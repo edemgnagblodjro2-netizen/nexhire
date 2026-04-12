@@ -120,6 +120,34 @@ export default function HomeScreen() {
         <UrgentButton />
       </View>
 
+      <Pressable
+        style={({ pressed }) => [
+          styles.aiBanner,
+          {
+            backgroundColor: colors.primary + "10",
+            borderColor: colors.primary + "28",
+            opacity: pressed ? 0.88 : 1,
+          },
+        ]}
+        onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          router.push("/(tabs)/chat" as any);
+        }}
+      >
+        <View style={[styles.aiBannerIcon, { backgroundColor: colors.primary }]}>
+          <Feather name="cpu" size={20} color="#fff" />
+        </View>
+        <View style={styles.aiBannerText}>
+          <Text style={[styles.aiBannerTitle, { color: colors.primary }]}>
+            {t.aiTitle}
+          </Text>
+          <Text style={[styles.aiBannerSub, { color: colors.mutedForeground }]}>
+            {t.aiSubtitle}
+          </Text>
+        </View>
+        <Feather name="arrow-right" size={16} color={colors.primary} />
+      </Pressable>
+
       <View
         style={[
           styles.searchBox,
@@ -276,7 +304,37 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_700Bold",
   },
   urgentWrap: {
+    marginBottom: 16,
+  },
+  aiBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    padding: 14,
+    borderRadius: 16,
+    borderWidth: 1,
     marginBottom: 24,
+  },
+  aiBannerIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  aiBannerText: {
+    flex: 1,
+    gap: 2,
+  },
+  aiBannerTitle: {
+    fontSize: 15,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+  },
+  aiBannerSub: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
   },
   searchBox: {
     flexDirection: "row",

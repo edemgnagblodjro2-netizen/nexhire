@@ -28,23 +28,37 @@ See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and pa
 
 ## Artifacts
 
-### ServiceQC — Community Services Quebec (artifacts/service-qc)
-- **Type**: Expo mobile app
+### AIDORA QC (artifacts/service-qc)
+- **Type**: Expo mobile app (React Native)
 - **Preview path**: `/`
-- **Purpose**: Helps users quickly find community and social services in Quebec
+- **Purpose**: AI-powered platform helping vulnerable people in Quebec find community and social services
 - **Features**:
-  - Natural language search with intelligent category detection
-  - 8 service categories: Housing, Food, Mental Health, Health, Immigration, Employment, Family, Social Support
-  - 35+ Quebec community services with phone numbers, websites, and descriptions
-  - Urgent Help button with emergency services
-  - Category browsing chips + quick prompt examples
-  - Service detail screen with direct call and website links
+  - **AI Chat (AIDORA IA)**: Conversational AI that analyzes user needs and recommends specific services. Powered by OpenAI GPT via Replit AI integrations. Streams responses in real-time. Supports 5 languages: FR, EN, ES, AR, HT (Haitian Creole).
+  - Natural language search with keyword-based category detection
+  - 100+ real Quebec services with GPS coordinates across all major regions
+  - Geolocation: sorts urgent services by distance from user
+  - Urgent Help screen: 67 urgent services with direct call buttons
+  - Services browsing tab: searchable + filterable 2-column grid
+  - Categories tab: 8 categories with service counts
+  - Bilingual FR/EN toggle (persisted in AsyncStorage)
+  - Dark mode support
+- **AI Endpoint**: `POST /api/ai/chat` — accepts `{message, language, history}`, streams SSE with AI analysis + matching service IDs
 - **Key files**:
-  - `data/services.ts` — all service data (35+ services)
-  - `utils/detectCategory.ts` — keyword detection logic for natural language input
-  - `utils/categoryColors.ts` — category colors and icons
-  - `app/(tabs)/index.tsx` — home screen
-  - `app/results.tsx` — search results screen
-  - `app/urgent.tsx` — urgent help screen
-  - `app/service/[id].tsx` — service detail screen
-  - `constants/colors.ts` — teal/green brand palette with dark mode support
+  - `app/(tabs)/chat.tsx` — AI chat screen (AIDORA IA)
+  - `app/(tabs)/index.tsx` — home screen with AI banner
+  - `app/(tabs)/services.tsx` — services browsing
+  - `app/(tabs)/categories.tsx` — categories grid
+  - `app/urgent.tsx` — urgent help with location sorting
+  - `data/services.ts` — 100+ services with coordinates
+  - `contexts/LocationContext.tsx` — geolocation context
+  - `contexts/LanguageContext.tsx` — bilingual context
+  - `constants/translations.ts` — FR/EN string translations
+  - `constants/colors.ts` — teal brand palette with dark mode
+
+### API Server (artifacts/api-server)
+- **Type**: Express 5 API
+- **Preview path**: `/api`
+- **Routes**:
+  - `GET /api/healthz` — health check
+  - `POST /api/ai/chat` — AI chat (SSE streaming, OpenAI integration)
+- **AI Integration**: Uses `@workspace/integrations-openai-ai-server` with `AI_INTEGRATIONS_OPENAI_BASE_URL` and `AI_INTEGRATIONS_OPENAI_API_KEY` env vars (auto-provisioned by Replit)

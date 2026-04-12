@@ -1,0 +1,793 @@
+import { Feather } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
+import { useRouter } from "expo-router";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { useLanguage } from "@/contexts/LanguageContext";
+import { SERVICES } from "@/data/services";
+import { useColors } from "@/hooks/useColors";
+import { getCategoryColor } from "@/utils/categoryColors";
+
+const API_BASE = process.env["EXPO_PUBLIC_DOMAIN"]
+  ? `https://${process.env["EXPO_PUBLIC_DOMAIN"]}`
+  : "";
+
+type ChatLang = "fr" | "en" | "es" | "ar" | "ht";
+const CHAT_LANGS: { code: ChatLang; label: string; flag: string }[] = [
+  { code: "fr", label: "Français", flag: "🇫🇷" },
+  { code: "en", label: "English", flag: "🇬🇧" },
+  { code: "es", label: "Español", flag: "🇪🇸" },
+  { code: "ar", label: "العربية", flag: "🇲🇦" },
+  { code: "ht", label: "Kreyòl", flag: "🇭🇹" },
+];
+
+interface ChatMessage {
+  id: string;
+  role: "user" | "assistant" | "system";
+  content: string;
+  serviceIds?: string[];
+  isStreaming?: boolean;
+}
+
+function ServiceChip({ serviceId }: { serviceId: string }) {
+  const colors = useColors();
+  const router = useRouter();
+  const service = SERVICES.find((s) => s.id === serviceId);
+  if (!service) return null;
+  const color = getCategoryColor(service.category, colors);
+
+  return (
+    <Pressable
+      style={({ pressed }) => [
+        styles.serviceChip,
+        {
+          backgroundColor: color + "12",
+          borderColor: color + "30",
+          opacity: pressed ? 0.85 : 1,
+        },
+      ]}
+      onPress={() => {
+        Haptics.selectionAsync();
+        router.push({ pathname: "/service/[id]", params: { id: service.id } });
+      }}
+    >
+      <View style={[styles.chipDot, { backgroundColor: color }]} />
+      <View style={styles.chipText}>
+        <Text style={[styles.chipName, { color: colors.foreground }]} numberOfLines={1}>
+          {service.name}
+        </Text>
+        <Text style={[styles.chipCity, { color: colors.mutedForeground }]} numberOfLines={1}>
+          {service.city} · {service.phone}
+        </Text>
+      </View>
+      <Feather name="chevron-right" size={14} color={color} />
+    </Pressable>
+  );
+}
+
+function MessageBubble({ message }: { message: ChatMessage }) {
+  const colors = useColors();
+  const isUser = message.role === "user";
+  const isSystem = message.role === "system";
+
+  const cleanContent = message.content
+    .replace(/\[SERVICES:[^\]]*\]/g, "")
+    .trim();
+
+  if (isSystem) {
+    return (
+      <View style={styles.systemMessage}>
+        <View
+          style={[
+            styles.systemBubble,
+            { backgroundColor: colors.primary + "12", borderColor: colors.primary + "25" },
+          ]}
+        >
+          <Feather name="cpu" size={13} color={colors.primary} />
+          <Text style={[styles.systemText, { color: colors.primary }]}>
+            {cleanContent}
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
+  return (
+    <View
+      style={[
+        styles.messageRow,
+        isUser ? styles.messageRowRight : styles.messageRowLeft,
+      ]}
+    >
+      {!isUser && (
+        <View style={[styles.aiAvatar, { backgroundColor: colors.primary }]}>
+          <Text style={styles.aiAvatarText}>AI</Text>
+        </View>
+      )}
+      <View style={[styles.messageBubbleWrap, isUser && { alignItems: "flex-end" }]}>
+        <View
+          style={[
+            styles.bubble,
+            isUser
+              ? [styles.bubbleUser, { backgroundColor: colors.primary }]
+              : [
+                  styles.bubbleAI,
+                  { backgroundColor: colors.card, borderColor: colors.border },
+                ],
+          ]}
+        >
+          <Text
+            style={[
+              styles.bubbleText,
+              { color: isUser ? "#fff" : colors.foreground },
+            ]}
+          >
+            {cleanContent}
+            {message.isStreaming && (
+              <Text style={{ color: colors.primary }}> ▋</Text>
+            )}
+          </Text>
+        </View>
+        {!isUser && message.serviceIds && message.serviceIds.length > 0 && !message.isStreaming && (
+          <View style={styles.serviceChips}>
+            {message.serviceIds.map((id) => (
+              <ServiceChip key={id} serviceId={id} />
+            ))}
+          </View>
+        )}
+      </View>
+    </View>
+  );
+}
+
+const QUICK_PROMPTS_FR = [
+  "Je n'ai nulle part où dormir",
+  "J'ai besoin de nourriture",
+  "Je me sens en danger",
+  "Je suis un immigrant",
+  "J'ai besoin d'aide psychologique",
+  "Je cherche du travail",
+];
+
+const QUICK_PROMPTS_EN = [
+  "I have nowhere to sleep",
+  "I need food assistance",
+  "I feel unsafe at home",
+  "I am an immigrant",
+  "I need mental health support",
+  "I'm looking for work",
+];
+
+const QUICK_PROMPTS_ES = [
+  "No tengo dónde dormir",
+  "Necesito comida",
+  "Me siento en peligro",
+  "Soy inmigrante",
+  "Necesito apoyo emocional",
+  "Busco trabajo",
+];
+
+export default function ChatScreen() {
+  const colors = useColors();
+  const insets = useSafeAreaInsets();
+  const { t, language } = useLanguage();
+
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [chatLang, setChatLang] = useState<ChatLang>(language as ChatLang);
+  const [showLangPicker, setShowLangPicker] = useState(false);
+  const listRef = useRef<FlatList>(null);
+  const inputRef = useRef<TextInput>(null);
+
+  const topPadding = Platform.OS === "web" ? 16 : insets.top;
+  const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
+
+  const quickPrompts =
+    language === "en"
+      ? QUICK_PROMPTS_EN
+      : language === "es"
+      ? QUICK_PROMPTS_ES
+      : QUICK_PROMPTS_FR;
+
+  useEffect(() => {
+    setMessages([
+      {
+        id: "welcome",
+        role: "system",
+        content: t.aiWelcome,
+      },
+    ]);
+  }, [language, t.aiWelcome]);
+
+  const scrollToBottom = useCallback(() => {
+    setTimeout(() => {
+      listRef.current?.scrollToEnd({ animated: true });
+    }, 80);
+  }, []);
+
+  const sendMessage = useCallback(
+    async (text: string) => {
+      const trimmed = text.trim();
+      if (!trimmed || isLoading) return;
+
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      setInput("");
+
+      const userMsg: ChatMessage = {
+        id: `u-${Date.now()}`,
+        role: "user",
+        content: trimmed,
+      };
+
+      const aiMsgId = `a-${Date.now()}`;
+      const aiMsg: ChatMessage = {
+        id: aiMsgId,
+        role: "assistant",
+        content: "",
+        isStreaming: true,
+      };
+
+      setMessages((prev) => [...prev, userMsg, aiMsg]);
+      setIsLoading(true);
+      scrollToBottom();
+
+      const history = messages
+        .filter((m) => m.role !== "system")
+        .map((m) => ({ role: m.role, content: m.content }));
+
+      try {
+        const response = await fetch(`${API_BASE}/api/ai/chat`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: trimmed, language: chatLang, history }),
+        });
+
+        if (!response.ok || !response.body) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let accumulated = "";
+        let finalServiceIds: string[] = [];
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value, { stream: true });
+          const lines = chunk.split("\n");
+
+          for (const line of lines) {
+            if (!line.startsWith("data: ")) continue;
+            try {
+              const json = JSON.parse(line.slice(6));
+              if (json.content) {
+                accumulated += json.content;
+                setMessages((prev) =>
+                  prev.map((m) =>
+                    m.id === aiMsgId
+                      ? { ...m, content: accumulated, isStreaming: true }
+                      : m
+                  )
+                );
+                scrollToBottom();
+              }
+              if (json.done) {
+                finalServiceIds = json.serviceIds ?? [];
+              }
+              if (json.error) {
+                accumulated += `\n\n⚠️ ${json.error}`;
+              }
+            } catch {
+            }
+          }
+        }
+
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === aiMsgId
+              ? {
+                  ...m,
+                  content: accumulated,
+                  isStreaming: false,
+                  serviceIds: finalServiceIds,
+                }
+              : m
+          )
+        );
+      } catch (err) {
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === aiMsgId
+              ? {
+                  ...m,
+                  content: t.aiError,
+                  isStreaming: false,
+                }
+              : m
+          )
+        );
+      } finally {
+        setIsLoading(false);
+        scrollToBottom();
+      }
+    },
+    [isLoading, messages, language, scrollToBottom, t.aiError]
+  );
+
+  const handleReset = useCallback(() => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setMessages([
+      {
+        id: "welcome",
+        role: "system",
+        content: t.aiWelcome,
+      },
+    ]);
+  }, [t.aiWelcome]);
+
+  return (
+    <KeyboardAvoidingView
+      style={[styles.container, { backgroundColor: colors.background }]}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={0}
+    >
+      <View
+        style={[
+          styles.header,
+          {
+            backgroundColor: colors.background,
+            borderBottomColor: colors.border,
+            paddingTop: topPadding + 8,
+          },
+        ]}
+      >
+        <View style={styles.headerLeft}>
+          <View style={[styles.aiBadge, { backgroundColor: colors.primary }]}>
+            <Feather name="cpu" size={14} color="#fff" />
+          </View>
+          <View>
+            <Text style={[styles.headerTitle, { color: colors.foreground }]}>
+              {t.aiTitle}
+            </Text>
+            <Text style={[styles.headerSub, { color: colors.mutedForeground }]}>
+              {t.aiSubtitle}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.headerActions}>
+          <TouchableOpacity
+            style={[
+              styles.langBtn,
+              { backgroundColor: colors.card, borderColor: colors.border },
+            ]}
+            onPress={() => {
+              Haptics.selectionAsync();
+              setShowLangPicker((v) => !v);
+            }}
+          >
+            <Text style={styles.langFlag}>
+              {CHAT_LANGS.find((l) => l.code === chatLang)?.flag ?? "🇫🇷"}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.resetBtn, { borderColor: colors.border }]}
+            onPress={handleReset}
+            hitSlop={8}
+          >
+            <Feather name="rotate-ccw" size={15} color={colors.mutedForeground} />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {showLangPicker && (
+        <View
+          style={[
+            styles.langPicker,
+            { backgroundColor: colors.card, borderColor: colors.border },
+          ]}
+        >
+          {CHAT_LANGS.map((l) => (
+            <TouchableOpacity
+              key={l.code}
+              style={[
+                styles.langOption,
+                chatLang === l.code && { backgroundColor: colors.primary + "18" },
+              ]}
+              onPress={() => {
+                Haptics.selectionAsync();
+                setChatLang(l.code);
+                setShowLangPicker(false);
+              }}
+            >
+              <Text style={styles.langFlag}>{l.flag}</Text>
+              <Text
+                style={[
+                  styles.langLabel,
+                  {
+                    color:
+                      chatLang === l.code ? colors.primary : colors.foreground,
+                    fontWeight: chatLang === l.code ? "700" : "400",
+                  },
+                ]}
+              >
+                {l.label}
+              </Text>
+              {chatLang === l.code && (
+                <Feather name="check" size={14} color={colors.primary} />
+              )}
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
+
+      <FlatList
+        ref={listRef}
+        data={messages}
+        keyExtractor={(m) => m.id}
+        contentContainerStyle={[
+          styles.listContent,
+          {
+            paddingBottom: bottomPadding + 140,
+          },
+        ]}
+        showsVerticalScrollIndicator={false}
+        onContentSizeChange={scrollToBottom}
+        ListFooterComponent={
+          messages.length <= 1 ? (
+            <View style={styles.quickPromptsWrap}>
+              <Text style={[styles.quickLabel, { color: colors.mutedForeground }]}>
+                {t.aiSuggestions}
+              </Text>
+              <View style={styles.quickPrompts}>
+                {quickPrompts.map((p) => (
+                  <TouchableOpacity
+                    key={p}
+                    style={[
+                      styles.promptChip,
+                      { backgroundColor: colors.card, borderColor: colors.border },
+                    ]}
+                    onPress={() => sendMessage(p)}
+                    activeOpacity={0.8}
+                  >
+                    <Text style={[styles.promptText, { color: colors.foreground }]}>
+                      {p}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          ) : null
+        }
+        renderItem={({ item }) => <MessageBubble message={item} />}
+      />
+
+      <View
+        style={[
+          styles.inputBar,
+          {
+            backgroundColor: colors.background,
+            borderTopColor: colors.border,
+            paddingBottom: bottomPadding + 82,
+          },
+        ]}
+      >
+        {isLoading && (
+          <View style={[styles.thinkingBar, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <ActivityIndicator size="small" color={colors.primary} />
+            <Text style={[styles.thinkingText, { color: colors.mutedForeground }]}>
+              {t.aiThinking}
+            </Text>
+          </View>
+        )}
+        <View
+          style={[
+            styles.inputRow,
+            { backgroundColor: colors.card, borderColor: colors.border },
+          ]}
+        >
+          <TextInput
+            ref={inputRef}
+            style={[styles.textInput, { color: colors.foreground }]}
+            placeholder={t.aiPlaceholder}
+            placeholderTextColor={colors.mutedForeground}
+            value={input}
+            onChangeText={setInput}
+            multiline
+            maxLength={500}
+            returnKeyType="send"
+            blurOnSubmit={false}
+            onSubmitEditing={() => sendMessage(input)}
+          />
+          <Pressable
+            style={({ pressed }) => [
+              styles.sendBtn,
+              {
+                backgroundColor:
+                  input.trim() && !isLoading ? colors.primary : colors.border,
+                opacity: pressed ? 0.85 : 1,
+              },
+            ]}
+            onPress={() => sendMessage(input)}
+            disabled={!input.trim() || isLoading}
+          >
+            <Feather name="send" size={16} color="#fff" />
+          </Pressable>
+        </View>
+      </View>
+    </KeyboardAvoidingView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+  },
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  aiBadge: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerTitle: {
+    fontSize: 17,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+  },
+  headerSub: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+  },
+  resetBtn: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  listContent: {
+    padding: 16,
+    gap: 12,
+  },
+  systemMessage: {
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  systemBubble: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    maxWidth: "85%",
+  },
+  systemText: {
+    fontSize: 13,
+    fontFamily: "Inter_500Medium",
+    textAlign: "center",
+    flexShrink: 1,
+  },
+  messageRow: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    gap: 8,
+    marginBottom: 4,
+  },
+  messageRowLeft: { justifyContent: "flex-start" },
+  messageRowRight: { justifyContent: "flex-end" },
+  aiAvatar: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+    marginBottom: 2,
+  },
+  aiAvatarText: {
+    color: "#fff",
+    fontSize: 10,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+  },
+  messageBubbleWrap: {
+    flex: 1,
+    gap: 6,
+    maxWidth: "85%",
+  },
+  bubble: {
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 18,
+    borderWidth: 1,
+  },
+  bubbleUser: {
+    borderRadius: 18,
+    borderBottomRightRadius: 4,
+    borderColor: "transparent",
+    alignSelf: "flex-end",
+  },
+  bubbleAI: {
+    borderRadius: 18,
+    borderBottomLeftRadius: 4,
+    alignSelf: "flex-start",
+  },
+  bubbleText: {
+    fontSize: 15,
+    fontFamily: "Inter_400Regular",
+    lineHeight: 22,
+  },
+  serviceChips: {
+    gap: 6,
+    marginTop: 4,
+  },
+  serviceChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    padding: 10,
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  chipDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    flexShrink: 0,
+  },
+  chipText: { flex: 1, gap: 2 },
+  chipName: {
+    fontSize: 13,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
+  },
+  chipCity: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+  },
+  quickPromptsWrap: {
+    marginTop: 8,
+    gap: 12,
+  },
+  quickLabel: {
+    fontSize: 13,
+    fontFamily: "Inter_500Medium",
+    textAlign: "center",
+  },
+  quickPrompts: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    justifyContent: "center",
+  },
+  promptChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 9,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  promptText: {
+    fontSize: 13,
+    fontFamily: "Inter_400Regular",
+  },
+  inputBar: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    borderTopWidth: 1,
+    paddingTop: 8,
+    paddingHorizontal: 12,
+    gap: 6,
+  },
+  thinkingBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginBottom: 2,
+  },
+  thinkingText: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+  },
+  inputRow: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    gap: 8,
+    borderRadius: 24,
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+  },
+  textInput: {
+    flex: 1,
+    fontSize: 15,
+    fontFamily: "Inter_400Regular",
+    maxHeight: 100,
+    padding: 0,
+  },
+  sendBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  headerActions: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  langBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  langFlag: {
+    fontSize: 18,
+    lineHeight: 22,
+  },
+  langPicker: {
+    marginHorizontal: 16,
+    marginBottom: 8,
+    borderRadius: 14,
+    borderWidth: 1,
+    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  langOption: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  langLabel: {
+    flex: 1,
+    fontSize: 15,
+    fontFamily: "Inter_400Regular",
+  },
+});

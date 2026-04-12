@@ -17,6 +17,10 @@ function NativeTabLayout() {
         <Icon sf={{ default: "house", selected: "house.fill" }} />
         <Label>Accueil</Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="chat">
+        <Icon sf={{ default: "brain", selected: "brain.fill" }} />
+        <Label>Aide IA</Label>
+      </NativeTabs.Trigger>
       <NativeTabs.Trigger name="services">
         <Icon sf={{ default: "list.bullet", selected: "list.bullet" }} />
         <Label>Services</Label>
@@ -82,6 +86,32 @@ function ClassicTabLayout() {
               <SymbolView name="house" tintColor={color} size={24} />
             ) : (
               <Feather name="home" size={22} color={color} />
+            ),
+        }}
+      />
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: t.tabChat,
+          tabBarIcon: ({ color, focused }) =>
+            isIOS ? (
+              <SymbolView name="brain" tintColor={color} size={24} />
+            ) : (
+              <View
+                style={
+                  focused
+                    ? {
+                        backgroundColor: colors.primary,
+                        borderRadius: 14,
+                        paddingHorizontal: 10,
+                        paddingVertical: 4,
+                        marginBottom: 2,
+                      }
+                    : undefined
+                }
+              >
+                <Feather name="cpu" size={22} color={focused ? "#fff" : color} />
+              </View>
             ),
         }}
       />
