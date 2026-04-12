@@ -37,7 +37,6 @@ export const QUEBEC_CITIES = [
   "Saguenay",
   "Trois-Rivières",
   "Lévis",
-  "Terrebonne",
 ] as const;
 
 export type QuebecCity = (typeof QUEBEC_CITIES)[number];
@@ -229,7 +228,7 @@ export const RESTAURANTS: Restaurant[] = [
       "Pizzas napolitaines cuites au feu de bois, pasta maison et antipasti généreux. Elena est devenue la référence pizza à Montréal avec une ambiance décontractée et animée.",
     address: "5090 Rue Notre-Dame O, Montréal",
     phone: "514-379-2999",
-    website: "https://elenarestaurant.com",
+    website: "https://coffeepizzawine.com",
     rating: 4.5,
     coordinates: { lat: 45.4715, lng: -73.5876 },
     mustTry: "Pizza Margherita DOP et pasta carbonara",
@@ -333,42 +332,10 @@ export const RESTAURANTS: Restaurant[] = [
     mustTry: "Brunch du weekend et tartare de cerf",
     openHours: "Mer-Dim 9h–21h",
   },
-  {
-    id: "qc-06",
-    name: "Le Patriarche",
-    city: "Québec",
-    region: "Saint-Roch",
-    cuisine: "français",
-    description:
-      "Dans une église convertie, Le Patriarche offre une expérience gastronomique unique. Cuisine française contemporaine dans un décor architectural spectaculaire.",
-    address: "17 Rue Saint-Stanislas, Québec",
-    phone: "418-692-5488",
-    website: "https://lepatriarche.com",
-    rating: 4.6,
-    coordinates: { lat: 46.8087, lng: -71.2186 },
-    mustTry: "Canard confit et vol-au-vent aux ris de veau",
-    openHours: "Mar-Sam 17h30–22h",
-  },
 
   // ─── LAVAL ────────────────────────────────────────────────────────────────
   {
     id: "lav-01",
-    name: "Mangiafuoco",
-    city: "Laval",
-    region: "Chomedey",
-    cuisine: "italien",
-    description:
-      "Le meilleur restaurant italien de Laval. Pasta fraîche maison, pizzas à la napolitaine et ambiance italienne authentique avec terrasse animée en saison.",
-    address: "3434 Boulevard Le Carrefour, Laval",
-    phone: "450-686-9100",
-    website: "https://mangiafuoco.ca",
-    rating: 4.5,
-    coordinates: { lat: 45.5664, lng: -73.7562 },
-    mustTry: "Gnocchi alla Sorrentina et tiramisu maison",
-    openHours: "Lun-Dim 11h30–22h",
-  },
-  {
-    id: "lav-02",
     name: "Bâton Rouge Laval",
     city: "Laval",
     region: "Chomedey",
@@ -384,7 +351,7 @@ export const RESTAURANTS: Restaurant[] = [
     openHours: "Lun-Dim 11h–22h",
   },
   {
-    id: "lav-03",
+    id: "lav-02",
     name: "Giard Resto Bar",
     city: "Laval",
     region: "Saint-François",
@@ -403,22 +370,6 @@ export const RESTAURANTS: Restaurant[] = [
   // ─── GATINEAU ─────────────────────────────────────────────────────────────
   {
     id: "gat-01",
-    name: "Le Tartuffe",
-    city: "Gatineau",
-    region: "Hull",
-    cuisine: "français",
-    description:
-      "Table de référence de l'Outaouais. Cuisine française classique revue par les chefs locaux, avec une carte des vins internationale et un service impeccable.",
-    address: "133 Rue Notre-Dame de l'Île, Gatineau",
-    phone: "819-776-6424",
-    website: "https://letartuffe.com",
-    rating: 4.6,
-    coordinates: { lat: 45.4282, lng: -75.7075 },
-    mustTry: "Magret de canard et crème brûlée à la lavande",
-    openHours: "Mar-Sam 17h30–21h30",
-  },
-  {
-    id: "gat-02",
     name: "Soif Bar à vin",
     city: "Gatineau",
     region: "Hull",
@@ -434,7 +385,7 @@ export const RESTAURANTS: Restaurant[] = [
     openHours: "Mar-Sam 16h–23h",
   },
   {
-    id: "gat-03",
+    id: "gat-02",
     name: "La Brasserie du Temps",
     city: "Gatineau",
     region: "Hull",
@@ -469,22 +420,6 @@ export const RESTAURANTS: Restaurant[] = [
   },
   {
     id: "she-02",
-    name: "La Table du Chef",
-    city: "Sherbrooke",
-    region: "Centre-ville",
-    cuisine: "québécois",
-    description:
-      "Restaurant acclamé de Sherbrooke mettant en vedette les producteurs locaux des Cantons-de-l'Est. Cuisine de marché évoluant au rythme des saisons.",
-    address: "18 Rue Wellington N, Sherbrooke",
-    phone: "819-562-2258",
-    website: "https://latableduchef.ca",
-    rating: 4.5,
-    coordinates: { lat: 45.3996, lng: -71.8979 },
-    mustTry: "Canard de Brome et légumes du potager",
-    openHours: "Mar-Sam 18h–21h",
-  },
-  {
-    id: "she-03",
     name: "Le Bouchon",
     city: "Sherbrooke",
     region: "Vieux-Nord",
@@ -527,7 +462,7 @@ export const RESTAURANTS: Restaurant[] = [
       "Meilleur steakhouse du Saguenay-Lac-Saint-Jean. Viandes locales vieillies à sec, ambiance chaleureuse et service attentionné dans un décor boisé typique de la région.",
     address: "457 Rue Racine E, Saguenay",
     phone: "418-543-8778",
-    website: "https://lentrecote-saguenay.ca",
+    website: "https://entrecotesaintjean.com",
     rating: 4.4,
     coordinates: { lat: 48.424, lng: -71.0548 },
     mustTry: "Côte de bœuf locale vieilli 28 jours",
@@ -561,7 +496,7 @@ export const RESTAURANTS: Restaurant[] = [
       "Restaurant de cuisine régionale contemporaine célébrant les saveurs de la Mauricie. Menu à l'ardoise changeant selon les arrivages et les saisons.",
     address: "3 Rue des Forges, Trois-Rivières",
     phone: "819-373-3939",
-    website: "https://lardoise-tr.ca",
+    website: "https://ehmonteregie.ca",
     rating: 4.4,
     coordinates: { lat: 46.3476, lng: -72.5458 },
     mustTry: "Risotto aux champignons sauvages de la Mauricie",
@@ -579,28 +514,10 @@ export const RESTAURANTS: Restaurant[] = [
       "Grande table de la rive sud de Québec. Cuisine française créative avec une vue imprenable sur le fleuve Saint-Laurent et une terrasse spectaculaire en saison.",
     address: "3100 Chemin Saint-Louis, Lévis",
     phone: "418-653-9795",
-    website: "https://lafenouillere.com",
+    website: "https://fenouillere.com",
     rating: 4.6,
     coordinates: { lat: 46.7451, lng: -71.2943 },
     mustTry: "Homard de la Gaspésie et fromages fins",
     openHours: "Mar-Sam 18h–21h",
-  },
-
-  // ─── TERREBONNE ───────────────────────────────────────────────────────────
-  {
-    id: "ter-01",
-    name: "Le Jolifou",
-    city: "Terrebonne",
-    region: "Vieux-Terrebonne",
-    cuisine: "bistro",
-    description:
-      "Bistro gourmet dans le charme du Vieux-Terrebonne. Cuisine de marché inventive, belle terrasse sur la rivière des Mille Îles et atmosphère romantique très prisée.",
-    address: "901 Rue Saint-Louis, Terrebonne",
-    phone: "450-824-5466",
-    website: "https://lejolifou.com",
-    rating: 4.5,
-    coordinates: { lat: 45.7032, lng: -73.6478 },
-    mustTry: "Bavette à l'échalote et fondant au chocolat",
-    openHours: "Mar-Dim 11h30–22h",
   },
 ];
