@@ -109,6 +109,45 @@ SERVICES DE GARDE — RÉGIONS:
 - ID:cpe-sag1 | CPE Le Pionnier | Saguenay, CPE subventionné
 - ID:cpe-lng1 | CPE Les Petits Loups | Longueuil, CPE subventionné
 - ID:cpe-jer1 | CPE Les Castors | Saint-Jérôme, CPE subventionné Laurentides
+
+ACHAT IMMOBILIER — PROGRAMMES GOUVERNEMENTAUX (province-wide):
+- ID:re-pw1 | SCHL | Assurance hypothécaire fédérale, mise de fonds 5%-19,99%, guides premier acheteur | Tél:1-800-668-2642
+- ID:re-pw2 | RAP – Régime accession propriété (REER) | Retrait jusqu'à 35 000$ REER sans impôt | Tél:1-800-959-8281
+- ID:re-pw3 | CELIAPP | Épargne jusqu'à 40 000$ exonérée d'impôt pour première propriété | Tél:1-800-959-8281
+- ID:re-pw4 | Centris.ca | Toutes les propriétés à vendre au Québec | Tél:514-762-2440
+- ID:re-pw5 | DuProprio | Propriétés sans courtier, moins cher | Tél:1-866-387-7677
+- ID:re-assist1 | OACIQ | Vérification courtiers certifiés, droits de l'acheteur | Tél:1-800-440-7170
+- ID:re-assist2 | Chambre des notaires Québec | Notaire obligatoire pour acte de vente, 1000$-1800$ | Tél:1-800-263-1793
+
+ACHAT IMMOBILIER — BANQUES ET FINANCEMENT (province-wide):
+- ID:re-bank1 | Desjardins | Caisse québécoise, taux compétitifs, programme premiers acheteurs | Tél:1-800-224-7737
+- ID:re-bank2 | Banque Nationale | Banque québécoise, solutions nouveaux arrivants | Tél:1-888-835-6281
+- ID:re-bank3 | RBC Banque Royale | Programme Première Maison, mise de fonds réduite | Tél:1-800-769-2511
+- ID:re-bank4 | TD Canada Trust | Approbation rapide, programme premier acheteur | Tél:1-866-222-3456
+- ID:re-bank5 | BMO Banque de Montréal | Remboursement anticipé 20%, refinancement | Tél:1-877-225-5266
+- ID:re-bank6 | Scotiabank | Aide aux nouveaux arrivants, programme STEP | Tél:1-800-472-6842
+- ID:re-bank7 | Banque Laurentienne | Taux compétitifs, travailleurs autonomes | Tél:1-877-522-3863
+
+ACHAT IMMOBILIER — MARCHÉS RÉGIONAUX (prix médian maison, du moins au plus cher):
+- ID:re-sag1 | Saguenay | Le moins cher : 150 000$–280 000$ | Idéal budget limité
+- ID:re-tr1 | Trois-Rivières | Très abordable : 200 000$–320 000$ | Bonne qualité de vie
+- ID:re-rn1 | Abitibi-Témiscamingue (Rouyn-Noranda) | Abordable : 180 000$–300 000$ | Fort marché emploi
+- ID:re-sher1 | Sherbrooke | Abordable : 250 000$–380 000$ | Ville universitaire
+- ID:re-qc1 | Québec (ville) | Modéré : 280 000$–500 000$ | Qualité de vie élevée
+- ID:re-gat1 | Gatineau | Modéré : 300 000$–480 000$ | Emplois fédéraux, proximité Ottawa
+- ID:re-lng1 | Longueuil / Rive-Sud | Modéré : 380 000$–600 000$ | Accès métro Montréal
+- ID:re-lav1 | Laval | Modéré à élevé : 450 000$–700 000$ | Métro Orange, île entre deux villes
+- ID:re-mtl1 | Montréal | Le plus cher : 350 000$–1 100 000$+ | Quartiers abordables : Montréal-Nord, RDP (200K-450K)
+
+PROCÉDURE D'ACHAT IMMOBILIER AU QUÉBEC (à expliquer si demandé):
+1. PRÉQUALIFICATION : Contactez une banque ou Desjardins pour connaître votre capacité d'emprunt
+2. ÉPARGNE MISE DE FONDS : Minimum 5% du prix si <500K$, 10% pour tranche 500K$-999K$. Utilisez RAP ou CELIAPP
+3. RECHERCHE : Centris.ca (avec courtier) ou DuProprio (sans courtier)
+4. OFFRE D'ACHAT : Votre courtier ou vous-même rédigez une offre avec conditions (financement, inspection)
+5. INSPECTION PRÉ-ACHAT : Obligatoire — inspecteur en bâtiment certifié (~500$-800$)
+6. FINANCEMENT FINAL : La banque confirme l'hypothèque. SCHL si mise de fonds <20%
+7. NOTAIRE : Acte de vente chez le notaire (~1000$-1800$). Transfert de propriété officiel
+8. REMISE DES CLÉS : Prise de possession à la date convenue
 `.trim();
 
 function buildSystemPrompt(language: string): string {

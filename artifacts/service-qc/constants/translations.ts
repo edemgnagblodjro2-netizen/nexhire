@@ -69,6 +69,7 @@ export const translations = {
       family: "Famille",
       social: "Soutien social",
       childcare: "Services de garde",
+      realestate: "Achat immobilier",
     },
   },
   en: {
@@ -138,6 +139,7 @@ export const translations = {
       family: "Family",
       social: "Social Support",
       childcare: "Childcare",
+      realestate: "Home Buying",
     },
   },
 } as const;

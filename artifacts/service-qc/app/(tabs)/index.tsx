@@ -31,6 +31,7 @@ const ALL_CATEGORIES: Category[] = [
   "family",
   "social",
   "childcare",
+  "realestate",
 ];
 
 export default function HomeScreen() {

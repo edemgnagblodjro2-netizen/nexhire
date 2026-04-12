@@ -29,6 +29,7 @@ const ALL_CATEGORIES: Category[] = [
   "family",
   "social",
   "childcare",
+  "realestate",
 ];
 
 function ServiceCard({ service }: { service: Service }) {
