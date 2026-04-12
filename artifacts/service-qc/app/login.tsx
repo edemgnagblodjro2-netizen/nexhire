@@ -14,11 +14,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 
 import { useAuth } from "@/lib/auth";
-import { useColors } from "@/hooks/useColors";
 
 export default function LoginScreen() {
   const { login, isAuthenticated } = useAuth();
-  const colors = useColors();
   const router = useRouter();
 
   useEffect(() => {

@@ -61,8 +61,11 @@ export function AppSplashScreen({ visible, onDone }: AppSplashScreenProps) {
 
   return (
     <Animated.View
-      style={[StyleSheet.absoluteFill, styles.overlay, { opacity: containerOpacity }]}
-      pointerEvents={visible ? "auto" : "none"}
+      style={[
+        StyleSheet.absoluteFill,
+        styles.overlay,
+        { opacity: containerOpacity, pointerEvents: visible ? "auto" : "none" },
+      ]}
     >
       <LinearGradient
         colors={["#0a6558", "#0e7e6e", "#1a9f8c"]}
