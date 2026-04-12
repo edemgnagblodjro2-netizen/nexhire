@@ -15,7 +15,6 @@ import {
   deleteSession,
   SESSION_COOKIE,
   SESSION_TTL,
-  ISSUER_URL,
   type SessionData,
 } from "../lib/auth";
 
@@ -211,34 +210,62 @@ router.post(
       return;
     }
 
-    const { code, code_verifier, redirect_uri, state, nonce } = parsed.data;
+    const { code, code_verifier, redirect_uri } = parsed.data;
 
     try {
       const config = await getOidcConfig();
+      const tokenEndpoint = config.serverMetadata().token_endpoint;
 
-      const callbackUrl = new URL(redirect_uri);
-      callbackUrl.searchParams.set("code", code);
-      callbackUrl.searchParams.set("state", state);
-      callbackUrl.searchParams.set("iss", ISSUER_URL);
-
-      const tokens = await oidc.authorizationCodeGrant(config, callbackUrl, {
-        pkceCodeVerifier: code_verifier,
-        expectedNonce: nonce ?? undefined,
-        expectedState: state,
-        idTokenExpected: true,
-      });
-
-      const claims = tokens.claims();
-      if (!claims) {
-        res.status(401).json({ error: "No claims in ID token" });
+      if (!tokenEndpoint) {
+        req.log.error("Token endpoint not found in OIDC discovery");
+        res.status(500).json({ error: "Token exchange failed" });
         return;
       }
 
-      const dbUser = await upsertUser(
-        claims as unknown as Record<string, unknown>,
+      req.log.info(
+        { tokenEndpoint, redirect_uri, client_id: process.env.REPL_ID },
+        "Attempting mobile token exchange",
       );
 
-      const now = Math.floor(Date.now() / 1000);
+      const tokenRes = await fetch(tokenEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          grant_type: "authorization_code",
+          code,
+          redirect_uri,
+          client_id: process.env.REPL_ID!,
+          code_verifier,
+        }).toString(),
+      });
+
+      const tokenData = (await tokenRes.json()) as Record<string, unknown>;
+
+      if (!tokenRes.ok || tokenData.error) {
+        req.log.error({ tokenData, status: tokenRes.status }, "Token exchange failed from provider");
+        res.status(500).json({ error: "Token exchange failed" });
+        return;
+      }
+
+      const idToken = tokenData.id_token as string | undefined;
+      if (!idToken) {
+        req.log.error({ tokenData }, "No ID token in provider response");
+        res.status(401).json({ error: "No ID token in response" });
+        return;
+      }
+
+      const parts = idToken.split(".");
+      if (parts.length !== 3) {
+        res.status(401).json({ error: "Invalid ID token format" });
+        return;
+      }
+
+      const claims = JSON.parse(
+        Buffer.from(parts[1], "base64url").toString("utf8"),
+      ) as Record<string, unknown>;
+
+      const dbUser = await upsertUser(claims);
+
       const sessionData: SessionData = {
         user: {
           id: dbUser.id,
@@ -247,9 +274,9 @@ router.post(
           lastName: dbUser.lastName,
           profileImageUrl: dbUser.profileImageUrl,
         },
-        access_token: tokens.access_token,
-        refresh_token: tokens.refresh_token,
-        expires_at: tokens.expiresIn() ? now + tokens.expiresIn()! : claims.exp,
+        access_token: tokenData.access_token as string,
+        refresh_token: tokenData.refresh_token as string | undefined,
+        expires_at: typeof claims.exp === "number" ? claims.exp : undefined,
       };
 
       const sid = await createSession(sessionData);

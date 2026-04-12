@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef, type ReactNode } from "react";
 import * as AuthSession from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
 import * as SecureStore from "expo-secure-store";
@@ -61,6 +61,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     discovery,
   );
 
+  const exchangedCodeRef = useRef<string | null>(null);
+
   const fetchUser = useCallback(async () => {
     try {
       const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
@@ -97,6 +99,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (response?.type !== "success" || !request?.codeVerifier) return;
 
     const { code, state } = response.params;
+
+    if (exchangedCodeRef.current === code) return;
+    exchangedCodeRef.current = code;
 
     (async () => {
       try {
