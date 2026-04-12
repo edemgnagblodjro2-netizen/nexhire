@@ -1,8 +1,9 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useMemo } from "react";
 import {
+  ActivityIndicator,
   FlatList,
   Linking,
   Platform,
@@ -15,11 +16,17 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useLocation } from "@/contexts/LocationContext";
 import { URGENT_SERVICES, type Service } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor } from "@/utils/categoryColors";
+import { formatDistance, haversineDistance } from "@/utils/location";
 
-function UrgentServiceItem({ service }: { service: Service }) {
+interface ServiceWithDistance extends Service {
+  distanceKm: number | null;
+}
+
+function UrgentServiceItem({ service }: { service: ServiceWithDistance }) {
   const colors = useColors();
   const router = useRouter();
   const { t } = useLanguage();
@@ -27,15 +34,12 @@ function UrgentServiceItem({ service }: { service: Service }) {
 
   function handleCall() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    Linking.openURL(`tel:${service.phone.replace(/\s/g, "")}`);
+    Linking.openURL(`tel:${service.phone.replace(/[-\s]/g, "")}`);
   }
 
   function handleDetails() {
     Haptics.selectionAsync();
-    router.push({
-      pathname: "/service/[id]",
-      params: { id: service.id },
-    });
+    router.push({ pathname: "/service/[id]", params: { id: service.id } });
   }
 
   return (
@@ -50,30 +54,71 @@ function UrgentServiceItem({ service }: { service: Service }) {
       ]}
       onPress={handleDetails}
     >
-      <View style={styles.cardLeft}>
-        <View style={[styles.categoryDot, { backgroundColor: categoryColor }]} />
-        <View style={styles.cardText}>
+      <View style={[styles.categoryStripe, { backgroundColor: categoryColor }]} />
+
+      <View style={styles.cardBody}>
+        <View style={styles.cardTop}>
           <Text
             style={[styles.serviceName, { color: colors.foreground }]}
             numberOfLines={2}
           >
             {service.name}
           </Text>
-          <Text
-            style={[styles.serviceCategory, { color: colors.mutedForeground }]}
+          <TouchableOpacity
+            style={[styles.callBtn, { backgroundColor: colors.urgent }]}
+            onPress={handleCall}
+            activeOpacity={0.8}
+            hitSlop={8}
           >
-            {t.categories[service.category]} · {service.city}
-          </Text>
+            <Feather name="phone" size={16} color="#fff" />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.cardMeta}>
+          <View
+            style={[
+              styles.categoryPill,
+              { backgroundColor: categoryColor + "18" },
+            ]}
+          >
+            <Text style={[styles.categoryPillText, { color: categoryColor }]}>
+              {t.categories[service.category]}
+            </Text>
+          </View>
+
+          <View style={styles.metaRight}>
+            {service.isProvinceWide ? (
+              <View
+                style={[
+                  styles.provinceTag,
+                  { backgroundColor: colors.muted },
+                ]}
+              >
+                <Feather name="globe" size={10} color={colors.mutedForeground} />
+                <Text
+                  style={[styles.provinceTagText, { color: colors.mutedForeground }]}
+                >
+                  {t.provinceWide}
+                </Text>
+              </View>
+            ) : (
+              <View style={styles.locationMeta}>
+                <Feather name="map-pin" size={11} color={colors.mutedForeground} />
+                <Text style={[styles.cityText, { color: colors.mutedForeground }]}>
+                  {service.city}
+                </Text>
+                {service.distanceKm !== null && (
+                  <Text
+                    style={[styles.distanceText, { color: colors.primary }]}
+                  >
+                    · {formatDistance(service.distanceKm)} {t.away}
+                  </Text>
+                )}
+              </View>
+            )}
+          </View>
         </View>
       </View>
-      <TouchableOpacity
-        style={[styles.callBtn, { backgroundColor: colors.urgent }]}
-        onPress={handleCall}
-        activeOpacity={0.8}
-        hitSlop={8}
-      >
-        <Feather name="phone" size={16} color="#fff" />
-      </TouchableOpacity>
     </Pressable>
   );
 }
@@ -83,19 +128,46 @@ export default function UrgentScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { t } = useLanguage();
+  const { userLocation, locationStatus, locationError, requestLocation } =
+    useLocation();
 
   const topPadding = Platform.OS === "web" ? 16 : insets.top;
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
+
+  const sortedServices = useMemo((): ServiceWithDistance[] => {
+    const withDistance: ServiceWithDistance[] = URGENT_SERVICES.map((s) => ({
+      ...s,
+      distanceKm:
+        userLocation && !s.isProvinceWide
+          ? haversineDistance(userLocation, s.coordinates)
+          : null,
+    }));
+
+    const physical = withDistance
+      .filter((s) => !s.isProvinceWide)
+      .sort((a, b) => {
+        if (a.distanceKm !== null && b.distanceKm !== null) {
+          return a.distanceKm - b.distanceKm;
+        }
+        return 0;
+      });
+
+    const provinceWide = withDistance.filter((s) => s.isProvinceWide);
+
+    return [...physical, ...provinceWide];
+  }, [userLocation]);
+
+  function handleLocate() {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    requestLocation();
+  }
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View
         style={[
           styles.header,
-          {
-            backgroundColor: colors.urgent,
-            paddingTop: topPadding + 8,
-          },
+          { backgroundColor: colors.urgent, paddingTop: topPadding + 8 },
         ]}
       >
         <Pressable
@@ -105,10 +177,10 @@ export default function UrgentScreen() {
         >
           <Feather name="arrow-left" size={22} color="#fff" />
         </Pressable>
-        <View>
+        <View style={styles.headerTextWrap}>
           <Text style={styles.headerTitle}>{t.urgentTitle}</Text>
           <Text style={styles.headerSub}>
-            {URGENT_SERVICES.length} {t.urgentSubtitle}
+            {sortedServices.length} {t.urgentSubtitle}
           </Text>
         </View>
       </View>
@@ -129,8 +201,59 @@ export default function UrgentScreen() {
         </Text>
       </View>
 
+      <View
+        style={[
+          styles.locationBar,
+          {
+            backgroundColor: colors.card,
+            borderColor: colors.border,
+          },
+        ]}
+      >
+        {locationStatus === "idle" || locationStatus === "denied" ? (
+          <View style={styles.locationBarRow}>
+            <Feather name="map-pin" size={16} color={colors.mutedForeground} />
+            <Text
+              style={[styles.locationBarText, { color: colors.mutedForeground }]}
+            >
+              {locationStatus === "denied"
+                ? t.locationDeniedText
+                : t.nearestFirst}
+            </Text>
+            <TouchableOpacity
+              style={[
+                styles.locateBtn,
+                { backgroundColor: colors.primary },
+              ]}
+              onPress={handleLocate}
+              activeOpacity={0.85}
+            >
+              <Feather name="navigation" size={13} color="#fff" />
+              <Text style={styles.locateBtnText}>{t.locateMe}</Text>
+            </TouchableOpacity>
+          </View>
+        ) : locationStatus === "requesting" ? (
+          <View style={styles.locationBarRow}>
+            <ActivityIndicator size="small" color={colors.primary} />
+            <Text style={[styles.locationBarText, { color: colors.mutedForeground }]}>
+              {t.locating}
+            </Text>
+          </View>
+        ) : (
+          <View style={styles.locationBarRow}>
+            <Feather name="navigation" size={16} color={colors.primary} />
+            <Text style={[styles.locationBarText, { color: colors.primary }]}>
+              {t.locationGranted}
+            </Text>
+            <TouchableOpacity onPress={handleLocate} hitSlop={8}>
+              <Feather name="refresh-cw" size={14} color={colors.mutedForeground} />
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+
       <FlatList
-        data={URGENT_SERVICES}
+        data={sortedServices}
         keyExtractor={(item) => item.id}
         contentContainerStyle={[
           styles.list,
@@ -144,9 +267,7 @@ export default function UrgentScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: { flex: 1 },
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -160,6 +281,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  headerTextWrap: { flex: 1 },
   headerTitle: {
     color: "#fff",
     fontSize: 20,
@@ -192,54 +314,75 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontFamily: "Inter_700Bold",
   },
-  list: {
-    padding: 16,
-    paddingTop: 12,
+  locationBar: {
+    marginHorizontal: 16,
+    marginTop: 10,
+    borderRadius: 12,
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
   },
-  urgentCard: {
+  locationBarRow: {
     flexDirection: "row",
     alignItems: "center",
+    gap: 8,
+  },
+  locationBarText: {
+    flex: 1,
+    fontSize: 13,
+    fontFamily: "Inter_400Regular",
+  },
+  locateBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 20,
+  },
+  locateBtnText: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
+  },
+  list: { padding: 16, paddingTop: 12, gap: 0 },
+  urgentCard: {
+    flexDirection: "row",
     borderRadius: 14,
     borderWidth: 1,
-    padding: 14,
     marginBottom: 10,
-    gap: 12,
+    overflow: "hidden",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 4,
     elevation: 2,
   },
-  cardLeft: {
+  categoryStripe: {
+    width: 4,
+  },
+  cardBody: {
     flex: 1,
+    padding: 14,
+    gap: 8,
+  },
+  cardTop: {
     flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-  },
-  categoryDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    flexShrink: 0,
-  },
-  cardText: {
-    flex: 1,
+    alignItems: "flex-start",
+    gap: 10,
   },
   serviceName: {
+    flex: 1,
     fontSize: 15,
     fontWeight: "600",
     fontFamily: "Inter_600SemiBold",
     lineHeight: 21,
   },
-  serviceCategory: {
-    fontSize: 12,
-    fontFamily: "Inter_400Regular",
-    marginTop: 2,
-  },
   callBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 38,
+    height: 38,
+    borderRadius: 19,
     alignItems: "center",
     justifyContent: "center",
     shadowColor: "#e53935",
@@ -248,5 +391,52 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 4,
     flexShrink: 0,
+  },
+  cardMeta: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexWrap: "wrap",
+    gap: 6,
+  },
+  categoryPill: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 12,
+  },
+  categoryPillText: {
+    fontSize: 11,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
+  },
+  metaRight: {
+    flex: 1,
+    alignItems: "flex-end",
+  },
+  locationMeta: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  cityText: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+  },
+  distanceText: {
+    fontSize: 12,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
+  },
+  provinceTag: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 12,
+  },
+  provinceTagText: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
   },
 });
