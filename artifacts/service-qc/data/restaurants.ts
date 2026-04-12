@@ -394,7 +394,7 @@ export const RESTAURANTS: Restaurant[] = [
       "Microbrasserie artisanale et restaurant gastronomique au cœur de Gatineau. Bières brassées sur place, cuisine de pub élevée et terrasse face à la rivière des Outaouais.",
     address: "170 Rue Montcalm, Gatineau",
     phone: "819-205-4999",
-    website: "https://brasseriedutemps.com",
+    website: "https://tempsdunepinte.ca",
     rating: 4.3,
     coordinates: { lat: 45.4275, lng: -75.7068 },
     mustTry: "Burger artisanal et frites à la graisse de canard",
