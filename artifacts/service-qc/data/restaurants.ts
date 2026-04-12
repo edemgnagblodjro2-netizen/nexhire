@@ -91,22 +91,6 @@ export const RESTAURANTS: Restaurant[] = [
     openHours: "Mer-Sam 18h–22h",
   },
   {
-    id: "mtl-03",
-    name: "Au Pied de Cochon",
-    city: "Montréal",
-    region: "Plateau-Mont-Royal",
-    cuisine: "québécois",
-    description:
-      "Martin Picard signe une cuisine québécoise généreuse et décomplexée. Foie gras, gibier, fromages du Québec — un festin inoubliable qui fait la fierté nationale.",
-    address: "536 Avenue Duluth E, Montréal",
-    phone: "514-281-1114",
-    website: "https://restaurantaupieddecochon.ca",
-    rating: 4.7,
-    coordinates: { lat: 45.5178, lng: -73.5786 },
-    mustTry: "Foie gras poutine",
-    openHours: "Mer-Sam 17h–22h30",
-  },
-  {
     id: "mtl-04",
     name: "Liverpool House",
     city: "Montréal",
@@ -252,22 +236,6 @@ export const RESTAURANTS: Restaurant[] = [
   },
 
   // ─── QUÉBEC (VILLE) ───────────────────────────────────────────────────────
-  {
-    id: "qc-01",
-    name: "Le Champlain",
-    city: "Québec",
-    region: "Vieux-Québec",
-    cuisine: "français",
-    description:
-      "Dans le mythique Château Frontenac, Le Champlain offre une cuisine gastronomique d'exception avec vue panoramique sur le fleuve Saint-Laurent. Service blanc impeccable.",
-    address: "1 Rue des Carrières, Québec",
-    phone: "418-692-3861",
-    website: "https://restaurants.fairmont.com/fr/le-champlain",
-    rating: 4.7,
-    coordinates: { lat: 46.8199, lng: -71.2026 },
-    mustTry: "Menu prestige et soufflé au Grand Marnier",
-    openHours: "Mar-Dim 17h30–21h30",
-  },
   {
     id: "qc-02",
     name: "L'Initiale",
@@ -485,22 +453,6 @@ export const RESTAURANTS: Restaurant[] = [
     coordinates: { lat: 46.3484, lng: -72.5434 },
     mustTry: "Tartare de cerf de la Mauricie",
     openHours: "Mar-Sam 11h30–22h",
-  },
-  {
-    id: "tr-02",
-    name: "L'Ardoise",
-    city: "Trois-Rivières",
-    region: "Centre-ville",
-    cuisine: "québécois",
-    description:
-      "Restaurant de cuisine régionale contemporaine célébrant les saveurs de la Mauricie. Menu à l'ardoise changeant selon les arrivages et les saisons.",
-    address: "3 Rue des Forges, Trois-Rivières",
-    phone: "819-373-3939",
-    website: "https://ehmonteregie.ca",
-    rating: 4.4,
-    coordinates: { lat: 46.3476, lng: -72.5458 },
-    mustTry: "Risotto aux champignons sauvages de la Mauricie",
-    openHours: "Mar-Dim 17h–21h30",
   },
 
   // ─── LÉVIS ────────────────────────────────────────────────────────────────
