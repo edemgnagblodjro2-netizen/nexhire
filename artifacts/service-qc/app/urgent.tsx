@@ -14,13 +14,15 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { CATEGORY_LABELS, URGENT_SERVICES, type Service } from "@/data/services";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { URGENT_SERVICES, type Service } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor } from "@/utils/categoryColors";
 
 function UrgentServiceItem({ service }: { service: Service }) {
   const colors = useColors();
   const router = useRouter();
+  const { t } = useLanguage();
   const categoryColor = getCategoryColor(service.category, colors);
 
   function handleCall() {
@@ -49,18 +51,18 @@ function UrgentServiceItem({ service }: { service: Service }) {
       onPress={handleDetails}
     >
       <View style={styles.cardLeft}>
-        <View
-          style={[
-            styles.categoryDot,
-            { backgroundColor: categoryColor },
-          ]}
-        />
+        <View style={[styles.categoryDot, { backgroundColor: categoryColor }]} />
         <View style={styles.cardText}>
-          <Text style={[styles.serviceName, { color: colors.foreground }]} numberOfLines={2}>
+          <Text
+            style={[styles.serviceName, { color: colors.foreground }]}
+            numberOfLines={2}
+          >
             {service.name}
           </Text>
-          <Text style={[styles.serviceCategory, { color: colors.mutedForeground }]}>
-            {CATEGORY_LABELS[service.category]} · {service.city}
+          <Text
+            style={[styles.serviceCategory, { color: colors.mutedForeground }]}
+          >
+            {t.categories[service.category]} · {service.city}
           </Text>
         </View>
       </View>
@@ -80,8 +82,9 @@ export default function UrgentScreen() {
   const colors = useColors();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { t } = useLanguage();
 
-  const topPadding = Platform.OS === "web" ? 67 : insets.top;
+  const topPadding = Platform.OS === "web" ? 16 : insets.top;
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
 
   return (
@@ -103,9 +106,9 @@ export default function UrgentScreen() {
           <Feather name="arrow-left" size={22} color="#fff" />
         </Pressable>
         <View>
-          <Text style={styles.headerTitle}>Aide d'urgence</Text>
+          <Text style={styles.headerTitle}>{t.urgentTitle}</Text>
           <Text style={styles.headerSub}>
-            {URGENT_SERVICES.length} services disponibles maintenant
+            {URGENT_SERVICES.length} {t.urgentSubtitle}
           </Text>
         </View>
       </View>
@@ -113,12 +116,15 @@ export default function UrgentScreen() {
       <View
         style={[
           styles.alertBanner,
-          { backgroundColor: colors.urgentLight, borderColor: colors.urgent + "30" },
+          {
+            backgroundColor: colors.urgentLight,
+            borderColor: colors.urgent + "30",
+          },
         ]}
       >
         <Feather name="alert-circle" size={18} color={colors.urgent} />
         <Text style={[styles.alertText, { color: colors.urgent }]}>
-          En cas de danger immédiat, composez le{" "}
+          {t.urgentAlert}
           <Text style={styles.alertPhone}>911</Text>
         </Text>
       </View>
@@ -189,7 +195,6 @@ const styles = StyleSheet.create({
   list: {
     padding: 16,
     paddingTop: 12,
-    gap: 0,
   },
   urgentCard: {
     flexDirection: "row",

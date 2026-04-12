@@ -11,7 +11,8 @@ import {
   View,
 } from "react-native";
 
-import { CATEGORY_LABELS, type Service } from "@/data/services";
+import { useLanguage } from "@/contexts/LanguageContext";
+import type { Service } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor } from "@/utils/categoryColors";
 
@@ -23,6 +24,7 @@ interface ServiceCardProps {
 export function ServiceCard({ service, compact = false }: ServiceCardProps) {
   const colors = useColors();
   const router = useRouter();
+  const { t } = useLanguage();
   const categoryColor = getCategoryColor(service.category, colors);
 
   function handlePress() {
@@ -59,25 +61,25 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
           ]}
         >
           <Text style={[styles.categoryText, { color: categoryColor }]}>
-            {CATEGORY_LABELS[service.category]}
+            {t.categories[service.category]}
           </Text>
         </View>
         {service.isUrgent && (
           <View
-            style={[
-              styles.urgentBadge,
-              { backgroundColor: colors.urgentLight },
-            ]}
+            style={[styles.urgentBadge, { backgroundColor: colors.urgentLight }]}
           >
             <Feather name="zap" size={10} color={colors.urgent} />
             <Text style={[styles.urgentText, { color: colors.urgent }]}>
-              Urgent
+              {t.urgent}
             </Text>
           </View>
         )}
       </View>
 
-      <Text style={[styles.name, { color: colors.foreground }]} numberOfLines={2}>
+      <Text
+        style={[styles.name, { color: colors.foreground }]}
+        numberOfLines={2}
+      >
         {service.name}
       </Text>
 

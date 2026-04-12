@@ -4,11 +4,13 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useColors } from "@/hooks/useColors";
 
 export function UrgentButton() {
   const colors = useColors();
   const router = useRouter();
+  const { t } = useLanguage();
 
   function handlePress() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
@@ -31,8 +33,8 @@ export function UrgentButton() {
         <Feather name="alert-circle" size={22} color="#fff" />
       </View>
       <View style={styles.textWrap}>
-        <Text style={styles.title}>Aide d'urgence</Text>
-        <Text style={styles.subtitle}>Services disponibles maintenant</Text>
+        <Text style={styles.title}>{t.urgentButtonTitle}</Text>
+        <Text style={styles.subtitle}>{t.urgentButtonSubtitle}</Text>
       </View>
       <Feather name="chevron-right" size={20} color="rgba(255,255,255,0.7)" />
     </Pressable>

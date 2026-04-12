@@ -13,13 +13,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { CategoryChip } from "@/components/CategoryChip";
 import { UrgentButton } from "@/components/UrgentButton";
+import { useLanguage } from "@/contexts/LanguageContext";
 import type { Category } from "@/data/services";
-import { CATEGORY_LABELS } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
+import { getCategoryColor, CATEGORY_ICONS } from "@/utils/categoryColors";
 import { detectCategory } from "@/utils/detectCategory";
 
 const ALL_CATEGORIES: Category[] = [
@@ -33,19 +32,10 @@ const ALL_CATEGORIES: Category[] = [
   "social",
 ];
 
-const QUICK_PROMPTS = [
-  "Je n'ai nulle part où dormir",
-  "J'ai besoin de nourriture",
-  "Je me sens très stressé",
-  "Je cherche du travail",
-  "Aide pour ma famille",
-  "Je suis un réfugié",
-];
-
 export default function HomeScreen() {
   const colors = useColors();
   const router = useRouter();
-  const insets = useSafeAreaInsets();
+  const { t, language, toggleLanguage } = useLanguage();
   const inputRef = useRef<TextInput>(null);
 
   const [query, setQuery] = useState("");
@@ -69,11 +59,11 @@ export default function HomeScreen() {
     Haptics.selectionAsync();
     router.push({
       pathname: "/results",
-      params: { query: CATEGORY_LABELS[category], category },
+      params: { query: t.categories[category], category },
     });
   }
 
-  function handleQuickPrompt(prompt: string) {
+  function handleQuickPrompt(prompt: string, index: number) {
     setQuery(prompt);
     Haptics.selectionAsync();
     const result = detectCategory(prompt);
@@ -81,6 +71,11 @@ export default function HomeScreen() {
       pathname: "/results",
       params: { query: prompt, category: result.category ?? "all" },
     });
+  }
+
+  function handleToggleLanguage() {
+    Haptics.selectionAsync();
+    toggleLanguage();
   }
 
   return (
@@ -94,12 +89,31 @@ export default function HomeScreen() {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.header}>
-        <Text style={[styles.appName, { color: colors.primary }]}>
-          ServiceQC
-        </Text>
-        <Text style={[styles.tagline, { color: colors.mutedForeground }]}>
-          Services communautaires du Québec
-        </Text>
+        <View style={styles.headerTop}>
+          <View>
+            <Text style={[styles.appName, { color: colors.primary }]}>
+              AIDORA QC
+            </Text>
+            <Text style={[styles.tagline, { color: colors.mutedForeground }]}>
+              {t.tagline}
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={[
+              styles.langToggle,
+              { backgroundColor: colors.secondary ?? colors.muted, borderColor: colors.border },
+            ]}
+            onPress={handleToggleLanguage}
+            activeOpacity={0.7}
+          >
+            <Text style={[styles.langFlag]}>
+              {language === "fr" ? "🇬🇧" : "🇫🇷"}
+            </Text>
+            <Text style={[styles.langLabel, { color: colors.primary }]}>
+              {language === "fr" ? "EN" : "FR"}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={styles.urgentWrap}>
@@ -124,7 +138,7 @@ export default function HomeScreen() {
         <TextInput
           ref={inputRef}
           style={[styles.input, { color: colors.foreground }]}
-          placeholder="Ex: j'ai besoin de nourriture..."
+          placeholder={t.searchPlaceholder}
           placeholderTextColor={colors.mutedForeground}
           value={query}
           onChangeText={setQuery}
@@ -153,17 +167,17 @@ export default function HomeScreen() {
         disabled={!query.trim()}
       >
         <Feather name="search" size={18} color="#fff" />
-        <Text style={styles.searchButtonText}>Rechercher</Text>
+        <Text style={styles.searchButtonText}>{t.searchButton}</Text>
       </Pressable>
 
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
-          Exemples de demandes
+          {t.sectionExamples}
         </Text>
         <View style={styles.quickPrompts}>
-          {QUICK_PROMPTS.map((prompt) => (
+          {t.quickPrompts.map((prompt, i) => (
             <TouchableOpacity
-              key={prompt}
+              key={i}
               style={[
                 styles.promptChip,
                 {
@@ -171,7 +185,7 @@ export default function HomeScreen() {
                   borderColor: colors.border,
                 },
               ]}
-              onPress={() => handleQuickPrompt(prompt)}
+              onPress={() => handleQuickPrompt(prompt, i)}
               activeOpacity={0.7}
             >
               <Text style={[styles.promptText, { color: colors.foreground }]}>
@@ -184,16 +198,32 @@ export default function HomeScreen() {
 
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
-          Parcourir par catégorie
+          {t.sectionCategories}
         </Text>
         <View style={styles.categories}>
-          {ALL_CATEGORIES.map((cat) => (
-            <CategoryChip
-              key={cat}
-              category={cat}
-              onPress={handleCategoryPress}
-            />
-          ))}
+          {ALL_CATEGORIES.map((cat) => {
+            const color = getCategoryColor(cat, colors);
+            const icon = CATEGORY_ICONS[cat] as keyof typeof Feather.glyphMap;
+            return (
+              <Pressable
+                key={cat}
+                style={({ pressed }) => [
+                  styles.catChip,
+                  {
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
+                    opacity: pressed ? 0.8 : 1,
+                  },
+                ]}
+                onPress={() => handleCategoryPress(cat)}
+              >
+                <Feather name={icon} size={14} color={color} />
+                <Text style={[styles.catChipLabel, { color: colors.foreground }]}>
+                  {t.categories[cat]}
+                </Text>
+              </Pressable>
+            );
+          })}
         </View>
       </View>
     </ScrollView>
@@ -211,6 +241,11 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 24,
   },
+  headerTop: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+  },
   appName: {
     fontSize: 32,
     fontWeight: "800",
@@ -221,6 +256,24 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 4,
     fontFamily: "Inter_400Regular",
+  },
+  langToggle: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1.5,
+    marginTop: 4,
+  },
+  langFlag: {
+    fontSize: 14,
+  },
+  langLabel: {
+    fontSize: 13,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
   },
   urgentWrap: {
     marginBottom: 24,
@@ -292,5 +345,24 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 10,
+  },
+  catChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 9,
+    borderRadius: 24,
+    borderWidth: 1.5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
+    elevation: 1,
+  },
+  catChipLabel: {
+    fontSize: 13,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
   },
 });

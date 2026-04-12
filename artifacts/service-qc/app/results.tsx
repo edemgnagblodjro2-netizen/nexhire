@@ -1,4 +1,5 @@
 import { Feather } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useMemo } from "react";
 import {
@@ -11,12 +12,12 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { CategoryChip } from "@/components/CategoryChip";
 import { ServiceCard } from "@/components/ServiceCard";
+import { useLanguage } from "@/contexts/LanguageContext";
 import type { Category } from "@/data/services";
-import { CATEGORY_LABELS, SERVICES } from "@/data/services";
+import { SERVICES } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
-import { getCategoryColor } from "@/utils/categoryColors";
+import { getCategoryColor, CATEGORY_ICONS } from "@/utils/categoryColors";
 
 const ALL_CATEGORIES: Category[] = [
   "housing",
@@ -33,6 +34,7 @@ export default function ResultsScreen() {
   const colors = useColors();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { t } = useLanguage();
   const { query, category } = useLocalSearchParams<{
     query: string;
     category: string;
@@ -42,7 +44,7 @@ export default function ResultsScreen() {
     Category | "all"
   >((category as Category) ?? "all");
 
-  const topPadding = Platform.OS === "web" ? 67 : insets.top;
+  const topPadding = Platform.OS === "web" ? 16 : insets.top;
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
 
   const filtered = useMemo(() => {
@@ -50,10 +52,10 @@ export default function ResultsScreen() {
     return SERVICES.filter((s) => s.category === selectedCategory);
   }, [selectedCategory]);
 
-  const catColor =
-    selectedCategory !== "all"
-      ? getCategoryColor(selectedCategory as Category, colors)
-      : colors.primary;
+  function handleChipPress(cat: Category | "all") {
+    Haptics.selectionAsync();
+    setSelectedCategory(cat);
+  }
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -73,10 +75,11 @@ export default function ResultsScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={[styles.headerTitle, { color: colors.foreground }]} numberOfLines={1}>
-              {query || CATEGORY_LABELS[selectedCategory as Category] || "Résultats"}
+              {query || t.results}
             </Text>
             <Text style={[styles.headerCount, { color: colors.mutedForeground }]}>
-              {filtered.length} service{filtered.length !== 1 ? "s" : ""}
+              {filtered.length}{" "}
+              {filtered.length !== 1 ? t.servicesPlural : t.services}
             </Text>
           </View>
         </View>
@@ -89,45 +92,57 @@ export default function ResultsScreen() {
           contentContainerStyle={styles.filterRow}
           renderItem={({ item }) => {
             if (item === "all") {
+              const isSelected = selectedCategory === "all";
               return (
                 <Pressable
                   style={[
                     styles.allChip,
                     {
-                      backgroundColor:
-                        selectedCategory === "all"
-                          ? colors.primary
-                          : colors.card,
-                      borderColor:
-                        selectedCategory === "all"
-                          ? colors.primary
-                          : colors.border,
+                      backgroundColor: isSelected ? colors.primary : colors.card,
+                      borderColor: isSelected ? colors.primary : colors.border,
                     },
                   ]}
-                  onPress={() => setSelectedCategory("all")}
+                  onPress={() => handleChipPress("all")}
                 >
                   <Text
                     style={[
                       styles.allChipText,
-                      {
-                        color:
-                          selectedCategory === "all"
-                            ? "#fff"
-                            : colors.foreground,
-                      },
+                      { color: isSelected ? "#fff" : colors.foreground },
                     ]}
                   >
-                    Tous
+                    {t.all}
                   </Text>
                 </Pressable>
               );
             }
+            const isSelected = selectedCategory === item;
+            const color = getCategoryColor(item, colors);
+            const icon = CATEGORY_ICONS[item] as keyof typeof Feather.glyphMap;
             return (
-              <CategoryChip
-                category={item}
-                selected={selectedCategory === item}
-                onPress={(cat) => setSelectedCategory(cat)}
-              />
+              <Pressable
+                style={[
+                  styles.catFilterChip,
+                  {
+                    backgroundColor: isSelected ? color : colors.card,
+                    borderColor: isSelected ? color : colors.border,
+                  },
+                ]}
+                onPress={() => handleChipPress(item)}
+              >
+                <Feather
+                  name={icon}
+                  size={13}
+                  color={isSelected ? "#fff" : color}
+                />
+                <Text
+                  style={[
+                    styles.catFilterText,
+                    { color: isSelected ? "#fff" : colors.foreground },
+                  ]}
+                >
+                  {t.categories[item]}
+                </Text>
+              </Pressable>
             );
           }}
         />
@@ -147,10 +162,10 @@ export default function ResultsScreen() {
           <View style={styles.empty}>
             <Feather name="search" size={40} color={colors.mutedForeground} />
             <Text style={[styles.emptyTitle, { color: colors.foreground }]}>
-              Aucun résultat
+              {t.noResults}
             </Text>
             <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>
-              Essayez une autre catégorie ou modifiez votre recherche.
+              {t.noResultsText}
             </Text>
           </View>
         }
@@ -211,6 +226,20 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
   },
   allChipText: {
+    fontSize: 13,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
+  },
+  catFilterChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 9,
+    borderRadius: 24,
+    borderWidth: 1.5,
+  },
+  catFilterText: {
     fontSize: 13,
     fontWeight: "600",
     fontFamily: "Inter_600SemiBold",

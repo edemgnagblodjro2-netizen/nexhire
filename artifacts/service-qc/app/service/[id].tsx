@@ -14,7 +14,8 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { CATEGORY_LABELS, SERVICES } from "@/data/services";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { SERVICES } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 
@@ -22,18 +23,19 @@ export default function ServiceDetailScreen() {
   const colors = useColors();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { t } = useLanguage();
   const { id } = useLocalSearchParams<{ id: string }>();
 
   const service = SERVICES.find((s) => s.id === id);
 
-  const topPadding = Platform.OS === "web" ? 67 : insets.top;
+  const topPadding = Platform.OS === "web" ? 16 : insets.top;
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
 
   if (!service) {
     return (
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Text style={[styles.errorText, { color: colors.foreground }]}>
-          Service introuvable
+          {t.serviceNotFound}
         </Text>
       </View>
     );
@@ -72,7 +74,7 @@ export default function ServiceDetailScreen() {
           <Feather name="arrow-left" size={22} color={colors.foreground} />
         </Pressable>
         <Text style={[styles.headerTitle, { color: colors.foreground }]}>
-          Détails du service
+          {t.serviceDetails}
         </Text>
       </View>
 
@@ -105,13 +107,10 @@ export default function ServiceDetailScreen() {
 
             <View style={styles.heroMeta}>
               <View
-                style={[
-                  styles.badge,
-                  { backgroundColor: categoryColor + "20" },
-                ]}
+                style={[styles.badge, { backgroundColor: categoryColor + "20" }]}
               >
                 <Text style={[styles.badgeText, { color: categoryColor }]}>
-                  {CATEGORY_LABELS[service.category]}
+                  {t.categories[service.category]}
                 </Text>
               </View>
               {service.isUrgent && (
@@ -123,7 +122,7 @@ export default function ServiceDetailScreen() {
                 >
                   <Feather name="zap" size={11} color={colors.urgent} />
                   <Text style={[styles.urgentText, { color: colors.urgent }]}>
-                    Urgent
+                    {t.urgent}
                   </Text>
                 </View>
               )}
@@ -145,7 +144,7 @@ export default function ServiceDetailScreen() {
           ]}
         >
           <Text style={[styles.infoTitle, { color: colors.foreground }]}>
-            Description
+            {t.description}
           </Text>
           <Text style={[styles.description, { color: colors.mutedForeground }]}>
             {service.description}
@@ -159,7 +158,7 @@ export default function ServiceDetailScreen() {
           ]}
         >
           <Text style={[styles.infoTitle, { color: colors.foreground }]}>
-            Localisation
+            {t.location}
           </Text>
           <View style={styles.infoRow}>
             <Feather name="map-pin" size={16} color={categoryColor} />
@@ -177,7 +176,7 @@ export default function ServiceDetailScreen() {
           >
             <Feather name="phone" size={20} color="#fff" />
             <View>
-              <Text style={styles.actionBtnLabel}>Appeler maintenant</Text>
+              <Text style={styles.actionBtnLabel}>{t.callNow}</Text>
               <Text style={styles.actionBtnSub}>{service.phone}</Text>
             </View>
           </TouchableOpacity>
@@ -197,10 +196,13 @@ export default function ServiceDetailScreen() {
             <Feather name="globe" size={20} color={colors.primary} />
             <View>
               <Text style={[styles.actionBtnLabel, { color: colors.primary }]}>
-                Visiter le site web
+                {t.visitWebsite}
               </Text>
               <Text
-                style={[styles.actionBtnSub, { color: colors.mutedForeground }]}
+                style={[
+                  styles.actionBtnSub,
+                  { color: colors.mutedForeground },
+                ]}
                 numberOfLines={1}
               >
                 {service.website.replace("https://", "")}
