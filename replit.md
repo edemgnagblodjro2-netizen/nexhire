@@ -33,6 +33,9 @@ See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and pa
 - **Preview path**: `/`
 - **Purpose**: AI-powered platform helping vulnerable people in Quebec find community and social services
 - **Features**:
+  - **Animated Splash Screen**: Custom logo splash with teal gradient, spring animation, and fade-out before login
+  - **Login Page**: Full-screen login with logo, feature highlights, and "Se connecter" button (OIDC via Replit Auth)
+  - **Auth Guard**: Unauthenticated users are redirected to login; tabs are protected
   - **AI Chat (AIDORA IA)**: Conversational AI that analyzes user needs and recommends specific services. Powered by OpenAI GPT via Replit AI integrations. Streams responses in real-time. Supports 5 languages: FR, EN, ES, AR, HT (Haitian Creole).
   - Natural language search with keyword-based category detection
   - 100+ real Quebec services with GPS coordinates across all major regions
@@ -44,6 +47,9 @@ See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and pa
   - Dark mode support
 - **AI Endpoint**: `POST /api/ai/chat` — accepts `{message, language, history}`, streams SSE with AI analysis + matching service IDs
 - **Key files**:
+  - `app/index.tsx` — root auth guard (redirects to login or tabs)
+  - `app/login.tsx` — login page with logo, features, and sign-in button
+  - `components/AppSplashScreen.tsx` — animated splash screen overlay
   - `app/(tabs)/chat.tsx` — AI chat screen (AIDORA IA)
   - `app/(tabs)/index.tsx` — home screen with AI banner
   - `app/(tabs)/services.tsx` — services browsing
