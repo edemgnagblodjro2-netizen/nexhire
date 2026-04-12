@@ -68,6 +68,7 @@ export const translations = {
       employment: "Emploi",
       family: "Famille",
       social: "Soutien social",
+      childcare: "Services de garde",
     },
   },
   en: {
@@ -136,6 +137,7 @@ export const translations = {
       employment: "Employment",
       family: "Family",
       social: "Social Support",
+      childcare: "Childcare",
     },
   },
 } as const;

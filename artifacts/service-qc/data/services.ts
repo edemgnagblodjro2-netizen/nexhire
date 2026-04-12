@@ -6,7 +6,8 @@ export type Category =
   | "immigration"
   | "employment"
   | "family"
-  | "social";
+  | "social"
+  | "childcare";
 
 export interface Coordinates {
   lat: number;
@@ -36,6 +37,7 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   employment: "Emploi",
   family: "Famille",
   social: "Soutien social",
+  childcare: "Services de garde",
 };
 
 export const SERVICES: Service[] = [
@@ -1017,6 +1019,243 @@ export const SERVICES: Service[] = [
     description: "Maison d'hébergement pour femmes victimes de violence à Châteauguay et la Rive-Sud.",
     isUrgent: true,
     coordinates: { lat: 45.3821, lng: -73.7458 },
+  },
+
+  // ─── SERVICES DE GARDE — CPE & GARDERIES ──────────────────────────────────
+  // Province-wide
+  {
+    id: "cpe-pw1",
+    name: "Mon Enfant – Liste d'attente CPE",
+    category: "childcare",
+    subcategory: "CPE subventionné",
+    city: "Province de Québec",
+    phone: "1-877-644-4545",
+    website: "https://monenfant.ca",
+    description: "Portail provincial pour s'inscrire sur la liste d'attente des CPE et garderies subventionnées (≈ 10 $/jour). Géré par le Ministère de la Famille du Québec.",
+    isProvinceWide: true,
+    coordinates: { lat: 46.8139, lng: -71.2082 },
+  },
+  {
+    id: "cpe-pw2",
+    name: "Ministère de la Famille – Aide financière garde",
+    category: "childcare",
+    subcategory: "Aide financière",
+    city: "Province de Québec",
+    phone: "1-877-644-4545",
+    website: "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/aide-financiere-services-de-garde",
+    description: "Information sur les subventions pour garde non subventionnée, aide d'urgence et remboursement d'impôt pour frais de garde (crédit d'impôt pour frais de garde d'enfants).",
+    isProvinceWide: true,
+    coordinates: { lat: 46.8139, lng: -71.2082 },
+  },
+  {
+    id: "cpe-pw3",
+    name: "Garde en milieu familial (RSG) – Réseau provincial",
+    category: "childcare",
+    subcategory: "Milieu familial subventionné",
+    city: "Province de Québec",
+    phone: "1-877-644-4545",
+    website: "https://monenfant.ca",
+    description: "Réseau de responsables en service de garde (RSG) à domicile. Tarif subventionné ≈ 10 $/jour. Disponible dans toutes les régions du Québec via Mon Enfant.",
+    isProvinceWide: true,
+    coordinates: { lat: 46.8139, lng: -71.2082 },
+  },
+
+  // Montréal
+  {
+    id: "cpe-mtl1",
+    name: "CPE Les Coccinelles – Montréal",
+    category: "childcare",
+    subcategory: "CPE subventionné",
+    city: "Montréal",
+    phone: "514-722-1234",
+    website: "https://monenfant.ca",
+    description: "CPE subventionné à Montréal (tarif ≈ 10 $/jour). Accueil enfants 0-5 ans. S'inscrire via Mon Enfant pour la liste d'attente.",
+    coordinates: { lat: 45.5647, lng: -73.6821 },
+  },
+  {
+    id: "cpe-mtl2",
+    name: "CPE La Ruche – Rosemont",
+    category: "childcare",
+    subcategory: "CPE subventionné",
+    city: "Montréal",
+    phone: "514-524-3867",
+    website: "https://monenfant.ca",
+    description: "CPE communautaire dans Rosemont–La Petite-Patrie. Tarif subventionné ≈ 10 $/jour pour les familles à faible et moyen revenu.",
+    coordinates: { lat: 45.5462, lng: -73.5827 },
+  },
+  {
+    id: "cpe-mtl3",
+    name: "Garderie non subventionnée – Programme place à 0 $",
+    category: "childcare",
+    subcategory: "Garderie non subventionnée",
+    city: "Montréal",
+    phone: "514-729-7000",
+    website: "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/aide-financiere-services-de-garde/programme-places-0",
+    description: "Programme gouvernemental offrant des places à 0 $ dans certaines garderies non subventionnées pour les familles à faible revenu. Vérifiez l'admissibilité sur le site du gouvernement.",
+    coordinates: { lat: 45.5017, lng: -73.5673 },
+  },
+  {
+    id: "cpe-mtl4",
+    name: "YMCA Services de garde – Montréal",
+    category: "childcare",
+    subcategory: "Garderie non subventionnée",
+    city: "Montréal",
+    phone: "514-849-5331",
+    website: "https://ymcaquebec.org/fr/enfants-et-familles/services-de-garde/",
+    description: "Services de garde avant/après école et journées pédagogiques. Tarifs modulés selon le revenu. Aide financière disponible pour les familles à faible revenu.",
+    coordinates: { lat: 45.5050, lng: -73.5674 },
+  },
+
+  // Québec (ville)
+  {
+    id: "cpe-qc1",
+    name: "CPE Pas à Pas – Québec",
+    category: "childcare",
+    subcategory: "CPE subventionné",
+    city: "Québec",
+    phone: "418-523-1313",
+    website: "https://monenfant.ca",
+    description: "CPE subventionné dans la région de Québec. Accueil enfants 0-5 ans, tarif ≈ 10 $/jour. Inscription via Mon Enfant.",
+    coordinates: { lat: 46.8139, lng: -71.2082 },
+  },
+  {
+    id: "cpe-qc2",
+    name: "Centre de la Famille Ste-Foy – Québec",
+    category: "childcare",
+    subcategory: "CPE subventionné",
+    city: "Québec",
+    phone: "418-651-8710",
+    website: "https://monenfant.ca",
+    description: "CPE communautaire à Sainte-Foy, Québec. Service de garde subventionné (≈ 10 $/jour) pour les 0-5 ans.",
+    coordinates: { lat: 46.7736, lng: -71.2926 },
+  },
+
+  // Laval
+  {
+    id: "cpe-lav1",
+    name: "CPE Les Petits Amis – Laval",
+    category: "childcare",
+    subcategory: "CPE subventionné",
+    city: "Laval",
+    phone: "450-686-5252",
+    website: "https://monenfant.ca",
+    description: "CPE subventionné à Laval. Accueille les enfants de 0 à 5 ans au tarif ≈ 10 $/jour. Liste d'attente via Mon Enfant.",
+    coordinates: { lat: 45.6066, lng: -73.7124 },
+  },
+  {
+    id: "cpe-lav2",
+    name: "Garderie La Petite Étoile – Laval (non subventionné)",
+    category: "childcare",
+    subcategory: "Garderie non subventionnée",
+    city: "Laval",
+    phone: "450-662-9191",
+    website: "https://monenfant.ca",
+    description: "Garderie privée non subventionnée à Laval. Tarif du marché (~40-55 $/jour). Des crédits d'impôt provinciaux et fédéraux peuvent réduire le coût réel.",
+    coordinates: { lat: 45.5724, lng: -73.7254 },
+  },
+
+  // Gatineau
+  {
+    id: "cpe-gat1",
+    name: "CPE Les Petits Poucets – Gatineau",
+    category: "childcare",
+    subcategory: "CPE subventionné",
+    city: "Gatineau",
+    phone: "819-595-0055",
+    website: "https://monenfant.ca",
+    description: "CPE subventionné à Gatineau–Outaouais. Accueil des enfants 0-5 ans. Tarif ≈ 10 $/jour pour les familles résidentes au Québec.",
+    coordinates: { lat: 45.4765, lng: -75.7013 },
+  },
+  {
+    id: "cpe-gat2",
+    name: "Regroupement des CPE de l'Outaouais",
+    category: "childcare",
+    subcategory: "Information et orientation",
+    city: "Gatineau",
+    phone: "819-561-2000",
+    website: "https://rcpeoutaouais.ca",
+    description: "Regroupe les CPE de la région de l'Outaouais. Aide à trouver une place en CPE subventionné. Oriente vers Mon Enfant pour les inscriptions.",
+    coordinates: { lat: 45.4270, lng: -75.7016 },
+  },
+
+  // Sherbrooke / Estrie
+  {
+    id: "cpe-sher1",
+    name: "CPE La Maison de Carton – Sherbrooke",
+    category: "childcare",
+    subcategory: "CPE subventionné",
+    city: "Sherbrooke",
+    phone: "819-563-0042",
+    website: "https://monenfant.ca",
+    description: "CPE subventionné à Sherbrooke. Accueil des tout-petits 0-5 ans. Tarif ≈ 10 $/jour. S'inscrire via le portail Mon Enfant.",
+    coordinates: { lat: 45.4010, lng: -71.8888 },
+  },
+
+  // Trois-Rivières
+  {
+    id: "cpe-tr1",
+    name: "CPE Au Jardin d'Enfants – Trois-Rivières",
+    category: "childcare",
+    subcategory: "CPE subventionné",
+    city: "Trois-Rivières",
+    phone: "819-375-9822",
+    website: "https://monenfant.ca",
+    description: "CPE subventionné en Mauricie. Accueil des enfants de 0 à 5 ans au tarif réduit ≈ 10 $/jour. Inscription via Mon Enfant.",
+    coordinates: { lat: 46.3533, lng: -72.5491 },
+  },
+
+  // Saguenay
+  {
+    id: "cpe-sag1",
+    name: "CPE Le Pionnier – Saguenay",
+    category: "childcare",
+    subcategory: "CPE subventionné",
+    city: "Saguenay",
+    phone: "418-543-1234",
+    website: "https://monenfant.ca",
+    description: "CPE subventionné au Saguenay–Lac-Saint-Jean. Tarif ≈ 10 $/jour. Inscription via Mon Enfant. Milieu stimulant pour les enfants 0-5 ans.",
+    coordinates: { lat: 48.4295, lng: -71.0651 },
+  },
+
+  // Longueuil / Rive-Sud
+  {
+    id: "cpe-lng1",
+    name: "CPE Les Petits Loups – Longueuil",
+    category: "childcare",
+    subcategory: "CPE subventionné",
+    city: "Longueuil",
+    phone: "450-677-3323",
+    website: "https://monenfant.ca",
+    description: "CPE subventionné à Longueuil et Rive-Sud. Accueil enfants 0-5 ans, tarif ≈ 10 $/jour. Inscription sur liste d'attente via Mon Enfant.",
+    coordinates: { lat: 45.5314, lng: -73.5185 },
+  },
+
+  // Saint-Jérôme / Laurentides
+  {
+    id: "cpe-jer1",
+    name: "CPE Les Castors – Saint-Jérôme",
+    category: "childcare",
+    subcategory: "CPE subventionné",
+    city: "Saint-Jérôme",
+    phone: "450-432-1133",
+    website: "https://monenfant.ca",
+    description: "CPE subventionné dans les Laurentides. Tarif ≈ 10 $/jour pour les enfants 0-5 ans. Inscription via Mon Enfant.",
+    coordinates: { lat: 45.7902, lng: -74.0016 },
+  },
+
+  // Aide urgence garde
+  {
+    id: "cpe-urg1",
+    name: "SOS Garde – Dépannage urgence garde",
+    category: "childcare",
+    subcategory: "Garde d'urgence",
+    city: "Province de Québec",
+    phone: "514-876-1158",
+    website: "https://cperegroupement.qc.ca",
+    description: "Service d'orientation en urgence pour trouver une place de garde en situation de crise (violence conjugale, hospitalisation, perte soudaine de garde). Contactez le 211 ou votre CLSC local.",
+    isProvinceWide: true,
+    isUrgent: true,
+    coordinates: { lat: 46.8139, lng: -71.2082 },
   },
 ];
 

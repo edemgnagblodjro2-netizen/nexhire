@@ -86,6 +86,29 @@ AUTRES RÉGIONS:
 - ID:gasp-fa1 | Maison Hébergement Gaspé | Violence conjugale Gaspésie | Famille urgent
 - ID:lev-h1 | Maison Revivre Lévis | Hébergement Lévis | Logement urgent
 - ID:jol-h1 | Centre Hébergement Joliette | Hébergement Lanaudière | Logement urgent
+
+SERVICES DE GARDE — CPE & GARDERIES (province-wide):
+- ID:cpe-pw1 | Mon Enfant – Liste d'attente CPE | Portail inscription CPE/garderies subventionnées (~10$/jour) | Tél:1-877-644-4545 | Site:monenfant.ca
+- ID:cpe-pw2 | Ministère de la Famille – Aide financière garde | Subventions, aide urgence, crédit d'impôt frais de garde | Tél:1-877-644-4545
+- ID:cpe-pw3 | Garde en milieu familial (RSG) | Réseau RSG à domicile, subventionné ~10$/jour | Site:monenfant.ca
+- ID:cpe-urg1 | SOS Garde – Dépannage urgence garde | Garde d'urgence (violence conjugale, hospitalisation) | Tél:514-876-1158 | URGENT
+
+SERVICES DE GARDE — RÉGIONS:
+- ID:cpe-mtl1 | CPE Les Coccinelles | Montréal, CPE subventionné 0-5 ans ~10$/jour
+- ID:cpe-mtl2 | CPE La Ruche – Rosemont | Montréal, CPE communautaire subventionné
+- ID:cpe-mtl3 | Programme places à 0$ | Montréal, garderie non subventionnée avec aide financière
+- ID:cpe-mtl4 | YMCA Services de garde | Montréal, avant/après-école, tarifs modulés selon revenu
+- ID:cpe-qc1 | CPE Pas à Pas | Québec, CPE subventionné 0-5 ans
+- ID:cpe-qc2 | Centre de la Famille Ste-Foy | Québec, CPE communautaire subventionné
+- ID:cpe-lav1 | CPE Les Petits Amis | Laval, CPE subventionné
+- ID:cpe-lav2 | Garderie La Petite Étoile | Laval, garderie non subventionnée (crédit d'impôt disponible)
+- ID:cpe-gat1 | CPE Les Petits Poucets | Gatineau, CPE subventionné 0-5 ans
+- ID:cpe-gat2 | Regroupement des CPE Outaouais | Gatineau, orientation vers CPE de la région
+- ID:cpe-sher1 | CPE La Maison de Carton | Sherbrooke, CPE subventionné
+- ID:cpe-tr1 | CPE Au Jardin d'Enfants | Trois-Rivières, CPE subventionné
+- ID:cpe-sag1 | CPE Le Pionnier | Saguenay, CPE subventionné
+- ID:cpe-lng1 | CPE Les Petits Loups | Longueuil, CPE subventionné
+- ID:cpe-jer1 | CPE Les Castors | Saint-Jérôme, CPE subventionné Laurentides
 `.trim();
 
 function buildSystemPrompt(language: string): string {
@@ -118,7 +141,7 @@ ${langInstruction}
 
 Your role:
 - Listen carefully to the person's situation
-- Identify their main needs (housing, food, mental health, health, immigration, employment, family, social support)
+- Identify their main needs (housing, food, mental health, health, immigration, employment, family, social support, childcare/CPE/garderie)
 - Recommend the most relevant services from the catalog below
 - Be warm, non-judgmental, and concise
 - If the situation is urgent or involves safety risks, always mention 911 first, then other services

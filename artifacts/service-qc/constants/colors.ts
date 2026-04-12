@@ -41,6 +41,7 @@ const colors = {
     categoryEmployment: "#0891b2",
     categoryFamily: "#d97706",
     categorySocial: "#db2777",
+    categoryChildcare: "#ea580c",
   },
 
   dark: {
@@ -85,6 +86,7 @@ const colors = {
     categoryEmployment: "#22d3ee",
     categoryFamily: "#fbbf24",
     categorySocial: "#f472b6",
+    categoryChildcare: "#fb923c",
   },
 
   radius: 12,

@@ -9,6 +9,7 @@ type Colors = {
   categoryEmployment: string;
   categoryFamily: string;
   categorySocial: string;
+  categoryChildcare: string;
 };
 
 export function getCategoryColor(category: Category, colors: Colors): string {
@@ -21,6 +22,7 @@ export function getCategoryColor(category: Category, colors: Colors): string {
     employment: colors.categoryEmployment,
     family: colors.categoryFamily,
     social: colors.categorySocial,
+    childcare: colors.categoryChildcare,
   };
   return map[category];
 }
@@ -34,4 +36,5 @@ export const CATEGORY_ICONS: Record<Category, string> = {
   employment: "briefcase",
   family: "users",
   social: "share-2",
+  childcare: "sun",
 };
