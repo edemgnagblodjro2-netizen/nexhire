@@ -1,6 +1,5 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
-import { useRouter } from "expo-router";
 import React, { useMemo, useState } from "react";
 import {
   FlatList,
@@ -61,13 +60,6 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-const PRICE_COLORS: Record<string, string> = {
-  "$": "#16a34a",
-  "$$": "#0891b2",
-  "$$$": "#7c3aed",
-  "$$$$": "#dc2626",
-};
-
 const CUISINE_COLORS: Record<CuisineType, string> = {
   québécois: "#0e7e6e",
   français: "#2563eb",
@@ -86,7 +78,6 @@ const CUISINE_COLORS: Record<CuisineType, string> = {
 function RestaurantCard({ restaurant }: { restaurant: Restaurant }) {
   const colors = useColors();
   const cuisineColor = CUISINE_COLORS[restaurant.cuisine] || colors.primary;
-  const priceColor = PRICE_COLORS[restaurant.priceRange] || colors.primary;
 
   function handleCall() {
     Haptics.selectionAsync();
@@ -117,9 +108,6 @@ function RestaurantCard({ restaurant }: { restaurant: Restaurant }) {
               numberOfLines={1}
             >
               {restaurant.name}
-            </Text>
-            <Text style={[styles.priceTag, { color: priceColor }]}>
-              {restaurant.priceRange}
             </Text>
           </View>
           <View style={styles.cardMetaRow}>
@@ -600,10 +588,6 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_700Bold",
     flex: 1,
     marginRight: 8,
-  },
-  priceTag: {
-    fontSize: 14,
-    fontFamily: "Inter_700Bold",
   },
   cardMetaRow: {
     flexDirection: "row",

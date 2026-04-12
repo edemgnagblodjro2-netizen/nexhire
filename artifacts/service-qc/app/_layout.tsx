@@ -8,7 +8,7 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -22,6 +22,7 @@ import { AppSplashScreen } from "@/components/AppSplashScreen";
 import { AuthProvider, useAuth } from "@/lib/auth";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { LocationProvider } from "@/contexts/LocationContext";
+import { useInactivityTimer } from "@/hooks/useInactivityTimer";
 
 const domain = process.env.EXPO_PUBLIC_DOMAIN;
 if (domain) setBaseUrl(`https://${domain}`);
@@ -32,7 +33,7 @@ SplashScreen.preventAutoHideAsync();
 const queryClient = new QueryClient();
 
 function AppContent({ fontsReady }: { fontsReady: boolean }) {
-  const { isLoading } = useAuth();
+  const { isLoading, isAuthenticated, logout } = useAuth();
   const [splashVisible, setSplashVisible] = useState(true);
 
   const isReady = fontsReady && !isLoading;
@@ -49,8 +50,23 @@ function AppContent({ fontsReady }: { fontsReady: boolean }) {
     return () => clearTimeout(safetyTimer);
   }, []);
 
+  const handleInactivityTimeout = useCallback(async () => {
+    await logout();
+  }, [logout]);
+
+  const { resetTimer } = useInactivityTimer(
+    handleInactivityTimeout,
+    isAuthenticated
+  );
+
   return (
-    <View style={styles.root}>
+    <View
+      style={styles.root}
+      onStartShouldSetResponderCapture={() => {
+        resetTimer();
+        return false;
+      }}
+    >
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
