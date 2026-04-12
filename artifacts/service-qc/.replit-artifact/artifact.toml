@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/"
+title = "ServiceQC — Community Services Quebec"
+version = "1.0.0"
+id = "artifacts/service-qc"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+name = "expo"
+paths = [ "/" ]
+localPort = 22729
+
+[services.development]
+run = "pnpm --filter @workspace/service-qc run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/service-qc", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/service-qc", "run", "serve" ]
+
+[services.env]
+PORT = "22729"
+BASE_PATH = "/"

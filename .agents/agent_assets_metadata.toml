@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "EgFP_0k2VeANHxmpnzGG6"
+uri = "file://artifacts/service-qc/assets/images/icon.png"
+type = "image"
+title = "serviceqc app icon"
