@@ -28,13 +28,15 @@ const ALL_CATEGORIES: Category[] = [
   "employment",
   "family",
   "social",
+  "childcare",
+  "realestate",
 ];
 
 export default function ResultsScreen() {
   const colors = useColors();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { query, category } = useLocalSearchParams<{
     query: string;
     category: string;
@@ -158,6 +160,39 @@ export default function ResultsScreen() {
         showsVerticalScrollIndicator={false}
         scrollEnabled={!!filtered.length}
         renderItem={({ item }) => <ServiceCard service={item} />}
+        ListHeaderComponent={
+          selectedCategory === "realestate" ? (
+            <Pressable
+              style={({ pressed }) => [
+                styles.guideBanner,
+                {
+                  backgroundColor: "#0e5c99" + "10",
+                  borderColor: "#0e5c99" + "28",
+                  opacity: pressed ? 0.88 : 1,
+                },
+              ]}
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                router.push("/buying-guide" as any);
+              }}
+            >
+              <View style={styles.guideBannerIcon}>
+                <Feather name="list" size={18} color="#fff" />
+              </View>
+              <View style={styles.guideBannerText}>
+                <Text style={[styles.guideBannerTitle, { color: "#0e5c99" }]}>
+                  {language === "fr" ? "Guide d'achat — 8 étapes" : "Buying Guide — 8 Steps"}
+                </Text>
+                <Text style={[styles.guideBannerSub, { color: colors.mutedForeground }]}>
+                  {language === "fr"
+                    ? "De la préqualification à la remise des clés"
+                    : "From pre-qualification to key handover"}
+                </Text>
+              </View>
+              <Feather name="arrow-right" size={16} color="#0e5c99" />
+            </Pressable>
+          ) : null
+        }
         ListEmptyComponent={
           <View style={styles.empty}>
             <Feather name="search" size={40} color={colors.mutedForeground} />
@@ -246,6 +281,38 @@ const styles = StyleSheet.create({
   },
   list: {
     padding: 16,
+    gap: 0,
+  },
+  guideBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    padding: 14,
+    borderRadius: 14,
+    borderWidth: 1,
+    marginBottom: 16,
+  },
+  guideBannerIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#0e5c99",
+    flexShrink: 0,
+  },
+  guideBannerText: {
+    flex: 1,
+    gap: 2,
+  },
+  guideBannerTitle: {
+    fontSize: 14,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+  },
+  guideBannerSub: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
   },
   empty: {
     flex: 1,
