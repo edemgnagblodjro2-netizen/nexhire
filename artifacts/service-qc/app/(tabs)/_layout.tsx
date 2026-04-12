@@ -25,6 +25,10 @@ function NativeTabLayout() {
         <Icon sf={{ default: "list.bullet", selected: "list.bullet" }} />
         <Label>Services</Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="restaurants">
+        <Icon sf={{ default: "fork.knife", selected: "fork.knife" }} />
+        <Label>Resto</Label>
+      </NativeTabs.Trigger>
       <NativeTabs.Trigger name="categories">
         <Icon sf={{ default: "square.grid.2x2", selected: "square.grid.2x2.fill" }} />
         <Label>Catégories</Label>
@@ -71,7 +75,7 @@ function ClassicTabLayout() {
             />
           ) : null,
         tabBarLabelStyle: {
-          fontSize: 11,
+          fontSize: 10,
           fontFamily: "Inter_500Medium",
           marginBottom: isWeb ? 4 : 0,
         },
@@ -83,9 +87,9 @@ function ClassicTabLayout() {
           title: t.tabHome,
           tabBarIcon: ({ color }) =>
             isIOS ? (
-              <SymbolView name="house" tintColor={color} size={24} />
+              <SymbolView name="house" tintColor={color} size={22} />
             ) : (
-              <Feather name="home" size={22} color={color} />
+              <Feather name="home" size={21} color={color} />
             ),
         }}
       />
@@ -95,7 +99,7 @@ function ClassicTabLayout() {
           title: t.tabChat,
           tabBarIcon: ({ color, focused }) =>
             isIOS ? (
-              <SymbolView name="brain" tintColor={color} size={24} />
+              <SymbolView name="brain" tintColor={color} size={22} />
             ) : (
               <View
                 style={
@@ -103,14 +107,14 @@ function ClassicTabLayout() {
                     ? {
                         backgroundColor: colors.primary,
                         borderRadius: 14,
-                        paddingHorizontal: 10,
-                        paddingVertical: 4,
+                        paddingHorizontal: 8,
+                        paddingVertical: 3,
                         marginBottom: 2,
                       }
                     : undefined
                 }
               >
-                <Feather name="cpu" size={22} color={focused ? "#fff" : color} />
+                <Feather name="cpu" size={21} color={focused ? "#fff" : color} />
               </View>
             ),
         }}
@@ -121,9 +125,21 @@ function ClassicTabLayout() {
           title: t.tabServices,
           tabBarIcon: ({ color }) =>
             isIOS ? (
-              <SymbolView name="list.bullet" tintColor={color} size={24} />
+              <SymbolView name="list.bullet" tintColor={color} size={22} />
             ) : (
-              <Feather name="list" size={22} color={color} />
+              <Feather name="list" size={21} color={color} />
+            ),
+        }}
+      />
+      <Tabs.Screen
+        name="restaurants"
+        options={{
+          title: "Restos",
+          tabBarIcon: ({ color }) =>
+            isIOS ? (
+              <SymbolView name="fork.knife" tintColor={color} size={22} />
+            ) : (
+              <Feather name="coffee" size={21} color={color} />
             ),
         }}
       />
@@ -133,9 +149,9 @@ function ClassicTabLayout() {
           title: t.tabCategories,
           tabBarIcon: ({ color }) =>
             isIOS ? (
-              <SymbolView name="square.grid.2x2" tintColor={color} size={24} />
+              <SymbolView name="square.grid.2x2" tintColor={color} size={22} />
             ) : (
-              <Feather name="grid" size={22} color={color} />
+              <Feather name="grid" size={21} color={color} />
             ),
         }}
       />
