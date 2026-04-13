@@ -8,6 +8,9 @@ async function runStartupMigrations() {
     await db.execute(
       sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash varchar`
     );
+    await db.execute(
+      sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS address varchar`
+    );
     await db.execute(sql`
       CREATE TABLE IF NOT EXISTS password_reset_tokens (
         id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

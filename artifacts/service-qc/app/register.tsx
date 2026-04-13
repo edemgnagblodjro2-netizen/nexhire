@@ -24,6 +24,7 @@ export default function RegisterScreen() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -61,7 +62,7 @@ export default function RegisterScreen() {
     }
     setError(null);
     setLoading(true);
-    const err = await register(email.trim().toLowerCase(), password, firstName.trim(), lastName.trim());
+    const err = await register(email.trim().toLowerCase(), password, firstName.trim(), lastName.trim(), address.trim() || undefined);
     setLoading(false);
     if (err) setError(err);
   }
@@ -128,6 +129,20 @@ export default function RegisterScreen() {
                   autoCapitalize="none"
                   keyboardType="email-address"
                   autoComplete="email"
+                  returnKeyType="next"
+                />
+              </View>
+
+              <View style={styles.inputWrapper}>
+                <Feather name="map-pin" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Adresse (optionnel)"
+                  placeholderTextColor="rgba(255,255,255,0.5)"
+                  value={address}
+                  onChangeText={setAddress}
+                  autoCapitalize="words"
+                  autoComplete="street-address"
                   returnKeyType="next"
                 />
               </View>

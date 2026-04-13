@@ -10,6 +10,7 @@ interface User {
   firstName: string | null;
   lastName: string | null;
   profileImageUrl: string | null;
+  address: string | null;
 }
 
 interface AuthContextValue {
@@ -17,7 +18,7 @@ interface AuthContextValue {
   isLoading: boolean;
   isAuthenticated: boolean;
   loginWithEmail: (email: string, password: string) => Promise<string | null>;
-  register: (email: string, password: string, firstName: string, lastName: string) => Promise<string | null>;
+  register: (email: string, password: string, firstName: string, lastName: string, address?: string) => Promise<string | null>;
   logout: () => Promise<void>;
 }
 
@@ -101,13 +102,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     password: string,
     firstName: string,
     lastName: string,
+    address?: string,
   ): Promise<string | null> => {
     try {
       const apiBase = getApiBaseUrl();
       const res = await fetch(`${apiBase}/api/mobile-auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, firstName, lastName }),
+        body: JSON.stringify({ email, password, firstName, lastName, address }),
       });
 
       const data = await res.json();

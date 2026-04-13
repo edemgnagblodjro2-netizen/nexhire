@@ -296,6 +296,7 @@ const RegisterBody = z.object({
   password: z.string().min(6),
   firstName: z.string().min(1),
   lastName: z.string().min(1),
+  address: z.string().optional(),
 });
 
 router.post("/mobile-auth/register", async (req: Request, res: Response) => {
@@ -305,7 +306,7 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
     return;
   }
 
-  const { email, password, firstName, lastName } = parsed.data;
+  const { email, password, firstName, lastName, address } = parsed.data;
 
   try {
     const existing = await db
@@ -323,7 +324,7 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
 
     const [newUser] = await db
       .insert(usersTable)
-      .values({ email, firstName, lastName, passwordHash })
+      .values({ email, firstName, lastName, passwordHash, address: address ?? null })
       .returning();
 
     const sessionData: SessionData = {
@@ -333,6 +334,7 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
         firstName: newUser.firstName,
         lastName: newUser.lastName,
         profileImageUrl: newUser.profileImageUrl,
+        address: newUser.address ?? null,
       },
       access_token: "",
     };
@@ -384,6 +386,7 @@ router.post("/mobile-auth/email-login", async (req: Request, res: Response) => {
         firstName: user.firstName,
         lastName: user.lastName,
         profileImageUrl: user.profileImageUrl,
+        address: user.address ?? null,
       },
       access_token: "",
     };
