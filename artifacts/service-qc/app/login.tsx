@@ -133,6 +133,13 @@ export default function LoginScreen() {
                 </Pressable>
               </View>
 
+              <Pressable
+                onPress={() => router.push("/forgot-password")}
+                style={styles.forgotBtn}
+              >
+                <Text style={styles.forgotText}>Mot de passe oublié ?</Text>
+              </Pressable>
+
               {error && (
                 <View style={styles.errorBox}>
                   <Feather name="alert-circle" size={14} color="#ff6b6b" />
@@ -254,6 +261,13 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   eyeBtn: { padding: 4 },
+  forgotBtn: { alignSelf: "flex-end" },
+  forgotText: {
+    fontSize: 13,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.75)",
+    textDecorationLine: "underline",
+  },
   errorBox: {
     flexDirection: "row",
     alignItems: "center",

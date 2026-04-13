@@ -8,6 +8,16 @@ async function runStartupMigrations() {
     await db.execute(
       sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash varchar`
     );
+    await db.execute(sql`
+      CREATE TABLE IF NOT EXISTS password_reset_tokens (
+        id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        email VARCHAR NOT NULL,
+        code VARCHAR(6) NOT NULL,
+        expires_at TIMESTAMPTZ NOT NULL,
+        used_at TIMESTAMPTZ,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `);
     logger.info("Startup migrations completed");
   } catch (err) {
     logger.error({ err }, "Startup migration failed");

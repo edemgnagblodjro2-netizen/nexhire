@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef, type ReactNode } from "react";
 import * as SecureStore from "expo-secure-store";
+import { getApiBaseUrl } from "./apiBase";
 
 const AUTH_TOKEN_KEY = "auth_session_token";
 
@@ -28,16 +29,6 @@ const AuthContext = createContext<AuthContextValue>({
   register: async () => null,
   logout: async () => {},
 });
-
-function getApiBaseUrl(): string {
-  if (process.env.EXPO_PUBLIC_DOMAIN) {
-    return `https://${process.env.EXPO_PUBLIC_DOMAIN}`;
-  }
-  if (process.env.EXPO_PUBLIC_API_URL) {
-    return process.env.EXPO_PUBLIC_API_URL;
-  }
-  return "https://quebec-aid-finder.replit.app";
-}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);

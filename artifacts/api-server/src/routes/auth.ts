@@ -8,8 +8,8 @@ import {
   ExchangeMobileAuthorizationCodeResponse,
   LogoutMobileSessionResponse,
 } from "@workspace/api-zod";
-import { db, usersTable } from "@workspace/db";
-import { eq } from "drizzle-orm";
+import { db, usersTable, passwordResetTokensTable } from "@workspace/db";
+import { eq, and, gt, isNull } from "drizzle-orm";
 import {
   clearSession,
   getOidcConfig,
@@ -402,6 +402,102 @@ router.post("/mobile-auth/logout", async (req: Request, res: Response) => {
     await deleteSession(sid);
   }
   res.json(LogoutMobileSessionResponse.parse({ success: true }));
+});
+
+const ForgotPasswordBody = z.object({
+  email: z.string().email(),
+});
+
+router.post("/mobile-auth/forgot-password", async (req: Request, res: Response) => {
+  const parsed = ForgotPasswordBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: "Adresse courriel invalide." });
+    return;
+  }
+
+  const { email } = parsed.data;
+
+  try {
+    const [user] = await db
+      .select({ id: usersTable.id })
+      .from(usersTable)
+      .where(eq(usersTable.email, email.toLowerCase()))
+      .limit(1);
+
+    if (!user) {
+      res.json({ message: "Si un compte existe, un code vous sera envoyé." });
+      return;
+    }
+
+    const code = String(Math.floor(100000 + Math.random() * 900000));
+    const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
+
+    await db.insert(passwordResetTokensTable).values({
+      email: email.toLowerCase(),
+      code,
+      expiresAt,
+    });
+
+    req.log.info({ email, code }, "Password reset code generated");
+
+    res.json({ code, message: "Code de réinitialisation généré." });
+  } catch (err) {
+    req.log.error({ err }, "Forgot password error");
+    res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
+  }
+});
+
+const ResetPasswordBody = z.object({
+  email: z.string().email(),
+  code: z.string().length(6),
+  newPassword: z.string().min(6),
+});
+
+router.post("/mobile-auth/reset-password", async (req: Request, res: Response) => {
+  const parsed = ResetPasswordBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: "Données invalides." });
+    return;
+  }
+
+  const { email, code, newPassword } = parsed.data;
+
+  try {
+    const [token] = await db
+      .select()
+      .from(passwordResetTokensTable)
+      .where(
+        and(
+          eq(passwordResetTokensTable.email, email.toLowerCase()),
+          eq(passwordResetTokensTable.code, code),
+          gt(passwordResetTokensTable.expiresAt, new Date()),
+          isNull(passwordResetTokensTable.usedAt)
+        )
+      )
+      .limit(1);
+
+    if (!token) {
+      res.status(400).json({ error: "Code invalide ou expiré." });
+      return;
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 12);
+
+    await db
+      .update(usersTable)
+      .set({ passwordHash })
+      .where(eq(usersTable.email, email.toLowerCase()));
+
+    await db
+      .update(passwordResetTokensTable)
+      .set({ usedAt: new Date() })
+      .where(eq(passwordResetTokensTable.id, token.id));
+
+    res.json({ success: true, message: "Mot de passe mis à jour avec succès." });
+  } catch (err) {
+    req.log.error({ err }, "Reset password error");
+    res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
+  }
 });
 
 export default router;
