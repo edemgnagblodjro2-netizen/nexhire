@@ -402,7 +402,7 @@ export default function ChatScreen() {
         scrollToBottom();
       }
     },
-    [isLoading, messages, language, scrollToBottom, t.aiError]
+    [isLoading, messages, language, chatLang, scrollToBottom, t.aiError]
   );
 
   const handleReset = useCallback(() => {
