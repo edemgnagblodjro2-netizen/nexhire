@@ -81,9 +81,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return data.error || "Erreur de connexion.";
       }
 
-      if (data.token) {
+      if (data.token && data.user) {
+        await SecureStore.setItemAsync(AUTH_TOKEN_KEY, data.token);
+        setUser(data.user);
+      } else if (data.token) {
         await SecureStore.setItemAsync(AUTH_TOKEN_KEY, data.token);
         await fetchUser();
+      } else {
+        return "Erreur de connexion. Veuillez réessayer.";
       }
       return null;
     } catch {
@@ -111,9 +116,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return data.error || "Erreur lors de l'inscription.";
       }
 
-      if (data.token) {
+      if (data.token && data.user) {
+        await SecureStore.setItemAsync(AUTH_TOKEN_KEY, data.token);
+        setUser(data.user);
+      } else if (data.token) {
         await SecureStore.setItemAsync(AUTH_TOKEN_KEY, data.token);
         await fetchUser();
+      } else {
+        return "Erreur lors de l'inscription. Veuillez réessayer.";
       }
       return null;
     } catch {

@@ -338,7 +338,7 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
     };
 
     const sid = await createSession(sessionData);
-    res.json({ token: sid });
+    res.json({ token: sid, user: sessionData.user });
   } catch (err) {
     req.log.error({ err }, "Register error");
     res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
@@ -389,7 +389,7 @@ router.post("/mobile-auth/email-login", async (req: Request, res: Response) => {
     };
 
     const sid = await createSession(sessionData);
-    res.json({ token: sid });
+    res.json({ token: sid, user: sessionData.user });
   } catch (err) {
     req.log.error({ err }, "Email login error");
     res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
