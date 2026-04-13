@@ -426,6 +426,7 @@ export default function ChatScreen() {
             backgroundColor: colors.background,
             borderBottomColor: colors.border,
             paddingTop: topPadding + 8,
+            paddingRight: 16 + insets.right,
           },
         ]}
       >
