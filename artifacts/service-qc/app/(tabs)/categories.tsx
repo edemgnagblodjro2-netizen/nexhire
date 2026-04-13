@@ -1,5 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useMemo } from "react";
 import {
@@ -55,24 +56,47 @@ function CategoryCard({ category }: { category: Category }) {
       style={({ pressed }) => [
         styles.card,
         {
-          backgroundColor: color + "12",
-          borderColor: color + "30",
+          backgroundColor: colors.card,
+          borderColor: colors.border,
           opacity: pressed ? 0.88 : 1,
+          transform: [{ scale: pressed ? 0.97 : 1 }],
         },
       ]}
       onPress={handlePress}
     >
-      <View style={[styles.iconCircle, { backgroundColor: color + "22" }]}>
-        <Feather name={icon as any} size={26} color={color} />
-      </View>
-      <Text style={[styles.catName, { color: colors.foreground }]}>
-        {t.categories[category]}
-      </Text>
-      <Text style={[styles.catCount, { color: color }]}>
-        {serviceCount} {serviceCount === 1 ? t.services : t.servicesPlural}
-      </Text>
-      <View style={[styles.arrow, { backgroundColor: color + "18" }]}>
-        <Feather name="arrow-right" size={14} color={color} />
+      {/* Colored top accent bar */}
+      <View style={[styles.accentBar, { backgroundColor: color }]} />
+
+      <View style={styles.cardInner}>
+        {/* Icon + badge row */}
+        <View style={styles.cardTopRow}>
+          <View style={[styles.iconCircle, { backgroundColor: color + "18" }]}>
+            <Feather name={icon as any} size={22} color={color} />
+          </View>
+          <View style={[styles.countBadge, { backgroundColor: color + "18", borderColor: color + "30" }]}>
+            <Text style={[styles.countText, { color }]}>
+              {serviceCount}
+            </Text>
+          </View>
+        </View>
+
+        {/* Name */}
+        <Text
+          style={[styles.catName, { color: colors.foreground }]}
+          numberOfLines={2}
+        >
+          {t.categories[category]}
+        </Text>
+
+        {/* Footer row */}
+        <View style={styles.cardFooter}>
+          <Text style={[styles.catSub, { color: colors.mutedForeground }]}>
+            {serviceCount === 1 ? t.services : t.servicesPlural}
+          </Text>
+          <View style={[styles.arrowBtn, { backgroundColor: color + "15" }]}>
+            <Feather name="arrow-right" size={13} color={color} />
+          </View>
+        </View>
       </View>
     </Pressable>
   );
@@ -81,30 +105,34 @@ function CategoryCard({ category }: { category: Category }) {
 export default function CategoriesScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const topPadding = Platform.OS === "web" ? 16 : insets.top;
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
 
+  const totalServices = SERVICES.length;
+
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <View
-        style={[
-          styles.header,
-          {
-            backgroundColor: colors.background,
-            borderBottomColor: colors.border,
-            paddingTop: topPadding + 8,
-          },
-        ]}
+      {/* Gradient header */}
+      <LinearGradient
+        colors={[colors.primary, "#0a5e52"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[styles.header, { paddingTop: topPadding + 12 }]}
       >
-        <Text style={[styles.title, { color: colors.foreground }]}>
-          {t.categoriesTitle}
+        <View style={styles.headerBadge}>
+          <Feather name="grid" size={14} color={colors.primary} />
+        </View>
+        <Text style={styles.headerTitle}>
+          {language === "fr" ? "Catégories" : "Categories"}
         </Text>
-        <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
-          {ALL_CATEGORIES.length} {t.categoriesTitle.toLowerCase()}
+        <Text style={styles.headerSub}>
+          {language === "fr"
+            ? `${ALL_CATEGORIES.length} catégories · ${totalServices} services disponibles`
+            : `${ALL_CATEGORIES.length} categories · ${totalServices} services available`}
         </Text>
-      </View>
+      </LinearGradient>
 
       <FlatList
         data={ALL_CATEGORIES}
@@ -124,66 +152,109 @@ export default function CategoriesScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+
+  /* Header */
   header: {
-    paddingHorizontal: 16,
-    paddingBottom: 16,
-    borderBottomWidth: 1,
-    gap: 2,
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+    gap: 6,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
+  headerBadge: {
+    width: 34,
+    height: 34,
+    borderRadius: 10,
+    backgroundColor: "rgba(255,255,255,0.92)",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 8,
+  },
+  headerTitle: {
+    fontSize: 26,
+    fontWeight: "800",
     fontFamily: "Inter_700Bold",
+    color: "#fff",
+    letterSpacing: -0.3,
   },
-  subtitle: {
+  headerSub: {
     fontSize: 13,
     fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.75)",
   },
+
+  /* Grid */
   listContent: {
-    padding: 16,
+    padding: 14,
   },
   row: {
     gap: 12,
     marginBottom: 12,
   },
+
+  /* Card */
   card: {
     flex: 1,
-    borderRadius: 18,
+    borderRadius: 16,
     borderWidth: 1,
-    padding: 18,
-    gap: 8,
-    alignItems: "flex-start",
+    overflow: "hidden",
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 3,
   },
-  iconCircle: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
+  accentBar: {
+    height: 4,
+    width: "100%",
+  },
+  cardInner: {
+    padding: 14,
+    gap: 8,
+  },
+  cardTopRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    justifyContent: "center",
     marginBottom: 4,
   },
-  catName: {
-    fontSize: 15,
-    fontWeight: "700",
-    fontFamily: "Inter_700Bold",
-    lineHeight: 20,
-  },
-  catCount: {
-    fontSize: 12,
-    fontFamily: "Inter_500Medium",
-  },
-  arrow: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+  iconCircle: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
-    alignSelf: "flex-end",
-    marginTop: 4,
+  },
+  countBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  countText: {
+    fontSize: 12,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+  },
+  catName: {
+    fontSize: 14,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+    lineHeight: 19,
+  },
+  cardFooter: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 2,
+  },
+  catSub: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+  },
+  arrowBtn: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
