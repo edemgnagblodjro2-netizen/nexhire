@@ -218,6 +218,8 @@ const QUICK_PROMPTS_FR = [
   "Je suis un immigrant",
   "J'ai besoin d'aide psychologique",
   "Je cherche du travail",
+  "Je cherche un concessionnaire automobile",
+  "Je cherche une assurance auto",
 ];
 
 const QUICK_PROMPTS_EN = [
@@ -227,6 +229,8 @@ const QUICK_PROMPTS_EN = [
   "I am an immigrant",
   "I need mental health support",
   "I'm looking for work",
+  "I want to buy a car",
+  "I need car insurance",
 ];
 
 const QUICK_PROMPTS_ES = [
@@ -236,6 +240,8 @@ const QUICK_PROMPTS_ES = [
   "Soy inmigrante",
   "Necesito apoyo emocional",
   "Busco trabajo",
+  "Busco un concesionario de autos",
+  "Necesito seguro de auto",
 ];
 
 export default function ChatScreen() {
