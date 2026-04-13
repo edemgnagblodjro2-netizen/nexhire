@@ -22,10 +22,7 @@ import { SERVICES } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor } from "@/utils/categoryColors";
 import { detectCriticalSituation, type CriticalAlert } from "@/utils/detectCritical";
-
-const API_BASE = process.env["EXPO_PUBLIC_DOMAIN"]
-  ? `https://${process.env["EXPO_PUBLIC_DOMAIN"]}`
-  : "";
+import { getApiBaseUrl } from "@/lib/apiBase";
 
 type ChatLang = "fr" | "en" | "es" | "ar" | "ht";
 const CHAT_LANGS: { code: ChatLang; label: string; flag: string }[] = [
@@ -321,11 +318,11 @@ export default function ChatScreen() {
       scrollToBottom();
 
       const history = messages
-        .filter((m) => m.role !== "system")
-        .map((m) => ({ role: m.role, content: m.content }));
+        .filter((m) => m.role === "user" || m.role === "assistant")
+        .map((m) => ({ role: m.role as "user" | "assistant", content: m.content }));
 
       try {
-        const response = await fetch(`${API_BASE}/api/ai/chat`, {
+        const response = await fetch(`${getApiBaseUrl()}/api/ai/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: trimmed, language: chatLang, history }),
