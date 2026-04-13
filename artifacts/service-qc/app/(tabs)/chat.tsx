@@ -454,11 +454,11 @@ export default function ChatScreen() {
           <View style={[styles.aiBadge, { backgroundColor: colors.primary }]}>
             <Feather name="cpu" size={14} color="#fff" />
           </View>
-          <View>
-            <Text style={[styles.headerTitle, { color: colors.foreground }]}>
+          <View style={{ flex: 1, flexShrink: 1 }}>
+            <Text numberOfLines={1} style={[styles.headerTitle, { color: colors.foreground }]}>
               {t.aiTitle}
             </Text>
-            <Text style={[styles.headerSub, { color: colors.mutedForeground }]}>
+            <Text numberOfLines={1} style={[styles.headerSub, { color: colors.mutedForeground }]}>
               {t.aiSubtitle}
             </Text>
           </View>
@@ -641,6 +641,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
+    flex: 1,
+    flexShrink: 1,
+    marginRight: 8,
   },
   aiBadge: {
     width: 36,
@@ -905,6 +908,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
+    flexShrink: 0,
   },
   langBtn: {
     width: 36,
