@@ -29,6 +29,10 @@ function NativeTabLayout() {
         <Icon sf={{ default: "square.grid.2x2", selected: "square.grid.2x2.fill" }} />
         <Label>Catégories</Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="profile">
+        <Icon sf={{ default: "person.circle", selected: "person.circle.fill" }} />
+        <Label>Profil</Label>
+      </NativeTabs.Trigger>
     </NativeTabs>
   );
 }
@@ -140,6 +144,18 @@ function ClassicTabLayout() {
               <SymbolView name="square.grid.2x2" tintColor={color} size={22} />
             ) : (
               <Feather name="grid" size={21} color={color} />
+            ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: t.tabProfile,
+          tabBarIcon: ({ color }) =>
+            isIOS ? (
+              <SymbolView name="person.circle" tintColor={color} size={22} />
+            ) : (
+              <Feather name="user" size={21} color={color} />
             ),
         }}
       />

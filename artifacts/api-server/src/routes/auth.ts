@@ -14,7 +14,9 @@ import {
   clearSession,
   getOidcConfig,
   getSessionId,
+  getSession,
   createSession,
+  updateSession,
   deleteSession,
   SESSION_COOKIE,
   SESSION_TTL,
@@ -395,6 +397,47 @@ router.post("/mobile-auth/email-login", async (req: Request, res: Response) => {
     res.json({ token: sid, user: sessionData.user });
   } catch (err) {
     req.log.error({ err }, "Email login error");
+    res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
+  }
+});
+
+const UpdateProfileBody = z.object({
+  address: z.string().nullable().optional(),
+});
+
+router.patch("/mobile-auth/update-profile", async (req: Request, res: Response) => {
+  const sid = getSessionId(req);
+  if (!sid) {
+    res.status(401).json({ error: "Non authentifié." });
+    return;
+  }
+
+  const session = await getSession(sid);
+  if (!session?.user?.id) {
+    res.status(401).json({ error: "Session invalide." });
+    return;
+  }
+
+  const parsed = UpdateProfileBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: "Données invalides." });
+    return;
+  }
+
+  const { address } = parsed.data;
+
+  try {
+    await db
+      .update(usersTable)
+      .set({ address: address ?? null })
+      .where(eq(usersTable.id, session.user.id));
+
+    session.user.address = address ?? null;
+    await updateSession(sid, session);
+
+    res.json({ success: true, user: session.user });
+  } catch (err) {
+    req.log.error({ err }, "Update profile error");
     res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
   }
 });

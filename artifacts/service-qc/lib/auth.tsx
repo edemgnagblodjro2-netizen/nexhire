@@ -19,12 +19,14 @@ interface AuthContextValue {
   isAuthenticated: boolean;
   loginWithEmail: (email: string, password: string) => Promise<string | null>;
   register: (email: string, password: string, firstName: string, lastName: string, address?: string) => Promise<string | null>;
+  updateProfile: (data: { address?: string | null }) => Promise<string | null>;
   logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
   user: null,
   isLoading: true,
+  updateProfile: async () => null,
   isAuthenticated: false,
   loginWithEmail: async () => null,
   register: async () => null,
@@ -133,6 +135,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [fetchUser]);
 
+  const updateProfile = useCallback(async (data: { address?: string | null }): Promise<string | null> => {
+    try {
+      const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
+      if (!token) return "Non authentifié.";
+      const apiBase = getApiBaseUrl();
+      const res = await fetch(`${apiBase}/api/mobile-auth/update-profile`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+      if (!res.ok) return json.error || "Erreur lors de la mise à jour.";
+      if (json.user) {
+        setUser(json.user);
+      } else {
+        setUser((prev) => prev ? { ...prev, ...data } : prev);
+      }
+      return null;
+    } catch {
+      return "Erreur réseau. Vérifiez votre connexion.";
+    }
+  }, []);
+
   const logout = useCallback(async () => {
     try {
       const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
@@ -158,6 +186,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated: !!user,
         loginWithEmail,
         register,
+        updateProfile,
         logout,
       }}
     >
