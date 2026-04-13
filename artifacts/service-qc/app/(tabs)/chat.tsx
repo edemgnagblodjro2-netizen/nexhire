@@ -328,46 +328,65 @@ export default function ChatScreen() {
           body: JSON.stringify({ message: trimmed, language: chatLang, history }),
         });
 
-        if (!response.ok || !response.body) {
-          throw new Error(`HTTP ${response.status}`);
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          throw new Error((errData as { error?: string }).error || `HTTP ${response.status}`);
         }
 
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
         let accumulated = "";
         let finalServiceIds: string[] = [];
 
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          const chunk = decoder.decode(value, { stream: true });
-          const lines = chunk.split("\n");
-
+        function parseSseText(text: string) {
+          const lines = text.split("\n");
           for (const line of lines) {
             if (!line.startsWith("data: ")) continue;
             try {
               const json = JSON.parse(line.slice(6));
-              if (json.content) {
-                accumulated += json.content;
-                setMessages((prev) =>
-                  prev.map((m) =>
-                    m.id === aiMsgId
-                      ? { ...m, content: accumulated, isStreaming: true }
-                      : m
-                  )
-                );
-                scrollToBottom();
-              }
-              if (json.done) {
-                finalServiceIds = json.serviceIds ?? [];
-              }
-              if (json.error) {
-                accumulated += `\n\n⚠️ ${json.error}`;
-              }
-            } catch {
+              if (json.content) accumulated += json.content;
+              if (json.done) finalServiceIds = json.serviceIds ?? [];
+              if (json.error) accumulated += `\n\n⚠️ ${json.error}`;
+            } catch { /* skip malformed line */ }
+          }
+        }
+
+        const supportsStreaming =
+          !!response.body &&
+          typeof (response.body as ReadableStream).getReader === "function";
+
+        if (supportsStreaming) {
+          const reader = (response.body as ReadableStream<Uint8Array>).getReader();
+          const decoder = new TextDecoder();
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = decoder.decode(value, { stream: true });
+            const lines = chunk.split("\n");
+            for (const line of lines) {
+              if (!line.startsWith("data: ")) continue;
+              try {
+                const json = JSON.parse(line.slice(6));
+                if (json.content) {
+                  accumulated += json.content;
+                  setMessages((prev) =>
+                    prev.map((m) =>
+                      m.id === aiMsgId
+                        ? { ...m, content: accumulated, isStreaming: true }
+                        : m
+                    )
+                  );
+                  scrollToBottom();
+                }
+                if (json.done) finalServiceIds = json.serviceIds ?? [];
+                if (json.error) accumulated += `\n\n⚠️ ${json.error}`;
+              } catch { /* skip malformed line */ }
             }
           }
+        } else {
+          // Fallback for environments without ReadableStream (some Expo WebView / proxies)
+          const text = await response.text();
+          parseSseText(text);
         }
 
         setMessages((prev) =>
@@ -375,7 +394,7 @@ export default function ChatScreen() {
             m.id === aiMsgId
               ? {
                   ...m,
-                  content: accumulated,
+                  content: accumulated || t.aiError,
                   isStreaming: false,
                   serviceIds: finalServiceIds,
                 }
@@ -383,12 +402,13 @@ export default function ChatScreen() {
           )
         );
       } catch (err) {
+        const errMsg = err instanceof Error ? err.message : String(err);
         setMessages((prev) =>
           prev.map((m) =>
             m.id === aiMsgId
               ? {
                   ...m,
-                  content: t.aiError,
+                  content: t.aiError + (errMsg ? `\n\n(${errMsg})` : ""),
                   isStreaming: false,
                 }
               : m
