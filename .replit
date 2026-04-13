@@ -37,3 +37,8 @@ externalPort = 80
 
 [nix]
 channel = "stable-25_05"
+
+[userenv]
+
+[userenv.shared]
+EXPO_PUBLIC_API_URL = "https://quebec-aid-finder.replit.app"

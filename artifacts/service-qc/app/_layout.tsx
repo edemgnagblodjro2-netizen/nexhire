@@ -25,7 +25,12 @@ import { LocationProvider } from "@/contexts/LocationContext";
 import { useInactivityTimer } from "@/hooks/useInactivityTimer";
 
 const domain = process.env.EXPO_PUBLIC_DOMAIN;
-if (domain) setBaseUrl(`https://${domain}`);
+const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "https://quebec-aid-finder.replit.app";
+if (domain) {
+  setBaseUrl(`https://${domain}`);
+} else {
+  setBaseUrl(apiUrl);
+}
 setAuthTokenGetter(() => SecureStore.getItemAsync("auth_session_token"));
 
 SplashScreen.preventAutoHideAsync();
