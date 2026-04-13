@@ -15,6 +15,7 @@ import {
 } from "react-native";
 
 import { UrgentButton } from "@/components/UrgentButton";
+import { useAuth } from "@/lib/auth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { Category } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
@@ -38,6 +39,7 @@ export default function HomeScreen() {
   const colors = useColors();
   const router = useRouter();
   const { t, language, toggleLanguage } = useLanguage();
+  const { logout } = useAuth();
   const inputRef = useRef<TextInput>(null);
 
   const [query, setQuery] = useState("");
@@ -91,28 +93,45 @@ export default function HomeScreen() {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.header}>
-        <View style={styles.headerTop}>
-          <View>
-            <Text style={[styles.appName, { color: colors.primary }]}>
-              AIDORA QC
-            </Text>
-            <Text style={[styles.tagline, { color: colors.mutedForeground }]}>
-              {t.tagline}
-            </Text>
-          </View>
+        <View style={styles.titleBlock}>
+          <Text style={[styles.appName, { color: colors.primary }]}>
+            AIDORA QC
+          </Text>
+          <Text style={[styles.tagline, { color: colors.mutedForeground }]}>
+            {t.tagline}
+          </Text>
+        </View>
+        <View style={styles.headerActions}>
           <TouchableOpacity
             style={[
-              styles.langToggle,
+              styles.actionBtn,
               { backgroundColor: colors.secondary ?? colors.muted, borderColor: colors.border },
             ]}
             onPress={handleToggleLanguage}
             activeOpacity={0.7}
           >
-            <Text style={[styles.langFlag]}>
+            <Text style={styles.langFlag}>
               {language === "fr" ? "🇬🇧" : "🇫🇷"}
             </Text>
             <Text style={[styles.langLabel, { color: colors.primary }]}>
               {language === "fr" ? "EN" : "FR"}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.actionBtn,
+              { backgroundColor: colors.secondary ?? colors.muted, borderColor: colors.border },
+            ]}
+            onPress={() => {
+              Haptics.selectionAsync();
+              logout();
+            }}
+            activeOpacity={0.7}
+          >
+            <Feather name="log-out" size={15} color={colors.primary} />
+            <Text style={[styles.langLabel, { color: colors.primary }]}>
+              {language === "fr" ? "Quitter" : "Logout"}
             </Text>
           </TouchableOpacity>
         </View>
@@ -270,35 +289,41 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 24,
+    alignItems: "center",
+    gap: 14,
   },
-  headerTop: {
+  titleBlock: {
+    alignItems: "center",
+  },
+  headerActions: {
     flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
+    gap: 10,
+    justifyContent: "center",
   },
   appName: {
     fontSize: 32,
     fontWeight: "800",
     fontFamily: "Inter_700Bold",
     letterSpacing: -0.5,
+    textAlign: "center",
   },
   tagline: {
     fontSize: 15,
     marginTop: 4,
     fontFamily: "Inter_400Regular",
+    textAlign: "center",
   },
-  langToggle: {
+  actionBtn: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 9,
     borderRadius: 20,
     borderWidth: 1.5,
-    marginTop: 4,
   },
   langFlag: {
-    fontSize: 14,
+    fontSize: 15,
   },
   langLabel: {
     fontSize: 13,
