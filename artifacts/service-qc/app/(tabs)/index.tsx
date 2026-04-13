@@ -1,5 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
@@ -13,10 +14,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { UrgentButton } from "@/components/UrgentButton";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { Category } from "@/data/services";
+import { SERVICES } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor, CATEGORY_ICONS } from "@/utils/categoryColors";
 import { detectCategory } from "@/utils/detectCategory";
@@ -37,14 +40,14 @@ const ALL_CATEGORIES: Category[] = [
 export default function HomeScreen() {
   const colors = useColors();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const { t, language, toggleLanguage } = useLanguage();
   const inputRef = useRef<TextInput>(null);
 
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
 
-  const topPadding = Platform.OS === "web" ? 16 : 0;
-  const bottomPadding = Platform.OS === "web" ? 34 : 0;
+  const totalServices = SERVICES.length;
 
   function handleSearch() {
     if (!query.trim()) return;
@@ -65,8 +68,7 @@ export default function HomeScreen() {
     });
   }
 
-  function handleQuickPrompt(prompt: string, index: number) {
-    setQuery(prompt);
+  function handleQuickPrompt(prompt: string) {
     Haptics.selectionAsync();
     const result = detectCategory(prompt);
     router.push({
@@ -75,260 +77,375 @@ export default function HomeScreen() {
     });
   }
 
-  function handleToggleLanguage() {
-    Haptics.selectionAsync();
-    toggleLanguage();
-  }
-
   return (
     <ScrollView
       style={[styles.container, { backgroundColor: colors.background }]}
-      contentContainerStyle={[
-        styles.content,
-        { paddingTop: topPadding + 24, paddingBottom: bottomPadding + 100 },
-      ]}
+      contentContainerStyle={{ paddingBottom: Math.max(insets.bottom, 8) + 100 }}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-      <View style={styles.header}>
-        <View style={styles.titleBlock}>
-          <Text style={[styles.appName, { color: colors.primary }]}>
-            AIDORA QC
-          </Text>
-          <Text style={[styles.tagline, { color: colors.mutedForeground }]}>
-            {t.tagline}
-          </Text>
-        </View>
-        <TouchableOpacity
-          style={[
-            styles.actionBtn,
-            { backgroundColor: colors.secondary ?? colors.muted, borderColor: colors.border },
-          ]}
-          onPress={handleToggleLanguage}
-          activeOpacity={0.7}
-        >
-          <Text style={styles.langFlag}>
-            {language === "fr" ? "🇬🇧" : "🇫🇷"}
-          </Text>
-          <Text style={[styles.langLabel, { color: colors.primary }]}>
-            {language === "fr" ? "EN" : "FR"}
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.urgentWrap}>
-        <UrgentButton />
-      </View>
-
-      <Pressable
-        style={({ pressed }) => [
-          styles.aiBanner,
-          {
-            backgroundColor: colors.primary + "10",
-            borderColor: colors.primary + "28",
-            opacity: pressed ? 0.88 : 1,
-          },
-        ]}
-        onPress={() => {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          router.push("/(tabs)/chat" as any);
-        }}
+      {/* ── Hero ── */}
+      <LinearGradient
+        colors={[colors.primary, "#0a5e52"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[styles.hero, { paddingTop: (Platform.OS === "web" ? 16 : insets.top) + 18 }]}
       >
-        <View style={[styles.aiBannerIcon, { backgroundColor: colors.primary }]}>
-          <Feather name="cpu" size={20} color="#fff" />
-        </View>
-        <View style={styles.aiBannerText}>
-          <Text style={[styles.aiBannerTitle, { color: colors.primary }]}>
-            {t.aiTitle}
-          </Text>
-          <Text style={[styles.aiBannerSub, { color: colors.mutedForeground }]}>
-            {t.aiSubtitle}
-          </Text>
-        </View>
-        <Feather name="arrow-right" size={16} color={colors.primary} />
-      </Pressable>
-
-      <View
-        style={[
-          styles.searchBox,
-          {
-            backgroundColor: colors.card,
-            borderColor: focused ? colors.primary : colors.border,
-            shadowColor: focused ? colors.primary : "#000",
-          },
-        ]}
-      >
-        <Feather
-          name="search"
-          size={20}
-          color={focused ? colors.primary : colors.mutedForeground}
-        />
-        <TextInput
-          ref={inputRef}
-          style={[styles.input, { color: colors.foreground }]}
-          placeholder={t.searchPlaceholder}
-          placeholderTextColor={colors.mutedForeground}
-          value={query}
-          onChangeText={setQuery}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          onSubmitEditing={handleSearch}
-          returnKeyType="search"
-          multiline={false}
-        />
-        {query.length > 0 && (
-          <TouchableOpacity onPress={() => setQuery("")} hitSlop={10}>
-            <Feather name="x-circle" size={18} color={colors.mutedForeground} />
+        <View style={styles.heroTop}>
+          <View style={styles.heroLeft}>
+            <View style={styles.logoBadge}>
+              <Feather name="heart" size={18} color={colors.primary} />
+            </View>
+            <View>
+              <Text style={styles.heroAppName}>AIDORA QC</Text>
+              <Text style={styles.heroTagline}>{t.tagline}</Text>
+            </View>
+          </View>
+          <TouchableOpacity
+            style={styles.langBtn}
+            onPress={() => { Haptics.selectionAsync(); toggleLanguage(); }}
+            activeOpacity={0.75}
+          >
+            <Text style={styles.langFlag}>{language === "fr" ? "🇬🇧" : "🇫🇷"}</Text>
+            <Text style={styles.langLabel}>{language === "fr" ? "EN" : "FR"}</Text>
           </TouchableOpacity>
-        )}
-      </View>
+        </View>
 
-      <Pressable
-        style={({ pressed }) => [
-          styles.searchButton,
-          {
-            backgroundColor: colors.primary,
-            opacity: pressed ? 0.88 : query.trim() ? 1 : 0.5,
-          },
-        ]}
-        onPress={handleSearch}
-        disabled={!query.trim()}
-      >
-        <Feather name="search" size={18} color="#fff" />
-        <Text style={styles.searchButtonText}>{t.searchButton}</Text>
-      </Pressable>
+        {/* Stats strip */}
+        <View style={styles.statsRow}>
+          <View style={styles.statItem}>
+            <Text style={styles.statNum}>{totalServices}+</Text>
+            <Text style={styles.statLabel}>{language === "fr" ? "services" : "services"}</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.statItem}>
+            <Text style={styles.statNum}>10</Text>
+            <Text style={styles.statLabel}>{language === "fr" ? "villes" : "cities"}</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.statItem}>
+            <Text style={styles.statNum}>24/7</Text>
+            <Text style={styles.statLabel}>{language === "fr" ? "disponible" : "available"}</Text>
+          </View>
+        </View>
 
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
-          {t.sectionExamples}
-        </Text>
-        <View style={styles.quickPrompts}>
-          {t.quickPrompts.map((prompt, i) => (
-            <TouchableOpacity
-              key={i}
-              style={[
-                styles.promptChip,
-                {
-                  backgroundColor: colors.surfaceSecondary ?? colors.muted,
-                  borderColor: colors.border,
-                },
-              ]}
-              onPress={() => handleQuickPrompt(prompt, i)}
-              activeOpacity={0.7}
-            >
-              <Text style={[styles.promptText, { color: colors.foreground }]}>
-                {prompt}
-              </Text>
+        {/* Search bar inside hero */}
+        <View
+          style={[
+            styles.searchBox,
+            {
+              backgroundColor: "rgba(255,255,255,0.97)",
+              borderColor: focused ? colors.primary : "transparent",
+            },
+          ]}
+        >
+          <Feather name="search" size={20} color={focused ? colors.primary : "#9ca3af"} />
+          <TextInput
+            ref={inputRef}
+            style={[styles.input, { color: "#111827" }]}
+            placeholder={t.searchPlaceholder}
+            placeholderTextColor="#9ca3af"
+            value={query}
+            onChangeText={setQuery}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            onSubmitEditing={handleSearch}
+            returnKeyType="search"
+            multiline={false}
+          />
+          {query.length > 0 ? (
+            <TouchableOpacity onPress={() => setQuery("")} hitSlop={10}>
+              <Feather name="x-circle" size={18} color="#9ca3af" />
             </TouchableOpacity>
-          ))}
+          ) : (
+            <TouchableOpacity
+              style={[styles.searchBtn, { backgroundColor: colors.primary }]}
+              onPress={handleSearch}
+              activeOpacity={0.85}
+            >
+              <Feather name="arrow-right" size={16} color="#fff" />
+            </TouchableOpacity>
+          )}
         </View>
-      </View>
+      </LinearGradient>
 
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
-          {t.sectionCategories}
-        </Text>
-        <View style={styles.categories}>
-          {ALL_CATEGORIES.map((cat) => {
-            const color = getCategoryColor(cat, colors);
-            const icon = CATEGORY_ICONS[cat] as keyof typeof Feather.glyphMap;
-            return (
-              <Pressable
-                key={cat}
-                style={({ pressed }) => [
-                  styles.catChip,
-                  {
-                    backgroundColor: colors.card,
-                    borderColor: colors.border,
-                    opacity: pressed ? 0.8 : 1,
-                  },
-                ]}
-                onPress={() => handleCategoryPress(cat)}
-              >
-                <Feather name={icon} size={14} color={color} />
-                <Text style={[styles.catChipLabel, { color: colors.foreground }]}>
-                  {t.categories[cat]}
-                </Text>
-              </Pressable>
-            );
-          })}
+      <View style={styles.body}>
+
+        {/* ── Urgence ── */}
+        <View style={styles.urgentWrap}>
+          <UrgentButton />
         </View>
+
+        {/* ── AI Banner ── */}
+        <Pressable
+          style={({ pressed }) => [
+            styles.aiBanner,
+            {
+              backgroundColor: colors.card,
+              borderColor: colors.border,
+              opacity: pressed ? 0.9 : 1,
+            },
+          ]}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            router.push("/(tabs)/chat" as any);
+          }}
+        >
+          <View style={[styles.aiBannerAccent, { backgroundColor: colors.primary }]} />
+          <View style={[styles.aiBannerIconWrap, { backgroundColor: colors.primary + "15" }]}>
+            <Feather name="cpu" size={22} color={colors.primary} />
+          </View>
+          <View style={styles.aiBannerText}>
+            <Text style={[styles.aiBannerTitle, { color: colors.foreground }]}>
+              {t.aiTitle}
+            </Text>
+            <Text style={[styles.aiBannerSub, { color: colors.mutedForeground }]}>
+              {t.aiSubtitle}
+            </Text>
+          </View>
+          <View style={[styles.aiBannerCta, { backgroundColor: colors.primary }]}>
+            <Feather name="arrow-right" size={14} color="#fff" />
+          </View>
+        </Pressable>
+
+        {/* ── Suggestions rapides ── */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
+            {t.sectionExamples}
+          </Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.quickScrollContent}
+          >
+            {t.quickPrompts.map((prompt, i) => (
+              <TouchableOpacity
+                key={i}
+                style={[
+                  styles.promptChip,
+                  { backgroundColor: colors.card, borderColor: colors.border },
+                ]}
+                onPress={() => handleQuickPrompt(prompt)}
+                activeOpacity={0.75}
+              >
+                <Feather name="chevron-right" size={12} color={colors.primary} />
+                <Text style={[styles.promptText, { color: colors.foreground }]} numberOfLines={1}>
+                  {prompt}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* ── Catégories ── */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
+            {t.sectionCategories}
+          </Text>
+          <View style={styles.catGrid}>
+            {ALL_CATEGORIES.map((cat) => {
+              const color = getCategoryColor(cat, colors);
+              const icon = CATEGORY_ICONS[cat] as keyof typeof Feather.glyphMap;
+              return (
+                <Pressable
+                  key={cat}
+                  style={({ pressed }) => [
+                    styles.catCard,
+                    {
+                      backgroundColor: colors.card,
+                      borderColor: colors.border,
+                      opacity: pressed ? 0.82 : 1,
+                    },
+                  ]}
+                  onPress={() => handleCategoryPress(cat)}
+                >
+                  <View style={[styles.catIconWrap, { backgroundColor: color + "18" }]}>
+                    <Feather name={icon} size={20} color={color} />
+                  </View>
+                  <Text
+                    style={[styles.catLabel, { color: colors.foreground }]}
+                    numberOfLines={2}
+                  >
+                    {t.categories[cat]}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        </View>
+
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  content: {
-    paddingHorizontal: 20,
-    gap: 0,
-  },
-  header: {
-    marginBottom: 24,
-    alignItems: "center",
-    gap: 14,
-  },
-  titleBlock: {
-    alignItems: "center",
-  },
+  container: { flex: 1 },
 
-  appName: {
-    fontSize: 32,
-    fontWeight: "800",
-    fontFamily: "Inter_700Bold",
-    letterSpacing: -0.5,
-    textAlign: "center",
+  /* Hero */
+  hero: {
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+    gap: 16,
   },
-  tagline: {
-    fontSize: 15,
-    marginTop: 4,
-    fontFamily: "Inter_400Regular",
-    textAlign: "center",
-  },
-  actionBtn: {
+  heroTop: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
-    paddingHorizontal: 14,
-    paddingVertical: 9,
-    borderRadius: 20,
-    borderWidth: 1.5,
+    justifyContent: "space-between",
   },
-  langFlag: {
-    fontSize: 15,
-  },
-  langLabel: {
-    fontSize: 13,
-    fontWeight: "700",
-    fontFamily: "Inter_700Bold",
-  },
-  urgentWrap: {
-    marginBottom: 16,
-  },
-  aiBanner: {
+  heroLeft: {
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
-    padding: 14,
-    borderRadius: 16,
-    borderWidth: 1,
-    marginBottom: 24,
+    flex: 1,
   },
-  aiBannerIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+  logoBadge: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    backgroundColor: "rgba(255,255,255,0.95)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  heroAppName: {
+    fontSize: 22,
+    fontWeight: "800",
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+    letterSpacing: -0.3,
+  },
+  heroTagline: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.75)",
+    marginTop: 1,
+  },
+  langBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    backgroundColor: "rgba(255,255,255,0.18)",
+    borderRadius: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.25)",
+  },
+  langFlag: { fontSize: 14 },
+  langLabel: {
+    fontSize: 12,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+  },
+
+  /* Stats */
+  statsRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255,255,255,0.12)",
+    borderRadius: 14,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    gap: 0,
+  },
+  statItem: {
+    flex: 1,
+    alignItems: "center",
+  },
+  statNum: {
+    fontSize: 17,
+    fontWeight: "800",
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+  },
+  statLabel: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.72)",
+    marginTop: 1,
+  },
+  statDivider: {
+    width: 1,
+    height: 28,
+    backgroundColor: "rgba(255,255,255,0.25)",
+  },
+
+  /* Search inside hero */
+  searchBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    borderRadius: 14,
+    borderWidth: 2,
+    paddingHorizontal: 14,
+    paddingVertical: 11,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 5,
+  },
+  input: {
+    flex: 1,
+    fontSize: 15,
+    fontFamily: "Inter_400Regular",
+  },
+  searchBtn: {
+    width: 32,
+    height: 32,
+    borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
   },
-  aiBannerText: {
-    flex: 1,
-    gap: 2,
+
+  /* Body */
+  body: {
+    paddingHorizontal: 16,
+    paddingTop: 20,
+    gap: 0,
   },
+  urgentWrap: {
+    marginBottom: 14,
+  },
+
+  /* AI Banner */
+  aiBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    borderRadius: 16,
+    borderWidth: 1,
+    padding: 14,
+    marginBottom: 24,
+    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  aiBannerAccent: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 4,
+    borderTopLeftRadius: 16,
+    borderBottomLeftRadius: 16,
+  },
+  aiBannerIconWrap: {
+    width: 46,
+    height: 46,
+    borderRadius: 13,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+    marginLeft: 6,
+  },
+  aiBannerText: { flex: 1, gap: 3 },
   aiBannerTitle: {
     fontSize: 15,
     fontWeight: "700",
@@ -337,46 +454,18 @@ const styles = StyleSheet.create({
   aiBannerSub: {
     fontSize: 12,
     fontFamily: "Inter_400Regular",
+    lineHeight: 16,
   },
-  searchBox: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    borderRadius: 16,
-    borderWidth: 1.5,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    marginBottom: 12,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
-    elevation: 3,
-  },
-  input: {
-    flex: 1,
-    fontSize: 16,
-    fontFamily: "Inter_400Regular",
-  },
-  searchButton: {
-    flexDirection: "row",
+  aiBannerCta: {
+    width: 30,
+    height: 30,
+    borderRadius: 9,
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
-    borderRadius: 16,
-    paddingVertical: 15,
-    marginBottom: 32,
-    shadowColor: "#0e7e6e",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
+    flexShrink: 0,
   },
-  searchButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "700",
-    fontFamily: "Inter_700Bold",
-  },
+
+  /* Sections */
   section: {
     marginBottom: 28,
   },
@@ -384,45 +473,60 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "700",
     fontFamily: "Inter_700Bold",
-    marginBottom: 14,
+    marginBottom: 12,
+    letterSpacing: -0.2,
   },
-  quickPrompts: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+
+  /* Quick prompts horizontal */
+  quickScrollContent: {
     gap: 8,
+    paddingRight: 8,
   },
   promptChip: {
-    paddingHorizontal: 14,
-    paddingVertical: 9,
-    borderRadius: 20,
-    borderWidth: 1,
-  },
-  promptText: {
-    fontSize: 13,
-    fontFamily: "Inter_400Regular",
-  },
-  categories: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-  },
-  catChip: {
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
     paddingHorizontal: 14,
     paddingVertical: 9,
-    borderRadius: 24,
-    borderWidth: 1.5,
+    borderRadius: 22,
+    borderWidth: 1,
+    maxWidth: 220,
+  },
+  promptText: {
+    fontSize: 13,
+    fontFamily: "Inter_400Regular",
+    flexShrink: 1,
+  },
+
+  /* Category grid 2-col */
+  catGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+  catCard: {
+    width: "47.5%",
+    borderRadius: 14,
+    borderWidth: 1,
+    padding: 14,
+    gap: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.04,
     shadowRadius: 4,
     elevation: 1,
   },
-  catChipLabel: {
+  catIconWrap: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  catLabel: {
     fontSize: 13,
     fontWeight: "600",
     fontFamily: "Inter_600SemiBold",
+    lineHeight: 17,
   },
 });
