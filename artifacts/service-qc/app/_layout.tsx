@@ -6,7 +6,7 @@ import {
   useFonts,
 } from "@expo-google-fonts/inter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { View, StyleSheet } from "react-native";
@@ -39,7 +39,9 @@ const queryClient = new QueryClient();
 
 function AppContent({ fontsReady }: { fontsReady: boolean }) {
   const { isLoading, isAuthenticated, logout } = useAuth();
+  const router = useRouter();
   const [splashVisible, setSplashVisible] = useState(true);
+  const wasAuthenticated = useRef(false);
 
   const isReady = fontsReady && !isLoading;
 
@@ -54,6 +56,15 @@ function AppContent({ fontsReady }: { fontsReady: boolean }) {
     const safetyTimer = setTimeout(() => setSplashVisible(false), 4000);
     return () => clearTimeout(safetyTimer);
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      wasAuthenticated.current = true;
+    } else if (wasAuthenticated.current && !isLoading) {
+      wasAuthenticated.current = false;
+      router.replace("/login");
+    }
+  }, [isAuthenticated, isLoading]);
 
   const handleInactivityTimeout = useCallback(async () => {
     await logout();
