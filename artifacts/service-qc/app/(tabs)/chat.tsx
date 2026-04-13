@@ -6,9 +6,9 @@ import {
   ActivityIndicator,
   FlatList,
   KeyboardAvoidingView,
+  Linking,
   Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -21,6 +21,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { SERVICES } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor } from "@/utils/categoryColors";
+import { detectCriticalSituation, type CriticalAlert } from "@/utils/detectCritical";
 
 const API_BASE = process.env["EXPO_PUBLIC_DOMAIN"]
   ? `https://${process.env["EXPO_PUBLIC_DOMAIN"]}`
@@ -37,10 +38,11 @@ const CHAT_LANGS: { code: ChatLang; label: string; flag: string }[] = [
 
 interface ChatMessage {
   id: string;
-  role: "user" | "assistant" | "system";
+  role: "user" | "assistant" | "system" | "alert";
   content: string;
   serviceIds?: string[];
   isStreaming?: boolean;
+  alert?: CriticalAlert;
 }
 
 function ServiceChip({ serviceId }: { serviceId: string }) {
@@ -79,14 +81,71 @@ function ServiceChip({ serviceId }: { serviceId: string }) {
   );
 }
 
-function MessageBubble({ message }: { message: ChatMessage }) {
+function CriticalAlertBubble({ alert, language }: { alert: CriticalAlert; language: string }) {
+  const isFr = language !== "en";
+  const isCrisis = alert.level === "crisis";
+
+  return (
+    <View style={styles.alertWrap}>
+      <View style={[styles.alertCard, isCrisis ? styles.alertCardCrisis : styles.alertCardWarning]}>
+        <View style={styles.alertHeader}>
+          <View style={[styles.alertIcon, { backgroundColor: isCrisis ? "#dc2626" : "#d97706" }]}>
+            <Feather name={isCrisis ? "heart" : "shield"} size={16} color="#fff" />
+          </View>
+          <Text style={styles.alertTitle}>
+            {isCrisis
+              ? (isFr ? "Vous n'êtes pas seul(e)" : "You are not alone")
+              : (isFr ? "Votre sécurité compte" : "Your safety matters")}
+          </Text>
+        </View>
+        <Text style={styles.alertBody}>
+          {isCrisis
+            ? (isFr
+              ? "Des professionnels sont disponibles maintenant, 24h/24, pour vous aider."
+              : "Professionals are available now, 24/7, to help you.")
+            : (isFr
+              ? "Si vous êtes en danger, contactez immédiatement les services d'urgence."
+              : "If you are in danger, contact emergency services immediately.")}
+        </Text>
+        <View style={styles.alertNumbers}>
+          {alert.numbers.map((n) => (
+            <Pressable
+              key={n.number}
+              style={({ pressed }) => [
+                styles.alertNumberBtn,
+                { backgroundColor: isCrisis ? "#dc2626" : "#d97706", opacity: pressed ? 0.8 : 1 },
+              ]}
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                Linking.openURL(`tel:${n.number.replace(/[^0-9+]/g, "")}`);
+              }}
+            >
+              <Feather name="phone" size={13} color="#fff" />
+              <View>
+                <Text style={styles.alertNumberLabel}>{n.label}</Text>
+                <Text style={styles.alertNumberVal}>{n.number}</Text>
+              </View>
+            </Pressable>
+          ))}
+        </View>
+      </View>
+    </View>
+  );
+}
+
+function MessageBubble({ message, language }: { message: ChatMessage; language: string }) {
   const colors = useColors();
   const isUser = message.role === "user";
   const isSystem = message.role === "system";
+  const isAlert = message.role === "alert";
 
   const cleanContent = message.content
     .replace(/\[SERVICES:[^\]]*\]/g, "")
     .trim();
+
+  if (isAlert && message.alert) {
+    return <CriticalAlertBubble alert={message.alert} language={language} />;
+  }
 
   if (isSystem) {
     return (
@@ -115,7 +174,7 @@ function MessageBubble({ message }: { message: ChatMessage }) {
     >
       {!isUser && (
         <View style={[styles.aiAvatar, { backgroundColor: colors.primary }]}>
-          <Text style={styles.aiAvatarText}>AI</Text>
+          <Feather name="cpu" size={13} color="#fff" />
         </View>
       )}
       <View style={[styles.messageBubbleWrap, isUser && { alignItems: "flex-end" }]}>
@@ -234,6 +293,16 @@ export default function ChatScreen() {
         content: trimmed,
       };
 
+      const criticalAlert = detectCriticalSituation(trimmed);
+      const alertMsg: ChatMessage | null = criticalAlert
+        ? {
+            id: `alert-${Date.now()}`,
+            role: "alert",
+            content: "",
+            alert: criticalAlert,
+          }
+        : null;
+
       const aiMsgId = `a-${Date.now()}`;
       const aiMsg: ChatMessage = {
         id: aiMsgId,
@@ -242,7 +311,12 @@ export default function ChatScreen() {
         isStreaming: true,
       };
 
-      setMessages((prev) => [...prev, userMsg, aiMsg]);
+      setMessages((prev) => [
+        ...prev,
+        userMsg,
+        ...(alertMsg ? [alertMsg] : []),
+        aiMsg,
+      ]);
       setIsLoading(true);
       scrollToBottom();
 
@@ -475,7 +549,7 @@ export default function ChatScreen() {
             </View>
           ) : null
         }
-        renderItem={({ item }) => <MessageBubble message={item} />}
+        renderItem={({ item }) => <MessageBubble message={item} language={chatLang} />}
       />
 
       <View
@@ -615,9 +689,69 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     marginBottom: 2,
   },
-  aiAvatarText: {
+  alertWrap: {
+    marginVertical: 4,
+  },
+  alertCard: {
+    borderRadius: 16,
+    padding: 14,
+    gap: 10,
+  },
+  alertCardCrisis: {
+    backgroundColor: "#fef2f2",
+    borderWidth: 1.5,
+    borderColor: "#fca5a5",
+  },
+  alertCardWarning: {
+    backgroundColor: "#fffbeb",
+    borderWidth: 1.5,
+    borderColor: "#fcd34d",
+  },
+  alertHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  alertIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  alertTitle: {
+    fontSize: 15,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+    color: "#1a1a1a",
+    flex: 1,
+  },
+  alertBody: {
+    fontSize: 13,
+    fontFamily: "Inter_400Regular",
+    color: "#374151",
+    lineHeight: 19,
+  },
+  alertNumbers: {
+    gap: 8,
+    marginTop: 2,
+  },
+  alertNumberBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+  },
+  alertNumberLabel: {
+    color: "rgba(255,255,255,0.85)",
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+  },
+  alertNumberVal: {
     color: "#fff",
-    fontSize: 10,
+    fontSize: 14,
     fontWeight: "700",
     fontFamily: "Inter_700Bold",
   },
