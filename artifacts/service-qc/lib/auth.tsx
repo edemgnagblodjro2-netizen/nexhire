@@ -1,12 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef, type ReactNode } from "react";
-import * as AuthSession from "expo-auth-session";
-import * as WebBrowser from "expo-web-browser";
 import * as SecureStore from "expo-secure-store";
 
-WebBrowser.maybeCompleteAuthSession();
-
 const AUTH_TOKEN_KEY = "auth_session_token";
-const ISSUER_URL = process.env.EXPO_PUBLIC_ISSUER_URL ?? "https://replit.com/oidc";
 
 interface User {
   id: string;
@@ -20,7 +15,8 @@ interface AuthContextValue {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: () => Promise<void>;
+  loginWithEmail: (email: string, password: string) => Promise<string | null>;
+  register: (email: string, password: string, firstName: string, lastName: string) => Promise<string | null>;
   logout: () => Promise<void>;
 }
 
@@ -28,7 +24,8 @@ const AuthContext = createContext<AuthContextValue>({
   user: null,
   isLoading: true,
   isAuthenticated: false,
-  login: async () => {},
+  loginWithEmail: async () => null,
+  register: async () => null,
   logout: async () => {},
 });
 
@@ -39,29 +36,9 @@ function getApiBaseUrl(): string {
   return "";
 }
 
-function getClientId(): string {
-  return process.env.EXPO_PUBLIC_REPL_ID || "";
-}
-
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  const discovery = AuthSession.useAutoDiscovery(ISSUER_URL);
-
-  const redirectUri = AuthSession.makeRedirectUri();
-
-  const [request, response, promptAsync] = AuthSession.useAuthRequest(
-    {
-      clientId: getClientId(),
-      scopes: ["openid", "email", "profile", "offline_access"],
-      redirectUri,
-      prompt: AuthSession.Prompt.Login,
-    },
-    discovery,
-  );
-
-  const exchangedCodeRef = useRef<string | null>(null);
 
   const fetchUser = useCallback(async () => {
     try {
@@ -95,60 +72,60 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     fetchUser();
   }, [fetchUser]);
 
-  useEffect(() => {
-    if (response?.type !== "success" || !request?.codeVerifier) return;
-
-    const { code, state } = response.params;
-
-    if (exchangedCodeRef.current === code) return;
-    exchangedCodeRef.current = code;
-
-    (async () => {
-      try {
-        const apiBase = getApiBaseUrl();
-        if (!apiBase) {
-          console.error("API base URL is not configured.");
-          return;
-        }
-
-        const exchangeRes = await fetch(`${apiBase}/api/mobile-auth/token-exchange`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            code,
-            code_verifier: request.codeVerifier,
-            redirect_uri: redirectUri,
-            state,
-            nonce: request.nonce,
-          }),
-        });
-
-        if (!exchangeRes.ok) {
-          console.error("Token exchange failed:", exchangeRes.status);
-          setIsLoading(false);
-          return;
-        }
-
-        const data = await exchangeRes.json();
-        if (data.token) {
-          await SecureStore.setItemAsync(AUTH_TOKEN_KEY, data.token);
-          setIsLoading(true);
-          await fetchUser();
-        }
-      } catch (err) {
-        console.error("Token exchange error:", err);
-        setIsLoading(false);
-      }
-    })();
-  }, [response, request, redirectUri, fetchUser]);
-
-  const login = useCallback(async () => {
+  const loginWithEmail = useCallback(async (email: string, password: string): Promise<string | null> => {
     try {
-      await promptAsync();
-    } catch (err) {
-      console.error("Login error:", err);
+      const apiBase = getApiBaseUrl();
+      const res = await fetch(`${apiBase}/api/mobile-auth/email-login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        return data.error || "Erreur de connexion.";
+      }
+
+      if (data.token) {
+        await SecureStore.setItemAsync(AUTH_TOKEN_KEY, data.token);
+        await fetchUser();
+      }
+      return null;
+    } catch {
+      return "Erreur réseau. Vérifiez votre connexion.";
     }
-  }, [promptAsync]);
+  }, [fetchUser]);
+
+  const register = useCallback(async (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+  ): Promise<string | null> => {
+    try {
+      const apiBase = getApiBaseUrl();
+      const res = await fetch(`${apiBase}/api/mobile-auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, firstName, lastName }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        return data.error || "Erreur lors de l'inscription.";
+      }
+
+      if (data.token) {
+        await SecureStore.setItemAsync(AUTH_TOKEN_KEY, data.token);
+        await fetchUser();
+      }
+      return null;
+    } catch {
+      return "Erreur réseau. Vérifiez votre connexion.";
+    }
+  }, [fetchUser]);
 
   const logout = useCallback(async () => {
     try {
@@ -173,7 +150,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         isLoading,
         isAuthenticated: !!user,
-        login,
+        loginWithEmail,
+        register,
         logout,
       }}
     >

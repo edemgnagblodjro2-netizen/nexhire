@@ -1,4 +1,6 @@
 import * as oidc from "openid-client";
+import bcrypt from "bcryptjs";
+import { z } from "zod";
 import { Router, type IRouter, type Request, type Response } from "express";
 import {
   GetCurrentAuthUserResponse,
@@ -7,6 +9,7 @@ import {
   LogoutMobileSessionResponse,
 } from "@workspace/api-zod";
 import { db, usersTable } from "@workspace/db";
+import { eq } from "drizzle-orm";
 import {
   clearSession,
   getOidcConfig,
@@ -287,6 +290,111 @@ router.post(
     }
   },
 );
+
+const RegisterBody = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+  firstName: z.string().min(1),
+  lastName: z.string().min(1),
+});
+
+router.post("/mobile-auth/register", async (req: Request, res: Response) => {
+  const parsed = RegisterBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: "Données invalides. Vérifiez tous les champs." });
+    return;
+  }
+
+  const { email, password, firstName, lastName } = parsed.data;
+
+  try {
+    const existing = await db
+      .select({ id: usersTable.id })
+      .from(usersTable)
+      .where(eq(usersTable.email, email))
+      .limit(1);
+
+    if (existing.length > 0) {
+      res.status(409).json({ error: "Un compte existe déjà avec cet email." });
+      return;
+    }
+
+    const passwordHash = await bcrypt.hash(password, 12);
+
+    const [newUser] = await db
+      .insert(usersTable)
+      .values({ email, firstName, lastName, passwordHash })
+      .returning();
+
+    const sessionData: SessionData = {
+      user: {
+        id: newUser.id,
+        email: newUser.email,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        profileImageUrl: newUser.profileImageUrl,
+      },
+      access_token: "",
+    };
+
+    const sid = await createSession(sessionData);
+    res.json({ token: sid });
+  } catch (err) {
+    req.log.error({ err }, "Register error");
+    res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
+  }
+});
+
+const EmailLoginBody = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+});
+
+router.post("/mobile-auth/email-login", async (req: Request, res: Response) => {
+  const parsed = EmailLoginBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: "Email ou mot de passe invalide." });
+    return;
+  }
+
+  const { email, password } = parsed.data;
+
+  try {
+    const [user] = await db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.email, email))
+      .limit(1);
+
+    if (!user || !user.passwordHash) {
+      res.status(401).json({ error: "Email ou mot de passe incorrect." });
+      return;
+    }
+
+    const valid = await bcrypt.compare(password, user.passwordHash);
+    if (!valid) {
+      res.status(401).json({ error: "Email ou mot de passe incorrect." });
+      return;
+    }
+
+    const sessionData: SessionData = {
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        profileImageUrl: user.profileImageUrl,
+      },
+      access_token: "",
+    };
+
+    const sid = await createSession(sessionData);
+    res.json({ token: sid });
+  } catch (err) {
+    req.log.error({ err }, "Email login error");
+    res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
+  }
+});
 
 router.post("/mobile-auth/logout", async (req: Request, res: Response) => {
   const sid = getSessionId(req);
