@@ -9,6 +9,7 @@ import {
   Linking,
   Platform,
   Pressable,
+  RefreshControl,
   StyleSheet,
   Text,
   TextInput,
@@ -245,6 +246,7 @@ export default function ChatScreen() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [chatLang, setChatLang] = useState<ChatLang>(language as ChatLang);
   const [showLangPicker, setShowLangPicker] = useState(false);
   const listRef = useRef<FlatList>(null);
@@ -433,6 +435,17 @@ export default function ChatScreen() {
     ]);
   }, [t.aiWelcome]);
 
+  const handleRefresh = useCallback(() => {
+    if (isLoading) return;
+    setIsRefreshing(true);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setTimeout(() => {
+      setMessages([{ id: "welcome", role: "system", content: t.aiWelcome }]);
+      setInput("");
+      setIsRefreshing(false);
+    }, 600);
+  }, [isLoading, t.aiWelcome]);
+
   return (
     <KeyboardAvoidingView
       style={[styles.container, { backgroundColor: colors.background }]}
@@ -537,6 +550,15 @@ export default function ChatScreen() {
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
         onContentSizeChange={scrollToBottom}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor={colors.primary}
+            colors={[colors.primary]}
+            progressBackgroundColor={colors.card}
+          />
+        }
         ListFooterComponent={
           messages.length <= 1 ? (
             <View style={styles.quickPromptsWrap}>
