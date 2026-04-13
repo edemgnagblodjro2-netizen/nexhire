@@ -181,10 +181,12 @@ export default function RegisterScreen() {
             </Animated.View>
 
             <Animated.View style={[styles.footer, { opacity: fadeAnim }]}>
-              <Text style={styles.footerText}>Vous avez déjà un compte ?</Text>
-              <Pressable onPress={() => router.back()}>
-                <Text style={styles.footerLink}>Se connecter</Text>
-              </Pressable>
+              <Text style={styles.footerText}>
+                Vous avez déjà un compte ?{" "}
+                <Text style={styles.footerLink} onPress={() => router.back()}>
+                  Se connecter
+                </Text>
+              </Text>
             </Animated.View>
           </ScrollView>
         </KeyboardAvoidingView>
@@ -291,15 +293,14 @@ const styles = StyleSheet.create({
     color: "#0e7e6e",
   },
   footer: {
-    flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-    gap: 6,
+    justifyContent: "center",
   },
   footerText: {
     fontSize: 14,
     fontFamily: "Inter_400Regular",
     color: "rgba(255,255,255,0.7)",
+    textAlign: "center",
   },
   footerLink: {
     fontSize: 14,
