@@ -251,7 +251,7 @@ export default function ChatScreen() {
   const inputRef = useRef<TextInput>(null);
 
   const topPadding = Platform.OS === "web" ? 16 : insets.top;
-  const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
+  const bottomPadding = Math.max(insets.bottom, 8);
 
   const quickPrompts =
     language === "en"
@@ -533,12 +533,8 @@ export default function ChatScreen() {
         ref={listRef}
         data={messages}
         keyExtractor={(m) => m.id}
-        contentContainerStyle={[
-          styles.listContent,
-          {
-            paddingBottom: bottomPadding + 140,
-          },
-        ]}
+        style={styles.list}
+        contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
         onContentSizeChange={scrollToBottom}
         ListFooterComponent={
@@ -576,7 +572,7 @@ export default function ChatScreen() {
           {
             backgroundColor: colors.background,
             borderTopColor: colors.border,
-            paddingBottom: bottomPadding + 82,
+            paddingBottom: Math.max(bottomPadding, 8),
           },
         ]}
       >
@@ -629,6 +625,7 @@ export default function ChatScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+  list: { flex: 1 },
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -671,6 +668,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     padding: 16,
+    paddingBottom: 24,
     gap: 12,
   },
   systemMessage: {
@@ -857,10 +855,6 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
   },
   inputBar: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
     borderTopWidth: 1,
     paddingTop: 8,
     paddingHorizontal: 12,
