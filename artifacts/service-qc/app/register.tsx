@@ -201,6 +201,14 @@ export default function RegisterScreen() {
                 <Text style={styles.footerLink}>Se connecter</Text>
               </Pressable>
             </Animated.View>
+
+            <Animated.View style={[styles.disclaimerRow, { opacity: fadeAnim }]}>
+              <Text style={styles.disclaimer}>En continuant, vous acceptez nos </Text>
+              <Pressable onPress={() => router.push("/legal" as any)}>
+                <Text style={styles.disclaimerLink}>conditions d'utilisation et notre politique de confidentialité</Text>
+              </Pressable>
+              <Text style={styles.disclaimer}>.</Text>
+            </Animated.View>
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -321,5 +329,27 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_600SemiBold",
     color: "#ffffff",
     textDecorationLine: "underline",
+  },
+  disclaimerRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 8,
+    marginTop: 8,
+  },
+  disclaimer: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.45)",
+    textAlign: "center",
+    lineHeight: 18,
+  },
+  disclaimerLink: {
+    fontSize: 11,
+    fontFamily: "Inter_500Medium",
+    color: "rgba(255,255,255,0.75)",
+    textDecorationLine: "underline",
+    lineHeight: 18,
   },
 });

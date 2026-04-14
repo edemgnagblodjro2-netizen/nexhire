@@ -176,9 +176,13 @@ export default function LoginScreen() {
               </Pressable>
             </Animated.View>
 
-            <Animated.Text style={[styles.disclaimer, { opacity: fadeAnim }]}>
-              En continuant, vous acceptez nos conditions d'utilisation et notre politique de confidentialité.
-            </Animated.Text>
+            <Animated.View style={[styles.disclaimerRow, { opacity: fadeAnim }]}>
+              <Text style={styles.disclaimer}>En continuant, vous acceptez nos </Text>
+              <Pressable onPress={() => router.push("/legal" as any)}>
+                <Text style={styles.disclaimerLink}>conditions d'utilisation et notre politique de confidentialité</Text>
+              </Pressable>
+              <Text style={styles.disclaimer}>.</Text>
+            </Animated.View>
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -330,12 +334,25 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_600SemiBold",
     color: "#ffffff",
   },
+  disclaimerRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 8,
+  },
   disclaimer: {
     fontSize: 11,
     fontFamily: "Inter_400Regular",
     color: "rgba(255,255,255,0.45)",
     textAlign: "center",
-    lineHeight: 16,
-    paddingHorizontal: 8,
+    lineHeight: 18,
+  },
+  disclaimerLink: {
+    fontSize: 11,
+    fontFamily: "Inter_500Medium",
+    color: "rgba(255,255,255,0.75)",
+    textDecorationLine: "underline",
+    lineHeight: 18,
   },
 });
