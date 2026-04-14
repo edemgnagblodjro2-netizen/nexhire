@@ -1,0 +1,89 @@
+🗺️ Cartographie réelle des urgences au Québec
+🚒 1. Services incendie (les plus nombreux)
+
+
+
+6
+•	✅ 704 services incendie municipaux 
+•	Plus de 20 000 pompiers actifs 
+👉 C’est le réseau le plus dense au Québec
+👉 Presque chaque municipalité est couverte
+________________________________________
+🚑 2. Services ambulanciers (préhospitaliers)
+
+
+
+7
+•	Réseau structuré en : 
+o	Centres de communication santé (CCS) 
+o	Entreprises ambulancières 
+•	Exemple majeur : 
+o	Urgences-santé couvre ≈ 36 % des appels d’urgence au Québec 
+👉 ⚠️ Problème clé :
+•	773 municipalités sur 1102 n’ont pas de premiers répondants 
+👉 Donc :
+•	couverture inégale 
+•	délais parfois élevés en région 
+________________________________________
+🚓 3. Services policiers
+
+
+
+6
+•	Environ 30 à 35 corps policiers 
+•	Principaux acteurs : 
+o	Sûreté du Québec (couvre la majorité du territoire) 
+o	Service de police de la Ville de Montréal 
+o	Service de police de la Ville de Québec 
+👉 Une seule organisation peut couvrir des dizaines de municipalités
+________________________________________
+📞 4. Centres d’appels d’urgence (911)
+
+
+
+5
+•	Réseau de centres 911 qui desservent toutes les municipalités 
+•	Ils coordonnent : 
+o	police 
+o	ambulance 
+o	incendie 
+👉 C’est le cerveau du système
+________________________________________
+📊 🔥 RÉSUMÉ GLOBAL RÉEL
+Type de service	Nombre estimé
+🚒 Incendie	704
+🚑 Ambulance (organisations)	~40–50
+🚓 Police	~30–35
+📞 Centres 911	~30
+✅ TOTAL :
+👉 ≈ 800 à 820 services d’urgence structurés
+________________________________________
+⚠️ Ce que peu de gens comprennent (très important)
+👉 Le Québec a :
+•	1 112 municipalités 
+•	MAIS seulement ~800 structures d’urgence 
+➡️ Donc :
+•	plusieurs villes partagent les mêmes services 
+•	il y a des zones moins bien desservies 
+________________________________________
+💡 Insight stratégique (TRÈS IMPORTANT pour ton projet)
+👉 Le vrai problème au Québec n’est pas le nombre…
+mais :
+❌ Les failles majeures :
+•	délais ambulanciers élevés en région 
+•	manque de premiers répondants 
+•	coordination lente entre services 
+•	surcharge dans les grandes villes 
+________________________________________
+🚀 Opportunité directe pour ton projet AttenteZéro
+Tu peux viser :
+1. 📱 Centralisation intelligente
+•	connecter police + ambulance + incendie 
+2. ⏱️ Réduction des délais
+•	géolocalisation en temps réel 
+•	priorisation intelligente des urgences 
+3. 📊 Prédiction des urgences
+•	IA pour anticiper : 
+o	zones à risque 
+o	périodes critiques
+
