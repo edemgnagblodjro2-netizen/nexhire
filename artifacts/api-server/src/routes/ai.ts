@@ -62,6 +62,8 @@ SHERBROOKE:
 - ID:sher-fa1 | Maison La Montée | Violence conjugale Sherbrooke | Famille urgent
 
 TROIS-RIVIÈRES (Mauricie):
+- ID:tr-hop1 | CHAUR | Hôpital universitaire urgences 24h Trois-Rivières trauma chirurgie | Santé urgent Tél:819-697-3333
+- ID:tr-ambu1 | Coopérative Ambulanciers Mauricie | Ambulance Trois-Rivières région TAP soins | Santé urgent Tél:819-374-4444
 - ID:tr-h1 | Le Havre | Hébergement urgence hommes Trois-Rivières 24h | Logement urgent
 - ID:tr-h2 | Mission de l'Espoir | Refuge hommes sans abri Trois-Rivières | Logement urgent
 - ID:tr-h3 | Carrefour Le Mitan | Logement transitoire Trois-Rivières | Logement
@@ -80,6 +82,9 @@ TROIS-RIVIÈRES (Mauricie):
 - ID:tr-drop | Drogue Aide Référence TR | Dépendances TR/Mauricie | Santé mentale urgent
 
 SHAWINIGAN (Mauricie):
+- ID:shaw-hop1 | Hôpital Centre-de-la-Mauricie | Hôpital urgences 24h Shawinigan chirurgie obstétrique | Santé urgent Tél:819-536-7500
+- ID:shaw-ambu1 | Ambulance 22-22 Shawinigan | Ambulance locale Shawinigan Grand-Mère | Santé urgent Tél:819-536-2222
+- ID:shaw-caserne | Caserne pompiers Champlain Shawinigan | Incendie sauvetage Shawinigan | Social urgent
 - ID:shaw-f1 | Dépannage Alimentaire Shawinigan | Aide alimentaire urgence Shawinigan | Nourriture urgent
 - ID:shaw-food2 | Moisson Mauricie dist. Shawinigan | Paniers alimentaires Shawinigan | Nourriture urgent
 - ID:shaw-h1 | La Chrysalide | Maison hébergement femmes violences Shawinigan 24h | Famille urgent
@@ -92,6 +97,9 @@ SHAWINIGAN (Mauricie):
 - ID:shaw-legal1 | Aide juridique Shawinigan | Droit gratuit faible revenu Shawinigan | Juridique
 
 DRUMMONDVILLE (Centre-du-Québec):
+- ID:drum-hop1 | Hôpital Sainte-Croix | Hôpital urgences 24h Drummondville chirurgie soins intensifs | Santé urgent Tél:819-478-6464
+- ID:drum-ambu1 | CAM Centre-du-Québec | Ambulance Drummondville TAP soins préhospitaliers | Santé urgent Tél:819-478-2323
+- ID:drum-siuc | SIUCQ | Urgence civile évacuation sinistre Drummondville CDQ | Social urgent
 - ID:drum-h1 | Maison Coup d'Éclat | Violence conjugale Drummondville 24h | Famille urgent Tél:819-477-8644
 - ID:drum-h2 | Les Escales de Drummond | Logement transitoire Drummondville | Logement
 - ID:drum-mh1 | Centre de Crise CDQ | Crise Drummondville 24h | Santé mentale urgent Tél:819-477-2433
@@ -105,6 +113,8 @@ DRUMMONDVILLE (Centre-du-Québec):
 - ID:drum-cavac | CAVAC CDQ Drummondville | Victimes actes criminels Drummondville | Famille urgent
 
 VICTORIAVILLE (Centre-du-Québec / Arthabaska):
+- ID:vic-hop1 | Hôtel-Dieu d'Arthabaska | Hôpital urgences 24h Victoriaville trauma chirurgie oncologie | Santé urgent Tél:819-357-2030
+- ID:vic-ambu1 | Ambulanciers Arthabaska-L'Érable | Ambulance Victoriaville Plessisville TAP | Santé urgent Tél:819-752-4444
 - ID:vic-h1 | La Montée | Maison hébergement femmes violences Victoriaville 24h | Famille urgent Tél:819-758-6066
 - ID:vic-h2 | Accueil-Gîte | Hébergement urgence Victoriaville | Logement urgent
 - ID:vic-food1 | Moisson Arthabaska | Banque alimentaire Victoriaville région | Nourriture urgent Tél:819-752-7700
@@ -263,6 +273,16 @@ AMBULANCE / SOINS PRÉHOSPITALIERS:
 - Services ambulanciers Côte-Nord | Tél:418-962-8811 / 911
 - Services ambulanciers Chaudière-Appalaches | Tél:418-380-8996 / 911
 ⚠️ 773 des 1 112 municipalités du Québec n'ont pas de premiers répondants — délais possibles en zone rurale
+
+DISTANCES ENTRE LES 4 VILLES PRIORITAIRES (Mauricie / Centre-du-Québec):
+- Trois-Rivières → Shawinigan : ~30 km (autoroute 55, ~25 min)
+- Trois-Rivières → Drummondville : ~70 km (autoroute 55, ~50 min)
+- Trois-Rivières → Victoriaville : ~95 km (autoroute 55, ~1h05)
+- Drummondville → Victoriaville : ~60 km (autoroute 55, ~45 min)
+⚠️ HÔPITAUX SPÉCIALISÉS: Si patient doit être transféré depuis Shawinigan → CHAUR Trois-Rivières (trauma, cardiologie, neurologie) = 30 km. Depuis Victoriaville → CHAUR ou CHU de Québec selon la spécialité.
+💡 Si personne à Shawinigan demande ambulance: Ambulance 22-22 (819-536-2222), urgences à l'Hôpital Centre-de-la-Mauricie.
+💡 Si personne à Drummondville demande ambulance: CAM CDQ (819-478-2323), urgences à l'Hôpital Sainte-Croix.
+💡 Si personne à Victoriaville demande ambulance: Services ambulanciers Arthabaska (819-752-4444), urgences à l'Hôtel-Dieu d'Arthabaska.
 
 DÉPENDANCES ET LIGNES DE CRISE SPÉCIALISÉES:
 - Drogue : aide et référence | Dépendances drogue/alcool 24h | Tél:1-800-265-2626

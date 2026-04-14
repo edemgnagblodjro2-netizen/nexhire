@@ -67,6 +67,24 @@ const SECTIONS: EmergencySection[] = [
     noteEn: "Real-time dispatch — police, fire, ambulance",
   },
   {
+    subcategory: "Urgence hospitalière",
+    icon: "plus-square",
+    color: "#7c3aed",
+    label: "Hôpital d'urgence le plus proche",
+    labelEn: "Nearest Emergency Hospital",
+    note: "Urgences 24h/24 — trauma, chirurgie, soins intensifs",
+    noteEn: "24/7 ER — trauma, surgery, intensive care",
+  },
+  {
+    subcategory: "Service ambulancier",
+    icon: "activity",
+    color: "#10b981",
+    label: "Service ambulancier",
+    labelEn: "Ambulance Service",
+    note: "Soins préhospitaliers — TAP, défibrillation, transport",
+    noteEn: "Pre-hospital care — paramedics, defibrillation, transport",
+  },
+  {
     subcategory: "Service de police",
     icon: "shield",
     color: "#3b82f6",
@@ -83,15 +101,6 @@ const SECTIONS: EmergencySection[] = [
     labelEn: "Fire Department",
     note: "Incendie, sauvetage, matières dangereuses",
     noteEn: "Fire, rescue, hazardous materials",
-  },
-  {
-    subcategory: "Service ambulancier",
-    icon: "activity",
-    color: "#10b981",
-    label: "Service ambulancier",
-    labelEn: "Ambulance Service",
-    note: "Urgences médicales, soins préhospitaliers",
-    noteEn: "Medical emergencies, pre-hospital care",
   },
 ];
 
