@@ -50,9 +50,19 @@ export default function ResultsScreen() {
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
 
   const filtered = useMemo(() => {
-    if (selectedCategory === "all") return SERVICES;
-    return SERVICES.filter((s) => s.category === selectedCategory);
-  }, [selectedCategory]);
+    const q = (query ?? "").toLowerCase().trim();
+    return SERVICES.filter((s) => {
+      const matchesCategory =
+        selectedCategory === "all" || s.category === selectedCategory;
+      if (!q) return matchesCategory;
+      const matchesText =
+        s.name.toLowerCase().includes(q) ||
+        s.city.toLowerCase().includes(q) ||
+        s.description.toLowerCase().includes(q) ||
+        (s.subcategory ?? "").toLowerCase().includes(q);
+      return matchesCategory && matchesText;
+    });
+  }, [selectedCategory, query]);
 
   function handleChipPress(cat: Category | "all") {
     Haptics.selectionAsync();

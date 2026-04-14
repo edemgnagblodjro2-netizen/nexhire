@@ -218,8 +218,8 @@ const QUICK_PROMPTS_FR = [
   "Je suis un immigrant",
   "J'ai besoin d'aide psychologique",
   "Je cherche du travail",
-  "Je cherche un concessionnaire automobile",
-  "Je cherche une assurance auto",
+  "Je cherche une garderie",
+  "Aide pour ma famille",
 ];
 
 const QUICK_PROMPTS_EN = [
@@ -229,8 +229,8 @@ const QUICK_PROMPTS_EN = [
   "I am an immigrant",
   "I need mental health support",
   "I'm looking for work",
-  "I want to buy a car",
-  "I need car insurance",
+  "I need childcare",
+  "Help for my family",
 ];
 
 const QUICK_PROMPTS_ES = [
@@ -240,8 +240,30 @@ const QUICK_PROMPTS_ES = [
   "Soy inmigrante",
   "Necesito apoyo emocional",
   "Busco trabajo",
-  "Busco un concesionario de autos",
-  "Necesito seguro de auto",
+  "Busco guardería para mis hijos",
+  "Necesito ayuda para mi familia",
+];
+
+const QUICK_PROMPTS_AR = [
+  "ليس لدي مكان للنوم",
+  "أحتاج مساعدة غذائية",
+  "أشعر بالخطر",
+  "أنا مهاجر",
+  "أحتاج دعماً نفسياً",
+  "أبحث عن عمل",
+  "أحتاج رعاية أطفال",
+  "أحتاج مساعدة لعائلتي",
+];
+
+const QUICK_PROMPTS_HT = [
+  "Mwen pa gen kote pou dòmi",
+  "Mwen bezwen manje",
+  "Mwen santi mwen an danje",
+  "Mwen se yon imigran",
+  "Mwen bezwen sipò sikolojik",
+  "Mwen ap chèche travay",
+  "Mwen bezwen gadri pou timoun mwen",
+  "Mwen bezwen èd pou fanmi mwen",
 ];
 
 export default function ChatScreen() {
@@ -262,10 +284,14 @@ export default function ChatScreen() {
   const bottomPadding = Math.max(insets.bottom, 8);
 
   const quickPrompts =
-    language === "en"
+    chatLang === "en"
       ? QUICK_PROMPTS_EN
-      : language === "es"
+      : chatLang === "es"
       ? QUICK_PROMPTS_ES
+      : chatLang === "ar"
+      ? QUICK_PROMPTS_AR
+      : chatLang === "ht"
+      ? QUICK_PROMPTS_HT
       : QUICK_PROMPTS_FR;
 
   useEffect(() => {

@@ -119,7 +119,7 @@ export default function HomeScreen() {
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statItem}>
-            <Text style={styles.statNum}>10</Text>
+            <Text style={styles.statNum}>4</Text>
             <Text style={styles.statLabel}>{language === "fr" ? "villes" : "cities"}</Text>
           </View>
           <View style={styles.statDivider} />
