@@ -214,6 +214,41 @@ export default function HomeScreen() {
           </LinearGradient>
         </Pressable>
 
+        {/* ── Map Banner ── */}
+        <Pressable
+          style={({ pressed }) => [styles.mapBanner, { opacity: pressed ? 0.88 : 1 }]}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            router.push("/(tabs)/map" as any);
+          }}
+        >
+          <LinearGradient
+            colors={["#0f766e", colors.primary]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.mapBannerGrad}
+          >
+            <View style={styles.mapBannerLeft}>
+              <View style={styles.mapIconWrap}>
+                <Feather name="map-pin" size={20} color="#fff" />
+              </View>
+              <View style={styles.mapBannerText}>
+                <Text style={styles.mapBannerTitle}>
+                  {language === "fr" ? "🗺️ Carte des services" : "🗺️ Services Map"}
+                </Text>
+                <Text style={styles.mapBannerSub}>
+                  {language === "fr"
+                    ? `${SERVICES.length}+ épingles • filtrées par catégorie`
+                    : `${SERVICES.length}+ pins • filtered by category`}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.mapArrow}>
+              <Feather name="chevron-right" size={18} color="rgba(255,255,255,0.85)" />
+            </View>
+          </LinearGradient>
+        </Pressable>
+
         {/* ── AI Banner ── */}
         <Pressable
           style={({ pressed }) => [
@@ -497,6 +532,56 @@ const styles = StyleSheet.create({
     color: "rgba(255,255,255,0.82)",
   },
   sosArrow: {
+    flexShrink: 0,
+  },
+
+  /* Map Banner */
+  mapBanner: {
+    marginBottom: 14,
+    borderRadius: 16,
+    overflow: "hidden",
+    shadowColor: "#0f766e",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  mapBannerGrad: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16,
+    gap: 12,
+  },
+  mapBannerLeft: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  mapIconWrap: {
+    width: 44,
+    height: 44,
+    borderRadius: 13,
+    backgroundColor: "rgba(255,255,255,0.22)",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  mapBannerText: {
+    flex: 1,
+    gap: 3,
+  },
+  mapBannerTitle: {
+    fontSize: 16,
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+  },
+  mapBannerSub: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.82)",
+  },
+  mapArrow: {
     flexShrink: 0,
   },
 
