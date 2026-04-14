@@ -11,12 +11,18 @@
     "splash": {
       "image": "./assets/images/icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0e7e6e"
+      "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "icon": "./assets/images/icon.png"
     },
-    "android": {},
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/icon_transparent.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
     "web": {
       "favicon": "./assets/images/icon.png"
     },
