@@ -61,11 +61,61 @@ SHERBROOKE:
 - ID:sher-m1 | Centre de Crise Estrie | Crise Sherbrooke 24h | Santé mentale urgent
 - ID:sher-fa1 | Maison La Montée | Violence conjugale Sherbrooke | Famille urgent
 
-TROIS-RIVIÈRES:
-- ID:tr-h1 | Le Havre | Hébergement urgence Trois-Rivières | Logement urgent
-- ID:tr-f1 | Moisson Mauricie | Banque alimentaire Trois-Rivières | Nourriture urgent
+TROIS-RIVIÈRES (Mauricie):
+- ID:tr-h1 | Le Havre | Hébergement urgence hommes Trois-Rivières 24h | Logement urgent
+- ID:tr-h2 | Mission de l'Espoir | Refuge hommes sans abri Trois-Rivières | Logement urgent
+- ID:tr-h3 | Carrefour Le Mitan | Logement transitoire Trois-Rivières | Logement
+- ID:tr-f1 | Moisson Mauricie/CDQ | Banque alimentaire Trois-Rivières | Nourriture urgent
+- ID:tr-f2 | Saint-Vincent-de-Paul TR | Alimentation, vêtements, mobilier | Nourriture/Social
 - ID:tr-m1 | Centre de Crise Mauricie | Crise Trois-Rivières 24h | Santé mentale urgent
 - ID:tr-fa1 | La Séjournelle | Violence conjugale Trois-Rivières | Famille urgent
+- ID:tr-health1 | CLSC Trois-Rivières CIUSSS MCQ | Soins santé, services sociaux | Santé Tél:819-370-2100
+- ID:tr-emp1 | CJE Mauricie | Emploi jeunes 16-35 ans Trois-Rivières | Emploi Tél:819-375-1313
+- ID:tr-emp2 | Emploi-Québec Trois-Rivières | Aide emploi, formations | Emploi Tél:1-888-643-4721
+- ID:tr-fam1 | Centre-femmes Mauricie | Soutien femmes Trois-Rivières | Famille Tél:819-378-9373
+- ID:tr-legal1 | Aide juridique Mauricie | Droit gratuit faible revenu TR | Juridique Tél:819-371-6711
+- ID:tr-social1 | Centraide Mauricie | Référence 60+ organismes locaux | Social Tél:819-374-3676
+- ID:tr-immig1 | CITIM Mauricie | Immigration, intégration TR | Immigration Tél:819-372-4655
+- ID:tr-cavac | CAVAC Mauricie-CDQ | Victimes actes criminels TR | Famille urgent Tél:819-373-0318
+- ID:tr-drop | Drogue Aide Référence TR | Dépendances TR/Mauricie | Santé mentale urgent
+
+SHAWINIGAN (Mauricie):
+- ID:shaw-f1 | Dépannage Alimentaire Shawinigan | Aide alimentaire urgence Shawinigan | Nourriture urgent
+- ID:shaw-food2 | Moisson Mauricie dist. Shawinigan | Paniers alimentaires Shawinigan | Nourriture urgent
+- ID:shaw-h1 | La Chrysalide | Maison hébergement femmes violences Shawinigan 24h | Famille urgent
+- ID:shaw-h2 | Hébergement La Vigile | Hébergement urgence sans abri Shawinigan | Logement urgent
+- ID:shaw-health1 | CLSC Shawinigan CIUSSS MCQ | Soins santé Shawinigan | Santé Tél:819-536-7500
+- ID:shaw-mh1 | Centre de Crise Mauricie (Shawinigan) | Crise 24h Shawinigan | Santé mentale urgent
+- ID:shaw-emp1 | CJE Shawinigan | Emploi jeunes Shawinigan | Emploi Tél:819-537-0111
+- ID:shaw-fam1 | Centre-femmes Shawinigan | Soutien femmes Shawinigan | Famille Tél:819-537-8261
+- ID:shaw-social1 | Saint-Vincent-de-Paul Shawinigan | Aide matérielle Shawinigan | Social
+- ID:shaw-legal1 | Aide juridique Shawinigan | Droit gratuit faible revenu Shawinigan | Juridique
+
+DRUMMONDVILLE (Centre-du-Québec):
+- ID:drum-h1 | Maison Coup d'Éclat | Violence conjugale Drummondville 24h | Famille urgent Tél:819-477-8644
+- ID:drum-h2 | Les Escales de Drummond | Logement transitoire Drummondville | Logement
+- ID:drum-mh1 | Centre de Crise CDQ | Crise Drummondville 24h | Santé mentale urgent Tél:819-477-2433
+- ID:drum-health1 | CLSC Drummond CIUSSS MCQ | Soins santé Drummondville | Santé Tél:819-474-2572
+- ID:drum-emp1 | CJE Drummond | Emploi jeunes Drummondville | Emploi Tél:819-474-1463
+- ID:drum-fam1 | Centre-femmes l'Essentielle | Soutien femmes Drummondville | Famille Tél:819-474-2381
+- ID:drum-immig1 | CAID Drummondville | Immigration intégration Drummondville | Immigration Tél:819-474-0961
+- ID:drum-legal1 | Aide juridique Drummondville | Droit gratuit Drummondville | Juridique Tél:819-478-0540
+- ID:drum-social1 | Centraide CDQ | Référence organismes Centre-du-Québec | Social Tél:819-472-6444
+- ID:drum-food2 | L'Armoire du Placard | Épicerie communautaire Drummondville | Nourriture
+- ID:drum-cavac | CAVAC CDQ Drummondville | Victimes actes criminels Drummondville | Famille urgent
+
+VICTORIAVILLE (Centre-du-Québec / Arthabaska):
+- ID:vic-h1 | La Montée | Maison hébergement femmes violences Victoriaville 24h | Famille urgent Tél:819-758-6066
+- ID:vic-h2 | Accueil-Gîte | Hébergement urgence Victoriaville | Logement urgent
+- ID:vic-food1 | Moisson Arthabaska | Banque alimentaire Victoriaville région | Nourriture urgent Tél:819-752-7700
+- ID:vic-mh1 | Centre de Crise CDQ (Victoriaville) | Crise 24h Victoriaville | Santé mentale urgent
+- ID:vic-health1 | CLSC Arthabaska-L'Érable | Soins santé Victoriaville | Santé Tél:819-357-2100
+- ID:vic-emp1 | CJE Arthabaska-L'Érable | Emploi jeunes Victoriaville | Emploi Tél:819-758-2088
+- ID:vic-fam1 | Centre-femmes Victoriaville | Soutien femmes Victoriaville | Famille Tél:819-758-6262
+- ID:vic-legal1 | Aide juridique Victoriaville | Droit gratuit Victoriaville | Juridique Tél:819-752-2231
+- ID:vic-social1 | Saint-Vincent-de-Paul Victoriaville | Aide matérielle Victoriaville | Social
+- ID:vic-social2 | REA Victoriaville | Entraide, visites amitié, soutien aînés | Social
+- ID:vic-cavac | CAVAC CDQ Victoriaville | Victimes actes criminels Victoriaville | Famille urgent
 
 SAGUENAY:
 - ID:sag-h1 | Centre Le Havre | Hébergement Saguenay | Logement urgent
