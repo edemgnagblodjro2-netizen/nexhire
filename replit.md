@@ -13,58 +13,99 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **API framework**: Express 5
 - **Database**: PostgreSQL + Drizzle ORM
 - **Validation**: Zod (`zod/v4`), `drizzle-zod`
-- **API codegen**: Orval (from OpenAPI spec)
 - **Build**: esbuild (CJS bundle)
 
 ## Key Commands
 
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
 - `pnpm --filter @workspace/api-server run dev` — run API server locally
-
-See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
 
 ## Artifacts
 
-### AIDORA QC (artifacts/service-qc)
+### AttenteZéro (artifacts/service-qc)
+
 - **Type**: Expo mobile app (React Native)
 - **Preview path**: `/`
-- **Purpose**: AI-powered platform helping vulnerable people in Quebec find community and social services
-- **Features**:
-  - **Animated Splash Screen**: Custom logo splash with teal gradient, spring animation, and fade-out before login
-  - **Login Page**: Full-screen login with logo, feature highlights, and "Se connecter" button (OIDC via Replit Auth)
-  - **Auth Guard**: Unauthenticated users are redirected to login; tabs are protected
-  - **AI Chat (AIDORA IA)**: Conversational AI that analyzes user needs and recommends specific services. Powered by OpenAI GPT via Replit AI integrations. Streams responses in real-time. Supports 5 languages: FR, EN, ES, AR, HT (Haitian Creole).
-  - Natural language search with keyword-based category detection
-  - 100+ real Quebec services with GPS coordinates across all major regions
-  - Geolocation: sorts urgent services by distance from user
-  - Urgent Help screen: 67 urgent services with direct call buttons
-  - Services browsing tab: searchable + filterable 2-column grid
-  - Categories tab: 8 categories with service counts
-  - Bilingual FR/EN toggle (persisted in AsyncStorage)
-  - Dark mode support
-- **AI Endpoint**: `POST /api/ai/chat` — accepts `{message, language, history}`, streams SSE with AI analysis + matching service IDs
-- **Key files**:
-  - `app/index.tsx` — root auth guard (redirects to login or tabs)
-  - `app/login.tsx` — login page with logo, features, and sign-in button
-  - `components/AppSplashScreen.tsx` — animated splash screen overlay
-  - `app/(tabs)/chat.tsx` — AI chat screen (AIDORA IA)
-  - `app/(tabs)/index.tsx` — home screen with AI banner
-  - `app/(tabs)/services.tsx` — services browsing
-  - `app/(tabs)/categories.tsx` — categories grid
-  - `app/urgent.tsx` — urgent help with location sorting
-  - `data/services.ts` — 100+ services with coordinates
-  - `contexts/LocationContext.tsx` — geolocation context
-  - `contexts/LanguageContext.tsx` — bilingual context
-  - `constants/translations.ts` — FR/EN string translations
-  - `constants/colors.ts` — teal brand palette with dark mode
+- **App name**: AttenteZéro
+- **Bundle ID (iOS)**: `com.attentezero.app`
+- **Package (Android)**: `com.attentezero.app`
+- **Version**: 1.0.0 (versionCode: 1)
+- **Purpose**: Aide les personnes vulnérables au Québec à trouver des services communautaires et sociaux. Couvre 4 villes : Trois-Rivières, Shawinigan, Drummondville, Victoriaville.
+
+### Features
+
+- **Splash animé** : Logo AttenteZéro avec gradient teal, animation spring, fondu avant login
+- **Auth email/mot de passe** : login, register, reset-password via API `quebec-aid-finder.replit.app`
+- **Accueil** : Hero gradient, barre de recherche, stats (457+ services, 4 villes, 24/7), bannières SOS/Carte/IA, catégories rapides
+- **Chat IA** : GPT-4o-mini via SSE streaming, détection de situations critiques (crise suicidaire, danger immédiat), alertes humanisées, 5 langues (FR/EN/ES/AR/HT), prompts rapides par langue
+- **Services** : 457 services, grille 2 colonnes, recherche texte + filtre catégorie
+- **Catégories** : 10 catégories avec compteurs dynamiques
+- **Résultats** : Filtres par catégorie + recherche texte (nom, ville, description, sous-catégorie)
+- **Service détail** : Description, localisation, adresse, horaires, boutons Appeler / Site web
+- **SOS Urgences** : 5 sections (911, hôpital, ambulance, police, pompiers), tri par distance GPS réelle
+- **Aide d'urgence** : Services urgents filtrés, triés par géolocalisation
+- **Carte** : Native (iOS/Android) avec épingles filtrables ; fallback web élégant
+- **Profil** : Nom, email, adresse modifiable, changement mot de passe, toggle langue
+- **Guide d'achat immobilier** : 8 étapes interactives (catégorie realestate)
+- **Mentions légales** : Conditions d'utilisation + politique de confidentialité intégrées
+- **Localisation** : Haversine distance, tri automatique des services urgents par proximité
+- **Dark mode** : Complet
+- **Bilingue** : FR/EN avec persistance AsyncStorage
+
+### Data
+
+- **457 services** validés, 0 doublons d'ID, 0 téléphones vides, 0 sites web vides
+- **10 catégories** : housing, food, mentalHealth, health, immigration, employment, family, social, childcare, realestate
+- **Sous-catégories SOS** : "Centre 911", "Urgence hospitalière", "Service ambulancier", "Service de police", "Service des incendies" (doivent correspondre exactement dans services.ts)
+- **Champs** : id, name, city, phone, website, description, category, subcategory, isUrgent?, isProvinceWide?, coordinates?, hours?, address?
+
+### API
+
+- **Endpoint IA** : `POST /api/ai/chat` — `{message, language, history}` → SSE streaming avec `{content}`, `{done, serviceIds}`, `{error}`
+- **Base URL** : `https://quebec-aid-finder.replit.app` (configurée dans `lib/apiBase.ts`)
+- **Auth API** : `/api/mobile-auth/email-login`, `/api/mobile-auth/register`, `/api/mobile-auth/update-profile`, `/api/mobile-auth/logout`
+
+### Key Files
+
+| Fichier | Rôle |
+|---|---|
+| `app.json` | Config Expo — package Android `com.attentezero.app`, bundleId iOS, permissions GPS |
+| `eas.json` | Config EAS Build — 3 profils : development (APK interne), preview (APK interne), production (AAB Play Store) |
+| `data/services.ts` | 457 services avec coordonnées, horaires, adresses |
+| `constants/translations.ts` | Traductions FR/EN complètes |
+| `constants/colors.ts` | Palette teal (`#0e7e6e`) avec dark mode |
+| `lib/apiBase.ts` | URL API (env `EXPO_PUBLIC_API_URL` ou fallback `quebec-aid-finder.replit.app`) |
+| `lib/auth.tsx` | AuthContext — token SecureStore, login/register/logout/updateProfile |
+| `components/AppSplashScreen.tsx` | Splash animé avec `useNativeDriver: true` |
+| `app/(tabs)/_layout.tsx` | Navigation tabs — Liquid Glass (iOS 26+) ou Classic |
+| `app/sos.tsx` | Écran SOS urgences avec tri GPS |
+| `utils/detectCritical.ts` | Détection situations critiques pour alertes chat IA |
+
+### Play Store — Étapes de publication
+
+1. **Compte EAS** : `npm install -g eas-cli` puis `eas login` (compte Expo requis)
+2. **Initialiser le projet EAS** : `eas init` dans `artifacts/service-qc/` → génère un vrai `projectId`
+3. **Build production** : `eas build --platform android --profile production` → génère le `.aab`
+4. **Google Play Console** : Créer l'application, uploader le `.aab`, remplir fiche (descriptions FR/EN, captures d'écran, politique de confidentialité URL publique)
+5. **Soumettre en test interne** d'abord, puis production
+
+### App Store iOS — Étapes de publication
+
+1. **Compte Apple Developer** : 99 USD/an requis
+2. **Build iOS** : `eas build --platform ios --profile production`
+3. **App Store Connect** : Uploader via EAS Submit ou Transporter
+
+---
 
 ### API Server (artifacts/api-server)
+
 - **Type**: Express 5 API
 - **Preview path**: `/api`
 - **Routes**:
   - `GET /api/healthz` — health check
-  - `POST /api/ai/chat` — AI chat (SSE streaming, OpenAI integration)
-- **AI Integration**: Uses `@workspace/integrations-openai-ai-server` with `AI_INTEGRATIONS_OPENAI_BASE_URL` and `AI_INTEGRATIONS_OPENAI_API_KEY` env vars (auto-provisioned by Replit)
+  - `POST /api/ai/chat` — AI chat (SSE streaming, OpenAI GPT-4o-mini)
+  - `POST /api/mobile-auth/email-login` — authentification email/password
+  - `POST /api/mobile-auth/register` — création de compte
+  - `PATCH /api/mobile-auth/update-profile` — mise à jour profil
+  - `POST /api/mobile-auth/logout` — déconnexion
