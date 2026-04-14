@@ -94,6 +94,7 @@ function AppContent({ fontsReady }: { fontsReady: boolean }) {
         <Stack.Screen name="buying-guide" options={{ headerShown: false }} />
         <Stack.Screen name="forgot-password" options={{ headerShown: false }} />
         <Stack.Screen name="reset-password" options={{ headerShown: false }} />
+        <Stack.Screen name="sos" options={{ headerShown: false }} />
       </Stack>
       <AppSplashScreen visible={splashVisible} />
     </View>

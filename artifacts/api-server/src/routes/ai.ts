@@ -150,6 +150,124 @@ PROCÉDURE D'ACHAT IMMOBILIER AU QUÉBEC (à expliquer si demandé):
 8. REMISE DES CLÉS : Prise de possession à la date convenue
 `.trim();
 
+const EMERGENCY_CATALOG = `
+SERVICES D'URGENCE DE PREMIÈRE LIGNE — QUÉBEC:
+
+CENTRES 911 (dispatch temps réel):
+- 911 Montréal | Centre dispatch Île de Montréal | Tél:911
+- 911 Québec | Centre dispatch Ville de Québec | Tél:911
+- 911 Laval | Centre dispatch Laval | Tél:911
+- 911 Longueuil | Centre dispatch agglomération Longueuil | Tél:911
+- 911 Gatineau–Outaouais | Centre dispatch Outaouais | Tél:911
+- 911 Sherbrooke–Estrie | Centre dispatch Estrie | Tél:911
+- 911 Saguenay–Lac-Saint-Jean | Centre dispatch Saguenay | Tél:911
+- 911 Trois-Rivières–Mauricie | Centre dispatch Mauricie | Tél:911
+- 911 Lévis–Chaudière-Appalaches | Centre dispatch Rive-Sud | Tél:911
+- 911 Lanaudière | Centre dispatch Lanaudière | Tél:911
+- 911 Laurentides | Centre dispatch Laurentides | Tél:911
+- 911 Montérégie | Centre dispatch Montérégie | Tél:911
+- 911 Centre-du-Québec | Centre dispatch Centre-du-Québec | Tél:911
+- 911 Abitibi–Témiscamingue | Centre dispatch Abitibi | Tél:911
+- 911 Bas-Saint-Laurent | Centre dispatch Bas-Saint-Laurent | Tél:911
+- 911 Gaspésie–Îles-de-la-Madeleine | Centre dispatch Gaspésie | Tél:911
+- 911 Côte-Nord | Centre dispatch Côte-Nord | Tél:911
+- 911 Nord-du-Québec | Centre dispatch Nord-du-Québec | Tél:911
+- 911 Nunavik | Centre dispatch Nunavik (évacuations aériennes) | Tél:911
+
+POLICE:
+- Sûreté du Québec (SQ) | Police provinciale — couvre toutes les municipalités sans service municipal | Tél:1-800-461-2131 / 911
+- SPVM | Service de police Montréal | Tél:514-280-2222 / 911
+- SPQ | Service de police Québec | Tél:418-641-6411 / 911
+- SPL | Service de police Laval | Tél:450-662-4636 / 911
+- SPAL | Police agglomération Longueuil | Tél:450-463-7211 / 911
+- SPG | Police Gatineau | Tél:819-246-0222 / 911
+- SPS | Police Sherbrooke | Tél:819-821-8000 / 911
+- SPS | Police Saguenay | Tél:418-545-5778 / 911
+- SPTR | Police Trois-Rivières | Tél:819-691-2929 / 911
+- GRC Québec | Police fédérale, crimes organisés | Tél:514-939-8300 / 911
+
+INCENDIE (pompiers):
+- SIM | Service incendie Montréal — 66 casernes | Tél:514-872-3800 / 911
+- Service incendie Québec | Tél:418-641-6800 / 911
+- SSIL | Service incendie Laval | Tél:450-662-4900 / 911
+- Service incendie Longueuil | Tél:450-646-8800 / 911
+- SIG | Service incendie Gatineau | Tél:819-595-7777 / 911
+- Service incendie Sherbrooke | Tél:819-821-5600 / 911
+- Service incendie Saguenay | Tél:418-698-3000 / 911
+- Service incendie Trois-Rivières | Tél:819-379-4600 / 911
+- Service incendie Lévis | Tél:418-833-7777 / 911
+⚠️ Plus de 700 services incendie municipaux au Québec — pour toute urgence incendie : 911
+
+AMBULANCE / SOINS PRÉHOSPITALIERS:
+- Urgences-santé | Montréal et Laval | Tél:514-842-4242 / 911
+- CETAM | Montérégie | Tél:450-677-4411 / 911
+- Services préhospitaliers Québec | Capitale-Nationale | Tél:418-529-4141 / 911
+- Services ambulanciers Estrie | Tél:819-562-9341 / 911
+- Services ambulanciers Mauricie–Centre-du-Québec | Tél:819-697-3333 / 911
+- Services ambulanciers Outaouais | Tél:819-771-7444 / 911
+- Services ambulanciers Saguenay–Lac-Saint-Jean | Tél:418-541-1000 / 911
+- Services ambulanciers Laurentides | Tél:450-569-3311 / 911
+- Services ambulanciers Lanaudière | Tél:450-759-8222 / 911
+- Services ambulanciers Abitibi–Témiscamingue | Tél:819-764-5131 / 911
+- Services ambulanciers Bas-Saint-Laurent | Tél:418-724-5231 / 911
+- Services ambulanciers Côte-Nord | Tél:418-962-8811 / 911
+- Services ambulanciers Chaudière-Appalaches | Tél:418-380-8996 / 911
+⚠️ 773 des 1 112 municipalités du Québec n'ont pas de premiers répondants — délais possibles en zone rurale
+
+DÉPENDANCES ET LIGNES DE CRISE SPÉCIALISÉES:
+- Drogue : aide et référence | Dépendances drogue/alcool 24h | Tél:1-800-265-2626
+- Jeu : aide et référence | Jeu compulsif 24h | Tél:1-800-461-0140
+- AA Québec | Alcooliques Anonymes | Tél:514-376-9230
+- NA Québec | Narcotiques Anonymes | Tél:514-249-0555
+- RQCALACS | Agressions sexuelles | Tél:1-888-933-9007
+- Ligne Aide Abus Aînés | Maltraitance aînés | Tél:1-888-489-2287
+- SOS Grossesse | Grossesse en crise 24h | Tél:1-800-463-5655
+- Tel-Jeunes | Jeunes 12-25 ans 24h | Tél:1-800-263-2266
+- Jeunesse j'écoute | Jeunes Canadiens 24h | Tél:1-800-668-6868
+- Traite des personnes | Ligne nationale | Tél:1-833-900-1010
+- Info-Crime Québec | Signalement anonyme | Tél:1-800-711-1800
+- Croix-Rouge canadienne | Sinistres / catastrophes | Tél:1-800-418-1111
+- Sécurité civile Québec | Sinistrés, indemnisation | Tél:1-800-363-1363
+`.trim();
+
+function getQuebecTimeContext(): string {
+  const now = new Date();
+  const quebecTime = new Date(now.toLocaleString("en-US", { timeZone: "America/Montreal" }));
+  const hour = quebecTime.getHours();
+  const month = quebecTime.getMonth() + 1;
+  const dayOfWeek = quebecTime.getDay();
+  const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+  const dayName = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"][dayOfWeek];
+
+  const risks: string[] = [];
+
+  if (hour >= 22 || hour < 6) {
+    risks.push("NUIT (22h–6h) : risques accrus de violence, intoxication, accidents de la route, hypothermie");
+  }
+  if ((hour >= 7 && hour <= 9) || (hour >= 16 && hour <= 18)) {
+    risks.push("HEURE DE POINTE : risques élevés d'accidents de la route et de surcharge des services d'urgence");
+  }
+  if (isWeekend && hour >= 20) {
+    risks.push("SOIRÉE DE FIN DE SEMAINE : risques accrus d'intoxication à l'alcool/drogues, violences, accidents");
+  }
+  if (month >= 12 || month <= 2) {
+    risks.push("HIVER : risques d'hypothermie pour personnes sans abri, verglas, accidents de la route, chutes");
+  }
+  if (month === 3 || month === 4) {
+    risks.push("DÉGEL PRINTANIER : risques d'inondations, glaces instables, crues subites en région");
+  }
+  if (month >= 6 && month <= 8) {
+    risks.push("ÉTÉ : coups de chaleur, noyades, accidents vélos/motos, incendies de forêt possible en région");
+  }
+
+  return `
+CONTEXTE TEMPOREL ACTUEL (Québec):
+- Heure locale : ${quebecTime.toLocaleTimeString("fr-CA", { hour: "2-digit", minute: "2-digit" })} (${dayName})
+- Mois : ${quebecTime.toLocaleDateString("fr-CA", { month: "long", year: "numeric" })}
+${risks.length > 0 ? `- Alertes de risques actives :\n  • ${risks.join("\n  • ")}` : "- Pas d'alerte de risque particulière pour ce moment"}
+`.trim();
+}
+
 function buildSystemPrompt(language: string): string {
   const isEn = language === "en";
   const isEs = language === "es";
@@ -174,44 +292,69 @@ function buildSystemPrompt(language: string): string {
       "Respond in French. The user is in Quebec. Be welcoming and clear.";
   }
 
-  return `You are AIDORA — a compassionate AI guide helping vulnerable people in Quebec find community and social services.
+  const timeContext = getQuebecTimeContext();
+
+  return `You are AIDORA — a compassionate AI guide and emergency coordinator helping vulnerable people in Quebec find community, social, and emergency services.
 
 ${langInstruction}
 
 Your role:
 - Listen carefully to the person's situation with empathy
-- Identify their main needs: housing, food, mental health, physical health, immigration, employment, family, social support, childcare
-- Recommend the most relevant services from the catalog below
+- Identify their needs: housing, food, mental health, health, immigration, employment, family, social support, childcare, emergency
+- Recommend the most relevant services — including emergency services when appropriate
 - Be warm, non-judgmental, trauma-informed, and concise
+- Use the time context below to anticipate risks and give proactive safety advice
+
+${timeContext}
+
+INTELLIGENCE PRÉDICTIVE — utilise le contexte temporel pour:
+- Mentionner les risques saisonniers ou horaires pertinents si la situation l'exige
+- Prioriser les ressources d'hébergement d'urgence la nuit en hiver
+- Avertir des risques d'hypothermie pour les personnes sans abri par temps froid
+- Alerter sur les risques d'intoxication en soirée de fin de semaine
+- Signaler les risques d'inondations au printemps pour les zones à risque
+- Recommander de l'eau et de l'ombre en période de canicule
+
+CENTRALISATION DES SERVICES D'URGENCE — pour toute urgence, TOUJOURS mentionner:
+1. Composez le 911 en PREMIER (police + pompiers + ambulance via dispatch centralisé)
+2. Le 911 coordonne automatiquement les services disponibles dans la région
+3. Préciser que 773 des 1 112 municipalités n'ont pas de premiers répondants — délais possibles
 
 CRITICAL SITUATIONS — respond to these with the highest priority:
-- If the person mentions suicide, self-harm, wanting to die, or feeling like giving up: START your response by saying they are not alone, that a professional can help RIGHT NOW, and recommend 911 + pw5 (Suicide Action / 1-866-APPELLE) IMMEDIATELY as first priority.
-- If the person mentions domestic violence, assault, rape, or immediate danger: START with 911 + pw3 (SOS Violence conjugale) + pw9. Validate their courage in speaking up.
-- If the person mentions a child in danger or abuse: START with pw4 (DPJ) + 911.
-- For any urgent/crisis situation: be brief, direct, reassuring. Do NOT overwhelm them.
+- Suicide, self-harm, wanting to die: START with 911 + Suicide Action (1-866-APPELLE). They are not alone.
+- Domestic violence, assault, immediate danger: START with 911 + SOS Violence conjugale (1-800-363-9010).
+- Child in danger: START with 911 + DPJ (1-800-463-9019).
+- Fire / building emergency: START with 911 + local fire service.
+- Medical emergency: START with 911 + Urgences-santé or regional ambulance.
+- Drug overdose: START with 911 + Drogue : aide et référence (1-800-265-2626).
+- Elder abuse: START with Aide Abus Aînés (1-888-489-2287) + 911 if immediate danger.
+- For any urgent/crisis: be brief, direct, reassuring. Do NOT overwhelm.
 
-PROFESSIONAL REFERRALS — proactively recommend professionals in these cases:
-- Mental health concerns (anxiety, depression, trauma, addiction): recommend a psychologist, social worker, or mental health counselor. Include pw5 and mtl-m1/regional crisis centres.
-- Family conflict or violence: recommend a social worker or family mediator.
-- Complex immigration situation: recommend a legal immigration consultant or lawyer.
-- Chronic health problems: recommend a doctor or community health clinic.
-- Always phrase it as "Je vous recommande de parler avec un(e) professionnel(le)" / "I recommend speaking with a professional" and explain who and why.
+PROFESSIONAL REFERRALS — proactively recommend:
+- Mental health / addiction: psychologist, travailleur social, pw5, crisis centres.
+- Family conflict or violence: social worker, family mediator.
+- Immigration complex situations: legal consultant or lawyer.
+- Chronic health: doctor or community health clinic.
 
 When recommending services, include their IDs in this exact format at the END of your message:
 [SERVICES: id1, id2, id3]
 
-Only include service IDs that are truly relevant to the person's needs. For urgent situations, prefer services marked "urgent". Match the city/region when known.
+Only include service IDs from the catalogs below. For urgent situations, prefer services marked "urgent". Match the city/region when known.
 
-SERVICES CATALOG:
+EMERGENCY SERVICES CATALOG:
+${EMERGENCY_CATALOG}
+
+COMMUNITY SERVICES CATALOG:
 ${SERVICES_CATALOG}
 
 Guidelines:
-- Keep responses under 180 words
+- Keep responses under 200 words
 - Always end with the [SERVICES: ...] tag if recommending any services
 - If unsure about region, recommend province-wide services (pw1–pw10)
-- Never make up service IDs — only use IDs from the catalog above
+- For emergency queries, always start with 911 instruction
+- Never make up service IDs — only use IDs from the catalogs above
 - Never be dismissive — every situation deserves a caring, actionable response
-- For mental health and crisis topics: always validate feelings first, then provide resources`;
+- For mental health and crisis topics: validate feelings first, then provide resources`;
 }
 
 router.post("/ai/chat", async (req, res) => {

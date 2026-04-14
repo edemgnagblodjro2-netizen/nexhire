@@ -176,6 +176,44 @@ export default function HomeScreen() {
           <UrgentButton />
         </View>
 
+        {/* ── SOS Urgences Banner ── */}
+        <Pressable
+          style={({ pressed }) => [
+            styles.sosBanner,
+            { opacity: pressed ? 0.88 : 1 },
+          ]}
+          onPress={() => {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+            router.push("/sos" as any);
+          }}
+        >
+          <LinearGradient
+            colors={["#b91c1c", "#ef4444"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.sosBannerGrad}
+          >
+            <View style={styles.sosBannerLeft}>
+              <View style={styles.sosPulse}>
+                <Feather name="phone-call" size={22} color="#fff" />
+              </View>
+              <View style={styles.sosBannerText}>
+                <Text style={styles.sosBannerTitle}>
+                  {language === "fr" ? "🚨 SOS Urgences" : "🚨 SOS Emergency"}
+                </Text>
+                <Text style={styles.sosBannerSub}>
+                  {language === "fr"
+                    ? "Police · Pompiers · Ambulance — triés par proximité"
+                    : "Police · Fire · Ambulance — sorted by proximity"}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.sosArrow}>
+              <Feather name="chevron-right" size={18} color="rgba(255,255,255,0.85)" />
+            </View>
+          </LinearGradient>
+        </Pressable>
+
         {/* ── AI Banner ── */}
         <Pressable
           style={({ pressed }) => [
@@ -409,6 +447,57 @@ const styles = StyleSheet.create({
   },
   urgentWrap: {
     marginBottom: 14,
+  },
+
+  /* SOS Banner */
+  sosBanner: {
+    marginBottom: 14,
+    borderRadius: 16,
+    overflow: "hidden",
+    shadowColor: "#ef4444",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 6,
+  },
+  sosBannerGrad: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16,
+    gap: 12,
+  },
+  sosBannerLeft: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  sosPulse: {
+    width: 46,
+    height: 46,
+    borderRadius: 14,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  sosBannerText: {
+    flex: 1,
+    gap: 3,
+  },
+  sosBannerTitle: {
+    fontSize: 16,
+    fontWeight: "800",
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+  },
+  sosBannerSub: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.82)",
+  },
+  sosArrow: {
+    flexShrink: 0,
   },
 
   /* AI Banner */
