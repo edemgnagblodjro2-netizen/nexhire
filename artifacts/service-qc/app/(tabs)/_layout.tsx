@@ -25,6 +25,10 @@ function NativeTabLayout() {
         <Icon sf={{ default: "list.bullet", selected: "list.bullet" }} />
         <Label>Services</Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="map">
+        <Icon sf={{ default: "map", selected: "map.fill" }} />
+        <Label>Carte</Label>
+      </NativeTabs.Trigger>
       <NativeTabs.Trigger name="categories">
         <Icon sf={{ default: "square.grid.2x2", selected: "square.grid.2x2.fill" }} />
         <Label>Catégories</Label>
@@ -128,6 +132,18 @@ function ClassicTabLayout() {
               <SymbolView name="list.bullet" tintColor={color} size={22} />
             ) : (
               <Feather name="list" size={21} color={color} />
+            ),
+        }}
+      />
+      <Tabs.Screen
+        name="map"
+        options={{
+          title: t.tabMap,
+          tabBarIcon: ({ color }) =>
+            isIOS ? (
+              <SymbolView name="map" tintColor={color} size={22} />
+            ) : (
+              <Feather name="map" size={21} color={color} />
             ),
         }}
       />
