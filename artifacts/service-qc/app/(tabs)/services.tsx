@@ -1,11 +1,13 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useMemo, useRef, useState } from "react";
 import {
   FlatList,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -50,7 +52,8 @@ function ServiceCard({ service }: { service: Service }) {
         {
           backgroundColor: colors.card,
           borderColor: colors.border,
-          opacity: pressed ? 0.92 : 1,
+          opacity: pressed ? 0.9 : 1,
+          transform: [{ scale: pressed ? 0.97 : 1 }],
         },
       ]}
       onPress={handlePress}
@@ -86,7 +89,12 @@ function ServiceCard({ service }: { service: Service }) {
             </Text>
           </View>
           {service.isUrgent && (
-            <View style={[styles.urgentDot, { backgroundColor: colors.urgent }]} />
+            <View style={styles.urgentBadge}>
+              <View style={[styles.urgentDot, { backgroundColor: colors.urgent }]} />
+              <Text style={[styles.urgentLabel, { color: colors.urgent }]}>
+                Urgent
+              </Text>
+            </View>
           )}
         </View>
       </View>
@@ -128,30 +136,35 @@ export default function ServicesScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <View
-        style={[
-          styles.header,
-          {
-            backgroundColor: colors.background,
-            borderBottomColor: colors.border,
-            paddingTop: topPadding + 8,
-          },
-        ]}
+      {/* Gradient header */}
+      <LinearGradient
+        colors={[colors.primary, "#0a5e52"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[styles.header, { paddingTop: topPadding + 12 }]}
       >
-        <Text style={[styles.title, { color: colors.foreground }]}>
-          {t.servicesTitle}
-        </Text>
-        <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
-          {count} {count === 1 ? t.services : t.servicesPlural}
-        </Text>
+        <View style={styles.headerTop}>
+          <View style={styles.headerBadge}>
+            <Feather name="list" size={14} color={colors.primary} />
+          </View>
+          <View style={styles.headerTexts}>
+            <Text style={styles.headerTitle}>{t.servicesTitle}</Text>
+            <Text style={styles.headerSub}>
+              {count} {count === 1 ? t.services : t.servicesPlural}
+              {activeCategory
+                ? ` · ${t.categories[activeCategory]}`
+                : language === "fr"
+                ? " · Tous les services"
+                : " · All services"}
+            </Text>
+          </View>
+        </View>
 
+        {/* Search bar in hero */}
         <View
           style={[
             styles.searchBar,
-            {
-              backgroundColor: colors.card,
-              borderColor: colors.border,
-            },
+            { backgroundColor: colors.card, borderColor: "rgba(255,255,255,0.25)" },
           ]}
         >
           <Feather name="search" size={16} color={colors.mutedForeground} />
@@ -171,6 +184,60 @@ export default function ServicesScreen() {
             </TouchableOpacity>
           )}
         </View>
+      </LinearGradient>
+
+      {/* Horizontal category chips */}
+      <View style={[styles.chipsWrapper, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.chipRow}
+        >
+          <TouchableOpacity
+            style={[
+              styles.chip,
+              {
+                backgroundColor: activeCategory === null ? colors.primary : colors.card,
+                borderColor: activeCategory === null ? colors.primary : colors.border,
+              },
+            ]}
+            onPress={() => { Haptics.selectionAsync(); setActiveCategory(null); }}
+            activeOpacity={0.8}
+          >
+            <Feather
+              name="layers"
+              size={11}
+              color={activeCategory === null ? "#fff" : colors.mutedForeground}
+            />
+            <Text style={[styles.chipText, { color: activeCategory === null ? "#fff" : colors.mutedForeground }]}>
+              {t.all}
+            </Text>
+          </TouchableOpacity>
+
+          {ALL_CATEGORIES.map((cat) => {
+            const catColor = getCategoryColor(cat, colors);
+            const isActive = activeCategory === cat;
+            return (
+              <TouchableOpacity
+                key={cat}
+                style={[
+                  styles.chip,
+                  {
+                    backgroundColor: isActive ? catColor : colors.card,
+                    borderColor: isActive ? catColor : colors.border,
+                  },
+                ]}
+                onPress={() => { Haptics.selectionAsync(); setActiveCategory(isActive ? null : cat); }}
+                activeOpacity={0.8}
+              >
+                <Feather name={CATEGORY_ICONS[cat] as any} size={11} color={isActive ? "#fff" : catColor} />
+                <Text style={[styles.chipText, { color: isActive ? "#fff" : colors.mutedForeground }]}>
+                  {t.categories[cat]}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
       </View>
 
       <FlatList
@@ -183,78 +250,11 @@ export default function ServicesScreen() {
           { paddingBottom: bottomPadding + 100 },
         ]}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={
-          <View style={styles.chipRow}>
-            <TouchableOpacity
-              style={[
-                styles.chip,
-                {
-                  backgroundColor:
-                    activeCategory === null
-                      ? colors.primary
-                      : colors.card,
-                  borderColor:
-                    activeCategory === null ? colors.primary : colors.border,
-                },
-              ]}
-              onPress={() => {
-                Haptics.selectionAsync();
-                setActiveCategory(null);
-              }}
-              activeOpacity={0.8}
-            >
-              <Text
-                style={[
-                  styles.chipText,
-                  {
-                    color:
-                      activeCategory === null ? "#fff" : colors.mutedForeground,
-                  },
-                ]}
-              >
-                {t.all}
-              </Text>
-            </TouchableOpacity>
-            {ALL_CATEGORIES.map((cat) => {
-              const catColor = getCategoryColor(cat, colors);
-              const isActive = activeCategory === cat;
-              return (
-                <TouchableOpacity
-                  key={cat}
-                  style={[
-                    styles.chip,
-                    {
-                      backgroundColor: isActive ? catColor : colors.card,
-                      borderColor: isActive ? catColor : colors.border,
-                    },
-                  ]}
-                  onPress={() => {
-                    Haptics.selectionAsync();
-                    setActiveCategory(isActive ? null : cat);
-                  }}
-                  activeOpacity={0.8}
-                >
-                  <Feather
-                    name={CATEGORY_ICONS[cat] as any}
-                    size={12}
-                    color={isActive ? "#fff" : catColor}
-                  />
-                  <Text
-                    style={[
-                      styles.chipText,
-                      { color: isActive ? "#fff" : colors.mutedForeground },
-                    ]}
-                  >
-                    {t.categories[cat]}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        }
         ListEmptyComponent={
           <View style={styles.empty}>
-            <Feather name="search" size={32} color={colors.mutedForeground} />
+            <View style={[styles.emptyIcon, { backgroundColor: colors.muted }]}>
+              <Feather name="search" size={28} color={colors.mutedForeground} />
+            </View>
             <Text style={[styles.emptyTitle, { color: colors.foreground }]}>
               {t.noResults}
             </Text>
@@ -271,30 +271,49 @@ export default function ServicesScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+
+  /* Header */
   header: {
-    paddingHorizontal: 16,
-    paddingBottom: 12,
-    borderBottomWidth: 1,
-    gap: 4,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    gap: 14,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
+  headerTop: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  headerBadge: {
+    width: 34,
+    height: 34,
+    borderRadius: 10,
+    backgroundColor: "rgba(255,255,255,0.92)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerTexts: {
+    gap: 2,
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: "800",
     fontFamily: "Inter_700Bold",
+    color: "#fff",
+    letterSpacing: -0.3,
   },
-  subtitle: {
-    fontSize: 13,
+  headerSub: {
+    fontSize: 12,
     fontFamily: "Inter_400Regular",
-    marginBottom: 8,
+    color: "rgba(255,255,255,0.75)",
   },
   searchBar: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    borderRadius: 12,
+    borderRadius: 14,
     borderWidth: 1,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 11,
   },
   searchInput: {
     flex: 1,
@@ -302,20 +321,23 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     padding: 0,
   },
+
+  /* Chips */
+  chipsWrapper: {
+    borderBottomWidth: 1,
+  },
   chipRow: {
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    gap: 8,
     flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 6,
-    paddingHorizontal: 16,
-    paddingTop: 14,
-    paddingBottom: 10,
   },
   chip: {
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
     paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingVertical: 7,
     borderRadius: 20,
     borderWidth: 1,
   },
@@ -323,25 +345,29 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "Inter_500Medium",
   },
+
+  /* List */
   listContent: {
     paddingHorizontal: 10,
-    gap: 0,
+    paddingTop: 12,
   },
   row: {
     gap: 10,
     marginBottom: 10,
     paddingHorizontal: 6,
   },
+
+  /* Card */
   card: {
     flex: 1,
     borderRadius: 14,
     borderWidth: 1,
     overflow: "hidden",
-    minHeight: 110,
+    minHeight: 115,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
     elevation: 2,
   },
   cardAccent: {
@@ -383,16 +409,35 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: "Inter_600SemiBold",
   },
+  urgentBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+  },
   urgentDot: {
-    width: 6,
-    height: 6,
+    width: 5,
+    height: 5,
     borderRadius: 3,
   },
+  urgentLabel: {
+    fontSize: 9,
+    fontFamily: "Inter_600SemiBold",
+  },
+
+  /* Empty */
   empty: {
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 64,
-    gap: 8,
+    gap: 12,
+  },
+  emptyIcon: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 4,
   },
   emptyTitle: {
     fontSize: 17,

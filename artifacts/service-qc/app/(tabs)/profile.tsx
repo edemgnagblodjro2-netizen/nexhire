@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 
@@ -95,13 +96,22 @@ export default function ProfileScreen() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.topSection}>
-          <InitialsAvatar firstName={user?.firstName ?? null} lastName={user?.lastName ?? null} size={88} />
-          <Text style={[styles.fullName, { color: colors.foreground }]}>{fullName}</Text>
-          <Text style={[styles.emailBadge, { color: colors.mutedForeground, backgroundColor: colors.muted }]}>
-            {user?.email || "—"}
-          </Text>
-        </View>
+        {/* Gradient banner with avatar */}
+        <LinearGradient
+          colors={[colors.primary, "#0a5e52"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.heroBanner}
+        >
+          <View style={styles.avatarRing}>
+            <InitialsAvatar firstName={user?.firstName ?? null} lastName={user?.lastName ?? null} size={80} />
+          </View>
+          <Text style={styles.heroName}>{fullName}</Text>
+          <View style={styles.heroBadge}>
+            <Feather name="mail" size={11} color="rgba(255,255,255,0.8)" />
+            <Text style={styles.heroEmail}>{user?.email || "—"}</Text>
+          </View>
+        </LinearGradient>
 
         <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Text style={[styles.cardTitle, { color: colors.foreground }]}>
@@ -238,15 +248,49 @@ const styles = StyleSheet.create({
   scroll: { flex: 1 },
   content: {
     paddingHorizontal: 20,
-    paddingTop: 24,
+    paddingTop: 0,
     paddingBottom: 100,
     gap: 16,
   },
-  topSection: {
+
+  /* Hero banner */
+  heroBanner: {
     alignItems: "center",
-    gap: 10,
-    marginBottom: 8,
+    paddingTop: 32,
+    paddingBottom: 28,
+    gap: 8,
+    marginHorizontal: -20,
+    marginBottom: 4,
   },
+  avatarRing: {
+    padding: 3,
+    borderRadius: 50,
+    backgroundColor: "rgba(255,255,255,0.25)",
+    marginBottom: 4,
+  },
+  heroName: {
+    fontSize: 22,
+    fontFamily: "Inter_700Bold",
+    fontWeight: "700",
+    color: "#fff",
+    letterSpacing: -0.3,
+  },
+  heroBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    backgroundColor: "rgba(255,255,255,0.15)",
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 20,
+  },
+  heroEmail: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.9)",
+  },
+
+  /* Legacy (kept for reference) */
   avatar: {
     alignItems: "center",
     justifyContent: "center",
