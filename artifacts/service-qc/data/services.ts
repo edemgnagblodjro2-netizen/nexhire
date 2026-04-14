@@ -25,7 +25,10 @@ export interface Service {
   website: string;
   description: string;
   isUrgent?: boolean;
+  hours: "Lun-Ven 9h-17h",
   coordinates: Coordinates;
+  hours?: string;
+  address?: string;
   isProvinceWide?: boolean;
 }
 
@@ -55,6 +58,7 @@ export const SERVICES: Service[] = [
     description: "Service de référence vers tous les organismes communautaires et services sociaux du Québec. Disponible 24h/24.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -68,6 +72,7 @@ export const SERVICES: Service[] = [
     description: "Ligne provinciale d'information santé. Infirmières disponibles 24h/24 pour conseils médicaux et orientation.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h-17h (sur rendez-vous)",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -81,6 +86,7 @@ export const SERVICES: Service[] = [
     description: "Ligne d'aide 24h/24 pour victimes de violence conjugale. Hébergement d'urgence et accompagnement.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -94,6 +100,7 @@ export const SERVICES: Service[] = [
     description: "Service de protection pour enfants en danger. Signalements et intervention pour enfants maltraités ou négligés.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h-17h · Urgences 24h/24",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -107,6 +114,7 @@ export const SERVICES: Service[] = [
     description: "Ligne de prévention du suicide 24h/24. Intervention pour personnes suicidaires et leurs proches.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -119,6 +127,7 @@ export const SERVICES: Service[] = [
     website: "https://telaide.org",
     description: "Service d'écoute téléphonique anonyme et confidentiel. Disponible tous les soirs.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -131,6 +140,7 @@ export const SERVICES: Service[] = [
     website: "https://emploiquebec.gouv.qc.ca",
     description: "Services publics d'emploi. Aide à la recherche d'emploi, formations professionnelles et prestations.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -144,6 +154,7 @@ export const SERVICES: Service[] = [
     description: "Réseau de soutien pour réfugiés et demandeurs d'asile. Orientation vers des ressources d'aide.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -157,6 +168,7 @@ export const SERVICES: Service[] = [
     description: "Réseau de maisons d'hébergement pour femmes victimes de violence. Référence vers une maison dans votre région.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -169,6 +181,7 @@ export const SERVICES: Service[] = [
     website: "https://rsiq.org",
     description: "Réseau provincial coordonnant les ressources d'hébergement pour personnes sans abri à travers le Québec.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
 
@@ -183,6 +196,7 @@ export const SERVICES: Service[] = [
     website: "https://maisondupere.org",
     description: "Centre d'hébergement pour hommes en situation d'itinérance. Accueil 24h/24, repas chauds et services d'accompagnement.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5095, lng: -73.5607 },
   },
   {
@@ -195,6 +209,7 @@ export const SERVICES: Service[] = [
     website: "https://welcomehallmission.com",
     description: "Refuge d'urgence pour hommes sans abri. Hébergement, repas et services de réintégration sociale.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4871, lng: -73.5809 },
   },
   {
@@ -207,6 +222,7 @@ export const SERVICES: Service[] = [
     website: "https://missionoldbrewery.ca",
     description: "Hébergement et services pour personnes en situation d'itinérance. Accueil d'urgence disponible.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5058, lng: -73.5545 },
   },
   {
@@ -219,6 +235,7 @@ export const SERVICES: Service[] = [
     website: "https://chezdoris.org",
     description: "Centre de jour et refuge pour femmes en situation de vulnérabilité. Services d'hébergement d'urgence.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4846, lng: -73.5762 },
   },
   {
@@ -230,6 +247,7 @@ export const SERVICES: Service[] = [
     phone: "514-872-6442",
     website: "https://omhm.qc.ca",
     description: "Logements sociaux et à loyer modique pour personnes à faible revenu. Demandes de logement HLM.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.5255, lng: -73.5730 },
   },
   {
@@ -242,6 +260,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonmontreal.org",
     description: "Plus grande banque alimentaire du Canada. Distribution de denrées à des centaines d'organismes.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 45.5491, lng: -73.6213 },
   },
   {
@@ -253,6 +272,7 @@ export const SERVICES: Service[] = [
     phone: "514-527-1401",
     website: "https://restopop.org",
     description: "Cafétéria communautaire à prix modique dans le Plateau-Mont-Royal. Repas chauds accessibles.",
+    hours: "Lun-Sam 11h30-13h30",
     coordinates: { lat: 45.5300, lng: -73.5750 },
   },
   {
@@ -265,6 +285,7 @@ export const SERVICES: Service[] = [
     website: "https://crisemontreal.ca",
     description: "Ligne de crise 24h/24, 7j/7. Intervention en cas de détresse psychologique ou pensées suicidaires.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5275, lng: -73.6240 },
   },
   {
@@ -276,6 +297,7 @@ export const SERVICES: Service[] = [
     phone: "514-382-6363",
     website: "https://pharespoir.org",
     description: "Soutien aux personnes vivant avec un problème de santé mentale. Ateliers et groupes de soutien.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.5523, lng: -73.6478 },
   },
   {
@@ -288,6 +310,7 @@ export const SERVICES: Service[] = [
     website: "https://medecinsdumonde.ca",
     description: "Soins médicaux gratuits pour personnes sans statut légal, sans-abri et personnes en situation précaire.",
     isUrgent: true,
+    hours: "Mar et Jeu 13h-17h · Sur rendez-vous",
     coordinates: { lat: 45.5205, lng: -73.5800 },
   },
   {
@@ -300,6 +323,7 @@ export const SERVICES: Service[] = [
     website: "https://maisonfemmesmontreal.com",
     description: "Soutien aux femmes en situation de vulnérabilité. Services de crise, hébergement et accompagnement.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5176, lng: -73.5585 },
   },
   {
@@ -311,6 +335,7 @@ export const SERVICES: Service[] = [
     phone: "514-748-2007",
     website: "https://cari.qc.ca",
     description: "Services d'accueil et d'intégration pour nouveaux arrivants. Francisation, aide à l'emploi, accompagnement.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.5128, lng: -73.6854 },
   },
   {
@@ -322,6 +347,7 @@ export const SERVICES: Service[] = [
     phone: "514-288-1261",
     website: "https://centraide-mtl.org",
     description: "Financement et référence vers des centaines d'organismes communautaires à Montréal.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.5136, lng: -73.5614 },
   },
 
@@ -336,6 +362,7 @@ export const SERVICES: Service[] = [
     website: "https://maisondejonathan.com",
     description: "Hébergement d'urgence et soutien pour personnes en situation d'itinérance à Laval.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.6066, lng: -73.7124 },
   },
   {
@@ -348,6 +375,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonlaval.com",
     description: "Banque alimentaire régionale de Laval. Distribution aux familles et personnes dans le besoin.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 45.5731, lng: -73.7567 },
   },
   {
@@ -360,6 +388,7 @@ export const SERVICES: Service[] = [
     website: "https://crisedelaval.com",
     description: "Intervention de crise 24h/24 pour personnes en détresse psychologique à Laval.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.6036, lng: -73.7028 },
   },
   {
@@ -371,6 +400,7 @@ export const SERVICES: Service[] = [
     phone: "450-680-7860",
     website: "https://maisondhaiti.qc.ca",
     description: "Services aux familles immigrantes et en difficulté à Laval. Accompagnement et soutien.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.5905, lng: -73.7200 },
   },
   {
@@ -382,6 +412,7 @@ export const SERVICES: Service[] = [
     phone: "450-686-2400",
     website: "https://centraide-nl.org",
     description: "Réseau de ressources communautaires pour la région de Laval. Référence et soutien aux citoyens.",
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.6066, lng: -73.7124 },
   },
 
@@ -396,6 +427,7 @@ export const SERVICES: Service[] = [
     website: "https://lauberiviere.org",
     description: "Centre d'hébergement d'urgence pour personnes itinérantes à Québec. Repas, refuge et réinsertion.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8088, lng: -71.2176 },
   },
   {
@@ -408,6 +440,7 @@ export const SERVICES: Service[] = [
     website: "https://laboussole.ca",
     description: "Services d'hébergement transitoire et de réinsertion pour personnes sans domicile à Québec.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8278, lng: -71.2290 },
   },
   {
@@ -420,6 +453,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonquebec.com",
     description: "Banque alimentaire de la région de Québec. Collecte et distribution de denrées pour organismes membres.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 46.8396, lng: -71.2980 },
   },
   {
@@ -431,6 +465,7 @@ export const SERVICES: Service[] = [
     phone: "418-529-3700",
     website: "https://lacorbeille.ca",
     description: "Épicerie à prix réduit pour les personnes à faible revenu. Accès à des aliments frais et nutritifs.",
+    hours: "Mar-Ven 10h-17h · Sam 9h-13h",
     coordinates: { lat: 46.8250, lng: -71.2150 },
   },
   {
@@ -443,6 +478,7 @@ export const SERVICES: Service[] = [
     website: "https://centredecrisequebec.com",
     description: "Intervention en situation de crise 24h/24. Soutien psychologique et hébergement de crise.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -455,6 +491,7 @@ export const SERVICES: Service[] = [
     website: "https://maisonmyosotis.ca",
     description: "Maison d'hébergement pour femmes victimes de violence conjugale et leurs enfants à Québec.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.7810, lng: -71.2800 },
   },
   {
@@ -466,6 +503,7 @@ export const SERVICES: Service[] = [
     phone: "418-660-2100",
     website: "https://centraide-quebec.com",
     description: "Financement et référence vers des organismes communautaires des régions de Québec et Chaudière-Appalaches.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
 
@@ -480,6 +518,7 @@ export const SERVICES: Service[] = [
     website: "https://maisonmontcalm.ca",
     description: "Hébergement d'urgence pour hommes en difficulté à Gatineau. Accueil 24h/24 et services de suivi.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4765, lng: -75.7013 },
   },
   {
@@ -492,6 +531,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonoutaouais.com",
     description: "Banque alimentaire de l'Outaouais. Distribution de denrées aux familles dans le besoin.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 45.4490, lng: -75.7261 },
   },
   {
@@ -504,6 +544,7 @@ export const SERVICES: Service[] = [
     website: "https://crisedeloutaouais.ca",
     description: "Service de crise 24h/24 pour l'Outaouais. Soutien immédiat en cas de détresse psychologique.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4765, lng: -75.7013 },
   },
   {
@@ -516,6 +557,7 @@ export const SERVICES: Service[] = [
     website: "https://maisonespoir.ca",
     description: "Maison d'hébergement pour femmes et enfants victimes de violence conjugale en Outaouais.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4765, lng: -75.7013 },
   },
 
@@ -530,6 +572,7 @@ export const SERVICES: Service[] = [
     website: "https://maisonmarguerite.org",
     description: "Maison d'hébergement pour femmes en difficulté et victimes de violence à Longueuil.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5313, lng: -73.5185 },
   },
   {
@@ -542,6 +585,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonrivesud.com",
     description: "Banque alimentaire de la Rive-Sud. Distribution de denrées aux familles et personnes vulnérables.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 45.5185, lng: -73.4793 },
   },
   {
@@ -554,6 +598,7 @@ export const SERVICES: Service[] = [
     website: "https://crisemonteregieoest.ca",
     description: "Intervention de crise 24h/24 pour la Montérégie. Soutien en cas de détresse psychologique.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5313, lng: -73.5185 },
   },
   {
@@ -566,6 +611,7 @@ export const SERVICES: Service[] = [
     website: "https://maisondessansabri.ca",
     description: "Hébergement d'urgence pour personnes sans domicile à Saint-Jean-sur-Richelieu.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.3125, lng: -73.2594 },
   },
   {
@@ -578,6 +624,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonestrie.ca",
     description: "Distribution alimentaire d'urgence pour les familles et personnes à faible revenu de la région de Granby.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 45.4003, lng: -72.7284 },
   },
 
@@ -592,6 +639,7 @@ export const SERVICES: Service[] = [
     website: "https://lachaumine.ca",
     description: "Hébergement d'urgence pour personnes en situation d'itinérance à Sherbrooke.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4042, lng: -71.8929 },
   },
   {
@@ -604,6 +652,7 @@ export const SERVICES: Service[] = [
     website: "https://partagesaintfrancois.org",
     description: "Service de dépannage alimentaire d'urgence pour les familles et personnes seules à Sherbrooke.",
     isUrgent: true,
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 45.4081, lng: -71.9074 },
   },
   {
@@ -616,6 +665,7 @@ export const SERVICES: Service[] = [
     website: "https://crisedelestrie.ca",
     description: "Intervention en crise 24h/24 pour la région de l'Estrie. Soutien psychologique immédiat.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4042, lng: -71.8929 },
   },
   {
@@ -628,6 +678,7 @@ export const SERVICES: Service[] = [
     website: "https://maisonlamontee.ca",
     description: "Maison d'hébergement pour femmes victimes de violence conjugale à Sherbrooke.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.3900, lng: -71.8780 },
   },
 
@@ -642,6 +693,7 @@ export const SERVICES: Service[] = [
     website: "https://lehavretr.com",
     description: "Hébergement d'urgence pour personnes sans domicile à Trois-Rivières. Accueil 24h/24.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -654,6 +706,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonmauricie.com",
     description: "Banque alimentaire régionale. Distribution de denrées aux familles et personnes dans le besoin.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 46.3358, lng: -72.5511 },
   },
   {
@@ -666,6 +719,7 @@ export const SERVICES: Service[] = [
     website: "https://crisemauricie.ca",
     description: "Intervention de crise 24h/24 pour la Mauricie. Soutien immédiat en cas de détresse.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -678,6 +732,7 @@ export const SERVICES: Service[] = [
     website: "https://lasejournelle.ca",
     description: "Maison d'hébergement pour femmes victimes de violence conjugale à Trois-Rivières.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   // ─── TROIS-RIVIÈRES — URGENCES HOSPITALIÈRES ET AMBULANCES SPÉCIFIQUES ───
@@ -691,6 +746,7 @@ export const SERVICES: Service[] = [
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca/chaur",
     description: "Hôpital universitaire principal de la Mauricie. Urgences 24h/24, chirurgie, soins intensifs, cardiologie, neurologie. Centre de traumatologie de niveau 2. Pour toute urgence médicale grave : composez le 911. L'ambulance vous y amènera directement.",
     isUrgent: true,
+    hours: "Urgences : 24h/24, 7j/7",
     coordinates: { lat: 46.3508, lng: -72.5690 },
   },
   {
@@ -703,6 +759,7 @@ export const SERVICES: Service[] = [
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca",
     description: "Service ambulancier couvrant toute la région Mauricie dont Trois-Rivières. Soins préhospitaliers d'urgence, techniciens ambulanciers paramédicaux (TAP). Dispatching via le Centre de communication santé. En cas d'urgence : composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
 
@@ -717,6 +774,7 @@ export const SERVICES: Service[] = [
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca",
     description: "Hôpital principal de Shawinigan. Urgences 24h/24, médecine interne, chirurgie, obstétrique, pédiatrie. Dessert Shawinigan, Grand-Mère et les environs. Pour urgence vitale : 911. À ~30 km du CHAUR de Trois-Rivières en cas de transfert spécialisé.",
     isUrgent: true,
+    hours: "Urgences : 24h/24, 7j/7",
     coordinates: { lat: 46.5740, lng: -72.7320 },
   },
   {
@@ -729,6 +787,7 @@ export const SERVICES: Service[] = [
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca",
     description: "Service ambulancier local de Shawinigan coordonné par le Centre de communication santé de la Mauricie. Réponse rapide pour Shawinigan, Grand-Mère, Saint-Georges-de-Champlain. Pour toute urgence médicale : composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.5672, lng: -72.7441 },
   },
   {
@@ -741,6 +800,7 @@ export const SERVICES: Service[] = [
     website: "https://www.shawinigan.ca/incendie",
     description: "Caserne principale de Shawinigan secteur Champlain. Pompiers professionnels et volontaires. Intervention incendie, sauvetage, matières dangereuses, premiers secours. Dessert Shawinigan et Grand-Mère. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.5600, lng: -72.7300 },
   },
 
@@ -755,6 +815,7 @@ export const SERVICES: Service[] = [
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca/sainte-croix",
     description: "Hôpital principal du Centre-du-Québec à Drummondville. Urgences 24h/24, chirurgie, obstétrique, pédiatrie, soins intensifs. Dessert Drummondville et toute la région du Centre-du-Québec. Pour urgence vitale : 911.",
     isUrgent: true,
+    hours: "Urgences : 24h/24, 7j/7",
     coordinates: { lat: 45.8870, lng: -72.4910 },
   },
   {
@@ -767,6 +828,7 @@ export const SERVICES: Service[] = [
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca",
     description: "Service ambulancier de Drummondville et du Centre-du-Québec. Techniciens ambulanciers paramédicaux (TAP), soins avancés, défibrillation. Dispatching via le Centre de communication santé. Urgence médicale : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -779,6 +841,7 @@ export const SERVICES: Service[] = [
     website: "https://www.securitepublique.gouv.qc.ca/securite-civile",
     description: "Service d'intervention pour les crises civiles : recherche et sauvetage, évacuations d'urgence, catastrophes naturelles, accidents industriels. Soutien aux municipalités du Centre-du-Québec en cas de sinistre majeur. Coordonné avec la Sécurité civile du Québec.",
     isUrgent: true,
+    hours: "24h/24 en période de sinistre",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
 
@@ -793,6 +856,7 @@ export const SERVICES: Service[] = [
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca/arthabaska",
     description: "Hôpital principal de Victoriaville et d'Arthabaska-L'Érable. Urgences 24h/24, chirurgie, médecine interne, obstétrique, oncologie. Dessert Victoriaville, Plessisville et toute la MRC d'Arthabaska. Pour urgence vitale : 911.",
     isUrgent: true,
+    hours: "Urgences : 24h/24, 7j/7",
     coordinates: { lat: 46.0500, lng: -71.9680 },
   },
   {
@@ -805,6 +869,7 @@ export const SERVICES: Service[] = [
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca",
     description: "Service ambulancier couvrant Victoriaville, Plessisville et la MRC Arthabaska-L'Érable. Techniciens ambulanciers paramédicaux (TAP). Dispatching via le Centre de communication santé 24h/24. Urgence médicale : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
 
@@ -819,6 +884,7 @@ export const SERVICES: Service[] = [
     website: "https://missiondelespoir.com",
     description: "Refuge communautaire pour hommes sans domicile à Trois-Rivières. Hébergement d'urgence, repas chauds, douches, vêtements et accompagnement vers des ressources permanentes. Accueil tous les soirs.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3442, lng: -72.5480 },
   },
   {
@@ -830,6 +896,7 @@ export const SERVICES: Service[] = [
     phone: "819-378-5088",
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca",
     description: "Logements transitoires supervisés pour personnes en situation d'itinérance à Trois-Rivières. Accompagnement vers un logement stable, soutien à l'autonomie. Géré par le CIUSSS MCQ.",
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -841,6 +908,7 @@ export const SERVICES: Service[] = [
     phone: "819-375-8467",
     website: "https://ssvp.ca",
     description: "Dépannage alimentaire, vêtements, mobilier et aide matérielle aux personnes dans le besoin à Trois-Rivières. Friperie à bas prix, épicerie communautaire, accompagnement. Aucun jugement, accueil chaleureux.",
+    hours: "Lun-Ven 10h-17h · Sam 10h-14h",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -852,6 +920,7 @@ export const SERVICES: Service[] = [
     phone: "819-370-2100",
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca",
     description: "Centre local de services communautaires de Trois-Rivières. Soins infirmiers, médecine familiale, travail social, nutrition, physiothérapie. Consultations sans rendez-vous selon disponibilité. Couverture gratuite avec carte d'assurance maladie.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -863,6 +932,7 @@ export const SERVICES: Service[] = [
     phone: "819-375-1313",
     website: "https://cjemauricie.com",
     description: "Service d'aide à l'emploi et à l'entrepreneuriat pour les 16-35 ans de la Mauricie. Rédaction de CV, préparation aux entrevues, exploration de carrière, formation. Gratuit et confidentiel.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -874,6 +944,7 @@ export const SERVICES: Service[] = [
     phone: "1-888-643-4721",
     website: "https://www.quebec.ca/emploi",
     description: "Bureau local d'Emploi-Québec à Trois-Rivières. Aide au placement, assurance-emploi, formations subventionnées, aide aux chercheurs d'emploi et aux travailleurs sans emploi. Soutien financier d'urgence possible.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -885,6 +956,7 @@ export const SERVICES: Service[] = [
     phone: "819-378-9373",
     website: "https://centrefemmesmauricie.org",
     description: "Centre de ressources pour femmes à Trois-Rivières. Soutien psychosocial, ateliers de développement personnel, aide aux démarches administratives, accompagnement. Accueil gratuit, espace sécuritaire et sans jugement.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -896,6 +968,7 @@ export const SERVICES: Service[] = [
     phone: "819-371-6711",
     website: "https://www.csj.qc.ca",
     description: "Aide juridique gratuite ou à faible coût pour les personnes à faible revenu à Trois-Rivières. Droit familial, logement, criminel, immigration. Vérification d'admissibilité selon revenus.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -908,6 +981,7 @@ export const SERVICES: Service[] = [
     website: "https://centraidemauricie.org",
     description: "Organisme communautaire finançant 60+ organismes en Mauricie. Référencement vers les ressources locales pour logement, alimentation, santé mentale, famille, emploi. Appel gratuit pour être orienté vers les bons services.",
     isProvinceWide: false,
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -919,6 +993,7 @@ export const SERVICES: Service[] = [
     phone: "819-372-4655",
     website: "https://citimmauricie.org",
     description: "Organisme d'accueil et d'intégration des immigrants à Trois-Rivières et en Mauricie. Aide aux démarches d'immigration, cours de français, recherche d'emploi, orientation culturelle, soutien à la famille. Accueil dans plusieurs langues.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -931,6 +1006,7 @@ export const SERVICES: Service[] = [
     website: "https://cavac.qc.ca",
     description: "Centre d'aide aux victimes d'actes criminels pour la Mauricie et le Centre-du-Québec. Soutien psychosocial, accompagnement judiciaire, aide aux démarches. Service gratuit et confidentiel pour toutes les victimes.",
     isUrgent: true,
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -943,6 +1019,7 @@ export const SERVICES: Service[] = [
     website: "https://www.drogue-aidereference.qc.ca",
     description: "Référencement local vers les ressources en dépendance à Trois-Rivières et en Mauricie. Centres de réadaptation, groupes d'entraide, suivi personnalisé. Le CIUSSS MCQ offre aussi des services spécialisés en dépendance.",
     isUrgent: true,
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
 
@@ -957,6 +1034,7 @@ export const SERVICES: Service[] = [
     website: "https://depannageshawinigan.ca",
     description: "Aide alimentaire d'urgence pour les résidents de Shawinigan et des environs.",
     isUrgent: true,
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 46.5672, lng: -72.7441 },
   },
   {
@@ -969,6 +1047,7 @@ export const SERVICES: Service[] = [
     website: "https://chrysalide.org",
     description: "Maison d'hébergement pour femmes et enfants fuyant la violence conjugale à Shawinigan. Accueil d'urgence 24h/24, suivi psychosocial, aide juridique, accompagnement vers l'autonomie. Confidentiel.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.5672, lng: -72.7441 },
   },
   {
@@ -981,6 +1060,7 @@ export const SERVICES: Service[] = [
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca",
     description: "Hébergement d'urgence et transitoire pour personnes sans domicile à Shawinigan. Repas, accompagnement et référence vers ressources permanentes. Coordonné par le CIUSSS MCQ.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.5672, lng: -72.7441 },
   },
   {
@@ -992,6 +1072,7 @@ export const SERVICES: Service[] = [
     phone: "819-536-7500",
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca",
     description: "Centre local de services communautaires de Shawinigan. Soins infirmiers, médecine familiale, services sociaux, périnatalité. Accès universel avec carte d'assurance maladie.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.5672, lng: -72.7441 },
   },
   {
@@ -1004,6 +1085,7 @@ export const SERVICES: Service[] = [
     website: "https://crisemauricie.ca",
     description: "Le Centre de crise de la Mauricie dessert aussi Shawinigan. Intervention de crise 24h/24, soutien téléphonique, hébergement de crise temporaire. Réponse immédiate pour toute détresse psychologique.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.5672, lng: -72.7441 },
   },
   {
@@ -1015,6 +1097,7 @@ export const SERVICES: Service[] = [
     phone: "819-537-0111",
     website: "https://cjeshawinigan.com",
     description: "Service d'emploi et de développement pour jeunes adultes à Shawinigan et Grand-Mère. CV, entrevues, orientation professionnelle, stages, entrepreneuriat. Service gratuit pour les 16-35 ans.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.5672, lng: -72.7441 },
   },
   {
@@ -1026,6 +1109,7 @@ export const SERVICES: Service[] = [
     phone: "819-537-8261",
     website: "https://centrefemmesshawinigan.org",
     description: "Espace de ressourcement pour femmes à Shawinigan. Soutien psychosocial, ateliers, accompagnement dans les démarches. Lieu d'écoute gratuit, ouvert à toutes les femmes.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.5672, lng: -72.7441 },
   },
   {
@@ -1037,6 +1121,7 @@ export const SERVICES: Service[] = [
     phone: "819-536-6882",
     website: "https://ssvp.ca",
     description: "Aide matérielle d'urgence à Shawinigan : alimentation, vêtements, mobilier, électroménagers. Friperie communautaire à bas prix. Soutien aux personnes en difficulté sans jugement.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.5672, lng: -72.7441 },
   },
   {
@@ -1048,6 +1133,7 @@ export const SERVICES: Service[] = [
     phone: "819-536-3576",
     website: "https://www.csj.qc.ca",
     description: "Aide juridique gratuite ou à faible coût pour les personnes à faible revenu de la région de Shawinigan. Droit de la famille, logement, criminel. Admissibilité selon revenus.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.5672, lng: -72.7441 },
   },
   {
@@ -1060,6 +1146,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonmauricie.com",
     description: "La banque alimentaire régionale Moisson Mauricie distribue aussi dans la région de Shawinigan. Paniers alimentaires pour familles et personnes dans le besoin. Référence via le 819-370-0484.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 46.5672, lng: -72.7441 },
   },
 
@@ -1074,6 +1161,7 @@ export const SERVICES: Service[] = [
     website: "https://maisoncoupeclat.org",
     description: "Maison d'hébergement d'urgence pour femmes et enfants victimes de violence conjugale à Drummondville. Accueil 24h/24, suivi psychosocial, accompagnement juridique, aide à la transition. Complètement confidentiel.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -1085,6 +1173,7 @@ export const SERVICES: Service[] = [
     phone: "819-474-1991",
     website: "https://lesescales.org",
     description: "Maisons de transition pour personnes en situation d'itinérance ou en difficulté à Drummondville. Hébergement supervisé, soutien à l'autonomie, accompagnement vers un logement permanent.",
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -1097,6 +1186,7 @@ export const SERVICES: Service[] = [
     website: "https://centrecrisecdq.org",
     description: "Intervention de crise 24h/24 pour le Centre-du-Québec. Soutien téléphonique, hébergement de crise et suivi. Dessert Drummondville, Victoriaville, Bécancour et toute la région.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -1108,6 +1198,7 @@ export const SERVICES: Service[] = [
     phone: "819-474-2572",
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca",
     description: "Centre local de services communautaires de Drummondville. Soins de première ligne, services sociaux, santé mentale, périnatalité, nutrition. Consultations avec ou sans rendez-vous.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -1119,6 +1210,7 @@ export const SERVICES: Service[] = [
     phone: "819-474-1463",
     website: "https://cjedrummond.com",
     description: "Service gratuit pour jeunes de 16-35 ans à Drummondville. Aide à la rédaction de CV, préparation aux entrevues, bilan de compétences, orientation scolaire et professionnelle. Accompagnement personnalisé.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -1130,6 +1222,7 @@ export const SERVICES: Service[] = [
     phone: "819-474-2381",
     website: "https://centrefemmeslessentielle.org",
     description: "Centre de ressources pour femmes de Drummondville. Groupes de soutien, ateliers, counseling, aide aux démarches. Espace chaleureux et sécuritaire pour toutes les femmes.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -1141,6 +1234,7 @@ export const SERVICES: Service[] = [
     phone: "819-474-0961",
     website: "https://caid.ca",
     description: "Organisme d'accueil et d'intégration pour immigrants à Drummondville. Aide aux démarches, cours de français, recherche d'emploi, orientation dans les services, activités d'intégration. Accueil dans plusieurs langues.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -1152,6 +1246,7 @@ export const SERVICES: Service[] = [
     phone: "819-478-0540",
     website: "https://www.csj.qc.ca",
     description: "Aide juridique gratuite pour personnes à faible revenu à Drummondville. Droit familial, logement, criminel, immigration, protection du consommateur. Vérification de l'admissibilité gratuite.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -1163,6 +1258,7 @@ export const SERVICES: Service[] = [
     phone: "819-472-6444",
     website: "https://centraidecdq.com",
     description: "Réseau communautaire du Centre-du-Québec finançant 50+ organismes locaux. Référencement vers les ressources pour logement, alimentation, santé mentale, famille. Un appel pour être orienté.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -1174,6 +1270,7 @@ export const SERVICES: Service[] = [
     phone: "819-478-7678",
     website: "https://armoire-placard.org",
     description: "Épicerie communautaire à prix réduit à Drummondville. Fruits, légumes, produits secs, produits laitiers à 50-70% du prix régulier. Aucune preuve de revenu exigée. Ouvert à tous les résidents.",
+    hours: "Mar-Ven 10h-17h · Sam 9h-13h",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -1186,6 +1283,7 @@ export const SERVICES: Service[] = [
     website: "https://cavac.qc.ca",
     description: "Centre d'aide aux victimes d'actes criminels du Centre-du-Québec. Soutien psychosocial aux victimes d'agression, vol, violence, accident. Accompagnement judiciaire, aide aux démarches. Gratuit et confidentiel.",
     isUrgent: true,
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
 
@@ -1200,6 +1298,7 @@ export const SERVICES: Service[] = [
     website: "https://maisonlamontee.org",
     description: "Maison d'hébergement pour femmes victimes de violence conjugale à Victoriaville et dans la région d'Arthabaska. Accueil 24h/24, suivi psychosocial, aide juridique, plan de sécurité. Confidentiel.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
   {
@@ -1212,6 +1311,7 @@ export const SERVICES: Service[] = [
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca",
     description: "Hébergement d'urgence pour personnes en situation précaire à Victoriaville. Gîte temporaire, repas, accompagnement vers ressources permanentes. Coordonné par le CIUSSS MCQ.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
   {
@@ -1224,6 +1324,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonarthabaska.org",
     description: "Banque alimentaire régionale d'Arthabaska-L'Érable. Distribution de paniers alimentaires à Victoriaville et dans 40+ municipalités environnantes. Aide alimentaire d'urgence disponible. Aucun jugement.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
   {
@@ -1236,6 +1337,7 @@ export const SERVICES: Service[] = [
     website: "https://centrecrisecdq.org",
     description: "Le Centre de crise du Centre-du-Québec dessert aussi Victoriaville et la région d'Arthabaska. Soutien 24h/24, hébergement de crise, suivi post-crise. Intervention immédiate disponible.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
   {
@@ -1247,6 +1349,7 @@ export const SERVICES: Service[] = [
     phone: "819-357-2100",
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca",
     description: "Centre local de services communautaires d'Arthabaska-L'Érable à Victoriaville. Soins infirmiers, médecine familiale, services sociaux, santé mentale, programme périnatal. Couverture RAMQ.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
   {
@@ -1258,6 +1361,7 @@ export const SERVICES: Service[] = [
     phone: "819-758-2088",
     website: "https://cjearthabaska.com",
     description: "Aide à l'emploi pour jeunes de 16-35 ans à Victoriaville et Arthabaska. CV, entrevues, bilan de compétences, projets, entrepreneuriat jeunesse. Service totalement gratuit.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
   {
@@ -1269,6 +1373,7 @@ export const SERVICES: Service[] = [
     phone: "819-758-6262",
     website: "https://centrefemmesvictoriaville.org",
     description: "Ressource pour femmes de Victoriaville et Arthabaska. Soutien psychosocial, groupes de parole, ateliers, accompagnement dans les démarches. Ouvert à toutes les femmes, gratuit.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
   {
@@ -1280,6 +1385,7 @@ export const SERVICES: Service[] = [
     phone: "819-752-2231",
     website: "https://www.csj.qc.ca",
     description: "Aide juridique gratuite pour personnes à faible revenu à Victoriaville. Couverture pour droit familial, logement, criminel, immigration. Admissibilité vérifiée rapidement sur place.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
   {
@@ -1291,6 +1397,7 @@ export const SERVICES: Service[] = [
     phone: "819-758-2181",
     website: "https://ssvp.ca",
     description: "Aide alimentaire, vêtements, mobilier et soutien aux personnes dans le besoin à Victoriaville. Friperie à très bas prix, épicerie communautaire, accompagnement. Aucun jugement.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
   {
@@ -1302,6 +1409,7 @@ export const SERVICES: Service[] = [
     phone: "819-752-6111",
     website: "https://ressourceentraid.org",
     description: "Organisme communautaire d'entraide à Victoriaville. Visites d'amitié aux personnes isolées, aide aux aînés, soutien aux familles, références vers ressources locales. Bénévolat et accompagnement.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
   {
@@ -1314,6 +1422,7 @@ export const SERVICES: Service[] = [
     website: "https://cavac.qc.ca",
     description: "Aide aux victimes d'actes criminels à Victoriaville et Arthabaska. Soutien psychosocial, accompagnement judiciaire, aide financière d'urgence. Gratuit et confidentiel.",
     isUrgent: true,
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
 
@@ -1328,6 +1437,7 @@ export const SERVICES: Service[] = [
     website: "https://centrelehavre.ca",
     description: "Hébergement d'urgence pour personnes en situation d'itinérance à Saguenay.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.4228, lng: -71.0667 },
   },
   {
@@ -1340,6 +1450,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonslsj.ca",
     description: "Banque alimentaire régionale du Saguenay-Lac-Saint-Jean. Distribution aux familles dans le besoin.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 48.4280, lng: -71.0600 },
   },
   {
@@ -1352,6 +1463,7 @@ export const SERVICES: Service[] = [
     website: "https://crisesaguenay.ca",
     description: "Intervention en crise 24h/24 pour le Saguenay-Lac-Saint-Jean.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.4228, lng: -71.0667 },
   },
   {
@@ -1364,6 +1476,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonslsj.ca",
     description: "Distribution alimentaire d'urgence pour les résidents du Lac-Saint-Jean.",
     isUrgent: true,
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 48.5510, lng: -71.6565 },
   },
 
@@ -1378,6 +1491,7 @@ export const SERVICES: Service[] = [
     website: "https://maisonrevivre.ca",
     description: "Hébergement d'urgence et services d'accompagnement pour personnes sans domicile à Lévis.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8036, lng: -71.1759 },
   },
   {
@@ -1390,6 +1504,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonchaudiereappalaches.com",
     description: "Banque alimentaire de la Chaudière-Appalaches. Distribution aux familles en situation précaire.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 46.8000, lng: -71.1800 },
   },
   {
@@ -1402,6 +1517,7 @@ export const SERVICES: Service[] = [
     website: "https://hebergement-thetford.ca",
     description: "Refuge d'urgence pour personnes sans domicile dans la région de Thetford Mines.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.0977, lng: -71.2977 },
   },
 
@@ -1416,6 +1532,7 @@ export const SERVICES: Service[] = [
     website: "https://maisondureconfort.ca",
     description: "Hébergement d'urgence pour hommes et femmes en situation d'itinérance dans les Laurentides.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.7790, lng: -74.0000 },
   },
   {
@@ -1428,6 +1545,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonlaurentides.org",
     description: "Banque alimentaire des Laurentides. Distribution aux familles et personnes vulnérables.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 45.7950, lng: -74.0050 },
   },
   {
@@ -1440,6 +1558,7 @@ export const SERVICES: Service[] = [
     website: "https://crisedeslaurentides.ca",
     description: "Intervention en crise 24h/24 pour les Laurentides.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.7790, lng: -74.0000 },
   },
 
@@ -1454,6 +1573,7 @@ export const SERVICES: Service[] = [
     website: "https://hebergementjoliette.ca",
     description: "Hébergement d'urgence pour personnes sans domicile dans la région de Lanaudière.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.0233, lng: -73.4323 },
   },
   {
@@ -1466,6 +1586,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonlanaudiere.com",
     description: "Banque alimentaire de Lanaudière. Distribution de denrées aux familles dans le besoin.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 46.0100, lng: -73.4250 },
   },
 
@@ -1480,6 +1601,7 @@ export const SERVICES: Service[] = [
     website: "https://maisonalcove.ca",
     description: "Maison d'hébergement pour femmes victimes de violence et en situation d'urgence à Rimouski.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.4502, lng: -68.5306 },
   },
   {
@@ -1492,6 +1614,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonrimouski.ca",
     description: "Banque alimentaire de Rimouski. Distribution de denrées aux familles en situation précaire.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 48.4502, lng: -68.5306 },
   },
   {
@@ -1504,6 +1627,7 @@ export const SERVICES: Service[] = [
     website: "https://aidelouperivain.ca",
     description: "Services d'hébergement d'urgence et de dépannage pour les résidents de Rivière-du-Loup.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 47.8337, lng: -69.5337 },
   },
 
@@ -1518,6 +1642,7 @@ export const SERVICES: Service[] = [
     website: "https://maisonhebergement-rn.ca",
     description: "Hébergement d'urgence pour personnes en difficulté dans la région de Rouyn-Noranda.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.2374, lng: -79.0145 },
   },
   {
@@ -1530,6 +1655,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonabitibi.ca",
     description: "Banque alimentaire de l'Abitibi-Témiscamingue. Distribution aux familles dans le besoin.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 48.2374, lng: -79.0145 },
   },
   {
@@ -1542,6 +1668,7 @@ export const SERVICES: Service[] = [
     website: "https://lapiaule.ca",
     description: "Centre d'hébergement d'urgence pour personnes itinérantes à Val-d'Or.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.1001, lng: -77.7926 },
   },
 
@@ -1556,6 +1683,7 @@ export const SERVICES: Service[] = [
     website: "https://maisondhebergementgaspe.ca",
     description: "Hébergement d'urgence pour femmes victimes de violence conjugale en Gaspésie.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.8349, lng: -64.4818 },
   },
   {
@@ -1568,6 +1696,7 @@ export const SERVICES: Service[] = [
     website: "https://depannagematane.ca",
     description: "Service de dépannage alimentaire d'urgence pour les résidents de Matane.",
     isUrgent: true,
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 48.8503, lng: -67.5310 },
   },
   {
@@ -1580,6 +1709,7 @@ export const SERVICES: Service[] = [
     website: "https://centrehebergementseptiles.ca",
     description: "Hébergement d'urgence et soutien pour personnes en difficulté sur la Côte-Nord.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 50.2022, lng: -66.3832 },
   },
   {
@@ -1592,6 +1722,7 @@ export const SERVICES: Service[] = [
     website: "https://hebergementbaiecomeau.ca",
     description: "Hébergement d'urgence et services communautaires pour les résidents de Baie-Comeau.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 49.2144, lng: -68.1488 },
   },
 
@@ -1606,6 +1737,7 @@ export const SERVICES: Service[] = [
     website: "https://moissoncentreduqc.ca",
     description: "Distribution alimentaire aux familles en difficulté dans la région de Drummondville.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 45.8851, lng: -72.4951 },
   },
   {
@@ -1618,6 +1750,7 @@ export const SERVICES: Service[] = [
     website: "https://comptoirvictoriaville.ca",
     description: "Service de dépannage alimentaire pour les familles et personnes vulnérables de Victoriaville.",
     isUrgent: true,
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 46.0574, lng: -71.9574 },
   },
 
@@ -1632,6 +1765,7 @@ export const SERVICES: Service[] = [
     website: "https://moissonmaskoutaine.ca",
     description: "Banque alimentaire de la région de Saint-Hyacinthe. Distribution aux familles dans le besoin.",
     isUrgent: true,
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 45.6253, lng: -72.9587 },
   },
   {
@@ -1644,6 +1778,7 @@ export const SERVICES: Service[] = [
     website: "https://lequilibre.org",
     description: "Maison d'hébergement pour femmes victimes de violence à Châteauguay et la Rive-Sud.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.3821, lng: -73.7458 },
   },
 
@@ -1659,6 +1794,7 @@ export const SERVICES: Service[] = [
     website: "https://monenfant.ca",
     description: "Portail provincial pour s'inscrire sur la liste d'attente des CPE et garderies subventionnées (≈ 10 $/jour). Géré par le Ministère de la Famille du Québec.",
     isProvinceWide: true,
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -1671,6 +1807,7 @@ export const SERVICES: Service[] = [
     website: "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/aide-financiere-services-de-garde",
     description: "Information sur les subventions pour garde non subventionnée, aide d'urgence et remboursement d'impôt pour frais de garde (crédit d'impôt pour frais de garde d'enfants).",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -1683,6 +1820,7 @@ export const SERVICES: Service[] = [
     website: "https://monenfant.ca",
     description: "Réseau de responsables en service de garde (RSG) à domicile. Tarif subventionné ≈ 10 $/jour. Disponible dans toutes les régions du Québec via Mon Enfant.",
     isProvinceWide: true,
+    hours: "Lun-Ven 7h-17h30",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
 
@@ -1696,6 +1834,7 @@ export const SERVICES: Service[] = [
     phone: "514-722-1234",
     website: "https://monenfant.ca",
     description: "CPE subventionné à Montréal (tarif ≈ 10 $/jour). Accueil enfants 0-5 ans. S'inscrire via Mon Enfant pour la liste d'attente.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 45.5647, lng: -73.6821 },
   },
   {
@@ -1707,6 +1846,7 @@ export const SERVICES: Service[] = [
     phone: "514-524-3867",
     website: "https://monenfant.ca",
     description: "CPE communautaire dans Rosemont–La Petite-Patrie. Tarif subventionné ≈ 10 $/jour pour les familles à faible et moyen revenu.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 45.5462, lng: -73.5827 },
   },
   {
@@ -1718,6 +1858,7 @@ export const SERVICES: Service[] = [
     phone: "514-729-7000",
     website: "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/aide-financiere-services-de-garde/programme-places-0",
     description: "Programme gouvernemental offrant des places à 0 $ dans certaines garderies non subventionnées pour les familles à faible revenu. Vérifiez l'admissibilité sur le site du gouvernement.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 45.5017, lng: -73.5673 },
   },
   {
@@ -1729,6 +1870,7 @@ export const SERVICES: Service[] = [
     phone: "514-849-5331",
     website: "https://ymcaquebec.org/fr/enfants-et-familles/services-de-garde/",
     description: "Services de garde avant/après école et journées pédagogiques. Tarifs modulés selon le revenu. Aide financière disponible pour les familles à faible revenu.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 45.5050, lng: -73.5674 },
   },
 
@@ -1742,6 +1884,7 @@ export const SERVICES: Service[] = [
     phone: "418-523-1313",
     website: "https://monenfant.ca",
     description: "CPE subventionné dans la région de Québec. Accueil enfants 0-5 ans, tarif ≈ 10 $/jour. Inscription via Mon Enfant.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -1753,6 +1896,7 @@ export const SERVICES: Service[] = [
     phone: "418-651-8710",
     website: "https://monenfant.ca",
     description: "CPE communautaire à Sainte-Foy, Québec. Service de garde subventionné (≈ 10 $/jour) pour les 0-5 ans.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 46.7736, lng: -71.2926 },
   },
 
@@ -1766,6 +1910,7 @@ export const SERVICES: Service[] = [
     phone: "450-686-5252",
     website: "https://monenfant.ca",
     description: "CPE subventionné à Laval. Accueille les enfants de 0 à 5 ans au tarif ≈ 10 $/jour. Liste d'attente via Mon Enfant.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 45.6066, lng: -73.7124 },
   },
   {
@@ -1777,6 +1922,7 @@ export const SERVICES: Service[] = [
     phone: "450-662-9191",
     website: "https://monenfant.ca",
     description: "Garderie privée non subventionnée à Laval. Tarif du marché (~40-55 $/jour). Des crédits d'impôt provinciaux et fédéraux peuvent réduire le coût réel.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 45.5724, lng: -73.7254 },
   },
 
@@ -1790,6 +1936,7 @@ export const SERVICES: Service[] = [
     phone: "819-595-0055",
     website: "https://monenfant.ca",
     description: "CPE subventionné à Gatineau–Outaouais. Accueil des enfants 0-5 ans. Tarif ≈ 10 $/jour pour les familles résidentes au Québec.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 45.4765, lng: -75.7013 },
   },
   {
@@ -1801,6 +1948,7 @@ export const SERVICES: Service[] = [
     phone: "819-561-2000",
     website: "https://rcpeoutaouais.ca",
     description: "Regroupe les CPE de la région de l'Outaouais. Aide à trouver une place en CPE subventionné. Oriente vers Mon Enfant pour les inscriptions.",
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 45.4270, lng: -75.7016 },
   },
 
@@ -1814,6 +1962,7 @@ export const SERVICES: Service[] = [
     phone: "819-563-0042",
     website: "https://monenfant.ca",
     description: "CPE subventionné à Sherbrooke. Accueil des tout-petits 0-5 ans. Tarif ≈ 10 $/jour. S'inscrire via le portail Mon Enfant.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 45.4010, lng: -71.8888 },
   },
 
@@ -1827,6 +1976,7 @@ export const SERVICES: Service[] = [
     phone: "819-375-9822",
     website: "https://monenfant.ca",
     description: "CPE subventionné en Mauricie. Accueil des enfants de 0 à 5 ans au tarif réduit ≈ 10 $/jour. Inscription via Mon Enfant.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 46.3533, lng: -72.5491 },
   },
 
@@ -1840,6 +1990,7 @@ export const SERVICES: Service[] = [
     phone: "418-543-1234",
     website: "https://monenfant.ca",
     description: "CPE subventionné au Saguenay–Lac-Saint-Jean. Tarif ≈ 10 $/jour. Inscription via Mon Enfant. Milieu stimulant pour les enfants 0-5 ans.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 48.4295, lng: -71.0651 },
   },
 
@@ -1853,6 +2004,7 @@ export const SERVICES: Service[] = [
     phone: "450-677-3323",
     website: "https://monenfant.ca",
     description: "CPE subventionné à Longueuil et Rive-Sud. Accueil enfants 0-5 ans, tarif ≈ 10 $/jour. Inscription sur liste d'attente via Mon Enfant.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 45.5314, lng: -73.5185 },
   },
 
@@ -1866,6 +2018,7 @@ export const SERVICES: Service[] = [
     phone: "450-432-1133",
     website: "https://monenfant.ca",
     description: "CPE subventionné dans les Laurentides. Tarif ≈ 10 $/jour pour les enfants 0-5 ans. Inscription via Mon Enfant.",
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 45.7902, lng: -74.0016 },
   },
 
@@ -1881,6 +2034,7 @@ export const SERVICES: Service[] = [
     description: "Service d'orientation en urgence pour trouver une place de garde en situation de crise (violence conjugale, hospitalisation, perte soudaine de garde). Contactez le 211 ou votre CLSC local.",
     isProvinceWide: true,
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
 
@@ -1896,6 +2050,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cmhc-schl.gc.ca/fr",
     description: "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -1908,6 +2063,7 @@ export const SERVICES: Service[] = [
     website: "https://www.canada.ca/fr/agence-revenu/services/impot/particuliers/sujets/reer-ferr-rap.html",
     description: "Retirez jusqu'à 35 000 $ de votre REER sans impôt pour l'achat d'une première propriété. Remboursement sur 15 ans. Accessible via l'Agence du revenu du Canada (ARC).",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -1920,6 +2076,7 @@ export const SERVICES: Service[] = [
     website: "https://www.canada.ca/fr/agence-revenu/services/impot/particuliers/sujets/celiapp.html",
     description: "Épargnez jusqu'à 40 000 $ (8 000 $/an) à l'abri de l'impôt pour acheter votre première maison. Cotisations déductibles du revenu. Disponible dans toutes les banques et caisses.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -1932,6 +2089,7 @@ export const SERVICES: Service[] = [
     website: "https://www.centris.ca",
     description: "Toutes les propriétés à vendre au Québec par les courtiers immobiliers. Filtrez par région, prix, type de propriété. Référence principale pour acheter au Québec.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h · Sam 10h-16h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -1944,6 +2102,7 @@ export const SERVICES: Service[] = [
     website: "https://duproprio.com",
     description: "Propriétés vendues directement par les propriétaires, sans commission de courtier. Souvent moins cher. Bonne option pour acheteurs à budget limité.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h · Sam 10h-16h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
 
@@ -1958,6 +2117,7 @@ export const SERVICES: Service[] = [
     website: "https://www.desjardins.com/fr/prets/pret-hypothecaire.html",
     description: "Caisse populaire québécoise leader en hypothèques. Taux compétitifs, conseils personnalisés, accès à des programmes pour premiers acheteurs. Présente dans toutes les régions du Québec.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h30-16h30 · Sam 9h30-12h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -1970,6 +2130,7 @@ export const SERVICES: Service[] = [
     website: "https://www.bnc.ca/fr/particuliers/prets/hypotheque.html",
     description: "Banque nationale québécoise avec de forts taux hypothécaires. Offre des solutions adaptées aux nouveaux arrivants et aux travailleurs autonomes. Calculateurs en ligne disponibles.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h30-16h30 · Sam 9h30-12h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -1982,6 +2143,7 @@ export const SERVICES: Service[] = [
     website: "https://www.rbc.com/hypotheques",
     description: "Hypothèques flexibles pour premiers acheteurs, taux variables ou fixes. Programme RBC Première Maison avec mise de fonds réduite. Succursales dans toutes les villes du Québec.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h30-16h30 · Sam 9h30-12h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -1994,6 +2156,7 @@ export const SERVICES: Service[] = [
     website: "https://www.td.com/ca/fr/particuliers/hypotheques/",
     description: "Hypothèques à taux fixe et variable, approbation rapide en ligne. Programme Premier Acheteur TD. Outil de comparaison de taux sur le site web.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h30-16h30 · Sam 9h30-12h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2006,6 +2169,7 @@ export const SERVICES: Service[] = [
     website: "https://www.bmo.com/fr-ca/main/personnel/hypotheques/",
     description: "Hypothèques BMO avec remboursement anticipé jusqu'à 20 %. Programmes premiers acheteurs et refinancement. Spécialistes en succursale à travers le Québec.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h30-16h30 · Sam 9h30-12h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2018,6 +2182,7 @@ export const SERVICES: Service[] = [
     website: "https://www.scotiabank.com/ca/fr/particuliers/immobilier/hypotheques.html",
     description: "Options hypothécaires flexibles avec aide aux nouveaux arrivants et immigrants. Programme STEP (Produit hypothécaire) combinant hypothèque et marge. Taux compétitifs.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h30-16h30 · Sam 9h30-12h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2030,6 +2195,7 @@ export const SERVICES: Service[] = [
     website: "https://www.banquelaurentienne.ca/fr/hypotheques",
     description: "Banque québécoise avec taux hypothécaires souvent parmi les plus compétitifs. Spécialisée dans l'accompagnement des premiers acheteurs et des travailleurs autonomes.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h30-16h30 · Sam 9h30-12h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
 
@@ -2043,6 +2209,7 @@ export const SERVICES: Service[] = [
     phone: "418-543-5778",
     website: "https://www.centris.ca/fr/proprietes~a-vendre~saguenay",
     description: "Région la plus abordable du Québec. Prix médian maison : 150 000 $–280 000 $. Copropriétés dès 100 000 $. Idéal pour les premiers acheteurs à budget limité. Courtiers locaux disponibles.",
+    hours: "Lun-Ven 9h-17h · Sam 10h-14h",
     coordinates: { lat: 48.4295, lng: -71.0651 },
   },
   {
@@ -2054,6 +2221,7 @@ export const SERVICES: Service[] = [
     phone: "819-375-1515",
     website: "https://www.centris.ca/fr/proprietes~a-vendre~trois-rivieres",
     description: "Marché abordable en plein essor. Prix médian maison : 200 000 $–320 000 $. Croissance de la valeur soutenue. Bonne qualité de vie et coûts de vie bas. Idéal famille.",
+    hours: "Lun-Ven 9h-17h · Sam 10h-14h",
     coordinates: { lat: 46.3533, lng: -72.5491 },
   },
   {
@@ -2065,6 +2233,7 @@ export const SERVICES: Service[] = [
     phone: "819-562-1221",
     website: "https://www.centris.ca/fr/proprietes~a-vendre~sherbrooke",
     description: "Ville universitaire dynamique. Prix médian maison : 250 000 $–380 000 $. Condos dès 180 000 $. Bonne qualité de vie, accès à l'emploi et services. Marché en progression.",
+    hours: "Lun-Ven 9h-17h · Sam 10h-14h",
     coordinates: { lat: 45.4010, lng: -71.8888 },
   },
   {
@@ -2076,6 +2245,7 @@ export const SERVICES: Service[] = [
     phone: "819-762-0971",
     website: "https://www.centris.ca/fr/proprietes~a-vendre~abitibi-temiscamingue",
     description: "Région ressources avec prix très abordables. Prix médian maison : 180 000 $–300 000 $. Fort marché de l'emploi minier et forestier. Bonne option pour familles cherchant espace et tranquillité.",
+    hours: "Lun-Ven 9h-17h · Sam 10h-14h",
     coordinates: { lat: 48.2342, lng: -79.0170 },
   },
   {
@@ -2087,6 +2257,7 @@ export const SERVICES: Service[] = [
     phone: "819-595-2228",
     website: "https://www.centris.ca/fr/proprietes~a-vendre~gatineau",
     description: "Marché influencé par la proximité d'Ottawa. Prix médian maison : 300 000 $–480 000 $. Condos dès 220 000 $. Emplois fédéraux stables. Bonne alternative à Ottawa plus cher.",
+    hours: "Lun-Ven 9h-17h · Sam 10h-14h",
     coordinates: { lat: 45.4765, lng: -75.7013 },
   },
   {
@@ -2098,6 +2269,7 @@ export const SERVICES: Service[] = [
     phone: "418-688-3362",
     website: "https://www.centris.ca/fr/proprietes~a-vendre~ville-de-quebec",
     description: "Marché équilibré moins cher que Montréal. Prix médian maison : 280 000 $–500 000 $. Condos Centre-ville : 250 000 $–450 000 $. Haute qualité de vie, marché de l'emploi diversifié.",
+    hours: "Lun-Ven 9h-17h · Sam 10h-14h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2109,6 +2281,7 @@ export const SERVICES: Service[] = [
     phone: "450-670-7100",
     website: "https://www.centris.ca/fr/proprietes~a-vendre~longueuil",
     description: "Rive-Sud de Montréal : banlieue prisée plus abordable que l'île. Prix médian maison : 380 000 $–600 000 $. Accès métro/autoroute vers Montréal. Idéal familles avec enfants.",
+    hours: "Lun-Ven 9h-17h · Sam 10h-14h",
     coordinates: { lat: 45.5314, lng: -73.5185 },
   },
   {
@@ -2120,6 +2293,7 @@ export const SERVICES: Service[] = [
     phone: "450-686-4646",
     website: "https://www.centris.ca/fr/proprietes~a-vendre~laval",
     description: "Île entre Montréal et les Laurentides. Prix médian maison : 450 000 $–700 000 $. Condos neufs disponibles. Bonne infrastructure et liens rapides avec Montréal (métro Orange).",
+    hours: "Lun-Ven 9h-17h · Sam 10h-14h",
     coordinates: { lat: 45.6066, lng: -73.7124 },
   },
   {
@@ -2131,6 +2305,7 @@ export const SERVICES: Service[] = [
     phone: "514-762-2440",
     website: "https://www.centris.ca/fr/proprietes~a-vendre~montreal",
     description: "Marché le plus cher du Québec. Condos Centre-ville/Plateau : 350 000 $–700 000 $. Maisons Rosemont/Verdun : 600 000 $–1 100 000 $. Quartiers abordables : Montréal-Nord, RDP, Pointe-aux-Trembles (200 000 $–450 000 $).",
+    hours: "Lun-Ven 9h-17h · Sam 10h-14h",
     coordinates: { lat: 45.5017, lng: -73.5673 },
   },
 
@@ -2145,6 +2320,7 @@ export const SERVICES: Service[] = [
     website: "https://www.oaciq.com/fr",
     description: "Vérifiez qu'un courtier est certifié au Québec. Accès à la procédure officielle d'achat immobilier, vos droits comme acheteur, et résolution de litiges. Gratuit.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h (sur rendez-vous)",
     coordinates: { lat: 45.5548, lng: -73.4568 },
   },
   {
@@ -2157,6 +2333,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cnq.org/fr",
     description: "Le notaire est obligatoire pour finaliser un achat immobilier au Québec. Il rédige l'acte de vente, vérifie les titres de propriété et enregistre la transaction. Honoraires typiques : 1 000 $–1 800 $.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.5015, lng: -73.5711 },
   },
 
@@ -2171,6 +2348,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ramq.gouv.qc.ca",
     description: "Inscrivez-vous à la carte d'assurance maladie (RAMQ) pour accéder aux soins de santé couverts. Aide pour personnes sans carte, nouveaux arrivants et situations précaires.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-17h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2183,6 +2361,7 @@ export const SERVICES: Service[] = [
     website: "https://www.medecinsdumonde.ca",
     description: "Soins médicaux gratuits pour personnes sans assurance maladie, sans statut légal, en situation précaire. Montréal, Québec et autres villes. Aucune carte RAMQ requise.",
     isProvinceWide: true,
+    hours: "Mar et Jeu 13h-17h · Sur rendez-vous",
     coordinates: { lat: 45.5225, lng: -73.5905 },
   },
   {
@@ -2195,6 +2374,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ophq.gouv.qc.ca",
     description: "Défense des droits des personnes handicapées au Québec. Aide à l'accès aux services adaptés, transport, logement et emploi. Guide des programmes et ressources disponibles.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2207,6 +2387,7 @@ export const SERVICES: Service[] = [
     website: "https://www.quebec.ca/sante/trouver-une-ressource/soutien-a-domicile",
     description: "Services de soins à domicile pour personnes âgées ou en perte d'autonomie : infirmières, ergothérapeutes, aide-ménagère, repas. Contactez votre CLSC local ou le 811.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h-16h30",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2218,6 +2399,7 @@ export const SERVICES: Service[] = [
     phone: "514-527-2361",
     website: "https://santemontreal.ca",
     description: "CLSC offrant soins de première ligne : médecins, infirmières, travailleurs sociaux, services en santé mentale, périnatalité et soins à domicile. Sans rendez-vous possible.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.5246, lng: -73.5579 },
   },
   {
@@ -2229,6 +2411,7 @@ export const SERVICES: Service[] = [
     phone: "514-937-9251",
     website: "https://www.cliniquepointe.ca",
     description: "Clinique médicale communautaire à but non lucratif dans PSC. Médecins de famille, santé mentale, suivi des personnes vulnérables. Accès facilité pour personnes sans médecin.",
+    hours: "Lun-Ven 8h-17h · Sam 9h-13h",
     coordinates: { lat: 45.4837, lng: -73.5671 },
   },
   {
@@ -2240,6 +2423,7 @@ export const SERVICES: Service[] = [
     phone: "514-374-1717",
     website: "https://santemontreal.ca",
     description: "Groupe de médecine de famille universitaire. Consultations sans rendez-vous pour problèmes aigus. Inscription possible pour les personnes sans médecin de famille.",
+    hours: "Lun-Ven 8h-20h · Sam-Dim 9h-17h",
     coordinates: { lat: 45.5666, lng: -73.6054 },
   },
   {
@@ -2251,6 +2435,7 @@ export const SERVICES: Service[] = [
     phone: "418-641-2572",
     website: "https://ciussscn.ca",
     description: "CLSC couvrant la Haute-Ville et Basse-Ville de Québec. Services médicaux, sociaux et communautaires. Suivi des ainés, familles et personnes en situation précaire.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.8132, lng: -71.2140 },
   },
   {
@@ -2262,6 +2447,7 @@ export const SERVICES: Service[] = [
     phone: "514-529-4440",
     website: "https://clinique-spot.ca",
     description: "Soins de santé sexuelle gratuits ou à faible coût. Dépistage ITS, contraception, PrEP, soutien aux personnes LGBTQ+. Accueil sans jugement, sans rendez-vous.",
+    hours: "Lun-Ven 8h-17h (sur rendez-vous)",
     coordinates: { lat: 45.5250, lng: -73.5695 },
   },
   {
@@ -2273,6 +2459,7 @@ export const SERVICES: Service[] = [
     phone: "450-445-4452",
     website: "https://santemonteregie.qc.ca",
     description: "CLSC de la Montérégie offrant services de première ligne. Médecin, infirmière, travailleur social. Services spéciaux pour personnes à faible revenu et sans médecin.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.4456, lng: -73.4600 },
   },
   {
@@ -2285,6 +2472,7 @@ export const SERVICES: Service[] = [
     website: "https://www.fadoq.ca",
     description: "Plus grand réseau d'aînés du Québec. Aide aux aînés pour accéder aux services de santé, logement, transport adapté, activités sociales et défense de leurs droits.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-16h · Sam 9h-12h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2296,6 +2484,7 @@ export const SERVICES: Service[] = [
     phone: "514-270-7550",
     website: "https://www.exaequo.net",
     description: "Organisme communautaire offrant des services d'aide à la vie quotidienne aux personnes ayant une déficience physique à Montréal. Aide à l'intégration sociale et accompagnement.",
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 45.5312, lng: -73.6184 },
   },
   {
@@ -2308,6 +2497,7 @@ export const SERVICES: Service[] = [
     website: "https://www.aqis-iqdi.qc.ca",
     description: "Soutien aux personnes ayant une déficience intellectuelle et à leurs proches. Ressources, références, défense des droits, accompagnement pour accéder aux services adaptés.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 45.5322, lng: -73.5918 },
   },
 
@@ -2322,6 +2512,7 @@ export const SERVICES: Service[] = [
     website: "https://www.immigration-quebec.gouv.qc.ca",
     description: "Ministère responsable de l'immigration et francisation au Québec. Statuts, permis, demandes de résidence, cours de français financés par l'État. Bureaux à Montréal, Québec et autres villes.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.5088, lng: -73.5610 },
   },
   {
@@ -2334,6 +2525,7 @@ export const SERVICES: Service[] = [
     website: "https://www.canada.ca/fr/immigration-refugies-citoyennete.html",
     description: "Immigration, Réfugiés et Citoyenneté Canada (IRCC). Permis de travail, résidence permanente, citoyenneté, réfugiés. Service d'assistance téléphonique gratuit.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-16h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2346,6 +2538,7 @@ export const SERVICES: Service[] = [
     website: "https://www.tcri.qc.ca",
     description: "Réseau de plus de 150 organismes aidant les réfugiés et demandeurs d'asile au Québec. Hébergement d'urgence, accompagnement, services juridiques et intégration. Référence vers l'organisme approprié.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.5288, lng: -73.6218 },
   },
   {
@@ -2358,6 +2551,7 @@ export const SERVICES: Service[] = [
     website: "https://francisationquebec.gouv.qc.ca",
     description: "Cours de français entièrement gratuits pour les adultes immigrants au Québec. Cours à temps plein ou partiel, en classe ou en ligne. Allocations de participation disponibles.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2369,6 +2563,7 @@ export const SERVICES: Service[] = [
     phone: "514-271-8207",
     website: "https://www.caci.ca",
     description: "Centre d'alphabétisation et cours de français pour immigrants à Montréal. Niveaux débutant à avancé, services d'interprétation, aide aux démarches administratives. Communauté accueillante.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.5266, lng: -73.6176 },
   },
   {
@@ -2380,6 +2575,7 @@ export const SERVICES: Service[] = [
     phone: "514-270-9386",
     website: "https://www.promis.qc.ca",
     description: "Organisme d'accueil et d'intégration pour nouveaux arrivants à Montréal. Cours de français, aide à l'emploi, accompagnement social, garderie, activités culturelles. Quartier Côte-des-Neiges.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.4897, lng: -73.6256 },
   },
   {
@@ -2391,6 +2587,7 @@ export const SERVICES: Service[] = [
     phone: "514-382-0735",
     website: "https://www.bina.ca",
     description: "Services d'intégration aux immigrants dans le nord de Montréal. Accueil, cours de français, aide à l'emploi, activités jeunesse, soutien psychosocial et événements interculturels.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.5634, lng: -73.6745 },
   },
   {
@@ -2402,6 +2599,7 @@ export const SERVICES: Service[] = [
     phone: "514-384-5959",
     website: "https://www.cana.qc.ca",
     description: "Services spécialisés pour femmes immigrantes à Montréal. Francisation, alphabétisation, soutien psychosocial, atelier cuisine, accompagnement dans les démarches. Environnement bienveillant.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.5401, lng: -73.6113 },
   },
   {
@@ -2413,6 +2611,7 @@ export const SERVICES: Service[] = [
     phone: "418-687-9771",
     website: "https://www.caiq.ca",
     description: "Accueil et intégration des immigrants dans la région de Québec. Cours de français, aide à la recherche d'emploi, orientation communautaire et accompagnement pour les démarches administratives.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.8005, lng: -71.2427 },
   },
   {
@@ -2425,6 +2624,7 @@ export const SERVICES: Service[] = [
     website: "https://www.csaj.qc.ca",
     description: "Aide juridique gratuite pour immigrants à faible revenu : statut de réfugié, appels CISR, permis de travail, parrainage. Disponible dans toutes les régions du Québec.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.5088, lng: -73.5610 },
   },
   {
@@ -2437,6 +2637,7 @@ export const SERVICES: Service[] = [
     website: "https://ciussscow.ca",
     description: "Services d'interprétation médicale et sociale gratuits dans les établissements de santé. Disponible en arabe, espagnol, créole, mandarin, hindi et plus de 60 langues.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.4919, lng: -73.5947 },
   },
 
@@ -2451,6 +2652,7 @@ export const SERVICES: Service[] = [
     website: "https://www.quebec.ca/emploi",
     description: "Service public d'emploi du Québec. Aide à la recherche d'emploi, formation professionnelle, programmes de subvention aux employeurs, aide financière pour les chercheurs d'emploi.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2463,6 +2665,7 @@ export const SERVICES: Service[] = [
     website: "https://www.canada.ca/fr/emploi-developpement-social/services/assurance-emploi.html",
     description: "Demande de prestations d'assurance-emploi suite à une perte d'emploi. Calculateur de prestations, déclarations bimensuelles, aide aux prestataires en situation précaire.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2475,6 +2678,7 @@ export const SERVICES: Service[] = [
     website: "https://www.axtra.ca",
     description: "Réseau de centres d'aide à l'emploi au Québec. Accompagnement personnalisé : rédaction de CV, préparation d'entrevue, techniques de recherche d'emploi. Gratuit pour chercheurs d'emploi.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 45.5259, lng: -73.6058 },
   },
   {
@@ -2487,6 +2691,7 @@ export const SERVICES: Service[] = [
     website: "https://cjereseau.ca",
     description: "Réseau de 110 organismes pour jeunes de 16–35 ans. Aide à l'emploi, retour aux études, entrepreneuriat, équilibre de vie. Réseau présent dans toutes les régions du Québec.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2499,6 +2704,7 @@ export const SERVICES: Service[] = [
     website: "https://www.camo-pi.qc.ca",
     description: "Accompagnement spécialisé pour les immigrants dans leur intégration au marché du travail québécois. Reconnaissance des compétences étrangères, mise à niveau professionnelle et stages.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 45.5200, lng: -73.5753 },
   },
   {
@@ -2510,6 +2716,7 @@ export const SERVICES: Service[] = [
     phone: "514-878-9717",
     website: "https://www.competencesmontreal.ca",
     description: "Formations sectorielles (construction, hôtellerie, TI, transport) et aide à l'intégration en emploi. Gratuit pour personnes admissibles. Lié aux centres de formation professionnelle.",
+    hours: "Lun-Ven 8h-17h (selon session)",
     coordinates: { lat: 45.5001, lng: -73.5568 },
   },
   {
@@ -2521,6 +2728,7 @@ export const SERVICES: Service[] = [
     phone: "514-737-9481",
     website: "https://www.interactionemploi.com",
     description: "Centre d'aide à l'emploi dans CDN-NDG. CV, entrevue, recherche d'emploi, ateliers en français. Accompagnement pour immigrants, réfugiés et personnes éloignées du marché du travail.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.4957, lng: -73.6143 },
   },
   {
@@ -2532,6 +2740,7 @@ export const SERVICES: Service[] = [
     phone: "514-523-0835",
     website: "https://www.promotravail.ca",
     description: "Organisme d'aide à l'emploi dans l'est de Montréal. Aide aux personnes exclues du marché du travail (sans expérience québécoise, handicap, faible scolarité). Suivi individualisé gratuit.",
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 45.5460, lng: -73.5350 },
   },
   {
@@ -2543,6 +2752,7 @@ export const SERVICES: Service[] = [
     phone: "418-524-2111",
     website: "https://www.quebec.ca/emploi/trouver-emploi",
     description: "Centre local d'emploi de la région de Québec. Aide à la recherche d'emploi, bilan de compétences, formations subventionnées, rédaction de CV et démarches d'aide financière.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.8145, lng: -71.2181 },
   },
   {
@@ -2555,6 +2765,7 @@ export const SERVICES: Service[] = [
     website: "https://www.saje.ca",
     description: "Accompagnement gratuit pour lancer ou développer une entreprise au Québec. Planification d'affaires, financement, marketing. Idéal pour personnes souhaitant créer leur propre emploi.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.5070, lng: -73.5540 },
   },
   {
@@ -2567,6 +2778,7 @@ export const SERVICES: Service[] = [
     website: "https://www.inforoutefpt.org",
     description: "Réseau de formations professionnelles reconnues (DEP, AEP). Cuisine, électricité, coiffure, mécanique, soins infirmiers... Programmes financés par le gouvernement. Droits de scolarité réduits.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h-17h (selon session)",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
 
@@ -2581,6 +2793,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cdpdj.qc.ca",
     description: "Organisme québécois de défense contre la discrimination et le harcèlement. Plaintes pour discrimination au logement, emploi, services. Aide gratuite aux victimes de violations des droits.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.5088, lng: -73.5565 },
   },
   {
@@ -2593,6 +2806,7 @@ export const SERVICES: Service[] = [
     website: "https://protecteurducitoyen.qc.ca",
     description: "Ombudsman québécois. Défend les citoyens face aux erreurs ou injustices des ministères et organismes publics du Québec. Gratuit, confidentiel. Aussi pour aide sociale, logement, RAMQ.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2605,6 +2819,7 @@ export const SERVICES: Service[] = [
     website: "https://www.csaj.qc.ca",
     description: "Aide juridique gratuite pour personnes à faible revenu : logement, famille, immigration, criminel, aide sociale. Seuils d'admissibilité selon revenu. Bureaux dans toutes les régions.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.5088, lng: -73.5570 },
   },
   {
@@ -2617,6 +2832,7 @@ export const SERVICES: Service[] = [
     website: "https://www.justicedeproximite.qc.ca",
     description: "Information et orientation juridique gratuite sans rendez-vous. Aide pour comprendre ses droits, compléter des formulaires et savoir à qui s'adresser. Présent dans 9 régions du Québec.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.5000, lng: -73.5670 },
   },
   {
@@ -2629,6 +2845,7 @@ export const SERVICES: Service[] = [
     website: "https://www.acef.qc.ca",
     description: "Associations coopératives d'économie familiale. Aide gratuite pour gérer dettes, budget, arnaques financières, recours contre créanciers abusifs. Présent dans 18 régions du Québec.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 45.5322, lng: -73.6162 },
   },
   {
@@ -2641,6 +2858,7 @@ export const SERVICES: Service[] = [
     website: "https://www.stm.info/fr/info/services/transport-adapte",
     description: "Transport adapté porte-à-porte pour personnes handicapées ou à mobilité réduite. Inscription via votre autorité de transport régionale (STM, RTL, STL, RTC...). Tarifs réduits disponibles.",
     isProvinceWide: true,
+    hours: "Lun-Ven 7h-18h (sur réservation)",
     coordinates: { lat: 45.5088, lng: -73.5540 },
   },
   {
@@ -2652,6 +2870,7 @@ export const SERVICES: Service[] = [
     phone: "514-842-5558",
     website: "https://www.rouedesecours.ca",
     description: "Service de transport bénévole pour personnes âgées ou à mobilité réduite à Montréal. Transport médical, rendez-vous, courses essentielles. Tarifs symboliques selon revenu.",
+    hours: "Lun-Ven 7h-18h (sur réservation)",
     coordinates: { lat: 45.5301, lng: -73.5882 },
   },
   {
@@ -2664,6 +2883,7 @@ export const SERVICES: Service[] = [
     website: "https://www.option-consommateurs.org",
     description: "Défense des droits des consommateurs québécois. Aide pour litiges avec commerçants, contrats abusifs, arnaques, plaintes à l'Office de protection du consommateur (OPC). Gratuit.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.5088, lng: -73.5545 },
   },
   {
@@ -2676,6 +2896,7 @@ export const SERVICES: Service[] = [
     website: "https://www.revenuquebec.ca",
     description: "Aide pour produire votre déclaration de revenus, accéder aux crédits d'impôt (solidarité, TVQ), régulariser des dettes fiscales. Programme Assistance-Revenu et aide aux aînes.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2688,6 +2909,7 @@ export const SERVICES: Service[] = [
     website: "https://www.quebec.ca/famille-et-soutien-aux-personnes/aide-et-soutien-financier",
     description: "Programme d'aide sociale et de solidarité sociale du Québec. Prestations mensuelles pour personnes à faible revenu sans emploi. Aide spéciale pour situations d'urgence.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2700,6 +2922,7 @@ export const SERVICES: Service[] = [
     website: "https://www.rocmtl.org",
     description: "Réseau de centaines d'organismes communautaires au Québec. Référence vers ressources locales : groupes d'entraide, activités communautaires, soutien alimentaire, social et culturel.",
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.5140, lng: -73.5701 },
   },
 
@@ -2713,6 +2936,7 @@ export const SERVICES: Service[] = [
     phone: "1-800-361-7620",
     website: "https://saaq.gouv.qc.ca",
     description: "Bureau de la SAAQ pour permis de conduire, immatriculation, plaques, indemnisation des victimes d'accidents et services aux conducteurs. Rendez-vous en ligne recommandé.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.5088, lng: -73.5878 },
   },
   {
@@ -2724,6 +2948,7 @@ export const SERVICES: Service[] = [
     phone: "1-800-361-7620",
     website: "https://saaq.gouv.qc.ca",
     description: "Bureau de la SAAQ pour permis de conduire, immatriculation, plaques, indemnisation des victimes d'accidents et services aux conducteurs. Rendez-vous en ligne recommandé.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2735,6 +2960,7 @@ export const SERVICES: Service[] = [
     phone: "1-800-361-7620",
     website: "https://saaq.gouv.qc.ca",
     description: "Bureau de la SAAQ pour permis de conduire, immatriculation, plaques, indemnisation des victimes d'accidents et services aux conducteurs. Rendez-vous en ligne recommandé.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.6066, lng: -73.7124 },
   },
   {
@@ -2746,6 +2972,7 @@ export const SERVICES: Service[] = [
     phone: "1-800-361-7620",
     website: "https://saaq.gouv.qc.ca",
     description: "Bureau de la SAAQ pour permis de conduire, immatriculation, plaques, indemnisation des victimes d'accidents et services aux conducteurs. Rendez-vous en ligne recommandé.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.5315, lng: -73.5189 },
   },
   {
@@ -2757,6 +2984,7 @@ export const SERVICES: Service[] = [
     phone: "1-800-361-7620",
     website: "https://saaq.gouv.qc.ca",
     description: "Bureau de la SAAQ pour permis de conduire, immatriculation, plaques, indemnisation des victimes d'accidents et services aux conducteurs. Rendez-vous en ligne recommandé.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.4042, lng: -71.8929 },
   },
   {
@@ -2768,6 +2996,7 @@ export const SERVICES: Service[] = [
     phone: "1-800-361-7620",
     website: "https://saaq.gouv.qc.ca",
     description: "Bureau de la SAAQ pour permis de conduire, immatriculation, plaques, indemnisation des victimes d'accidents et services aux conducteurs. Rendez-vous en ligne recommandé.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.4765, lng: -75.7013 },
   },
   {
@@ -2779,6 +3008,7 @@ export const SERVICES: Service[] = [
     phone: "1-800-361-7620",
     website: "https://saaq.gouv.qc.ca",
     description: "Bureau de la SAAQ pour permis de conduire, immatriculation, plaques, indemnisation des victimes d'accidents et services aux conducteurs. Rendez-vous en ligne recommandé.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -2790,6 +3020,7 @@ export const SERVICES: Service[] = [
     phone: "1-800-361-7620",
     website: "https://saaq.gouv.qc.ca",
     description: "Bureau de la SAAQ pour permis de conduire, immatriculation, plaques, indemnisation des victimes d'accidents et services aux conducteurs. Rendez-vous en ligne recommandé.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 48.4277, lng: -71.0694 },
   },
 
@@ -2805,6 +3036,7 @@ export const SERVICES: Service[] = [
     description: "Beneva (fusion de La Capitale et SSQ) est le plus grand assureur québécois. Assurance auto, habitation et vie. Service en ligne 24h/24, gestion des réclamations rapide et application mobile.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-17h · Sam 9h-13h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2818,6 +3050,7 @@ export const SERVICES: Service[] = [
     description: "Assureur mutuel québécois offrant la couverture auto, habitation et entreprise. Réseau de 17 caisses régionales partout au Québec. Déclaration de sinistre disponible 24h/24.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-17h · Sam 9h-13h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -2831,6 +3064,7 @@ export const SERVICES: Service[] = [
     description: "Plus grand assureur de dommages au Canada. Assurance auto et habitation au Québec avec service de réclamation 24h/24, réseau de réparateurs certifiés et application Intact MaVoiture.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-17h · Sam 9h-13h",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -2844,6 +3078,7 @@ export const SERVICES: Service[] = [
     description: "Assurance auto et habitation du Mouvement Desjardins. Accès par les caisses populaires, en ligne ou par téléphone. Programme Ajusto récompense la conduite prudente avec des rabais.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-17h · Sam 9h-13h",
     coordinates: { lat: 45.4230, lng: -73.5610 },
   },
   {
@@ -2857,6 +3092,7 @@ export const SERVICES: Service[] = [
     description: "Assureur en ligne leader au Québec. Soumission et gestion de police 100% numérique. Assurance auto avec assistance routière incluse, déclaration de sinistre 24h/24 et tarifs compétitifs.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-17h · Sam 9h-13h",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -2870,6 +3106,7 @@ export const SERVICES: Service[] = [
     description: "Assurance auto et habitation offerte aux membres de groupes affiliés et clients TD. Service de réclamation 24h/24, voiture de remplacement et protection contre les accidents sans faute.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-17h · Sam 9h-13h",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -2883,6 +3120,7 @@ export const SERVICES: Service[] = [
     description: "Coopérative d'assurance canadienne. Couvertures auto, habitation et vie au Québec. Conseillers locaux dans plusieurs villes, programme de fidélité et accompagnement personnalisé en cas de sinistre.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-17h · Sam 9h-13h",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -2896,6 +3134,7 @@ export const SERVICES: Service[] = [
     description: "Assureur de dommages présent au Québec via un réseau de courtiers. Produits auto, habitation et assurance spécialisée. Déclaration de sinistre en ligne ou par téléphone 24h/24.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-17h · Sam 9h-13h",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -2909,6 +3148,7 @@ export const SERVICES: Service[] = [
     description: "Assureur mutuel reconnu pour ses prix compétitifs en assurance auto et habitation. Vendu via courtiers agréés au Québec. Service en français, assistance routière et gestion des réclamations réactive.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-17h · Sam 9h-13h",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -2922,6 +3162,7 @@ export const SERVICES: Service[] = [
     description: "Industrielle Alliance (iA Groupe financier) offre assurance auto, habitation et vie au Québec. Siège social à Québec, réseau de conseillers partout dans la province et plateforme numérique complète.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-17h · Sam 9h-13h",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
 
@@ -2935,6 +3176,7 @@ export const SERVICES: Service[] = [
     phone: "514-369-5555",
     website: "https://www.spinelli.ca",
     description: "Grand groupe de concessionnaires automobiles à Montréal offrant des véhicules neufs et d'occasion de plusieurs marques : Honda, Toyota, Hyundai, Kia, Mazda. Financement disponible.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.4960, lng: -73.6700 },
   },
   {
@@ -2946,6 +3188,7 @@ export const SERVICES: Service[] = [
     phone: "514-731-2001",
     website: "https://www.groupeparkavenue.com",
     description: "Concessionnaire multi-marques (GM, Buick, Cadillac, Chevrolet) proposant des véhicules neufs, d'occasion certifiés et des options de location-financement accessibles.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.5088, lng: -73.6132 },
   },
   {
@@ -2957,6 +3200,7 @@ export const SERVICES: Service[] = [
     phone: "514-739-6397",
     website: "https://www.decariemotors.com",
     description: "Concessionnaire BMW et véhicules d'occasion certifiés à Montréal. Service de financement personnalisé, reprise de véhicules et programmes d'accessibilité.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.4859, lng: -73.6427 },
   },
   {
@@ -2968,6 +3212,7 @@ export const SERVICES: Service[] = [
     phone: "418-681-1212",
     website: "https://www.lallier.com",
     description: "Groupe automobile majeur de la région de Québec regroupant plusieurs marques (Honda, Hyundai, Mazda, Mitsubishi). Véhicules neufs, d'occasion et financement sur place.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 46.7884, lng: -71.2776 },
   },
   {
@@ -2979,6 +3224,7 @@ export const SERVICES: Service[] = [
     phone: "418-622-2525",
     website: "https://www.capitalehonda.com",
     description: "Concessionnaire Honda officiel à Québec. Vente, location et financement de véhicules neufs et certifiés d'occasion avec programmes adaptés aux différents budgets.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 46.8112, lng: -71.2589 },
   },
   {
@@ -2990,6 +3236,7 @@ export const SERVICES: Service[] = [
     phone: "450-688-2222",
     website: "https://www.prestigeford.ca",
     description: "Concessionnaire Ford et Lincoln à Laval proposant voitures, camionnettes et VUS neufs et d'occasion. Options de financement flexibles et programmes de reprise.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.5581, lng: -73.7552 },
   },
   {
@@ -3001,6 +3248,7 @@ export const SERVICES: Service[] = [
     phone: "450-686-4666",
     website: "https://www.spinellihondalaval.com",
     description: "Concessionnaire Honda à Laval offrant véhicules neufs, d'occasion certifiés et service de financement. Programme de reprise et évaluation gratuite de votre véhicule.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.5625, lng: -73.7430 },
   },
   {
@@ -3012,6 +3260,7 @@ export const SERVICES: Service[] = [
     phone: "450-674-7474",
     website: "https://www.autorivesud.com",
     description: "Concessionnaire multi-marques sur la Rive-Sud de Montréal. Vaste inventaire de véhicules neufs et d'occasion, financement maison et service après-vente complet.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.5310, lng: -73.5190 },
   },
   {
@@ -3023,6 +3272,7 @@ export const SERVICES: Service[] = [
     phone: "450-449-3555",
     website: "https://www.groupepratte.com",
     description: "Concessionnaire Mazda et Toyota sur la Rive-Sud. Service clientèle reconnu, financement avantageux et large choix de véhicules pour tous les budgets.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.5947, lng: -73.4356 },
   },
   {
@@ -3034,6 +3284,7 @@ export const SERVICES: Service[] = [
     phone: "819-563-5544",
     website: "https://www.bouchardsherbrooke.com",
     description: "Concessionnaire Toyota et véhicules d'occasion à Sherbrooke. Équipe locale de confiance, programmes de financement flexibles et service certifié constructeur.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.4042, lng: -71.8929 },
   },
   {
@@ -3045,6 +3296,7 @@ export const SERVICES: Service[] = [
     phone: "819-562-3555",
     website: "https://www.vwsherbrooke.com",
     description: "Concessionnaire officiel Volkswagen à Sherbrooke. Véhicules neufs, Golf, Tiguan, Atlas et voitures d'occasion certifiées. Financement 0% disponible sur certains modèles.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.4125, lng: -71.9010 },
   },
   {
@@ -3056,6 +3308,7 @@ export const SERVICES: Service[] = [
     phone: "819-770-6666",
     website: "https://www.gatineauford.com",
     description: "Concessionnaire Ford dans la région de Gatineau. Camionnettes F-150, Explorer, Bronco et voitures d'occasion. Service bilingue et financement sur place.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.4765, lng: -75.7013 },
   },
   {
@@ -3067,6 +3320,7 @@ export const SERVICES: Service[] = [
     phone: "819-561-2525",
     website: "https://www.hyundaigatineau.com",
     description: "Concessionnaire Hyundai officiel à Gatineau. Véhicules neufs Elantra, Tucson, Santa Fe et Ioniq électrique. Options de location et financement adaptés à tous les budgets.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.4652, lng: -75.7110 },
   },
   {
@@ -3078,6 +3332,7 @@ export const SERVICES: Service[] = [
     phone: "819-374-5555",
     website: "https://www.hondatroisrivieres.com",
     description: "Concessionnaire Honda à Trois-Rivières. Civic, CR-V, Pilot neufs et d'occasion certifiés. Financement maison disponible pour crédits difficiles et reprises.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 46.3500, lng: -72.5500 },
   },
   {
@@ -3089,6 +3344,7 @@ export const SERVICES: Service[] = [
     phone: "418-545-3333",
     website: "https://www.saguenaymazda.com",
     description: "Concessionnaire Mazda à Saguenay–Lac-Saint-Jean. Mazda3, CX-5, CX-50 neufs et d'occasion. Service après-vente, financement et programmes de fidélisation.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 48.4200, lng: -71.0600 },
   },
   {
@@ -3100,6 +3356,7 @@ export const SERVICES: Service[] = [
     phone: "418-722-5678",
     website: "https://www.kiarimouski.com",
     description: "Concessionnaire Kia officiel à Rimouski. Kia Sportage, Sorento, EV6 électrique et véhicules d'occasion. Service de livraison régionale disponible.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 48.4504, lng: -68.5310 },
   },
   {
@@ -3111,6 +3368,7 @@ export const SERVICES: Service[] = [
     phone: "450-349-7777",
     website: "https://www.nissanstjean.com",
     description: "Concessionnaire Nissan sur la Rive-Sud. Rogue, Qashqai, Pathfinder neufs et certifiés d'occasion. Options de financement pour tout type de crédit.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.3070, lng: -73.2613 },
   },
   {
@@ -3122,6 +3380,7 @@ export const SERVICES: Service[] = [
     phone: "450-372-3838",
     website: "https://www.toyotagranby.com",
     description: "Concessionnaire Toyota certifié à Granby. Corolla, RAV4, Highlander neufs et d'occasion. Programme de reprise et évaluation gratuite. Financement 0% selon éligibilité.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.4008, lng: -72.7333 },
   },
   {
@@ -3133,6 +3392,7 @@ export const SERVICES: Service[] = [
     phone: "418-838-5555",
     website: "https://www.subarulevis.com",
     description: "Concessionnaire Subaru sur la Rive-Sud de Québec. Outback, Forester, Crosstrek neufs et d'occasion certifiés. Spécialiste des véhicules à traction intégrale pour l'hiver québécois.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 46.7165, lng: -71.1839 },
   },
   {
@@ -3144,6 +3404,7 @@ export const SERVICES: Service[] = [
     phone: "450-773-5551",
     website: "https://www.chevroletsthyacinthe.com",
     description: "Concessionnaire Chevrolet en Montérégie. Silverado, Equinox, Traverse neufs et d'occasion. Atelier certifié et service de prêt de véhicule de courtoisie.",
+    hours: "Lun-Ven 9h-18h · Sam 9h-17h · Dim 10h-16h",
     coordinates: { lat: 45.6142, lng: -72.9566 },
   },
 
@@ -3159,6 +3420,7 @@ export const SERVICES: Service[] = [
     description: "Composez le 811 pour parler à une infirmière en tout temps, 24h/24, 7j/7, partout au Québec. Conseils médicaux, orientation vers les bons soins, prise en charge des urgences non vitales. Service entièrement gratuit, disponible en français et en anglais.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h-17h (sur rendez-vous)",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -3172,6 +3434,7 @@ export const SERVICES: Service[] = [
     description: "Le 811 vous met aussi en contact avec un travailleur social pour des conseils psychosociaux immédiats. Détresse émotionnelle, conflits familiaux, anxiété, dépression légère. Service disponible 24h/24, 7j/7, gratuit et confidentiel.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
 
@@ -3187,6 +3450,7 @@ export const SERVICES: Service[] = [
     description: "Ligne provinciale gratuite d'aide et de référence pour les problèmes de dépendance à la drogue, à l'alcool et aux médicaments. Disponible 24h/24, 7j/7. Intervenants spécialisés, orientent vers les centres de réadaptation, groupes de soutien et ressources locales.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -3200,6 +3464,7 @@ export const SERVICES: Service[] = [
     description: "Ligne provinciale gratuite pour les personnes aux prises avec un problème de jeu compulsif. Disponible 24h/24, 7j/7. Écoute, soutien, référence vers les centres de traitement et groupes d'entraide. Les proches peuvent aussi appeler.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -3213,6 +3478,7 @@ export const SERVICES: Service[] = [
     description: "Fraternité internationale pour les personnes souhaitant arrêter de boire. Réunions quotidiennes dans toutes les régions du Québec. Programme en 12 étapes, parrainage, soutien continu. Totalement gratuit, anonyme et sans affiliation religieuse obligatoire.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -3226,6 +3492,7 @@ export const SERVICES: Service[] = [
     description: "Programme de rétablissement pour personnes dépendantes à toute substance (drogues, médicaments). Réunions régulières dans toutes les régions du Québec. Soutien par les pairs, programme en 12 étapes. Gratuit, anonyme, ouvert à tous.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
 
@@ -3241,6 +3508,7 @@ export const SERVICES: Service[] = [
     description: "Ligne d'aide provinciale gratuite pour les victimes d'abus, de maltraitance ou de négligence envers les personnes aînées. Violence physique, psychologique, financière ou sexuelle. Intervenants spécialisés disponibles du lundi au vendredi, référence vers ressources locales. Confidentiel.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
 
@@ -3256,6 +3524,7 @@ export const SERVICES: Service[] = [
     description: "Réseau québécois des centres d'aide et de lutte contre les agressions à caractère sexuel. Soutien aux victimes d'agression sexuelle, d'inceste et de harcèlement. Écoute, accompagnement, défense des droits, thérapie. Centres présents dans toutes les régions du Québec.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
 
@@ -3271,6 +3540,7 @@ export const SERVICES: Service[] = [
     description: "Ligne d'écoute et de référence pour les femmes vivant une grossesse non désirée ou difficile. Soutien émotionnel, information sur toutes les options, référence vers ressources locales. Disponible 24h/24 par téléphone et clavardage. Totalement gratuit et confidentiel.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "Lun-Ven 9h-21h · Sam-Dim 10h-18h",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
 
@@ -3286,6 +3556,7 @@ export const SERVICES: Service[] = [
     description: "Aide d'urgence pour les victimes de sinistres : incendie, inondation, tempête. Hébergement temporaire, vêtements, nourriture, médicaments. Disponible 24h/24 en cas de catastrophe. Également présente pour l'aide humanitaire internationale et les formations aux premiers secours.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24 en période de sinistre",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -3299,6 +3570,7 @@ export const SERVICES: Service[] = [
     description: "Service gouvernemental d'aide aux sinistrés en cas de catastrophe naturelle (inondation, verglas, tempête). Programme d'indemnisation, hébergement d'urgence, rétablissement. Coordination avec les municipalités et organismes communautaires.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24 en période de sinistre",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
 
@@ -3314,6 +3586,7 @@ export const SERVICES: Service[] = [
     description: "Ligne d'aide nationale pour les victimes de traite des personnes (exploitation sexuelle, travail forcé). Disponible 24h/24, confidentielle, multilingue. Référence vers refuges spécialisés, soutien juridique et accompagnement. Signalement possible des cas suspects.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
 
@@ -3329,6 +3602,7 @@ export const SERVICES: Service[] = [
     description: "Service d'écoute et d'intervention pour jeunes de 12 à 25 ans. Disponible 24h/24 par téléphone, texto et clavardage. Soutien pour idées suicidaires, dépression, violence, relations amoureuses, identité sexuelle, pression des pairs. Gratuit, confidentiel, sans jugement.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -3342,6 +3616,7 @@ export const SERVICES: Service[] = [
     description: "Service d'écoute et de counseling professionnel pour les jeunes Canadiens, disponible 24h/24, 365 jours par an. Thérapie par texto (texto 686868), clavardage et téléphone. Sujets : santé mentale, abus, LGBTQ+, identité, intimidation, relations. Entièrement gratuit.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
 
@@ -3357,6 +3632,7 @@ export const SERVICES: Service[] = [
     description: "Service anonyme et confidentiel pour signaler des crimes ou des activités criminelles sans devoir s'identifier. Trafic de drogue, violence, exploitation, vol. L'information est transmise aux corps policiers compétents. Disponible 24h/24.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   // ══════════════════════════════════════════════════════════════════════════
@@ -3375,6 +3651,7 @@ export const SERVICES: Service[] = [
     description: "Police provinciale du Québec. Couvre la totalité du territoire québécois, notamment toutes les municipalités sans service de police municipal. Interventions d'urgence, enquêtes criminelles, sécurité routière. En cas d'urgence, composez le 911.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -3387,6 +3664,7 @@ export const SERVICES: Service[] = [
     website: "https://spvm.qc.ca",
     description: "Corps policier municipal de la Ville de Montréal. Urgences, enquêtes, prévention et sécurité communautaire. 33 postes de quartier répartis sur l'île. Non-urgence : 514-280-2222. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -3399,6 +3677,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.quebec.qc.ca/police",
     description: "Police municipale de la Ville de Québec. Interventions d'urgence, patrouille, enquêtes, sécurité routière. Postes dans toutes les arrondissements. Non-urgence : 418-641-6411. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -3411,6 +3690,7 @@ export const SERVICES: Service[] = [
     website: "https://www.police.laval.qc.ca",
     description: "Police municipale de Laval. Patrouille, urgences, enquêtes criminelles et sécurité communautaire sur l'île Jésus. Non-urgence : 450-662-4636. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.6066, lng: -73.7124 },
   },
   {
@@ -3423,6 +3703,7 @@ export const SERVICES: Service[] = [
     website: "https://www.longueuil.quebec/fr/police",
     description: "Corps policier de l'agglomération de Longueuil, couvrant Longueuil, Brossard, Saint-Lambert et Saint-Bruno. Non-urgence : 450-463-7211. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5313, lng: -73.5185 },
   },
   {
@@ -3435,6 +3716,7 @@ export const SERVICES: Service[] = [
     website: "https://www.gatineau.ca/police",
     description: "Police municipale de Gatineau (Outaouais). Patrouille, enquêtes, interventions d'urgence dans les secteurs Aylmer, Hull, Gatineau et Masson-Angers. Non-urgence : 819-246-0222. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4766, lng: -75.7013 },
   },
   {
@@ -3447,6 +3729,7 @@ export const SERVICES: Service[] = [
     website: "https://www.sherbrooke.ca/police",
     description: "Police municipale de Sherbrooke. Interventions, patrouille, prévention et enquêtes pour la grande région de Sherbrooke et l'Estrie. Non-urgence : 819-821-8000. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4042, lng: -71.8929 },
   },
   {
@@ -3459,6 +3742,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.saguenay.ca/police",
     description: "Police municipale de Saguenay couvrant Chicoutimi, Jonquière et La Baie. Patrouille, enquêtes criminelles et sécurité routière. Non-urgence : 418-545-5778. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.4277, lng: -71.0694 },
   },
   {
@@ -3471,6 +3755,7 @@ export const SERVICES: Service[] = [
     website: "https://www.v3r.net/sptr",
     description: "Corps policier municipal de Trois-Rivières et environs. Patrouille, prévention, enquêtes et sécurité publique. Non-urgence : 819-691-2929. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -3483,6 +3768,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.levis.qc.ca/police",
     description: "Police municipale de Lévis (Rive-Sud de Québec). Couvre les secteurs de Charny, Saint-Nicolas, Saint-Romuald et Lauzon. Non-urgence : 418-835-0404. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8036, lng: -71.1759 },
   },
   {
@@ -3495,6 +3781,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.terrebonne.qc.ca/securite-publique",
     description: "Police municipale de Terrebonne (Lanaudière). Patrouille, urgences et sécurité communautaire dans les secteurs Terrebonne, Lachenaie et La Plaine. Non-urgence : 450-471-4121. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.7007, lng: -73.6440 },
   },
   {
@@ -3507,6 +3794,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.repentigny.qc.ca/police",
     description: "Police municipale de Repentigny (Lanaudière). Sécurité publique, patrouille et intervention d'urgence. Non-urgence : 450-654-5252. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.7441, lng: -73.4528 },
   },
   {
@@ -3519,6 +3807,7 @@ export const SERVICES: Service[] = [
     website: "https://www.drummondville.ca/spdv",
     description: "Police municipale de Drummondville (Centre-du-Québec). Patrouille, enquêtes, prévention et sécurité routière. Non-urgence : 819-478-6444. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -3531,6 +3820,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.saint-jean-sur-richelieu.qc.ca/police",
     description: "Police municipale de Saint-Jean-sur-Richelieu (Montérégie). Intervention, sécurité routière, prévention et enquêtes. Non-urgence : 450-347-2781. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.3125, lng: -73.2594 },
   },
   {
@@ -3543,6 +3833,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.saint-jerome.qc.ca/police",
     description: "Police municipale de Saint-Jérôme (Laurentides). Patrouille, prévention, sécurité publique. Non-urgence : 450-436-1441. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.7790, lng: -74.0000 },
   },
   {
@@ -3555,6 +3846,7 @@ export const SERVICES: Service[] = [
     website: "https://www.granby.ca/police",
     description: "Police municipale de Granby (Estrie/Haute-Yamaska). Interventions d'urgence, patrouille et enquêtes. Non-urgence : 450-776-8000. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4003, lng: -72.7284 },
   },
   {
@@ -3567,6 +3859,7 @@ export const SERVICES: Service[] = [
     website: "https://www.shawinigan.ca/securite-publique",
     description: "Police municipale de Shawinigan (Mauricie). Sécurité publique, prévention et interventions d'urgence. Non-urgence : 819-536-3344. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.5672, lng: -72.7441 },
   },
   {
@@ -3579,6 +3872,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.joliette.qc.ca/police",
     description: "Police municipale de Joliette (Lanaudière). Patrouille, sécurité communautaire et intervention. Non-urgence : 450-753-8151. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.0233, lng: -73.4323 },
   },
   {
@@ -3591,6 +3885,7 @@ export const SERVICES: Service[] = [
     website: "https://www.victoriaville.ca/securite-publique",
     description: "Police municipale de Victoriaville (Centre-du-Québec). Interventions d'urgence, enquêtes et sécurité routière. Non-urgence : 819-758-1211. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
   {
@@ -3603,6 +3898,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.rouyn-noranda.qc.ca/securite-publique",
     description: "Police municipale de Rouyn-Noranda (Abitibi-Témiscamingue). Patrouille, sécurité et interventions d'urgence. Non-urgence : 819-762-5555. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.2374, lng: -79.0145 },
   },
   {
@@ -3616,6 +3912,7 @@ export const SERVICES: Service[] = [
     description: "Police fédérale au Québec. Crime organisé, terrorisme, crimes financiers, sécurité nationale et contrôle aux frontières. Travaille en collaboration avec la SQ et les polices municipales. Urgence : 911.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -3628,6 +3925,7 @@ export const SERVICES: Service[] = [
     website: "https://www.mirabel.ca/police",
     description: "Police municipale de Mirabel (Laurentides). Couvre le vaste territoire de Mirabel incluant Saint-Janvier, Saint-Canut, Sainte-Monique. Non-urgence : 450-476-7979. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.6500, lng: -74.0833 },
   },
   {
@@ -3640,6 +3938,7 @@ export const SERVICES: Service[] = [
     website: "https://www.rpvs.qc.ca",
     description: "Régie de police inter-municipale couvrant Vaudreuil-Dorion, Hudson, Rigaud et autres municipalités de Vaudreuil-Soulanges. Non-urgence : 450-455-3000. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.3959, lng: -74.0294 },
   },
 
@@ -3654,6 +3953,7 @@ export const SERVICES: Service[] = [
     website: "https://spvm.qc.ca/fr/Pages/Decouvrir-le-SPVM/Organisation/Centre-de-communication",
     description: "Centre de réception et de dispatch des appels d'urgence pour l'île de Montréal. Coordonne en temps réel le déploiement de la police (SPVM), des pompiers (SIM) et des ambulances (Urgences-santé). Disponible 24h/24, 7j/7. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -3666,6 +3966,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.quebec.qc.ca/securitepublique",
     description: "Centre d'appels d'urgence 911 pour la Ville de Québec et sa région. Dispatch de la police (SPQ), des pompiers et des ambulances pour tous les arrondissements. Réception 24h/24. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -3678,6 +3979,7 @@ export const SERVICES: Service[] = [
     website: "https://www.laval.ca/securite-publique",
     description: "Centre de dispatch 911 pour la Ville de Laval. Coordonne police (SPL), pompiers (SSIL) et ambulances (Urgences-santé). Disponible 24h/24. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.6066, lng: -73.7124 },
   },
   {
@@ -3690,6 +3992,7 @@ export const SERVICES: Service[] = [
     website: "https://www.longueuil.quebec/fr/securite-publique",
     description: "Centre 911 couvrant Longueuil, Brossard, Saint-Lambert et Saint-Bruno. Dispatch police (SPAL), incendie et ambulances pour toute l'agglomération. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5313, lng: -73.5185 },
   },
   {
@@ -3702,6 +4005,7 @@ export const SERVICES: Service[] = [
     website: "https://www.gatineau.ca/securite-publique",
     description: "Centre de dispatch d'urgence pour Gatineau et la région de l'Outaouais. Coordonne police (SPG), pompiers (SIG) et services ambulanciers. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4766, lng: -75.7013 },
   },
   {
@@ -3714,6 +4018,7 @@ export const SERVICES: Service[] = [
     website: "https://www.sherbrooke.ca/securite-publique",
     description: "Centre 911 pour Sherbrooke et la région de l'Estrie. Dispatch police, pompiers et ambulances en temps réel. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4042, lng: -71.8929 },
   },
   {
@@ -3726,6 +4031,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.saguenay.ca/securite-publique",
     description: "Centre de dispatch 911 pour Saguenay et le Saguenay-Lac-Saint-Jean. Couvre Chicoutimi, Jonquière, La Baie, Alma et les municipalités environnantes. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.4277, lng: -71.0694 },
   },
   {
@@ -3738,6 +4044,7 @@ export const SERVICES: Service[] = [
     website: "https://www.v3r.net/securite-publique",
     description: "Centre d'urgence 911 pour Trois-Rivières, Shawinigan et la région de la Mauricie. Dispatch de la police, des pompiers et des ambulances. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -3750,6 +4057,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.levis.qc.ca/securite-publique",
     description: "Centre 911 couvrant Lévis et la région de Chaudière-Appalaches. Dispatch police, incendie et ambulances pour la Rive-Sud et les environs. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8036, lng: -71.1759 },
   },
   {
@@ -3762,6 +4070,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-lanaudiere.gouv.qc.ca",
     description: "Centre 911 pour la région de Lanaudière. Dispatch d'urgence pour Joliette, Terrebonne, Repentigny, Mascouche, L'Assomption. ⚠️ Note : Environ 773 des 1 112 municipalités du Québec n'ont pas de premiers répondants — des délais d'intervention plus longs peuvent survenir en zone rurale. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.0233, lng: -73.4323 },
   },
   {
@@ -3774,6 +4083,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-laurentides.gouv.qc.ca",
     description: "Centre 911 pour la région des Laurentides. Dispatch pour Saint-Jérôme, Mirabel, Mont-Tremblant, Sainte-Agathe et les municipalités environnantes. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.7790, lng: -74.0000 },
   },
   {
@@ -3786,6 +4096,7 @@ export const SERVICES: Service[] = [
     website: "https://santemonteregie.qc.ca",
     description: "Centre 911 pour la Montérégie. Dispatch pour Saint-Jean-sur-Richelieu, Vaudreuil, Châteauguay, Saint-Hyacinthe, Granby et toute la région. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.3125, lng: -73.2594 },
   },
   {
@@ -3798,6 +4109,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ciusssmcq.ca",
     description: "Centre 911 pour le Centre-du-Québec. Dispatch police, incendie et ambulances pour Drummondville, Victoriaville, Bécancour. ⚠️ Plusieurs petites municipalités rurales ont des délais d'intervention plus longs en raison du manque de premiers répondants. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -3810,6 +4122,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-at.gouv.qc.ca",
     description: "Centre 911 pour l'Abitibi-Témiscamingue. Dispatch pour Rouyn-Noranda, Val-d'Or, Amos, Ville-Marie. ⚠️ Région étendue avec couverture inégale — délais ambulanciers parfois élevés en territoire éloigné. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.2374, lng: -79.0145 },
   },
   {
@@ -3822,6 +4135,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-bsl.gouv.qc.ca",
     description: "Centre 911 pour le Bas-Saint-Laurent. Dispatch pour Rimouski, Rivière-du-Loup, Matane, Amqui. ⚠️ Plusieurs municipalités rurales ont des délais plus longs. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.4501, lng: -68.5202 },
   },
   {
@@ -3834,6 +4148,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-gim.gouv.qc.ca",
     description: "Centre 911 pour la Gaspésie et les Îles-de-la-Madeleine. Dispatch pour Gaspé, Matane, Carleton, Cap-aux-Meules. ⚠️ Territoire vaste — délais d'intervention variables. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.8349, lng: -64.4818 },
   },
   {
@@ -3846,6 +4161,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-cotenord.gouv.qc.ca",
     description: "Centre 911 pour la Côte-Nord. Dispatch pour Sept-Îles, Baie-Comeau, Havre-Saint-Pierre. ⚠️ Territoire parmi les plus étendus du Québec — couverture ambulancière limitée dans les zones isolées. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 50.2022, lng: -66.3832 },
   },
   {
@@ -3858,6 +4174,7 @@ export const SERVICES: Service[] = [
     website: "https://www.crsss-baiejames.gouv.qc.ca",
     description: "Centre 911 pour le Nord-du-Québec (Chibougamau, Chapais, Matagami, territoire de la Baie-James). ⚠️ Zone très peu couverte en premiers répondants — évacuations médicales aériennes parfois nécessaires. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 49.9167, lng: -74.3667 },
   },
   {
@@ -3870,6 +4187,7 @@ export const SERVICES: Service[] = [
     website: "https://www.rrsss17.gouv.qc.ca",
     description: "Centre de coordination des urgences pour le Nunavik (14 villages inuits). ⚠️ Région sans service ambulancier au sol — toutes les évacuations médicales se font par avion. Couverture d'urgence très limitée. Composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 58.1072, lng: -68.3890 },
   },
 
@@ -3884,6 +4202,7 @@ export const SERVICES: Service[] = [
     website: "https://sim.montreal.ca",
     description: "Service de sécurité incendie de la Ville de Montréal. Lutte contre les incendies, sauvetage, matières dangereuses, premiers secours. 66 casernes réparties sur l'île de Montréal. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -3896,6 +4215,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.quebec.qc.ca/incendie",
     description: "Service incendie de la Ville de Québec. Intervention, sauvetage, prévention et inspection. Couvre tous les arrondissements de la Ville de Québec. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -3908,6 +4228,7 @@ export const SERVICES: Service[] = [
     website: "https://www.laval.ca/incendie",
     description: "Service incendie de la Ville de Laval. Intervention d'urgence, sauvetage technique, prévention et inspection des bâtiments. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.6066, lng: -73.7124 },
   },
   {
@@ -3920,6 +4241,7 @@ export const SERVICES: Service[] = [
     website: "https://www.longueuil.quebec/fr/incendie",
     description: "Service incendie couvrant l'agglomération de Longueuil. Lutte contre les incendies, matières dangereuses et sauvetage aquatique. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5313, lng: -73.5185 },
   },
   {
@@ -3932,6 +4254,7 @@ export const SERVICES: Service[] = [
     website: "https://www.gatineau.ca/incendie",
     description: "Service incendie de la Ville de Gatineau. Intervention, sauvetage, prévention et sensibilisation dans tous les secteurs de Gatineau. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4766, lng: -75.7013 },
   },
   {
@@ -3944,6 +4267,7 @@ export const SERVICES: Service[] = [
     website: "https://www.sherbrooke.ca/incendie",
     description: "Service incendie municipal de Sherbrooke (Estrie). Lutte contre les incendies, sauvetage, matières dangereuses et inspection. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4042, lng: -71.8929 },
   },
   {
@@ -3956,6 +4280,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.saguenay.ca/incendie",
     description: "Service incendie de Saguenay couvrant Chicoutimi, Jonquière et La Baie. Intervention d'urgence, sauvetage et prévention. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.4277, lng: -71.0694 },
   },
   {
@@ -3968,6 +4293,7 @@ export const SERVICES: Service[] = [
     website: "https://www.v3r.net/incendie",
     description: "Service incendie municipal de Trois-Rivières (Mauricie). Lutte contre les incendies, sauvetage technique et prévention. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -3980,6 +4306,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.levis.qc.ca/incendie",
     description: "Service incendie de Lévis (Rive-Sud de Québec). Couvre tous les secteurs de Lévis. Intervention, sauvetage et prévention. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8036, lng: -71.1759 },
   },
   {
@@ -3992,6 +4319,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.terrebonne.qc.ca/incendie",
     description: "Service incendie municipal de Terrebonne (Lanaudière). Intervention d'urgence, sauvetage et inspection dans les secteurs Terrebonne, Lachenaie et La Plaine. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.7007, lng: -73.6440 },
   },
   {
@@ -4004,6 +4332,7 @@ export const SERVICES: Service[] = [
     website: "https://www.drummondville.ca/incendie",
     description: "Service incendie de Drummondville (Centre-du-Québec). Lutte contre les incendies, premiers secours et prévention. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -4016,6 +4345,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.saint-jerome.qc.ca/incendie",
     description: "Service incendie de Saint-Jérôme (Laurentides). Intervention et sauvetage pour Saint-Jérôme et environs. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.7790, lng: -74.0000 },
   },
   {
@@ -4028,6 +4358,7 @@ export const SERVICES: Service[] = [
     website: "https://www.granby.ca/incendie",
     description: "Service incendie de Granby (Estrie). Lutte contre les incendies, sauvetage et prévention dans la MRC de La Haute-Yamaska. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4003, lng: -72.7284 },
   },
   {
@@ -4040,6 +4371,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.rimouski.qc.ca/incendie",
     description: "Service incendie de Rimouski (Bas-Saint-Laurent). Intervention, sauvetage, prévention et inspection. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.4501, lng: -68.5202 },
   },
   {
@@ -4052,6 +4384,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.rouyn-noranda.qc.ca/incendie",
     description: "Service incendie de Rouyn-Noranda (Abitibi-Témiscamingue). Couvre la vaste ville fusionnée de Rouyn-Noranda. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.2374, lng: -79.0145 },
   },
   {
@@ -4064,6 +4397,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.valdor.qc.ca/incendie",
     description: "Service incendie de Val-d'Or (Abitibi-Témiscamingue). Intervention d'urgence, sauvetage et prévention. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.1001, lng: -77.7926 },
   },
   {
@@ -4076,6 +4410,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.sept-iles.qc.ca/incendie",
     description: "Service incendie de Sept-Îles (Côte-Nord). Lutte contre les incendies, sauvetage et prévention pour la grande région de Sept-Îles. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 50.2022, lng: -66.3832 },
   },
   {
@@ -4088,6 +4423,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.baie-comeau.qc.ca/incendie",
     description: "Service incendie de Baie-Comeau (Côte-Nord). Intervention, sauvetage et prévention. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 49.2161, lng: -68.1488 },
   },
   {
@@ -4100,6 +4436,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.alma.qc.ca/incendie",
     description: "Service incendie d'Alma (Saguenay-Lac-Saint-Jean). Intervention d'urgence, sauvetage nautique (Lac-Saint-Jean) et prévention. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.5510, lng: -71.6565 },
   },
   {
@@ -4112,6 +4449,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.repentigny.qc.ca/incendie",
     description: "Service incendie de Repentigny (Lanaudière). Intervention d'urgence, sauvetage et prévention pour Repentigny, Le Gardeur et Saint-Sulpice. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.7441, lng: -73.4528 },
   },
   {
@@ -4124,6 +4462,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.saint-jean-sur-richelieu.qc.ca/incendie",
     description: "Service incendie de Saint-Jean-sur-Richelieu (Montérégie). Couvre les secteurs Saint-Jean, Iberville, Saint-Luc et Saint-Athanase. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.3125, lng: -73.2594 },
   },
   {
@@ -4136,6 +4475,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.joliette.qc.ca/incendie",
     description: "Service incendie de Joliette (Lanaudière). Intervention, sauvetage et prévention des incendies. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.0233, lng: -73.4323 },
   },
   {
@@ -4148,6 +4488,7 @@ export const SERVICES: Service[] = [
     website: "https://www.victoriaville.ca/incendie",
     description: "Service incendie de Victoriaville (Centre-du-Québec). Lutte contre les incendies, sauvetage et inspection des bâtiments. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.0517, lng: -71.9614 },
   },
   {
@@ -4160,6 +4501,7 @@ export const SERVICES: Service[] = [
     website: "https://www.shawinigan.ca/incendie",
     description: "Service incendie de Shawinigan (Mauricie). Couvre Grand-Mère, Saint-Georges-de-Champlain et environs. Pompiers professionnels et volontaires. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.5672, lng: -72.7441 },
   },
   {
@@ -4172,6 +4514,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.mascouche.qc.ca/incendie",
     description: "Service incendie de Mascouche (Lanaudière). Intervention d'urgence et prévention pour Mascouche et secteurs adjacents. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.7523, lng: -73.6007 },
   },
   {
@@ -4184,6 +4527,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.vaudreuil-dorion.qc.ca/incendie",
     description: "Service incendie de Vaudreuil-Dorion (Vaudreuil-Soulanges). Lutte contre les incendies, sauvetage et prévention dans la région. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.3959, lng: -74.0294 },
   },
   {
@@ -4196,6 +4540,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.blainville.qc.ca/incendie",
     description: "Service incendie de Blainville (Laurentides). Intervention, prévention et sensibilisation pour Blainville et ses secteurs. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.6709, lng: -73.8835 },
   },
   {
@@ -4208,6 +4553,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.chateauguay.qc.ca/incendie",
     description: "Service incendie de Châteauguay (Montérégie). Lutte contre les incendies, sauvetage et prévention. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.3812, lng: -73.7528 },
   },
   {
@@ -4220,6 +4566,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.st-hyacinthe.qc.ca/incendie",
     description: "Service incendie de Saint-Hyacinthe (Montérégie). Intervention d'urgence, sauvetage et prévention des incendies. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.6142, lng: -72.9566 },
   },
   {
@@ -4232,6 +4579,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.roberval.qc.ca/incendie",
     description: "Service incendie de Roberval (Saguenay-Lac-Saint-Jean). Intervention et sauvetage nautique sur le Lac-Saint-Jean. Pompiers volontaires. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.5218, lng: -72.2320 },
   },
   {
@@ -4244,6 +4592,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.riviere-du-loup.qc.ca/incendie",
     description: "Service incendie de Rivière-du-Loup (Bas-Saint-Laurent). Lutte contre les incendies, sauvetage et prévention. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 47.8277, lng: -69.5327 },
   },
   {
@@ -4256,6 +4605,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.matane.qc.ca/incendie",
     description: "Service incendie de Matane (Bas-Saint-Laurent / Gaspésie). Pompiers volontaires et professionnels. Intervention et prévention. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.8456, lng: -67.5319 },
   },
   {
@@ -4268,6 +4618,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.amos.qc.ca/incendie",
     description: "Service incendie d'Amos (Abitibi-Témiscamingue). Intervention d'urgence et prévention pour Amos et ses environs. Pompiers professionnels et volontaires. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.5673, lng: -78.1125 },
   },
   {
@@ -4280,6 +4631,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.gaspe.qc.ca/incendie",
     description: "Service incendie de Gaspé (Gaspésie). Territoire vaste couvrant la pointe gaspésienne. Pompiers volontaires en majorité. ⚠️ Délais d'intervention possibles en zones rurales éloignées. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.8349, lng: -64.4818 },
   },
   {
@@ -4292,6 +4644,7 @@ export const SERVICES: Service[] = [
     website: "https://www.thetfordmines.com/incendie",
     description: "Service incendie de Thetford Mines (Chaudière-Appalaches). Intervention, sauvetage et prévention. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.1038, lng: -71.3001 },
   },
   {
@@ -4304,6 +4657,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ville.saint-georges.qc.ca/incendie",
     description: "Service incendie de Saint-Georges (Beauce / Chaudière-Appalaches). Pompiers professionnels et volontaires. Intervention d'urgence et prévention. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.1152, lng: -70.6636 },
   },
 
@@ -4318,6 +4672,7 @@ export const SERVICES: Service[] = [
     website: "https://www.urgences-sante.qc.ca",
     description: "Organisme public responsable des services préhospitaliers d'urgence pour Montréal et Laval. Dispatching des ambulances, premiers secours avancés, coordination médicale. Pour toute urgence médicale, composez le 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5048, lng: -73.5772 },
   },
   {
@@ -4330,6 +4685,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cetam.qc.ca",
     description: "Centre de coordination des transports ambulanciers de la Montérégie. Dispatching des ambulances pour toute la région Montérégie. Coordonne les interventions préhospitalières d'urgence. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.5313, lng: -73.5185 },
   },
   {
@@ -4342,6 +4698,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ciussscn.ca/services/prehos",
     description: "Services ambulanciers de la région de la Capitale-Nationale coordonnés par le CIUSSS-CN. Interventions d'urgence médicale, transferts inter-établissements. Pour urgence médicale : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2082 },
   },
   {
@@ -4354,6 +4711,7 @@ export const SERVICES: Service[] = [
     website: "https://ciusss-estrie-chus.gouv.qc.ca/ambulances",
     description: "Services préhospitaliers d'urgence pour l'Estrie et Sherbrooke. Coordination des ambulances, soins préhospitaliers avancés et transferts médicaux. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4042, lng: -71.8929 },
   },
   {
@@ -4366,6 +4724,7 @@ export const SERVICES: Service[] = [
     website: "https://ciusss-mauricie-centreduqc.gouv.qc.ca",
     description: "Services préhospitaliers d'urgence pour la Mauricie et le Centre-du-Québec. Couvre Trois-Rivières, Drummondville, Shawinigan et toute la région. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
@@ -4378,6 +4737,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-outaouais.gouv.qc.ca/ambulances",
     description: "Services préhospitaliers d'urgence pour l'Outaouais, incluant Gatineau et toute la région. Coordination des ambulances et soins d'urgence. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.4766, lng: -75.7013 },
   },
   {
@@ -4390,6 +4750,7 @@ export const SERVICES: Service[] = [
     website: "https://www.ciussslacstjean.gouv.qc.ca/ambulances",
     description: "Services préhospitaliers d'urgence pour le Saguenay-Lac-Saint-Jean. Couvre Saguenay, Alma, Roberval et toute la région. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.4277, lng: -71.0694 },
   },
   {
@@ -4402,6 +4763,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-laurentides.gouv.qc.ca/ambulances",
     description: "Services préhospitaliers d'urgence pour les Laurentides. Couvre Saint-Jérôme, Mont-Tremblant, Sainte-Agathe et toute la région. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 45.7790, lng: -74.0000 },
   },
   {
@@ -4414,6 +4776,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-lanaudiere.gouv.qc.ca/ambulances",
     description: "Services préhospitaliers d'urgence pour Lanaudière. Couvre Joliette, Terrebonne, Repentigny, Mascouche et toute la région. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.0233, lng: -73.4323 },
   },
   {
@@ -4426,6 +4789,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-at.gouv.qc.ca/ambulances",
     description: "Services préhospitaliers d'urgence pour l'Abitibi-Témiscamingue. Couvre Rouyn-Noranda, Val-d'Or, Amos et toute la région. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.2374, lng: -79.0145 },
   },
   {
@@ -4438,6 +4802,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-bsl.gouv.qc.ca/ambulances",
     description: "Services préhospitaliers d'urgence pour le Bas-Saint-Laurent. Couvre Rimouski, Rivière-du-Loup, Matane et toute la région. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.4501, lng: -68.5202 },
   },
   {
@@ -4450,6 +4815,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-cotenord.gouv.qc.ca/ambulances",
     description: "Services préhospitaliers d'urgence pour la Côte-Nord. Couvre Sept-Îles, Baie-Comeau et toute la Côte-Nord. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 50.2022, lng: -66.3832 },
   },
   {
@@ -4462,6 +4828,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-ca.gouv.qc.ca/ambulances",
     description: "Services préhospitaliers d'urgence pour Chaudière-Appalaches. Couvre Lévis, Saint-Georges, Thetford Mines et toute la région. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8036, lng: -71.1759 },
   },
   {
@@ -4474,6 +4841,7 @@ export const SERVICES: Service[] = [
     website: "https://www.cisss-gim.gouv.qc.ca/ambulances",
     description: "Services préhospitaliers d'urgence pour la Gaspésie et les Îles-de-la-Madeleine. Couvre Gaspé, Matane, Carleton-sur-Mer. Urgence : 911.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 48.8349, lng: -64.4818 },
   },
   // ─── SANTÉ (ajouts liste 100) ─────────────────────────────────────────────
@@ -4486,6 +4854,8 @@ export const SERVICES: Service[] = [
     phone: '819-375-7723',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Centre local de services communautaires : soins infirmiers, services sociaux, prévention, suivi à domicile et soutien aux aînés pour les résidents de Trois-Rivières.',
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
+    address: "1900 boul. des Récollets, Trois-Rivières, QC G8Z 4K4",
     coordinates: { lat: 46.3510, lng: -72.5498 },
   },
   {
@@ -4497,6 +4867,8 @@ export const SERVICES: Service[] = [
     phone: '819-539-8371',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Centre local de services communautaires de Shawinigan offrant soins de santé primaires, services sociaux, programmes de prévention et soins à domicile.',
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
+    address: "55 av. Champlain, Shawinigan, QC G9N 6W3",
     coordinates: { lat: 46.5678, lng: -72.7421 },
   },
   {
@@ -4508,6 +4880,8 @@ export const SERVICES: Service[] = [
     phone: '819-474-2572',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Services communautaires de santé et sociaux pour Drummondville et la région Drummond : soins infirmiers, suivi à domicile, services sociaux.',
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
+    address: "350 rue Saint-Jean, Drummondville, QC J2B 5L4",
     coordinates: { lat: 45.8811, lng: -72.4893 },
   },
   {
@@ -4519,11 +4893,13 @@ export const SERVICES: Service[] = [
     phone: '819-758-7281',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Centre local de services communautaires de Victoriaville. Soins infirmiers, suivi à domicile, vaccination, services sociaux et soutien aux familles.',
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
+    address: "147 rue Notre-Dame Ouest, Victoriaville, QC G6P 1S7",
     coordinates: { lat: 46.0578, lng: -71.9712 },
   },
   {
     id: 'hotel-dieu-arthabaska-v',
-    name: 'Hôtel-Dieu d'Arthabaska',
+    name: "Hôtel-Dieu d'Arthabaska",
     category: 'health',
     subcategory: 'Urgence hospitalière',
     city: 'Victoriaville',
@@ -4531,6 +4907,8 @@ export const SERVICES: Service[] = [
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Centre hospitalier de Victoriaville offrant urgence 24h/24, chirurgie, obstétrique, médecine interne et soins spécialisés pour le Centre-du-Québec.',
     isUrgent: true,
+    hours: "Urgences : 24h/24, 7j/7",
+    address: "5 rue des Hospitalières, Victoriaville, QC G6P 6N2",
     coordinates: { lat: 46.0540, lng: -71.9650 },
   },
   {
@@ -4542,6 +4920,7 @@ export const SERVICES: Service[] = [
     phone: '819-379-2000',
     website: 'https://www.cliniqueducap.ca',
     description: 'Clinique médicale offrant consultations sans rendez-vous, médecine familiale et soins de santé généraux dans le secteur Cap-de-la-Madeleine à Trois-Rivières.',
+    hours: "Lun-Ven 8h-20h · Sam-Dim 9h-17h",
     coordinates: { lat: 46.3711, lng: -72.5211 },
   },
   {
@@ -4553,6 +4932,8 @@ export const SERVICES: Service[] = [
     phone: '819-373-5555',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Groupe de médecine de famille au cœur de Trois-Rivières. Médecine familiale, suivi chronique, soins préventifs et accès rapide aux médecins de famille.',
+    hours: "Lun-Ven 8h-17h · Sam 9h-13h",
+    address: "1500 rue des Commissaires Est, Trois-Rivières, QC G9A 4B9",
     coordinates: { lat: 46.3495, lng: -72.5520 },
   },
   {
@@ -4564,6 +4945,7 @@ export const SERVICES: Service[] = [
     phone: '819-375-1221',
     website: 'https://www.cliniquestlouis.ca',
     description: 'Clinique médicale du secteur St-Louis offrant médecine familiale, consultations sans rendez-vous et soins préventifs à Trois-Rivières.',
+    hours: "Lun-Ven 8h-17h · Sam 9h-13h",
     coordinates: { lat: 46.3455, lng: -72.5601 },
   },
   {
@@ -4574,7 +4956,8 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-379-2100',
     website: 'https://www.jeancoutu.com',
-    description: 'Pharmacie communautaire offrant consultations pharmaceutiques, renouvellements d'ordonnances, vaccins et conseils en santé au centre-ville de Trois-Rivières.',
+    description: "Pharmacie communautaire offrant consultations pharmaceutiques, renouvellements d'ordonnances, vaccins et conseils en santé au centre-ville de Trois-Rivières.",
+    hours: "Lun-Ven 9h-21h · Sam-Dim 10h-18h",
     coordinates: { lat: 46.3488, lng: -72.5531 },
   },
   {
@@ -4585,7 +4968,8 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-375-3721',
     website: 'https://www.pharmaprix.ca',
-    description: 'Pharmacie offrant services pharmaceutiques complets, consultations santé, renouvellements d'ordonnances et programme de vaccination à Trois-Rivières.',
+    description: "Pharmacie offrant services pharmaceutiques complets, consultations santé, renouvellements d'ordonnances et programme de vaccination à Trois-Rivières.",
+    hours: "Lun-Ven 9h-21h · Sam-Dim 10h-18h",
     coordinates: { lat: 46.3520, lng: -72.5401 },
   },
   {
@@ -4597,6 +4981,7 @@ export const SERVICES: Service[] = [
     phone: '819-697-0922',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Clinique médicale acceptant les patients sans rendez-vous pour les situations non urgentes. Idéale pour infections, blessures mineures et suivis de routine.',
+    hours: "Lun-Ven 8h-20h · Sam-Dim 9h-17h",
     coordinates: { lat: 46.3478, lng: -72.5560 },
   },
   {
@@ -4608,6 +4993,7 @@ export const SERVICES: Service[] = [
     phone: '819-373-2700',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Centre de radiologie offrant radiographies, échographies, mammographies et imagerie diagnostique pour les résidents de la région Mauricie.',
+    hours: "Lun-Ven 8h-17h (sur rendez-vous)",
     coordinates: { lat: 46.3504, lng: -72.5488 },
   },
   {
@@ -4619,6 +5005,7 @@ export const SERVICES: Service[] = [
     phone: '819-374-7070',
     website: 'https://www.podiatriemauricie.ca',
     description: 'Soins podiatriques spécialisés pour les pieds et les chevilles : traitement des ongles incarnés, fasciite plantaire, orthèses sur mesure à Trois-Rivières.',
+    hours: "Lun-Ven 8h-17h (sur rendez-vous)",
     coordinates: { lat: 46.3540, lng: -72.5470 },
   },
   {
@@ -4630,6 +5017,7 @@ export const SERVICES: Service[] = [
     phone: '819-375-8080',
     website: 'https://www.cliniquedentaletR.ca',
     description: 'Clinique dentaire complète offrant soins préventifs, extraction, orthodontie et urgences dentaires à Trois-Rivières. Accepte les patients sans médecin de famille.',
+    hours: "Lun-Ven 8h-17h (sur rendez-vous)",
     coordinates: { lat: 46.3468, lng: -72.5515 },
   },
   {
@@ -4641,6 +5029,7 @@ export const SERVICES: Service[] = [
     phone: '819-374-2020',
     website: 'https://www.visionmauricie.ca',
     description: 'Examens de la vue, prescription de lunettes et lentilles cornéennes, dépistage de maladies oculaires pour toute la région Mauricie.',
+    hours: "Lun-Ven 8h-17h (sur rendez-vous)",
     coordinates: { lat: 46.3498, lng: -72.5442 },
   },
   {
@@ -4652,6 +5041,8 @@ export const SERVICES: Service[] = [
     phone: '819-537-5252',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Groupe de médecine de famille de Shawinigan. Suivi médical régulier, soins préventifs, gestion des maladies chroniques et accès aux médecins de famille.',
+    hours: "Lun-Ven 8h-17h · Sam 9h-13h",
+    address: "1000 boul. Mellon, Shawinigan, QC G9N 7L4",
     coordinates: { lat: 46.5712, lng: -72.7398 },
   },
   {
@@ -4663,6 +5054,7 @@ export const SERVICES: Service[] = [
     phone: '819-477-8000',
     website: 'https://www.cliniquemedicaledrummond.ca',
     description: 'Clinique médicale de Drummondville offrant consultations sans rendez-vous, médecine familiale et services de santé généraux pour la région Drummond.',
+    hours: "Lun-Ven 8h-20h · Sam-Dim 9h-17h",
     coordinates: { lat: 45.8795, lng: -72.4920 },
   },
   // ─── SANTÉ MENTALE (ajouts liste 100) ────────────────────────────────────
@@ -4676,6 +5068,8 @@ export const SERVICES: Service[] = [
     website: 'https://www.cpsm.qc.ca',
     description: 'Soutien 24h/24 aux personnes en crise suicidaire et leurs proches. Ligne de crise, intervention à domicile et suivi post-tentative pour toute la Mauricie.',
     isUrgent: true,
+    hours: "24h/24, 7j/7",
+    address: "1080 rue Notre-Dame Centre, Trois-Rivières, QC G9A 4Y8",
     coordinates: { lat: 46.3485, lng: -72.5555 },
   },
   {
@@ -4688,6 +5082,8 @@ export const SERVICES: Service[] = [
     website: 'https://www.centrecrisemauricie.ca',
     description: 'Intervention de crise 24h/24 pour personnes en détresse psychologique. Hébergement de courte durée, suivi intensif et références vers les ressources adaptées.',
     isUrgent: true,
+    hours: "24h/24, 7j/7",
+    address: "2085 rue Barkoff, Trois-Rivières, QC G8Z 1C7",
     coordinates: { lat: 46.3501, lng: -72.5530 },
   },
   {
@@ -4700,6 +5096,7 @@ export const SERVICES: Service[] = [
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Ressource résidentielle de crise offrant hébergement de courte durée et soutien intensif aux adultes en crise psychologique ou psychiatrique à Trois-Rivières.',
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3520, lng: -72.5500 },
   },
   {
@@ -4710,20 +5107,22 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-373-5820',
     website: 'https://www.letraversier.org',
-    description: 'Organisme communautaire offrant soutien psychosocial, groupes d'entraide, accompagnement et activités de réintégration sociale aux personnes vivant avec des problèmes de santé mentale.',
+    description: "Organisme communautaire offrant soutien psychosocial, groupes d'entraide, accompagnement et activités de réintégration sociale aux personnes vivant avec des problèmes de santé mentale.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3512, lng: -72.5488 },
   },
   {
     id: 'info-social-811',
     name: 'Service Info-Social 811',
     category: 'mentalHealth',
-    subcategory: 'Ligne d'écoute',
+    subcategory: "Ligne d'écoute",
     city: 'Trois-Rivières',
     phone: '811',
     website: 'https://www.quebec.ca/sante/trouver-une-ressource/info-social',
-    description: 'Service téléphonique provincial d'écoute et de consultation en santé mentale. Disponible 24h/24, 7j/7. Répond à toutes les questions d'ordre psychosocial et oriente vers les ressources.',
+    description: "Service téléphonique provincial d'écoute et de consultation en santé mentale. Disponible 24h/24, 7j/7. Répond à toutes les questions d'ordre psychosocial et oriente vers les ressources.",
     isUrgent: true,
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.8139, lng: -71.2080 },
   },
   {
@@ -4735,6 +5134,7 @@ export const SERVICES: Service[] = [
     phone: '819-373-7200',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Services de psychologie clinique, évaluation psychologique, thérapies cognitivo-comportementales et suivi en santé mentale pour adultes et enfants.',
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3507, lng: -72.5462 },
   },
   {
@@ -4746,6 +5146,7 @@ export const SERVICES: Service[] = [
     phone: '819-375-1122',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Thérapies familiales et de couple, médiation, intervention auprès des enfants et adolescents et soutien aux parents en situation de crise familiale.',
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3528, lng: -72.5540 },
   },
   {
@@ -4757,28 +5158,31 @@ export const SERVICES: Service[] = [
     phone: '819-374-3344',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Hébergement et accompagnement pour personnes en transition suite à une hospitalisation psychiatrique. Réinsertion sociale progressive avec soutien quotidien.',
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3495, lng: -72.5520 },
   },
   {
     id: 'groupe-entraide-sante-mentale',
-    name: 'Groupe d'entraide en santé mentale',
+    name: "Groupe d'entraide en santé mentale",
     category: 'mentalHealth',
     subcategory: 'Soutien communautaire',
     city: 'Trois-Rivières',
     phone: '819-375-5880',
     website: 'https://www.aqrp-sm.org',
-    description: 'Groupe d'entraide communautaire pour personnes vivant avec des troubles de santé mentale. Réunions hebdomadaires, activités de groupe et soutien par les pairs.',
+    description: "Groupe d'entraide communautaire pour personnes vivant avec des troubles de santé mentale. Réunions hebdomadaires, activités de groupe et soutien par les pairs.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3518, lng: -72.5475 },
   },
   {
     id: 'ligne-ecoute-regionale',
-    name: 'Ligne d'écoute régionale Mauricie',
+    name: "Ligne d'écoute régionale Mauricie",
     category: 'mentalHealth',
-    subcategory: 'Ligne d'écoute',
+    subcategory: "Ligne d'écoute",
     city: 'Trois-Rivières',
     phone: '819-379-9799',
     website: 'https://www.aidebienveillante.ca',
-    description: 'Ligne d'écoute régionale anonyme et confidentielle disponible en soirée et la fin de semaine. Bénévoles formés pour accompagner les personnes en difficulté.',
+    description: "Ligne d'écoute régionale anonyme et confidentielle disponible en soirée et la fin de semaine. Bénévoles formés pour accompagner les personnes en difficulté.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3488, lng: -72.5510 },
   },
   {
@@ -4789,7 +5193,8 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-374-4744',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
-    description: 'Services spécialisés en réadaptation pour l'alcoolisme, la toxicomanie et autres dépendances. Suivi individuel, thérapie de groupe et réinsertion sociale.',
+    description: "Services spécialisés en réadaptation pour l'alcoolisme, la toxicomanie et autres dépendances. Suivi individuel, thérapie de groupe et réinsertion sociale.",
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 46.3502, lng: -72.5545 },
   },
   {
@@ -4800,7 +5205,8 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-379-5252',
     website: 'https://www.aa-quebec.org',
-    description: 'Programme de rétablissement en 12 étapes pour les personnes souffrant d'alcoolisme. Réunions quotidiennes à Trois-Rivières, soutien par les pairs, parrainage.',
+    description: "Programme de rétablissement en 12 étapes pour les personnes souffrant d'alcoolisme. Réunions quotidiennes à Trois-Rivières, soutien par les pairs, parrainage.",
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 46.3508, lng: -72.5498 },
   },
   {
@@ -4812,6 +5218,7 @@ export const SERVICES: Service[] = [
     phone: '1-800-879-0333',
     website: 'https://www.na.org',
     description: 'Programme de rétablissement communautaire pour les personnes dépendantes aux drogues. Réunions hebdomadaires en Mauricie, anonymat complet garanti.',
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 46.3515, lng: -72.5462 },
   },
   {
@@ -4823,6 +5230,7 @@ export const SERVICES: Service[] = [
     phone: '819-374-4783',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Services de protection de la jeunesse, réadaptation et hébergement pour les enfants et adolescents en difficulté ou en situation de crise en Mauricie.',
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3488, lng: -72.5535 },
   },
   // ─── ALIMENTATION (ajouts liste 100) ──────────────────────────────────────
@@ -4835,6 +5243,8 @@ export const SERVICES: Service[] = [
     phone: '819-379-9006',
     website: 'https://www.moissonmauricie.com',
     description: 'Banque alimentaire régionale collectant et redistribuant des denrées aux organismes communautaires de la Mauricie et du Centre-du-Québec. Service aux personnes dans le besoin.',
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
+    address: "250 rue Bellefeuille, Trois-Rivières, QC G8T 5P9",
     coordinates: { lat: 46.3540, lng: -72.5380 },
   },
   {
@@ -4845,7 +5255,9 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-374-1230',
     website: 'https://www.banquealimentairetr.org',
-    description: 'Distribution de paniers alimentaires et denrées aux familles et individus en situation précaire à Trois-Rivières. Aucun critère d'admissibilité restrictif.',
+    description: "Distribution de paniers alimentaires et denrées aux familles et individus en situation précaire à Trois-Rivières. Aucun critère d'admissibilité restrictif.",
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
+    address: "340 rue Bellefeuille, Trois-Rivières, QC G8T 2H1",
     coordinates: { lat: 46.3472, lng: -72.5568 },
   },
   {
@@ -4857,6 +5269,7 @@ export const SERVICES: Service[] = [
     phone: '819-372-1200',
     website: 'https://www.soupepopulaire-tr.org',
     description: 'Repas chauds servis quotidiennement aux personnes dans le besoin au centre-ville de Trois-Rivières. Ambiance chaleureuse, aucun jugement, tous les jours midi.',
+    hours: "Lun-Sam 11h30-13h30",
     coordinates: { lat: 46.3490, lng: -72.5545 },
   },
   {
@@ -4868,6 +5281,7 @@ export const SERVICES: Service[] = [
     phone: '819-374-5000',
     website: 'https://www.accueilbonneau.com',
     description: 'Distribution alimentaire gratuite et repas communautaires pour les personnes sans-abri et en situation précaire à Trois-Rivières. Accueil inconditionnel.',
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
     coordinates: { lat: 46.3482, lng: -72.5552 },
   },
   {
@@ -4878,7 +5292,8 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-375-4321',
     website: 'https://www.svdp-mauricie.org',
-    description: 'Dépannage alimentaire d'urgence et épicerie à prix modique. La Société Saint-Vincent-de-Paul offre aide immédiate aux familles en difficulté.',
+    description: "Dépannage alimentaire d'urgence et épicerie à prix modique. La Société Saint-Vincent-de-Paul offre aide immédiate aux familles en difficulté.",
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 46.3505, lng: -72.5490 },
   },
   {
@@ -4890,6 +5305,7 @@ export const SERVICES: Service[] = [
     phone: '819-373-1010',
     website: 'https://www.cuisinecollective-tr.org',
     description: 'Ateliers de cuisine en groupe pour apprendre à cuisiner sainement à faible coût. Partage des repas préparés, liens sociaux et apprentissage culinaire.',
+    hours: "Lun-Sam 11h30-13h30",
     coordinates: { lat: 46.3521, lng: -72.5468 },
   },
   {
@@ -4900,7 +5316,9 @@ export const SERVICES: Service[] = [
     city: 'Shawinigan',
     phone: '819-539-2222',
     website: 'https://www.partagealimshawinigan.org',
-    description: 'Banque alimentaire et dépannage d'urgence pour les personnes dans le besoin à Shawinigan. Distribution hebdomadaire de paniers et produits frais.',
+    description: "Banque alimentaire et dépannage d'urgence pour les personnes dans le besoin à Shawinigan. Distribution hebdomadaire de paniers et produits frais.",
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
+    address: "240 av. Champlain, Shawinigan, QC G9N 3C1",
     coordinates: { lat: 46.5688, lng: -72.7435 },
   },
   {
@@ -4912,17 +5330,20 @@ export const SERVICES: Service[] = [
     phone: '819-478-5555',
     website: 'https://www.banquealimentairedrum.org',
     description: 'Dépannage alimentaire et distribution de denrées aux personnes et familles en situation de précarité à Drummondville. Aide sans condition de ressources.',
+    hours: "Mar 9h-12h · Jeu 13h-16h · Sam 9h-12h",
+    address: "485 rue des Forges, Drummondville, QC J2B 2Z2",
     coordinates: { lat: 45.8820, lng: -72.4902 },
   },
   {
     id: 'centre-entraide-alimentaire',
-    name: 'Centre d'entraide alimentaire',
+    name: "Centre d'entraide alimentaire",
     category: 'food',
     subcategory: 'Dépannage alimentaire',
     city: 'Trois-Rivières',
     phone: '819-373-4455',
     website: 'https://www.centrentralimentaire.org',
-    description: 'Aide alimentaire d'urgence et banque de denrées pour familles, aînés et individus en situation précaire. Accueil chaleureux et discret à Trois-Rivières.',
+    description: "Aide alimentaire d'urgence et banque de denrées pour familles, aînés et individus en situation précaire. Accueil chaleureux et discret à Trois-Rivières.",
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 46.3498, lng: -72.5508 },
   },
   {
@@ -4933,7 +5354,8 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-374-8800',
     website: 'https://www.repascomm-mauricie.org',
-    description: 'Repas communautaires gratuits et à prix modique servis plusieurs fois par semaine en Mauricie. Moments de partage et d'inclusion pour personnes isolées.',
+    description: "Repas communautaires gratuits et à prix modique servis plusieurs fois par semaine en Mauricie. Moments de partage et d'inclusion pour personnes isolées.",
+    hours: "Lun-Sam 11h30-13h30",
     coordinates: { lat: 46.3510, lng: -72.5458 },
   },
   {
@@ -4945,6 +5367,7 @@ export const SERVICES: Service[] = [
     phone: '819-374-2500',
     website: 'https://www.eglise-alimentaire-tr.org',
     description: 'Distribution alimentaire hebdomadaire organisée par des paroisses de Trois-Rivières. Paniers de denrées et repas chauds offerts sans condition religieuse.',
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 46.3475, lng: -72.5540 },
   },
   {
@@ -4956,6 +5379,7 @@ export const SERVICES: Service[] = [
     phone: '819-379-0100',
     website: 'https://www.frigocommunautaire.ca',
     description: 'Réfrigérateur communautaire accessible 24h/24 permettant le partage de nourriture entre résidents. Zéro gaspillage, solidarité de quartier.',
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 46.3518, lng: -72.5488 },
   },
   {
@@ -4967,6 +5391,7 @@ export const SERVICES: Service[] = [
     phone: '819-374-2800',
     website: 'https://www.popote-tr.org',
     description: 'Livraison de repas chauds à domicile pour personnes âgées, malades ou à mobilité réduite à Trois-Rivières. Repas nutritifs et visite de bienveillance quotidienne.',
+    hours: "Lun-Ven 10h-17h · Sam 10h-14h",
     coordinates: { lat: 46.3530, lng: -72.5462 },
   },
   {
@@ -4978,6 +5403,7 @@ export const SERVICES: Service[] = [
     phone: '819-537-3388',
     website: 'https://www.popote-shawinigan.org',
     description: 'Service de livraison de repas chauds à domicile pour aînés et personnes à mobilité réduite à Shawinigan. Contact humain et repas équilibrés chaque jour.',
+    hours: "Lun-Ven 10h-17h · Sam 10h-14h",
     coordinates: { lat: 46.5695, lng: -72.7418 },
   },
   {
@@ -4989,6 +5415,7 @@ export const SERVICES: Service[] = [
     phone: '819-474-1144',
     website: 'https://www.popote-drummondville.org',
     description: 'Livraison de repas chauds à domicile pour personnes âgées et vulnérables à Drummondville. Service quotidien assurant nutrition et maintien du lien social.',
+    hours: "Lun-Ven 10h-17h · Sam 10h-14h",
     coordinates: { lat: 45.8832, lng: -72.4878 },
   },
   {
@@ -4999,121 +5426,137 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-376-5011',
     website: 'https://www.uqtr.ca/aideetudiante',
-    description: 'Aide alimentaire d'urgence pour étudiants en situation de précarité. Distribution de paniers, épicerie communautaire et référence vers les ressources d'aide financière.',
+    description: "Aide alimentaire d'urgence pour étudiants en situation de précarité. Distribution de paniers, épicerie communautaire et référence vers les ressources d'aide financière.",
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 46.3600, lng: -72.5720 },
   },
   {
     id: 'distribution-alimentaire-urgence',
-    name: 'Distribution alimentaire d'urgence',
+    name: "Distribution alimentaire d'urgence",
     category: 'food',
     subcategory: 'Dépannage alimentaire',
     city: 'Trois-Rivières',
     phone: '819-374-9900',
     website: 'https://www.entraide-mauricie.org',
-    description: 'Service de dépannage alimentaire d'urgence disponible rapidement pour familles et individus sans ressources. Paniers fournis dans les 24h sur demande.',
+    description: "Service de dépannage alimentaire d'urgence disponible rapidement pour familles et individus sans ressources. Paniers fournis dans les 24h sur demande.",
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 46.3488, lng: -72.5528 },
   },
   // ─── LOGEMENT (ajouts liste 100) ──────────────────────────────────────────
   {
     id: 'omh-trois-rivieres',
-    name: 'Office municipal d'habitation Trois-Rivières',
+    name: "Office municipal d'habitation Trois-Rivières",
     category: 'housing',
     subcategory: 'Logement subventionné',
     city: 'Trois-Rivières',
     phone: '819-372-4750',
     website: 'https://www.omh-tr.qc.ca',
-    description: 'Gestion du logement social et de l'habitation à loyer modique (HLM) pour Trois-Rivières. Inscription sur listes d'attente, aide à la demande, logements abordables.',
+    description: "Gestion du logement social et de l'habitation à loyer modique (HLM) pour Trois-Rivières. Inscription sur listes d'attente, aide à la demande, logements abordables.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
+    address: "4285 boul. des Chenaux, Trois-Rivières, QC G8Y 4S1",
     coordinates: { lat: 46.3498, lng: -72.5512 },
   },
   {
     id: 'omh-shawinigan',
-    name: 'Office municipal d'habitation Shawinigan',
+    name: "Office municipal d'habitation Shawinigan",
     category: 'housing',
     subcategory: 'Logement subventionné',
     city: 'Shawinigan',
     phone: '819-539-6481',
     website: 'https://www.omhshawinigan.com',
     description: 'Logements sociaux et HLM à Shawinigan pour personnes à faible revenu. Aide aux demandes de logement subventionné et gestion du parc résidentiel municipal.',
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
+    address: "170 av. Champlain, Shawinigan, QC G9N 6T8",
     coordinates: { lat: 46.5700, lng: -72.7410 },
   },
   {
     id: 'omh-drummondville',
-    name: 'Office municipal d'habitation Drummondville',
+    name: "Office municipal d'habitation Drummondville",
     category: 'housing',
     subcategory: 'Logement subventionné',
     city: 'Drummondville',
     phone: '819-474-5831',
     website: 'https://www.omhdrummondville.qc.ca',
     description: 'Logements à loyer modique et habitations à prix abordable pour résidents de Drummondville. Gestion des demandes HLM et accompagnement dans la recherche de logement.',
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
+    address: "1255 boul. René-Lévesque, Drummondville, QC J2C 5W4",
     coordinates: { lat: 45.8798, lng: -72.4905 },
   },
   {
     id: 'omh-victoriaville',
-    name: 'Office municipal d'habitation Victoriaville',
+    name: "Office municipal d'habitation Victoriaville",
     category: 'housing',
     subcategory: 'Logement subventionné',
     city: 'Victoriaville',
     phone: '819-752-2272',
     website: 'https://www.omhvictoriaville.ca',
-    description: 'Logements HLM et résidences abordables pour personnes à faible revenu à Victoriaville. Aide à l'inscription, suivi des dossiers et gestion des logements sociaux.',
+    description: "Logements HLM et résidences abordables pour personnes à faible revenu à Victoriaville. Aide à l'inscription, suivi des dossiers et gestion des logements sociaux.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
+    address: "150 boul. Arthabaska Est, Victoriaville, QC G6P 1H8",
     coordinates: { lat: 46.0590, lng: -71.9690 },
   },
   {
     id: 'refuge-le-havre',
     name: 'Refuge Le Havre',
     category: 'housing',
-    subcategory: 'Hébergement d'urgence',
+    subcategory: "Hébergement d'urgence",
     city: 'Trois-Rivières',
     phone: '819-374-4816',
     website: 'https://www.refugelehavre.org',
-    description: 'Refuge d'urgence pour hommes sans abri à Trois-Rivières. Hébergement, repas, douches et références vers logements permanents. Ouvert 365 jours.',
+    description: "Refuge d'urgence pour hommes sans abri à Trois-Rivières. Hébergement, repas, douches et références vers logements permanents. Ouvert 365 jours.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
+    address: "121 rue Fusey, Trois-Rivières, QC G9A 2B1",
     coordinates: { lat: 46.3488, lng: -72.5558 },
   },
   {
     id: 'maison-hebergement-urgence-tr',
-    name: 'Maison d'hébergement d'urgence',
+    name: "Maison d'hébergement d'urgence",
     category: 'housing',
-    subcategory: 'Hébergement d'urgence',
+    subcategory: "Hébergement d'urgence",
     city: 'Trois-Rivières',
     phone: '819-379-1400',
     website: 'https://www.hebergementurgence-tr.org',
-    description: 'Hébergement d'urgence immédiat pour personnes en situation de crise ou sans logis. Accueil inconditionnel, soutien de crise et orientation vers solutions durables.',
+    description: "Hébergement d'urgence immédiat pour personnes en situation de crise ou sans logis. Accueil inconditionnel, soutien de crise et orientation vers solutions durables.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3503, lng: -72.5540 },
   },
   {
     id: 'refuge-sans-abri-mauricie',
     name: 'Refuge pour sans-abri Mauricie',
     category: 'housing',
-    subcategory: 'Hébergement d'urgence',
+    subcategory: "Hébergement d'urgence",
     city: 'Trois-Rivières',
     phone: '819-374-1000',
     website: 'https://www.refugemauricie.org',
-    description: 'Hébergement d'urgence, repas et services de base pour personnes sans abri de la région Mauricie. Accompagnement vers la réinsertion et le logement stable.',
+    description: "Hébergement d'urgence, repas et services de base pour personnes sans abri de la région Mauricie. Accompagnement vers la réinsertion et le logement stable.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3510, lng: -72.5530 },
   },
   {
     id: 'centre-aide-logement-tr',
-    name: 'Centre d'aide au logement',
+    name: "Centre d'aide au logement",
     category: 'housing',
     subcategory: 'Logement subventionné',
     city: 'Trois-Rivières',
     phone: '819-375-0444',
     website: 'https://www.rclalq.qc.ca',
     description: 'Information et défense des droits des locataires. Aide aux recherches de logement, médiation avec propriétaires et référence vers logements sociaux disponibles.',
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.3518, lng: -72.5498 },
   },
   {
     id: 'ressource-hebergement-temp',
-    name: 'Ressource d'hébergement temporaire',
+    name: "Ressource d'hébergement temporaire",
     category: 'housing',
     subcategory: 'Logement transitoire',
     city: 'Drummondville',
     phone: '819-474-8811',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
-    description: 'Hébergement temporaire à Drummondville pour personnes en transition ou en attente d'un logement permanent. Suivi psychosocial et aide à la réinsertion.',
+    description: "Hébergement temporaire à Drummondville pour personnes en transition ou en attente d'un logement permanent. Suivi psychosocial et aide à la réinsertion.",
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 45.8808, lng: -72.4888 },
   },
   {
@@ -5124,19 +5567,21 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-374-7744',
     website: 'https://www.maisondesjeunes-tr.org',
-    description: 'Hébergement d'urgence et de transition pour jeunes de 16 à 30 ans en difficulté. Encadrement, activités et accompagnement vers l'autonomie résidentielle.',
+    description: "Hébergement d'urgence et de transition pour jeunes de 16 à 30 ans en difficulté. Encadrement, activités et accompagnement vers l'autonomie résidentielle.",
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3528, lng: -72.5512 },
   },
   {
     id: 'residence-urgence-femmes',
-    name: 'Résidence d'urgence pour femmes',
+    name: "Résidence d'urgence pour femmes",
     category: 'housing',
     subcategory: 'Hébergement femmes',
     city: 'Trois-Rivières',
     phone: '819-378-9999',
     website: 'https://www.maisonhautemauricie.com',
-    description: 'Hébergement sécurisé d'urgence pour femmes victimes de violence ou en situation précaire. Accueil immédiat 24h/24, soutien psychologique et aide juridique.',
+    description: "Hébergement sécurisé d'urgence pour femmes victimes de violence ou en situation précaire. Accueil immédiat 24h/24, soutien psychologique et aide juridique.",
     isUrgent: true,
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3495, lng: -72.5520 },
   },
   {
@@ -5147,7 +5592,8 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-374-5500',
     website: 'https://www.hebergementjeunesse-mauricie.org',
-    description: 'Hébergement supervisé pour jeunes sans abri ou en rupture familiale. Soutien personnalisé, insertion scolaire et professionnelle, et accompagnement vers l'autonomie.',
+    description: "Hébergement supervisé pour jeunes sans abri ou en rupture familiale. Soutien personnalisé, insertion scolaire et professionnelle, et accompagnement vers l'autonomie.",
+    hours: "24h/24, 7j/7",
     coordinates: { lat: 46.3538, lng: -72.5470 },
   },
   {
@@ -5159,6 +5605,7 @@ export const SERVICES: Service[] = [
     phone: '819-375-2200',
     website: 'https://www.transitionlogement-tr.org',
     description: 'Accompagnement des personnes en transition vers le logement autonome. Soutien à la recherche, aide au budget et coaching résidentiel pour éviter la récidive en itinérance.',
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 46.3508, lng: -72.5505 },
   },
   {
@@ -5169,18 +5616,20 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-373-9200',
     website: 'https://www.rclalq.qc.ca/regions/mauricie',
-    description: 'Soutien juridique et médiaton pour locataires menacés d'expulsion. Défense des droits, recours au Tribunal administratif du logement et aide à la relocalisation.',
+    description: "Soutien juridique et médiaton pour locataires menacés d'expulsion. Défense des droits, recours au Tribunal administratif du logement et aide à la relocalisation.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.3490, lng: -72.5535 },
   },
   {
     id: 'cooperative-habitation-tr',
-    name: 'Coopérative d'habitation Mauricie',
+    name: "Coopérative d'habitation Mauricie",
     category: 'housing',
     subcategory: 'Logement subventionné',
     city: 'Trois-Rivières',
     phone: '819-374-4600',
     website: 'https://www.fechim.qc.ca',
-    description: 'Coopérative d'habitation offrant des logements abordables en formule participative. Gouvernance démocratique, loyers sous le marché et vie de quartier enrichissante.',
+    description: "Coopérative d'habitation offrant des logements abordables en formule participative. Gouvernance démocratique, loyers sous le marché et vie de quartier enrichissante.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.3525, lng: -72.5488 },
   },
   // ─── FAMILLE & ENFANTS (ajouts liste 100) ────────────────────────────────
@@ -5192,7 +5641,9 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-373-1833',
     website: 'https://www.cpe-tr.ca',
-    description: 'CPE subventionné offrant garde éducative de qualité pour enfants 0 à 5 ans à Trois-Rivières. Programme éducatif agréé, repas inclus et liste d'attente en ligne.',
+    description: "CPE subventionné offrant garde éducative de qualité pour enfants 0 à 5 ans à Trois-Rivières. Programme éducatif agréé, repas inclus et liste d'attente en ligne.",
+    hours: "Lun-Ven 7h-18h",
+    address: "645 rue Bellefeuille, Trois-Rivières, QC G8T 2H1",
     coordinates: { lat: 46.3545, lng: -72.5430 },
   },
   {
@@ -5204,6 +5655,8 @@ export const SERVICES: Service[] = [
     phone: '819-537-2211',
     website: 'https://www.cpe-shawinigan.ca',
     description: 'Centre de la petite enfance subventionné à Shawinigan. Garde éducative de qualité, programme éducatif agréé, tarifs subventionnés pour enfants 0 à 5 ans.',
+    hours: "Lun-Ven 7h-18h",
+    address: "321 av. Parent, Shawinigan, QC G9N 2C5",
     coordinates: { lat: 46.5720, lng: -72.7380 },
   },
   {
@@ -5215,6 +5668,7 @@ export const SERVICES: Service[] = [
     phone: '819-376-4400',
     website: 'https://www.garderiemauricie.ca',
     description: 'Garderie éducative accréditée en Mauricie offrant programme éducatif structuré pour enfants de 18 mois à 5 ans. Personnel qualifié, environnement stimulant.',
+    hours: "Lun-Ven 7h-18h",
     coordinates: { lat: 46.3558, lng: -72.5395 },
   },
   {
@@ -5225,7 +5679,9 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-374-0222',
     website: 'https://www.maisonfamille-tr.org',
-    description: 'Organisme de soutien aux familles avec enfants. Activités parents-enfants, halte-garderie, groupes d'entraide parentale et accompagnement des nouveaux parents.',
+    description: "Organisme de soutien aux familles avec enfants. Activités parents-enfants, halte-garderie, groupes d'entraide parentale et accompagnement des nouveaux parents.",
+    hours: "Lun-Ven 9h-17h",
+    address: "740 rue Ste-Cécile, Trois-Rivières, QC G9A 1K5",
     coordinates: { lat: 46.3540, lng: -72.5450 },
   },
   {
@@ -5237,6 +5693,8 @@ export const SERVICES: Service[] = [
     phone: '819-477-1070',
     website: 'https://www.maisonfamilledrummond.org',
     description: 'Soutien aux familles de Drummondville : ateliers parents-enfants, groupes de jeux, halte-garderie, aide aux devoirs et ressources pour les familles monoparentales.',
+    hours: "Lun-Ven 9h-17h",
+    address: "1755 rue Demers, Drummondville, QC J2B 6L1",
     coordinates: { lat: 45.8828, lng: -72.4868 },
   },
   {
@@ -5248,6 +5706,7 @@ export const SERVICES: Service[] = [
     phone: '819-374-4783',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Services de soutien à la famille, protection de la jeunesse, médiation familiale et aide aux parents en difficulté. Signalements, évaluations et suivi.',
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3508, lng: -72.5498 },
   },
   {
@@ -5259,17 +5718,19 @@ export const SERVICES: Service[] = [
     phone: '819-373-0330',
     website: 'https://www.aideauxparents-mauricie.org',
     description: 'Accompagnement individuel et groupes de soutien pour parents vivant des difficultés avec leurs enfants. Information, référence et défense des droits des familles.',
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3520, lng: -72.5475 },
   },
   {
     id: 'halte-garderie-communautaire',
     name: 'Halte-garderie communautaire',
     category: 'childcare',
-    subcategory: 'Garde d'urgence',
+    subcategory: "Garde d'urgence",
     city: 'Trois-Rivières',
     phone: '819-373-5544',
     website: 'https://www.haltegarderie-tr.org',
-    description: 'Garde d'enfants ponctuelle et de dépannage pour parents ayant des rendez-vous, urgences ou situations imprévues. Service abordable et chaleureux.',
+    description: "Garde d'enfants ponctuelle et de dépannage pour parents ayant des rendez-vous, urgences ou situations imprévues. Service abordable et chaleureux.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3532, lng: -72.5455 },
   },
   {
@@ -5281,6 +5742,7 @@ export const SERVICES: Service[] = [
     phone: '819-372-1110',
     website: 'https://www.mediationfamiliale.ca',
     description: 'Médiation familiale certifiée pour couples en séparation ou divorce. Négociation des ententes sur la garde des enfants, pension alimentaire et partage des biens.',
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3498, lng: -72.5530 },
   },
   {
@@ -5291,7 +5753,8 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-374-9988',
     website: 'https://www.ciusss-mcq.gouv.qc.ca/soutien-parental',
-    description: 'Programme provincial de soutien à la parentalité offrant ateliers, visites à domicile et accompagnement pour parents d'enfants 0 à 5 ans à risque ou en difficulté.',
+    description: "Programme provincial de soutien à la parentalité offrant ateliers, visites à domicile et accompagnement pour parents d'enfants 0 à 5 ans à risque ou en difficulté.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3515, lng: -72.5505 },
   },
   // ─── EMPLOI (ajouts liste 100) ─────────────────────────────────────────────
@@ -5299,11 +5762,13 @@ export const SERVICES: Service[] = [
     id: 'services-quebec-tr',
     name: 'Services Québec — Centre de services',
     category: 'employment',
-    subcategory: 'Service public d'emploi',
+    subcategory: "Service public d'emploi",
     city: 'Trois-Rivières',
     phone: '819-372-7330',
     website: 'https://www.servicesquebec.gouv.qc.ca',
-    description: 'Guichet multiservice du gouvernement du Québec : aide sociale, assurance emploi, aide à l'emploi, renouvellement de documents et services en ligne. Accès en personne.',
+    description: "Guichet multiservice du gouvernement du Québec : aide sociale, assurance emploi, aide à l'emploi, renouvellement de documents et services en ligne. Accès en personne.",
+    hours: "Lun-Ven 9h-17h",
+    address: "100 rue Laviolette, Trois-Rivières, QC G9A 5S9",
     coordinates: { lat: 46.3495, lng: -72.5505 },
   },
   {
@@ -5314,29 +5779,34 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-379-5006',
     website: 'https://www.cjetr.qc.ca',
-    description: 'Soutien à l'emploi, formation professionnelle et accompagnement pour jeunes de 16 à 35 ans à Trois-Rivières. CV, entrevues, projets de vie et entrepreneuriat.',
+    description: "Soutien à l'emploi, formation professionnelle et accompagnement pour jeunes de 16 à 35 ans à Trois-Rivières. CV, entrevues, projets de vie et entrepreneuriat.",
+    hours: "Lun-Ven 9h-17h",
+    address: "85 rue Bureau, Trois-Rivières, QC G9A 2M6",
     coordinates: { lat: 46.3508, lng: -72.5488 },
   },
   {
     id: 'cle-trois-rivieres',
-    name: 'Centre local d'emploi Trois-Rivières',
+    name: "Centre local d'emploi Trois-Rivières",
     category: 'employment',
-    subcategory: 'Service public d'emploi',
+    subcategory: "Service public d'emploi",
     city: 'Trois-Rivières',
     phone: '819-372-5010',
     website: 'https://www.emploiquebec.gouv.qc.ca',
-    description: 'Emploi-Québec : aide à la recherche d'emploi, subventions salariales, formation professionnelle, aide sociale et programmes de réinsertion pour personnes sans emploi.',
+    description: "Emploi-Québec : aide à la recherche d'emploi, subventions salariales, formation professionnelle, aide sociale et programmes de réinsertion pour personnes sans emploi.",
+    hours: "Lun-Ven 9h-17h",
+    address: "100 rue Laviolette, Trois-Rivières, QC G9A 5S9",
     coordinates: { lat: 46.3501, lng: -72.5520 },
   },
   {
     id: 'agence-placement-mauricie',
     name: 'Agence de placement Mauricie',
     category: 'employment',
-    subcategory: 'Centre d'emploi',
+    subcategory: "Centre d'emploi",
     city: 'Trois-Rivières',
     phone: '819-376-1234',
     website: 'https://www.agencemauricie.ca',
     description: 'Agence de placement spécialisée en recrutement pour la Mauricie. Emplois temporaires, permanents et sur appel dans les secteurs industriel, commercial et administratif.',
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3512, lng: -72.5475 },
   },
   {
@@ -5347,51 +5817,56 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-379-6500',
     website: 'https://www.cfpmauricie.ca',
-    description: 'Formation professionnelle menant au DEP et à l'ASP dans les métiers de la construction, santé, administration et services. Programmes subventionnés disponibles.',
+    description: "Formation professionnelle menant au DEP et à l'ASP dans les métiers de la construction, santé, administration et services. Programmes subventionnés disponibles.",
+    hours: "Lun-Ven 8h-17h (selon session)",
     coordinates: { lat: 46.3560, lng: -72.5700 },
   },
   {
     id: 'service-integration-travail',
-    name: 'Service d'intégration au travail',
+    name: "Service d'intégration au travail",
     category: 'employment',
     subcategory: 'Insertion professionnelle',
     city: 'Trois-Rivières',
     phone: '819-373-8080',
     website: 'https://www.integrationtravail-mauricie.org',
-    description: 'Programme d'intégration socioprofessionnelle pour personnes éloignées du marché du travail. Stages, ateliers pratiques et accompagnement vers l'emploi durable.',
+    description: "Programme d'intégration socioprofessionnelle pour personnes éloignées du marché du travail. Stages, ateliers pratiques et accompagnement vers l'emploi durable.",
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 46.3528, lng: -72.5458 },
   },
   {
     id: 'programme-aide-emploi',
-    name: 'Programme d'aide à l'emploi',
+    name: "Programme d'aide à l'emploi",
     category: 'employment',
-    subcategory: 'Aide à l'emploi',
+    subcategory: "Aide à l'emploi",
     city: 'Trois-Rivières',
     phone: '819-372-7330',
     website: 'https://www.emploiquebec.gouv.qc.ca/aide-emploi',
-    description: 'Programme gouvernemental d'aide à l'emploi pour personnes bénéficiant de l'aide sociale. Mesures de réinsertion, subventions salariales et stages en entreprise.',
+    description: "Programme gouvernemental d'aide à l'emploi pour personnes bénéficiant de l'aide sociale. Mesures de réinsertion, subventions salariales et stages en entreprise.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3488, lng: -72.5510 },
   },
   {
     id: 'organisme-insertion-socio',
-    name: 'Organisme d'insertion socioprofessionnelle',
+    name: "Organisme d'insertion socioprofessionnelle",
     category: 'employment',
     subcategory: 'Insertion professionnelle',
     city: 'Trois-Rivières',
     phone: '819-374-5500',
     website: 'https://www.insertion-mauricie.org',
-    description: 'Accompagnement des personnes vivant des obstacles à l'emploi : santé mentale, dépendances, absence de formation. Parcours individualisés vers l'emploi adapté.',
+    description: "Accompagnement des personnes vivant des obstacles à l'emploi : santé mentale, dépendances, absence de formation. Parcours individualisés vers l'emploi adapté.",
+    hours: "Lun-Ven 8h30-16h30",
     coordinates: { lat: 46.3502, lng: -72.5540 },
   },
   {
     id: 'bureau-emploi-drummondville',
     name: 'Bureau emploi Drummondville',
     category: 'employment',
-    subcategory: 'Centre d'emploi',
+    subcategory: "Centre d'emploi",
     city: 'Drummondville',
     phone: '819-478-2000',
     website: 'https://www.emploiquebec.gouv.qc.ca',
-    description: 'Centre d'emploi régional de Drummondville : recherche d'emploi, références aux employeurs, formation, aide sociale et programmes de réinsertion professionnelle.',
+    description: "Centre d'emploi régional de Drummondville : recherche d'emploi, références aux employeurs, formation, aide sociale et programmes de réinsertion professionnelle.",
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 45.8792, lng: -72.4940 },
   },
   {
@@ -5402,30 +5877,34 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-379-5006',
     website: 'https://www.cjetr.qc.ca',
-    description: 'Ateliers de rédaction de CV, lettres de motivation et préparation aux entrevues. Service gratuit pour chercheurs d'emploi de Trois-Rivières et région Mauricie.',
+    description: "Ateliers de rédaction de CV, lettres de motivation et préparation aux entrevues. Service gratuit pour chercheurs d'emploi de Trois-Rivières et région Mauricie.",
+    hours: "Lun-Ven 9h-12h, 13h-16h",
     coordinates: { lat: 46.3515, lng: -72.5492 },
   },
   // ─── IMMIGRATION (ajouts liste 100) ───────────────────────────────────────
   {
     id: 'service-accueil-nouveaux-arrivants',
-    name: 'Service d'accueil aux nouveaux arrivants',
+    name: "Service d'accueil aux nouveaux arrivants",
     category: 'immigration',
     subcategory: 'Intégration immigrants',
     city: 'Trois-Rivières',
     phone: '819-373-4822',
     website: 'https://www.ciusss-mcq.gouv.qc.ca',
     description: 'Accueil, orientation et accompagnement des nouveaux arrivants à Trois-Rivières. Aide aux démarches administratives, information sur les services locaux et intégration.',
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.3505, lng: -72.5512 },
   },
   {
     id: 'organisme-integration-immigrants',
-    name: 'Organisme d'intégration des immigrants',
+    name: "Organisme d'intégration des immigrants",
     category: 'immigration',
     subcategory: 'Intégration immigrants',
     city: 'Trois-Rivières',
     phone: '819-370-5151',
     website: 'https://www.oriim3.ca',
-    description: 'Services d'intégration pour immigrants et réfugiés en Mauricie. Francisation, aide à l'emploi, logement, accompagnement culturel et intégration sociale.',
+    description: "Services d'intégration pour immigrants et réfugiés en Mauricie. Francisation, aide à l'emploi, logement, accompagnement culturel et intégration sociale.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
+    address: "1463 rue Notre-Dame Centre, Trois-Rivières, QC G9A 5C3",
     coordinates: { lat: 46.3518, lng: -72.5488 },
   },
   {
@@ -5437,39 +5916,45 @@ export const SERVICES: Service[] = [
     phone: '819-376-3000',
     website: 'https://www.francisation-mauricie.ca',
     description: 'Cours de français langue seconde gratuits pour immigrants adultes. Niveaux débutant à avancé, francisation à temps plein et partiel, soutien aux apprenants.',
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
+    address: "3500 rue de Courval, Trois-Rivières, QC G8Y 4H4",
     coordinates: { lat: 46.3528, lng: -72.5460 },
   },
   {
     id: 'aide-installation-immigrants',
-    name: 'Aide à l'installation des immigrants',
+    name: "Aide à l'installation des immigrants",
     category: 'immigration',
     subcategory: 'Intégration immigrants',
     city: 'Trois-Rivières',
     phone: '819-373-4822',
     website: 'https://www.oriim3.ca',
-    description: 'Accompagnement pratique pour l'installation des nouveaux arrivants : logement, école pour les enfants, services médicaux, documents officiels et orientation.',
+    description: "Accompagnement pratique pour l'installation des nouveaux arrivants : logement, école pour les enfants, services médicaux, documents officiels et orientation.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.3508, lng: -72.5498 },
   },
   {
     id: 'service-traduction-communautaire',
     name: 'Service de traduction communautaire',
     category: 'immigration',
-    subcategory: 'Services d'interprétation',
+    subcategory: "Services d'interprétation",
     city: 'Trois-Rivières',
     phone: '819-374-7799',
     website: 'https://www.traduction-communautaire-mauricie.org',
     description: 'Interprétariat et traduction communautaire pour immigrants lors de rendez-vous médicaux, légaux ou administratifs. Disponible en plusieurs langues.',
+    hours: "Lun-Ven 9h-17h",
     coordinates: { lat: 46.3512, lng: -72.5505 },
   },
   {
     id: 'aide-refugies-mauricie',
     name: 'Aide aux réfugiés Mauricie',
     category: 'immigration',
-    subcategory: 'Réfugiés et demandeurs d'asile',
+    subcategory: "Réfugiés et demandeurs d'asile",
     city: 'Trois-Rivières',
     phone: '819-373-9911',
     website: 'https://www.aide-refugies-mauricie.org',
-    description: 'Soutien spécialisé aux réfugiés et demandeurs d'asile : aide juridique, logement temporaire, francisation, intégration sociale et accompagnement des démarches.',
+    description: "Soutien spécialisé aux réfugiés et demandeurs d'asile : aide juridique, logement temporaire, francisation, intégration sociale et accompagnement des démarches.",
+    hours: "Lun-Ven 9h-17h",
+    address: "1280 boul. des Récollets, Trois-Rivières, QC G8Z 4L1",
     coordinates: { lat: 46.3498, lng: -72.5532 },
   },
   {
@@ -5480,7 +5965,9 @@ export const SERVICES: Service[] = [
     city: 'Trois-Rivières',
     phone: '819-375-0880',
     website: 'https://www.interculturel-mauricie.org',
-    description: 'Lieu d'échanges et d'intégration interculturelle. Activités culturelles, cours de langue, réseautage et soutien à l'intégration pour immigrants de toutes origines.',
+    description: "Lieu d'échanges et d'intégration interculturelle. Activités culturelles, cours de langue, réseautage et soutien à l'intégration pour immigrants de toutes origines.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
+    address: "1463 rue Notre-Dame Centre, Trois-Rivières, QC G9A 5C3",
     coordinates: { lat: 46.3540, lng: -72.5468 },
   },
   {
@@ -5491,19 +5978,21 @@ export const SERVICES: Service[] = [
     city: 'Drummondville',
     phone: '819-477-4600',
     website: 'https://www.csdrummond.qc.ca/immigration',
-    description: 'Services d'accueil et d'intégration pour immigrants à Drummondville. Accompagnement administratif, francisation, emploi et intégration à la communauté.',
+    description: "Services d'accueil et d'intégration pour immigrants à Drummondville. Accompagnement administratif, francisation, emploi et intégration à la communauté.",
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 45.8815, lng: -72.4895 },
   },
   {
     id: 'programme-accompagnement-arrivants',
-    name: 'Programme d'accompagnement nouveaux arrivants',
+    name: "Programme d'accompagnement nouveaux arrivants",
     category: 'immigration',
     subcategory: 'Intégration immigrants',
     city: 'Trois-Rivières',
     phone: '819-373-4822',
     website: 'https://www.mifi.gouv.qc.ca',
-    description: 'Programme gouvernemental d'accompagnement pour les nouveaux arrivants au Québec. Parrainage, jumelage interculturel et mentorat d'intégration communautaire.',
+    description: "Programme gouvernemental d'accompagnement pour les nouveaux arrivants au Québec. Parrainage, jumelage interculturel et mentorat d'intégration communautaire.",
     isProvinceWide: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
     coordinates: { lat: 46.3505, lng: -72.5518 },
   },
 

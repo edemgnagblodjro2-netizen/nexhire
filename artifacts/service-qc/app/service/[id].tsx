@@ -162,8 +162,32 @@ export default function ServiceDetailScreen() {
           </Text>
           <View style={styles.infoRow}>
             <Feather name="map-pin" size={16} color={categoryColor} />
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.infoValue, { color: colors.foreground }]}>
+                {service.city}
+              </Text>
+              {service.address && (
+                <Text style={[styles.infoSub, { color: colors.mutedForeground }]}>
+                  {service.address}
+                </Text>
+              )}
+            </View>
+          </View>
+        </View>
+
+        <View
+          style={[
+            styles.infoCard,
+            { backgroundColor: colors.card, borderColor: colors.border },
+          ]}
+        >
+          <Text style={[styles.infoTitle, { color: colors.foreground }]}>
+            {t.hours}
+          </Text>
+          <View style={styles.infoRow}>
+            <Feather name="clock" size={16} color={categoryColor} />
             <Text style={[styles.infoValue, { color: colors.foreground }]}>
-              {service.city}
+              {service.hours ?? t.hoursUnavailable}
             </Text>
           </View>
         </View>
@@ -347,6 +371,12 @@ const styles = StyleSheet.create({
   infoValue: {
     fontSize: 15,
     fontFamily: "Inter_500Medium",
+  },
+  infoSub: {
+    fontSize: 13,
+    fontFamily: "Inter_400Regular",
+    marginTop: 2,
+    lineHeight: 18,
   },
   actionsSection: {
     gap: 10,
