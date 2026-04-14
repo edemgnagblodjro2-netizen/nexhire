@@ -23,3 +23,9 @@ id = "MnpwCauLVqlWr2VNGXy9y"
 uri = "file://exports/testeurs-aidora-qc.csv"
 type = "table"
 title = "Testeurs AIDORA QC — Liste d'inscription"
+
+[[outputs]]
+id = "o_zlbsjufPRscDZhid6Ps"
+uri = "file://exports/guide-publication-attentezero.pdf"
+type = "pdf"
+title = "Guide Publication Play Store — AttenteZéro"
