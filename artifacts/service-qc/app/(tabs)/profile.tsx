@@ -290,7 +290,6 @@ const styles = StyleSheet.create({
     color: "rgba(255,255,255,0.9)",
   },
 
-  /* Legacy (kept for reference) */
   avatar: {
     alignItems: "center",
     justifyContent: "center",
@@ -302,18 +301,6 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontFamily: "Inter_700Bold",
     fontWeight: "700",
-  },
-  fullName: {
-    fontSize: 22,
-    fontFamily: "Inter_700Bold",
-    fontWeight: "700",
-  },
-  emailBadge: {
-    fontSize: 13,
-    fontFamily: "Inter_400Regular",
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 20,
   },
   card: {
     borderRadius: 16,

@@ -23,23 +23,23 @@ export function AppSplashScreen({ visible, onDone }: AppSplashScreenProps) {
           toValue: 1,
           tension: 50,
           friction: 6,
-          useNativeDriver: false,
+          useNativeDriver: true,
         }),
         Animated.timing(logoOpacity, {
           toValue: 1,
           duration: 400,
-          useNativeDriver: false,
+          useNativeDriver: true,
         }),
       ]),
       Animated.timing(textOpacity, {
         toValue: 1,
         duration: 350,
-        useNativeDriver: false,
+        useNativeDriver: true,
       }),
       Animated.timing(dotsOpacity, {
         toValue: 1,
         duration: 300,
-        useNativeDriver: false,
+        useNativeDriver: true,
       }),
     ]).start();
   }, []);
@@ -49,7 +49,7 @@ export function AppSplashScreen({ visible, onDone }: AppSplashScreenProps) {
       Animated.timing(containerOpacity, {
         toValue: 0,
         duration: 400,
-        useNativeDriver: false,
+        useNativeDriver: true,
       }).start(() => {
         setMounted(false);
         onDone?.();
@@ -114,12 +114,12 @@ function PulsingDot({ delay }: { delay: number }) {
           toValue: 1,
           duration: 500,
           delay,
-          useNativeDriver: false,
+          useNativeDriver: true,
         }),
         Animated.timing(opacity, {
           toValue: 0.3,
           duration: 500,
-          useNativeDriver: false,
+          useNativeDriver: true,
         }),
       ])
     );
