@@ -6,6 +6,18 @@ uri = "file://artifacts/service-qc/assets/images/icon.png"
 type = "image"
 title = "serviceqc app icon"
 
+[[generated]]
+id = "pu-WKNodQICkzxgqiS2ye"
+uri = "file://artifacts/service-qc/assets/images/icon_generated_v1.png"
+type = "image"
+title = "attentezero app icon clean"
+
+[[generated]]
+id = "wktHgI-kAN3K4uo1dq6dP"
+uri = "file://artifacts/service-qc/assets/images/icon_generated_v2.png"
+type = "image"
+title = "attentezero icon gradient teal"
+
 [[outputs]]
 id = "MnpwCauLVqlWr2VNGXy9y"
 uri = "file://exports/testeurs-aidora-qc.csv"
