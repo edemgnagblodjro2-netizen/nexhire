@@ -237,7 +237,7 @@ export default function ProfileScreen() {
           <Text style={styles.logoutText}>{isFr ? "Se déconnecter" : "Log out"}</Text>
         </Pressable>
 
-        <Text style={[styles.version, { color: colors.mutedForeground }]}>AIDORA QC · v1.0</Text>
+        <Text style={[styles.version, { color: colors.mutedForeground }]}>AttenteZéro · v1.0</Text>
       </ScrollView>
     </SafeAreaView>
   );

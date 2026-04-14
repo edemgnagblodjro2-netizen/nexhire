@@ -91,7 +91,7 @@ export default function LoginScreen() {
             <Animated.View
               style={[styles.textBlock, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}
             >
-              <Text style={styles.appName}>AIDORA QC</Text>
+              <Text style={styles.appName}>AttenteZéro</Text>
               <Text style={styles.tagline}>Services communautaires du Québec</Text>
             </Animated.View>
 

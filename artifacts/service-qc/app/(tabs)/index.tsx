@@ -97,7 +97,7 @@ export default function HomeScreen() {
               <Feather name="heart" size={18} color={colors.primary} />
             </View>
             <View>
-              <Text style={styles.heroAppName}>AIDORA QC</Text>
+              <Text style={styles.heroAppName}>AttenteZéro</Text>
               <Text style={styles.heroTagline}>{t.tagline}</Text>
             </View>
           </View>

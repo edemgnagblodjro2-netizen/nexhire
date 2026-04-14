@@ -364,7 +364,7 @@ function buildSystemPrompt(language: string): string {
 
   const timeContext = getQuebecTimeContext();
 
-  return `You are AIDORA — a compassionate AI guide and emergency coordinator helping vulnerable people in Quebec find community, social, and emergency services.
+  return `You are AttenteZéro — a compassionate AI guide and emergency coordinator helping vulnerable people in Quebec find community, social, and emergency services.
 
 ${langInstruction}
 

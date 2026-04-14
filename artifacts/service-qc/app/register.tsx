@@ -85,7 +85,7 @@ export default function RegisterScreen() {
               </Pressable>
               <View>
                 <Text style={styles.title}>Créer un compte</Text>
-                <Text style={styles.subtitle}>Rejoignez AIDORA QC</Text>
+                <Text style={styles.subtitle}>Rejoignez AttenteZéro</Text>
               </View>
             </Animated.View>
 

@@ -90,7 +90,7 @@ export function AppSplashScreen({ visible, onDone }: AppSplashScreenProps) {
         </Animated.View>
 
         <Animated.View style={{ opacity: textOpacity, alignItems: "center" }}>
-          <Text style={styles.appName}>AIDORA QC</Text>
+          <Text style={styles.appName}>AttenteZéro</Text>
           <Text style={styles.tagline}>Services communautaires du Québec</Text>
         </Animated.View>
 

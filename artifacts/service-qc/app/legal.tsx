@@ -201,7 +201,7 @@ export default function LegalScreen() {
         {/* LIMITATION DE RESPONSABILITÉ */}
         <Section title="⚖️ Limitation de responsabilité">
           <Paragraph>
-            L'application AIDORA QC est un outil d'orientation vers des ressources
+            L'application AttenteZéro est un outil d'orientation vers des ressources
             communautaires. L'éditeur s'efforce de maintenir des informations exactes et
             à jour, mais ne peut garantir l'exactitude, l'exhaustivité ou la disponibilité
             en temps réel de tous les services répertoriés.
@@ -224,7 +224,7 @@ export default function LegalScreen() {
 
         <View style={[styles.footerNote, { borderColor: colors.border }]}>
           <Text style={[styles.footerNoteText, { color: colors.mutedForeground }]}>
-            AIDORA QC — Application de services communautaires du Québec
+            AttenteZéro — Application de services communautaires du Québec
           </Text>
           <Text style={[styles.footerNoteText, { color: colors.mutedForeground }]}>
             Ces documents sont régis par les lois du Québec et du Canada.
