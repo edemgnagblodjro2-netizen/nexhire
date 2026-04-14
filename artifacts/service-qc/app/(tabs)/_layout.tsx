@@ -136,10 +136,6 @@ function ClassicTabLayout() {
         options={{ href: null }}
       />
       <Tabs.Screen
-        name="restaurants"
-        options={{ href: null }}
-      />
-      <Tabs.Screen
         name="categories"
         options={{
           title: t.tabCategories,
