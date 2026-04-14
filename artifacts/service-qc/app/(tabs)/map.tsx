@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+import { SERVICES } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 
 export default function MapWebFallback() {
@@ -30,7 +31,7 @@ export default function MapWebFallback() {
           La carte interactive avec épingles géolocalisées est disponible sur
           iOS et Android. Téléchargez l'app pour explorer les{" "}
           <Text style={{ fontFamily: "Inter_700Bold", color: colors.primary }}>
-            366 services
+            {SERVICES.length} services
           </Text>{" "}
           autour de vous.
         </Text>

@@ -87,7 +87,7 @@ export default function ResultsScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={[styles.headerTitle, { color: colors.foreground }]} numberOfLines={1}>
-              {query || t.results}
+              {query || (selectedCategory !== "all" ? t.categories[selectedCategory] : t.results)}
             </Text>
             <Text style={[styles.headerCount, { color: colors.mutedForeground }]}>
               {filtered.length}{" "}

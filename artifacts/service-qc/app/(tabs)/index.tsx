@@ -64,7 +64,7 @@ export default function HomeScreen() {
     Haptics.selectionAsync();
     router.push({
       pathname: "/results",
-      params: { query: t.categories[category], category },
+      params: { query: "", category },
     });
   }
 
