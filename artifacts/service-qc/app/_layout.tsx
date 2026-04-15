@@ -22,6 +22,7 @@ import { AppSplashScreen } from "@/components/AppSplashScreen";
 import { AuthProvider, useAuth } from "@/lib/auth";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { LocationProvider } from "@/contexts/LocationContext";
+import { ServicesProvider } from "@/contexts/ServicesContext";
 import { useInactivityTimer } from "@/hooks/useInactivityTimer";
 
 const domain = process.env.EXPO_PUBLIC_DOMAIN;
@@ -126,7 +127,9 @@ export default function RootLayout() {
               <KeyboardProvider>
                 <LanguageProvider>
                   <LocationProvider>
-                    <AppContent fontsReady={fontsReady} />
+                    <ServicesProvider>
+                      <AppContent fontsReady={fontsReady} />
+                    </ServicesProvider>
                   </LocationProvider>
                 </LanguageProvider>
               </KeyboardProvider>

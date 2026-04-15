@@ -17,7 +17,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "@/contexts/LocationContext";
-import { URGENT_SERVICES, type Service } from "@/data/services";
+import { type Service } from "@/data/services";
+import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor } from "@/utils/categoryColors";
 import { formatDistance, haversineDistance } from "@/utils/location";
@@ -134,12 +135,15 @@ export default function UrgentScreen() {
   const topPadding = Platform.OS === "web" ? 16 : insets.top;
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
 
+  const { services } = useServicesData();
+  const urgentServices = useMemo(() => services.filter((s) => s.isUrgent), [services]);
+
   const sortedServices = useMemo((): ServiceWithDistance[] => {
-    const withDistance: ServiceWithDistance[] = URGENT_SERVICES.map((s) => ({
+    const withDistance: ServiceWithDistance[] = urgentServices.map((s) => ({
       ...s,
       distanceKm:
         userLocation && !s.isProvinceWide
-          ? haversineDistance(userLocation, s.coordinates)
+          ? haversineDistance(userLocation, (s as any).coordinates)
           : null,
     }));
 
@@ -155,7 +159,7 @@ export default function UrgentScreen() {
     const provinceWide = withDistance.filter((s) => s.isProvinceWide);
 
     return [...physical, ...provinceWide];
-  }, [userLocation]);
+  }, [urgentServices, userLocation]);
 
   function handleLocate() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);

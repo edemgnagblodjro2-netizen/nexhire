@@ -14,7 +14,8 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useLanguage } from "@/contexts/LanguageContext";
-import { SERVICES, type Category } from "@/data/services";
+import { type Category } from "@/data/services";
+import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 
@@ -37,10 +38,11 @@ function CategoryCard({ category }: { category: Category }) {
   const { t } = useLanguage();
   const color = getCategoryColor(category, colors);
   const icon = CATEGORY_ICONS[category];
+  const { services } = useServicesData();
 
   const serviceCount = useMemo(
-    () => SERVICES.filter((s) => s.category === category).length,
-    [category]
+    () => services.filter((s) => s.category === category).length,
+    [services, category]
   );
 
   function handlePress() {
@@ -106,11 +108,12 @@ export default function CategoriesScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const { t, language } = useLanguage();
+  const { services } = useServicesData();
 
   const topPadding = Platform.OS === "web" ? 16 : insets.top;
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
 
-  const totalServices = SERVICES.length;
+  const totalServices = services.length;
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>

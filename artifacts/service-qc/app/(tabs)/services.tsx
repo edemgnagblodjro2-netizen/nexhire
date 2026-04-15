@@ -17,7 +17,8 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useLanguage } from "@/contexts/LanguageContext";
-import { SERVICES, type Category, type Service } from "@/data/services";
+import { type Category, type Service } from "@/data/services";
+import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 
@@ -107,6 +108,7 @@ export default function ServicesScreen() {
   const insets = useSafeAreaInsets();
   const { t, language } = useLanguage();
   const inputRef = useRef<TextInput>(null);
+  const { services } = useServicesData();
 
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<Category | null>(null);
@@ -115,7 +117,7 @@ export default function ServicesScreen() {
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
 
   const filtered = useMemo(() => {
-    let result = SERVICES;
+    let result = services;
     if (activeCategory) {
       result = result.filter((s) => s.category === activeCategory);
     }

@@ -19,7 +19,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useLanguage } from "@/contexts/LanguageContext";
-import { SERVICES } from "@/data/services";
+import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor } from "@/utils/categoryColors";
 import { detectCriticalSituation, type CriticalAlert } from "@/utils/detectCritical";
@@ -46,7 +46,8 @@ interface ChatMessage {
 function ServiceChip({ serviceId }: { serviceId: string }) {
   const colors = useColors();
   const router = useRouter();
-  const service = SERVICES.find((s) => s.id === serviceId);
+  const { services } = useServicesData();
+  const service = services.find((s) => s.id === serviceId);
   if (!service) return null;
   const color = getCategoryColor(service.category, colors);
 

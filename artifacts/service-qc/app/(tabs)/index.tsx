@@ -19,7 +19,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { UrgentButton } from "@/components/UrgentButton";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { Category } from "@/data/services";
-import { SERVICES } from "@/data/services";
+import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor, CATEGORY_ICONS } from "@/utils/categoryColors";
 import { detectCategory } from "@/utils/detectCategory";
@@ -44,10 +44,11 @@ export default function HomeScreen() {
   const { t, language, toggleLanguage } = useLanguage();
   const inputRef = useRef<TextInput>(null);
 
+  const { services } = useServicesData();
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
 
-  const totalServices = SERVICES.length;
+  const totalServices = services.length;
 
   function handleSearch() {
     if (!query.trim()) return;
@@ -238,8 +239,8 @@ export default function HomeScreen() {
                 </Text>
                 <Text style={styles.mapBannerSub}>
                   {language === "fr"
-                    ? `${SERVICES.length}+ épingles • filtrées par catégorie`
-                    : `${SERVICES.length}+ pins • filtered by category`}
+                    ? `${services.length}+ épingles • filtrées par catégorie`
+                    : `${services.length}+ pins • filtered by category`}
                 </Text>
               </View>
             </View>

@@ -15,7 +15,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useLanguage } from "@/contexts/LanguageContext";
-import { SERVICES } from "@/data/services";
+import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 
@@ -25,8 +25,9 @@ export default function ServiceDetailScreen() {
   const insets = useSafeAreaInsets();
   const { t } = useLanguage();
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { services } = useServicesData();
 
-  const service = SERVICES.find((s) => s.id === id);
+  const service = services.find((s) => s.id === id);
 
   const topPadding = Platform.OS === "web" ? 16 : insets.top;
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;

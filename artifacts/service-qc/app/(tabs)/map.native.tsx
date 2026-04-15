@@ -18,7 +18,8 @@ import {
 } from "react-native";
 
 import { useLocation } from "@/contexts/LocationContext";
-import { SERVICES, type Service } from "@/data/services";
+import { type Service } from "@/data/services";
+import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -66,10 +67,6 @@ const QUEBEC_REGION = {
   longitudeDelta: 3.5,
 };
 
-const SERVICES_WITH_COORDS = SERVICES.filter(
-  (s) => s.coordinates && s.coordinates.lat && s.coordinates.lng
-);
-
 export default function MapScreen() {
   const colors = useColors();
   const { userLocation, requestLocation, locationStatus } = useLocation();
@@ -78,18 +75,24 @@ export default function MapScreen() {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const modalAnim = useRef(new Animated.Value(0)).current;
+  const { services } = useServicesData();
+
+  const servicesWithCoords = useMemo(
+    () => services.filter((s) => (s as any).coordinates?.lat && (s as any).coordinates?.lng),
+    [services]
+  );
 
   const categories = useMemo(() => {
     const cats = Array.from(
-      new Set(SERVICES_WITH_COORDS.map((s) => s.category))
+      new Set(servicesWithCoords.map((s) => s.category))
     );
     return ["all", ...cats];
-  }, []);
+  }, [servicesWithCoords]);
 
   const filteredServices = useMemo(() => {
-    if (activeCategory === "all") return SERVICES_WITH_COORDS;
-    return SERVICES_WITH_COORDS.filter((s) => s.category === activeCategory);
-  }, [activeCategory]);
+    if (activeCategory === "all") return servicesWithCoords;
+    return servicesWithCoords.filter((s) => s.category === activeCategory);
+  }, [servicesWithCoords, activeCategory]);
 
   const openModal = useCallback((service: Service) => {
     setSelectedService(service);

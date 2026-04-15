@@ -48,6 +48,7 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **Carte** : Native (iOS/Android) avec épingles filtrables ; fallback web élégant
 - **Profil** : Nom, email, adresse modifiable, changement mot de passe, toggle langue
 - **Guide d'achat immobilier** : 8 étapes interactives (catégorie realestate)
+- **Services depuis API** : ServicesContext charge les 457 services depuis l'API `/api/services` avec cache AsyncStorage (6h TTL), fallback sur données statiques
 - **Mentions légales** : Conditions d'utilisation + politique de confidentialité intégrées
 - **Localisation** : Haversine distance, tri automatique des services urgents par proximité
 - **Dark mode** : Complet
@@ -98,6 +99,20 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 
 ---
 
+### Admin Panel (artifacts/admin)
+
+- **Type**: React + Vite web app
+- **Preview path**: `/admin`
+- **Auth**: Clé admin `attentezero-admin-2026` (env var `ADMIN_API_KEY`)
+- **Features**:
+  - Login avec validation de la clé admin via l'API
+  - Tableau de bord : stats totaux (services, actifs, urgents, provinciaux), liste des villes et catégories, graphique en barres
+  - Gestion des services : liste paginée (25/page), recherche texte, filtres ville/catégorie/statut
+  - Ajout / modification de service (modal complet)
+  - Toggle actif/inactif en un clic
+  - Suppression avec confirmation
+- **API proxy**: `/api/*` → `http://localhost:8080/api/*` (Vite proxy)
+
 ### API Server (artifacts/api-server)
 
 - **Type**: Express 5 API
@@ -108,4 +123,10 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
   - `POST /api/mobile-auth/email-login` — authentification email/password
   - `POST /api/mobile-auth/register` — création de compte
   - `PATCH /api/mobile-auth/update-profile` — mise à jour profil
+  - `GET /api/services` — liste publique des services (mobile app)
+  - `GET /api/admin/services` — liste paginée (admin, x-admin-key requis)
+  - `GET /api/admin/services/meta` — stats + villes + catégories (admin)
+  - `POST /api/admin/services` — créer un service (admin)
+  - `PUT /api/admin/services/:id` — modifier un service (admin)
+  - `DELETE /api/admin/services/:id` — supprimer (hard) ou désactiver (soft) un service (admin)
   - `POST /api/mobile-auth/logout` — déconnexion

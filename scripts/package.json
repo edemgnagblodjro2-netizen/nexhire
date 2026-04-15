@@ -5,7 +5,12 @@
   "type": "module",
   "scripts": {
     "hello": "tsx ./src/hello.ts",
+    "seed-services": "tsx ./src/seed-services.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@workspace/db": "workspace:*",
+    "dotenv": "^16.4.7"
   },
   "devDependencies": {
     "@types/node": "catalog:",

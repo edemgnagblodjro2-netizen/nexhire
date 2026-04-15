@@ -15,7 +15,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ServiceCard } from "@/components/ServiceCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { Category } from "@/data/services";
-import { SERVICES } from "@/data/services";
+import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor, CATEGORY_ICONS } from "@/utils/categoryColors";
 
@@ -49,9 +49,11 @@ export default function ResultsScreen() {
   const topPadding = Platform.OS === "web" ? 16 : insets.top;
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
 
+  const { services } = useServicesData();
+
   const filtered = useMemo(() => {
     const q = (query ?? "").toLowerCase().trim();
-    return SERVICES.filter((s) => {
+    return services.filter((s) => {
       const matchesCategory =
         selectedCategory === "all" || s.category === selectedCategory;
       if (!q) return matchesCategory;
@@ -62,7 +64,7 @@ export default function ResultsScreen() {
         (s.subcategory ?? "").toLowerCase().includes(q);
       return matchesCategory && matchesText;
     });
-  }, [selectedCategory, query]);
+  }, [services, selectedCategory, query]);
 
   function handleChipPress(cat: Category | "all") {
     Haptics.selectionAsync();

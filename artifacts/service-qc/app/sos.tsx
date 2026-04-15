@@ -17,7 +17,8 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useLocation } from "@/contexts/LocationContext";
-import { SERVICES, type Service } from "@/data/services";
+import { type Service } from "@/data/services";
+import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -121,9 +122,11 @@ export default function SOSScreen() {
     }
   }, [locationStatus, locRequested, requestLocation]);
 
+  const { services } = useServicesData();
+
   const servicesBySection = useMemo(() => {
     return SECTIONS.map((sec) => {
-      const candidates = SERVICES.filter(
+      const candidates = services.filter(
         (s) => s.subcategory === sec.subcategory
       );
       if (userLocation) {
@@ -131,7 +134,7 @@ export default function SOSScreen() {
       }
       return candidates.slice(0, 3);
     });
-  }, [userLocation]);
+  }, [services, userLocation]);
 
   function call911() {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
