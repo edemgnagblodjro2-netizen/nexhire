@@ -1,16 +1,14 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useState } from "react";
+import { useRouter } from "expo-router";
+import React from "react";
 import {
-  Alert,
-  Linking,
   Modal,
   Platform,
   Pressable,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -24,40 +22,22 @@ interface Props {
   remaining: number;
 }
 
-export default function PremiumGateModal({ visible, onDismiss, userEmail, remaining }: Props) {
+const PERKS = [
+  { icon: "bar-chart-2" as const, label: "Suivi personnalisé de vos démarches" },
+  { icon: "clock" as const, label: "Historique complet hors ligne" },
+  { icon: "bell" as const, label: "Alertes dès qu'un service est disponible" },
+  { icon: "star" as const, label: "Résultats priorisés par l'IA" },
+];
+
+export default function PremiumGateModal({ visible, onDismiss }: Props) {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const [email, setEmail] = useState(userEmail ?? "");
-  const [sent, setSent] = useState(false);
+  const router = useRouter();
 
-  function handleSend() {
-    const addr = email.trim();
-    if (!addr || !addr.includes("@")) {
-      Alert.alert("Courriel invalide", "Veuillez entrer une adresse courriel valide.");
-      return;
-    }
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-
-    const subject = encodeURIComponent("Demande d'abonnement — AttenteZéro Premium");
-    const body = encodeURIComponent(
-      `Bonjour,\n\nJe souhaite m'abonner à AttenteZéro Premium (5 $/mois).\n\nMon courriel de contact : ${addr}\n\nMerci de me contacter pour finaliser l'abonnement.\n\nCordialement`
-    );
-    // L'usager envoie depuis son propre client mail → attentezero5@gmail.com reçoit
-    const mailUrl = `mailto:attentezero5@gmail.com?subject=${subject}&body=${body}`;
-
-    Linking.openURL(mailUrl).catch(() => {
-      Alert.alert(
-        "Aucune application de courriel",
-        `Envoyez manuellement un courriel à :\nattentezero5@gmail.com\n\nEn précisant votre adresse : ${addr}`
-      );
-    });
-
-    setSent(true);
-  }
-
-  function handleDismiss() {
-    setSent(false);
+  function handleSubscribe() {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     onDismiss();
+    router.push("/premium" as any);
   }
 
   return (
@@ -66,17 +46,17 @@ export default function PremiumGateModal({ visible, onDismiss, userEmail, remain
       animationType="slide"
       transparent
       statusBarTranslucent
-      onRequestClose={handleDismiss}
+      onRequestClose={onDismiss}
     >
       <View style={styles.overlay}>
-        <Pressable style={StyleSheet.absoluteFill} onPress={handleDismiss} />
+        <Pressable style={StyleSheet.absoluteFill} onPress={onDismiss} />
 
         <View
           style={[
             styles.sheet,
             {
               backgroundColor: colors.background,
-              paddingBottom: Math.max(insets.bottom, 20),
+              paddingBottom: Math.max(insets.bottom, 24),
             },
           ]}
         >
@@ -90,113 +70,97 @@ export default function PremiumGateModal({ visible, onDismiss, userEmail, remain
             end={{ x: 1, y: 1 }}
             style={styles.headerGrad}
           >
-            <View style={styles.headerIconWrap}>
-              <Feather name="star" size={28} color="#fbbf24" />
-            </View>
-            <Text style={styles.headerTitle}>
-              {sent ? "Demande envoyée !" : "Passez à Premium"}
-            </Text>
-            <Text style={styles.headerSub}>
-              {sent
-                ? "Envoyez le courriel pré-rempli depuis votre application de messagerie. Nous vous répondrons sous 24 h."
-                : "Vous avez utilisé vos 3 essais gratuits. Abonnez-vous pour continuer à profiter des fonctionnalités avancées."}
-            </Text>
+            {/* Orbs */}
             <View style={styles.orb1} />
             <View style={styles.orb2} />
+
+            <View style={styles.headerIconWrap}>
+              <Feather name="star" size={30} color="#fbbf24" />
+            </View>
+            <Text style={styles.headerTitle}>Passez à Premium</Text>
+            <Text style={styles.headerSub}>
+              Vous avez utilisé vos 3 essais gratuits.{"\n"}
+              Débloquez toutes les fonctionnalités avancées.
+            </Text>
+
+            {/* Price chips */}
+            <View style={styles.priceRow}>
+              <View style={styles.pricePill}>
+                <Text style={styles.priceMain}>5 $</Text>
+                <Text style={styles.priceSub}>/mois</Text>
+              </View>
+              <Text style={styles.priceOr}>ou</Text>
+              <View style={[styles.pricePill, styles.pricePillBest]}>
+                <Text style={styles.priceMain}>45 $</Text>
+                <Text style={styles.priceSub}>/an</Text>
+                <View style={styles.saveBadge}>
+                  <Text style={styles.saveText}>−25 %</Text>
+                </View>
+              </View>
+            </View>
           </LinearGradient>
 
           <View style={styles.body}>
-            {sent ? (
-              /* ── Success state ── */
-              <>
-                <View style={[styles.successBox, { backgroundColor: colors.card, borderColor: "#10b981" + "30" }]}>
-                  <Feather name="check-circle" size={20} color="#10b981" />
-                  <View style={{ flex: 1 }}>
-                    <Text style={[styles.successTitle, { color: colors.foreground }]}>
-                      Courriel prêt à envoyer
-                    </Text>
-                    <Text style={[styles.successDesc, { color: colors.mutedForeground }]}>
-                      Votre application de messagerie s'est ouverte avec un message pré-rempli. Appuyez sur Envoyer — nous vous répondrons sous 24 h à l'adresse {email.trim() || "fournie"}.
-                    </Text>
-                  </View>
-                </View>
-                <Pressable
-                  onPress={handleDismiss}
-                  style={[styles.closeBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
-                >
-                  <Text style={[styles.closeBtnText, { color: colors.foreground }]}>Fermer</Text>
-                </Pressable>
-              </>
-            ) : (
-              /* ── Form state ── */
-              <>
-                {/* Price reminder */}
-                <View style={[styles.priceRow, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                  <View style={styles.pricePill}>
-                    <Text style={styles.priceAmount}>5 $</Text>
-                    <Text style={styles.pricePeriod}>/mois</Text>
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text style={[styles.priceDesc, { color: colors.foreground }]}>
-                      Suivi · Historique · Alertes · Priorisation
-                    </Text>
-                    <Text style={[styles.priceSub, { color: colors.mutedForeground }]}>
-                      Annulable à tout moment
-                    </Text>
-                  </View>
-                </View>
-
-                {/* Email input */}
-                <Text style={[styles.inputLabel, { color: colors.foreground }]}>
-                  Votre adresse courriel (pour qu'on vous réponde)
-                </Text>
+            {/* Perks list */}
+            <View style={[styles.perksBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              {PERKS.map((p, i) => (
                 <View
+                  key={p.label}
                   style={[
-                    styles.inputWrap,
-                    { backgroundColor: colors.card, borderColor: colors.border },
+                    styles.perkRow,
+                    i < PERKS.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border },
                   ]}
                 >
-                  <Feather name="mail" size={16} color={colors.mutedForeground} />
-                  <TextInput
-                    value={email}
-                    onChangeText={setEmail}
-                    placeholder="vous@exemple.com"
-                    placeholderTextColor={colors.mutedForeground}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    style={[styles.input, { color: colors.foreground }]}
-                  />
+                  <View style={styles.perkIcon}>
+                    <Feather name={p.icon} size={15} color="#7c3aed" />
+                  </View>
+                  <Text style={[styles.perkText, { color: colors.foreground }]}>{p.label}</Text>
+                  <Feather name="check" size={14} color="#10b981" />
                 </View>
+              ))}
+            </View>
 
-                <Text style={[styles.hint, { color: colors.mutedForeground }]}>
-                  Votre application de messagerie s'ouvrira avec un courriel pré-rempli destiné à attentezero5@gmail.com. Il vous suffit d'appuyer sur Envoyer.
-                </Text>
+            {/* Trust badges */}
+            <View style={styles.trustRow}>
+              <View style={styles.trustItem}>
+                <Feather name="shield" size={12} color={colors.mutedForeground} />
+                <Text style={[styles.trustText, { color: colors.mutedForeground }]}>SSL sécurisé</Text>
+              </View>
+              <View style={styles.trustDot} />
+              <View style={styles.trustItem}>
+                <Feather name="credit-card" size={12} color={colors.mutedForeground} />
+                <Text style={[styles.trustText, { color: colors.mutedForeground }]}>Visa · MC · Amex</Text>
+              </View>
+              <View style={styles.trustDot} />
+              <View style={styles.trustItem}>
+                <Feather name="refresh-cw" size={12} color={colors.mutedForeground} />
+                <Text style={[styles.trustText, { color: colors.mutedForeground }]}>Annulable à tout moment</Text>
+              </View>
+            </View>
 
-                {/* Send button */}
-                <Pressable
-                  onPress={handleSend}
-                  style={({ pressed }) => [styles.sendBtn, pressed && { opacity: 0.88 }]}
-                >
-                  <LinearGradient
-                    colors={["#6d28d9", "#7c3aed"]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.sendBtnGrad}
-                  >
-                    <Feather name="send" size={17} color="#fff" />
-                    <Text style={styles.sendBtnText}>Envoyer la demande d'abonnement</Text>
-                  </LinearGradient>
-                </Pressable>
+            {/* CTA */}
+            <Pressable
+              onPress={handleSubscribe}
+              style={({ pressed }) => [styles.ctaBtn, pressed && { opacity: 0.88 }]}
+            >
+              <LinearGradient
+                colors={["#6d28d9", "#7c3aed", "#a21caf"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.ctaBtnGrad}
+              >
+                <Feather name="lock" size={17} color="#fff" />
+                <Text style={styles.ctaBtnText}>Payer maintenant avec Stripe</Text>
+                <Feather name="arrow-right" size={17} color="#fff" />
+              </LinearGradient>
+            </Pressable>
 
-                {/* Dismiss */}
-                <Pressable onPress={handleDismiss} style={styles.laterBtn}>
-                  <Text style={[styles.laterText, { color: colors.mutedForeground }]}>
-                    Plus tard
-                  </Text>
-                </Pressable>
-              </>
-            )}
+            {/* Dismiss */}
+            <Pressable onPress={onDismiss} style={styles.laterBtn}>
+              <Text style={[styles.laterText, { color: colors.mutedForeground }]}>
+                Continuer en version gratuite
+              </Text>
+            </Pressable>
           </View>
         </View>
       </View>
@@ -207,16 +171,16 @@ export default function PremiumGateModal({ visible, onDismiss, userEmail, remain
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.55)",
+    backgroundColor: "rgba(0,0,0,0.6)",
     justifyContent: "flex-end",
   },
   sheet: {
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
     overflow: "hidden",
     ...(Platform.OS === "ios"
-      ? { shadowColor: "#000", shadowOffset: { width: 0, height: -4 }, shadowOpacity: 0.15, shadowRadius: 16 }
-      : { elevation: 24 }),
+      ? { shadowColor: "#000", shadowOffset: { width: 0, height: -6 }, shadowOpacity: 0.2, shadowRadius: 20 }
+      : { elevation: 30 }),
   },
   handle: {
     width: 40,
@@ -224,29 +188,49 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     alignSelf: "center",
     marginTop: 10,
-    marginBottom: 4,
+    marginBottom: 2,
   },
 
   /* Header */
   headerGrad: {
-    padding: 24,
-    paddingTop: 16,
+    paddingHorizontal: 24,
+    paddingTop: 20,
+    paddingBottom: 24,
     gap: 10,
     overflow: "hidden",
     alignItems: "center",
   },
+  orb1: {
+    position: "absolute",
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    backgroundColor: "rgba(255,255,255,0.05)",
+    top: -50,
+    right: -40,
+  },
+  orb2: {
+    position: "absolute",
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    backgroundColor: "rgba(255,255,255,0.05)",
+    bottom: -20,
+    left: 10,
+  },
   headerIconWrap: {
-    width: 56,
-    height: 56,
-    borderRadius: 16,
+    width: 64,
+    height: 64,
+    borderRadius: 20,
     backgroundColor: "rgba(251,191,36,0.18)",
     borderWidth: 1,
-    borderColor: "rgba(251,191,36,0.3)",
+    borderColor: "rgba(251,191,36,0.35)",
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 2,
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontFamily: "Inter_700Bold",
     color: "#fff",
     textAlign: "center",
@@ -254,103 +238,139 @@ const styles = StyleSheet.create({
   headerSub: {
     fontSize: 13,
     fontFamily: "Inter_400Regular",
-    color: "rgba(255,255,255,0.75)",
+    color: "rgba(255,255,255,0.78)",
     textAlign: "center",
-    lineHeight: 19,
-  },
-  orb1: {
-    position: "absolute",
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: "rgba(255,255,255,0.05)",
-    top: -40,
-    right: -30,
-  },
-  orb2: {
-    position: "absolute",
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    backgroundColor: "rgba(255,255,255,0.06)",
-    bottom: -20,
-    left: 20,
+    lineHeight: 20,
   },
 
-  body: {
-    padding: 20,
-    gap: 12,
-  },
-
-  /* Price row */
+  /* Price chips */
   priceRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 14,
-    borderRadius: 14,
-    borderWidth: 1,
-    padding: 14,
+    gap: 10,
+    marginTop: 6,
   },
   pricePill: {
     flexDirection: "row",
     alignItems: "baseline",
-    backgroundColor: "#7c3aed",
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    gap: 2,
+    backgroundColor: "rgba(255,255,255,0.15)",
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    gap: 3,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.2)",
   },
-  priceAmount: { fontSize: 18, fontFamily: "Inter_700Bold", color: "#fff" },
-  pricePeriod: { fontSize: 11, fontFamily: "Inter_400Regular", color: "rgba(255,255,255,0.75)" },
-  priceDesc: { fontSize: 13, fontFamily: "Inter_600SemiBold" },
-  priceSub: { fontSize: 11, fontFamily: "Inter_400Regular", marginTop: 2 },
+  pricePillBest: {
+    backgroundColor: "rgba(251,191,36,0.2)",
+    borderColor: "rgba(251,191,36,0.35)",
+    position: "relative",
+  },
+  priceMain: {
+    fontSize: 20,
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+  },
+  priceSub: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.75)",
+  },
+  priceOr: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.55)",
+  },
+  saveBadge: {
+    backgroundColor: "#fbbf24",
+    borderRadius: 6,
+    paddingHorizontal: 5,
+    paddingVertical: 1,
+    marginLeft: 4,
+  },
+  saveText: {
+    fontSize: 10,
+    fontFamily: "Inter_700Bold",
+    color: "#1e1b4b",
+  },
 
-  /* Input */
-  inputLabel: {
-    fontSize: 13,
-    fontFamily: "Inter_600SemiBold",
-    marginBottom: -4,
+  /* Body */
+  body: {
+    paddingHorizontal: 20,
+    paddingTop: 18,
+    gap: 14,
   },
-  inputWrap: {
+
+  /* Perks */
+  perksBox: {
+    borderRadius: 16,
+    borderWidth: 1,
+    overflow: "hidden",
+  },
+  perkRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    borderRadius: 12,
-    borderWidth: 1,
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
-  input: {
-    flex: 1,
-    fontSize: 15,
-    fontFamily: "Inter_400Regular",
-    ...(Platform.OS === "web" ? ({ outlineStyle: "none" } as any) : {}),
+  perkIcon: {
+    width: 30,
+    height: 30,
+    borderRadius: 8,
+    backgroundColor: "#7c3aed" + "15",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
   },
-  hint: {
-    fontSize: 11,
-    fontFamily: "Inter_400Regular",
-    lineHeight: 16,
-    marginTop: -4,
+  perkText: {
+    flex: 1,
+    fontSize: 13,
+    fontFamily: "Inter_500Medium",
+    lineHeight: 18,
   },
 
-  /* Send btn */
-  sendBtn: {
-    borderRadius: 14,
-    overflow: "hidden",
-    marginTop: 4,
-    ...(Platform.OS === "ios"
-      ? { shadowColor: "#7c3aed", shadowOffset: { width: 0, height: 5 }, shadowOpacity: 0.3, shadowRadius: 12 }
-      : { elevation: 6 }),
-  },
-  sendBtnGrad: {
+  /* Trust */
+  trustRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 9,
-    paddingVertical: 15,
+    flexWrap: "wrap",
+    gap: 6,
   },
-  sendBtnText: {
-    fontSize: 15,
+  trustItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  trustText: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+  },
+  trustDot: {
+    width: 3,
+    height: 3,
+    borderRadius: 1.5,
+    backgroundColor: "#94a3b8",
+  },
+
+  /* CTA */
+  ctaBtn: {
+    borderRadius: 16,
+    overflow: "hidden",
+    ...(Platform.OS === "ios"
+      ? { shadowColor: "#7c3aed", shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.35, shadowRadius: 14 }
+      : { elevation: 8 }),
+  },
+  ctaBtnGrad: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    paddingVertical: 17,
+  },
+  ctaBtnText: {
+    fontSize: 16,
     fontFamily: "Inter_600SemiBold",
     color: "#fff",
   },
@@ -358,41 +378,11 @@ const styles = StyleSheet.create({
   /* Dismiss */
   laterBtn: {
     alignItems: "center",
-    paddingVertical: 8,
+    paddingVertical: 6,
+    marginBottom: 4,
   },
   laterText: {
     fontSize: 13,
     fontFamily: "Inter_400Regular",
-  },
-
-  /* Success */
-  successBox: {
-    flexDirection: "row",
-    gap: 12,
-    borderRadius: 14,
-    borderWidth: 1,
-    padding: 16,
-    alignItems: "flex-start",
-  },
-  successTitle: {
-    fontSize: 14,
-    fontFamily: "Inter_600SemiBold",
-    marginBottom: 4,
-  },
-  successDesc: {
-    fontSize: 13,
-    fontFamily: "Inter_400Regular",
-    lineHeight: 18,
-  },
-  closeBtn: {
-    borderRadius: 14,
-    borderWidth: 1,
-    paddingVertical: 14,
-    alignItems: "center",
-    marginTop: 4,
-  },
-  closeBtnText: {
-    fontSize: 15,
-    fontFamily: "Inter_500Medium",
   },
 });
