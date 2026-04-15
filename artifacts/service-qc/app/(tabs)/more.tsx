@@ -13,14 +13,45 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import PremiumGateModal from "@/components/PremiumGateModal";
 import { useColors } from "@/hooks/useColors";
+import { usePremiumGate } from "@/hooks/usePremiumGate";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/lib/auth";
 
 const PREMIUM_FEATURES = [
-  { icon: "bar-chart-2" as const, label: "Suivi personnalisé", desc: "Suivez l'évolution de vos démarches" },
-  { icon: "clock" as const,       label: "Historique complet",  desc: "Retrouvez vos recherches et services consultés" },
-  { icon: "bell" as const,        label: "Alertes intelligentes", desc: "Notifié dès qu'un service proche est disponible" },
-  { icon: "star" as const,        label: "Priorisation",         desc: "Services les plus pertinents en premier" },
+  {
+    icon: "bar-chart-2" as const,
+    color: "#0e7e6e",
+    bg: "#f0fdf4",
+    darkBg: "#052e1c",
+    label: "Suivi personnalisé",
+    desc: "Suivez l'évolution de vos démarches en temps réel",
+  },
+  {
+    icon: "clock" as const,
+    color: "#7c3aed",
+    bg: "#f5f3ff",
+    darkBg: "#2e1a5e",
+    label: "Historique complet",
+    desc: "Retrouvez vos recherches et services consultés",
+  },
+  {
+    icon: "bell" as const,
+    color: "#d97706",
+    bg: "#fffbeb",
+    darkBg: "#3b2006",
+    label: "Alertes intelligentes",
+    desc: "Notifié dès qu'un service proche est disponible",
+  },
+  {
+    icon: "star" as const,
+    color: "#e11d48",
+    bg: "#fff1f2",
+    darkBg: "#3b0a16",
+    label: "Priorisation",
+    desc: "Services les plus pertinents en premier",
+  },
 ];
 
 const OTHER_OPTIONS = [
@@ -71,160 +102,222 @@ export default function MoreScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { language } = useLanguage();
+  const { user } = useAuth();
   const isFr = language !== "en";
   const isDark = colors.background === "#09090b" || colors.background === "#0a0a0a";
 
+  const { remaining, showGate, recordAttempt, dismissGate, isGated } = usePremiumGate();
+
+  async function handleFeaturePress() {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await recordAttempt();
+  }
+
   return (
-    <ScrollView
-      style={[styles.container, { backgroundColor: colors.background }]}
-      contentContainerStyle={{ paddingBottom: Math.max(insets.bottom, 8) + 100 }}
-      showsVerticalScrollIndicator={false}
-    >
-      {/* ── Header ── */}
-      <LinearGradient
-        colors={["#0e7e6e", "#0a5e52"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[styles.header, { paddingTop: (Platform.OS === "web" ? 16 : insets.top) + 16 }]}
+    <>
+      <ScrollView
+        style={[styles.container, { backgroundColor: colors.background }]}
+        contentContainerStyle={{ paddingBottom: Math.max(insets.bottom, 8) + 100 }}
+        showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.headerTitle}>
-          {isFr ? "Plus" : "More"}
-        </Text>
-        <Text style={styles.headerSub}>
-          {isFr ? "Fonctionnalités et options" : "Features & options"}
-        </Text>
-      </LinearGradient>
-
-      <View style={styles.body}>
-
-        {/* ── Premium card ── */}
-        <Pressable
-          onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-            router.push("/premium" as any);
-          }}
-          style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }]}
+        {/* ── Header ── */}
+        <LinearGradient
+          colors={["#0e7e6e", "#0a5e52"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={[styles.header, { paddingTop: (Platform.OS === "web" ? 16 : insets.top) + 16 }]}
         >
-          <LinearGradient
-            colors={["#1e40af", "#7c3aed", "#a21caf"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.premiumCard}
+          <Text style={styles.headerTitle}>
+            {isFr ? "Plus" : "More"}
+          </Text>
+          <Text style={styles.headerSub}>
+            {isFr ? "Fonctionnalités et options" : "Features & options"}
+          </Text>
+        </LinearGradient>
+
+        <View style={styles.body}>
+
+          {/* ── Premium card ── */}
+          <Pressable
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              router.push("/premium" as any);
+            }}
+            style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }]}
           >
-            <View style={styles.premiumTop}>
-              <View style={styles.premiumBadge}>
-                <Feather name="star" size={13} color="#fbbf24" />
-                <Text style={styles.premiumBadgeText}>PREMIUM</Text>
+            <LinearGradient
+              colors={["#1e40af", "#7c3aed", "#a21caf"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.premiumCard}
+            >
+              <View style={styles.premiumTop}>
+                <View style={styles.premiumBadge}>
+                  <Feather name="star" size={13} color="#fbbf24" />
+                  <Text style={styles.premiumBadgeText}>PREMIUM</Text>
+                </View>
+                <View style={styles.premiumPrice}>
+                  <Text style={styles.premiumAmount}>5 $</Text>
+                  <Text style={styles.premiumPeriod}>/mois</Text>
+                </View>
               </View>
-              <View style={styles.premiumPrice}>
-                <Text style={styles.premiumAmount}>5 $</Text>
-                <Text style={styles.premiumPeriod}>/mois</Text>
-              </View>
-            </View>
 
-            <Text style={styles.premiumTitle}>
-              {isFr ? "Passez à la version avancée" : "Upgrade to advanced"}
-            </Text>
-            <Text style={styles.premiumSub}>
-              {isFr
-                ? "Débloquez le suivi personnalisé, l'historique, les alertes et la priorisation"
-                : "Unlock personalized tracking, history, alerts and prioritization"}
-            </Text>
+              <Text style={styles.premiumTitle}>
+                {isFr ? "Passez à la version avancée" : "Upgrade to advanced"}
+              </Text>
+              <Text style={styles.premiumSub}>
+                {isFr
+                  ? "Débloquez le suivi personnalisé, l'historique, les alertes et la priorisation"
+                  : "Unlock personalized tracking, history, alerts and prioritization"}
+              </Text>
 
-            <View style={styles.premiumFeaturesList}>
-              {PREMIUM_FEATURES.map((f) => (
-                <View key={f.label} style={styles.premiumFeatureRow}>
-                  <View style={styles.premiumCheckCircle}>
-                    <Feather name="check" size={11} color="#fff" />
+              <View style={styles.premiumFeaturesList}>
+                {PREMIUM_FEATURES.map((f) => (
+                  <View key={f.label} style={styles.premiumFeatureRow}>
+                    <View style={styles.premiumCheckCircle}>
+                      <Feather name="check" size={11} color="#fff" />
+                    </View>
+                    <Text style={styles.premiumFeatureText}>{f.label}</Text>
                   </View>
-                  <Text style={styles.premiumFeatureText}>{f.label}</Text>
+                ))}
+              </View>
+
+              <View style={styles.premiumCta}>
+                <Text style={styles.premiumCtaText}>
+                  {isFr ? "Voir les détails" : "See details"}
+                </Text>
+                <Feather name="arrow-right" size={15} color="#fff" />
+              </View>
+
+              <View style={styles.premiumOrb1} />
+              <View style={styles.premiumOrb2} />
+            </LinearGradient>
+          </Pressable>
+
+          {/* ── Free vs Premium quick compare ── */}
+          <View style={[styles.compareBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <View style={styles.compareCol}>
+              <Text style={[styles.compareColTitle, { color: colors.mutedForeground }]}>Gratuit</Text>
+              {["457 services", "Chat IA", "SOS urgences", "Carte"].map((f) => (
+                <View key={f} style={styles.compareRow}>
+                  <Feather name="check" size={13} color="#10b981" />
+                  <Text style={[styles.compareText, { color: colors.foreground }]}>{f}</Text>
                 </View>
               ))}
             </View>
-
-            <View style={styles.premiumCta}>
-              <Text style={styles.premiumCtaText}>
-                {isFr ? "Voir les détails" : "See details"}
-              </Text>
-              <Feather name="arrow-right" size={15} color="#fff" />
-            </View>
-
-            {/* Decorative orb */}
-            <View style={styles.premiumOrb1} />
-            <View style={styles.premiumOrb2} />
-          </LinearGradient>
-        </Pressable>
-
-        {/* ── Free vs Premium quick compare ── */}
-        <View style={[styles.compareBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <View style={styles.compareCol}>
-            <Text style={[styles.compareColTitle, { color: colors.mutedForeground }]}>Gratuit</Text>
-            {["457 services", "Chat IA", "SOS urgences", "Carte"].map((f) => (
-              <View key={f} style={styles.compareRow}>
-                <Feather name="check" size={13} color="#10b981" />
-                <Text style={[styles.compareText, { color: colors.foreground }]}>{f}</Text>
-              </View>
-            ))}
-          </View>
-          <View style={[styles.compareDivider, { backgroundColor: colors.border }]} />
-          <View style={styles.compareCol}>
-            <Text style={[styles.compareColTitle, { color: "#7c3aed" }]}>⭐ Premium</Text>
-            {["Tout le gratuit", "Suivi perso.", "Historique", "Alertes", "Priorisation"].map((f) => (
-              <View key={f} style={styles.compareRow}>
-                <Feather name="check" size={13} color="#7c3aed" />
-                <Text style={[styles.compareText, { color: colors.foreground }]}>{f}</Text>
-              </View>
-            ))}
-          </View>
-        </View>
-
-        {/* ── Section title: Autres options ── */}
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
-          {isFr ? "Autres options de financement" : "Other funding options"}
-        </Text>
-
-        {/* ── Option cards ── */}
-        {OTHER_OPTIONS.map((opt) => (
-          <Pressable
-            key={opt.title}
-            style={({ pressed }) => [
-              styles.optionCard,
-              {
-                backgroundColor: colors.card,
-                borderColor: colors.border,
-                opacity: pressed ? 0.85 : 1,
-              },
-            ]}
-            onPress={() => Haptics.selectionAsync()}
-          >
-            <View style={[styles.optionIconWrap, { backgroundColor: isDark ? opt.darkBg : opt.bg }]}>
-              <Feather name={opt.icon} size={20} color={opt.color} />
-            </View>
-            <View style={styles.optionText}>
-              <View style={styles.optionTitleRow}>
-                <Text style={[styles.optionTitle, { color: colors.foreground }]}>{opt.title}</Text>
-                <View style={[styles.optionBadge, { backgroundColor: opt.badgeColor + "18", borderColor: opt.badgeColor + "30" }]}>
-                  <Text style={[styles.optionBadgeText, { color: opt.badgeColor }]}>{opt.badge}</Text>
+            <View style={[styles.compareDivider, { backgroundColor: colors.border }]} />
+            <View style={styles.compareCol}>
+              <Text style={[styles.compareColTitle, { color: "#7c3aed" }]}>⭐ Premium</Text>
+              {["Tout le gratuit", "Suivi perso.", "Historique", "Alertes", "Priorisation"].map((f) => (
+                <View key={f} style={styles.compareRow}>
+                  <Feather name="check" size={13} color="#7c3aed" />
+                  <Text style={[styles.compareText, { color: colors.foreground }]}>{f}</Text>
                 </View>
-              </View>
-              <Text style={[styles.optionDesc, { color: colors.mutedForeground }]}>{opt.desc}</Text>
+              ))}
             </View>
-            <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
-          </Pressable>
-        ))}
+          </View>
 
-        {/* ── Philosophy note ── */}
-        <View style={[styles.noteBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <Feather name="info" size={15} color={colors.mutedForeground} />
-          <Text style={[styles.noteText, { color: colors.mutedForeground }]}>
-            {isFr
-              ? "AttenteZéro restera toujours gratuit pour les personnes vulnérables. Le premium est optionnel et finance le maintien de la plateforme."
-              : "AttenteZéro will always be free for vulnerable people. Premium is optional and funds the platform's upkeep."}
+          {/* ── Premium features — clickable with gate ── */}
+          <View style={styles.sectionHeader}>
+            <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
+              {isFr ? "Fonctionnalités avancées" : "Advanced features"}
+            </Text>
+            {!isGated && (
+              <View style={[styles.trialBadge, { backgroundColor: "#7c3aed" + "18", borderColor: "#7c3aed" + "30" }]}>
+                <Feather name="gift" size={11} color="#7c3aed" />
+                <Text style={[styles.trialBadgeText, { color: "#7c3aed" }]}>
+                  {remaining} essai{remaining !== 1 ? "s" : ""} gratuit{remaining !== 1 ? "s" : ""}
+                </Text>
+              </View>
+            )}
+          </View>
+
+          {PREMIUM_FEATURES.map((f) => (
+            <Pressable
+              key={f.label}
+              onPress={handleFeaturePress}
+              style={({ pressed }) => [
+                styles.featureCard,
+                {
+                  backgroundColor: colors.card,
+                  borderColor: colors.border,
+                  opacity: pressed ? 0.85 : 1,
+                },
+              ]}
+            >
+              <View style={[styles.featureIconWrap, { backgroundColor: isDark ? f.darkBg : f.bg }]}>
+                <Feather name={f.icon} size={20} color={f.color} />
+              </View>
+              <View style={styles.featureText}>
+                <Text style={[styles.featureTitle, { color: colors.foreground }]}>{f.label}</Text>
+                <Text style={[styles.featureDesc, { color: colors.mutedForeground }]}>{f.desc}</Text>
+              </View>
+              <View style={[styles.lockBadge, { backgroundColor: isGated ? "#7c3aed" : "#10b981" + "18" }]}>
+                <Feather
+                  name={isGated ? "lock" : "zap"}
+                  size={13}
+                  color={isGated ? "#fff" : "#10b981"}
+                />
+              </View>
+            </Pressable>
+          ))}
+
+          {/* ── Section title: Autres options ── */}
+          <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
+            {isFr ? "Autres options de financement" : "Other funding options"}
           </Text>
-        </View>
 
-      </View>
-    </ScrollView>
+          {/* ── Option cards ── */}
+          {OTHER_OPTIONS.map((opt) => (
+            <Pressable
+              key={opt.title}
+              style={({ pressed }) => [
+                styles.optionCard,
+                {
+                  backgroundColor: colors.card,
+                  borderColor: colors.border,
+                  opacity: pressed ? 0.85 : 1,
+                },
+              ]}
+              onPress={() => Haptics.selectionAsync()}
+            >
+              <View style={[styles.optionIconWrap, { backgroundColor: isDark ? opt.darkBg : opt.bg }]}>
+                <Feather name={opt.icon} size={20} color={opt.color} />
+              </View>
+              <View style={styles.optionText}>
+                <View style={styles.optionTitleRow}>
+                  <Text style={[styles.optionTitle, { color: colors.foreground }]}>{opt.title}</Text>
+                  <View style={[styles.optionBadge, { backgroundColor: opt.badgeColor + "18", borderColor: opt.badgeColor + "30" }]}>
+                    <Text style={[styles.optionBadgeText, { color: opt.badgeColor }]}>{opt.badge}</Text>
+                  </View>
+                </View>
+                <Text style={[styles.optionDesc, { color: colors.mutedForeground }]}>{opt.desc}</Text>
+              </View>
+              <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+            </Pressable>
+          ))}
+
+          {/* ── Philosophy note ── */}
+          <View style={[styles.noteBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <Feather name="info" size={15} color={colors.mutedForeground} />
+            <Text style={[styles.noteText, { color: colors.mutedForeground }]}>
+              {isFr
+                ? "AttenteZéro restera toujours gratuit pour les personnes vulnérables. Le premium est optionnel et finance le maintien de la plateforme."
+                : "AttenteZéro will always be free for vulnerable people. Premium is optional and funds the platform's upkeep."}
+            </Text>
+          </View>
+
+        </View>
+      </ScrollView>
+
+      {/* ── Gate modal ── */}
+      <PremiumGateModal
+        visible={showGate}
+        onDismiss={dismissGate}
+        userEmail={user?.email}
+        remaining={0}
+      />
+    </>
   );
 }
 
@@ -386,11 +479,63 @@ const styles = StyleSheet.create({
   compareText: { fontSize: 13, fontFamily: "Inter_400Regular" },
   compareDivider: { width: 1, alignSelf: "stretch" },
 
-  /* Section title */
+  /* Section header */
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 4,
+  },
   sectionTitle: {
     fontSize: 16,
     fontFamily: "Inter_700Bold",
-    marginTop: 4,
+  },
+  trialBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  trialBadgeText: {
+    fontSize: 11,
+    fontFamily: "Inter_600SemiBold",
+  },
+
+  /* Feature cards */
+  featureCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    borderRadius: 14,
+    borderWidth: 1,
+    padding: 14,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
+    elevation: 1,
+  },
+  featureIconWrap: {
+    width: 46,
+    height: 46,
+    borderRadius: 13,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  featureText: { flex: 1, gap: 3 },
+  featureTitle: { fontSize: 14, fontFamily: "Inter_600SemiBold" },
+  featureDesc: { fontSize: 12, fontFamily: "Inter_400Regular", lineHeight: 17 },
+  lockBadge: {
+    width: 26,
+    height: 26,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
   },
 
   /* Option cards */
