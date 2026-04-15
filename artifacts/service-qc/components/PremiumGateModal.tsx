@@ -42,12 +42,12 @@ export default function PremiumGateModal({ visible, onDismiss, userEmail, remain
     const body = encodeURIComponent(
       `Bonjour,\n\nJe souhaite m'abonner à AttenteZéro Premium (5 $/mois).\n\nMon courriel : ${addr}\n\nMerci de me contacter pour finaliser l'abonnement.\n\nCordialement`
     );
-    const mailUrl = `mailto:abonnement@attentezero.ca?subject=${subject}&body=${body}`;
+    const mailUrl = `mailto:AttenteZero@gmail.com?subject=${subject}&body=${body}`;
 
     Linking.openURL(mailUrl).catch(() => {
       Alert.alert(
         "Aucune application de courriel",
-        `Envoyez manuellement un courriel à :\nabonnement@attentezero.ca\n\nEn précisant votre adresse : ${addr}`
+        `Envoyez manuellement un courriel à :\nAttenteZero@gmail.com\n\nEn précisant votre adresse : ${addr}`
       );
     });
 

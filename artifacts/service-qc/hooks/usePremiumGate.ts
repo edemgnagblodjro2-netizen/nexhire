@@ -18,11 +18,19 @@ export function usePremiumGate() {
     const next = attempts + 1;
     setAttempts(next);
     await AsyncStorage.setItem(STORAGE_KEY, String(next));
+    // Show gate on the 3rd use AND every subsequent tap — the modal is the reminder
     if (next >= FREE_USES) {
       setShowGate(true);
       return true;
     }
     return false;
+  }, [attempts]);
+
+  // Call this when the user visits the "Plus" tab while already gated
+  const checkAndRemind = useCallback(() => {
+    if (attempts >= FREE_USES) {
+      setShowGate(true);
+    }
   }, [attempts]);
 
   const dismissGate = useCallback(() => setShowGate(false), []);
@@ -39,6 +47,7 @@ export function usePremiumGate() {
     isGated: attempts >= FREE_USES,
     showGate,
     recordAttempt,
+    checkAndRemind,
     dismissGate,
     resetGate,
   };
