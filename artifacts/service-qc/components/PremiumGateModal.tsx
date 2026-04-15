@@ -40,14 +40,15 @@ export default function PremiumGateModal({ visible, onDismiss, userEmail, remain
 
     const subject = encodeURIComponent("Demande d'abonnement — AttenteZéro Premium");
     const body = encodeURIComponent(
-      `Bonjour,\n\nJe souhaite m'abonner à AttenteZéro Premium (5 $/mois).\n\nMon courriel : ${addr}\n\nMerci de me contacter pour finaliser l'abonnement.\n\nCordialement`
+      `Bonjour,\n\nJe souhaite m'abonner à AttenteZéro Premium (5 $/mois).\n\nMon courriel de contact : ${addr}\n\nMerci de me contacter pour finaliser l'abonnement.\n\nCordialement`
     );
-    const mailUrl = `mailto:AttenteZero@gmail.com?subject=${subject}&body=${body}`;
+    // L'usager envoie depuis son propre client mail → attentezero5@gmail.com reçoit
+    const mailUrl = `mailto:attentezero5@gmail.com?subject=${subject}&body=${body}`;
 
     Linking.openURL(mailUrl).catch(() => {
       Alert.alert(
         "Aucune application de courriel",
-        `Envoyez manuellement un courriel à :\nAttenteZero@gmail.com\n\nEn précisant votre adresse : ${addr}`
+        `Envoyez manuellement un courriel à :\nattentezero5@gmail.com\n\nEn précisant votre adresse : ${addr}`
       );
     });
 
@@ -97,7 +98,7 @@ export default function PremiumGateModal({ visible, onDismiss, userEmail, remain
             </Text>
             <Text style={styles.headerSub}>
               {sent
-                ? "Nous vous contacterons sous 24 h pour finaliser votre abonnement."
+                ? "Envoyez le courriel pré-rempli depuis votre application de messagerie. Nous vous répondrons sous 24 h."
                 : "Vous avez utilisé vos 3 essais gratuits. Abonnez-vous pour continuer à profiter des fonctionnalités avancées."}
             </Text>
             <View style={styles.orb1} />
@@ -112,10 +113,10 @@ export default function PremiumGateModal({ visible, onDismiss, userEmail, remain
                   <Feather name="check-circle" size={20} color="#10b981" />
                   <View style={{ flex: 1 }}>
                     <Text style={[styles.successTitle, { color: colors.foreground }]}>
-                      Courriel ouvert dans votre application
+                      Courriel prêt à envoyer
                     </Text>
                     <Text style={[styles.successDesc, { color: colors.mutedForeground }]}>
-                      Envoyez le courriel pré-rempli pour confirmer votre demande d'abonnement.
+                      Votre application de messagerie s'est ouverte avec un message pré-rempli. Appuyez sur Envoyer — nous vous répondrons sous 24 h à l'adresse {email.trim() || "fournie"}.
                     </Text>
                   </View>
                 </View>
@@ -147,7 +148,7 @@ export default function PremiumGateModal({ visible, onDismiss, userEmail, remain
 
                 {/* Email input */}
                 <Text style={[styles.inputLabel, { color: colors.foreground }]}>
-                  Votre adresse courriel
+                  Votre adresse courriel (pour qu'on vous réponde)
                 </Text>
                 <View
                   style={[
@@ -169,7 +170,7 @@ export default function PremiumGateModal({ visible, onDismiss, userEmail, remain
                 </View>
 
                 <Text style={[styles.hint, { color: colors.mutedForeground }]}>
-                  Un courriel pré-rempli s'ouvrira dans votre application de messagerie pour confirmer votre abonnement.
+                  Votre application de messagerie s'ouvrira avec un courriel pré-rempli destiné à attentezero5@gmail.com. Il vous suffit d'appuyer sur Envoyer.
                 </Text>
 
                 {/* Send button */}
