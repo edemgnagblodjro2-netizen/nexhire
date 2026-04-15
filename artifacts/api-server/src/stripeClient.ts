@@ -31,7 +31,7 @@ async function getCredentials() {
     },
   });
 
-  const data = await response.json();
+  const data = await response.json() as { items?: Array<any> };
   connectionSettings = data.items?.[0];
 
   if (
@@ -51,7 +51,7 @@ async function getCredentials() {
 // WARNING: Never cache this client — tokens expire
 export async function getUncachableStripeClient() {
   const { secretKey } = await getCredentials();
-  return new Stripe(secretKey, { apiVersion: "2025-08-27.basil" });
+  return new Stripe(secretKey, { apiVersion: "2025-11-17.clover" });
 }
 
 export async function getStripePublishableKey() {

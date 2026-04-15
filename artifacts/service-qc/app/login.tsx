@@ -29,8 +29,8 @@ function FloatingOrb({
   opacity: baseOpacity,
 }: {
   size: number;
-  top: string;
-  left: string;
+  top: number | string;
+  left: number | string;
   delay: number;
   opacity: number;
 }) {
@@ -49,10 +49,8 @@ function FloatingOrb({
   const opacity = anim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [baseOpacity, baseOpacity * 1.6, baseOpacity] });
   return (
     <Animated.View
-      style={{
+      style={[{
         position: "absolute",
-        top,
-        left,
         width: size,
         height: size,
         borderRadius: size / 2,
@@ -61,7 +59,7 @@ function FloatingOrb({
         borderColor: "rgba(255,255,255,0.12)",
         transform: [{ translateY }],
         opacity,
-      }}
+      }, { top: top as any, left: left as any }]}
     />
   );
 }

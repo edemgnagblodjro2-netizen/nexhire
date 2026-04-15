@@ -150,13 +150,13 @@ servicesRouter.post("/admin/services", requireAdminKey, async (req, res) => {
       })
       .returning();
 
-    res.status(201).json(created);
+    return res.status(201).json(created);
   } catch (err: any) {
     logger.error({ err }, "POST /api/admin/services error");
     if (err.code === "23505") {
       return res.status(409).json({ error: "Service ID already exists" });
     }
-    res.status(500).json({ error: "Internal error" });
+    return res.status(500).json({ error: "Internal error" });
   }
 });
 
@@ -189,10 +189,10 @@ servicesRouter.put("/admin/services/:id", requireAdminKey, async (req, res) => {
       .returning();
 
     if (!updated) return res.status(404).json({ error: "Service not found" });
-    res.json(updated);
+    return res.json(updated);
   } catch (err) {
     logger.error({ err }, "PUT /api/admin/services/:id error");
-    res.status(500).json({ error: "Internal error" });
+    return res.status(500).json({ error: "Internal error" });
   }
 });
 

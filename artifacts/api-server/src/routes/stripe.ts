@@ -86,8 +86,8 @@ stripeRouter.get("/stripe/subscription-status", async (req, res) => {
 
     if (!subscriptions.data.length) return res.json({ active: false });
 
-    const sub = subscriptions.data[0];
-    res.json({
+    const sub = subscriptions.data[0] as any;
+    return res.json({
       active: true,
       plan: sub.metadata?.plan || "monthly",
       currentPeriodEnd: sub.current_period_end,
@@ -95,7 +95,7 @@ stripeRouter.get("/stripe/subscription-status", async (req, res) => {
     });
   } catch (err: any) {
     logger.error({ err }, "Failed to get subscription status");
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 });
 
@@ -110,6 +110,7 @@ stripeRouter.get("/stripe/session-receipt", async (req, res) => {
 
     if (!session_id) return res.status(400).json({ error: "Missing session_id" });
 
+
     const session = await stripe.checkout.sessions.retrieve(session_id, {
       expand: ["subscription", "customer"],
     });
@@ -117,7 +118,7 @@ stripeRouter.get("/stripe/session-receipt", async (req, res) => {
     const customer = session.customer as any;
     const sub = session.subscription as any;
 
-    res.json({
+    return res.json({
       status: session.payment_status,
       customerEmail: customer?.email || session.customer_email,
       customerName: customer?.name || null,
@@ -130,7 +131,7 @@ stripeRouter.get("/stripe/session-receipt", async (req, res) => {
     });
   } catch (err: any) {
     logger.error({ err }, "Failed to get session receipt");
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 });
 

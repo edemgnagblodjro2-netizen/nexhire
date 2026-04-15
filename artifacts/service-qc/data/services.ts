@@ -25,8 +25,7 @@ export interface Service {
   website: string;
   description: string;
   isUrgent?: boolean;
-  hours: "Lun-Ven 9h-17h",
-  coordinates: Coordinates;
+  coordinates?: Coordinates;
   hours?: string;
   address?: string;
   isProvinceWide?: boolean;
