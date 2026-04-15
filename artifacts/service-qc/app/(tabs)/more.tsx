@@ -1,8 +1,8 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
-import React from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import React, { useCallback } from "react";
 import {
   Platform,
   Pressable,
@@ -106,7 +106,14 @@ export default function MoreScreen() {
   const isFr = language !== "en";
   const isDark = colors.background === "#09090b" || colors.background === "#0a0a0a";
 
-  const { remaining, showGate, recordAttempt, dismissGate, isGated } = usePremiumGate();
+  const { remaining, showGate, recordAttempt, checkAndRemind, dismissGate, isGated } = usePremiumGate();
+
+  // Each time user returns to this tab while gated → re-show the reminder modal
+  useFocusEffect(
+    useCallback(() => {
+      checkAndRemind();
+    }, [checkAndRemind])
+  );
 
   async function handleFeaturePress() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -136,6 +143,35 @@ export default function MoreScreen() {
         </LinearGradient>
 
         <View style={styles.body}>
+
+          {/* ── Persistent reminder banner (shown after 3 uses) ── */}
+          {isGated && (
+            <Pressable
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                checkAndRemind();
+              }}
+              style={({ pressed }) => [styles.reminderBanner, { opacity: pressed ? 0.9 : 1 }]}
+            >
+              <LinearGradient
+                colors={["#92400e", "#b45309"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.reminderGrad}
+              >
+                <View style={styles.reminderIcon}>
+                  <Feather name="bell" size={16} color="#fbbf24" />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.reminderTitle}>Rappel — Abonnement Premium</Text>
+                  <Text style={styles.reminderSub}>
+                    Vous avez atteint la limite d'essais gratuits. Appuyez pour vous abonner à 5 $/mois.
+                  </Text>
+                </View>
+                <Feather name="chevron-right" size={16} color="rgba(255,255,255,0.7)" />
+              </LinearGradient>
+            </Pressable>
+          )}
 
           {/* ── Premium card ── */}
           <Pressable
@@ -478,6 +514,39 @@ const styles = StyleSheet.create({
   compareRow: { flexDirection: "row", alignItems: "center", gap: 6 },
   compareText: { fontSize: 13, fontFamily: "Inter_400Regular" },
   compareDivider: { width: 1, alignSelf: "stretch" },
+
+  /* Reminder banner */
+  reminderBanner: {
+    borderRadius: 14,
+    overflow: "hidden",
+  },
+  reminderGrad: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    padding: 14,
+  },
+  reminderIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: "rgba(251,191,36,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  reminderTitle: {
+    fontSize: 13,
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+    marginBottom: 2,
+  },
+  reminderSub: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.8)",
+    lineHeight: 16,
+  },
 
   /* Section header */
   sectionHeader: {
