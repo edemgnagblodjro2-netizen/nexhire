@@ -2,16 +2,12 @@ import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Linking from "expo-linking";
-import * as WebBrowser from "expo-web-browser";
 import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  ActivityIndicator,
-  Modal,
   Platform,
   Pressable,
   ScrollView,
-  Share,
   StyleSheet,
   Text,
   View,
@@ -20,584 +16,354 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useColors } from "@/hooks/useColors";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useAuth } from "@/lib/auth";
 
-const API_BASE =
-  process.env.EXPO_PUBLIC_API_URL ?? "https://quebec-aid-finder.replit.app";
+const CONTACT_EMAIL = "attentezero5@gmail.com";
 
-const FEATURES = [
+type Tier = {
+  emoji: string;
+  color: string;
+  bg: string;
+  darkBg: string;
+  audience: string;
+  tagline: string;
+  price: string;
+  priceNote: string | null;
+  perks: string[];
+  cta: string | null;
+  free: boolean;
+};
+
+const TIERS: Tier[] = [
   {
-    icon: "bar-chart-2" as const,
-    color: "#0e7e6e",
+    emoji: "🟢",
+    color: "#10b981",
     bg: "#f0fdf4",
     darkBg: "#052e1c",
-    title: "Suivi personnalisé",
-    desc: "Tableau de bord : services favoris, statut de vos démarches, notes personnelles. Toujours à jour.",
-    tag: "Nouveau",
-    tagColor: "#0e7e6e",
+    audience: "Utilisateurs",
+    tagline: "L'aide, toujours gratuite pour tous",
+    price: "Gratuit",
+    priceNote: "Pour toujours",
+    perks: [
+      "Rechercher parmi 457 services",
+      "Appeler directement les organismes",
+      "Chat IA multilingue (FR · EN · ES · AR · HT)",
+      "SOS urgences avec tri géolocalisé",
+      "Carte interactive des services",
+    ],
+    cta: null,
+    free: true,
   },
   {
-    icon: "clock" as const,
-    color: "#7c3aed",
-    bg: "#f5f3ff",
-    darkBg: "#2e1a5e",
-    title: "Historique complet",
-    desc: "Retrouvez tous les services consultés et les conversations IA — même hors ligne.",
-    tag: null,
-    tagColor: "",
-  },
-  {
-    icon: "bell" as const,
+    emoji: "🟡",
     color: "#d97706",
     bg: "#fffbeb",
     darkBg: "#3b2006",
-    title: "Alertes intelligentes",
-    desc: "Soyez notifié dès qu'un nouveau service ouvre près de chez vous ou correspond à votre profil.",
-    tag: "IA",
-    tagColor: "#d97706",
+    audience: "Organismes communautaires",
+    tagline: "Soyez trouvés plus rapidement",
+    price: "25 $ – 300 $",
+    priceNote: "par mois",
+    perks: [
+      "Fiche de base incluse gratuitement",
+      "25 $/mois — visibilité améliorée dans les résultats",
+      "100 $/mois — mise en avant + profil enrichi",
+      "300 $/mois — priorité maximale + statistiques de trafic",
+    ],
+    cta: "Nous contacter",
+    free: false,
   },
   {
-    icon: "star" as const,
-    color: "#e11d48",
-    bg: "#fff1f2",
-    darkBg: "#3b0a16",
-    title: "Priorisation IA",
-    desc: "Les résultats sont triés selon votre historique, votre localisation et vos besoins déclarés.",
-    tag: "IA",
-    tagColor: "#e11d48",
+    emoji: "🟣",
+    color: "#7c3aed",
+    bg: "#f5f3ff",
+    darkBg: "#2e1a5e",
+    audience: "Villes & Gouvernements",
+    tagline: "Un outil de territoire pour vos citoyens",
+    price: "5 000 $ – 25 000 $",
+    priceNote: "par année",
+    perks: [
+      "Améliorer l'accès aux services publics",
+      "Outil officiel pour les citoyens de votre ville",
+      "Tableau de bord d'impact et de données",
+      "Intégration personnalisée à votre territoire",
+    ],
+    cta: "Discuter avec nous",
+    free: false,
+  },
+  {
+    emoji: "🔵",
+    color: "#0891b2",
+    bg: "#f0f9ff",
+    darkBg: "#0c2a38",
+    audience: "Entreprises privées",
+    tagline: "Cliniques, services privés & professionnels",
+    price: "50 $ – 200 $",
+    priceNote: "par mois",
+    perks: [
+      "Inscription dans le répertoire AttenteZéro",
+      "Visibilité ciblée dans votre catégorie",
+      "Génération de demandes qualifiées",
+    ],
+    cta: "Nous contacter",
+    free: false,
+  },
+  {
+    emoji: "🟤",
+    color: "#78716c",
+    bg: "#fafaf9",
+    darkBg: "#1c1917",
+    audience: "Dons",
+    tagline: "Soutenez les organismes communautaires",
+    price: "Libre",
+    priceNote: "Montant à votre choix",
+    perks: [
+      "Contribuez directement à la mission",
+      "Aidez à maintenir la plateforme gratuite",
+      "Recevez un reçu fiscal (bientôt disponible)",
+    ],
+    cta: "Faire un don",
+    free: false,
   },
 ];
 
-const PLANS = [
-  {
-    id: "monthly" as const,
-    label: "Mensuel",
-    priceDisplay: "5,00 $",
-    period: "/mois",
-    note: null,
-    highlight: false,
-    savings: null,
-  },
-  {
-    id: "annual" as const,
-    label: "Annuel",
-    priceDisplay: "3,75 $",
-    period: "/mois",
-    note: "Facturé 45 $ par an",
-    highlight: true,
-    savings: "Économisez 25 %",
-  },
+const SUMMARY = [
+  { type: "Utilisateurs", price: "✅ Gratuit", color: "#10b981" },
+  { type: "Organismes", price: "25 $ – 300 $/mois", color: "#d97706" },
+  { type: "Villes", price: "5 k$ – 25 k$/an", color: "#7c3aed" },
+  { type: "Entreprises", price: "50 $ – 200 $/mois", color: "#0891b2" },
+  { type: "Dons", price: "Libre", color: "#78716c" },
 ];
-
-interface Receipt {
-  customerEmail: string;
-  customerName: string | null;
-  amount: number;
-  currency: string;
-  plan: string;
-  sessionId: string;
-  createdAt: number;
-  status: string;
-}
 
 export default function PremiumScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { language } = useLanguage();
-  const { user } = useAuth();
   const isFr = language !== "en";
   const isDark = colors.background === "#09090b" || colors.background === "#0a0a0a";
 
-  const [selectedPlan, setSelectedPlan] = useState<"monthly" | "annual">("annual");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [receipt, setReceipt] = useState<Receipt | null>(null);
-  const [showReceipt, setShowReceipt] = useState(false);
+  const [expanded, setExpanded] = useState<number | null>(0);
 
-  // Listen for deep link return from Stripe success page
-  useEffect(() => {
-    const sub = Linking.addEventListener("url", ({ url }) => {
-      if (url.includes("payment-success")) {
-        const parsed = Linking.parse(url);
-        const sessionId = parsed.queryParams?.session_id as string | undefined;
-        if (sessionId) fetchReceipt(sessionId);
-      }
-    });
-    return () => sub.remove();
-  }, []);
-
-  async function fetchReceipt(sessionId: string) {
-    try {
-      const res = await fetch(
-        `${API_BASE}/api/stripe/session-receipt?session_id=${sessionId}`
-      );
-      if (res.ok) {
-        const data = await res.json();
-        setReceipt(data);
-        setShowReceipt(true);
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      }
-    } catch (_) {}
-  }
-
-  async function handleSubscribe() {
-    setLoading(true);
-    setError(null);
+  function handleContact(tier: Tier) {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    try {
-      const res = await fetch(`${API_BASE}/api/stripe/create-checkout-session`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: user?.email,
-          userId: user?.id,
-          plan: selectedPlan,
-        }),
-      });
-
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body?.error || "Impossible de créer la session de paiement.");
-      }
-      const { url } = await res.json();
-
-      if (Platform.OS === "web") {
-        Linking.openURL(url);
-      } else {
-        const result = await WebBrowser.openBrowserAsync(url, {
-          presentationStyle: WebBrowser.WebBrowserPresentationStyle.FORM_SHEET,
-          controlsColor: "#7c3aed",
-          toolbarColor: "#1e40af",
-        });
-        if (result.type === "dismiss" || result.type === "cancel") {
-          checkSubscriptionStatus();
-        }
-      }
-    } catch (err: any) {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      setError(err.message || "Une erreur est survenue. Veuillez réessayer.");
-    } finally {
-      setLoading(false);
+    if (tier.audience === "Dons") {
+      Linking.openURL(`mailto:${CONTACT_EMAIL}?subject=Don%20AttenteZéro`);
+    } else {
+      const subject = encodeURIComponent(`Partenariat AttenteZéro — ${tier.audience}`);
+      const body = encodeURIComponent(
+        `Bonjour,\n\nJe souhaite en savoir plus sur le partenariat ${tier.audience} pour AttenteZéro.\n\nMerci.`
+      );
+      Linking.openURL(`mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`);
     }
   }
 
-  async function checkSubscriptionStatus() {
-    if (!user?.email) return;
-    try {
-      const res = await fetch(
-        `${API_BASE}/api/stripe/subscription-status?email=${encodeURIComponent(user.email)}`
-      );
-      if (res.ok) {
-        const data = await res.json();
-        if (data.active) {
-          setReceipt({
-            customerEmail: user.email,
-            customerName: null,
-            amount: selectedPlan === "annual" ? 45 : 5,
-            currency: "CAD",
-            plan: selectedPlan === "annual" ? "Annuel" : "Mensuel",
-            sessionId: data.subscriptionId || "",
-            createdAt: Date.now() / 1000,
-            status: "paid",
-          });
-          setShowReceipt(true);
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        }
-      }
-    } catch (_) {}
-  }
-
-  async function handleShareReceipt() {
-    if (!receipt) return;
-    const dateStr = new Date(receipt.createdAt * 1000).toLocaleDateString("fr-CA", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-    const text = [
-      "Reçu AttenteZéro Premium",
-      "",
-      `Montant  : ${receipt.amount} $ ${receipt.currency}`,
-      `Plan     : ${receipt.plan}`,
-      `Date     : ${dateStr}`,
-      `Courriel : ${receipt.customerEmail}`,
-      `État     : Payé ✓`,
-      "",
-      "Merci de votre confiance — AttenteZéro",
-    ].join("\n");
-    await Share.share({ message: text, title: "Reçu AttenteZéro Premium" });
-  }
-
   return (
-    <>
-      <View style={[styles.root, { backgroundColor: colors.background }]}>
-        {/* ── Gradient header ── */}
-        <LinearGradient
-          colors={["#0f0c29", "#302b63", "#7c3aed"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={[styles.header, { paddingTop: (Platform.OS === "web" ? 16 : insets.top) + 12 }]}
-        >
-          {/* Orbs */}
-          <View style={styles.orb1} />
-          <View style={styles.orb2} />
-          <View style={styles.orb3} />
-
-          <View style={styles.headerRow}>
-            <Pressable
-              onPress={() => { Haptics.selectionAsync(); router.back(); }}
-              style={styles.backBtn}
-              hitSlop={12}
-            >
-              <Feather name="arrow-left" size={20} color="#fff" />
-            </Pressable>
-            <View style={styles.headerBadge}>
-              <Feather name="star" size={12} color="#fbbf24" />
-              <Text style={styles.headerBadgeText}>PREMIUM</Text>
-            </View>
-            <View style={{ width: 40 }} />
-          </View>
-
-          <View style={styles.headerContent}>
-            <Text style={styles.headerTitle}>
-              {isFr ? "Passez à la version\navancée" : "Upgrade to\nadvanced"}
-            </Text>
-            <Text style={styles.headerSub}>
-              {isFr
-                ? "Paiement sécurisé par Stripe · Annulable à tout moment"
-                : "Secured by Stripe · Cancel anytime"}
-            </Text>
-          </View>
-        </LinearGradient>
-
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={[styles.body, { paddingBottom: insets.bottom + 32 }]}
-        >
-          {/* ── Plan selector ── */}
-          <View style={styles.plansRow}>
-            {PLANS.map((plan) => {
-              const active = selectedPlan === plan.id;
-              return (
-                <Pressable
-                  key={plan.id}
-                  onPress={() => {
-                    Haptics.selectionAsync();
-                    setSelectedPlan(plan.id);
-                  }}
-                  style={[
-                    styles.planCard,
-                    {
-                      backgroundColor: active ? "#7c3aed" : colors.card,
-                      borderColor: active ? "#7c3aed" : colors.border,
-                      borderWidth: active ? 2 : 1,
-                    },
-                  ]}
-                >
-                  {plan.savings && (
-                    <View style={[styles.savingsBadge, { backgroundColor: active ? "#fbbf24" : "#7c3aed" }]}>
-                      <Text style={[styles.savingsBadgeText, { color: active ? "#1e1b4b" : "#fff" }]}>
-                        {plan.savings}
-                      </Text>
-                    </View>
-                  )}
-                  <Text style={[styles.planLabel, { color: active ? "rgba(255,255,255,0.8)" : colors.mutedForeground }]}>
-                    {plan.label}
-                  </Text>
-                  <View style={styles.planPriceRow}>
-                    <Text style={[styles.planPrice, { color: active ? "#fff" : colors.foreground }]}>
-                      {plan.priceDisplay}
-                    </Text>
-                    <Text style={[styles.planPeriod, { color: active ? "rgba(255,255,255,0.65)" : colors.mutedForeground }]}>
-                      {plan.period}
-                    </Text>
-                  </View>
-                  {plan.note && (
-                    <Text style={[styles.planNote, { color: active ? "rgba(255,255,255,0.75)" : colors.mutedForeground }]}>
-                      {plan.note}
-                    </Text>
-                  )}
-                  {active && (
-                    <View style={styles.planCheckWrap}>
-                      <Feather name="check-circle" size={18} color="#fff" />
-                    </View>
-                  )}
-                </Pressable>
-              );
-            })}
-          </View>
-
-          {/* ── Subscribe button ── */}
-          <Pressable
-            onPress={handleSubscribe}
-            disabled={loading}
-            style={({ pressed }) => [styles.subscribeBtn, pressed && { opacity: 0.88 }]}
-          >
-            <LinearGradient
-              colors={["#6d28d9", "#7c3aed", "#a21caf"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.subscribeBtnGrad}
-            >
-              {loading ? (
-                <>
-                  <ActivityIndicator color="#fff" size="small" />
-                  <Text style={styles.subscribeBtnText}>Connexion à Stripe…</Text>
-                </>
-              ) : (
-                <>
-                  <Feather name="lock" size={17} color="#fff" />
-                  <Text style={styles.subscribeBtnText}>
-                    {isFr ? "Payer maintenant avec Stripe" : "Pay now with Stripe"}
-                  </Text>
-                  <Feather name="arrow-right" size={17} color="#fff" />
-                </>
-              )}
-            </LinearGradient>
-          </Pressable>
-
-          {/* Error state */}
-          {error && (
-            <View style={[styles.errorBox, { backgroundColor: "#fff1f2", borderColor: "#fecdd3" }]}>
-              <Feather name="alert-circle" size={16} color="#e11d48" />
-              <Text style={[styles.errorText, { color: "#be123c" }]}>{error}</Text>
-            </View>
-          )}
-
-          {/* ── Trust row ── */}
-          <View style={[styles.trustRow, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            {[
-              { icon: "shield" as const, label: "SSL 256-bit" },
-              { icon: "credit-card" as const, label: "Visa · MC · Amex" },
-              { icon: "refresh-cw" as const, label: "Annulable à tout moment" },
-              { icon: "zap" as const, label: "Instant" },
-            ].map((b, i) => (
-              <View key={b.label} style={[styles.trustItem, i < 3 && { borderRightWidth: 1, borderRightColor: colors.border }]}>
-                <Feather name={b.icon} size={13} color={colors.mutedForeground} />
-                <Text style={[styles.trustText, { color: colors.mutedForeground }]}>{b.label}</Text>
-              </View>
-            ))}
-          </View>
-
-          {/* ── Features ── */}
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
-            {isFr ? "Ce qui est inclus" : "What's included"}
-          </Text>
-
-          {FEATURES.map((f) => (
-            <View
-              key={f.title}
-              style={[styles.featureCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-            >
-              <View style={[styles.featureIconWrap, { backgroundColor: isDark ? f.darkBg : f.bg }]}>
-                <Feather name={f.icon} size={22} color={f.color} />
-              </View>
-              <View style={styles.featureText}>
-                <View style={styles.featureTitleRow}>
-                  <Text style={[styles.featureTitle, { color: colors.foreground }]}>{f.title}</Text>
-                  {f.tag && (
-                    <View style={[styles.featureTag, { backgroundColor: f.tagColor + "18", borderColor: f.tagColor + "30" }]}>
-                      <Text style={[styles.featureTagText, { color: f.tagColor }]}>{f.tag}</Text>
-                    </View>
-                  )}
-                </View>
-                <Text style={[styles.featureDesc, { color: colors.mutedForeground }]}>{f.desc}</Text>
-              </View>
-            </View>
-          ))}
-
-          {/* ── Free box ── */}
-          <View style={[styles.freeBox, { backgroundColor: colors.card, borderColor: "#10b981" + "30" }]}>
-            <View style={[styles.freeIconWrap, { backgroundColor: "#10b981" + "15" }]}>
-              <Feather name="check-circle" size={20} color="#10b981" />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.freeTitle, { color: colors.foreground }]}>
-                {isFr ? "Toujours gratuit — pour tous" : "Always free — for everyone"}
-              </Text>
-              <Text style={[styles.freeDesc, { color: colors.mutedForeground }]}>
-                {isFr
-                  ? "457 services · Chat IA · SOS urgences · Carte interactive · Toutes les catégories"
-                  : "457 services · AI Chat · SOS emergency · Interactive map · All categories"}
-              </Text>
-            </View>
-          </View>
-
-          {/* ── FAQ ── */}
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
-            {isFr ? "Questions fréquentes" : "FAQ"}
-          </Text>
-
-          {[
-            {
-              q: "Comment annuler mon abonnement ?",
-              a: "Vous pouvez annuler à tout moment depuis les paramètres Stripe. Aucun frais supplémentaire.",
-            },
-            {
-              q: "Mes données bancaires sont-elles sécurisées ?",
-              a: "Oui — AttenteZéro ne voit jamais votre numéro de carte. Stripe gère le paiement avec une sécurité bancaire (SSL 256-bit, PCI DSS).",
-            },
-            {
-              q: "Le premium est-il disponible pour les organismes ?",
-              a: "Un plan communautaire est en développement. Contactez-nous à attentezero5@gmail.com.",
-            },
-          ].map((item) => (
-            <View
-              key={item.q}
-              style={[styles.faqCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-            >
-              <Text style={[styles.faqQ, { color: colors.foreground }]}>{item.q}</Text>
-              <Text style={[styles.faqA, { color: colors.mutedForeground }]}>{item.a}</Text>
-            </View>
-          ))}
-
-          {/* ── Mission note ── */}
-          <View style={[styles.missionBox, { backgroundColor: "#7c3aed" + "10", borderColor: "#7c3aed" + "25" }]}>
-            <Feather name="heart" size={16} color="#7c3aed" />
-            <Text style={[styles.missionText, { color: colors.mutedForeground }]}>
-              {isFr
-                ? "AttenteZéro est gratuit pour les personnes vulnérables. Le premium est optionnel et finance le maintien et l'amélioration continue de la plateforme."
-                : "AttenteZéro is free for vulnerable people. Premium is optional and funds ongoing platform maintenance and improvement."}
-            </Text>
-          </View>
-        </ScrollView>
-      </View>
-
-      {/* ── Receipt Modal ── */}
-      <Modal
-        visible={showReceipt}
-        animationType="slide"
-        transparent
-        onRequestClose={() => setShowReceipt(false)}
+    <View style={[styles.root, { backgroundColor: colors.background }]}>
+      {/* ── Header ── */}
+      <LinearGradient
+        colors={["#064e3b", "#0f766e", "#0e7e6e"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[styles.header, { paddingTop: (Platform.OS === "web" ? 16 : insets.top) + 12 }]}
       >
-        <View style={styles.receiptOverlay}>
-          <View
-            style={[
-              styles.receiptSheet,
-              {
-                backgroundColor: colors.background,
-                paddingBottom: Math.max(insets.bottom, 24),
-              },
-            ]}
+        <View style={styles.orb1} />
+        <View style={styles.orb2} />
+
+        <View style={styles.headerRow}>
+          <Pressable
+            onPress={() => { Haptics.selectionAsync(); router.back(); }}
+            style={styles.backBtn}
+            hitSlop={12}
           >
-            <View style={[styles.handle, { backgroundColor: colors.border }]} />
+            <Feather name="arrow-left" size={20} color="#fff" />
+          </Pressable>
+          <View style={styles.headerBadge}>
+            <Feather name="zap" size={11} color="#fff" />
+            <Text style={styles.headerBadgeText}>TARIFICATION</Text>
+          </View>
+          <View style={{ width: 40 }} />
+        </View>
 
-            {/* Success header */}
-            <LinearGradient
-              colors={["#064e3b", "#065f46", "#0e7e6e"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.receiptHeader}
-            >
-              <View style={styles.receiptOrb} />
-              <View style={styles.receiptCheckCircle}>
-                <Feather name="check" size={30} color="#fff" />
-              </View>
-              <Text style={styles.receiptTitle}>Paiement confirmé !</Text>
-              <Text style={styles.receiptSubtitle}>
-                Bienvenue dans AttenteZéro Premium{"\n"}Votre abonnement est maintenant actif.
-              </Text>
-            </LinearGradient>
-
-            {receipt && (
-              <View style={styles.receiptBody}>
-                {/* Amount hero */}
-                <View style={[styles.amountHero, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                  <Text style={[styles.amountLabel, { color: colors.mutedForeground }]}>Montant payé</Text>
-                  <Text style={styles.amountValue}>
-                    {receipt.amount.toFixed(2).replace(".", ",")} ${" "}
-                    <Text style={styles.amountCurrency}>{receipt.currency}</Text>
-                  </Text>
-                </View>
-
-                {/* Detail rows */}
-                <View style={[styles.detailBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                  {[
-                    { label: "Plan", value: `⭐ Premium ${receipt.plan}`, valueColor: "#7c3aed" },
-                    {
-                      label: "Date",
-                      value: new Date(receipt.createdAt * 1000).toLocaleDateString("fr-CA", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      }),
-                      valueColor: null,
-                    },
-                    { label: "Courriel", value: receipt.customerEmail, valueColor: null },
-                    { label: "État", value: "✓ Payé", valueColor: "#10b981" },
-                  ].map((row, i, arr) => (
-                    <View
-                      key={row.label}
-                      style={[
-                        styles.detailRow,
-                        i < arr.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border },
-                      ]}
-                    >
-                      <Text style={[styles.detailLabel, { color: colors.mutedForeground }]}>{row.label}</Text>
-                      <Text
-                        style={[
-                          styles.detailValue,
-                          { color: row.valueColor || colors.foreground },
-                          row.label === "État" && { fontFamily: "Inter_700Bold" },
-                        ]}
-                        numberOfLines={1}
-                        ellipsizeMode="tail"
-                      >
-                        {row.value}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-
-                {/* Actions */}
-                <View style={styles.receiptActions}>
-                  <Pressable
-                    onPress={handleShareReceipt}
-                    style={({ pressed }) => [
-                      styles.shareBtn,
-                      { backgroundColor: colors.card, borderColor: colors.border, opacity: pressed ? 0.8 : 1 },
-                    ]}
-                  >
-                    <Feather name="share-2" size={16} color={colors.foreground} />
-                    <Text style={[styles.shareBtnText, { color: colors.foreground }]}>
-                      Partager le reçu
-                    </Text>
-                  </Pressable>
-                  <Pressable
-                    onPress={() => setShowReceipt(false)}
-                    style={({ pressed }) => [styles.closeReceiptBtn, pressed && { opacity: 0.88 }]}
-                  >
-                    <LinearGradient
-                      colors={["#064e3b", "#0e7e6e"]}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 0 }}
-                      style={styles.closeReceiptGrad}
-                    >
-                      <Text style={styles.closeReceiptText}>
-                        Accéder aux fonctionnalités Premium
-                      </Text>
-                      <Feather name="arrow-right" size={16} color="#fff" />
-                    </LinearGradient>
-                  </Pressable>
-                </View>
-              </View>
-            )}
+        <View style={styles.headerContent}>
+          <Text style={styles.headerTitle}>
+            Notre modèle{"\n"}économique
+          </Text>
+          <View style={[styles.keyPhraseBox]}>
+            <Feather name="heart" size={14} color="#34d399" />
+            <Text style={styles.keyPhrase}>
+              "L'aide est gratuite. Nous facilitons simplement l'accès rapide et intelligent à cette aide."
+            </Text>
           </View>
         </View>
-      </Modal>
-    </>
+      </LinearGradient>
+
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[styles.body, { paddingBottom: insets.bottom + 32 }]}
+      >
+        {/* ── Logic pill ── */}
+        <View style={[styles.logicBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View style={styles.logicRow}>
+            <View style={[styles.logicPill, { backgroundColor: "#10b981" + "18" }]}>
+              <Feather name="check-circle" size={13} color="#10b981" />
+              <Text style={[styles.logicText, { color: "#10b981" }]}>Ceux qui cherchent de l'aide → gratuit</Text>
+            </View>
+          </View>
+          <View style={styles.logicRow}>
+            <View style={[styles.logicPill, { backgroundColor: "#d97706" + "18" }]}>
+              <Feather name="dollar-sign" size={13} color="#d97706" />
+              <Text style={[styles.logicText, { color: "#d97706" }]}>Ceux qui veulent être visibles → payant</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* ── Tier cards ── */}
+        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Les 5 paliers</Text>
+
+        {TIERS.map((tier, i) => {
+          const isOpen = expanded === i;
+          return (
+            <Pressable
+              key={tier.audience}
+              onPress={() => {
+                Haptics.selectionAsync();
+                setExpanded(isOpen ? null : i);
+              }}
+              style={[
+                styles.tierCard,
+                {
+                  backgroundColor: colors.card,
+                  borderColor: isOpen ? tier.color + "60" : colors.border,
+                  borderWidth: isOpen ? 1.5 : 1,
+                },
+              ]}
+            >
+              {/* Accent bar */}
+              <View style={[styles.tierAccent, { backgroundColor: tier.color }]} />
+
+              <View style={styles.tierHeader}>
+                <View style={styles.tierLeft}>
+                  <Text style={styles.tierEmoji}>{tier.emoji}</Text>
+                  <View style={styles.tierInfo}>
+                    <Text style={[styles.tierAudience, { color: colors.foreground }]}>
+                      {tier.audience}
+                    </Text>
+                    <Text style={[styles.tierTagline, { color: colors.mutedForeground }]}>
+                      {tier.tagline}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.tierRight}>
+                  <View style={[styles.priceBadge, { backgroundColor: tier.free ? "#10b981" + "18" : tier.color + "15", borderColor: tier.color + "30" }]}>
+                    <Text style={[styles.priceBadgeText, { color: tier.color }]}>{tier.price}</Text>
+                  </View>
+                  <Feather
+                    name={isOpen ? "chevron-up" : "chevron-down"}
+                    size={16}
+                    color={colors.mutedForeground}
+                  />
+                </View>
+              </View>
+
+              {isOpen && (
+                <View style={styles.tierBody}>
+                  <View style={[styles.divider, { backgroundColor: colors.border }]} />
+
+                  {tier.priceNote && (
+                    <Text style={[styles.priceNote, { color: tier.color }]}>
+                      {tier.price} · {tier.priceNote}
+                    </Text>
+                  )}
+
+                  {tier.perks.map((perk) => (
+                    <View key={perk} style={styles.perkRow}>
+                      <View style={[styles.perkDot, { backgroundColor: tier.color }]} />
+                      <Text style={[styles.perkText, { color: colors.foreground }]}>{perk}</Text>
+                    </View>
+                  ))}
+
+                  {tier.cta && (
+                    <Pressable
+                      onPress={() => handleContact(tier)}
+                      style={({ pressed }) => [
+                        styles.ctaBtn,
+                        { backgroundColor: tier.color, opacity: pressed ? 0.88 : 1 },
+                      ]}
+                    >
+                      <Feather name="mail" size={15} color="#fff" />
+                      <Text style={styles.ctaBtnText}>{tier.cta}</Text>
+                      <Feather name="arrow-right" size={15} color="#fff" />
+                    </Pressable>
+                  )}
+                </View>
+              )}
+            </Pressable>
+          );
+        })}
+
+        {/* ── Summary table ── */}
+        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Résumé</Text>
+
+        <View style={[styles.summaryTable, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          {SUMMARY.map((row, i) => (
+            <View
+              key={row.type}
+              style={[
+                styles.summaryRow,
+                i < SUMMARY.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border },
+              ]}
+            >
+              <View style={styles.summaryLeft}>
+                <View style={[styles.summaryDot, { backgroundColor: row.color }]} />
+                <Text style={[styles.summaryType, { color: colors.foreground }]}>{row.type}</Text>
+              </View>
+              <Text style={[styles.summaryPrice, { color: row.color }]}>{row.price}</Text>
+            </View>
+          ))}
+        </View>
+
+        {/* ── Contact box ── */}
+        <Pressable
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            Linking.openURL(`mailto:${CONTACT_EMAIL}?subject=Partenariat%20AttenteZéro`);
+          }}
+          style={({ pressed }) => [
+            styles.contactBox,
+            { backgroundColor: colors.card, borderColor: colors.border, opacity: pressed ? 0.88 : 1 },
+          ]}
+        >
+          <View style={[styles.contactIconWrap, { backgroundColor: "#0e7e6e" + "18" }]}>
+            <Feather name="mail" size={22} color="#0e7e6e" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={[styles.contactTitle, { color: colors.foreground }]}>
+              Vous êtes un organisme ou une ville ?
+            </Text>
+            <Text style={[styles.contactEmail, { color: "#0e7e6e" }]}>
+              {CONTACT_EMAIL}
+            </Text>
+          </View>
+          <Feather name="external-link" size={16} color={colors.mutedForeground} />
+        </Pressable>
+
+        {/* ── Mission note ── */}
+        <View style={[styles.missionBox, { backgroundColor: "#0e7e6e" + "10", borderColor: "#0e7e6e" + "25" }]}>
+          <Feather name="heart" size={16} color="#0e7e6e" />
+          <Text style={[styles.missionText, { color: colors.mutedForeground }]}>
+            AttenteZéro est né pour que personne ne reste sans aide faute de ne pas savoir où chercher. L'accès à l'aide reste toujours gratuit pour les personnes vulnérables.
+          </Text>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
 
-  /* Header */
   header: {
     paddingHorizontal: 20,
-    paddingBottom: 32,
-    gap: 16,
+    paddingBottom: 28,
     overflow: "hidden",
   },
   orb1: {
@@ -605,7 +371,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 100,
-    backgroundColor: "rgba(255,255,255,0.04)",
+    backgroundColor: "rgba(255,255,255,0.06)",
     top: -60,
     right: -60,
   },
@@ -616,27 +382,19 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     backgroundColor: "rgba(255,255,255,0.04)",
     bottom: -30,
-    left: -20,
-  },
-  orb3: {
-    position: "absolute",
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: "rgba(251,191,36,0.06)",
-    top: 20,
-    left: "40%",
+    left: 20,
   },
   headerRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    marginBottom: 18,
   },
   backBtn: {
-    width: 40,
-    height: 40,
+    width: 38,
+    height: 38,
     borderRadius: 12,
-    backgroundColor: "rgba(255,255,255,0.12)",
+    backgroundColor: "rgba(255,255,255,0.15)",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -644,402 +402,262 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
-    backgroundColor: "rgba(251,191,36,0.2)",
+    backgroundColor: "rgba(255,255,255,0.18)",
     borderRadius: 20,
     paddingHorizontal: 12,
     paddingVertical: 5,
     borderWidth: 1,
-    borderColor: "rgba(251,191,36,0.35)",
+    borderColor: "rgba(255,255,255,0.2)",
   },
   headerBadgeText: {
-    fontSize: 11,
+    fontSize: 10,
     fontFamily: "Inter_700Bold",
-    color: "#fbbf24",
-    letterSpacing: 0.8,
+    color: "#fff",
+    letterSpacing: 1,
   },
-  headerContent: { gap: 8 },
+  headerContent: {
+    gap: 14,
+  },
   headerTitle: {
     fontSize: 28,
     fontFamily: "Inter_700Bold",
     color: "#fff",
+    letterSpacing: -0.5,
     lineHeight: 34,
   },
-  headerSub: {
+  keyPhraseBox: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 8,
+    backgroundColor: "rgba(255,255,255,0.1)",
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.15)",
+    padding: 14,
+  },
+  keyPhrase: {
+    flex: 1,
     fontSize: 13,
-    fontFamily: "Inter_400Regular",
-    color: "rgba(255,255,255,0.72)",
+    fontFamily: "Inter_500Medium",
+    color: "rgba(255,255,255,0.9)",
+    fontStyle: "italic",
+    lineHeight: 19,
   },
 
-  /* Body */
   body: {
     paddingHorizontal: 16,
     paddingTop: 20,
-    gap: 14,
+    gap: 0,
   },
-
-  /* Plans */
-  plansRow: {
-    flexDirection: "row",
-    gap: 12,
-  },
-  planCard: {
-    flex: 1,
-    borderRadius: 18,
-    padding: 16,
-    gap: 6,
-    position: "relative",
-    overflow: "hidden",
-    ...(Platform.OS === "ios"
-      ? { shadowColor: "#7c3aed", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.15, shadowRadius: 10 }
-      : { elevation: 3 }),
-  },
-  savingsBadge: {
-    alignSelf: "flex-start",
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    marginBottom: 4,
-  },
-  savingsBadgeText: {
-    fontSize: 10,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 0.3,
-  },
-  planLabel: {
-    fontSize: 12,
-    fontFamily: "Inter_600SemiBold",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-  },
-  planPriceRow: {
-    flexDirection: "row",
-    alignItems: "baseline",
-    gap: 3,
-  },
-  planPrice: {
-    fontSize: 26,
-    fontFamily: "Inter_700Bold",
-  },
-  planPeriod: {
-    fontSize: 13,
-    fontFamily: "Inter_400Regular",
-  },
-  planNote: {
-    fontSize: 11,
-    fontFamily: "Inter_400Regular",
-    lineHeight: 15,
-  },
-  planCheckWrap: {
-    position: "absolute",
-    top: 12,
-    right: 12,
-  },
-
-  /* Subscribe btn */
-  subscribeBtn: {
-    borderRadius: 16,
-    overflow: "hidden",
-    ...(Platform.OS === "ios"
-      ? { shadowColor: "#7c3aed", shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.4, shadowRadius: 16 }
-      : { elevation: 10 }),
-  },
-  subscribeBtnGrad: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 10,
-    paddingVertical: 18,
-  },
-  subscribeBtnText: {
-    fontSize: 16,
-    fontFamily: "Inter_600SemiBold",
-    color: "#fff",
-    flex: 1,
-    textAlign: "center",
-  },
-
-  /* Error */
-  errorBox: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    gap: 10,
-    borderRadius: 12,
-    borderWidth: 1,
-    padding: 14,
-  },
-  errorText: {
-    flex: 1,
-    fontSize: 13,
-    fontFamily: "Inter_400Regular",
-    lineHeight: 18,
-  },
-
-  /* Trust row */
-  trustRow: {
-    flexDirection: "row",
-    borderRadius: 14,
-    borderWidth: 1,
-    overflow: "hidden",
-  },
-  trustItem: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 4,
-    paddingVertical: 12,
-    paddingHorizontal: 6,
-  },
-  trustText: {
-    fontSize: 10,
-    fontFamily: "Inter_500Medium",
-    textAlign: "center",
-    lineHeight: 13,
-  },
-
-  /* Features */
   sectionTitle: {
     fontSize: 17,
+    fontWeight: "700",
     fontFamily: "Inter_700Bold",
-    marginTop: 4,
+    marginBottom: 12,
+    marginTop: 8,
+    letterSpacing: -0.2,
   },
-  featureCard: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    gap: 14,
+
+  /* Logic box */
+  logicBox: {
     borderRadius: 16,
     borderWidth: 1,
-    padding: 16,
-    ...(Platform.OS === "ios"
-      ? { shadowColor: "#000", shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.04, shadowRadius: 4 }
-      : { elevation: 1 }),
+    padding: 14,
+    gap: 8,
+    marginBottom: 24,
   },
-  featureIconWrap: {
-    width: 50,
-    height: 50,
-    borderRadius: 14,
-    alignItems: "center",
-    justifyContent: "center",
-    flexShrink: 0,
-  },
-  featureText: { flex: 1, gap: 5 },
-  featureTitleRow: {
+  logicRow: {},
+  logicPill: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    flexWrap: "wrap",
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
   },
-  featureTitle: { fontSize: 15, fontFamily: "Inter_600SemiBold" },
-  featureTag: {
-    borderRadius: 7,
-    borderWidth: 1,
-    paddingHorizontal: 7,
-    paddingVertical: 2,
+  logicText: {
+    fontSize: 13,
+    fontFamily: "Inter_500Medium",
+    flex: 1,
   },
-  featureTagText: { fontSize: 10, fontFamily: "Inter_700Bold" },
-  featureDesc: { fontSize: 13, fontFamily: "Inter_400Regular", lineHeight: 19 },
 
-  /* Free box */
-  freeBox: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    gap: 14,
+  /* Tier cards */
+  tierCard: {
     borderRadius: 16,
     borderWidth: 1,
-    padding: 16,
+    overflow: "hidden",
+    marginBottom: 10,
   },
-  freeIconWrap: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
+  tierAccent: {
+    height: 4,
+    width: "100%",
+  },
+  tierHeader: {
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    padding: 14,
+    gap: 10,
+  },
+  tierLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    flex: 1,
+  },
+  tierEmoji: {
+    fontSize: 22,
+  },
+  tierInfo: {
+    flex: 1,
+    gap: 2,
+  },
+  tierAudience: {
+    fontSize: 15,
+    fontFamily: "Inter_600SemiBold",
+  },
+  tierTagline: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    lineHeight: 16,
+  },
+  tierRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
     flexShrink: 0,
   },
-  freeTitle: {
-    fontSize: 14,
+  priceBadge: {
+    borderRadius: 8,
+    borderWidth: 1,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  priceBadgeText: {
+    fontSize: 12,
+    fontFamily: "Inter_700Bold",
+  },
+  tierBody: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+    gap: 8,
+  },
+  divider: {
+    height: 1,
+    marginBottom: 4,
+  },
+  priceNote: {
+    fontSize: 13,
     fontFamily: "Inter_600SemiBold",
     marginBottom: 4,
   },
-  freeDesc: {
-    fontSize: 12,
-    fontFamily: "Inter_400Regular",
-    lineHeight: 18,
-  },
-
-  /* FAQ */
-  faqCard: {
-    borderRadius: 14,
-    borderWidth: 1,
-    padding: 16,
-    gap: 6,
-  },
-  faqQ: { fontSize: 13, fontFamily: "Inter_600SemiBold", lineHeight: 19 },
-  faqA: { fontSize: 12, fontFamily: "Inter_400Regular", lineHeight: 18 },
-
-  /* Mission */
-  missionBox: {
+  perkRow: {
     flexDirection: "row",
-    gap: 10,
-    padding: 16,
-    borderRadius: 14,
-    borderWidth: 1,
     alignItems: "flex-start",
+    gap: 10,
   },
-  missionText: {
-    flex: 1,
-    fontSize: 12,
-    fontFamily: "Inter_400Regular",
-    lineHeight: 18,
+  perkDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    marginTop: 5,
+    flexShrink: 0,
   },
-
-  /* Handle */
-  handle: {
-    width: 40,
-    height: 4,
-    borderRadius: 2,
-    alignSelf: "center",
-    marginTop: 10,
-    marginBottom: 4,
-  },
-
-  /* Receipt modal */
-  receiptOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.6)",
-    justifyContent: "flex-end",
-  },
-  receiptSheet: {
-    borderTopLeftRadius: 26,
-    borderTopRightRadius: 26,
-    overflow: "hidden",
-    ...(Platform.OS === "ios"
-      ? { shadowColor: "#000", shadowOffset: { width: 0, height: -6 }, shadowOpacity: 0.2, shadowRadius: 20 }
-      : { elevation: 30 }),
-  },
-  receiptHeader: {
-    padding: 28,
-    alignItems: "center",
-    gap: 8,
-    overflow: "hidden",
-    position: "relative",
-  },
-  receiptOrb: {
-    position: "absolute",
-    width: 180,
-    height: 180,
-    borderRadius: 90,
-    backgroundColor: "rgba(255,255,255,0.05)",
-    top: -60,
-    right: -50,
-  },
-  receiptCheckCircle: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    backgroundColor: "rgba(255,255,255,0.2)",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 2,
-    borderColor: "rgba(255,255,255,0.35)",
-    marginBottom: 4,
-  },
-  receiptTitle: {
-    fontSize: 22,
-    fontFamily: "Inter_700Bold",
-    color: "#fff",
-  },
-  receiptSubtitle: {
+  perkText: {
     fontSize: 13,
     fontFamily: "Inter_400Regular",
-    color: "rgba(255,255,255,0.8)",
-    textAlign: "center",
-    lineHeight: 20,
+    lineHeight: 19,
+    flex: 1,
   },
-
-  receiptBody: {
-    padding: 20,
-    gap: 14,
-  },
-
-  /* Amount */
-  amountHero: {
+  ctaBtn: {
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    borderRadius: 12,
+    paddingVertical: 12,
+    marginTop: 6,
+  },
+  ctaBtnText: {
+    fontSize: 14,
+    fontFamily: "Inter_600SemiBold",
+    color: "#fff",
+  },
+
+  /* Summary table */
+  summaryTable: {
     borderRadius: 16,
     borderWidth: 1,
-    padding: 18,
-    gap: 4,
-  },
-  amountLabel: {
-    fontSize: 12,
-    fontFamily: "Inter_400Regular",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-  },
-  amountValue: {
-    fontSize: 32,
-    fontFamily: "Inter_700Bold",
-    color: "#0e7e6e",
-  },
-  amountCurrency: {
-    fontSize: 16,
-    fontFamily: "Inter_400Regular",
-    color: "#0e7e6e",
-  },
-
-  /* Detail rows */
-  detailBox: {
-    borderRadius: 14,
-    borderWidth: 1,
     overflow: "hidden",
+    marginBottom: 20,
   },
-  detailRow: {
+  summaryRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    paddingVertical: 13,
-    gap: 12,
+    paddingVertical: 12,
   },
-  detailLabel: {
-    fontSize: 13,
-    fontFamily: "Inter_400Regular",
-  },
-  detailValue: {
-    fontSize: 13,
-    fontFamily: "Inter_600SemiBold",
-    flex: 1,
-    textAlign: "right",
-  },
-
-  /* Receipt actions */
-  receiptActions: { gap: 10 },
-  shareBtn: {
+  summaryLeft: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
-    borderRadius: 14,
-    borderWidth: 1,
-    paddingVertical: 13,
+    gap: 10,
   },
-  shareBtnText: {
+  summaryDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+  },
+  summaryType: {
     fontSize: 14,
     fontFamily: "Inter_500Medium",
   },
-  closeReceiptBtn: {
-    borderRadius: 14,
-    overflow: "hidden",
+  summaryPrice: {
+    fontSize: 13,
+    fontFamily: "Inter_700Bold",
   },
-  closeReceiptGrad: {
+
+  /* Contact */
+  contactBox: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
-    paddingVertical: 16,
+    gap: 14,
+    borderRadius: 16,
+    borderWidth: 1,
+    padding: 16,
+    marginBottom: 16,
   },
-  closeReceiptText: {
-    fontSize: 15,
+  contactIconWrap: {
+    width: 46,
+    height: 46,
+    borderRadius: 13,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  contactTitle: {
+    fontSize: 14,
     fontFamily: "Inter_600SemiBold",
-    color: "#fff",
+    marginBottom: 3,
+  },
+  contactEmail: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+  },
+
+  /* Mission */
+  missionBox: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 10,
+    borderRadius: 14,
+    borderWidth: 1,
+    padding: 14,
+  },
+  missionText: {
+    flex: 1,
+    fontSize: 13,
+    fontFamily: "Inter_400Regular",
+    lineHeight: 19,
   },
 });

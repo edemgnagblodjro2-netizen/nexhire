@@ -22,11 +22,18 @@ interface Props {
   remaining: number;
 }
 
-const PERKS = [
-  { icon: "bar-chart-2" as const, label: "Suivi personnalisé de vos démarches" },
-  { icon: "clock" as const, label: "Historique complet hors ligne" },
-  { icon: "bell" as const, label: "Alertes dès qu'un service est disponible" },
-  { icon: "star" as const, label: "Résultats priorisés par l'IA" },
+const FREE_FEATURES = [
+  { icon: "search" as const, label: "Rechercher parmi 457 services" },
+  { icon: "phone-call" as const, label: "Appeler directement les organismes" },
+  { icon: "cpu" as const, label: "Chat IA multilingue (FR · EN · ES · AR · HT)" },
+  { icon: "alert-triangle" as const, label: "SOS urgences avec tri GPS" },
+  { icon: "map-pin" as const, label: "Carte interactive des services" },
+];
+
+const PARTNER_TIERS = [
+  { label: "Organismes", price: "25 $–300 $/mois", color: "#d97706" },
+  { label: "Villes", price: "5 k$–25 k$/an", color: "#7c3aed" },
+  { label: "Entreprises", price: "50 $–200 $/mois", color: "#0891b2" },
 ];
 
 export default function PremiumGateModal({ visible, onDismiss }: Props) {
@@ -34,7 +41,7 @@ export default function PremiumGateModal({ visible, onDismiss }: Props) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
-  function handleSubscribe() {
+  function handleViewPricing() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     onDismiss();
     router.push("/premium" as any);
@@ -65,101 +72,78 @@ export default function PremiumGateModal({ visible, onDismiss }: Props) {
 
           {/* Gradient header */}
           <LinearGradient
-            colors={["#1e1b4b", "#3730a3", "#7c3aed"]}
+            colors={["#064e3b", "#0f766e", "#0e7e6e"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.headerGrad}
           >
-            {/* Orbs */}
             <View style={styles.orb1} />
             <View style={styles.orb2} />
 
             <View style={styles.headerIconWrap}>
-              <Feather name="star" size={30} color="#fbbf24" />
+              <Feather name="heart" size={28} color="#fff" />
             </View>
-            <Text style={styles.headerTitle}>Passez à Premium</Text>
+            <Text style={styles.headerTitle}>Toujours gratuit pour vous</Text>
             <Text style={styles.headerSub}>
-              Vous avez utilisé vos 3 essais gratuits.{"\n"}
-              Débloquez toutes les fonctionnalités avancées.
+              "L'aide est gratuite.{"\n"}Nous facilitons simplement l'accès rapide et intelligent à cette aide."
             </Text>
-
-            {/* Price chips */}
-            <View style={styles.priceRow}>
-              <View style={styles.pricePill}>
-                <Text style={styles.priceMain}>5 $</Text>
-                <Text style={styles.priceSub}>/mois</Text>
-              </View>
-              <Text style={styles.priceOr}>ou</Text>
-              <View style={[styles.pricePill, styles.pricePillBest]}>
-                <Text style={styles.priceMain}>45 $</Text>
-                <Text style={styles.priceSub}>/an</Text>
-                <View style={styles.saveBadge}>
-                  <Text style={styles.saveText}>−25 %</Text>
-                </View>
-              </View>
-            </View>
           </LinearGradient>
 
           <View style={styles.body}>
-            {/* Perks list */}
-            <View style={[styles.perksBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              {PERKS.map((p, i) => (
+            {/* Free features list */}
+            <View style={[styles.featuresBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              {FREE_FEATURES.map((f, i) => (
                 <View
-                  key={p.label}
+                  key={f.label}
                   style={[
-                    styles.perkRow,
-                    i < PERKS.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border },
+                    styles.featureRow,
+                    i < FREE_FEATURES.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border },
                   ]}
                 >
-                  <View style={styles.perkIcon}>
-                    <Feather name={p.icon} size={15} color="#7c3aed" />
+                  <View style={[styles.featureIcon, { backgroundColor: "#10b981" + "15" }]}>
+                    <Feather name={f.icon} size={14} color="#10b981" />
                   </View>
-                  <Text style={[styles.perkText, { color: colors.foreground }]}>{p.label}</Text>
+                  <Text style={[styles.featureText, { color: colors.foreground }]}>{f.label}</Text>
                   <Feather name="check" size={14} color="#10b981" />
                 </View>
               ))}
             </View>
 
-            {/* Trust badges */}
-            <View style={styles.trustRow}>
-              <View style={styles.trustItem}>
-                <Feather name="shield" size={12} color={colors.mutedForeground} />
-                <Text style={[styles.trustText, { color: colors.mutedForeground }]}>SSL sécurisé</Text>
+            {/* B2B note */}
+            <View style={[styles.partnerBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <Text style={[styles.partnerTitle, { color: colors.foreground }]}>
+                Vous êtes un organisme ou une ville ?
+              </Text>
+              <View style={styles.partnerTiers}>
+                {PARTNER_TIERS.map((t) => (
+                  <View key={t.label} style={[styles.partnerPill, { backgroundColor: t.color + "15", borderColor: t.color + "30" }]}>
+                    <Text style={[styles.partnerPillLabel, { color: t.color }]}>{t.label}</Text>
+                    <Text style={[styles.partnerPillPrice, { color: t.color }]}>{t.price}</Text>
+                  </View>
+                ))}
               </View>
-              <View style={styles.trustDot} />
-              <View style={styles.trustItem}>
-                <Feather name="credit-card" size={12} color={colors.mutedForeground} />
-                <Text style={[styles.trustText, { color: colors.mutedForeground }]}>Visa · MC · Amex</Text>
-              </View>
-              <View style={styles.trustDot} />
-              <View style={styles.trustItem}>
-                <Feather name="refresh-cw" size={12} color={colors.mutedForeground} />
-                <Text style={[styles.trustText, { color: colors.mutedForeground }]}>Annulable à tout moment</Text>
-              </View>
+              <Pressable
+                onPress={handleViewPricing}
+                style={({ pressed }) => [styles.partnerLink, { opacity: pressed ? 0.75 : 1 }]}
+              >
+                <Text style={[styles.partnerLinkText, { color: "#0e7e6e" }]}>Voir les partenariats →</Text>
+              </Pressable>
             </View>
 
             {/* CTA */}
             <Pressable
-              onPress={handleSubscribe}
+              onPress={onDismiss}
               style={({ pressed }) => [styles.ctaBtn, pressed && { opacity: 0.88 }]}
             >
               <LinearGradient
-                colors={["#6d28d9", "#7c3aed", "#a21caf"]}
+                colors={["#064e3b", "#0f766e"]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={styles.ctaBtnGrad}
               >
-                <Feather name="lock" size={17} color="#fff" />
-                <Text style={styles.ctaBtnText}>Payer maintenant avec Stripe</Text>
                 <Feather name="arrow-right" size={17} color="#fff" />
+                <Text style={styles.ctaBtnText}>Continuer — c'est gratuit</Text>
               </LinearGradient>
-            </Pressable>
-
-            {/* Dismiss */}
-            <Pressable onPress={onDismiss} style={styles.laterBtn}>
-              <Text style={[styles.laterText, { color: colors.mutedForeground }]}>
-                Continuer en version gratuite
-              </Text>
             </Pressable>
           </View>
         </View>
@@ -196,7 +180,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 20,
     paddingBottom: 24,
-    gap: 10,
+    gap: 8,
     overflow: "hidden",
     alignItems: "center",
   },
@@ -219,139 +203,105 @@ const styles = StyleSheet.create({
     left: 10,
   },
   headerIconWrap: {
-    width: 64,
-    height: 64,
-    borderRadius: 20,
-    backgroundColor: "rgba(251,191,36,0.18)",
+    width: 60,
+    height: 60,
+    borderRadius: 18,
+    backgroundColor: "rgba(255,255,255,0.18)",
     borderWidth: 1,
-    borderColor: "rgba(251,191,36,0.35)",
+    borderColor: "rgba(255,255,255,0.25)",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 2,
+    marginBottom: 4,
   },
   headerTitle: {
-    fontSize: 22,
+    fontSize: 21,
     fontFamily: "Inter_700Bold",
     color: "#fff",
     textAlign: "center",
   },
   headerSub: {
-    fontSize: 13,
+    fontSize: 12,
     fontFamily: "Inter_400Regular",
-    color: "rgba(255,255,255,0.78)",
+    color: "rgba(255,255,255,0.82)",
     textAlign: "center",
-    lineHeight: 20,
-  },
-
-  /* Price chips */
-  priceRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    marginTop: 6,
-  },
-  pricePill: {
-    flexDirection: "row",
-    alignItems: "baseline",
-    backgroundColor: "rgba(255,255,255,0.15)",
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    gap: 3,
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.2)",
-  },
-  pricePillBest: {
-    backgroundColor: "rgba(251,191,36,0.2)",
-    borderColor: "rgba(251,191,36,0.35)",
-    position: "relative",
-  },
-  priceMain: {
-    fontSize: 20,
-    fontFamily: "Inter_700Bold",
-    color: "#fff",
-  },
-  priceSub: {
-    fontSize: 12,
-    fontFamily: "Inter_400Regular",
-    color: "rgba(255,255,255,0.75)",
-  },
-  priceOr: {
-    fontSize: 12,
-    fontFamily: "Inter_400Regular",
-    color: "rgba(255,255,255,0.55)",
-  },
-  saveBadge: {
-    backgroundColor: "#fbbf24",
-    borderRadius: 6,
-    paddingHorizontal: 5,
-    paddingVertical: 1,
-    marginLeft: 4,
-  },
-  saveText: {
-    fontSize: 10,
-    fontFamily: "Inter_700Bold",
-    color: "#1e1b4b",
+    fontStyle: "italic",
+    lineHeight: 18,
   },
 
   /* Body */
   body: {
-    paddingHorizontal: 20,
-    paddingTop: 18,
-    gap: 14,
+    paddingHorizontal: 18,
+    paddingTop: 16,
+    gap: 12,
   },
 
-  /* Perks */
-  perksBox: {
+  /* Features */
+  featuresBox: {
     borderRadius: 16,
     borderWidth: 1,
     overflow: "hidden",
   },
-  perkRow: {
+  featureRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
     paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingVertical: 11,
   },
-  perkIcon: {
-    width: 30,
-    height: 30,
+  featureIcon: {
+    width: 28,
+    height: 28,
     borderRadius: 8,
-    backgroundColor: "#7c3aed" + "15",
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
   },
-  perkText: {
+  featureText: {
     flex: 1,
     fontSize: 13,
     fontFamily: "Inter_500Medium",
-    lineHeight: 18,
+    lineHeight: 17,
   },
 
-  /* Trust */
-  trustRow: {
+  /* Partner box */
+  partnerBox: {
+    borderRadius: 16,
+    borderWidth: 1,
+    padding: 14,
+    gap: 10,
+  },
+  partnerTitle: {
+    fontSize: 13,
+    fontFamily: "Inter_600SemiBold",
+  },
+  partnerTiers: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
     flexWrap: "wrap",
     gap: 6,
   },
-  trustItem: {
+  partnerPill: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 4,
+    gap: 5,
+    borderRadius: 8,
+    borderWidth: 1,
+    paddingHorizontal: 9,
+    paddingVertical: 5,
   },
-  trustText: {
+  partnerPillLabel: {
     fontSize: 11,
+    fontFamily: "Inter_600SemiBold",
+  },
+  partnerPillPrice: {
+    fontSize: 10,
     fontFamily: "Inter_400Regular",
   },
-  trustDot: {
-    width: 3,
-    height: 3,
-    borderRadius: 1.5,
-    backgroundColor: "#94a3b8",
+  partnerLink: {
+    alignSelf: "flex-start",
+  },
+  partnerLinkText: {
+    fontSize: 13,
+    fontFamily: "Inter_600SemiBold",
   },
 
   /* CTA */
@@ -359,7 +309,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: "hidden",
     ...(Platform.OS === "ios"
-      ? { shadowColor: "#7c3aed", shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.35, shadowRadius: 14 }
+      ? { shadowColor: "#0e7e6e", shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.35, shadowRadius: 14 }
       : { elevation: 8 }),
   },
   ctaBtnGrad: {
@@ -367,22 +317,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 10,
-    paddingVertical: 17,
+    paddingVertical: 16,
   },
   ctaBtnText: {
     fontSize: 16,
     fontFamily: "Inter_600SemiBold",
     color: "#fff",
-  },
-
-  /* Dismiss */
-  laterBtn: {
-    alignItems: "center",
-    paddingVertical: 6,
-    marginBottom: 4,
-  },
-  laterText: {
-    fontSize: 13,
-    fontFamily: "Inter_400Regular",
   },
 });
