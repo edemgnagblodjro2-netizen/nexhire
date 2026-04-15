@@ -2,6 +2,18 @@ import app from "./app";
 import { logger } from "./lib/logger";
 import { sql } from "drizzle-orm";
 import { db } from "@workspace/db";
+import { getUncachableStripeClient } from "./stripeClient";
+
+async function initStripe() {
+  try {
+    // Verify Stripe connection is working on startup
+    const stripe = await getUncachableStripeClient();
+    await stripe.products.list({ limit: 1 });
+    logger.info("Stripe connection verified");
+  } catch (err) {
+    logger.warn({ err }, "Stripe connection check skipped");
+  }
+}
 
 async function runStartupMigrations() {
   try {
@@ -41,13 +53,15 @@ if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
-runStartupMigrations().then(() => {
+runStartupMigrations().then(async () => {
   app.listen(port, (err) => {
     if (err) {
       logger.error({ err }, "Error listening on port");
       process.exit(1);
     }
-
     logger.info({ port }, "Server listening");
   });
+
+  // Initialize Stripe in the background (non-blocking)
+  initStripe();
 });

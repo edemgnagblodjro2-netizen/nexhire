@@ -5,8 +5,16 @@ import pinoHttp from "pino-http";
 import router from "./routes";
 import { logger } from "./lib/logger";
 import { authMiddleware } from "./middlewares/authMiddleware";
+import { handleStripeWebhook } from "./routes/stripe";
 
 const app: Express = express();
+
+// ── Stripe webhook MUST come before express.json() ──
+app.post(
+  "/api/stripe/webhook",
+  express.raw({ type: "application/json" }),
+  handleStripeWebhook
+);
 
 app.use(
   pinoHttp({
