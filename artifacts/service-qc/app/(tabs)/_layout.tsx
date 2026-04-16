@@ -136,10 +136,6 @@ function ClassicTabLayout() {
         }}
       />
       <Tabs.Screen
-        name="map"
-        options={{ href: null }}
-      />
-      <Tabs.Screen
         name="categories"
         options={{
           title: t.tabCategories,

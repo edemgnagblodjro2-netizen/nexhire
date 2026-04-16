@@ -37,12 +37,7 @@
       ],
       "blockedPermissions": [
         "android.permission.RECORD_AUDIO"
-      ],
-      "config": {
-        "googleMaps": {
-          "apiKey": "REMPLACER_PAR_VOTRE_CLE_GOOGLE_MAPS"
-        }
-      }
+      ]
     },
     "web": {
       "favicon": "./assets/images/icon.png"
