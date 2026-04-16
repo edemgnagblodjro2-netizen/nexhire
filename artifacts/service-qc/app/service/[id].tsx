@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Linking,
   Platform,
@@ -18,6 +18,19 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
+import { getApiBaseUrl } from "@/lib/apiBase";
+
+async function trackServiceAction(serviceId: string, action: "view" | "call" | "click") {
+  try {
+    await fetch(`${getApiBaseUrl()}/api/services/${serviceId}/track`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action }),
+    });
+  } catch {
+    // Silent: tracking should never block UX
+  }
+}
 
 export default function ServiceDetailScreen() {
   const colors = useColors();
@@ -31,6 +44,12 @@ export default function ServiceDetailScreen() {
 
   const topPadding = Platform.OS === "web" ? 16 : insets.top;
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
+
+  useEffect(() => {
+    if (id) {
+      trackServiceAction(id, "view");
+    }
+  }, [id]);
 
   if (!service) {
     return (
@@ -47,11 +66,13 @@ export default function ServiceDetailScreen() {
 
   function handleCall() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    trackServiceAction(service!.id, "call");
     Linking.openURL(`tel:${service!.phone.replace(/\s/g, "")}`);
   }
 
   function handleWebsite() {
     Haptics.selectionAsync();
+    trackServiceAction(service!.id, "click");
     Linking.openURL(service!.website);
   }
 
@@ -125,6 +146,12 @@ export default function ServiceDetailScreen() {
                   <Text style={[styles.urgentText, { color: colors.urgent }]}>
                     {t.urgent}
                   </Text>
+                </View>
+              )}
+              {service.badgeVerified && (
+                <View style={styles.verifiedBadge}>
+                  <Feather name="check-circle" size={11} color="#fff" />
+                  <Text style={styles.verifiedText}>Vérifié</Text>
                 </View>
               )}
             </View>
@@ -332,6 +359,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "600",
     fontFamily: "Inter_600SemiBold",
+  },
+  verifiedBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    backgroundColor: "#2563eb",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 20,
+  },
+  verifiedText: {
+    fontSize: 11,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
+    color: "#fff",
   },
   name: {
     fontSize: 22,

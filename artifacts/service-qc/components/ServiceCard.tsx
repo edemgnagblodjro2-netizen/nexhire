@@ -74,6 +74,12 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
             </Text>
           </View>
         )}
+        {service.badgeVerified && (
+          <View style={styles.verifiedBadge}>
+            <Feather name="check-circle" size={10} color="#fff" />
+            <Text style={styles.verifiedText}>Vérifié</Text>
+          </View>
+        )}
       </View>
 
       <Text
@@ -154,6 +160,21 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: "600",
     fontFamily: "Inter_600SemiBold",
+  },
+  verifiedBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+    backgroundColor: "#2563eb",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 20,
+  },
+  verifiedText: {
+    fontSize: 11,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
+    color: "#fff",
   },
   name: {
     fontSize: 16,

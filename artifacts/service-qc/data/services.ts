@@ -29,6 +29,9 @@ export interface Service {
   hours?: string;
   address?: string;
   isProvinceWide?: boolean;
+  badgeVerified?: boolean;
+  featured?: boolean;
+  organisationId?: string;
 }
 
 export const CATEGORY_LABELS: Record<Category, string> = {

@@ -24,6 +24,8 @@ import { useColors } from "@/hooks/useColors";
 import { getCategoryColor } from "@/utils/categoryColors";
 import { detectCriticalSituation, type CriticalAlert } from "@/utils/detectCritical";
 import { getApiBaseUrl } from "@/lib/apiBase";
+import { useAuth } from "@/lib/auth";
+import { LinearGradient } from "expo-linear-gradient";
 
 type ChatLang = "fr" | "en" | "es" | "ar" | "ht";
 const CHAT_LANGS: { code: ChatLang; label: string; flag: string }[] = [
@@ -271,6 +273,8 @@ export default function ChatScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const { t, language } = useLanguage();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const router = useRouter();
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -478,6 +482,58 @@ export default function ChatScreen() {
       setIsRefreshing(false);
     }, 600);
   }, [isLoading, t.aiWelcome]);
+
+  if (!authLoading && !isAuthenticated) {
+    const topInset = Platform.OS === "web" ? 16 : insets.top;
+    return (
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <LinearGradient
+          colors={[colors.primary, "#0a5e52"]}
+          style={[styles.gateHero, { paddingTop: topInset + 24 }]}
+        >
+          <View style={styles.gateIconWrap}>
+            <Feather name="cpu" size={32} color="#fff" />
+          </View>
+          <Text style={styles.gateTitle}>Chat IA</Text>
+          <Text style={styles.gateSub}>
+            Trouvez de l'aide en quelques secondes grâce à notre assistant intelligent.
+          </Text>
+        </LinearGradient>
+
+        <View style={styles.gateBody}>
+          <Text style={[styles.gateBodyTitle, { color: colors.foreground }]}>
+            Connectez-vous pour discuter
+          </Text>
+          <Text style={[styles.gateBodyText, { color: colors.mutedForeground }]}>
+            Le chat IA est réservé aux membres. La consultation des services reste libre et gratuite.
+          </Text>
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.gatePrimary,
+              { backgroundColor: colors.primary, opacity: pressed ? 0.9 : 1 },
+            ]}
+            onPress={() => router.push("/login" as any)}
+          >
+            <Feather name="log-in" size={16} color="#fff" />
+            <Text style={styles.gatePrimaryText}>Se connecter</Text>
+          </Pressable>
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.gateSecondary,
+              { borderColor: colors.border, opacity: pressed ? 0.85 : 1 },
+            ]}
+            onPress={() => router.push("/register" as any)}
+          >
+            <Text style={[styles.gateSecondaryText, { color: colors.foreground }]}>
+              Créer un compte gratuit
+            </Text>
+          </Pressable>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <KeyboardAvoidingView
@@ -703,6 +759,75 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     alignItems: "center",
     justifyContent: "center",
+  },
+  gateHero: {
+    paddingHorizontal: 24,
+    paddingBottom: 32,
+    alignItems: "center",
+    gap: 10,
+  },
+  gateIconWrap: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: "rgba(255,255,255,0.18)",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 4,
+  },
+  gateTitle: {
+    fontSize: 22,
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+  },
+  gateSub: {
+    fontSize: 13,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.85)",
+    textAlign: "center",
+    lineHeight: 19,
+    paddingHorizontal: 12,
+  },
+  gateBody: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 28,
+    gap: 14,
+  },
+  gateBodyTitle: {
+    fontSize: 17,
+    fontFamily: "Inter_700Bold",
+    textAlign: "center",
+  },
+  gateBodyText: {
+    fontSize: 13,
+    fontFamily: "Inter_400Regular",
+    lineHeight: 19,
+    textAlign: "center",
+    marginBottom: 8,
+  },
+  gatePrimary: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    paddingVertical: 14,
+    borderRadius: 14,
+  },
+  gatePrimaryText: {
+    fontSize: 15,
+    fontFamily: "Inter_600SemiBold",
+    color: "#fff",
+  },
+  gateSecondary: {
+    paddingVertical: 14,
+    borderRadius: 14,
+    borderWidth: 1,
+    alignItems: "center",
+  },
+  gateSecondaryText: {
+    fontSize: 14,
+    fontFamily: "Inter_500Medium",
   },
   headerTitle: {
     fontSize: 17,

@@ -1,8 +1,18 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, useRef, type ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 import * as SecureStore from "expo-secure-store";
 import { getApiBaseUrl } from "./apiBase";
 
 const AUTH_TOKEN_KEY = "auth_session_token";
+
+export type UserRole = "user" | "organisme";
+
+export interface OrganisationInfo {
+  organisationName: string;
+  organisationCity?: string;
+  organisationPhone?: string;
+  organisationWebsite?: string;
+  plan?: "standard" | "plus";
+}
 
 interface User {
   id: string;
@@ -11,6 +21,12 @@ interface User {
   lastName: string | null;
   profileImageUrl: string | null;
   address: string | null;
+  role?: UserRole;
+}
+
+export interface RegisterResult {
+  error?: string;
+  organisationId?: string | null;
 }
 
 interface AuthContextValue {
@@ -18,9 +34,18 @@ interface AuthContextValue {
   isLoading: boolean;
   isAuthenticated: boolean;
   loginWithEmail: (email: string, password: string) => Promise<string | null>;
-  register: (email: string, password: string, firstName: string, lastName: string, address?: string) => Promise<string | null>;
+  register: (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    address?: string,
+    role?: UserRole,
+    org?: OrganisationInfo,
+  ) => Promise<RegisterResult>;
   updateProfile: (data: { address?: string | null }) => Promise<string | null>;
   logout: () => Promise<void>;
+  getToken: () => Promise<string | null>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -29,8 +54,9 @@ const AuthContext = createContext<AuthContextValue>({
   updateProfile: async () => null,
   isAuthenticated: false,
   loginWithEmail: async () => null,
-  register: async () => null,
+  register: async () => ({ error: undefined }),
   logout: async () => {},
+  getToken: async () => null,
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -105,19 +131,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     firstName: string,
     lastName: string,
     address?: string,
-  ): Promise<string | null> => {
+    role: UserRole = "user",
+    org?: OrganisationInfo,
+  ): Promise<RegisterResult> => {
     try {
       const apiBase = getApiBaseUrl();
+      const body: Record<string, unknown> = { email, password, firstName, lastName, address, role };
+      if (role === "organisme" && org) {
+        body.organisationName = org.organisationName;
+        body.organisationCity = org.organisationCity;
+        body.organisationPhone = org.organisationPhone;
+        body.organisationWebsite = org.organisationWebsite;
+        body.plan = org.plan ?? "standard";
+      }
+
       const res = await fetch(`${apiBase}/api/mobile-auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, firstName, lastName, address }),
+        body: JSON.stringify(body),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        return data.error || "Erreur lors de l'inscription.";
+        return { error: data.error || "Erreur lors de l'inscription." };
       }
 
       if (data.token && data.user) {
@@ -127,11 +164,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await SecureStore.setItemAsync(AUTH_TOKEN_KEY, data.token);
         await fetchUser();
       } else {
-        return "Erreur lors de l'inscription. Veuillez réessayer.";
+        return { error: "Erreur lors de l'inscription. Veuillez réessayer." };
       }
-      return null;
+      return { organisationId: data.organisationId ?? null };
     } catch {
-      return "Erreur réseau. Vérifiez votre connexion.";
+      return { error: "Erreur réseau. Vérifiez votre connexion." };
     }
   }, [fetchUser]);
 
@@ -178,6 +215,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  const getToken = useCallback(async (): Promise<string | null> => {
+    return SecureStore.getItemAsync(AUTH_TOKEN_KEY);
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -188,6 +229,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         register,
         updateProfile,
         logout,
+        getToken,
       }}
     >
       {children}
