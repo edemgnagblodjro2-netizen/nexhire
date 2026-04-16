@@ -18,6 +18,12 @@ uri = "file://artifacts/service-qc/assets/images/icon_generated_v2.png"
 type = "image"
 title = "attentezero icon gradient teal"
 
+[[generated]]
+id = "bK92xX0fUfnIlyEVDpo9j"
+uri = "file://attached_assets/play_store_header_attentezero.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "MnpwCauLVqlWr2VNGXy9y"
 uri = "file://exports/testeurs-aidora-qc.csv"
@@ -29,3 +35,9 @@ id = "o_zlbsjufPRscDZhid6Ps"
 uri = "file://exports/guide-publication-attentezero.pdf"
 type = "pdf"
 title = "Guide Publication Play Store — AttenteZéro (v2)"
+
+[[outputs]]
+id = "FxKaWuSryWDLOwFnj7QJP"
+uri = "file://attached_assets/play_store_header_attentezero.jpg"
+type = "image"
+title = "Image d'en-tête Google Play — AttenteZéro (4096×2304)"
