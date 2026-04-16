@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AttenteZéro",
-    "slug": "service-qc",
+    "slug": "attentezero",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
