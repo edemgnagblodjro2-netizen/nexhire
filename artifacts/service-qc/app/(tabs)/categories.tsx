@@ -76,8 +76,8 @@ function CategoryCard({ category }: { category: Category }) {
             <Feather name={icon as any} size={22} color={color} />
           </View>
           <View style={[styles.countBadge, { backgroundColor: color + "18", borderColor: color + "30" }]}>
-            <Text style={[styles.countText, { color }]}>
-              {serviceCount}
+            <Text style={[styles.countText, { color }]} numberOfLines={1}>
+              {serviceCount > 999 ? "999+" : serviceCount}
             </Text>
           </View>
         </View>

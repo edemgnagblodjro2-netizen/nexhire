@@ -97,9 +97,16 @@ export default function HomeScreen() {
             <View style={styles.logoBadge}>
               <Feather name="heart" size={18} color={colors.primary} />
             </View>
-            <View>
-              <Text style={styles.heroAppName}>AttenteZéro</Text>
-              <Text style={styles.heroTagline}>{t.tagline}</Text>
+            <View style={{ flex: 1, minWidth: 0 }}>
+              <Text
+                style={styles.heroAppName}
+                numberOfLines={1}
+                adjustsFontSizeToFit
+                minimumFontScale={0.7}
+              >
+                AttenteZéro
+              </Text>
+              <Text style={styles.heroTagline} numberOfLines={1}>{t.tagline}</Text>
             </View>
           </View>
           <TouchableOpacity
@@ -215,40 +222,59 @@ export default function HomeScreen() {
           </LinearGradient>
         </Pressable>
 
-        {/* ── Map Banner ── */}
-        <Pressable
-          style={({ pressed }) => [styles.mapBanner, { opacity: pressed ? 0.88 : 1 }]}
-          onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            router.push("/(tabs)/map" as any);
-          }}
-        >
-          <LinearGradient
-            colors={["#0f766e", colors.primary]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.mapBannerGrad}
-          >
-            <View style={styles.mapBannerLeft}>
-              <View style={styles.mapIconWrap}>
-                <Feather name="map-pin" size={20} color="#fff" />
-              </View>
-              <View style={styles.mapBannerText}>
-                <Text style={styles.mapBannerTitle}>
-                  {language === "fr" ? "🗺️ Carte des services" : "🗺️ Services Map"}
-                </Text>
-                <Text style={styles.mapBannerSub}>
-                  {language === "fr"
-                    ? `${services.length}+ épingles • filtrées par catégorie`
-                    : `${services.length}+ pins • filtered by category`}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.mapArrow}>
-              <Feather name="chevron-right" size={18} color="rgba(255,255,255,0.85)" />
-            </View>
-          </LinearGradient>
-        </Pressable>
+        {/* ── Villes ── */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
+            {language === "fr" ? "Trouver par ville" : "Find by city"}
+          </Text>
+          <View style={styles.cityRow}>
+            {[
+              { key: "Trois-Rivières", emoji: "🏙️" },
+              { key: "Shawinigan", emoji: "🌲" },
+              { key: "Drummondville", emoji: "🏘️" },
+              { key: "Victoriaville", emoji: "🍁" },
+            ].map((city) => {
+              const count = services.filter(
+                (s) => !s.isProvinceWide && s.city?.toLowerCase().includes(city.key.toLowerCase()),
+              ).length;
+              return (
+                <Pressable
+                  key={city.key}
+                  style={({ pressed }) => [
+                    styles.cityChip,
+                    {
+                      backgroundColor: colors.card,
+                      borderColor: colors.border,
+                      opacity: pressed ? 0.85 : 1,
+                    },
+                  ]}
+                  onPress={() => {
+                    Haptics.selectionAsync();
+                    router.push({
+                      pathname: "/results",
+                      params: { query: city.key, category: "all" },
+                    });
+                  }}
+                >
+                  <Text style={styles.cityEmoji}>{city.emoji}</Text>
+                  <View style={{ flex: 1, minWidth: 0 }}>
+                    <Text
+                      style={[styles.cityName, { color: colors.foreground }]}
+                      numberOfLines={1}
+                      adjustsFontSizeToFit
+                      minimumFontScale={0.8}
+                    >
+                      {city.key}
+                    </Text>
+                    <Text style={[styles.cityCount, { color: colors.mutedForeground }]}>
+                      {count} {language === "fr" ? "services" : "services"}
+                    </Text>
+                  </View>
+                </Pressable>
+              );
+            })}
+          </View>
+        </View>
 
         {/* ── AI Banner ── */}
         <Pressable
@@ -536,54 +562,35 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
 
-  /* Map Banner */
-  mapBanner: {
-    marginBottom: 14,
-    borderRadius: 16,
-    overflow: "hidden",
-    shadowColor: "#0f766e",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 5,
+  /* City chips */
+  cityRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
   },
-  mapBannerGrad: {
+  cityChip: {
+    flexBasis: "47%",
+    flexGrow: 1,
     flexDirection: "row",
     alignItems: "center",
-    padding: 16,
-    gap: 12,
+    gap: 10,
+    padding: 12,
+    borderRadius: 14,
+    borderWidth: 1,
+    minWidth: 0,
   },
-  mapBannerLeft: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
+  cityEmoji: {
+    fontSize: 22,
   },
-  mapIconWrap: {
-    width: 44,
-    height: 44,
-    borderRadius: 13,
-    backgroundColor: "rgba(255,255,255,0.22)",
-    alignItems: "center",
-    justifyContent: "center",
-    flexShrink: 0,
-  },
-  mapBannerText: {
-    flex: 1,
-    gap: 3,
-  },
-  mapBannerTitle: {
-    fontSize: 16,
+  cityName: {
+    fontSize: 14,
     fontFamily: "Inter_700Bold",
-    color: "#fff",
+    fontWeight: "700",
   },
-  mapBannerSub: {
+  cityCount: {
     fontSize: 11,
     fontFamily: "Inter_400Regular",
-    color: "rgba(255,255,255,0.82)",
-  },
-  mapArrow: {
-    flexShrink: 0,
+    marginTop: 2,
   },
 
   /* AI Banner */

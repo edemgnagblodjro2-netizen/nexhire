@@ -82,42 +82,48 @@ function UrgentServiceItem({ service }: { service: ServiceWithDistance }) {
               { backgroundColor: categoryColor + "18" },
             ]}
           >
-            <Text style={[styles.categoryPillText, { color: categoryColor }]}>
+            <Text
+              style={[styles.categoryPillText, { color: categoryColor }]}
+              numberOfLines={1}
+            >
               {t.categories[service.category]}
             </Text>
           </View>
 
-          <View style={styles.metaRight}>
-            {service.isProvinceWide ? (
-              <View
-                style={[
-                  styles.provinceTag,
-                  { backgroundColor: colors.muted },
-                ]}
+          {service.isProvinceWide ? (
+            <View
+              style={[
+                styles.provinceTag,
+                { backgroundColor: colors.muted },
+              ]}
+            >
+              <Feather name="globe" size={10} color={colors.mutedForeground} />
+              <Text
+                style={[styles.provinceTagText, { color: colors.mutedForeground }]}
+                numberOfLines={1}
               >
-                <Feather name="globe" size={10} color={colors.mutedForeground} />
+                {t.provinceWide}
+              </Text>
+            </View>
+          ) : (
+            <View style={styles.locationMeta}>
+              <Feather name="map-pin" size={11} color={colors.mutedForeground} />
+              <Text
+                style={[styles.cityText, { color: colors.mutedForeground }]}
+                numberOfLines={1}
+              >
+                {service.city}
+              </Text>
+              {service.distanceKm !== null && (
                 <Text
-                  style={[styles.provinceTagText, { color: colors.mutedForeground }]}
+                  style={[styles.distanceText, { color: colors.primary }]}
+                  numberOfLines={1}
                 >
-                  {t.provinceWide}
+                  · {formatDistance(service.distanceKm)} {t.away}
                 </Text>
-              </View>
-            ) : (
-              <View style={styles.locationMeta}>
-                <Feather name="map-pin" size={11} color={colors.mutedForeground} />
-                <Text style={[styles.cityText, { color: colors.mutedForeground }]}>
-                  {service.city}
-                </Text>
-                {service.distanceKm !== null && (
-                  <Text
-                    style={[styles.distanceText, { color: colors.primary }]}
-                  >
-                    · {formatDistance(service.distanceKm)} {t.away}
-                  </Text>
-                )}
-              </View>
-            )}
-          </View>
+              )}
+            </View>
+          )}
         </View>
       </View>
     </Pressable>

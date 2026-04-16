@@ -89,9 +89,18 @@ export function AppSplashScreen({ visible, onDone }: AppSplashScreenProps) {
           </View>
         </Animated.View>
 
-        <Animated.View style={{ opacity: textOpacity, alignItems: "center" }}>
-          <Text style={styles.appName}>AttenteZéro</Text>
-          <Text style={styles.tagline}>Services communautaires du Québec</Text>
+        <Animated.View style={{ opacity: textOpacity, alignItems: "center", paddingHorizontal: 24, alignSelf: "stretch" }}>
+          <Text
+            style={styles.appName}
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.6}
+          >
+            AttenteZéro
+          </Text>
+          <Text style={styles.tagline} numberOfLines={2} adjustsFontSizeToFit>
+            Services communautaires du Québec
+          </Text>
         </Animated.View>
 
         <Animated.View style={[styles.loadingDots, { opacity: dotsOpacity }]}>
