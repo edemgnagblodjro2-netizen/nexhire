@@ -67,7 +67,7 @@ export default function LegalScreen() {
           <Feather name="arrow-left" size={20} color="#fff" />
         </TouchableOpacity>
         <View style={styles.headerText}>
-          <Text style={styles.headerTitle}>Mentions légales</Text>
+          <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>Mentions légales</Text>
           <Text style={styles.headerSub}>
             Conditions d'utilisation · Politique de confidentialité
           </Text>

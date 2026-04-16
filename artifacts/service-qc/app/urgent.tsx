@@ -188,7 +188,7 @@ export default function UrgentScreen() {
           <Feather name="arrow-left" size={22} color="#fff" />
         </Pressable>
         <View style={styles.headerTextWrap}>
-          <Text style={styles.headerTitle}>{t.urgentTitle}</Text>
+          <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>{t.urgentTitle}</Text>
           <Text style={styles.headerSub}>
             {sortedServices.length} {t.urgentSubtitle}
           </Text>

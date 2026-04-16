@@ -150,7 +150,7 @@ export default function ServicesScreen() {
             <Feather name="list" size={14} color={colors.primary} />
           </View>
           <View style={styles.headerTexts}>
-            <Text style={styles.headerTitle}>{t.servicesTitle}</Text>
+            <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>{t.servicesTitle}</Text>
             <Text style={styles.headerSub}>
               {count} {count === 1 ? t.services : t.servicesPlural}
               {activeCategory

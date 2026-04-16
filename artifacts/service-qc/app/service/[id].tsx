@@ -74,7 +74,7 @@ export default function ServiceDetailScreen() {
         >
           <Feather name="arrow-left" size={22} color={colors.foreground} />
         </Pressable>
-        <Text style={[styles.headerTitle, { color: colors.foreground }]}>
+        <Text style={[styles.headerTitle, { color: colors.foreground }]} numberOfLines={1} adjustsFontSizeToFit>
           {t.serviceDetails}
         </Text>
       </View>

@@ -106,7 +106,7 @@ export default function ProfileScreen() {
           <View style={styles.avatarRing}>
             <InitialsAvatar firstName={user?.firstName ?? null} lastName={user?.lastName ?? null} size={80} />
           </View>
-          <Text style={styles.heroName}>{fullName}</Text>
+          <Text style={styles.heroName} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7}>{fullName}</Text>
           <View style={styles.heroBadge}>
             <Feather name="mail" size={11} color="rgba(255,255,255,0.8)" />
             <Text style={styles.heroEmail}>{user?.email || "—"}</Text>

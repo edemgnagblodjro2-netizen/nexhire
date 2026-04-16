@@ -180,7 +180,7 @@ export default function BuyingGuideScreen() {
             <Feather name="arrow-left" size={22} color={colors.foreground} />
           </Pressable>
           <View style={styles.headerText}>
-            <Text style={[styles.headerTitle, { color: colors.foreground }]}>
+            <Text style={[styles.headerTitle, { color: colors.foreground }]} numberOfLines={1} adjustsFontSizeToFit>
               {isFr ? "Guide d'achat immobilier" : "Home Buying Guide"}
             </Text>
             <Text style={[styles.headerSub, { color: colors.mutedForeground }]}>

@@ -182,7 +182,7 @@ export default function PremiumScreen() {
           <View style={{ width: 38 }} />
         </View>
 
-        <Text style={styles.headerTitle}>Tarification</Text>
+        <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>Tarification</Text>
 
         <View style={styles.keyPhraseRow}>
           <Feather name="heart" size={13} color="#34d399" />

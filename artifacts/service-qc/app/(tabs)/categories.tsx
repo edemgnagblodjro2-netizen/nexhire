@@ -127,7 +127,7 @@ export default function CategoriesScreen() {
         <View style={styles.headerBadge}>
           <Feather name="grid" size={14} color={colors.primary} />
         </View>
-        <Text style={styles.headerTitle}>
+        <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>
           {language === "fr" ? "Catégories" : "Categories"}
         </Text>
         <Text style={styles.headerSub}>

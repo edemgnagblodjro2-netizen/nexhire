@@ -84,8 +84,8 @@ export default function RegisterScreen() {
                 <Feather name="arrow-left" size={22} color="#ffffff" />
               </Pressable>
               <View>
-                <Text style={styles.title}>Créer un compte</Text>
-                <Text style={styles.subtitle}>Rejoignez AttenteZéro</Text>
+                <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>Créer un compte</Text>
+                <Text style={styles.subtitle} numberOfLines={1}>Rejoignez AttenteZéro</Text>
               </View>
             </Animated.View>
 

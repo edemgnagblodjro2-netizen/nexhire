@@ -134,7 +134,7 @@ export default function MoreScreen() {
           end={{ x: 1, y: 1 }}
           style={[styles.header, { paddingTop: (Platform.OS === "web" ? 16 : insets.top) + 16 }]}
         >
-          <Text style={styles.headerTitle}>
+          <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>
             {isFr ? "Plus" : "More"}
           </Text>
           <Text style={styles.headerSub}>
