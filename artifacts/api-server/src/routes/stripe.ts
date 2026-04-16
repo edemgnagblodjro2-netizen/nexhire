@@ -1,8 +1,20 @@
 import { Router } from "express";
 import { getUncachableStripeClient } from "../stripeClient";
 import { logger } from "../lib/logger";
+import { db, subscriptionsTable } from "@workspace/db";
+import { eq } from "drizzle-orm";
 
 const stripeRouter = Router();
+
+// Pricing — AttenteZéro
+// Standard: 39$/mo, 390$/yr (-18%)
+// Plus:     89$/mo, 890$/yr (-18%)
+const PRICING = {
+  standard: { monthly: 3900, annual: 39000, productName: "AttenteZéro Standard" },
+  plus:     { monthly: 8900, annual: 89000, productName: "AttenteZéro Plus" },
+} as const;
+type PlanKey = keyof typeof PRICING;
+type IntervalKey = "monthly" | "annual";
 
 // ─────────────────────────────────────────────
 // POST /api/stripe/webhook  (raw body — registered BEFORE express.json())
@@ -11,32 +23,87 @@ export async function handleStripeWebhook(req: any, res: any) {
   const signature = req.headers["stripe-signature"];
   if (!signature) return res.status(400).json({ error: "Missing signature" });
 
+  let event: any;
   try {
-    // Acknowledge immediately — Stripe only needs a 200
-    res.status(200).json({ received: true });
-    logger.info("Stripe webhook received");
+    const stripe = await getUncachableStripeClient();
+    const secret = process.env.STRIPE_WEBHOOK_SECRET;
+    if (secret) {
+      event = stripe.webhooks.constructEvent(req.body, signature, secret);
+    } else {
+      // Dev fallback: parse without signature verification (NEVER in prod)
+      event = typeof req.body === "string" ? JSON.parse(req.body) : JSON.parse(req.body.toString("utf8"));
+    }
   } catch (err: any) {
-    logger.error({ err }, "Stripe webhook error");
-    res.status(400).json({ error: err.message });
+    logger.error({ err: err.message }, "Stripe webhook signature verification failed");
+    return res.status(400).json({ error: err.message });
+  }
+
+  // Acknowledge immediately, then process
+  res.status(200).json({ received: true });
+
+  try {
+    const obj = event.data?.object as any;
+    if (!obj) return;
+
+    switch (event.type) {
+      case "customer.subscription.created":
+      case "customer.subscription.updated":
+      case "customer.subscription.trial_will_end": {
+        const orgId = obj.metadata?.organisationId;
+        if (!orgId) break;
+        const item = obj.items?.data?.[0];
+        const priceId = item?.price?.id;
+        const interval = item?.price?.recurring?.interval || "month";
+        const plan = (obj.metadata?.plan as PlanKey) || "standard";
+
+        await db
+          .update(subscriptionsTable)
+          .set({
+            stripeCustomerId: obj.customer,
+            stripeSubscriptionId: obj.id,
+            plan,
+            interval: interval === "year" ? "year" : "month",
+            status: obj.status,
+            trialEnd: obj.trial_end ? new Date(obj.trial_end * 1000) : null,
+            currentPeriodEnd: obj.current_period_end ? new Date(obj.current_period_end * 1000) : null,
+            cancelAtPeriodEnd: !!obj.cancel_at_period_end,
+          })
+          .where(eq(subscriptionsTable.organisationId, orgId));
+        logger.info({ orgId, plan, status: obj.status }, "Subscription updated from webhook");
+        break;
+      }
+      case "customer.subscription.deleted": {
+        if (!obj.id) break;
+        await db
+          .update(subscriptionsTable)
+          .set({ status: "canceled", cancelAtPeriodEnd: true })
+          .where(eq(subscriptionsTable.stripeSubscriptionId, obj.id));
+        break;
+      }
+    }
+  } catch (err: any) {
+    logger.error({ err }, "Stripe webhook processing error");
   }
 }
 
 // ─────────────────────────────────────────────
 // POST /api/stripe/create-checkout-session
-// Body: { email?: string, userId?: string, plan: "monthly" | "annual" }
+// Body: { email?, userId?, organisationId?, plan: "standard"|"plus", interval: "monthly"|"annual" }
 // ─────────────────────────────────────────────
 stripeRouter.post("/stripe/create-checkout-session", async (req, res) => {
   try {
     const stripe = await getUncachableStripeClient();
-    const { email, userId, plan = "monthly" } = req.body;
+    const { email, userId, organisationId, plan = "standard", interval = "monthly" } = req.body || {};
+
+    const planKey: PlanKey = plan === "plus" ? "plus" : "standard";
+    const intervalKey: IntervalKey = interval === "annual" ? "annual" : "monthly";
 
     const baseUrl =
       process.env.REPLIT_DEPLOYMENT === "1"
         ? `https://${process.env.REPLIT_DOMAINS?.split(",")[0]}`
         : `https://quebec-aid-finder.replit.app`;
 
-    // Retrieve or create the price in Stripe
-    const priceId = await getOrCreatePriceId(stripe, plan);
+    const priceId = await getOrCreatePriceId(stripe, planKey, intervalKey);
 
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
@@ -46,11 +113,18 @@ stripeRouter.post("/stripe/create-checkout-session", async (req, res) => {
       customer_email: email || undefined,
       metadata: {
         userId: userId || "",
-        plan,
+        organisationId: organisationId || "",
+        plan: planKey,
+        interval: intervalKey,
         appName: "AttenteZéro",
       },
       subscription_data: {
-        metadata: { userId: userId || "", plan },
+        trial_period_days: 14,
+        metadata: {
+          userId: userId || "",
+          organisationId: organisationId || "",
+          plan: planKey,
+        },
       },
       success_url: `${baseUrl}/api/stripe/payment-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/api/stripe/payment-cancel`,
@@ -60,6 +134,46 @@ stripeRouter.post("/stripe/create-checkout-session", async (req, res) => {
     res.json({ url: session.url, sessionId: session.id });
   } catch (err: any) {
     logger.error({ err }, "Failed to create Stripe checkout session");
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────
+// POST /api/stripe/billing-portal
+// Body: { organisationId } → returns URL to manage subscription
+// ─────────────────────────────────────────────
+stripeRouter.post("/stripe/billing-portal", async (req, res) => {
+  try {
+    const stripe = await getUncachableStripeClient();
+    const { organisationId } = req.body || {};
+    if (!organisationId) {
+      res.status(400).json({ error: "organisationId required" });
+      return;
+    }
+
+    const [sub] = await db
+      .select()
+      .from(subscriptionsTable)
+      .where(eq(subscriptionsTable.organisationId, organisationId))
+      .limit(1);
+
+    if (!sub?.stripeCustomerId) {
+      res.status(404).json({ error: "Aucun abonnement payant trouvé." });
+      return;
+    }
+
+    const baseUrl =
+      process.env.REPLIT_DEPLOYMENT === "1"
+        ? `https://${process.env.REPLIT_DOMAINS?.split(",")[0]}`
+        : `https://quebec-aid-finder.replit.app`;
+
+    const portal = await stripe.billingPortal.sessions.create({
+      customer: sub.stripeCustomerId,
+      return_url: `${baseUrl}/admin/organisme/dashboard`,
+    });
+    res.json({ url: portal.url });
+  } catch (err: any) {
+    logger.error({ err }, "Failed to create billing portal session");
     res.status(500).json({ error: err.message });
   }
 });
@@ -410,19 +524,15 @@ stripeRouter.get("/stripe/payment-cancel", (_req, res) => {
 });
 
 // ─────────────────────────────────────────────
-// Helper: get or create the Stripe price for AttenteZéro Premium
+// Helper: get or create Stripe price for a (plan, interval) combo
 // ─────────────────────────────────────────────
-async function getOrCreatePriceId(stripe: any, plan: string): Promise<string> {
-  const planKey = plan === "annual" ? "annual" : "monthly";
-  const envKey = planKey === "annual"
-    ? process.env.STRIPE_PRICE_ANNUAL_ID
-    : process.env.STRIPE_PRICE_MONTHLY_ID;
+async function getOrCreatePriceId(stripe: any, plan: PlanKey, interval: IntervalKey): Promise<string> {
+  const productName = PRICING[plan].productName;
+  const stripeInterval = interval === "annual" ? "year" : "month";
+  const unitAmount = PRICING[plan][interval];
 
-  if (envKey) return envKey;
-
-  // Search for existing product
   const products = await stripe.products.search({
-    query: "name:'AttenteZéro Premium' AND active:'true'",
+    query: `name:'${productName}' AND active:'true'`,
   });
 
   let productId: string;
@@ -430,33 +540,31 @@ async function getOrCreatePriceId(stripe: any, plan: string): Promise<string> {
     productId = products.data[0].id;
   } else {
     const product = await stripe.products.create({
-      name: "AttenteZéro Premium",
-      description:
-        "Abonnement premium : suivi personnalisé, historique, alertes intelligentes, priorisation.",
-      metadata: { app: "attentezero" },
+      name: productName,
+      description: plan === "plus"
+        ? "Forfait Plus — Profil organisme, badge vérifié, statistiques détaillées, mise en avant prioritaire."
+        : "Forfait Standard — Profil organisme, badge vérifié, statistiques basiques.",
+      metadata: { app: "attentezero", plan },
     });
     productId = product.id;
   }
 
-  // Search for existing price
   const prices = await stripe.prices.list({
     product: productId,
     active: true,
-    recurring: { interval: planKey === "annual" ? "year" : "month" },
+    recurring: { interval: stripeInterval },
     currency: "cad",
+    limit: 10,
   });
 
-  if (prices.data.length > 0) return prices.data[0].id;
+  const matching = prices.data.find((p: any) => p.unit_amount === unitAmount);
+  if (matching) return matching.id;
 
-  // Create price
-  const unitAmount = planKey === "annual" ? 4500 : 500; // $45/year or $5/month
   const price = await stripe.prices.create({
     product: productId,
     unit_amount: unitAmount,
     currency: "cad",
-    recurring: {
-      interval: planKey === "annual" ? "year" : "month",
-    },
+    recurring: { interval: stripeInterval },
   });
   return price.id;
 }

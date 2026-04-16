@@ -8,7 +8,7 @@ import {
   ExchangeMobileAuthorizationCodeResponse,
   LogoutMobileSessionResponse,
 } from "@workspace/api-zod";
-import { db, usersTable, passwordResetTokensTable } from "@workspace/db";
+import { db, usersTable, passwordResetTokensTable, organisationsTable, subscriptionsTable } from "@workspace/db";
 import { eq, and, gt, isNull } from "drizzle-orm";
 import {
   clearSession,
@@ -86,12 +86,15 @@ async function upsertUser(claims: Record<string, unknown>) {
   return user;
 }
 
-router.get("/auth/user", (req: Request, res: Response) => {
-  res.json(
-    GetCurrentAuthUserResponse.parse({
-      user: req.isAuthenticated() ? req.user : null,
-    }),
-  );
+router.get("/auth/user", async (req: Request, res: Response) => {
+  if (!req.isAuthenticated()) {
+    res.json({ user: null });
+    return;
+  }
+  const sid = getSessionId(req);
+  const session = sid ? await getSession(sid) : null;
+  const role = session?.user?.role ?? "user";
+  res.json({ user: { ...req.user, role } });
 });
 
 router.get("/login", async (req: Request, res: Response) => {
@@ -301,6 +304,12 @@ const RegisterBody = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
   address: z.string().optional(),
+  role: z.enum(["user", "organisme"]).optional().default("user"),
+  organisationName: z.string().optional(),
+  organisationCity: z.string().optional(),
+  organisationPhone: z.string().optional(),
+  organisationWebsite: z.string().optional(),
+  plan: z.enum(["standard", "plus"]).optional().default("standard"),
 });
 
 router.post("/mobile-auth/register", async (req: Request, res: Response) => {
@@ -310,7 +319,12 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
     return;
   }
 
-  const { email, password, firstName, lastName, address } = parsed.data;
+  const { email, password, firstName, lastName, address, role, organisationName, organisationCity, organisationPhone, organisationWebsite, plan } = parsed.data;
+
+  if (role === "organisme" && !organisationName) {
+    res.status(400).json({ error: "Le nom de l'organisme est requis." });
+    return;
+  }
 
   try {
     const existing = await db
@@ -328,8 +342,38 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
 
     const [newUser] = await db
       .insert(usersTable)
-      .values({ email, firstName, lastName, passwordHash, address: address ?? null })
+      .values({ email, firstName, lastName, passwordHash, address: address ?? null, role })
       .returning();
+
+    let organisationId: string | null = null;
+
+    if (role === "organisme") {
+      const [newOrg] = await db
+        .insert(organisationsTable)
+        .values({
+          userId: newUser.id,
+          name: organisationName!,
+          contactName: `${firstName} ${lastName}`,
+          email,
+          phone: organisationPhone ?? null,
+          website: organisationWebsite ?? null,
+          city: organisationCity ?? null,
+          address: address ?? null,
+          badgeVerified: false,
+        })
+        .returning();
+      organisationId = newOrg.id;
+
+      // Start 14-day trial subscription (no card required yet)
+      const trialEnd = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
+      await db.insert(subscriptionsTable).values({
+        organisationId: newOrg.id,
+        plan,
+        interval: "month",
+        status: "trialing",
+        trialEnd,
+      });
+    }
 
     const sessionData: SessionData = {
       user: {
@@ -339,12 +383,13 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
         lastName: newUser.lastName,
         profileImageUrl: newUser.profileImageUrl,
         address: newUser.address ?? null,
+        role,
       },
       access_token: "",
     };
 
     const sid = await createSession(sessionData);
-    res.json({ token: sid, user: sessionData.user });
+    res.json({ token: sid, user: sessionData.user, organisationId });
   } catch (err) {
     req.log.error({ err }, "Register error");
     res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
@@ -391,6 +436,7 @@ router.post("/mobile-auth/email-login", async (req: Request, res: Response) => {
         lastName: user.lastName,
         profileImageUrl: user.profileImageUrl,
         address: user.address ?? null,
+        role: (user.role as "user" | "organisme") ?? "user",
       },
       access_token: "",
     };

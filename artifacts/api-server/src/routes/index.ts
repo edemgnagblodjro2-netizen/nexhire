@@ -4,6 +4,7 @@ import aiRouter from "./ai";
 import authRouter from "./auth";
 import stripeRouter from "./stripe";
 import servicesRouter from "./services";
+import organisationsRouter from "./organisations";
 
 const router: IRouter = Router();
 
@@ -12,5 +13,6 @@ router.use(aiRouter);
 router.use(authRouter);
 router.use(stripeRouter);
 router.use(servicesRouter);
+router.use(organisationsRouter);
 
 export default router;
