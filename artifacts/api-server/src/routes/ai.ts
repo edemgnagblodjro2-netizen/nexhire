@@ -476,7 +476,7 @@ router.post("/ai/chat", async (req, res) => {
     const serviceIds = serviceMatch
       ? serviceMatch[1]
           .split(",")
-          .map((s) => s.trim())
+          .map((s) => s.trim().replace(/^ID:/i, ""))
           .filter(Boolean)
       : [];
 
