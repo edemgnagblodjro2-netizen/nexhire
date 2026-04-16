@@ -1,0 +1,33 @@
+PS C:\Users\sandr> cd C:\Users\sandr\Downloads\projet\artifacts\service-qc
+PS C:\Users\sandr\Downloads\projet\artifacts\service-qc> $env:EAS_NO_VCS=1; eas build --platform android --profile preview
+Using EAS CLI without version control system is not recommended, use this mode only if you know what you are doing.
+Failed to get Git root path with `git rev-parse --show-toplevel`. Error: spawn git ENOENT
+Falling back to using current working directory as project root.
+You can set `EAS_PROJECT_ROOT` environment variable to let eas-cli know where your project is located.
+The field "cli.appVersionSource" is not set, but it will be required in the future. Learn more: https://docs.expo.dev/build-reference/app-versions/
+Unable to resolve a valid config plugin for expo-router.
+• main export of expo-router does not appear to be a config plugin: the following error was thrown when importing C:\Users\sandr\Downloads\projet\artifacts\service-qc\node_modules\expo-router\app.plugin.js: Cannot find module '@expo/config-plugins'
+Require stack:
+- C:\Users\sandr\Downloads\projet\artifacts\service-qc\node_modules\expo\config-plugins.js
+- C:\Users\sandr\Downloads\projet\artifacts\service-qc\node_modules\expo-router\plugin\build\index.js
+- C:\Users\sandr\Downloads\projet\artifacts\service-qc\node_modules\expo-router\app.plugin.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@expo\config-plugins\build\utils\plugin-resolver.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@expo\config-plugins\build\plugins\withStaticPlugin.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@expo\config-plugins\build\plugins\withPlugins.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@expo\config-plugins\build\index.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\build\build\android\syncProjectConfiguration.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\build\build\android\build.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\build\build\runBuildAndSubmit.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\build\commands\build\index.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\module-loader.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\help\index.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\errors\handle.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\errors\index.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\config\config.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\config\index.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\command.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\index.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\bin\run MODULE_NOT_FOUND
+Verify that expo-router includes a config plugin. If it does not, then remove the entry from plugins in your app config file. Learn more: https://docs.expo.dev/guides/config-plugins/
+    Error: build command failed.
+PS C:\Users\sandr\Downloads\projet\artifacts\service-qc>
