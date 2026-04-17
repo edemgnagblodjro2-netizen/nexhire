@@ -18,6 +18,9 @@ localPort = 22730
 [services.development]
 run = "pnpm --filter @workspace/service-qc run dev"
 
+[services.production]
+skip = true
+
 [services.env]
 PORT = "22730"
 BASE_PATH = "/mobile/"
