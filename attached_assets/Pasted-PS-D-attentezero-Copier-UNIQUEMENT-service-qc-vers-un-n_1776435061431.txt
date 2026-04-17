@@ -1,0 +1,150 @@
+PS D:\attentezero> # Copier UNIQUEMENT service-qc vers un nouveau dossier propre
+PS D:\attentezero> $src = "D:\attentezero\artifacts\service-qc"
+PS D:\attentezero> $dst = "D:\attentezero-app"
+PS D:\attentezero>
+PS D:\attentezero> robocopy $src $dst /E /XD node_modules .expo dist android ios
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Robust File Copy for Windows
+-------------------------------------------------------------------------------
+
+  Started : Friday, April 17, 2026 10:10:34 AM
+   Source : D:\attentezero\artifacts\service-qc\
+     Dest : D:\attentezero-app\
+
+    Files : *.*
+
+ Exc Dirs : node_modules
+            .expo
+            dist
+            android
+            ios
+
+  Options : *.* /S /E /DCOPY:DA /COPY:DAT /R:1000000 /W:30
+
+------------------------------------------------------------------------------
+
+          New Dir          8    D:\attentezero\artifacts\service-qc\
+100%        New File                 417        .gitignore
+100%        New File                2132        app.json
+100%        New File                 150        babel.config.js
+100%        New File                 766        eas.json
+100%        New File                 110        expo-env.d.ts
+100%        New File                 779        metro.config.js
+100%        New File                2269        package.json
+100%        New File                 340        tsconfig.json
+          New Dir          1    D:\attentezero\artifacts\service-qc\.replit-artifact\
+100%        New File                 592        artifact.toml
+          New Dir         13    D:\attentezero\artifacts\service-qc\app\
+100%        New File                1006        +not-found.tsx
+100%        New File               18437        buying-guide.tsx
+100%        New File                8167        forgot-password.tsx
+100%        New File                 378        index.tsx
+100%        New File               11968        legal.tsx
+100%        New File               14899        login.tsx
+100%        New File               18505        premium.tsx
+100%        New File               11638        register.tsx
+100%        New File               10262        reset-password.tsx
+100%        New File                9918        results.tsx
+100%        New File               14233        sos.tsx
+100%        New File               12019        urgent.tsx
+100%        New File                4848        _layout.tsx
+          New Dir          9    D:\attentezero\artifacts\service-qc\app\(tabs)\
+100%        New File                6652        categories.tsx
+100%        New File               27572        chat.tsx
+100%        New File               19269        index.tsx
+100%        New File               19230        map.native.tsx
+100%        New File                3591        map.tsx
+100%        New File               19995        more.tsx
+100%        New File               14034        profile.tsx
+100%        New File               12251        services.tsx
+100%        New File                5711        _layout.tsx
+          New Dir          1    D:\attentezero\artifacts\service-qc\app\service\
+100%        New File               10781        [id].tsx
+          New Dir          0    D:\attentezero\artifacts\service-qc\assets\
+          New Dir          4    D:\attentezero\artifacts\service-qc\assets\images\
+100%        New File              578107        icon.png
+100%        New File              578107        icon_generated_v1.png
+100%        New File              592532        icon_generated_v2.png
+100%        New File              625348        icon_transparent.png
+          New Dir          6    D:\attentezero\artifacts\service-qc\components\
+100%        New File                4555        AppSplashScreen.tsx
+100%        New File                1674        ErrorBoundary.tsx
+100%        New File                6746        ErrorFallback.tsx
+100%        New File                9009        PremiumGateModal.tsx
+100%        New File                4701        ServiceCard.tsx
+100%        New File                1995        UrgentButton.tsx
+          New Dir          2    D:\attentezero\artifacts\service-qc\constants\
+100%        New File                1969        colors.ts
+100%        New File                5739        translations.ts
+          New Dir          3    D:\attentezero\artifacts\service-qc\contexts\
+100%        New File                1343        LanguageContext.tsx
+100%        New File                2686        LocationContext.tsx
+100%        New File                3487        ServicesContext.tsx
+          New Dir          1    D:\attentezero\artifacts\service-qc\data\
+100%        New File              257971        services.ts
+          New Dir          3    D:\attentezero\artifacts\service-qc\hooks\
+100%        New File                 854        useColors.ts
+100%        New File                1326        useInactivityTimer.ts
+100%        New File                1453        usePremiumGate.ts
+          New Dir          2    D:\attentezero\artifacts\service-qc\lib\
+100%        New File                 282        apiBase.ts
+100%        New File                5742        auth.tsx
+          New Dir          1    D:\attentezero\artifacts\service-qc\mocks\
+100%        New File                 596        react-native-maps.js
+          New Dir          1    D:\attentezero\artifacts\service-qc\scripts\
+100%        New File               15500        build.js
+          New Dir          1    D:\attentezero\artifacts\service-qc\server\
+100%        New File                4162        serve.js
+          New Dir          1    D:\attentezero\artifacts\service-qc\server\templates\
+100%        New File               12442        landing-page.html
+          New Dir          4    D:\attentezero\artifacts\service-qc\utils\
+100%        New File                1179        categoryColors.ts
+100%        New File               10553        detectCategory.ts
+100%        New File                1775        detectCritical.ts
+100%        New File                 727        location.ts
+
+------------------------------------------------------------------------------
+
+               Total    Copied   Skipped  Mismatch    FAILED    Extras
+    Dirs :        20        18         2         0         0         0
+   Files :        61        61         0         0         0         0
+   Bytes :    2.87 m    2.87 m         0         0         0         0
+   Times :   0:00:00   0:00:00                       0:00:00   0:00:00
+
+
+   Speed :           25,995,508 Bytes/sec.
+   Speed :            1,487.475 MegaBytes/min.
+   Ended : Friday, April 17, 2026 10:10:34 AM
+
+PS D:\attentezero>
+PS D:\attentezero> cd D:\attentezero-app
+PS D:\attentezero-app> dir
+
+
+    Directory: D:\attentezero-app
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----         4/17/2026   8:02 AM                .replit-artifact
+d-----         4/17/2026   8:02 AM                app
+d-----         4/17/2026   8:02 AM                assets
+d-----         4/17/2026   8:02 AM                components
+d-----         4/17/2026   8:02 AM                constants
+d-----         4/17/2026   9:44 AM                contexts
+d-----         4/17/2026   9:44 AM                data
+d-----         4/17/2026   8:02 AM                hooks
+d-----         4/17/2026   9:44 AM                lib
+d-----         4/17/2026   9:44 AM                mocks
+d-----         4/17/2026   8:02 AM                scripts
+d-----         4/17/2026   8:02 AM                server
+d-----         4/17/2026   9:44 AM                utils
+-a----         4/17/2026   8:02 AM            417 .gitignore
+-a----         4/17/2026   8:02 AM           2132 app.json
+-a----         4/17/2026   8:02 AM            150 babel.config.js
+-a----         4/17/2026   8:02 AM            766 eas.json
+-a----         4/17/2026   8:02 AM            110 expo-env.d.ts
+-a----         4/17/2026   8:02 AM            779 metro.config.js
+-a----         4/17/2026   8:02 AM           2269 package.json
+-a----         4/17/2026   8:02 AM            340 tsconfig.json
