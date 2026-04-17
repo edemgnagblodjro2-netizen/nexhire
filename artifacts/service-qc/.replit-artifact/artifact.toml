@@ -1,5 +1,5 @@
 kind = "mobile"
-previewPath = "/"
+previewPath = "/mobile/"
 title = "ServiceQC — Community Services Quebec"
 version = "1.0.0"
 id = "artifacts/service-qc"
@@ -12,7 +12,7 @@ version = "1.0.0"
 [[services]]
 ensurePreviewReachable = "/status"
 name = "expo"
-paths = [ "/" ]
+paths = [ "/mobile/" ]
 localPort = 22729
 
 [services.development]
@@ -20,4 +20,4 @@ run = "pnpm --filter @workspace/service-qc run dev"
 
 [services.env]
 PORT = "22729"
-BASE_PATH = "/"
+BASE_PATH = "/mobile/"

@@ -46,6 +46,11 @@ app.use(authMiddleware);
 
 app.use("/api", router);
 
+// Redirect root to the admin panel
+app.get("/", (_req, res) => {
+  res.redirect("/admin/");
+});
+
 // Serve admin panel as static files (production)
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const adminDistCandidates = [
