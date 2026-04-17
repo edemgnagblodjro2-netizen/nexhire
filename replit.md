@@ -99,6 +99,15 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 
 ---
 
+### Espace Organisme (artifacts/admin — `/admin/organisme/*`)
+- **Routes**: `/organisme/login` (connexion email/mot de passe) et `/organisme/dashboard` (tableau de bord)
+- **Auth**: token bearer stocké dans `localStorage` (`az_org_token`), via `/api/mobile-auth/email-login` (le rôle `organisme` est vérifié côté client)
+- **Pages**:
+  - `OrgLogin.tsx` — formulaire email/mdp, refuse les comptes non-organisme
+  - `OrgDashboard.tsx` — bandeau forfait + statut + jours d'essai, 3 cartes stats (vues/appels/clics 30j), histogramme empilé, infos coordonnées en lecture seule, bouton « Gérer mon abonnement » (Stripe billing portal ou checkout)
+- **Lib**: `lib/orgAuth.ts` (storage), `lib/orgApi.ts` (fetch `/organisations/me`, `/organisations/me/stats`, `/stripe/billing-portal`, `/stripe/create-checkout-session`)
+- Le tri des services dans `/api/services` favorise les organismes Plus actifs (champ `featured`) en tête de liste, avec `badgeVerified` et `organisationId` exposés.
+
 ### Admin Panel (artifacts/admin)
 
 - **Type**: React + Vite web app

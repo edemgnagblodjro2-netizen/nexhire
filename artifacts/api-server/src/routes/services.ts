@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { db, servicesTable } from "@workspace/db";
-import { and, asc, count, eq, ilike, or, sql } from "drizzle-orm";
+import { db, servicesTable, organisationsTable, subscriptionsTable } from "@workspace/db";
+import { and, asc, count, desc, eq, ilike, inArray, or, sql } from "drizzle-orm";
 import { logger } from "../lib/logger";
 
 const servicesRouter = Router();
@@ -17,13 +17,34 @@ function requireAdminKey(req: any, res: any, next: any) {
 }
 
 // ── GET /api/services  (public — for mobile app) ───────────────────────────
-servicesRouter.get("/services", async (req, res) => {
+// Joins organisation + active subscription to expose `badgeVerified`, `featured`
+// (Plus plan with active/trialing status) and `organisationId`.
+// Sorts featured services first, then alphabetical.
+servicesRouter.get("/services", async (_req, res) => {
   try {
-    const services = await db
-      .select()
+    const featured = sql<boolean>`(${subscriptionsTable.plan} = 'plus' AND ${subscriptionsTable.status} IN ('active','trialing'))`;
+    const rows = await db
+      .select({
+        service: servicesTable,
+        organisationId: organisationsTable.id,
+        badgeVerified: organisationsTable.badgeVerified,
+        featured,
+      })
       .from(servicesTable)
+      .leftJoin(organisationsTable, eq(organisationsTable.serviceId, servicesTable.id))
+      .leftJoin(subscriptionsTable, and(
+        eq(subscriptionsTable.organisationId, organisationsTable.id),
+        inArray(subscriptionsTable.status, ["active", "trialing"]),
+      ))
       .where(eq(servicesTable.active, true))
-      .orderBy(asc(servicesTable.name));
+      .orderBy(desc(featured), asc(servicesTable.name));
+
+    const services = rows.map((r) => ({
+      ...r.service,
+      organisationId: r.organisationId,
+      badgeVerified: r.badgeVerified ?? false,
+      featured: !!r.featured,
+    }));
     res.json(services);
   } catch (err) {
     logger.error({ err }, "GET /api/services error");

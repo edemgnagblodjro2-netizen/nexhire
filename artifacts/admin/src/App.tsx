@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
-import { Switch, Route, Router as WouterRouter } from "wouter";
+import { Switch, Route, Router as WouterRouter, useLocation, Redirect } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import Services from "@/pages/Services";
+import OrgLogin from "@/pages/OrgLogin";
+import OrgDashboard from "@/pages/OrgDashboard";
 import Layout from "@/components/Layout";
 import NotFound from "@/pages/not-found";
 import { getStoredKey } from "@/lib/auth";
+import { getOrgToken } from "@/lib/orgAuth";
 
 const queryClient = new QueryClient();
 
@@ -39,12 +42,33 @@ function AdminApp() {
   );
 }
 
+function OrgGuard() {
+  const token = getOrgToken();
+  if (!token) return <Redirect to="/organisme/login" />;
+  return <OrgDashboard />;
+}
+
+function AppRouter() {
+  const [location] = useLocation();
+  if (location.startsWith("/organisme")) {
+    return (
+      <Switch>
+        <Route path="/organisme/login" component={OrgLogin} />
+        <Route path="/organisme/dashboard" component={OrgGuard} />
+        <Route path="/organisme" component={() => <Redirect to="/organisme/dashboard" />} />
+        <Route component={NotFound} />
+      </Switch>
+    );
+  }
+  return <AdminApp />;
+}
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <AdminApp />
+          <AppRouter />
         </WouterRouter>
         <Toaster />
       </TooltipProvider>
