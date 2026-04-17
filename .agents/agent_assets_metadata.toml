@@ -41,3 +41,9 @@ id = "FxKaWuSryWDLOwFnj7QJP"
 uri = "file://attached_assets/play_store_header_attentezero.jpg"
 type = "image"
 title = "Image d'en-tête Google Play — AttenteZéro (4096×2304)"
+
+[[outputs]]
+id = "7Dxr0Fg29P8XtsUQFRC3l"
+uri = "file://exports/testeurs-attentezero.csv"
+type = "table"
+title = "Liste de testeurs internes AttenteZéro"
