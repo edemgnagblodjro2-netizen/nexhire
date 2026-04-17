@@ -57,3 +57,4 @@ packages = ["zip"]
 [userenv.shared]
 EXPO_PUBLIC_API_URL = "https://quebec-aid-finder.replit.app"
 ADMIN_API_KEY = "attentezero-admin-2026"
+CI = "true"
