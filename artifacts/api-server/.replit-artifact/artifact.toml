@@ -5,12 +5,9 @@ version = "1.0.0"
 id = "3B4_FFSkEVBkAeYMFRJ2e"
 
 [[services]]
-localPort = 22729
+localPort = 8080
 name = "API Server"
-paths = ["/", "/api", "/admin/"]
-
-[services.env]
-PORT = "22729"
+paths = ["/api"]
 
 [services.development]
 run = "pnpm --filter @workspace/api-server run dev"
@@ -28,7 +25,7 @@ NODE_ENV = "production"
 args = ["node", "--enable-source-maps", "artifacts/api-server/dist/index.mjs"]
 
 [services.production.run.env]
-PORT = "22729"
+PORT = "8080"
 NODE_ENV = "production"
 
 [services.production.health.startup]

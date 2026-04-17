@@ -17,9 +17,6 @@ localPort = 23744
 [services.development]
 run = "pnpm --filter @workspace/admin run dev"
 
-[services.production]
-skip = true
-
 [services.env]
 PORT = "23744"
 BASE_PATH = "/admin/"
