@@ -5,9 +5,12 @@ version = "1.0.0"
 id = "3B4_FFSkEVBkAeYMFRJ2e"
 
 [[services]]
-localPort = 8080
+localPort = 22729
 name = "API Server"
 paths = ["/", "/api", "/admin/"]
+
+[services.env]
+PORT = "22729"
 
 [services.development]
 run = "pnpm --filter @workspace/api-server run dev"

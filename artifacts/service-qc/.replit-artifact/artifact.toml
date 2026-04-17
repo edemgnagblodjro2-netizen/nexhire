@@ -13,11 +13,11 @@ version = "1.0.0"
 ensurePreviewReachable = "/status"
 name = "expo"
 paths = [ "/mobile/" ]
-localPort = 22729
+localPort = 22730
 
 [services.development]
 run = "pnpm --filter @workspace/service-qc run dev"
 
 [services.env]
-PORT = "22729"
+PORT = "22730"
 BASE_PATH = "/mobile/"
