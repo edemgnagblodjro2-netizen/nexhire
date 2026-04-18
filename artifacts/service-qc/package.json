@@ -1,5 +1,5 @@
 {
-  "name": "attentezero",
+  "name": "@workspace/service-qc",
   "version": "0.0.0",
   "private": true,
   "main": "expo-router/entry",
