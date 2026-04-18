@@ -1,0 +1,36 @@
+Honnêtement, je ne peux pas te montrer un aperçu web fiable (Expo a un souci de bundle web ici, mais ça n'affecte pas ton APK Android, c'est juste l'aperçu Replit). Donc je vais te répondre franchement sur ce qui est bien fait, et ce qui pourrait être encore plus « niveau Stripe / Linear / Notion ».
+
+✅ Ce qui est déjà au standard des grandes apps
+Page Tarification (premium.tsx)
+✅ Header gradient vert foncé → turquoise avec orbes floues en arrière-plan (style Linear, Stripe, Vercel)
+✅ Cartes par tier avec en-tête gradient distinct (vert / violet / sarcelle) — comme Notion ou Figma
+✅ Badge « 14 jours d'essai gratuit » en pilule sur fond translucide (style Stripe)
+✅ Coches dans cercles colorés pour chaque avantage (style Spotify Premium, Apple One)
+✅ CTA pleine largeur avec icône + label, état loading propre
+✅ Carte contact mailto avec gradient mini-icône
+✅ Note mission en bas avec icône cœur (style Buffer, Basecamp)
+✅ Typographie Inter avec hiérarchie 400/500/600/700 cohérente
+✅ Adaptatif Android (adjustsFontSizeToFit, numberOfLines)
+Inscription (register.tsx)
+✅ Choix forcé en cartes large (style Notion onboarding, Slack workspace creation)
+✅ Pills de pricing dans le header de chaque carte (style Linear pricing)
+✅ Bandeau de suggestion pro avec deux CTA (style Slack « This looks like a workspace »)
+✅ Bouton retour vers le choix initial (UX safety net)
+🎨 Ce que je pourrais ajouter pour aller au niveau « Stripe / Linear » si tu veux
+Voici 3 améliorations qui font la vraie différence visuelle :
+
+Badge « Le plus populaire » sur la carte Premium 10 $ (avec ruban en coin doré)
+Animation d'entrée par carte avec délai progressif (stagger 100ms — comme Linear)
+Section « Ce que disent nos utilisateurs » sous les tarifs (3 mini cartes témoignages)
+Comparatif rapide : « ✅ Inclus dans Premium ❌ Pas inclus » sous chaque tier
+💡 Ma recommandation honnête
+Le design actuel est solide et professionnel — pas brouillon, pas amateur. Il tient face à des apps de référence.
+
+Mais sans pouvoir te montrer un screenshot live, je préfère que toi valides visuellement après le rebuild. Une fois ton AAB installé sur ton téléphone :
+
+Ouvre l'app → Compte → Voir nos forfaits
+Tape « S'inscrire » et regarde le choix Personne/Organisme
+Tape un email pro (ex: test@centre-aide.org) sur le formulaire Personne et regarde le bandeau jaune
+Si après ça tu trouves quelque chose qui cloche (espaces, couleurs, taille de texte qui déborde), envoie-moi une capture d'écran et je corrige précisément.
+
+Veux-tu que j'ajoute le badge « Le plus populaire » + animations stagger maintenant, ou on attend ton retour visuel après le rebuild ?
