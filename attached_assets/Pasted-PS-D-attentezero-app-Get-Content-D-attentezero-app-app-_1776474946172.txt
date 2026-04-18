@@ -1,0 +1,80 @@
+PS D:\attentezero-app> Get-Content D:\attentezero-app\app.json
+{
+  "expo": {
+    "name": "AttenteZÃ©ro",
+    "slug": "service-qc",
+    "version": "1.0.1",
+    "owner": "startupayas-organization",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "service-qc",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0e7e6e"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.attentezero.app",
+      "icon": "./assets/images/icon.png",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "AttenteZÃ©ro utilise votre position pour afficher les services communautaires les plus proches de vous.",
+        "NSLocationAlwaysUsageDescription": "AttenteZÃ©ro utilise votre position pour trier les services par distance."
+      }
+    },
+    "android": {
+      "package": "com.attentezero.app",
+      "versionCode": 5,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/icon_transparent.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ],
+      "blockedPermissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.READ_MEDIA_VIDEO",
+        "android.permission.READ_MEDIA_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/images/icon.png"
+    },
+    "plugins": [
+      [
+        "expo-router",
+        {
+          "origin": "https://replit.com/"
+        }
+      ],
+      "expo-font",
+      "expo-web-browser",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "AttenteZÃ©ro utilise votre position pour afficher les services communautaires les plus proches de vous.",
+          "locationWhenInUsePermission": "AttenteZÃ©ro utilise votre position pour afficher les services communautaires les plus proches de vous."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ab5ae7c2-9012-42c6-a5dd-d8f8e0c0d67b"
+      }
+    }
+  }
+}
