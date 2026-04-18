@@ -97,14 +97,25 @@ Write-Step "Etape 4 : Restauration de package.json"
 Copy-Item $BackupPath "$ProjectPath\package.json" -Force
 Write-OK "package.json restaure"
 
-# === ETAPE 5 : Suppression de map.tsx ===
-Write-Step "Etape 5 : Suppression de map.tsx (si present)"
-$mapFile = Join-Path $ProjectPath "app\(tabs)\map.tsx"
-if (Test-Path $mapFile) {
-    Remove-Item $mapFile -Force
-    Write-OK "map.tsx supprime"
+# === ETAPE 5 : Suppression de TOUS les fichiers map.* ===
+Write-Step "Etape 5 : Suppression de tous les fichiers map.* (tabs)"
+$mapPattern = Join-Path $ProjectPath "app\(tabs)\map*.tsx"
+$mapFiles = Get-ChildItem -Path $mapPattern -ErrorAction SilentlyContinue
+if ($mapFiles -and $mapFiles.Count -gt 0) {
+    foreach ($f in $mapFiles) {
+        Remove-Item $f.FullName -Force
+        Write-OK "Supprime : $($f.Name)"
+    }
 } else {
-    Write-Info "map.tsx n'existait pas (OK)"
+    Write-Info "Aucun fichier map.* trouve (OK)"
+}
+# Verification finale
+$remaining = Get-ChildItem -Path $mapPattern -ErrorAction SilentlyContinue
+if ($remaining -and $remaining.Count -gt 0) {
+    Write-Fail "Des fichiers map.* sont encore presents !"
+    $remaining | ForEach-Object { Write-Host "    - $($_.Name)" -ForegroundColor Red }
+} else {
+    Write-OK "Confirmation : aucun map.*.tsx restant"
 }
 
 # === ETAPE 6 : Bump versionCode ===
