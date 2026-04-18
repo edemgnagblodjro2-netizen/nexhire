@@ -333,6 +333,44 @@ export default function MoreScreen() {
             </Pressable>
           ))}
 
+          {/* ── Section title: Mon compte ── */}
+          <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
+            {isFr ? "Mon compte" : "My account"}
+          </Text>
+
+          {/* ── Profil card ── */}
+          <Pressable
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              router.push("/(tabs)/profile" as any);
+            }}
+            style={({ pressed }) => [
+              styles.optionCard,
+              {
+                backgroundColor: colors.card,
+                borderColor: colors.border,
+                opacity: pressed ? 0.85 : 1,
+              },
+            ]}
+          >
+            <View style={[styles.optionIconWrap, { backgroundColor: isDark ? "#052e1c" : "#f0fdf4" }]}>
+              <Feather name="user" size={20} color="#0e7e6e" />
+            </View>
+            <View style={styles.optionText}>
+              <Text style={[styles.optionTitle, { color: colors.foreground }]} numberOfLines={1}>
+                {user
+                  ? `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim() || (isFr ? "Mon profil" : "My profile")
+                  : isFr ? "Profil" : "Profile"}
+              </Text>
+              <Text style={[styles.optionDesc, { color: colors.mutedForeground }]} numberOfLines={1}>
+                {user
+                  ? user.email ?? (isFr ? "Voir mon profil" : "View profile")
+                  : isFr ? "Connexion · paramètres · déconnexion" : "Login · settings · sign out"}
+              </Text>
+            </View>
+            <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+          </Pressable>
+
           {/* ── Philosophy note ── */}
           <View style={[styles.noteBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <Feather name="info" size={15} color={colors.mutedForeground} />

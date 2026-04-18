@@ -33,7 +33,7 @@ function NativeTabLayout() {
         <Icon sf={{ default: "ellipsis.circle", selected: "ellipsis.circle.fill" }} />
         <Label>Plus</Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="profile">
+      <NativeTabs.Trigger name="profile" hidden>
         <Icon sf={{ default: "person.circle", selected: "person.circle.fill" }} />
         <Label>Profil</Label>
       </NativeTabs.Trigger>
@@ -162,13 +162,8 @@ function ClassicTabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
+          href: null,
           title: t.tabProfile,
-          tabBarIcon: ({ color }) =>
-            isIOS ? (
-              <SymbolView name="person.circle" tintColor={color} size={22} />
-            ) : (
-              <Feather name="user" size={21} color={color} />
-            ),
         }}
       />
     </Tabs>
