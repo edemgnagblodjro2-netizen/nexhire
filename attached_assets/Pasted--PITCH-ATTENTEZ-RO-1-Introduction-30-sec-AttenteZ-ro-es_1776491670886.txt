@@ -1,0 +1,77 @@
+🎤 PITCH — ATTENTEZÉRO
+1. Introduction (30 sec)
+
+AttenteZéro est une application basée sur l’intelligence artificielle qui permet aux citoyens de localiser rapidement les services d’urgence et les ressources communautaires les plus proches.
+
+Notre mission est simple : réduire le temps d’accès aux services essentiels et améliorer l’orientation des citoyens en situation critique.
+
+2. Le problème
+
+Au Québec, l’accès aux services essentiels est encore complexe :
+
+L’information est dispersée (sites web, lignes téléphoniques, documents PDF)
+Les urgences sont surchargées
+Les citoyens ne savent pas toujours vers quel service se tourner
+Les organismes communautaires sont sous-utilisés faute de visibilité
+
+👉 Résultat : perte de temps, stress, mauvaise orientation.
+
+3. La solution
+
+AttenteZéro propose :
+
+🔍 Une recherche intelligente basée sur l’IA
+📍 Une carte interactive géolocalisée
+⏱ Une orientation vers les services les plus rapides
+📊 Une centralisation de tous les services communautaires
+
+👉 Une seule application pour accéder à toutes les ressources.
+
+4. Valeur pour les utilisateurs
+Accès rapide aux services proches
+Réduction du stress en situation d’urgence
+Gain de temps significatif
+Interface simple et accessible
+Gratuit pour les fonctionnalités essentielles
+5. Valeur pour les organismes
+Visibilité accrue auprès des citoyens
+Réduction des appels inutiles
+Mise à jour simple des informations
+Accès à des données d’utilisation
+Canal direct avec la communauté
+6. Modèle économique
+👤 Utilisateurs :
+Gratuit + option premium à 10 $ (paiement unique)
+🏢 Organismes :
+14 jours d’essai → 39 $ / mois
+
+👉 Modèle simple, accessible et scalable.
+
+7. Impact social
+
+AttenteZéro contribue à :
+
+Améliorer l’accès aux services essentiels
+Réduire la pression sur les urgences
+Optimiser l’utilisation des ressources communautaires
+Renforcer le lien entre citoyens et organismes
+
+👉 Un projet à la fois technologique et socialement impactant
+
+8. Vision
+Déploiement au Québec
+Expansion dans tout le Canada francophone
+Intégration avec les systèmes publics et municipaux
+9. Demande de financement
+
+Nous recherchons un soutien financier pour :
+
+Développement technologique
+Acquisition d’organismes partenaires
+Déploiement et marketing
+Amélioration continue de l’IA
+10. Conclusion
+
+AttenteZéro n’est pas seulement une application.
+
+C’est une solution concrète pour rendre les services essentiels accessibles, rapides et intelligents.
