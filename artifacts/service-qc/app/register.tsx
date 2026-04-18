@@ -43,6 +43,28 @@ export default function RegisterScreen() {
 
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [proSuggestionDismissed, setProSuggestionDismissed] = useState(false);
+
+  // Detect if email looks professional (custom domain, not a free webmail)
+  const looksLikePro = React.useMemo(() => {
+    const trimmed = email.trim().toLowerCase();
+    const match = trimmed.match(/^[^\s@]+@([^\s@]+\.[^\s@]+)$/);
+    if (!match) return false;
+    const domain = match[1];
+    const FREE_DOMAINS = new Set([
+      "gmail.com", "googlemail.com",
+      "yahoo.com", "yahoo.ca", "yahoo.fr", "ymail.com", "rocketmail.com",
+      "hotmail.com", "hotmail.ca", "hotmail.fr", "outlook.com", "outlook.fr", "live.com", "live.ca", "live.fr", "msn.com",
+      "icloud.com", "me.com", "mac.com",
+      "protonmail.com", "proton.me", "pm.me",
+      "aol.com", "gmx.com", "gmx.fr", "mail.com", "zoho.com", "yandex.com",
+      "videotron.ca", "sympatico.ca", "bell.net", "rogers.com", "cogeco.ca",
+      "globetrotter.net", "qc.aira.com", "hec.ca",
+    ]);
+    return !FREE_DOMAINS.has(domain);
+  }, [email]);
+
+  const showProSuggestion = role === "user" && looksLikePro && !proSuggestionDismissed;
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
@@ -308,6 +330,44 @@ export default function RegisterScreen() {
                   returnKeyType="next"
                 />
               </View>
+
+              {showProSuggestion && (
+                <View style={styles.proSuggestion}>
+                  <Feather name="briefcase" size={16} color="#fbbf24" style={{ marginTop: 1 }} />
+                  <View style={styles.flex}>
+                    <Text style={styles.proSuggestionTitle} numberOfLines={2}>
+                      Ce courriel semble professionnel
+                    </Text>
+                    <Text style={styles.proSuggestionDesc} numberOfLines={3}>
+                      Si vous représentez un organisme, créez plutôt un compte Organisme pour être visible dans l'app et gérer vos services.
+                    </Text>
+                    <View style={styles.proSuggestionBtns}>
+                      <Pressable
+                        onPress={() => setRole("organisme")}
+                        style={({ pressed }) => [
+                          styles.proSuggestionBtnPrimary,
+                          pressed && { opacity: 0.85 },
+                        ]}
+                      >
+                        <Text style={styles.proSuggestionBtnPrimaryText} numberOfLines={1}>
+                          Passer en Organisme
+                        </Text>
+                      </Pressable>
+                      <Pressable
+                        onPress={() => setProSuggestionDismissed(true)}
+                        style={({ pressed }) => [
+                          styles.proSuggestionBtnSecondary,
+                          pressed && { opacity: 0.7 },
+                        ]}
+                      >
+                        <Text style={styles.proSuggestionBtnSecondaryText} numberOfLines={1}>
+                          Non, c'est personnel
+                        </Text>
+                      </Pressable>
+                    </View>
+                  </View>
+                </View>
+              )}
 
               {!isOrg && (
                 <View style={styles.inputWrapper}>
@@ -647,6 +707,58 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     color: "rgba(255,255,255,0.8)",
     lineHeight: 16,
+  },
+  proSuggestion: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 10,
+    backgroundColor: "rgba(251,191,36,0.14)",
+    borderWidth: 1,
+    borderColor: "rgba(251,191,36,0.4)",
+    borderRadius: 12,
+    padding: 12,
+  },
+  proSuggestionTitle: {
+    fontSize: 13,
+    fontFamily: "Inter_700Bold",
+    color: "#fef3c7",
+  },
+  proSuggestionDesc: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(254,243,199,0.85)",
+    lineHeight: 16,
+    marginTop: 3,
+  },
+  proSuggestionBtns: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginTop: 10,
+  },
+  proSuggestionBtnPrimary: {
+    backgroundColor: "#fbbf24",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+  },
+  proSuggestionBtnPrimaryText: {
+    fontSize: 12,
+    fontFamily: "Inter_700Bold",
+    color: "#1f1300",
+  },
+  proSuggestionBtnSecondary: {
+    backgroundColor: "rgba(255,255,255,0.12)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.25)",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+  },
+  proSuggestionBtnSecondaryText: {
+    fontSize: 12,
+    fontFamily: "Inter_500Medium",
+    color: "rgba(255,255,255,0.9)",
   },
   trialBox: {
     flexDirection: "row",
