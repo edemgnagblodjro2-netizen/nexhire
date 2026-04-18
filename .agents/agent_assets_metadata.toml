@@ -58,4 +58,10 @@ title = "Mise à jour AttenteZéro — 6 fichiers (18 avril)"
 id = "IlpRIhzxsxG93WBCMoeKL"
 uri = "file://exports/AttenteZero-Presentation.pdf"
 type = "pdf"
-title = "AttenteZéro — Présentation (corrigée)"
+title = "AttenteZéro — Présentation (PDF mis à jour)"
+
+[[outputs]]
+id = "lKI7iKoXsyph9Ue8tUmG3"
+uri = "file://exports/AttenteZero-Presentation.pptx"
+type = "slides"
+title = "AttenteZéro — Présentation (PowerPoint éditable)"
