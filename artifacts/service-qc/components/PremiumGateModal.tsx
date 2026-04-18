@@ -31,7 +31,7 @@ const FREE_FEATURES = [
 ];
 
 const PARTNER_TIERS = [
-  { label: "Organismes", price: "25 $–300 $/mois", color: "#d97706" },
+  { label: "Organismes", price: "39 $/mois", color: "#d97706" },
   { label: "Villes", price: "5 k$–25 k$/an", color: "#7c3aed" },
   { label: "Entreprises", price: "50 $–200 $/mois", color: "#0891b2" },
 ];

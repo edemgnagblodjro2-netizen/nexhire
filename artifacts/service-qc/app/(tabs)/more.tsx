@@ -165,7 +165,7 @@ export default function MoreScreen() {
                 <View style={{ flex: 1 }}>
                   <Text style={styles.reminderTitle}>Rappel — Abonnement Premium</Text>
                   <Text style={styles.reminderSub}>
-                    Vous avez atteint la limite d'essais gratuits. Appuyez pour vous abonner à 5 $/mois.
+                    Vous avez atteint la limite d'essais gratuits. Appuyez pour passer Premium pour 10 $ une seule fois.
                   </Text>
                 </View>
                 <Feather name="chevron-right" size={16} color="rgba(255,255,255,0.7)" />
@@ -193,8 +193,8 @@ export default function MoreScreen() {
                   <Text style={styles.premiumBadgeText}>PREMIUM</Text>
                 </View>
                 <View style={styles.premiumPrice}>
-                  <Text style={styles.premiumAmount}>5 $</Text>
-                  <Text style={styles.premiumPeriod}>/mois</Text>
+                  <Text style={styles.premiumAmount}>10 $</Text>
+                  <Text style={styles.premiumPeriod}>une fois</Text>
                 </View>
               </View>
 
