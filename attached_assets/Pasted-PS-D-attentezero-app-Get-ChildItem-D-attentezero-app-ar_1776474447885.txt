@@ -1,0 +1,182 @@
+PS D:\attentezero-app> Get-ChildItem D:\attentezero-app\artifacts
+Get-ChildItem : Cannot find path 'D:\attentezero-app\artifacts' because it does not exist.
+At line:1 char:1
++ Get-ChildItem D:\attentezero-app\artifacts
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (D:\attentezero-app\artifacts:String) [Get-ChildItem], ItemNotFoundExcep
+   tion
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand
+
+PS D:\attentezero-app> cd D:\attentezero-app
+PS D:\attentezero-app> npx eas-cli build --platform android --profile production
+
+⚠️ Detected that your app uses Expo Go for development, this is not recommended when building production apps.
+Learn more: https://expo.fyi/why-not-build-expo-go-for-production
+To suppress this warning, set EAS_BUILD_NO_EXPO_GO_WARNING=true.
+
+The field "cli.appVersionSource" is not set, but it will be required in the future. Learn more: https://docs.expo.dev/build-reference/app-versions/
+Invalid UUID appId
+Request ID: ec6571c0-bc2b-4299-8af2-c351f011b7e4
+    Error: GraphQL request failed.
+PS D:\attentezero-app> {
+>>   "expo": {
+>>     "name": "AttenteZéro",
+>>     "slug": "attentezero-app",
+>>     "version": "1.0.0",
+>>     "owner": "startupayas-organization",
+>>     ...
+>>     "android": {
+>>       "package": "com.attentezero.app",
+>>       "versionCode": 5
+>>     },
+>>     "extra": {
+>>       "eas": {
+>>         "projectId": "ab5ae7c2-9012-42c6-a5dd-d8f8e0c0d67b"
+>>       }
+>>     }
+>>   }
+>> }
+At line:2 char:9
++   "expo": {
++         ~
+Unexpected token ':' in expression or statement.
+At line:3 char:11
++     "name": "AttenteZéro",
++           ~
+Unexpected token ':' in expression or statement.
+At line:8 char:14
++     "android": {
++              ~
+Unexpected token ':' in expression or statement.
+At line:9 char:16
++       "package": "com.attentezero.app",
++                ~
+Unexpected token ':' in expression or statement.
+At line:13 char:12
++       "eas": {
++            ~
+Unexpected token ':' in expression or statement.
+At line:14 char:20
++         "projectId": "ab5ae7c2-9012-42c6-a5dd-d8f8e0c0d67b"
++                    ~
+Unexpected token ':' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+
+PS D:\attentezero-app> cd D:\attentezero-app
+PS D:\attentezero-app> notepad app.json
+PS D:\attentezero-app> {
+>>   "expo": {
+>>     "name": "AttenteZéro",
+>>     "slug": "service-qc",
+>>     "version": "1.0.0",
+>>     "orientation": "portrait",
+>>     "icon": "./assets/images/icon.png",
+>>     "scheme": "service-qc",
+>>     "userInterfaceStyle": "automatic",
+>>     "newArchEnabled": true,
+>>     "splash": {
+>>       "image": "./assets/images/icon.png",
+>>       "resizeMode": "contain",
+>>       "backgroundColor": "#0e7e6e"
+>>     },
+>>     "ios": {
+>>       "supportsTablet": false,
+>>       "bundleIdentifier": "com.attentezero.app",
+>>       "icon": "./assets/images/icon.png",
+>>       "infoPlist": {
+>>         "NSLocationWhenInUseUsageDescription": "AttenteZéro utilise votre position pour afficher les services communautaires les plus proches de vous.",
+>>         "NSLocationAlwaysUsageDescription": "AttenteZéro utilise votre position pour trier les services par distance."
+>>       }
+>>     },
+>>     "android": {
+>>       "package": "com.attentezero.app",
+>>       "versionCode": 1,
+>>       "adaptiveIcon": {
+>>         "foregroundImage": "./assets/images/icon_transparent.png",
+>>         "backgroundColor": "#ffffff"
+>>       },
+>>       "permissions": [
+>>         "android.permission.ACCESS_FINE_LOCATION",
+>>         "android.permission.ACCESS_COARSE_LOCATION",
+>>         "android.permission.INTERNET",
+>>         "android.permission.ACCESS_NETWORK_STATE"
+>>       ],
+>>       "blockedPermissions": [
+>>         "android.permission.RECORD_AUDIO"
+>>       ]
+>>     },
+>>     "web": {
+>>       "favicon": "./assets/images/icon.png"
+>>     },
+>>     "plugins": [
+>>       [
+>>         "expo-router",
+>>         {
+>>           "origin": "https://replit.com/"
+>>         }
+>>       ],
+>>       "expo-font",
+>>       "expo-web-browser",
+>>       [
+>>         "expo-location",
+>>         {
+>>           "locationAlwaysAndWhenInUsePermission": "AttenteZéro utilise votre position pour afficher les services communautaires les plus proches de vous.",
+>>           "locationWhenInUsePermission": "AttenteZéro utilise votre position pour afficher les services communautaires les plus proches de vous."
+>>         }
+>>       ]
+>>     ],
+>>     "experiments": {
+>>       "typedRoutes": true,
+>>       "reactCompiler": true
+>>     },
+>>     "extra": {
+>>       "eas": {
+>>         "projectId": "service-qc"
+>>       }
+>>     }
+>>   }
+>> }
+At line:2 char:9
++   "expo": {
++         ~
+Unexpected token ':' in expression or statement.
+At line:3 char:11
++     "name": "AttenteZéro",
++           ~
+Unexpected token ':' in expression or statement.
+At line:12 char:14
++       "image": "./assets/images/icon.png",
++              ~
+Unexpected token ':' in expression or statement.
+At line:17 char:23
++       "supportsTablet": false,
++                       ~
+Unexpected token ':' in expression or statement.
+At line:21 char:46
++         "NSLocationWhenInUseUsageDescription": "AttenteZéro utilise v ...
++                                              ~
+Unexpected token ':' in expression or statement.
+At line:26 char:16
++       "package": "com.attentezero.app",
++                ~
+Unexpected token ':' in expression or statement.
+At line:29 char:26
++         "foregroundImage": "./assets/images/icon_transparent.png",
++                          ~
+Unexpected token ':' in expression or statement.
+At line:37 char:8
++       ],
++        ~
+Missing argument in parameter list.
+At line:43 char:16
++       "favicon": "./assets/images/icon.png"
++                ~
+Unexpected token ':' in expression or statement.
+At line:46 char:8
++       [
++        ~
+Missing type name after '['.
+Not all parse errors were reported.  Correct the reported errors and try again.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
