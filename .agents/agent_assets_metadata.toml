@@ -24,6 +24,18 @@ uri = "file://attached_assets/play_store_header_attentezero.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "Sgc9JwI5nYI3Rn9lQ0Uv7"
+uri = "file://artifacts/service-qc/assets/images/banner-community.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "1KewTo9H7q5He4YVsPZyH"
+uri = "file://artifacts/service-qc/assets/images/banner-help.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "MnpwCauLVqlWr2VNGXy9y"
 uri = "file://exports/testeurs-aidora-qc.csv"

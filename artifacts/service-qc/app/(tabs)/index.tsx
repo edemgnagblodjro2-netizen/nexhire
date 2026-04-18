@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { HomeBannerSlider } from "@/components/HomeBannerSlider";
 import { UrgentButton } from "@/components/UrgentButton";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { Category } from "@/data/services";
@@ -177,6 +178,9 @@ export default function HomeScreen() {
       </LinearGradient>
 
       <View style={styles.body}>
+
+        {/* ── Bannière slide (auto-rotation) ── */}
+        <HomeBannerSlider />
 
         {/* ── Urgence ── */}
         <View style={styles.urgentWrap}>
