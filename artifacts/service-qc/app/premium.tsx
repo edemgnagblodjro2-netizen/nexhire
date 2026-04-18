@@ -4,10 +4,12 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
+  Animated,
+  Easing,
   Platform,
   Pressable,
   ScrollView,
@@ -107,6 +109,23 @@ export default function PremiumScreen() {
   const router = useRouter();
   const { user, isAuthenticated } = useAuth();
   const [loadingTier, setLoadingTier] = useState<string | null>(null);
+
+  // Stagger entry animations — one Animated.Value per tier card
+  const cardAnims = useRef(TIERS.map(() => new Animated.Value(0))).current;
+
+  useEffect(() => {
+    Animated.stagger(
+      120,
+      cardAnims.map((v) =>
+        Animated.timing(v, {
+          toValue: 1,
+          duration: 480,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: true,
+        })
+      )
+    ).start();
+  }, [cardAnims]);
 
   async function handleUserPremium() {
     if (!isAuthenticated) {
@@ -230,17 +249,47 @@ export default function PremiumScreen() {
           const isLoading =
             (tier.ctaKind === "trial" && loadingTier === "org-trial") ||
             (tier.ctaKind === "premium" && idx === 1 && loadingTier === "user-premium");
+          const isPopular = idx === 1; // Premium 10$ — the "best value" tier
+          const anim = cardAnims[idx];
           return (
-            <View
+            <Animated.View
               key={`${tier.id}-${idx}`}
+              style={{
+                opacity: anim,
+                transform: [
+                  {
+                    translateY: anim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [24, 0],
+                    }),
+                  },
+                ],
+              }}
+            >
+            <View
               style={[
                 styles.card,
                 {
                   backgroundColor: colors.card,
-                  borderColor: tier.color + "40",
+                  borderColor: isPopular ? "#fbbf24" : tier.color + "40",
+                  borderWidth: isPopular ? 2 : 1.5,
                 },
               ]}
             >
+              {isPopular && (
+                <View style={styles.popularRibbon}>
+                  <LinearGradient
+                    colors={["#f59e0b", "#fbbf24"]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.popularRibbonGrad}
+                  >
+                    <Feather name="star" size={11} color="#78350f" />
+                    <Text style={styles.popularRibbonText}>LE PLUS POPULAIRE</Text>
+                    <Feather name="star" size={11} color="#78350f" />
+                  </LinearGradient>
+                </View>
+              )}
               <LinearGradient
                 colors={tier.gradColors}
                 start={{ x: 0, y: 0 }}
@@ -313,6 +362,7 @@ export default function PremiumScreen() {
                 </Pressable>
               </View>
             </View>
+            </Animated.View>
           );
         })}
 
@@ -441,6 +491,31 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: 1.5,
     overflow: "hidden",
+  },
+  popularRibbon: {
+    alignSelf: "center",
+    marginTop: -1,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    overflow: "hidden",
+    shadowColor: "#f59e0b",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  popularRibbonGrad: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 5,
+  },
+  popularRibbonText: {
+    fontSize: 10,
+    fontFamily: "Inter_700Bold",
+    color: "#78350f",
+    letterSpacing: 0.8,
   },
   cardHeader: {
     paddingHorizontal: 16,

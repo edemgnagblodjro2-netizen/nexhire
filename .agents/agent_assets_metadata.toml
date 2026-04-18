@@ -47,3 +47,9 @@ id = "7Dxr0Fg29P8XtsUQFRC3l"
 uri = "file://exports/testeurs-attentezero.csv"
 type = "table"
 title = "Liste de testeurs internes AttenteZéro"
+
+[[outputs]]
+id = "pnp-CXV5rHv64bxDQPkXz"
+uri = "file://exports/service-qc-update.zip"
+type = "unspecified"
+title = "Mise à jour AttenteZéro — 6 fichiers (18 avril)"
