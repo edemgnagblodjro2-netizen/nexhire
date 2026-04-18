@@ -19,14 +19,13 @@ import { useRouter } from "expo-router";
 import { useAuth, type UserRole } from "@/lib/auth";
 import { getApiBaseUrl } from "@/lib/apiBase";
 
-type Plan = "standard" | "plus";
-
 export default function RegisterScreen() {
   const { register, isAuthenticated } = useAuth();
   const router = useRouter();
 
-  const [role, setRole] = useState<UserRole>("user");
-  const [plan, setPlan] = useState<Plan>("standard");
+  // ── Step state ───────────────────────────────────────────
+  // null = user must first pick a role (forced choice screen)
+  const [role, setRole] = useState<UserRole | null>(null);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -53,13 +52,17 @@ export default function RegisterScreen() {
   }, [isAuthenticated]);
 
   useEffect(() => {
+    fadeAnim.setValue(0);
+    slideAnim.setValue(30);
     Animated.parallel([
       Animated.timing(fadeAnim, { toValue: 1, duration: 400, useNativeDriver: true }),
       Animated.spring(slideAnim, { toValue: 0, tension: 50, friction: 8, useNativeDriver: true }),
     ]).start();
-  }, []);
+  }, [role]);
 
   async function handleRegister() {
+    if (!role) return;
+
     if (!firstName.trim() || !lastName.trim() || !email.trim() || !password) {
       setError("Veuillez remplir tous les champs.");
       return;
@@ -93,7 +96,7 @@ export default function RegisterScreen() {
             organisationCity: orgCity.trim() || undefined,
             organisationPhone: orgPhone.trim() || undefined,
             organisationWebsite: orgWebsite.trim() || undefined,
-            plan,
+            plan: "standard",
           }
         : undefined,
     );
@@ -113,7 +116,7 @@ export default function RegisterScreen() {
           body: JSON.stringify({
             email: email.trim().toLowerCase(),
             organisationId: result.organisationId,
-            plan,
+            plan: "standard",
             interval: "monthly",
           }),
         });
@@ -129,6 +132,108 @@ export default function RegisterScreen() {
     setLoading(false);
   }
 
+  // ─── Step 1: Forced role choice ──────────────────────────
+  if (role === null) {
+    return (
+      <LinearGradient colors={["#0a6558", "#0e7e6e", "#1a9f8c"]} style={styles.gradient}>
+        <SafeAreaView style={styles.safe}>
+          <ScrollView
+            contentContainerStyle={styles.scroll}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            <Animated.View
+              style={[styles.header, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}
+            >
+              <Pressable onPress={() => router.back()} style={styles.backBtn}>
+                <Feather name="arrow-left" size={22} color="#ffffff" />
+              </Pressable>
+              <View style={styles.flex}>
+                <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
+                  Créer un compte
+                </Text>
+                <Text style={styles.subtitle} numberOfLines={1}>
+                  Quel type de compte voulez-vous ?
+                </Text>
+              </View>
+            </Animated.View>
+
+            <Animated.View
+              style={[
+                styles.choiceWrap,
+                { opacity: fadeAnim, transform: [{ translateY: slideAnim }] },
+              ]}
+            >
+              {/* Personne */}
+              <Pressable
+                onPress={() => setRole("user")}
+                style={({ pressed }) => [styles.choiceCard, pressed && { opacity: 0.85 }]}
+              >
+                <View style={[styles.choiceIcon, { backgroundColor: "rgba(16,185,129,0.25)" }]}>
+                  <Feather name="user" size={26} color="#fff" />
+                </View>
+                <View style={styles.flex}>
+                  <View style={styles.choiceTitleRow}>
+                    <Text style={styles.choiceTitle} numberOfLines={1} adjustsFontSizeToFit>
+                      👤 Personne
+                    </Text>
+                    <View style={[styles.choicePill, { backgroundColor: "rgba(16,185,129,0.25)" }]}>
+                      <Text style={styles.choicePillText}>Gratuit</Text>
+                    </View>
+                  </View>
+                  <Text style={styles.choiceDesc} numberOfLines={3}>
+                    Pour chercher des services, contacter des organismes et trouver de l'aide.
+                  </Text>
+                  <View style={styles.choicePerks}>
+                    <Text style={styles.choicePerk}>· Recherche illimitée</Text>
+                    <Text style={styles.choicePerk}>· Premium optionnel : 10 $ une seule fois</Text>
+                  </View>
+                </View>
+                <Feather name="chevron-right" size={20} color="rgba(255,255,255,0.7)" />
+              </Pressable>
+
+              {/* Organisme */}
+              <Pressable
+                onPress={() => setRole("organisme")}
+                style={({ pressed }) => [styles.choiceCard, pressed && { opacity: 0.85 }]}
+              >
+                <View style={[styles.choiceIcon, { backgroundColor: "rgba(251,191,36,0.25)" }]}>
+                  <Feather name="briefcase" size={26} color="#fff" />
+                </View>
+                <View style={styles.flex}>
+                  <View style={styles.choiceTitleRow}>
+                    <Text style={styles.choiceTitle} numberOfLines={1} adjustsFontSizeToFit>
+                      🏢 Organisme
+                    </Text>
+                    <View style={[styles.choicePill, { backgroundColor: "rgba(251,191,36,0.3)" }]}>
+                      <Text style={styles.choicePillText}>14 j gratuits</Text>
+                    </View>
+                  </View>
+                  <Text style={styles.choiceDesc} numberOfLines={3}>
+                    Pour les OBNL, entreprises et partenaires qui veulent être visibles dans l'app.
+                  </Text>
+                  <View style={styles.choicePerks}>
+                    <Text style={styles.choicePerk}>· Profil + statistiques</Text>
+                    <Text style={styles.choicePerk}>· 39 $/mois après l'essai · Annulable</Text>
+                  </View>
+                </View>
+                <Feather name="chevron-right" size={20} color="rgba(255,255,255,0.7)" />
+              </Pressable>
+            </Animated.View>
+
+            <Animated.View style={[styles.footer, { opacity: fadeAnim }]}>
+              <Text style={styles.footerText}>Vous avez déjà un compte ?</Text>
+              <Pressable onPress={() => router.back()}>
+                <Text style={styles.footerLink}>Se connecter</Text>
+              </Pressable>
+            </Animated.View>
+          </ScrollView>
+        </SafeAreaView>
+      </LinearGradient>
+    );
+  }
+
+  // ─── Step 2: Form for selected role ──────────────────────
   const isOrg = role === "organisme";
 
   return (
@@ -143,32 +248,20 @@ export default function RegisterScreen() {
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
           >
-            <Animated.View style={[styles.header, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
-              <Pressable onPress={() => router.back()} style={styles.backBtn}>
+            <Animated.View
+              style={[styles.header, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}
+            >
+              <Pressable onPress={() => setRole(null)} style={styles.backBtn}>
                 <Feather name="arrow-left" size={22} color="#ffffff" />
               </Pressable>
               <View style={styles.flex}>
-                <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>Créer un compte</Text>
-                <Text style={styles.subtitle} numberOfLines={1}>Rejoignez AttenteZéro</Text>
+                <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
+                  {isOrg ? "Compte Organisme" : "Compte Personne"}
+                </Text>
+                <Text style={styles.subtitle} numberOfLines={1}>
+                  {isOrg ? "14 jours gratuits, sans carte" : "Inscription gratuite"}
+                </Text>
               </View>
-            </Animated.View>
-
-            {/* Role selector */}
-            <Animated.View style={[styles.roleRow, { opacity: fadeAnim }]}>
-              <Pressable
-                style={[styles.roleBtn, !isOrg && styles.roleBtnActive]}
-                onPress={() => setRole("user")}
-              >
-                <Feather name="user" size={16} color={!isOrg ? "#0e7e6e" : "rgba(255,255,255,0.8)"} />
-                <Text style={[styles.roleText, !isOrg && styles.roleTextActive]}>Personne</Text>
-              </Pressable>
-              <Pressable
-                style={[styles.roleBtn, isOrg && styles.roleBtnActive]}
-                onPress={() => setRole("organisme")}
-              >
-                <Feather name="briefcase" size={16} color={isOrg ? "#0e7e6e" : "rgba(255,255,255,0.8)"} />
-                <Text style={[styles.roleText, isOrg && styles.roleTextActive]}>Organisme</Text>
-              </Pressable>
             </Animated.View>
 
             <Animated.View
@@ -205,7 +298,7 @@ export default function RegisterScreen() {
                 <Feather name="mail" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="Adresse courriel"
+                  placeholder={isOrg ? "Courriel professionnel" : "Adresse courriel"}
                   placeholderTextColor="rgba(255,255,255,0.5)"
                   value={email}
                   onChangeText={setEmail}
@@ -317,32 +410,21 @@ export default function RegisterScreen() {
                     />
                   </View>
 
-                  {/* Plan selector */}
-                  <Text style={styles.sectionLabel}>Choisir votre formule</Text>
-                  <View style={styles.planRow}>
-                    <Pressable
-                      style={[styles.planCard, plan === "standard" && styles.planCardActive]}
-                      onPress={() => setPlan("standard")}
-                    >
-                      <Text style={styles.planTitle}>Standard</Text>
-                      <Text style={styles.planPrice}>39 $/mois</Text>
-                      <Text style={styles.planNote}>Profil + statistiques</Text>
-                    </Pressable>
-                    <Pressable
-                      style={[styles.planCard, plan === "plus" && styles.planCardActive]}
-                      onPress={() => setPlan("plus")}
-                    >
-                      <View style={styles.planBadge}><Text style={styles.planBadgeText}>POPULAIRE</Text></View>
-                      <Text style={styles.planTitle}>Plus</Text>
-                      <Text style={styles.planPrice}>89 $/mois</Text>
-                      <Text style={styles.planNote}>Mise en avant + badge</Text>
-                    </Pressable>
+                  {/* Plan summary (no choice — single plan) */}
+                  <View style={styles.planSummary}>
+                    <View style={styles.planSummaryHead}>
+                      <Text style={styles.planSummaryTitle}>Plan Organisme</Text>
+                      <Text style={styles.planSummaryPrice}>39 $/mois</Text>
+                    </View>
+                    <Text style={styles.planSummaryNote} numberOfLines={2}>
+                      Profil complet · Badge vérifié · Statistiques · Mise en avant
+                    </Text>
                   </View>
 
                   <View style={styles.trialBox}>
                     <Feather name="gift" size={14} color="#fbbf24" />
-                    <Text style={styles.trialText}>
-                      Essai gratuit 14 jours · Sans carte bancaire requise
+                    <Text style={styles.trialText} numberOfLines={2}>
+                      14 jours gratuits · Sans carte bancaire · Annulable à tout moment
                     </Text>
                   </View>
                 </>
@@ -360,12 +442,12 @@ export default function RegisterScreen() {
                 disabled={loading}
                 style={({ pressed }) => [styles.registerButton, pressed && { opacity: 0.85 }]}
               >
-                <Text style={styles.registerButtonText}>
+                <Text style={styles.registerButtonText} numberOfLines={1} adjustsFontSizeToFit>
                   {loading
                     ? "Création du compte..."
                     : isOrg
                     ? "Commencer mon essai gratuit"
-                    : "S'inscrire"}
+                    : "Créer mon compte"}
                 </Text>
               </Pressable>
             </Animated.View>
@@ -380,7 +462,9 @@ export default function RegisterScreen() {
             <Animated.View style={[styles.disclaimerRow, { opacity: fadeAnim }]}>
               <Text style={styles.disclaimer}>En continuant, vous acceptez nos </Text>
               <Pressable onPress={() => router.push("/legal" as any)}>
-                <Text style={styles.disclaimerLink}>conditions d'utilisation et notre politique de confidentialité</Text>
+                <Text style={styles.disclaimerLink}>
+                  conditions d'utilisation et notre politique de confidentialité
+                </Text>
               </Pressable>
               <Text style={styles.disclaimer}>.</Text>
             </Animated.View>
@@ -423,37 +507,75 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 13,
     fontFamily: "Inter_400Regular",
-    color: "rgba(255,255,255,0.7)",
+    color: "rgba(255,255,255,0.75)",
     marginTop: 2,
   },
-  roleRow: {
-    flexDirection: "row",
-    backgroundColor: "rgba(255,255,255,0.1)",
-    borderRadius: 14,
-    padding: 4,
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.18)",
+
+  /* Step 1 — choice cards */
+  choiceWrap: {
+    gap: 14,
+    marginTop: 4,
   },
-  roleBtn: {
-    flex: 1,
+  choiceCard: {
     flexDirection: "row",
     alignItems: "center",
+    gap: 14,
+    padding: 16,
+    backgroundColor: "rgba(255,255,255,0.12)",
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.22)",
+  },
+  choiceIcon: {
+    width: 54,
+    height: 54,
+    borderRadius: 14,
+    alignItems: "center",
     justifyContent: "center",
-    gap: 6,
-    paddingVertical: 11,
+    flexShrink: 0,
+  },
+  choiceTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    minWidth: 0,
+  },
+  choiceTitle: {
+    fontSize: 17,
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+    flexShrink: 1,
+  },
+  choicePill: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
     borderRadius: 10,
+    flexShrink: 0,
   },
-  roleBtnActive: {
-    backgroundColor: "#fff",
+  choicePillText: {
+    fontSize: 10,
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+    letterSpacing: 0.4,
   },
-  roleText: {
-    fontSize: 13,
-    fontFamily: "Inter_600SemiBold",
-    color: "rgba(255,255,255,0.8)",
+  choiceDesc: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.85)",
+    lineHeight: 17,
+    marginTop: 4,
   },
-  roleTextActive: {
-    color: "#0e7e6e",
+  choicePerks: {
+    marginTop: 6,
+    gap: 2,
   },
+  choicePerk: {
+    fontSize: 11,
+    fontFamily: "Inter_500Medium",
+    color: "rgba(255,255,255,0.95)",
+  },
+
+  /* Step 2 — form */
   formCard: {
     width: "100%",
     backgroundColor: "rgba(255,255,255,0.12)",
@@ -495,54 +617,36 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     marginTop: 2,
   },
-  planRow: {
-    flexDirection: "row",
-    gap: 10,
-  },
-  planCard: {
-    flex: 1,
-    backgroundColor: "rgba(255,255,255,0.08)",
-    borderWidth: 1.5,
+  planSummary: {
+    backgroundColor: "rgba(255,255,255,0.1)",
+    borderRadius: 12,
+    borderWidth: 1,
     borderColor: "rgba(255,255,255,0.2)",
-    borderRadius: 14,
-    paddingVertical: 14,
-    paddingHorizontal: 12,
+    padding: 12,
     gap: 4,
-    position: "relative",
+    marginTop: 4,
   },
-  planCardActive: {
-    backgroundColor: "rgba(255,255,255,0.22)",
-    borderColor: "#fff",
+  planSummaryHead: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    justifyContent: "space-between",
+    gap: 8,
   },
-  planTitle: {
-    fontSize: 15,
+  planSummaryTitle: {
+    fontSize: 14,
     fontFamily: "Inter_700Bold",
     color: "#fff",
   },
-  planPrice: {
-    fontSize: 18,
+  planSummaryPrice: {
+    fontSize: 16,
     fontFamily: "Inter_700Bold",
     color: "#fff",
   },
-  planNote: {
+  planSummaryNote: {
     fontSize: 11,
     fontFamily: "Inter_400Regular",
-    color: "rgba(255,255,255,0.75)",
-  },
-  planBadge: {
-    position: "absolute",
-    top: -8,
-    right: 8,
-    backgroundColor: "#fbbf24",
-    borderRadius: 10,
-    paddingHorizontal: 7,
-    paddingVertical: 2,
-  },
-  planBadgeText: {
-    fontSize: 9,
-    fontFamily: "Inter_700Bold",
-    color: "#1f1300",
-    letterSpacing: 0.5,
+    color: "rgba(255,255,255,0.8)",
+    lineHeight: 16,
   },
   trialBox: {
     flexDirection: "row",
@@ -580,6 +684,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderRadius: 14,
     paddingVertical: 15,
+    paddingHorizontal: 12,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 4,
