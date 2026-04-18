@@ -53,3 +53,9 @@ id = "pnp-CXV5rHv64bxDQPkXz"
 uri = "file://exports/service-qc-update.zip"
 type = "unspecified"
 title = "Mise à jour AttenteZéro — 6 fichiers (18 avril)"
+
+[[outputs]]
+id = "IlpRIhzxsxG93WBCMoeKL"
+uri = "file://exports/AttenteZero-Presentation.pdf"
+type = "pdf"
+title = "AttenteZéro — Présentation officielle (7 pages)"
