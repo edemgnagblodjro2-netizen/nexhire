@@ -71,10 +71,9 @@ export default function HomeScreen() {
 
   function handleQuickPrompt(prompt: string) {
     Haptics.selectionAsync();
-    const result = detectCategory(prompt);
     router.push({
-      pathname: "/results",
-      params: { query: prompt, category: result.category ?? "all" },
+      pathname: "/(tabs)/chat" as any,
+      params: { autoPrompt: prompt },
     });
   }
 

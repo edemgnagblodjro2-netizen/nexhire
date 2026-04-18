@@ -139,6 +139,45 @@ stripeRouter.post("/stripe/create-checkout-session", async (req, res) => {
 });
 
 // ─────────────────────────────────────────────
+// POST /api/stripe/create-user-premium-session
+// Body: { email?, userId? } → 10$ CAD ONE-TIME payment for user premium upgrade
+// ─────────────────────────────────────────────
+stripeRouter.post("/stripe/create-user-premium-session", async (req, res) => {
+  try {
+    const stripe = await getUncachableStripeClient();
+    const { email, userId } = req.body || {};
+
+    const baseUrl =
+      process.env.REPLIT_DEPLOYMENT === "1"
+        ? `https://${process.env.REPLIT_DOMAINS?.split(",")[0]}`
+        : `https://quebec-aid-finder.replit.app`;
+
+    const priceId = await getOrCreateUserPremiumPriceId(stripe);
+
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      payment_method_types: ["card"],
+      currency: "cad",
+      line_items: [{ price: priceId, quantity: 1 }],
+      customer_email: email || undefined,
+      metadata: {
+        userId: userId || "",
+        plan: "user-premium",
+        appName: "AttenteZéro",
+      },
+      success_url: `${baseUrl}/api/stripe/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/api/stripe/payment-cancel`,
+      locale: "fr",
+    });
+
+    res.json({ url: session.url, sessionId: session.id });
+  } catch (err: any) {
+    logger.error({ err }, "Failed to create user premium session");
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────
 // POST /api/stripe/billing-portal
 // Body: { organisationId } → returns URL to manage subscription
 // ─────────────────────────────────────────────
@@ -526,6 +565,45 @@ stripeRouter.get("/stripe/payment-cancel", (_req, res) => {
 // ─────────────────────────────────────────────
 // Helper: get or create Stripe price for a (plan, interval) combo
 // ─────────────────────────────────────────────
+async function getOrCreateUserPremiumPriceId(stripe: any): Promise<string> {
+  const productName = "AttenteZéro Premium (Utilisateur)";
+  const unitAmount = 1000; // 10.00 CAD
+
+  const products = await stripe.products.search({
+    query: `name:'${productName}' AND active:'true'`,
+  });
+
+  let productId: string;
+  if (products.data.length > 0) {
+    productId = products.data[0].id;
+  } else {
+    const product = await stripe.products.create({
+      name: productName,
+      description: "Accès Premium à vie : chat IA illimité, favoris, alertes personnalisées.",
+      metadata: { app: "attentezero", plan: "user-premium" },
+    });
+    productId = product.id;
+  }
+
+  const prices = await stripe.prices.list({
+    product: productId,
+    active: true,
+    type: "one_time",
+    currency: "cad",
+    limit: 10,
+  });
+
+  const matching = prices.data.find((p: any) => p.unit_amount === unitAmount);
+  if (matching) return matching.id;
+
+  const price = await stripe.prices.create({
+    product: productId,
+    unit_amount: unitAmount,
+    currency: "cad",
+  });
+  return price.id;
+}
+
 async function getOrCreatePriceId(stripe: any, plan: PlanKey, interval: IntervalKey): Promise<string> {
   const productName = PRICING[plan].productName;
   const stripeInterval = interval === "annual" ? "year" : "month";

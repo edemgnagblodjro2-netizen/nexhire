@@ -1,6 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -275,6 +275,8 @@ export default function ChatScreen() {
   const { t, language } = useLanguage();
   const { isAuthenticated, isLoading: authLoading } = useAuth();
   const router = useRouter();
+  const params = useLocalSearchParams<{ autoPrompt?: string }>();
+  const autoSentRef = useRef<string | null>(null);
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -460,6 +462,20 @@ export default function ChatScreen() {
     },
     [isLoading, messages, language, chatLang, scrollToBottom, t.aiError]
   );
+
+  // Auto-send prompt from URL params (e.g. coming from home screen quick prompts)
+  useEffect(() => {
+    const prompt = params.autoPrompt;
+    if (!prompt || typeof prompt !== "string") return;
+    if (!isAuthenticated) return;
+    if (autoSentRef.current === prompt) return;
+    autoSentRef.current = prompt;
+    const t = setTimeout(() => {
+      sendMessage(prompt);
+      router.setParams({ autoPrompt: undefined });
+    }, 250);
+    return () => clearTimeout(t);
+  }, [params.autoPrompt, isAuthenticated, sendMessage, router]);
 
   const handleReset = useCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);

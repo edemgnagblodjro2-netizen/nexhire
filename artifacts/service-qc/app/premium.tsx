@@ -2,9 +2,12 @@ import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Linking from "expo-linking";
+import * as WebBrowser from "expo-web-browser";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
+  ActivityIndicator,
+  Alert,
   Platform,
   Pressable,
   ScrollView,
@@ -15,10 +18,12 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useColors } from "@/hooks/useColors";
+import { useAuth } from "@/lib/auth";
+import { getApiBaseUrl } from "@/lib/apiBase";
 
 const CONTACT_EMAIL = "attentezero5@gmail.com";
 
-type TierId = "users" | "orgs" | "cities" | "enterprise" | "donations";
+type TierId = "users" | "orgs";
 
 type Tier = {
   id: TierId;
@@ -29,9 +34,10 @@ type Tier = {
   tagline: string;
   priceLabel: string;
   priceUnit: string | null;
+  trialBadge?: string;
   perks: string[];
-  ctaLabel: string | null;
-  isFree: boolean;
+  ctaLabel: string;
+  ctaKind: "premium" | "trial" | "contact";
 };
 
 const TIERS: Tier[] = [
@@ -41,116 +47,143 @@ const TIERS: Tier[] = [
     color: "#10b981",
     gradColors: ["#065f46", "#10b981"],
     audience: "Utilisateurs",
-    tagline: "L'aide, toujours gratuite",
-    priceLabel: "GRATUIT",
+    tagline: "Trouvez de l'aide gratuitement",
+    priceLabel: "Gratuit",
     priceUnit: null,
     perks: [
-      "Rechercher parmi 457 services",
+      "Rechercher parmi tous les services",
       "Appeler directement les organismes",
-      "Chat IA multilingue (FR · EN · ES · AR · HT)",
-      "SOS urgences avec tri géolocalisé",
-      "Carte interactive des services",
+      "SOS urgences avec tri par proximité",
+      "Répertoire des services par ville",
     ],
-    ctaLabel: null,
-    isFree: true,
+    ctaLabel: "Continuer gratuitement",
+    ctaKind: "premium",
+  },
+  {
+    id: "users",
+    emoji: "⭐",
+    color: "#7c3aed",
+    gradColors: ["#4c1d95", "#7c3aed"],
+    audience: "Utilisateur Premium",
+    tagline: "Débloquez le chat IA et les favoris à vie",
+    priceLabel: "10 $",
+    priceUnit: "une seule fois",
+    perks: [
+      "Tout du forfait gratuit",
+      "Chat IA multilingue illimité (FR · EN · ES · AR · HT)",
+      "Sauvegarder vos services favoris",
+      "Alertes critiques personnalisées",
+      "Aucun abonnement — payez une fois, gardez à vie",
+    ],
+    ctaLabel: "Devenir Premium — 10 $",
+    ctaKind: "premium",
   },
   {
     id: "orgs",
-    emoji: "🟡",
-    color: "#d97706",
-    gradColors: ["#92400e", "#d97706"],
-    audience: "Organismes communautaires",
-    tagline: "Soyez trouvés plus rapidement",
-    priceLabel: "25 $–300 $",
-    priceUnit: "/mois",
+    emoji: "🏢",
+    color: "#0e7e6e",
+    gradColors: ["#064e3b", "#0e7e6e"],
+    audience: "Organismes & Partenaires",
+    tagline: "Soyez visible auprès des personnes qui ont besoin de vous",
+    priceLabel: "39 $",
+    priceUnit: "/ mois",
+    trialBadge: "14 jours d'essai gratuit",
     perks: [
-      "Fiche de base incluse gratuitement",
-      "Visibilité améliorée dans les résultats",
-      "Profil enrichi + mise en avant",
-      "Priorité maximale + statistiques de trafic",
+      "Profil organisme complet (logo, photos, horaires)",
+      "Badge « Vérifié » pour rassurer les utilisateurs",
+      "Mise en avant dans les résultats",
+      "Statistiques de vues et appels reçus",
+      "Aucune carte de crédit requise pour l'essai",
+      "Annulable à tout moment",
     ],
-    ctaLabel: "Nous contacter",
-    isFree: false,
+    ctaLabel: "Démarrer l'essai gratuit 14 jours",
+    ctaKind: "trial",
   },
-  {
-    id: "cities",
-    emoji: "🟣",
-    color: "#7c3aed",
-    gradColors: ["#3b0764", "#7c3aed"],
-    audience: "Villes & Gouvernements",
-    tagline: "Un outil de territoire",
-    priceLabel: "5 000 $–25 000 $",
-    priceUnit: "/an",
-    perks: [
-      "Améliorer l'accès aux services publics",
-      "Outil officiel pour vos citoyens",
-      "Tableau de bord d'impact et données",
-      "Intégration personnalisée au territoire",
-    ],
-    ctaLabel: "Discuter avec nous",
-    isFree: false,
-  },
-  {
-    id: "enterprise",
-    emoji: "🔵",
-    color: "#0891b2",
-    gradColors: ["#0c4a6e", "#0891b2"],
-    audience: "Entreprises privées",
-    tagline: "Cliniques, services professionnels",
-    priceLabel: "50 $–200 $",
-    priceUnit: "/mois",
-    perks: [
-      "Inscription dans le répertoire AttenteZéro",
-      "Visibilité ciblée dans votre catégorie",
-      "Génération de demandes qualifiées",
-    ],
-    ctaLabel: "Nous contacter",
-    isFree: false,
-  },
-  {
-    id: "donations",
-    emoji: "🟤",
-    color: "#78716c",
-    gradColors: ["#44403c", "#78716c"],
-    audience: "Dons",
-    tagline: "Soutenez la mission",
-    priceLabel: "Libre",
-    priceUnit: null,
-    perks: [
-      "Contribuez directement à la mission",
-      "Maintenez la plateforme gratuite",
-      "Reçu fiscal (bientôt disponible)",
-    ],
-    ctaLabel: "Faire un don",
-    isFree: false,
-  },
-];
-
-const SUMMARY_ROWS = [
-  { label: "Utilisateurs", price: "✅ Gratuit", color: "#10b981" },
-  { label: "Organismes", price: "25 $–300 $/mois", color: "#d97706" },
-  { label: "Villes", price: "5 k$–25 k$/an", color: "#7c3aed" },
-  { label: "Entreprises", price: "50 $–200 $/mois", color: "#0891b2" },
-  { label: "Dons", price: "Libre", color: "#78716c" },
 ];
 
 export default function PremiumScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const [openId, setOpenId] = useState<TierId | null>("users");
+  const { user, isAuthenticated } = useAuth();
+  const [loadingTier, setLoadingTier] = useState<string | null>(null);
 
-  function handleContact(tier: Tier) {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    const subject = encodeURIComponent(
-      tier.id === "donations"
-        ? "Don — AttenteZéro"
-        : `Partenariat AttenteZéro — ${tier.audience}`
-    );
-    const body = encodeURIComponent(
-      `Bonjour,\n\nJe souhaite en savoir plus sur ${tier.audience === "Dons" ? "les dons à" : "le partenariat"} AttenteZéro.\n\nMerci.`
-    );
-    Linking.openURL(`mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`);
+  async function handleUserPremium() {
+    if (!isAuthenticated) {
+      Alert.alert(
+        "Connexion requise",
+        "Connectez-vous d'abord pour acheter le forfait Premium.",
+        [
+          { text: "Annuler", style: "cancel" },
+          { text: "Se connecter", onPress: () => router.push("/login" as any) },
+        ]
+      );
+      return;
+    }
+    try {
+      setLoadingTier("user-premium");
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      const res = await fetch(`${getApiBaseUrl()}/api/stripe/create-user-premium-session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: user?.email,
+          userId: user?.id,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error || "Erreur de paiement");
+      await WebBrowser.openBrowserAsync(data.url);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Erreur inconnue";
+      Alert.alert("Paiement impossible", msg);
+    } finally {
+      setLoadingTier(null);
+    }
+  }
+
+  async function handleOrgTrial() {
+    if (!isAuthenticated) {
+      Alert.alert(
+        "Compte requis",
+        "Créez un compte organisme pour démarrer votre essai gratuit de 14 jours.",
+        [
+          { text: "Annuler", style: "cancel" },
+          { text: "Créer un compte", onPress: () => router.push("/register" as any) },
+        ]
+      );
+      return;
+    }
+    try {
+      setLoadingTier("org-trial");
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      const res = await fetch(`${getApiBaseUrl()}/api/stripe/create-checkout-session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: user?.email,
+          userId: user?.id,
+          plan: "standard",
+          interval: "monthly",
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error || "Erreur de paiement");
+      await WebBrowser.openBrowserAsync(data.url);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Erreur inconnue";
+      Alert.alert("Inscription impossible", msg);
+    } finally {
+      setLoadingTier(null);
+    }
+  }
+
+  function handleTierCta(tier: Tier, idx: number) {
+    if (tier.ctaKind === "trial") return handleOrgTrial();
+    if (tier.ctaKind === "premium" && idx === 1) return handleUserPremium();
+    // First "free" tier — just go back / show toast
+    Haptics.selectionAsync();
+    router.back();
   }
 
   return (
@@ -177,145 +210,117 @@ export default function PremiumScreen() {
           </Pressable>
           <View style={styles.chip}>
             <Feather name="zap" size={10} color="#34d399" />
-            <Text style={styles.chipText}>MODÈLE ÉCONOMIQUE</Text>
+            <Text style={styles.chipText}>TARIFICATION</Text>
           </View>
           <View style={{ width: 38 }} />
         </View>
 
-        <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>Tarification</Text>
+        <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>Nos forfaits</Text>
 
-        <View style={styles.keyPhraseRow}>
-          <Feather name="heart" size={13} color="#34d399" />
-          <Text style={styles.keyPhrase} numberOfLines={3}>
-            "L'aide est gratuite. Nous facilitons simplement l'accès rapide et intelligent à cette aide."
-          </Text>
-        </View>
-
-        {/* Logic pills */}
-        <View style={styles.logicRow}>
-          <View style={[styles.logicPill, { backgroundColor: "rgba(16,185,129,0.2)", borderColor: "rgba(52,211,153,0.35)" }]}>
-            <Feather name="check-circle" size={11} color="#34d399" />
-            <Text style={[styles.logicText, { color: "#34d399" }]}>Chercheurs d'aide → toujours gratuit</Text>
-          </View>
-          <View style={[styles.logicPill, { backgroundColor: "rgba(251,191,36,0.18)", borderColor: "rgba(251,191,36,0.3)" }]}>
-            <Feather name="dollar-sign" size={11} color="#fbbf24" />
-            <Text style={[styles.logicText, { color: "#fbbf24" }]}>Organismes visibles → formule payante</Text>
-          </View>
-        </View>
+        <Text style={styles.headerSub} numberOfLines={3}>
+          Toujours gratuit pour trouver de l'aide. Premium et organismes financent la plateforme.
+        </Text>
       </LinearGradient>
 
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[styles.scroll, { paddingBottom: insets.bottom + 32 }]}
       >
-        {/* ─── Tier accordion ─── */}
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Les 5 paliers</Text>
-
-        {TIERS.map((tier) => {
-          const isOpen = openId === tier.id;
+        {TIERS.map((tier, idx) => {
+          const isLoading =
+            (tier.ctaKind === "trial" && loadingTier === "org-trial") ||
+            (tier.ctaKind === "premium" && idx === 1 && loadingTier === "user-premium");
           return (
             <View
-              key={tier.id}
+              key={`${tier.id}-${idx}`}
               style={[
                 styles.card,
                 {
                   backgroundColor: colors.card,
-                  borderColor: isOpen ? tier.color + "55" : colors.border,
-                  borderWidth: isOpen ? 1.5 : 1,
+                  borderColor: tier.color + "40",
                 },
               ]}
             >
-              {/* Colored left bar */}
-              <View style={[styles.leftBar, { backgroundColor: tier.color }]} />
-
-              <Pressable
-                onPress={() => {
-                  Haptics.selectionAsync();
-                  setOpenId(isOpen ? null : tier.id);
-                }}
+              <LinearGradient
+                colors={tier.gradColors}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
                 style={styles.cardHeader}
               >
-                <Text style={styles.tierEmoji}>{tier.emoji}</Text>
-                <View style={styles.tierInfo}>
-                  <Text style={[styles.tierName, { color: colors.foreground }]} numberOfLines={1}>
-                    {tier.audience}
-                  </Text>
-                  <Text style={[styles.tierTagline, { color: colors.mutedForeground }]} numberOfLines={1}>
-                    {tier.tagline}
-                  </Text>
+                <View style={styles.cardHeaderTop}>
+                  <Text style={styles.tierEmoji}>{tier.emoji}</Text>
+                  <View style={styles.tierTextWrap}>
+                    <Text style={styles.tierName} numberOfLines={1} adjustsFontSizeToFit>
+                      {tier.audience}
+                    </Text>
+                    <Text style={styles.tierTagline} numberOfLines={2}>
+                      {tier.tagline}
+                    </Text>
+                  </View>
                 </View>
-                <View style={[styles.priceBadge, { backgroundColor: tier.color + "18" }]}>
-                  <Text style={[styles.priceText, { color: tier.color }]} numberOfLines={1} adjustsFontSizeToFit>
+
+                <View style={styles.priceRow}>
+                  <Text style={styles.priceText} numberOfLines={1} adjustsFontSizeToFit>
                     {tier.priceLabel}
                   </Text>
                   {tier.priceUnit && (
-                    <Text style={[styles.priceUnit, { color: tier.color + "cc" }]}>{tier.priceUnit}</Text>
+                    <Text style={styles.priceUnit} numberOfLines={1}>{tier.priceUnit}</Text>
                   )}
                 </View>
-                <Feather
-                  name={isOpen ? "chevron-up" : "chevron-down"}
-                  size={16}
-                  color={colors.mutedForeground}
-                  style={{ marginLeft: 6, flexShrink: 0 }}
-                />
-              </Pressable>
 
-              {isOpen && (
-                <View style={[styles.cardBody, { borderTopColor: colors.border }]}>
-                  {tier.perks.map((perk, idx) => (
-                    <View key={idx} style={styles.perkRow}>
-                      <View style={[styles.perkDot, { backgroundColor: tier.color }]} />
-                      <Text style={[styles.perkText, { color: colors.foreground }]}>{perk}</Text>
+                {tier.trialBadge && (
+                  <View style={styles.trialBadge}>
+                    <Feather name="gift" size={12} color="#fff" />
+                    <Text style={styles.trialBadgeText}>{tier.trialBadge}</Text>
+                  </View>
+                )}
+              </LinearGradient>
+
+              <View style={styles.cardBody}>
+                {tier.perks.map((perk, pidx) => (
+                  <View key={pidx} style={styles.perkRow}>
+                    <View style={[styles.perkCheck, { backgroundColor: tier.color + "20" }]}>
+                      <Feather name="check" size={11} color={tier.color} />
                     </View>
-                  ))}
+                    <Text style={[styles.perkText, { color: colors.foreground }]}>
+                      {perk}
+                    </Text>
+                  </View>
+                ))}
 
-                  {tier.ctaLabel && (
-                    <Pressable
-                      onPress={() => handleContact(tier)}
-                      style={({ pressed }) => [
-                        styles.ctaBtn,
-                        { backgroundColor: tier.color, opacity: pressed ? 0.85 : 1 },
-                      ]}
-                    >
-                      <Feather name="mail" size={14} color="#fff" />
-                      <Text style={styles.ctaBtnText}>{tier.ctaLabel}</Text>
-                      <Feather name="external-link" size={13} color="rgba(255,255,255,0.75)" />
-                    </Pressable>
+                <Pressable
+                  onPress={() => handleTierCta(tier, idx)}
+                  disabled={isLoading}
+                  style={({ pressed }) => [
+                    styles.ctaBtn,
+                    { backgroundColor: tier.color, opacity: pressed || isLoading ? 0.85 : 1 },
+                  ]}
+                >
+                  {isLoading ? (
+                    <ActivityIndicator size="small" color="#fff" />
+                  ) : (
+                    <>
+                      <Feather
+                        name={tier.ctaKind === "trial" ? "gift" : tier.ctaKind === "premium" && idx === 1 ? "star" : "check"}
+                        size={15}
+                        color="#fff"
+                      />
+                      <Text style={styles.ctaBtnText} numberOfLines={1} adjustsFontSizeToFit>
+                        {tier.ctaLabel}
+                      </Text>
+                    </>
                   )}
-                </View>
-              )}
+                </Pressable>
+              </View>
             </View>
           );
         })}
-
-        {/* ─── Summary table ─── */}
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Résumé</Text>
-
-        <View style={[styles.table, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          {SUMMARY_ROWS.map((row, i) => (
-            <View
-              key={row.label}
-              style={[
-                styles.tableRow,
-                i < SUMMARY_ROWS.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border },
-              ]}
-            >
-              <View style={styles.tableLeft}>
-                <View style={[styles.dot, { backgroundColor: row.color }]} />
-                <Text style={[styles.tableLabel, { color: colors.foreground }]}>{row.label}</Text>
-              </View>
-              <Text style={[styles.tablePrice, { color: row.color }]} numberOfLines={1} adjustsFontSizeToFit>
-                {row.price}
-              </Text>
-            </View>
-          ))}
-        </View>
 
         {/* ─── Contact CTA ─── */}
         <Pressable
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            Linking.openURL(`mailto:${CONTACT_EMAIL}?subject=Partenariat%20AttenteZ%C3%A9ro`);
+            Linking.openURL(`mailto:${CONTACT_EMAIL}?subject=Question%20%E2%80%94%20AttenteZ%C3%A9ro`);
           }}
           style={({ pressed }) => [
             styles.contactCard,
@@ -331,7 +336,9 @@ export default function PremiumScreen() {
             <Feather name="mail" size={18} color="#fff" />
           </LinearGradient>
           <View style={styles.contactText}>
-            <Text style={[styles.contactTitle, { color: colors.foreground }]}>Organisme ou ville ?</Text>
+            <Text style={[styles.contactTitle, { color: colors.foreground }]} numberOfLines={1}>
+              Une question ?
+            </Text>
             <Text style={[styles.contactSub, { color: "#0e7e6e" }]} numberOfLines={1}>
               {CONTACT_EMAIL}
             </Text>
@@ -343,7 +350,7 @@ export default function PremiumScreen() {
         <View style={[styles.missionCard, { backgroundColor: "#0e7e6e10", borderColor: "#0e7e6e30" }]}>
           <Feather name="heart" size={15} color="#0e7e6e" style={{ flexShrink: 0, marginTop: 1 }} />
           <Text style={[styles.missionText, { color: colors.mutedForeground }]}>
-            AttenteZéro est né pour que personne ne reste sans aide. L'accès reste toujours gratuit pour les personnes vulnérables — c'est notre engagement fondamental.
+            L'accès à l'aide reste toujours gratuit. Premium et abonnements organismes financent l'app pour la garder vivante.
           </Text>
         </View>
       </ScrollView>
@@ -354,10 +361,10 @@ export default function PremiumScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1 },
 
-  /* ─── Header ─── */
+  /* Header */
   header: {
     paddingHorizontal: 18,
-    paddingBottom: 20,
+    paddingBottom: 22,
     overflow: "hidden",
     gap: 12,
   },
@@ -410,206 +417,145 @@ const styles = StyleSheet.create({
     letterSpacing: 0.8,
   },
   headerTitle: {
-    fontSize: 30,
+    fontSize: 28,
     fontFamily: "Inter_700Bold",
     color: "#fff",
     letterSpacing: -0.5,
   },
-  keyPhraseRow: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    gap: 8,
-    backgroundColor: "rgba(255,255,255,0.1)",
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.15)",
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-  },
-  keyPhrase: {
-    flex: 1,
-    fontSize: 12,
-    fontFamily: "Inter_500Medium",
-    color: "rgba(255,255,255,0.9)",
-    fontStyle: "italic",
-    lineHeight: 18,
-  },
-  logicRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 6,
-  },
-  logicPill: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 5,
-    borderRadius: 20,
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    flexShrink: 1,
-  },
-  logicText: {
-    fontSize: 11,
-    fontFamily: "Inter_500Medium",
-    flexShrink: 1,
+  headerSub: {
+    fontSize: 13,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.85)",
+    lineHeight: 19,
   },
 
-  /* ─── Scroll body ─── */
+  /* Scroll */
   scroll: {
     paddingHorizontal: 16,
-    paddingTop: 20,
-    gap: 10,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: -0.2,
-    marginTop: 4,
-    marginBottom: 2,
+    paddingTop: 18,
+    gap: 14,
   },
 
-  /* ─── Tier card ─── */
+  /* Card */
   card: {
-    borderRadius: 14,
-    borderWidth: 1,
+    borderRadius: 18,
+    borderWidth: 1.5,
     overflow: "hidden",
   },
-  leftBar: {
-    position: "absolute",
-    left: 0,
-    top: 0,
-    bottom: 0,
-    width: 4,
-  },
   cardHeader: {
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 14,
+    gap: 10,
+  },
+  cardHeaderTop: {
     flexDirection: "row",
     alignItems: "center",
-    paddingLeft: 16,
-    paddingRight: 12,
-    paddingVertical: 13,
-    gap: 10,
+    gap: 12,
     minWidth: 0,
   },
   tierEmoji: {
-    fontSize: 20,
+    fontSize: 28,
     flexShrink: 0,
   },
-  tierInfo: {
+  tierTextWrap: {
     flex: 1,
     minWidth: 0,
     gap: 2,
   },
   tierName: {
-    fontSize: 14,
-    fontFamily: "Inter_600SemiBold",
+    fontSize: 17,
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+    letterSpacing: -0.2,
   },
   tierTagline: {
-    fontSize: 11,
+    fontSize: 12,
     fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.85)",
+    lineHeight: 16,
   },
-  priceBadge: {
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    alignItems: "flex-end",
-    flexShrink: 0,
-    maxWidth: 110,
+  priceRow: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    gap: 8,
+    flexWrap: "wrap",
   },
   priceText: {
-    fontSize: 12,
+    fontSize: 32,
     fontFamily: "Inter_700Bold",
+    color: "#fff",
+    letterSpacing: -1,
   },
   priceUnit: {
-    fontSize: 9,
-    fontFamily: "Inter_400Regular",
-    lineHeight: 12,
+    fontSize: 13,
+    fontFamily: "Inter_500Medium",
+    color: "rgba(255,255,255,0.85)",
+  },
+  trialBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "flex-start",
+    gap: 6,
+    backgroundColor: "rgba(255,255,255,0.18)",
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.3)",
+  },
+  trialBadgeText: {
+    fontSize: 11,
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+    letterSpacing: 0.2,
   },
   cardBody: {
-    paddingLeft: 16,
-    paddingRight: 12,
-    paddingBottom: 14,
-    paddingTop: 10,
-    borderTopWidth: 1,
-    gap: 7,
+    paddingHorizontal: 16,
+    paddingTop: 14,
+    paddingBottom: 16,
+    gap: 10,
   },
   perkRow: {
     flexDirection: "row",
     alignItems: "flex-start",
-    gap: 9,
+    gap: 10,
     minWidth: 0,
   },
-  perkDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    marginTop: 6,
+  perkCheck: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
     flexShrink: 0,
+    marginTop: 1,
   },
   perkText: {
+    flex: 1,
     fontSize: 13,
     fontFamily: "Inter_400Regular",
-    lineHeight: 20,
-    flex: 1,
+    lineHeight: 19,
   },
   ctaBtn: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 7,
-    borderRadius: 10,
-    paddingVertical: 11,
-    marginTop: 4,
+    gap: 8,
+    borderRadius: 12,
+    paddingVertical: 13,
+    paddingHorizontal: 14,
+    marginTop: 8,
+    minHeight: 46,
   },
   ctaBtnText: {
-    fontSize: 13,
+    fontSize: 14,
     fontFamily: "Inter_600SemiBold",
     color: "#fff",
-    flex: 1,
-    textAlign: "center",
-  },
-
-  /* ─── Summary table ─── */
-  table: {
-    borderRadius: 14,
-    borderWidth: 1,
-    overflow: "hidden",
-  },
-  tableRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 14,
-    paddingVertical: 11,
-    gap: 8,
-  },
-  tableLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 9,
-    flex: 1,
-    minWidth: 0,
-  },
-  dot: {
-    width: 9,
-    height: 9,
-    borderRadius: 4.5,
-    flexShrink: 0,
-  },
-  tableLabel: {
-    fontSize: 13,
-    fontFamily: "Inter_500Medium",
     flexShrink: 1,
   },
-  tablePrice: {
-    fontSize: 12,
-    fontFamily: "Inter_700Bold",
-    flexShrink: 0,
-    maxWidth: 140,
-    textAlign: "right",
-  },
 
-  /* ─── Contact card ─── */
+  /* Contact card */
   contactCard: {
     flexDirection: "row",
     alignItems: "center",
@@ -617,6 +563,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1,
     padding: 14,
+    marginTop: 4,
   },
   contactIcon: {
     width: 44,
@@ -640,7 +587,7 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
   },
 
-  /* ─── Mission note ─── */
+  /* Mission card */
   missionCard: {
     flexDirection: "row",
     alignItems: "flex-start",
