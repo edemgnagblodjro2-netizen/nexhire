@@ -1,0 +1,145 @@
+=== STRUCTURE DU ZIP EXTRAIT ===
+PS D:\attentezero-app> Get-ChildItem "$env:USERPROFILE\Downloads\service-qc-new" -Recurse -Depth 2 | Select-Object FullName | Format-Table -AutoSize
+PS D:\attentezero-app>
+PS D:\attentezero-app> Write-Host "`n=== Y A-T-IL UN _layout.tsx DANS LE ZIP ? ===" -ForegroundColor Cyan
+
+=== Y A-T-IL UN _layout.tsx DANS LE ZIP ? ===
+PS D:\attentezero-app> Get-ChildItem "$env:USERPROFILE\Downloads\service-qc-new" -Recurse -Filter "_layout.tsx" | Select-Object FullName
+PS D:\attentezero-app>
+PS D:\attentezero-app> Write-Host "`n=== CE _layout.tsx CONTIENT-IL 'hidden' ? ===" -ForegroundColor Cyan
+
+=== CE _layout.tsx CONTIENT-IL 'hidden' ? ===
+PS D:\attentezero-app> Get-ChildItem "$env:USERPROFILE\Downloads\service-qc-new" -Recurse -Filter "_layout.tsx" | ForEach-Object {
+>>   Select-String -Path $_.FullName -Pattern "hidden"
+>> }
+PS D:\attentezero-app> Write-Host "`n=== 1. Le zip a-t-il été téléchargé ? ===" -ForegroundColor Cyan
+
+=== 1. Le zip a-t-il été téléchargé ? ===
+PS D:\attentezero-app> Get-ChildItem "$env:USERPROFILE\Downloads\*.zip" | Select-Object Name, LastWriteTime, Length
+
+Name                                                                              LastWriteTime              Length
+----                                                                              -------------              ------
+!Sat-Up-Open-1375--!Pa$$wØrD#!.zip                                                12/9/2024 4:10:32 PM     25882505
+192312.zip                                                                        9/25/2024 3:16:39 PM    281498114
+3.3.3.zip                                                                         12/28/2025 12:38:13 PM    6936466
+36fb550ddd555f20dbf0c4cb7316bf45.zip                                              11/9/2024 9:57:24 PM      8820575
+4008088-cee9f0fb267c20b69726f00ac6e09979958ec576.zip                              9/16/2024 8:15:48 PM         6602
+547.zip                                                                           9/20/2025 11:00:20 AM    46590558
+86903729.zip                                                                      1/2/2025 1:03:26 PM        286780
+Activité  Comptes clients - Journal des encaissements.html.zip                    10/10/2025 11:44:51 PM     178526
+Activité  Le plan professionnel.html.zip                                          3/9/2025 1:25:22 PM        128430
+administrative-assistant-resume-example-template-free-download-1.zip              8/10/2024 8:49:59 AM      5326012
+archive.zip                                                                       2/26/2025 11:10:57 AM     2126431
+BLOC-000-089-972-125 (1).zip                                                      3/3/2025 3:37:30 PM       1107556
+BLOC-000-089-972-125 (2).zip                                                      3/3/2025 3:37:31 PM       1107556
+BLOC-000-089-972-125 (3).zip                                                      8/9/2025 10:21:15 AM      1107726
+BLOC-000-089-972-125 (4).zip                                                      8/9/2025 10:21:15 AM      1107726
+BLOC-000-089-972-125 (5).zip                                                      1/5/2026 4:08:52 PM       1107608
+BLOC-000-089-972-125 (6).zip                                                      1/5/2026 4:08:53 PM       1107608
+BLOC-000-089-972-125.zip                                                          2/17/2025 4:35:19 PM       891768
+box-sizing-polyfill-master.zip                                                    9/25/2024 1:53:03 PM         4750
+BUR1026-Traitement de texte I-24A-01 - 9112024 - 1257 AM.zip                      9/11/2024 12:57:06 AM      909003
+BUR1029-Gestion de bureau I - Partie 1-24A-01 - 9102024 - 727 PM.zip              9/10/2024 7:27:19 PM        46770
+BUR1029-Gestion de bureau I - Partie 1-24A-01 - 962024 - 631 PM.zip               9/6/2024 6:31:44 PM       2297182
+CompressedFiles.zip                                                               10/11/2024 2:36:39 PM         491
+concept-solution-commerciale-globale.zip                                          10/9/2024 11:56:43 PM     1355241
+dba_nwashauto.zip                                                                 9/20/2024 8:50:15 PM         1646
+Design sans titre (1).zip                                                         1/2/2025 6:50:10 PM       1103383
+Design sans titre (2).zip                                                         1/2/2025 7:24:45 PM       1332484
+Design sans titre (3).zip                                                         1/2/2025 7:41:41 PM       2040809
+Design sans titre.zip                                                             1/2/2025 2:21:21 PM        864350
+design-screenshots.zip                                                            4/11/2026 10:27:07 PM     2757320
+Dossier BUR1004.zip                                                               1/22/2025 8:44:00 AM     52880945
+Dossiers_BUR1026 (1).zip                                                          9/6/2024 6:35:43 PM      16551299
+Dossiers_BUR1026 (2).zip                                                          9/11/2024 12:35:23 AM    16551299
+Dossiers_BUR1026 (3).zip                                                          9/11/2024 12:36:19 AM    16551299
+Dossiers_BUR1026.zip                                                              9/6/2024 6:35:41 PM      16551299
+drive-download-20251207T152318Z-1-001.zip                                         12/7/2025 10:23:30 AM    24492473
+drive-download-20251207T152346Z-1-001.zip                                         12/7/2025 10:24:40 AM   235485344
+drive-download-20251207T152459Z-1-001.zip                                         12/7/2025 10:25:12 AM    15677560
+drive-download-20251207T152525Z-1-001.zip                                         12/7/2025 10:25:49 AM    16954030
+ExcelCreatePivotTable.zip                                                         12/3/2024 11:11:39 AM      232246
+exports.zip                                                                       4/15/2026 8:33:36 PM         8168
+formation-python-debutant-a-expert-main.zip                                       1/31/2026 9:08:22 AM      2381608
+GNS3.VM.VMware.Workstation.2.2.53.zip                                             2/21/2025 12:10:09 AM   958901288
+Green and White Modern Business Card (1).zip                                      12/21/2024 8:51:01 PM      409741
+Green and White Modern Business Card (2).zip                                      12/21/2024 9:06:43 PM      412657
+Green and White Modern Business Card (3).zip                                      12/21/2024 10:02:03 PM     422123
+Green and White Modern Business Card.zip                                          12/19/2024 8:38:55 PM      134650
+ilovepdf_extracted-pages (1).zip                                                  8/31/2025 10:43:50 AM     3588519
+ilovepdf_extracted-pages.zip                                                      3/22/2025 12:52:01 PM     6731251
+ilovepdf_pages-to-jpg.zip                                                         7/15/2024 7:07:10 PM      2768434
+memtest86-usb.zip                                                                 2/4/2025 9:03:01 PM      12177370
+monolog-main.zip                                                                  9/18/2024 6:06:20 PM       189624
+NaviBusiness (1).zip                                                              1/7/2025 12:39:58 AM        72707
+NaviBusiness.zip                                                                  1/2/2025 5:51:38 PM         74560
+notebook-main.zip                                                                 1/31/2026 10:39:27 AM       16240
+nwashauto.com.zip                                                                 1/19/2025 8:26:33 PM         6732
+offers.zip                                                                        12/26/2024 9:06:16 PM        4936
+onboarding.zip                                                                    1/21/2025 6:29:17 PM       908009
+OneDrive_3_8-12-2024.zip                                                          8/12/2024 10:55:31 AM     6458471
+Photos-1-001 (1).zip                                                              12/7/2025 10:15:38 AM   362236180
+Photos-1-001 (2).zip                                                              12/7/2025 10:18:01 AM   930797433
+Photos-1-001 (3).zip                                                              12/7/2025 10:42:47 AM   436726360
+Photos-1-001 (4).zip                                                              12/7/2025 11:11:34 AM   144117839
+Photos-1-001.zip                                                                  12/7/2025 10:13:25 AM  5097255134
+PHPMailer-master (1).zip                                                          11/2/2024 1:44:37 PM       146609
+PHPMailer-master.zip                                                              9/14/2024 12:02:09 PM      145520
+phpMyAdmin-5.2.1-all-languages.zip                                                9/13/2024 8:30:46 AM     15096155
+phpqrcode-2010100721_1.1.4.zip                                                    10/27/2024 11:26:02 AM     223617
+PIXresizer.zip                                                                    9/19/2024 12:35:38 PM     3077972
+PowerBI_Dashboard_Data (1).zip                                                    3/5/2025 9:00:20 AM           727
+PowerBI_Dashboard_Data.zip                                                        3/5/2025 9:00:15 AM           727
+projet (1).zip                                                                    4/15/2026 10:06:58 PM   513625383
+projet (2).zip                                                                    4/16/2026 8:22:58 PM    513625383
+projet (3).zip                                                                    4/16/2026 8:40:46 PM    513625383
+projet (4).zip                                                                    4/17/2026 4:20:31 PM    513625383
+projet (5).zip                                                                    4/17/2026 11:51:40 PM   513625383
+projet.zip                                                                        4/15/2026 8:33:48 PM    513625383
+Projetnavi (1).zip                                                                9/26/2024 5:24:34 PM      8981478
+Projetnavi (2).zip                                                                9/27/2024 8:34:49 AM      8981478
+Projetnavi.zip                                                                    9/21/2024 10:45:33 PM   103264745
+Red and Black modern Business Automotive Presentation .zip                        9/19/2024 12:38:03 AM     9372937
+RL-31_20260305_06h55_27s.zip                                                      3/5/2026 6:55:30 AM       1266502
+RTE0001-Ressources d'appui technologique aux étudiants - 5102025 - 101 PM (1).zip 5/10/2025 1:01:50 PM      1183713
+RTE0001-Ressources d'appui technologique aux étudiants - 5102025 - 101 PM.zip     5/10/2025 1:01:36 PM      2891080
+SolarWinds-FT-Solar-PuTTY.zip                                                     2/21/2025 12:13:43 AM     5685903
+Séance 1.mp4.zip                                                                  9/20/2025 10:40:20 AM   230376741
+Séance 2.mp4.zip                                                                  9/20/2025 10:40:39 AM   138046014
+Séance 6.mp4.zip                                                                  10/11/2025 7:12:27 PM   248831843
+Séance de cours  La création de documents de référence 1.html.zip                 1/27/2025 2:43:24 PM        93621
+Séance de cours 4  Paie.html.zip                                                  10/11/2025 12:01:01 AM     126507
+themeforest-BBjAPHtk-construction-html5-construction-business-template.zip        11/1/2024 3:10:44 PM      2485819
+Untitled Project (1).zip                                                          1/2/2025 4:34:02 PM        596783
+Untitled Project.zip                                                              1/2/2025 4:31:59 PM        226698
+v915-red-blue (1).zip                                                             4/11/2026 2:13:10 PM       568475
+v915-red-blue.zip                                                                 4/11/2026 2:12:56 PM       568475
+votreinscriptionfuturpreneurcanadanaviwashautoserv.zip                            10/13/2024 9:27:10 PM        2115
+WB0J3973K (1).zip                                                                 9/26/2024 5:04:45 PM      9132829
+WB0J3973K.zip                                                                     9/26/2024 5:02:53 PM      9132829
+XMLSpyIntegrationPackage2026_x64.zip                                              3/1/2026 11:05:48 AM     40823143
+
+
+PS D:\attentezero-app>
+PS D:\attentezero-app> Write-Host "`n=== 2. Le dossier extrait existe-t-il ? ===" -ForegroundColor Cyan
+
+=== 2. Le dossier extrait existe-t-il ? ===
+PS D:\attentezero-app> Test-Path "$env:USERPROFILE\Downloads\service-qc-new"
+True
+PS D:\attentezero-app>
+PS D:\attentezero-app> Write-Host "`n=== 3. Contenu du dossier Downloads ===" -ForegroundColor Cyan
+
+=== 3. Contenu du dossier Downloads ===
+PS D:\attentezero-app> Get-ChildItem "$env:USERPROFILE\Downloads" -Filter "service*" | Select-Object Name, LastWriteTime
+
+
+Name                             LastWriteTime
+----                             -------------
+service-qc-new                   4/18/2026 12:49:53 AM
+service au volant.png            10/10/2024 2:19:02 PM
+SERVICE CANADA.pdf               8/8/2024 1:46:10 PM
+service-account.json             10/15/2024 1:45:32 AM
+service-cleaning.png             12/23/2025 3:06:37 PM
+Services.csv                     4/10/2026 10:32:05 PM
+services_logement_quebec (1).csv 4/10/2026 11:21:06 AM
+services_structure_complete.csv  4/12/2026 11:50:34 AM
