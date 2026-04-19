@@ -183,6 +183,45 @@ export default function MoreScreen() {
             </Pressable>
           )}
 
+          {/* ── Agenda — also for Mode Terrain ── */}
+          {(user?.role === "intervenant" || user?.role === "organisme") && (
+            <Pressable
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                router.push("/agenda" as any);
+              }}
+              style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1, marginTop: 10 }]}
+            >
+              <LinearGradient
+                colors={["#0e7e6e", "#0284c7"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.terrainCard}
+              >
+                <View style={styles.terrainIconWrap}>
+                  <Feather name="calendar" size={22} color="#fff" />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <View style={styles.terrainBadgeRow}>
+                    <View style={styles.terrainBadge}>
+                      <Feather name="clock" size={10} color="#bae6fd" />
+                      <Text style={styles.terrainBadgeText}>AGENDA</Text>
+                    </View>
+                  </View>
+                  <Text style={styles.terrainTitle}>
+                    {isFr ? "Rendez-vous" : "Appointments"}
+                  </Text>
+                  <Text style={styles.terrainSub}>
+                    {isFr
+                      ? "Aujourd'hui, à venir, passé. Suivi du statut (confirmé, terminé, absent)."
+                      : "Today, upcoming, past. Track status (confirmed, done, no-show)."}
+                  </Text>
+                </View>
+                <Feather name="chevron-right" size={18} color="rgba(255,255,255,0.7)" />
+              </LinearGradient>
+            </Pressable>
+          )}
+
           {/* ── Persistent reminder banner (shown after 3 uses) ── */}
           {isGated && (
             <Pressable

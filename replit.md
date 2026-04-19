@@ -53,6 +53,8 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **Localisation** : Haversine distance, tri automatique des services urgents par proximité
 - **Dark mode** : Complet
 - **Bilingue** : FR/EN avec persistance AsyncStorage
+- **Mode Terrain — Dossiers clients** (`/clients`) : intervenants & organismes uniquement (gate par abonnement Terrain 19$/mois ou Institution 199$/mois). Liste avec recherche debounce, fiche détail (avatar, niveau de risque, timeline 5 types de notes, appel/partage/archive)
+- **Mode Terrain — Agenda RDV** (`/agenda`) : 3 onglets (aujourd'hui / à venir / passé), regroupement par jour, statuts (planifié/confirmé/terminé/annulé/absent), planification depuis la fiche client (chips date + heure + lieu + notes), création auto d'une note "rdv" dans la timeline. DST-safe (calendrier, pas +24h ms) et timestamps stricts ISO+offset côté API.
 
 ### Data
 
@@ -66,6 +68,8 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **Endpoint IA** : `POST /api/ai/chat` — `{message, language, history}` → SSE streaming avec `{content}`, `{done, serviceIds}`, `{error}`
 - **Base URL** : `https://quebec-aid-finder.replit.app` (configurée dans `lib/apiBase.ts`)
 - **Auth API** : `/api/mobile-auth/email-login`, `/api/mobile-auth/register`, `/api/mobile-auth/update-profile`, `/api/mobile-auth/logout`
+- **Clients API** : `GET/POST /api/clients`, `GET/PATCH/DELETE /api/clients/:id`, `POST /api/clients/:id/notes`, `GET /api/clients/_meta/access` (gate Terrain/Institution)
+- **Appointments API** : `GET /api/appointments?from&to&clientId`, `POST /api/appointments`, `PATCH/DELETE /api/appointments/:id`. `scheduledAt` doit être ISO 8601 avec offset (`Z` ou `±HH:MM`). Crée automatiquement une note "rdv" sur la timeline du client.
 
 ### Key Files
 

@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
   KeyboardAvoidingView,
   Linking,
+  Modal,
   Platform,
   Pressable,
   ScrollView,
@@ -88,6 +89,17 @@ export default function ClientDetailScreen() {
   const [noteKind, setNoteKind] = useState<Note["kind"]>("note");
   const [savingNote, setSavingNote] = useState(false);
 
+  // Schedule appointment modal state
+  const [showSchedule, setShowSchedule] = useState(false);
+  const [aptDateChip, setAptDateChip] = useState<"today" | "tomorrow" | "in2d" | "in7d" | "custom">("tomorrow");
+  const [aptCustomDate, setAptCustomDate] = useState(""); // YYYY-MM-DD
+  const [aptHour, setAptHour] = useState("14");
+  const [aptMinute, setAptMinute] = useState("00");
+  const [aptDuration, setAptDuration] = useState("30");
+  const [aptLocation, setAptLocation] = useState("");
+  const [aptNotes, setAptNotes] = useState("");
+  const [scheduling, setScheduling] = useState(false);
+
   const load = useCallback(async () => {
     if (!id) return;
     try {
@@ -145,6 +157,71 @@ export default function ClientDetailScreen() {
     } catch {
       Alert.alert("Erreur", "Impossible de mettre à jour le niveau.");
       load();
+    }
+  }
+
+  function computeAptDate(): Date | null {
+    // Use calendar-safe arithmetic (setDate) — DST-safe, unlike +24h ms.
+    const now = new Date();
+    const base = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    if (aptDateChip === "tomorrow") base.setDate(base.getDate() + 1);
+    else if (aptDateChip === "in2d") base.setDate(base.getDate() + 2);
+    else if (aptDateChip === "in7d") base.setDate(base.getDate() + 7);
+    else if (aptDateChip === "custom") {
+      const m = aptCustomDate.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+      if (!m) return null;
+      base.setFullYear(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+      if (isNaN(base.getTime())) return null;
+    }
+    const h = Math.max(0, Math.min(23, parseInt(aptHour, 10) || 0));
+    const min = Math.max(0, Math.min(59, parseInt(aptMinute, 10) || 0));
+    base.setHours(h, min, 0, 0);
+    return base;
+  }
+
+  const aptDateLabel = useMemo(() => {
+    const d = computeAptDate();
+    if (!d) return "Date invalide";
+    return d.toLocaleString("fr-CA", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [aptDateChip, aptCustomDate, aptHour, aptMinute]);
+
+  async function handleSchedule() {
+    if (!client) return;
+    const when = computeAptDate();
+    if (!when) {
+      Alert.alert("Date invalide", "Vérifiez le format de date (AAAA-MM-JJ).");
+      return;
+    }
+    setScheduling(true);
+    try {
+      const res = await authedFetch(`${getApiBaseUrl()}/api/appointments`, {
+        method: "POST",
+        body: JSON.stringify({
+          clientId: client.id,
+          scheduledAt: when.toISOString(),
+          durationMin: parseInt(aptDuration, 10) || 30,
+          location: aptLocation.trim() || null,
+          notes: aptNotes.trim() || null,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Erreur");
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      setShowSchedule(false);
+      setAptLocation("");
+      setAptNotes("");
+      load(); // reload notes (the rdv note is auto-created)
+    } catch (e) {
+      Alert.alert("Erreur", e instanceof Error ? e.message : "Impossible de planifier");
+    } finally {
+      setScheduling(false);
     }
   }
 
@@ -250,9 +327,19 @@ export default function ClientDetailScreen() {
                   <Text style={styles.actionBtnText}>Appeler</Text>
                 </Pressable>
               )}
+              <Pressable
+                style={[styles.actionBtn, { backgroundColor: "#0284c7" }]}
+                onPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  setShowSchedule(true);
+                }}
+              >
+                <Feather name="calendar" size={15} color="#fff" />
+                <Text style={styles.actionBtnText}>Planifier RDV</Text>
+              </Pressable>
               <Pressable style={[styles.actionBtn, { backgroundColor: "#7c3aed" }]} onPress={handleShare}>
                 <Feather name="share-2" size={15} color="#fff" />
-                <Text style={styles.actionBtnText}>Partager / Référer</Text>
+                <Text style={styles.actionBtnText}>Partager</Text>
               </Pressable>
             </View>
           </View>
@@ -405,6 +492,131 @@ export default function ClientDetailScreen() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+
+      {/* Schedule appointment modal */}
+      <Modal
+        visible={showSchedule}
+        animationType="slide"
+        transparent
+        onRequestClose={() => setShowSchedule(false)}
+      >
+        <View style={styles.modalBackdrop}>
+          <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} style={{ width: "100%" }}>
+            <View style={[styles.modalCard, { backgroundColor: colors.card }]}>
+              <View style={styles.modalHeader}>
+                <Text style={[styles.modalTitle, { color: colors.foreground }]}>Planifier un rendez-vous</Text>
+                <Pressable onPress={() => setShowSchedule(false)} hitSlop={12}>
+                  <Feather name="x" size={20} color={colors.mutedForeground} />
+                </Pressable>
+              </View>
+              <ScrollView style={{ maxHeight: 480 }}>
+                <Text style={[styles.modalSummary, { color: "#0284c7" }]}>{aptDateLabel}</Text>
+
+                <Text style={[styles.modalLabel, { color: colors.mutedForeground }]}>Date</Text>
+                <View style={styles.chipRow}>
+                  {[
+                    ["today", "Aujourd'hui"],
+                    ["tomorrow", "Demain"],
+                    ["in2d", "Après-demain"],
+                    ["in7d", "Dans 7 jours"],
+                    ["custom", "Date précise"],
+                  ].map(([k, label]) => {
+                    const active = aptDateChip === k;
+                    return (
+                      <Pressable
+                        key={k}
+                        onPress={() => setAptDateChip(k as any)}
+                        style={[
+                          styles.dateChip,
+                          { borderColor: active ? "#0284c7" : colors.border, backgroundColor: active ? "#0284c7" : "transparent" },
+                        ]}
+                      >
+                        <Text style={[styles.dateChipText, { color: active ? "#fff" : colors.foreground }]}>{label}</Text>
+                      </Pressable>
+                    );
+                  })}
+                </View>
+                {aptDateChip === "custom" && (
+                  <TextInput
+                    placeholder="AAAA-MM-JJ"
+                    placeholderTextColor={colors.mutedForeground}
+                    value={aptCustomDate}
+                    onChangeText={setAptCustomDate}
+                    style={[styles.modalInput, { color: colors.foreground, borderColor: colors.border }]}
+                  />
+                )}
+
+                <Text style={[styles.modalLabel, { color: colors.mutedForeground, marginTop: 12 }]}>Heure</Text>
+                <View style={{ flexDirection: "row", gap: 8 }}>
+                  <TextInput
+                    placeholder="14"
+                    placeholderTextColor={colors.mutedForeground}
+                    value={aptHour}
+                    onChangeText={setAptHour}
+                    keyboardType="number-pad"
+                    maxLength={2}
+                    style={[styles.modalInput, { flex: 1, color: colors.foreground, borderColor: colors.border }]}
+                  />
+                  <Text style={[styles.colon, { color: colors.foreground }]}>:</Text>
+                  <TextInput
+                    placeholder="00"
+                    placeholderTextColor={colors.mutedForeground}
+                    value={aptMinute}
+                    onChangeText={setAptMinute}
+                    keyboardType="number-pad"
+                    maxLength={2}
+                    style={[styles.modalInput, { flex: 1, color: colors.foreground, borderColor: colors.border }]}
+                  />
+                  <TextInput
+                    placeholder="30 min"
+                    placeholderTextColor={colors.mutedForeground}
+                    value={aptDuration}
+                    onChangeText={setAptDuration}
+                    keyboardType="number-pad"
+                    maxLength={3}
+                    style={[styles.modalInput, { flex: 1.4, color: colors.foreground, borderColor: colors.border }]}
+                  />
+                </View>
+
+                <Text style={[styles.modalLabel, { color: colors.mutedForeground, marginTop: 12 }]}>Lieu</Text>
+                <TextInput
+                  placeholder="ex. CLSC, café, domicile"
+                  placeholderTextColor={colors.mutedForeground}
+                  value={aptLocation}
+                  onChangeText={setAptLocation}
+                  style={[styles.modalInput, { color: colors.foreground, borderColor: colors.border }]}
+                />
+
+                <Text style={[styles.modalLabel, { color: colors.mutedForeground, marginTop: 12 }]}>Notes (optionnel)</Text>
+                <TextInput
+                  placeholder="Sujet, préparation, etc."
+                  placeholderTextColor={colors.mutedForeground}
+                  value={aptNotes}
+                  onChangeText={setAptNotes}
+                  multiline
+                  numberOfLines={3}
+                  style={[styles.modalInput, { minHeight: 70, textAlignVertical: "top", color: colors.foreground, borderColor: colors.border }]}
+                />
+              </ScrollView>
+
+              <Pressable
+                onPress={handleSchedule}
+                disabled={scheduling}
+                style={({ pressed }) => [styles.modalSaveBtn, { opacity: pressed || scheduling ? 0.7 : 1 }]}
+              >
+                {scheduling ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  <>
+                    <Feather name="calendar" size={16} color="#fff" />
+                    <Text style={styles.modalSaveBtnText}>Confirmer le RDV</Text>
+                  </>
+                )}
+              </Pressable>
+            </View>
+          </KeyboardAvoidingView>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -566,4 +778,65 @@ const styles = StyleSheet.create({
   noteKind: { fontSize: 12, fontFamily: "Inter_700Bold", flex: 1 },
   noteDate: { fontSize: 11, fontFamily: "Inter_400Regular" },
   noteText: { fontSize: 14, fontFamily: "Inter_400Regular", lineHeight: 20 },
+
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.55)",
+    justifyContent: "center",
+    padding: 16,
+  },
+  modalCard: {
+    borderRadius: 18,
+    padding: 18,
+    gap: 8,
+  },
+  modalHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 4,
+  },
+  modalTitle: { fontSize: 16, fontFamily: "Inter_700Bold" },
+  modalSummary: {
+    fontSize: 14,
+    fontFamily: "Inter_700Bold",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  modalLabel: {
+    fontSize: 11,
+    fontFamily: "Inter_700Bold",
+    letterSpacing: 0.4,
+    textTransform: "uppercase",
+    marginBottom: 6,
+  },
+  modalInput: {
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 14,
+    fontFamily: "Inter_400Regular",
+    marginBottom: 0,
+  },
+  chipRow: { flexDirection: "row", flexWrap: "wrap", gap: 6, marginBottom: 6 },
+  dateChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  dateChipText: { fontSize: 12, fontFamily: "Inter_600SemiBold" },
+  colon: { fontSize: 18, fontFamily: "Inter_700Bold", alignSelf: "center" },
+  modalSaveBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    backgroundColor: "#0284c7",
+    paddingVertical: 14,
+    borderRadius: 12,
+    marginTop: 14,
+  },
+  modalSaveBtnText: { color: "#fff", fontSize: 15, fontFamily: "Inter_700Bold" },
 });

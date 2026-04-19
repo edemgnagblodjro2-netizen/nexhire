@@ -7,6 +7,7 @@ import stripeRouter from "./stripe";
 import servicesRouter from "./services";
 import organisationsRouter from "./organisations";
 import clientsRouter from "./clients";
+import appointmentsRouter from "./appointments";
 
 const router: IRouter = Router();
 
@@ -18,5 +19,6 @@ router.use(stripeRouter);
 router.use(servicesRouter);
 router.use(organisationsRouter);
 router.use(clientsRouter);
+router.use(appointmentsRouter);
 
 export default router;
