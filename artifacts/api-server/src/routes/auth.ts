@@ -320,12 +320,14 @@ const RegisterBody = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
   address: z.string().optional(),
-  role: z.enum(["user", "organisme"]).optional().default("user"),
+  role: z.enum(["user", "organisme", "intervenant"]).optional().default("user"),
   organisationName: z.string().optional(),
   organisationCity: z.string().optional(),
   organisationPhone: z.string().optional(),
   organisationWebsite: z.string().optional(),
-  plan: z.enum(["standard", "plus"]).optional().default("standard"),
+  professionalTitle: z.string().optional(),
+  affiliation: z.string().optional(),
+  plan: z.enum(["standard", "plus", "terrain"]).optional().default("standard"),
 });
 
 router.post("/mobile-auth/register", async (req: Request, res: Response) => {
@@ -335,7 +337,7 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
     return;
   }
 
-  const { email, password, firstName, lastName, address, role, organisationName, organisationCity, organisationPhone, organisationWebsite, plan } = parsed.data;
+  const { email, password, firstName, lastName, address, role, organisationName, organisationCity, organisationPhone, organisationWebsite, professionalTitle, affiliation, plan } = parsed.data;
 
   if (role === "organisme" && !organisationName) {
     res.status(400).json({ error: "Le nom de l'organisme est requis." });
@@ -376,6 +378,7 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
           city: organisationCity ?? null,
           address: address ?? null,
           badgeVerified: false,
+          kind: "organisme",
         })
         .returning();
       organisationId = newOrg.id;
@@ -385,6 +388,34 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
       await db.insert(subscriptionsTable).values({
         organisationId: newOrg.id,
         plan,
+        interval: "month",
+        status: "trialing",
+        trialEnd,
+      });
+    } else if (role === "intervenant") {
+      // Self-org for the intervenant — not displayed publicly
+      const [newOrg] = await db
+        .insert(organisationsTable)
+        .values({
+          userId: newUser.id,
+          name: `${firstName} ${lastName}`,
+          contactName: `${firstName} ${lastName}`,
+          email,
+          phone: organisationPhone ?? null,
+          city: organisationCity ?? null,
+          address: address ?? null,
+          badgeVerified: false,
+          kind: "intervenant",
+          professionalTitle: professionalTitle ?? null,
+          affiliation: affiliation ?? null,
+        })
+        .returning();
+      organisationId = newOrg.id;
+
+      const trialEnd = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
+      await db.insert(subscriptionsTable).values({
+        organisationId: newOrg.id,
+        plan: "terrain",
         interval: "month",
         status: "trialing",
         trialEnd,

@@ -18,6 +18,10 @@ export const organisationsTable = pgTable(
     description: text("description"),
     serviceId: varchar("service_id").references(() => servicesTable.id, { onDelete: "set null" }),
     badgeVerified: boolean("badge_verified").notNull().default(false),
+    // "organisme" (public B2B org) | "intervenant" (private self-org for field workers)
+    kind: varchar("kind", { length: 16 }).notNull().default("organisme"),
+    professionalTitle: text("professional_title"),
+    affiliation: text("affiliation"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
   },

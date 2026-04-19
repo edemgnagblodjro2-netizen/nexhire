@@ -25,7 +25,7 @@ import { getApiBaseUrl } from "@/lib/apiBase";
 
 const CONTACT_EMAIL = "attentezero5@gmail.com";
 
-type TierId = "users" | "orgs";
+type TierId = "users" | "orgs" | "intervenant";
 
 type Tier = {
   id: TierId;
@@ -39,7 +39,7 @@ type Tier = {
   trialBadge?: string;
   perks: string[];
   ctaLabel: string;
-  ctaKind: "premium" | "trial" | "contact";
+  ctaKind: "premium" | "trial" | "contact" | "terrain";
 };
 
 const TIERS: Tier[] = [
@@ -79,6 +79,27 @@ const TIERS: Tier[] = [
     ],
     ctaLabel: "Devenir Premium — 10 $",
     ctaKind: "premium",
+  },
+  {
+    id: "intervenant",
+    emoji: "🏅",
+    color: "#0284c7",
+    gradColors: ["#0c4a6e", "#0284c7"],
+    audience: "Travailleur social terrain",
+    tagline: "L'outil quotidien des intervenants CLSC, refuges et organismes",
+    priceLabel: "19 $",
+    priceUnit: "/ mois",
+    trialBadge: "14 jours d'essai gratuit",
+    perks: [
+      "Tout le Premium IA inclus (chat illimité, vocal, multilingue)",
+      "Mode terrain — dossiers clients privés et notes confidentielles",
+      "Listes de favoris regroupées par client",
+      "Partage rapide d'un service par SMS, courriel ou WhatsApp",
+      "Détection de crise prioritaire (suicide / violence / DPJ)",
+      "Aucune carte requise pour l'essai · annulable en tout temps",
+    ],
+    ctaLabel: "Démarrer mon essai terrain — 14 j",
+    ctaKind: "terrain",
   },
   {
     id: "orgs",
@@ -161,6 +182,46 @@ export default function PremiumScreen() {
     }
   }
 
+  async function handleTerrainTrial() {
+    if (!isAuthenticated) {
+      Alert.alert(
+        "Compte intervenant requis",
+        "Créez un compte « Travailleur social terrain » pour démarrer votre essai gratuit de 14 jours.",
+        [
+          { text: "Annuler", style: "cancel" },
+          {
+            text: "Créer un compte",
+            onPress: () =>
+              router.push({ pathname: "/register", params: { role: "intervenant" } } as any),
+          },
+        ]
+      );
+      return;
+    }
+    try {
+      setLoadingTier("terrain-trial");
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      const res = await fetch(`${getApiBaseUrl()}/api/stripe/create-checkout-session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: user?.email,
+          userId: user?.id,
+          plan: "terrain",
+          interval: "monthly",
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error || "Erreur de paiement");
+      await WebBrowser.openBrowserAsync(data.url);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Erreur inconnue";
+      Alert.alert("Inscription impossible", msg);
+    } finally {
+      setLoadingTier(null);
+    }
+  }
+
   async function handleOrgTrial() {
     if (!isAuthenticated) {
       Alert.alert(
@@ -198,6 +259,7 @@ export default function PremiumScreen() {
   }
 
   function handleTierCta(tier: Tier, idx: number) {
+    if (tier.ctaKind === "terrain") return handleTerrainTrial();
     if (tier.ctaKind === "trial") return handleOrgTrial();
     if (tier.ctaKind === "premium" && idx === 1) return handleUserPremium();
     // First "free" tier — just go back / show toast
@@ -248,6 +310,7 @@ export default function PremiumScreen() {
         {TIERS.map((tier, idx) => {
           const isLoading =
             (tier.ctaKind === "trial" && loadingTier === "org-trial") ||
+            (tier.ctaKind === "terrain" && loadingTier === "terrain-trial") ||
             (tier.ctaKind === "premium" && idx === 1 && loadingTier === "user-premium");
           const isPopular = idx === 1; // Premium 10$ — the "best value" tier
           const anim = cardAnims[idx];
@@ -350,7 +413,15 @@ export default function PremiumScreen() {
                   ) : (
                     <>
                       <Feather
-                        name={tier.ctaKind === "trial" ? "gift" : tier.ctaKind === "premium" && idx === 1 ? "star" : "check"}
+                        name={
+                          tier.ctaKind === "trial"
+                            ? "gift"
+                            : tier.ctaKind === "terrain"
+                            ? "briefcase"
+                            : tier.ctaKind === "premium" && idx === 1
+                            ? "star"
+                            : "check"
+                        }
                         size={15}
                         color="#fff"
                       />

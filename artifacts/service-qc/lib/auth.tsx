@@ -4,14 +4,16 @@ import { getApiBaseUrl } from "./apiBase";
 
 const AUTH_TOKEN_KEY = "auth_session_token";
 
-export type UserRole = "user" | "organisme";
+export type UserRole = "user" | "organisme" | "intervenant";
 
 export interface OrganisationInfo {
   organisationName: string;
   organisationCity?: string;
   organisationPhone?: string;
   organisationWebsite?: string;
-  plan?: "standard" | "plus";
+  professionalTitle?: string;
+  affiliation?: string;
+  plan?: "standard" | "plus" | "terrain";
 }
 
 interface User {
@@ -144,6 +146,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         body.organisationPhone = org.organisationPhone;
         body.organisationWebsite = org.organisationWebsite;
         body.plan = org.plan ?? "standard";
+      } else if (role === "intervenant" && org) {
+        body.organisationCity = org.organisationCity;
+        body.organisationPhone = org.organisationPhone;
+        body.professionalTitle = org.professionalTitle;
+        body.affiliation = org.affiliation;
+        body.plan = "terrain";
       }
 
       const res = await fetch(`${apiBase}/api/mobile-auth/register`, {

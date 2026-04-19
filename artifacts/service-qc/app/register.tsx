@@ -41,6 +41,10 @@ export default function RegisterScreen() {
   const [orgPhone, setOrgPhone] = useState("");
   const [orgWebsite, setOrgWebsite] = useState("");
 
+  // Intervenant fields
+  const [profTitle, setProfTitle] = useState("");
+  const [affiliation, setAffiliation] = useState("");
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [proSuggestionDismissed, setProSuggestionDismissed] = useState(false);
@@ -120,6 +124,15 @@ export default function RegisterScreen() {
             organisationPhone: orgPhone.trim() || undefined,
             organisationWebsite: orgWebsite.trim() || undefined,
             plan: "standard",
+          }
+        : role === "intervenant"
+        ? {
+            organisationName: `${firstName.trim()} ${lastName.trim()}`,
+            organisationCity: orgCity.trim() || undefined,
+            organisationPhone: orgPhone.trim() || undefined,
+            professionalTitle: profTitle.trim() || undefined,
+            affiliation: affiliation.trim() || undefined,
+            plan: "terrain",
           }
         : undefined,
     );
@@ -333,6 +346,34 @@ export default function RegisterScreen() {
                   <View style={styles.choicePerks}>
                     <Text style={styles.choicePerk}>· Recherche illimitée</Text>
                     <Text style={styles.choicePerk}>· Premium optionnel : 10 $ une seule fois</Text>
+                  </View>
+                </View>
+                <Feather name="chevron-right" size={20} color="rgba(255,255,255,0.7)" />
+              </Pressable>
+
+              {/* Intervenant — Travailleur social terrain */}
+              <Pressable
+                onPress={() => setRole("intervenant")}
+                style={({ pressed }) => [styles.choiceCard, pressed && { opacity: 0.85 }]}
+              >
+                <View style={[styles.choiceIcon, { backgroundColor: "rgba(59,130,246,0.28)" }]}>
+                  <Feather name="award" size={26} color="#fff" />
+                </View>
+                <View style={styles.flex}>
+                  <View style={styles.choiceTitleRow}>
+                    <Text style={styles.choiceTitle} numberOfLines={1} adjustsFontSizeToFit>
+                      🏅 Travailleur social terrain
+                    </Text>
+                    <View style={[styles.choicePill, { backgroundColor: "rgba(59,130,246,0.3)" }]}>
+                      <Text style={styles.choicePillText}>14 j gratuits</Text>
+                    </View>
+                  </View>
+                  <Text style={styles.choiceDesc} numberOfLines={3}>
+                    Pour les intervenants CLSC, refuges, organismes — dossiers clients, IA illimitée, partage rapide.
+                  </Text>
+                  <View style={styles.choicePerks}>
+                    <Text style={styles.choicePerk}>· Mode terrain + IA + partage</Text>
+                    <Text style={styles.choicePerk}>· 19 $/mois après l'essai · Annulable</Text>
                   </View>
                 </View>
                 <Feather name="chevron-right" size={20} color="rgba(255,255,255,0.7)" />
@@ -602,6 +643,79 @@ export default function RegisterScreen() {
                     </View>
                     <Text style={styles.planSummaryNote} numberOfLines={2}>
                       Profil complet · Badge vérifié · Statistiques · Mise en avant
+                    </Text>
+                  </View>
+
+                  <View style={styles.trialBox}>
+                    <Feather name="gift" size={14} color="#fbbf24" />
+                    <Text style={styles.trialText} numberOfLines={2}>
+                      14 jours gratuits · Sans carte bancaire · Annulable à tout moment
+                    </Text>
+                  </View>
+                </>
+              )}
+
+              {/* Intervenant-specific fields */}
+              {role === "intervenant" && (
+                <>
+                  <View style={styles.divider} />
+                  <Text style={styles.sectionLabel}>Votre pratique</Text>
+
+                  <View style={styles.inputWrapper}>
+                    <Feather name="award" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Titre professionnel (ex. : T.S., intervenant)"
+                      placeholderTextColor="rgba(255,255,255,0.5)"
+                      value={profTitle}
+                      onChangeText={setProfTitle}
+                      autoCapitalize="sentences"
+                    />
+                  </View>
+
+                  <View style={styles.inputWrapper}>
+                    <Feather name="briefcase" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Affiliation (CLSC, refuge, OBNL...)"
+                      placeholderTextColor="rgba(255,255,255,0.5)"
+                      value={affiliation}
+                      onChangeText={setAffiliation}
+                      autoCapitalize="words"
+                    />
+                  </View>
+
+                  <View style={styles.inputWrapper}>
+                    <Feather name="map-pin" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Ville (optionnel)"
+                      placeholderTextColor="rgba(255,255,255,0.5)"
+                      value={orgCity}
+                      onChangeText={setOrgCity}
+                      autoCapitalize="words"
+                    />
+                  </View>
+
+                  <View style={styles.inputWrapper}>
+                    <Feather name="phone" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Téléphone professionnel (optionnel)"
+                      placeholderTextColor="rgba(255,255,255,0.5)"
+                      value={orgPhone}
+                      onChangeText={setOrgPhone}
+                      keyboardType="phone-pad"
+                    />
+                  </View>
+
+                  <View style={styles.planSummary}>
+                    <View style={styles.planSummaryHead}>
+                      <Text style={styles.planSummaryTitle}>Plan Terrain</Text>
+                      <Text style={styles.planSummaryPrice}>19 $/mois</Text>
+                    </View>
+                    <Text style={styles.planSummaryNote} numberOfLines={2}>
+                      IA illimitée · Dossiers clients · Partage rapide · Crise prioritaire
                     </Text>
                   </View>
 

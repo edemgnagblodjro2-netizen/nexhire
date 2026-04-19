@@ -7,11 +7,13 @@ import { eq, or } from "drizzle-orm";
 const stripeRouter = Router();
 
 // Pricing — AttenteZéro
-// Standard: 39$/mo, 390$/yr (-18%)
-// Plus:     89$/mo, 890$/yr (-18%)
+// Standard: 39$/mo, 390$/yr (-18%)  — Organismes (B2B public)
+// Plus:     89$/mo, 890$/yr (-18%)  — Organismes Plus
+// Terrain:  19$/mo, 190$/yr (-18%)  — Travailleurs sociaux terrain (B2B individuel)
 const PRICING = {
   standard: { monthly: 3900, annual: 39000, productName: "AttenteZéro Standard" },
   plus:     { monthly: 8900, annual: 89000, productName: "AttenteZéro Plus" },
+  terrain:  { monthly: 1900, annual: 19000, productName: "AttenteZéro Terrain (Intervenant)" },
 } as const;
 type PlanKey = keyof typeof PRICING;
 type IntervalKey = "monthly" | "annual";
@@ -135,7 +137,8 @@ stripeRouter.post("/stripe/create-checkout-session", async (req, res) => {
     const stripe = await getUncachableStripeClient();
     const { email, userId, organisationId, plan = "standard", interval = "monthly" } = req.body || {};
 
-    const planKey: PlanKey = plan === "plus" ? "plus" : "standard";
+    const planKey: PlanKey =
+      plan === "plus" ? "plus" : plan === "terrain" ? "terrain" : "standard";
     const intervalKey: IntervalKey = interval === "annual" ? "annual" : "monthly";
 
     const baseUrl =
