@@ -77,3 +77,9 @@ id = "lKI7iKoXsyph9Ue8tUmG3"
 uri = "file://exports/AttenteZero-Presentation.pptx"
 type = "slides"
 title = "AttenteZéro — Présentation (PowerPoint éditable)"
+
+[[outputs]]
+id = "qGtudn2Wh_Ve_3UAVrLny"
+uri = "file://docs/AttenteZero_Plan_Budget_Financement.md"
+type = "text"
+title = "AttenteZéro — Plan d'affaires, budget et demande de financement"
