@@ -1,5 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
+import { Audio } from "expo-av";
+import * as Speech from "expo-speech";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -82,39 +84,55 @@ function ServiceChip({ serviceId }: { serviceId: string }) {
   );
 }
 
-function CriticalAlertBubble({ alert, language }: { alert: CriticalAlert; language: string }) {
+function CriticalAlertBubble({
+  alert,
+  language,
+  router,
+}: {
+  alert: CriticalAlert;
+  language: string;
+  router: ReturnType<typeof useRouter>;
+}) {
   const isFr = language !== "en";
   const isCrisis = alert.level === "crisis";
+  const isViolence = alert.level === "violence";
+  const accent = isCrisis ? "#dc2626" : isViolence ? "#7c2d12" : "#d97706";
+
+  const title = isCrisis
+    ? (isFr ? "Vous n'êtes pas seul(e)" : "You are not alone")
+    : isViolence
+    ? (isFr ? "Vous méritez d'être en sécurité" : "You deserve to be safe")
+    : (isFr ? "Votre sécurité compte" : "Your safety matters");
+
+  const body = isCrisis
+    ? (isFr
+      ? "Des professionnels sont disponibles maintenant, 24h/24, pour vous aider."
+      : "Professionals are available now, 24/7, to help you.")
+    : isViolence
+    ? (isFr
+      ? "Vous pouvez quitter cette page rapidement. Personne ne le verra."
+      : "You can leave this page quickly. No one will see.")
+    : (isFr
+      ? "Si vous êtes en danger, contactez immédiatement les services d'urgence."
+      : "If you are in danger, contact emergency services immediately.");
 
   return (
     <View style={styles.alertWrap}>
-      <View style={[styles.alertCard, isCrisis ? styles.alertCardCrisis : styles.alertCardWarning]}>
+      <View style={[styles.alertCard, isCrisis ? styles.alertCardCrisis : styles.alertCardWarning, isViolence && { borderColor: accent }]}>
         <View style={styles.alertHeader}>
-          <View style={[styles.alertIcon, { backgroundColor: isCrisis ? "#dc2626" : "#d97706" }]}>
-            <Feather name={isCrisis ? "heart" : "shield"} size={16} color="#fff" />
+          <View style={[styles.alertIcon, { backgroundColor: accent }]}>
+            <Feather name={isCrisis ? "heart" : isViolence ? "shield" : "alert-triangle"} size={16} color="#fff" />
           </View>
-          <Text style={styles.alertTitle}>
-            {isCrisis
-              ? (isFr ? "Vous n'êtes pas seul(e)" : "You are not alone")
-              : (isFr ? "Votre sécurité compte" : "Your safety matters")}
-          </Text>
+          <Text style={styles.alertTitle}>{title}</Text>
         </View>
-        <Text style={styles.alertBody}>
-          {isCrisis
-            ? (isFr
-              ? "Des professionnels sont disponibles maintenant, 24h/24, pour vous aider."
-              : "Professionals are available now, 24/7, to help you.")
-            : (isFr
-              ? "Si vous êtes en danger, contactez immédiatement les services d'urgence."
-              : "If you are in danger, contact emergency services immediately.")}
-        </Text>
+        <Text style={styles.alertBody}>{body}</Text>
         <View style={styles.alertNumbers}>
           {alert.numbers.map((n) => (
             <Pressable
               key={n.number}
               style={({ pressed }) => [
                 styles.alertNumberBtn,
-                { backgroundColor: isCrisis ? "#dc2626" : "#d97706", opacity: pressed ? 0.8 : 1 },
+                { backgroundColor: accent, opacity: pressed ? 0.8 : 1 },
               ]}
               onPress={() => {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
@@ -129,13 +147,51 @@ function CriticalAlertBubble({ alert, language }: { alert: CriticalAlert; langua
             </Pressable>
           ))}
         </View>
+        {alert.showQuickExit && (
+          <Pressable
+            style={({ pressed }) => [
+              {
+                marginTop: 12,
+                paddingVertical: 12,
+                paddingHorizontal: 16,
+                borderRadius: 10,
+                backgroundColor: "#1f2937",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                opacity: pressed ? 0.85 : 1,
+              },
+            ]}
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+              router.replace("/");
+            }}
+          >
+            <Feather name="x-circle" size={16} color="#fff" />
+            <Text style={{ color: "#fff", fontWeight: "700" }}>
+              {isFr ? "🚪 Quitter rapidement" : "🚪 Quick exit"}
+            </Text>
+          </Pressable>
+        )}
       </View>
     </View>
   );
 }
 
-function MessageBubble({ message, language }: { message: ChatMessage; language: string }) {
+function MessageBubble({
+  message,
+  language,
+  onSpeak,
+  isSpeakingThis,
+}: {
+  message: ChatMessage;
+  language: string;
+  onSpeak?: (messageId: string, text: string) => void;
+  isSpeakingThis?: boolean;
+}) {
   const colors = useColors();
+  const router = useRouter();
   const isUser = message.role === "user";
   const isSystem = message.role === "system";
   const isAlert = message.role === "alert";
@@ -145,7 +201,7 @@ function MessageBubble({ message, language }: { message: ChatMessage; language: 
     .trim();
 
   if (isAlert && message.alert) {
-    return <CriticalAlertBubble alert={message.alert} language={language} />;
+    return <CriticalAlertBubble alert={message.alert} language={language} router={router} />;
   }
 
   if (isSystem) {
@@ -202,6 +258,32 @@ function MessageBubble({ message, language }: { message: ChatMessage; language: 
             )}
           </Text>
         </View>
+        {!isUser && !message.isStreaming && cleanContent.length > 0 && onSpeak && (
+          <Pressable
+            onPress={() => onSpeak(message.id, cleanContent)}
+            style={({ pressed }) => ({
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 4,
+              marginTop: 4,
+              paddingHorizontal: 8,
+              paddingVertical: 4,
+              borderRadius: 12,
+              backgroundColor: isSpeakingThis ? colors.primary + "20" : "transparent",
+              opacity: pressed ? 0.6 : 1,
+              alignSelf: "flex-start",
+            })}
+          >
+            <Feather
+              name={isSpeakingThis ? "volume-2" : "volume-1"}
+              size={12}
+              color={isSpeakingThis ? colors.primary : colors.mutedForeground}
+            />
+            <Text style={{ fontSize: 11, color: isSpeakingThis ? colors.primary : colors.mutedForeground }}>
+              {isSpeakingThis ? "Lecture..." : "Écouter"}
+            </Text>
+          </Pressable>
+        )}
         {!isUser && message.serviceIds && message.serviceIds.length > 0 && !message.isStreaming && (
           <View style={styles.serviceChips}>
             {message.serviceIds.map((id) => (
@@ -284,6 +366,11 @@ export default function ChatScreen() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [chatLang, setChatLang] = useState<ChatLang>(language as ChatLang);
   const [showLangPicker, setShowLangPicker] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
+  const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
+  const recordingRef = useRef<Audio.Recording | null>(null);
+  const sendMessageRef = useRef<((text: string) => void) | null>(null);
   const listRef = useRef<FlatList>(null);
   const inputRef = useRef<TextInput>(null);
 
@@ -315,6 +402,120 @@ export default function ChatScreen() {
     setTimeout(() => {
       listRef.current?.scrollToEnd({ animated: true });
     }, 80);
+  }, []);
+
+  const speakResponse = useCallback(
+    (messageId: string, text: string) => {
+      // Always stop any current speech first
+      Speech.stop();
+      // If user tapped the same message that was speaking, treat as toggle off
+      if (speakingMessageId === messageId) {
+        setSpeakingMessageId(null);
+        return;
+      }
+      const clean = text
+        .replace(/\[SERVICES:[^\]]*\]/gi, "")
+        .replace(/\*\*/g, "")
+        .replace(/\*/g, "")
+        .trim();
+      if (!clean) return;
+      const langCode =
+        chatLang === "en" ? "en-US"
+        : chatLang === "es" ? "es-ES"
+        : chatLang === "ar" ? "ar-SA"
+        : "fr-CA";
+      Haptics.selectionAsync();
+      setSpeakingMessageId(messageId);
+      Speech.speak(clean, {
+        language: langCode,
+        rate: 0.95,
+        onDone: () =>
+          setSpeakingMessageId((cur) => (cur === messageId ? null : cur)),
+        onStopped: () =>
+          setSpeakingMessageId((cur) => (cur === messageId ? null : cur)),
+        onError: () =>
+          setSpeakingMessageId((cur) => (cur === messageId ? null : cur)),
+      });
+    },
+    [chatLang, speakingMessageId],
+  );
+
+  const startRecording = useCallback(async () => {
+    try {
+      const { status } = await Audio.requestPermissionsAsync();
+      if (status !== "granted") {
+        return;
+      }
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: true,
+        playsInSilentModeIOS: true,
+      });
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      const { recording } = await Audio.Recording.createAsync(
+        Audio.RecordingOptionsPresets.HIGH_QUALITY,
+      );
+      recordingRef.current = recording;
+      setIsRecording(true);
+    } catch (err) {
+      console.error("Recording error:", err);
+      setIsRecording(false);
+    }
+  }, []);
+
+  const stopRecordingAndSend = useCallback(async () => {
+    const recording = recordingRef.current;
+    if (!recording) return;
+    setIsRecording(false);
+    setIsTranscribing(true);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    try {
+      await recording.stopAndUnloadAsync();
+      const uri = recording.getURI();
+      recordingRef.current = null;
+      if (!uri) {
+        setIsTranscribing(false);
+        return;
+      }
+      const formData = new FormData();
+      formData.append("audio", {
+        uri,
+        name: "recording.m4a",
+        type: "audio/m4a",
+      } as unknown as Blob);
+      formData.append("language", chatLang);
+      const response = await fetch(`${getApiBaseUrl()}/api/ai/transcribe`, {
+        method: "POST",
+        body: formData,
+      });
+      setIsTranscribing(false);
+      if (!response.ok) {
+        console.error("Transcribe HTTP error:", response.status);
+        setInput(
+          chatLang === "en"
+            ? "(Voice unavailable - please type)"
+            : "(Voix indisponible - veuillez écrire)",
+        );
+        return;
+      }
+      const data = (await response.json()) as { text?: string; error?: string };
+      if (data.text && data.text.trim()) {
+        sendMessageRef.current?.(data.text.trim());
+      } else if (data.error) {
+        console.error("Transcribe API error:", data.error);
+      }
+    } catch (err) {
+      console.error("Transcription error:", err);
+      setIsTranscribing(false);
+    }
+  }, [chatLang]);
+
+  useEffect(() => {
+    return () => {
+      Speech.stop();
+      if (recordingRef.current) {
+        recordingRef.current.stopAndUnloadAsync().catch(() => {});
+      }
+    };
   }, []);
 
   const sendMessage = useCallback(
@@ -462,6 +663,11 @@ export default function ChatScreen() {
     },
     [isLoading, messages, language, chatLang, scrollToBottom, t.aiError]
   );
+
+  // Keep ref to latest sendMessage so voice transcribe callback can call it without stale closure
+  useEffect(() => {
+    sendMessageRef.current = sendMessage;
+  }, [sendMessage]);
 
   // Auto-send prompt from URL params (e.g. coming from home screen quick prompts)
   useEffect(() => {
@@ -690,7 +896,14 @@ export default function ChatScreen() {
             </View>
           ) : null
         }
-        renderItem={({ item }) => <MessageBubble message={item} language={chatLang} />}
+        renderItem={({ item }) => (
+          <MessageBubble
+            message={item}
+            language={chatLang}
+            onSpeak={speakResponse}
+            isSpeakingThis={speakingMessageId === item.id}
+          />
+        )}
       />
 
       <View
@@ -720,7 +933,7 @@ export default function ChatScreen() {
           <TextInput
             ref={inputRef}
             style={[styles.textInput, { color: colors.foreground }]}
-            placeholder={t.aiPlaceholder}
+            placeholder={isRecording ? "🎙️ Enregistrement..." : isTranscribing ? "✍️ Transcription..." : t.aiPlaceholder}
             placeholderTextColor={colors.mutedForeground}
             value={input}
             onChangeText={setInput}
@@ -728,8 +941,33 @@ export default function ChatScreen() {
             maxLength={500}
             returnKeyType="send"
             blurOnSubmit={false}
+            editable={!isRecording && !isTranscribing}
             onSubmitEditing={() => sendMessage(input)}
           />
+          <Pressable
+            style={({ pressed }) => [
+              styles.sendBtn,
+              {
+                backgroundColor: isRecording
+                  ? "#ef4444"
+                  : isTranscribing
+                  ? colors.border
+                  : input.trim()
+                  ? colors.border
+                  : colors.primary,
+                opacity: pressed ? 0.85 : 1,
+                marginRight: 6,
+              },
+            ]}
+            onPress={isRecording ? stopRecordingAndSend : startRecording}
+            disabled={isLoading || isTranscribing || !!input.trim()}
+          >
+            {isTranscribing ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Feather name={isRecording ? "square" : "mic"} size={16} color="#fff" />
+            )}
+          </Pressable>
           <Pressable
             style={({ pressed }) => [
               styles.sendBtn,
