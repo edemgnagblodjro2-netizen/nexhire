@@ -37,10 +37,6 @@ function NativeTabLayout() {
         <Icon sf={{ default: "person.circle", selected: "person.circle.fill" }} />
         <Label>Profil</Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="map" hidden>
-        <Icon sf={{ default: "map", selected: "map.fill" }} />
-        <Label>Map</Label>
-      </NativeTabs.Trigger>
     </NativeTabs>
   );
 }
@@ -168,13 +164,6 @@ function ClassicTabLayout() {
         options={{
           href: null,
           title: t.tabProfile,
-        }}
-      />
-      <Tabs.Screen
-        name="map"
-        options={{
-          href: null,
-          title: "Map",
         }}
       />
     </Tabs>

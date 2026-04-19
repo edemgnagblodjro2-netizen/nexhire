@@ -13,12 +13,9 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFocusEffect, useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
-import * as SecureStore from "expo-secure-store";
+import { authedFetch } from "@/lib/apiClient";
 
 import { useColors } from "@/hooks/useColors";
-import { getApiBaseUrl } from "@/lib/apiBase";
-
-const AUTH_TOKEN_KEY = "auth_session_token";
 
 type Appointment = {
   id: string;
@@ -43,17 +40,6 @@ const STATUS_META: Record<Appointment["status"], { color: string; label: string;
 
 type Tab = "today" | "upcoming" | "past";
 
-async function authedFetch(url: string, init?: RequestInit) {
-  const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
-  return fetch(url, {
-    ...init,
-    headers: {
-      "Content-Type": "application/json",
-      ...(init?.headers || {}),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-  });
-}
 
 export default function AgendaScreen() {
   const router = useRouter();
@@ -86,7 +72,7 @@ export default function AgendaScreen() {
 
   const load = useCallback(async () => {
     try {
-      const url = `${getApiBaseUrl()}/api/appointments?from=${encodeURIComponent(range.from)}&to=${encodeURIComponent(range.to)}`;
+      const url = `/api/appointments?from=${encodeURIComponent(range.from)}&to=${encodeURIComponent(range.to)}`;
       const res = await authedFetch(url);
       if (res.status === 403) {
         setAccessDenied(true);
@@ -122,7 +108,7 @@ export default function AgendaScreen() {
     Haptics.selectionAsync();
     setItems((prev) => prev.map((a) => (a.id === apt.id ? { ...a, status } : a)));
     try {
-      await authedFetch(`${getApiBaseUrl()}/api/appointments/${apt.id}`, {
+      await authedFetch(`/api/appointments/${apt.id}`, {
         method: "PATCH",
         body: JSON.stringify({ status }),
       });

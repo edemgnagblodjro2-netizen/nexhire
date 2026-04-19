@@ -21,10 +21,7 @@ import * as Haptics from "expo-haptics";
 
 import { useColors } from "@/hooks/useColors";
 import { useAuth } from "@/lib/auth";
-import { getApiBaseUrl } from "@/lib/apiBase";
-import * as SecureStore from "expo-secure-store";
-
-const AUTH_TOKEN_KEY = "auth_session_token";
+import { authedFetch } from "@/lib/apiClient";
 
 type ClientRow = {
   id: string;
@@ -44,17 +41,6 @@ const RISK_META: Record<ClientRow["riskLevel"], { color: string; label: string }
   high: { color: "#dc2626", label: "Élevé" },
 };
 
-async function authedFetch(url: string, init?: RequestInit) {
-  const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
-  return fetch(url, {
-    ...init,
-    headers: {
-      "Content-Type": "application/json",
-      ...(init?.headers || {}),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-  });
-}
 
 export default function ClientsListScreen() {
   const colors = useColors();
@@ -78,7 +64,7 @@ export default function ClientsListScreen() {
   const load = useCallback(
     async (q?: string) => {
       try {
-        const url = `${getApiBaseUrl()}/api/clients${q ? `?q=${encodeURIComponent(q)}` : ""}`;
+        const url = `/api/clients${q ? `?q=${encodeURIComponent(q)}` : ""}`;
         const res = await authedFetch(url);
         if (res.status === 403) {
           setAccessDenied(true);
@@ -127,7 +113,7 @@ export default function ClientsListScreen() {
     }
     setCreating(true);
     try {
-      const res = await authedFetch(`${getApiBaseUrl()}/api/clients`, {
+      const res = await authedFetch(`/api/clients`, {
         method: "POST",
         body: JSON.stringify({
           firstName: newFirst.trim(),

@@ -13,22 +13,7 @@ import {
 } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import * as SecureStore from "expo-secure-store";
-import { getApiBaseUrl } from "@/lib/apiBase";
-
-const AUTH_TOKEN_KEY = "auth_session_token";
-
-async function authedFetch(url: string, init?: RequestInit) {
-  const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
-  return fetch(url, {
-    ...init,
-    headers: {
-      "Content-Type": "application/json",
-      ...(init?.headers || {}),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-  });
-}
+import { authedFetch } from "@/lib/apiClient";
 
 type Member = {
   id: string;
@@ -87,7 +72,7 @@ export default function TeamScreen() {
   const load = useCallback(async () => {
     try {
       setError(null);
-      const r = await authedFetch(`${getApiBaseUrl()}/api/organisations/me/members`);
+      const r = await authedFetch(`/api/organisations/me/members`);
       if (!r.ok) {
         const j = await r.json().catch(() => ({}));
         throw new Error(j.error || "Erreur de chargement");
@@ -113,7 +98,7 @@ export default function TeamScreen() {
     }
     setSubmitting(true);
     try {
-      const r = await authedFetch(`${getApiBaseUrl()}/api/organisations/me/members`, {
+      const r = await authedFetch(`/api/organisations/me/members`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: inviteEmail.trim(), role: inviteRole }),
@@ -143,7 +128,7 @@ export default function TeamScreen() {
           style: "destructive",
           onPress: async () => {
             const r = await authedFetch(
-              `${getApiBaseUrl()}/api/organisations/me/members/${m.id}`,
+              `/api/organisations/me/members/${m.id}`,
               { method: "DELETE" },
             );
             if (r.ok) load();

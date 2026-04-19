@@ -60,6 +60,18 @@ const RISK_OPTIONS: Array<{ value: Client["riskLevel"]; label: string; color: st
   { value: "high", label: "Élevé", color: "#dc2626" },
 ];
 
+async function authedFetch(url: string, init?: RequestInit) {
+  const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
+  return fetch(url, {
+    ...init,
+    headers: {
+      "Content-Type": "application/json",
+      ...(init?.headers || {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
+}
+
 export default function ClientDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
