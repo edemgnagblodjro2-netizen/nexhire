@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "AttenteZéro",
+    "name": "AttenteZ\u00e9ro",
     "slug": "attentezero",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,8 +18,8 @@
       "bundleIdentifier": "com.attentezero.app",
       "icon": "./assets/images/icon.png",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "AttenteZéro utilise votre position pour afficher les services communautaires les plus proches de vous.",
-        "NSLocationAlwaysUsageDescription": "AttenteZéro utilise votre position pour trier les services par distance."
+        "NSLocationWhenInUseUsageDescription": "AttenteZ\u00e9ro utilise votre position pour afficher les services communautaires les plus proches de vous.",
+        "NSLocationAlwaysUsageDescription": "AttenteZ\u00e9ro utilise votre position pour trier les services par distance."
       }
     },
     "android": {
@@ -54,8 +54,8 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "AttenteZéro utilise votre position pour afficher les services communautaires les plus proches de vous.",
-          "locationWhenInUsePermission": "AttenteZéro utilise votre position pour afficher les services communautaires les plus proches de vous."
+          "locationAlwaysAndWhenInUsePermission": "AttenteZ\u00e9ro utilise votre position pour afficher les services communautaires les plus proches de vous.",
+          "locationWhenInUsePermission": "AttenteZ\u00e9ro utilise votre position pour afficher les services communautaires les plus proches de vous."
         }
       ]
     ],
