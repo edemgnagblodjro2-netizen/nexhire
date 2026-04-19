@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { getUncachableStripeClient } from "../stripeClient";
 import { logger } from "../lib/logger";
-import { db, subscriptionsTable } from "@workspace/db";
-import { eq } from "drizzle-orm";
+import { db, subscriptionsTable, usersTable } from "@workspace/db";
+import { eq, or } from "drizzle-orm";
 
 const stripeRouter = Router();
 
@@ -46,6 +46,46 @@ export async function handleStripeWebhook(req: any, res: any) {
     if (!obj) return;
 
     switch (event.type) {
+      // ── User Premium 10$ one-time payment ──
+      case "checkout.session.completed": {
+        if (obj.payment_status !== "paid") break;
+        const plan = obj.metadata?.plan;
+        if (plan !== "user-premium") break; // Only handle user premium here
+
+        const userId = obj.metadata?.userId || null;
+        const email = obj.customer_details?.email || obj.customer_email || null;
+        const sessionId = obj.id;
+
+        // Match by userId first (most reliable), fall back to email
+        const updates = {
+          isPremium: true,
+          premiumPurchasedAt: new Date(),
+          premiumStripeSessionId: sessionId,
+        };
+
+        let updated: { id: string; email: string | null }[] = [];
+        if (userId) {
+          updated = await db
+            .update(usersTable)
+            .set(updates)
+            .where(eq(usersTable.id, userId))
+            .returning({ id: usersTable.id, email: usersTable.email });
+        }
+        if ((!updated || updated.length === 0) && email) {
+          updated = await db
+            .update(usersTable)
+            .set(updates)
+            .where(eq(usersTable.email, email))
+            .returning({ id: usersTable.id, email: usersTable.email });
+        }
+
+        logger.info(
+          { userId, email, sessionId, matched: updated?.length || 0 },
+          "User Premium 10$ payment processed",
+        );
+        break;
+      }
+
       case "customer.subscription.created":
       case "customer.subscription.updated":
       case "customer.subscription.trial_will_end": {

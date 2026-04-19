@@ -94,7 +94,23 @@ router.get("/auth/user", async (req: Request, res: Response) => {
   const sid = getSessionId(req);
   const session = sid ? await getSession(sid) : null;
   const role = session?.user?.role ?? "user";
-  res.json({ user: { ...req.user, role } });
+
+  // Fetch fresh isPremium from DB (in case it was upgraded since last login)
+  let isPremium = false;
+  try {
+    const sessionUser = (req.user as any) || {};
+    const userId = sessionUser.id;
+    if (userId) {
+      const [dbUser] = await db
+        .select({ isPremium: usersTable.isPremium })
+        .from(usersTable)
+        .where(eq(usersTable.id, userId))
+        .limit(1);
+      isPremium = !!dbUser?.isPremium;
+    }
+  } catch {}
+
+  res.json({ user: { ...req.user, role, isPremium } });
 });
 
 router.get("/login", async (req: Request, res: Response) => {
@@ -389,7 +405,7 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
     };
 
     const sid = await createSession(sessionData);
-    res.json({ token: sid, user: sessionData.user, organisationId });
+    res.json({ token: sid, user: { ...sessionData.user, isPremium: !!newUser.isPremium }, organisationId });
   } catch (err) {
     req.log.error({ err }, "Register error");
     res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
@@ -442,7 +458,7 @@ router.post("/mobile-auth/email-login", async (req: Request, res: Response) => {
     };
 
     const sid = await createSession(sessionData);
-    res.json({ token: sid, user: sessionData.user });
+    res.json({ token: sid, user: { ...sessionData.user, isPremium: !!user.isPremium } });
   } catch (err) {
     req.log.error({ err }, "Email login error");
     res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });

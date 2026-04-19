@@ -22,6 +22,7 @@ interface User {
   profileImageUrl: string | null;
   address: string | null;
   role?: UserRole;
+  isPremium?: boolean;
 }
 
 export interface RegisterResult {

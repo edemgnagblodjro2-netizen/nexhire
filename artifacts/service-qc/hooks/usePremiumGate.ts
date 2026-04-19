@@ -1,10 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCallback, useEffect, useState } from "react";
+import { useAuth } from "@/lib/auth";
 
 const STORAGE_KEY = "premium_gate_attempts";
 const FREE_USES = 3;
 
 export function usePremiumGate() {
+  const { user } = useAuth();
+  const isPremium = !!user?.isPremium;
+
   const [attempts, setAttempts] = useState(0);
   const [showGate, setShowGate] = useState(false);
 
@@ -14,24 +18,31 @@ export function usePremiumGate() {
     });
   }, []);
 
+  // If user becomes Premium, immediately dismiss any visible gate
+  useEffect(() => {
+    if (isPremium && showGate) setShowGate(false);
+  }, [isPremium, showGate]);
+
   const recordAttempt = useCallback(async () => {
+    // Premium users bypass gating entirely
+    if (isPremium) return false;
+
     const next = attempts + 1;
     setAttempts(next);
     await AsyncStorage.setItem(STORAGE_KEY, String(next));
-    // Show gate on the 3rd use AND every subsequent tap — the modal is the reminder
     if (next >= FREE_USES) {
       setShowGate(true);
       return true;
     }
     return false;
-  }, [attempts]);
+  }, [attempts, isPremium]);
 
-  // Call this when the user visits the "Plus" tab while already gated
   const checkAndRemind = useCallback(() => {
+    if (isPremium) return; // never gate Premium users
     if (attempts >= FREE_USES) {
       setShowGate(true);
     }
-  }, [attempts]);
+  }, [attempts, isPremium]);
 
   const dismissGate = useCallback(() => setShowGate(false), []);
 
@@ -43,9 +54,10 @@ export function usePremiumGate() {
 
   return {
     attempts,
-    remaining: Math.max(0, FREE_USES - attempts),
-    isGated: attempts >= FREE_USES,
-    showGate,
+    remaining: isPremium ? Infinity : Math.max(0, FREE_USES - attempts),
+    isGated: !isPremium && attempts >= FREE_USES,
+    isPremium,
+    showGate: !isPremium && showGate,
     recordAttempt,
     checkAndRemind,
     dismissGate,
