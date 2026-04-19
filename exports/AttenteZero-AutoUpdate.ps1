@@ -166,8 +166,35 @@ foreach ($c in $checks) {
     }
 }
 
-# === ETAPE 8 : Lancer EAS Build (optionnel) ===
-Write-Step "Etape 8 : Build APK Android"
+# === ETAPE 8 : OTA Update (rapide, optionnel) ===
+Write-Step "Etape 8 : OTA Update (optionnel, rapide)"
+Write-Host ""
+Write-Host "  L'OTA pousse les changements de code/data en ~1 min" -ForegroundColor Yellow
+Write-Host "  Les utilisateurs actuels recoivent la MAJ instantanement" -ForegroundColor Yellow
+Write-Host "  (pas besoin de telecharger un nouvel APK)." -ForegroundColor Yellow
+Write-Host ""
+$otaResp = Read-Host "  Pousser un OTA update maintenant ? (O/N)"
+if ($otaResp -eq "O" -or $otaResp -eq "o") {
+    $otaMsg = Read-Host "  Message de l'update (ex: 'Audit -17 doublons')"
+    if ([string]::IsNullOrWhiteSpace($otaMsg)) {
+        $otaMsg = "Update " + (Get-Date -Format "yyyy-MM-dd HH:mm")
+    }
+    Write-Host ""
+    Write-Info "Push OTA via EAS Update..."
+    Set-Location $ProjectPath
+    try {
+        eas update --branch production --message "$otaMsg"
+        Write-OK "OTA pousse ! Utilisateurs recoivent la MAJ a la prochaine ouverture."
+    } catch {
+        Write-Fail "Echec OTA : $_"
+        Write-Host "  (Si premiere fois : lance 'eas update:configure' une fois)" -ForegroundColor Yellow
+    }
+} else {
+    Write-Info "OTA ignore."
+}
+
+# === ETAPE 9 : Lancer EAS Build (optionnel) ===
+Write-Step "Etape 9 : Build APK Android"
 Write-Host ""
 Write-Host "  Tous les fichiers sont en place !" -ForegroundColor Green
 Write-Host ""
