@@ -44,6 +44,7 @@ export default function RegisterScreen() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [proSuggestionDismissed, setProSuggestionDismissed] = useState(false);
+  const [orgWelcome, setOrgWelcome] = useState<{ organisationId: string } | null>(null);
 
   // Detect if email looks professional (custom domain, not a free webmail)
   const looksLikePro = React.useMemo(() => {
@@ -129,29 +130,152 @@ export default function RegisterScreen() {
       return;
     }
 
-    // Organisme: open Stripe checkout in browser (14-day free trial)
-    if (role === "organisme" && result.organisationId) {
-      try {
-        const res = await fetch(`${getApiBaseUrl()}/api/stripe/create-checkout-session`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: email.trim().toLowerCase(),
-            organisationId: result.organisationId,
-            plan: "standard",
-            interval: "monthly",
-          }),
-        });
-        const data = await res.json();
-        if (data.url) {
-          Linking.openURL(data.url);
-        }
-      } catch {
-        // Subscription started in trial mode regardless
-      }
-    }
-
     setLoading(false);
+
+    // Organisme: show welcome screen with admin panel info first
+    if (role === "organisme" && result.organisationId) {
+      setOrgWelcome({ organisationId: result.organisationId });
+    }
+  }
+
+  async function startOrgTrialCheckout() {
+    if (!orgWelcome) return;
+    try {
+      const res = await fetch(`${getApiBaseUrl()}/api/stripe/create-checkout-session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.trim().toLowerCase(),
+          organisationId: orgWelcome.organisationId,
+          plan: "standard",
+          interval: "monthly",
+        }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        Linking.openURL(data.url);
+      }
+    } catch {
+      // Subscription started in trial mode regardless
+    }
+  }
+
+  // ─── Welcome screen for new organisms ────────────────────
+  if (orgWelcome) {
+    const ADMIN_URL = "https://attentezero.replit.app/org-login";
+    return (
+      <LinearGradient colors={["#0a6558", "#0e7e6e", "#1a9f8c"]} style={styles.gradient}>
+        <SafeAreaView style={styles.safe}>
+          <ScrollView
+            contentContainerStyle={[styles.scroll, { paddingTop: 32, paddingBottom: 40 }]}
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={{ alignItems: "center", marginBottom: 24 }}>
+              <View style={{
+                width: 88, height: 88, borderRadius: 44,
+                backgroundColor: "rgba(255,255,255,0.18)",
+                alignItems: "center", justifyContent: "center", marginBottom: 16,
+              }}>
+                <Feather name="check-circle" size={48} color="#fff" />
+              </View>
+              <Text style={{ fontSize: 26, fontWeight: "800", color: "#fff", textAlign: "center" }}>
+                Bienvenue sur AttenteZéro !
+              </Text>
+              <Text style={{ fontSize: 15, color: "rgba(255,255,255,0.85)", textAlign: "center", marginTop: 8, paddingHorizontal: 16 }}>
+                Votre compte organisme est créé. Votre essai gratuit de 14 jours commence maintenant.
+              </Text>
+            </View>
+
+            <View style={{
+              backgroundColor: "rgba(255,255,255,0.97)",
+              borderRadius: 18, padding: 20, marginBottom: 16,
+            }}>
+              <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12 }}>
+                <Feather name="monitor" size={20} color="#0a6558" />
+                <Text style={{ fontSize: 17, fontWeight: "700", color: "#0a6558", marginLeft: 10 }}>
+                  Votre panneau admin web
+                </Text>
+              </View>
+              <Text style={{ fontSize: 14, color: "#374151", lineHeight: 20, marginBottom: 14 }}>
+                Gérez votre fiche, vos statistiques et votre abonnement depuis un ordinateur :
+              </Text>
+              <View style={{
+                backgroundColor: "#f0fdf4", borderRadius: 10, padding: 12,
+                borderWidth: 1, borderColor: "#86efac", marginBottom: 14,
+              }}>
+                <Text style={{ fontSize: 13, color: "#166534", fontWeight: "600" }} selectable>
+                  {ADMIN_URL}
+                </Text>
+                <Text style={{ fontSize: 12, color: "#15803d", marginTop: 4 }}>
+                  Connectez-vous avec les mêmes identifiants que cette app.
+                </Text>
+              </View>
+              {[
+                { icon: "bar-chart-2", text: "Statistiques de visites, appels et clics" },
+                { icon: "credit-card", text: "Gestion de votre abonnement" },
+                { icon: "x-circle", text: "Annulation à tout moment" },
+                { icon: "shield", text: "Badge « Vérifié » sur votre fiche" },
+              ].map((item) => (
+                <View key={item.icon} style={{ flexDirection: "row", alignItems: "center", marginTop: 8 }}>
+                  <Feather name={item.icon as any} size={14} color="#0a6558" />
+                  <Text style={{ fontSize: 13, color: "#374151", marginLeft: 10 }}>{item.text}</Text>
+                </View>
+              ))}
+              <Pressable
+                onPress={() => Linking.openURL(ADMIN_URL)}
+                style={({ pressed }) => [{
+                  marginTop: 16, backgroundColor: "#0a6558", borderRadius: 10,
+                  paddingVertical: 12, alignItems: "center", opacity: pressed ? 0.85 : 1,
+                }]}
+              >
+                <Text style={{ color: "#fff", fontWeight: "700", fontSize: 15 }}>
+                  Ouvrir mon panneau admin
+                </Text>
+              </Pressable>
+            </View>
+
+            <View style={{
+              backgroundColor: "rgba(251,191,36,0.18)",
+              borderRadius: 14, padding: 14, marginBottom: 20,
+              borderWidth: 1, borderColor: "rgba(251,191,36,0.4)",
+            }}>
+              <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 6 }}>
+                <Feather name="gift" size={16} color="#fbbf24" />
+                <Text style={{ fontSize: 14, fontWeight: "700", color: "#fff", marginLeft: 8 }}>
+                  Activer mon essai gratuit (optionnel)
+                </Text>
+              </View>
+              <Text style={{ fontSize: 12, color: "rgba(255,255,255,0.85)", lineHeight: 17 }}>
+                Pour activer le débit auto à la fin des 14 jours, enregistrez votre carte. Sinon, vous pourrez le faire plus tard.
+              </Text>
+              <Pressable
+                onPress={startOrgTrialCheckout}
+                style={({ pressed }) => [{
+                  marginTop: 10, backgroundColor: "rgba(255,255,255,0.2)",
+                  borderRadius: 8, paddingVertical: 10, alignItems: "center",
+                  opacity: pressed ? 0.7 : 1,
+                }]}
+              >
+                <Text style={{ color: "#fff", fontWeight: "600", fontSize: 13 }}>
+                  Enregistrer ma carte maintenant
+                </Text>
+              </Pressable>
+            </View>
+
+            <Pressable
+              onPress={() => router.replace("/(tabs)")}
+              style={({ pressed }) => [{
+                paddingVertical: 14, alignItems: "center", opacity: pressed ? 0.7 : 1,
+              }]}
+            >
+              <Text style={{ color: "#fff", fontSize: 15, fontWeight: "600", textDecorationLine: "underline" }}>
+                Continuer vers l'application →
+              </Text>
+            </Pressable>
+          </ScrollView>
+        </SafeAreaView>
+      </LinearGradient>
+    );
   }
 
   // ─── Step 1: Forced role choice ──────────────────────────

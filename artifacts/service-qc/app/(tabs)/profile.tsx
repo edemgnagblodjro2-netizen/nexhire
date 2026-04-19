@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   Alert,
+  Linking,
   Platform,
   Pressable,
   ScrollView,
@@ -179,6 +180,59 @@ export default function ProfileScreen() {
             </View>
           </View>
         </View>
+
+        {user?.role === "organisme" && (
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 6 }}>
+              <Feather name="briefcase" size={16} color={colors.primary} />
+              <Text style={[styles.cardTitle, { color: colors.foreground, marginLeft: 8, marginBottom: 0 }]}>
+                {isFr ? "Votre espace Organisme" : "Your Organization Space"}
+              </Text>
+            </View>
+            <Text style={{ fontSize: 13, color: colors.mutedForeground, marginBottom: 12, lineHeight: 18 }}>
+              {isFr
+                ? "Gérez vos statistiques, votre fiche et votre abonnement depuis un ordinateur :"
+                : "Manage your stats, profile and subscription from a computer:"}
+            </Text>
+            <View style={{
+              backgroundColor: colors.primary + "10",
+              borderRadius: 8, padding: 10, marginBottom: 10,
+              borderWidth: 1, borderColor: colors.primary + "30",
+            }}>
+              <Text style={{ fontSize: 12, color: colors.primary, fontWeight: "600" }} selectable>
+                attentezero.replit.app/org-login
+              </Text>
+              <Text style={{ fontSize: 11, color: colors.mutedForeground, marginTop: 2 }}>
+                {isFr ? "Mêmes identifiants que cette app." : "Same login as this app."}
+              </Text>
+            </View>
+            {[
+              isFr ? "📊 Statistiques (vues, appels, clics)" : "📊 Stats (views, calls, clicks)",
+              isFr ? "💳 Gestion de l'abonnement" : "💳 Subscription management",
+              isFr ? "🛡️ Badge Vérifié sur votre fiche" : "🛡️ Verified badge on your listing",
+              isFr ? "❌ Annulation à tout moment" : "❌ Cancel anytime",
+            ].map((line) => (
+              <Text key={line} style={{ fontSize: 12, color: colors.foreground, marginBottom: 4 }}>
+                {line}
+              </Text>
+            ))}
+            <Pressable
+              onPress={() => Linking.openURL("https://attentezero.replit.app/org-login")}
+              style={({ pressed }) => [{
+                marginTop: 12,
+                backgroundColor: colors.primary,
+                borderRadius: 8,
+                paddingVertical: 11,
+                alignItems: "center",
+                opacity: pressed ? 0.85 : 1,
+              }]}
+            >
+              <Text style={{ color: "#fff", fontWeight: "700", fontSize: 14 }}>
+                {isFr ? "Ouvrir mon panneau admin" : "Open my admin panel"}
+              </Text>
+            </Pressable>
+          </View>
+        )}
 
         <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Text style={[styles.cardTitle, { color: colors.foreground }]}>
