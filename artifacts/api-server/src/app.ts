@@ -46,7 +46,7 @@ app.use(authMiddleware);
 
 app.use("/api", router);
 
-app.get("/privacy", (_req, res) => {
+app.get(["/api/privacy", "/privacy"], (_req, res) => {
   res.type("html").send(`<!DOCTYPE html>
 <html lang="fr-CA">
 <head>
