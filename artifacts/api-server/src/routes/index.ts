@@ -8,6 +8,7 @@ import servicesRouter from "./services";
 import organisationsRouter from "./organisations";
 import clientsRouter from "./clients";
 import appointmentsRouter from "./appointments";
+import teamRouter from "./team";
 
 const router: IRouter = Router();
 
@@ -20,5 +21,6 @@ router.use(servicesRouter);
 router.use(organisationsRouter);
 router.use(clientsRouter);
 router.use(appointmentsRouter);
+router.use(teamRouter);
 
 export default router;

@@ -222,6 +222,45 @@ export default function MoreScreen() {
             </Pressable>
           )}
 
+          {/* ── Équipe — multi-seat (Organisme & Institution) ── */}
+          {(user?.role === "intervenant" || user?.role === "organisme") && (
+            <Pressable
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                router.push("/team" as any);
+              }}
+              style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1, marginTop: 10 }]}
+            >
+              <LinearGradient
+                colors={["#5b21b6", "#7c3aed"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.terrainCard}
+              >
+                <View style={styles.terrainIconWrap}>
+                  <Feather name="users" size={22} color="#fff" />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <View style={styles.terrainBadgeRow}>
+                    <View style={styles.terrainBadge}>
+                      <Feather name="user-plus" size={10} color="#ddd6fe" />
+                      <Text style={styles.terrainBadgeText}>ÉQUIPE</Text>
+                    </View>
+                  </View>
+                  <Text style={styles.terrainTitle}>
+                    {isFr ? "Mon équipe" : "My team"}
+                  </Text>
+                  <Text style={styles.terrainSub}>
+                    {isFr
+                      ? "Inviter des coéquipiers pour partager les dossiers clients et l'agenda."
+                      : "Invite teammates to share client files and the agenda."}
+                  </Text>
+                </View>
+                <Feather name="chevron-right" size={18} color="rgba(255,255,255,0.7)" />
+              </LinearGradient>
+            </Pressable>
+          )}
+
           {/* ── Persistent reminder banner (shown after 3 uses) ── */}
           {isGated && (
             <Pressable

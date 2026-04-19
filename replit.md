@@ -55,6 +55,7 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **Bilingue** : FR/EN avec persistance AsyncStorage
 - **Mode Terrain — Dossiers clients** (`/clients`) : intervenants & organismes uniquement (gate par abonnement Terrain 19$/mois ou Institution 199$/mois). Liste avec recherche debounce, fiche détail (avatar, niveau de risque, timeline 5 types de notes, appel/partage/archive)
 - **Mode Terrain — Agenda RDV** (`/agenda`) : 3 onglets (aujourd'hui / à venir / passé), regroupement par jour, statuts (planifié/confirmé/terminé/annulé/absent), planification depuis la fiche client (chips date + heure + lieu + notes), création auto d'une note "rdv" dans la timeline. DST-safe (calendrier, pas +24h ms) et timestamps stricts ISO+offset côté API.
+- **Équipe multi-sièges** (`/team`, table `organisation_members`) : Organisme = 3 sièges, Institution = 15 sièges, Terrain = 1 siège. Rôles owner / admin / member, statuts invited / active / revoked. Le propriétaire & les administrateurs peuvent inviter par courriel (insertion transactionnelle avec `SELECT FOR UPDATE` sur l'org → pas de course concurrente sur la limite). Auto-claim au register et au login : toute invitation pending pour `email` est passée à `active`. Les membres actifs partagent l'accès clients & RDV via `getEligibleOrgForUser` (multi-seat aware, lookup par membership au lieu de `organisations.userId`).
 
 ### Data
 
@@ -70,6 +71,7 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **Auth API** : `/api/mobile-auth/email-login`, `/api/mobile-auth/register`, `/api/mobile-auth/update-profile`, `/api/mobile-auth/logout`
 - **Clients API** : `GET/POST /api/clients`, `GET/PATCH/DELETE /api/clients/:id`, `POST /api/clients/:id/notes`, `GET /api/clients/_meta/access` (gate Terrain/Institution)
 - **Appointments API** : `GET /api/appointments?from&to&clientId`, `POST /api/appointments`, `PATCH/DELETE /api/appointments/:id`. `scheduledAt` doit être ISO 8601 avec offset (`Z` ou `±HH:MM`). Crée automatiquement une note "rdv" sur la timeline du client.
+- **Team API** : `GET /api/organisations/me/members` (liste + plan + sièges utilisés/limite + rôle), `POST` (invite par email, rôle member/admin, transactionnel), `PATCH /:id` (changer rôle, owner only), `DELETE /:id` (révoquer, owner du rôle interdit). Auto-claim des invitations pending au register et au login (case-insensitive sur invited_email). 12/12 tests d'intégration validés (gating subscription, rôle, course, double-invite 409, owner-protection).
 
 ### Key Files
 

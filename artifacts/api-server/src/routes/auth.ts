@@ -8,7 +8,8 @@ import {
   ExchangeMobileAuthorizationCodeResponse,
   LogoutMobileSessionResponse,
 } from "@workspace/api-zod";
-import { db, usersTable, passwordResetTokensTable, organisationsTable, subscriptionsTable } from "@workspace/db";
+import { db, usersTable, passwordResetTokensTable, organisationsTable, subscriptionsTable, organisationMembersTable } from "@workspace/db";
+import { claimPendingInvites } from "./team";
 import { eq, and, gt, isNull } from "drizzle-orm";
 import {
   clearSession,
@@ -327,7 +328,7 @@ const RegisterBody = z.object({
   organisationWebsite: z.string().optional(),
   professionalTitle: z.string().optional(),
   affiliation: z.string().optional(),
-  plan: z.enum(["standard", "plus", "terrain", "institution"]).optional().default("standard"),
+  plan: z.enum(["standard", "plus", "terrain", "organisme", "institution"]).optional().default("standard"),
 });
 
 router.post("/mobile-auth/register", async (req: Request, res: Response) => {
@@ -392,6 +393,16 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
         status: "trialing",
         trialEnd,
       });
+
+      // Owner row for multi-seat support
+      await db.insert(organisationMembersTable).values({
+        organisationId: newOrg.id,
+        userId: newUser.id,
+        invitedEmail: email.toLowerCase(),
+        role: "owner",
+        status: "active",
+        joinedAt: new Date(),
+      });
     } else if (role === "intervenant") {
       // Self-org for the intervenant — not displayed publicly
       const [newOrg] = await db
@@ -420,7 +431,19 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
         status: "trialing",
         trialEnd,
       });
+
+      await db.insert(organisationMembersTable).values({
+        organisationId: newOrg.id,
+        userId: newUser.id,
+        invitedEmail: email.toLowerCase(),
+        role: "owner",
+        status: "active",
+        joinedAt: new Date(),
+      });
     }
+
+    // Claim any pending team invitations addressed to this email
+    const claimed = await claimPendingInvites(newUser.id, newUser.email);
 
     const sessionData: SessionData = {
       user: {
@@ -436,7 +459,7 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
     };
 
     const sid = await createSession(sessionData);
-    res.json({ token: sid, user: { ...sessionData.user, isPremium: !!newUser.isPremium }, organisationId });
+    res.json({ token: sid, user: { ...sessionData.user, isPremium: !!newUser.isPremium }, organisationId, joinedTeams: claimed });
   } catch (err) {
     req.log.error({ err }, "Register error");
     res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
@@ -487,6 +510,9 @@ router.post("/mobile-auth/email-login", async (req: Request, res: Response) => {
       },
       access_token: "",
     };
+
+    // Claim any pending team invitations addressed to this email (idempotent)
+    await claimPendingInvites(user.id, user.email);
 
     const sid = await createSession(sessionData);
     res.json({ token: sid, user: { ...sessionData.user, isPremium: !!user.isPremium } });

@@ -7,6 +7,7 @@ import {
   caseNotesTable,
   organisationsTable,
   subscriptionsTable,
+  organisationMembersTable,
 } from "@workspace/db";
 import { and, desc, eq, gte, lte, asc } from "drizzle-orm";
 
@@ -16,21 +17,36 @@ const ALLOWED_PLANS = new Set(["terrain", "institution"]);
 const ACTIVE_STATUSES = new Set(["active", "trialing", "past_due"]);
 
 async function getEligibleOrgForUser(userId: string) {
-  const [org] = await db
-    .select()
-    .from(organisationsTable)
-    .where(eq(organisationsTable.userId, userId))
-    .limit(1);
-  if (!org) return null;
-  const [sub] = await db
-    .select()
-    .from(subscriptionsTable)
-    .where(eq(subscriptionsTable.organisationId, org.id))
-    .limit(1);
-  if (!sub) return null;
-  if (!ALLOWED_PLANS.has(sub.plan)) return null;
-  if (!ACTIVE_STATUSES.has(sub.status)) return null;
-  return org;
+  // Multi-seat aware: any active membership in an org with an eligible
+  // subscription grants access. Prefer owner-role memberships first.
+  const memberships = await db
+    .select({
+      org: organisationsTable,
+      memberRole: organisationMembersTable.role,
+    })
+    .from(organisationMembersTable)
+    .leftJoin(organisationsTable, eq(organisationsTable.id, organisationMembersTable.organisationId))
+    .where(
+      and(
+        eq(organisationMembersTable.userId, userId),
+        eq(organisationMembersTable.status, "active"),
+      ),
+    );
+  if (memberships.length === 0) return null;
+  memberships.sort((a, b) => (a.memberRole === "owner" ? -1 : b.memberRole === "owner" ? 1 : 0));
+  for (const m of memberships) {
+    if (!m.org) continue;
+    const [sub] = await db
+      .select()
+      .from(subscriptionsTable)
+      .where(eq(subscriptionsTable.organisationId, m.org.id))
+      .limit(1);
+    if (!sub) continue;
+    if (!ALLOWED_PLANS.has(sub.plan)) continue;
+    if (!ACTIVE_STATUSES.has(sub.status)) continue;
+    return m.org;
+  }
+  return null;
 }
 
 function gate(req: Request, res: Response): string | null {

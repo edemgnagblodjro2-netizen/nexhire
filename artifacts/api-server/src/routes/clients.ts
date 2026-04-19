@@ -6,6 +6,7 @@ import {
   caseNotesTable,
   organisationsTable,
   subscriptionsTable,
+  organisationMembersTable,
 } from "@workspace/db";
 import { eq, and, desc, ilike, or, sql } from "drizzle-orm";
 
@@ -24,26 +25,42 @@ const ALLOWED_PLANS = new Set(["terrain", "institution"]);
 const ACTIVE_STATUSES = new Set(["active", "trialing", "past_due"]);
 
 /**
- * Returns the organisation owned by `userId` if and only if it has an
- * active subscription on a plan eligible for the field-worker / institution
- * client-management module. Returns null otherwise.
+ * Returns the organisation the `userId` belongs to (as owner, admin, or member)
+ * if and only if that org has an active subscription on a plan eligible for
+ * the field-worker / institution client-management module. Returns null otherwise.
+ *
+ * Multi-seat aware: invited team members get the same access as the owner.
  */
 async function getEligibleOrgForUser(userId: string) {
-  const [org] = await db
-    .select()
-    .from(organisationsTable)
-    .where(eq(organisationsTable.userId, userId))
-    .limit(1);
-  if (!org) return null;
-  const [sub] = await db
-    .select()
-    .from(subscriptionsTable)
-    .where(eq(subscriptionsTable.organisationId, org.id))
-    .limit(1);
-  if (!sub) return null;
-  if (!ALLOWED_PLANS.has(sub.plan)) return null;
-  if (!ACTIVE_STATUSES.has(sub.status)) return null;
-  return org;
+  const memberships = await db
+    .select({
+      org: organisationsTable,
+      memberRole: organisationMembersTable.role,
+    })
+    .from(organisationMembersTable)
+    .leftJoin(organisationsTable, eq(organisationsTable.id, organisationMembersTable.organisationId))
+    .where(
+      and(
+        eq(organisationMembersTable.userId, userId),
+        eq(organisationMembersTable.status, "active"),
+      ),
+    );
+  if (memberships.length === 0) return null;
+  // Prefer owner role first, then any other active membership
+  memberships.sort((a, b) => (a.memberRole === "owner" ? -1 : b.memberRole === "owner" ? 1 : 0));
+  for (const m of memberships) {
+    if (!m.org) continue;
+    const [sub] = await db
+      .select()
+      .from(subscriptionsTable)
+      .where(eq(subscriptionsTable.organisationId, m.org.id))
+      .limit(1);
+    if (!sub) continue;
+    if (!ALLOWED_PLANS.has(sub.plan)) continue;
+    if (!ACTIVE_STATUSES.has(sub.status)) continue;
+    return m.org;
+  }
+  return null;
 }
 
 function gateOrg(req: Request, res: Response) {
