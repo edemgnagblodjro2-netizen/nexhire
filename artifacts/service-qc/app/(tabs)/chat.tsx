@@ -483,11 +483,40 @@ export default function ChatScreen() {
         type: "audio/m4a",
       } as unknown as Blob);
       formData.append("language", chatLang);
+      // The /api/ai/transcribe endpoint requires authentication and is
+      // rate-limited per user. Attach the bearer token if signed in;
+      // otherwise show a friendly fallback.
+      const authToken = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
+      if (!authToken) {
+        setIsTranscribing(false);
+        setInput(
+          chatLang === "en"
+            ? "(Sign in to use voice input)"
+            : "(Connectez-vous pour la saisie vocale)",
+        );
+        return;
+      }
       const response = await fetch(`${getApiBaseUrl()}/api/ai/transcribe`, {
         method: "POST",
         body: formData,
+        headers: { Authorization: `Bearer ${authToken}` },
       });
       setIsTranscribing(false);
+      if (response.status === 429) {
+        const data = (await response.json().catch(() => ({}))) as { error?: string };
+        setInput(data.error ?? (chatLang === "en"
+          ? "(Voice quota reached, try again later)"
+          : "(Quota vocal atteint, réessayez plus tard)"));
+        return;
+      }
+      if (response.status === 401) {
+        setInput(
+          chatLang === "en"
+            ? "(Sign in to use voice input)"
+            : "(Connectez-vous pour la saisie vocale)",
+        );
+        return;
+      }
       if (!response.ok) {
         console.error("Transcribe HTTP error:", response.status);
         setInput(

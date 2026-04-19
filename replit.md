@@ -67,6 +67,7 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 ### API
 
 - **Endpoint IA** : `POST /api/ai/chat` — `{message, language, history}` → SSE streaming avec `{content}`, `{done, serviceIds}`, `{error}`
+- **Endpoint voix** : `POST /api/ai/transcribe` (multipart `audio` + `language`) → Whisper-1. **Sécurisé** : authentification obligatoire (401 sans token), rate-limit 30 req / 10 min par utilisateur (429 + `Retry-After`), allowlist MIME audio (415 sinon), taille max 10 Mo (413), refus fichier vide (400). Mobile envoie le bearer token et affiche un message de repli localisé en cas de quota / non-connecté.
 - **Base URL** : `https://quebec-aid-finder.replit.app` (configurée dans `lib/apiBase.ts`)
 - **Auth API** : `/api/mobile-auth/email-login`, `/api/mobile-auth/register`, `/api/mobile-auth/update-profile`, `/api/mobile-auth/logout`
 - **Clients API** : `GET/POST /api/clients`, `GET/PATCH/DELETE /api/clients/:id`, `POST /api/clients/:id/notes`, `GET /api/clients/_meta/access` (gate Terrain/Institution)

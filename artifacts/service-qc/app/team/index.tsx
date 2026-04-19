@@ -13,8 +13,22 @@ import {
 } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import * as SecureStore from "expo-secure-store";
 import { getApiBaseUrl } from "@/lib/apiBase";
-import { authedFetch } from "@/lib/apiClient";
+
+const AUTH_TOKEN_KEY = "auth_session_token";
+
+async function authedFetch(url: string, init?: RequestInit) {
+  const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
+  return fetch(url, {
+    ...init,
+    headers: {
+      "Content-Type": "application/json",
+      ...(init?.headers || {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
+}
 
 type Member = {
   id: string;
