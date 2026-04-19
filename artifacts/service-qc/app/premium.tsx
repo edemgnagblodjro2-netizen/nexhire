@@ -25,7 +25,7 @@ import { getApiBaseUrl } from "@/lib/apiBase";
 
 const CONTACT_EMAIL = "attentezero5@gmail.com";
 
-type TierId = "users" | "orgs" | "intervenant";
+type TierId = "users" | "orgs" | "intervenant" | "institution";
 
 type Tier = {
   id: TierId;
@@ -39,7 +39,7 @@ type Tier = {
   trialBadge?: string;
   perks: string[];
   ctaLabel: string;
-  ctaKind: "premium" | "trial" | "contact" | "terrain";
+  ctaKind: "premium" | "trial" | "contact" | "terrain" | "institution";
 };
 
 const TIERS: Tier[] = [
@@ -100,6 +100,27 @@ const TIERS: Tier[] = [
     ],
     ctaLabel: "Démarrer mon essai terrain — 14 j",
     ctaKind: "terrain",
+  },
+  {
+    id: "institution",
+    emoji: "🏛️",
+    color: "#7c3aed",
+    gradColors: ["#3b0764", "#7c3aed"],
+    audience: "Institution — CIUSSS, CLSC, refuges",
+    tagline: "L'infrastructure essentielle du réseau communautaire québécois",
+    priceLabel: "199 $",
+    priceUnit: "/ mois",
+    trialBadge: "14 jours d'essai gratuit",
+    perks: [
+      "Tout le mode Terrain inclus pour toute l'équipe",
+      "Dossiers clients partagés entre intervenants de l'organisme",
+      "Recherche client par nom, téléphone ou adresse",
+      "Notes de suivi chronologiques (contact, RDV, alertes)",
+      "Bientôt : référencement chiffré entre organismes",
+      "Bientôt : calendrier RDV + dashboard d'impact mensuel",
+    ],
+    ctaLabel: "Démarrer l'essai Institution — 14 j",
+    ctaKind: "institution",
   },
   {
     id: "orgs",
@@ -182,6 +203,49 @@ export default function PremiumScreen() {
     }
   }
 
+  async function handleInstitutionTrial() {
+    if (!isAuthenticated) {
+      Alert.alert(
+        "Compte requis",
+        "Créez un compte « Institution » (CIUSSS, CLSC, refuge, OBNL) pour démarrer votre essai gratuit de 14 jours.",
+        [
+          { text: "Annuler", style: "cancel" },
+          {
+            text: "Créer un compte",
+            onPress: () =>
+              router.push({
+                pathname: "/register",
+                params: { role: "organisme", plan: "institution" },
+              } as any),
+          },
+        ]
+      );
+      return;
+    }
+    try {
+      setLoadingTier("institution-trial");
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      const res = await fetch(`${getApiBaseUrl()}/api/stripe/create-checkout-session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: user?.email,
+          userId: user?.id,
+          plan: "institution",
+          interval: "monthly",
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error || "Erreur de paiement");
+      await WebBrowser.openBrowserAsync(data.url);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Erreur inconnue";
+      Alert.alert("Inscription impossible", msg);
+    } finally {
+      setLoadingTier(null);
+    }
+  }
+
   async function handleTerrainTrial() {
     if (!isAuthenticated) {
       Alert.alert(
@@ -259,6 +323,7 @@ export default function PremiumScreen() {
   }
 
   function handleTierCta(tier: Tier, idx: number) {
+    if (tier.ctaKind === "institution") return handleInstitutionTrial();
     if (tier.ctaKind === "terrain") return handleTerrainTrial();
     if (tier.ctaKind === "trial") return handleOrgTrial();
     if (tier.ctaKind === "premium" && idx === 1) return handleUserPremium();
@@ -311,6 +376,7 @@ export default function PremiumScreen() {
           const isLoading =
             (tier.ctaKind === "trial" && loadingTier === "org-trial") ||
             (tier.ctaKind === "terrain" && loadingTier === "terrain-trial") ||
+            (tier.ctaKind === "institution" && loadingTier === "institution-trial") ||
             (tier.ctaKind === "premium" && idx === 1 && loadingTier === "user-premium");
           const isPopular = idx === 1; // Premium 10$ — the "best value" tier
           const anim = cardAnims[idx];
@@ -414,7 +480,9 @@ export default function PremiumScreen() {
                     <>
                       <Feather
                         name={
-                          tier.ctaKind === "trial"
+                          tier.ctaKind === "institution"
+                            ? "users"
+                            : tier.ctaKind === "trial"
                             ? "gift"
                             : tier.ctaKind === "terrain"
                             ? "briefcase"

@@ -327,7 +327,7 @@ const RegisterBody = z.object({
   organisationWebsite: z.string().optional(),
   professionalTitle: z.string().optional(),
   affiliation: z.string().optional(),
-  plan: z.enum(["standard", "plus", "terrain"]).optional().default("standard"),
+  plan: z.enum(["standard", "plus", "terrain", "institution"]).optional().default("standard"),
 });
 
 router.post("/mobile-auth/register", async (req: Request, res: Response) => {

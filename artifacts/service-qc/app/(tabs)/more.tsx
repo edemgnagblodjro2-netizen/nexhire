@@ -144,6 +144,45 @@ export default function MoreScreen() {
 
         <View style={styles.body}>
 
+          {/* ── Mode Terrain — visible to intervenants & organismes ── */}
+          {(user?.role === "intervenant" || user?.role === "organisme") && (
+            <Pressable
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                router.push("/clients" as any);
+              }}
+              style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }]}
+            >
+              <LinearGradient
+                colors={["#0c4a6e", "#0284c7"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.terrainCard}
+              >
+                <View style={styles.terrainIconWrap}>
+                  <Feather name="users" size={22} color="#fff" />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <View style={styles.terrainBadgeRow}>
+                    <View style={styles.terrainBadge}>
+                      <Feather name="shield" size={10} color="#bae6fd" />
+                      <Text style={styles.terrainBadgeText}>MODE TERRAIN</Text>
+                    </View>
+                  </View>
+                  <Text style={styles.terrainTitle}>
+                    {isFr ? "Dossiers clients" : "Client files"}
+                  </Text>
+                  <Text style={styles.terrainSub}>
+                    {isFr
+                      ? "Suivi confidentiel, journal de contacts, alertes — réservé aux abonnés Terrain & Institution."
+                      : "Confidential follow-up, contact log, alerts — for Terrain & Institution subscribers."}
+                  </Text>
+                </View>
+                <Feather name="chevron-right" size={18} color="rgba(255,255,255,0.7)" />
+              </LinearGradient>
+            </Pressable>
+          )}
+
           {/* ── Persistent reminder banner (shown after 3 uses) ── */}
           {isGated && (
             <Pressable
@@ -678,6 +717,54 @@ const styles = StyleSheet.create({
   },
   optionBadgeText: { fontSize: 10, fontFamily: "Inter_600SemiBold" },
   optionDesc: { fontSize: 12, fontFamily: "Inter_400Regular", lineHeight: 17 },
+
+  /* Mode Terrain card */
+  terrainCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    padding: 16,
+    borderRadius: 16,
+    overflow: "hidden",
+  },
+  terrainIconWrap: {
+    width: 46,
+    height: 46,
+    borderRadius: 13,
+    backgroundColor: "rgba(255,255,255,0.18)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  terrainBadgeRow: { flexDirection: "row", marginBottom: 4 },
+  terrainBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    backgroundColor: "rgba(186,230,253,0.18)",
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "rgba(186,230,253,0.3)",
+  },
+  terrainBadgeText: {
+    color: "#bae6fd",
+    fontSize: 9,
+    fontFamily: "Inter_700Bold",
+    letterSpacing: 0.5,
+  },
+  terrainTitle: {
+    color: "#fff",
+    fontSize: 15,
+    fontFamily: "Inter_700Bold",
+  },
+  terrainSub: {
+    color: "rgba(255,255,255,0.78)",
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    lineHeight: 17,
+    marginTop: 2,
+  },
 
   /* Note */
   noteBox: {
