@@ -71,9 +71,10 @@ export default function ServiceDetailScreen() {
   }
 
   function handleWebsite() {
+    if (!service?.website) return;
     Haptics.selectionAsync();
-    trackServiceAction(service!.id, "click");
-    Linking.openURL(service!.website);
+    trackServiceAction(service.id, "click");
+    Linking.openURL(service.website);
   }
 
   return (
@@ -233,34 +234,36 @@ export default function ServiceDetailScreen() {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={[
-              styles.actionBtn,
-              {
-                backgroundColor: colors.secondary ?? colors.muted,
-                borderWidth: 1,
-                borderColor: colors.border,
-              },
-            ]}
-            onPress={handleWebsite}
-            activeOpacity={0.85}
-          >
-            <Feather name="globe" size={20} color={colors.primary} />
-            <View>
-              <Text style={[styles.actionBtnLabel, { color: colors.primary }]}>
-                {t.visitWebsite}
-              </Text>
-              <Text
-                style={[
-                  styles.actionBtnSub,
-                  { color: colors.mutedForeground },
-                ]}
-                numberOfLines={1}
-              >
-                {service.website.replace("https://", "")}
-              </Text>
-            </View>
-          </TouchableOpacity>
+          {service.website ? (
+            <TouchableOpacity
+              style={[
+                styles.actionBtn,
+                {
+                  backgroundColor: colors.secondary ?? colors.muted,
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                },
+              ]}
+              onPress={handleWebsite}
+              activeOpacity={0.85}
+            >
+              <Feather name="globe" size={20} color={colors.primary} />
+              <View>
+                <Text style={[styles.actionBtnLabel, { color: colors.primary }]}>
+                  {t.visitWebsite}
+                </Text>
+                <Text
+                  style={[
+                    styles.actionBtnSub,
+                    { color: colors.mutedForeground },
+                  ]}
+                  numberOfLines={1}
+                >
+                  {service.website.replace("https://", "")}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : null}
         </View>
       </ScrollView>
     </View>
