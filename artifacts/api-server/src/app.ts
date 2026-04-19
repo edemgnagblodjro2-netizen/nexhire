@@ -46,6 +46,89 @@ app.use(authMiddleware);
 
 app.use("/api", router);
 
+app.get(["/api/delete-account", "/delete-account"], (_req, res) => {
+  res.type("html").send(`<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suppression de compte — AttenteZéro</title>
+<style>
+body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:760px;margin:2rem auto;padding:1rem;line-height:1.6;color:#1f2937}
+h1{color:#dc2626;border-bottom:2px solid #e5e7eb;padding-bottom:.5rem}
+h2{color:#0369a1;margin-top:2rem}
+a{color:#0ea5e9}
+.box{background:#fef2f2;border-left:4px solid #dc2626;padding:1rem;margin:1.5rem 0;border-radius:4px}
+.email{background:#f0f9ff;padding:1rem;border-radius:6px;font-size:1.1rem;text-align:center}
+ul{padding-left:1.5rem}
+</style>
+</head>
+<body>
+<h1>Suppression de votre compte AttenteZéro</h1>
+<p><strong>Dernière mise à jour :</strong> 19 avril 2026</p>
+
+<p>Conformément à la Loi 25 du Québec sur la protection des renseignements personnels et aux exigences de Google Play, vous pouvez demander la suppression de votre compte AttenteZéro et de toutes vos données associées à tout moment.</p>
+
+<h2>Méthode 1 — Supprimer depuis l'application (recommandé)</h2>
+<ol>
+<li>Ouvrez l'application AttenteZéro</li>
+<li>Allez dans <strong>Profil</strong> → <strong>Paramètres</strong></li>
+<li>Cliquez sur <strong>« Supprimer mon compte »</strong></li>
+<li>Confirmez votre choix</li>
+</ol>
+<p>La suppression est <strong>immédiate et définitive</strong>.</p>
+
+<h2>Méthode 2 — Demander la suppression par courriel</h2>
+<p>Si vous n'avez plus accès à l'application, envoyez un courriel à :</p>
+
+<div class="email">
+<a href="mailto:attentezero5@gmail.com?subject=Demande%20de%20suppression%20de%20compte">attentezero5@gmail.com</a>
+</div>
+
+<p>Précisez dans votre message :</p>
+<ul>
+<li>L'adresse courriel utilisée pour créer votre compte</li>
+<li>L'objet : <em>« Demande de suppression de compte »</em></li>
+</ul>
+<p>Nous traiterons votre demande dans un délai maximal de <strong>30 jours</strong>.</p>
+
+<h2>Données supprimées</h2>
+<p>La suppression efface définitivement :</p>
+<ul>
+<li>Votre profil (nom, courriel, langue préférée, mot de passe)</li>
+<li>Vos services favoris</li>
+<li>L'historique de vos recherches</li>
+<li>Vos conversations avec l'assistant IA</li>
+<li>Vos préférences personnelles</li>
+<li>Vos données de géolocalisation</li>
+</ul>
+
+<h2>Données conservées</h2>
+<div class="box">
+<p>Pour des raisons légales, comptables et de prévention de la fraude, nous conservons pendant la durée prévue par la loi :</p>
+<ul>
+<li><strong>Factures et historique de paiement</strong> (7 ans, obligation fiscale Québec/Canada)</li>
+<li><strong>Journaux de sécurité anonymisés</strong> (12 mois)</li>
+</ul>
+<p>Ces données ne permettent plus de vous identifier après suppression du compte.</p>
+</div>
+
+<h2>Abonnements actifs</h2>
+<p>Si vous avez un abonnement payant (Premium, Terrain, Organisme, Institution), il sera automatiquement annulé. Aucun remboursement au prorata n'est effectué pour la période en cours, conformément aux conditions d'utilisation acceptées à l'inscription.</p>
+
+<h2>Contact</h2>
+<p>Pour toute question :<br>
+<strong>Startup Ayas</strong><br>
+Courriel : <a href="mailto:attentezero5@gmail.com">attentezero5@gmail.com</a></p>
+
+<p>Pour déposer une plainte : <a href="https://www.cai.gouv.qc.ca">Commission d'accès à l'information du Québec</a>.</p>
+
+<hr>
+<p style="font-size:.85rem;color:#6b7280"><a href="/api/privacy">← Voir la politique de confidentialité</a></p>
+</body>
+</html>`);
+});
+
 app.get(["/api/privacy", "/privacy"], (_req, res) => {
   res.type("html").send(`<!DOCTYPE html>
 <html lang="fr-CA">
