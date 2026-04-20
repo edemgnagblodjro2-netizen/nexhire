@@ -14,6 +14,7 @@ name = "web"
 paths = [ "/admin/" ]
 localPort = 23744
 serve = "static"
+publicDir = "dist/public"
 
 [services.development]
 run = "pnpm --filter @workspace/admin run dev"
