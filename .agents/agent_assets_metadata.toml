@@ -143,3 +143,27 @@ id = "Z5nvwRCy-wcf7Z34orQHf"
 uri = "file://attached_assets/screenshot_4.png"
 type = "image"
 title = "Capture 4 — Multilingue (1080×1920)"
+
+[[outputs]]
+id = "4N8oX-GVN0jWwEFPz1L-f"
+uri = "file://attached_assets/tablet_1.png"
+type = "image"
+title = "Tablette 7\" — Accueil (1200×1920)"
+
+[[outputs]]
+id = "k1NxUH_ypqvONvGmAsoDB"
+uri = "file://attached_assets/tablet_2.png"
+type = "image"
+title = "Tablette 7\" — Carte (1200×1920)"
+
+[[outputs]]
+id = "hnAfWlYOBHFMF0lq7yivL"
+uri = "file://attached_assets/tablet_3.png"
+type = "image"
+title = "Tablette 7\" — Assistant IA (1200×1920)"
+
+[[outputs]]
+id = "iPX7waPtT0yVFmYgMrd_Q"
+uri = "file://attached_assets/tablet_4.png"
+type = "image"
+title = "Tablette 7\" — Détail service (1200×1920)"
