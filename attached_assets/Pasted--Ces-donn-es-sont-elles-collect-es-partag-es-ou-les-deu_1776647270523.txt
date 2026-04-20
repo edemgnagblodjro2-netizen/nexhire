@@ -1,0 +1,47 @@
+
+Ces données sont-elles collectées, partagées ou les deux ?
+Plusieurs réponses possibles. Certains types de données ne sont pas collectés ni partagés. Voir les définitions et exceptions
+
+
+Collectées
+Ces données sont transmises depuis l'appareil de l'utilisateur, soit à vous (le développeur) ou à un tiers, y compris les données traitées de manière éphémère ou stockées plus longtemps.
+
+Partagées
+Ces données sont transférées à un tiers, sur ou depuis l'appareil de l'utilisateur
+Ces données sont-elles traitées de manière éphémère ?
+Traiter des données de façon "éphémère" consiste à accéder aux données et à les utiliser alors qu'elles ne sont conservées en mémoire que le temps de répondre en temps réel à une demande précise.
+
+Vous devez quand même les mentionner aux utilisateurs, même si elles ne seront pas indiquées sur votre fiche Play Store. En savoir plus
+
+
+Oui, les données collectées sont traitées de manière éphémère
+
+Non, les données collectées ne sont pas traitées de manière éphémère
+Ces données sont-elles requises pour votre appli, ou les utilisateurs peuvent-ils décider qu'elles soient collectées ou non ? En savoir plus
+
+La collecte de données est requise (les utilisateurs ne peuvent pas désactiver cette collecte)
+
+Les utilisateurs peuvent choisir si ces données sont collectées ou non
+La collecte de données sera affichée comme facultative sur votre fiche Play Store
+Pourquoi ces données utilisateur sont-elles collectées ? Plusieurs réponses possibles. En savoir plus et voir des exemples
+
+Fonctionnement de l'appli
+Pour exécuter des fonctionnalités de votre appli (ex. : activer des fonctionnalités ou authentifier des utilisateurs). En savoir plus
+
+Analyse
+Pour analyser votre appli en termes de performances ou l'usage qu'en font les utilisateurs (ex. : combien d'entre eux utilisent une fonctionnalité précise, surveiller l'état de l'appli, identifier et corriger des bugs ou des plantages, ou améliorer plus tard les performances). En savoir plus
+
+Communications du développeur
+Pour envoyer des infos ou des notifications sur vous ou votre appli (ex. : une notification push informant les utilisateurs d'une importante mise à jour de sécurité ou des nouvelle fonctionnalités de votre appli). En savoir plus
+
+Publicité ou marketing
+Données utilisées pour afficher ou cibler des annonces ou des communications marketing, ou pour mesurer les performances des annonces. Par exemple, pour afficher des annonces dans votre appli, partager des données avec des partenaires publicitaires ou envoyer des notifications push dans le but de promouvoir vos produits ou vos services. En savoir plus
+
+Prévention des fraudes, sécurité et conformité
+Pour prévenir les fraudes, assurer la sécurité ou respecter les lois (ex. : surveiller les tentatives de connexion qui ont échoué pour identifier une éventuelle activité frauduleuse). En savoir plus
+
+Personnalisation
+Pour personnaliser votre appli en recommandant des contenus ou en faisant des suggestions (ex. : suggérer des playlists d'après les habitudes d'écoute des utilisateurs ou diffuser les actualités locales en fonction de leur position). En savoir plus
+
+Gestion des comptes
+Données utilisées pour configurer ou gérer les comptes utilisateur. Par exemple, pour permettre aux utilisateurs de créer des comptes, d'ajouter des informations aux comptes que vous fournissez pour une utilisation dans l'ensemble de vos services, de se connecter à votre appli ou de vérifier leurs identifiants. En savoir plus
