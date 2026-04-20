@@ -3,7 +3,7 @@
     "name": "AttenteZ\u00e9ro",
     "slug": "attentezero",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "service-qc",
     "userInterfaceStyle": "automatic",
@@ -24,7 +24,7 @@
     },
     "android": {
       "package": "com.attentezero.app",
-      "versionCode": 2,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon_transparent.png",
         "backgroundColor": "#ffffff"
