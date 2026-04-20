@@ -1,0 +1,16 @@
+Où ce problème a été détecté
+Ce problème peut aussi se produire dans d'autres zones. Vérifiez tous les éléments de votre appli en corrigeant ce problème.
+
+Emplacement
+Preuve
+Description complète (fr-CA)
+AttenteZéro helps you quickly find the right community service in Quebec, in seconds rather than after hours of waiting. 🎯 WHO IS IT FOR? Families experiencing financial hardship People in emergency situations (housing, food, safety) Newcomers and immigrants Social workers, service providers, and organizations Anyone seeking concrete assistance in Quebec 🗺️ OVER 530 LISTED SERVICES Food banks, emergency shelters, mental health services, legal aid, women's support, youth resources, senior services, immigrant integration, and more. 15 regions covered: Montreal, Quebec City, Laval, Longueuil, Sherbrooke, Trois-Rivières, Saguenay, Gatineau, Lévis, Drummondville, Granby, Saint-Jérôme, Rimouski, Rouyn-Noranda, Val-d’Or. 🤖 ARTIFICIAL INTELLIGENCE An intelligent assistant helps you articulate your needs and directs you to the appropriate resources, even if you don't know where to start. 🆘 CRITICAL SITUATION DETECTION In case of distress (suicidal thoughts, domestic violence, or emergency), the app immediately directs you to the appropriate resources: 911, 1-866-APPELLE (1-866-3553), shelters, and support centers. 🌍 MULTILINGUAL Available in French, English, Spanish, Arabic, and Haitian Creole. 📍 GEOLOCATION Find the nearest services with their hours, phone numbers, addresses, and directions. ⭐ FREE FEATURES Unlimited search Geolocation Access to the complete list of services Interface available in 5 languages 💎 PREMIUM OPTION ($10 one-time payment) — Optional Unlimited access to AI chat Synced favorites Ad-free experience 🏢 OFFERS FOR ORGANIZATIONS Field Plan ($19/month): for frontline workers Organization Plan ($39/month): for community teams Institution Plan ($199/month): for CIUSSS, CISSS, and municipalities
+Dépannage
+Si vous disposez d'un document écrit prouvant votre affiliation gouvernementale ou l'autorisation de fournir des services gouvernementaux au moyen de votre appli, procédez comme suit :
+Faites appel. Si vous l'avez déjà fait, veuillez attendre une réponse après la création du dossier d'appel.
+Si vous n'avez pas d'affiliation gouvernementale ou n'êtes pas autorisé à fournir des services gouvernementaux au moyen de votre appli, procédez comme suit :
+Clarifiez et/ou complétez les informations de votre appli.
+Identifiez et fournissez au moins une source claire, officielle, valide et fonctionnelle pour tous les renseignements gouvernementaux partagés dans votre appli.
+Incluez dans la description de votre appli une clause de non-responsabilité bien visible indiquant que l'appli ne représente pas une entité gouvernementale.
+Assurez-vous de respecter toutes les autres politiques du programme pour les développeurs.
+Soumettez la mise à jour de votre appli.

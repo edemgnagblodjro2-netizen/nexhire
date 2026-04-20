@@ -137,6 +137,16 @@ export default function HomeScreen() {
           </View>
         </View>
 
+        {/* Disclaimer banner — independent app, not government */}
+        <View style={styles.disclaimerBanner}>
+          <Feather name="info" size={12} color="rgba(255,255,255,0.95)" />
+          <Text style={styles.disclaimerText} numberOfLines={2}>
+            {language === "fr"
+              ? "Application indépendante. Non affiliée au gouvernement du Québec ni à 211 Québec."
+              : "Independent app. Not affiliated with the Government of Quebec or 211 Québec."}
+          </Text>
+        </View>
+
         {/* Search bar inside hero */}
         <View
           style={[
@@ -452,6 +462,23 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 16,
     gap: 0,
+  },
+  disclaimerBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginTop: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    backgroundColor: "rgba(0,0,0,0.18)",
+    borderRadius: 8,
+  },
+  disclaimerText: {
+    flex: 1,
+    color: "rgba(255,255,255,0.95)",
+    fontSize: 10.5,
+    lineHeight: 13,
+    fontWeight: "500",
   },
   statItem: {
     flex: 1,
