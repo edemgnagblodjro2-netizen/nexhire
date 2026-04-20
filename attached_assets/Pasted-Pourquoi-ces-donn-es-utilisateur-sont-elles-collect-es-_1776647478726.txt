@@ -1,0 +1,22 @@
+Pourquoi ces données utilisateur sont-elles collectées ? Plusieurs réponses possibles. En savoir plus et voir des exemples
+
+Fonctionnement de l'appli
+Pour exécuter des fonctionnalités de votre appli (ex. : activer des fonctionnalités ou authentifier des utilisateurs). En savoir plus
+
+Analyse
+Pour analyser votre appli en termes de performances ou l'usage qu'en font les utilisateurs (ex. : combien d'entre eux utilisent une fonctionnalité précise, surveiller l'état de l'appli, identifier et corriger des bugs ou des plantages, ou améliorer plus tard les performances). En savoir plus
+
+Communications du développeur
+Pour envoyer des infos ou des notifications sur vous ou votre appli (ex. : une notification push informant les utilisateurs d'une importante mise à jour de sécurité ou des nouvelle fonctionnalités de votre appli). En savoir plus
+
+Publicité ou marketing
+Données utilisées pour afficher ou cibler des annonces ou des communications marketing, ou pour mesurer les performances des annonces. Par exemple, pour afficher des annonces dans votre appli, partager des données avec des partenaires publicitaires ou envoyer des notifications push dans le but de promouvoir vos produits ou vos services. En savoir plus
+
+Prévention des fraudes, sécurité et conformité
+Pour prévenir les fraudes, assurer la sécurité ou respecter les lois (ex. : surveiller les tentatives de connexion qui ont échoué pour identifier une éventuelle activité frauduleuse). En savoir plus
+
+Personnalisation
+Pour personnaliser votre appli en recommandant des contenus ou en faisant des suggestions (ex. : suggérer des playlists d'après les habitudes d'écoute des utilisateurs ou diffuser les actualités locales en fonction de leur position). En savoir plus
+
+Gestion des comptes
+Données utilisées pour configurer ou gérer les comptes utilisateur. Par exemple, pour permettre aux utilisateurs de créer des comptes, d'ajouter des informations aux comptes que vous fournissez pour une utilisation dans l'ensemble de vos services, de se connecter à votre appli ou de vérifier leurs identifiants. En savoir plus
