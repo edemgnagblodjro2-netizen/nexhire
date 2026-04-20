@@ -1,0 +1,47 @@
+Modifications en cours d'examen
+Vos modifications sont en cours d'examen. Il est possible que d'autres problèmes soient identifiés lors de l'examen de votre appli.
+Production
+1.0.0
+Lancer le déploiement complet
+Pays/Régions
+Ajouter 1 pays/région : Canada
+Tests ouverts
+Pays/Régions
+Ajouter 1 pays/région : Canada
+Pays/Régions
+Désynchroniser de la production
+Tests fermés - Alpha
+1.0.0
+Lancer le déploiement complet
+État du niveau de sortie
+Reprendre le test
+Testeurs
+Définir les testeurs à gérer par des listes de diffusion : Sandro, sandro
+Fiches Play Store
+Français (Canada) – fr-CA
+Fiche Play Store par défaut
+Ajouter une langue. Le nom d'appli (AttenteZéro) et toutes les autres informations requises ont été fournis.
+Anglais (Canada) – en-CA
+Fiche Play Store par défaut
+Ajouter une langue. Le nom d'appli (Attentezéro) et toutes les autres informations requises ont été fournis.
+Contenu de l'application
+Catégorie de contenu
+Envoyer un nouveau questionnaire
+Cible et contenu
+Modifier les informations sur la cible et le contenu. Tranche d'âge cible : 18 et plus.
+Règles de confidentialité
+Définir l'URL des règles de confidentialité sur https://quebec-aid-finder.replit.app/api/privacy
+Déclaration relative aux annonces
+Modifier la déclaration concernant les annonces
+Sécurité des données
+Remplir le questionnaire Sécurité des données
+Paramètres de la fiche Play Store
+Catégorie de votre application
+Sélectionner la catégorie d'appli (Application de la catégorie "Communication")
+Voici ce que vous nous avez indiqué
+Les éléments répertoriés ici ne sont pas publiés, mais nous en tiendrons compte au moment d'examiner votre application :
+Contenu de l'application : modifier les instructions d'accès aux applis (toutes les fonctionnalités sont disponibles sans restriction d'accès)
+Contenu de l'application : modification de la déclaration intitulée "Identifiant publicitaire"
+Contenu de l'application : déclaration "Applis gouvernementales" mise à jour
+Contenu de l'application : déclaration "Fonctionnalités financières" mise à jour
+Contenu de l'application : déclaration "Santé" mise à jour
