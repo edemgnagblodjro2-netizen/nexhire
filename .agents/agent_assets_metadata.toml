@@ -36,6 +36,12 @@ uri = "file://artifacts/service-qc/assets/images/banner-help.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "VOkLeGZ4sSlFMvWq16boO"
+uri = "file://attached_assets/generated_images/generated_image.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "MnpwCauLVqlWr2VNGXy9y"
 uri = "file://exports/testeurs-aidora-qc.csv"
@@ -83,3 +89,9 @@ id = "qGtudn2Wh_Ve_3UAVrLny"
 uri = "file://docs/AttenteZero_Plan_Budget_Financement.md"
 type = "text"
 title = "AttenteZéro — Plan d'affaires, budget et demande de financement"
+
+[[outputs]]
+id = "52jH7v-iJyrHQWygdSH3b"
+uri = "file://attached_assets/play_store_feature_graphic.png"
+type = "image"
+title = "Image de présentation Google Play — AttenteZéro (1024×500)"
