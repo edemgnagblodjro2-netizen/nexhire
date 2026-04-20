@@ -42,6 +42,30 @@ uri = "file://attached_assets/generated_images/generated_image.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "QKMAopw39e4AeLWs5F-z8"
+uri = "file://attached_assets/generated_images/generated_image_0.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "11eE88TBFMVZLq9vJAocW"
+uri = "file://attached_assets/generated_images/generated_image_1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "kwmI6TQJca0M9U4pHkeEf"
+uri = "file://attached_assets/generated_images/generated_image_2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "e31lyla49ayFiTPA-bkeZ"
+uri = "file://attached_assets/generated_images/generated_image_3.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "MnpwCauLVqlWr2VNGXy9y"
 uri = "file://exports/testeurs-aidora-qc.csv"
@@ -95,3 +119,27 @@ id = "52jH7v-iJyrHQWygdSH3b"
 uri = "file://attached_assets/play_store_feature_graphic.png"
 type = "image"
 title = "Image de présentation Google Play — 1024×500"
+
+[[outputs]]
+id = "3rFSdH0cKxAentDehIsG1"
+uri = "file://attached_assets/screenshot_1.png"
+type = "image"
+title = "Capture 1 — Accueil (1080×1920)"
+
+[[outputs]]
+id = "Q15i-e7ixJUN6TXIrcss_"
+uri = "file://attached_assets/screenshot_2.png"
+type = "image"
+title = "Capture 2 — Carte (1080×1920)"
+
+[[outputs]]
+id = "QZ4f-jSG2hH2tj4Z3QVa3"
+uri = "file://attached_assets/screenshot_3.png"
+type = "image"
+title = "Capture 3 — Assistant IA (1080×1920)"
+
+[[outputs]]
+id = "Z5nvwRCy-wcf7Z34orQHf"
+uri = "file://attached_assets/screenshot_4.png"
+type = "image"
+title = "Capture 4 — Multilingue (1080×1920)"
