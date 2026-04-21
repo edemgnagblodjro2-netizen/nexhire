@@ -164,6 +164,8 @@ function ClassicTabLayout() {
         options={{
           href: null,
           title: t.tabProfile,
+          tabBarButton: () => null,
+          tabBarItemStyle: { display: "none" },
         }}
       />
     </Tabs>
