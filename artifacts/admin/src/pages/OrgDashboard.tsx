@@ -10,6 +10,11 @@ import {
   type StatsResponse,
 } from "@/lib/orgApi";
 import { clearOrgToken } from "@/lib/orgAuth";
+import {
+  fetchVerificationStatus,
+  submitVerificationRequest,
+  type VerificationStatus,
+} from "@/lib/orgApi";
 
 const PLAN_LABELS: Record<string, { label: string; price: string; color: string }> = {
   standard: { label: "Standard", price: "39 $/mois", color: "from-blue-500 to-blue-600" },
@@ -96,6 +101,57 @@ export default function OrgDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
+  const [verif, setVerif] = useState<VerificationStatus | null>(null);
+  const [showVerifForm, setShowVerifForm] = useState(false);
+  const [verifSubmitting, setVerifSubmitting] = useState(false);
+  const [verifError, setVerifError] = useState<string | null>(null);
+  const [verifForm, setVerifForm] = useState({
+    neq: "",
+    arcCharityNumber: "",
+    legalName: "",
+    foundedYear: "",
+    contactPhone: "",
+    website: "",
+    mission: "",
+  });
+
+  async function reloadVerif() {
+    try {
+      const v = await fetchVerificationStatus();
+      setVerif(v);
+    } catch {
+      /* silent */
+    }
+  }
+
+  async function handleVerifSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setVerifError(null);
+    setVerifSubmitting(true);
+    try {
+      const r = await submitVerificationRequest({
+        neq: verifForm.neq.trim(),
+        arcCharityNumber: verifForm.arcCharityNumber.trim() || undefined,
+        legalName: verifForm.legalName.trim(),
+        foundedYear: verifForm.foundedYear.trim(),
+        contactPhone: verifForm.contactPhone.trim(),
+        website: verifForm.website.trim() || undefined,
+        mission: verifForm.mission.trim(),
+      });
+      alert(r.message);
+      setShowVerifForm(false);
+      await reloadVerif();
+      // Also reload org to reflect new badge
+      try {
+        const fresh = await fetchMyOrganisation();
+        setOrg(fresh.organisation);
+      } catch { /* silent */ }
+    } catch (err: any) {
+      setVerifError(err.message || "Erreur lors de la soumission.");
+    } finally {
+      setVerifSubmitting(false);
+    }
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -109,6 +165,11 @@ export default function OrgDashboard() {
         setOrg(orgData.organisation);
         setSub(orgData.subscription);
         setStats(statsData);
+        // Fetch verification status (best-effort)
+        try {
+          const v = await fetchVerificationStatus();
+          if (!cancelled) setVerif(v);
+        } catch { /* silent */ }
       } catch (err: any) {
         if (cancelled) return;
         if (err.message === "UNAUTHORIZED") {
@@ -258,6 +319,121 @@ export default function OrgDashboard() {
           </div>
         </div>
 
+        {/* ── Badge Vérifié ── */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <div className="flex items-start justify-between mb-4 flex-wrap gap-3">
+            <div className="flex items-center gap-3">
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${verif?.isVerified ? "bg-emerald-100" : "bg-gray-100"}`}>
+                {verif?.isVerified ? "✓" : "🛡️"}
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Badge Vérifié{" "}
+                  {verif?.isVerified && (
+                    <span className="ml-1 text-xs px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded-full font-bold">ACTIF</span>
+                  )}
+                </h3>
+                <p className="text-sm text-gray-500 mt-0.5">
+                  {verif?.isVerified
+                    ? "Votre organisme est officiellement vérifié."
+                    : "Rassurez les usagers vulnérables avec un badge officiel."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {verif === null && (
+            <div className="rounded-xl bg-gray-50 border border-gray-200 p-4 text-sm text-gray-500">
+              Chargement du statut de vérification…
+            </div>
+          )}
+
+          {verif && !verif.eligibleForRequest && !verif.isVerified && (
+            <div className="rounded-xl bg-amber-50 border border-amber-200 p-4 text-sm text-amber-800">
+              <strong>Forfait payant requis.</strong> Le badge Vérifié est réservé aux abonnements actifs (Standard, Plus, Terrain ou Institution). <button onClick={handleManageSub} className="underline font-semibold">Gérer mon abonnement →</button>
+            </div>
+          )}
+
+          {verif?.eligibleForRequest && !verif.isVerified && verif.latestRequest?.status === "pending" && (
+            <div className="rounded-xl bg-blue-50 border border-blue-200 p-4 text-sm text-blue-800">
+              <strong>⏳ Demande en cours de traitement.</strong> Un administrateur la révisera sous 48 heures. Soumise le {formatDate(verif.latestRequest.createdAt)}.
+            </div>
+          )}
+
+          {verif?.latestRequest?.status === "rejected" && !verif.isVerified && (
+            <div className="rounded-xl bg-red-50 border border-red-200 p-4 text-sm text-red-800 mb-3">
+              <strong>Demande refusée.</strong> {verif.latestRequest.rejectionReason || "Raison non précisée."}
+            </div>
+          )}
+
+          {verif?.eligibleForRequest && !verif.isVerified && verif.latestRequest?.status !== "pending" && !showVerifForm && (
+            <button
+              onClick={() => setShowVerifForm(true)}
+              className="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-sm transition"
+            >
+              {verif.latestRequest?.status === "rejected" ? "Refaire une demande" : "Demander le badge Vérifié"}
+            </button>
+          )}
+
+          {verif?.isVerified && verif.latestRequest?.expiresAt && (
+            <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-4 text-sm text-emerald-800">
+              ✓ Badge actif jusqu'au <strong>{formatDate(verif.latestRequest.expiresAt)}</strong> — un rappel vous sera envoyé avant l'expiration.
+            </div>
+          )}
+
+          {showVerifForm && (
+            <form onSubmit={handleVerifSubmit} className="space-y-3 mt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <Field label="NEQ (Quebec) *" hint="10 chiffres — Registraire des entreprises">
+                  <input
+                    required
+                    maxLength={10}
+                    value={verifForm.neq}
+                    onChange={(e) => setVerifForm({ ...verifForm, neq: e.target.value.replace(/\D/g, "") })}
+                    placeholder="1234567890"
+                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm font-mono"
+                  />
+                </Field>
+                <Field label="N° ARC organisme de bienfaisance" hint="Format : 123456789RR0001 (recommandé pour auto-approbation)">
+                  <input
+                    maxLength={15}
+                    value={verifForm.arcCharityNumber}
+                    onChange={(e) => setVerifForm({ ...verifForm, arcCharityNumber: e.target.value.toUpperCase() })}
+                    placeholder="123456789RR0001"
+                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm font-mono"
+                  />
+                </Field>
+                <Field label="Nom légal complet *">
+                  <input required value={verifForm.legalName} onChange={(e) => setVerifForm({ ...verifForm, legalName: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm" />
+                </Field>
+                <Field label="Année de fondation *" hint="Min. 12 mois d'existence">
+                  <input required maxLength={4} value={verifForm.foundedYear} onChange={(e) => setVerifForm({ ...verifForm, foundedYear: e.target.value.replace(/\D/g, "") })} placeholder="2020" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm" />
+                </Field>
+                <Field label="Téléphone de contact *">
+                  <input required value={verifForm.contactPhone} onChange={(e) => setVerifForm({ ...verifForm, contactPhone: e.target.value })} placeholder="514 555-1234" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm" />
+                </Field>
+                <Field label="Site web officiel">
+                  <input type="url" value={verifForm.website} onChange={(e) => setVerifForm({ ...verifForm, website: e.target.value })} placeholder="https://" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm" />
+                </Field>
+              </div>
+              <Field label="Mission de l'organisme *" hint="2-3 phrases">
+                <textarea required rows={3} value={verifForm.mission} onChange={(e) => setVerifForm({ ...verifForm, mission: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm" />
+              </Field>
+              {verifError && (
+                <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg p-3">{verifError}</div>
+              )}
+              <div className="flex flex-wrap gap-2">
+                <button type="submit" disabled={verifSubmitting} className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-semibold rounded-xl text-sm">
+                  {verifSubmitting ? "Envoi…" : "Envoyer la demande"}
+                </button>
+                <button type="button" onClick={() => setShowVerifForm(false)} className="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl text-sm">
+                  Annuler
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+
         {/* ── Plan benefits ── */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <div className="flex items-start justify-between mb-4 flex-wrap gap-3">
@@ -371,6 +547,16 @@ export default function OrgDashboard() {
         </div>
       </main>
     </div>
+  );
+}
+
+function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="block text-xs font-semibold text-gray-700 mb-1">{label}</span>
+      {children}
+      {hint && <span className="block text-[11px] text-gray-400 mt-1">{hint}</span>}
+    </label>
   );
 }
 

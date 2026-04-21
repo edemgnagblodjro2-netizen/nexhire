@@ -9,6 +9,7 @@ import organisationsRouter from "./organisations";
 import clientsRouter from "./clients";
 import appointmentsRouter from "./appointments";
 import teamRouter from "./team";
+import verificationsRouter from "./verifications";
 
 const router: IRouter = Router();
 
@@ -22,5 +23,6 @@ router.use(organisationsRouter);
 router.use(clientsRouter);
 router.use(appointmentsRouter);
 router.use(teamRouter);
+router.use(verificationsRouter);
 
 export default router;

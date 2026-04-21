@@ -4,6 +4,7 @@ import { clearKey } from "@/lib/auth";
 const NAV = [
   { href: "/", icon: "📊", label: "Tableau de bord" },
   { href: "/services", icon: "🏢", label: "Services" },
+  { href: "/verifications", icon: "🛡️", label: "Vérifications" },
 ];
 
 export default function Layout({

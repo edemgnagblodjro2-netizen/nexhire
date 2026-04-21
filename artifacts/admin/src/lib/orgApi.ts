@@ -114,6 +114,92 @@ export async function openBillingPortal(organisationId: string): Promise<string>
   return data.url as string;
 }
 
+// ── Verification (Badge Vérifié) ─────────────────────────────────────────
+export type VerificationRequest = {
+  id: string;
+  organisationId: string;
+  neq: string;
+  arcCharityNumber: string | null;
+  legalName: string;
+  foundedYear: string;
+  contactPhone: string;
+  website: string | null;
+  mission: string;
+  status: "pending" | "auto_approved" | "approved" | "rejected";
+  autoCheckResult: string | null;
+  rejectionReason: string | null;
+  reviewedAt: string | null;
+  expiresAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type VerificationStatus = {
+  isVerified: boolean;
+  eligibleForRequest: boolean;
+  paidPlan: string | null;
+  latestRequest: VerificationRequest | null;
+};
+
+export async function fetchVerificationStatus(): Promise<VerificationStatus> {
+  const res = await fetch("/api/org/verification/status", { headers: authHeaders() });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+export async function submitVerificationRequest(payload: {
+  neq: string;
+  arcCharityNumber?: string;
+  legalName: string;
+  foundedYear: string;
+  contactPhone: string;
+  website?: string;
+  mission: string;
+}): Promise<{
+  request: VerificationRequest;
+  autoApproved: boolean;
+  message: string;
+  autoCheck: { passed: boolean; reason: string };
+}> {
+  const res = await fetch("/api/org/verification/request", {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Erreur lors de la demande.");
+  return data;
+}
+
+// Admin (super-admin) endpoints — use admin key, not org token.
+export async function adminListVerifications(adminKey: string, status = "pending") {
+  const res = await fetch(
+    `/api/admin/verification/requests?status=${encodeURIComponent(status)}`,
+    { headers: { "x-admin-key": adminKey } },
+  );
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return (await res.json()) as {
+    requests: Array<{ request: VerificationRequest; org: Organisation | null }>;
+  };
+}
+
+export async function adminApproveVerification(adminKey: string, id: string) {
+  const res = await fetch(`/api/admin/verification/${id}/approve`, {
+    method: "POST",
+    headers: { "x-admin-key": adminKey },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+}
+
+export async function adminRejectVerification(adminKey: string, id: string, reason: string) {
+  const res = await fetch(`/api/admin/verification/${id}/reject`, {
+    method: "POST",
+    headers: { "x-admin-key": adminKey, "Content-Type": "application/json" },
+    body: JSON.stringify({ reason }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+}
+
 export async function startCheckout(
   organisationId: string,
   email: string,

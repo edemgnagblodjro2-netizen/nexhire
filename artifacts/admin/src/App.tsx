@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import Services from "@/pages/Services";
+import Verifications from "@/pages/Verifications";
 import OrgLogin from "@/pages/OrgLogin";
 import OrgDashboard from "@/pages/OrgDashboard";
 import Layout from "@/components/Layout";
@@ -36,6 +37,7 @@ function AdminApp() {
       <Switch>
         <Route path="/" component={() => <Dashboard adminKey={adminKey} />} />
         <Route path="/services" component={() => <Services adminKey={adminKey} />} />
+        <Route path="/verifications" component={() => <Verifications adminKey={adminKey} />} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
