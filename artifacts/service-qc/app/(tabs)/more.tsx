@@ -89,7 +89,7 @@ const OTHER_OPTIONS = [
     badgeColor: "#0284c7",
   },
   {
-    icon: "map" as const,
+    icon: "tag" as const,
     color: "#059669",
     bg: "#f0fdf4",
     darkBg: "#052e1c",
@@ -354,7 +354,7 @@ export default function MoreScreen() {
           <View style={[styles.compareBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <View style={styles.compareCol}>
               <Text style={[styles.compareColTitle, { color: colors.mutedForeground }]}>Gratuit</Text>
-              {["457 services", "Chat IA", "SOS urgences", "Carte"].map((f) => (
+              {["457 services", "Chat IA", "SOS urgences", "Géolocalisation"].map((f) => (
                 <View key={f} style={styles.compareRow}>
                   <Feather name="check" size={13} color="#10b981" />
                   <Text style={[styles.compareText, { color: colors.foreground }]}>{f}</Text>

@@ -27,7 +27,6 @@ const FREE_FEATURES = [
   { icon: "phone-call" as const, label: "Appeler directement les organismes" },
   { icon: "cpu" as const, label: "Chat IA multilingue (FR · EN · ES · AR · HT)" },
   { icon: "alert-triangle" as const, label: "SOS urgences avec tri GPS" },
-  { icon: "map-pin" as const, label: "Carte interactive des services" },
 ];
 
 const PARTNER_TIERS = [
