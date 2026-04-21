@@ -57,6 +57,7 @@ const TIERS: Tier[] = [
       "Appeler directement les organismes",
       "SOS urgences avec tri par proximité",
       "Répertoire des services par ville",
+      "Chat IA — 5 messages par jour",
     ],
     ctaLabel: "Continuer gratuitement",
     ctaKind: "premium",
