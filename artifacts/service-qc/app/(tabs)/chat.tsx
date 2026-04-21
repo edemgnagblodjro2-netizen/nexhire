@@ -356,7 +356,7 @@ export default function ChatScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const { t, language } = useLanguage();
-  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const { isAuthenticated, isLoading: authLoading, getToken } = useAuth();
   const router = useRouter();
   const params = useLocalSearchParams<{ autoPrompt?: string }>();
   const autoSentRef = useRef<string | null>(null);
@@ -584,9 +584,13 @@ export default function ChatScreen() {
         .map((m) => ({ role: m.role as "user" | "assistant", content: m.content }));
 
       try {
+        const authToken = await getToken().catch(() => null);
         const response = await fetch(`${getApiBaseUrl()}/api/ai/chat`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+          },
           body: JSON.stringify({ message: trimmed, language: chatLang, history }),
         });
 

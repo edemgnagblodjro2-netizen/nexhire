@@ -149,7 +149,7 @@ export default function PremiumScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, refreshUser } = useAuth();
   const [loadingTier, setLoadingTier] = useState<string | null>(null);
 
   // Stagger entry animations — one Animated.Value per tier card
@@ -195,6 +195,12 @@ export default function PremiumScreen() {
       const data = await res.json();
       if (!res.ok || !data.url) throw new Error(data.error || "Erreur de paiement");
       await WebBrowser.openBrowserAsync(data.url);
+      // Poll user state after browser closes — Stripe webhook may take a few
+      // seconds to flip isPremium / plan in the DB. Try up to 6 times over ~12s.
+      for (let i = 0; i < 6; i++) {
+        await refreshUser();
+        await new Promise((r) => setTimeout(r, 2000));
+      }
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Erreur inconnue";
       Alert.alert("Paiement impossible", msg);
@@ -238,6 +244,12 @@ export default function PremiumScreen() {
       const data = await res.json();
       if (!res.ok || !data.url) throw new Error(data.error || "Erreur de paiement");
       await WebBrowser.openBrowserAsync(data.url);
+      // Poll user state after browser closes — Stripe webhook may take a few
+      // seconds to flip isPremium / plan in the DB. Try up to 6 times over ~12s.
+      for (let i = 0; i < 6; i++) {
+        await refreshUser();
+        await new Promise((r) => setTimeout(r, 2000));
+      }
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Erreur inconnue";
       Alert.alert("Inscription impossible", msg);
@@ -278,6 +290,12 @@ export default function PremiumScreen() {
       const data = await res.json();
       if (!res.ok || !data.url) throw new Error(data.error || "Erreur de paiement");
       await WebBrowser.openBrowserAsync(data.url);
+      // Poll user state after browser closes — Stripe webhook may take a few
+      // seconds to flip isPremium / plan in the DB. Try up to 6 times over ~12s.
+      for (let i = 0; i < 6; i++) {
+        await refreshUser();
+        await new Promise((r) => setTimeout(r, 2000));
+      }
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Erreur inconnue";
       Alert.alert("Inscription impossible", msg);
@@ -314,6 +332,12 @@ export default function PremiumScreen() {
       const data = await res.json();
       if (!res.ok || !data.url) throw new Error(data.error || "Erreur de paiement");
       await WebBrowser.openBrowserAsync(data.url);
+      // Poll user state after browser closes — Stripe webhook may take a few
+      // seconds to flip isPremium / plan in the DB. Try up to 6 times over ~12s.
+      for (let i = 0; i < 6; i++) {
+        await refreshUser();
+        await new Promise((r) => setTimeout(r, 2000));
+      }
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Erreur inconnue";
       Alert.alert("Inscription impossible", msg);

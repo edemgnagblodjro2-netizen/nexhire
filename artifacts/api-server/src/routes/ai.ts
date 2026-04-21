@@ -1,5 +1,62 @@
-import { Router } from "express";
+import { Router, type Request } from "express";
 import { openai } from "@workspace/integrations-openai-ai-server";
+import { db, usersTable } from "@workspace/db";
+import { eq } from "drizzle-orm";
+import { getSession, getSessionId } from "../lib/auth.js";
+
+// ── Free-tier daily quota for AI chat ────────────────────────────
+// Free users: 5 messages/day. Premium users: unlimited.
+// In-memory map keyed by userId or IP. Resets at local midnight (UTC).
+const FREE_DAILY_LIMIT = 5;
+const aiChatCounts = new Map<string, { day: string; count: number }>();
+
+function todayKey(): string {
+  const d = new Date();
+  return `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
+}
+
+function bumpQuota(key: string): { count: number; limit: number; remaining: number } {
+  const today = todayKey();
+  const entry = aiChatCounts.get(key);
+  if (!entry || entry.day !== today) {
+    aiChatCounts.set(key, { day: today, count: 1 });
+    return { count: 1, limit: FREE_DAILY_LIMIT, remaining: FREE_DAILY_LIMIT - 1 };
+  }
+  entry.count += 1;
+  // Periodic GC
+  if (aiChatCounts.size > 5000) {
+    for (const [k, v] of aiChatCounts) {
+      if (v.day !== today) aiChatCounts.delete(k);
+    }
+  }
+  return { count: entry.count, limit: FREE_DAILY_LIMIT, remaining: Math.max(0, FREE_DAILY_LIMIT - entry.count) };
+}
+
+async function getUserPremiumStatus(req: Request): Promise<{ isPremium: boolean; userId: string | null }> {
+  try {
+    const sid = getSessionId(req);
+    if (!sid) return { isPremium: false, userId: null };
+    const session = await getSession(sid);
+    const userId = session?.user?.id;
+    if (!userId) return { isPremium: false, userId: null };
+    const [u] = await db
+      .select({ isPremium: usersTable.isPremium })
+      .from(usersTable)
+      .where(eq(usersTable.id, userId))
+      .limit(1);
+    return { isPremium: !!u?.isPremium, userId };
+  } catch {
+    return { isPremium: false, userId: null };
+  }
+}
+
+function clientKey(req: Request, userId: string | null): string {
+  if (userId) return `u:${userId}`;
+  const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim()
+    || req.socket.remoteAddress
+    || "unknown";
+  return `ip:${ip}`;
+}
 
 const router = Router();
 
@@ -437,6 +494,27 @@ router.post("/ai/chat", async (req, res) => {
   if (!message || typeof message !== "string") {
     res.status(400).json({ error: "message is required" });
     return;
+  }
+
+  // ── Quota check (free users: 5/day, premium: unlimited) ──────
+  const { isPremium, userId } = await getUserPremiumStatus(req);
+  if (!isPremium) {
+    const key = clientKey(req, userId);
+    const q = bumpQuota(key);
+    if (q.count > q.limit) {
+      res.status(429).json({
+        error: language === "en"
+          ? `Daily free limit reached (${q.limit} messages/day). Upgrade to Premium for unlimited AI chat.`
+          : `Limite quotidienne atteinte (${q.limit} messages/jour). Passez à Premium pour un usage illimité.`,
+        quotaExceeded: true,
+        limit: q.limit,
+        upgradeUrl: "/premium",
+      });
+      return;
+    }
+    // Inform client of remaining quota via headers
+    res.setHeader("X-AI-Quota-Limit", String(q.limit));
+    res.setHeader("X-AI-Quota-Remaining", String(q.remaining));
   }
 
   res.setHeader("Content-Type", "text/event-stream");

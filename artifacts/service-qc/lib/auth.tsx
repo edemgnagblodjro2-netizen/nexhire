@@ -47,6 +47,7 @@ interface AuthContextValue {
     org?: OrganisationInfo,
   ) => Promise<RegisterResult>;
   updateProfile: (data: { address?: string | null }) => Promise<string | null>;
+  refreshUser: () => Promise<void>;
   logout: () => Promise<void>;
   getToken: () => Promise<string | null>;
 }
@@ -58,6 +59,7 @@ const AuthContext = createContext<AuthContextValue>({
   isAuthenticated: false,
   loginWithEmail: async () => null,
   register: async () => ({ error: undefined }),
+  refreshUser: async () => {},
   logout: async () => {},
   getToken: async () => null,
 });
@@ -237,6 +239,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         loginWithEmail,
         register,
         updateProfile,
+        refreshUser: fetchUser,
         logout,
         getToken,
       }}

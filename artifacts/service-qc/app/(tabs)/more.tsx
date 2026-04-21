@@ -2,8 +2,10 @@ import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFocusEffect, useRouter } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
 import React, { useCallback } from "react";
 import {
+  Alert,
   Platform,
   Pressable,
   ScrollView,
@@ -17,6 +19,7 @@ import PremiumGateModal from "@/components/PremiumGateModal";
 import { useColors } from "@/hooks/useColors";
 import { usePremiumGate } from "@/hooks/usePremiumGate";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { getApiBaseUrl } from "@/lib/apiBase";
 import { useAuth } from "@/lib/auth";
 
 const PREMIUM_FEATURES = [
@@ -102,7 +105,7 @@ export default function MoreScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { language } = useLanguage();
-  const { user } = useAuth();
+  const { user, getToken } = useAuth();
   const isFr = language !== "en";
   const isDark = colors.background === "#09090b" || colors.background === "#0a0a0a";
 
@@ -454,6 +457,65 @@ export default function MoreScreen() {
           <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
             {isFr ? "Mon compte" : "My account"}
           </Text>
+
+          {/* ── Mon abonnement card (Stripe billing portal) ── */}
+          {user?.email && (
+            <Pressable
+              onPress={async () => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                try {
+                  const tk = await getToken().catch(() => null);
+                  const res = await fetch(`${getApiBaseUrl()}/api/stripe/user-portal`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      ...(tk ? { Authorization: `Bearer ${tk}` } : {}),
+                    },
+                    body: JSON.stringify({}),
+                  });
+                  const data = await res.json();
+                  if (!res.ok || !data.url) {
+                    Alert.alert(
+                      isFr ? "Aucun abonnement" : "No subscription",
+                      data.error ?? (isFr
+                        ? "Aucun abonnement Stripe trouvé pour votre compte."
+                        : "No Stripe subscription found for your account."),
+                    );
+                    return;
+                  }
+                  await WebBrowser.openBrowserAsync(data.url);
+                } catch (err) {
+                  Alert.alert(
+                    isFr ? "Erreur" : "Error",
+                    err instanceof Error ? err.message : "Network error",
+                  );
+                }
+              }}
+              style={({ pressed }) => [
+                styles.optionCard,
+                {
+                  backgroundColor: colors.card,
+                  borderColor: colors.border,
+                  opacity: pressed ? 0.85 : 1,
+                },
+              ]}
+            >
+              <View style={[styles.optionIconWrap, { backgroundColor: isDark ? "#1e1b4b" : "#eef2ff" }]}>
+                <Feather name="credit-card" size={20} color="#6366f1" />
+              </View>
+              <View style={styles.optionText}>
+                <Text style={[styles.optionTitle, { color: colors.foreground }]} numberOfLines={1}>
+                  {isFr ? "Mon abonnement" : "My subscription"}
+                </Text>
+                <Text style={[styles.optionDesc, { color: colors.mutedForeground }]} numberOfLines={2}>
+                  {isFr
+                    ? "Gérer le paiement, changer de forfait, annuler"
+                    : "Manage payment, change plan, cancel"}
+                </Text>
+              </View>
+              <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+            </Pressable>
+          )}
 
           {/* ── Profil card ── */}
           <Pressable

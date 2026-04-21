@@ -3,6 +3,7 @@ import { getUncachableStripeClient } from "../stripeClient";
 import { logger } from "../lib/logger";
 import { db, subscriptionsTable, usersTable } from "@workspace/db";
 import { eq, or } from "drizzle-orm";
+import { getSession, getSessionId } from "../lib/auth.js";
 
 const stripeRouter = Router();
 
@@ -264,6 +265,48 @@ stripeRouter.post("/stripe/billing-portal", async (req, res) => {
     res.json({ url: portal.url });
   } catch (err: any) {
     logger.error({ err }, "Failed to create billing portal session");
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────
+// POST /api/stripe/user-portal
+// Body: { email } → returns Stripe billing portal URL for an individual user
+// (manages Premium one-time purchases AND any active subscriptions)
+// ─────────────────────────────────────────────
+stripeRouter.post("/stripe/user-portal", async (req, res) => {
+  try {
+    // ── AUTH: only the logged-in user can open their own billing portal.
+    // We trust the email from the session, NOT from the request body, to
+    // prevent an attacker from looking up another user's billing portal.
+    const sid = getSessionId(req);
+    const session = sid ? await getSession(sid) : null;
+    const sessionEmail = session?.user?.email;
+    if (!sessionEmail) {
+      res.status(401).json({ error: "Authentification requise." });
+      return;
+    }
+
+    const stripe = await getUncachableStripeClient();
+    const customers = await stripe.customers.list({ email: sessionEmail, limit: 1 });
+    if (!customers.data.length) {
+      res.status(404).json({ error: "Aucun compte de facturation trouvé pour cet email." });
+      return;
+    }
+    const customerId = customers.data[0].id;
+
+    const baseUrl =
+      process.env.REPLIT_DEPLOYMENT === "1"
+        ? `https://${process.env.REPLIT_DOMAINS?.split(",")[0]}`
+        : `https://quebec-aid-finder.replit.app`;
+
+    const portal = await stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: `${baseUrl}/`,
+    });
+    res.json({ url: portal.url });
+  } catch (err: any) {
+    logger.error({ err }, "Failed to create user billing portal session");
     res.status(500).json({ error: err.message });
   }
 });
