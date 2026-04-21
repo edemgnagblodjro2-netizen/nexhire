@@ -1,0 +1,49 @@
+PS D:\attentezero-monorepo_new1\artifacts\service-qc> cd D:\attentezero-monorepo_new1\artifacts\service-qc
+PS D:\attentezero-monorepo_new1\artifacts\service-qc> $json = Get-Content .\app.json -Raw | ConvertFrom-Json
+PS D:\attentezero-monorepo_new1\artifacts\service-qc> $json.expo.owner = "startupayas-organization"
+PS D:\attentezero-monorepo_new1\artifacts\service-qc> $json | ConvertTo-Json -Depth 20 | Out-File -FilePath .\app.json -Encoding utf8 -NoNewline
+PS D:\attentezero-monorepo_new1\artifacts\service-qc>
+PS D:\attentezero-monorepo_new1\artifacts\service-qc> eas build --platform android --profile production
+
+⚠️ Detected that your app uses Expo Go for development, this is not recommended when building production apps.
+Learn more: https://expo.fyi/why-not-build-expo-go-for-production
+To suppress this warning, set EAS_BUILD_NO_EXPO_GO_WARNING=true.
+
+The field "cli.appVersionSource" is not set, but it will be required in the future. Learn more: https://docs.expo.dev/build-reference/app-versions/
+Project config: Slug for project identified by "extra.eas.projectId" (attentezero) does not match the "slug" field (service-qc). Learn more: https://expo.fyi/eas-project-id
+    Error: build command failed.
+PS D:\attentezero-monorepo_new1\artifacts\service-qc> cd D:\attentezero-monorepo_new1\artifacts\service-qc
+PS D:\attentezero-monorepo_new1\artifacts\service-qc> $json = Get-Content .\app.json -Raw | ConvertFrom-Json
+PS D:\attentezero-monorepo_new1\artifacts\service-qc> $json.expo.slug = "attentezero"
+PS D:\attentezero-monorepo_new1\artifacts\service-qc> $json | ConvertTo-Json -Depth 20 | Out-File -FilePath .\app.json -Encoding utf8 -NoNewline
+PS D:\attentezero-monorepo_new1\artifacts\service-qc>
+PS D:\attentezero-monorepo_new1\artifacts\service-qc> eas build --platform android --profile production
+
+⚠️ Detected that your app uses Expo Go for development, this is not recommended when building production apps.
+Learn more: https://expo.fyi/why-not-build-expo-go-for-production
+To suppress this warning, set EAS_BUILD_NO_EXPO_GO_WARNING=true.
+
+The field "cli.appVersionSource" is not set, but it will be required in the future. Learn more: https://docs.expo.dev/build-reference/app-versions/
+Resolved "production" environment for the build. Learn more: https://docs.expo.dev/eas/environment-variables/#setting-the-environment-for-your-builds
+No environment variables with visibility "Plain text" and "Sensitive" found for the "production" environment on EAS.
+Environment variables loaded from the "production" build profile "env" configuration: EXPO_PUBLIC_API_URL.
+
+
+
+The field "cli.appVersionSource" is not set, but it will be required in the future. Learn more: https://docs.expo.dev/build-reference/app-versions/
+✔ Using remote Android credentials (Expo server)
+✔ Using Keystore from configuration: Build Credentials 5Hyt42hLiJ (default)
+
+Compressing project files and uploading to EAS Build. Learn more: https://expo.fyi/eas-build-archive
+✔ Compressed project files 4s (5.4 MB)
+✔ Uploaded to EAS
+✔ Computed project fingerprint
+
+See logs: https://expo.dev/accounts/startupayas-organization/projects/attentezero/builds/4bdd42dd-d7f3-4115-bae6-38308d207b98
+
+Waiting for build to complete. You can press Ctrl+C to exit.
+✖ Build failed
+
+🤖 Android build failed:
+Unknown error. See logs of the Bundle JavaScript build phase for more information.
+PS D:\attentezero-monorepo_new1\artifacts\service-qc>
