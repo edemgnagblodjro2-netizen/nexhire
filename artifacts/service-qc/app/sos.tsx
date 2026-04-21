@@ -57,6 +57,150 @@ interface EmergencySection {
   noteEn: string;
 }
 
+// ── Lignes d'écoute / hotlines provinciales 24/7 ─────────────────────────
+interface Hotline {
+  name: string;
+  nameEn: string;
+  phone: string;
+  text?: string; // SMS support
+  hours?: string;
+  hoursEn?: string;
+  desc: string;
+  descEn: string;
+}
+
+interface HotlineCategory {
+  key: string;
+  icon: keyof typeof Feather.glyphMap;
+  color: string;
+  label: string;
+  labelEn: string;
+  hotlines: Hotline[];
+}
+
+const HOTLINE_CATEGORIES: HotlineCategory[] = [
+  {
+    key: "mental-health",
+    icon: "heart",
+    color: "#8b5cf6",
+    label: "Santé mentale & détresse psychologique",
+    labelEn: "Mental Health & Crisis Support",
+    hotlines: [
+      {
+        name: "Suicide Action — 1 866 APPELLE",
+        nameEn: "Suicide Action — 1-866-APPELLE",
+        phone: "1-866-277-3553",
+        hours: "24h/24, 7j/7",
+        hoursEn: "24/7",
+        desc: "Aide aux personnes en détresse suicidaire et à leurs proches",
+        descEn: "Help for people in suicidal distress and their loved ones",
+      },
+      {
+        name: "Info-Social 811 (option 2)",
+        nameEn: "Info-Social 811 (option 2)",
+        phone: "811",
+        hours: "24h/24, 7j/7",
+        hoursEn: "24/7",
+        desc: "Intervention psychosociale par un travailleur social",
+        descEn: "Psychosocial intervention by a social worker",
+      },
+    ],
+  },
+  {
+    key: "domestic-violence",
+    icon: "shield",
+    color: "#db2777",
+    label: "Violence conjugale & familiale",
+    labelEn: "Domestic & Family Violence",
+    hotlines: [
+      {
+        name: "SOS violence conjugale",
+        nameEn: "SOS Domestic Violence",
+        phone: "1-800-363-9010",
+        text: "438-601-1211",
+        hours: "24h/24, 7j/7 · Confidentiel & gratuit",
+        hoursEn: "24/7 · Confidential & free",
+        desc: "Hébergement d'urgence, sécurité, accompagnement",
+        descEn: "Emergency shelter, safety, support",
+      },
+      {
+        name: "Info-aide violence sexuelle",
+        nameEn: "Sexual Violence Info-Help",
+        phone: "1-888-933-9007",
+        hours: "24h/24, 7j/7",
+        hoursEn: "24/7",
+        desc: "Soutien aux victimes d'agression sexuelle",
+        descEn: "Support for victims of sexual assault",
+      },
+    ],
+  },
+  {
+    key: "youth",
+    icon: "smile",
+    color: "#0891b2",
+    label: "Jeunesse (5–20 ans)",
+    labelEn: "Youth (5–20 years)",
+    hotlines: [
+      {
+        name: "Tel-jeunes",
+        nameEn: "Tel-jeunes",
+        phone: "1-800-263-2266",
+        text: "514-600-1002",
+        hours: "24h/24, 7j/7 · Anonyme & gratuit",
+        hoursEn: "24/7 · Anonymous & free",
+        desc: "Écoute et intervention pour jeunes — appel, texto, clavardage",
+        descEn: "Support and intervention for youth — call, text, chat",
+      },
+      {
+        name: "Jeunesse, J'écoute",
+        nameEn: "Kids Help Phone",
+        phone: "1-800-668-6868",
+        text: "686868",
+        hours: "24h/24, 7j/7",
+        hoursEn: "24/7",
+        desc: "Service pancanadien bilingue pour enfants et adolescents",
+        descEn: "Pan-Canadian bilingual service for children and teens",
+      },
+    ],
+  },
+  {
+    key: "seniors",
+    icon: "user-check",
+    color: "#ea580c",
+    label: "Aînés maltraités",
+    labelEn: "Elder Abuse",
+    hotlines: [
+      {
+        name: "Ligne Aide Abus Aînés",
+        nameEn: "Elder Abuse Helpline",
+        phone: "1-888-489-2287",
+        hours: "8h à 20h, 7j/7 · Gratuit & confidentiel",
+        hoursEn: "8 AM–8 PM, 7 days · Free & confidential",
+        desc: "Écoute, information et référence pour aînés maltraités",
+        descEn: "Listening, info and referrals for mistreated seniors",
+      },
+    ],
+  },
+  {
+    key: "addiction",
+    icon: "alert-octagon",
+    color: "#16a34a",
+    label: "Dépendance · drogue, alcool, jeu",
+    labelEn: "Addiction · drugs, alcohol, gambling",
+    hotlines: [
+      {
+        name: "Drogue : Aide et Référence",
+        nameEn: "Drug Help & Referral",
+        phone: "1-800-265-2626",
+        hours: "24h/24, 7j/7 · Anonyme",
+        hoursEn: "24/7 · Anonymous",
+        desc: "Information, aide et référence (toxicomanie, alcool, jeu)",
+        descEn: "Information, help and referral (substance abuse, alcohol, gambling)",
+      },
+    ],
+  },
+];
+
 const SECTIONS: EmergencySection[] = [
   {
     subcategory: "Centre 911",
@@ -222,6 +366,90 @@ export default function SOSScreen() {
           { paddingBottom: insets.bottom + 24 },
         ]}
       >
+        {/* ── Lignes d'écoute & d'aide 24/7 ── */}
+        <View style={styles.hotlinesIntro}>
+          <Text style={[styles.hotlinesTitle, { color: colors.foreground }]}>
+            {isFr ? "📞 Lignes d'écoute & d'aide" : "📞 Helplines & Crisis Lines"}
+          </Text>
+          <Text style={[styles.hotlinesSub, { color: colors.mutedForeground }]}>
+            {isFr
+              ? "Confidentiel · gratuit · partout au Québec"
+              : "Confidential · free · across Quebec"}
+          </Text>
+        </View>
+
+        {HOTLINE_CATEGORIES.map((cat) => (
+          <View key={cat.key} style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <View style={[styles.sectionIconWrap, { backgroundColor: cat.color + "18" }]}>
+                <Feather name={cat.icon} size={18} color={cat.color} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
+                  {isFr ? cat.label : cat.labelEn}
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.cards}>
+              {cat.hotlines.map((h) => (
+                <Pressable
+                  key={h.phone}
+                  style={({ pressed }) => [
+                    styles.hotlineCard,
+                    {
+                      backgroundColor: colors.card,
+                      borderColor: colors.border,
+                      opacity: pressed ? 0.88 : 1,
+                    },
+                  ]}
+                  onPress={() => callService(h.phone)}
+                >
+                  <View style={[styles.cardAccent, { backgroundColor: cat.color }]} />
+                  <View style={styles.cardContent}>
+                    <Text
+                      style={[styles.cardName, { color: colors.foreground }]}
+                      numberOfLines={2}
+                    >
+                      {isFr ? h.name : h.nameEn}
+                    </Text>
+                    <Text style={[styles.cardCity, { color: colors.mutedForeground }]} numberOfLines={2}>
+                      {isFr ? h.desc : h.descEn}
+                    </Text>
+                    {h.hours && (
+                      <View style={styles.hotlineMeta}>
+                        <Feather name="clock" size={11} color={cat.color} />
+                        <Text style={[styles.hotlineMetaText, { color: cat.color }]}>
+                          {isFr ? h.hours : h.hoursEn}
+                        </Text>
+                      </View>
+                    )}
+                    {h.text && (
+                      <View style={styles.hotlineMeta}>
+                        <Feather name="message-circle" size={11} color={colors.mutedForeground} />
+                        <Text style={[styles.hotlineMetaText, { color: colors.mutedForeground }]}>
+                          {isFr ? "Texto " : "Text "}{h.text}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                  <View style={[styles.callBadge, { backgroundColor: cat.color }]}>
+                    <Feather name="phone" size={14} color="#fff" />
+                    <Text style={styles.callBadgeText}>{h.phone}</Text>
+                  </View>
+                </Pressable>
+              ))}
+            </View>
+          </View>
+        ))}
+
+        {/* ── Services géolocalisés (911, hôpital, police, etc.) ── */}
+        <View style={styles.hotlinesIntro}>
+          <Text style={[styles.hotlinesTitle, { color: colors.foreground }]}>
+            {isFr ? "🚑 Services d'urgence à proximité" : "🚑 Nearby Emergency Services"}
+          </Text>
+        </View>
+
         {SECTIONS.map((sec, si) => {
           const items = servicesBySection[si];
           return (
@@ -464,6 +692,46 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontFamily: "Inter_700Bold",
     color: "#fff",
+  },
+
+  hotlinesIntro: {
+    marginBottom: 8,
+    paddingHorizontal: 4,
+    gap: 2,
+  },
+  hotlinesTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+  },
+  hotlinesSub: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+  },
+  hotlineCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 14,
+    borderWidth: 1,
+    padding: 14,
+    gap: 12,
+    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
+    elevation: 1,
+  },
+  hotlineMeta: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    marginTop: 2,
+  },
+  hotlineMetaText: {
+    fontSize: 11,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
   },
 
   emptyText: {
