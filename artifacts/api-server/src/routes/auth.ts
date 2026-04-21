@@ -605,9 +605,13 @@ router.post("/mobile-auth/forgot-password", async (req: Request, res: Response) 
       expiresAt,
     });
 
-    req.log.info({ email, code }, "Password reset code generated");
+    // Never log the code itself, and never return it to the client.
+    // The code must be delivered out-of-band (email/SMS) by a trusted channel.
+    req.log.info({ userId: user.id }, "Password reset code generated");
 
-    res.json({ code, message: "Code de réinitialisation généré." });
+    // TODO: integrate email delivery (e.g., Resend/SendGrid) to send the code.
+    // For now, the operator must read the code from server-side records.
+    res.json({ message: "Si un compte existe, un code vous sera envoyé." });
   } catch (err) {
     req.log.error({ err }, "Forgot password error");
     res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });

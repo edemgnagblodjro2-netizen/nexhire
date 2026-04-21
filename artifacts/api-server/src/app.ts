@@ -1,6 +1,8 @@
-import express, { type Express } from "express";
+import express, { type Express, type Request } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import pinoHttp from "pino-http";
 import path from "node:path";
 import fs from "node:fs";
@@ -11,6 +13,10 @@ import { authMiddleware } from "./middlewares/authMiddleware";
 import { handleStripeWebhook } from "./routes/stripe";
 
 const app: Express = express();
+
+// Trust the Replit proxy so req.ip / X-Forwarded-* are honored (needed for
+// correct rate-limiting and secure cookies behind the edge proxy).
+app.set("trust proxy", 1);
 
 // ── Stripe webhook MUST come before express.json() ──
 app.post(
@@ -38,11 +44,89 @@ app.use(
     },
   }),
 );
-app.use(cors({ credentials: true, origin: true }));
+// ── Security headers (helmet) ─────────────────────────────────────────────
+// `crossOriginResourcePolicy: false` allows the admin SPA assets to be
+// fetched from the embedded preview iframe; `contentSecurityPolicy: false`
+// keeps the static admin HTML usable (the React build sets its own meta).
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    crossOriginEmbedderPolicy: false,
+  }),
+);
+
+// ── CORS — restrict to known origins ──────────────────────────────────────
+// Allowed: Replit dev/preview hosts, configured prod domain, and same-origin
+// requests (no Origin header — typical for native mobile fetch / curl).
+const ALLOWED_ORIGIN_HOSTS = new Set<string>(
+  [
+    process.env.REPLIT_DEV_DOMAIN,
+    process.env.REPLIT_DOMAINS?.split(","),
+    process.env.PUBLIC_API_DOMAIN,
+    process.env.PUBLIC_APP_DOMAIN,
+  ]
+    .flat()
+    .filter(Boolean) as string[],
+);
+
+app.use(
+  cors({
+    credentials: true,
+    origin(origin, cb) {
+      // Same-origin / native mobile / server-to-server requests
+      if (!origin) return cb(null, true);
+      try {
+        const { hostname } = new URL(origin);
+        if (
+          ALLOWED_ORIGIN_HOSTS.has(hostname) ||
+          hostname.endsWith(".replit.dev") ||
+          hostname.endsWith(".replit.app") ||
+          hostname.endsWith(".repl.co") ||
+          hostname === "localhost" ||
+          hostname === "127.0.0.1"
+        ) {
+          return cb(null, true);
+        }
+      } catch {}
+      logger.warn({ origin }, "CORS blocked origin");
+      return cb(new Error("CORS: origin not allowed"));
+    },
+  }),
+);
+
 app.use(cookieParser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "1mb" }));
+app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 app.use(authMiddleware);
+
+// ── Rate limiting on sensitive auth endpoints ─────────────────────────────
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 min
+  max: 20, // 20 attempts / IP / window for login & register
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Trop de tentatives. Réessayez dans quelques minutes." },
+});
+const passwordResetLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 h
+  max: 5, // 5 reset requests / IP / hour
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Trop de demandes. Réessayez plus tard." },
+});
+const resetConfirmLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10, // 10 code confirmation attempts / IP / 15 min (brute-force guard)
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Trop de tentatives. Réessayez plus tard." },
+});
+
+app.use("/api/mobile-auth/email-login", authLimiter);
+app.use("/api/mobile-auth/register", authLimiter);
+app.use("/api/mobile-auth/forgot-password", passwordResetLimiter);
+app.use("/api/mobile-auth/reset-password", resetConfirmLimiter);
 
 app.use("/api", router);
 

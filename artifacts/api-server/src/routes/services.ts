@@ -8,8 +8,8 @@ const servicesRouter = Router();
 // ── Admin auth middleware ───────────────────────────────────────────────────
 function requireAdminKey(req: any, res: any, next: any) {
   const adminKey = process.env.ADMIN_API_KEY;
-  const provided =
-    req.headers["x-admin-key"] || req.query.adminKey;
+  // Header only — never accept admin key in query string (would leak to logs/proxies/Referer).
+  const provided = req.headers["x-admin-key"];
   if (!adminKey || provided !== adminKey) {
     return res.status(401).json({ error: "Unauthorized" });
   }
