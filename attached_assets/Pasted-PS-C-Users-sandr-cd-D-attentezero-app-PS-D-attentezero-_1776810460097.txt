@@ -1,0 +1,53 @@
+PS C:\Users\sandr> cd D:\attentezero-app
+PS D:\attentezero-app>
+PS D:\attentezero-app> $projectId = "ab5ae7c2-9012-42c6-a5dd-d8f8e0c0d67b"
+PS D:\attentezero-app>
+PS D:\attentezero-app> $content = Get-Content app.json -Raw
+PS D:\attentezero-app> $content = $content -replace '"eas":\s*\{[^}]*\}', ('"eas": { "projectId": "' + $projectId + '" }')
+PS D:\attentezero-app> [System.IO.File]::WriteAllText("D:\attentezero-app\app.json", $content, (New-Object System.Text.UTF8Encoding $false))
+PS D:\attentezero-app>
+PS D:\attentezero-app> # Vérification
+PS D:\attentezero-app> cd D:\attentezero-monorepoNEW
+PS D:\attentezero-monorepoNEW> cd artifacts\service-qc
+PS D:\attentezero-monorepoNEW\artifacts\service-qc> eas build --platform android --profile production
+It looks like you haven't initialized the git repository yet.
+EAS requires you to use a git repository for your project.
+√ Would you like us to run 'git init' in D:\attentezero-monorepoNEW for you? ... yes
+We're going to make an initial commit for your repository.
+√ Commit message: ... Initial commit
+You need to configure Git with your username (user.name) and email address (user.email)
+√ Username: ... startupaya
+✔ Running git config --local user.name startupaya
+√ Email address: ... attentezero5@gmail.com
+✔ Running git config --local user.email attentezero5@gmail.com
+
+⚠️ Detected that your app uses Expo Go for development, this is not recommended when building production apps.
+Learn more: https://expo.fyi/why-not-build-expo-go-for-production
+To suppress this warning, set EAS_BUILD_NO_EXPO_GO_WARNING=true.
+
+The field "cli.appVersionSource" is not set, but it will be required in the future. Learn more: https://docs.expo.dev/build-reference/app-versions/
+Unable to resolve a valid config plugin for expo-router.
+• main export of expo-router does not appear to be a config plugin: the following error was thrown when importing D:\attentezero-monorepoNEW\artifacts\service-qc\node_modules\expo-router\app.plugin.js: Cannot find module '@expo/schema-utils'
+Require stack:
+- D:\attentezero-monorepoNEW\artifacts\service-qc\node_modules\expo-router\plugin\build\index.js
+- D:\attentezero-monorepoNEW\artifacts\service-qc\node_modules\expo-router\app.plugin.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@expo\config-plugins\build\utils\plugin-resolver.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@expo\config-plugins\build\plugins\withStaticPlugin.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@expo\config-plugins\build\plugins\withPlugins.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@expo\config-plugins\build\index.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\build\build\android\syncProjectConfiguration.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\build\build\android\build.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\build\build\runBuildAndSubmit.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\build\commands\build\index.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\module-loader.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\help\index.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\errors\handle.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\errors\index.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\config\config.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\config\index.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\command.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\node_modules\@oclif\core\lib\index.js
+- C:\Users\sandr\AppData\Roaming\npm\node_modules\eas-cli\bin\run MODULE_NOT_FOUND
+Verify that expo-router includes a config plugin. If it does not, then remove the entry from plugins in your app config file. Learn more: https://docs.expo.dev/guides/config-plugins/
+    Error: build command failed.
+PS D:\attentezero-monorepoNEW\artifacts\service-qc>
