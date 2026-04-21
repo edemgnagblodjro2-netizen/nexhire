@@ -33,10 +33,6 @@ function NativeTabLayout() {
         <Icon sf={{ default: "ellipsis.circle", selected: "ellipsis.circle.fill" }} />
         <Label>Plus</Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="profile" hidden>
-        <Icon sf={{ default: "person.circle", selected: "person.circle.fill" }} />
-        <Label>Profil</Label>
-      </NativeTabs.Trigger>
     </NativeTabs>
   );
 }
