@@ -370,6 +370,9 @@ export default function ChatScreen() {
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
+  const [quotaRemaining, setQuotaRemaining] = useState<number | null>(null);
+  const [quotaLimit, setQuotaLimit] = useState<number | null>(null);
+  const [quotaExceeded, setQuotaExceeded] = useState(false);
   const recordingRef = useRef<Audio.Recording | null>(null);
   const sendMessageRef = useRef<((text: string) => void) | null>(null);
   const listRef = useRef<FlatList>(null);
@@ -594,10 +597,26 @@ export default function ChatScreen() {
           body: JSON.stringify({ message: trimmed, language: chatLang, history }),
         });
 
+        // Read quota headers (free tier only)
+        const limitHeader = response.headers.get("X-AI-Quota-Limit");
+        const remainHeader = response.headers.get("X-AI-Quota-Remaining");
+        if (limitHeader) setQuotaLimit(parseInt(limitHeader, 10));
+        if (remainHeader) {
+          const remain = parseInt(remainHeader, 10);
+          setQuotaRemaining(remain);
+          // Reset blocked state if server says we have quota left (e.g., new day)
+          if (remain > 0) setQuotaExceeded(false);
+        }
+
         if (!response.ok) {
           const errData = await response.json().catch(() => ({}));
+          if ((errData as { quotaExceeded?: boolean }).quotaExceeded) {
+            setQuotaExceeded(true);
+            setQuotaRemaining(0);
+          }
           throw new Error((errData as { error?: string }).error || `HTTP ${response.status}`);
         }
+        if (remainHeader && parseInt(remainHeader, 10) === 0) setQuotaExceeded(true);
 
         let accumulated = "";
         let finalServiceIds: string[] = [];
@@ -877,6 +896,49 @@ export default function ChatScreen() {
         </View>
       )}
 
+      {/* Quota banner — shown to free users when ≤2 messages remain */}
+      {quotaRemaining !== null && quotaLimit !== null && quotaRemaining <= 2 && (
+        <Pressable
+          onPress={() => router.push("/premium" as any)}
+          style={[
+            styles.quotaBanner,
+            quotaExceeded || quotaRemaining === 0
+              ? styles.quotaBannerBlocked
+              : styles.quotaBannerWarn,
+          ]}
+        >
+          <Feather
+            name={quotaExceeded || quotaRemaining === 0 ? "lock" : "alert-circle"}
+            size={16}
+            color="#fff"
+          />
+          <Text style={styles.quotaBannerText}>
+            {(() => {
+              const blocked = quotaExceeded || quotaRemaining === 0;
+              const n = quotaRemaining ?? 0;
+              const s = n > 1 ? "s" : "";
+              if (blocked) {
+                switch (chatLang) {
+                  case "en": return `Daily free limit reached (${quotaLimit}/day). Tap to upgrade for unlimited.`;
+                  case "es": return `Límite diario alcanzado (${quotaLimit}/día). Toca para pasar a Premium.`;
+                  case "ar": return `تم بلوغ الحد اليومي (${quotaLimit}/يوم). اضغط للترقية إلى Premium.`;
+                  case "ht": return `Limit jounalye atenn (${quotaLimit}/jou). Peze pou ale Premium.`;
+                  default: return `Limite quotidienne atteinte (${quotaLimit}/jour). Touchez pour passer Premium.`;
+                }
+              }
+              switch (chatLang) {
+                case "en": return `${n} message${s} left today. Upgrade for unlimited.`;
+                case "es": return `Te queda${n > 1 ? "n" : ""} ${n} mensaje${s} hoy. Pasa a Premium para uso ilimitado.`;
+                case "ar": return `تبقى لك ${n} رسالة اليوم. قم بالترقية للاستخدام غير المحدود.`;
+                case "ht": return `Ou genyen ${n} mesaj ki rete jodi a. Ale Premium pou san limit.`;
+                default: return `Il vous reste ${n} message${s} aujourd'hui. Passez Premium pour un usage illimité.`;
+              }
+            })()}
+          </Text>
+          <Feather name="chevron-right" size={16} color="#fff" />
+        </Pressable>
+      )}
+
       <FlatList
         ref={listRef}
         data={messages}
@@ -1013,6 +1075,24 @@ export default function ChatScreen() {
 }
 
 const styles = StyleSheet.create({
+  quotaBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    marginHorizontal: 12,
+    marginTop: 8,
+    borderRadius: 12,
+  },
+  quotaBannerWarn: { backgroundColor: "#7c3aed" },
+  quotaBannerBlocked: { backgroundColor: "#dc2626" },
+  quotaBannerText: {
+    flex: 1,
+    color: "#fff",
+    fontSize: 13,
+    fontWeight: "600",
+  },
   container: { flex: 1 },
   list: { flex: 1 },
   header: {

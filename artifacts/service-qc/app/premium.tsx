@@ -103,27 +103,6 @@ const TIERS: Tier[] = [
     ctaKind: "terrain",
   },
   {
-    id: "institution",
-    emoji: "🏛️",
-    color: "#7c3aed",
-    gradColors: ["#3b0764", "#7c3aed"],
-    audience: "Institution — CIUSSS, CLSC, refuges",
-    tagline: "L'infrastructure essentielle du réseau communautaire québécois",
-    priceLabel: "199 $",
-    priceUnit: "/ mois",
-    trialBadge: "14 jours d'essai gratuit",
-    perks: [
-      "Tout le mode Terrain inclus pour toute l'équipe",
-      "Dossiers clients partagés entre intervenants de l'organisme",
-      "Recherche client par nom, téléphone ou adresse",
-      "Notes de suivi chronologiques (contact, RDV, alertes)",
-      "Bientôt : référencement chiffré entre organismes",
-      "Bientôt : calendrier RDV + dashboard d'impact mensuel",
-    ],
-    ctaLabel: "Démarrer l'essai Institution — 14 j",
-    ctaKind: "institution",
-  },
-  {
     id: "orgs",
     emoji: "🏢",
     color: "#0e7e6e",
@@ -143,6 +122,27 @@ const TIERS: Tier[] = [
     ],
     ctaLabel: "Démarrer l'essai gratuit 14 jours",
     ctaKind: "trial",
+  },
+  {
+    id: "institution",
+    emoji: "🏛️",
+    color: "#7c3aed",
+    gradColors: ["#3b0764", "#7c3aed"],
+    audience: "Institution — CIUSSS, CLSC, refuges",
+    tagline: "L'infrastructure essentielle du réseau communautaire québécois",
+    priceLabel: "199 $",
+    priceUnit: "/ mois",
+    trialBadge: "14 jours d'essai gratuit",
+    perks: [
+      "Tout le mode Terrain inclus pour toute l'équipe",
+      "Dossiers clients partagés entre intervenants de l'organisme",
+      "Recherche client par nom, téléphone ou adresse",
+      "Notes de suivi chronologiques (contact, RDV, alertes)",
+      "Bientôt : référencement chiffré entre organismes",
+      "Bientôt : calendrier RDV + dashboard d'impact mensuel",
+    ],
+    ctaLabel: "Démarrer l'essai Institution — 14 j",
+    ctaKind: "institution",
   },
 ];
 
@@ -397,6 +397,37 @@ export default function PremiumScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[styles.scroll, { paddingBottom: insets.bottom + 32 }]}
       >
+        {/* ── Trust strip (Stripe, sans engagement, etc.) ── */}
+        <View style={[styles.trustStrip, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View style={styles.trustItem}>
+            <Feather name="shield" size={14} color="#0e7e6e" />
+            <Text style={[styles.trustText, { color: colors.foreground }]}>Paiement sécurisé Stripe</Text>
+          </View>
+          <View style={[styles.trustDivider, { backgroundColor: colors.border }]} />
+          <View style={styles.trustItem}>
+            <Feather name="x-circle" size={14} color="#0e7e6e" />
+            <Text style={[styles.trustText, { color: colors.foreground }]}>Annulable à tout moment</Text>
+          </View>
+          <View style={[styles.trustDivider, { backgroundColor: colors.border }]} />
+          <View style={styles.trustItem}>
+            <Feather name="map-pin" size={14} color="#0e7e6e" />
+            <Text style={[styles.trustText, { color: colors.foreground }]}>Fait au Québec 🇨🇦</Text>
+          </View>
+        </View>
+
+        {/* ── Section: Particuliers ── */}
+        <View style={styles.sectionHead}>
+          <View style={[styles.sectionHeadIcon, { backgroundColor: "#10b98118" }]}>
+            <Feather name="user" size={14} color="#10b981" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={[styles.sectionHeadTitle, { color: colors.foreground }]}>Pour les particuliers</Text>
+            <Text style={[styles.sectionHeadSub, { color: colors.mutedForeground }]}>
+              Trouvez de l'aide, gratuitement ou en illimité
+            </Text>
+          </View>
+        </View>
+
         {TIERS.map((tier, idx) => {
           const isLoading =
             (tier.ctaKind === "trial" && loadingTier === "org-trial") ||
@@ -406,6 +437,22 @@ export default function PremiumScreen() {
           const isPopular = idx === 1; // Premium 10$ — the "best value" tier
           const anim = cardAnims[idx];
           return (
+            <React.Fragment key={`tier-frag-${idx}`}>
+            {idx === 2 && (
+              <View style={styles.sectionHead}>
+                <View style={[styles.sectionHeadIcon, { backgroundColor: "#7c3aed18" }]}>
+                  <Feather name="briefcase" size={14} color="#7c3aed" />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={[styles.sectionHeadTitle, { color: colors.foreground }]}>
+                    Pour les professionnels
+                  </Text>
+                  <Text style={[styles.sectionHeadSub, { color: colors.mutedForeground }]}>
+                    Intervenants, organismes, institutions du réseau
+                  </Text>
+                </View>
+              </View>
+            )}
             <Animated.View
               key={`${tier.id}-${idx}`}
               style={{
@@ -527,6 +574,7 @@ export default function PremiumScreen() {
               </View>
             </View>
             </Animated.View>
+            </React.Fragment>
           );
         })}
 
@@ -648,6 +696,61 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 18,
     gap: 14,
+  },
+
+  /* Trust strip */
+  trustStrip: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderRadius: 14,
+    borderWidth: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    gap: 6,
+  },
+  trustItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    flex: 1,
+    justifyContent: "center",
+  },
+  trustText: {
+    fontSize: 10.5,
+    fontFamily: "Inter_600SemiBold",
+    textAlign: "center",
+  },
+  trustDivider: {
+    width: 1,
+    height: 22,
+  },
+
+  /* Section heading */
+  sectionHead: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    marginTop: 8,
+    marginBottom: -4,
+    paddingHorizontal: 4,
+  },
+  sectionHeadIcon: {
+    width: 30,
+    height: 30,
+    borderRadius: 9,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sectionHeadTitle: {
+    fontSize: 15,
+    fontFamily: "Inter_700Bold",
+    letterSpacing: -0.2,
+  },
+  sectionHeadSub: {
+    fontSize: 11.5,
+    fontFamily: "Inter_400Regular",
+    marginTop: 1,
   },
 
   /* Card */

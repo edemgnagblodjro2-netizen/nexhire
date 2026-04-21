@@ -38,7 +38,10 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **Splash animé** : Logo AttenteZéro avec gradient teal, animation spring, fondu avant login
 - **Auth email/mot de passe** : login, register, reset-password via API `quebec-aid-finder.replit.app`
 - **Accueil** : Hero gradient, barre de recherche, stats (457+ services, 4 villes, 24/7), bannières SOS/Carte/IA, catégories rapides
-- **Chat IA** : GPT-4o-mini via SSE streaming, détection de situations critiques (crise suicidaire, danger immédiat), alertes humanisées, 5 langues (FR/EN/ES/AR/HT), prompts rapides par langue
+- **Chat IA** : GPT-4o-mini via SSE streaming, détection de situations critiques (crise suicidaire, danger immédiat), alertes humanisées, 5 langues (FR/EN/ES/AR/HT), prompts rapides par langue. **Quota gratuit : 5 messages/jour** (illimité Premium). Headers `X-AI-Quota-Limit/Remaining`, 429 + JSON `{quotaExceeded:true}`. Bannière in-chat (5 langues) avertit à ≤2 restants ou bloque, lien vers `/premium`. Reset auto si serveur signale > 0 restant.
+- **Gestion abonnement** (`/api/stripe/user-portal`) : endpoint sécurisé (auth obligatoire — utilise email de session, pas du body). Carte « Mon abonnement » dans `more.tsx` ouvre le portail Stripe.
+- **Page tarification** (`premium.tsx`) : 5 forfaits ordonnés par prix croissant (Gratuit → Premium 10$ → Terrain 19$ → Organisme 39$ → Institution 199$). Sections groupées « Pour les particuliers » / « Pour les professionnels », bandeau de confiance (Stripe sécurisé · annulable · fait au Québec). Polling refreshUser 6× sur 12 s après fermeture du navigateur Stripe pour gérer la latence webhook.
+- **Tableau de bord organisme** (admin `OrgDashboard.tsx`) : section « Avantages de votre forfait » détaillant les bénéfices par plan (standard / plus / terrain / institution) avec carte d'upsell vers le palier supérieur.
 - **Services** : 457 services, grille 2 colonnes, recherche texte + filtre catégorie
 - **Catégories** : 10 catégories avec compteurs dynamiques
 - **Résultats** : Filtres par catégorie + recherche texte (nom, ville, description, sous-catégorie)

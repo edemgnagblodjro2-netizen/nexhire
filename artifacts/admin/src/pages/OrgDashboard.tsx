@@ -14,6 +14,56 @@ import { clearOrgToken } from "@/lib/orgAuth";
 const PLAN_LABELS: Record<string, { label: string; price: string; color: string }> = {
   standard: { label: "Standard", price: "39 $/mois", color: "from-blue-500 to-blue-600" },
   plus: { label: "Plus", price: "89 $/mois", color: "from-violet-500 to-fuchsia-600" },
+  terrain: { label: "Terrain", price: "19 $/mois", color: "from-sky-500 to-cyan-600" },
+  institution: { label: "Institution", price: "199 $/mois", color: "from-purple-600 to-fuchsia-700" },
+};
+
+type PlanBenefit = { icon: string; title: string; desc: string };
+
+const PLAN_BENEFITS: Record<string, { tagline: string; benefits: PlanBenefit[]; upsell?: { plan: string; reason: string } }> = {
+  standard: {
+    tagline: "Visibilité de base pour votre organisme",
+    benefits: [
+      { icon: "📋", title: "Profil organisme", desc: "Logo, photos, horaires, coordonnées complètes" },
+      { icon: "✓", title: "Badge « Vérifié »", desc: "Rassurez les utilisateurs vulnérables" },
+      { icon: "📊", title: "Statistiques 30 j", desc: "Vues, appels et clics sur votre profil" },
+      { icon: "📞", title: "Appels directs", desc: "Les utilisateurs vous contactent en un clic" },
+    ],
+    upsell: { plan: "Plus (89 $/mois)", reason: "Mise en avant prioritaire dans les résultats + alertes urgentes" },
+  },
+  plus: {
+    tagline: "Mise en avant maximale + alertes prioritaires",
+    benefits: [
+      { icon: "⭐", title: "Mise en avant", desc: "Vos services apparaissent en priorité dans les résultats" },
+      { icon: "🚨", title: "Alertes prioritaires", desc: "Notifications instantanées pour les besoins urgents dans votre secteur" },
+      { icon: "📋", title: "Profil complet", desc: "Logo, photos, horaires, badges Vérifié" },
+      { icon: "📊", title: "Statistiques avancées", desc: "Vues, appels, clics, taux de conversion" },
+      { icon: "🎯", title: "Catégorisation fine", desc: "Apparaissez sur plusieurs segments pertinents" },
+    ],
+  },
+  terrain: {
+    tagline: "L'outil quotidien des intervenants terrain",
+    benefits: [
+      { icon: "💬", title: "Chat IA illimité", desc: "Multilingue (FR · EN · ES · AR · HT), saisie vocale" },
+      { icon: "👥", title: "Dossiers clients privés", desc: "Notes confidentielles par usager, historique complet" },
+      { icon: "⭐", title: "Favoris par client", desc: "Listes de services personnalisées par dossier" },
+      { icon: "📤", title: "Partage rapide", desc: "Envoyez un service par SMS, courriel ou WhatsApp" },
+      { icon: "🚨", title: "Détection de crise", desc: "Priorité aux situations suicide / violence / DPJ" },
+    ],
+    upsell: { plan: "Institution (199 $/mois)", reason: "Partagez les dossiers entre intervenants de votre équipe + RDV partagés" },
+  },
+  institution: {
+    tagline: "L'infrastructure essentielle du réseau communautaire québécois",
+    benefits: [
+      { icon: "👥", title: "Dossiers partagés en équipe", desc: "Toute l'équipe accède aux mêmes dossiers clients" },
+      { icon: "🔍", title: "Recherche client globale", desc: "Par nom, téléphone ou adresse, sur toute l'organisation" },
+      { icon: "📅", title: "Calendrier partagé", desc: "RDV de toute l'équipe centralisés" },
+      { icon: "📝", title: "Notes de suivi chronologiques", desc: "Contacts, RDV, alertes par client" },
+      { icon: "💬", title: "Chat IA illimité", desc: "Tout l'équipe profite de l'IA multilingue" },
+      { icon: "🚨", title: "Détection de crise prioritaire", desc: "Alertes routées au membre disponible" },
+      { icon: "🔮", title: "Bientôt", desc: "Référencement chiffré entre organismes + dashboard d'impact mensuel" },
+    ],
+  },
 };
 
 const STATUS_LABELS: Record<string, { label: string; color: string }> = {
@@ -126,7 +176,9 @@ export default function OrgDashboard() {
 
   if (!org) return null;
 
-  const planInfo = PLAN_LABELS[sub?.plan || "standard"];
+  const planKey = sub?.plan || "standard";
+  const planInfo = PLAN_LABELS[planKey] || PLAN_LABELS.standard;
+  const planBenefits = PLAN_BENEFITS[planKey] || PLAN_BENEFITS.standard;
   const statusInfo = STATUS_LABELS[sub?.status || "trialing"] || { label: sub?.status || "—", color: "bg-gray-100 text-gray-700" };
   const trialDays = daysLeft(sub?.trialEnd ?? null);
   const totals = stats?.totals || { views: 0, calls: 0, clicks: 0 };
@@ -204,6 +256,54 @@ export default function OrgDashboard() {
               {actionLoading ? "Ouverture…" : sub?.stripeCustomerId ? "Gérer mon abonnement" : "Activer mon paiement"}
             </button>
           </div>
+        </div>
+
+        {/* ── Plan benefits ── */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <div className="flex items-start justify-between mb-4 flex-wrap gap-3">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">
+                Avantages de votre forfait <span className="text-blue-600">{planInfo.label}</span>
+              </h3>
+              <p className="text-sm text-gray-500 mt-1">{planBenefits.tagline}</p>
+            </div>
+            <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold bg-gray-50 px-3 py-1.5 rounded-md">
+              {planInfo.price}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {planBenefits.benefits.map((b) => (
+              <div key={b.title} className="flex items-start gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100">
+                <div className="text-2xl leading-none flex-shrink-0">{b.icon}</div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-gray-900">{b.title}</p>
+                  <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{b.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {planBenefits.upsell && (
+            <div className="mt-5 p-4 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200">
+              <div className="flex items-start gap-3">
+                <div className="text-xl flex-shrink-0">💡</div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-gray-900">
+                    Passer à <span className="text-amber-700">{planBenefits.upsell.plan}</span> ?
+                  </p>
+                  <p className="text-xs text-gray-600 mt-1">{planBenefits.upsell.reason}</p>
+                </div>
+                <button
+                  onClick={handleManageSub}
+                  disabled={actionLoading}
+                  className="text-xs font-semibold text-amber-700 hover:text-amber-900 px-3 py-1.5 rounded-lg bg-white border border-amber-200 disabled:opacity-50 flex-shrink-0"
+                >
+                  Découvrir
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Stats cards */}
