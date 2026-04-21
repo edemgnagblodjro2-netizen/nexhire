@@ -1,7 +1,7 @@
 import app from "./app";
 import { logger } from "./lib/logger";
 import { sql } from "drizzle-orm";
-import { db } from "@workspace/db";
+import { db, servicesTable } from "@workspace/db";
 import { getUncachableStripeClient } from "./stripeClient";
 
 async function initStripe() {
@@ -53,7 +53,55 @@ if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
+async function autoSeedServicesIfEmpty() {
+  try {
+    const count = await db.$count(servicesTable);
+    if (count > 0) {
+      logger.info({ count }, "Services table already populated, skipping seed");
+      return;
+    }
+    logger.info("Services table is empty — auto-seeding from static data…");
+    const mod: any = await import("../../service-qc/data/services.js").catch(
+      () => import("../../service-qc/data/services" as any),
+    );
+    const SERVICES: any[] = mod.SERVICES ?? [];
+    if (SERVICES.length === 0) {
+      logger.warn("No static services to seed");
+      return;
+    }
+    const rows = SERVICES.map((s: any) => ({
+      id: s.id,
+      name: s.name,
+      category: s.category,
+      subcategory: s.subcategory ?? "",
+      city: s.city ?? "",
+      phone: s.phone ?? "",
+      website: s.website ?? "",
+      description: s.description ?? "",
+      address: s.address ?? null,
+      hours: s.hours ?? null,
+      isUrgent: s.isUrgent ?? false,
+      isProvinceWide: s.isProvinceWide ?? false,
+      lat: s.coordinates?.lat ?? null,
+      lng: s.coordinates?.lng ?? null,
+      active: true,
+    }));
+    const batchSize = 100;
+    for (let i = 0; i < rows.length; i += batchSize) {
+      await db
+        .insert(servicesTable)
+        .values(rows.slice(i, i + batchSize))
+        .onConflictDoNothing();
+    }
+    const finalCount = await db.$count(servicesTable);
+    logger.info({ finalCount }, "Auto-seed complete");
+  } catch (err) {
+    logger.error({ err }, "Auto-seed failed (non-fatal)");
+  }
+}
+
 runStartupMigrations().then(async () => {
+  autoSeedServicesIfEmpty();
   app.listen(port, (err) => {
     if (err) {
       logger.error({ err }, "Error listening on port");
