@@ -37,6 +37,7 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 
 - **Splash animé** : Logo AttenteZéro avec gradient teal, animation spring, fondu avant login
 - **Auth email/mot de passe** : login, register, reset-password via API `quebec-aid-finder.replit.app`
+- ⚠️ **Reset mot de passe : envoi du code EN ATTENTE** — depuis le hardening sécu (avr. 2026), le code n'est plus retourné dans la réponse `/forgot-password` (anti-takeover). Il faut brancher un service d'envoi (Resend/SendGrid/SMTP/Brevo). Intégration Resend a été refusée par l'usager une fois — redemander des credentials avant de re-proposer. En attendant, la fonction « mot de passe oublié » est de fait inopérante (sécurisée mais non livrée).
 - **Accueil** : Hero gradient, barre de recherche, stats (457+ services, 4 villes, 24/7), bannières SOS/Carte/IA, catégories rapides
 - **Chat IA** : GPT-4o-mini via SSE streaming, détection de situations critiques (crise suicidaire, danger immédiat), alertes humanisées, 5 langues (FR/EN/ES/AR/HT), prompts rapides par langue. **Quota gratuit : 5 messages/jour** (illimité Premium). Headers `X-AI-Quota-Limit/Remaining`, 429 + JSON `{quotaExceeded:true}`. Bannière in-chat (5 langues) avertit à ≤2 restants ou bloque, lien vers `/premium`. Reset auto si serveur signale > 0 restant.
 - **Gestion abonnement** (`/api/stripe/user-portal`) : endpoint sécurisé (auth obligatoire — utilise email de session, pas du body). Carte « Mon abonnement » dans `more.tsx` ouvre le portail Stripe.
