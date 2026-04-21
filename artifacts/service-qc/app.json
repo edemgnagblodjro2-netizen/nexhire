@@ -64,7 +64,10 @@
       "reactCompiler": true
     },
     "extra": {
-      "eas": {}
-    }
+      "eas": {
+        "projectId": "ab5ae7c2-9012-42c6-a5dd-d8f8e0c0d67b"
+      }
+    },
+    "owner": "startupayas"
   }
 }
