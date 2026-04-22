@@ -1,0 +1,69 @@
+PS D:\attentezero-monorepo\artifacts\service-qc> cd D:\attentezero-monorepo\artifacts\service-qc
+PS D:\attentezero-monorepo\artifacts\service-qc> eas credentials
+√ Select platform » Android
+√ Which build profile do you want to configure? » production
+✔ Using build profile: production
+Android Credentials
+Project                 service-qc
+Application Identifier  com.attentezero.app
+
+Push Notifications (FCM Legacy)
+  None assigned yet
+
+Push Notifications (FCM V1): Google Service Account Key For FCM V1
+  None assigned yet
+
+Submissions: Google Service Account Key for Play Store Submissions
+  None assigned yet
+
+Configuration: Build Credentials VAJ7hA8XtV (Default)
+Keystore
+Type                JKS
+Key Alias           7cadb9ef49cb6d92665752fc22f06669
+MD5 Fingerprint     90:5D:9E:13:9F:DF:75:A0:15:DE:CD:33:83:21:2F:45
+SHA1 Fingerprint    49:FD:00:65:B8:8F:82:82:2B:C5:8E:AC:86:86:AB:09:3E:40:34:A1
+SHA256 Fingerprint  EF:75:86:37:40:3F:2F:C0:F0:2B:1F:27:D3:58:06:41:6F:5F:D6:98:7F:11:31:BA:FF:51:C6:F4:16:4B:08:D0
+Updated             49 minutes ago
+
+√ What do you want to do? » Keystore: Manage everything needed to build your project
+Android Credentials
+Project                 service-qc
+Application Identifier  com.attentezero.app
+
+Push Notifications (FCM Legacy)
+  None assigned yet
+
+Push Notifications (FCM V1): Google Service Account Key For FCM V1
+  None assigned yet
+
+Submissions: Google Service Account Key for Play Store Submissions
+  None assigned yet
+
+Configuration: Build Credentials VAJ7hA8XtV (Default)
+Keystore
+Type                JKS
+Key Alias           7cadb9ef49cb6d92665752fc22f06669
+MD5 Fingerprint     90:5D:9E:13:9F:DF:75:A0:15:DE:CD:33:83:21:2F:45
+SHA1 Fingerprint    49:FD:00:65:B8:8F:82:82:2B:C5:8E:AC:86:86:AB:09:3E:40:34:A1
+SHA256 Fingerprint  EF:75:86:37:40:3F:2F:C0:F0:2B:1F:27:D3:58:06:41:6F:5F:D6:98:7F:11:31:BA:FF:51:C6:F4:16:4B:08:D0
+Updated             49 minutes ago
+
+√ What do you want to do? » Download existing keystore
+√ Do you want to display the sensitive information of the Android Keystore? ... yes
+Saving Keystore to @startupayas-organization__service-qc.jks
+Type                JKS
+Key Alias           7cadb9ef49cb6d92665752fc22f06669
+MD5 Fingerprint     90:5D:9E:13:9F:DF:75:A0:15:DE:CD:33:83:21:2F:45
+SHA1 Fingerprint    49:FD:00:65:B8:8F:82:82:2B:C5:8E:AC:86:86:AB:09:3E:40:34:A1
+SHA256 Fingerprint  EF:75:86:37:40:3F:2F:C0:F0:2B:1F:27:D3:58:06:41:6F:5F:D6:98:7F:11:31:BA:FF:51:C6:F4:16:4B:08:D0
+Updated             50 minutes ago
+
+Sensitive Keystore information:
+    Keystore password: 5f88754bbea28f82e5347191d816b1b6
+    Key alias:         7cadb9ef49cb6d92665752fc22f06669
+    Key password:      2263e28df716f6b79d1432f4cbff9233
+
+    Path to Keystore:  @startupayas-organization__service-qc.jks
+
+
+Press any key to continue...
