@@ -66,6 +66,30 @@ uri = "file://attached_assets/generated_images/generated_image_3.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "g7aOSE6lfzIyxTwYH6bpX"
+uri = "file://exports/marketing/hero_app.png"
+type = "image"
+title = "phone app hero"
+
+[[generated]]
+id = "_R5y1rLIA0Ds79FnA43m4"
+uri = "file://exports/marketing/community_help.png"
+type = "image"
+title = "diverse community help"
+
+[[generated]]
+id = "6WaP5FekAAOdeoF7-urKy"
+uri = "file://exports/marketing/pricing_tiers.png"
+type = "image"
+title = "pricing tiers infographic"
+
+[[generated]]
+id = "2eP0LpjjZcfegplFAydgA"
+uri = "file://exports/marketing/quebec_map.png"
+type = "image"
+title = "quebec coverage map"
+
 [[outputs]]
 id = "MnpwCauLVqlWr2VNGXy9y"
 uri = "file://exports/testeurs-aidora-qc.csv"
@@ -191,3 +215,21 @@ id = "XWdkSaxggaalL0yZwdTC_"
 uri = "file://docs/DOCUMENTATION_PROJET.md"
 type = "text"
 title = "AttenteZéro — Documentation complète du projet (17 sections)"
+
+[[outputs]]
+id = "6Szp2ebAFbz8VIepD70xN"
+uri = "file://exports/AttenteZero_Documentation.pdf"
+type = "pdf"
+title = "Documentation complète du projet (PDF)"
+
+[[outputs]]
+id = "fSLzm7M0eGmLxBPwTp6fN"
+uri = "file://exports/AttenteZero_Flyer.pdf"
+type = "pdf"
+title = "Flyer promotionnel pro (PDF)"
+
+[[outputs]]
+id = "IddVEpzevsRUnLlWB7JLZ"
+uri = "file://exports/AttenteZero_Plan_Marketing_Financement.pdf"
+type = "pdf"
+title = "Plan Marketing & Financement (PDF)"
