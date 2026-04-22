@@ -2,7 +2,7 @@
   "expo": {
     "name": "AttenteZ\u00e9ro",
     "slug": "attentezero",
-    "version": "1.0.5",
+    "version": "1.0.22",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "service-qc",
@@ -24,7 +24,7 @@
     },
     "android": {
       "package": "com.attentezero.app",
-      "versionCode": 5,
+      "versionCode": 22,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon_transparent.png",
         "backgroundColor": "#ffffff"
