@@ -63,6 +63,10 @@ module.exports = function (api) {
   api.cache(true);
   return {
     presets: [["babel-preset-expo", { unstable_transformImportMeta: true }]],
-    plugins: [inlineExpoRouterAppRoot],
+    // IMPORTANT: react-native-reanimated/plugin MUST be the last plugin.
+    // Without it, runtime errors like
+    //   "[Worklets] Only worklets can be executed synchronously on UI runtime"
+    // appear on app launch.
+    plugins: [inlineExpoRouterAppRoot, "react-native-reanimated/plugin"],
   };
 };
