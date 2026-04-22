@@ -179,3 +179,9 @@ id = "6b3yMCop4W_kP1LWVIljl"
 uri = "file://exports/attentezero-v23-source.zip"
 type = "unspecified"
 title = "AttenteZéro v23 — Source complète (extraire dans D:\\attentezero-v23\\)"
+
+[[outputs]]
+id = "wTY2_nUpduupommfo2LE2"
+uri = "file://exports/attentezero-v24-source.zip"
+type = "unspecified"
+title = "AttenteZéro v24 — Source complète (extraire dans D:\\attentezero-v24\\)"
