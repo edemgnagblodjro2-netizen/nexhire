@@ -185,3 +185,9 @@ id = "wTY2_nUpduupommfo2LE2"
 uri = "file://exports/attentezero-v24-source.zip"
 type = "unspecified"
 title = "AttenteZéro v24 — avec correctifs login + tabs (extraire dans D:\\attentezero-v24\\)"
+
+[[outputs]]
+id = "XWdkSaxggaalL0yZwdTC_"
+uri = "file://docs/DOCUMENTATION_PROJET.md"
+type = "text"
+title = "AttenteZéro — Documentation complète du projet (17 sections)"
