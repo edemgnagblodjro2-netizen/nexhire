@@ -67,6 +67,8 @@ module.exports = function (api) {
     // Without it, runtime errors like
     //   "[Worklets] Only worklets can be executed synchronously on UI runtime"
     // appear on app launch.
-    plugins: [inlineExpoRouterAppRoot, "react-native-reanimated/plugin"],
+    // Reanimated 4.x requires `react-native-worklets/plugin` (the old
+    // `react-native-reanimated/plugin` only worked for v3.x).
+    plugins: [inlineExpoRouterAppRoot, "react-native-worklets/plugin"],
   };
 };
