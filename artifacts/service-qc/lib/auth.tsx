@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
-import * as SecureStore from "expo-secure-store";
+import { getItem, setItem, deleteItem } from "./secureStorage";
 import { getApiBaseUrl } from "./apiBase";
 
 const AUTH_TOKEN_KEY = "auth_session_token";
@@ -70,7 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const fetchUser = useCallback(async () => {
     try {
-      const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
+      const token = await getItem(AUTH_TOKEN_KEY);
       if (!token) {
         setUser(null);
         setIsLoading(false);
@@ -86,7 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (data.user) {
         setUser(data.user);
       } else {
-        await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
+        await deleteItem(AUTH_TOKEN_KEY);
         setUser(null);
       }
     } catch {
@@ -116,10 +116,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       if (data.token && data.user) {
-        await SecureStore.setItemAsync(AUTH_TOKEN_KEY, data.token);
+        await setItem(AUTH_TOKEN_KEY, data.token);
         setUser(data.user);
       } else if (data.token) {
-        await SecureStore.setItemAsync(AUTH_TOKEN_KEY, data.token);
+        await setItem(AUTH_TOKEN_KEY, data.token);
         await fetchUser();
       } else {
         return "Erreur de connexion. Veuillez réessayer.";
@@ -169,10 +169,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       if (data.token && data.user) {
-        await SecureStore.setItemAsync(AUTH_TOKEN_KEY, data.token);
+        await setItem(AUTH_TOKEN_KEY, data.token);
         setUser(data.user);
       } else if (data.token) {
-        await SecureStore.setItemAsync(AUTH_TOKEN_KEY, data.token);
+        await setItem(AUTH_TOKEN_KEY, data.token);
         await fetchUser();
       } else {
         return { error: "Erreur lors de l'inscription. Veuillez réessayer." };
@@ -185,7 +185,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const updateProfile = useCallback(async (data: { address?: string | null }): Promise<string | null> => {
     try {
-      const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
+      const token = await getItem(AUTH_TOKEN_KEY);
       if (!token) return "Non authentifié.";
       const apiBase = getApiBaseUrl();
       const res = await fetch(`${apiBase}/api/mobile-auth/update-profile`, {
@@ -211,7 +211,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(async () => {
     try {
-      const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
+      const token = await getItem(AUTH_TOKEN_KEY);
       if (token) {
         const apiBase = getApiBaseUrl();
         await fetch(`${apiBase}/api/mobile-auth/logout`, {
@@ -221,13 +221,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } catch {
     } finally {
-      await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
+      await deleteItem(AUTH_TOKEN_KEY);
       setUser(null);
     }
   }, []);
 
   const getToken = useCallback(async (): Promise<string | null> => {
-    return SecureStore.getItemAsync(AUTH_TOKEN_KEY);
+    return getItem(AUTH_TOKEN_KEY);
   }, []);
 
   return (
