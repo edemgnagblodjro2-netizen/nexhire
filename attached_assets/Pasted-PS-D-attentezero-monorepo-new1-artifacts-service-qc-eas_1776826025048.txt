@@ -1,0 +1,49 @@
+PS D:\attentezero-monorepo_new1\artifacts\service-qc> eas build --profile development --platform android
+
+You want to build a development client build for platforms: Android
+However, we detected that you don't have expo-dev-client installed for your project.
+√ Do you want EAS CLI to install expo-dev-client for you? ... yes
+
+Running expo install expo-dev-client
+
+[expo-cli] › Installing 1 SDK 54.0.0 compatible native module using pnpm
+[expo-cli] > pnpm add expo-dev-client@~6.0.20
+[expo-cli] ../..                                    | Progress: resolved 1, reused 0, downloaded 0, added 0
+[expo-cli] ../..                                    | Progress: resolved 52, reused 0, downloaded 0, added 0
+[expo-cli] ../..                                    | Progress: resolved 109, reused 0, downloaded 0, added 0
+[expo-cli] ../api-server                            |  WARN  deprecated @types/bcryptjs@3.0.0
+[expo-cli] ../..                                    | Progress: resolved 167, reused 0, downloaded 0, added 0
+[expo-cli] ../..                                    | Progress: resolved 400, reused 0, downloaded 0, added 0
+[expo-cli] ../..                                    | Progress: resolved 783, reused 0, downloaded 0, added 0
+[expo-cli] ../..                                    | Progress: resolved 999, reused 0, downloaded 0, added 0
+[expo-cli] WARN  4 deprecated subdependencies found: glob@7.2.3, inflight@1.0.6, rimraf@3.0.2, uuid@3.4.0
+[expo-cli] dependencies:
+[expo-cli] + expo-dev-client ~6.0.20
+[expo-cli] ../..                                    | Progress: resolved 1115, reused 0, downloaded 0, added 0
+[expo-cli] ../..                                    | Progress: resolved 1115, reused 7, downloaded 0, added 0
+[expo-cli] ../..                                    | Progress: resolved 1115, reused 16, downloaded 0, added 0
+[expo-cli] ../..                                    |  +19  -14 ++-
+[expo-cli] ../..                                    | Progress: resolved 1115, reused 17, downloaded 5, added 17
+[expo-cli] ../..                                    | Progress: resolved 1115, reused 17, downloaded 7, added 19, done
+[expo-cli] ../.. preinstall$ sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm instead" >&2; exit 1 ;; esac'
+[expo-cli] ../.. preinstall: 'sh' is not recognized as an internal or external command,
+[expo-cli] ../.. preinstall: operable program or batch file.
+[expo-cli] ../.. preinstall: Failed
+[expo-cli] ELIFECYCLE  Command failed with exit code 1.
+[expo-cli] Error: pnpm add expo-dev-client@~6.0.20 exited with non-zero code: 1
+[expo-cli] Error: pnpm add expo-dev-client@~6.0.20 exited with non-zero code: 1
+[expo-cli]     at ChildProcess.completionListener (D:\attentezero-monorepo_new1\node_modules\@expo\spawn-async\build\spawnAsync.js:42:23)
+[expo-cli]     at Object.onceWrapper (node:events:623:26)
+[expo-cli]     at ChildProcess.emit (node:events:508:28)
+[expo-cli]     at cp.emit (D:\attentezero-monorepo_new1\node_modules\cross-spawn\lib\enoent.js:34:29)
+[expo-cli]     at maybeClose (node:internal/child_process:1100:16)
+[expo-cli]     at ChildProcess._handle.onexit (node:internal/child_process:305:5)
+[expo-cli]     ...
+[expo-cli]     at spawnAsync (D:\attentezero-monorepo_new1\node_modules\@expo\spawn-async\build\spawnAsync.js:7:23)
+[expo-cli]     at PnpmPackageManager.runAsync (D:\attentezero-monorepo_new1\node_modules\@expo\package-manager\build\node\BasePackageManager.js:41:42)
+[expo-cli]     at PnpmPackageManager.addAsync (D:\attentezero-monorepo_new1\node_modules\@expo\package-manager\build\node\PnpmPackageManager.js:36:21)
+[expo-cli]     at installPackagesAsync (D:\attentezero-monorepo_new1\artifacts\service-qc\node_modules\@expo\cli\build\src\install\installAsync.js:189:30)
+[expo-cli]     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+D:\attentezero-monorepo_new1\artifacts\service-qc\node_modules\expo\bin\cli install expo-dev-client exited with non-zero code: 1
+    Error: build command failed.
+PS D:\attentezero-monorepo_new1\artifacts\service-qc>
