@@ -1,0 +1,39 @@
+PS D:\attentezero-monorepo_new1\artifacts\service-qc> eas build --profile production --platform android
+The field "cli.appVersionSource" is not set, but it will be required in the future. Learn more: https://docs.expo.dev/build-reference/app-versions/
+Resolved "production" environment for the build. Learn more: https://docs.expo.dev/eas/environment-variables/#setting-the-environment-for-your-builds
+No environment variables with visibility "Plain text" and "Sensitive" found for the "production" environment on EAS.
+Environment variables loaded from the "production" build profile "env" configuration: EXPO_PUBLIC_API_URL, EXPO_ROUTER_APP_ROOT.
+
+
+
+The field "cli.appVersionSource" is not set, but it will be required in the future. Learn more: https://docs.expo.dev/build-reference/app-versions/
+✔ Using remote Android credentials (Expo server)
+✔ Using Keystore from configuration: Build Credentials IecI3AO6F1 (default)
+
+Compressing project files and uploading to EAS Build. Learn more: https://expo.fyi/eas-build-archive
+✔ Compressed project files 7s (5.4 MB)
+✔ Uploaded to EAS
+⌛️ Computing the project fingerprint is taking longer than expected...
+⏩ To skip this step, set the environment variable: EAS_SKIP_AUTO_FINGERPRINT=1
+✔ Computed project fingerprint
+
+See logs: https://expo.dev/accounts/startupayas-organization/projects/attentezero/builds/0a3e09fa-fabb-4d02-8413-9650835ebd9c
+
+Waiting for build to complete. You can press Ctrl+C to exit.
+✖ Build failed
+
+🤖 Android build failed:
+Unknown error. See logs of the Install dependencies build phase for more information.
+PS D:\attentezero-monorepo_new1\artifacts\service-qc> cd D:\attentezero-monorepo_new1
+PS D:\attentezero-monorepo_new1> pnpm install --no-frozen-lockfile
+Scope: all 12 workspace projects
+artifacts/api-server                     |  WARN  deprecated @types/bcryptjs@3.0.0
+ WARN  4 deprecated subdependencies found: glob@7.2.3, inflight@1.0.6, rimraf@3.0.2, uuid@3.4.0
+Packages: +2 -20
+++--------------------
+Progress: resolved 1108, reused 17, downloaded 0, added 2, done
+. preinstall$ sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config…
+│ 'sh' is not recognized as an internal or external command,
+│ operable program or batch file.
+└─ Failed in 133ms at D:\attentezero-monorepo_new1
+ ELIFECYCLE  Command failed with exit code 1.
