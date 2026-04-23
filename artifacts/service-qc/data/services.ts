@@ -8,7 +8,9 @@ export type Category =
   | "family"
   | "social"
   | "childcare"
-  | "realestate";
+  | "realestate"
+  | "administrative"
+  | "legal";
 
 export interface Coordinates {
   lat: number;
