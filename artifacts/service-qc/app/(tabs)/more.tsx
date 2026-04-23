@@ -16,6 +16,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import PremiumGateModal from "@/components/PremiumGateModal";
+import { BrandFooter } from "@/components/BrandFooter";
 import { useColors } from "@/hooks/useColors";
 import { usePremiumGate } from "@/hooks/usePremiumGate";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -563,6 +564,8 @@ export default function MoreScreen() {
                 : "AttenteZéro will always be free for vulnerable people. Premium is optional and funds the platform's upkeep."}
             </Text>
           </View>
+
+          <BrandFooter />
 
         </View>
       </ScrollView>

@@ -19,6 +19,7 @@ import { useRouter } from "expo-router";
 
 import { useAuth } from "@/lib/auth";
 import { useServicesData } from "@/contexts/ServicesContext";
+import { BrandFooter } from "@/components/BrandFooter";
 
 const { width: SW } = Dimensions.get("window");
 
@@ -257,6 +258,8 @@ export default function LoginScreen() {
               </Pressable>
               <Text style={styles.disclaimer}>.</Text>
             </Animated.View>
+
+            <BrandFooter variant="light" />
 
           </ScrollView>
         </KeyboardAvoidingView>

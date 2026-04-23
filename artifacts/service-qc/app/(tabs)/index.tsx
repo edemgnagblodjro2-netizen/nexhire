@@ -18,6 +18,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { HomeBannerSlider } from "@/components/HomeBannerSlider";
 import { UrgentButton } from "@/components/UrgentButton";
+import { BrandFooter } from "@/components/BrandFooter";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { Category } from "@/data/services";
 import { useServicesData } from "@/contexts/ServicesContext";
@@ -386,6 +387,8 @@ export default function HomeScreen() {
             })}
           </View>
         </View>
+
+        <BrandFooter />
 
       </View>
     </ScrollView>
