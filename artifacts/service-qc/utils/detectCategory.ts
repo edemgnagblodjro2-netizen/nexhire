@@ -7,6 +7,8 @@ interface DetectionResult {
 }
 
 const KEYWORD_MAP: Record<Category, string[]> = {
+  administrative: [],
+  legal: [],
   housing: [
     "logement",
     "loger",
@@ -536,6 +538,8 @@ export function detectCategory(input: string): DetectionResult {
     social: 0,
     childcare: 0,
     realestate: 0,
+    administrative: 0,
+    legal: 0,
   };
   const matchedKeywords: string[] = [];
 

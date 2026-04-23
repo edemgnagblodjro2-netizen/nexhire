@@ -47,6 +47,8 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   social: "Soutien social",
   childcare: "Services de garde",
   realestate: "Achat immobilier",
+  administrative: "Démarches administratives",
+  legal: "Aide juridique",
 };
 
 export const SERVICES: Service[] = [

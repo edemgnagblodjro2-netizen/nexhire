@@ -25,6 +25,8 @@ export function getCategoryColor(category: Category, colors: Colors): string {
     social: colors.categorySocial,
     childcare: colors.categoryChildcare,
     realestate: colors.categoryRealestate,
+    administrative: colors.categorySocial,
+    legal: colors.categoryFamily,
   };
   return map[category];
 }
@@ -40,4 +42,6 @@ export const CATEGORY_ICONS: Record<Category, string> = {
   social: "share-2",
   childcare: "sun",
   realestate: "key",
+  administrative: "file-text",
+  legal: "shield",
 };

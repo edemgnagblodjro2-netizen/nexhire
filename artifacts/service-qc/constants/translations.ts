@@ -78,6 +78,8 @@ export const translations = {
       social: "Soutien social",
       childcare: "Services de garde",
       realestate: "Achat immobilier",
+      administrative: "Démarches administratives",
+      legal: "Aide juridique",
     },
   },
   en: {
@@ -156,6 +158,8 @@ export const translations = {
       social: "Social Support",
       childcare: "Childcare",
       realestate: "Home Buying",
+      administrative: "Administrative",
+      legal: "Legal Aid",
     },
   },
 } as const;

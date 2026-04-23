@@ -19,9 +19,34 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "@/contexts/LocationContext";
 import { useServicesData } from "@/contexts/ServicesContext";
-import { type Service } from "@/data/services";
+import { CATEGORY_LABELS, type Category, type Service } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 import { getFavorites, toggleFavorite } from "@/lib/favorites";
+
+type CatFilter = Category | "all";
+type SortMode = "distance" | "name" | "urgent";
+
+const CAT_ICONS: Record<Category, keyof typeof Feather.glyphMap> = {
+  health: "activity",
+  mentalHealth: "heart",
+  food: "shopping-bag",
+  housing: "home",
+  social: "users",
+  family: "users",
+  immigration: "globe",
+  employment: "briefcase",
+  childcare: "smile",
+  realestate: "key",
+  administrative: "file-text",
+  legal: "shield",
+};
+
+const CAT_LABELS_EN: Record<Category, string> = {
+  housing: "Housing", food: "Food", mentalHealth: "Mental health", health: "Health",
+  immigration: "Immigration", employment: "Employment", family: "Family",
+  social: "Social", childcare: "Childcare", realestate: "Real estate",
+  administrative: "Admin", legal: "Legal",
+};
 
 function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number) {
   const R = 6371;
@@ -49,6 +74,8 @@ export default function MapScreen() {
   const [tab, setTab] = useState<Tab>("nearby");
   const [favIds, setFavIds] = useState<string[]>([]);
   const [locTried, setLocTried] = useState(false);
+  const [catFilter, setCatFilter] = useState<CatFilter>("all");
+  const [sortMode, setSortMode] = useState<SortMode>("distance");
 
   // Auto-request location once
   useEffect(() => {
@@ -67,35 +94,64 @@ export default function MapScreen() {
     }, [])
   );
 
-  const nearby = useMemo(() => {
-    const withCoords = services.filter((s) => s.coordinates);
-    if (!userLocation) return withCoords.slice(0, 30);
-    return withCoords
-      .map((s) => ({
-        ...s,
-        distKm: haversineKm(userLocation.lat, userLocation.lng, s.coordinates!.lat, s.coordinates!.lng),
-      }))
-      .sort((a, b) => a.distKm - b.distKm)
-      .slice(0, 30);
-  }, [services, userLocation]);
-
-  const favorites = useMemo(() => {
-    const set = new Set(favIds);
-    const list = services.filter((s) => set.has(s.id));
-    if (userLocation) {
-      return list
-        .map((s) => ({
-          ...s,
-          distKm: s.coordinates
-            ? haversineKm(userLocation.lat, userLocation.lng, s.coordinates.lat, s.coordinates.lng)
-            : undefined,
-        }))
-        .sort((a, b) => (a.distKm ?? 1e9) - (b.distKm ?? 1e9));
+  // Pool of services for the active tab (before category/sort)
+  const tabPool = useMemo(() => {
+    if (tab === "favorites") {
+      const set = new Set(favIds);
+      return services.filter((s) => set.has(s.id));
     }
-    return list as (Service & { distKm?: number })[];
-  }, [services, favIds, userLocation]);
+    return services.filter((s) => s.coordinates);
+  }, [tab, services, favIds]);
 
-  const list = tab === "nearby" ? nearby : favorites;
+  // Per-category counts for chips (within current tab pool)
+  const catCounts = useMemo(() => {
+    const counts: Record<string, number> = { all: tabPool.length };
+    for (const s of tabPool) counts[s.category] = (counts[s.category] || 0) + 1;
+    return counts;
+  }, [tabPool]);
+
+  // Categories that actually appear, ordered by count desc
+  const availableCats = useMemo(() => {
+    return (Object.keys(catCounts).filter((k) => k !== "all") as Category[])
+      .sort((a, b) => (catCounts[b] || 0) - (catCounts[a] || 0));
+  }, [catCounts]);
+
+  // Reset category filter if it's no longer present when tab changes
+  useEffect(() => {
+    if (catFilter !== "all" && !catCounts[catFilter]) setCatFilter("all");
+  }, [catCounts, catFilter]);
+
+  // Compute distances + apply category + sort
+  const list = useMemo(() => {
+    let arr = tabPool.map((s) => {
+      const distKm = s.coordinates && userLocation
+        ? haversineKm(userLocation.lat, userLocation.lng, s.coordinates.lat, s.coordinates.lng)
+        : undefined;
+      return { ...s, distKm } as Service & { distKm?: number };
+    });
+
+    if (catFilter !== "all") arr = arr.filter((s) => s.category === catFilter);
+
+    if (sortMode === "name") {
+      arr.sort((a, b) => a.name.localeCompare(b.name, "fr"));
+    } else if (sortMode === "urgent") {
+      arr.sort((a, b) => {
+        const ua = a.isUrgent ? 0 : 1;
+        const ub = b.isUrgent ? 0 : 1;
+        if (ua !== ub) return ua - ub;
+        return (a.distKm ?? 1e9) - (b.distKm ?? 1e9);
+      });
+    } else {
+      arr.sort((a, b) => (a.distKm ?? 1e9) - (b.distKm ?? 1e9));
+    }
+
+    return arr.slice(0, tab === "nearby" ? 60 : arr.length);
+  }, [tabPool, userLocation, catFilter, sortMode, tab]);
+
+  const nearbyForMap = useMemo(
+    () => list.filter((s) => s.coordinates).slice(0, 12),
+    [list]
+  );
 
   async function onPin(id: string) {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -197,14 +253,100 @@ export default function MapScreen() {
         </View>
       </LinearGradient>
 
+      {/* Category filter chips */}
+      <View style={[styles.filterBar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.chipsRow}
+        >
+          {(["all", ...availableCats] as CatFilter[]).map((c) => {
+            const active = catFilter === c;
+            const label =
+              c === "all"
+                ? (isFr ? "Tous" : "All")
+                : (isFr ? CATEGORY_LABELS[c as Category] ?? c : CAT_LABELS_EN[c as Category] ?? c);
+            const iconName = c === "all" ? "grid" : (CAT_ICONS[c as Category] ?? "circle");
+            const count = catCounts[c] || 0;
+            return (
+              <Pressable
+                key={c}
+                onPress={() => { Haptics.selectionAsync(); setCatFilter(c); }}
+                style={[
+                  styles.chip,
+                  { borderColor: colors.border, backgroundColor: colors.background },
+                  active && { backgroundColor: "#0e7e6e", borderColor: "#0e7e6e" },
+                ]}
+              >
+                <Feather
+                  name={iconName as any}
+                  size={12}
+                  color={active ? "#fff" : "#0e7e6e"}
+                />
+                <Text style={[styles.chipTxt, { color: active ? "#fff" : colors.foreground }]} numberOfLines={1}>
+                  {label}
+                </Text>
+                <View style={[styles.chipCount, { backgroundColor: active ? "rgba(255,255,255,0.22)" : "#0e7e6e15" }]}>
+                  <Text style={[styles.chipCountTxt, { color: active ? "#fff" : "#0e7e6e" }]}>
+                    {count}
+                  </Text>
+                </View>
+              </Pressable>
+            );
+          })}
+        </ScrollView>
+
+        {/* Sort row */}
+        <View style={styles.sortRow}>
+          <Feather name="sliders" size={12} color={colors.mutedForeground} />
+          <Text style={[styles.sortLabel, { color: colors.mutedForeground }]}>
+            {isFr ? "Trier :" : "Sort:"}
+          </Text>
+          {(["distance", "name", "urgent"] as SortMode[]).map((m) => {
+            const active = sortMode === m;
+            const label =
+              m === "distance" ? (isFr ? "Distance" : "Distance")
+              : m === "name" ? (isFr ? "Nom" : "Name")
+              : (isFr ? "Urgent" : "Urgent");
+            return (
+              <Pressable
+                key={m}
+                onPress={() => { Haptics.selectionAsync(); setSortMode(m); }}
+                style={[
+                  styles.sortBtn,
+                  { borderColor: colors.border },
+                  active && { backgroundColor: "#0e7e6e15", borderColor: "#0e7e6e" },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.sortTxt,
+                    { color: active ? "#0e7e6e" : colors.mutedForeground },
+                  ]}
+                >
+                  {label}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      </View>
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[styles.body, { paddingBottom: insets.bottom + 100 }]}
       >
+        {/* Result summary */}
+        <Text style={[styles.resultCount, { color: colors.mutedForeground }]}>
+          {isFr
+            ? `${list.length} service${list.length > 1 ? "s" : ""}${catFilter !== "all" ? ` · ${CATEGORY_LABELS[catFilter as Category] ?? catFilter}` : ""}`
+            : `${list.length} service${list.length > 1 ? "s" : ""}${catFilter !== "all" ? ` · ${CAT_LABELS_EN[catFilter as Category] ?? catFilter}` : ""}`}
+        </Text>
+
         {/* Mini visual map (lightweight: pins on a styled canvas) */}
-        {tab === "nearby" && nearby.length > 0 && (
+        {tab === "nearby" && nearbyForMap.length > 0 && (
           <MiniMap
-            services={nearby.slice(0, 12)}
+            services={nearbyForMap}
             userLocation={userLocation}
             colors={colors}
           />
@@ -442,6 +584,33 @@ const styles = StyleSheet.create({
   segTxtActive: { color: "#0e7e6e" },
 
   body: { padding: 14, paddingTop: 14 },
+
+  filterBar: { borderBottomWidth: 1, paddingTop: 10, paddingBottom: 8 },
+  chipsRow: { paddingHorizontal: 12, gap: 6 },
+  chip: {
+    flexDirection: "row", alignItems: "center", gap: 5,
+    paddingHorizontal: 10, paddingVertical: 6,
+    borderRadius: 14, borderWidth: 1,
+  },
+  chipTxt: { fontSize: 12, fontFamily: "Inter_600SemiBold", maxWidth: 110 },
+  chipCount: {
+    paddingHorizontal: 6, paddingVertical: 1,
+    borderRadius: 8, marginLeft: 2,
+  },
+  chipCountTxt: { fontSize: 10, fontFamily: "Inter_700Bold" },
+
+  sortRow: {
+    flexDirection: "row", alignItems: "center", gap: 6,
+    paddingHorizontal: 14, marginTop: 8,
+  },
+  sortLabel: { fontSize: 11, fontFamily: "Inter_500Medium", marginRight: 2 },
+  sortBtn: {
+    paddingHorizontal: 9, paddingVertical: 4,
+    borderRadius: 10, borderWidth: 1,
+  },
+  sortTxt: { fontSize: 11, fontFamily: "Inter_600SemiBold" },
+
+  resultCount: { fontSize: 11, fontFamily: "Inter_500Medium", marginBottom: 10, marginLeft: 2 },
 
   miniMap: {
     height: 180,
