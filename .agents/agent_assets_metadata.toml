@@ -251,3 +251,9 @@ id = "Z-304xM9cLDAb-oXSiRSX"
 uri = "file://attached_assets/builds/attentezero-v1.0.28-build.tar.gz"
 type = "unspecified"
 title = "AttenteZéro v1.0.28 — Archive complète pour build local"
+
+[[outputs]]
+id = "j4KoU4-uLzEaTk9E3B2BN"
+uri = "file://attached_assets/builds/attentezero-v1.0.28-monorepo-FULL.tar.gz"
+type = "unspecified"
+title = "AttenteZéro v1.0.28 — Monorepo COMPLET pour build EAS"
