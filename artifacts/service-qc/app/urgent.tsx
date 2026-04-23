@@ -145,13 +145,20 @@ export default function UrgentScreen() {
   const urgentServices = useMemo(() => services.filter((s) => s.isUrgent), [services]);
 
   const sortedServices = useMemo((): ServiceWithDistance[] => {
-    const withDistance: ServiceWithDistance[] = urgentServices.map((s) => ({
-      ...s,
-      distanceKm:
-        userLocation && !s.isProvinceWide
-          ? haversineDistance(userLocation, (s as any).coordinates)
-          : null,
-    }));
+    const withDistance: ServiceWithDistance[] = urgentServices.map((s) => {
+      const coords = (s as any).coordinates;
+      const hasCoords =
+        coords &&
+        typeof coords.lat === "number" &&
+        typeof coords.lng === "number";
+      return {
+        ...s,
+        distanceKm:
+          userLocation && !s.isProvinceWide && hasCoords
+            ? haversineDistance(userLocation, coords)
+            : null,
+      };
+    });
 
     const physical = withDistance
       .filter((s) => !s.isProvinceWide)
@@ -159,6 +166,8 @@ export default function UrgentScreen() {
         if (a.distanceKm !== null && b.distanceKm !== null) {
           return a.distanceKm - b.distanceKm;
         }
+        if (a.distanceKm !== null) return -1;
+        if (b.distanceKm !== null) return 1;
         return 0;
       });
 
