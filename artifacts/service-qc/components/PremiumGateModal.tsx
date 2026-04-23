@@ -14,6 +14,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useColors } from "@/hooks/useColors";
+import { useServicesData } from "@/contexts/ServicesContext";
 
 interface Props {
   visible: boolean;
@@ -21,13 +22,6 @@ interface Props {
   userEmail?: string | null;
   remaining: number;
 }
-
-const FREE_FEATURES = [
-  { icon: "search" as const, label: "Rechercher parmi 531+ services" },
-  { icon: "phone-call" as const, label: "Appeler directement les organismes" },
-  { icon: "cpu" as const, label: "Chat IA multilingue (FR · EN · ES · AR · HT)" },
-  { icon: "alert-triangle" as const, label: "SOS urgences avec tri GPS" },
-];
 
 const PARTNER_TIERS = [
   { label: "Travailleur", price: "19 $/mois", color: "#0e7e6e" },
@@ -40,6 +34,15 @@ export default function PremiumGateModal({ visible, onDismiss }: Props) {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const { services } = useServicesData();
+  const roundedCount = Math.max(100, Math.floor(services.length / 10) * 10);
+
+  const FREE_FEATURES = [
+    { icon: "search" as const, label: `Rechercher parmi ${roundedCount}+ services` },
+    { icon: "phone-call" as const, label: "Appeler directement les organismes" },
+    { icon: "cpu" as const, label: "Chat IA multilingue (FR · EN · ES · AR · HT)" },
+    { icon: "alert-triangle" as const, label: "SOS urgences avec tri GPS" },
+  ];
 
   function handleViewPricing() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);

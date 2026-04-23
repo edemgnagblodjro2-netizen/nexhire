@@ -18,6 +18,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 
 import { useAuth } from "@/lib/auth";
+import { useServicesData } from "@/contexts/ServicesContext";
 
 const { width: SW } = Dimensions.get("window");
 
@@ -64,15 +65,17 @@ function FloatingOrb({
   );
 }
 
-const FEATURES = [
-  { icon: "map-pin" as const, label: "531+ services" },
-  { icon: "cpu" as const, label: "IA multilingue" },
-  { icon: "phone-call" as const, label: "SOS urgences" },
-];
-
 export default function LoginScreen() {
   const { loginWithEmail, isAuthenticated } = useAuth();
   const router = useRouter();
+  const { services } = useServicesData();
+  const roundedCount = Math.max(100, Math.floor(services.length / 10) * 10);
+
+  const FEATURES = [
+    { icon: "map-pin" as const, label: `${roundedCount}+ services` },
+    { icon: "cpu" as const, label: "IA multilingue" },
+    { icon: "phone-call" as const, label: "SOS urgences" },
+  ];
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
