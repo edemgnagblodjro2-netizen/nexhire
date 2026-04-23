@@ -233,3 +233,9 @@ id = "IddVEpzevsRUnLlWB7JLZ"
 uri = "file://exports/AttenteZero_Plan_Marketing_Financement.pdf"
 type = "pdf"
 title = "Plan Marketing & Financement (PDF)"
+
+[[outputs]]
+id = "1QLUE4MoJKgCiI3pcG5Dh"
+uri = "file://attached_assets/services_AttenteZero.xlsx"
+type = "table"
+title = "AttenteZéro — 723 services à corriger"
