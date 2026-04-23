@@ -351,41 +351,87 @@ export default function HomeScreen() {
           </ScrollView>
         </View>
 
-        {/* ── Catégories ── */}
+        {/* ── Catégories (carrousel horizontal avec compteurs) ── */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
-            {t.sectionCategories}
-          </Text>
-          <View style={styles.catGrid}>
-            {ALL_CATEGORIES.map((cat) => {
-              const color = getCategoryColor(cat, colors);
-              const icon = CATEGORY_ICONS[cat] as keyof typeof Feather.glyphMap;
-              return (
-                <Pressable
-                  key={cat}
-                  style={({ pressed }) => [
-                    styles.catCard,
-                    {
-                      backgroundColor: colors.card,
-                      borderColor: colors.border,
-                      opacity: pressed ? 0.82 : 1,
-                    },
-                  ]}
-                  onPress={() => handleCategoryPress(cat)}
-                >
-                  <View style={[styles.catIconWrap, { backgroundColor: color + "18" }]}>
-                    <Feather name={icon} size={20} color={color} />
-                  </View>
-                  <Text
-                    style={[styles.catLabel, { color: colors.foreground }]}
-                    numberOfLines={2}
-                  >
-                    {t.categories[cat]}
-                  </Text>
-                </Pressable>
-              );
-            })}
+          <View style={styles.sectionHeaderRow}>
+            <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: 0 }]}>
+              {t.sectionCategories}
+            </Text>
+            <Pressable
+              onPress={() => {
+                Haptics.selectionAsync();
+                router.push("/(tabs)/categories" as any);
+              }}
+              hitSlop={8}
+            >
+              <Text style={[styles.sectionLink, { color: colors.primary }]}>
+                {language === "fr" ? "Tout voir" : "See all"} ›
+              </Text>
+            </Pressable>
           </View>
+
+          {/* Compteurs par catégorie (mémorisés inline) */}
+          {(() => {
+            const counts: Record<string, number> = {};
+            for (const c of ALL_CATEGORIES) counts[c] = 0;
+            for (const s of services) {
+              if (counts[s.category] !== undefined) counts[s.category]++;
+            }
+            const sorted = [...ALL_CATEGORIES].sort(
+              (a, b) => (counts[b] ?? 0) - (counts[a] ?? 0),
+            );
+
+            return (
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.catScrollContent}
+                decelerationRate="fast"
+                snapToInterval={132}
+                snapToAlignment="start"
+              >
+                {sorted.map((cat) => {
+                  const color = getCategoryColor(cat, colors);
+                  const icon = CATEGORY_ICONS[cat] as keyof typeof Feather.glyphMap;
+                  const count = counts[cat] ?? 0;
+                  return (
+                    <Pressable
+                      key={cat}
+                      style={({ pressed }) => [
+                        styles.catCardH,
+                        {
+                          backgroundColor: colors.card,
+                          borderColor: colors.border,
+                          opacity: pressed ? 0.82 : 1,
+                        },
+                      ]}
+                      onPress={() => handleCategoryPress(cat)}
+                    >
+                      <LinearGradient
+                        colors={[color + "26", color + "10"]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={styles.catIconWrapH}
+                      >
+                        <Feather name={icon} size={26} color={color} />
+                      </LinearGradient>
+                      <Text
+                        style={[styles.catLabelH, { color: colors.foreground }]}
+                        numberOfLines={2}
+                      >
+                        {t.categories[cat]}
+                      </Text>
+                      <View style={[styles.catCountBadge, { backgroundColor: color + "18" }]}>
+                        <Text style={[styles.catCountText, { color }]}>
+                          {count}
+                        </Text>
+                      </View>
+                    </Pressable>
+                  );
+                })}
+              </ScrollView>
+            );
+          })()}
         </View>
 
         <BrandFooter />
@@ -713,7 +759,68 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
 
-  /* Category grid 2-col */
+  /* Section header row (titre + lien "Tout voir") */
+  sectionHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 12,
+  },
+  sectionLink: {
+    fontSize: 13,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
+  },
+
+  /* Catégories — carrousel horizontal */
+  catScrollContent: {
+    gap: 10,
+    paddingRight: 16,
+    paddingVertical: 4,
+  },
+  catCardH: {
+    width: 122,
+    borderRadius: 16,
+    borderWidth: 1,
+    paddingVertical: 14,
+    paddingHorizontal: 10,
+    alignItems: "center",
+    gap: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  catIconWrapH: {
+    width: 54,
+    height: 54,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  catLabelH: {
+    fontSize: 12.5,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
+    lineHeight: 15,
+    textAlign: "center",
+    minHeight: 30,
+  },
+  catCountBadge: {
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    borderRadius: 10,
+    minWidth: 36,
+    alignItems: "center",
+  },
+  catCountText: {
+    fontSize: 12,
+    fontWeight: "800",
+    fontFamily: "Inter_700Bold",
+  },
+
+  /* Category grid 2-col (legacy, conservé au cas où) */
   catGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
