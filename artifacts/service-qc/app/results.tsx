@@ -14,10 +14,14 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ServiceCard } from "@/components/ServiceCard";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useLocation } from "@/contexts/LocationContext";
 import type { Category } from "@/data/services";
 import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor, CATEGORY_ICONS } from "@/utils/categoryColors";
+import { haversineDistance } from "@/utils/location";
+
+type SortMode = "default" | "city" | "distance";
 
 const ALL_CATEGORIES: Category[] = [
   "housing",
@@ -50,10 +54,13 @@ export default function ResultsScreen() {
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
 
   const { services } = useServicesData();
+  const { userLocation, locationStatus, requestLocation } = useLocation();
+
+  const [sortMode, setSortMode] = React.useState<SortMode>("default");
 
   const filtered = useMemo(() => {
     const q = (query ?? "").toLowerCase().trim();
-    return services.filter((s) => {
+    const base = services.filter((s) => {
       const matchesCategory =
         selectedCategory === "all" || s.category === selectedCategory;
       if (!q) return matchesCategory;
@@ -64,11 +71,38 @@ export default function ResultsScreen() {
         (s.subcategory ?? "").toLowerCase().includes(q);
       return matchesCategory && matchesText;
     });
-  }, [services, selectedCategory, query]);
+
+    if (sortMode === "city") {
+      return [...base].sort((a, b) => {
+        if (a.isProvinceWide && !b.isProvinceWide) return -1;
+        if (!a.isProvinceWide && b.isProvinceWide) return 1;
+        return (a.city ?? "").localeCompare(b.city ?? "", "fr") ||
+          a.name.localeCompare(b.name, "fr");
+      });
+    }
+
+    if (sortMode === "distance" && userLocation) {
+      return [...base].sort((a, b) => {
+        const da = a.coordinates ? haversineDistance(userLocation, a.coordinates) : Infinity;
+        const db = b.coordinates ? haversineDistance(userLocation, b.coordinates) : Infinity;
+        return da - db;
+      });
+    }
+
+    return base;
+  }, [services, selectedCategory, query, sortMode, userLocation]);
 
   function handleChipPress(cat: Category | "all") {
     Haptics.selectionAsync();
     setSelectedCategory(cat);
+  }
+
+  async function handleSortPress(mode: SortMode) {
+    Haptics.selectionAsync();
+    if (mode === "distance" && !userLocation) {
+      await requestLocation();
+    }
+    setSortMode(mode);
   }
 
   return (
@@ -160,6 +194,56 @@ export default function ResultsScreen() {
             );
           }}
         />
+
+        <View style={styles.sortRow}>
+          <Text style={[styles.sortLabel, { color: colors.mutedForeground }]}>
+            {language === "fr" ? "Trier :" : "Sort:"}
+          </Text>
+          {([
+            { key: "default" as const, label: language === "fr" ? "Pertinence" : "Relevance", icon: "list" as const },
+            { key: "city" as const, label: language === "fr" ? "Ville A-Z" : "City A-Z", icon: "map-pin" as const },
+            { key: "distance" as const, label: language === "fr" ? "Proximité" : "Nearest", icon: "navigation" as const },
+          ]).map((opt) => {
+            const isSelected = sortMode === opt.key;
+            const isLoading = opt.key === "distance" && locationStatus === "requesting";
+            return (
+              <Pressable
+                key={opt.key}
+                style={[
+                  styles.sortChip,
+                  {
+                    backgroundColor: isSelected ? colors.primary : colors.card,
+                    borderColor: isSelected ? colors.primary : colors.border,
+                    opacity: isLoading ? 0.6 : 1,
+                  },
+                ]}
+                onPress={() => handleSortPress(opt.key)}
+                disabled={isLoading}
+              >
+                <Feather
+                  name={opt.icon}
+                  size={12}
+                  color={isSelected ? "#fff" : colors.foreground}
+                />
+                <Text
+                  style={[
+                    styles.sortChipText,
+                    { color: isSelected ? "#fff" : colors.foreground },
+                  ]}
+                >
+                  {opt.label}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+        {sortMode === "distance" && !userLocation && locationStatus !== "requesting" ? (
+          <Text style={[styles.sortHint, { color: colors.mutedForeground }]}>
+            {language === "fr"
+              ? "Activez la géolocalisation pour trier par proximité."
+              : "Enable location to sort by proximity."}
+          </Text>
+        ) : null}
       </View>
 
       <FlatList
@@ -263,6 +347,41 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     gap: 8,
     paddingRight: 24,
+  },
+  sortRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 16,
+    paddingTop: 10,
+    flexWrap: "wrap",
+  },
+  sortLabel: {
+    fontSize: 12,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
+    marginRight: 2,
+  },
+  sortChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 16,
+    borderWidth: 1,
+  },
+  sortChipText: {
+    fontSize: 11,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
+  },
+  sortHint: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+    paddingHorizontal: 16,
+    paddingTop: 6,
+    fontStyle: "italic",
   },
   allChip: {
     flexDirection: "row",
