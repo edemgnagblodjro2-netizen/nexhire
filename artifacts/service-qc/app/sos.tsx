@@ -11,6 +11,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -258,6 +259,8 @@ export default function SOSScreen() {
   const isFr = language !== "en";
 
   const [locRequested, setLocRequested] = useState(false);
+  const [cityFilter, setCityFilter] = useState<string>("");
+  const [cityQuery, setCityQuery] = useState<string>("");
 
   useEffect(() => {
     if (locationStatus === "idle" && !locRequested) {
@@ -268,17 +271,36 @@ export default function SOSScreen() {
 
   const { services } = useServicesData();
 
+  const cityOptions = useMemo(() => {
+    const set = new Set<string>();
+    for (const s of services) {
+      const sub = SECTIONS.find((sec) => sec.subcategory === s.subcategory);
+      if (sub && s.city) set.add(s.city.trim());
+    }
+    return Array.from(set).sort((a, b) => a.localeCompare(b, "fr"));
+  }, [services]);
+
+  const filteredCityOptions = useMemo(() => {
+    const q = cityQuery.trim().toLowerCase();
+    if (!q) return cityOptions.slice(0, 50);
+    return cityOptions.filter((c) => c.toLowerCase().includes(q)).slice(0, 50);
+  }, [cityOptions, cityQuery]);
+
   const servicesBySection = useMemo(() => {
     return SECTIONS.map((sec) => {
-      const candidates = services.filter(
+      let candidates = services.filter(
         (s) => s.subcategory === sec.subcategory
       );
+      if (cityFilter) {
+        const cf = cityFilter.toLowerCase();
+        candidates = candidates.filter((s) => s.city?.toLowerCase() === cf);
+      }
       if (userLocation) {
         return withDistance(candidates, userLocation.lat, userLocation.lng).slice(0, 3);
       }
       return candidates.slice(0, 3);
     });
-  }, [services, userLocation]);
+  }, [services, userLocation, cityFilter]);
 
   function call911() {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
@@ -464,6 +486,106 @@ export default function SOSScreen() {
           <Text style={[styles.hotlinesTitle, { color: colors.foreground }]}>
             {isFr ? "🚑 Services d'urgence à proximité" : "🚑 Nearby Emergency Services"}
           </Text>
+        </View>
+
+        {/* ── Filtre par ville ── */}
+        <View style={[styles.cityFilterBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View style={styles.cityFilterHeader}>
+            <Feather name="map-pin" size={14} color={colors.mutedForeground} />
+            <Text style={[styles.cityFilterLabel, { color: colors.mutedForeground }]}>
+              {isFr ? "Filtrer par ville" : "Filter by city"}
+            </Text>
+            {cityFilter ? (
+              <TouchableOpacity
+                onPress={() => {
+                  Haptics.selectionAsync();
+                  setCityFilter("");
+                  setCityQuery("");
+                }}
+                style={styles.cityClearBtn}
+              >
+                <Text style={[styles.cityClearText, { color: colors.primary }]}>
+                  {isFr ? "Effacer" : "Clear"}
+                </Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
+
+          <TextInput
+            value={cityQuery}
+            onChangeText={setCityQuery}
+            placeholder={isFr ? "Rechercher une ville…" : "Search a city…"}
+            placeholderTextColor={colors.mutedForeground}
+            style={[
+              styles.cityInput,
+              {
+                backgroundColor: colors.background,
+                color: colors.foreground,
+                borderColor: colors.border,
+              },
+            ]}
+            autoCorrect={false}
+            autoCapitalize="words"
+          />
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.cityChipsRow}
+          >
+            <Pressable
+              onPress={() => {
+                Haptics.selectionAsync();
+                setCityFilter("");
+              }}
+              style={({ pressed }) => [
+                styles.cityChip,
+                {
+                  backgroundColor: !cityFilter ? colors.primary : colors.background,
+                  borderColor: !cityFilter ? colors.primary : colors.border,
+                  opacity: pressed ? 0.85 : 1,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.cityChipText,
+                  { color: !cityFilter ? "#fff" : colors.foreground },
+                ]}
+              >
+                {isFr ? "Toutes" : "All"}
+              </Text>
+            </Pressable>
+            {filteredCityOptions.map((city) => {
+              const active = cityFilter === city;
+              return (
+                <Pressable
+                  key={city}
+                  onPress={() => {
+                    Haptics.selectionAsync();
+                    setCityFilter(active ? "" : city);
+                  }}
+                  style={({ pressed }) => [
+                    styles.cityChip,
+                    {
+                      backgroundColor: active ? colors.primary : colors.background,
+                      borderColor: active ? colors.primary : colors.border,
+                      opacity: pressed ? 0.85 : 1,
+                    },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.cityChipText,
+                      { color: active ? "#fff" : colors.foreground },
+                    ]}
+                  >
+                    {city}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
         </View>
 
         {SECTIONS.map((sec, si) => {
@@ -714,6 +836,54 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     paddingHorizontal: 4,
     gap: 2,
+  },
+  cityFilterBox: {
+    borderWidth: 1,
+    borderRadius: 14,
+    padding: 12,
+    marginBottom: 14,
+    gap: 10,
+  },
+  cityFilterHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  cityFilterLabel: {
+    fontSize: 12,
+    fontFamily: "Inter_600SemiBold",
+    flex: 1,
+  },
+  cityClearBtn: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
+  cityClearText: {
+    fontSize: 12,
+    fontFamily: "Inter_600SemiBold",
+  },
+  cityInput: {
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    fontSize: 14,
+    fontFamily: "Inter_400Regular",
+  },
+  cityChipsRow: {
+    gap: 6,
+    paddingVertical: 2,
+    paddingRight: 8,
+  },
+  cityChip: {
+    borderWidth: 1,
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  cityChipText: {
+    fontSize: 12,
+    fontFamily: "Inter_600SemiBold",
   },
   hotlinesTitle: {
     fontSize: 16,
