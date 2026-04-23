@@ -56,11 +56,6 @@ if (Number.isNaN(port) || port <= 0) {
 async function autoSeedServicesIfEmpty() {
   try {
     const count = await db.$count(servicesTable);
-    if (count > 0) {
-      logger.info({ count }, "Services table already populated, skipping seed");
-      return;
-    }
-    logger.info("Services table is empty — auto-seeding from static data…");
     const mod: any = await import("../../service-qc/data/services.js").catch(
       () => import("../../service-qc/data/services" as any),
     );
@@ -69,6 +64,11 @@ async function autoSeedServicesIfEmpty() {
       logger.warn("No static services to seed");
       return;
     }
+    if (count > 0 && count >= SERVICES.length) {
+      logger.info({ count, staticCount: SERVICES.length }, "Services table already in sync, skipping seed");
+      return;
+    }
+    logger.info({ dbCount: count, staticCount: SERVICES.length }, "Auto-seeding new services from static data…");
     const rows = SERVICES.map((s: any) => ({
       id: s.id,
       name: s.name,
