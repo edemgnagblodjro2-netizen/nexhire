@@ -10,6 +10,7 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -144,8 +145,21 @@ export default function UrgentScreen() {
   const { services } = useServicesData();
   const urgentServices = useMemo(() => services.filter((s) => s.isUrgent), [services]);
 
+  const [searchQuery, setSearchQuery] = React.useState("");
+
+  const filteredServices = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return urgentServices;
+    return urgentServices.filter((s) =>
+      s.name.toLowerCase().includes(q) ||
+      s.city.toLowerCase().includes(q) ||
+      (s.subcategory ?? "").toLowerCase().includes(q) ||
+      s.description.toLowerCase().includes(q)
+    );
+  }, [urgentServices, searchQuery]);
+
   const sortedServices = useMemo((): ServiceWithDistance[] => {
-    const withDistance: ServiceWithDistance[] = urgentServices.map((s) => {
+    const withDistance: ServiceWithDistance[] = filteredServices.map((s) => {
       const coords = (s as any).coordinates;
       const hasCoords =
         coords &&
@@ -218,6 +232,43 @@ export default function UrgentScreen() {
           {t.urgentAlert}
           <Text style={styles.alertPhone}>911</Text>
         </Text>
+      </View>
+
+      <View
+        style={[
+          styles.searchBox,
+          {
+            backgroundColor: colors.card,
+            borderColor: colors.border,
+          },
+        ]}
+      >
+        <Feather name="search" size={16} color={colors.mutedForeground} />
+        <TextInput
+          style={[styles.searchInput, { color: colors.foreground }]}
+          placeholder={
+            t === undefined || !("searchByName" in t)
+              ? "Rechercher par nom (ex. CHAUR, Carignan…)"
+              : "Rechercher par nom (ex. CHAUR, Carignan…)"
+          }
+          placeholderTextColor={colors.mutedForeground}
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          returnKeyType="search"
+          autoCorrect={false}
+          autoCapitalize="none"
+        />
+        {searchQuery.length > 0 ? (
+          <TouchableOpacity
+            onPress={() => {
+              Haptics.selectionAsync();
+              setSearchQuery("");
+            }}
+            hitSlop={10}
+          >
+            <Feather name="x-circle" size={16} color={colors.mutedForeground} />
+          </TouchableOpacity>
+        ) : null}
       </View>
 
       <View
@@ -332,6 +383,23 @@ const styles = StyleSheet.create({
   alertPhone: {
     fontWeight: "700",
     fontFamily: "Inter_700Bold",
+  },
+  searchBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginHorizontal: 16,
+    marginTop: 10,
+    borderRadius: 12,
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 14,
+    fontFamily: "Inter_400Regular",
+    paddingVertical: 2,
   },
   locationBar: {
     marginHorizontal: 16,
