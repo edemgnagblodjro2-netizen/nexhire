@@ -90,6 +90,12 @@ uri = "file://exports/marketing/quebec_map.png"
 type = "image"
 title = "quebec coverage map"
 
+[[generated]]
+id = "NaOaHgNtuMiydDLQ3ISkf"
+uri = "file://artifacts/service-qc/assets/images/banner-terrain.png"
+type = "image"
+title = "warm community welcome banner"
+
 [[outputs]]
 id = "MnpwCauLVqlWr2VNGXy9y"
 uri = "file://exports/testeurs-aidora-qc.csv"
