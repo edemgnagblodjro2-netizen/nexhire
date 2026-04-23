@@ -352,9 +352,25 @@ export default function SOSScreen() {
         {locationStatus === "denied" && (
           <View style={styles.locRow}>
             <Feather name="alert-circle" size={13} color="rgba(255,255,255,0.75)" />
-            <Text style={styles.locText}>
-              {isFr ? "Localisation refusée — résultats généraux" : "Location denied — showing general results"}
+            <Text style={[styles.locText, { flex: 1 }]} numberOfLines={1}>
+              {isFr ? "Localisation refusée" : "Location denied"}
             </Text>
+            <TouchableOpacity
+              onPress={() => {
+                Haptics.selectionAsync();
+                requestLocation({ force: true });
+              }}
+              style={{
+                backgroundColor: "rgba(255,255,255,0.22)",
+                paddingHorizontal: 10,
+                paddingVertical: 4,
+                borderRadius: 8,
+              }}
+            >
+              <Text style={{ color: "#fff", fontSize: 11, fontFamily: "Inter_600SemiBold" }}>
+                {isFr ? "Réessayer" : "Retry"}
+              </Text>
+            </TouchableOpacity>
           </View>
         )}
       </LinearGradient>

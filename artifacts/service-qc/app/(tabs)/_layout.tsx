@@ -25,7 +25,11 @@ function NativeTabLayout() {
         <Icon sf={{ default: "list.bullet", selected: "list.bullet" }} />
         <Label>Services</Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="categories">
+      <NativeTabs.Trigger name="map">
+        <Icon sf={{ default: "map", selected: "map.fill" }} />
+        <Label>Carte</Label>
+      </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="categories" hidden>
         <Icon sf={{ default: "square.grid.2x2", selected: "square.grid.2x2.fill" }} />
         <Label>Catégories</Label>
       </NativeTabs.Trigger>
@@ -132,15 +136,22 @@ function ClassicTabLayout() {
         }}
       />
       <Tabs.Screen
-        name="categories"
+        name="map"
         options={{
-          title: t.tabCategories,
+          title: "Carte",
           tabBarIcon: ({ color }) =>
             isIOS ? (
-              <SymbolView name="square.grid.2x2" tintColor={color} size={22} />
+              <SymbolView name="map" tintColor={color} size={22} />
             ) : (
-              <Feather name="grid" size={21} color={color} />
+              <Feather name="map-pin" size={21} color={color} />
             ),
+        }}
+      />
+      <Tabs.Screen
+        name="categories"
+        options={{
+          href: null,
+          title: t.tabCategories,
         }}
       />
       <Tabs.Screen

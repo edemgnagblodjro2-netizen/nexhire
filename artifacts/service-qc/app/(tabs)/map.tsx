@@ -1,0 +1,515 @@
+import { Feather } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
+import { LinearGradient } from "expo-linear-gradient";
+import { useFocusEffect, useRouter } from "expo-router";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  ActivityIndicator,
+  Linking,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useLocation } from "@/contexts/LocationContext";
+import { useServicesData } from "@/contexts/ServicesContext";
+import { type Service } from "@/data/services";
+import { useColors } from "@/hooks/useColors";
+import { getFavorites, toggleFavorite } from "@/lib/favorites";
+
+function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number) {
+  const R = 6371;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLng = ((lng2 - lng1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+type Tab = "nearby" | "favorites";
+
+export default function MapScreen() {
+  const colors = useColors();
+  const router = useRouter();
+  const insets = useSafeAreaInsets();
+  const { language } = useLanguage();
+  const { userLocation, locationStatus, requestLocation } = useLocation();
+  const { services } = useServicesData();
+  const isFr = language !== "en";
+
+  const [tab, setTab] = useState<Tab>("nearby");
+  const [favIds, setFavIds] = useState<string[]>([]);
+  const [locTried, setLocTried] = useState(false);
+
+  // Auto-request location once
+  useEffect(() => {
+    if (locationStatus === "idle" && !locTried) {
+      setLocTried(true);
+      requestLocation();
+    }
+  }, [locationStatus, locTried, requestLocation]);
+
+  // Reload favorites when screen gains focus
+  useFocusEffect(
+    useCallback(() => {
+      let alive = true;
+      getFavorites().then((ids) => { if (alive) setFavIds(ids); });
+      return () => { alive = false; };
+    }, [])
+  );
+
+  const nearby = useMemo(() => {
+    const withCoords = services.filter((s) => s.coordinates);
+    if (!userLocation) return withCoords.slice(0, 30);
+    return withCoords
+      .map((s) => ({
+        ...s,
+        distKm: haversineKm(userLocation.lat, userLocation.lng, s.coordinates!.lat, s.coordinates!.lng),
+      }))
+      .sort((a, b) => a.distKm - b.distKm)
+      .slice(0, 30);
+  }, [services, userLocation]);
+
+  const favorites = useMemo(() => {
+    const set = new Set(favIds);
+    const list = services.filter((s) => set.has(s.id));
+    if (userLocation) {
+      return list
+        .map((s) => ({
+          ...s,
+          distKm: s.coordinates
+            ? haversineKm(userLocation.lat, userLocation.lng, s.coordinates.lat, s.coordinates.lng)
+            : undefined,
+        }))
+        .sort((a, b) => (a.distKm ?? 1e9) - (b.distKm ?? 1e9));
+    }
+    return list as (Service & { distKm?: number })[];
+  }, [services, favIds, userLocation]);
+
+  const list = tab === "nearby" ? nearby : favorites;
+
+  async function onPin(id: string) {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    const next = await toggleFavorite(id);
+    setFavIds(next);
+  }
+
+  function openService(s: Service) {
+    Haptics.selectionAsync();
+    router.push(`/service/${s.id}` as any);
+  }
+
+  function callService(phone: string) {
+    if (!phone) return;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    Linking.openURL(`tel:${phone.replace(/\s/g, "")}`);
+  }
+
+  function openInMaps(s: Service) {
+    if (!s.coordinates) return;
+    Haptics.selectionAsync();
+    const { lat, lng } = s.coordinates;
+    const label = encodeURIComponent(s.name);
+    const url = Platform.select({
+      ios: `http://maps.apple.com/?q=${label}&ll=${lat},${lng}`,
+      android: `geo:${lat},${lng}?q=${lat},${lng}(${label})`,
+      default: `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=16/${lat}/${lng}`,
+    })!;
+    Linking.openURL(url).catch(() => {});
+  }
+
+  return (
+    <View style={[styles.root, { backgroundColor: colors.background }]}>
+      <LinearGradient
+        colors={["#0e7e6e", "#0a5e52"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[styles.header, { paddingTop: (Platform.OS === "web" ? 16 : insets.top) + 14 }]}
+      >
+        <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>
+          {isFr ? "Carte & Favoris" : "Map & Favorites"}
+        </Text>
+        <Text style={styles.headerSub} numberOfLines={2}>
+          {isFr
+            ? "Services proches de vous · épinglez vos préférés"
+            : "Services near you · pin your favorites"}
+        </Text>
+
+        {/* Location status row */}
+        <View style={styles.locRow}>
+          {locationStatus === "requesting" ? (
+            <>
+              <ActivityIndicator size="small" color="rgba(255,255,255,0.85)" />
+              <Text style={styles.locText}>{isFr ? "Localisation…" : "Locating…"}</Text>
+            </>
+          ) : locationStatus === "granted" && userLocation ? (
+            <>
+              <Feather name="map-pin" size={13} color="rgba(255,255,255,0.85)" />
+              <Text style={styles.locText}>
+                {isFr ? "Position détectée — triés par distance" : "Located — sorted by distance"}
+              </Text>
+            </>
+          ) : (
+            <>
+              <Feather name="alert-circle" size={13} color="rgba(255,255,255,0.85)" />
+              <Text style={styles.locText} numberOfLines={1}>
+                {isFr ? "Position non disponible" : "Location unavailable"}
+              </Text>
+              <TouchableOpacity onPress={() => requestLocation({ force: true })} style={styles.retryBtn}>
+                <Text style={styles.retryTxt}>{isFr ? "Réessayer" : "Retry"}</Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
+
+        {/* Tab segmented control */}
+        <View style={styles.segment}>
+          {(["nearby", "favorites"] as Tab[]).map((t) => {
+            const active = tab === t;
+            return (
+              <Pressable
+                key={t}
+                onPress={() => { Haptics.selectionAsync(); setTab(t); }}
+                style={[styles.segBtn, active && styles.segBtnActive]}
+              >
+                <Feather
+                  name={t === "nearby" ? "map" : "heart"}
+                  size={14}
+                  color={active ? "#0e7e6e" : "#fff"}
+                />
+                <Text style={[styles.segTxt, active && styles.segTxtActive]}>
+                  {t === "nearby"
+                    ? (isFr ? "À proximité" : "Nearby")
+                    : (isFr ? `Favoris${favIds.length ? ` (${favIds.length})` : ""}` : `Favorites${favIds.length ? ` (${favIds.length})` : ""}`)}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      </LinearGradient>
+
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[styles.body, { paddingBottom: insets.bottom + 100 }]}
+      >
+        {/* Mini visual map (lightweight: pins on a styled canvas) */}
+        {tab === "nearby" && nearby.length > 0 && (
+          <MiniMap
+            services={nearby.slice(0, 12)}
+            userLocation={userLocation}
+            colors={colors}
+          />
+        )}
+
+        {list.length === 0 ? (
+          <View style={[styles.empty, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <Feather
+              name={tab === "favorites" ? "heart" : "map-pin"}
+              size={32}
+              color={colors.mutedForeground}
+            />
+            <Text style={[styles.emptyTitle, { color: colors.foreground }]}>
+              {tab === "favorites"
+                ? (isFr ? "Aucun favori" : "No favorites yet")
+                : (isFr ? "Aucun service géolocalisé" : "No geolocated services")}
+            </Text>
+            <Text style={[styles.emptyDesc, { color: colors.mutedForeground }]}>
+              {tab === "favorites"
+                ? (isFr
+                    ? "Appuyez sur le cœur d'un service pour l'épingler ici."
+                    : "Tap the heart on any service to pin it here.")
+                : (isFr
+                    ? "Activez la localisation pour découvrir les services proches."
+                    : "Enable location to discover nearby services.")}
+            </Text>
+          </View>
+        ) : (
+          list.map((s) => {
+            const isFav = favIds.includes(s.id);
+            const dist = (s as any).distKm as number | undefined;
+            return (
+              <Pressable
+                key={s.id}
+                onPress={() => openService(s)}
+                style={({ pressed }) => [
+                  styles.card,
+                  {
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
+                    opacity: pressed ? 0.9 : 1,
+                  },
+                ]}
+              >
+                <View style={styles.cardHead}>
+                  <View style={styles.pinWrap}>
+                    <Feather name="map-pin" size={16} color="#0e7e6e" />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={[styles.cardName, { color: colors.foreground }]} numberOfLines={2}>
+                      {s.name}
+                    </Text>
+                    <Text style={[styles.cardCity, { color: colors.mutedForeground }]} numberOfLines={1}>
+                      {s.city}{s.address ? ` · ${s.address}` : ""}
+                    </Text>
+                  </View>
+                  <TouchableOpacity onPress={() => onPin(s.id)} hitSlop={10} style={styles.heartBtn}>
+                    <Feather
+                      name="heart"
+                      size={20}
+                      color={isFav ? "#e11d48" : colors.mutedForeground}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.cardActions}>
+                  {typeof dist === "number" && (
+                    <View style={styles.distBadge}>
+                      <Feather name="navigation" size={11} color="#0e7e6e" />
+                      <Text style={styles.distTxt}>
+                        {dist < 1 ? `${Math.round(dist * 1000)} m` : `${dist.toFixed(1)} km`}
+                      </Text>
+                    </View>
+                  )}
+                  {s.coordinates && (
+                    <TouchableOpacity onPress={() => openInMaps(s)} style={styles.actionBtn}>
+                      <Feather name="map" size={13} color="#0e7e6e" />
+                      <Text style={styles.actionTxt}>{isFr ? "Itinéraire" : "Directions"}</Text>
+                    </TouchableOpacity>
+                  )}
+                  {s.phone ? (
+                    <TouchableOpacity onPress={() => callService(s.phone)} style={[styles.actionBtn, styles.actionBtnPrimary]}>
+                      <Feather name="phone" size={13} color="#fff" />
+                      <Text style={[styles.actionTxt, { color: "#fff" }]}>
+                        {isFr ? "Appeler" : "Call"}
+                      </Text>
+                    </TouchableOpacity>
+                  ) : null}
+                </View>
+              </Pressable>
+            );
+          })
+        )}
+      </ScrollView>
+    </View>
+  );
+}
+
+// ── Mini visual map: simple SVG-like dots laid out by relative coords ────
+function MiniMap({
+  services,
+  userLocation,
+  colors,
+}: {
+  services: (Service & { distKm?: number })[];
+  userLocation: { lat: number; lng: number } | null;
+  colors: any;
+}) {
+  const points = useMemo(() => {
+    const coords = services.map((s) => s.coordinates!).filter(Boolean);
+    if (userLocation) coords.push(userLocation);
+    if (coords.length < 2) return null;
+    const lats = coords.map((c) => c.lat);
+    const lngs = coords.map((c) => c.lng);
+    const minLat = Math.min(...lats);
+    const maxLat = Math.max(...lats);
+    const minLng = Math.min(...lngs);
+    const maxLng = Math.max(...lngs);
+    const dLat = (maxLat - minLat) || 1e-4;
+    const dLng = (maxLng - minLng) || 1e-4;
+
+    function project(lat: number, lng: number) {
+      // x: lng → left-to-right, y: lat → top-to-bottom (invert)
+      const x = ((lng - minLng) / dLng) * 100;
+      const y = (1 - (lat - minLat) / dLat) * 100;
+      return { x, y };
+    }
+
+    return {
+      services: services.slice(0, 12).map((s) => ({ s, ...project(s.coordinates!.lat, s.coordinates!.lng) })),
+      user: userLocation ? project(userLocation.lat, userLocation.lng) : null,
+    };
+  }, [services, userLocation]);
+
+  if (!points) return null;
+
+  return (
+    <View style={[styles.miniMap, { backgroundColor: colors.card, borderColor: colors.border }]}>
+      <View style={styles.miniGrid} pointerEvents="none">
+        {[0, 25, 50, 75, 100].map((p) => (
+          <React.Fragment key={p}>
+            <View style={[styles.gridLineH, { top: `${p}%`, backgroundColor: colors.border }]} />
+            <View style={[styles.gridLineV, { left: `${p}%`, backgroundColor: colors.border }]} />
+          </React.Fragment>
+        ))}
+      </View>
+
+      {points.services.map(({ s, x, y }) => (
+        <View
+          key={s.id}
+          style={[
+            styles.dot,
+            { left: `${x}%`, top: `${y}%` },
+          ]}
+        >
+          <View style={styles.dotPing} />
+          <View style={styles.dotCore} />
+        </View>
+      ))}
+
+      {points.user && (
+        <View
+          style={[
+            styles.userDot,
+            { left: `${points.user.x}%`, top: `${points.user.y}%` },
+          ]}
+        >
+          <View style={styles.userPing} />
+          <View style={styles.userCore} />
+        </View>
+      )}
+
+      <View style={styles.legend}>
+        <View style={styles.legendRow}>
+          <View style={styles.legendDotUser} />
+          <Text style={[styles.legendTxt, { color: colors.foreground }]}>Vous</Text>
+        </View>
+        <View style={styles.legendRow}>
+          <View style={styles.legendDotSvc} />
+          <Text style={[styles.legendTxt, { color: colors.foreground }]}>Services</Text>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  root: { flex: 1 },
+  header: {
+    paddingHorizontal: 18,
+    paddingBottom: 14,
+    borderBottomLeftRadius: 22,
+    borderBottomRightRadius: 22,
+  },
+  headerTitle: { color: "#fff", fontSize: 22, fontFamily: "Inter_700Bold" },
+  headerSub: { color: "rgba(255,255,255,0.85)", fontSize: 12, marginTop: 2, fontFamily: "Inter_400Regular" },
+  locRow: {
+    marginTop: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    backgroundColor: "rgba(0,0,0,0.18)",
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    borderRadius: 10,
+  },
+  locText: { color: "rgba(255,255,255,0.95)", fontSize: 11, fontFamily: "Inter_500Medium", flex: 1 },
+  retryBtn: {
+    backgroundColor: "rgba(255,255,255,0.2)",
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+  retryTxt: { color: "#fff", fontSize: 11, fontFamily: "Inter_600SemiBold" },
+
+  segment: {
+    flexDirection: "row",
+    backgroundColor: "rgba(0,0,0,0.18)",
+    borderRadius: 12,
+    padding: 4,
+    marginTop: 10,
+    gap: 4,
+  },
+  segBtn: {
+    flex: 1,
+    paddingVertical: 9,
+    borderRadius: 9,
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 6,
+  },
+  segBtnActive: { backgroundColor: "#fff" },
+  segTxt: { color: "#fff", fontFamily: "Inter_600SemiBold", fontSize: 12 },
+  segTxtActive: { color: "#0e7e6e" },
+
+  body: { padding: 14, paddingTop: 14 },
+
+  miniMap: {
+    height: 180,
+    borderRadius: 16,
+    borderWidth: 1,
+    overflow: "hidden",
+    marginBottom: 14,
+    position: "relative",
+  },
+  miniGrid: { ...StyleSheet.absoluteFillObject, opacity: 0.5 },
+  gridLineH: { position: "absolute", left: 0, right: 0, height: 1 },
+  gridLineV: { position: "absolute", top: 0, bottom: 0, width: 1 },
+
+  dot: { position: "absolute", width: 14, height: 14, marginLeft: -7, marginTop: -7, alignItems: "center", justifyContent: "center" },
+  dotPing: { position: "absolute", width: 18, height: 18, borderRadius: 9, backgroundColor: "#0e7e6e", opacity: 0.25 },
+  dotCore: { width: 8, height: 8, borderRadius: 4, backgroundColor: "#0e7e6e", borderWidth: 1.5, borderColor: "#fff" },
+
+  userDot: { position: "absolute", width: 18, height: 18, marginLeft: -9, marginTop: -9, alignItems: "center", justifyContent: "center" },
+  userPing: { position: "absolute", width: 26, height: 26, borderRadius: 13, backgroundColor: "#3b82f6", opacity: 0.3 },
+  userCore: { width: 12, height: 12, borderRadius: 6, backgroundColor: "#3b82f6", borderWidth: 2, borderColor: "#fff" },
+
+  legend: {
+    position: "absolute",
+    bottom: 8,
+    right: 8,
+    backgroundColor: "rgba(255,255,255,0.92)",
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    flexDirection: "row",
+    gap: 12,
+  },
+  legendRow: { flexDirection: "row", alignItems: "center", gap: 4 },
+  legendDotUser: { width: 8, height: 8, borderRadius: 4, backgroundColor: "#3b82f6" },
+  legendDotSvc: { width: 8, height: 8, borderRadius: 4, backgroundColor: "#0e7e6e" },
+  legendTxt: { fontSize: 10, fontFamily: "Inter_500Medium" },
+
+  empty: { padding: 28, borderRadius: 16, borderWidth: 1, alignItems: "center", gap: 10 },
+  emptyTitle: { fontSize: 15, fontFamily: "Inter_700Bold", textAlign: "center" },
+  emptyDesc: { fontSize: 12, fontFamily: "Inter_400Regular", textAlign: "center", lineHeight: 18 },
+
+  card: {
+    borderRadius: 14,
+    borderWidth: 1,
+    padding: 14,
+    marginBottom: 10,
+    gap: 10,
+  },
+  cardHead: { flexDirection: "row", alignItems: "flex-start", gap: 10 },
+  pinWrap: {
+    width: 36, height: 36, borderRadius: 10,
+    backgroundColor: "#0e7e6e15", alignItems: "center", justifyContent: "center",
+  },
+  cardName: { fontSize: 14, fontFamily: "Inter_700Bold", marginBottom: 2 },
+  cardCity: { fontSize: 11, fontFamily: "Inter_400Regular" },
+  heartBtn: { padding: 4 },
+
+  cardActions: { flexDirection: "row", alignItems: "center", gap: 8, flexWrap: "wrap" },
+  distBadge: {
+    flexDirection: "row", alignItems: "center", gap: 4,
+    backgroundColor: "#0e7e6e15", paddingHorizontal: 8, paddingVertical: 5, borderRadius: 8,
+  },
+  distTxt: { color: "#0e7e6e", fontSize: 11, fontFamily: "Inter_600SemiBold" },
+  actionBtn: {
+    flexDirection: "row", alignItems: "center", gap: 5,
+    backgroundColor: "#0e7e6e10", borderWidth: 1, borderColor: "#0e7e6e30",
+    paddingHorizontal: 10, paddingVertical: 6, borderRadius: 8,
+  },
+  actionBtnPrimary: { backgroundColor: "#0e7e6e", borderColor: "#0e7e6e" },
+  actionTxt: { color: "#0e7e6e", fontSize: 11, fontFamily: "Inter_600SemiBold" },
+});
