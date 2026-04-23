@@ -283,9 +283,9 @@ export default function MoreScreen() {
                   <Feather name="bell" size={16} color="#fbbf24" />
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.reminderTitle}>Rappel — Abonnement Premium</Text>
+                  <Text style={styles.reminderTitle}>Rappel — Forfait avancé</Text>
                   <Text style={styles.reminderSub}>
-                    Vous avez atteint la limite d'essais gratuits. Appuyez pour passer Premium pour 10 $ une seule fois.
+                    Vous avez atteint la limite d'essais gratuits. Découvrez nos forfaits à partir de 19 $/mois.
                   </Text>
                 </View>
                 <Feather name="chevron-right" size={16} color="rgba(255,255,255,0.7)" />
@@ -310,21 +310,21 @@ export default function MoreScreen() {
               <View style={styles.premiumTop}>
                 <View style={styles.premiumBadge}>
                   <Feather name="star" size={13} color="#fbbf24" />
-                  <Text style={styles.premiumBadgeText}>PREMIUM</Text>
+                  <Text style={styles.premiumBadgeText}>FORFAITS PRO</Text>
                 </View>
                 <View style={styles.premiumPrice}>
-                  <Text style={styles.premiumAmount}>10 $</Text>
-                  <Text style={styles.premiumPeriod}>une fois</Text>
+                  <Text style={styles.premiumAmount}>19 $</Text>
+                  <Text style={styles.premiumPeriod}>{isFr ? "/ mois" : "/ month"}</Text>
                 </View>
               </View>
 
               <Text style={styles.premiumTitle}>
-                {isFr ? "Passez à la version avancée" : "Upgrade to advanced"}
+                {isFr ? "Découvrez nos 5 forfaits" : "Discover our 5 plans"}
               </Text>
               <Text style={styles.premiumSub}>
                 {isFr
-                  ? "Débloquez le suivi personnalisé, l'historique, les alertes et la priorisation"
-                  : "Unlock personalized tracking, history, alerts and prioritization"}
+                  ? "Personne (gratuit) · Travailleur 19 $ · Organisme 39 $ · Plus 89 $ · Institution 199 $"
+                  : "Personal (free) · Worker $19 · Organisation $39 · Plus $89 · Institution $199"}
               </Text>
 
               <View style={styles.premiumFeaturesList}>
@@ -354,7 +354,7 @@ export default function MoreScreen() {
           <View style={[styles.compareBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <View style={styles.compareCol}>
               <Text style={[styles.compareColTitle, { color: colors.mutedForeground }]}>Gratuit</Text>
-              {["457 services", "Chat IA", "SOS urgences", "Géolocalisation"].map((f) => (
+              {["531+ services", "Chat IA", "SOS urgences", "Géolocalisation"].map((f) => (
                 <View key={f} style={styles.compareRow}>
                   <Feather name="check" size={13} color="#10b981" />
                   <Text style={[styles.compareText, { color: colors.foreground }]}>{f}</Text>

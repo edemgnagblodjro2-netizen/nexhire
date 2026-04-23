@@ -65,7 +65,7 @@ function FloatingOrb({
 }
 
 const FEATURES = [
-  { icon: "map-pin" as const, label: "457 services" },
+  { icon: "map-pin" as const, label: "531+ services" },
   { icon: "cpu" as const, label: "IA multilingue" },
   { icon: "phone-call" as const, label: "SOS urgences" },
 ];

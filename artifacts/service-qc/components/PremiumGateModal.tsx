@@ -23,16 +23,17 @@ interface Props {
 }
 
 const FREE_FEATURES = [
-  { icon: "search" as const, label: "Rechercher parmi 457 services" },
+  { icon: "search" as const, label: "Rechercher parmi 531+ services" },
   { icon: "phone-call" as const, label: "Appeler directement les organismes" },
   { icon: "cpu" as const, label: "Chat IA multilingue (FR · EN · ES · AR · HT)" },
   { icon: "alert-triangle" as const, label: "SOS urgences avec tri GPS" },
 ];
 
 const PARTNER_TIERS = [
-  { label: "Organismes", price: "39 $/mois", color: "#d97706" },
-  { label: "Villes", price: "5 k$–25 k$/an", color: "#7c3aed" },
-  { label: "Entreprises", price: "50 $–200 $/mois", color: "#0891b2" },
+  { label: "Travailleur", price: "19 $/mois", color: "#0e7e6e" },
+  { label: "Organisme", price: "39 $/mois", color: "#d97706" },
+  { label: "Plus", price: "89 $/mois", color: "#7c3aed" },
+  { label: "Institution", price: "199 $/mois", color: "#0891b2" },
 ];
 
 export default function PremiumGateModal({ visible, onDismiss }: Props) {
