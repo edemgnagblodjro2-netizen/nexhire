@@ -1787,6 +1787,19 @@ export const SERVICES: Service[] = [
   // ─── SERVICES DE GARDE — CPE & GARDERIES ──────────────────────────────────
   // Province-wide
   {
+    id: "cpe-pw0",
+    name: "Portail Services de garde – Gouvernement du Québec",
+    category: "childcare",
+    subcategory: "Inscription officielle",
+    city: "Province de Québec",
+    phone: "1-855-336-8568",
+    website: "https://www.portail-servicesgarde.gouv.qc.ca/parent/s/login/?language=fr&ec=302&startURL=%2Fparent%2Fs%2F",
+    description: "Portail officiel du gouvernement du Québec pour créer un compte parent, s'inscrire sur les listes d'attente des CPE, garderies et milieux familiaux (subventionnés ou non) partout au Québec. Recherchez par ville, type de garde et disponibilités, suivez vos demandes en ligne. C'est l'outil incontournable pour trouver une place de garde au Québec.",
+    isProvinceWide: true,
+    hours: "Disponible 24/7 en ligne",
+    coordinates: { lat: 46.8139, lng: -71.2082 },
+  },
+  {
     id: "cpe-pw1",
     name: "Mon Enfant – Liste d'attente CPE",
     category: "childcare",
