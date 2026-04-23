@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { db, servicesTable, organisationsTable, subscriptionsTable } from "@workspace/db";
-import { and, asc, count, desc, eq, ilike, inArray, or, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, ilike, inArray, isNull, isNotNull, or, sql } from "drizzle-orm";
 import { logger } from "../lib/logger";
 
 const servicesRouter = Router();
@@ -62,6 +62,7 @@ servicesRouter.get("/admin/services", requireAdminKey, async (req, res) => {
     const city = req.query.city as string | undefined;
     const category = req.query.category as string | undefined;
     const activeFilter = req.query.active as string | undefined;
+    const quality = req.query.quality as string | undefined;
 
     const conditions: any[] = [];
 
@@ -79,6 +80,36 @@ servicesRouter.get("/admin/services", requireAdminKey, async (req, res) => {
     if (category) conditions.push(eq(servicesTable.category, category));
     if (activeFilter === "true") conditions.push(eq(servicesTable.active, true));
     if (activeFilter === "false") conditions.push(eq(servicesTable.active, false));
+
+    // Data quality filters
+    if (quality === "missing-address") {
+      conditions.push(or(isNull(servicesTable.address), eq(servicesTable.address, "")));
+    } else if (quality === "missing-gps") {
+      conditions.push(or(isNull(servicesTable.lat), isNull(servicesTable.lng)));
+    } else if (quality === "missing-phone") {
+      conditions.push(eq(servicesTable.phone, ""));
+    } else if (quality === "suspect-phone") {
+      conditions.push(
+        or(
+          ilike(servicesTable.phone, "%-5555%"),
+          ilike(servicesTable.phone, "%-5558%"),
+          ilike(servicesTable.phone, "%-0555%"),
+          ilike(servicesTable.phone, "%555-555%"),
+        ),
+      );
+    } else if (quality === "unverified") {
+      conditions.push(isNull(servicesTable.verifiedAt));
+    } else if (quality === "verified") {
+      conditions.push(isNotNull(servicesTable.verifiedAt));
+    } else if (quality === "stale") {
+      // Verified more than 6 months ago
+      conditions.push(
+        and(
+          isNotNull(servicesTable.verifiedAt),
+          sql`${servicesTable.verifiedAt} < now() - interval '6 months'`,
+        ),
+      );
+    }
 
     const where = conditions.length > 0 ? and(...conditions) : undefined;
 
@@ -127,6 +158,13 @@ servicesRouter.get("/admin/services/meta", requireAdminKey, async (req, res) => 
           active: sql<number>`sum(case when ${servicesTable.active} then 1 else 0 end)`,
           urgent: sql<number>`sum(case when ${servicesTable.isUrgent} then 1 else 0 end)`,
           provinceWide: sql<number>`sum(case when ${servicesTable.isProvinceWide} then 1 else 0 end)`,
+          missingAddress: sql<number>`sum(case when (${servicesTable.address} is null or ${servicesTable.address} = '') and ${servicesTable.active} then 1 else 0 end)`,
+          missingGps: sql<number>`sum(case when (${servicesTable.lat} is null or ${servicesTable.lng} is null) and ${servicesTable.active} then 1 else 0 end)`,
+          missingPhone: sql<number>`sum(case when ${servicesTable.phone} = '' and ${servicesTable.active} then 1 else 0 end)`,
+          suspectPhone: sql<number>`sum(case when (${servicesTable.phone} ilike '%-5555%' or ${servicesTable.phone} ilike '%-5558%' or ${servicesTable.phone} ilike '%-0555%' or ${servicesTable.phone} ilike '%555-555%') and ${servicesTable.active} then 1 else 0 end)`,
+          verified: sql<number>`sum(case when ${servicesTable.verifiedAt} is not null and ${servicesTable.active} then 1 else 0 end)`,
+          unverified: sql<number>`sum(case when ${servicesTable.verifiedAt} is null and ${servicesTable.active} then 1 else 0 end)`,
+          stale: sql<number>`sum(case when ${servicesTable.verifiedAt} is not null and ${servicesTable.verifiedAt} < now() - interval '6 months' and ${servicesTable.active} then 1 else 0 end)`,
         })
         .from(servicesTable),
     ]);
@@ -213,6 +251,34 @@ servicesRouter.put("/admin/services/:id", requireAdminKey, async (req, res) => {
     return res.json(updated);
   } catch (err) {
     logger.error({ err }, "PUT /api/admin/services/:id error");
+    return res.status(500).json({ error: "Internal error" });
+  }
+});
+
+// ── POST /api/admin/services/:id/verify  (mark as verified / un-verify) ───
+servicesRouter.post("/admin/services/:id/verify", requireAdminKey, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { verified, verifiedBy, note } = req.body ?? {};
+
+    const update: Partial<typeof servicesTable.$inferInsert> = verified === false
+      ? { verifiedAt: null, verifiedBy: null, verificationNote: null }
+      : {
+          verifiedAt: new Date(),
+          verifiedBy: verifiedBy || "admin",
+          verificationNote: note || null,
+        };
+
+    const [updated] = await db
+      .update(servicesTable)
+      .set(update)
+      .where(eq(servicesTable.id, id))
+      .returning();
+
+    if (!updated) return res.status(404).json({ error: "Service not found" });
+    return res.json(updated);
+  } catch (err) {
+    logger.error({ err }, "POST /api/admin/services/:id/verify error");
     return res.status(500).json({ error: "Internal error" });
   }
 });

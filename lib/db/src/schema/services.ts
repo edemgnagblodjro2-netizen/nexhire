@@ -17,6 +17,9 @@ export const servicesTable = pgTable("services", {
   lat: doublePrecision("lat"),
   lng: doublePrecision("lng"),
   active: boolean("active").notNull().default(true),
+  verifiedAt: timestamp("verified_at", { withTimezone: true }),
+  verifiedBy: text("verified_by"),
+  verificationNote: text("verification_note"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
 });

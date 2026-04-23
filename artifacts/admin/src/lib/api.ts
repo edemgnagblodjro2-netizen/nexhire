@@ -16,9 +16,22 @@ export type Service = {
   lat: number | null;
   lng: number | null;
   active: boolean;
+  verifiedAt: string | null;
+  verifiedBy: string | null;
+  verificationNote: string | null;
   createdAt: string;
   updatedAt: string;
 };
+
+export type QualityFilter =
+  | ""
+  | "missing-address"
+  | "missing-gps"
+  | "missing-phone"
+  | "suspect-phone"
+  | "unverified"
+  | "verified"
+  | "stale";
 
 export type ServiceList = {
   data: Service[];
@@ -36,6 +49,13 @@ export type ServiceMeta = {
     active: number;
     urgent: number;
     provinceWide: number;
+    missingAddress: number;
+    missingGps: number;
+    missingPhone: number;
+    suspectPhone: number;
+    verified: number;
+    unverified: number;
+    stale: number;
   };
 };
 
@@ -61,6 +81,7 @@ export type ListParams = {
   city?: string;
   category?: string;
   active?: "true" | "false" | "";
+  quality?: QualityFilter;
 };
 
 export async function fetchServices(
@@ -74,6 +95,7 @@ export async function fetchServices(
   if (params.city) q.set("city", params.city);
   if (params.category) q.set("category", params.category);
   if (params.active) q.set("active", params.active);
+  if (params.quality) q.set("quality", params.quality);
 
   const res = await fetch(`${API_BASE}/api/admin/services?${q}`, {
     headers: headers(adminKey),
@@ -134,4 +156,23 @@ export async function toggleService(
   active: boolean
 ): Promise<Service> {
   return updateService(adminKey, id, { active });
+}
+
+export async function verifyService(
+  adminKey: string,
+  id: string,
+  verified: boolean,
+  verifiedBy?: string,
+  note?: string,
+): Promise<Service> {
+  const res = await fetch(
+    `${API_BASE}/api/admin/services/${encodeURIComponent(id)}/verify`,
+    {
+      method: "POST",
+      headers: headers(adminKey),
+      body: JSON.stringify({ verified, verifiedBy, note }),
+    },
+  );
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
 }

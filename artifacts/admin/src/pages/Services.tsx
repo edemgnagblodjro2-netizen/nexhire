@@ -1,10 +1,41 @@
 import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { fetchServices, fetchMeta, deleteService, toggleService } from "@/lib/api";
-import type { Service } from "@/lib/api";
+import { fetchServices, fetchMeta, deleteService, toggleService, verifyService } from "@/lib/api";
+import type { Service, QualityFilter } from "@/lib/api";
 import ServiceModal from "@/components/ServiceModal";
 
 const PAGE_SIZE = 25;
+
+const COLOR_MAP: Record<string, { bg: string; text: string; ring: string; activeBg: string }> = {
+  emerald: { bg: "bg-emerald-50", text: "text-emerald-700", ring: "ring-emerald-200", activeBg: "bg-emerald-600 text-white" },
+  amber:   { bg: "bg-amber-50",   text: "text-amber-700",   ring: "ring-amber-200",   activeBg: "bg-amber-600 text-white" },
+  orange:  { bg: "bg-orange-50",  text: "text-orange-700",  ring: "ring-orange-200",  activeBg: "bg-orange-600 text-white" },
+  rose:    { bg: "bg-rose-50",    text: "text-rose-700",    ring: "ring-rose-200",    activeBg: "bg-rose-600 text-white" },
+  red:     { bg: "bg-red-50",     text: "text-red-700",     ring: "ring-red-200",     activeBg: "bg-red-600 text-white" },
+};
+
+function QualityChip({
+  label, value, total, color, active, onClick,
+}: {
+  label: string; value: number; total: number; color: string; active: boolean; onClick: () => void;
+}) {
+  const c = COLOR_MAP[color] ?? COLOR_MAP.amber;
+  const pct = total > 0 ? Math.round((Number(value) / Number(total)) * 100) : 0;
+  return (
+    <button
+      onClick={onClick}
+      className={`text-left px-3 py-2 rounded-xl border border-transparent transition shadow-sm ${
+        active ? c.activeBg : `${c.bg} ${c.text} hover:ring-2 hover:${c.ring}`
+      }`}
+    >
+      <div className={`text-xs font-medium ${active ? "opacity-80" : "opacity-70"}`}>{label}</div>
+      <div className="flex items-baseline gap-1.5 mt-0.5">
+        <div className="text-lg font-bold leading-none">{Number(value).toLocaleString("fr-CA")}</div>
+        <div className={`text-[10px] ${active ? "opacity-70" : "opacity-60"}`}>{pct}%</div>
+      </div>
+    </button>
+  );
+}
 
 export default function Services({ adminKey }: { adminKey: string }) {
   const qc = useQueryClient();
@@ -14,9 +45,11 @@ export default function Services({ adminKey }: { adminKey: string }) {
   const [city, setCity] = useState("");
   const [category, setCategory] = useState("");
   const [activeFilter, setActiveFilter] = useState<"" | "true" | "false">("");
+  const [quality, setQuality] = useState<QualityFilter>("");
   const [editService, setEditService] = useState<Service | null | undefined>(undefined);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<Service | null>(null);
+  const [verifying, setVerifying] = useState<string | null>(null);
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -27,7 +60,7 @@ export default function Services({ adminKey }: { adminKey: string }) {
   }, [search]);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["services", adminKey, page, debouncedSearch, city, category, activeFilter],
+    queryKey: ["services", adminKey, page, debouncedSearch, city, category, activeFilter, quality],
     queryFn: () =>
       fetchServices(adminKey, {
         page,
@@ -36,6 +69,7 @@ export default function Services({ adminKey }: { adminKey: string }) {
         city: city || undefined,
         category: category || undefined,
         active: activeFilter || undefined,
+        quality: quality || undefined,
       }),
     staleTime: 30_000,
   });
@@ -68,6 +102,15 @@ export default function Services({ adminKey }: { adminKey: string }) {
     setConfirmDelete(null);
   }
 
+  async function handleVerify(svc: Service) {
+    setVerifying(svc.id);
+    try {
+      await verifyService(adminKey, svc.id, !svc.verifiedAt);
+      invalidate();
+    } catch {}
+    setVerifying(null);
+  }
+
   const total = data?.total ?? 0;
   const pages = data?.pages ?? 1;
 
@@ -77,7 +120,8 @@ export default function Services({ adminKey }: { adminKey: string }) {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Services</h1>
           <p className="text-gray-500 text-sm mt-0.5">
-            {total > 0 ? `${total.toLocaleString("fr-CA")} services au total` : "Chargement…"}
+            {total > 0 ? `${total.toLocaleString("fr-CA")} services` : "Chargement…"}
+            {quality && <span className="ml-2 text-amber-600">· filtre: {quality}</span>}
           </p>
         </div>
         <button
@@ -87,6 +131,68 @@ export default function Services({ adminKey }: { adminKey: string }) {
           <span>＋</span> Nouveau service
         </button>
       </div>
+
+      {/* ── Data quality dashboard ── */}
+      {meta?.stats && (
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 mb-4">
+          <QualityChip
+            label="Vérifiés"
+            value={meta.stats.verified}
+            total={meta.stats.active}
+            color="emerald"
+            active={quality === "verified"}
+            onClick={() => { setQuality(quality === "verified" ? "" : "verified"); setPage(1); }}
+          />
+          <QualityChip
+            label="Non vérifiés"
+            value={meta.stats.unverified}
+            total={meta.stats.active}
+            color="amber"
+            active={quality === "unverified"}
+            onClick={() => { setQuality(quality === "unverified" ? "" : "unverified"); setPage(1); }}
+          />
+          <QualityChip
+            label="Périmés (>6 mois)"
+            value={meta.stats.stale}
+            total={meta.stats.active}
+            color="orange"
+            active={quality === "stale"}
+            onClick={() => { setQuality(quality === "stale" ? "" : "stale"); setPage(1); }}
+          />
+          <QualityChip
+            label="Sans GPS"
+            value={meta.stats.missingGps}
+            total={meta.stats.active}
+            color="rose"
+            active={quality === "missing-gps"}
+            onClick={() => { setQuality(quality === "missing-gps" ? "" : "missing-gps"); setPage(1); }}
+          />
+          <QualityChip
+            label="Sans adresse"
+            value={meta.stats.missingAddress}
+            total={meta.stats.active}
+            color="rose"
+            active={quality === "missing-address"}
+            onClick={() => { setQuality(quality === "missing-address" ? "" : "missing-address"); setPage(1); }}
+          />
+          <QualityChip
+            label="Sans téléphone"
+            value={meta.stats.missingPhone}
+            total={meta.stats.active}
+            color="rose"
+            active={quality === "missing-phone"}
+            onClick={() => { setQuality(quality === "missing-phone" ? "" : "missing-phone"); setPage(1); }}
+          />
+          <QualityChip
+            label="Tél. suspect"
+            value={meta.stats.suspectPhone}
+            total={meta.stats.active}
+            color="red"
+            active={quality === "suspect-phone"}
+            onClick={() => { setQuality(quality === "suspect-phone" ? "" : "suspect-phone"); setPage(1); }}
+          />
+        </div>
+      )}
 
       <div className="bg-white border border-gray-100 rounded-2xl shadow-sm mb-4">
         <div className="p-4 flex flex-wrap gap-3">
@@ -146,7 +252,8 @@ export default function Services({ adminKey }: { adminKey: string }) {
                   <th className="text-left px-4 py-3 font-medium text-gray-500">Catégorie</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-500">Ville</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-500">Téléphone</th>
-                  <th className="text-center px-4 py-3 font-medium text-gray-500">Urgent</th>
+                  <th className="text-center px-4 py-3 font-medium text-gray-500">Qualité</th>
+                  <th className="text-center px-4 py-3 font-medium text-gray-500">Vérifié</th>
                   <th className="text-center px-4 py-3 font-medium text-gray-500">Actif</th>
                   <th className="text-right px-4 py-3 font-medium text-gray-500">Actions</th>
                 </tr>
@@ -170,12 +277,45 @@ export default function Services({ adminKey }: { adminKey: string }) {
                     </td>
                     <td className="px-4 py-3 text-gray-600">{svc.city || "—"}</td>
                     <td className="px-4 py-3 text-gray-600 text-xs">{svc.phone || "—"}</td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center justify-center gap-1 flex-wrap">
+                        {svc.isUrgent && <span title="Urgent" className="text-red-500 text-xs">🚨</span>}
+                        {(!svc.address || svc.address.trim() === "") && (
+                          <span title="Sans adresse" className="px-1.5 py-0.5 bg-rose-50 text-rose-700 rounded text-[10px] font-semibold">ADR</span>
+                        )}
+                        {(svc.lat == null || svc.lng == null) && (
+                          <span title="Sans GPS" className="px-1.5 py-0.5 bg-rose-50 text-rose-700 rounded text-[10px] font-semibold">GPS</span>
+                        )}
+                        {!svc.phone && (
+                          <span title="Sans téléphone" className="px-1.5 py-0.5 bg-rose-50 text-rose-700 rounded text-[10px] font-semibold">TÉL</span>
+                        )}
+                        {svc.phone && /(-5555|-5558|-0555|555-555)/.test(svc.phone) && (
+                          <span title="Téléphone suspect" className="px-1.5 py-0.5 bg-red-100 text-red-800 rounded text-[10px] font-semibold">⚠ TÉL</span>
+                        )}
+                        {svc.address && svc.lat != null && svc.phone && !/(-5555|-5558|-0555|555-555)/.test(svc.phone) && !svc.isUrgent && (
+                          <span className="text-gray-300">—</span>
+                        )}
+                      </div>
+                    </td>
                     <td className="px-4 py-3 text-center">
-                      {svc.isUrgent ? (
-                        <span className="text-red-500">🚨</span>
-                      ) : (
-                        <span className="text-gray-300">—</span>
-                      )}
+                      <button
+                        onClick={() => handleVerify(svc)}
+                        disabled={verifying === svc.id}
+                        title={
+                          svc.verifiedAt
+                            ? `Vérifié le ${new Date(svc.verifiedAt).toLocaleDateString("fr-CA")}${svc.verifiedBy ? ` par ${svc.verifiedBy}` : ""} — cliquer pour annuler`
+                            : "Marquer comme vérifié"
+                        }
+                        className={`px-2 py-1 rounded-lg text-[11px] font-semibold transition disabled:opacity-50 ${
+                          svc.verifiedAt
+                            ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+                            : "bg-gray-100 text-gray-500 hover:bg-amber-50 hover:text-amber-700"
+                        }`}
+                      >
+                        {svc.verifiedAt
+                          ? `✓ ${new Date(svc.verifiedAt).toLocaleDateString("fr-CA", { day: "2-digit", month: "2-digit", year: "2-digit" })}`
+                          : "Marquer ✓"}
+                      </button>
                     </td>
                     <td className="px-4 py-3 text-center">
                       <button
