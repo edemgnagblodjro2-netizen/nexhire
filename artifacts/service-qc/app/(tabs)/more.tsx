@@ -19,6 +19,7 @@ import PremiumGateModal from "@/components/PremiumGateModal";
 import { useColors } from "@/hooks/useColors";
 import { usePremiumGate } from "@/hooks/usePremiumGate";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useServicesData } from "@/contexts/ServicesContext";
 import { getApiBaseUrl } from "@/lib/apiBase";
 import { useAuth } from "@/lib/auth";
 
@@ -108,6 +109,9 @@ export default function MoreScreen() {
   const { user, getToken } = useAuth();
   const isFr = language !== "en";
   const isDark = colors.background === "#09090b" || colors.background === "#0a0a0a";
+
+  const { services } = useServicesData();
+  const servicesCount = Math.max(1, Math.floor(services.length / 10) * 10);
 
   const { remaining, showGate, recordAttempt, checkAndRemind, dismissGate, isGated } = usePremiumGate();
 
@@ -354,7 +358,7 @@ export default function MoreScreen() {
           <View style={[styles.compareBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <View style={styles.compareCol}>
               <Text style={[styles.compareColTitle, { color: colors.mutedForeground }]}>Gratuit</Text>
-              {["531+ services", "Chat IA", "SOS urgences", "Géolocalisation"].map((f) => (
+              {[`${servicesCount}+ services`, "Chat IA", "SOS urgences", "Géolocalisation"].map((f) => (
                 <View key={f} style={styles.compareRow}>
                   <Feather name="check" size={13} color="#10b981" />
                   <Text style={[styles.compareText, { color: colors.foreground }]}>{f}</Text>
