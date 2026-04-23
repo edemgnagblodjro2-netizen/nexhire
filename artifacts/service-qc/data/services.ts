@@ -915,6 +915,18 @@ export const SERVICES: Service[] = [
     coordinates: { lat: 46.3432, lng: -72.5427 },
   },
   {
+    id: "tr-ciusss-territoire",
+    name: "CIUSSS MCQ — Territoire de Trois-Rivières",
+    category: "health",
+    subcategory: "Réseau de la santé",
+    city: "Trois-Rivières",
+    phone: "819-370-2200",
+    website: "https://ciusssmcq.ca/a-propos-de-nous/territoire/trois-rivieres/",
+    description: "Portail officiel du CIUSSS de la Mauricie-et-du-Centre-du-Québec pour le territoire de Trois-Rivières. Liste complète de toutes les installations : hôpital CHAUR, CLSC, CHSLD, centres de réadaptation, points de service, groupes de médecine de famille (GMF). Coordonnées, horaires et services offerts pour chaque installation.",
+    hours: "Portail accessible 24h/24",
+    coordinates: { lat: 46.3432, lng: -72.5427 },
+  },
+  {
     id: "tr-health1",
     name: "CLSC de Trois-Rivières — CIUSSS MCQ",
     category: "health",
