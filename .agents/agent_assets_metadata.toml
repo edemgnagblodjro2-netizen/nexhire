@@ -245,3 +245,9 @@ id = "1QLUE4MoJKgCiI3pcG5Dh"
 uri = "file://attached_assets/services_AttenteZero.xlsx"
 type = "table"
 title = "AttenteZéro — 723 services à corriger"
+
+[[outputs]]
+id = "Z-304xM9cLDAb-oXSiRSX"
+uri = "file://attached_assets/builds/attentezero-v1.0.28-build.tar.gz"
+type = "unspecified"
+title = "AttenteZéro v1.0.28 — Archive complète pour build local"
