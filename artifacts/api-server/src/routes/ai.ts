@@ -52,9 +52,10 @@ async function getUserPremiumStatus(req: Request): Promise<{ isPremium: boolean;
 
 function clientKey(req: Request, userId: string | null): string {
   if (userId) return `u:${userId}`;
-  const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim()
-    || req.socket.remoteAddress
-    || "unknown";
+  // Use Express's req.ip which respects the `trust proxy` setting so the
+  // address is resolved by the trusted reverse proxy layer — NOT the raw
+  // X-Forwarded-For header which any caller can spoof.
+  const ip = req.ip ?? req.socket.remoteAddress ?? "unknown";
   return `ip:${ip}`;
 }
 

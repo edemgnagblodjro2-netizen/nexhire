@@ -62,6 +62,22 @@ function requireAuth(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
+// Rate-limit check runs BEFORE multer so that over-quota requests are
+// rejected immediately — without allocating up to 10 MB of RAM for the
+// upload body first.
+function requireRateLimit(req: Request, res: Response, next: NextFunction) {
+  const userId = req.user!.id;
+  const rl = rateLimit(userId);
+  if (!rl.ok) {
+    res.setHeader("Retry-After", String(rl.retryAfterSec));
+    res.status(429).json({
+      error: `Limite de transcriptions atteinte. Réessayez dans ${rl.retryAfterSec} secondes.`,
+    });
+    return;
+  }
+  next();
+}
+
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
@@ -87,18 +103,11 @@ function uploadOne(req: Request, res: Response, next: NextFunction) {
 }
 
 // ── Route ────────────────────────────────────────────────────────
-router.post("/ai/transcribe", requireAuth, uploadOne, async (req, res) => {
+// Order: requireAuth → requireRateLimit → uploadOne → handler
+// Rate limiting runs before multer so over-quota requests are rejected
+// before any upload memory is allocated.
+router.post("/ai/transcribe", requireAuth, requireRateLimit, uploadOne, async (req, res) => {
   const userId = req.user!.id;
-
-  // Rate-limit AFTER auth so anonymous floods don't fill the bucket map.
-  const rl = rateLimit(userId);
-  if (!rl.ok) {
-    res.setHeader("Retry-After", String(rl.retryAfterSec));
-    res.status(429).json({
-      error: `Limite de transcriptions atteinte. Réessayez dans ${rl.retryAfterSec} secondes.`,
-    });
-    return;
-  }
 
   try {
     if (!req.file) {
