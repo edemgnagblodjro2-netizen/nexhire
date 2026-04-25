@@ -356,6 +356,75 @@ DÉPENDANCES ET LIGNES DE CRISE SPÉCIALISÉES:
 - Info-Crime Québec | Signalement anonyme | Tél:1-800-711-1800
 - Croix-Rouge canadienne | Sinistres / catastrophes | Tél:1-800-418-1111
 - Sécurité civile Québec | Sinistrés, indemnisation | Tél:1-800-363-1363
+
+═══════════════════════════════════════════════════════════════════
+SERVICES ADMINISTRATIFS — AUTRES PROVINCES ET TERRITOIRES DU CANADA
+═══════════════════════════════════════════════════════════════════
+⚠️ Pour ces 12 régions, AttenteZéro couvre uniquement le 211 (référence
+communautaire) et les services administratifs gouvernementaux principaux
+(Service Canada + service provincial). Pour tout autre besoin, oriente
+l'usager vers le 211 de sa province qui connaît tous les organismes locaux.
+
+ONTARIO (ON):
+- ID:pw-211-on | 211 Ontario | Référence communautaire toutes catégories | Tél:211
+- ID:on-service-canada-toronto | Service Canada — Centre Toronto Nord | Démarches fédérales (AE, NAS, pension) | Tél:1-800-622-6232
+- ID:on-serviceontario-bay | ServiceOntario — Bay & College (Toronto) | Démarches provinciales (permis, carte santé) | Tél:1-800-267-8097
+- ID:311-tor | 311 Toronto | Services municipaux Toronto | Tél:311
+
+ALBERTA (AB):
+- ID:pw-211-ab | 211 Alberta | Référence communautaire | Tél:211
+- ID:ab-service-canada-calgary | Service Canada — Centre Calgary Harry Hays | Démarches fédérales | Tél:1-800-622-6232
+- ID:ab-service-alberta-edmonton | Service Alberta — Edmonton (registres) | Démarches provinciales | Tél:780-427-7013
+
+COLOMBIE-BRITANNIQUE (BC):
+- ID:pw-211-bc | 211 Colombie-Britannique | Référence communautaire | Tél:211
+- ID:bc-service-canada-vancouver | Service Canada — Centre Vancouver | Démarches fédérales | Tél:1-800-622-6232
+- ID:bc-servicebc-vancouver | Service BC — Centre Vancouver | Démarches provinciales | Tél:1-800-663-7867
+
+MANITOBA (MB):
+- ID:pw-211-mb | 211 Manitoba | Référence communautaire | Tél:211
+- ID:mb-service-canada-winnipeg | Service Canada — Centre Winnipeg | Démarches fédérales | Tél:1-800-622-6232
+- ID:mb-gov-inquiry-winnipeg | Manitoba Government Inquiry — Winnipeg | Démarches provinciales | Tél:1-866-626-4862
+
+SASKATCHEWAN (SK):
+- ID:pw-211-sk | 211 Saskatchewan | Référence communautaire | Tél:211
+- ID:sk-service-canada-regina | Service Canada — Centre Regina | Démarches fédérales | Tél:1-800-622-6232
+- ID:sk-isc-regina | Information Services Corporation (ISC) — Regina | Démarches provinciales | Tél:1-866-275-4721
+
+NOUVEAU-BRUNSWICK (NB):
+- ID:pw-211-nb | 211 Nouveau-Brunswick | Référence communautaire | Tél:211
+- ID:nb-service-canada-fredericton | Service Canada — Centre Fredericton | Démarches fédérales | Tél:1-800-622-6232
+- ID:nb-snb-fredericton | Service Nouveau-Brunswick — Fredericton | Démarches provinciales | Tél:1-888-762-8600
+
+NOUVELLE-ÉCOSSE (NS):
+- ID:pw-211-ns | 211 Nouvelle-Écosse | Référence communautaire | Tél:211
+- ID:ns-service-canada-halifax | Service Canada — Centre Halifax | Démarches fédérales | Tél:1-800-622-6232
+- ID:ns-access-ns-halifax | Access Nova Scotia — Halifax | Démarches provinciales | Tél:1-800-670-4357
+
+ÎLE-DU-PRINCE-ÉDOUARD (PE):
+- ID:pw-211-pe | 211 Île-du-Prince-Édouard | Référence communautaire | Tél:211
+- ID:pe-service-canada-charlottetown | Service Canada — Centre Charlottetown | Démarches fédérales | Tél:1-800-622-6232
+- ID:pe-access-pei-charlottetown | Access PEI — Charlottetown | Démarches provinciales | Tél:1-902-368-5200
+
+TERRE-NEUVE-ET-LABRADOR (NL):
+- ID:pw-211-nl | 211 Terre-Neuve-et-Labrador | Référence communautaire | Tél:211
+- ID:nl-service-canada-stjohns | Service Canada — Centre St. John's | Démarches fédérales | Tél:1-800-622-6232
+- ID:nl-digital-gov-stjohns | Digital Government and Service NL — St. John's | Démarches provinciales | Tél:1-709-729-4834
+
+YUKON (YT):
+- ID:pw-211-yt | 211 Yukon | Référence communautaire | Tél:211
+- ID:yk-svc-canada | Service Canada — Centre Whitehorse | Démarches fédérales | Tél:1-800-622-6232
+- ID:yk-yg-info | Yukon Government — Information & Services | Démarches territoriales | Tél:1-867-667-5811
+
+TERRITOIRES DU NORD-OUEST (NT):
+- ID:pw-211-nt | 211 Territoires du Nord-Ouest | Référence communautaire | Tél:211
+- ID:nt-svc-canada | Service Canada — Centre Yellowknife | Démarches fédérales | Tél:1-800-622-6232
+- ID:nt-gov-info | Gouvernement des T.N.-O. — Renseignements | Démarches territoriales | Tél:1-867-767-9100
+
+NUNAVUT (NU):
+- ID:pw-211-nu | Nunavut Kamatsiaqtut Helpline | Soutien crise/santé mentale 24h | Tél:1-800-265-3333
+- ID:nu-svc-canada | Service Canada — Centre Iqaluit | Démarches fédérales | Tél:1-800-622-6232
+- ID:nu-gn-info | Gouvernement du Nunavut — Renseignements | Démarches territoriales | Tél:1-867-975-5300
 `.trim();
 
 function getQuebecTimeContext(): string {
@@ -417,12 +486,20 @@ function buildSystemPrompt(language: string): string {
       "Respond in Haitian Creole (Kreyòl ayisyen). The user is likely a Haitian Creole speaker. Be welcoming and clear.";
   } else {
     langInstruction =
-      "Respond in French. The user is in Quebec. Be welcoming and clear.";
+      "Respond in French. The user may be anywhere in Canada (Quebec or another province). Be welcoming and clear.";
   }
 
   const timeContext = getQuebecTimeContext();
 
-  return `You are AttenteZéro — a compassionate AI guide and emergency coordinator helping vulnerable people in Quebec find community, social, and emergency services.
+  return `You are AttenteZéro — a compassionate AI guide and emergency coordinator helping vulnerable people across Canada (Quebec + 9 other provinces and 3 territories) find community, social, and emergency services.
+
+GEOGRAPHIC SCOPE — TRÈS IMPORTANT:
+- Couverture COMPLÈTE (5 700+ services locaux): Québec uniquement.
+- Couverture PARTIELLE (services administratifs gouvernementaux + 211 provincial): Ontario (ON), Alberta (AB), Colombie-Britannique (BC), Manitoba (MB), Saskatchewan (SK), Nouveau-Brunswick (NB), Nouvelle-Écosse (NS), Île-du-Prince-Édouard (PE), Terre-Neuve-et-Labrador (NL), Yukon (YT), Territoires du Nord-Ouest (NT), Nunavut (NU).
+- Si l'usager mentionne une province autre que le Québec (ex: "je suis en Ontario", "I'm in Alberta", "à Vancouver"): recommande le 211 provincial + Service Canada local + le service administratif provincial correspondant. Précise honnêtement que pour les organismes communautaires locaux, le 211 de leur province est la meilleure ressource.
+- Si la province n'est pas claire et que la demande sort du Québec, demande poliment "Dans quelle province ou territoire êtes-vous ?" avant de recommander.
+- Pour les urgences (911, lignes de crise), tous les numéros pancanadiens fonctionnent partout au pays — ne refuse jamais d'aider pour cause de géographie.
+
 
 ${langInstruction}
 

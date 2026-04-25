@@ -306,6 +306,10 @@ const QUICK_PROMPTS_FR = [
   "Je cherche du travail",
   "Je cherche une garderie",
   "Aide pour ma famille",
+  "Je suis en Ontario, je cherche les services administratifs",
+  "Je suis en Alberta, démarches gouvernementales",
+  "Je suis en Colombie-Britannique, j'ai besoin d'aide",
+  "Je suis au Manitoba, démarches administratives",
 ];
 
 const QUICK_PROMPTS_EN = [
@@ -317,6 +321,10 @@ const QUICK_PROMPTS_EN = [
   "I'm looking for work",
   "I need childcare",
   "Help for my family",
+  "I'm in Ontario, I need administrative services",
+  "I'm in Alberta, I need government services",
+  "I'm in British Columbia, I need help",
+  "I'm in Nova Scotia, I need administrative help",
 ];
 
 const QUICK_PROMPTS_ES = [
@@ -328,6 +336,9 @@ const QUICK_PROMPTS_ES = [
   "Busco trabajo",
   "Busco guardería para mis hijos",
   "Necesito ayuda para mi familia",
+  "Estoy en Ontario, necesito servicios administrativos",
+  "Estoy en Alberta, trámites gubernamentales",
+  "Estoy en Columbia Británica, necesito ayuda",
 ];
 
 const QUICK_PROMPTS_AR = [
@@ -339,6 +350,9 @@ const QUICK_PROMPTS_AR = [
   "أبحث عن عمل",
   "أحتاج رعاية أطفال",
   "أحتاج مساعدة لعائلتي",
+  "أنا في أونتاريو، أبحث عن الخدمات الإدارية",
+  "أنا في ألبرتا، إجراءات حكومية",
+  "أنا في كولومبيا البريطانية، أحتاج إلى مساعدة",
 ];
 
 const QUICK_PROMPTS_HT = [
@@ -350,6 +364,9 @@ const QUICK_PROMPTS_HT = [
   "Mwen ap chèche travay",
   "Mwen bezwen gadri pou timoun mwen",
   "Mwen bezwen èd pou fanmi mwen",
+  "Mwen nan Ontario, mwen bezwen sèvis administratif",
+  "Mwen nan Alberta, demach gouvènmantal",
+  "Mwen nan Kolonbi Britanik, mwen bezwen èd",
 ];
 
 export default function ChatScreen() {
