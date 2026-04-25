@@ -263,3 +263,9 @@ id = "dN2FVEma9ynFNLE-xhtoH"
 uri = "file://attached_assets/builds/attentezero-v1.0.29-monorepo-FULL.tar.gz"
 type = "unspecified"
 title = "AttenteZéro v1.0.29 — Monorepo (5.1MB) — pour build EAS local"
+
+[[outputs]]
+id = "2MHKtZpHFVGK_ipI0Ua_l"
+uri = "file://projet.zip"
+type = "unspecified"
+title = "AttenteZéro — projet complet (v1.0.33 + Combien d'attente?)"
