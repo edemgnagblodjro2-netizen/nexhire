@@ -26,10 +26,16 @@ export const organisationMembersTable = pgTable(
     userId: varchar("user_id").references(() => usersTable.id, { onDelete: "cascade" }),
     invitedEmail: text("invited_email").notNull(), // always lowercase
     role: varchar("role", { length: 16 }).notNull().default("member"), // owner | admin | member
-    status: varchar("status", { length: 16 }).notNull().default("invited"), // invited | active | revoked
+    status: varchar("status", { length: 16 }).notNull().default("invited"), // invited | active | revoked | declined
     invitedByUserId: varchar("invited_by_user_id").references(() => usersTable.id, { onDelete: "set null" }),
     invitedAt: timestamp("invited_at", { withTimezone: true }).notNull().defaultNow(),
     joinedAt: timestamp("joined_at", { withTimezone: true }),
+    /** When the invitee accepted or declined the invitation. */
+    respondedAt: timestamp("responded_at", { withTimezone: true }),
+    /** Free-form note from the invitee — typically a disponibility statement when declining. */
+    responseNote: text("response_note"),
+    /** Set to false once the inviter has seen the response (used to badge unread declines). */
+    responseSeenByInviter: varchar("response_seen_by_inviter", { length: 4 }).notNull().default("no"), // yes | no
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
   },

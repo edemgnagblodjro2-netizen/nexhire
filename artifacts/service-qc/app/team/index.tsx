@@ -20,9 +20,12 @@ type Member = {
   userId: string | null;
   invitedEmail: string;
   role: "owner" | "admin" | "member";
-  status: "invited" | "active" | "revoked";
+  status: "invited" | "active" | "revoked" | "declined";
   invitedAt: string;
   joinedAt: string | null;
+  respondedAt: string | null;
+  responseNote: string | null;
+  responseSeenByInviter: "yes" | "no" | null;
   firstName: string | null;
   lastName: string | null;
   email: string | null;
@@ -50,12 +53,14 @@ const STATUS_LABEL: Record<string, string> = {
   active: "Actif",
   invited: "Invitation envoyée",
   revoked: "Révoqué",
+  declined: "Invitation refusée",
 };
 
 const STATUS_COLORS: Record<string, { bg: string; fg: string }> = {
   active: { bg: "#dcfce7", fg: "#166534" },
   invited: { bg: "#fef3c7", fg: "#92400e" },
   revoked: { bg: "#e5e7eb", fg: "#374151" },
+  declined: { bg: "#fee2e2", fg: "#991b1b" },
 };
 
 export default function TeamScreen() {
@@ -79,6 +84,22 @@ export default function TeamScreen() {
       }
       const j = (await r.json()) as TeamPayload;
       setData(j);
+      // Mark any unseen decline notifications as seen for owners/admins.
+      // The "NOUVEAU" badge therefore disappears next time the page is loaded.
+      // We intentionally keep the badges visible during the current view so the
+      // admin can still see what is new, then they're cleared on next visit.
+      if (j.myRole === "owner" || j.myRole === "admin") {
+        const hasUnseen = j.members.some(
+          (m) => m.status === "declined" && m.responseSeenByInviter !== "yes",
+        );
+        if (hasUnseen) {
+          authedFetch(`/api/team/responses/seen`, { method: "POST" }).catch(
+            () => {
+              /* non-fatal */
+            },
+          );
+        }
+      }
     } catch (e: any) {
       setError(e.message ?? "Erreur");
     } finally {
@@ -240,8 +261,20 @@ export default function TeamScreen() {
               : m.email ?? m.invitedEmail;
           const canRevoke =
             (data.myRole === "owner" || data.myRole === "admin") && m.role !== "owner";
+          const isUnseenDecline =
+            m.status === "declined" && m.responseSeenByInviter !== "yes";
           return (
-            <View key={m.id} style={styles.memberCard}>
+            <View
+              key={m.id}
+              style={[
+                styles.memberCard,
+                isUnseenDecline && {
+                  borderLeftWidth: 4,
+                  borderLeftColor: "#dc2626",
+                  backgroundColor: "#fef2f2",
+                },
+              ]}
+            >
               <View style={{ flex: 1 }}>
                 <Text style={styles.memberName}>{displayName}</Text>
                 <Text style={styles.memberEmail}>{m.invitedEmail}</Text>
@@ -254,9 +287,23 @@ export default function TeamScreen() {
                       {STATUS_LABEL[m.status]}
                     </Text>
                   </View>
+                  {isUnseenDecline && (
+                    <View style={[styles.statusChip, { backgroundColor: "#dc2626" }]}>
+                      <Text style={[styles.statusChipText, { color: "#fff" }]}>NOUVEAU</Text>
+                    </View>
+                  )}
                 </View>
+                {m.status === "declined" && m.responseNote ? (
+                  <View style={styles.noteBox}>
+                    <Text style={styles.noteLabel}>Note de la personne :</Text>
+                    <Text style={styles.noteText}>{m.responseNote}</Text>
+                  </View>
+                ) : null}
+                {m.status === "declined" && !m.responseNote ? (
+                  <Text style={styles.noteHint}>Aucune note de disponibilité fournie.</Text>
+                ) : null}
               </View>
-              {canRevoke && (
+              {canRevoke && m.status !== "declined" && (
                 <TouchableOpacity onPress={() => confirmRevoke(m)} style={styles.revokeBtn}>
                   <Ionicons name="close-circle" size={22} color="#dc2626" />
                 </TouchableOpacity>
@@ -396,6 +443,17 @@ const styles = StyleSheet.create({
   statusChip: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 12 },
   statusChipText: { fontSize: 12, fontWeight: "600" },
   revokeBtn: { padding: 6 },
+  noteBox: {
+    marginTop: 10,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#fecaca",
+  },
+  noteLabel: { fontSize: 11, fontWeight: "700", color: "#991b1b", marginBottom: 4 },
+  noteText: { fontSize: 13, color: "#374151", lineHeight: 18 },
+  noteHint: { marginTop: 8, fontSize: 12, fontStyle: "italic", color: "#6b7280" },
   modalBg: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.4)",

@@ -7,7 +7,7 @@ import {
   subscriptionsTable,
   usersTable,
 } from "@workspace/db";
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, isNull, sql } from "drizzle-orm";
 // `sql` import already covers raw fragments used below.
 
 const router: IRouter = Router();
@@ -90,6 +90,9 @@ router.get("/organisations/me/members", async (req, res) => {
       status: organisationMembersTable.status,
       invitedAt: organisationMembersTable.invitedAt,
       joinedAt: organisationMembersTable.joinedAt,
+      respondedAt: organisationMembersTable.respondedAt,
+      responseNote: organisationMembersTable.responseNote,
+      responseSeenByInviter: organisationMembersTable.responseSeenByInviter,
       firstName: usersTable.firstName,
       lastName: usersTable.lastName,
       email: usersTable.email,
@@ -169,9 +172,9 @@ router.post("/organisations/me/members", async (req, res) => {
         sql`SELECT id FROM organisations WHERE id = ${ctx.orgId} FOR UPDATE`,
       );
 
-      // Already invited / already member?
-      const [dup] = await tx
-        .select({ id: organisationMembersTable.id })
+      // Look up an existing row for this (org, email) — UNIQUE INDEX guarantees ≤1.
+      const [existing] = await tx
+        .select()
         .from(organisationMembersTable)
         .where(
           and(
@@ -180,7 +183,10 @@ router.post("/organisations/me/members", async (req, res) => {
           ),
         )
         .limit(1);
-      if (dup) {
+
+      // Block only if the row is currently invited or active. revoked/declined
+      // rows are recyclable: the admin can re-invite the same email.
+      if (existing && (existing.status === "invited" || existing.status === "active")) {
         return { kind: "dup" as const };
       }
 
@@ -199,25 +205,48 @@ router.post("/organisations/me/members", async (req, res) => {
       }
 
       // Existing-user lookup: case-insensitive (we store invitedEmail lowercase
-      // but legacy rows in usersTable may use mixed case).
+      // but legacy rows in usersTable may use mixed case). We link the userId
+      // up-front so the invitee can find the row immediately, but we do NOT
+      // auto-activate — they must explicitly accept via the invitations screen.
       const [existingUser] = await tx
         .select({ id: usersTable.id })
         .from(usersTable)
         .where(sql`LOWER(${usersTable.email}) = ${email}`)
         .limit(1);
 
-      const [row] = await tx
-        .insert(organisationMembersTable)
-        .values({
-          organisationId: ctx.orgId,
-          userId: existingUser?.id ?? null,
-          invitedEmail: email,
-          role,
-          status: existingUser ? "active" : "invited",
-          invitedByUserId: userId,
-          joinedAt: existingUser ? new Date() : null,
-        })
-        .returning();
+      let row;
+      if (existing) {
+        // Recycle the revoked/declined row — reset response fields, set role,
+        // mark as invited again. UNIQUE INDEX (org, email) prevents duplicates.
+        [row] = await tx
+          .update(organisationMembersTable)
+          .set({
+            userId: existingUser?.id ?? null,
+            role,
+            status: "invited",
+            invitedByUserId: userId,
+            invitedAt: new Date(),
+            joinedAt: null,
+            respondedAt: null,
+            responseNote: null,
+            responseSeenByInviter: "no",
+          })
+          .where(eq(organisationMembersTable.id, existing.id))
+          .returning();
+      } else {
+        [row] = await tx
+          .insert(organisationMembersTable)
+          .values({
+            organisationId: ctx.orgId,
+            userId: existingUser?.id ?? null,
+            invitedEmail: email,
+            role,
+            status: "invited",
+            invitedByUserId: userId,
+            joinedAt: null,
+          })
+          .returning();
+      }
       return { kind: "ok" as const, row };
     });
 
@@ -331,6 +360,142 @@ router.delete("/organisations/me/members/:id", async (req, res) => {
   res.json({ ok: true });
 });
 
+// ── GET /api/invitations/pending — invites awaiting this user's response ─
+router.get("/invitations/pending", async (req, res) => {
+  const userId = gate(req, res);
+  if (!userId) return;
+  const me = (req.user as any) ?? {};
+  const lower = (me.email ?? "").toLowerCase().trim();
+
+  const rows = await db
+    .select({
+      id: organisationMembersTable.id,
+      role: organisationMembersTable.role,
+      invitedAt: organisationMembersTable.invitedAt,
+      invitedEmail: organisationMembersTable.invitedEmail,
+      orgId: organisationsTable.id,
+      orgName: organisationsTable.name,
+      orgKind: organisationsTable.kind,
+      inviterFirstName: usersTable.firstName,
+      inviterLastName: usersTable.lastName,
+      inviterEmail: usersTable.email,
+    })
+    .from(organisationMembersTable)
+    .leftJoin(
+      organisationsTable,
+      eq(organisationsTable.id, organisationMembersTable.organisationId),
+    )
+    .leftJoin(
+      usersTable,
+      eq(usersTable.id, organisationMembersTable.invitedByUserId),
+    )
+    .where(
+      and(
+        eq(organisationMembersTable.status, "invited"),
+        // Match either by linked userId OR by email (covers freshly-registered users)
+        sql`(${organisationMembersTable.userId} = ${userId} OR LOWER(${organisationMembersTable.invitedEmail}) = ${lower})`,
+      ),
+    );
+
+  res.json({ invitations: rows });
+});
+
+// ── POST /api/invitations/:id/respond — accept or decline ────────
+const RespondBody = z.object({
+  action: z.enum(["accept", "decline"]),
+  note: z.string().max(500).optional(),
+});
+
+router.post("/invitations/:id/respond", async (req, res) => {
+  const userId = gate(req, res);
+  if (!userId) return;
+  const me = (req.user as any) ?? {};
+  const lower = (me.email ?? "").toLowerCase().trim();
+
+  const parsed = RespondBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: "Données invalides." });
+    return;
+  }
+
+  // Atomic update — guards against double-respond races by including
+  // status='invited' AND ownership in the WHERE clause. If 0 rows are
+  // returned, either the invite doesn't exist, was already handled, or
+  // doesn't belong to this user.
+  const now = new Date();
+  const newStatus = parsed.data.action === "accept" ? "active" : "declined";
+  const updated = await db
+    .update(organisationMembersTable)
+    .set({
+      userId, // ensure linked (might still be null on accept-by-email path)
+      status: newStatus,
+      respondedAt: now,
+      responseNote: parsed.data.note?.trim() ?? null,
+      responseSeenByInviter: "no",
+      joinedAt: newStatus === "active" ? now : null,
+    })
+    .where(
+      and(
+        eq(organisationMembersTable.id, req.params.id),
+        eq(organisationMembersTable.status, "invited"),
+        sql`(${organisationMembersTable.userId} = ${userId} OR LOWER(${organisationMembersTable.invitedEmail}) = ${lower})`,
+      ),
+    )
+    .returning();
+
+  if (updated.length === 0) {
+    // Disambiguate the failure for a clearer error message.
+    const [target] = await db
+      .select({
+        id: organisationMembersTable.id,
+        status: organisationMembersTable.status,
+        invitedEmail: organisationMembersTable.invitedEmail,
+        userId: organisationMembersTable.userId,
+      })
+      .from(organisationMembersTable)
+      .where(eq(organisationMembersTable.id, req.params.id))
+      .limit(1);
+    if (!target) {
+      res.status(404).json({ error: "Invitation introuvable." });
+      return;
+    }
+    if (target.status !== "invited") {
+      res.status(409).json({ error: "Invitation déjà traitée." });
+      return;
+    }
+    res.status(403).json({ error: "Cette invitation ne vous est pas destinée." });
+    return;
+  }
+
+  res.json({ member: updated[0] });
+});
+
+// ── POST /api/team/responses/seen — admin marks decline notifications as seen ─
+router.post("/team/responses/seen", async (req, res) => {
+  const userId = gate(req, res);
+  if (!userId) return;
+  const ctx = await getMyOrgContext(userId);
+  if (!ctx) {
+    res.status(403).json({ error: "Aucune organisation associée." });
+    return;
+  }
+  if (ctx.memberRole !== "owner" && ctx.memberRole !== "admin") {
+    res.status(403).json({ error: "Réservé aux propriétaires et administrateurs." });
+    return;
+  }
+  await db
+    .update(organisationMembersTable)
+    .set({ responseSeenByInviter: "yes" })
+    .where(
+      and(
+        eq(organisationMembersTable.organisationId, ctx.orgId),
+        eq(organisationMembersTable.responseSeenByInviter, "no"),
+        eq(organisationMembersTable.status, "declined"),
+      ),
+    );
+  res.json({ ok: true });
+});
+
 export default router;
 
 /**
@@ -363,16 +528,22 @@ export async function getMembershipOrg(userId: string) {
  * Idempotent and case-insensitive: invitedEmail is already lowercased at write
  * time, but we lower() the user's email to be safe against legacy data.
  */
+/**
+ * Link any pending `invited` rows for this email to the user (so they can later
+ * accept or decline them from the app), but DO NOT auto-activate. Acceptance
+ * requires an explicit POST to /api/invitations/:id/respond from the invitee.
+ */
 export async function claimPendingInvites(userId: string, email: string | null | undefined) {
   if (!email) return 0;
   const lower = email.toLowerCase().trim();
   const result = await db
     .update(organisationMembersTable)
-    .set({ userId, status: "active", joinedAt: new Date() })
+    .set({ userId })
     .where(
       and(
         sql`LOWER(${organisationMembersTable.invitedEmail}) = ${lower}`,
         eq(organisationMembersTable.status, "invited"),
+        isNull(organisationMembersTable.userId),
       ),
     )
     .returning({ id: organisationMembersTable.id });

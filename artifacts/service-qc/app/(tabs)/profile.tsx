@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   Linking,
@@ -13,12 +13,13 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 
 import { useAuth } from "@/lib/auth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useColors } from "@/hooks/useColors";
+import { authedFetch } from "@/lib/apiClient";
 
 function InitialsAvatar({ firstName, lastName, size = 80 }: { firstName: string | null; lastName: string | null; size?: number }) {
   const colors = useColors();
@@ -67,8 +68,30 @@ export default function ProfileScreen() {
   const [editingAddress, setEditingAddress] = useState(false);
   const [addressValue, setAddressValue] = useState(user?.address || "");
   const [saving, setSaving] = useState(false);
+  const [pendingInvitesCount, setPendingInvitesCount] = useState(0);
 
   const isFr = language === "fr";
+
+  const loadPendingInvites = React.useCallback(async () => {
+    try {
+      const r = await authedFetch(`/api/invitations/pending`);
+      if (!r.ok) return;
+      const j = await r.json();
+      setPendingInvitesCount(Array.isArray(j.invitations) ? j.invitations.length : 0);
+    } catch {
+      // silent — banner just won't show
+    }
+  }, []);
+
+  useEffect(() => {
+    loadPendingInvites();
+  }, [loadPendingInvites]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadPendingInvites();
+    }, [loadPendingInvites]),
+  );
 
   async function handleSaveAddress() {
     setSaving(true);
@@ -113,6 +136,38 @@ export default function ProfileScreen() {
             <Text style={styles.heroEmail}>{user?.email || "—"}</Text>
           </View>
         </LinearGradient>
+
+        {pendingInvitesCount > 0 ? (
+          <Pressable
+            onPress={() => {
+              Haptics.selectionAsync();
+              router.push("/invitations");
+            }}
+            style={({ pressed }) => [
+              styles.invitesBanner,
+              pressed && { opacity: 0.85 },
+            ]}
+          >
+            <View style={styles.invitesBadge}>
+              <Text style={styles.invitesBadgeText}>{pendingInvitesCount}</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.invitesTitle}>
+                {isFr
+                  ? pendingInvitesCount === 1
+                    ? "1 invitation d'équipe en attente"
+                    : `${pendingInvitesCount} invitations d'équipe en attente`
+                  : pendingInvitesCount === 1
+                    ? "1 pending team invitation"
+                    : `${pendingInvitesCount} pending team invitations`}
+              </Text>
+              <Text style={styles.invitesSubtitle}>
+                {isFr ? "Toucher pour accepter ou refuser" : "Tap to accept or decline"}
+              </Text>
+            </View>
+            <Feather name="chevron-right" size={20} color="#1d4ed8" />
+          </Pressable>
+        ) : null}
 
         <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Text style={[styles.cardTitle, { color: colors.foreground }]}>
@@ -343,6 +398,29 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     color: "rgba(255,255,255,0.9)",
   },
+  invitesBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    marginHorizontal: 16,
+    marginTop: 14,
+    padding: 14,
+    borderRadius: 12,
+    backgroundColor: "#dbeafe",
+    borderWidth: 1,
+    borderColor: "#93c5fd",
+  },
+  invitesBadge: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: "#1d4ed8",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  invitesBadgeText: { color: "#fff", fontSize: 14, fontWeight: "700" },
+  invitesTitle: { fontSize: 14, fontWeight: "700", color: "#1e3a8a" },
+  invitesSubtitle: { fontSize: 12, color: "#1d4ed8", marginTop: 2 },
 
   avatar: {
     alignItems: "center",

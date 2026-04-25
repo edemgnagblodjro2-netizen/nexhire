@@ -33,6 +33,16 @@ async function runStartupMigrations() {
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       )
     `);
+    // Team invitation response columns (accept / decline + disponibility note).
+    await db.execute(
+      sql`ALTER TABLE organisation_members ADD COLUMN IF NOT EXISTS responded_at TIMESTAMPTZ`,
+    );
+    await db.execute(
+      sql`ALTER TABLE organisation_members ADD COLUMN IF NOT EXISTS response_note TEXT`,
+    );
+    await db.execute(
+      sql`ALTER TABLE organisation_members ADD COLUMN IF NOT EXISTS response_seen_by_inviter VARCHAR(4) NOT NULL DEFAULT 'no'`,
+    );
     logger.info("Startup migrations completed");
   } catch (err) {
     logger.error({ err }, "Startup migration failed");
