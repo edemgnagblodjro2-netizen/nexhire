@@ -2,7 +2,7 @@ import * as client from "openid-client";
 import crypto from "crypto";
 import { type Request, type Response } from "express";
 import { db, sessionsTable } from "@workspace/db";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import type { AuthUser } from "@workspace/api-zod";
 
 export const ISSUER_URL = process.env.ISSUER_URL ?? "https://replit.com/oidc";
@@ -69,6 +69,12 @@ export async function updateSession(
 
 export async function deleteSession(sid: string): Promise<void> {
   await db.delete(sessionsTable).where(eq(sessionsTable.sid, sid));
+}
+
+export async function deleteAllSessionsByEmail(email: string): Promise<void> {
+  await db
+    .delete(sessionsTable)
+    .where(sql`${sessionsTable.sess}->'user'->>'email' = ${email.toLowerCase()}`);
 }
 
 export async function clearSession(

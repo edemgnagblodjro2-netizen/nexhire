@@ -19,6 +19,7 @@ import {
   createSession,
   updateSession,
   deleteSession,
+  deleteAllSessionsByEmail,
   SESSION_COOKIE,
   SESSION_TTL,
   type SessionData,
@@ -712,6 +713,8 @@ router.post("/mobile-auth/reset-password", async (req: Request, res: Response) =
       .update(passwordResetTokensTable)
       .set({ usedAt: new Date() })
       .where(eq(passwordResetTokensTable.id, token.id));
+
+    await deleteAllSessionsByEmail(email);
 
     res.json({ success: true, message: "Mot de passe mis à jour avec succès." });
   } catch (err) {
