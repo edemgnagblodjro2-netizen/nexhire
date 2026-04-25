@@ -25,12 +25,20 @@ const ALLOWED_MIME = new Set([
   "audio/3gpp",
 ]);
 
-// Per-user rate limit: 30 transcriptions per rolling 10-minute window.
+// Per-user rate limit: 5 transcriptions per rolling 10-minute window.
+// Reduced from 30 to prevent a single self-registered account from forcing
+// ~300 MB of concurrent upload buffers in one burst.
 // In-memory map keyed by userId — fine for single-instance deploy. If we ever
 // scale horizontally, swap for Redis.
 const RL_WINDOW_MS = 10 * 60 * 1000;
-const RL_MAX = 30;
+const RL_MAX = 5;
 const rlBuckets = new Map<string, number[]>();
+
+// Per-user concurrency cap: at most 2 uploads buffered in RAM at once.
+// This prevents 30 parallel 10 MB uploads from the same account, regardless
+// of whether they'd individually pass the rolling rate limit.
+const MAX_CONCURRENT_PER_USER = 2;
+const activeUploads = new Map<string, number>();
 
 function rateLimit(userId: string): { ok: boolean; retryAfterSec: number } {
   const now = Date.now();
@@ -78,6 +86,33 @@ function requireRateLimit(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
+// Concurrency guard: reject if this user already has MAX_CONCURRENT_PER_USER
+// uploads buffered in memory. Runs BEFORE multer for the same reason as above.
+function requireConcurrencySlot(req: Request, res: Response, next: NextFunction) {
+  const userId = req.user!.id;
+  const current = activeUploads.get(userId) ?? 0;
+  if (current >= MAX_CONCURRENT_PER_USER) {
+    res.status(429).json({
+      error: `Trop de transcriptions simultanées. Attendez la fin d'une requête en cours.`,
+    });
+    return;
+  }
+  activeUploads.set(userId, current + 1);
+  // Decrement exactly once when the response ends (finish covers normal
+  // completion; close covers aborted connections that never emit finish).
+  let released = false;
+  const release = () => {
+    if (released) return;
+    released = true;
+    const n = (activeUploads.get(userId) ?? 1) - 1;
+    if (n <= 0) activeUploads.delete(userId);
+    else activeUploads.set(userId, n);
+  };
+  res.on("finish", release);
+  res.on("close", release);
+  next();
+}
+
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
@@ -103,10 +138,9 @@ function uploadOne(req: Request, res: Response, next: NextFunction) {
 }
 
 // ── Route ────────────────────────────────────────────────────────
-// Order: requireAuth → requireRateLimit → uploadOne → handler
-// Rate limiting runs before multer so over-quota requests are rejected
-// before any upload memory is allocated.
-router.post("/ai/transcribe", requireAuth, requireRateLimit, uploadOne, async (req, res) => {
+// Order: requireAuth → requireRateLimit → requireConcurrencySlot → uploadOne → handler
+// Both guards run before multer so rejected requests never touch RAM.
+router.post("/ai/transcribe", requireAuth, requireRateLimit, requireConcurrencySlot, uploadOne, async (req, res) => {
   const userId = req.user!.id;
 
   try {

@@ -486,6 +486,22 @@ Guidelines:
 }
 
 router.post("/ai/chat", async (req, res) => {
+  // ── Authentication guard ───────────────────────────────────────
+  // The mobile app already gates the chat UI behind isAuthenticated, but the
+  // server must enforce the same rule so the endpoint cannot be used as a
+  // public OpenAI proxy by callers who bypass the app.
+  const { language: bodyLanguage = "fr" } = req.body as { language?: string };
+  const sid = getSessionId(req);
+  const session = sid ? await getSession(sid) : null;
+  if (!session?.user?.id) {
+    res.status(401).json({
+      error: bodyLanguage === "en"
+        ? "AI chat is reserved for signed-in members."
+        : "Le chat IA est réservé aux membres connectés.",
+    });
+    return;
+  }
+
   const { message, language = "fr", history = [] } = req.body as {
     message: string;
     language?: string;
