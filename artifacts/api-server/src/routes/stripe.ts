@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { getUncachableStripeClient } from "../stripeClient";
 import { logger } from "../lib/logger";
-import { db, subscriptionsTable, usersTable } from "@workspace/db";
-import { eq, or } from "drizzle-orm";
+import { db, subscriptionsTable, usersTable, organisationsTable, organisationMembersTable } from "@workspace/db";
+import { and, eq, or } from "drizzle-orm";
 import { getSession, getSessionId } from "../lib/auth.js";
 
 const stripeRouter = Router();
@@ -137,8 +137,47 @@ export async function handleStripeWebhook(req: any, res: any) {
 // ─────────────────────────────────────────────
 stripeRouter.post("/stripe/create-checkout-session", async (req, res) => {
   try {
+    const sid = getSessionId(req);
+    const authSession = sid ? await getSession(sid) : null;
+    if (!authSession?.user) {
+      res.status(401).json({ error: "Authentification requise." });
+      return;
+    }
+    const sessionUserId = authSession.user.id;
+
     const stripe = await getUncachableStripeClient();
     const { email, userId, organisationId, plan = "standard", interval = "monthly" } = req.body || {};
+
+    // If an organisationId is provided, verify the authenticated user owns or belongs to that org
+    if (organisationId) {
+      const [org] = await db
+        .select({ id: organisationsTable.id })
+        .from(organisationsTable)
+        .where(eq(organisationsTable.id, organisationId))
+        .limit(1);
+
+      if (!org) {
+        res.status(404).json({ error: "Organisation introuvable." });
+        return;
+      }
+
+      const [membership] = await db
+        .select({ id: organisationMembersTable.id })
+        .from(organisationMembersTable)
+        .where(
+          and(
+            eq(organisationMembersTable.organisationId, organisationId),
+            eq(organisationMembersTable.userId, sessionUserId),
+            eq(organisationMembersTable.status, "active"),
+          ),
+        )
+        .limit(1);
+
+      if (!membership) {
+        res.status(403).json({ error: "Accès refusé à cette organisation." });
+        return;
+      }
+    }
 
     const planKey: PlanKey =
       plan === "plus"
@@ -235,10 +274,36 @@ stripeRouter.post("/stripe/create-user-premium-session", async (req, res) => {
 // ─────────────────────────────────────────────
 stripeRouter.post("/stripe/billing-portal", async (req, res) => {
   try {
+    const sid = getSessionId(req);
+    const authSession = sid ? await getSession(sid) : null;
+    if (!authSession?.user) {
+      res.status(401).json({ error: "Authentification requise." });
+      return;
+    }
+    const sessionUserId = authSession.user.id;
+
     const stripe = await getUncachableStripeClient();
     const { organisationId } = req.body || {};
     if (!organisationId) {
       res.status(400).json({ error: "organisationId required" });
+      return;
+    }
+
+    // Verify the authenticated user owns or is an active member of the requested organisation
+    const [membership] = await db
+      .select({ id: organisationMembersTable.id })
+      .from(organisationMembersTable)
+      .where(
+        and(
+          eq(organisationMembersTable.organisationId, organisationId),
+          eq(organisationMembersTable.userId, sessionUserId),
+          eq(organisationMembersTable.status, "active"),
+        ),
+      )
+      .limit(1);
+
+    if (!membership) {
+      res.status(403).json({ error: "Accès refusé à cette organisation." });
       return;
     }
 
