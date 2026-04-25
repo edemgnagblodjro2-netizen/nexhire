@@ -80,6 +80,10 @@ externalPort = 8008
 localPort = 23749
 externalPort = 6800
 
+[[ports]]
+localPort = 23750
+externalPort = 9000
+
 [nix]
 channel = "stable-25_05"
 packages = ["zip"]
