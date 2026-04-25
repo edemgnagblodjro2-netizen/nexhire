@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { db, servicesTable, organisationsTable, subscriptionsTable } from "@workspace/db";
+import { db, servicesTable, organisationsTable, subscriptionsTable, verificationRequestsTable } from "@workspace/db";
 import { and, asc, count, desc, eq, ilike, inArray, isNull, isNotNull, or, sql } from "drizzle-orm";
 import { logger } from "../lib/logger";
 
@@ -23,11 +23,20 @@ function requireAdminKey(req: any, res: any, next: any) {
 servicesRouter.get("/services", async (_req, res) => {
   try {
     const featured = sql<boolean>`(${subscriptionsTable.plan} = 'plus' AND ${subscriptionsTable.status} IN ('active','trialing'))`;
+    const badgeValid = sql<boolean>`(
+      ${organisationsTable.badgeVerified} = true
+      AND EXISTS (
+        SELECT 1 FROM ${verificationRequestsTable}
+        WHERE ${verificationRequestsTable.organisationId} = ${organisationsTable.id}
+          AND ${verificationRequestsTable.status} IN ('approved', 'auto_approved')
+          AND ${verificationRequestsTable.expiresAt} > now()
+      )
+    )`;
     const rows = await db
       .select({
         service: servicesTable,
         organisationId: organisationsTable.id,
-        badgeVerified: organisationsTable.badgeVerified,
+        badgeVerified: badgeValid,
         featured,
       })
       .from(servicesTable)

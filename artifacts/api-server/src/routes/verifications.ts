@@ -194,9 +194,9 @@ router.post("/org/verification/request", async (req, res) => {
   const expiresAt = new Date();
   expiresAt.setMonth(expiresAt.getMonth() + BADGE_VALIDITY_MONTHS);
 
-  // If auto-check passes AND ARC charity provided → auto-approve.
-  // Otherwise → queue for manual admin review.
-  const autoApprove = auto.passed && !!parsed.data.arcCharityNumber;
+  // All verification requests are queued for manual admin review.
+  // Format checks are informational only — no badge is ever issued automatically.
+  const autoApprove = false;
 
   const [created] = await db
     .insert(verificationRequestsTable)

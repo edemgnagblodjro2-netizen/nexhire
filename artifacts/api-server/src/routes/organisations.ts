@@ -1,6 +1,6 @@
 import { Router, type IRouter, type Request, type Response } from "express";
-import { db, organisationsTable, subscriptionsTable, serviceViewsTable } from "@workspace/db";
-import { eq, and, gte, sql } from "drizzle-orm";
+import { db, organisationsTable, subscriptionsTable, serviceViewsTable, servicesTable } from "@workspace/db";
+import { eq, and, gte, sql, count } from "drizzle-orm";
 import { z } from "zod";
 
 const router: IRouter = Router();
@@ -130,12 +130,26 @@ router.patch("/organisations/me", async (req, res) => {
   res.json({ organisation: updated });
 });
 
-// POST /api/services/:id/track — log a view/call/click event (no auth required)
+// POST /api/services/:id/track — log a view/call/click event (auth required)
+//
+// Anti-abuse controls (applied in order, cheapest first):
+//  1. Authentication — anonymous callers are rejected (401).
+//  2. Service existence — only active services can receive events (404).
+//  3. Per-user global rate limit — a single authenticated user may record at
+//     most TRACK_HOURLY_USER_CAP events across all services within any rolling
+//     1-hour window. Prevents bulk flooding from a single account.
+//  4. Per-user per-service deduplication — a (user, service, action) triple is
+//     accepted at most once per TRACK_DEDUP_MINUTES window. Prevents the same
+//     account from repeatedly boosting one service's counter.
 const TrackBody = z.object({
   action: z.enum(["view", "call", "click"]).default("view"),
 });
 
+const TRACK_HOURLY_USER_CAP = 30;
+const TRACK_DEDUP_MINUTES = 30;
+
 router.post("/services/:id/track", async (req, res) => {
+  if (!requireAuth(req, res)) return;
   const serviceId = req.params.id;
   if (!serviceId) {
     res.status(400).json({ error: "Service ID requis." });
@@ -146,11 +160,52 @@ router.post("/services/:id/track", async (req, res) => {
     res.status(400).json({ error: "Action invalide." });
     return;
   }
+  const userId = req.user!.id;
   try {
+    const [service] = await db
+      .select({ id: servicesTable.id })
+      .from(servicesTable)
+      .where(and(eq(servicesTable.id, serviceId), eq(servicesTable.active, true)))
+      .limit(1);
+    if (!service) {
+      res.status(404).json({ error: "Service introuvable." });
+      return;
+    }
+
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+    const dedupWindowAgo = new Date(Date.now() - TRACK_DEDUP_MINUTES * 60 * 1000);
+
+    const [[hourlyRow], [dedupRow]] = await Promise.all([
+      db
+        .select({ total: count() })
+        .from(serviceViewsTable)
+        .where(and(eq(serviceViewsTable.userId, userId), gte(serviceViewsTable.createdAt, oneHourAgo))),
+      db
+        .select({ total: count() })
+        .from(serviceViewsTable)
+        .where(
+          and(
+            eq(serviceViewsTable.userId, userId),
+            eq(serviceViewsTable.serviceId, serviceId),
+            eq(serviceViewsTable.action, parsed.data.action),
+            gte(serviceViewsTable.createdAt, dedupWindowAgo),
+          ),
+        ),
+    ]);
+
+    if ((hourlyRow?.total ?? 0) >= TRACK_HOURLY_USER_CAP) {
+      res.status(429).json({ error: "Limite d'événements atteinte. Veuillez réessayer plus tard." });
+      return;
+    }
+    if ((dedupRow?.total ?? 0) > 0) {
+      res.json({ success: true, deduplicated: true });
+      return;
+    }
+
     await db.insert(serviceViewsTable).values({
       serviceId,
       action: parsed.data.action,
-      userId: req.user?.id ?? null,
+      userId,
     });
     res.json({ success: true });
   } catch (err) {
