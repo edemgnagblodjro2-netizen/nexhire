@@ -24,9 +24,12 @@ type WaitStats = {
   serviceId: string;
   windowMinutes: number;
   minReports: number;
-  sampleCount: number;
+  // sampleCount and lastReportedAt are only present when sampleCount >= minReports.
+  // The server suppresses them for low-volume services to avoid leaking near-real-time
+  // activity signals at sensitive locations (shelters, crisis lines, food banks).
+  sampleCount?: number;
   medianMinutes: number | null;
-  lastReportedAt: string | null;
+  lastReportedAt?: string | null;
 };
 
 type Status = "idle" | "loading" | "submitting" | "sent" | "rate-limited" | "error";
@@ -129,12 +132,15 @@ export default function WaitTimeWidget({
           setErrorText((j as { error?: string }).error ?? t.waitReportError);
           return;
         }
-        const json = (await res.json()) as { sampleCount: number; medianMinutes: number | null };
-        setStats((prev) =>
-          prev
-            ? { ...prev, sampleCount: json.sampleCount, medianMinutes: json.medianMinutes, lastReportedAt: new Date().toISOString() }
-            : prev,
-        );
+        const json = (await res.json()) as { sampleCount: number | null; medianMinutes: number | null };
+        setStats((prev) => {
+          if (!prev) return prev;
+          const patch: Partial<WaitStats> = { medianMinutes: json.medianMinutes };
+          // Only update sampleCount when the server returns a real count
+          // (i.e. when the service has crossed the minimum-reports threshold).
+          if (json.sampleCount != null) patch.sampleCount = json.sampleCount;
+          return { ...prev, ...patch };
+        });
         setStatus("sent");
         setPickerOpen(false);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
