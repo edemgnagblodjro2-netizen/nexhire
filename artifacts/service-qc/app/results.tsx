@@ -15,7 +15,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ServiceCard } from "@/components/ServiceCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "@/contexts/LocationContext";
-import type { Category } from "@/data/services";
+import type { Category, ProvinceCode } from "@/data/services";
+import { PROVINCE_LABELS } from "@/data/services";
 import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor, CATEGORY_ICONS } from "@/utils/categoryColors";
@@ -64,11 +65,18 @@ export default function ResultsScreen() {
       const matchesCategory =
         selectedCategory === "all" || s.category === selectedCategory;
       if (!q) return matchesCategory;
+      // Province label match: when the user opens results from the province
+      // carousel ("Ontario", "Colombie-Britannique", etc.), every service of
+      // that province should appear, even if the city is "Toronto" or
+      // "Vancouver" and the word "Ontario" never appears in name/city/desc.
+      const provinceLabel = (PROVINCE_LABELS[(s.province ?? "QC") as ProvinceCode] ?? "").toLowerCase();
       const matchesText =
         s.name.toLowerCase().includes(q) ||
         s.city.toLowerCase().includes(q) ||
         s.description.toLowerCase().includes(q) ||
-        (s.subcategory ?? "").toLowerCase().includes(q);
+        (s.subcategory ?? "").toLowerCase().includes(q) ||
+        provinceLabel.includes(q) ||
+        (s.province ?? "").toLowerCase() === q;
       return matchesCategory && matchesText;
     });
 
