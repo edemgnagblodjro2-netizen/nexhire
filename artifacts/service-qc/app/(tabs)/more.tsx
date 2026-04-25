@@ -9,6 +9,7 @@ import {
   Platform,
   Pressable,
   ScrollView,
+  Share,
   StyleSheet,
   Text,
   View,
@@ -241,6 +242,49 @@ export default function MoreScreen() {
               <View style={styles.premiumOrb1} />
               <View style={styles.premiumOrb2} />
             </LinearGradient>
+          </Pressable>
+
+          {/* ── Invite a friend / family member ── */}
+          <Pressable
+            onPress={async () => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              const url = "https://attentezero.replit.app";
+              const message = isFr
+                ? `J'utilise AttenteZéro pour trouver des services communautaires au Québec — c'est gratuit et ça peut aider quelqu'un autour de toi.\n\n${url}`
+                : `I'm using AttenteZéro to find community services in Quebec — it's free and could help someone around you.\n\n${url}`;
+              try {
+                await Share.share(
+                  Platform.OS === "ios"
+                    ? { message, url }
+                    : { message, title: "AttenteZéro" },
+                );
+              } catch {
+                // user cancelled or share unavailable
+              }
+            }}
+            style={({ pressed }) => [
+              styles.inviteCard,
+              {
+                backgroundColor: isDark ? "#052e1c" : "#ecfdf5",
+                borderColor: isDark ? "#065f46" : "#a7f3d0",
+                opacity: pressed ? 0.85 : 1,
+              },
+            ]}
+          >
+            <View style={[styles.inviteIcon, { backgroundColor: isDark ? "#0a6558" : "#10b981" }]}>
+              <Feather name="user-plus" size={20} color="#ffffff" />
+            </View>
+            <View style={styles.inviteText}>
+              <Text style={[styles.inviteTitle, { color: colors.foreground }]} numberOfLines={1}>
+                {isFr ? "Inviter un proche" : "Invite someone"}
+              </Text>
+              <Text style={[styles.inviteDesc, { color: colors.mutedForeground }]} numberOfLines={2}>
+                {isFr
+                  ? "Partagez l'application avec une personne qui pourrait en avoir besoin."
+                  : "Share the app with someone who might need it."}
+              </Text>
+            </View>
+            <Feather name="share-2" size={18} color={isDark ? "#34d399" : "#0e7e6e"} />
           </Pressable>
 
           {/* ── Free vs Premium quick compare ── */}
@@ -626,6 +670,26 @@ const styles = StyleSheet.create({
   compareRow: { flexDirection: "row", alignItems: "center", gap: 6 },
   compareText: { fontSize: 13, fontFamily: "Inter_400Regular" },
   compareDivider: { width: 1, alignSelf: "stretch" },
+
+  /* Invite card */
+  inviteCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    padding: 14,
+    borderRadius: 14,
+    borderWidth: 1,
+  },
+  inviteIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inviteText: { flex: 1, gap: 2 },
+  inviteTitle: { fontSize: 15, fontFamily: "Inter_700Bold" },
+  inviteDesc: { fontSize: 12, fontFamily: "Inter_400Regular", lineHeight: 16 },
 
   /* Reminder banner */
   reminderBanner: {
