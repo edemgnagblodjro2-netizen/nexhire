@@ -148,7 +148,7 @@ stripeRouter.post("/stripe/create-checkout-session", async (req, res) => {
     const stripe = await getUncachableStripeClient();
     const { email, userId, organisationId, plan = "standard", interval = "monthly" } = req.body || {};
 
-    // If an organisationId is provided, verify the authenticated user owns or belongs to that org
+    // If an organisationId is provided, verify the authenticated user is an owner or admin of that org
     if (organisationId) {
       const [org] = await db
         .select({ id: organisationsTable.id })
@@ -162,7 +162,7 @@ stripeRouter.post("/stripe/create-checkout-session", async (req, res) => {
       }
 
       const [membership] = await db
-        .select({ id: organisationMembersTable.id })
+        .select({ id: organisationMembersTable.id, role: organisationMembersTable.role })
         .from(organisationMembersTable)
         .where(
           and(
@@ -173,8 +173,8 @@ stripeRouter.post("/stripe/create-checkout-session", async (req, res) => {
         )
         .limit(1);
 
-      if (!membership) {
-        res.status(403).json({ error: "Accès refusé à cette organisation." });
+      if (!membership || !["owner", "admin"].includes(membership.role)) {
+        res.status(403).json({ error: "Accès refusé : rôle propriétaire ou administrateur requis." });
         return;
       }
     }
@@ -289,9 +289,9 @@ stripeRouter.post("/stripe/billing-portal", async (req, res) => {
       return;
     }
 
-    // Verify the authenticated user owns or is an active member of the requested organisation
+    // Verify the authenticated user is an owner or admin of the requested organisation
     const [membership] = await db
-      .select({ id: organisationMembersTable.id })
+      .select({ id: organisationMembersTable.id, role: organisationMembersTable.role })
       .from(organisationMembersTable)
       .where(
         and(
@@ -302,8 +302,8 @@ stripeRouter.post("/stripe/billing-portal", async (req, res) => {
       )
       .limit(1);
 
-    if (!membership) {
-      res.status(403).json({ error: "Accès refusé à cette organisation." });
+    if (!membership || !["owner", "admin"].includes(membership.role)) {
+      res.status(403).json({ error: "Accès refusé : rôle propriétaire ou administrateur requis." });
       return;
     }
 
@@ -377,14 +377,19 @@ stripeRouter.post("/stripe/user-portal", async (req, res) => {
 });
 
 // ─────────────────────────────────────────────
-// GET /api/stripe/subscription-status?userId=...&email=...
+// GET /api/stripe/subscription-status
+// Requires authentication — returns the subscription status for the current user only.
 // ─────────────────────────────────────────────
 stripeRouter.get("/stripe/subscription-status", async (req, res) => {
   try {
-    const stripe = await getUncachableStripeClient();
-    const { email } = req.query as { email?: string };
+    const sid = getSessionId(req);
+    const authSession = sid ? await getSession(sid) : null;
+    if (!authSession?.user?.email) {
+      return res.status(401).json({ error: "Authentification requise." });
+    }
+    const email = authSession.user.email;
 
-    if (!email) return res.json({ active: false });
+    const stripe = await getUncachableStripeClient();
 
     const customers = await stripe.customers.list({ email, limit: 1 });
     if (!customers.data.length) return res.json({ active: false });
@@ -413,26 +418,44 @@ stripeRouter.get("/stripe/subscription-status", async (req, res) => {
 
 // ─────────────────────────────────────────────
 // GET /api/stripe/session-receipt?session_id=...
-// Returns JSON receipt data for the app
+// Requires authentication — returns receipt data only for the authenticated user's own session.
 // ─────────────────────────────────────────────
 stripeRouter.get("/stripe/session-receipt", async (req, res) => {
   try {
+    const sid = getSessionId(req);
+    const authSession = sid ? await getSession(sid) : null;
+    if (!authSession?.user) {
+      return res.status(401).json({ error: "Authentification requise." });
+    }
+    const sessionUserEmail = authSession.user.email;
+    const sessionUserId = authSession.user.id;
+
     const stripe = await getUncachableStripeClient();
     const { session_id } = req.query as { session_id: string };
 
     if (!session_id) return res.status(400).json({ error: "Missing session_id" });
 
-
     const session = await stripe.checkout.sessions.retrieve(session_id, {
       expand: ["subscription", "customer"],
     });
 
+    // Verify this session belongs to the authenticated user (by email or userId in metadata)
     const customer = session.customer as any;
+    const sessionEmail = customer?.email || session.customer_email;
+    const metaUserId = session.metadata?.userId;
+    const ownsSession =
+      (sessionUserEmail && sessionEmail && sessionEmail.toLowerCase() === sessionUserEmail.toLowerCase()) ||
+      (metaUserId && metaUserId === sessionUserId);
+
+    if (!ownsSession) {
+      return res.status(403).json({ error: "Accès refusé à ce reçu." });
+    }
+
     const sub = session.subscription as any;
 
     return res.json({
       status: session.payment_status,
-      customerEmail: customer?.email || session.customer_email,
+      customerEmail: sessionEmail,
       customerName: customer?.name || null,
       amount: session.amount_total ? session.amount_total / 100 : 5,
       currency: (session.currency || "cad").toUpperCase(),
@@ -448,13 +471,27 @@ stripeRouter.get("/stripe/session-receipt", async (req, res) => {
 });
 
 // ─────────────────────────────────────────────
+// Helper: HTML-escape a string to prevent XSS in server-rendered HTML
+// ─────────────────────────────────────────────
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+// ─────────────────────────────────────────────
 // GET /api/stripe/payment-success?session_id=...
 // HTML receipt page (opens in WebBrowser after payment)
 // ─────────────────────────────────────────────
 stripeRouter.get("/stripe/payment-success", async (req, res) => {
   try {
     const stripe = await getUncachableStripeClient();
-    const { session_id } = req.query as { session_id?: string };
+    // Validate: session IDs are alphanumeric with underscores only
+    const rawSessionId = typeof req.query.session_id === "string" ? req.query.session_id : "";
+    const session_id = /^[a-zA-Z0-9_]+$/.test(rawSessionId) ? rawSessionId : "";
 
     let amount = "5,00";
     let currency = "CAD";
@@ -487,8 +524,16 @@ stripeRouter.get("/stripe/payment-success", async (req, res) => {
       } catch (_) {}
     }
 
-    // Deep link back to the app
-    const deepLink = `service-qc://payment-success?session_id=${session_id || ""}`;
+    // Deep link back to the app — URL-encode the session_id, then HTML-escape the href
+    const deepLink = escapeHtml(`service-qc://payment-success?session_id=${encodeURIComponent(session_id)}`);
+
+    // HTML-escape all values that go into the page
+    const safeAmount = escapeHtml(amount);
+    const safeCurrency = escapeHtml(currency);
+    const safePlan = escapeHtml(plan);
+    const safeDateStr = escapeHtml(dateStr);
+    const safeEmail = escapeHtml(email);
+    const safeTxId = escapeHtml(txId);
 
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.send(`<!DOCTYPE html>
@@ -645,24 +690,24 @@ stripeRouter.get("/stripe/payment-success", async (req, res) => {
     <div class="amount-box">
       <div class="amount-label">Montant payé</div>
       <div>
-        <span class="amount-value">${amount} $</span>
-        <span class="amount-currency">${currency}</span>
+        <span class="amount-value">${safeAmount} $</span>
+        <span class="amount-currency">${safeCurrency}</span>
       </div>
     </div>
 
     <div class="rows">
       <div class="row">
         <span class="row-label">Plan</span>
-        <span class="plan-badge">⭐ Premium ${plan}</span>
+        <span class="plan-badge">⭐ Premium ${safePlan}</span>
       </div>
       <div class="row">
         <span class="row-label">Date</span>
-        <span class="row-value">${dateStr}</span>
+        <span class="row-value">${safeDateStr}</span>
       </div>
-      ${email ? `<div class="row"><span class="row-label">Courriel</span><span class="row-value">${email}</span></div>` : ""}
+      ${safeEmail ? `<div class="row"><span class="row-label">Courriel</span><span class="row-value">${safeEmail}</span></div>` : ""}
       <div class="row">
         <span class="row-label">Référence</span>
-        <span class="row-value" style="font-size:11px;color:#94a3b8">${txId}</span>
+        <span class="row-value" style="font-size:11px;color:#94a3b8">${safeTxId}</span>
       </div>
       <div class="row">
         <span class="row-label">État</span>
