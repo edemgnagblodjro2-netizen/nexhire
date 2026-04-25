@@ -13,6 +13,7 @@ async function seed() {
     category: s.category,
     subcategory: s.subcategory ?? "",
     city: s.city ?? "",
+    province: s.province ?? "QC",
     phone: s.phone ?? "",
     website: s.website ?? "",
     description: s.description ?? "",

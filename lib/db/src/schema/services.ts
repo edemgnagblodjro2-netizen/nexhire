@@ -9,6 +9,7 @@ export const servicesTable = pgTable(
     category: text("category").notNull(),
     subcategory: text("subcategory").notNull().default(""),
     city: text("city").notNull().default(""),
+    province: text("province").notNull().default("QC"),
     phone: text("phone").notNull().default(""),
     website: text("website").notNull().default(""),
     description: text("description").notNull().default(""),

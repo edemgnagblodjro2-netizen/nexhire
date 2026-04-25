@@ -17,12 +17,38 @@ export interface Coordinates {
   lng: number;
 }
 
+export type ProvinceCode =
+  | "QC"
+  | "ON"
+  | "BC"
+  | "AB"
+  | "MB"
+  | "SK"
+  | "NB"
+  | "NS"
+  | "PE"
+  | "NL";
+
+export const PROVINCE_LABELS: Record<ProvinceCode, string> = {
+  QC: "Québec",
+  ON: "Ontario",
+  BC: "Colombie-Britannique",
+  AB: "Alberta",
+  MB: "Manitoba",
+  SK: "Saskatchewan",
+  NB: "Nouveau-Brunswick",
+  NS: "Nouvelle-Écosse",
+  PE: "Île-du-Prince-Édouard",
+  NL: "Terre-Neuve-et-Labrador",
+};
+
 export interface Service {
   id: string;
   name: string;
   category: Category;
   subcategory: string;
   city: string;
+  province?: ProvinceCode;
   phone: string;
   website?: string;
   description: string;
@@ -8176,7 +8202,297 @@ export const SERVICES: Service[] = [
     coordinates: { lat: 46.3465, lng: -72.5420 },
   },
 
+  // ─── ONTARIO ────────────────────────────────────────────────────────────
+  {
+    id: "on-serviceontario-bay",
+    name: "ServiceOntario — Bay & College (Toronto)",
+    category: "administrative",
+    subcategory: "Permis, santé (OHIP), immatriculation",
+    city: "Toronto",
+    province: "ON",
+    phone: "1-800-267-8097",
+    website: "https://www.ontario.ca/page/serviceontario",
+    description: "Bureau central ServiceOntario : carte santé OHIP, permis de conduire, immatriculation des véhicules, certificat de naissance, changement d'adresse. Service en français disponible.",
+    hours: "Lun-Ven 8h30-17h, Sam 8h30-13h",
+    address: "777 Bay St, Toronto, ON M5G 2C8",
+    coordinates: { lat: 43.6608, lng: -79.3855 },
+    isProvinceWide: true,
+  },
+  {
+    id: "on-service-canada-toronto",
+    name: "Service Canada — Centre Toronto Nord",
+    category: "administrative",
+    subcategory: "NAS, passeport, AE, SV/RPC",
+    city: "Toronto",
+    province: "ON",
+    phone: "1-800-622-6232",
+    website: "https://www.canada.ca/fr/emploi-developpement-social/ministere/service-canada.html",
+    description: "Bureau Service Canada : numéro d'assurance sociale (NAS), passeport canadien, assurance-emploi (AE), Sécurité de la vieillesse, RPC, prestations pour enfants. Service bilingue.",
+    hours: "Lun-Ven 8h30-16h",
+    address: "25 St Clair Ave E, Toronto, ON M4T 1M4",
+    coordinates: { lat: 43.6859, lng: -79.3914 },
+    isProvinceWide: true,
+  },
+
+  // ─── COLOMBIE-BRITANNIQUE ───────────────────────────────────────────────
+  {
+    id: "bc-servicebc-vancouver",
+    name: "Service BC — Centre Vancouver",
+    category: "administrative",
+    subcategory: "Carte santé, permis, aides",
+    city: "Vancouver",
+    province: "BC",
+    phone: "1-800-663-7867",
+    website: "https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/ministries/citizens-services/servicebc",
+    description: "Bureau Service BC : carte BC Services Card (santé), permis de conduire (via ICBC), enregistrement civil (naissance/mariage/décès), aides provinciales, paiements gouvernementaux.",
+    hours: "Lun-Ven 8h30-16h30",
+    address: "605 Robson St, Vancouver, BC V6B 5J3",
+    coordinates: { lat: 49.2806, lng: -123.1182 },
+    isProvinceWide: true,
+  },
+  {
+    id: "bc-service-canada-vancouver",
+    name: "Service Canada — Centre Vancouver",
+    category: "administrative",
+    subcategory: "NAS, passeport, AE, SV/RPC",
+    city: "Vancouver",
+    province: "BC",
+    phone: "1-800-622-6232",
+    website: "https://www.canada.ca/fr/emploi-developpement-social/ministere/service-canada.html",
+    description: "Bureau Service Canada : NAS, passeport canadien, AE, Sécurité de la vieillesse, RPC. Service bilingue.",
+    hours: "Lun-Ven 8h30-16h",
+    address: "125 East 10th Ave, Vancouver, BC V5T 1Z3",
+    coordinates: { lat: 49.2618, lng: -123.1006 },
+    isProvinceWide: true,
+  },
+
+  // ─── ALBERTA ────────────────────────────────────────────────────────────
+  {
+    id: "ab-service-alberta-edmonton",
+    name: "Service Alberta — Edmonton (registres)",
+    category: "administrative",
+    subcategory: "Registres, permis, documents",
+    city: "Edmonton",
+    province: "AB",
+    phone: "780-427-7013",
+    website: "https://www.alberta.ca/service-alberta",
+    description: "Service Alberta : registres fonciers, registres corporatifs, registres de véhicules, permis. Comptes-rendus officiels et certificats.",
+    hours: "Lun-Ven 8h15-16h30",
+    address: "10365 97 St NW, Edmonton, AB T5J 3W7",
+    coordinates: { lat: 53.5447, lng: -113.4914 },
+    isProvinceWide: true,
+  },
+  {
+    id: "ab-service-canada-calgary",
+    name: "Service Canada — Centre Calgary Harry Hays",
+    category: "administrative",
+    subcategory: "NAS, passeport, AE, SV/RPC",
+    city: "Calgary",
+    province: "AB",
+    phone: "1-800-622-6232",
+    website: "https://www.canada.ca/fr/emploi-developpement-social/ministere/service-canada.html",
+    description: "Bureau Service Canada Harry Hays : NAS, passeport canadien, AE, Sécurité de la vieillesse, RPC, prestations pour enfants. Service bilingue.",
+    hours: "Lun-Ven 8h30-16h",
+    address: "220 4 Ave SE, Calgary, AB T2G 4X3",
+    coordinates: { lat: 51.0473, lng: -114.0567 },
+    isProvinceWide: true,
+  },
+
+  // ─── MANITOBA ───────────────────────────────────────────────────────────
+  {
+    id: "mb-gov-inquiry-winnipeg",
+    name: "Manitoba Government Inquiry — Winnipeg",
+    category: "administrative",
+    subcategory: "Santé, permis, aides sociales",
+    city: "Winnipeg",
+    province: "MB",
+    phone: "1-866-626-4862",
+    website: "https://www.gov.mb.ca",
+    description: "Renseignements généraux du gouvernement du Manitoba : carte santé, permis de conduire, aide à l'emploi et au revenu, services pour familles et aînés.",
+    hours: "Lun-Ven 8h-18h",
+    address: "450 Broadway, Winnipeg, MB R3C 0V8",
+    coordinates: { lat: 49.8866, lng: -97.1494 },
+    isProvinceWide: true,
+  },
+  {
+    id: "mb-service-canada-winnipeg",
+    name: "Service Canada — Centre Winnipeg",
+    category: "administrative",
+    subcategory: "NAS, passeport, AE, SV/RPC",
+    city: "Winnipeg",
+    province: "MB",
+    phone: "1-800-622-6232",
+    website: "https://www.canada.ca/fr/emploi-developpement-social/ministere/service-canada.html",
+    description: "Bureau Service Canada : NAS, passeport, AE, Sécurité de la vieillesse, RPC, prestations pour enfants. Service bilingue.",
+    hours: "Lun-Ven 8h30-16h",
+    address: "391 York Ave, Winnipeg, MB R3C 0P4",
+    coordinates: { lat: 49.8916, lng: -97.1485 },
+    isProvinceWide: true,
+  },
+
+  // ─── SASKATCHEWAN ───────────────────────────────────────────────────────
+  {
+    id: "sk-isc-regina",
+    name: "Information Services Corporation (ISC) — Regina",
+    category: "administrative",
+    subcategory: "Assurance auto, santé, permis",
+    city: "Regina",
+    province: "SK",
+    phone: "1-866-275-4721",
+    website: "https://www.isc.ca",
+    description: "Registres provinciaux de la Saskatchewan : titres fonciers, registres corporatifs, sûretés mobilières. Carte santé via eHealth Saskatchewan ; permis et immatriculation via SGI.",
+    hours: "Lun-Ven 8h-17h",
+    address: "1301 1st Ave, Regina, SK S4R 8H2",
+    coordinates: { lat: 50.4501, lng: -104.6178 },
+    isProvinceWide: true,
+  },
+  {
+    id: "sk-service-canada-regina",
+    name: "Service Canada — Centre Regina",
+    category: "administrative",
+    subcategory: "NAS, passeport, AE, SV/RPC",
+    city: "Regina",
+    province: "SK",
+    phone: "1-800-622-6232",
+    website: "https://www.canada.ca/fr/emploi-developpement-social/ministere/service-canada.html",
+    description: "Bureau Service Canada : NAS, passeport canadien, AE, Sécurité de la vieillesse, RPC. Service bilingue.",
+    hours: "Lun-Ven 8h30-16h",
+    address: "1783 Hamilton St, Regina, SK S4P 2B6",
+    coordinates: { lat: 50.4519, lng: -104.6131 },
+    isProvinceWide: true,
+  },
+
+  // ─── NOUVEAU-BRUNSWICK ──────────────────────────────────────────────────
+  {
+    id: "nb-snb-fredericton",
+    name: "Service Nouveau-Brunswick — Fredericton",
+    category: "administrative",
+    subcategory: "Documents, santé, services publics",
+    city: "Fredericton",
+    province: "NB",
+    phone: "1-888-762-8600",
+    website: "https://www2.snb.ca",
+    description: "Service Nouveau-Brunswick : carte d'assurance-maladie (Medicare NB), permis de conduire, immatriculation, certificats vitaux, paiement de taxes et factures. Service entièrement bilingue.",
+    hours: "Lun-Ven 8h15-17h",
+    address: "432 rue Queen, Fredericton, NB E3B 1B6",
+    coordinates: { lat: 45.9636, lng: -66.6431 },
+    isProvinceWide: true,
+  },
+  {
+    id: "nb-service-canada-fredericton",
+    name: "Service Canada — Centre Fredericton",
+    category: "administrative",
+    subcategory: "NAS, passeport, AE, SV/RPC",
+    city: "Fredericton",
+    province: "NB",
+    phone: "1-800-622-6232",
+    website: "https://www.canada.ca/fr/emploi-developpement-social/ministere/service-canada.html",
+    description: "Bureau Service Canada : NAS, passeport canadien, AE, Sécurité de la vieillesse, RPC, prestations pour enfants. Service entièrement bilingue.",
+    hours: "Lun-Ven 8h30-16h",
+    address: "633 rue Queen, Fredericton, NB E3B 1C3",
+    coordinates: { lat: 45.9628, lng: -66.6402 },
+    isProvinceWide: true,
+  },
+
+  // ─── NOUVELLE-ÉCOSSE ────────────────────────────────────────────────────
+  {
+    id: "ns-access-ns-halifax",
+    name: "Access Nova Scotia — Halifax",
+    category: "administrative",
+    subcategory: "Permis, santé, registres",
+    city: "Halifax",
+    province: "NS",
+    phone: "1-800-670-4357",
+    website: "https://beta.novascotia.ca/access-nova-scotia-centres",
+    description: "Centre Access Nova Scotia : carte santé MSI, permis de conduire, immatriculation, certificats vitaux, registres fonciers, examens de conduite.",
+    hours: "Lun-Ven 8h30-16h30",
+    address: "300 Horseshoe Lake Dr, Halifax, NS B3S 0B7",
+    coordinates: { lat: 44.6651, lng: -63.6724 },
+    isProvinceWide: true,
+  },
+  {
+    id: "ns-service-canada-halifax",
+    name: "Service Canada — Centre Halifax",
+    category: "administrative",
+    subcategory: "NAS, passeport, AE, SV/RPC",
+    city: "Halifax",
+    province: "NS",
+    phone: "1-800-622-6232",
+    website: "https://www.canada.ca/fr/emploi-developpement-social/ministere/service-canada.html",
+    description: "Bureau Service Canada : NAS, passeport canadien, AE, Sécurité de la vieillesse, RPC, prestations pour enfants. Service bilingue.",
+    hours: "Lun-Ven 8h30-16h",
+    address: "6009 Quinpool Rd, Halifax, NS B3K 5J7",
+    coordinates: { lat: 44.6477, lng: -63.6010 },
+    isProvinceWide: true,
+  },
+
+  // ─── ÎLE-DU-PRINCE-ÉDOUARD ──────────────────────────────────────────────
+  {
+    id: "pe-access-pei-charlottetown",
+    name: "Access PEI — Charlottetown",
+    category: "administrative",
+    subcategory: "Santé, permis, services locaux",
+    city: "Charlottetown",
+    province: "PE",
+    phone: "1-902-368-5200",
+    website: "https://www.princeedwardisland.ca/en/information/transportation-and-infrastructure/access-pei-locations",
+    description: "Centre Access PEI : carte santé Î.-P.-É., permis de conduire, immatriculation, certificats de naissance/mariage/décès, paiements gouvernementaux. Guichet unique provincial.",
+    hours: "Lun-Ven 8h30-17h",
+    address: "33 Riverside Dr, Charlottetown, PE C1A 9L2",
+    coordinates: { lat: 46.2455, lng: -63.1308 },
+    isProvinceWide: true,
+  },
+  {
+    id: "pe-service-canada-charlottetown",
+    name: "Service Canada — Centre Charlottetown",
+    category: "administrative",
+    subcategory: "NAS, passeport, AE, SV/RPC",
+    city: "Charlottetown",
+    province: "PE",
+    phone: "1-800-622-6232",
+    website: "https://www.canada.ca/fr/emploi-developpement-social/ministere/service-canada.html",
+    description: "Bureau Service Canada : NAS, passeport canadien, AE, Sécurité de la vieillesse, RPC, prestations pour enfants. Service bilingue.",
+    hours: "Lun-Ven 8h30-16h",
+    address: "191 University Ave, Charlottetown, PE C1A 4L9",
+    coordinates: { lat: 46.2381, lng: -63.1303 },
+    isProvinceWide: true,
+  },
+
+  // ─── TERRE-NEUVE-ET-LABRADOR ────────────────────────────────────────────
+  {
+    id: "nl-digital-gov-stjohns",
+    name: "Digital Government and Service NL — St. John's",
+    category: "administrative",
+    subcategory: "Documents, aides, permis",
+    city: "St. John's",
+    province: "NL",
+    phone: "1-709-729-4834",
+    website: "https://www.gov.nl.ca/dgsnl",
+    description: "Digital Government and Service NL : carte d'assurance-maladie MCP, permis de conduire, immatriculation, certificats vitaux, registres corporatifs, services aux consommateurs.",
+    hours: "Lun-Ven 8h30-16h30",
+    address: "100 Prince Philip Dr, St. John's, NL A1B 4J6",
+    coordinates: { lat: 47.5736, lng: -52.7355 },
+    isProvinceWide: true,
+  },
+  {
+    id: "nl-service-canada-stjohns",
+    name: "Service Canada — Centre St. John's",
+    category: "administrative",
+    subcategory: "NAS, passeport, AE, SV/RPC",
+    city: "St. John's",
+    province: "NL",
+    phone: "1-800-622-6232",
+    website: "https://www.canada.ca/fr/emploi-developpement-social/ministere/service-canada.html",
+    description: "Bureau Service Canada : NAS, passeport canadien, AE, Sécurité de la vieillesse, RPC, prestations pour enfants. Service bilingue.",
+    hours: "Lun-Ven 8h30-16h",
+    address: "120 Torbay Rd, St. John's, NL A1A 0J5",
+    coordinates: { lat: 47.5824, lng: -52.7102 },
+    isProvinceWide: true,
+  },
+
 ];
 
 export const URGENT_SERVICES = SERVICES.filter((s) => s.isUrgent);
 export const PROVINCE_WIDE_SERVICES = SERVICES.filter((s) => s.isProvinceWide);
+export const SERVICES_BY_PROVINCE = (code: ProvinceCode): Service[] =>
+  SERVICES.filter((s) => (s.province ?? "QC") === code);
