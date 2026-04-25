@@ -377,12 +377,22 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
     return;
   }
 
-  const { email, password, firstName, lastName, address, role, organisationName, organisationCity, organisationPhone, organisationWebsite, professionalTitle, affiliation, plan } = parsed.data;
+  // v1.0.33 — Public self-signup is restricted to citizen accounts only.
+  // The "organisme" / "intervenant" onboarding flows have been retired with
+  // the Mode Terrain pivot. New B2G partnerships go through direct contracts
+  // and provisioned accounts (out of band), not this public endpoint.
+  // Existing organisme/intervenant accounts continue to work for login,
+  // billing, and data access — this guard only blocks NEW creation.
+  const role: "user" = "user";
+  const organisationName = undefined;
+  const organisationCity = undefined;
+  const organisationPhone = undefined;
+  const organisationWebsite = undefined;
+  const professionalTitle = undefined;
+  const affiliation = undefined;
+  const plan = "standard" as const;
 
-  if (role === "organisme" && !organisationName) {
-    res.status(400).json({ error: "Le nom de l'organisme est requis." });
-    return;
-  }
+  const { email, password, firstName, lastName, address } = parsed.data;
 
   try {
     const existing = await db
