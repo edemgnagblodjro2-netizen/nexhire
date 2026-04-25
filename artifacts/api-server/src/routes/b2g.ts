@@ -4,6 +4,12 @@ import { and, desc, eq, gte, inArray, isNotNull, isNull, sql } from "drizzle-orm
 
 const LIVE_WAIT_WINDOW_MINUTES = 120;
 
+// Mirrors the temporal-spread gate enforced by the public wait-time endpoint
+// (wait.ts :: MIN_TEMPORAL_SPREAD_MINUTES). Keeps B2G live rankings in sync
+// with the citizen-facing publication rules so only organically collected data
+// can affect partner dashboards.
+const LIVE_MIN_TEMPORAL_SPREAD_MINUTES = 30;
+
 // ─────────────────────────────────────────────────────────────────────────────
 // AttenteZéro — B2G insights endpoint (v1.0.33 Phase 2)
 //
@@ -23,8 +29,15 @@ const LIVE_WAIT_WINDOW_MINUTES = 120;
 // distinct from `ADMIN_API_KEY` so a partner credential can NEVER reach
 // the service or verification administration endpoints. Startup refuses
 // to boot if the two keys are set to the same value (see index.ts ::
-// validateAuthKeysOrExit). Once partner contracts are signed, swap for a
-// per-tenant signed token tied to a specific allowed region.
+// validateAuthKeysOrExit).
+//
+// Tenant scoping: when `B2G_TENANT_CITY` is set in the environment, every
+// request authenticated with `B2G_API_KEY` is restricted to that city.
+// - `/b2g/regions` only returns the tenant's city.
+// - `/b2g/insights` rejects requests for any other city with 403.
+// - Province-wide userStats and dailySignups are suppressed for scoped
+//   partners because those metrics aggregate data outside their territory.
+// The `ADMIN_API_KEY` bypasses all tenant restrictions.
 // ─────────────────────────────────────────────────────────────────────────────
 
 const MIN_AGGREGATE = 5;
@@ -39,6 +52,26 @@ function requireB2GKey(req: Request, res: Response, next: NextFunction) {
     res.status(401).json({ error: "Accès refusé." });
     return;
   }
+
+  // Attach tenant city for B2G key holders so downstream handlers can enforce
+  // regional scoping. Admin key holders receive null (unrestricted).
+  if (validB2G && !validAdmin) {
+    const tenantCity = process.env.B2G_TENANT_CITY?.trim() ?? "";
+    if (!tenantCity) {
+      // Fail closed: a B2G key without a configured tenant city would grant
+      // province-wide access to every partner who holds the key. Reject the
+      // request until the operator sets B2G_TENANT_CITY.
+      res.status(503).json({
+        error:
+          "B2G endpoint non configuré : B2G_TENANT_CITY est requis pour ce partenaire. Contactez l'administrateur.",
+      });
+      return;
+    }
+    res.locals.b2gTenantCity = tenantCity;
+  } else {
+    res.locals.b2gTenantCity = null;
+  }
+
   next();
 }
 
@@ -46,14 +79,21 @@ const router = Router();
 
 // GET /api/b2g/regions — list of cities that have at least one referenced
 // service. Used to populate the region selector in the dashboard.
-router.get("/b2g/regions", requireB2GKey, async (_req, res) => {
+// Scoped B2G partners only see their own tenant city.
+router.get("/b2g/regions", requireB2GKey, async (req, res) => {
+  const tenantCity = res.locals.b2gTenantCity as string | null;
+
   const rows = await db
     .select({
       city: servicesTable.city,
       services: sql<number>`count(*)::int`,
     })
     .from(servicesTable)
-    .where(eq(servicesTable.active, true))
+    .where(
+      tenantCity
+        ? and(eq(servicesTable.active, true), eq(servicesTable.city, tenantCity))
+        : eq(servicesTable.active, true),
+    )
     .groupBy(servicesTable.city)
     .orderBy(desc(sql`count(*)`));
 
@@ -66,7 +106,29 @@ router.get("/b2g/regions", requireB2GKey, async (_req, res) => {
 
 // GET /api/b2g/insights?city=Montréal&days=30
 router.get("/b2g/insights", requireB2GKey, async (req, res) => {
-  const city = String(req.query.city ?? "").trim();
+  const tenantCity = res.locals.b2gTenantCity as string | null;
+  const requestedCity = String(req.query.city ?? "").trim();
+
+  // Enforce tenant scoping: a scoped B2G partner may not query other regions
+  // or the province-wide view.
+  if (tenantCity) {
+    if (requestedCity && requestedCity !== tenantCity) {
+      res.status(403).json({ error: "Accès refusé : région non autorisée pour ce partenaire." });
+      return;
+    }
+    // If the partner omits the city param, pin them to their tenant city so
+    // they cannot obtain the province-wide aggregation.
+    if (!requestedCity) {
+      res.redirect(
+        `/api/b2g/insights?city=${encodeURIComponent(tenantCity)}&${new URLSearchParams(
+          Object.entries(req.query as Record<string, string>).filter(([k]) => k !== "city"),
+        ).toString()}`,
+      );
+      return;
+    }
+  }
+
+  const city = tenantCity ?? requestedCity;
   const days = Math.min(Math.max(parseInt(String(req.query.days ?? "30"), 10) || 30, 1), 365);
   const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
 
@@ -119,15 +181,19 @@ router.get("/b2g/insights", requireB2GKey, async (req, res) => {
       // Keep the response shape invariant across regions so the admin dashboard
       // never has to defend against missing fields. Empty regions just get
       // zero/empty placeholders for every section the populated payload emits.
-      userStats: {
-        total: 0,
-        newInPeriod: 0,
-        premium: 0,
-        premiumConversionPct: 0,
-        citizens: 0,
-        organisations: 0,
-      },
-      dailySignups: [],
+      ...(tenantCity
+        ? {}
+        : {
+            userStats: {
+              total: 0,
+              newInPeriod: 0,
+              premium: 0,
+              premiumConversionPct: 0,
+              citizens: 0,
+              organisations: 0,
+            },
+            dailySignups: [],
+          }),
       waitStats: {
         reportsInPeriod: 0,
         servicesReportedInPeriod: 0,
@@ -311,50 +377,52 @@ router.get("/b2g/insights", requireB2GKey, async (req, res) => {
     interactions: floor(r.count),
   }));
 
-  // ── User adoption stats. Comptes are stored at the province level, not
-  // tied to a city, so these numbers are GLOBAL — same value regardless of
-  // the selected region. They tell municipalities how the platform itself
-  // is growing in Quebec, complementing the regional engagement metrics.
-  const [userAggRow] = await db
-    .select({
-      total: sql<number>`count(*)::int`,
-      newInPeriod: sql<number>`count(*) filter (where ${usersTable.createdAt} >= ${since})::int`,
-      premium: sql<number>`count(*) filter (where ${usersTable.isPremium} = true)::int`,
-      citizens: sql<number>`count(*) filter (where ${usersTable.role} = 'user')::int`,
-      organisations: sql<number>`count(*) filter (where ${usersTable.role} = 'organisme')::int`,
-    })
-    .from(usersTable);
+  // ── User adoption stats — province-level; ONLY exposed to super-admin.
+  // Scoped B2G partners (tenantCity set) must not see platform-wide user,
+  // premium, and signup numbers from outside their own territory.
+  let userStats: object | undefined;
+  let dailySignups: object[] | undefined;
 
-  const userTotal = userAggRow?.total ?? 0;
-  const userPremium = userAggRow?.premium ?? 0;
+  if (!tenantCity) {
+    const [userAggRow] = await db
+      .select({
+        total: sql<number>`count(*)::int`,
+        newInPeriod: sql<number>`count(*) filter (where ${usersTable.createdAt} >= ${since})::int`,
+        premium: sql<number>`count(*) filter (where ${usersTable.isPremium} = true)::int`,
+        citizens: sql<number>`count(*) filter (where ${usersTable.role} = 'user')::int`,
+        organisations: sql<number>`count(*) filter (where ${usersTable.role} = 'organisme')::int`,
+      })
+      .from(usersTable);
 
-  const userStats = {
-    total: userTotal,
-    newInPeriod: floor(userAggRow?.newInPeriod ?? 0),
-    premium: userPremium,
-    premiumConversionPct: userTotal > 0
-      ? Math.round((userPremium / userTotal) * 1000) / 10
-      : 0,
-    citizens: userAggRow?.citizens ?? 0,
-    organisations: userAggRow?.organisations ?? 0,
-  };
+    const userTotal = userAggRow?.total ?? 0;
+    const userPremium = userAggRow?.premium ?? 0;
 
-  // Daily new signups across the period — useful to spot acquisition spikes
-  // (e.g. after a media mention or campaign).
-  const signupRows = await db
-    .select({
-      date: sql<string>`date_trunc('day', ${usersTable.createdAt})::date::text`,
-      count: sql<number>`count(*)::int`,
-    })
-    .from(usersTable)
-    .where(gte(usersTable.createdAt, since))
-    .groupBy(sql`date_trunc('day', ${usersTable.createdAt})`)
-    .orderBy(sql`date_trunc('day', ${usersTable.createdAt})`);
+    userStats = {
+      total: userTotal,
+      newInPeriod: floor(userAggRow?.newInPeriod ?? 0),
+      premium: userPremium,
+      premiumConversionPct: userTotal > 0
+        ? Math.round((userPremium / userTotal) * 1000) / 10
+        : 0,
+      citizens: userAggRow?.citizens ?? 0,
+      organisations: userAggRow?.organisations ?? 0,
+    };
 
-  const dailySignups = signupRows.map((r) => ({
-    date: r.date,
-    signups: floor(r.count),
-  }));
+    const signupRows = await db
+      .select({
+        date: sql<string>`date_trunc('day', ${usersTable.createdAt})::date::text`,
+        count: sql<number>`count(*)::int`,
+      })
+      .from(usersTable)
+      .where(gte(usersTable.createdAt, since))
+      .groupBy(sql`date_trunc('day', ${usersTable.createdAt})`)
+      .orderBy(sql`date_trunc('day', ${usersTable.createdAt})`);
+
+    dailySignups = signupRows.map((r) => ({
+      date: r.date,
+      signups: floor(r.count),
+    }));
+  }
 
   // ── Wait-time signals from "Combien d'attente ?" reports.
   // Two layers:
@@ -363,6 +431,15 @@ router.get("/b2g/insights", requireB2GKey, async (req, res) => {
   //   2. Live pulse — for each service in the region, the median wait over
   //      the rolling 2h window. We surface the 5 services with the LONGEST
   //      live medians (i.e. the most pressured access points right now).
+  //
+  // The HAVING clause applies the same three-gate publication criteria as the
+  // public wait-time endpoint (wait.ts :: isPublishable):
+  //   • count(*) >= MIN_AGGREGATE            — minimum sample count
+  //   • count(distinct ip_hash) >= MIN_AGGREGATE — distinct sources required
+  //   • temporal spread >= LIVE_MIN_TEMPORAL_SPREAD_MINUTES — burst-sybil gate
+  // This prevents an attacker from poisoning the partner dashboard using
+  // forged reports from five proxied IPs within a short burst, which would
+  // satisfy count(*) >= 5 alone but fail the other two gates.
   const [periodWaitRow] = await db
     .select({
       reports: sql<number>`count(*)::int`,
@@ -387,7 +464,13 @@ router.get("/b2g/insights", requireB2GKey, async (req, res) => {
       inArray(waitTimeReportsTable.serviceId, serviceIds),
     ))
     .groupBy(waitTimeReportsTable.serviceId)
-    .having(sql`count(*) >= ${MIN_AGGREGATE}`)
+    .having(sql`
+      count(*) >= ${MIN_AGGREGATE}
+      AND count(distinct ${waitTimeReportsTable.ipHash}) >= ${MIN_AGGREGATE}
+      AND EXTRACT(EPOCH FROM (
+        max(${waitTimeReportsTable.createdAt}) - min(${waitTimeReportsTable.createdAt})
+      )) / 60 >= ${LIVE_MIN_TEMPORAL_SPREAD_MINUTES}
+    `)
     .orderBy(desc(sql`percentile_cont(0.5) within group (order by ${waitTimeReportsTable.minutes})`))
     .limit(5);
 
@@ -431,8 +514,8 @@ router.get("/b2g/insights", requireB2GKey, async (req, res) => {
     generatedAt: new Date().toISOString(),
     privacyFloor: MIN_AGGREGATE,
     totals,
-    userStats,
-    dailySignups,
+    ...(userStats !== undefined ? { userStats } : {}),
+    ...(dailySignups !== undefined ? { dailySignups } : {}),
     waitStats,
     topCategories,
     topServices,

@@ -14,8 +14,10 @@ import { db, servicesTable, waitTimeReportsTable } from "@workspace/db";
 // Privacy:
 //  - Reports are stored without the raw IP. We only keep sha256(ip + salt) so
 //    that the same device can be rate-limited without storing PII.
-//  - Reports may be anonymous (no userId) by design — most citizens won't be
-//    logged in.
+//  - Authentication is required to submit a report (POST handler enforces
+//    req.user). This ensures each report carries an account-bound identity
+//    that is stronger than an IP address, which can be trivially rotated
+//    through proxies/VPNs to mount a sybil attack.
 //  - Low-volume fields (sampleCount, lastReportedAt, recentReports) are
 //    suppressed entirely until isPublishable() is true, so an outsider cannot
 //    monitor near-real-time activity at sensitive services (shelters, food
@@ -167,7 +169,22 @@ router.get("/services/:id/wait", async (req, res) => {
 });
 
 // POST /api/services/:id/wait — submit a new wait-time report.
+//
+// Authentication required: an account-bound identity (userId) is needed so
+// that the source of each report is at least as strong as a registered user,
+// not merely an IP address that can be trivially rotated through proxies or
+// VPNs. Without this gate, five low-cost proxy exits can satisfy all three
+// publication criteria (count, distinct-IP, temporal-spread) and push forged
+// wait times to both the public widget and the B2G partner dashboard.
 router.post("/services/:id/wait", async (req, res) => {
+  if (!req.user) {
+    res.status(401).json({
+      error: "Connexion requise pour signaler un temps d'attente.",
+      code: "AUTH_REQUIRED",
+    });
+    return;
+  }
+
   const serviceId = req.params.id;
   if (!serviceId) {
     res.status(400).json({ error: "Service ID requis." });

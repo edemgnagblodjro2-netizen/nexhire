@@ -18,6 +18,13 @@ function validateAuthKeysOrExit() {
       "B2G_API_KEY is not set — B2G partners cannot be onboarded with a scoped credential.",
     );
   }
+  if (b2gKey && !process.env.B2G_TENANT_CITY?.trim()) {
+    logger.warn(
+      "B2G_TENANT_CITY is not set — the B2G API key is not scoped to any region. " +
+        "Any holder of B2G_API_KEY can query analytics for every city. " +
+        "Set B2G_TENANT_CITY to the municipality or CIUSSS city this credential represents.",
+    );
+  }
   if (adminKey && b2gKey && adminKey === b2gKey) {
     logger.error(
       "Refusing to start: ADMIN_API_KEY and B2G_API_KEY must be distinct. " +

@@ -34,7 +34,7 @@ type Insights = {
     distinctAuthenticatedUsers: number;
     anonymousEvents: number;
   };
-  userStats: {
+  userStats?: {
     total: number;
     newInPeriod: number;
     premium: number;
@@ -42,7 +42,7 @@ type Insights = {
     citizens: number;
     organisations: number;
   };
-  dailySignups: Array<{ date: string; signups: number }>;
+  dailySignups?: Array<{ date: string; signups: number }>;
   waitStats: {
     reportsInPeriod: number;
     servicesReportedInPeriod: number;
@@ -315,58 +315,63 @@ export default function B2G({ adminKey }: { adminKey: string }) {
           </div>
 
           {/* Adoption — comptes utilisateurs (global, hors région) */}
-          <div className="bg-white border border-gray-100 rounded-2xl p-6 mb-6 shadow-sm">
-            <div className="flex items-baseline justify-between mb-1 gap-3 flex-wrap">
-              <h2 className="text-base font-semibold text-gray-900">
-                Adoption — comptes utilisateurs
-              </h2>
-              <span className="text-xs text-gray-400">
-                Données pan-québécoises (non régionalisées)
-              </span>
+          {/* Only present for super-admin (ADMIN_API_KEY). Scoped B2G partners  */}
+          {/* do not receive these province-wide metrics to prevent cross-tenant */}
+          {/* data leakage.                                                       */}
+          {data.userStats && (
+            <div className="bg-white border border-gray-100 rounded-2xl p-6 mb-6 shadow-sm">
+              <div className="flex items-baseline justify-between mb-1 gap-3 flex-wrap">
+                <h2 className="text-base font-semibold text-gray-900">
+                  Adoption — comptes utilisateurs
+                </h2>
+                <span className="text-xs text-gray-400">
+                  Données pan-québécoises (non régionalisées)
+                </span>
+              </div>
+              <p className="text-xs text-gray-500 mb-4">
+                Croissance de la base d'utilisateurs AttenteZéro à l'échelle de la province.
+              </p>
+              <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-5">
+                <MiniStat label="Comptes totaux" value={data.userStats.total} accent="teal" />
+                <MiniStat
+                  label={`Nouveaux (${data.days}j)`}
+                  value={data.userStats.newInPeriod}
+                  accent="blue"
+                />
+                <MiniStat label="Citoyens" value={data.userStats.citizens} accent="violet" />
+                <MiniStat label="Organismes" value={data.userStats.organisations} accent="indigo" />
+                <MiniStat
+                  label="Premium"
+                  value={data.userStats.premium}
+                  accent="amber"
+                  hint={`${data.userStats.premiumConversionPct}% conversion`}
+                />
+              </div>
+              {(data.dailySignups ?? []).length > 0 && (
+                <ResponsiveContainer width="100%" height={140}>
+                  <LineChart
+                    data={data.dailySignups}
+                    margin={{ left: 0, right: 10, top: 5, bottom: 0 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                    <XAxis dataKey="date" stroke="#9ca3af" fontSize={10} tickFormatter={fmtDate} />
+                    <YAxis stroke="#9ca3af" fontSize={10} allowDecimals={false} />
+                    <Tooltip
+                      formatter={(v: number) => [`${v} inscriptions`, "Inscriptions"]}
+                      labelFormatter={fmtDate}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="signups"
+                      stroke="#0d9488"
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
             </div>
-            <p className="text-xs text-gray-500 mb-4">
-              Croissance de la base d'utilisateurs AttenteZéro à l'échelle de la province.
-            </p>
-            <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-5">
-              <MiniStat label="Comptes totaux" value={data.userStats.total} accent="teal" />
-              <MiniStat
-                label={`Nouveaux (${data.days}j)`}
-                value={data.userStats.newInPeriod}
-                accent="blue"
-              />
-              <MiniStat label="Citoyens" value={data.userStats.citizens} accent="violet" />
-              <MiniStat label="Organismes" value={data.userStats.organisations} accent="indigo" />
-              <MiniStat
-                label="Premium"
-                value={data.userStats.premium}
-                accent="amber"
-                hint={`${data.userStats.premiumConversionPct}% conversion`}
-              />
-            </div>
-            {data.dailySignups.length > 0 && (
-              <ResponsiveContainer width="100%" height={140}>
-                <LineChart
-                  data={data.dailySignups}
-                  margin={{ left: 0, right: 10, top: 5, bottom: 0 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                  <XAxis dataKey="date" stroke="#9ca3af" fontSize={10} tickFormatter={fmtDate} />
-                  <YAxis stroke="#9ca3af" fontSize={10} allowDecimals={false} />
-                  <Tooltip
-                    formatter={(v: number) => [`${v} inscriptions`, "Inscriptions"]}
-                    labelFormatter={fmtDate}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="signups"
-                    stroke="#0d9488"
-                    strokeWidth={2}
-                    dot={false}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            )}
-          </div>
+          )}
 
           {/* "Combien d'attente ?" — citizen wait-time pulse */}
           <div className="bg-white border border-gray-100 rounded-2xl p-6 mb-6 shadow-sm">

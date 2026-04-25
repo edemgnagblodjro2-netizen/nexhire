@@ -12,6 +12,8 @@ import {
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useColors } from "@/hooks/useColors";
 import { getApiBaseUrl } from "@/lib/apiBase";
+import { useAuth } from "@/lib/auth";
+import { authedFetch } from "@/lib/apiClient";
 
 // "Combien d'attente?" widget — shows the rolling 2h median wait reported by
 // other citizens at this service, and lets the current user contribute a new
@@ -32,7 +34,7 @@ type WaitStats = {
   lastReportedAt?: string | null;
 };
 
-type Status = "idle" | "loading" | "submitting" | "sent" | "rate-limited" | "error";
+type Status = "idle" | "loading" | "submitting" | "sent" | "rate-limited" | "auth-required" | "error";
 
 const RATE_LIMIT_COOLDOWN_MS = 15 * 60 * 1000;
 const SENT_TOAST_MS = 6000;
@@ -59,6 +61,7 @@ export default function WaitTimeWidget({
 }) {
   const colors = useColors();
   const { t } = useLanguage();
+  const { isAuthenticated } = useAuth();
 
   const [stats, setStats] = useState<WaitStats | null>(null);
   const [status, setStatus] = useState<Status>("loading");
@@ -111,15 +114,24 @@ export default function WaitTimeWidget({
 
   const submit = useCallback(
     async (minutes: number) => {
+      if (!isAuthenticated) {
+        setStatus("auth-required");
+        setPickerOpen(false);
+        return;
+      }
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setStatus("submitting");
       setErrorText(null);
       try {
-        const res = await fetch(`${getApiBaseUrl()}/api/services/${serviceId}/wait`, {
+        const res = await authedFetch(`/api/services/${serviceId}/wait`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ minutes }),
         });
+        if (res.status === 401) {
+          setStatus("auth-required");
+          setPickerOpen(false);
+          return;
+        }
         if (res.status === 429) {
           setStatus("rate-limited");
           setErrorText(t.waitReportRateLimited);
@@ -149,7 +161,7 @@ export default function WaitTimeWidget({
         setErrorText(t.waitReportError);
       }
     },
-    [serviceId, t.waitReportError, t.waitReportRateLimited],
+    [serviceId, t.waitReportError, t.waitReportRateLimited, isAuthenticated],
   );
 
   const fresh = useMemo(
@@ -216,7 +228,16 @@ export default function WaitTimeWidget({
         </View>
       )}
 
-      {!pickerOpen && status !== "rate-limited" && (
+      {status === "auth-required" && (
+        <View style={[styles.toast, { backgroundColor: "#eff6ff", borderColor: "#bfdbfe" }]}>
+          <Feather name="lock" size={16} color="#1d4ed8" />
+          <Text style={[styles.toastText, { color: "#1e40af" }]}>
+            {"Connectez-vous pour signaler un temps d'attente."}
+          </Text>
+        </View>
+      )}
+
+      {!pickerOpen && status !== "rate-limited" && status !== "auth-required" && isAuthenticated && (
         <Pressable
           onPress={() => {
             Haptics.selectionAsync();
