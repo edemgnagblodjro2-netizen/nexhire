@@ -68,6 +68,7 @@ export const serviceViewsTable = pgTable(
   (table) => [
     index("IDX_service_views_service").on(table.serviceId),
     index("IDX_service_views_created").on(table.createdAt),
+    index("IDX_service_views_service_created").on(table.serviceId, table.createdAt),
   ],
 );
 

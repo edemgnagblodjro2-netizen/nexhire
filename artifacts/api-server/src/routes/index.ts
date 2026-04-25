@@ -7,6 +7,7 @@ import stripeRouter from "./stripe";
 import servicesRouter from "./services";
 import organisationsRouter from "./organisations";
 import verificationsRouter from "./verifications";
+import b2gRouter from "./b2g";
 
 // Pivot v1.0.33 — sensitive-data modules retired:
 // `clients`, `appointments`, `team`, and the activity-feed endpoints have been
@@ -26,5 +27,6 @@ router.use(stripeRouter);
 router.use(servicesRouter);
 router.use(organisationsRouter);
 router.use(verificationsRouter);
+router.use(b2gRouter);
 
 export default router;

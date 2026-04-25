@@ -5,6 +5,7 @@ const NAV = [
   { href: "/", icon: "📊", label: "Tableau de bord" },
   { href: "/services", icon: "🏢", label: "Services" },
   { href: "/verifications", icon: "🛡️", label: "Vérifications" },
+  { href: "/b2g", icon: "🏛️", label: "B2G — Régions" },
 ];
 
 export default function Layout({
