@@ -96,8 +96,9 @@ router.get("/auth/user", async (req: Request, res: Response) => {
   const session = sid ? await getSession(sid) : null;
   const role = session?.user?.role ?? "user";
 
-  // Fetch fresh isPremium from DB (in case it was upgraded since last login)
+  // Fetch fresh isPremium + plan from DB (in case it was upgraded since last login)
   let isPremium = false;
+  let plan: string | null = null;
   try {
     const sessionUser = (req.user as any) || {};
     const userId = sessionUser.id;
@@ -108,10 +109,42 @@ router.get("/auth/user", async (req: Request, res: Response) => {
         .where(eq(usersTable.id, userId))
         .limit(1);
       isPremium = !!dbUser?.isPremium;
+
+      // Find the user's organisation (as owner OR as active member), then read its
+      // current subscription plan from the subscriptions table.
+      let orgId: string | null = null;
+      const [ownedOrg] = await db
+        .select({ id: organisationsTable.id })
+        .from(organisationsTable)
+        .where(eq(organisationsTable.userId, userId))
+        .limit(1);
+      if (ownedOrg?.id) {
+        orgId = ownedOrg.id;
+      } else {
+        const [memberOrg] = await db
+          .select({ id: organisationMembersTable.organisationId })
+          .from(organisationMembersTable)
+          .where(
+            and(
+              eq(organisationMembersTable.userId, userId),
+              eq(organisationMembersTable.status, "active"),
+            ),
+          )
+          .limit(1);
+        if (memberOrg?.id) orgId = memberOrg.id;
+      }
+      if (orgId) {
+        const [sub] = await db
+          .select({ plan: subscriptionsTable.plan })
+          .from(subscriptionsTable)
+          .where(eq(subscriptionsTable.organisationId, orgId))
+          .limit(1);
+        if (sub?.plan) plan = sub.plan;
+      }
     }
   } catch {}
 
-  res.json({ user: { ...req.user, role, isPremium } });
+  res.json({ user: { ...req.user, role, isPremium, plan } });
 });
 
 router.get("/login", async (req: Request, res: Response) => {

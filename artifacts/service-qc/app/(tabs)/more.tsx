@@ -19,6 +19,8 @@ import PremiumGateModal from "@/components/PremiumGateModal";
 import { BrandFooter } from "@/components/BrandFooter";
 import { useColors } from "@/hooks/useColors";
 import { usePremiumGate } from "@/hooks/usePremiumGate";
+import { usePlanGate } from "@/hooks/usePlanGate";
+import { isUnlimited } from "@/lib/planLimits";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useServicesData } from "@/contexts/ServicesContext";
 import { getApiBaseUrl } from "@/lib/apiBase";

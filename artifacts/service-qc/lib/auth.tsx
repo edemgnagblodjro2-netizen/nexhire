@@ -25,6 +25,8 @@ interface User {
   address: string | null;
   role?: UserRole;
   isPremium?: boolean;
+  /** Organisation plan, hydrated server-side in /api/auth/user. May be legacy DB value. */
+  plan?: string | null;
 }
 
 export interface RegisterResult {

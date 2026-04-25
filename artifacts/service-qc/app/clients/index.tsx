@@ -22,6 +22,8 @@ import * as Haptics from "expo-haptics";
 import { useColors } from "@/hooks/useColors";
 import { useAuth } from "@/lib/auth";
 import { authedFetch } from "@/lib/apiClient";
+import { usePlanGate } from "@/hooks/usePlanGate";
+import PlanLimitModal from "@/components/PlanLimitModal";
 
 type ClientRow = {
   id: string;
@@ -55,11 +57,23 @@ export default function ClientsListScreen() {
   const [accessDenied, setAccessDenied] = useState(false);
 
   const [showCreate, setShowCreate] = useState(false);
+  const [showLimit, setShowLimit] = useState(false);
   const [newFirst, setNewFirst] = useState("");
   const [newLast, setNewLast] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [newSummary, setNewSummary] = useState("");
   const [creating, setCreating] = useState(false);
+
+  const gate = usePlanGate();
+
+  function tryOpenCreate() {
+    if (!gate.canCreateClient(clients.length)) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+      setShowLimit(true);
+      return;
+    }
+    setShowCreate(true);
+  }
 
   const load = useCallback(
     async (q?: string) => {
@@ -157,7 +171,7 @@ export default function ClientsListScreen() {
             <Feather name="lock" size={28} color="#fff" />
             <Text style={styles.gateTitle}>Mode Terrain réservé aux abonnés</Text>
             <Text style={styles.gateText}>
-              Cette section est disponible avec l'abonnement Terrain (19 $/mois) ou Institution (199 $/mois).
+              Cette section est disponible avec l'abonnement Travailleur (19 $/mois), Organisme (39 $/mois), Plus (89 $/mois) ou Institution (199 $/mois).
               Les deux incluent 14 jours d'essai gratuit, sans carte requise.
             </Text>
             <Pressable
@@ -283,7 +297,7 @@ export default function ClientsListScreen() {
       <Pressable
         onPress={() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-          setShowCreate(true);
+          tryOpenCreate();
         }}
         style={({ pressed }) => [styles.fab, { opacity: pressed ? 0.85 : 1 }]}
       >
@@ -367,6 +381,15 @@ export default function ClientsListScreen() {
           </View>
         </KeyboardAvoidingView>
       </Modal>
+
+      <PlanLimitModal
+        visible={showLimit}
+        onDismiss={() => setShowLimit(false)}
+        currentPlanId={gate.planId}
+        upgradePlanId={gate.upgradePlanId}
+        limitKind="clients"
+        limitValue={gate.plan.features.maxClients}
+      />
     </SafeAreaView>
   );
 }
