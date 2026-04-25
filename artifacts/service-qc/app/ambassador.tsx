@@ -31,7 +31,7 @@ export default function AmbassadorScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { language } = useLanguage();
-  const { user } = useAuth();
+  const { user, getToken } = useAuth();
   const isFr = language !== "en";
 
   const [data, setData] = useState<ReferralResponse | null>(null);
@@ -47,8 +47,14 @@ export default function AmbassadorScreen() {
         return;
       }
       try {
+        const token = await getToken();
+        if (!token) {
+          setError(isFr ? "Connectez-vous pour obtenir votre code." : "Sign in to get your code.");
+          setLoading(false);
+          return;
+        }
         const res = await fetch(`${getApiBaseUrl()}/api/referrals/me`, {
-          headers: { "X-User-Id": user.id },
+          headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = (await res.json()) as ReferralResponse;
@@ -63,7 +69,7 @@ export default function AmbassadorScreen() {
     return () => {
       cancelled = true;
     };
-  }, [user?.id, isFr]);
+  }, [user?.id, isFr, getToken]);
 
   const shareUrl = data ? `https://attentezero.app/?ref=${data.code}` : "";
 

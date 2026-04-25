@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from "express";
 import { z } from "zod";
-import { and, eq, sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { db, referralCodesTable } from "@workspace/db";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -10,14 +10,9 @@ import { db, referralCodesTable } from "@workspace/db";
 // POST   /api/referrals/claim        → un nouvel inscrit utilise un code.
 // GET    /api/admin/referrals        → admin : top ambassadeurs.
 //
-// L'utilisateur est identifié via header X-User-Id (envoyé par l'app mobile,
-// même valeur que celle utilisée par l'auth existante).
+// L'utilisateur est identifié via la session serveur (Authorization: Bearer)
+// établie par authMiddleware — le header X-User-Id n'est plus utilisé.
 // ─────────────────────────────────────────────────────────────────────────────
-
-function getUserId(req: Request): string | null {
-  const id = (req.headers["x-user-id"] as string | undefined)?.trim();
-  return id && id.length > 0 && id.length <= 64 ? id : null;
-}
 
 function requireAdmin(req: Request, res: Response): boolean {
   const expected = process.env.ADMIN_API_KEY;
@@ -48,11 +43,11 @@ function makeCode(): string {
 const router = Router();
 
 router.get("/referrals/me", async (req, res) => {
-  const userId = getUserId(req);
-  if (!userId) {
-    res.status(401).json({ error: "missing X-User-Id" });
+  if (!req.isAuthenticated()) {
+    res.status(401).json({ error: "authentication required" });
     return;
   }
+  const userId = req.user.id;
 
   try {
     const existing = await db
@@ -99,11 +94,11 @@ const ClaimBody = z.object({
 });
 
 router.post("/referrals/claim", async (req, res) => {
-  const claimantId = getUserId(req);
-  if (!claimantId) {
-    res.status(401).json({ error: "missing X-User-Id" });
+  if (!req.isAuthenticated()) {
+    res.status(401).json({ error: "authentication required" });
     return;
   }
+  const claimantId = req.user.id;
   const parsed = ClaimBody.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: "invalid code" });
