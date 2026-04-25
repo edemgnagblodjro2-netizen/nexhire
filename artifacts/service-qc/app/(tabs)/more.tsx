@@ -487,6 +487,42 @@ export default function MoreScreen() {
             <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
           </Pressable>
 
+          {/* ── Section title: Aide ── */}
+          <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
+            {isFr ? "Aide & support" : "Help & support"}
+          </Text>
+
+          {/* ── Signaler un bogue card ── */}
+          <Pressable
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              router.push("/bug-report" as any);
+            }}
+            style={({ pressed }) => [
+              styles.optionCard,
+              {
+                backgroundColor: colors.card,
+                borderColor: colors.border,
+                opacity: pressed ? 0.85 : 1,
+              },
+            ]}
+          >
+            <View style={[styles.optionIconWrap, { backgroundColor: isDark ? "#3b1a06" : "#fff7ed" }]}>
+              <Feather name="alert-triangle" size={20} color="#ea580c" />
+            </View>
+            <View style={styles.optionText}>
+              <Text style={[styles.optionTitle, { color: colors.foreground }]} numberOfLines={1}>
+                {isFr ? "Signaler un bogue" : "Report a bug"}
+              </Text>
+              <Text style={[styles.optionDesc, { color: colors.mutedForeground }]} numberOfLines={2}>
+                {isFr
+                  ? "Un problème dans l'application ? Parlez-nous-en."
+                  : "Spotted an issue in the app? Let us know."}
+              </Text>
+            </View>
+            <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+          </Pressable>
+
           {/* ── Philosophy note ── */}
           <View style={[styles.noteBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <Feather name="info" size={15} color={colors.mutedForeground} />
