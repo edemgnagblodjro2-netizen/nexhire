@@ -41,6 +41,14 @@ Production assumptions for this scan:
 - **Admin-key surfaces:** `/api/admin/services*`, `/api/b2g/*`, `/api/admin/verification/*`, `/api/admin/search-stats`, `/api/admin/referrals`, `/api/bug-reports`, and the `/admin` SPA that stores and replays the key
 - **Usually dev-only / ignore unless proven reachable:** `artifacts/mockup-sandbox/**`, `artifacts/service-qc/scripts/**`, archived route files not mounted from `routes/index.ts`
 
+## Current Hotspots For Future Scans
+
+- **Password reset remains a primary takeover surface** — `artifacts/api-server/src/routes/auth.ts` and `lib/db/src/schema/auth.ts` currently use 6-digit reset codes with IP-based throttling. Future scans should always revisit per-account attempt caps, token invalidation, and code entropy here.
+- **Verification request links are security-sensitive because they land in `/admin`** — `artifacts/api-server/src/routes/verifications.ts` feeds attacker-controlled URLs into `artifacts/admin/src/pages/Verifications.tsx`. Any executable scheme or navigation gadget is high risk because the admin SPA stores the shared admin key in browser storage.
+- **B2G authorization is still key-based, not tenant-scoped** — `artifacts/api-server/src/routes/b2g.ts` uses a single global partner secret and accepts region selection from request parameters. Future scans should continue checking for cross-tenant analytics exposure until per-tenant scoping is implemented.
+- **Crowdsourced wait-time data should be treated as attacker-influenced input** — `artifacts/api-server/src/routes/wait.ts` and the B2G live-wait aggregation in `artifacts/api-server/src/routes/b2g.ts` need integrity review whenever the product increases operational reliance on these signals.
+- **Stripe webhook processing must fail closed** — `artifacts/api-server/src/routes/stripe.ts` is a standing hotspot because billing state is mutated from webhook events. Future scans should confirm signature verification is mandatory in every production path.
+
 ## Threat Categories
 
 ### Spoofing
