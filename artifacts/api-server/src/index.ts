@@ -72,6 +72,41 @@ async function runStartupMigrations() {
         PRIMARY KEY (user_id, organisation_id)
       )
     `);
+    // Anonymous search analytics (no PII).
+    await db.execute(sql`
+      CREATE TABLE IF NOT EXISTS search_events (
+        id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        province VARCHAR(8) NOT NULL DEFAULT 'ALL',
+        category VARCHAR(32) NOT NULL DEFAULT 'all',
+        query_len INTEGER NOT NULL DEFAULT 0,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `);
+    await db.execute(sql`CREATE INDEX IF NOT EXISTS "IDX_search_events_created" ON search_events (created_at)`);
+    await db.execute(sql`CREATE INDEX IF NOT EXISTS "IDX_search_events_province" ON search_events (province)`);
+    // Ambassador referral codes.
+    await db.execute(sql`
+      CREATE TABLE IF NOT EXISTS referral_codes (
+        id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        user_id VARCHAR(64) NOT NULL,
+        code VARCHAR(16) NOT NULL,
+        claimed_count INTEGER NOT NULL DEFAULT 0,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `);
+    await db.execute(sql`CREATE UNIQUE INDEX IF NOT EXISTS "UQ_referral_codes_code" ON referral_codes (code)`);
+    await db.execute(sql`CREATE UNIQUE INDEX IF NOT EXISTS "UQ_referral_codes_user" ON referral_codes (user_id)`);
+    await db.execute(sql`CREATE INDEX IF NOT EXISTS "IDX_referral_codes_created" ON referral_codes (created_at)`);
+    // Claim ledger to prevent spam (one claim per claimant per code).
+    await db.execute(sql`
+      CREATE TABLE IF NOT EXISTS referral_claims (
+        code VARCHAR(16) NOT NULL,
+        claimant_user_id VARCHAR(64) NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        PRIMARY KEY (claimant_user_id)
+      )
+    `);
+    await db.execute(sql`CREATE INDEX IF NOT EXISTS "IDX_referral_claims_code" ON referral_claims (code)`);
     logger.info("Startup migrations completed");
   } catch (err) {
     logger.error({ err }, "Startup migration failed");

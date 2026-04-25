@@ -74,6 +74,12 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
             </Text>
           </View>
         )}
+        {(service.hours?.includes("24h/24") || service.hours?.includes("24/7")) && (
+          <View style={styles.alwaysOpenBadge}>
+            <Feather name="clock" size={10} color="#fff" />
+            <Text style={styles.alwaysOpenText}>24/7</Text>
+          </View>
+        )}
         {service.badgeVerified && (
           <View style={styles.verifiedBadge}>
             <Feather name="check-circle" size={10} color="#fff" />
@@ -160,6 +166,21 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: "600",
     fontFamily: "Inter_600SemiBold",
+  },
+  alwaysOpenBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+    backgroundColor: "#16a34a",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 20,
+  },
+  alwaysOpenText: {
+    fontSize: 11,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
   },
   verifiedBadge: {
     flexDirection: "row",

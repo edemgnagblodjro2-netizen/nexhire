@@ -10,6 +10,8 @@ import verificationsRouter from "./verifications";
 import b2gRouter from "./b2g";
 import waitRouter from "./wait";
 import bugReportsRouter from "./bugReports";
+import searchEventsRouter from "./searchEvents";
+import referralsRouter from "./referrals";
 
 // Pivot v1.0.33 — sensitive-data modules retired:
 // `clients`, `appointments`, `team`, and the activity-feed endpoints have been
@@ -32,5 +34,7 @@ router.use(verificationsRouter);
 router.use(b2gRouter);
 router.use(waitRouter);
 router.use(bugReportsRouter);
+router.use(searchEventsRouter);
+router.use(referralsRouter);
 
 export default router;

@@ -6,6 +6,8 @@ const NAV = [
   { href: "/services", icon: "🏢", label: "Services" },
   { href: "/verifications", icon: "🛡️", label: "Vérifications" },
   { href: "/b2g", icon: "🏛️", label: "B2G — Régions" },
+  { href: "/bug-reports", icon: "🐛", label: "Signalements" },
+  { href: "/stats", icon: "📈", label: "Statistiques" },
 ];
 
 export default function Layout({

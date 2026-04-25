@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { z } from "zod";
 import { and, desc, eq, gte } from "drizzle-orm";
 import { db, bugReportsTable } from "@workspace/db";
+import { sendOwnerEmail } from "../lib/notify";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // AttenteZéro — Signalement de bogues.
@@ -87,6 +88,18 @@ router.post("/bug-reports", async (req, res) => {
       ipHash,
     })
     .returning({ id: bugReportsTable.id, createdAt: bugReportsTable.createdAt });
+
+  // Best-effort owner notification — never blocks the response.
+  sendOwnerEmail({
+    subject: `[AttenteZéro] Nouveau signalement #${row?.id} — ${name}`,
+    text:
+      `Nouveau signalement de bogue reçu.\n\n` +
+      `De : ${name}${email ? ` <${email}>` : " (sans courriel)"}\n` +
+      `Plateforme : ${platform ?? "?"} ${appVersion ? `(v${appVersion})` : ""}\n` +
+      `Date : ${row?.createdAt?.toISOString?.() ?? "?"}\n\n` +
+      `Message :\n${message}\n\n` +
+      `— Consultez le panneau admin /admin/bug-reports pour triager.`,
+  }).catch((err) => console.warn("[bug-reports] notify failed", err));
 
   res.status(201).json({ id: row?.id, createdAt: row?.createdAt });
 });

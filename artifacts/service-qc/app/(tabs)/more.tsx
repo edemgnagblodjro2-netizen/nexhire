@@ -90,7 +90,7 @@ const OTHER_OPTIONS = [
     darkBg: "#0c2a3b",
     title: "Programme ambassadeur",
     desc: "Parrainez des proches et gagnez des mois premium offerts",
-    badge: "Bientôt",
+    badge: "Nouveau",
     badgeColor: "#0284c7",
   },
   {
@@ -374,6 +374,11 @@ export default function MoreScreen() {
               ]}
               onPress={() => {
                 Haptics.selectionAsync();
+                // Programme ambassadeur is now active — open dedicated screen.
+                if (opt.title === "Programme ambassadeur") {
+                  router.push("/ambassador" as any);
+                  return;
+                }
                 Alert.alert(
                   opt.title,
                   isFr
@@ -499,6 +504,68 @@ export default function MoreScreen() {
           <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
             {isFr ? "Aide & support" : "Help & support"}
           </Text>
+
+          {/* ── Aide & FAQ card ── */}
+          <Pressable
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              router.push("/help" as any);
+            }}
+            style={({ pressed }) => [
+              styles.optionCard,
+              {
+                backgroundColor: colors.card,
+                borderColor: colors.border,
+                opacity: pressed ? 0.85 : 1,
+              },
+            ]}
+          >
+            <View style={[styles.optionIconWrap, { backgroundColor: isDark ? "#0c2a3b" : "#f0f9ff" }]}>
+              <Feather name="help-circle" size={20} color="#0284c7" />
+            </View>
+            <View style={styles.optionText}>
+              <Text style={[styles.optionTitle, { color: colors.foreground }]} numberOfLines={1}>
+                {isFr ? "Aide & FAQ" : "Help & FAQ"}
+              </Text>
+              <Text style={[styles.optionDesc, { color: colors.mutedForeground }]} numberOfLines={2}>
+                {isFr
+                  ? "Réponses aux questions les plus fréquentes."
+                  : "Answers to the most frequently asked questions."}
+              </Text>
+            </View>
+            <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+          </Pressable>
+
+          {/* ── Quoi de neuf card ── */}
+          <Pressable
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              router.push("/whats-new" as any);
+            }}
+            style={({ pressed }) => [
+              styles.optionCard,
+              {
+                backgroundColor: colors.card,
+                borderColor: colors.border,
+                opacity: pressed ? 0.85 : 1,
+              },
+            ]}
+          >
+            <View style={[styles.optionIconWrap, { backgroundColor: isDark ? "#1e1b4b" : "#eef2ff" }]}>
+              <Feather name="gift" size={20} color="#6366f1" />
+            </View>
+            <View style={styles.optionText}>
+              <Text style={[styles.optionTitle, { color: colors.foreground }]} numberOfLines={1}>
+                {isFr ? "Quoi de neuf" : "What's new"}
+              </Text>
+              <Text style={[styles.optionDesc, { color: colors.mutedForeground }]} numberOfLines={2}>
+                {isFr
+                  ? "Découvrez les dernières améliorations de l'application."
+                  : "Discover the latest improvements to the app."}
+              </Text>
+            </View>
+            <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+          </Pressable>
 
           {/* ── Signaler un bogue card ── */}
           <Pressable

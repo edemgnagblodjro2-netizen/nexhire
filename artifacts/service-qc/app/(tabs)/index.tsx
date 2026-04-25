@@ -20,6 +20,8 @@ import { HomeBannerSlider } from "@/components/HomeBannerSlider";
 import { UrgentButton } from "@/components/UrgentButton";
 import { BrandFooter } from "@/components/BrandFooter";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useLocation } from "@/contexts/LocationContext";
+import { getApiBaseUrl } from "@/lib/apiBase";
 import type { Category, ProvinceCode } from "@/data/services";
 import { PROVINCE_LABELS } from "@/data/services";
 import { useServicesData } from "@/contexts/ServicesContext";
@@ -48,8 +50,14 @@ export default function HomeScreen() {
   const inputRef = useRef<TextInput>(null);
 
   const { services } = useServicesData();
+  const { userLocation, locationStatus, requestLocation } = useLocation();
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
+
+  async function handleRefreshLocation() {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await requestLocation({ force: true });
+  }
 
   const totalServices = services.length;
   const totalCities = React.useMemo(() => {
@@ -81,6 +89,9 @@ export default function HomeScreen() {
     { code: "NS", emoji: "⚓" },
     { code: "PE", emoji: "🏝️" },
     { code: "NL", emoji: "🧊" },
+    { code: "YT", emoji: "🏔️" },
+    { code: "NT", emoji: "❄️" },
+    { code: "NU", emoji: "🐻‍❄️" },
   ];
 
   function handleSearch() {
@@ -88,6 +99,16 @@ export default function HomeScreen() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     Keyboard.dismiss();
     const result = detectCategory(query);
+    // Best-effort anonymous analytics — never blocks navigation.
+    fetch(`${getApiBaseUrl()}/api/search-events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        province: "ALL",
+        category: result.category ?? "all",
+        queryLen: query.trim().length,
+      }),
+    }).catch(() => {});
     router.push({
       pathname: "/results",
       params: { query, category: result.category ?? "all" },
@@ -271,6 +292,45 @@ export default function HomeScreen() {
             </View>
           </LinearGradient>
         </Pressable>
+
+        {/* ── Localisation ── */}
+        <View style={styles.section}>
+          <Pressable
+            onPress={handleRefreshLocation}
+            disabled={locationStatus === "requesting"}
+            style={({ pressed }) => [
+              styles.locationCard,
+              {
+                backgroundColor: colors.card,
+                borderColor: colors.border,
+                opacity: pressed || locationStatus === "requesting" ? 0.75 : 1,
+              },
+            ]}
+          >
+            <View style={[styles.locationIconWrap, { backgroundColor: colors.primary + "15" }]}>
+              <Feather
+                name={locationStatus === "requesting" ? "loader" : userLocation ? "navigation" : "map-pin"}
+                size={18}
+                color={colors.primary}
+              />
+            </View>
+            <View style={{ flex: 1, minWidth: 0 }}>
+              <Text style={[styles.locationTitle, { color: colors.foreground }]} numberOfLines={1}>
+                {locationStatus === "requesting"
+                  ? language === "fr" ? "Localisation en cours…" : "Locating…"
+                  : userLocation
+                    ? language === "fr" ? "Localisation active" : "Location active"
+                    : language === "fr" ? "Activer ma localisation" : "Enable my location"}
+              </Text>
+              <Text style={[styles.locationDesc, { color: colors.mutedForeground }]} numberOfLines={1}>
+                {userLocation
+                  ? language === "fr" ? "Toucher pour rafraîchir" : "Tap to refresh"
+                  : language === "fr" ? "Pour voir les services les plus proches" : "To see the closest services"}
+              </Text>
+            </View>
+            <Feather name="refresh-cw" size={14} color={colors.mutedForeground} />
+          </Pressable>
+        </View>
 
         {/* ── Villes ── */}
         <View style={styles.section}>
@@ -752,6 +812,31 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 10,
+  },
+  locationCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    padding: 14,
+    borderRadius: 14,
+    borderWidth: 1,
+  },
+  locationIconWrap: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  locationTitle: {
+    fontSize: 14,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+  },
+  locationDesc: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    marginTop: 2,
   },
   cityChip: {
     flexBasis: "47%",

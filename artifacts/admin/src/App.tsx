@@ -8,6 +8,8 @@ import Dashboard from "@/pages/Dashboard";
 import Services from "@/pages/Services";
 import Verifications from "@/pages/Verifications";
 import B2G from "@/pages/B2G";
+import BugReports from "@/pages/BugReports";
+import Stats from "@/pages/Stats";
 import OrgLogin from "@/pages/OrgLogin";
 import OrgDashboard from "@/pages/OrgDashboard";
 import Layout from "@/components/Layout";
@@ -40,6 +42,8 @@ function AdminApp() {
         <Route path="/services" component={() => <Services adminKey={adminKey} />} />
         <Route path="/verifications" component={() => <Verifications adminKey={adminKey} />} />
         <Route path="/b2g" component={() => <B2G adminKey={adminKey} />} />
+        <Route path="/bug-reports" component={() => <BugReports adminKey={adminKey} />} />
+        <Route path="/stats" component={() => <Stats adminKey={adminKey} />} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
