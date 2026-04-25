@@ -1,5 +1,5 @@
 import { Router, type Request, type Response, type NextFunction } from "express";
-import { db, servicesTable, serviceViewsTable } from "@workspace/db";
+import { db, servicesTable, serviceViewsTable, usersTable } from "@workspace/db";
 import { and, desc, eq, gte, inArray, isNotNull, isNull, sql } from "drizzle-orm";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -284,6 +284,51 @@ router.get("/b2g/insights", requireAdminKey, async (req, res) => {
     interactions: floor(r.count),
   }));
 
+  // ── User adoption stats. Comptes are stored at the province level, not
+  // tied to a city, so these numbers are GLOBAL — same value regardless of
+  // the selected region. They tell municipalities how the platform itself
+  // is growing in Quebec, complementing the regional engagement metrics.
+  const [userAggRow] = await db
+    .select({
+      total: sql<number>`count(*)::int`,
+      newInPeriod: sql<number>`count(*) filter (where ${usersTable.createdAt} >= ${since})::int`,
+      premium: sql<number>`count(*) filter (where ${usersTable.isPremium} = true)::int`,
+      citizens: sql<number>`count(*) filter (where ${usersTable.role} = 'user')::int`,
+      organisations: sql<number>`count(*) filter (where ${usersTable.role} = 'organisme')::int`,
+    })
+    .from(usersTable);
+
+  const userTotal = userAggRow?.total ?? 0;
+  const userPremium = userAggRow?.premium ?? 0;
+
+  const userStats = {
+    total: userTotal,
+    newInPeriod: floor(userAggRow?.newInPeriod ?? 0),
+    premium: userPremium,
+    premiumConversionPct: userTotal > 0
+      ? Math.round((userPremium / userTotal) * 1000) / 10
+      : 0,
+    citizens: userAggRow?.citizens ?? 0,
+    organisations: userAggRow?.organisations ?? 0,
+  };
+
+  // Daily new signups across the period — useful to spot acquisition spikes
+  // (e.g. after a media mention or campaign).
+  const signupRows = await db
+    .select({
+      date: sql<string>`date_trunc('day', ${usersTable.createdAt})::date::text`,
+      count: sql<number>`count(*)::int`,
+    })
+    .from(usersTable)
+    .where(gte(usersTable.createdAt, since))
+    .groupBy(sql`date_trunc('day', ${usersTable.createdAt})`)
+    .orderBy(sql`date_trunc('day', ${usersTable.createdAt})`);
+
+  const dailySignups = signupRows.map((r) => ({
+    date: r.date,
+    signups: floor(r.count),
+  }));
+
   // ── Coverage gap analysis: any category with substantial engagement but
   // few referenced services in the region. Threshold = ≥ 20 engagements with
   // ≤ 3 services available, OR engagement-to-service ratio ≥ 30:1.
@@ -307,6 +352,8 @@ router.get("/b2g/insights", requireAdminKey, async (req, res) => {
     generatedAt: new Date().toISOString(),
     privacyFloor: MIN_AGGREGATE,
     totals,
+    userStats,
+    dailySignups,
     topCategories,
     topServices,
     dailyActivity,

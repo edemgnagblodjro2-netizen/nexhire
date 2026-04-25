@@ -34,6 +34,15 @@ type Insights = {
     distinctAuthenticatedUsers: number;
     anonymousEvents: number;
   };
+  userStats: {
+    total: number;
+    newInPeriod: number;
+    premium: number;
+    premiumConversionPct: number;
+    citizens: number;
+    organisations: number;
+  };
+  dailySignups: Array<{ date: string; signups: number }>;
   topCategories: Array<{ category: string; interactions: number }>;
   topServices: Array<{
     id: string;
@@ -69,6 +78,41 @@ const RANGE_OPTIONS = [
 
 function formatNum(n: number): string {
   return n.toLocaleString("fr-CA");
+}
+
+function fmtDate(s: string): string {
+  // Inputs are "YYYY-MM-DD" — render as "1 mars" in fr-CA.
+  const d = new Date(s + "T00:00:00");
+  if (Number.isNaN(d.getTime())) return s;
+  return d.toLocaleDateString("fr-CA", { day: "numeric", month: "short" });
+}
+
+const MINI_ACCENTS: Record<string, string> = {
+  teal: "bg-teal-50 text-teal-700 border-teal-100",
+  blue: "bg-blue-50 text-blue-700 border-blue-100",
+  violet: "bg-violet-50 text-violet-700 border-violet-100",
+  indigo: "bg-indigo-50 text-indigo-700 border-indigo-100",
+  amber: "bg-amber-50 text-amber-700 border-amber-100",
+};
+
+function MiniStat({
+  label,
+  value,
+  accent,
+  hint,
+}: {
+  label: string;
+  value: number;
+  accent: keyof typeof MINI_ACCENTS;
+  hint?: string;
+}) {
+  return (
+    <div className={`rounded-xl border px-4 py-3 ${MINI_ACCENTS[accent] ?? MINI_ACCENTS.teal}`}>
+      <p className="text-[11px] uppercase tracking-wide font-semibold opacity-70">{label}</p>
+      <p className="text-2xl font-bold mt-0.5">{formatNum(value)}</p>
+      {hint && <p className="text-[11px] opacity-70 mt-0.5">{hint}</p>}
+    </div>
+  );
 }
 
 function downloadCsv(filename: string, rows: Array<Record<string, string | number>>) {
@@ -255,6 +299,60 @@ export default function B2G({ adminKey }: { adminKey: string }) {
               hint="Distincts ayant reçu ≥ 1 interaction"
               color="violet"
             />
+          </div>
+
+          {/* Adoption — comptes utilisateurs (global, hors région) */}
+          <div className="bg-white border border-gray-100 rounded-2xl p-6 mb-6 shadow-sm">
+            <div className="flex items-baseline justify-between mb-1 gap-3 flex-wrap">
+              <h2 className="text-base font-semibold text-gray-900">
+                Adoption — comptes utilisateurs
+              </h2>
+              <span className="text-xs text-gray-400">
+                Données pan-québécoises (non régionalisées)
+              </span>
+            </div>
+            <p className="text-xs text-gray-500 mb-4">
+              Croissance de la base d'utilisateurs AttenteZéro à l'échelle de la province.
+            </p>
+            <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-5">
+              <MiniStat label="Comptes totaux" value={data.userStats.total} accent="teal" />
+              <MiniStat
+                label={`Nouveaux (${data.days}j)`}
+                value={data.userStats.newInPeriod}
+                accent="blue"
+              />
+              <MiniStat label="Citoyens" value={data.userStats.citizens} accent="violet" />
+              <MiniStat label="Organismes" value={data.userStats.organisations} accent="indigo" />
+              <MiniStat
+                label="Premium"
+                value={data.userStats.premium}
+                accent="amber"
+                hint={`${data.userStats.premiumConversionPct}% conversion`}
+              />
+            </div>
+            {data.dailySignups.length > 0 && (
+              <ResponsiveContainer width="100%" height={140}>
+                <LineChart
+                  data={data.dailySignups}
+                  margin={{ left: 0, right: 10, top: 5, bottom: 0 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                  <XAxis dataKey="date" stroke="#9ca3af" fontSize={10} tickFormatter={fmtDate} />
+                  <YAxis stroke="#9ca3af" fontSize={10} allowDecimals={false} />
+                  <Tooltip
+                    formatter={(v: number) => [`${v} inscriptions`, "Inscriptions"]}
+                    labelFormatter={fmtDate}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="signups"
+                    stroke="#0d9488"
+                    strokeWidth={2}
+                    dot={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            )}
           </div>
 
           {/* Coverage gaps callout */}
