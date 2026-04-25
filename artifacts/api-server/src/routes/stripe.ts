@@ -30,14 +30,13 @@ export async function handleStripeWebhook(req: any, res: any) {
 
   let event: any;
   try {
-    const stripe = await getUncachableStripeClient();
     const secret = process.env.STRIPE_WEBHOOK_SECRET;
-    if (secret) {
-      event = stripe.webhooks.constructEvent(req.body, signature, secret);
-    } else {
-      // Dev fallback: parse without signature verification (NEVER in prod)
-      event = typeof req.body === "string" ? JSON.parse(req.body) : JSON.parse(req.body.toString("utf8"));
+    if (!secret) {
+      logger.error("STRIPE_WEBHOOK_SECRET is not configured — rejecting webhook request");
+      return res.status(400).json({ error: "Webhook secret not configured" });
     }
+    const stripe = await getUncachableStripeClient();
+    event = stripe.webhooks.constructEvent(req.body, signature, secret);
   } catch (err: any) {
     logger.error({ err: err.message }, "Stripe webhook signature verification failed");
     return res.status(400).json({ error: err.message });
