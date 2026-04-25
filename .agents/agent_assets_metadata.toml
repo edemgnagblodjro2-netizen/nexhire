@@ -269,3 +269,9 @@ id = "2MHKtZpHFVGK_ipI0Ua_l"
 uri = "file://projet.zip"
 type = "unspecified"
 title = "AttenteZéro — fix filtre province"
+
+[[outputs]]
+id = "R204HaC5p4SOzm-HfVYqc"
+uri = "file://exports/attentezero-v1.0.34-vc31-20260425-1918.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.34 (versionCode 31) — source pour build Google Play"
