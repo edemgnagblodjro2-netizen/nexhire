@@ -20,7 +20,8 @@ import { HomeBannerSlider } from "@/components/HomeBannerSlider";
 import { UrgentButton } from "@/components/UrgentButton";
 import { BrandFooter } from "@/components/BrandFooter";
 import { useLanguage } from "@/contexts/LanguageContext";
-import type { Category } from "@/data/services";
+import type { Category, ProvinceCode } from "@/data/services";
+import { PROVINCE_LABELS } from "@/data/services";
 import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor, CATEGORY_ICONS } from "@/utils/categoryColors";
@@ -51,6 +52,36 @@ export default function HomeScreen() {
   const [focused, setFocused] = useState(false);
 
   const totalServices = services.length;
+  const totalCities = React.useMemo(() => {
+    const set = new Set<string>();
+    for (const s of services) {
+      if (!s.isProvinceWide && s.city && s.city.trim().length > 0) {
+        set.add(s.city.trim().toLowerCase());
+      }
+    }
+    return set.size;
+  }, [services]);
+  const provinceCounts = React.useMemo(() => {
+    const counts: Partial<Record<ProvinceCode, number>> = {};
+    for (const s of services) {
+      const p = (s.province ?? "QC") as ProvinceCode;
+      counts[p] = (counts[p] ?? 0) + 1;
+    }
+    return counts;
+  }, [services]);
+  const totalProvinces = Object.values(provinceCounts).filter((n) => (n ?? 0) > 0).length;
+  const PROVINCE_ORDER: { code: ProvinceCode; emoji: string }[] = [
+    { code: "QC", emoji: "⚜️" },
+    { code: "ON", emoji: "🏙️" },
+    { code: "BC", emoji: "🌊" },
+    { code: "AB", emoji: "⛽" },
+    { code: "MB", emoji: "🌾" },
+    { code: "SK", emoji: "🌾" },
+    { code: "NB", emoji: "🌊" },
+    { code: "NS", emoji: "⚓" },
+    { code: "PE", emoji: "🏝️" },
+    { code: "NL", emoji: "🧊" },
+  ];
 
   function handleSearch() {
     if (!query.trim()) return;
@@ -123,13 +154,18 @@ export default function HomeScreen() {
         {/* Stats strip */}
         <View style={styles.statsRow}>
           <View style={styles.statItem}>
-            <Text style={styles.statNum}>{totalServices}+</Text>
+            <Text style={styles.statNum}>{totalServices.toLocaleString(language === "fr" ? "fr-CA" : "en-CA")}</Text>
             <Text style={styles.statLabel}>{language === "fr" ? "services" : "services"}</Text>
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statItem}>
-            <Text style={styles.statNum}>4</Text>
+            <Text style={styles.statNum}>{totalCities}</Text>
             <Text style={styles.statLabel}>{language === "fr" ? "villes" : "cities"}</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.statItem}>
+            <Text style={styles.statNum}>{totalProvinces}</Text>
+            <Text style={styles.statLabel}>{language === "fr" ? "provinces" : "provinces"}</Text>
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statItem}>
@@ -288,6 +324,76 @@ export default function HomeScreen() {
               );
             })}
           </View>
+        </View>
+
+        {/* ── Provinces (Canada) ── */}
+        <View style={styles.section}>
+          <View style={styles.provinceHeader}>
+            <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
+              {language === "fr" ? "Trouver par province" : "Find by province"}
+            </Text>
+            <View style={[styles.provinceTotalBadge, { backgroundColor: colors.primary + "15", borderColor: colors.primary + "40" }]}>
+              <Text style={[styles.provinceTotalText, { color: colors.primary }]}>
+                🇨🇦 {totalServices.toLocaleString(language === "fr" ? "fr-CA" : "en-CA")} {language === "fr" ? "services" : "services"}
+              </Text>
+            </View>
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.provinceScroll}
+          >
+            {PROVINCE_ORDER.map(({ code, emoji }) => {
+              const count = provinceCounts[code] ?? 0;
+              const available = count > 0;
+              const isQc = code === "QC";
+              return (
+                <Pressable
+                  key={code}
+                  disabled={!available}
+                  style={({ pressed }) => [
+                    styles.provinceChip,
+                    {
+                      backgroundColor: colors.card,
+                      borderColor: isQc ? colors.primary : colors.border,
+                      borderWidth: isQc ? 1.5 : 1,
+                      opacity: !available ? 0.55 : pressed ? 0.85 : 1,
+                    },
+                  ]}
+                  onPress={() => {
+                    if (!available) return;
+                    Haptics.selectionAsync();
+                    router.push({
+                      pathname: "/results",
+                      params: { query: PROVINCE_LABELS[code], category: "all" },
+                    });
+                  }}
+                >
+                  <Text style={styles.provinceEmoji}>{emoji}</Text>
+                  <Text
+                    style={[styles.provinceCode, { color: isQc ? colors.primary : colors.foreground }]}
+                    numberOfLines={1}
+                  >
+                    {code}
+                  </Text>
+                  <Text
+                    style={[styles.provinceName, { color: colors.mutedForeground }]}
+                    numberOfLines={1}
+                  >
+                    {PROVINCE_LABELS[code]}
+                  </Text>
+                  <Text style={[styles.provinceCount, { color: colors.foreground }]}>
+                    {count.toLocaleString(language === "fr" ? "fr-CA" : "en-CA")}
+                  </Text>
+                  <Text style={[styles.provinceStatus, { color: available ? "#16a34a" : colors.mutedForeground }]}>
+                    {available
+                      ? language === "fr" ? "✓ disponible" : "✓ available"
+                      : language === "fr" ? "à venir" : "coming soon"}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
         </View>
 
         {/* ── AI Banner ── */}
@@ -670,6 +776,60 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontFamily: "Inter_400Regular",
     marginTop: 2,
+  },
+
+  /* Provinces */
+  provinceHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 8,
+    marginBottom: 12,
+  },
+  provinceTotalBadge: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 999,
+    borderWidth: 1,
+  },
+  provinceTotalText: {
+    fontSize: 11,
+    fontFamily: "Inter_700Bold",
+  },
+  provinceScroll: {
+    gap: 10,
+    paddingRight: 4,
+  },
+  provinceChip: {
+    width: 124,
+    borderRadius: 14,
+    padding: 12,
+    alignItems: "flex-start",
+    gap: 2,
+  },
+  provinceEmoji: {
+    fontSize: 20,
+    marginBottom: 4,
+  },
+  provinceCode: {
+    fontSize: 16,
+    fontFamily: "Inter_700Bold",
+    letterSpacing: 0.5,
+  },
+  provinceName: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+    marginTop: 1,
+  },
+  provinceCount: {
+    fontSize: 18,
+    fontFamily: "Inter_700Bold",
+    marginTop: 6,
+  },
+  provinceStatus: {
+    fontSize: 10,
+    fontFamily: "Inter_500Medium",
+    marginTop: 1,
   },
 
   /* AI Banner */
