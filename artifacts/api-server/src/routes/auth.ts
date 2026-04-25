@@ -384,7 +384,9 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
   // and provisioned accounts (out of band), not this public endpoint.
   // Existing organisme/intervenant accounts continue to work for login,
   // billing, and data access — this guard only blocks NEW creation.
-  const role: "user" = "user";
+  // Public self-signup: only "user" creation is enabled. Type widened so the
+  // dead-code organisme/intervenant branches still compile.
+  const role = "user" as "user" | "organisme" | "intervenant";
   const organisationName = undefined;
   const organisationCity = undefined;
   const organisationPhone = undefined;

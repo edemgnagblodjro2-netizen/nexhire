@@ -1,7 +1,7 @@
 import { db, servicesTable } from "@workspace/db";
 import { sql } from "drizzle-orm";
 
-const servicesModule = await import("../../../artifacts/service-qc/data/services.js");
+const servicesModule = await import("../../../artifacts/service-qc/data/services.js" as any);
 const SERVICES: any[] = servicesModule.SERVICES;
 
 async function seed() {

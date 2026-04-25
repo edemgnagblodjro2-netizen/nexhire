@@ -189,7 +189,7 @@ async function ensureDemoAccount() {
 async function autoSeedServicesIfEmpty() {
   try {
     const count = await db.$count(servicesTable);
-    const mod: any = await import("../../service-qc/data/services.js").catch(
+    const mod: any = await import("../../service-qc/data/services.js" as any).catch(
       () => import("../../service-qc/data/services" as any),
     );
     const SERVICES: any[] = mod.SERVICES ?? [];

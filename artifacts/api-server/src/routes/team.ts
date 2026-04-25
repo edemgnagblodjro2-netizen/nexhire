@@ -63,13 +63,23 @@ async function getMyOrgContext(userId: string) {
   // Owner first
   rows.sort((a, b) => (a.memberRole === "owner" ? -1 : b.memberRole === "owner" ? 1 : 0));
   const me = rows[0];
-  if (!me.orgId) return null;
+  if (!me.orgId || !me.orgName || !me.orgKind) return null;
+  const orgId: string = me.orgId;
+  const orgName: string = me.orgName;
+  const orgKind: string = me.orgKind;
   const [sub] = await db
     .select()
     .from(subscriptionsTable)
-    .where(eq(subscriptionsTable.organisationId, me.orgId))
+    .where(eq(subscriptionsTable.organisationId, orgId))
     .limit(1);
-  return { ...me, subscription: sub ?? null };
+  return {
+    memberId: me.memberId,
+    memberRole: me.memberRole,
+    orgId,
+    orgName,
+    orgKind,
+    subscription: sub ?? null,
+  };
 }
 
 // ── GET /api/organisations/me/members ────────────────────────────
