@@ -103,17 +103,14 @@ async function autoSeedServicesIfEmpty() {
       logger.warn("No static services to seed");
       return;
     }
-    if (count > 0 && count >= SERVICES.length) {
-      logger.info({ count, staticCount: SERVICES.length }, "Services table already in sync, skipping seed");
-      return;
-    }
-    logger.info({ dbCount: count, staticCount: SERVICES.length }, "Auto-seeding new services from static data…");
+    logger.info({ dbCount: count, staticCount: SERVICES.length }, "Auto-seeding services from static data (insert-or-update province)…");
     const rows = SERVICES.map((s: any) => ({
       id: s.id,
       name: s.name,
       category: s.category,
       subcategory: s.subcategory ?? "",
       city: s.city ?? "",
+      province: s.province ?? "QC",
       phone: s.phone ?? "",
       website: s.website ?? "",
       description: s.description ?? "",
@@ -127,10 +124,14 @@ async function autoSeedServicesIfEmpty() {
     }));
     const batchSize = 100;
     for (let i = 0; i < rows.length; i += batchSize) {
+      // Insert new rows; for existing rows, only refresh `province` so we don't clobber admin edits.
       await db
         .insert(servicesTable)
         .values(rows.slice(i, i + batchSize))
-        .onConflictDoNothing();
+        .onConflictDoUpdate({
+          target: servicesTable.id,
+          set: { province: sql`excluded.province` },
+        });
     }
     const finalCount = await db.$count(servicesTable);
     logger.info({ finalCount }, "Auto-seed complete");
