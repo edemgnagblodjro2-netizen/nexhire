@@ -1,0 +1,39 @@
+PS C:\Users\sandr> Cd D:\attentezero-v1.0.34
+PS D:\attentezero-v1.0.34> cd artifacts/service-qc
+PS D:\attentezero-v1.0.34\artifacts\service-qc> pnpm install
+Scope: all 12 workspace projects
+../..                                    |    +1194 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+../..                                    | Progress: resolved 0, reused 1100, downloaded 8, added 1194, done
+../.. preinstall$ node -e "if(!(process.env.npm_config_user_agent||'').startsWith('pnpm')){console.error('Use pnpm in…
+└─ Done in 93ms
+Done in 36.6s using pnpm v10.26.1
+PS D:\attentezero-v1.0.34\artifacts\service-qc> npx eas-cli build --platform android --profile production
+npm warn Unknown project config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+★ eas-cli@18.8.1 is now available.
+To upgrade, run:
+npm install -g eas-cli
+Proceeding with outdated version.
+
+It looks like you haven't initialized the git repository yet.
+EAS requires you to use a git repository for your project.
+√ Would you like us to run 'git init' in D:\attentezero-v1.0.34 for you? ... yes
+We're going to make an initial commit for your repository.
+√ Commit message: ... Initial commit
+You need to configure Git with your username (user.name) and email address (user.email)
+√ Username: ... startupaya
+✔ Running git config --local user.name startupaya
+√ Email address: ... attentezero5@gmail.com
+✔ Running git config --local user.email attentezero5@gmail.com
+PS D:\attentezero-v1.0.34\artifacts\service-qc> npx eas-cli submit --platform android --latest --track internal
+npm warn Unknown project config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+★ eas-cli@18.8.1 is now available.
+To upgrade, run:
+npm install -g eas-cli
+Proceeding with outdated version.
+
+Nonexistent flag: --track
+See more help with --help
+    Error: submit command failed.
+PS D:\attentezero-v1.0.34\artifacts\service-qc>
