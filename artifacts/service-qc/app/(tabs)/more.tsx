@@ -372,7 +372,15 @@ export default function MoreScreen() {
                   opacity: pressed ? 0.85 : 1,
                 },
               ]}
-              onPress={() => Haptics.selectionAsync()}
+              onPress={() => {
+                Haptics.selectionAsync();
+                Alert.alert(
+                  opt.title,
+                  isFr
+                    ? `Cette fonctionnalité arrive bientôt. En attendant, vous pouvez nous écrire via « Signaler un bogue » au bas du menu.`
+                    : `This feature is coming soon. In the meantime, you can reach us via "Report a bug" at the bottom of the menu.`,
+                );
+              }}
             >
               <View style={[styles.optionIconWrap, { backgroundColor: isDark ? opt.darkBg : opt.bg }]}>
                 <Feather name={opt.icon} size={20} color={opt.color} />
