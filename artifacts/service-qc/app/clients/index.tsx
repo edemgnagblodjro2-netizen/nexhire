@@ -33,6 +33,7 @@ type ClientRow = {
   city: string | null;
   summary: string | null;
   riskLevel: "none" | "low" | "medium" | "high";
+  status: "en_attente" | "en_cours" | "en_pause" | "termine";
   updatedAt: string;
 };
 
@@ -41,6 +42,13 @@ const RISK_META: Record<ClientRow["riskLevel"], { color: string; label: string }
   low: { color: "#0e7e6e", label: "Faible" },
   medium: { color: "#d97706", label: "Modéré" },
   high: { color: "#dc2626", label: "Élevé" },
+};
+
+const STATUS_META: Record<ClientRow["status"], { color: string; label: string }> = {
+  en_attente: { color: "#94a3b8", label: "En attente" },
+  en_cours: { color: "#0284c7", label: "En cours" },
+  en_pause: { color: "#d97706", label: "En pause" },
+  termine: { color: "#0e7e6e", label: "Terminé" },
 };
 
 
@@ -250,6 +258,7 @@ export default function ClientsListScreen() {
           }
           renderItem={({ item }) => {
             const risk = RISK_META[item.riskLevel];
+            const status = STATUS_META[item.status] ?? STATUS_META.en_cours;
             const fullName = `${item.firstName}${item.lastName ? ` ${item.lastName}` : ""}`;
             return (
               <Pressable
@@ -279,12 +288,18 @@ export default function ClientsListScreen() {
                       </View>
                     )}
                   </View>
-                  <Text
-                    style={[styles.rowMeta, { color: colors.mutedForeground }]}
-                    numberOfLines={1}
-                  >
-                    {item.phone || item.city || item.summary || "Aucune note récente"}
-                  </Text>
+                  <View style={styles.rowMetaLine}>
+                    <View style={[styles.statusDot, { backgroundColor: status.color }]} />
+                    <Text style={[styles.rowStatus, { color: status.color }]}>{status.label}</Text>
+                    {(item.phone || item.city || item.summary) && (
+                      <Text
+                        style={[styles.rowMeta, { color: colors.mutedForeground, flex: 1 }]}
+                        numberOfLines={1}
+                      >
+                        · {item.phone || item.city || item.summary}
+                      </Text>
+                    )}
+                  </View>
                 </View>
                 <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
               </Pressable>
@@ -510,6 +525,9 @@ const styles = StyleSheet.create({
   rowTitleLine: { flexDirection: "row", alignItems: "center", gap: 6 },
   rowName: { fontSize: 15, fontFamily: "Inter_600SemiBold", flexShrink: 1 },
   rowMeta: { fontSize: 12, fontFamily: "Inter_400Regular" },
+  rowMetaLine: { flexDirection: "row", alignItems: "center", gap: 5, marginTop: 2 },
+  statusDot: { width: 7, height: 7, borderRadius: 4 },
+  rowStatus: { fontSize: 11, fontFamily: "Inter_700Bold" },
   riskPill: {
     paddingHorizontal: 6,
     paddingVertical: 2,

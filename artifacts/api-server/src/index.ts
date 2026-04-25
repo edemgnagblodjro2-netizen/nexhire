@@ -43,6 +43,35 @@ async function runStartupMigrations() {
     await db.execute(
       sql`ALTER TABLE organisation_members ADD COLUMN IF NOT EXISTS response_seen_by_inviter VARCHAR(4) NOT NULL DEFAULT 'no'`,
     );
+    // Client workflow status + activity feed (shared across org members).
+    await db.execute(
+      sql`ALTER TABLE clients ADD COLUMN IF NOT EXISTS status VARCHAR(16) NOT NULL DEFAULT 'en_cours'`,
+    );
+    await db.execute(sql`
+      CREATE TABLE IF NOT EXISTS client_activities (
+        id VARCHAR PRIMARY KEY DEFAULT gen_random_uuid(),
+        organisation_id VARCHAR NOT NULL REFERENCES organisations(id) ON DELETE CASCADE,
+        client_id VARCHAR NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+        actor_user_id VARCHAR NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
+        kind VARCHAR(24) NOT NULL,
+        detail TEXT,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `);
+    await db.execute(
+      sql`CREATE INDEX IF NOT EXISTS "IDX_client_activities_org_time" ON client_activities (organisation_id, created_at)`,
+    );
+    await db.execute(
+      sql`CREATE INDEX IF NOT EXISTS "IDX_client_activities_client" ON client_activities (client_id, created_at)`,
+    );
+    await db.execute(sql`
+      CREATE TABLE IF NOT EXISTS client_activity_reads (
+        user_id VARCHAR NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        organisation_id VARCHAR NOT NULL REFERENCES organisations(id) ON DELETE CASCADE,
+        last_seen_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        PRIMARY KEY (user_id, organisation_id)
+      )
+    `);
     logger.info("Startup migrations completed");
   } catch (err) {
     logger.error({ err }, "Startup migration failed");

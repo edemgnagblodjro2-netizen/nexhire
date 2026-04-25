@@ -7,8 +7,32 @@ import {
   organisationsTable,
   subscriptionsTable,
   organisationMembersTable,
+  clientActivitiesTable,
+  clientActivityReadsTable,
+  usersTable,
 } from "@workspace/db";
-import { eq, and, desc, ilike, or, sql } from "drizzle-orm";
+import { eq, and, desc, ilike, or, sql, gt, ne, inArray } from "drizzle-orm";
+
+// Best-effort activity logger — never throws into the request flow.
+async function logActivity(args: {
+  organisationId: string;
+  clientId: string;
+  actorUserId: string;
+  kind: string;
+  detail?: string | null;
+}) {
+  try {
+    await db.insert(clientActivitiesTable).values({
+      organisationId: args.organisationId,
+      clientId: args.clientId,
+      actorUserId: args.actorUserId,
+      kind: args.kind,
+      detail: args.detail ?? null,
+    });
+  } catch {
+    /* swallow — activity log must not break the action */
+  }
+}
 
 const router: IRouter = Router();
 
@@ -32,6 +56,18 @@ const ACTIVE_STATUSES = new Set(["active", "trialing", "past_due"]);
  * Multi-seat aware: invited team members get the same access as the owner.
  */
 async function getEligibleOrgForUser(userId: string) {
+  const orgs = await getAllEligibleOrgsForUser(userId);
+  return orgs[0] ?? null;
+}
+
+/**
+ * Returns ALL organisations the user belongs to (active membership) that are
+ * on an eligible plan + active status. Owner-role orgs come first so that
+ * single-org callers (client CRUD) keep targeting the user's primary org,
+ * but the activity-feed endpoints can read across every org the user shares
+ * with collaborators.
+ */
+async function getAllEligibleOrgsForUser(userId: string) {
   const memberships = await db
     .select({
       org: organisationsTable,
@@ -45,9 +81,9 @@ async function getEligibleOrgForUser(userId: string) {
         eq(organisationMembersTable.status, "active"),
       ),
     );
-  if (memberships.length === 0) return null;
-  // Prefer owner role first, then any other active membership
+  if (memberships.length === 0) return [];
   memberships.sort((a, b) => (a.memberRole === "owner" ? -1 : b.memberRole === "owner" ? 1 : 0));
+  const eligible: typeof organisationsTable.$inferSelect[] = [];
   for (const m of memberships) {
     if (!m.org) continue;
     const [sub] = await db
@@ -58,9 +94,9 @@ async function getEligibleOrgForUser(userId: string) {
     if (!sub) continue;
     if (!ALLOWED_PLANS.has(sub.plan)) continue;
     if (!ACTIVE_STATUSES.has(sub.status)) continue;
-    return m.org;
+    eligible.push(m.org);
   }
-  return null;
+  return eligible;
 }
 
 function gateOrg(req: Request, res: Response) {
@@ -79,6 +115,7 @@ const ClientBody = z.object({
   city: z.string().max(120).optional().nullable(),
   summary: z.string().max(4000).optional().nullable(),
   riskLevel: z.enum(["none", "low", "medium", "high"]).optional(),
+  status: z.enum(["en_attente", "en_cours", "en_pause", "termine"]).optional(),
 });
 
 const NoteBody = z.object({
@@ -148,9 +185,119 @@ router.post("/clients", async (req, res) => {
       city: data.city ?? null,
       summary: data.summary ?? null,
       riskLevel: data.riskLevel ?? "none",
+      status: data.status ?? "en_cours",
     })
     .returning();
+  await logActivity({
+    organisationId: org.id,
+    clientId: row.id,
+    actorUserId: userId,
+    kind: "created",
+    detail: null,
+  });
   res.json({ client: row });
+});
+
+// ── GET /api/clients/activities ──────────────────────────────────
+// Must be registered BEFORE /clients/:id so it's not captured by the :id pattern.
+// Returns the org-wide activity feed (latest first), enriched with the
+// actor's display name and the client's first/last name.
+router.get("/clients/activities", async (req, res) => {
+  const userId = gateOrg(req, res);
+  if (!userId) return;
+  const orgs = await getAllEligibleOrgsForUser(userId);
+  if (orgs.length === 0) {
+    res.status(403).json({ error: "Abonnement requis." });
+    return;
+  }
+  const orgIds = orgs.map((o) => o.id);
+  const limit = Math.min(Number(req.query.limit) || 80, 200);
+  const rows = await db
+    .select({
+      id: clientActivitiesTable.id,
+      organisationId: clientActivitiesTable.organisationId,
+      clientId: clientActivitiesTable.clientId,
+      kind: clientActivitiesTable.kind,
+      detail: clientActivitiesTable.detail,
+      createdAt: clientActivitiesTable.createdAt,
+      actorUserId: clientActivitiesTable.actorUserId,
+      actorFirstName: usersTable.firstName,
+      actorLastName: usersTable.lastName,
+      actorEmail: usersTable.email,
+      clientFirstName: clientsTable.firstName,
+      clientLastName: clientsTable.lastName,
+    })
+    .from(clientActivitiesTable)
+    .leftJoin(usersTable, eq(usersTable.id, clientActivitiesTable.actorUserId))
+    .leftJoin(clientsTable, eq(clientsTable.id, clientActivitiesTable.clientId))
+    .where(inArray(clientActivitiesTable.organisationId, orgIds))
+    .orderBy(desc(clientActivitiesTable.createdAt))
+    .limit(limit);
+  res.json({ activities: rows });
+});
+
+// ── GET /api/clients/activities/unseen-count ─────────────────────
+router.get("/clients/activities/unseen-count", async (req, res) => {
+  const userId = gateOrg(req, res);
+  if (!userId) return;
+  const orgs = await getAllEligibleOrgsForUser(userId);
+  if (orgs.length === 0) {
+    res.json({ count: 0 });
+    return;
+  }
+  const reads = await db
+    .select({
+      organisationId: clientActivityReadsTable.organisationId,
+      lastSeenAt: clientActivityReadsTable.lastSeenAt,
+    })
+    .from(clientActivityReadsTable)
+    .where(
+      and(
+        eq(clientActivityReadsTable.userId, userId),
+        inArray(clientActivityReadsTable.organisationId, orgs.map((o) => o.id)),
+      ),
+    );
+  const readByOrg = new Map(reads.map((r) => [r.organisationId, r.lastSeenAt]));
+  const fallback = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  let total = 0;
+  for (const o of orgs) {
+    const cutoff = readByOrg.get(o.id) ?? fallback;
+    const [{ count } = { count: 0 }] = await db
+      .select({ count: sql<number>`cast(count(*) as int)` })
+      .from(clientActivitiesTable)
+      .where(
+        and(
+          eq(clientActivitiesTable.organisationId, o.id),
+          ne(clientActivitiesTable.actorUserId, userId),
+          gt(clientActivitiesTable.createdAt, cutoff),
+        ),
+      );
+    total += Number(count) || 0;
+  }
+  res.json({ count: total });
+});
+
+// ── POST /api/clients/activities/seen — reset unread badge ───────
+// Marks every eligible org as seen-now so cross-org members see a clean badge.
+router.post("/clients/activities/seen", async (req, res) => {
+  const userId = gateOrg(req, res);
+  if (!userId) return;
+  const orgs = await getAllEligibleOrgsForUser(userId);
+  if (orgs.length === 0) {
+    res.json({ ok: true });
+    return;
+  }
+  const now = new Date();
+  for (const o of orgs) {
+    await db
+      .insert(clientActivityReadsTable)
+      .values({ userId, organisationId: o.id, lastSeenAt: now })
+      .onConflictDoUpdate({
+        target: [clientActivityReadsTable.userId, clientActivityReadsTable.organisationId],
+        set: { lastSeenAt: now },
+      });
+  }
+  res.json({ ok: true });
 });
 
 // ── GET /api/clients/:id ─────────────────────────────────────────
@@ -207,6 +354,12 @@ router.patch("/clients/:id", async (req, res) => {
     res.status(400).json({ error: "Aucune modification." });
     return;
   }
+  // Capture previous values for activity diffing
+  const [prev] = await db
+    .select({ status: clientsTable.status, riskLevel: clientsTable.riskLevel })
+    .from(clientsTable)
+    .where(and(eq(clientsTable.id, req.params.id), eq(clientsTable.organisationId, org.id)))
+    .limit(1);
   const [row] = await db
     .update(clientsTable)
     .set(updates)
@@ -215,6 +368,26 @@ router.patch("/clients/:id", async (req, res) => {
   if (!row) {
     res.status(404).json({ error: "Client introuvable." });
     return;
+  }
+  if (prev) {
+    if (typeof updates.status === "string" && updates.status !== prev.status) {
+      await logActivity({
+        organisationId: org.id,
+        clientId: row.id,
+        actorUserId: userId,
+        kind: "status_changed",
+        detail: `${prev.status}→${updates.status}`,
+      });
+    }
+    if (typeof updates.riskLevel === "string" && updates.riskLevel !== prev.riskLevel) {
+      await logActivity({
+        organisationId: org.id,
+        clientId: row.id,
+        actorUserId: userId,
+        kind: "risk_changed",
+        detail: `${prev.riskLevel}→${updates.riskLevel}`,
+      });
+    }
   }
   res.json({ client: row });
 });
@@ -237,6 +410,13 @@ router.delete("/clients/:id", async (req, res) => {
     res.status(404).json({ error: "Client introuvable." });
     return;
   }
+  await logActivity({
+    organisationId: org.id,
+    clientId: row.id,
+    actorUserId: userId,
+    kind: "archived",
+    detail: null,
+  });
   res.json({ ok: true });
 });
 
@@ -279,6 +459,17 @@ router.post("/clients/:id/notes", async (req, res) => {
     .update(clientsTable)
     .set({ updatedAt: new Date() })
     .where(eq(clientsTable.id, client.id));
+  // Activity feed entry — short excerpt of the note + kind
+  const excerpt = parsed.data.content.length > 80
+    ? parsed.data.content.slice(0, 80) + "…"
+    : parsed.data.content;
+  await logActivity({
+    organisationId: org.id,
+    clientId: client.id,
+    actorUserId: userId,
+    kind: "note_added",
+    detail: `${parsed.data.kind ?? "note"}: ${excerpt}`,
+  });
   res.json({ note: row });
 });
 

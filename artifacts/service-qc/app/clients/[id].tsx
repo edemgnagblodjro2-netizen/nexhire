@@ -36,6 +36,7 @@ type Client = {
   dateOfBirth: string | null;
   summary: string | null;
   riskLevel: "none" | "low" | "medium" | "high";
+  status: "en_attente" | "en_cours" | "en_pause" | "termine";
   updatedAt: string;
   createdAt: string;
 };
@@ -60,6 +61,13 @@ const RISK_OPTIONS: Array<{ value: Client["riskLevel"]; label: string; color: st
   { value: "low", label: "Faible", color: "#0e7e6e" },
   { value: "medium", label: "Modéré", color: "#d97706" },
   { value: "high", label: "Élevé", color: "#dc2626" },
+];
+
+const STATUS_OPTIONS: Array<{ value: Client["status"]; label: string; color: string; icon: any }> = [
+  { value: "en_attente", label: "En attente", color: "#94a3b8", icon: "clock" },
+  { value: "en_cours", label: "En cours", color: "#0284c7", icon: "play-circle" },
+  { value: "en_pause", label: "En pause", color: "#d97706", icon: "pause-circle" },
+  { value: "termine", label: "Terminé", color: "#0e7e6e", icon: "check-circle" },
 ];
 
 export default function ClientDetailScreen() {
@@ -170,6 +178,22 @@ export default function ClientDetailScreen() {
       if (!res.ok) throw new Error();
     } catch {
       Alert.alert("Erreur", "Impossible de mettre à jour le niveau.");
+      load();
+    }
+  }
+
+  async function handleUpdateStatus(status: Client["status"]) {
+    if (!client || client.status === status) return;
+    Haptics.selectionAsync();
+    setClient({ ...client, status });
+    try {
+      const res = await authedFetch(`/api/clients/${client.id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ status }),
+      });
+      if (!res.ok) throw new Error();
+    } catch {
+      Alert.alert("Erreur", "Impossible de mettre à jour le statut.");
       load();
     }
   }
@@ -356,6 +380,44 @@ export default function ClientDetailScreen() {
                 <Text style={styles.actionBtnText}>Partager</Text>
               </Pressable>
             </View>
+          </View>
+
+          {/* Status selector — visible to all team members */}
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Statut du dossier</Text>
+            <View style={styles.riskRow}>
+              {STATUS_OPTIONS.map((s) => {
+                const active = client.status === s.value;
+                return (
+                  <Pressable
+                    key={s.value}
+                    onPress={() => handleUpdateStatus(s.value)}
+                    style={[
+                      styles.riskChip,
+                      {
+                        flexDirection: "row",
+                        gap: 6,
+                        backgroundColor: active ? s.color : colors.card,
+                        borderColor: active ? s.color : colors.border,
+                      },
+                    ]}
+                  >
+                    <Feather name={s.icon} size={13} color={active ? "#fff" : s.color} />
+                    <Text
+                      style={[
+                        styles.riskChipText,
+                        { color: active ? "#fff" : colors.foreground },
+                      ]}
+                    >
+                      {s.label}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+            <Text style={[styles.statusHint, { color: colors.mutedForeground }]}>
+              Changement visible par toute l'équipe.
+            </Text>
           </View>
 
           {/* Risk selector */}
@@ -723,6 +785,7 @@ const styles = StyleSheet.create({
   sectionTitle: { fontSize: 14, fontFamily: "Inter_700Bold" },
 
   riskRow: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+  statusHint: { fontSize: 11, fontFamily: "Inter_400Regular", marginTop: 8, fontStyle: "italic" },
   riskChip: {
     paddingHorizontal: 12,
     paddingVertical: 7,

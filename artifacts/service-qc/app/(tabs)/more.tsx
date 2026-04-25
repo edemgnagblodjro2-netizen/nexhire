@@ -3,7 +3,8 @@ import * as Haptics from "expo-haptics";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFocusEffect, useRouter } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
+import { authedFetch } from "@/lib/apiClient";
 import {
   Alert,
   Platform,
@@ -125,6 +126,24 @@ export default function MoreScreen() {
     }, [checkAndRemind])
   );
 
+  // Unread badge for client activity feed (other team members' actions)
+  const [activityUnread, setActivityUnread] = useState(0);
+  useFocusEffect(
+    useCallback(() => {
+      let cancelled = false;
+      if (user?.role !== "intervenant" && user?.role !== "organisme") return;
+      authedFetch("/api/clients/activities/unseen-count")
+        .then((r) => (r.ok ? r.json() : { count: 0 }))
+        .then((j) => {
+          if (!cancelled) setActivityUnread(Number(j.count) || 0);
+        })
+        .catch(() => {});
+      return () => {
+        cancelled = true;
+      };
+    }, [user?.role]),
+  );
+
   async function handleFeaturePress() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     await recordAttempt();
@@ -186,6 +205,60 @@ export default function MoreScreen() {
                     {isFr
                       ? "Suivi confidentiel, journal de contacts, alertes — réservé aux abonnés Terrain & Institution."
                       : "Confidential follow-up, contact log, alerts — for Terrain & Institution subscribers."}
+                  </Text>
+                </View>
+                <Feather name="chevron-right" size={18} color="rgba(255,255,255,0.7)" />
+              </LinearGradient>
+            </Pressable>
+          )}
+
+          {/* ── Fil d'activité de l'équipe — collaborators get notified here ── */}
+          {(user?.role === "intervenant" || user?.role === "organisme") && (
+            <Pressable
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                router.push("/clients/activities" as any);
+              }}
+              style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1, marginTop: 10 }]}
+            >
+              <LinearGradient
+                colors={["#7c3aed", "#5b21b6"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.terrainCard}
+              >
+                <View style={styles.terrainIconWrap}>
+                  <Feather name="activity" size={22} color="#fff" />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <View style={styles.terrainBadgeRow}>
+                    <View style={styles.terrainBadge}>
+                      <Feather name="users" size={10} color="#ddd6fe" />
+                      <Text style={styles.terrainBadgeText}>ÉQUIPE</Text>
+                    </View>
+                    {activityUnread > 0 && (
+                      <View
+                        style={{
+                          backgroundColor: "#dc2626",
+                          paddingHorizontal: 8,
+                          paddingVertical: 2,
+                          borderRadius: 999,
+                          marginLeft: 6,
+                        }}
+                      >
+                        <Text style={{ color: "#fff", fontSize: 10, fontFamily: "Inter_700Bold" }}>
+                          {activityUnread > 99 ? "99+" : activityUnread} nouv.
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                  <Text style={styles.terrainTitle}>
+                    {isFr ? "Fil d'activité" : "Team activity"}
+                  </Text>
+                  <Text style={styles.terrainSub}>
+                    {isFr
+                      ? "Voyez en temps réel les changements de statut, notes et nouveaux dossiers de vos coéquipiers."
+                      : "See real-time status changes, notes, and new files from your teammates."}
                   </Text>
                 </View>
                 <Feather name="chevron-right" size={18} color="rgba(255,255,255,0.7)" />
