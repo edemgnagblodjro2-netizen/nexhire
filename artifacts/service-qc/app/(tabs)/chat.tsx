@@ -306,10 +306,18 @@ const QUICK_PROMPTS_FR = [
   "Je cherche du travail",
   "Je cherche une garderie",
   "Aide pour ma famille",
-  "Je suis en Ontario, je cherche les services administratifs",
+  "Je suis en Ontario, services administratifs",
   "Je suis en Alberta, démarches gouvernementales",
   "Je suis en Colombie-Britannique, j'ai besoin d'aide",
   "Je suis au Manitoba, démarches administratives",
+  "Je suis en Saskatchewan, services gouvernementaux",
+  "Je suis au Nouveau-Brunswick, démarches",
+  "Je suis en Nouvelle-Écosse, services administratifs",
+  "Je suis à l'Île-du-Prince-Édouard, j'ai besoin d'aide",
+  "Je suis à Terre-Neuve-et-Labrador, démarches",
+  "Je suis au Yukon, services administratifs",
+  "Je suis aux Territoires du Nord-Ouest, démarches",
+  "Je suis au Nunavut, services administratifs",
 ];
 
 const QUICK_PROMPTS_EN = [
@@ -321,10 +329,18 @@ const QUICK_PROMPTS_EN = [
   "I'm looking for work",
   "I need childcare",
   "Help for my family",
-  "I'm in Ontario, I need administrative services",
-  "I'm in Alberta, I need government services",
+  "I'm in Ontario, administrative services",
+  "I'm in Alberta, government services",
   "I'm in British Columbia, I need help",
-  "I'm in Nova Scotia, I need administrative help",
+  "I'm in Manitoba, administrative help",
+  "I'm in Saskatchewan, government services",
+  "I'm in New Brunswick, administrative help",
+  "I'm in Nova Scotia, administrative services",
+  "I'm in Prince Edward Island, I need help",
+  "I'm in Newfoundland and Labrador, services",
+  "I'm in Yukon, administrative services",
+  "I'm in Northwest Territories, services",
+  "I'm in Nunavut, administrative services",
 ];
 
 const QUICK_PROMPTS_ES = [
@@ -336,9 +352,18 @@ const QUICK_PROMPTS_ES = [
   "Busco trabajo",
   "Busco guardería para mis hijos",
   "Necesito ayuda para mi familia",
-  "Estoy en Ontario, necesito servicios administrativos",
+  "Estoy en Ontario, servicios administrativos",
   "Estoy en Alberta, trámites gubernamentales",
   "Estoy en Columbia Británica, necesito ayuda",
+  "Estoy en Manitoba, trámites administrativos",
+  "Estoy en Saskatchewan, servicios gubernamentales",
+  "Estoy en Nuevo Brunswick, trámites",
+  "Estoy en Nueva Escocia, servicios administrativos",
+  "Estoy en Isla del Príncipe Eduardo, necesito ayuda",
+  "Estoy en Terranova y Labrador, trámites",
+  "Estoy en Yukón, servicios administrativos",
+  "Estoy en Territorios del Noroeste, trámites",
+  "Estoy en Nunavut, servicios administrativos",
 ];
 
 const QUICK_PROMPTS_AR = [
@@ -350,9 +375,18 @@ const QUICK_PROMPTS_AR = [
   "أبحث عن عمل",
   "أحتاج رعاية أطفال",
   "أحتاج مساعدة لعائلتي",
-  "أنا في أونتاريو، أبحث عن الخدمات الإدارية",
+  "أنا في أونتاريو، خدمات إدارية",
   "أنا في ألبرتا، إجراءات حكومية",
   "أنا في كولومبيا البريطانية، أحتاج إلى مساعدة",
+  "أنا في مانيتوبا، إجراءات إدارية",
+  "أنا في ساسكاتشوان، خدمات حكومية",
+  "أنا في نيو برونزويك، إجراءات",
+  "أنا في نوفا سكوشا، خدمات إدارية",
+  "أنا في جزيرة الأمير إدوارد، أحتاج إلى مساعدة",
+  "أنا في نيوفاوندلاند ولابرادور، إجراءات",
+  "أنا في يوكون، خدمات إدارية",
+  "أنا في الأقاليم الشمالية الغربية، إجراءات",
+  "أنا في نونافوت، خدمات إدارية",
 ];
 
 const QUICK_PROMPTS_HT = [
@@ -364,9 +398,18 @@ const QUICK_PROMPTS_HT = [
   "Mwen ap chèche travay",
   "Mwen bezwen gadri pou timoun mwen",
   "Mwen bezwen èd pou fanmi mwen",
-  "Mwen nan Ontario, mwen bezwen sèvis administratif",
+  "Mwen nan Ontario, sèvis administratif",
   "Mwen nan Alberta, demach gouvènmantal",
   "Mwen nan Kolonbi Britanik, mwen bezwen èd",
+  "Mwen nan Manitoba, demach administratif",
+  "Mwen nan Saskatchewan, sèvis gouvènmantal",
+  "Mwen nan Nouvo Brunswick, demach",
+  "Mwen nan Nouvèl Ekòs, sèvis administratif",
+  "Mwen nan Il Prens Edward, mwen bezwen èd",
+  "Mwen nan Tèneuv ak Labrador, demach",
+  "Mwen nan Yukon, sèvis administratif",
+  "Mwen nan Teritwa Nòdwès, demach",
+  "Mwen nan Nunavut, sèvis administratif",
 ];
 
 export default function ChatScreen() {
