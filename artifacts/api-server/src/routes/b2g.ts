@@ -18,17 +18,24 @@ const LIVE_WAIT_WINDOW_MINUTES = 120;
 // categories alike. The exact threshold is also returned as `privacyFloor`
 // so dashboards can label suppressed buckets.
 //
-// Auth: gated by the same x-admin-key as the rest of the admin panel for
-// the demo phase. Once partner contracts are signed, swap for a per-tenant
-// signed token tied to a specific allowed region.
+// Auth: gated by `B2G_API_KEY` (issued to municipality / CIUSSS partners)
+// or `ADMIN_API_KEY` (super-admin override). The B2G key is intentionally
+// distinct from `ADMIN_API_KEY` so a partner credential can NEVER reach
+// the service or verification administration endpoints. Startup refuses
+// to boot if the two keys are set to the same value (see index.ts ::
+// validateAuthKeysOrExit). Once partner contracts are signed, swap for a
+// per-tenant signed token tied to a specific allowed region.
 // ─────────────────────────────────────────────────────────────────────────────
 
 const MIN_AGGREGATE = 5;
 
-function requireAdminKey(req: Request, res: Response, next: NextFunction) {
+function requireB2GKey(req: Request, res: Response, next: NextFunction) {
+  const b2gKey = process.env.B2G_API_KEY;
   const adminKey = process.env.ADMIN_API_KEY;
   const provided = req.headers["x-admin-key"];
-  if (!adminKey || provided !== adminKey) {
+  const validB2G = b2gKey && provided === b2gKey;
+  const validAdmin = adminKey && provided === adminKey;
+  if (!validB2G && !validAdmin) {
     res.status(401).json({ error: "Accès refusé." });
     return;
   }
@@ -39,7 +46,7 @@ const router = Router();
 
 // GET /api/b2g/regions — list of cities that have at least one referenced
 // service. Used to populate the region selector in the dashboard.
-router.get("/b2g/regions", requireAdminKey, async (_req, res) => {
+router.get("/b2g/regions", requireB2GKey, async (_req, res) => {
   const rows = await db
     .select({
       city: servicesTable.city,
@@ -58,7 +65,7 @@ router.get("/b2g/regions", requireAdminKey, async (_req, res) => {
 });
 
 // GET /api/b2g/insights?city=Montréal&days=30
-router.get("/b2g/insights", requireAdminKey, async (req, res) => {
+router.get("/b2g/insights", requireB2GKey, async (req, res) => {
   const city = String(req.query.city ?? "").trim();
   const days = Math.min(Math.max(parseInt(String(req.query.days ?? "30"), 10) || 30, 1), 365);
   const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000);

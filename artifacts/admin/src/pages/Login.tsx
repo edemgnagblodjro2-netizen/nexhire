@@ -1,8 +1,25 @@
 import { useState } from "react";
 import { fetchMeta } from "@/lib/api";
-import { storeKey } from "@/lib/auth";
+import { storeKey, type AdminRole } from "@/lib/auth";
 
-export default function Login({ onLogin }: { onLogin: (key: string) => void }) {
+const API_BASE = "";
+
+async function probeB2GKey(key: string): Promise<boolean> {
+  try {
+    const res = await fetch(`${API_BASE}/api/b2g/regions`, {
+      headers: { "x-admin-key": key },
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+export default function Login({
+  onLogin,
+}: {
+  onLogin: (key: string, role: AdminRole) => void;
+}) {
   const [key, setKey] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -12,19 +29,31 @@ export default function Login({ onLogin }: { onLogin: (key: string) => void }) {
     if (!key.trim()) return;
     setLoading(true);
     setError(null);
+    const trimmed = key.trim();
     try {
-      await fetchMeta(key.trim());
-      storeKey(key.trim());
-      onLogin(key.trim());
+      await fetchMeta(trimmed);
+      storeKey(trimmed, "superadmin");
+      onLogin(trimmed, "superadmin");
+      return;
     } catch (err: any) {
-      if (err.message?.includes("401") || err.message === "UNAUTHORIZED") {
-        setError("Clé invalide. Vérifiez votre clé d'accès admin.");
-      } else {
+      const isUnauth =
+        err.message?.includes("401") || err.message === "UNAUTHORIZED";
+      if (!isUnauth) {
         setError("Impossible de joindre le serveur. Réessayez.");
+        setLoading(false);
+        return;
       }
-    } finally {
-      setLoading(false);
     }
+
+    const b2gOk = await probeB2GKey(trimmed);
+    if (b2gOk) {
+      storeKey(trimmed, "b2g");
+      onLogin(trimmed, "b2g");
+      return;
+    }
+
+    setError("Clé invalide. Vérifiez votre clé d'accès.");
+    setLoading(false);
   }
 
   return (
@@ -43,7 +72,7 @@ export default function Login({ onLogin }: { onLogin: (key: string) => void }) {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Clé d'accès admin
+                Clé d'accès
               </label>
               <input
                 type="password"

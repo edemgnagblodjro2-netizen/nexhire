@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
-import { clearKey } from "@/lib/auth";
+import { type AdminRole } from "@/lib/auth";
 
-const NAV = [
+const SUPERADMIN_NAV = [
   { href: "/", icon: "📊", label: "Tableau de bord" },
   { href: "/services", icon: "🏢", label: "Services" },
   { href: "/verifications", icon: "🛡️", label: "Vérifications" },
@@ -10,19 +10,21 @@ const NAV = [
   { href: "/stats", icon: "📈", label: "Statistiques" },
 ];
 
+const B2G_NAV = [
+  { href: "/", icon: "🏛️", label: "B2G — Régions" },
+];
+
 export default function Layout({
   children,
   onLogout,
+  role,
 }: {
   children: React.ReactNode;
   onLogout: () => void;
+  role: AdminRole;
 }) {
   const [location] = useLocation();
-
-  function handleLogout() {
-    clearKey();
-    onLogout();
-  }
+  const NAV = role === "b2g" ? B2G_NAV : SUPERADMIN_NAV;
 
   return (
     <div className="min-h-screen flex bg-gray-50">
@@ -34,7 +36,9 @@ export default function Layout({
             </div>
             <div>
               <p className="text-sm font-bold text-gray-900">AttenteZéro</p>
-              <p className="text-xs text-gray-400">Administration</p>
+              <p className="text-xs text-gray-400">
+                {role === "b2g" ? "Portail B2G" : "Administration"}
+              </p>
             </div>
           </div>
         </div>
@@ -43,7 +47,7 @@ export default function Layout({
           {NAV.map((item) => {
             const active =
               item.href === "/"
-                ? location === "/"
+                ? location === "/" || location === ""
                 : location.startsWith(item.href);
             return (
               <Link key={item.href} href={item.href}>
@@ -64,7 +68,7 @@ export default function Layout({
 
         <div className="p-3 border-t border-gray-100">
           <button
-            onClick={handleLogout}
+            onClick={onLogout}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-500 hover:bg-red-50 hover:text-red-600 transition-all"
           >
             <span>🚪</span>

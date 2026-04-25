@@ -5,6 +5,29 @@ import { eq, sql } from "drizzle-orm";
 import { db, servicesTable, usersTable } from "@workspace/db";
 import { getUncachableStripeClient } from "./stripeClient";
 
+function validateAuthKeysOrExit() {
+  const adminKey = process.env.ADMIN_API_KEY;
+  const b2gKey = process.env.B2G_API_KEY;
+  if (!adminKey) {
+    logger.warn(
+      "ADMIN_API_KEY is not set — admin and B2G surfaces will reject every request.",
+    );
+  }
+  if (!b2gKey) {
+    logger.warn(
+      "B2G_API_KEY is not set — B2G partners cannot be onboarded with a scoped credential.",
+    );
+  }
+  if (adminKey && b2gKey && adminKey === b2gKey) {
+    logger.error(
+      "Refusing to start: ADMIN_API_KEY and B2G_API_KEY must be distinct. " +
+        "Sharing the same value reintroduces the privilege-escalation path " +
+        "where B2G partners gain super-admin access.",
+    );
+    process.exit(1);
+  }
+}
+
 async function initStripe() {
   try {
     // Verify Stripe connection is working on startup
@@ -210,6 +233,8 @@ async function autoSeedServicesIfEmpty() {
     logger.error({ err }, "Auto-seed failed (non-fatal)");
   }
 }
+
+validateAuthKeysOrExit();
 
 runStartupMigrations().then(async () => {
   autoSeedServicesIfEmpty();

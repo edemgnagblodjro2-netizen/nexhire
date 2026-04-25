@@ -14,36 +14,66 @@ import OrgLogin from "@/pages/OrgLogin";
 import OrgDashboard from "@/pages/OrgDashboard";
 import Layout from "@/components/Layout";
 import NotFound from "@/pages/not-found";
-import { getStoredKey } from "@/lib/auth";
+import { getStoredKey, getStoredRole, clearKey, type AdminRole } from "@/lib/auth";
 import { getOrgToken } from "@/lib/orgAuth";
 
 const queryClient = new QueryClient();
 
 function AdminApp() {
   const [adminKey, setAdminKey] = useState<string | null>(null);
+  const [role, setRole] = useState<AdminRole | null>(null);
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     const stored = getStoredKey();
-    if (stored) setAdminKey(stored);
+    const storedRole = getStoredRole();
+    if (stored && storedRole) {
+      setAdminKey(stored);
+      setRole(storedRole);
+    }
     setChecked(true);
   }, []);
 
   if (!checked) return null;
 
-  if (!adminKey) {
-    return <Login onLogin={setAdminKey} />;
+  if (!adminKey || !role) {
+    return (
+      <Login
+        onLogin={(key, r) => {
+          setAdminKey(key);
+          setRole(r);
+        }}
+      />
+    );
+  }
+
+  function handleLogout() {
+    clearKey();
+    setAdminKey(null);
+    setRole(null);
+  }
+
+  if (role === "b2g") {
+    return (
+      <Layout onLogout={handleLogout} role={role}>
+        <Switch>
+          <Route path="/" component={() => <B2G adminKey={adminKey!} />} />
+          <Route path="/b2g" component={() => <B2G adminKey={adminKey!} />} />
+          <Route component={() => <Redirect to="/" />} />
+        </Switch>
+      </Layout>
+    );
   }
 
   return (
-    <Layout onLogout={() => setAdminKey(null)}>
+    <Layout onLogout={handleLogout} role={role}>
       <Switch>
-        <Route path="/" component={() => <Dashboard adminKey={adminKey} />} />
-        <Route path="/services" component={() => <Services adminKey={adminKey} />} />
-        <Route path="/verifications" component={() => <Verifications adminKey={adminKey} />} />
-        <Route path="/b2g" component={() => <B2G adminKey={adminKey} />} />
-        <Route path="/bug-reports" component={() => <BugReports adminKey={adminKey} />} />
-        <Route path="/stats" component={() => <Stats adminKey={adminKey} />} />
+        <Route path="/" component={() => <Dashboard adminKey={adminKey!} />} />
+        <Route path="/services" component={() => <Services adminKey={adminKey!} />} />
+        <Route path="/verifications" component={() => <Verifications adminKey={adminKey!} />} />
+        <Route path="/b2g" component={() => <B2G adminKey={adminKey!} />} />
+        <Route path="/bug-reports" component={() => <BugReports adminKey={adminKey!} />} />
+        <Route path="/stats" component={() => <Stats adminKey={adminKey!} />} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
