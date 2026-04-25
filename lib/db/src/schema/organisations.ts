@@ -74,3 +74,28 @@ export const serviceViewsTable = pgTable(
 
 export type ServiceView = typeof serviceViewsTable.$inferSelect;
 export type InsertServiceView = typeof serviceViewsTable.$inferInsert;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Wait time reports — citizens crowdsource the actual time they waited at a
+// given service (urgences, CLSC, banque alimentaire…). The dashboard shows a
+// rolling 2-hour median next to each service and the B2G dashboard surfaces
+// systemic wait-time pressure across regions.
+// ─────────────────────────────────────────────────────────────────────────────
+export const waitTimeReportsTable = pgTable(
+  "wait_time_reports",
+  {
+    id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+    serviceId: varchar("service_id").notNull(),
+    minutes: integer("minutes").notNull(),
+    userId: varchar("user_id"), // null = anonymous report
+    ipHash: varchar("ip_hash", { length: 64 }), // sha256(ip+salt) for rate-limit, never raw IP
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("IDX_wait_reports_service_created").on(table.serviceId, table.createdAt),
+    index("IDX_wait_reports_created").on(table.createdAt),
+  ],
+);
+
+export type WaitTimeReport = typeof waitTimeReportsTable.$inferSelect;
+export type InsertWaitTimeReport = typeof waitTimeReportsTable.$inferInsert;

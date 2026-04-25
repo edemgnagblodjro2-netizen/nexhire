@@ -19,6 +19,7 @@ import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 import { getApiBaseUrl } from "@/lib/apiBase";
+import WaitTimeWidget from "@/components/WaitTimeWidget";
 
 async function trackServiceAction(serviceId: string, action: "view" | "call" | "click") {
   try {
@@ -220,6 +221,8 @@ export default function ServiceDetailScreen() {
             </Text>
           </View>
         </View>
+
+        <WaitTimeWidget serviceId={service.id} accentColor={categoryColor} />
 
         <View style={styles.actionsSection}>
           <TouchableOpacity

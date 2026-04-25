@@ -43,6 +43,19 @@ type Insights = {
     organisations: number;
   };
   dailySignups: Array<{ date: string; signups: number }>;
+  waitStats: {
+    reportsInPeriod: number;
+    servicesReportedInPeriod: number;
+    liveWindowMinutes: number;
+    liveTopServices: Array<{
+      id: string;
+      name: string;
+      category: string;
+      isUrgent: boolean;
+      medianMinutes: number;
+      sampleCount: number;
+    }>;
+  };
   topCategories: Array<{ category: string; interactions: number }>;
   topServices: Array<{
     id: string;
@@ -352,6 +365,77 @@ export default function B2G({ adminKey }: { adminKey: string }) {
                   />
                 </LineChart>
               </ResponsiveContainer>
+            )}
+          </div>
+
+          {/* "Combien d'attente ?" — citizen wait-time pulse */}
+          <div className="bg-white border border-gray-100 rounded-2xl p-6 mb-6 shadow-sm">
+            <div className="flex items-baseline justify-between mb-1 gap-3 flex-wrap">
+              <h2 className="text-base font-semibold text-gray-900">
+                Combien d'attente ? — pouls citoyen
+              </h2>
+              <span className="text-xs text-gray-400">
+                Médiane sur les {data.waitStats.liveWindowMinutes} dernières minutes
+              </span>
+            </div>
+            <p className="text-xs text-gray-500 mb-4">
+              Temps d'attente déclarés par les citoyens sur place. Filtre de
+              confidentialité : minimum {data.privacyFloor} signalements requis pour publier
+              une médiane par service.
+            </p>
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
+              <MiniStat
+                label={`Signalements (${data.days}j)`}
+                value={data.waitStats.reportsInPeriod}
+                accent="teal"
+              />
+              <MiniStat
+                label="Services signalés"
+                value={data.waitStats.servicesReportedInPeriod}
+                accent="blue"
+              />
+              <MiniStat
+                label="Services chauds (live)"
+                value={data.waitStats.liveTopServices.length}
+                accent="amber"
+                hint="Médiane active publiable"
+              />
+            </div>
+            {data.waitStats.liveTopServices.length > 0 ? (
+              <div className="space-y-2">
+                <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                  Files d'attente les plus longues actuellement
+                </p>
+                {data.waitStats.liveTopServices.map((s) => (
+                  <div
+                    key={s.id}
+                    className="bg-gray-50 rounded-xl px-4 py-3 flex items-center justify-between gap-4 border border-gray-100"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="font-semibold text-gray-900 truncate flex items-center gap-2">
+                        {s.isUrgent && <span className="text-rose-600">●</span>}
+                        {s.name}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-0.5">
+                        {s.category} · {s.sampleCount} signalement
+                        {s.sampleCount === 1 ? "" : "s"}
+                      </p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <p className="text-2xl font-bold text-amber-700">
+                        {s.medianMinutes}
+                        <span className="text-sm font-medium text-gray-500"> min</span>
+                      </p>
+                      <p className="text-[10px] text-gray-400 uppercase tracking-wide">Médiane</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500 italic">
+                Aucun service avec assez de signalements actifs pour publier une médiane.
+                Encouragez les citoyens à partager leur temps d'attente depuis l'app mobile.
+              </p>
             )}
           </div>
 

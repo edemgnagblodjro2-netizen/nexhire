@@ -1,6 +1,8 @@
 import { Router, type Request, type Response, type NextFunction } from "express";
-import { db, servicesTable, serviceViewsTable, usersTable } from "@workspace/db";
+import { db, servicesTable, serviceViewsTable, usersTable, waitTimeReportsTable } from "@workspace/db";
 import { and, desc, eq, gte, inArray, isNotNull, isNull, sql } from "drizzle-orm";
+
+const LIVE_WAIT_WINDOW_MINUTES = 120;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // AttenteZéro — B2G insights endpoint (v1.0.33 Phase 2)
@@ -106,6 +108,24 @@ router.get("/b2g/insights", requireAdminKey, async (req, res) => {
         uniqueServicesEngaged: 0,
         distinctAuthenticatedUsers: 0,
         anonymousEvents: 0,
+      },
+      // Keep the response shape invariant across regions so the admin dashboard
+      // never has to defend against missing fields. Empty regions just get
+      // zero/empty placeholders for every section the populated payload emits.
+      userStats: {
+        total: 0,
+        newInPeriod: 0,
+        premium: 0,
+        premiumConversionPct: 0,
+        citizens: 0,
+        organisations: 0,
+      },
+      dailySignups: [],
+      waitStats: {
+        reportsInPeriod: 0,
+        servicesReportedInPeriod: 0,
+        liveWindowMinutes: LIVE_WAIT_WINDOW_MINUTES,
+        liveTopServices: [],
       },
       topCategories: [],
       topServices: [],
@@ -329,6 +349,58 @@ router.get("/b2g/insights", requireAdminKey, async (req, res) => {
     signups: floor(r.count),
   }));
 
+  // ── Wait-time signals from "Combien d'attente ?" reports.
+  // Two layers:
+  //   1. Adoption — total reports submitted in the selected period for any
+  //      service in this region.
+  //   2. Live pulse — for each service in the region, the median wait over
+  //      the rolling 2h window. We surface the 5 services with the LONGEST
+  //      live medians (i.e. the most pressured access points right now).
+  const [periodWaitRow] = await db
+    .select({
+      reports: sql<number>`count(*)::int`,
+      services: sql<number>`count(distinct ${waitTimeReportsTable.serviceId})::int`,
+    })
+    .from(waitTimeReportsTable)
+    .where(and(
+      gte(waitTimeReportsTable.createdAt, since),
+      inArray(waitTimeReportsTable.serviceId, serviceIds),
+    ));
+
+  const liveSince = new Date(Date.now() - LIVE_WAIT_WINDOW_MINUTES * 60 * 1000);
+  const liveRows = await db
+    .select({
+      serviceId: waitTimeReportsTable.serviceId,
+      median: sql<number>`percentile_cont(0.5) within group (order by ${waitTimeReportsTable.minutes})::int`,
+      sampleCount: sql<number>`count(*)::int`,
+    })
+    .from(waitTimeReportsTable)
+    .where(and(
+      gte(waitTimeReportsTable.createdAt, liveSince),
+      inArray(waitTimeReportsTable.serviceId, serviceIds),
+    ))
+    .groupBy(waitTimeReportsTable.serviceId)
+    .having(sql`count(*) >= ${MIN_AGGREGATE}`)
+    .orderBy(desc(sql`percentile_cont(0.5) within group (order by ${waitTimeReportsTable.minutes})`))
+    .limit(5);
+
+  const waitStats = {
+    reportsInPeriod: floor(periodWaitRow?.reports ?? 0),
+    servicesReportedInPeriod: floor(periodWaitRow?.services ?? 0),
+    liveWindowMinutes: LIVE_WAIT_WINDOW_MINUTES,
+    liveTopServices: liveRows.map((r) => {
+      const meta = serviceMeta.get(r.serviceId);
+      return {
+        id: r.serviceId,
+        name: meta?.name ?? "—",
+        category: meta?.category ?? "—",
+        isUrgent: meta?.isUrgent ?? false,
+        medianMinutes: r.median,
+        sampleCount: r.sampleCount,
+      };
+    }),
+  };
+
   // ── Coverage gap analysis: any category with substantial engagement but
   // few referenced services in the region. Threshold = ≥ 20 engagements with
   // ≤ 3 services available, OR engagement-to-service ratio ≥ 30:1.
@@ -354,6 +426,7 @@ router.get("/b2g/insights", requireAdminKey, async (req, res) => {
     totals,
     userStats,
     dailySignups,
+    waitStats,
     topCategories,
     topServices,
     dailyActivity,
