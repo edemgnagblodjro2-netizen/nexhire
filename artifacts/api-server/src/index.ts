@@ -1,7 +1,8 @@
 import app from "./app";
 import { logger } from "./lib/logger";
-import { sql } from "drizzle-orm";
-import { db, servicesTable } from "@workspace/db";
+import bcrypt from "bcryptjs";
+import { eq, sql } from "drizzle-orm";
+import { db, servicesTable, usersTable } from "@workspace/db";
 import { getUncachableStripeClient } from "./stripeClient";
 
 async function initStripe() {
@@ -127,6 +128,41 @@ if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
+// Compte démo pour la révision Google Play / App Store.
+// Identifiants : demo@attentezero.ca / Demo2026!
+// Idempotent : recrée le mot de passe si l'utilisateur existe déjà.
+async function ensureDemoAccount() {
+  try {
+    const email = "demo@attentezero.ca";
+    const password = "Demo2026!";
+    const passwordHash = await bcrypt.hash(password, 12);
+    const existing = await db
+      .select({ id: usersTable.id })
+      .from(usersTable)
+      .where(eq(usersTable.email, email))
+      .limit(1);
+    if (existing.length === 0) {
+      await db.insert(usersTable).values({
+        email,
+        firstName: "Démo",
+        lastName: "Réviseur",
+        passwordHash,
+        role: "user",
+      });
+      logger.info({ email }, "Demo account created");
+    } else {
+      // Always reset to known password so reviewers never get stuck.
+      await db
+        .update(usersTable)
+        .set({ passwordHash })
+        .where(eq(usersTable.email, email));
+      logger.info({ email }, "Demo account password refreshed");
+    }
+  } catch (err) {
+    logger.error({ err }, "Demo account seed failed (non-fatal)");
+  }
+}
+
 async function autoSeedServicesIfEmpty() {
   try {
     const count = await db.$count(servicesTable);
@@ -177,6 +213,7 @@ async function autoSeedServicesIfEmpty() {
 
 runStartupMigrations().then(async () => {
   autoSeedServicesIfEmpty();
+  ensureDemoAccount();
   app.listen(port, (err) => {
     if (err) {
       logger.error({ err }, "Error listening on port");

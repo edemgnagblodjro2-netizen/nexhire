@@ -8,3 +8,4 @@ export * from "./verifications";
 export * from "./bugReports";
 export * from "./searchEvents";
 export * from "./referralCodes";
+export * from "./referralClaims";
