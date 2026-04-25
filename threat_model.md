@@ -18,6 +18,7 @@ Production assumptions for this scan:
 - **Organisation and subscription data** — organisation profiles, billing customer/subscription identifiers, verification requests, plan state, and badge status. Compromise can expose billing information, allow subscription tampering, or create cross-tenant impact.
 - **Service interaction analytics** — service view/call/click events, B2G aggregates, and wait-time submissions. These metrics are privacy-sensitive because low-volume regional signals can reveal behaviour patterns.
 - **Application secrets** — database URL, Stripe secret/webhook secret, OIDC client identifiers, OpenAI API key, wait-report salt, and admin API key. Leakage would enable impersonation, billing abuse, or direct infrastructure compromise.
+- **Admin browser-held credentials** — the current admin flow stores the shared admin API key in browser storage. Any same-origin script execution on the deployment origin can expose that key and collapse all admin-key-protected routes.
 - **AI/transcription quota and spend controls** — OpenAI-backed chat/transcription endpoints can incur direct cost and can expose sensitive user prompts or audio if boundaries are weak.
 
 ## Trust Boundaries
@@ -27,6 +28,7 @@ Production assumptions for this scan:
 - **API to Stripe** — Stripe calls are privileged and can create checkout or billing portal sessions and consume webhook events. Requests that influence Stripe actions must be bound to the authenticated principal or validated webhook source.
 - **API to OpenAI** — AI and transcription routes spend money and may process sensitive user content. Public access must be bounded by trustworthy rate limiting and quota checks.
 - **Public vs authenticated vs admin** — public service discovery, wait-time reads/writes, and some chat access coexist with authenticated profile/organisation/billing flows and admin-key-gated dashboards. These boundaries must be explicit and enforced server-side.
+- **Same-origin public HTML vs admin SPA** — public HTML responses such as Stripe receipt pages share origin with `/admin`, so any reflected or stored XSS on a public page can interact with browser storage used by the admin app.
 - **Hosted-origin isolation** — Replit sibling subdomains are not automatically trusted browser peers; future scans should not infer same-site cookie reachability across unrelated `*.replit.app` / `*.replit.dev` / `*.repl.co` origins without additional deployment-specific evidence.
 - **Dev-only vs production** — mockup sandbox code, build scripts, and archived but unmounted B2B routes should generally be excluded from production findings unless reachable from mounted routes or deployment config.
 
@@ -34,9 +36,9 @@ Production assumptions for this scan:
 
 - **Production entry points:** `artifacts/api-server/src/index.ts`, `artifacts/api-server/src/app.ts`, `artifacts/api-server/src/routes/index.ts`
 - **Highest-risk server areas:** `artifacts/api-server/src/routes/auth.ts`, `stripe.ts`, `ai.ts`, `transcribe.ts`, `services.ts`, `organisations.ts`, `verifications.ts`, `b2g.ts`
-- **Public surfaces:** `/api/services`, `/api/services/:id/track`, `/api/services/:id/wait`, `/api/mobile-auth/*`, likely `/api/ai/chat`
+- **Public surfaces:** `/api/services`, `/api/services/:id/track`, `/api/services/:id/wait`, `/api/mobile-auth/*`, `/api/referrals/*`, `/api/bug-reports`, `/api/search-events`, `/api/stripe/payment-success`, `/api/stripe/session-receipt`, `/api/stripe/subscription-status`, and likely `/api/ai/chat`
 - **Authenticated surfaces:** `/api/auth/user`, `/api/mobile-auth/update-profile`, `/api/organisations/me*`, `/api/stripe/user-portal`, `/api/org/verification/*`, `/api/ai/transcribe`
-- **Admin-key surfaces:** `/api/admin/services*`, `/api/b2g/*`, `/api/admin/verification/*`
+- **Admin-key surfaces:** `/api/admin/services*`, `/api/b2g/*`, `/api/admin/verification/*`, `/api/admin/search-stats`, `/api/admin/referrals`, `/api/bug-reports`, and the `/admin` SPA that stores and replays the key
 - **Usually dev-only / ignore unless proven reachable:** `artifacts/mockup-sandbox/**`, `artifacts/service-qc/scripts/**`, archived route files not mounted from `routes/index.ts`
 
 ## Threat Categories
