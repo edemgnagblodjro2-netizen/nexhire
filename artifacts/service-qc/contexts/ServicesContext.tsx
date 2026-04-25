@@ -8,7 +8,7 @@ import React, {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SERVICES as STATIC_SERVICES, type Service } from "@/data/services";
 
-const CACHE_KEY = "attentezero_services_cache_v3";
+const CACHE_KEY = "attentezero_services_cache_v4";
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 type ServicesContextValue = {
@@ -32,6 +32,7 @@ function mapApiService(raw: any): Service {
     category: raw.category,
     subcategory: raw.subcategory ?? "",
     city: raw.city ?? "",
+    province: raw.province ?? "QC",
     phone: raw.phone ?? "",
     website: raw.website ?? "",
     description: raw.description ?? "",
