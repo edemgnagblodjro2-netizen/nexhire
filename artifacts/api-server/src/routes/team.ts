@@ -19,10 +19,16 @@ const router: IRouter = Router();
  * - institution (CIUSSS / CLSC)  : 15 seats
  * Other plans: 1 (owner only).
  */
+// Aligned with artifacts/service-qc/lib/planLimits.ts (single source of truth on
+// the client). 9999 represents "unlimited" so the bar UI still renders.
 const SEAT_LIMITS: Record<string, number> = {
+  standard: 1,
+  free: 1,
+  travailleur: 1,
   terrain: 1,
-  organisme: 3,
-  institution: 15,
+  organisme: 10,
+  plus: 25,
+  institution: 9999,
 };
 const ACTIVE_STATUSES = new Set(["active", "trialing", "past_due"]);
 
@@ -106,7 +112,7 @@ router.get("/organisations/me/members", async (req, res) => {
     seatsActive: usedActive,
     seatsInvited: usedInvited,
     canInvite: (ctx.memberRole === "owner" || ctx.memberRole === "admin")
-      && (plan === "organisme" || plan === "institution")
+      && (plan === "organisme" || plan === "plus" || plan === "institution")
       && ACTIVE_STATUSES.has(ctx.subscription?.status ?? ""),
     members,
   });
@@ -131,8 +137,8 @@ router.post("/organisations/me/members", async (req, res) => {
     return;
   }
   const plan = ctx.subscription?.plan;
-  if (plan !== "organisme" && plan !== "institution") {
-    res.status(403).json({ error: "L'invitation d'équipe nécessite un forfait Organisme ou Institution." });
+  if (plan !== "organisme" && plan !== "plus" && plan !== "institution") {
+    res.status(403).json({ error: "L'invitation d'équipe nécessite un forfait Organisme, Plus ou Institution." });
     return;
   }
   if (!ACTIVE_STATUSES.has(ctx.subscription?.status ?? "")) {

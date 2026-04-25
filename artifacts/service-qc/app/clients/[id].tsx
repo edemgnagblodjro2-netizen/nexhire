@@ -22,6 +22,8 @@ import * as Haptics from "expo-haptics";
 import { authedFetch } from "@/lib/apiClient";
 
 import { useColors } from "@/hooks/useColors";
+import { usePlanGate } from "@/hooks/usePlanGate";
+import PlanLimitModal from "@/components/PlanLimitModal";
 
 type Client = {
   id: string;
@@ -76,6 +78,32 @@ export default function ClientDetailScreen() {
 
   // Schedule appointment modal state
   const [showSchedule, setShowSchedule] = useState(false);
+  const [showAptLimit, setShowAptLimit] = useState(false);
+  const [monthlyAptCount, setMonthlyAptCount] = useState(0);
+  const gate = usePlanGate();
+
+  const loadMonthlyAptCount = useCallback(async () => {
+    try {
+      const now = new Date();
+      const from = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+      const to = new Date(now.getFullYear(), now.getMonth() + 1, 1).toISOString();
+      const r = await authedFetch(
+        `/api/appointments?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`,
+      );
+      if (!r.ok) return;
+      const j = await r.json();
+      setMonthlyAptCount(Array.isArray(j.appointments) ? j.appointments.length : 0);
+    } catch {}
+  }, []);
+
+  function tryOpenSchedule() {
+    if (!gate.canCreateAppointment(monthlyAptCount)) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+      setShowAptLimit(true);
+      return;
+    }
+    setShowSchedule(true);
+  }
   const [aptDateChip, setAptDateChip] = useState<"today" | "tomorrow" | "in2d" | "in7d" | "custom">("tomorrow");
   const [aptCustomDate, setAptCustomDate] = useState(""); // YYYY-MM-DD
   const [aptHour, setAptHour] = useState("14");
@@ -105,7 +133,8 @@ export default function ClientDetailScreen() {
     useCallback(() => {
       setLoading(true);
       load();
-    }, [load]),
+      loadMonthlyAptCount();
+    }, [load, loadMonthlyAptCount]),
   );
 
   async function handleAddNote() {
@@ -316,7 +345,7 @@ export default function ClientDetailScreen() {
                 style={[styles.actionBtn, { backgroundColor: "#0284c7" }]}
                 onPress={() => {
                   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-                  setShowSchedule(true);
+                  tryOpenSchedule();
                 }}
               >
                 <Feather name="calendar" size={15} color="#fff" />
@@ -602,6 +631,15 @@ export default function ClientDetailScreen() {
           </KeyboardAvoidingView>
         </View>
       </Modal>
+
+      <PlanLimitModal
+        visible={showAptLimit}
+        onDismiss={() => setShowAptLimit(false)}
+        currentPlanId={gate.planId}
+        upgradePlanId={gate.upgradePlanId}
+        limitKind="appointments"
+        limitValue={gate.plan.features.maxAppointmentsPerMonth}
+      />
     </SafeAreaView>
   );
 }

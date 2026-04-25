@@ -13,7 +13,15 @@ import { and, desc, eq, gte, lte, asc } from "drizzle-orm";
 
 const router: IRouter = Router();
 
-const ALLOWED_PLANS = new Set(["terrain", "institution"]);
+// Aligned with artifacts/service-qc/lib/planLimits.ts: any paid plan can create
+// appointments. Free/standard remain blocked.
+const ALLOWED_PLANS = new Set([
+  "travailleur",
+  "terrain",
+  "organisme",
+  "plus",
+  "institution",
+]);
 const ACTIVE_STATUSES = new Set(["active", "trialing", "past_due"]);
 
 async function getEligibleOrgForUser(userId: string) {

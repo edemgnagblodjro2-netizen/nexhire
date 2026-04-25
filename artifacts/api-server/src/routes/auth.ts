@@ -10,7 +10,7 @@ import {
 } from "@workspace/api-zod";
 import { db, usersTable, passwordResetTokensTable, organisationsTable, subscriptionsTable, organisationMembersTable } from "@workspace/db";
 import { claimPendingInvites } from "./team";
-import { eq, and, gt, isNull } from "drizzle-orm";
+import { eq, and, gt, isNull, inArray } from "drizzle-orm";
 import {
   clearSession,
   getOidcConfig,
@@ -110,36 +110,42 @@ router.get("/auth/user", async (req: Request, res: Response) => {
         .limit(1);
       isPremium = !!dbUser?.isPremium;
 
-      // Find the user's organisation (as owner OR as active member), then read its
-      // current subscription plan from the subscriptions table.
-      let orgId: string | null = null;
-      const [ownedOrg] = await db
+      // Collect every org the user belongs to (owner or active member), then pick
+      // the plan from whichever has an active subscription. Falls back to the
+      // first owned org's plan if nothing is active.
+      const orgIds = new Set<string>();
+      const ownedOrgs = await db
         .select({ id: organisationsTable.id })
         .from(organisationsTable)
-        .where(eq(organisationsTable.userId, userId))
-        .limit(1);
-      if (ownedOrg?.id) {
-        orgId = ownedOrg.id;
-      } else {
-        const [memberOrg] = await db
-          .select({ id: organisationMembersTable.organisationId })
-          .from(organisationMembersTable)
-          .where(
-            and(
-              eq(organisationMembersTable.userId, userId),
-              eq(organisationMembersTable.status, "active"),
-            ),
-          )
-          .limit(1);
-        if (memberOrg?.id) orgId = memberOrg.id;
-      }
-      if (orgId) {
-        const [sub] = await db
-          .select({ plan: subscriptionsTable.plan })
+        .where(eq(organisationsTable.userId, userId));
+      for (const o of ownedOrgs) if (o.id) orgIds.add(o.id);
+      const memberOrgs = await db
+        .select({ id: organisationMembersTable.organisationId })
+        .from(organisationMembersTable)
+        .where(
+          and(
+            eq(organisationMembersTable.userId, userId),
+            eq(organisationMembersTable.status, "active"),
+          ),
+        );
+      for (const m of memberOrgs) if (m.id) orgIds.add(m.id);
+
+      if (orgIds.size > 0) {
+        const subs = await db
+          .select({
+            plan: subscriptionsTable.plan,
+            status: subscriptionsTable.status,
+          })
           .from(subscriptionsTable)
-          .where(eq(subscriptionsTable.organisationId, orgId))
-          .limit(1);
-        if (sub?.plan) plan = sub.plan;
+          .where(
+            inArray(subscriptionsTable.organisationId, Array.from(orgIds)),
+          );
+        const active = subs.find((s) =>
+          s.status === "active" ||
+          s.status === "trialing" ||
+          s.status === "past_due",
+        );
+        plan = active?.plan ?? subs[0]?.plan ?? null;
       }
     }
   } catch {}
