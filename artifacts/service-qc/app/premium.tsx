@@ -25,7 +25,7 @@ import { getApiBaseUrl } from "@/lib/apiBase";
 
 const CONTACT_EMAIL = "attentezero5@gmail.com";
 
-type TierId = "users" | "orgs" | "intervenant" | "institution";
+type TierId = "users";
 
 type Tier = {
   id: TierId;
@@ -39,17 +39,22 @@ type Tier = {
   trialBadge?: string;
   perks: string[];
   ctaLabel: string;
-  ctaKind: "premium" | "trial" | "contact" | "terrain" | "institution";
+  ctaKind: "premium" | "free";
 };
 
+// Pivot v1.0.33 — pricing simplifié à deux paliers grand public.
+// Les forfaits Travailleur (19$), Organisme (39$), Plus (89$) et Institution
+// (199$) ont été retirés en même temps que Mode Terrain. La monétisation B2B
+// passe désormais par des contrats institutionnels directs (B2G) traités hors
+// app — voir replit.md pour la stratégie commerciale.
 const TIERS: Tier[] = [
   {
     id: "users",
     emoji: "🟢",
     color: "#10b981",
     gradColors: ["#065f46", "#10b981"],
-    audience: "Utilisateurs",
-    tagline: "Trouvez de l'aide gratuitement",
+    audience: "Citoyen — Gratuit",
+    tagline: "Trouvez de l'aide, gratuitement, sans compte requis",
     priceLabel: "Gratuit",
     priceUnit: null,
     perks: [
@@ -60,15 +65,15 @@ const TIERS: Tier[] = [
       "Chat IA — 5 messages par jour",
     ],
     ctaLabel: "Continuer gratuitement",
-    ctaKind: "premium",
+    ctaKind: "free",
   },
   {
     id: "users",
     emoji: "⭐",
     color: "#7c3aed",
     gradColors: ["#4c1d95", "#7c3aed"],
-    audience: "Utilisateur Premium",
-    tagline: "Débloquez le chat IA et les favoris à vie",
+    audience: "Premium — Soutien",
+    tagline: "Débloquez le chat IA illimité et les favoris à vie",
     priceLabel: "10 $",
     priceUnit: "une seule fois",
     perks: [
@@ -77,72 +82,10 @@ const TIERS: Tier[] = [
       "Sauvegarder vos services favoris",
       "Alertes critiques personnalisées",
       "Aucun abonnement — payez une fois, gardez à vie",
+      "Vous soutenez un projet 100 % québécois",
     ],
     ctaLabel: "Devenir Premium — 10 $",
     ctaKind: "premium",
-  },
-  {
-    id: "intervenant",
-    emoji: "🏅",
-    color: "#0284c7",
-    gradColors: ["#0c4a6e", "#0284c7"],
-    audience: "Travailleur social terrain",
-    tagline: "L'outil quotidien des intervenants CLSC, refuges et organismes",
-    priceLabel: "19 $",
-    priceUnit: "/ mois",
-    trialBadge: "14 jours d'essai gratuit",
-    perks: [
-      "Tout le Premium IA inclus (chat illimité, vocal, multilingue)",
-      "Mode terrain — dossiers clients privés et notes confidentielles",
-      "Listes de favoris regroupées par client",
-      "Partage rapide d'un service par SMS, courriel ou WhatsApp",
-      "Détection de crise prioritaire (suicide / violence / DPJ)",
-      "Aucune carte requise pour l'essai · annulable en tout temps",
-    ],
-    ctaLabel: "Démarrer mon essai terrain — 14 j",
-    ctaKind: "terrain",
-  },
-  {
-    id: "orgs",
-    emoji: "🏢",
-    color: "#0e7e6e",
-    gradColors: ["#064e3b", "#0e7e6e"],
-    audience: "Organismes & Partenaires",
-    tagline: "Soyez visible auprès des personnes qui ont besoin de vous",
-    priceLabel: "39 $",
-    priceUnit: "/ mois",
-    trialBadge: "14 jours d'essai gratuit",
-    perks: [
-      "Profil organisme complet (logo, photos, horaires)",
-      "Badge « Vérifié » pour rassurer les utilisateurs",
-      "Mise en avant dans les résultats",
-      "Statistiques de vues et appels reçus",
-      "Aucune carte de crédit requise pour l'essai",
-      "Annulable à tout moment",
-    ],
-    ctaLabel: "Démarrer l'essai gratuit 14 jours",
-    ctaKind: "trial",
-  },
-  {
-    id: "institution",
-    emoji: "🏛️",
-    color: "#7c3aed",
-    gradColors: ["#3b0764", "#7c3aed"],
-    audience: "Institution — CIUSSS, CLSC, refuges",
-    tagline: "L'infrastructure essentielle du réseau communautaire québécois",
-    priceLabel: "199 $",
-    priceUnit: "/ mois",
-    trialBadge: "14 jours d'essai gratuit",
-    perks: [
-      "Tout le mode Terrain inclus pour toute l'équipe",
-      "Dossiers clients partagés entre intervenants de l'organisme",
-      "Recherche client par nom, téléphone ou adresse",
-      "Notes de suivi chronologiques (contact, RDV, alertes)",
-      "Bientôt : référencement chiffré entre organismes",
-      "Bientôt : calendrier RDV + dashboard d'impact mensuel",
-    ],
-    ctaLabel: "Démarrer l'essai Institution — 14 j",
-    ctaKind: "institution",
   },
 ];
 
@@ -210,149 +153,9 @@ export default function PremiumScreen() {
     }
   }
 
-  async function handleInstitutionTrial() {
-    if (!isAuthenticated) {
-      Alert.alert(
-        "Compte requis",
-        "Créez un compte « Institution » (CIUSSS, CLSC, refuge, OBNL) pour démarrer votre essai gratuit de 14 jours.",
-        [
-          { text: "Annuler", style: "cancel" },
-          {
-            text: "Créer un compte",
-            onPress: () =>
-              router.push({
-                pathname: "/register",
-                params: { role: "organisme", plan: "institution" },
-              } as any),
-          },
-        ]
-      );
-      return;
-    }
-    try {
-      setLoadingTier("institution-trial");
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-      const res = await fetch(`${getApiBaseUrl()}/api/stripe/create-checkout-session`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: user?.email,
-          userId: user?.id,
-          plan: "institution",
-          interval: "monthly",
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.url) throw new Error(data.error || "Erreur de paiement");
-      await WebBrowser.openBrowserAsync(data.url);
-      // Poll user state after browser closes — Stripe webhook may take a few
-      // seconds to flip isPremium / plan in the DB. Try up to 6 times over ~12s.
-      for (let i = 0; i < 6; i++) {
-        await refreshUser();
-        await new Promise((r) => setTimeout(r, 2000));
-      }
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : "Erreur inconnue";
-      Alert.alert("Inscription impossible", msg);
-    } finally {
-      setLoadingTier(null);
-    }
-  }
-
-  async function handleTerrainTrial() {
-    if (!isAuthenticated) {
-      Alert.alert(
-        "Compte intervenant requis",
-        "Créez un compte « Travailleur social terrain » pour démarrer votre essai gratuit de 14 jours.",
-        [
-          { text: "Annuler", style: "cancel" },
-          {
-            text: "Créer un compte",
-            onPress: () =>
-              router.push({ pathname: "/register", params: { role: "intervenant" } } as any),
-          },
-        ]
-      );
-      return;
-    }
-    try {
-      setLoadingTier("terrain-trial");
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-      const res = await fetch(`${getApiBaseUrl()}/api/stripe/create-checkout-session`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: user?.email,
-          userId: user?.id,
-          plan: "terrain",
-          interval: "monthly",
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.url) throw new Error(data.error || "Erreur de paiement");
-      await WebBrowser.openBrowserAsync(data.url);
-      // Poll user state after browser closes — Stripe webhook may take a few
-      // seconds to flip isPremium / plan in the DB. Try up to 6 times over ~12s.
-      for (let i = 0; i < 6; i++) {
-        await refreshUser();
-        await new Promise((r) => setTimeout(r, 2000));
-      }
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : "Erreur inconnue";
-      Alert.alert("Inscription impossible", msg);
-    } finally {
-      setLoadingTier(null);
-    }
-  }
-
-  async function handleOrgTrial() {
-    if (!isAuthenticated) {
-      Alert.alert(
-        "Compte requis",
-        "Créez un compte organisme pour démarrer votre essai gratuit de 14 jours.",
-        [
-          { text: "Annuler", style: "cancel" },
-          { text: "Créer un compte", onPress: () => router.push("/register" as any) },
-        ]
-      );
-      return;
-    }
-    try {
-      setLoadingTier("org-trial");
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-      const res = await fetch(`${getApiBaseUrl()}/api/stripe/create-checkout-session`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: user?.email,
-          userId: user?.id,
-          plan: "standard",
-          interval: "monthly",
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.url) throw new Error(data.error || "Erreur de paiement");
-      await WebBrowser.openBrowserAsync(data.url);
-      // Poll user state after browser closes — Stripe webhook may take a few
-      // seconds to flip isPremium / plan in the DB. Try up to 6 times over ~12s.
-      for (let i = 0; i < 6; i++) {
-        await refreshUser();
-        await new Promise((r) => setTimeout(r, 2000));
-      }
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : "Erreur inconnue";
-      Alert.alert("Inscription impossible", msg);
-    } finally {
-      setLoadingTier(null);
-    }
-  }
-
-  function handleTierCta(tier: Tier, idx: number) {
-    if (tier.ctaKind === "institution") return handleInstitutionTrial();
-    if (tier.ctaKind === "terrain") return handleTerrainTrial();
-    if (tier.ctaKind === "trial") return handleOrgTrial();
-    if (tier.ctaKind === "premium" && idx === 1) return handleUserPremium();
-    // First "free" tier — just go back / show toast
+  function handleTierCta(tier: Tier, _idx: number) {
+    if (tier.ctaKind === "premium") return handleUserPremium();
+    // Free tier — just go back
     Haptics.selectionAsync();
     router.back();
   }
@@ -430,29 +233,11 @@ export default function PremiumScreen() {
 
         {TIERS.map((tier, idx) => {
           const isLoading =
-            (tier.ctaKind === "trial" && loadingTier === "org-trial") ||
-            (tier.ctaKind === "terrain" && loadingTier === "terrain-trial") ||
-            (tier.ctaKind === "institution" && loadingTier === "institution-trial") ||
-            (tier.ctaKind === "premium" && idx === 1 && loadingTier === "user-premium");
+            tier.ctaKind === "premium" && loadingTier === "user-premium";
           const isPopular = idx === 1; // Premium 10$ — the "best value" tier
           const anim = cardAnims[idx];
           return (
             <React.Fragment key={`tier-frag-${idx}`}>
-            {idx === 2 && (
-              <View style={styles.sectionHead}>
-                <View style={[styles.sectionHeadIcon, { backgroundColor: "#7c3aed18" }]}>
-                  <Feather name="briefcase" size={14} color="#7c3aed" />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={[styles.sectionHeadTitle, { color: colors.foreground }]}>
-                    Pour les professionnels
-                  </Text>
-                  <Text style={[styles.sectionHeadSub, { color: colors.mutedForeground }]}>
-                    Intervenants, organismes, institutions du réseau
-                  </Text>
-                </View>
-              </View>
-            )}
             <Animated.View
               key={`${tier.id}-${idx}`}
               style={{
@@ -551,17 +336,7 @@ export default function PremiumScreen() {
                   ) : (
                     <>
                       <Feather
-                        name={
-                          tier.ctaKind === "institution"
-                            ? "users"
-                            : tier.ctaKind === "trial"
-                            ? "gift"
-                            : tier.ctaKind === "terrain"
-                            ? "briefcase"
-                            : tier.ctaKind === "premium" && idx === 1
-                            ? "star"
-                            : "check"
-                        }
+                        name={tier.ctaKind === "premium" ? "star" : "check"}
                         size={15}
                         color="#fff"
                       />

@@ -1,153 +1,59 @@
-# Workspace
+# Overview
 
-## Overview
+This project is a pnpm workspace monorepo using TypeScript, designed to provide a comprehensive aid-finding service for vulnerable individuals in Quebec. The primary application, "AttenteZéro," is an Expo mobile app (React Native) focused on connecting users with community and social services across four key cities in Quebec. The project aims to become a 100% free citizen service, complemented by a B2G (Business-to-Government) infrastructure offering institutional contracts and anonymized aggregated dashboards to municipalities and governmental organizations.
 
-pnpm workspace monorepo using TypeScript. Each package manages its own dependencies.
+The core vision is to leverage mobile UX, conversational AI, geolocation, and multilingual support to offer a superior experience compared to existing directories. The strategic pivot focuses on avoiding sensitive beneficiary data storage to streamline compliance and target public administrations as primary paying customers, recognizing their solvency over individual professionals.
 
-## Stack
+Key capabilities include an AI-powered chat for assistance (GPT-4o-mini), a comprehensive service directory with search and filtering, emergency SOS features, interactive maps, and user authentication. The project includes an administrative panel for managing services and an API server to support all functionalities.
 
-- **Monorepo tool**: pnpm workspaces
-- **Node.js version**: 24
-- **Package manager**: pnpm
-- **TypeScript version**: 5.9
-- **API framework**: Express 5
-- **Database**: PostgreSQL + Drizzle ORM
-- **Validation**: Zod (`zod/v4`), `drizzle-zod`
-- **Build**: esbuild (CJS bundle)
+# User Preferences
 
-## Key Commands
+I want iterative development.
+Ask before making major changes.
 
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-server run dev` — run API server locally
+# System Architecture
 
-## Artifacts
+## Monorepo Structure
+The project is organized as a pnpm workspace monorepo, with each package managing its own dependencies. The stack utilizes Node.js 24, pnpm, and TypeScript 5.9.
 
-### AttenteZéro (artifacts/service-qc)
+## Mobile Application (AttenteZéro)
+- **Technology**: Expo mobile app (React Native).
+- **UI/UX**: Features an animated splash screen, gradient hero sections, and a complete dark mode.
+- **Key Features**:
+    - **Authentication**: Email/password login, registration, and reset-password functionality (awaiting external email service integration for full reset functionality).
+    - **AI Chat**: GPT-4o-mini via SSE streaming, includes critical situation detection, humanized alerts, and supports 5 languages (FR/EN/ES/AR/HT). Offers a free quota (5 messages/day) with an unlimited premium option.
+    - **Subscription Management**: Secure endpoint for Stripe user portal integration for premium features.
+    - **Service Directory**: Displays 457 services with search, category filtering, and detailed views (description, location, hours). Services are loaded from API with AsyncStorage cache (6h TTL).
+    - **Emergency Services**: SOS feature with 5 sections (911, hospital, ambulance, police, fire department), sorted by real-time GPS distance.
+    - **Mapping**: Native iOS/Android map with filterable pins and an elegant web fallback.
+    - **User Profile**: Editable name, email, address, password change, and language toggle.
+    - **Multilingual Support**: FR/EN with AsyncStorage persistence.
+- **Strategic Pivot (v1.0.33)**: Removed B2B "Field Mode" features (client files, appointments, team management) to reposition as a B2G infrastructure. The app now focuses on free citizen services (service search, map, SOS, AI Chat) and a one-time premium purchase for unlimited AI chat, favorites, and alerts. Archived B2B modules remain in the codebase but are deactivated.
 
-- **Type**: Expo mobile app (React Native)
-- **Preview path**: `/`
-- **App name**: AttenteZéro
-- **Bundle ID (iOS)**: `com.attentezero.app`
-- **Package (Android)**: `com.attentezero.app`
-- **Version**: 1.0.0 (versionCode: 1)
-- **Purpose**: Aide les personnes vulnérables au Québec à trouver des services communautaires et sociaux. Couvre 4 villes : Trois-Rivières, Shawinigan, Drummondville, Victoriaville.
+## Admin Panel
+- **Technology**: React + Vite web app.
+- **Authentication**: Admin key-based login.
+- **Features**: Dashboard with total stats, city/category lists, bar graphs. Service management including paginated lists, search, filters, add/edit modals, active/inactive toggles, and deletion.
 
-### Features
+## API Server
+- **Technology**: Express 5 API.
+- **Database**: PostgreSQL + Drizzle ORM.
+- **Validation**: Zod (`zod/v4`), `drizzle-zod`.
+- **Build**: esbuild (CJS bundle).
+- **Core Routes**:
+    - Health check (`/api/healthz`).
+    - AI chat (`POST /api/ai/chat`) with SSE streaming.
+    - Mobile authentication (`/api/mobile-auth/*`).
+    - Public service listing (`GET /api/services`).
+    - Admin service management (`/api/admin/services/*`).
+    - AI Voice transcription (`POST /api/ai/transcribe`) using Whisper-1, secured with authentication and rate-limiting.
+    - Archived B2B routes (`/api/clients`, `/api/appointments`, `/api/team`) are present but not actively used in the current app version.
 
-- **Splash animé** : Logo AttenteZéro avec gradient teal, animation spring, fondu avant login
-- **Auth email/mot de passe** : login, register, reset-password via API `quebec-aid-finder.replit.app`
-- ⚠️ **Reset mot de passe : envoi du code EN ATTENTE** — depuis le hardening sécu (avr. 2026), le code n'est plus retourné dans la réponse `/forgot-password` (anti-takeover). Il faut brancher un service d'envoi (Resend/SendGrid/SMTP/Brevo). Intégration Resend a été refusée par l'usager une fois — redemander des credentials avant de re-proposer. En attendant, la fonction « mot de passe oublié » est de fait inopérante (sécurisée mais non livrée).
-- **Accueil** : Hero gradient, barre de recherche, stats (457+ services, 4 villes, 24/7), bannières SOS/Carte/IA, catégories rapides
-- **Chat IA** : GPT-4o-mini via SSE streaming, détection de situations critiques (crise suicidaire, danger immédiat), alertes humanisées, 5 langues (FR/EN/ES/AR/HT), prompts rapides par langue. **Quota gratuit : 5 messages/jour** (illimité Premium). Headers `X-AI-Quota-Limit/Remaining`, 429 + JSON `{quotaExceeded:true}`. Bannière in-chat (5 langues) avertit à ≤2 restants ou bloque, lien vers `/premium`. Reset auto si serveur signale > 0 restant.
-- **Gestion abonnement** (`/api/stripe/user-portal`) : endpoint sécurisé (auth obligatoire — utilise email de session, pas du body). Carte « Mon abonnement » dans `more.tsx` ouvre le portail Stripe.
-- **Page tarification** (`premium.tsx`) : 5 forfaits ordonnés par prix croissant (Gratuit → Premium 10$ → Terrain 19$ → Organisme 39$ → Institution 199$). Sections groupées « Pour les particuliers » / « Pour les professionnels », bandeau de confiance (Stripe sécurisé · annulable · fait au Québec). Polling refreshUser 6× sur 12 s après fermeture du navigateur Stripe pour gérer la latence webhook.
-- **Tableau de bord organisme** (admin `OrgDashboard.tsx`) : section « Avantages de votre forfait » détaillant les bénéfices par plan (standard / plus / terrain / institution) avec carte d'upsell vers le palier supérieur.
-- **Services** : 457 services, grille 2 colonnes, recherche texte + filtre catégorie
-- **Catégories** : 10 catégories avec compteurs dynamiques
-- **Résultats** : Filtres par catégorie + recherche texte (nom, ville, description, sous-catégorie)
-- **Service détail** : Description, localisation, adresse, horaires, boutons Appeler / Site web
-- **SOS Urgences** : 5 sections (911, hôpital, ambulance, police, pompiers), tri par distance GPS réelle
-- **Aide d'urgence** : Services urgents filtrés, triés par géolocalisation
-- **Carte** : Native (iOS/Android) avec épingles filtrables ; fallback web élégant
-- **Profil** : Nom, email, adresse modifiable, changement mot de passe, toggle langue
-- **Guide d'achat immobilier** : 8 étapes interactives (catégorie realestate)
-- **Services depuis API** : ServicesContext charge les 457 services depuis l'API `/api/services` avec cache AsyncStorage (6h TTL), fallback sur données statiques
-- **Mentions légales** : Conditions d'utilisation + politique de confidentialité intégrées
-- **Localisation** : Haversine distance, tri automatique des services urgents par proximité
-- **Dark mode** : Complet
-- **Bilingue** : FR/EN avec persistance AsyncStorage
-- **Mode Terrain — Dossiers clients** (`/clients`) : intervenants & organismes uniquement (gate par abonnement Terrain 19$/mois ou Institution 199$/mois). Liste avec recherche debounce, fiche détail (avatar, niveau de risque, timeline 5 types de notes, appel/partage/archive). **Statut de suivi** (4 valeurs : `en_cours` (défaut) / `en_attente` / `en_pause` / `termine`) sélectionnable via puces colorées sur la fiche, point + libellé affichés dans la liste.
-- **Mode Terrain — Fil d'activité partagé** (`/clients/activities`) : journal org-wide listant qui a fait quoi (création, changement de statut/risque, note, archivage) avec nom de l'intervenant, nom du client, et temps relatif en français. Multi-org-aware côté API : un membre invité dans une organisation Institution voit le fil de cette org même si son compte personnel a aussi un forfait Terrain. Badge rouge "X nouv." sur la carte « Fil d'activité » de l'écran *Plus* (compteur des actions par d'autres utilisateurs depuis la dernière visite, défaut = 24 h pour le premier usage). ⚠️ Limitation pré-existante : les endpoints CRUD `/api/clients` ciblent uniquement l'org owner-role du caller (via `getEligibleOrgForUser`), donc un membre invité dans une autre org ne peut pas encore PATCH/POST des clients de cette org — seul le fil d'activité a été rendu multi-org. À élargir si l'usager veut une vraie collaboration en lecture/écriture.
-- **Mode Terrain — Agenda RDV** (`/agenda`) : 3 onglets (aujourd'hui / à venir / passé), regroupement par jour, statuts (planifié/confirmé/terminé/annulé/absent), planification depuis la fiche client (chips date + heure + lieu + notes), création auto d'une note "rdv" dans la timeline. DST-safe (calendrier, pas +24h ms) et timestamps stricts ISO+offset côté API.
-- **Équipe multi-sièges** (`/team`, table `organisation_members`) : Organisme = 10 sièges, Plus = 25, Institution = 9999, Travailleur = 1. Rôles owner / admin / member, statuts invited / active / revoked / **declined**. Le propriétaire & les administrateurs peuvent inviter par courriel (insertion transactionnelle avec `SELECT FOR UPDATE` sur l'org → pas de course concurrente sur la limite ; les rangées revoked/declined sont recyclées en `invited` pour permettre une ré-invitation). **L'invitation n'active plus jamais le membre automatiquement** : l'invité doit explicitement accepter ou refuser depuis l'écran `/invitations` (banner sur `/profile` quand des invitations sont en attente). Le refus exige une note de disponibilité ; la note s'affiche sur le panneau `/team` de l'admin avec un badge rouge "NOUVEAU" jusqu'à ce qu'il l'ait vue (POST `/api/team/responses/seen`).
+# External Dependencies
 
-### Data
-
-- **457 services** validés, 0 doublons d'ID, 0 téléphones vides, 0 sites web vides
-- **10 catégories** : housing, food, mentalHealth, health, immigration, employment, family, social, childcare, realestate
-- **Sous-catégories SOS** : "Centre 911", "Urgence hospitalière", "Service ambulancier", "Service de police", "Service des incendies" (doivent correspondre exactement dans services.ts)
-- **Champs** : id, name, city, phone, website, description, category, subcategory, isUrgent?, isProvinceWide?, coordinates?, hours?, address?
-
-### API
-
-- **Endpoint IA** : `POST /api/ai/chat` — `{message, language, history}` → SSE streaming avec `{content}`, `{done, serviceIds}`, `{error}`
-- **Endpoint voix** : `POST /api/ai/transcribe` (multipart `audio` + `language`) → Whisper-1. **Sécurisé** : authentification obligatoire (401 sans token), rate-limit 30 req / 10 min par utilisateur (429 + `Retry-After`), allowlist MIME audio (415 sinon), taille max 10 Mo (413), refus fichier vide (400). Mobile envoie le bearer token et affiche un message de repli localisé en cas de quota / non-connecté.
-- **Base URL** : `https://quebec-aid-finder.replit.app` (configurée dans `lib/apiBase.ts`)
-- **Auth API** : `/api/mobile-auth/email-login`, `/api/mobile-auth/register`, `/api/mobile-auth/update-profile`, `/api/mobile-auth/logout`
-- **Clients API** : `GET/POST /api/clients`, `GET/PATCH/DELETE /api/clients/:id`, `POST /api/clients/:id/notes`, `GET /api/clients/_meta/access` (gate Terrain/Institution)
-- **Appointments API** : `GET /api/appointments?from&to&clientId`, `POST /api/appointments`, `PATCH/DELETE /api/appointments/:id`. `scheduledAt` doit être ISO 8601 avec offset (`Z` ou `±HH:MM`). Crée automatiquement une note "rdv" sur la timeline du client.
-- **Team API** : `GET /api/organisations/me/members` (liste + plan + sièges utilisés/limite + rôle), `POST` (invite par email, rôle member/admin, transactionnel), `PATCH /:id` (changer rôle, owner only), `DELETE /:id` (révoquer, owner du rôle interdit). Auto-claim des invitations pending au register et au login (case-insensitive sur invited_email). 12/12 tests d'intégration validés (gating subscription, rôle, course, double-invite 409, owner-protection).
-
-### Key Files
-
-| Fichier | Rôle |
-|---|---|
-| `app.json` | Config Expo — package Android `com.attentezero.app`, bundleId iOS, permissions GPS |
-| `eas.json` | Config EAS Build — 3 profils : development (APK interne), preview (APK interne), production (AAB Play Store) |
-| `data/services.ts` | 457 services avec coordonnées, horaires, adresses |
-| `constants/translations.ts` | Traductions FR/EN complètes |
-| `constants/colors.ts` | Palette teal (`#0e7e6e`) avec dark mode |
-| `lib/apiBase.ts` | URL API (env `EXPO_PUBLIC_API_URL` ou fallback `quebec-aid-finder.replit.app`) |
-| `lib/auth.tsx` | AuthContext — token SecureStore, login/register/logout/updateProfile |
-| `components/AppSplashScreen.tsx` | Splash animé avec `useNativeDriver: true` |
-| `app/(tabs)/_layout.tsx` | Navigation tabs — Liquid Glass (iOS 26+) ou Classic |
-| `app/sos.tsx` | Écran SOS urgences avec tri GPS |
-| `utils/detectCritical.ts` | Détection situations critiques pour alertes chat IA |
-
-### Play Store — Étapes de publication
-
-1. **Compte EAS** : `npm install -g eas-cli` puis `eas login` (compte Expo requis)
-2. **Initialiser le projet EAS** : `eas init` dans `artifacts/service-qc/` → génère un vrai `projectId`
-3. **Build production** : `eas build --platform android --profile production` → génère le `.aab`
-4. **Google Play Console** : Créer l'application, uploader le `.aab`, remplir fiche (descriptions FR/EN, captures d'écran, politique de confidentialité URL publique)
-5. **Soumettre en test interne** d'abord, puis production
-
-### App Store iOS — Étapes de publication
-
-1. **Compte Apple Developer** : 99 USD/an requis
-2. **Build iOS** : `eas build --platform ios --profile production`
-3. **App Store Connect** : Uploader via EAS Submit ou Transporter
-
----
-
-### Espace Organisme (artifacts/admin — `/admin/organisme/*`)
-- **Routes**: `/organisme/login` (connexion email/mot de passe) et `/organisme/dashboard` (tableau de bord)
-- **Auth**: token bearer stocké dans `localStorage` (`az_org_token`), via `/api/mobile-auth/email-login` (le rôle `organisme` est vérifié côté client)
-- **Pages**:
-  - `OrgLogin.tsx` — formulaire email/mdp, refuse les comptes non-organisme
-  - `OrgDashboard.tsx` — bandeau forfait + statut + jours d'essai, 3 cartes stats (vues/appels/clics 30j), histogramme empilé, infos coordonnées en lecture seule, bouton « Gérer mon abonnement » (Stripe billing portal ou checkout)
-- **Lib**: `lib/orgAuth.ts` (storage), `lib/orgApi.ts` (fetch `/organisations/me`, `/organisations/me/stats`, `/stripe/billing-portal`, `/stripe/create-checkout-session`)
-- Le tri des services dans `/api/services` favorise les organismes Plus actifs (champ `featured`) en tête de liste, avec `badgeVerified` et `organisationId` exposés.
-
-### Admin Panel (artifacts/admin)
-
-- **Type**: React + Vite web app
-- **Preview path**: `/admin`
-- **Auth**: Clé admin `attentezero-admin-2026` (env var `ADMIN_API_KEY`)
-- **Features**:
-  - Login avec validation de la clé admin via l'API
-  - Tableau de bord : stats totaux (services, actifs, urgents, provinciaux), liste des villes et catégories, graphique en barres
-  - Gestion des services : liste paginée (25/page), recherche texte, filtres ville/catégorie/statut
-  - Ajout / modification de service (modal complet)
-  - Toggle actif/inactif en un clic
-  - Suppression avec confirmation
-- **API proxy**: `/api/*` → `http://localhost:8080/api/*` (Vite proxy)
-
-### API Server (artifacts/api-server)
-
-- **Type**: Express 5 API
-- **Preview path**: `/api`
-- **Routes**:
-  - `GET /api/healthz` — health check
-  - `POST /api/ai/chat` — AI chat (SSE streaming, OpenAI GPT-4o-mini)
-  - `POST /api/mobile-auth/email-login` — authentification email/password
-  - `POST /api/mobile-auth/register` — création de compte
-  - `PATCH /api/mobile-auth/update-profile` — mise à jour profil
-  - `GET /api/services` — liste publique des services (mobile app)
-  - `GET /api/admin/services` — liste paginée (admin, x-admin-key requis)
-  - `GET /api/admin/services/meta` — stats + villes + catégories (admin)
-  - `POST /api/admin/services` — créer un service (admin)
-  - `PUT /api/admin/services/:id` — modifier un service (admin)
-  - `DELETE /api/admin/services/:id` — supprimer (hard) ou désactiver (soft) un service (admin)
-  - `POST /api/mobile-auth/logout` — déconnexion
+- **OpenAI**: Used for AI chat features (GPT-4o-mini) and voice transcription (Whisper-1).
+- **Stripe**: Integrated for subscription management and billing portal access for premium features.
+- **PostgreSQL**: Primary database for storing application data.
+- **Drizzle ORM**: Used for database interaction with PostgreSQL.
+- **Expo**: Framework for building the React Native mobile application.
+- **Google Play Console / Apple App Store Connect**: Platforms for mobile application distribution.

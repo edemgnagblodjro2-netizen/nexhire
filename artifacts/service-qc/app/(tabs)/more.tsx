@@ -3,8 +3,7 @@ import * as Haptics from "expo-haptics";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFocusEffect, useRouter } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
-import React, { useCallback, useState } from "react";
-import { authedFetch } from "@/lib/apiClient";
+import React, { useCallback } from "react";
 import {
   Alert,
   Platform,
@@ -126,24 +125,6 @@ export default function MoreScreen() {
     }, [checkAndRemind])
   );
 
-  // Unread badge for client activity feed (other team members' actions)
-  const [activityUnread, setActivityUnread] = useState(0);
-  useFocusEffect(
-    useCallback(() => {
-      let cancelled = false;
-      if (user?.role !== "intervenant" && user?.role !== "organisme") return;
-      authedFetch("/api/clients/activities/unseen-count")
-        .then((r) => (r.ok ? r.json() : { count: 0 }))
-        .then((j) => {
-          if (!cancelled) setActivityUnread(Number(j.count) || 0);
-        })
-        .catch(() => {});
-      return () => {
-        cancelled = true;
-      };
-    }, [user?.role]),
-  );
-
   async function handleFeaturePress() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     await recordAttempt();
@@ -173,176 +154,8 @@ export default function MoreScreen() {
 
         <View style={styles.body}>
 
-          {/* ── Mode Terrain — visible to intervenants & organismes ── */}
-          {(user?.role === "intervenant" || user?.role === "organisme") && (
-            <Pressable
-              onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-                router.push("/clients" as any);
-              }}
-              style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }]}
-            >
-              <LinearGradient
-                colors={["#0c4a6e", "#0284c7"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={styles.terrainCard}
-              >
-                <View style={styles.terrainIconWrap}>
-                  <Feather name="users" size={22} color="#fff" />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <View style={styles.terrainBadgeRow}>
-                    <View style={styles.terrainBadge}>
-                      <Feather name="shield" size={10} color="#bae6fd" />
-                      <Text style={styles.terrainBadgeText}>MODE TERRAIN</Text>
-                    </View>
-                  </View>
-                  <Text style={styles.terrainTitle}>
-                    {isFr ? "Dossiers clients" : "Client files"}
-                  </Text>
-                  <Text style={styles.terrainSub}>
-                    {isFr
-                      ? "Suivi confidentiel, journal de contacts, alertes — réservé aux abonnés Terrain & Institution."
-                      : "Confidential follow-up, contact log, alerts — for Terrain & Institution subscribers."}
-                  </Text>
-                </View>
-                <Feather name="chevron-right" size={18} color="rgba(255,255,255,0.7)" />
-              </LinearGradient>
-            </Pressable>
-          )}
-
-          {/* ── Fil d'activité de l'équipe — collaborators get notified here ── */}
-          {(user?.role === "intervenant" || user?.role === "organisme") && (
-            <Pressable
-              onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-                router.push("/clients/activities" as any);
-              }}
-              style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1, marginTop: 10 }]}
-            >
-              <LinearGradient
-                colors={["#7c3aed", "#5b21b6"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={styles.terrainCard}
-              >
-                <View style={styles.terrainIconWrap}>
-                  <Feather name="activity" size={22} color="#fff" />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <View style={styles.terrainBadgeRow}>
-                    <View style={styles.terrainBadge}>
-                      <Feather name="users" size={10} color="#ddd6fe" />
-                      <Text style={styles.terrainBadgeText}>ÉQUIPE</Text>
-                    </View>
-                    {activityUnread > 0 && (
-                      <View
-                        style={{
-                          backgroundColor: "#dc2626",
-                          paddingHorizontal: 8,
-                          paddingVertical: 2,
-                          borderRadius: 999,
-                          marginLeft: 6,
-                        }}
-                      >
-                        <Text style={{ color: "#fff", fontSize: 10, fontFamily: "Inter_700Bold" }}>
-                          {activityUnread > 99 ? "99+" : activityUnread} nouv.
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                  <Text style={styles.terrainTitle}>
-                    {isFr ? "Fil d'activité" : "Team activity"}
-                  </Text>
-                  <Text style={styles.terrainSub}>
-                    {isFr
-                      ? "Voyez en temps réel les changements de statut, notes et nouveaux dossiers de vos coéquipiers."
-                      : "See real-time status changes, notes, and new files from your teammates."}
-                  </Text>
-                </View>
-                <Feather name="chevron-right" size={18} color="rgba(255,255,255,0.7)" />
-              </LinearGradient>
-            </Pressable>
-          )}
-
-          {/* ── Agenda — also for Mode Terrain ── */}
-          {(user?.role === "intervenant" || user?.role === "organisme") && (
-            <Pressable
-              onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-                router.push("/agenda" as any);
-              }}
-              style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1, marginTop: 10 }]}
-            >
-              <LinearGradient
-                colors={["#0e7e6e", "#0284c7"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={styles.terrainCard}
-              >
-                <View style={styles.terrainIconWrap}>
-                  <Feather name="calendar" size={22} color="#fff" />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <View style={styles.terrainBadgeRow}>
-                    <View style={styles.terrainBadge}>
-                      <Feather name="clock" size={10} color="#bae6fd" />
-                      <Text style={styles.terrainBadgeText}>AGENDA</Text>
-                    </View>
-                  </View>
-                  <Text style={styles.terrainTitle}>
-                    {isFr ? "Rendez-vous" : "Appointments"}
-                  </Text>
-                  <Text style={styles.terrainSub}>
-                    {isFr
-                      ? "Aujourd'hui, à venir, passé. Suivi du statut (confirmé, terminé, absent)."
-                      : "Today, upcoming, past. Track status (confirmed, done, no-show)."}
-                  </Text>
-                </View>
-                <Feather name="chevron-right" size={18} color="rgba(255,255,255,0.7)" />
-              </LinearGradient>
-            </Pressable>
-          )}
-
-          {/* ── Équipe — multi-seat (Organisme & Institution) ── */}
-          {(user?.role === "intervenant" || user?.role === "organisme") && (
-            <Pressable
-              onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-                router.push("/team" as any);
-              }}
-              style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1, marginTop: 10 }]}
-            >
-              <LinearGradient
-                colors={["#5b21b6", "#7c3aed"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={styles.terrainCard}
-              >
-                <View style={styles.terrainIconWrap}>
-                  <Feather name="users" size={22} color="#fff" />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <View style={styles.terrainBadgeRow}>
-                    <View style={styles.terrainBadge}>
-                      <Feather name="user-plus" size={10} color="#ddd6fe" />
-                      <Text style={styles.terrainBadgeText}>ÉQUIPE</Text>
-                    </View>
-                  </View>
-                  <Text style={styles.terrainTitle}>
-                    {isFr ? "Mon équipe" : "My team"}
-                  </Text>
-                  <Text style={styles.terrainSub}>
-                    {isFr
-                      ? "Inviter des coéquipiers pour partager les dossiers clients et l'agenda."
-                      : "Invite teammates to share client files and the agenda."}
-                  </Text>
-                </View>
-                <Feather name="chevron-right" size={18} color="rgba(255,255,255,0.7)" />
-              </LinearGradient>
-            </Pressable>
-          )}
+          {/* Mode Terrain (clients/agenda/équipe/fil d'activité) retiré v1.0.33 —
+              AttenteZéro ne stocke plus de données sensibles de bénéficiaires. */}
 
           {/* ── Persistent reminder banner (shown after 3 uses) ── */}
           {isGated && (
@@ -365,7 +178,7 @@ export default function MoreScreen() {
                 <View style={{ flex: 1 }}>
                   <Text style={styles.reminderTitle}>Rappel — Forfait avancé</Text>
                   <Text style={styles.reminderSub}>
-                    Vous avez atteint la limite d'essais gratuits. Découvrez nos forfaits à partir de 19 $/mois.
+                    Vous avez atteint la limite d'essais gratuits. Passez Premium pour 10 $ une seule fois.
                   </Text>
                 </View>
                 <Feather name="chevron-right" size={16} color="rgba(255,255,255,0.7)" />
@@ -390,21 +203,21 @@ export default function MoreScreen() {
               <View style={styles.premiumTop}>
                 <View style={styles.premiumBadge}>
                   <Feather name="star" size={13} color="#fbbf24" />
-                  <Text style={styles.premiumBadgeText}>FORFAITS PRO</Text>
+                  <Text style={styles.premiumBadgeText}>PREMIUM</Text>
                 </View>
                 <View style={styles.premiumPrice}>
-                  <Text style={styles.premiumAmount}>19 $</Text>
-                  <Text style={styles.premiumPeriod}>{isFr ? "/ mois" : "/ month"}</Text>
+                  <Text style={styles.premiumAmount}>10 $</Text>
+                  <Text style={styles.premiumPeriod}>{isFr ? "à vie" : "lifetime"}</Text>
                 </View>
               </View>
 
               <Text style={styles.premiumTitle}>
-                {isFr ? "Découvrez nos 5 forfaits" : "Discover our 5 plans"}
+                {isFr ? "Soutenez AttenteZéro" : "Support AttenteZéro"}
               </Text>
               <Text style={styles.premiumSub}>
                 {isFr
-                  ? "Personne (gratuit) · Travailleur 19 $ · Organisme 39 $ · Plus 89 $ · Institution 199 $"
-                  : "Personal (free) · Worker $19 · Organisation $39 · Plus $89 · Institution $199"}
+                  ? "Gratuit pour tous · Premium 10 $/mois pour fonctions avancées et soutien du projet."
+                  : "Free for everyone · Premium $10/month for advanced features and to support the project."}
               </Text>
 
               <View style={styles.premiumFeaturesList}>

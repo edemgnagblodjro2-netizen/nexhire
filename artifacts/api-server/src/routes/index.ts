@@ -6,10 +6,15 @@ import authRouter from "./auth";
 import stripeRouter from "./stripe";
 import servicesRouter from "./services";
 import organisationsRouter from "./organisations";
-import clientsRouter from "./clients";
-import appointmentsRouter from "./appointments";
-import teamRouter from "./team";
 import verificationsRouter from "./verifications";
+
+// Pivot v1.0.33 — sensitive-data modules retired:
+// `clients`, `appointments`, `team`, and the activity-feed endpoints have been
+// pulled from the public surface. The route files and DB tables are kept on
+// disk so the work can be revived if the product direction changes, but
+// nothing routes traffic into them anymore. This eliminates AttenteZéro's
+// custodianship of beneficiary case-files and lets us focus the offering on
+// the public-facing directory + AI assistant + B2G dashboards.
 
 const router: IRouter = Router();
 
@@ -20,9 +25,6 @@ router.use(authRouter);
 router.use(stripeRouter);
 router.use(servicesRouter);
 router.use(organisationsRouter);
-router.use(clientsRouter);
-router.use(appointmentsRouter);
-router.use(teamRouter);
 router.use(verificationsRouter);
 
 export default router;
