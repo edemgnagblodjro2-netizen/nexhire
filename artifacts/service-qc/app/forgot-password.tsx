@@ -51,10 +51,10 @@ export default function ForgotPasswordScreen() {
       const data = await res.json();
       if (!res.ok) {
         setError(data.error ?? "Erreur serveur.");
-      } else if (data.code) {
-        setCode(data.code);
       } else {
-        setError("Aucun compte trouvé avec cet email.");
+        // The server sends the reset token by email — it is never returned in the API
+        // response. Show confirmation and let the user proceed to the reset screen.
+        setCode("sent");
       }
     } catch {
       setError("Impossible de contacter le serveur.");
@@ -124,12 +124,11 @@ export default function ForgotPasswordScreen() {
                   <View style={styles.successIcon}>
                     <Feather name="check-circle" size={40} color="#4ade80" />
                   </View>
-                  <Text style={styles.codeLabel}>Votre code de réinitialisation :</Text>
-                  <View style={styles.codeBox}>
-                    <Text style={styles.codeText}>{code}</Text>
-                  </View>
+                  <Text style={styles.codeLabel}>Vérifiez votre courriel</Text>
                   <Text style={styles.codeNote}>
-                    Ce code est valide 30 minutes.{"\n"}Notez-le et cliquez sur Continuer.
+                    Si un compte existe pour cette adresse, un lien de réinitialisation vous a été envoyé.{"\n\n"}
+                    Copiez le code de réinitialisation depuis le courriel et collez-le dans l'écran suivant.{"\n"}
+                    Le code est valide 15 minutes.
                   </Text>
                   <Pressable
                     onPress={() => router.push({ pathname: "/reset-password", params: { email } })}

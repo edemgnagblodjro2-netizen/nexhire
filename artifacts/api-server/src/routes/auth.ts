@@ -627,6 +627,11 @@ const ForgotPasswordBody = z.object({
   email: z.string().email(),
 });
 
+// Per-account cooldown: one reset request per email every 2 minutes.
+const RESET_COOLDOWN_MS = 2 * 60 * 1000;
+// Token lifetime: 15 minutes (reduced from 30 to limit brute-force window).
+const RESET_TOKEN_TTL_MS = 15 * 60 * 1000;
+
 router.post("/mobile-auth/forgot-password", async (req: Request, res: Response) => {
   const parsed = ForgotPasswordBody.safeParse(req.body);
   if (!parsed.success) {
@@ -635,35 +640,74 @@ router.post("/mobile-auth/forgot-password", async (req: Request, res: Response) 
   }
 
   const { email } = parsed.data;
+  const normalizedEmail = email.toLowerCase();
+
+  // Always return the same neutral message to avoid email enumeration.
+  const neutralResponse = { message: "Si un compte existe, un code vous sera envoyé." };
 
   try {
     const [user] = await db
       .select({ id: usersTable.id })
       .from(usersTable)
-      .where(eq(usersTable.email, email.toLowerCase()))
+      .where(eq(usersTable.email, normalizedEmail))
       .limit(1);
 
     if (!user) {
-      res.json({ message: "Si un compte existe, un code vous sera envoyé." });
+      res.json(neutralResponse);
       return;
     }
 
-    const code = String(Math.floor(100000 + Math.random() * 900000));
-    const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
+    // Enforce per-account cooldown: reject if a token was already issued recently.
+    const cooldownCutoff = new Date(Date.now() - RESET_COOLDOWN_MS);
+    const [recentToken] = await db
+      .select({ createdAt: passwordResetTokensTable.createdAt })
+      .from(passwordResetTokensTable)
+      .where(
+        and(
+          eq(passwordResetTokensTable.email, normalizedEmail),
+          isNull(passwordResetTokensTable.usedAt),
+          gt(passwordResetTokensTable.createdAt, cooldownCutoff)
+        )
+      )
+      .limit(1);
+
+    if (recentToken) {
+      // Return the same neutral message so the account existence is not revealed
+      // and so the cooldown cannot be detected by response differences.
+      res.json(neutralResponse);
+      return;
+    }
+
+    // Invalidate all previous unused tokens for this email before creating a new one.
+    // This ensures only one valid token can exist per account at any time.
+    await db
+      .update(passwordResetTokensTable)
+      .set({ usedAt: new Date() })
+      .where(
+        and(
+          eq(passwordResetTokensTable.email, normalizedEmail),
+          isNull(passwordResetTokensTable.usedAt)
+        )
+      );
+
+    // Generate a cryptographically secure 32-byte (256-bit) token.
+    const { randomBytes } = await import("node:crypto");
+    const code = randomBytes(32).toString("hex");
+    const expiresAt = new Date(Date.now() + RESET_TOKEN_TTL_MS);
 
     await db.insert(passwordResetTokensTable).values({
-      email: email.toLowerCase(),
+      email: normalizedEmail,
       code,
       expiresAt,
     });
 
-    // Never log the code itself, and never return it to the client.
-    // The code must be delivered out-of-band (email/SMS) by a trusted channel.
-    req.log.info({ userId: user.id }, "Password reset code generated");
+    // Never log the token itself, and never return it to the client.
+    // The token must be delivered out-of-band (email/SMS) by a trusted channel.
+    req.log.info({ userId: user.id }, "Password reset token generated");
 
-    // TODO: integrate email delivery (e.g., Resend/SendGrid) to send the code.
-    // For now, the operator must read the code from server-side records.
-    res.json({ message: "Si un compte existe, un code vous sera envoyé." });
+    // TODO: integrate email delivery (e.g., Resend/SendGrid) to send the token.
+    // For now, the operator must read the token from server-side records.
+    res.json(neutralResponse);
   } catch (err) {
     req.log.error({ err }, "Forgot password error");
     res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
@@ -672,7 +716,7 @@ router.post("/mobile-auth/forgot-password", async (req: Request, res: Response) 
 
 const ResetPasswordBody = z.object({
   email: z.string().email(),
-  code: z.string().length(6),
+  code: z.string().length(64).regex(/^[0-9a-f]+$/),
   newPassword: z.string().min(6),
 });
 
@@ -711,10 +755,17 @@ router.post("/mobile-auth/reset-password", async (req: Request, res: Response) =
       .set({ passwordHash })
       .where(eq(usersTable.email, email.toLowerCase()));
 
+    // Invalidate ALL outstanding tokens for this email (not just the matched one)
+    // so that any tokens that may have been issued concurrently are revoked.
     await db
       .update(passwordResetTokensTable)
       .set({ usedAt: new Date() })
-      .where(eq(passwordResetTokensTable.id, token.id));
+      .where(
+        and(
+          eq(passwordResetTokensTable.email, email.toLowerCase()),
+          isNull(passwordResetTokensTable.usedAt)
+        )
+      );
 
     await deleteAllSessionsByEmail(email);
 

@@ -45,8 +45,8 @@ export default function ResetPasswordScreen() {
       setError("Veuillez remplir tous les champs.");
       return;
     }
-    if (code.length !== 6) {
-      setError("Le code doit contenir 6 chiffres.");
+    if (code.trim().length !== 64 || !/^[0-9a-f]+$/.test(code.trim())) {
+      setError("Code de réinitialisation invalide. Vérifiez que vous l'avez copié en entier depuis le courriel.");
       return;
     }
     if (newPassword.length < 6) {
@@ -120,12 +120,12 @@ export default function ResetPasswordScreen() {
                     <Feather name="hash" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
                     <TextInput
                       style={styles.input}
-                      placeholder="Code à 6 chiffres"
+                      placeholder="Code de réinitialisation (depuis le courriel)"
                       placeholderTextColor="rgba(255,255,255,0.5)"
                       value={code}
-                      onChangeText={(t) => setCode(t.replace(/\D/g, "").slice(0, 6))}
-                      keyboardType="number-pad"
-                      maxLength={6}
+                      onChangeText={(t) => setCode(t.trim().toLowerCase())}
+                      autoCapitalize="none"
+                      autoCorrect={false}
                       returnKeyType="next"
                     />
                   </View>
