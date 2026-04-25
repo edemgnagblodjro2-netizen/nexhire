@@ -154,7 +154,13 @@ router.post("/org/verification/request", async (req, res) => {
     legalName: z.string().trim().min(2).max(200),
     foundedYear: z.string().trim().regex(/^\d{4}$/),
     contactPhone: z.string().trim().min(7).max(40),
-    website: z.string().trim().url().optional().nullable().or(z.literal("")),
+    website: z.union([
+      z.literal(""),
+      z.string().trim().url().refine(
+        (v) => v.startsWith("http://") || v.startsWith("https://"),
+        { message: "Le site web doit utiliser http ou https." }
+      ),
+    ]).optional().nullable(),
     mission: z.string().trim().min(10).max(1000),
   });
   const parsed = schema.safeParse(req.body);

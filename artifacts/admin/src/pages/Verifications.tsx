@@ -16,6 +16,15 @@ const STATUS_TABS = [
   { key: "rejected", label: "Refusées", color: "bg-red-100 text-red-700" },
 ] as const;
 
+function safeHttpUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol === "http:" || parsed.protocol === "https:") return url;
+  } catch {}
+  return null;
+}
+
 function formatDate(d: string | null) {
   if (!d) return "—";
   return new Date(d).toLocaleString("fr-CA", {
@@ -140,9 +149,14 @@ export default function Verifications({ adminKey }: { adminKey: string }) {
                 <Row k="N° ARC" v={<span className="font-mono">{r.arcCharityNumber || "—"}</span>} />
                 <Row k="Année de fondation" v={r.foundedYear} />
                 <Row k="Téléphone" v={r.contactPhone} />
-                <Row k="Site web" v={r.website ? (
-                  <a href={r.website} target="_blank" rel="noreferrer" className="text-blue-600 underline">{r.website}</a>
-                ) : "—"} />
+                <Row k="Site web" v={(() => {
+                  const safe = safeHttpUrl(r.website);
+                  return safe ? (
+                    <a href={safe} target="_blank" rel="noreferrer" className="text-blue-600 underline">{safe}</a>
+                  ) : r.website ? (
+                    <span className="text-gray-600 font-mono text-xs">{r.website}</span>
+                  ) : "—";
+                })()} />
                 <Row k="Email organisme" v={org?.email || "—"} />
               </div>
 

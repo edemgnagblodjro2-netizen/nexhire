@@ -46,11 +46,25 @@ app.use(
 );
 // ── Security headers (helmet) ─────────────────────────────────────────────
 // `crossOriginResourcePolicy: false` allows the admin SPA assets to be
-// fetched from the embedded preview iframe; `contentSecurityPolicy: false`
-// keeps the static admin HTML usable (the React build sets its own meta).
+// fetched from the embedded preview iframe.
+// CSP is set explicitly: `script-src 'self'` blocks `javascript:` URL
+// execution in browsers that honour CSP Level 2+, which is the primary
+// mitigation for the admin-origin credential-theft vector.
 app.use(
   helmet({
-    contentSecurityPolicy: false,
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        imgSrc: ["'self'", "data:", "https:"],
+        connectSrc: ["'self'", "https:"],
+        fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
+        objectSrc: ["'none'"],
+        baseUri: ["'self'"],
+        formAction: ["'self'"],
+      },
+    },
     crossOriginResourcePolicy: { policy: "cross-origin" },
     crossOriginEmbedderPolicy: false,
   }),
