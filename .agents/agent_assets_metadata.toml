@@ -299,3 +299,9 @@ id = "z5YjYpsAqTHRp1N41hz8P"
 uri = "file://exports/attentezero-v1.0.36-show-error-20260426-1430.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.36 — Affiche le détail d'erreur"
+
+[[outputs]]
+id = "slIK87HmmdnY1xMXDD0Xg"
+uri = "file://exports/attentezero-v1.0.37-fix-lineargradient-20260426-1545.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.37 — Fix LinearGradient crash"

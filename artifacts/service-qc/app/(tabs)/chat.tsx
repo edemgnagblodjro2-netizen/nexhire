@@ -28,7 +28,7 @@ import { detectCriticalSituation, type CriticalAlert } from "@/utils/detectCriti
 import { getApiBaseUrl } from "@/lib/apiBase";
 import { authedFetch } from "@/lib/apiClient";
 import { useAuth } from "@/lib/auth";
-import { LinearGradient } from "expo-linear-gradient";
+import { LinearGradient } from "@/components/SafeLinearGradient";
 
 type ChatLang = "fr" | "en" | "es" | "ar" | "ht";
 const CHAT_LANGS: { code: ChatLang; label: string; flag: string }[] = [
