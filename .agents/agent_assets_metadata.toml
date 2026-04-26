@@ -293,3 +293,9 @@ id = "ZER3VVTFTFIAi4Q54NW3W"
 uri = "file://exports/attentezero-v1.0.35-fix-android-crash-20260425-2135.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.35 — Fix crash Android"
+
+[[outputs]]
+id = "z5YjYpsAqTHRp1N41hz8P"
+uri = "file://exports/attentezero-v1.0.36-show-error-20260426-1430.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.36 — Affiche le détail d'erreur"
