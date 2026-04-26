@@ -1,45 +1,11 @@
 import { BlurView } from "expo-blur";
-import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { Tabs } from "expo-router";
-import { Icon, Label, NativeTabs } from "expo-router/unstable-native-tabs";
-import { SymbolView } from "expo-symbols";
 import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { Platform, StyleSheet, View, useColorScheme } from "react-native";
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useColors } from "@/hooks/useColors";
-
-function NativeTabLayout() {
-  return (
-    <NativeTabs>
-      <NativeTabs.Trigger name="index">
-        <Icon sf={{ default: "house", selected: "house.fill" }} />
-        <Label>Accueil</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="chat">
-        <Icon sf={{ default: "brain", selected: "brain.fill" }} />
-        <Label>Aide IA</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="services">
-        <Icon sf={{ default: "list.bullet", selected: "list.bullet" }} />
-        <Label>Services</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="map">
-        <Icon sf={{ default: "map", selected: "map.fill" }} />
-        <Label>Carte</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="categories" hidden>
-        <Icon sf={{ default: "square.grid.2x2", selected: "square.grid.2x2.fill" }} />
-        <Label>Catégories</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="more">
-        <Icon sf={{ default: "ellipsis.circle", selected: "ellipsis.circle.fill" }} />
-        <Label>Plus</Label>
-      </NativeTabs.Trigger>
-    </NativeTabs>
-  );
-}
 
 function ClassicTabLayout() {
   const colors = useColors();
@@ -89,62 +55,50 @@ function ClassicTabLayout() {
         name="index"
         options={{
           title: t.tabHome,
-          tabBarIcon: ({ color }) =>
-            isIOS ? (
-              <SymbolView name="house" tintColor={color} size={22} />
-            ) : (
-              <Feather name="home" size={21} color={color} />
-            ),
+          tabBarIcon: ({ color }) => (
+            <Feather name="home" size={21} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="chat"
         options={{
           title: t.tabChat,
-          tabBarIcon: ({ color, focused }) =>
-            isIOS ? (
-              <SymbolView name="brain" tintColor={color} size={22} />
-            ) : (
-              <View
-                style={
-                  focused
-                    ? {
-                        backgroundColor: colors.primary,
-                        borderRadius: 14,
-                        paddingHorizontal: 8,
-                        paddingVertical: 3,
-                        marginBottom: 2,
-                      }
-                    : undefined
-                }
-              >
-                <Feather name="cpu" size={21} color={focused ? "#fff" : color} />
-              </View>
-            ),
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              style={
+                focused
+                  ? {
+                      backgroundColor: colors.primary,
+                      borderRadius: 14,
+                      paddingHorizontal: 8,
+                      paddingVertical: 3,
+                      marginBottom: 2,
+                    }
+                  : undefined
+              }
+            >
+              <Feather name="cpu" size={21} color={focused ? "#fff" : color} />
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
         name="services"
         options={{
           title: t.tabServices,
-          tabBarIcon: ({ color }) =>
-            isIOS ? (
-              <SymbolView name="list.bullet" tintColor={color} size={22} />
-            ) : (
-              <Feather name="list" size={21} color={color} />
-            ),
+          tabBarIcon: ({ color }) => (
+            <Feather name="list" size={21} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="map"
         options={{
           title: "Carte",
-          tabBarIcon: ({ color }) =>
-            isIOS ? (
-              <SymbolView name="map" tintColor={color} size={22} />
-            ) : (
-              <Feather name="map-pin" size={21} color={color} />
-            ),
+          tabBarIcon: ({ color }) => (
+            <Feather name="map-pin" size={21} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -158,12 +112,9 @@ function ClassicTabLayout() {
         name="more"
         options={{
           title: "Plus",
-          tabBarIcon: ({ color }) =>
-            isIOS ? (
-              <SymbolView name="ellipsis.circle" tintColor={color} size={22} />
-            ) : (
-              <Feather name="more-horizontal" size={21} color={color} />
-            ),
+          tabBarIcon: ({ color }) => (
+            <Feather name="more-horizontal" size={21} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -178,8 +129,5 @@ function ClassicTabLayout() {
 }
 
 export default function TabLayout() {
-  if (isLiquidGlassAvailable()) {
-    return <NativeTabLayout />;
-  }
   return <ClassicTabLayout />;
 }

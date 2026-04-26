@@ -287,3 +287,9 @@ id = "YRB_Tmb_HMm5SmmVVJgwv"
 uri = "file://exports/attentezero-v1.0.34-13provinces-20260425-2000.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.34 — 13 provinces & territoires"
+
+[[outputs]]
+id = "ZER3VVTFTFIAi4Q54NW3W"
+uri = "file://exports/attentezero-v1.0.35-fix-android-crash-20260425-2135.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.35 — Fix crash Android"
