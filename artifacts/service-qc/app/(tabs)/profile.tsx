@@ -60,7 +60,7 @@ function InfoRow({ icon, label, value }: { icon: keyof typeof Feather.glyphMap; 
 }
 
 export default function ProfileScreen() {
-  const { user, logout, updateProfile } = useAuth();
+  const { user, logout, updateProfile, isAuthenticated } = useAuth();
   const { language, toggleLanguage } = useLanguage();
   const colors = useColors();
   const router = useRouter();
@@ -112,6 +112,92 @@ export default function ProfileScreen() {
   }
 
   const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ") || "—";
+
+  if (!isAuthenticated) {
+    return (
+      <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]}>
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
+        >
+          <LinearGradient
+            colors={[colors.primary, "#0a5e52"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.heroBanner}
+          >
+            <View style={[styles.avatarRing, { backgroundColor: "rgba(255,255,255,0.15)" }]}>
+              <Feather name="user" size={40} color="#ffffff" />
+            </View>
+            <Text style={styles.heroName}>
+              {isFr ? "Bienvenue !" : "Welcome!"}
+            </Text>
+            <Text style={[styles.heroEmail, { marginTop: 4 }]}>
+              {isFr ? "Mode invité" : "Guest mode"}
+            </Text>
+          </LinearGradient>
+
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border, marginTop: 20 }]}>
+            <Text style={[styles.cardTitle, { color: colors.foreground }]}>
+              {isFr ? "Créez un compte gratuit" : "Create a free account"}
+            </Text>
+            <Text style={{ color: colors.mutedForeground, fontSize: 14, lineHeight: 20, marginBottom: 16, fontFamily: "Inter_400Regular" }}>
+              {isFr
+                ? "Avec un compte, vous pouvez :\n• Sauvegarder vos services favoris\n• Recevoir des alertes personnalisées\n• Discuter avec l'assistant IA\n• Synchroniser entre appareils"
+                : "With an account, you can:\n• Save your favorite services\n• Get personalized alerts\n• Chat with the AI assistant\n• Sync across devices"}
+            </Text>
+
+            <Pressable
+              onPress={() => { Haptics.selectionAsync(); router.push("/login" as any); }}
+              style={({ pressed }) => ({
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                backgroundColor: colors.primary,
+                borderRadius: 12,
+                paddingVertical: 14,
+                opacity: pressed ? 0.9 : 1,
+                marginBottom: 10,
+              })}
+            >
+              <Feather name="log-in" size={16} color="#fff" />
+              <Text style={{ color: "#fff", fontSize: 15, fontFamily: "Inter_600SemiBold" }}>
+                {isFr ? "Se connecter" : "Sign in"}
+              </Text>
+            </Pressable>
+
+            <Pressable
+              onPress={() => { Haptics.selectionAsync(); router.push("/register" as any); }}
+              style={({ pressed }) => ({
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                borderWidth: 1.5,
+                borderColor: colors.border,
+                borderRadius: 12,
+                paddingVertical: 13,
+                opacity: pressed ? 0.85 : 1,
+              })}
+            >
+              <Feather name="user-plus" size={16} color={colors.foreground} />
+              <Text style={{ color: colors.foreground, fontSize: 15, fontFamily: "Inter_600SemiBold" }}>
+                {isFr ? "Créer un compte gratuit" : "Create free account"}
+              </Text>
+            </Pressable>
+          </View>
+
+          <Text style={{ color: colors.mutedForeground, fontSize: 12, textAlign: "center", marginTop: 16, fontFamily: "Inter_400Regular", paddingHorizontal: 24, lineHeight: 18 }}>
+            {isFr
+              ? "Vous pouvez continuer à utiliser l'application gratuitement sans compte."
+              : "You can keep using the app for free without an account."}
+          </Text>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]}>

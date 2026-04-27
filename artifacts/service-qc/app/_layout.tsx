@@ -63,7 +63,7 @@ function AppContent({ fontsReady }: { fontsReady: boolean }) {
       wasAuthenticated.current = true;
     } else if (wasAuthenticated.current && !isLoading) {
       wasAuthenticated.current = false;
-      router.replace("/login");
+      router.replace("/(tabs)");
     }
   }, [isAuthenticated, isLoading]);
 

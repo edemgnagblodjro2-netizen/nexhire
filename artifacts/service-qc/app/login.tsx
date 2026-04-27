@@ -248,6 +248,15 @@ export default function LoginScreen() {
                 <Feather name="user-plus" size={16} color="rgba(255,255,255,0.9)" />
                 <Text style={styles.registerButtonText}>Créer un compte</Text>
               </Pressable>
+
+              <Pressable
+                onPress={() => router.replace("/(tabs)")}
+                style={({ pressed }) => [styles.guestButton, pressed && { opacity: 0.7 }]}
+                hitSlop={8}
+              >
+                <Feather name="arrow-right-circle" size={14} color="rgba(255,255,255,0.85)" />
+                <Text style={styles.guestButtonText}>Continuer sans compte</Text>
+              </Pressable>
             </Animated.View>
 
             {/* ── Disclaimer ── */}
@@ -456,6 +465,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Inter_600SemiBold",
     color: "#ffffff",
+  },
+  guestButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    paddingVertical: 12,
+    marginTop: 4,
+  },
+  guestButtonText: {
+    fontSize: 13,
+    fontFamily: "Inter_500Medium",
+    color: "rgba(255,255,255,0.85)",
+    textDecorationLine: "underline",
   },
 
   /* Disclaimer */
