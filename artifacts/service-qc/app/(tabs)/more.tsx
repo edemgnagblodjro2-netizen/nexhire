@@ -355,6 +355,55 @@ export default function MoreScreen() {
             </Pressable>
           ))}
 
+          {/* ── Section title: Soutenir AttenteZéro ── */}
+          <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
+            {isFr ? "Soutenir AttenteZéro" : "Support AttenteZéro"}
+          </Text>
+
+          {/* ── Share app card ── */}
+          <Pressable
+            style={({ pressed }) => [
+              styles.optionCard,
+              {
+                backgroundColor: colors.card,
+                borderColor: colors.border,
+                opacity: pressed ? 0.85 : 1,
+              },
+            ]}
+            onPress={async () => {
+              Haptics.selectionAsync();
+              try {
+                const playStoreUrl = "https://play.google.com/store/apps/details?id=com.attentezero.app";
+                const message = isFr
+                  ? `Découvrez AttenteZéro — l'application gratuite pour trouver les services communautaires du Québec en quelques secondes.\n\n📱 Téléchargez : ${playStoreUrl}`
+                  : `Discover AttenteZéro — the free app to find Quebec community services in seconds.\n\n📱 Download: ${playStoreUrl}`;
+                await Share.share({
+                  message,
+                  title: "AttenteZéro",
+                });
+              } catch (e) {
+                /* user cancelled */
+              }
+            }}
+          >
+            <View style={[styles.optionIconWrap, { backgroundColor: isDark ? "#0a3d36" : "#d1fae5" }]}>
+              <Feather name="share-2" size={20} color="#0e7e6e" />
+            </View>
+            <View style={styles.optionText}>
+              <View style={styles.optionTitleRow}>
+                <Text style={[styles.optionTitle, { color: colors.foreground }]}>
+                  {isFr ? "Partager l'application" : "Share the app"}
+                </Text>
+              </View>
+              <Text style={[styles.optionDesc, { color: colors.mutedForeground }]}>
+                {isFr
+                  ? "Aidez vos proches à trouver les bons services rapidement"
+                  : "Help your loved ones find the right services quickly"}
+              </Text>
+            </View>
+            <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+          </Pressable>
+
           {/* ── Section title: Autres options ── */}
           <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
             {isFr ? "Autres options de financement" : "Other funding options"}

@@ -305,3 +305,9 @@ id = "slIK87HmmdnY1xMXDD0Xg"
 uri = "file://exports/attentezero-v1.0.37-fix-lineargradient-20260426-1545.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.37 — Fix LinearGradient crash"
+
+[[outputs]]
+id = "3h7JF7ZrqhS4T50Hux39I"
+uri = "file://exports/attentezero-v1.0.38-share-20260427-0115.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.38 (vc35) — avec Partage app"
