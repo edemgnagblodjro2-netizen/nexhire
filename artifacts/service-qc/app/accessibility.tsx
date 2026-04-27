@@ -102,12 +102,12 @@ export default function AccessibilityScreen() {
           {isFr ? "Signaler un obstacle" : "Report a barrier"}
         </Text>
         <Pressable
-          onPress={() => Linking.openURL("mailto:accessibilite@attentezero.ca")}
+          onPress={() => Linking.openURL("mailto:attentezero5+accessibilite@gmail.com")}
           style={({ pressed }) => [styles.ctaSecondary, { borderColor: colors.border, opacity: pressed ? 0.85 : 1 }]}
         >
           <Feather name="mail" size={18} color="#0e7e6e" />
           <Text style={[styles.ctaSecondaryText, { color: "#0e7e6e" }]}>
-            accessibilite@attentezero.ca
+            attentezero5+accessibilite@gmail.com
           </Text>
         </Pressable>
       </View>

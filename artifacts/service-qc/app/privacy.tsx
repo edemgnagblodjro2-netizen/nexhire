@@ -26,7 +26,7 @@ export default function PrivacyScreen() {
         { title: "6. Vos droits (Loi 25)", body: "Conformément à la Loi 25 du Québec sur la protection des renseignements personnels, vous pouvez : (a) accéder à vos données ; (b) les corriger ; (c) demander leur suppression complète ; (d) déposer plainte auprès de la Commission d'accès à l'information du Québec." },
         { title: "7. Hébergement et chiffrement", body: "Les données de compte (courriel + mot de passe haché) sont hébergées sur des serveurs sécurisés au Canada. Toutes les communications utilisent le protocole TLS 1.3." },
         { title: "8. Conservation", body: "Les comptes inactifs depuis plus de 24 mois sont supprimés automatiquement. Vous pouvez supprimer votre compte vous-même à tout moment depuis l'onglet Profil." },
-        { title: "9. Personne responsable", body: "Toute demande relative aux renseignements personnels peut être envoyée à : confidentialite@attentezero.ca. Nous répondons sous 30 jours, conformément à la Loi 25." },
+        { title: "9. Personne responsable", body: "Toute demande relative aux renseignements personnels peut être envoyée à : attentezero5+confidentialite@gmail.com. Nous répondons sous 30 jours, conformément à la Loi 25." },
       ]
     : [
         { title: "1. Data collected", body: "AttenteZéro collects no required identifiable data. Account creation is optional. If you create one, only your email and a hashed password are stored." },
@@ -37,7 +37,7 @@ export default function PrivacyScreen() {
         { title: "6. Your rights (Law 25)", body: "Per Quebec Law 25 on personal information protection, you may: (a) access your data; (b) correct it; (c) request full deletion; (d) file a complaint with the Quebec Access to Information Commission." },
         { title: "7. Hosting & encryption", body: "Account data (email + hashed password) is hosted on secure Canadian servers. All communications use TLS 1.3." },
         { title: "8. Retention", body: "Accounts inactive for over 24 months are deleted automatically. You can delete your account yourself any time from the Profile tab." },
-        { title: "9. Privacy officer", body: "Any personal-information request can be sent to: confidentialite@attentezero.ca. We respond within 30 days, per Law 25." },
+        { title: "9. Privacy officer", body: "Any personal-information request can be sent to: attentezero5+confidentialite@gmail.com. We respond within 30 days, per Law 25." },
       ];
 
   return (
@@ -77,7 +77,7 @@ export default function PrivacyScreen() {
         ))}
 
         <Pressable
-          onPress={() => Linking.openURL("mailto:confidentialite@attentezero.ca")}
+          onPress={() => Linking.openURL("mailto:attentezero5+confidentialite@gmail.com")}
           style={({ pressed }) => [styles.cta, { opacity: pressed ? 0.85 : 1 }]}
         >
           <Feather name="mail" size={18} color="#fff" />

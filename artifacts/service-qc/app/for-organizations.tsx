@@ -34,13 +34,13 @@ export default function ForOrganizationsScreen() {
 
   const steps = isFr
     ? [
-        "Envoyez un courriel à organismes@attentezero.ca avec le nom de votre organisme.",
+        "Envoyez un courriel à attentezero5+organismes@gmail.com avec le nom de votre organisme.",
         "Nous vous renvoyons un formulaire court (nom, services, horaires, critères, contacts).",
         "Votre fiche est validée puis publiée dans l'application sous 5 jours ouvrables.",
         "Vous pouvez la modifier à tout moment, gratuitement, par courriel.",
       ]
     : [
-        "Email organismes@attentezero.ca with your organization's name.",
+        "Email attentezero5+organismes@gmail.com with your organization's name.",
         "We send back a short form (name, services, hours, criteria, contacts).",
         "Your listing is reviewed and published in the app within 5 business days.",
         "You can update it anytime, free of charge, by email.",
@@ -111,7 +111,7 @@ export default function ForOrganizationsScreen() {
         </View>
 
         <Pressable
-          onPress={() => Linking.openURL("mailto:organismes@attentezero.ca?subject=Inscription%20organisme%20communautaire")}
+          onPress={() => Linking.openURL("mailto:attentezero5+organismes@gmail.com?subject=Inscription%20organisme%20communautaire")}
           style={({ pressed }) => [styles.cta, { opacity: pressed ? 0.85 : 1 }]}
         >
           <Feather name="mail" size={18} color="#fff" />
