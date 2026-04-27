@@ -452,6 +452,47 @@ export default function MoreScreen() {
             </Pressable>
           ))}
 
+          {/* ── Section title: Transparence & ressources ── */}
+          <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
+            {isFr ? "Transparence & ressources" : "Transparency & resources"}
+          </Text>
+
+          {[
+            { icon: "info" as const, color: "#0e7e6e", route: "/about", title: isFr ? "À propos" : "About", desc: isFr ? "Notre mission, notre équipe, témoignages" : "Our mission, team, testimonials" },
+            { icon: "bar-chart-2" as const, color: "#0284c7", route: "/impact", title: isFr ? "Notre impact" : "Our impact", desc: isFr ? "Statistiques publiques et étapes clés" : "Public stats and key milestones" },
+            { icon: "shield" as const, color: "#059669", route: "/privacy", title: isFr ? "Confidentialité (Loi 25)" : "Privacy (Law 25)", desc: isFr ? "Vos données, vos droits, notre engagement" : "Your data, your rights, our commitment" },
+            { icon: "eye" as const, color: "#7c3aed", route: "/accessibility", title: isFr ? "Accessibilité" : "Accessibility", desc: isFr ? "Conforme WCAG 2.1 AA" : "WCAG 2.1 AA compliant" },
+            { icon: "award" as const, color: "#d97706", route: "/partners", title: isFr ? "Partenaires & soutiens" : "Partners & supporters", desc: isFr ? "Avec le milieu communautaire québécois" : "With the Quebec community sector" },
+            { icon: "briefcase" as const, color: "#e11d48", route: "/for-organizations", title: isFr ? "Pour les organismes" : "For organizations", desc: isFr ? "Référencement gratuit pour les OBNL" : "Free listing for non-profits" },
+          ].map((item) => (
+            <Pressable
+              key={item.route}
+              style={({ pressed }) => [
+                styles.optionCard,
+                {
+                  backgroundColor: colors.card,
+                  borderColor: colors.border,
+                  opacity: pressed ? 0.85 : 1,
+                },
+              ]}
+              onPress={() => {
+                Haptics.selectionAsync();
+                router.push(item.route as any);
+              }}
+            >
+              <View style={[styles.optionIconWrap, { backgroundColor: item.color + "18" }]}>
+                <Feather name={item.icon} size={20} color={item.color} />
+              </View>
+              <View style={styles.optionText}>
+                <View style={styles.optionTitleRow}>
+                  <Text style={[styles.optionTitle, { color: colors.foreground }]}>{item.title}</Text>
+                </View>
+                <Text style={[styles.optionDesc, { color: colors.mutedForeground }]}>{item.desc}</Text>
+              </View>
+              <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+            </Pressable>
+          ))}
+
           {/* ── Section title: Mon compte ── */}
           <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
             {isFr ? "Mon compte" : "My account"}
