@@ -542,7 +542,7 @@ export default function OrgDashboard() {
             <InfoRow label="Service lié" value={org.serviceId ? `#${org.serviceId.slice(0, 8)}…` : "À assigner par un administrateur"} />
           </div>
           <p className="text-xs text-gray-400 mt-4">
-            Pour modifier vos coordonnées, contactez l'équipe AttenteZéro à <a href="mailto:attentezero5@gmail.com" className="text-blue-600">attentezero5@gmail.com</a>.
+            Pour modifier vos coordonnées, contactez l'équipe AttenteZéro à <a href="mailto:contact@attentezero.ca" className="text-blue-600">contact@attentezero.ca</a>.
           </p>
         </div>
       </main>

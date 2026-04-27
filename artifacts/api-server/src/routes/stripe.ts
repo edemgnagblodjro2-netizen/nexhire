@@ -722,7 +722,7 @@ stripeRouter.get("/stripe/payment-success", async (req, res) => {
 
   <div class="footer">
     AttenteZéro — Services communautaires du Québec<br>
-    attentezero5@gmail.com · Ce reçu confirme votre abonnement<br>
+    contact@attentezero.ca · Ce reçu confirme votre abonnement<br>
     Annulable à tout moment depuis les paramètres de l'app
   </div>
 </div>

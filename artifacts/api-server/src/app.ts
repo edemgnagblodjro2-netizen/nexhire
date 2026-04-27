@@ -180,7 +180,7 @@ ul{padding-left:1.5rem}
 <p>Si vous n'avez plus accès à l'application, envoyez un courriel à :</p>
 
 <div class="email">
-<a href="mailto:attentezero5@gmail.com?subject=Demande%20de%20suppression%20de%20compte">attentezero5@gmail.com</a>
+<a href="mailto:contact@attentezero.ca?subject=Demande%20de%20suppression%20de%20compte">contact@attentezero.ca</a>
 </div>
 
 <p>Précisez dans votre message :</p>
@@ -217,7 +217,7 @@ ul{padding-left:1.5rem}
 <h2>Contact</h2>
 <p>Pour toute question :<br>
 <strong>Startup Ayas</strong><br>
-Courriel : <a href="mailto:attentezero5@gmail.com">attentezero5@gmail.com</a></p>
+Courriel : <a href="mailto:contact@attentezero.ca">contact@attentezero.ca</a></p>
 
 <p>Pour déposer une plainte : <a href="https://www.cai.gouv.qc.ca">Commission d'accès à l'information du Québec</a>.</p>
 
@@ -296,7 +296,7 @@ a{color:#0ea5e9}
 <h2>9. Contact</h2>
 <p>Responsable de la protection des renseignements personnels :<br>
 <strong>Startup Ayas</strong><br>
-Courriel : <a href="mailto:attentezero5@gmail.com">attentezero5@gmail.com</a></p>
+Courriel : <a href="mailto:contact@attentezero.ca">contact@attentezero.ca</a></p>
 
 <p>Pour déposer une plainte : <a href="https://www.cai.gouv.qc.ca">Commission d'accès à l'information du Québec</a>.</p>
 

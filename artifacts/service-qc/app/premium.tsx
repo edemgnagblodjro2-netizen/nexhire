@@ -23,7 +23,7 @@ import { useColors } from "@/hooks/useColors";
 import { useAuth } from "@/lib/auth";
 import { getApiBaseUrl } from "@/lib/apiBase";
 
-const CONTACT_EMAIL = "attentezero5@gmail.com";
+const CONTACT_EMAIL = "contact@attentezero.ca";
 
 type TierId = "users";
 
