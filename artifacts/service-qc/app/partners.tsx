@@ -90,11 +90,11 @@ export default function PartnersScreen() {
               : "Are you a CIUSSS, foundation, non-profit, or funder interested in supporting AttenteZéro's free distribution to vulnerable Quebecers?"}
           </Text>
           <Pressable
-            onPress={() => Linking.openURL("mailto:attentezero5+partenariats@gmail.com?subject=Proposition%20de%20partenariat")}
+            onPress={() => Linking.openURL("mailto:partenariats@attentezero.ca?subject=Proposition%20de%20partenariat")}
             style={({ pressed }) => [styles.cta, { opacity: pressed ? 0.85 : 1 }]}
           >
             <Feather name="mail" size={18} color="#fff" />
-            <Text style={styles.ctaText}>attentezero5+partenariats@gmail.com</Text>
+            <Text style={styles.ctaText}>partenariats@attentezero.ca</Text>
           </Pressable>
         </View>
       </View>

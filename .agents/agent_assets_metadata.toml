@@ -323,3 +323,9 @@ id = "eNsCF6uDMElGhVVjOW1mx"
 uri = "file://exports/attentezero-v1.0.38-final-20260427-0230.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.38 FINAL — Courriels Gmail alignés"
+
+[[outputs]]
+id = "-Cklirpr_SVlFnynC-azJ"
+uri = "file://exports/attentezero-v1.0.39-20260427-1603.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.39 (vc36) - Emails @attentezero.ca"
