@@ -425,3 +425,9 @@ id = "R3QN3lO0ijusqenNspPX5"
 uri = "file://exports/attentezero-v1.0.50-provinces-fix-20260428-2355.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.50 — corrigé (10 services pancanadiens dé-tagués QC)"
+
+[[outputs]]
+id = "A29fIEuRTGRl4XkUP5ujr"
+uri = "file://exports/attentezero-v1.0.50-final-20260429-0000.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.50 final — 180 fiches réparties sur les 12 provinces hors QC"

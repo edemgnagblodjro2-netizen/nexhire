@@ -2,7 +2,7 @@
 
 **Current version: v1.0.50 (versionCode 47) — 2026-04-28**
 
-Ajout massif de ressources hors Québec : **5 services vérifiés par province** (12 provinces × 5 = 60 fiches) couvrant ligne santé 811, ligne d'écoute/crise, violence familiale, aide juridique et banque alimentaire — toutes avec téléphone, adresse et site web. Plus **5 services urgents pancanadiens** (911, 988 Aide suicide, Jeunesse J'écoute, Espoir Autochtones, Trans Lifeline) et **5 lignes SOS pancanadiennes** (Refuges femmes Canada, Protection enfance, Espace mieux-être, Enfants disparus, Aînés). Toutes vérifiées (`badgeVerified: true`).
+Ajout massif de ressources **hors Québec uniquement** : **5 services vérifiés par province × 12 provinces** = 60 fiches (ligne santé 811, ligne d'écoute/crise, violence familiale, aide juridique, banque alimentaire) + **5 services urgents × 12 provinces** = 60 fiches (911, 9-8-8 suicide, Jeunesse J'écoute, Espoir Autochtones, Trans Lifeline) + **5 lignes SOS × 12 provinces** = 60 fiches (Refuges femmes, Protection enfance, Espace mieux-être, Enfants disparus, Aînés). Total : **180 nouvelles fiches** taguées ON, BC, AB, MB, SK, NB, NS, PE, NL, YT, NT, NU. Aucune ajoutée à Québec (les utilisateurs québécois ont déjà leurs équivalents francophones spécialisés). Toutes vérifiées (`badgeVerified: true`, `isProvinceWide: true`).
 
 **v1.0.49 (versionCode 46) — 2026-04-28**
 
