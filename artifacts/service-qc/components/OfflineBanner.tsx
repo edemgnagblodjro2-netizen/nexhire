@@ -53,9 +53,13 @@ export function OfflineBanner() {
 
   if (!offline) return null;
 
-  const label = language === "fr"
-    ? "Mode hors ligne · liste sauvegardée affichée"
-    : "Offline mode · showing saved list";
+  const labels: Record<string, string> = {
+    fr: "Mode hors ligne · liste sauvegardée affichée",
+    en: "Offline mode · showing saved list",
+    es: "Modo sin conexión · mostrando lista guardada",
+    ar: "وضع عدم الاتصال · عرض القائمة المحفوظة",
+  };
+  const label = labels[language] ?? labels.fr;
 
   return (
     <View style={styles.bar} pointerEvents="none">
