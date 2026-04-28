@@ -14,6 +14,7 @@ import {
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { Service } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
+import { usePremiumGate } from "@/hooks/usePremiumGate";
 import { getCategoryColor } from "@/utils/categoryColors";
 
 interface ServiceCardProps {
@@ -26,9 +27,15 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
   const router = useRouter();
   const { t } = useLanguage();
   const categoryColor = getCategoryColor(service.category, colors);
+  const { recordAttempt } = usePremiumGate();
 
-  function handlePress() {
+  async function handlePress() {
     Haptics.selectionAsync();
+    const blocked = await recordAttempt();
+    if (blocked) {
+      router.push("/premium" as any);
+      return;
+    }
     router.push({
       pathname: "/service/[id]",
       params: { id: service.id },

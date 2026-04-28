@@ -158,6 +158,39 @@ export default function MoreScreen() {
           {/* Mode Terrain (clients/agenda/équipe/fil d'activité) retiré v1.0.33 —
               AttenteZéro ne stocke plus de données sensibles de bénéficiaires. */}
 
+          {/* ── Persistent reminder banner (shown after 3 uses today) ── */}
+          {isGated && (
+            <Pressable
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                checkAndRemind();
+              }}
+              style={({ pressed }) => [styles.reminderBanner, { opacity: pressed ? 0.9 : 1 }]}
+            >
+              <LinearGradient
+                colors={["#92400e", "#b45309"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.reminderGrad}
+              >
+                <View style={styles.reminderIcon}>
+                  <Feather name="bell" size={16} color="#fbbf24" />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.reminderTitle}>
+                    {isFr ? "Limite quotidienne atteinte" : "Daily limit reached"}
+                  </Text>
+                  <Text style={styles.reminderSub}>
+                    {isFr
+                      ? "Vous avez utilisé vos 3 consultations gratuites du jour. Passez Premium 10 $ à vie pour un accès illimité."
+                      : "You have used your 3 free daily lookups. Upgrade to Premium $10 lifetime for unlimited access."}
+                  </Text>
+                </View>
+                <Feather name="chevron-right" size={16} color="rgba(255,255,255,0.7)" />
+              </LinearGradient>
+            </Pressable>
+          )}
+
           {/* ── Premium card ── */}
           <Pressable
             onPress={() => {
@@ -184,12 +217,12 @@ export default function MoreScreen() {
               </View>
 
               <Text style={styles.premiumTitle}>
-                {isFr ? "Soutenez AttenteZéro" : "Support AttenteZéro"}
+                {isFr ? "Accès illimité à vie" : "Unlimited lifetime access"}
               </Text>
               <Text style={styles.premiumSub}>
                 {isFr
-                  ? "L'application reste 100 % gratuite. Premium 10 $ à vie est un soutien volontaire au projet."
-                  : "The app stays 100% free. Premium $10 lifetime is a voluntary contribution to the project."}
+                  ? "Gratuit : 3 consultations de services par jour. Premium 10 $ une seule fois — accès illimité, sans publicité, à vie."
+                  : "Free: 3 service lookups per day. Premium $10 once — unlimited access, no ads, forever."}
               </Text>
 
               <View style={styles.premiumFeaturesList}>
@@ -281,17 +314,26 @@ export default function MoreScreen() {
             </View>
           </View>
 
-          {/* ── Premium features — informational, no gate ── */}
+          {/* ── Daily quota indicator ── */}
           <View style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
-              {isFr ? "Fonctionnalités avancées" : "Advanced features"}
+              {isFr ? "Vos consultations du jour" : "Your daily lookups"}
             </Text>
-            <View style={[styles.trialBadge, { backgroundColor: "#7c3aed" + "18", borderColor: "#7c3aed" + "30" }]}>
-              <Feather name="clock" size={11} color="#7c3aed" />
-              <Text style={[styles.trialBadgeText, { color: "#7c3aed" }]}>
-                {isFr ? "Bientôt" : "Soon"}
-              </Text>
-            </View>
+            {isGated ? (
+              <View style={[styles.trialBadge, { backgroundColor: "#dc2626" + "18", borderColor: "#dc2626" + "30" }]}>
+                <Feather name="lock" size={11} color="#dc2626" />
+                <Text style={[styles.trialBadgeText, { color: "#dc2626" }]}>
+                  {isFr ? "Limite atteinte" : "Limit reached"}
+                </Text>
+              </View>
+            ) : (
+              <View style={[styles.trialBadge, { backgroundColor: "#10b981" + "18", borderColor: "#10b981" + "30" }]}>
+                <Feather name="check-circle" size={11} color="#10b981" />
+                <Text style={[styles.trialBadgeText, { color: "#10b981" }]}>
+                  {remaining} {isFr ? `consultation${remaining !== 1 ? "s" : ""} restante${remaining !== 1 ? "s" : ""}` : `lookup${remaining !== 1 ? "s" : ""} left`}
+                </Text>
+              </View>
+            )}
           </View>
 
           {PREMIUM_FEATURES.map((f) => (
