@@ -158,35 +158,6 @@ export default function MoreScreen() {
           {/* Mode Terrain (clients/agenda/équipe/fil d'activité) retiré v1.0.33 —
               AttenteZéro ne stocke plus de données sensibles de bénéficiaires. */}
 
-          {/* ── Persistent reminder banner (shown after 3 uses) ── */}
-          {isGated && (
-            <Pressable
-              onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-                checkAndRemind();
-              }}
-              style={({ pressed }) => [styles.reminderBanner, { opacity: pressed ? 0.9 : 1 }]}
-            >
-              <LinearGradient
-                colors={["#92400e", "#b45309"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.reminderGrad}
-              >
-                <View style={styles.reminderIcon}>
-                  <Feather name="bell" size={16} color="#fbbf24" />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={styles.reminderTitle}>Rappel — Forfait avancé</Text>
-                  <Text style={styles.reminderSub}>
-                    Vous avez atteint la limite d'essais gratuits. Passez Premium pour 10 $ une seule fois.
-                  </Text>
-                </View>
-                <Feather name="chevron-right" size={16} color="rgba(255,255,255,0.7)" />
-              </LinearGradient>
-            </Pressable>
-          )}
-
           {/* ── Premium card ── */}
           <Pressable
             onPress={() => {
@@ -217,8 +188,8 @@ export default function MoreScreen() {
               </Text>
               <Text style={styles.premiumSub}>
                 {isFr
-                  ? "Gratuit pour tous · Premium 10 $/mois pour fonctions avancées et soutien du projet."
-                  : "Free for everyone · Premium $10/month for advanced features and to support the project."}
+                  ? "L'application reste 100 % gratuite. Premium 10 $ à vie est un soutien volontaire au projet."
+                  : "The app stays 100% free. Premium $10 lifetime is a voluntary contribution to the project."}
               </Text>
 
               <View style={styles.premiumFeaturesList}>
@@ -310,19 +281,17 @@ export default function MoreScreen() {
             </View>
           </View>
 
-          {/* ── Premium features — clickable with gate ── */}
+          {/* ── Premium features — informational, no gate ── */}
           <View style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
               {isFr ? "Fonctionnalités avancées" : "Advanced features"}
             </Text>
-            {!isGated && (
-              <View style={[styles.trialBadge, { backgroundColor: "#7c3aed" + "18", borderColor: "#7c3aed" + "30" }]}>
-                <Feather name="gift" size={11} color="#7c3aed" />
-                <Text style={[styles.trialBadgeText, { color: "#7c3aed" }]}>
-                  {remaining} essai{remaining !== 1 ? "s" : ""} gratuit{remaining !== 1 ? "s" : ""}
-                </Text>
-              </View>
-            )}
+            <View style={[styles.trialBadge, { backgroundColor: "#7c3aed" + "18", borderColor: "#7c3aed" + "30" }]}>
+              <Feather name="clock" size={11} color="#7c3aed" />
+              <Text style={[styles.trialBadgeText, { color: "#7c3aed" }]}>
+                {isFr ? "Bientôt" : "Soon"}
+              </Text>
+            </View>
           </View>
 
           {PREMIUM_FEATURES.map((f) => (
@@ -345,11 +314,11 @@ export default function MoreScreen() {
                 <Text style={[styles.featureTitle, { color: colors.foreground }]}>{f.label}</Text>
                 <Text style={[styles.featureDesc, { color: colors.mutedForeground }]}>{f.desc}</Text>
               </View>
-              <View style={[styles.lockBadge, { backgroundColor: isGated ? "#7c3aed" : "#10b981" + "18" }]}>
+              <View style={[styles.lockBadge, { backgroundColor: "#7c3aed" + "18" }]}>
                 <Feather
-                  name={isGated ? "lock" : "zap"}
+                  name="clock"
                   size={13}
-                  color={isGated ? "#fff" : "#10b981"}
+                  color="#7c3aed"
                 />
               </View>
             </Pressable>

@@ -341,3 +341,9 @@ id = "MTqCjfxLeX1dn0sBvQRCq"
 uri = "file://exports/attentezero-v1.0.40-childcare-redirect-20260428-1712.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.40 (vc37) — Garderies → La Place 0-5"
+
+[[outputs]]
+id = "icOMTXDxwdTyaQQb9dFUY"
+uri = "file://exports/attentezero-v1.0.41-100pct-gratuit-20260428-1729.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.41 (vc38) — 100 % gratuit, message cohérent"
