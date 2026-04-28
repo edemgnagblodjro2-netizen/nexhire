@@ -5,9 +5,12 @@ const servicesModule = await import("../../../artifacts/service-qc/data/services
 const SERVICES: any[] = servicesModule.SERVICES;
 
 async function seed() {
-  console.log(`Seeding ${SERVICES.length} services…`);
+  // Exclude "childcare" — daycare registration is now handled exclusively
+  // via the official Quebec portal "La Place 0-5", so we don't list them here.
+  const FILTERED = SERVICES.filter((s: any) => s.category !== "childcare");
+  console.log(`Seeding ${FILTERED.length} services (childcare excluded)…`);
 
-  const rows = SERVICES.map((s: any) => ({
+  const rows = FILTERED.map((s: any) => ({
     id: s.id,
     name: s.name,
     category: s.category,

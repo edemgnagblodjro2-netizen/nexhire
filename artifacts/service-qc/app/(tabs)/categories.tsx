@@ -35,10 +35,12 @@ const ALL_CATEGORIES: Category[] = [
 function CategoryCard({ category }: { category: Category }) {
   const colors = useColors();
   const router = useRouter();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const color = getCategoryColor(category, colors);
   const icon = CATEGORY_ICONS[category];
   const { services } = useServicesData();
+
+  const isExternalRedirect = category === "childcare";
 
   const serviceCount = useMemo(
     () => services.filter((s) => s.category === category).length,
@@ -77,7 +79,7 @@ function CategoryCard({ category }: { category: Category }) {
           </View>
           <View style={[styles.countBadge, { backgroundColor: color + "18", borderColor: color + "30" }]}>
             <Text style={[styles.countText, { color }]} numberOfLines={1}>
-              {serviceCount > 999 ? "999+" : serviceCount}
+              {isExternalRedirect ? (language === "fr" ? "Portail" : "Portal") : serviceCount > 999 ? "999+" : serviceCount}
             </Text>
           </View>
         </View>
@@ -92,11 +94,13 @@ function CategoryCard({ category }: { category: Category }) {
 
         {/* Footer row */}
         <View style={styles.cardFooter}>
-          <Text style={[styles.catSub, { color: colors.mutedForeground }]}>
-            {serviceCount === 1 ? t.services : t.servicesPlural}
+          <Text style={[styles.catSub, { color: colors.mutedForeground }]} numberOfLines={1}>
+            {isExternalRedirect
+              ? "La Place 0-5"
+              : serviceCount === 1 ? t.services : t.servicesPlural}
           </Text>
           <View style={[styles.arrowBtn, { backgroundColor: color + "15" }]}>
-            <Feather name="arrow-right" size={13} color={color} />
+            <Feather name={isExternalRedirect ? "external-link" : "arrow-right"} size={13} color={color} />
           </View>
         </View>
       </View>

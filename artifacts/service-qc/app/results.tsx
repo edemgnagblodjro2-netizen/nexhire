@@ -4,12 +4,17 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useMemo } from "react";
 import {
   FlatList,
+  Linking,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+
+const CHILDCARE_PORTAL_URL =
+  "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ServiceCard } from "@/components/ServiceCard";
@@ -134,8 +139,9 @@ export default function ResultsScreen() {
               {query || (selectedCategory !== "all" ? t.categories[selectedCategory] : t.results)}
             </Text>
             <Text style={[styles.headerCount, { color: colors.mutedForeground }]}>
-              {filtered.length}{" "}
-              {filtered.length !== 1 ? t.servicesPlural : t.services}
+              {selectedCategory === "childcare"
+                ? (language === "fr" ? "Portail externe — La Place 0-5" : "External portal — La Place 0-5")
+                : `${filtered.length} ${filtered.length !== 1 ? t.servicesPlural : t.services}`}
             </Text>
           </View>
         </View>
@@ -254,6 +260,71 @@ export default function ResultsScreen() {
         ) : null}
       </View>
 
+      {selectedCategory === "childcare" ? (
+        <ScrollView
+          contentContainerStyle={[
+            styles.list,
+            { paddingBottom: bottomPadding + 24 },
+          ]}
+          showsVerticalScrollIndicator={false}
+        >
+          <View
+            style={[
+              styles.childcareCard,
+              { backgroundColor: colors.card, borderColor: colors.border },
+            ]}
+          >
+            <View style={styles.childcareIcon}>
+              <Feather name="external-link" size={26} color="#fff" />
+            </View>
+            <Text style={[styles.childcareTitle, { color: colors.foreground }]}>
+              {language === "fr"
+                ? "Inscription via La Place 0-5"
+                : "Registration via La Place 0-5"}
+            </Text>
+            <Text
+              style={[styles.childcareSub, { color: colors.mutedForeground }]}
+            >
+              {language === "fr"
+                ? "Au Québec, l'inscription en garderie subventionnée et en CPE se fait désormais uniquement via le portail officiel du gouvernement du Québec : La Place 0-5."
+                : "In Quebec, registration for subsidized daycares and CPEs is now done exclusively through the official Quebec government portal: La Place 0-5."}
+            </Text>
+            <Text
+              style={[styles.childcareSub, { color: colors.mutedForeground, marginTop: 8 }]}
+            >
+              {language === "fr"
+                ? "Vous y trouverez toutes les places disponibles, pourrez vous inscrire et suivre votre demande en ligne."
+                : "You will find all available spots, register, and track your request online."}
+            </Text>
+
+            <Pressable
+              style={({ pressed }) => [
+                styles.childcareButton,
+                { backgroundColor: colors.primary, opacity: pressed ? 0.85 : 1 },
+              ]}
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                Linking.openURL(CHILDCARE_PORTAL_URL);
+              }}
+            >
+              <Feather name="external-link" size={16} color="#fff" />
+              <Text style={styles.childcareButtonText}>
+                {language === "fr"
+                  ? "Ouvrir La Place 0-5"
+                  : "Open La Place 0-5"}
+              </Text>
+            </Pressable>
+
+            <Text
+              style={[styles.childcareNote, { color: colors.mutedForeground }]}
+            >
+              {language === "fr"
+                ? "💡 Astuce : certaines garderies privées non subventionnées peuvent aussi être trouvées via les pages Facebook locales de votre quartier."
+                : "💡 Tip: some private non-subsidized daycares can also be found on local neighborhood Facebook pages."}
+            </Text>
+          </View>
+        </ScrollView>
+      ) : (
       <FlatList
         data={filtered}
         keyExtractor={(item) => item.id}
@@ -309,6 +380,7 @@ export default function ResultsScreen() {
           </View>
         }
       />
+      )}
     </View>
   );
 }
@@ -470,5 +542,64 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "Inter_400Regular",
     paddingHorizontal: 40,
+  },
+  childcareCard: {
+    borderWidth: 1,
+    borderRadius: 18,
+    padding: 22,
+    alignItems: "center",
+    gap: 6,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  childcareIcon: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: "#0e7e6e",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 8,
+  },
+  childcareTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+    textAlign: "center",
+    marginBottom: 4,
+  },
+  childcareSub: {
+    fontSize: 14,
+    fontFamily: "Inter_400Regular",
+    textAlign: "center",
+    lineHeight: 20,
+  },
+  childcareButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 14,
+    marginTop: 18,
+    marginBottom: 10,
+  },
+  childcareButtonText: {
+    color: "#fff",
+    fontSize: 15,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+  },
+  childcareNote: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    textAlign: "center",
+    fontStyle: "italic",
+    marginTop: 8,
+    paddingHorizontal: 4,
+    lineHeight: 17,
   },
 });
