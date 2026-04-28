@@ -18,8 +18,9 @@ import { ServiceCard } from "@/components/ServiceCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "@/contexts/LocationContext";
 import { useServicesData } from "@/contexts/ServicesContext";
+import { useUserProvince } from "@/contexts/UserProvinceContext";
 import { useColors } from "@/hooks/useColors";
-import { type Category, type Service } from "@/data/services";
+import { type Category, type ProvinceCode, type Service, PROVINCE_LABELS } from "@/data/services";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 import { isOpenNow } from "@/utils/openHours";
 import { haversineDistance } from "@/utils/location";
@@ -86,8 +87,14 @@ function scoreService(
   s: Service,
   d: Diagnosis,
   userLoc: { lat: number; lng: number } | null,
+  userProvince: ProvinceCode,
 ): number {
   let score = 0;
+
+  // Province filter — on garde uniquement les fiches de la province de l'utilisateur,
+  // ainsi que les ressources pancanadiennes (sans province ou marquées CA).
+  const sp = (s.province ?? "QC") as ProvinceCode;
+  if (sp !== userProvince) return -1000;
 
   // Need / category match
   const needDef = NEEDS.find((n) => n.key === d.need);
@@ -139,11 +146,6 @@ function scoreService(
   // Childcare excluded — redirected to portal
   if (s.category === "childcare") return -1000;
 
-  // AttenteZéro est un service québécois : on exclut toute fiche d'une autre province.
-  // (Si la province est absente, on suppose QC par défaut, pour ne pas exclure les
-  // anciennes fiches qui n'avaient pas ce champ.)
-  if (s.province && s.province !== "QC") return -1000;
-
   return score;
 }
 
@@ -156,6 +158,7 @@ export default function DiagnosticScreen() {
   const { language } = useLanguage();
   const { services } = useServicesData();
   const { userLocation, requestLocation } = useLocation();
+  const { province: userProvince, setProvince: setUserProvince } = useUserProvince();
   const isFr = language !== "en";
 
   const [step, setStep] = useState<0 | 1 | 2 | 3 | 4>(0);
@@ -174,12 +177,12 @@ export default function DiagnosticScreen() {
   const recommendations = useMemo(() => {
     if (step !== 4) return [];
     const scored = services
-      .map((s) => ({ s, score: scoreService(s, diag, userLocation) }))
+      .map((s) => ({ s, score: scoreService(s, diag, userLocation, userProvince) }))
       .filter((x) => x.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 12);
     return scored;
-  }, [step, services, diag, userLocation]);
+  }, [step, services, diag, userLocation, userProvince]);
 
   function next() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -404,7 +407,9 @@ export default function DiagnosticScreen() {
             </View>
             <View style={{ flex: 1 }}>
               <Text style={[styles.bigChoiceTitleAlt, { color: colors.foreground }]}>
-                {isFr ? "Tout le Québec" : "All of Quebec"}
+                {isFr
+                  ? `Tout — ${PROVINCE_LABELS[userProvince]}`
+                  : `All of ${PROVINCE_LABELS[userProvince]}`}
               </Text>
               <Text style={[styles.bigChoiceSub, { color: colors.mutedForeground }]}>
                 {isFr ? "Sans géolocalisation" : "Without geolocation"}
@@ -630,6 +635,67 @@ export default function DiagnosticScreen() {
         ]}
         showsVerticalScrollIndicator={false}
       >
+        <View
+          style={[
+            styles.provinceBar,
+            { backgroundColor: colors.card, borderColor: colors.border },
+          ]}
+        >
+          <Feather name="map-pin" size={14} color={colors.primary} />
+          <Text style={[styles.provinceBarLabel, { color: colors.mutedForeground }]}>
+            {isFr ? "Ma province :" : "My province:"}
+          </Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.provinceBarChips}
+          >
+            {(["QC","ON","BC","AB","MB","SK","NB","NS","PE","NL","YT","NT","NU"] as ProvinceCode[]).map((code) => {
+              const active = userProvince === code;
+              return (
+                <Pressable
+                  key={code}
+                  onPress={() => {
+                    Haptics.selectionAsync();
+                    setUserProvince(code);
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={
+                    isFr
+                      ? `Choisir ${PROVINCE_LABELS[code]}`
+                      : `Select ${PROVINCE_LABELS[code]}`
+                  }
+                  accessibilityState={{ selected: active }}
+                  hitSlop={{ top: 8, bottom: 8, left: 4, right: 4 }}
+                  style={({ pressed }) => [
+                    styles.provinceBarChip,
+                    {
+                      backgroundColor: active ? colors.primary : colors.background,
+                      borderColor: active ? colors.primary : colors.border,
+                      opacity: pressed ? 0.85 : 1,
+                    },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.provinceBarChipText,
+                      { color: active ? "#fff" : colors.foreground },
+                    ]}
+                  >
+                    {code}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
+        </View>
+        {step === 4 && (
+          <Text style={[styles.provinceBarHint, { color: colors.mutedForeground }]}>
+            {isFr
+              ? `Résultats filtrés pour ${PROVINCE_LABELS[userProvince]}.`
+              : `Results filtered for ${PROVINCE_LABELS[userProvince]}.`}
+          </Text>
+        )}
         {stepNode}
       </ScrollView>
 
@@ -726,7 +792,44 @@ const styles = StyleSheet.create({
   /* Step body */
   scroll: {
     paddingHorizontal: 18,
-    paddingTop: 22,
+    paddingTop: 14,
+  },
+  provinceBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginBottom: 12,
+  },
+  provinceBarLabel: {
+    fontSize: 11,
+    fontFamily: "Inter_600SemiBold",
+  },
+  provinceBarChips: {
+    gap: 6,
+    paddingRight: 6,
+  },
+  provinceBarChip: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8,
+    borderWidth: 1,
+    minWidth: 36,
+    alignItems: "center",
+  },
+  provinceBarChipText: {
+    fontSize: 11,
+    fontFamily: "Inter_700Bold",
+    letterSpacing: 0.5,
+  },
+  provinceBarHint: {
+    fontSize: 11,
+    fontFamily: "Inter_500Medium",
+    marginBottom: 8,
+    textAlign: "center",
   },
   stepWrap: { gap: 12 },
   stepKicker: {

@@ -24,6 +24,7 @@ import { AuthProvider, useAuth } from "@/lib/auth";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { LocationProvider } from "@/contexts/LocationContext";
 import { ServicesProvider } from "@/contexts/ServicesContext";
+import { UserProvinceProvider } from "@/contexts/UserProvinceContext";
 import { useInactivityTimer } from "@/hooks/useInactivityTimer";
 import { hasSeenOnboarding } from "@/lib/onboarding";
 
@@ -151,7 +152,9 @@ export default function RootLayout() {
                 <LanguageProvider>
                   <LocationProvider>
                     <ServicesProvider>
-                      <AppContent fontsReady={fontsReady} />
+                      <UserProvinceProvider>
+                        <AppContent fontsReady={fontsReady} />
+                      </UserProvinceProvider>
                     </ServicesProvider>
                   </LocationProvider>
                 </LanguageProvider>

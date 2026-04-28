@@ -1,6 +1,29 @@
 # Overview
 
-**Current version: v1.0.51 (versionCode 48) — 2026-04-28**
+**Current version: v1.0.52 (versionCode 49) — 2026-04-28**
+
+Diagnostic IA désormais **multi-province** :
+- Nouveau contexte `UserProvinceContext` (persistance AsyncStorage, défaut « QC ») branché à la racine de l'app.
+- `scoreService()` utilise maintenant `userProvince` au lieu d'exclure tout ce qui n'est pas QC. Un utilisateur ontarien obtient des recommandations ON, un BC obtient des recommandations BC, etc.
+- Sélecteur de province intégré en tête de l'écran diagnostic (chips horizontales QC/ON/BC/…/NU) avec bandeau « Résultats filtrés pour [Province] ».
+
+Ajout de **24 services francophones pour immigrants francophones** (2 par province hors QC × 12) :
+- ON : Centre francophone du Grand Toronto (CFGT), MOFIF
+- BC : La Boussole, Réseau-Femmes C.-B.
+- AB : Centre d'accueil et d'établissement (CAE) Nord-Alberta, ACFA
+- MB : Accueil francophone Manitoba, SFM
+- SK : RIFS, Assemblée communautaire fransaskoise (ACF)
+- NB : CAFI Sud-Est, SANB
+- NS : CDÉNÉ, FANE
+- PE : SSTA, RIF Î.-P.-É.
+- NL : FFTNL, RIF Atlantique antenne T.-N.-L.
+- YT : AFY, Partenariat communauté en santé Yukon
+- NT : Fédération franco-ténoise, RDÉE TNO
+- NU : Association des francophones du Nunavut (AFN), RIF Nunavut
+
+Toutes vérifiées (`badgeVerified: true`), avec téléphone, adresse, site et coordonnées géographiques. Total app : **827 services**.
+
+**v1.0.51 (versionCode 48) — 2026-04-28**
 
 Ajout de **5 organismes communautaires par province × 12 provinces hors QC = 60 fiches** couvrant 5 catégories distinctes par province : alimentation communautaire, refuge/jeunesse (famille), accueil immigrants, santé mentale (CMHA local), emploi/formation. Toutes vérifiées avec téléphone, adresse complète et site web. Exemples : Second Harvest (ON), MOSAIC (BC), Bissell Centre (AB), IRCOM (MB), EGADZ (SK), ISANS (NS), ANC (NL), Skookum Jim Friendship Centre (YT), Fédération franco-ténoise (NT), Embrace Life Council (NU). Total app : **803 services**.
 

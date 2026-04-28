@@ -443,3 +443,9 @@ id = "oSihcOwqM7Hd2aCb9dJDs"
 uri = "file://exports/attentezero-v1.0.51-comm-20260429-0030.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.51 — 60 organismes communautaires répartis"
+
+[[outputs]]
+id = "A0OkFwCiiONb0jyp2r0HA"
+uri = "file://exports/attentezero-v1.0.52-multiprov-20260429-0050.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.52 — Diagnostic multi-province + 24 services francophones"

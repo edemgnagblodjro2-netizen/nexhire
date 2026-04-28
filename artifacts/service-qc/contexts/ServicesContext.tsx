@@ -8,7 +8,7 @@ import React, {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SERVICES as STATIC_SERVICES, type Service } from "@/data/services";
 
-const CACHE_KEY = "attentezero_services_cache_v4";
+const CACHE_KEY = "attentezero_services_cache_v5";
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 type ServicesContextValue = {
