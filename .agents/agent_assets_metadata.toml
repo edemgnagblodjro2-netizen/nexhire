@@ -395,3 +395,9 @@ id = "jmN8mCSldSH6thslllGVO"
 uri = "file://exports/attentezero-v1.0.47-FULL-monorepo-20260428-2255.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.47 (vc44) — monorepo COMPLET (corrigé)"
+
+[[outputs]]
+id = "FgDdFYJAhQr1veZW2BKca"
+uri = "file://exports/attentezero-v1.0.47-COMPLETE-20260428-2305.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.47 (vc44) — monorepo COMPLET (387 fichiers)"
