@@ -419,3 +419,9 @@ id = "0RuseRwUJm5Hfum_s82qm"
 uri = "file://exports/attentezero-v1.0.50-provinces-20260428-2350.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.50 — 60 provinces + 5 urgents + 5 SOS"
+
+[[outputs]]
+id = "R3QN3lO0ijusqenNspPX5"
+uri = "file://exports/attentezero-v1.0.50-provinces-fix-20260428-2355.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.50 — corrigé (10 services pancanadiens dé-tagués QC)"
