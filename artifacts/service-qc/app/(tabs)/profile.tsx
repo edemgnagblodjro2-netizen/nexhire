@@ -5,6 +5,7 @@ import {
   Platform,
   Pressable,
   ScrollView,
+  Share,
   StyleSheet,
   Text,
   TextInput,
@@ -15,11 +16,27 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "@/components/SafeLinearGradient";
 import { useFocusEffect, useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
+import * as WebBrowser from "expo-web-browser";
 
 import { useAuth } from "@/lib/auth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useColors } from "@/hooks/useColors";
 import { authedFetch } from "@/lib/apiClient";
+import { getApiBaseUrl } from "@/lib/apiBase";
+
+const ADVANCED_FEATURES = [
+  { icon: "bar-chart-2" as const, color: "#0e7e6e", bg: "#f0fdf4", darkBg: "#052e1c", labelFr: "Suivi personnalisé", labelEn: "Personal tracking", descFr: "Suivez l'évolution de vos démarches en temps réel", descEn: "Track your applications in real time" },
+  { icon: "clock" as const, color: "#7c3aed", bg: "#f5f3ff", darkBg: "#2e1a5e", labelFr: "Historique complet", labelEn: "Full history", descFr: "Retrouvez vos recherches et services consultés", descEn: "Find your past searches and services" },
+  { icon: "bell" as const, color: "#d97706", bg: "#fffbeb", darkBg: "#3b2006", labelFr: "Alertes intelligentes", labelEn: "Smart alerts", descFr: "Notifié dès qu'un service proche est disponible", descEn: "Notified when a nearby service opens" },
+  { icon: "star" as const, color: "#e11d48", bg: "#fff1f2", darkBg: "#3b0a16", labelFr: "Priorisation", labelEn: "Prioritization", descFr: "Services les plus pertinents en premier", descEn: "Most relevant services first" },
+];
+
+const FUNDING_OPTIONS = [
+  { icon: "heart" as const, color: "#e11d48", bg: "#fff1f2", darkBg: "#3b0a16", titleFr: "Faire un don", titleEn: "Make a donation", descFr: "Soutenir AttenteZéro et financer de nouveaux services", descEn: "Support AttenteZéro and fund new services", badgeFr: "Bientôt", badgeEn: "Soon", badgeColor: "#e11d48", route: null as string | null },
+  { icon: "briefcase" as const, color: "#7c3aed", bg: "#f5f3ff", darkBg: "#2e1a5e", titleFr: "Partenariat organisation", titleEn: "Organization partnership", descFr: "Vous êtes un organisme communautaire ? Référencez vos services gratuitement", descEn: "Community organization? List your services for free", badgeFr: "Bientôt", badgeEn: "Soon", badgeColor: "#7c3aed", route: null },
+  { icon: "users" as const, color: "#0284c7", bg: "#f0f9ff", darkBg: "#0c2a3b", titleFr: "Programme ambassadeur", titleEn: "Ambassador program", descFr: "Parrainez des proches et gagnez des mois premium offerts", descEn: "Refer loved ones and earn free premium months", badgeFr: "Nouveau", badgeEn: "New", badgeColor: "#0284c7", route: "/ambassador" },
+  { icon: "tag" as const, color: "#059669", bg: "#f0fdf4", darkBg: "#052e1c", titleFr: "Publicité locale responsable", titleEn: "Local responsible advertising", descFr: "Pour organismes et institutions seulement — zéro pub intrusive", descEn: "For orgs and institutions only — zero intrusive ads", badgeFr: "Bientôt", badgeEn: "Soon", badgeColor: "#059669", route: null },
+];
 
 function InitialsAvatar({ firstName, lastName, size = 80 }: { firstName: string | null; lastName: string | null; size?: number }) {
   const colors = useColors();
@@ -60,10 +77,11 @@ function InfoRow({ icon, label, value }: { icon: keyof typeof Feather.glyphMap; 
 }
 
 export default function ProfileScreen() {
-  const { user, logout, updateProfile, isAuthenticated } = useAuth();
+  const { user, logout, updateProfile, isAuthenticated, getToken } = useAuth();
   const { language, toggleLanguage } = useLanguage();
   const colors = useColors();
   const router = useRouter();
+  const isDark = colors.background === "#09090b" || colors.background === "#0a0a0a";
 
   const [editingAddress, setEditingAddress] = useState(false);
   const [addressValue, setAddressValue] = useState(user?.address || "");
@@ -421,6 +439,197 @@ export default function ProfileScreen() {
           </Pressable>
         </View>
 
+        {/* ── Mon abonnement (Stripe billing portal) ── */}
+        {user?.email && (
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <Text style={[styles.cardTitle, { color: colors.foreground }]}>
+              {isFr ? "Mon abonnement" : "My subscription"}
+            </Text>
+            <Pressable
+              onPress={async () => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                try {
+                  const tk = await getToken().catch(() => null);
+                  const res = await fetch(`${getApiBaseUrl()}/api/stripe/user-portal`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      ...(tk ? { Authorization: `Bearer ${tk}` } : {}),
+                    },
+                    body: JSON.stringify({}),
+                  });
+                  const data = await res.json();
+                  if (!res.ok || !data.url) {
+                    Alert.alert(
+                      isFr ? "Aucun abonnement" : "No subscription",
+                      data.error ?? (isFr
+                        ? "Aucun abonnement Stripe trouvé pour votre compte."
+                        : "No Stripe subscription found for your account."),
+                    );
+                    return;
+                  }
+                  await WebBrowser.openBrowserAsync(data.url);
+                } catch (err) {
+                  Alert.alert(
+                    isFr ? "Erreur" : "Error",
+                    err instanceof Error ? err.message : "Network error",
+                  );
+                }
+              }}
+              style={({ pressed }) => [
+                styles.accountRow,
+                { borderBottomColor: "transparent", opacity: pressed ? 0.7 : 1 },
+              ]}
+            >
+              <View style={[styles.infoIcon, { backgroundColor: isDark ? "#1e1b4b" : "#eef2ff" }]}>
+                <Feather name="credit-card" size={15} color="#6366f1" />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.actionText, { color: colors.foreground }]} numberOfLines={1}>
+                  {isFr ? "Gérer mon abonnement" : "Manage my subscription"}
+                </Text>
+                <Text style={{ fontSize: 12, color: colors.mutedForeground, marginTop: 2 }} numberOfLines={2}>
+                  {isFr
+                    ? "Paiement, changer de forfait, annuler"
+                    : "Payment, change plan, cancel"}
+                </Text>
+              </View>
+              <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+            </Pressable>
+          </View>
+        )}
+
+        {/* ── Fonctionnalités avancées (Premium features) ── */}
+        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+            <Text style={[styles.cardTitle, { color: colors.foreground, marginBottom: 0 }]}>
+              {isFr ? "Fonctionnalités avancées" : "Advanced features"}
+            </Text>
+            <View style={{
+              flexDirection: "row", alignItems: "center", gap: 4,
+              backgroundColor: "#7c3aed18", paddingHorizontal: 8, paddingVertical: 3,
+              borderRadius: 10, borderWidth: 1, borderColor: "#7c3aed30",
+            }}>
+              <Feather name="star" size={10} color="#7c3aed" />
+              <Text style={{ fontSize: 10, color: "#7c3aed", fontWeight: "700" }}>PREMIUM</Text>
+            </View>
+          </View>
+          {ADVANCED_FEATURES.map((f, idx) => (
+            <Pressable
+              key={f.labelFr}
+              onPress={() => { Haptics.selectionAsync(); router.push("/premium" as any); }}
+              style={({ pressed }) => [
+                styles.advancedRow,
+                {
+                  borderBottomColor: idx === ADVANCED_FEATURES.length - 1 ? "transparent" : colors.border,
+                  opacity: pressed ? 0.7 : 1,
+                },
+              ]}
+            >
+              <View style={[styles.infoIcon, { backgroundColor: isDark ? f.darkBg : f.bg }]}>
+                <Feather name={f.icon} size={15} color={f.color} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.actionText, { color: colors.foreground }]} numberOfLines={1}>
+                  {isFr ? f.labelFr : f.labelEn}
+                </Text>
+                <Text style={{ fontSize: 12, color: colors.mutedForeground, marginTop: 2 }} numberOfLines={2}>
+                  {isFr ? f.descFr : f.descEn}
+                </Text>
+              </View>
+              <Feather name="lock" size={14} color="#7c3aed" />
+            </Pressable>
+          ))}
+        </View>
+
+        {/* ── Soutenir AttenteZéro ── */}
+        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <Text style={[styles.cardTitle, { color: colors.foreground }]}>
+            {isFr ? "Soutenir AttenteZéro" : "Support AttenteZéro"}
+          </Text>
+
+          <Pressable
+            onPress={async () => {
+              Haptics.selectionAsync();
+              try {
+                const playStoreUrl = "https://play.google.com/store/apps/details?id=com.attentezero.app";
+                const message = isFr
+                  ? `Découvrez AttenteZéro — l'application gratuite pour trouver les services communautaires du Québec en quelques secondes.\n\n📱 Téléchargez : ${playStoreUrl}`
+                  : `Discover AttenteZéro — the free app to find Quebec community services in seconds.\n\n📱 Download: ${playStoreUrl}`;
+                await Share.share({ message, title: "AttenteZéro" });
+              } catch { /* cancelled */ }
+            }}
+            style={({ pressed }) => [
+              styles.advancedRow,
+              { borderBottomColor: colors.border, opacity: pressed ? 0.7 : 1 },
+            ]}
+          >
+            <View style={[styles.infoIcon, { backgroundColor: isDark ? "#0a3d36" : "#d1fae5" }]}>
+              <Feather name="share-2" size={15} color="#0e7e6e" />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.actionText, { color: colors.foreground }]} numberOfLines={1}>
+                {isFr ? "Partager l'application" : "Share the app"}
+              </Text>
+              <Text style={{ fontSize: 12, color: colors.mutedForeground, marginTop: 2 }} numberOfLines={2}>
+                {isFr
+                  ? "Aidez vos proches à trouver les bons services"
+                  : "Help your loved ones find the right services"}
+              </Text>
+            </View>
+            <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+          </Pressable>
+
+          {FUNDING_OPTIONS.map((opt, idx) => (
+            <Pressable
+              key={opt.titleFr}
+              onPress={() => {
+                Haptics.selectionAsync();
+                if (opt.route) {
+                  router.push(opt.route as any);
+                  return;
+                }
+                Alert.alert(
+                  isFr ? opt.titleFr : opt.titleEn,
+                  isFr
+                    ? "Cette fonctionnalité arrive bientôt. En attendant, vous pouvez nous écrire via « Signaler un bogue » au bas du menu Plus."
+                    : "This feature is coming soon. In the meantime, you can reach us via \"Report a bug\" at the bottom of the More menu.",
+                );
+              }}
+              style={({ pressed }) => [
+                styles.advancedRow,
+                {
+                  borderBottomColor: idx === FUNDING_OPTIONS.length - 1 ? "transparent" : colors.border,
+                  opacity: pressed ? 0.7 : 1,
+                },
+              ]}
+            >
+              <View style={[styles.infoIcon, { backgroundColor: isDark ? opt.darkBg : opt.bg }]}>
+                <Feather name={opt.icon} size={15} color={opt.color} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <View style={{ flexDirection: "row", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                  <Text style={[styles.actionText, { color: colors.foreground }]} numberOfLines={1}>
+                    {isFr ? opt.titleFr : opt.titleEn}
+                  </Text>
+                  <View style={{
+                    paddingHorizontal: 6, paddingVertical: 1, borderRadius: 6,
+                    backgroundColor: opt.badgeColor + "18", borderWidth: 1, borderColor: opt.badgeColor + "30",
+                  }}>
+                    <Text style={{ fontSize: 9, color: opt.badgeColor, fontWeight: "700" }}>
+                      {isFr ? opt.badgeFr : opt.badgeEn}
+                    </Text>
+                  </View>
+                </View>
+                <Text style={{ fontSize: 12, color: colors.mutedForeground, marginTop: 2 }} numberOfLines={2}>
+                  {isFr ? opt.descFr : opt.descEn}
+                </Text>
+              </View>
+              <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+            </Pressable>
+          ))}
+        </View>
+
         <Pressable
           onPress={handleLogout}
           style={({ pressed }) => [
@@ -630,6 +839,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 14,
+    borderBottomWidth: 1,
+    gap: 12,
+  },
+  accountRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 12,
+    gap: 12,
+  },
+  advancedRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 12,
     borderBottomWidth: 1,
     gap: 12,
   },

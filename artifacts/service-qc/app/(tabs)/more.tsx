@@ -158,6 +158,67 @@ export default function MoreScreen() {
           {/* Mode Terrain (clients/agenda/équipe/fil d'activité) retiré v1.0.33 —
               AttenteZéro ne stocke plus de données sensibles de bénéficiaires. */}
 
+          {/* ── MON COMPTE — Grosse carte en haut à gauche (au-dessus de Premium) ── */}
+          <Pressable
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              router.push("/(tabs)/profile" as any);
+            }}
+            style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }]}
+          >
+            <LinearGradient
+              colors={isDark ? ["#0a5e52", "#0e7e6e"] : ["#0e7e6e", "#0a5e52"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.accountCard}
+            >
+              <View style={styles.accountAvatarWrap}>
+                {user ? (
+                  <View style={styles.accountAvatar}>
+                    <Text style={styles.accountAvatarText}>
+                      {[user.firstName, user.lastName]
+                        .filter(Boolean)
+                        .map((n) => n![0].toUpperCase())
+                        .join("") || "?"}
+                    </Text>
+                  </View>
+                ) : (
+                  <View style={styles.accountAvatar}>
+                    <Feather name="user" size={26} color="#0e7e6e" />
+                  </View>
+                )}
+              </View>
+              <View style={styles.accountInfo}>
+                <Text style={styles.accountLabel}>{isFr ? "MON COMPTE" : "MY ACCOUNT"}</Text>
+                <Text style={styles.accountName} numberOfLines={1}>
+                  {user
+                    ? `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim() || (isFr ? "Mon profil" : "My profile")
+                    : isFr ? "Connexion · profil · paramètres" : "Login · profile · settings"}
+                </Text>
+                <Text style={styles.accountSub} numberOfLines={1}>
+                  {user
+                    ? user.email ?? ""
+                    : isFr ? "Toucher pour vous connecter" : "Tap to sign in"}
+                </Text>
+                <View style={styles.accountChips}>
+                  <View style={styles.accountChip}>
+                    <Feather name="credit-card" size={9} color="#fff" />
+                    <Text style={styles.accountChipText}>{isFr ? "Abonnement" : "Subscription"}</Text>
+                  </View>
+                  <View style={styles.accountChip}>
+                    <Feather name="star" size={9} color="#fff" />
+                    <Text style={styles.accountChipText}>{isFr ? "Avancé" : "Advanced"}</Text>
+                  </View>
+                  <View style={styles.accountChip}>
+                    <Feather name="heart" size={9} color="#fff" />
+                    <Text style={styles.accountChipText}>{isFr ? "Soutenir" : "Support"}</Text>
+                  </View>
+                </View>
+              </View>
+              <Feather name="chevron-right" size={22} color="rgba(255,255,255,0.85)" />
+            </LinearGradient>
+          </Pressable>
+
           {/* ── Persistent reminder banner (shown after 3 uses today) ── */}
           {isGated && (
             <Pressable
@@ -336,132 +397,8 @@ export default function MoreScreen() {
             )}
           </View>
 
-          {PREMIUM_FEATURES.map((f) => (
-            <Pressable
-              key={f.label}
-              onPress={handleFeaturePress}
-              style={({ pressed }) => [
-                styles.featureCard,
-                {
-                  backgroundColor: colors.card,
-                  borderColor: colors.border,
-                  opacity: pressed ? 0.85 : 1,
-                },
-              ]}
-            >
-              <View style={[styles.featureIconWrap, { backgroundColor: isDark ? f.darkBg : f.bg }]}>
-                <Feather name={f.icon} size={20} color={f.color} />
-              </View>
-              <View style={styles.featureText}>
-                <Text style={[styles.featureTitle, { color: colors.foreground }]}>{f.label}</Text>
-                <Text style={[styles.featureDesc, { color: colors.mutedForeground }]}>{f.desc}</Text>
-              </View>
-              <View style={[styles.lockBadge, { backgroundColor: "#7c3aed" + "18" }]}>
-                <Feather
-                  name="clock"
-                  size={13}
-                  color="#7c3aed"
-                />
-              </View>
-            </Pressable>
-          ))}
-
-          {/* ── Section title: Soutenir AttenteZéro ── */}
-          <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
-            {isFr ? "Soutenir AttenteZéro" : "Support AttenteZéro"}
-          </Text>
-
-          {/* ── Share app card ── */}
-          <Pressable
-            style={({ pressed }) => [
-              styles.optionCard,
-              {
-                backgroundColor: colors.card,
-                borderColor: colors.border,
-                opacity: pressed ? 0.85 : 1,
-              },
-            ]}
-            onPress={async () => {
-              Haptics.selectionAsync();
-              try {
-                const playStoreUrl = "https://play.google.com/store/apps/details?id=com.attentezero.app";
-                const message = isFr
-                  ? `Découvrez AttenteZéro — l'application gratuite pour trouver les services communautaires du Québec en quelques secondes.\n\n📱 Téléchargez : ${playStoreUrl}`
-                  : `Discover AttenteZéro — the free app to find Quebec community services in seconds.\n\n📱 Download: ${playStoreUrl}`;
-                await Share.share({
-                  message,
-                  title: "AttenteZéro",
-                });
-              } catch (e) {
-                /* user cancelled */
-              }
-            }}
-          >
-            <View style={[styles.optionIconWrap, { backgroundColor: isDark ? "#0a3d36" : "#d1fae5" }]}>
-              <Feather name="share-2" size={20} color="#0e7e6e" />
-            </View>
-            <View style={styles.optionText}>
-              <View style={styles.optionTitleRow}>
-                <Text style={[styles.optionTitle, { color: colors.foreground }]}>
-                  {isFr ? "Partager l'application" : "Share the app"}
-                </Text>
-              </View>
-              <Text style={[styles.optionDesc, { color: colors.mutedForeground }]}>
-                {isFr
-                  ? "Aidez vos proches à trouver les bons services rapidement"
-                  : "Help your loved ones find the right services quickly"}
-              </Text>
-            </View>
-            <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
-          </Pressable>
-
-          {/* ── Section title: Autres options ── */}
-          <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
-            {isFr ? "Autres options de financement" : "Other funding options"}
-          </Text>
-
-          {/* ── Option cards ── */}
-          {OTHER_OPTIONS.map((opt) => (
-            <Pressable
-              key={opt.title}
-              style={({ pressed }) => [
-                styles.optionCard,
-                {
-                  backgroundColor: colors.card,
-                  borderColor: colors.border,
-                  opacity: pressed ? 0.85 : 1,
-                },
-              ]}
-              onPress={() => {
-                Haptics.selectionAsync();
-                // Programme ambassadeur is now active — open dedicated screen.
-                if (opt.title === "Programme ambassadeur") {
-                  router.push("/ambassador" as any);
-                  return;
-                }
-                Alert.alert(
-                  opt.title,
-                  isFr
-                    ? `Cette fonctionnalité arrive bientôt. En attendant, vous pouvez nous écrire via « Signaler un bogue » au bas du menu.`
-                    : `This feature is coming soon. In the meantime, you can reach us via "Report a bug" at the bottom of the menu.`,
-                );
-              }}
-            >
-              <View style={[styles.optionIconWrap, { backgroundColor: isDark ? opt.darkBg : opt.bg }]}>
-                <Feather name={opt.icon} size={20} color={opt.color} />
-              </View>
-              <View style={styles.optionText}>
-                <View style={styles.optionTitleRow}>
-                  <Text style={[styles.optionTitle, { color: colors.foreground }]}>{opt.title}</Text>
-                  <View style={[styles.optionBadge, { backgroundColor: opt.badgeColor + "18", borderColor: opt.badgeColor + "30" }]}>
-                    <Text style={[styles.optionBadgeText, { color: opt.badgeColor }]}>{opt.badge}</Text>
-                  </View>
-                </View>
-                <Text style={[styles.optionDesc, { color: colors.mutedForeground }]}>{opt.desc}</Text>
-              </View>
-              <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
-            </Pressable>
-          ))}
+          {/* PREMIUM_FEATURES list, "Soutenir AttenteZéro" et "Autres options de financement"
+              ont été déplacés dans Mon compte (profile.tsx) en v1.0.46. */}
 
           {/* ── Section title: Transparence & ressources ── */}
           <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
@@ -504,102 +441,9 @@ export default function MoreScreen() {
             </Pressable>
           ))}
 
-          {/* ── Section title: Mon compte ── */}
-          <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
-            {isFr ? "Mon compte" : "My account"}
-          </Text>
-
-          {/* ── Mon abonnement card (Stripe billing portal) ── */}
-          {user?.email && (
-            <Pressable
-              onPress={async () => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                try {
-                  const tk = await getToken().catch(() => null);
-                  const res = await fetch(`${getApiBaseUrl()}/api/stripe/user-portal`, {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                      ...(tk ? { Authorization: `Bearer ${tk}` } : {}),
-                    },
-                    body: JSON.stringify({}),
-                  });
-                  const data = await res.json();
-                  if (!res.ok || !data.url) {
-                    Alert.alert(
-                      isFr ? "Aucun abonnement" : "No subscription",
-                      data.error ?? (isFr
-                        ? "Aucun abonnement Stripe trouvé pour votre compte."
-                        : "No Stripe subscription found for your account."),
-                    );
-                    return;
-                  }
-                  await WebBrowser.openBrowserAsync(data.url);
-                } catch (err) {
-                  Alert.alert(
-                    isFr ? "Erreur" : "Error",
-                    err instanceof Error ? err.message : "Network error",
-                  );
-                }
-              }}
-              style={({ pressed }) => [
-                styles.optionCard,
-                {
-                  backgroundColor: colors.card,
-                  borderColor: colors.border,
-                  opacity: pressed ? 0.85 : 1,
-                },
-              ]}
-            >
-              <View style={[styles.optionIconWrap, { backgroundColor: isDark ? "#1e1b4b" : "#eef2ff" }]}>
-                <Feather name="credit-card" size={20} color="#6366f1" />
-              </View>
-              <View style={styles.optionText}>
-                <Text style={[styles.optionTitle, { color: colors.foreground }]} numberOfLines={1}>
-                  {isFr ? "Mon abonnement" : "My subscription"}
-                </Text>
-                <Text style={[styles.optionDesc, { color: colors.mutedForeground }]} numberOfLines={2}>
-                  {isFr
-                    ? "Gérer le paiement, changer de forfait, annuler"
-                    : "Manage payment, change plan, cancel"}
-                </Text>
-              </View>
-              <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
-            </Pressable>
-          )}
-
-          {/* ── Profil card ── */}
-          <Pressable
-            onPress={() => {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              router.push("/(tabs)/profile" as any);
-            }}
-            style={({ pressed }) => [
-              styles.optionCard,
-              {
-                backgroundColor: colors.card,
-                borderColor: colors.border,
-                opacity: pressed ? 0.85 : 1,
-              },
-            ]}
-          >
-            <View style={[styles.optionIconWrap, { backgroundColor: isDark ? "#052e1c" : "#f0fdf4" }]}>
-              <Feather name="user" size={20} color="#0e7e6e" />
-            </View>
-            <View style={styles.optionText}>
-              <Text style={[styles.optionTitle, { color: colors.foreground }]} numberOfLines={1}>
-                {user
-                  ? `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim() || (isFr ? "Mon profil" : "My profile")
-                  : isFr ? "Profil" : "Profile"}
-              </Text>
-              <Text style={[styles.optionDesc, { color: colors.mutedForeground }]} numberOfLines={1}>
-                {user
-                  ? user.email ?? (isFr ? "Voir mon profil" : "View profile")
-                  : isFr ? "Connexion · paramètres · déconnexion" : "Login · settings · sign out"}
-              </Text>
-            </View>
-            <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
-          </Pressable>
+          {/* La section Mon compte (Mon abonnement + Profil) a été déplacée
+              tout en haut de cette page (grosse carte verte) et dans la page
+              Mon compte elle-même en v1.0.46. */}
 
           {/* ── Section title: Aide ── */}
           <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 4 }]}>
@@ -748,6 +592,81 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 20,
     gap: 14,
+  },
+
+  /* Mon compte top card */
+  accountCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+    borderRadius: 18,
+    padding: 16,
+    overflow: "hidden",
+    shadowColor: "#0a5e52",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.18,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  accountAvatarWrap: {
+    padding: 3,
+    borderRadius: 30,
+    backgroundColor: "rgba(255,255,255,0.25)",
+  },
+  accountAvatar: {
+    width: 54,
+    height: 54,
+    borderRadius: 27,
+    backgroundColor: "#ffffff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  accountAvatarText: {
+    fontSize: 19,
+    fontFamily: "Inter_700Bold",
+    fontWeight: "700",
+    color: "#0e7e6e",
+  },
+  accountInfo: { flex: 1, gap: 2 },
+  accountLabel: {
+    fontSize: 10,
+    fontFamily: "Inter_700Bold",
+    color: "rgba(255,255,255,0.85)",
+    letterSpacing: 1,
+    marginBottom: 1,
+  },
+  accountName: {
+    fontSize: 16,
+    fontFamily: "Inter_700Bold",
+    color: "#ffffff",
+  },
+  accountSub: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.78)",
+  },
+  accountChips: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 5,
+    marginTop: 6,
+  },
+  accountChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+    backgroundColor: "rgba(255,255,255,0.18)",
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.18)",
+  },
+  accountChipText: {
+    fontSize: 9,
+    fontFamily: "Inter_600SemiBold",
+    color: "#ffffff",
+    letterSpacing: 0.3,
   },
 
   /* Premium card */
