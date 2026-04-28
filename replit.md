@@ -1,6 +1,10 @@
 # Overview
 
-**Current version: v1.0.49 (versionCode 46) — 2026-04-28**
+**Current version: v1.0.50 (versionCode 47) — 2026-04-28**
+
+Ajout massif de ressources hors Québec : **5 services vérifiés par province** (12 provinces × 5 = 60 fiches) couvrant ligne santé 811, ligne d'écoute/crise, violence familiale, aide juridique et banque alimentaire — toutes avec téléphone, adresse et site web. Plus **5 services urgents pancanadiens** (911, 988 Aide suicide, Jeunesse J'écoute, Espoir Autochtones, Trans Lifeline) et **5 lignes SOS pancanadiennes** (Refuges femmes Canada, Protection enfance, Espace mieux-être, Enfants disparus, Aînés). Toutes vérifiées (`badgeVerified: true`).
+
+**v1.0.49 (versionCode 46) — 2026-04-28**
 
 Ajout de 10 ressources de référence (gouvernementales et communautaires) couvrant les catégories demandées : logement (SHQ), nourriture (Banques alimentaires du Québec), santé mentale (Mouvement Santé Mentale Québec), immigration (MIFI), emploi (Services Québec), famille (LigneParents 24/7), aide juridique (Commission des services juridiques + Juripop), services francophones hors Québec (FCCF), et exemple Ontario en français (Tribunaux administratifs Ontario). Toutes vérifiées (`badgeVerified: true`) et marquées `isProvinceWide: true`.
 

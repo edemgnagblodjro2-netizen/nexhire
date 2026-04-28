@@ -413,3 +413,9 @@ id = "6iotzvYDhEPpVhFRgBCid"
 uri = "file://exports/attentezero-v1.0.49-resources-20260428-2335.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.49 — +10 ressources"
+
+[[outputs]]
+id = "0RuseRwUJm5Hfum_s82qm"
+uri = "file://exports/attentezero-v1.0.50-provinces-20260428-2350.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.50 — 60 provinces + 5 urgents + 5 SOS"
