@@ -94,4 +94,4 @@ packages = ["zip"]
 EXPO_PUBLIC_API_URL = "https://quebec-aid-finder.replit.app"
 ADMIN_API_KEY = "attentezero-admin-2026"
 NOTIFY_FROM_EMAIL = "AttenteZéro <notify@attentezero.ca>"
-NOTIFY_EMAIL = "admin@attentezero.ca"
+NOTIFY_EMAIL = "attentezero5@gmail.com"
