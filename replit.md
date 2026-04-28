@@ -1,6 +1,10 @@
 # Overview
 
-**Current version: v1.0.50 (versionCode 47) — 2026-04-28**
+**Current version: v1.0.51 (versionCode 48) — 2026-04-28**
+
+Ajout de **5 organismes communautaires par province × 12 provinces hors QC = 60 fiches** couvrant 5 catégories distinctes par province : alimentation communautaire, refuge/jeunesse (famille), accueil immigrants, santé mentale (CMHA local), emploi/formation. Toutes vérifiées avec téléphone, adresse complète et site web. Exemples : Second Harvest (ON), MOSAIC (BC), Bissell Centre (AB), IRCOM (MB), EGADZ (SK), ISANS (NS), ANC (NL), Skookum Jim Friendship Centre (YT), Fédération franco-ténoise (NT), Embrace Life Council (NU). Total app : **803 services**.
+
+**v1.0.50 (versionCode 47) — 2026-04-28**
 
 Ajout massif de ressources **hors Québec uniquement** : **5 services vérifiés par province × 12 provinces** = 60 fiches (ligne santé 811, ligne d'écoute/crise, violence familiale, aide juridique, banque alimentaire) + **5 services urgents × 12 provinces** = 60 fiches (911, 9-8-8 suicide, Jeunesse J'écoute, Espoir Autochtones, Trans Lifeline) + **5 lignes SOS × 12 provinces** = 60 fiches (Refuges femmes, Protection enfance, Espace mieux-être, Enfants disparus, Aînés). Total : **180 nouvelles fiches** taguées ON, BC, AB, MB, SK, NB, NS, PE, NL, YT, NT, NU. Aucune ajoutée à Québec (les utilisateurs québécois ont déjà leurs équivalents francophones spécialisés). Toutes vérifiées (`badgeVerified: true`, `isProvinceWide: true`).
 
