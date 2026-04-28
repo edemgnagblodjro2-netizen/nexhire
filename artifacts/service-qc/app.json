@@ -2,7 +2,7 @@
   "expo": {
     "name": "AttenteZ\u00e9ro",
     "slug": "attentezero",
-    "version": "1.0.46",
+    "version": "1.0.47",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "service-qc",
@@ -24,7 +24,7 @@
     },
     "android": {
       "package": "com.attentezero.app",
-      "versionCode": 43,
+      "versionCode": 44,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon_transparent.png",
         "backgroundColor": "#ffffff"
@@ -56,6 +56,12 @@
         {
           "locationAlwaysAndWhenInUsePermission": "AttenteZ\u00e9ro utilise votre position pour afficher les services communautaires les plus proches de vous.",
           "locationWhenInUsePermission": "AttenteZ\u00e9ro utilise votre position pour afficher les services communautaires les plus proches de vous."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#0e7e6e"
         }
       ]
     ],

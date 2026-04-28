@@ -23,6 +23,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useColors } from "@/hooks/useColors";
 import { authedFetch } from "@/lib/apiClient";
 import { getApiBaseUrl } from "@/lib/apiBase";
+import { getHistory, clearHistory, type HistoryEntry } from "@/lib/history";
+import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
+import { type Category } from "@/data/services";
 
 const ADVANCED_FEATURES = [
   { icon: "bar-chart-2" as const, color: "#0e7e6e", bg: "#f0fdf4", darkBg: "#052e1c", labelFr: "Suivi personnalisé", labelEn: "Personal tracking", descFr: "Suivez l'évolution de vos démarches en temps réel", descEn: "Track your applications in real time" },
@@ -57,6 +60,98 @@ function InitialsAvatar({ firstName, lastName, size = 80 }: { firstName: string 
       ]}
     >
       <Text style={[styles.avatarText, { fontSize: size * 0.38 }]}>{initials}</Text>
+    </View>
+  );
+}
+
+function HistoryCard({ isFr }: { isFr: boolean }) {
+  const colors = useColors();
+  const router = useRouter();
+  const [items, setItems] = useState<HistoryEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const reload = React.useCallback(() => {
+    setLoading(true);
+    getHistory().then((arr) => {
+      setItems(arr.slice(0, 5));
+      setLoading(false);
+    });
+  }, []);
+
+  useFocusEffect(React.useCallback(() => { reload(); }, [reload]));
+
+  if (loading || items.length === 0) return null;
+
+  function fmtTime(ts: number): string {
+    const diff = Date.now() - ts;
+    const min = Math.floor(diff / 60000);
+    if (min < 1) return isFr ? "à l'instant" : "just now";
+    if (min < 60) return isFr ? `il y a ${min} min` : `${min} min ago`;
+    const h = Math.floor(min / 60);
+    if (h < 24) return isFr ? `il y a ${h} h` : `${h} h ago`;
+    const d = Math.floor(h / 24);
+    return isFr ? `il y a ${d} j` : `${d} d ago`;
+  }
+
+  return (
+    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+        <Text style={[styles.cardTitle, { color: colors.foreground, marginBottom: 0 }]}>
+          {isFr ? "Historique récent" : "Recent history"}
+        </Text>
+        <Pressable
+          onPress={() => {
+            Alert.alert(
+              isFr ? "Effacer l'historique ?" : "Clear history?",
+              isFr ? "Cette action est définitive." : "This cannot be undone.",
+              [
+                { text: isFr ? "Annuler" : "Cancel", style: "cancel" },
+                {
+                  text: isFr ? "Effacer" : "Clear",
+                  style: "destructive",
+                  onPress: async () => { await clearHistory(); reload(); },
+                },
+              ],
+            );
+          }}
+          hitSlop={10}
+        >
+          <Text style={{ fontSize: 12, color: colors.mutedForeground, fontWeight: "600" }}>
+            {isFr ? "Effacer" : "Clear"}
+          </Text>
+        </Pressable>
+      </View>
+      {items.map((it, idx) => {
+        const cat = it.category as Category;
+        const catColor = getCategoryColor(cat, colors);
+        const icon = CATEGORY_ICONS[cat] ?? "tag";
+        return (
+          <Pressable
+            key={it.serviceId}
+            onPress={() => { Haptics.selectionAsync(); router.push(`/service/${it.serviceId}` as any); }}
+            style={({ pressed }) => [
+              styles.advancedRow,
+              {
+                borderBottomColor: idx === items.length - 1 ? "transparent" : colors.border,
+                opacity: pressed ? 0.7 : 1,
+              },
+            ]}
+          >
+            <View style={[styles.infoIcon, { backgroundColor: catColor + "20" }]}>
+              <Feather name={icon as any} size={15} color={catColor} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.actionText, { color: colors.foreground }]} numberOfLines={1}>
+                {it.serviceName}
+              </Text>
+              <Text style={{ fontSize: 11, color: colors.mutedForeground, marginTop: 2 }} numberOfLines={1}>
+                {it.city ? `${it.city} · ` : ""}{fmtTime(it.viewedAt)}
+              </Text>
+            </View>
+            <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+          </Pressable>
+        );
+      })}
     </View>
   );
 }
@@ -499,7 +594,10 @@ export default function ProfileScreen() {
           </View>
         )}
 
-        {/* ── Fonctionnalités avancées (Premium features) ── */}
+        {/* ── Historique (services consultés) ── */}
+        <HistoryCard isFr={isFr} />
+
+        {/* ── Fonctionnalités avancées (En développement) ── */}
         <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
             <Text style={[styles.cardTitle, { color: colors.foreground, marginBottom: 0 }]}>
@@ -507,17 +605,30 @@ export default function ProfileScreen() {
             </Text>
             <View style={{
               flexDirection: "row", alignItems: "center", gap: 4,
-              backgroundColor: "#7c3aed18", paddingHorizontal: 8, paddingVertical: 3,
-              borderRadius: 10, borderWidth: 1, borderColor: "#7c3aed30",
+              backgroundColor: "#d9770618", paddingHorizontal: 8, paddingVertical: 3,
+              borderRadius: 10, borderWidth: 1, borderColor: "#d9770640",
             }}>
-              <Feather name="star" size={10} color="#7c3aed" />
-              <Text style={{ fontSize: 10, color: "#7c3aed", fontWeight: "700" }}>PREMIUM</Text>
+              <Feather name="clock" size={10} color="#d97706" />
+              <Text style={{ fontSize: 10, color: "#d97706", fontWeight: "700" }}>{isFr ? "BIENTÔT" : "SOON"}</Text>
             </View>
           </View>
+          <Text style={{ fontSize: 12, color: colors.mutedForeground, marginBottom: 10, lineHeight: 17 }}>
+            {isFr
+              ? "Ces fonctionnalités sont en développement. Elles seront offertes gratuitement aux abonnés Premium quand elles seront prêtes."
+              : "These features are in development. They will be offered free to Premium subscribers once ready."}
+          </Text>
           {ADVANCED_FEATURES.map((f, idx) => (
             <Pressable
               key={f.labelFr}
-              onPress={() => { Haptics.selectionAsync(); router.push("/premium" as any); }}
+              onPress={() => {
+                Haptics.selectionAsync();
+                Alert.alert(
+                  isFr ? f.labelFr : f.labelEn,
+                  isFr
+                    ? "Cette fonctionnalité arrive bientôt. Elle ne fait pas encore partie de votre abonnement Premium actuel."
+                    : "This feature is coming soon. It is not yet part of your current Premium subscription.",
+                );
+              }}
               style={({ pressed }) => [
                 styles.advancedRow,
                 {
@@ -537,7 +648,14 @@ export default function ProfileScreen() {
                   {isFr ? f.descFr : f.descEn}
                 </Text>
               </View>
-              <Feather name="lock" size={14} color="#7c3aed" />
+              <View style={{
+                paddingHorizontal: 7, paddingVertical: 2,
+                borderRadius: 6, backgroundColor: "#d9770618",
+              }}>
+                <Text style={{ fontSize: 9, color: "#d97706", fontWeight: "700" }}>
+                  {isFr ? "BIENTÔT" : "SOON"}
+                </Text>
+              </View>
             </Pressable>
           ))}
         </View>

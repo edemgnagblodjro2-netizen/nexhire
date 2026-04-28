@@ -377,3 +377,9 @@ id = "q4jPvtr0Y-7ioeD2TiUq8"
 uri = "file://exports/attentezero-v1.0.46-mon-compte-top-20260428-1828.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.46 — Mon compte centralisé + grosse carte en haut"
+
+[[outputs]]
+id = "3qSoHyypRJ2BDJV9MGs4h"
+uri = "file://exports/attentezero-v1.0.47-audit-polish-20260428-2230.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.47 (vc44) — audit-polish FINAL"

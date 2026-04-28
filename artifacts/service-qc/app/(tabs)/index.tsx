@@ -162,14 +162,24 @@ export default function HomeScreen() {
               <Text style={styles.heroTagline} numberOfLines={1}>{t.tagline}</Text>
             </View>
           </View>
-          <TouchableOpacity
-            style={styles.langBtn}
-            onPress={() => { Haptics.selectionAsync(); toggleLanguage(); }}
-            activeOpacity={0.75}
-          >
-            <Text style={styles.langFlag}>{language === "fr" ? "🇬🇧" : "🇫🇷"}</Text>
-            <Text style={styles.langLabel}>{language === "fr" ? "EN" : "FR"}</Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+            <TouchableOpacity
+              style={styles.langBtn}
+              onPress={() => { Haptics.selectionAsync(); toggleLanguage(); }}
+              activeOpacity={0.75}
+            >
+              <Text style={styles.langFlag}>{language === "fr" ? "🇬🇧" : "🇫🇷"}</Text>
+              <Text style={styles.langLabel}>{language === "fr" ? "EN" : "FR"}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.profileBtn}
+              onPress={() => { Haptics.selectionAsync(); router.push("/(tabs)/profile" as any); }}
+              activeOpacity={0.75}
+              accessibilityLabel={language === "fr" ? "Mon compte" : "My account"}
+            >
+              <Feather name="user" size={18} color="#fff" />
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Stats strip */}
@@ -711,6 +721,16 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontFamily: "Inter_700Bold",
     color: "#fff",
+  },
+  profileBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255,255,255,0.18)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.25)",
   },
 
   /* Stats */

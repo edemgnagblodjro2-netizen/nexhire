@@ -19,11 +19,13 @@ import { setAuthTokenGetter, setBaseUrl } from "@/lib/apiClient";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AppSplashScreen } from "@/components/AppSplashScreen";
+import { OfflineBanner } from "@/components/OfflineBanner";
 import { AuthProvider, useAuth } from "@/lib/auth";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { LocationProvider } from "@/contexts/LocationContext";
 import { ServicesProvider } from "@/contexts/ServicesContext";
 import { useInactivityTimer } from "@/hooks/useInactivityTimer";
+import { hasSeenOnboarding } from "@/lib/onboarding";
 
 const domain = process.env.EXPO_PUBLIC_DOMAIN;
 const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "https://quebec-aid-finder.replit.app";
@@ -42,9 +44,23 @@ function AppContent({ fontsReady }: { fontsReady: boolean }) {
   const { isLoading, isAuthenticated, logout } = useAuth();
   const router = useRouter();
   const [splashVisible, setSplashVisible] = useState(true);
+  const [onboardingResolved, setOnboardingResolved] = useState(false);
   const wasAuthenticated = useRef(false);
+  const onboardingChecked = useRef(false);
 
-  const isReady = fontsReady && !isLoading;
+  const isReady = fontsReady && !isLoading && onboardingResolved;
+
+  useEffect(() => {
+    if (fontsReady && !isLoading && !onboardingChecked.current) {
+      onboardingChecked.current = true;
+      hasSeenOnboarding().then((seen) => {
+        if (!seen) {
+          router.replace("/onboarding" as any);
+        }
+        setOnboardingResolved(true);
+      }).catch(() => setOnboardingResolved(true));
+    }
+  }, [fontsReady, isLoading]);
 
   useEffect(() => {
     if (isReady) {
@@ -101,7 +117,9 @@ function AppContent({ fontsReady }: { fontsReady: boolean }) {
         <Stack.Screen name="help" options={{ headerShown: false }} />
         <Stack.Screen name="whats-new" options={{ headerShown: false }} />
         <Stack.Screen name="ambassador" options={{ headerShown: false }} />
+        <Stack.Screen name="onboarding" options={{ headerShown: false, gestureEnabled: false }} />
       </Stack>
+      <OfflineBanner />
       <AppSplashScreen visible={splashVisible} />
     </View>
   );

@@ -20,6 +20,7 @@ import { useColors } from "@/hooks/useColors";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 import { getApiBaseUrl } from "@/lib/apiBase";
 import WaitTimeWidget from "@/components/WaitTimeWidget";
+import { addHistoryEntry } from "@/lib/history";
 
 async function trackServiceAction(serviceId: string, action: "view" | "call" | "click") {
   try {
@@ -51,6 +52,17 @@ export default function ServiceDetailScreen() {
       trackServiceAction(id, "view");
     }
   }, [id]);
+
+  useEffect(() => {
+    if (service) {
+      addHistoryEntry({
+        serviceId: service.id,
+        serviceName: service.name,
+        category: service.category,
+        city: service.city ?? "",
+      });
+    }
+  }, [service?.id]);
 
   if (!service) {
     return (

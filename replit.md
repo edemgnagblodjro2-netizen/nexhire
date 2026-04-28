@@ -1,5 +1,16 @@
 # Overview
 
+**Current version: v1.0.47 (versionCode 44) — 2026-04-28**
+
+Audit & polish release based on feature gap analysis vs vision:
+- **Premium honesty**: 4 advanced features (Suivi/Historique/Alertes/Priorisation) re-labeled "BIENTÔT" (orange) instead of "PREMIUM" (purple lock) so users who pay 10$ today don't expect features that aren't built yet. Tap shows "in development" alert.
+- **Recent history**: New `lib/history.ts` (AsyncStorage, last 20 services). Auto-tracked when opening any service detail. Shows top 5 in profile with relative timestamps + "Clear" button.
+- **Offline banner**: New `components/OfflineBanner.tsx` (uses `@react-native-community/netinfo`) renders an orange "Mode hors ligne · liste sauvegardée affichée" bar at the top of every screen when no internet.
+- **Avatar in home header**: Round profile button next to language toggle on `(tabs)/index.tsx` hero — taps to `/(tabs)/profile`.
+- **Onboarding**: New `app/onboarding.tsx` — 3-slide first-launch tour (Trouvez · Appelez · Demandez à l'IA). AsyncStorage flag `attentezero_onboarding_seen_v1`. Gated in root `_layout.tsx` `AppContent`. Skip button.
+- **Push notifications scaffolding**: Installed `expo-notifications` + plugin in app.json. New `lib/notifications.ts` requests permission and registers Expo push token on AsyncStorage at end of onboarding. Backend cron / "new service near you" sender NOT YET BUILT — token is stored client-side only.
+- **Resend production domain**: `notify.ts` reads `NOTIFY_FROM_EMAIL` env var. Default falls back to `onboarding@resend.dev` (sandbox). To send password-reset emails from `noreply@attentezero.ca` in production: (1) verify domain in Resend dashboard, (2) set `NOTIFY_FROM_EMAIL="AttenteZéro <noreply@attentezero.ca>"` secret on the deployment.
+
 This project is a pnpm workspace monorepo using TypeScript, designed to provide a comprehensive aid-finding service for vulnerable individuals in Quebec. The primary application, "AttenteZéro," is an Expo mobile app (React Native) focused on connecting users with community and social services across four key cities in Quebec. The project aims to become a 100% free citizen service, complemented by a B2G (Business-to-Government) infrastructure offering institutional contracts and anonymized aggregated dashboards to municipalities and governmental organizations.
 
 The core vision is to leverage mobile UX, conversational AI, geolocation, and multilingual support to offer a superior experience compared to existing directories. The strategic pivot focuses on avoiding sensitive beneficiary data storage to streamline compliance and target public administrations as primary paying customers, recognizing their solvency over individual professionals.
