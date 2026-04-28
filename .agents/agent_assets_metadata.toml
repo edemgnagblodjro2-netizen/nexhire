@@ -401,3 +401,9 @@ id = "FgDdFYJAhQr1veZW2BKca"
 uri = "file://exports/attentezero-v1.0.47-COMPLETE-20260428-2305.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.47 (vc44) — monorepo COMPLET (387 fichiers)"
+
+[[outputs]]
+id = "e9K322kBRK4i2V2OeH6ie"
+uri = "file://exports/attentezero-v1.0.48-hotfix-diag-20260428-2320.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.48 (vc45) — hotfix diagnostic Québec uniquement"

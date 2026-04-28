@@ -1,6 +1,11 @@
 # Overview
 
-**Current version: v1.0.47 (versionCode 44) — 2026-04-28**
+**Current version: v1.0.48 (versionCode 45) — 2026-04-28**
+
+Hotfix sur le diagnostic IA :
+- **Bug corrigé** : le diagnostic IA classait des services d'autres provinces (ON, BC, AB, etc.) parmi les recommandations quand l'utilisateur ne filtrait pas par « ouvert maintenant ». Comme AttenteZéro est un service québécois, on exclut maintenant systématiquement toute fiche dont `province` ≠ "QC" (les fiches sans province sont supposées QC pour rétrocompatibilité). Fix dans `app/diagnostic.tsx` → `scoreService()`.
+
+**v1.0.47 (versionCode 44) — 2026-04-28**
 
 Audit & polish release based on feature gap analysis vs vision:
 - **Premium honesty**: 4 advanced features (Suivi/Historique/Alertes/Priorisation) re-labeled "BIENTÔT" (orange) instead of "PREMIUM" (purple lock) so users who pay 10$ today don't expect features that aren't built yet. Tap shows "in development" alert.

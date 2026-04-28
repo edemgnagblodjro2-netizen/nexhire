@@ -139,6 +139,11 @@ function scoreService(
   // Childcare excluded — redirected to portal
   if (s.category === "childcare") return -1000;
 
+  // AttenteZéro est un service québécois : on exclut toute fiche d'une autre province.
+  // (Si la province est absente, on suppose QC par défaut, pour ne pas exclure les
+  // anciennes fiches qui n'avaient pas ce champ.)
+  if (s.province && s.province !== "QC") return -1000;
+
   return score;
 }
 
