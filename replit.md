@@ -1,6 +1,10 @@
 # Overview
 
-**Current version: v1.0.48 (versionCode 45) — 2026-04-28**
+**Current version: v1.0.49 (versionCode 46) — 2026-04-28**
+
+Ajout de 10 ressources de référence (gouvernementales et communautaires) couvrant les catégories demandées : logement (SHQ), nourriture (Banques alimentaires du Québec), santé mentale (Mouvement Santé Mentale Québec), immigration (MIFI), emploi (Services Québec), famille (LigneParents 24/7), aide juridique (Commission des services juridiques + Juripop), services francophones hors Québec (FCCF), et exemple Ontario en français (Tribunaux administratifs Ontario). Toutes vérifiées (`badgeVerified: true`) et marquées `isProvinceWide: true`.
+
+**v1.0.48 (versionCode 45) — 2026-04-28**
 
 Hotfix sur le diagnostic IA :
 - **Bug corrigé** : le diagnostic IA classait des services d'autres provinces (ON, BC, AB, etc.) parmi les recommandations quand l'utilisateur ne filtrait pas par « ouvert maintenant ». Comme AttenteZéro est un service québécois, on exclut maintenant systématiquement toute fiche dont `province` ≠ "QC" (les fiches sans province sont supposées QC pour rétrocompatibilité). Fix dans `app/diagnostic.tsx` → `scoreService()`.
