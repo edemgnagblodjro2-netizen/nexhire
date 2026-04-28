@@ -66,6 +66,8 @@ export interface Service {
   badgeVerified?: boolean;
   featured?: boolean;
   organisationId?: string;
+  /** ISO 639-1 codes — fr, en, es, ar, ht, zh. If omitted, inferred from name/city. */
+  languages?: string[];
 }
 
 export const CATEGORY_LABELS: Record<Category, string> = {

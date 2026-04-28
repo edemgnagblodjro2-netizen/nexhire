@@ -293,6 +293,52 @@ export default function HomeScreen() {
           </LinearGradient>
         </Pressable>
 
+        {/* ── Diagnostic IA personnalisé ── */}
+        <Pressable
+          style={({ pressed }) => [
+            styles.diagBanner,
+            { opacity: pressed ? 0.92 : 1 },
+          ]}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            router.push("/diagnostic" as any);
+          }}
+        >
+          <LinearGradient
+            colors={["#064e3b", "#0e7e6e", "#10b981"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.diagBannerGrad}
+          >
+            <View style={styles.diagBannerLeft}>
+              <View style={styles.diagBannerIcon}>
+                <Feather name="cpu" size={22} color="#10b981" />
+              </View>
+              <View style={styles.diagBannerText}>
+                <View style={styles.diagBannerKickerRow}>
+                  <View style={styles.diagBannerNewBadge}>
+                    <Text style={styles.diagBannerNewText}>NOUVEAU</Text>
+                  </View>
+                  <Text style={styles.diagBannerKicker}>
+                    {language === "fr" ? "DIAGNOSTIC IA" : "AI DIAGNOSIS"}
+                  </Text>
+                </View>
+                <Text style={styles.diagBannerTitle}>
+                  {language === "fr" ? "Trouver mon service en 1 minute" : "Find my service in 1 minute"}
+                </Text>
+                <Text style={styles.diagBannerSub} numberOfLines={2}>
+                  {language === "fr"
+                    ? "5 questions · recommandations personnalisées · langue, proximité, ouvert maintenant"
+                    : "5 questions · personalized recommendations · language, proximity, open now"}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.diagBannerArrow}>
+              <Feather name="arrow-right" size={20} color="#fff" />
+            </View>
+          </LinearGradient>
+        </Pressable>
+
         {/* ── Localisation ── */}
         <View style={styles.section}>
           <Pressable
@@ -804,6 +850,88 @@ const styles = StyleSheet.create({
     color: "rgba(255,255,255,0.82)",
   },
   sosArrow: {
+    flexShrink: 0,
+  },
+
+  /* Diagnostic IA Banner */
+  diagBanner: {
+    marginBottom: 14,
+    borderRadius: 16,
+    overflow: "hidden",
+    shadowColor: "#10b981",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.28,
+    shadowRadius: 12,
+    elevation: 6,
+  },
+  diagBannerGrad: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16,
+    gap: 12,
+  },
+  diagBannerLeft: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  diagBannerIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 14,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  diagBannerText: {
+    flex: 1,
+    gap: 4,
+  },
+  diagBannerKickerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  diagBannerNewBadge: {
+    backgroundColor: "#fde68a",
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 6,
+  },
+  diagBannerNewText: {
+    fontSize: 9,
+    fontFamily: "Inter_700Bold",
+    color: "#92400e",
+    letterSpacing: 0.6,
+  },
+  diagBannerKicker: {
+    fontSize: 10,
+    fontFamily: "Inter_700Bold",
+    color: "rgba(255,255,255,0.85)",
+    letterSpacing: 1.1,
+  },
+  diagBannerTitle: {
+    fontSize: 16,
+    fontWeight: "800",
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+    letterSpacing: -0.2,
+  },
+  diagBannerSub: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.85)",
+    lineHeight: 15,
+  },
+  diagBannerArrow: {
+    width: 36,
+    height: 36,
+    borderRadius: 12,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
     flexShrink: 0,
   },
 

@@ -365,3 +365,9 @@ id = "QLT4ePXtFXZ4iBHuUl1Qp"
 uri = "file://exports/attentezero-v1.0.44-freemium-3jour-20260428-1752.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.44 (vc41) — Modèle freemium restauré (3 consultations/jour)"
+
+[[outputs]]
+id = "NL4cXIJxQw_eNQSVAZtEu"
+uri = "file://exports/attentezero-v1.0.45-diagnostic-ia-langues-ouvert-20260428-1807.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.45 — Diagnostic IA + Langues + Ouvert maintenant"

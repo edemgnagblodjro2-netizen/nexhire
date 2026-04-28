@@ -96,6 +96,7 @@ function AppContent({ fontsReady }: { fontsReady: boolean }) {
         <Stack.Screen name="forgot-password" options={{ headerShown: false }} />
         <Stack.Screen name="reset-password" options={{ headerShown: false }} />
         <Stack.Screen name="sos" options={{ headerShown: false }} />
+        <Stack.Screen name="diagnostic" options={{ headerShown: false }} />
         <Stack.Screen name="bug-report" options={{ headerShown: false }} />
         <Stack.Screen name="help" options={{ headerShown: false }} />
         <Stack.Screen name="whats-new" options={{ headerShown: false }} />

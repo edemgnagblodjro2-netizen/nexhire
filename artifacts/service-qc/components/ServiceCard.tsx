@@ -16,6 +16,7 @@ import type { Service } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 import { usePremiumGate } from "@/hooks/usePremiumGate";
 import { getCategoryColor } from "@/utils/categoryColors";
+import { isOpenNow } from "@/utils/openHours";
 
 interface ServiceCardProps {
   service: Service;
@@ -81,12 +82,26 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
             </Text>
           </View>
         )}
-        {(service.hours?.includes("24h/24") || service.hours?.includes("24/7")) && (
-          <View style={styles.alwaysOpenBadge}>
-            <Feather name="clock" size={10} color="#fff" />
-            <Text style={styles.alwaysOpenText}>24/7</Text>
-          </View>
-        )}
+        {(() => {
+          const open = isOpenNow(service.hours);
+          if (service.hours?.includes("24h/24") || service.hours?.includes("24/7")) {
+            return (
+              <View style={styles.alwaysOpenBadge}>
+                <Feather name="clock" size={10} color="#fff" />
+                <Text style={styles.alwaysOpenText}>24/7</Text>
+              </View>
+            );
+          }
+          if (open === true) {
+            return (
+              <View style={styles.openNowBadge}>
+                <View style={styles.openDot} />
+                <Text style={styles.openNowText}>Ouvert</Text>
+              </View>
+            );
+          }
+          return null;
+        })()}
         {service.badgeVerified && (
           <View style={styles.verifiedBadge}>
             <Feather name="check-circle" size={10} color="#fff" />
@@ -184,6 +199,27 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   alwaysOpenText: {
+    fontSize: 11,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+  },
+  openNowBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    backgroundColor: "#10b981",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 20,
+  },
+  openDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: "#fff",
+  },
+  openNowText: {
     fontSize: 11,
     fontWeight: "700",
     fontFamily: "Inter_700Bold",

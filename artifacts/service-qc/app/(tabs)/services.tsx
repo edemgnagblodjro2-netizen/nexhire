@@ -23,6 +23,9 @@ import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 import { haversineDistance } from "@/utils/location";
+import { type LangCode, LANG_LABELS, inferLanguages } from "@/utils/serviceLanguages";
+
+const FILTER_LANGUAGES: LangCode[] = ["fr", "en", "es", "ar", "ht", "zh"];
 
 type SortMode = "default" | "az" | "distance" | "urgent";
 
@@ -49,6 +52,7 @@ export default function ServicesScreen() {
 
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<Category | null>(null);
+  const [activeLanguage, setActiveLanguage] = useState<LangCode | null>(null);
   const [sortMode, setSortMode] = useState<SortMode>("default");
 
   const isFr = language !== "en";
@@ -68,6 +72,9 @@ export default function ServicesScreen() {
     let result = services;
     if (activeCategory) {
       result = result.filter((s) => s.category === activeCategory);
+    }
+    if (activeLanguage) {
+      result = result.filter((s) => inferLanguages(s).includes(activeLanguage));
     }
     if (query.trim()) {
       const q = query.trim().toLowerCase();
@@ -97,7 +104,7 @@ export default function ServicesScreen() {
       });
     }
     return result;
-  }, [services, query, activeCategory, sortMode, userLocation]);
+  }, [services, query, activeCategory, activeLanguage, sortMode, userLocation]);
 
   const count = filtered.length;
   const totalCount = services.length;
@@ -113,11 +120,12 @@ export default function ServicesScreen() {
   function clearFilters() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setActiveCategory(null);
+    setActiveLanguage(null);
     setQuery("");
     setSortMode("default");
   }
 
-  const hasActiveFilter = !!activeCategory || !!query.trim() || sortMode !== "default";
+  const hasActiveFilter = !!activeCategory || !!activeLanguage || !!query.trim() || sortMode !== "default";
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -257,6 +265,51 @@ export default function ServicesScreen() {
                     </Text>
                   </View>
                 )}
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+
+        {/* Language filter row */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.langStrip}
+        >
+          <View style={styles.langStripLabel}>
+            <Feather name="message-circle" size={11} color={colors.mutedForeground} />
+            <Text style={[styles.langStripLabelText, { color: colors.mutedForeground }]}>
+              {isFr ? "Langue parlée" : "Language spoken"}
+            </Text>
+          </View>
+          {FILTER_LANGUAGES.map((lang) => {
+            const meta = LANG_LABELS[lang];
+            const isActive = activeLanguage === lang;
+            return (
+              <TouchableOpacity
+                key={lang}
+                onPress={() => {
+                  Haptics.selectionAsync();
+                  setActiveLanguage(isActive ? null : lang);
+                }}
+                style={[
+                  styles.langChip,
+                  {
+                    backgroundColor: isActive ? colors.primary + "18" : colors.card,
+                    borderColor: isActive ? colors.primary : colors.border,
+                  },
+                ]}
+                activeOpacity={0.85}
+              >
+                <Text style={styles.langChipFlag}>{meta.flag}</Text>
+                <Text
+                  style={[
+                    styles.langChipText,
+                    { color: isActive ? colors.primary : colors.foreground },
+                  ]}
+                >
+                  {isFr ? meta.fr : meta.en}
+                </Text>
               </TouchableOpacity>
             );
           })}
@@ -485,6 +538,40 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: "Inter_700Bold",
     fontWeight: "700",
+  },
+  langStrip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingHorizontal: 14,
+    paddingTop: 4,
+    paddingBottom: 6,
+  },
+  langStripLabel: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    marginRight: 4,
+  },
+  langStripLabelText: {
+    fontSize: 10,
+    fontFamily: "Inter_700Bold",
+    textTransform: "uppercase",
+    letterSpacing: 0.6,
+  },
+  langChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 14,
+    borderWidth: 1,
+  },
+  langChipFlag: { fontSize: 14 },
+  langChipText: {
+    fontSize: 12,
+    fontFamily: "Inter_600SemiBold",
   },
   sortRow: {
     flexDirection: "row",
