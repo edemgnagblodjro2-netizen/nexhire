@@ -95,12 +95,14 @@ export default function MapScreen() {
   );
 
   // Pool of services for the active tab (before category/sort)
+  // Childcare is excluded everywhere — it now redirects to the official La Place 0-5 portal.
   const tabPool = useMemo(() => {
+    const noChildcare = services.filter((s) => s.category !== "childcare");
     if (tab === "favorites") {
       const set = new Set(favIds);
-      return services.filter((s) => set.has(s.id));
+      return noChildcare.filter((s) => set.has(s.id));
     }
-    return services.filter((s) => s.coordinates);
+    return noChildcare.filter((s) => s.coordinates);
   }, [tab, services, favIds]);
 
   // Per-category counts for chips (within current tab pool)

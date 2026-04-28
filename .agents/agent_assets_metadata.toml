@@ -353,3 +353,9 @@ id = "xSAd3ZUyfTSEBU7YZlPBv"
 uri = "file://exports/attentezero-v1.0.42-services-pro-20260428-1733.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.42 (vc39) — Onglet Services redesigné PRO"
+
+[[outputs]]
+id = "H5zLymv0-kiR0rSISAall"
+uri = "file://exports/attentezero-v1.0.43-no-garderie-carte-fav-20260428-1735.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.43 (vc40) — Carte & Favoris sans garderie"

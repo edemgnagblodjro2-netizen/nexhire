@@ -26,6 +26,7 @@ import { haversineDistance } from "@/utils/location";
 
 type SortMode = "default" | "az" | "distance" | "urgent";
 
+// Childcare is intentionally excluded — it now redirects to the official La Place 0-5 portal.
 const ALL_CATEGORIES: Category[] = [
   "housing",
   "food",
@@ -35,7 +36,6 @@ const ALL_CATEGORIES: Category[] = [
   "employment",
   "family",
   "social",
-  "childcare",
   "realestate",
 ];
 
