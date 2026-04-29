@@ -6,6 +6,7 @@
   "scripts": {
     "hello": "tsx ./src/hello.ts",
     "seed-services": "tsx ./src/seed-services.ts",
+    "sync-services": "node ../node_modules/tsx/dist/cli.mjs ./src/sync-services-from-db.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
