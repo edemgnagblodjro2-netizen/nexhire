@@ -497,3 +497,9 @@ id = "kKrNbu0P30dpd_Nh87qKG"
 uri = "file://attached_assets/services_sans_adresse_214.csv"
 type = "table"
 title = "Fiches sans adresse (214)"
+
+[[outputs]]
+id = "ijrFd_AEjsg49Rv1SBrvl"
+uri = "file://attached_assets/fiches_a_corriger_priorite.csv"
+type = "table"
+title = "Fiches à corriger en priorité (177)"
