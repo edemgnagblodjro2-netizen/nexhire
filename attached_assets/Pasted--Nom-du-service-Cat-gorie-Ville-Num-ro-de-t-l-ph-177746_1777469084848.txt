@@ -1,0 +1,15 @@
+| #  | Nom du service                              | Catégorie    | Ville         | Numéro de téléphone | Code interne                     | Statut      |
+| -- | ------------------------------------------- | ------------ | ------------- | ------------------- | -------------------------------- | ----------- |
+| 1  | Société Enfants disparus du Canada          | family       | Charlottetown | 1-800-661-6160      | sos-disparus-pe                  | Actif       |
+| 2  | Trans Lifeline                              | mentalHealth | Charlottetown | 1-877-330-6366      | urg-trans-pe                     | Actif       |
+| 3  | Upper Room Food Bank                        | food         | Charlottetown | 902-892-7378        | pe-r5-v50                        | Actif       |
+| 4  | Centre 911 — Nord-du-Québec                 | social       | Chibougamau   | 911                 | centre911-nord-qc                | Actif (ADR) |
+| 5  | Service de sécurité incendie de Châteauguay | social       | Châteauguay   | 450-698-3200        | incendie-chateauguay             | Actif (ADR) |
+| 6  | Société francophone de Maillardville        | social       | Coquitlam     | 604-515-7070        | fr-bc-maillardville-v53          | Actif       |
+| 7  | 2205 rue Bertrand                           | childcare    | Drummondville | 1-844-270-5055      | drum-garde-2205-rue-bertrand     | Actif (ADR) |
+| 8  | Andrea Duquette                             | childcare    | Drummondville | 1-844-270-5055      | drum-garde-andrea-duquette       | Actif (ADR) |
+| 9  | Anny Gelinas                                | childcare    | Drummondville | 1-844-270-5055      | drum-garde-anny-gelinas          | Actif (ADR) |
+| 10 | Banque alimentaire Drummondville            | food         | Drummondville | (819) 478-4243      | banque-alimentaire-drummondville | Actif       |
+| 11 | Bousquet Lyn                                | childcare    | Drummondville | 1-844-270-5055      | drum-garde-bousquet-lyn          | Actif (ADR) |
+| 12 | Bureau d'aide juridique de Drummondville    | social       | Drummondville | 819-478-0540        | drum-legal1                      | Actif (ADR) |
+| 13 | Bureau emploi Drummondville                 | employment   | Drummondville | 819-478-2000        | drum-emploi                      | Actif (ADR) |
