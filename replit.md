@@ -1,6 +1,14 @@
 # Overview
 
-**Current version: v1.0.52 (versionCode 49) — 2026-04-28**
+**Current version: v1.0.53 (versionCode 50) — 2026-04-29**
+
+Ajout de **3 services francophones supplémentaires par province hors QC = 36 nouvelles fiches**. Chaque province non-QC dispose maintenant de **5 services francophones** dédiés aux immigrants francophones (catégories : immigration, social, famille, emploi, santé, garderie).
+
+Exemples par province : ON ajoute AFO, RIF-CSO, Oasis Centre des femmes ; BC ajoute Maillardville, Éducacentre, SDECB ; AB ajoute La Cité francophone, Accueil Calgary, CDÉA ; MB ajoute CCFM, Pluri-elles, CDEM ; SK ajoute CÉCS, Réseau Santé fransaskois, CCF ; NB ajoute CAIIM, CARI, AAFANB ; NS ajoute Conseil Grand-Havre, U. Sainte-Anne, Réseau Santé NS ; PE ajoute La Belle-Alliance, Carrefour Isle-Saint-Jean, RDÉE Î.-P.-É. ; NL ajoute ACFSJ, ARCO, Franco-Jeunes ; YT ajoute EssentiElles, Garderie petit cheval blanc, RDÉE Yukon ; NT ajoute AFCY, CDÉTNO, Réseau Santé TNO ; NU ajoute Carrefour Nunavut, Franco-Centre, Réseau Santé Nunavut.
+
+Toutes vérifiées (`badgeVerified: true`), avec téléphone, adresse, site et coordonnées géographiques. **Total app : 1032 services**.
+
+**v1.0.52 (versionCode 49) — 2026-04-28**
 
 Diagnostic IA désormais **multi-province** :
 - Nouveau contexte `UserProvinceContext` (persistance AsyncStorage, défaut « QC ») branché à la racine de l'app.

@@ -449,3 +449,9 @@ id = "A0OkFwCiiONb0jyp2r0HA"
 uri = "file://exports/attentezero-v1.0.52-multiprov-20260429-0050.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.52 — Diagnostic multi-province + 24 services francophones"
+
+[[outputs]]
+id = "WYIykU-tjD1r054nbTHKM"
+uri = "file://exports/attentezero-v1.0.53-franco5-20260429-0110.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.53 — 5 services francophones par province hors QC"
