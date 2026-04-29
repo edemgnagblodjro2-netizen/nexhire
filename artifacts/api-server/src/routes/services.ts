@@ -118,6 +118,21 @@ servicesRouter.get("/admin/services", requireAdminKey, async (req, res) => {
           sql`${servicesTable.verifiedAt} < now() - interval '6 months'`,
         ),
       );
+    } else if (quality === "needs-fix") {
+      // Real data quality problems: missing address/GPS/phone or suspect phone
+      conditions.push(
+        or(
+          isNull(servicesTable.address),
+          eq(servicesTable.address, ""),
+          isNull(servicesTable.lat),
+          isNull(servicesTable.lng),
+          eq(servicesTable.phone, ""),
+          ilike(servicesTable.phone, "%-5555%"),
+          ilike(servicesTable.phone, "%-5558%"),
+          ilike(servicesTable.phone, "%-0555%"),
+          ilike(servicesTable.phone, "%555-555%"),
+        ),
+      );
     }
 
     const where = conditions.length > 0 ? and(...conditions) : undefined;
@@ -174,6 +189,7 @@ servicesRouter.get("/admin/services/meta", requireAdminKey, async (req, res) => 
           verified: sql<number>`sum(case when ${servicesTable.verifiedAt} is not null and ${servicesTable.active} then 1 else 0 end)`,
           unverified: sql<number>`sum(case when ${servicesTable.verifiedAt} is null and ${servicesTable.active} then 1 else 0 end)`,
           stale: sql<number>`sum(case when ${servicesTable.verifiedAt} is not null and ${servicesTable.verifiedAt} < now() - interval '6 months' and ${servicesTable.active} then 1 else 0 end)`,
+          needsFix: sql<number>`sum(case when (${servicesTable.address} is null or ${servicesTable.address} = '' or ${servicesTable.lat} is null or ${servicesTable.lng} is null or ${servicesTable.phone} = '' or ${servicesTable.phone} ilike '%-5555%' or ${servicesTable.phone} ilike '%-5558%' or ${servicesTable.phone} ilike '%-0555%' or ${servicesTable.phone} ilike '%555-555%') and ${servicesTable.active} then 1 else 0 end)`,
         })
         .from(servicesTable),
     ]);

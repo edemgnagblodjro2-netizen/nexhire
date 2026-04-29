@@ -140,64 +140,84 @@ export default function Services({ adminKey }: { adminKey: string }) {
 
       {/* ── Data quality dashboard ── */}
       {meta?.stats && (
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 mb-4">
-          <QualityChip
-            label="Vérifiés"
-            value={meta.stats.verified}
-            total={meta.stats.active}
-            color="emerald"
-            active={quality === "verified"}
-            onClick={() => { setQuality(quality === "verified" ? "" : "verified"); setPage(1); }}
-          />
-          <QualityChip
-            label="Non vérifiés"
-            value={meta.stats.unverified}
-            total={meta.stats.active}
-            color="amber"
-            active={quality === "unverified"}
-            onClick={() => { setQuality(quality === "unverified" ? "" : "unverified"); setPage(1); }}
-          />
-          <QualityChip
-            label="Périmés (>6 mois)"
-            value={meta.stats.stale}
-            total={meta.stats.active}
-            color="orange"
-            active={quality === "stale"}
-            onClick={() => { setQuality(quality === "stale" ? "" : "stale"); setPage(1); }}
-          />
-          <QualityChip
-            label="Sans GPS"
-            value={meta.stats.missingGps}
-            total={meta.stats.active}
-            color="rose"
-            active={quality === "missing-gps"}
-            onClick={() => { setQuality(quality === "missing-gps" ? "" : "missing-gps"); setPage(1); }}
-          />
-          <QualityChip
-            label="Sans adresse"
-            value={meta.stats.missingAddress}
-            total={meta.stats.active}
-            color="rose"
-            active={quality === "missing-address"}
-            onClick={() => { setQuality(quality === "missing-address" ? "" : "missing-address"); setPage(1); }}
-          />
-          <QualityChip
-            label="Sans téléphone"
-            value={meta.stats.missingPhone}
-            total={meta.stats.active}
-            color="rose"
-            active={quality === "missing-phone"}
-            onClick={() => { setQuality(quality === "missing-phone" ? "" : "missing-phone"); setPage(1); }}
-          />
-          <QualityChip
-            label="Tél. suspect"
-            value={meta.stats.suspectPhone}
-            total={meta.stats.active}
-            color="red"
-            active={quality === "suspect-phone"}
-            onClick={() => { setQuality(quality === "suspect-phone" ? "" : "suspect-phone"); setPage(1); }}
-          />
-        </div>
+        <>
+          <div className="mb-3">
+            <button
+              type="button"
+              onClick={() => { setQuality(quality === "needs-fix" ? "" : "needs-fix"); setPage(1); }}
+              className={`w-full text-left rounded-2xl border-2 p-4 transition ${
+                quality === "needs-fix"
+                  ? "border-red-500 bg-red-50 shadow-md"
+                  : "border-red-200 bg-white hover:border-red-400 hover:bg-red-50"
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-wide text-red-600">
+                    À corriger en priorité
+                  </div>
+                  <div className="mt-1 text-sm text-gray-700">
+                    Fiches avec adresse, GPS ou téléphone manquant ou suspect
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-3xl font-bold text-red-700">{meta.stats.needsFix}</div>
+                  <div className="text-xs text-gray-500">sur {meta.stats.active} actives</div>
+                </div>
+              </div>
+            </button>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 mb-4">
+            <QualityChip
+              label="Sans adresse"
+              value={meta.stats.missingAddress}
+              total={meta.stats.active}
+              color="rose"
+              active={quality === "missing-address"}
+              onClick={() => { setQuality(quality === "missing-address" ? "" : "missing-address"); setPage(1); }}
+            />
+            <QualityChip
+              label="Sans GPS"
+              value={meta.stats.missingGps}
+              total={meta.stats.active}
+              color="rose"
+              active={quality === "missing-gps"}
+              onClick={() => { setQuality(quality === "missing-gps" ? "" : "missing-gps"); setPage(1); }}
+            />
+            <QualityChip
+              label="Sans téléphone"
+              value={meta.stats.missingPhone}
+              total={meta.stats.active}
+              color="rose"
+              active={quality === "missing-phone"}
+              onClick={() => { setQuality(quality === "missing-phone" ? "" : "missing-phone"); setPage(1); }}
+            />
+            <QualityChip
+              label="Tél. suspect"
+              value={meta.stats.suspectPhone}
+              total={meta.stats.active}
+              color="red"
+              active={quality === "suspect-phone"}
+              onClick={() => { setQuality(quality === "suspect-phone" ? "" : "suspect-phone"); setPage(1); }}
+            />
+            <QualityChip
+              label="Vérifiés"
+              value={meta.stats.verified}
+              total={meta.stats.active}
+              color="emerald"
+              active={quality === "verified"}
+              onClick={() => { setQuality(quality === "verified" ? "" : "verified"); setPage(1); }}
+            />
+            <QualityChip
+              label="Périmés (>6 mois)"
+              value={meta.stats.stale}
+              total={meta.stats.active}
+              color="orange"
+              active={quality === "stale"}
+              onClick={() => { setQuality(quality === "stale" ? "" : "stale"); setPage(1); }}
+            />
+          </div>
+        </>
       )}
 
       <div className="bg-white border border-gray-100 rounded-2xl shadow-sm mb-4">

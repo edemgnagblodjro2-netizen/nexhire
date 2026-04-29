@@ -31,7 +31,8 @@ export type QualityFilter =
   | "suspect-phone"
   | "unverified"
   | "verified"
-  | "stale";
+  | "stale"
+  | "needs-fix";
 
 export type ServiceList = {
   data: Service[];
@@ -56,6 +57,7 @@ export type ServiceMeta = {
     verified: number;
     unverified: number;
     stale: number;
+    needsFix: number;
   };
 };
 
