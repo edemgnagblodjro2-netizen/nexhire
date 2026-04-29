@@ -1,0 +1,15 @@
+| #  | Nom du service                                  | Catégorie | Ville         | Numéro de téléphone | Code interne                                          | Statut      |
+| -- | ----------------------------------------------- | --------- | ------------- | ------------------- | ----------------------------------------------------- | ----------- |
+| 1  | CAM — Coopérative ambulancière Centre-du-Québec | health    | Drummondville | 819-478-2323        | drum-ambul                                            | Actif (ADR) |
+| 2  | CLSC Drummond — CIUSSS MCQ                      | health    | Drummondville | 819-474-2572        | drum-health1                                          | Actif (ADR) |
+| 3  | CLSC Drummondville                              | health    | Drummondville | 819-474-2572        | clsc-drummondville                                    | Actif       |
+| 4  | CPE Coopératif Les P’tites Abeilles — Inst. 2   | childcare | Drummondville | 1-844-270-5055      | drum-garde-cpe-cooperatif-les-p-tites-abeilles-inst-2 | Actif (ADR) |
+| 5  | CPE Coopératif Les P’tites Abeilles — Inst. 1   | childcare | Drummondville | 1-844-270-5055      | drum-garde-cpe-cooperatif-les-p-tites-abeilles-inst   | Actif (ADR) |
+| 6  | CPE Fardoche — Inst. du Moulin                  | childcare | Drummondville | 1-844-270-5055      | drum-garde-cpe-fardoche-inst-du-moulin                | Actif (ADR) |
+| 7  | CPE Fardoche — Inst. Rajotte                    | childcare | Drummondville | 1-844-270-5055      | drum-garde-cpe-fardoche-inst-rajotte                  | Actif (ADR) |
+| 8  | CPE Fardoche — Inst. Saint-Alfred               | childcare | Drummondville | 1-844-270-5055      | drum-garde-cpe-fardoche-inst-saint-alfred             | Actif (ADR) |
+| 9  | CPE Grand-Mère Douceur — Inst. Drummond         | childcare | Drummondville | 1-844-270-5055      | drum-garde-cpe-grand-mere-douceur-inst-drummond       | Actif (ADR) |
+| 10 | CPE Grand-Mère Douceur — Inst. Le Quartier      | childcare | Drummondville | 1-844-270-5055      | drum-garde-cpe-grand-mere-douceur-inst-le-quartier    | Actif (ADR) |
+| 11 | CPE Grand-Mère Douceur — Inst. St-Charles       | childcare | Drummondville | 1-844-270-5055      | drum-garde-cpe-grand-mere-douceur-inst-st-charles     | Actif (ADR) |
+| 12 | CPE La Maison de Bécassine — Inst. 1            | childcare | Drummondville | 1-844-270-5055      | drum-garde-cpe-la-maison-de-becassine-inst-1          | Actif (ADR) |
+| 13 | CPE Le Papillon Enchanté — Inst. 1              | childcare | Drummondville | 1-844-270-5055      | drum-garde-cpe-le-papillon-enchante-inst-1            | Actif (ADR) |
