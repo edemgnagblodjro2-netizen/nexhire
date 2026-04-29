@@ -1,16 +1,17 @@
 # Overview
 
-**Current version: v1.0.55 (versionCode 52) — 2026-04-29**
+**Current version: v1.0.54 (versionCode 51) — 2026-04-29**
 
-Mise en place du **flux de synchronisation BD admin → fichier app intégré**. L'admin (BD Postgres) devient la **source de vérité** : tu corriges téléphones, adresses, sites, etc. dans le panneau admin à ton rythme, puis avant chaque ZIP je lance `pnpm --filter @workspace/scripts run sync-services` qui réécrit `artifacts/service-qc/data/services.ts` avec les valeurs fraîches de la BD. Plus jamais de désynchronisation entre admin et APK compilé.
-
-Corrections appliquées dans cette version :
-- **Centre de prévention du suicide des Bois-Francs** (`v-cps-drummond`) : téléphone passe de `1-866-APPELLE` à **`1-866-277-3553`** (numéro composable) + adresse ajoutée `575 Rue des Écoles, Drummondville, QC`.
-- **Moisson Outaouais** (`baq-moisson-outaouais`) : téléphone passe de `819-503-8997` à **`819-669-2000`** + adresse mise à jour `37 rue Bombardier, Gatineau, QC J8R 0G4`.
-
-Pendant la synchro, **35 autres dérives historiques** ont été propagées de la BD vers le fichier intégré (corrections de l'admin qui n'étaient jamais arrivées dans les builds précédents).
-
-Note : doublon détecté pour Moisson Outaouais — fiche `gat-f1` (vieux numéro 819-771-4111) co-existe avec `baq-moisson-outaouais`. À fusionner/supprimer plus tard si nécessaire.
+> ⏳ **v1.0.55 EN COURS DE PRÉPARATION** (pas encore publiée — pas de ZIP généré).
+>
+> L'utilisateur corrige actuellement les fiches dans le panneau admin (téléphones, adresses, sites web). Le ZIP v1.0.55 sera généré **uniquement quand toutes les corrections seront terminées**, pour ne jamais compiler une version qui contient de fausses informations.
+>
+> **Infrastructure déjà en place** :
+> - Script de synchronisation `pnpm --filter @workspace/scripts run sync-services` qui réécrit `artifacts/service-qc/data/services.ts` à partir de la BD admin (source de vérité).
+> - 2 corrections déjà appliquées en BD : CPS Bois-Francs (1-866-277-3553 + adresse 575 Rue des Écoles) et Moisson Outaouais (819-669-2000 + 37 rue Bombardier J8R 0G4).
+> - Doublon connu à traiter : `gat-f1` (vieux numéro Moisson Outaouais) co-existe avec `baq-moisson-outaouais`.
+>
+> Quand l'utilisateur dira « génère le ZIP », bumper à v1.0.55/vc52, lancer la synchro, créer le ZIP et publier.
 
 **v1.0.54 (versionCode 51) — 2026-04-29**
 
