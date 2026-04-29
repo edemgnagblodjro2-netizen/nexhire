@@ -485,3 +485,9 @@ id = "-yzaqFlSOM8o5pMEWF8-8"
 uri = "file://exports/fiches-a-corriger.csv"
 type = "table"
 title = "Fiches à corriger — 1760 lignes, triées par province"
+
+[[outputs]]
+id = "CXvrozAK-wTdIJ_SlFj0q"
+uri = "file://attached_assets/services_sans_adresse.csv"
+type = "table"
+title = "Services sans adresse (389 fiches)"
