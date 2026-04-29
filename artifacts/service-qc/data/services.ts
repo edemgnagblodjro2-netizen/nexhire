@@ -2612,17 +2612,6 @@ export const SERVICES: Service[] = [
     coordinates: { lat: 45.5088, lng: -73.554 },
   },
   {
-    id: "soc-trsp2",
-    name: "Roue de secours – Transport bénévole",
-    category: "social",
-    subcategory: "Transport solidaire",
-    city: "Montréal",
-    phone: "514-842-5558",
-    description: "Service de transport bénévole pour personnes âgées ou à mobilité réduite à Montréal. Transport médical, rendez-vous, courses essentielles. Tarifs symboliques selon revenu.",
-    hours: "Lun-Ven 7h-18h (sur réservation)",
-    coordinates: { lat: 45.5301, lng: -73.5882 },
-  },
-  {
     id: "soc-opt1",
     name: "Option Consommateurs – Droits des consommateurs",
     category: "social",
