@@ -1,0 +1,53 @@
+
+=== BUREAUX COORDONNATEURS POUR SERVICES DE GARDE EN MILIEU FAMILIAL (RSG) ===
+Source : Répertoire officiel gouvernement du Québec (mise à jour avril 2025)
+
+TROIS-RIVIÈRES (secteur centre-ouest) :
+  BC CPE Les Petits Collégiens
+  500, rue des Forges, Trois-Rivières QC G9A 2H5
+  Tél. : 819-694-6662
+  Site : https://lespetitscollegiens.com
+  Territoire : Ville de Trois-Rivières (CLSC Trois-Rivières, secteur centre/ouest)
+
+TROIS-RIVIÈRES (secteur est – Cap-Madeleine, St-Louis-de-France, Ste-Marthe) :
+  BC CPE Le Cerf-Volant
+  925, rue Tousignant, Trois-Rivières QC G8V 2R7
+  Tél. : 819-379-1797
+  Site : https://www.cpecerfvolant.com
+  Territoire : Cap-de-la-Madeleine, St-Louis-de-France, Ste-Marthe
+
+SHAWINIGAN (territoire complet) :
+  BC CPE Le Manège des Tout-Petits
+  821, 5e Avenue, Shawinigan QC G9T 2M9
+  Tél. : 819-533-3326
+  Site : https://manegedestoutpetits.ca
+  Territoire : Ville de Shawinigan (673 places en MF)
+
+DRUMMONDVILLE / MRC DRUMMOND :
+  BC CPE Les Petits Lutins de Drummondville
+  234, rue Moisan, Drummondville QC J2C 1W8
+  Tél. : 819-472-4454
+  Territoire : MRC Drummond
+
+=== RÉSUMÉ DES MODIFICATIONS DANS LE CSV ===
+
+142 fiches RSG (milieu familial) : numéro 1-844-270-5055 remplacé par le BC local
+ 8 fiches CPE/garderies : numéro direct + adresse trouvés et mis à jour
+ 5 garderies Drummondville : marquées "À VÉRIFIER" (numéro direct non trouvé)
+
+CPE avec numéros directs mis à jour :
+  - CPE Entre Deux Nuages (TR) : 819-374-0401
+  - CPE Jean-Noël Lapin inst. Dessureault (TR) : 819-372-9640
+  - CPE Jean-Noël Lapin inst. Ste-Marthe (TR) : 819-372-9640
+  - G. L'Oiseau Bleu (TR) : 819-909-1145
+  - G. L'Oiseau Bleu II (TR) : 819-909-1145
+  - G. La Petite Académie (TR) : 819-373-5121
+  - CPE Le Pipandor (Shawinigan) : 819-537-0404
+  - CPE La Maison du Pipandor (Shawinigan) : 819-852-0177 ← numéro direct distinct
+  - CPE À Tire d'Aile (Drummondville, 2 inst.) : 819-477-9474
+  - CPE Fardoche (Drummondville, 3 inst.) : 819-477-5233 / 819-478-8898
+  - CPE Grand-Mère Douceur (Drummondville, 3 inst.) : 819-474-5849 / 819-850-0773
+  - CPE Plumeau-Soleil + Ribambelle (Drummondville) : 819-478-7886
+  - CPE Le Papillon Enchanté (Drummondville) : 819-477-4475
+  - CPE La Maison de Bécassine (Drummondville) : 819-472-1811
+  - CPE Les Petits Lutins (Drummondville, 2 inst.) : 819-472-4474
