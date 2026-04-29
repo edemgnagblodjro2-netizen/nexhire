@@ -89,7 +89,9 @@ export default function Services({ adminKey }: { adminKey: string }) {
     try {
       await toggleService(adminKey, svc.id, !svc.active);
       invalidate();
-    } catch {}
+    } catch (err) {
+      alert(`Échec activation/désactivation : ${(err as Error).message}\n\nFiche : ${svc.name}`);
+    }
   }
 
   async function handleDelete(svc: Service) {
@@ -97,7 +99,9 @@ export default function Services({ adminKey }: { adminKey: string }) {
     try {
       await deleteService(adminKey, svc.id, true);
       invalidate();
-    } catch {}
+    } catch (err) {
+      alert(`Échec suppression : ${(err as Error).message}\n\nFiche : ${svc.name}`);
+    }
     setDeleting(null);
     setConfirmDelete(null);
   }
@@ -107,7 +111,9 @@ export default function Services({ adminKey }: { adminKey: string }) {
     try {
       await verifyService(adminKey, svc.id, !svc.verifiedAt);
       invalidate();
-    } catch {}
+    } catch (err) {
+      alert(`Échec validation : ${(err as Error).message}\n\nFiche : ${svc.name}\n\nVérifie ta connexion ou ta clé admin et réessaye.`);
+    }
     setVerifying(null);
   }
 
@@ -279,18 +285,18 @@ export default function Services({ adminKey }: { adminKey: string }) {
                     <td className="px-4 py-3 text-gray-600 text-xs">{svc.phone || "—"}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center justify-center gap-1 flex-wrap">
-                        {svc.isUrgent && <span title="Urgent" className="text-red-500 text-xs">🚨</span>}
+                        {svc.isUrgent && <span title="Service marqué comme urgent (ne disparaît pas en validant)" className="text-red-500 text-xs">🚨</span>}
                         {(!svc.address || svc.address.trim() === "") && (
-                          <span title="Sans adresse" className="px-1.5 py-0.5 bg-rose-50 text-rose-700 rounded text-[10px] font-semibold">ADR</span>
+                          <span title="Adresse manquante — modifie la fiche pour en ajouter une" className="px-1.5 py-0.5 bg-rose-50 text-rose-700 rounded text-[10px] font-semibold">Sans adr.</span>
                         )}
                         {(svc.lat == null || svc.lng == null) && (
-                          <span title="Sans GPS" className="px-1.5 py-0.5 bg-rose-50 text-rose-700 rounded text-[10px] font-semibold">GPS</span>
+                          <span title="Coordonnées GPS manquantes — modifie la fiche pour les ajouter" className="px-1.5 py-0.5 bg-rose-50 text-rose-700 rounded text-[10px] font-semibold">Sans GPS</span>
                         )}
                         {!svc.phone && (
-                          <span title="Sans téléphone" className="px-1.5 py-0.5 bg-rose-50 text-rose-700 rounded text-[10px] font-semibold">TÉL</span>
+                          <span title="Téléphone manquant" className="px-1.5 py-0.5 bg-rose-50 text-rose-700 rounded text-[10px] font-semibold">Sans tél.</span>
                         )}
                         {svc.phone && /(-5555|-5558|-0555|555-555)/.test(svc.phone) && (
-                          <span title="Téléphone suspect" className="px-1.5 py-0.5 bg-red-100 text-red-800 rounded text-[10px] font-semibold">⚠ TÉL</span>
+                          <span title="Téléphone suspect (ressemble à un placeholder)" className="px-1.5 py-0.5 bg-red-100 text-red-800 rounded text-[10px] font-semibold">⚠ Tél suspect</span>
                         )}
                         {svc.address && svc.lat != null && svc.phone && !/(-5555|-5558|-0555|555-555)/.test(svc.phone) && !svc.isUrgent && (
                           <span className="text-gray-300">—</span>
