@@ -1,9 +1,10 @@
 import app from "./app";
 import { logger } from "./lib/logger";
 import bcrypt from "bcryptjs";
-import { eq, sql } from "drizzle-orm";
+import { eq, sql, inArray, notInArray } from "drizzle-orm";
 import { db, servicesTable, usersTable } from "@workspace/db";
 import { getUncachableStripeClient } from "./stripeClient";
+import SERVICES_DATA from "../../service-qc/data/services-data.json" with { type: "json" };
 
 function validateAuthKeysOrExit() {
   const adminKey = process.env.ADMIN_API_KEY;
@@ -196,15 +197,14 @@ async function ensureDemoAccount() {
 async function autoSeedServicesIfEmpty() {
   try {
     const count = await db.$count(servicesTable);
-    const mod: any = await import("../../service-qc/data/services.js" as any).catch(
-      () => import("../../service-qc/data/services" as any),
-    );
-    const SERVICES: any[] = mod.SERVICES ?? [];
+    const SERVICES: any[] = (SERVICES_DATA as any[]) ?? [];
     if (SERVICES.length === 0) {
       logger.warn("No static services to seed");
       return;
     }
-    logger.info({ dbCount: count, staticCount: SERVICES.length }, "Auto-seeding services from static data (insert-or-update province)…");
+
+    const reseedMode = process.env.RESEED_SERVICES === "1";
+
     const rows = SERVICES.map((s: any) => ({
       id: s.id,
       name: s.name,
@@ -223,9 +223,63 @@ async function autoSeedServicesIfEmpty() {
       lng: s.coordinates?.lng ?? null,
       active: true,
     }));
+
+    if (reseedMode) {
+      logger.warn(
+        { dbCount: count, bundleCount: rows.length },
+        "RESEED_SERVICES=1 — performing FULL destructive sync (delete stale + upsert all fields)",
+      );
+      const bundleIds = rows.map((r) => r.id);
+      // Delete services in DB that aren't in the bundle
+      const deleted = await db
+        .delete(servicesTable)
+        .where(notInArray(servicesTable.id, bundleIds))
+        .returning({ id: servicesTable.id });
+      logger.info({ deleted: deleted.length }, "Deleted stale services");
+
+      // Upsert all fields from bundle
+      const batchSize = 100;
+      for (let i = 0; i < rows.length; i += batchSize) {
+        await db
+          .insert(servicesTable)
+          .values(rows.slice(i, i + batchSize))
+          .onConflictDoUpdate({
+            target: servicesTable.id,
+            set: {
+              name: sql`excluded.name`,
+              category: sql`excluded.category`,
+              subcategory: sql`excluded.subcategory`,
+              city: sql`excluded.city`,
+              province: sql`excluded.province`,
+              phone: sql`excluded.phone`,
+              website: sql`excluded.website`,
+              description: sql`excluded.description`,
+              address: sql`excluded.address`,
+              hours: sql`excluded.hours`,
+              isUrgent: sql`excluded.is_urgent`,
+              isProvinceWide: sql`excluded.is_province_wide`,
+              lat: sql`excluded.lat`,
+              lng: sql`excluded.lng`,
+              active: sql`excluded.active`,
+              updatedAt: sql`now()`,
+            },
+          });
+      }
+      const finalCount = await db.$count(servicesTable);
+      logger.warn(
+        { finalCount },
+        "Full reseed complete. UNSET RESEED_SERVICES env var on next deploy to restore safe behavior.",
+      );
+      return;
+    }
+
+    // Default safe behavior: insert new, only refresh `province` on existing rows.
+    logger.info(
+      { dbCount: count, staticCount: rows.length },
+      "Auto-seeding services (safe mode: insert new + update province only)…",
+    );
     const batchSize = 100;
     for (let i = 0; i < rows.length; i += batchSize) {
-      // Insert new rows; for existing rows, only refresh `province` so we don't clobber admin edits.
       await db
         .insert(servicesTable)
         .values(rows.slice(i, i + batchSize))
@@ -244,7 +298,9 @@ async function autoSeedServicesIfEmpty() {
 validateAuthKeysOrExit();
 
 runStartupMigrations().then(async () => {
-  autoSeedServicesIfEmpty();
+  // Await the seed before serving traffic so users never see partial data
+  // (especially during destructive RESEED_SERVICES=1 sync).
+  await autoSeedServicesIfEmpty();
   ensureDemoAccount();
   app.listen(port, (err) => {
     if (err) {
