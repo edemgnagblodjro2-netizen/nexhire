@@ -1,0 +1,27 @@
+| #  | Service                                     | Ville         | Adresse (principale)                          | Téléphone                |
+| -- | ------------------------------------------- | ------------- | --------------------------------------------- | ------------------------ |
+| 1  | Maison Internationale de la Rive-Sud (MIRS) | Brossard      | 2060 Rue Holmes, Brossard, QC                 | 450-445-8777             |
+| 2  | Banque alimentaire Drummond                 | Drummondville | 2020 Rue Saint-Pierre, Drummondville, QC      | 819-478-4243             |
+| 3  | Carrefour Jeunesse-Emploi Drummond          | Drummondville | 159 Rue Lindsay, Drummondville, QC            | 819-475-4646             |
+| 4  | Centre prévention suicide Bois-Francs       | Drummondville | 570 Rue Hériot, Drummondville, QC             | 1-866-APPELLE (277-3553) |
+| 5  | La Rose des Vents                           | Drummondville | 575 Rue des Écoles, Drummondville, QC         | 819-472-5444             |
+| 6  | Office municipal habitation Drummond        | Drummondville | 218 Rue Brock, Drummondville, QC              | 819-477-1620             |
+| 7  | Tel-Aide Drummond                           | Drummondville | Service téléphonique (pas d’adresse publique) | 819-474-3666             |
+| 8  | Moisson Haut-Saint-François                 | East Angus    | 101 Rue David-Swan, East Angus, QC            | 819-832-2515             |
+| 9  | Accueil Parrainage Outaouais (APO)          | Gatineau      | 124 Rue Jeanne-d’Arc, Gatineau, QC            | 819-777-2960             |
+| 10 | Carrefour jeunesse-emploi Outaouais         | Gatineau      | 350 Boulevard de la Gappe, Gatineau, QC       | 819-771-4391             |
+| 11 | Centre 24/7 Outaouais                       | Gatineau      | 92 Boulevard Saint-Raymond, Gatineau, QC      | 819-595-3267             |
+| 12 | Moisson Outaouais                           | Gatineau      | 2175 Rue Saint-Louis, Gatineau, QC            | 819-503-8997             |
+| 13 | Office municipal habitation Gatineau        | Gatineau      | 649 Boulevard de la Gappe, Gatineau, QC       | 819-771-5862             |
+| 14 | Service Intégration Travail Outaouais       | Gatineau      | 920 Boulevard Saint-Joseph, Gatineau, QC      | 819-595-9444             |
+| 15 | SOS Dépannage – Moisson Granby              | Granby        | 327 Rue Matton, Granby, QC                    | 450-378-3026             |
+| 16 | Moisson Lanaudière                          | L’Assomption  | 200 Rue De L’Industrie, L’Assomption, QC      | 450-654-1414             |
+| 17 | Moisson Kamouraska                          | La Pocatière  | 322 Rue Verreault, La Pocatière, QC           | 418-856-3325             |
+| 18 | Carrefour intercultures Laval (CIL)         | Laval         | 1535 Boulevard Chomedey, Laval, QC            | 450-686-5871             |
+| 19 | Carrefour jeunesse-emploi Laval             | Laval         | 500 Boulevard Cartier Ouest, Laval, QC        | 450-967-9009             |
+| 20 | Centre crise & prévention suicide Laval     | Laval         | 1870 Avenue Michelin, Laval, QC               | 450-686-1992             |
+| 21 | Comité logement Laval                       | Laval         | 1870 Rue Michelin, Laval, QC                  | 450-967-3138             |
+| 22 | L’Aviron de Laval                           | Laval         | 430 Rue Saint-Nicolas, Laval, QC              | 450-682-3050             |
+| 23 | Maison de Lina                              | Laval         | Adresse confidentielle (violence)             | 450-682-3050             |
+| 24 | Mira-Bel                                    | Laval         | Adresse confidentielle                        | 450-628-3457             |
+| 25 | Moisson Laval                               | Laval         | 1870 Avenue Michelin, Laval, QC               | 450-622-0668             |
