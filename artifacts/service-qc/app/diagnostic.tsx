@@ -174,14 +174,32 @@ export default function DiagnosticScreen() {
   const topPadding = Platform.OS === "web" ? 16 : insets.top;
   const totalSteps = 5;
 
-  const recommendations = useMemo(() => {
-    if (step !== 4) return [];
-    const scored = services
+  const { recommendations, langFallback } = useMemo(() => {
+    if (step !== 4) return { recommendations: [], langFallback: false };
+
+    // First pass: score with the chosen language
+    let scored = services
       .map((s) => ({ s, score: scoreService(s, diag, userLocation, userProvince) }))
       .filter((x) => x.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 12);
-    return scored;
+      .sort((a, b) => b.score - a.score);
+
+    // If user picked a non-FR/EN language and NO service actually speaks it,
+    // fall back to FR/EN (re-score without the language criterion).
+    let fallback = false;
+    const lang = diag.language;
+    if (lang && lang !== "fr" && lang !== "en") {
+      const hasMatch = services.some((s) => inferLanguages(s).includes(lang));
+      if (!hasMatch) {
+        fallback = true;
+        const diagNoLang = { ...diag, language: null };
+        scored = services
+          .map((s) => ({ s, score: scoreService(s, diagNoLang, userLocation, userProvince) }))
+          .filter((x) => x.score > 0)
+          .sort((a, b) => b.score - a.score);
+      }
+    }
+
+    return { recommendations: scored.slice(0, 12), langFallback: fallback };
   }, [step, services, diag, userLocation, userProvince]);
 
   function next() {
@@ -317,6 +335,14 @@ export default function DiagnosticScreen() {
           <Text style={[styles.stepSub, { color: colors.mutedForeground }]}>
             {isFr ? "Nous prioriserons les organismes qui parlent votre langue." : "We will prioritize organizations that speak your language."}
           </Text>
+          <View style={[styles.langNote, { backgroundColor: colors.muted, borderColor: colors.border }]}>
+            <Feather name="info" size={12} color={colors.mutedForeground} />
+            <Text style={[styles.langNoteText, { color: colors.mutedForeground }]}>
+              {isFr
+                ? "L'interface de l'app reste en français/anglais. Si aucun service n'existe dans la langue choisie, on vous proposera ceux en français/anglais."
+                : "The app interface stays in French/English. If no service exists in your chosen language, we'll show you French/English ones instead."}
+            </Text>
+          </View>
           <View style={styles.langGrid}>
             {LANGS.map((lang) => {
               const meta = LANG_LABELS[lang];
@@ -535,6 +561,16 @@ export default function DiagnosticScreen() {
                 ? "Triés par pertinence pour votre situation."
                 : "Sorted by relevance for your situation."}
             </Text>
+            {langFallback && diag.language && (
+              <View style={[styles.langFallbackBanner, { backgroundColor: "#fff7ed", borderColor: "#fdba74" }]}>
+                <Feather name="alert-circle" size={14} color="#c2410c" />
+                <Text style={[styles.langFallbackText, { color: "#9a3412" }]}>
+                  {isFr
+                    ? `Aucun service en ${LANG_LABELS[diag.language].fr.toLowerCase()} trouvé. Voici les meilleurs résultats en français/anglais.`
+                    : `No service in ${LANG_LABELS[diag.language].en.toLowerCase()} found. Here are the best results in French/English.`}
+                </Text>
+              </View>
+            )}
           </View>
 
           {recommendations.map(({ s, score }, idx) => (
@@ -941,6 +977,37 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
+  },
+  langNote: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 8,
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    marginTop: 6,
+    marginBottom: 4,
+  },
+  langNoteText: {
+    flex: 1,
+    fontSize: 11,
+    fontFamily: "Inter_500Medium",
+    lineHeight: 16,
+  },
+  langFallbackBanner: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 8,
+    padding: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    marginTop: 12,
+  },
+  langFallbackText: {
+    flex: 1,
+    fontSize: 12,
+    fontFamily: "Inter_500Medium",
+    lineHeight: 17,
   },
 
   /* Big choice (location step) */
