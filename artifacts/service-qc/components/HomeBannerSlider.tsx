@@ -17,6 +17,7 @@ const BANNERS: ImageSourcePropType[] = [
   require("@/assets/images/banner-community.png"),
   require("@/assets/images/banner-help.png"),
   require("@/assets/images/banner-terrain.png"),
+  require("@/assets/images/banner-canada.png"),
 ];
 
 const AUTO_ROTATE_MS = 4000;
