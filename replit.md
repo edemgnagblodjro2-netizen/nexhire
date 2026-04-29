@@ -1,6 +1,10 @@
 # Overview
 
-**Current version: v1.0.53 (versionCode 50) — 2026-04-29**
+**Current version: v1.0.54 (versionCode 51) — 2026-04-29**
+
+Ajout de la fiche officielle **SANA — Service d'Accueil des Nouveaux Arrivants de Trois-Rivières** avec ses coordonnées vérifiées : 2000 boulevard des Récollets, édifice B, Trois-Rivières QC G9A 5K3 · 819-375-2196 · sana3r.ca · communication@sana3r.ca. Organisme officiel d'accueil et d'intégration en Mauricie depuis 1968.
+
+**v1.0.53 (versionCode 50) — 2026-04-29**
 
 Ajout de **3 services francophones supplémentaires par province hors QC = 36 nouvelles fiches**. Chaque province non-QC dispose maintenant de **5 services francophones** dédiés aux immigrants francophones (catégories : immigration, social, famille, emploi, santé, garderie).
 

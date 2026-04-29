@@ -14269,6 +14269,25 @@ export const SERVICES: Service[] = [
     coordinates: { lat: 63.7467, lng: -68.517 },
     languages: ["fr"],
   },
+
+  // ─── v54 — SANA Trois-Rivières (coordonnées officielles vérifiées) ───────
+  // Note: id "imm-saa-trois-rivieres" remplace une ancienne fiche obsolète en BD.
+  {
+    id: "imm-saa-trois-rivieres",
+    name: "SANA — Service d'Accueil des Nouveaux Arrivants de Trois-Rivières",
+    category: "immigration",
+    subcategory: "Accueil et intégration des immigrants",
+    city: "Trois-Rivières",
+    province: "QC",
+    phone: "819-375-2196",
+    website: "https://sana3r.ca/",
+    description: "Organisme officiel d'accueil et d'intégration des personnes immigrantes en Mauricie depuis 1968. Accompagnement personnalisé : démarches administratives, francisation, recherche d'emploi, logement, scolarisation des enfants, jumelage interculturel et soutien à la famille. Courriel : communication@sana3r.ca",
+    badgeVerified: true,
+    hours: "Lun-Ven 8h30-12h, 13h-16h30",
+    address: "2000 boulevard des Récollets, édifice B, Trois-Rivières QC G9A 5K3",
+    coordinates: { lat: 46.3375, lng: -72.5707 },
+    languages: ["fr", "en"],
+  },
 ];
 
 export const URGENT_SERVICES = SERVICES.filter((s) => s.isUrgent);
