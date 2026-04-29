@@ -457,10 +457,13 @@ function MiniMap({
   userLocation: { lat: number; lng: number } | null;
   colors: any;
 }) {
-  const points = useMemo(() => {
+  // Measure container size so we can place dots in PIXELS (Android-safe).
+  const [size, setSize] = useState<{ w: number; h: number } | null>(null);
+
+  const projected = useMemo(() => {
     const coords = services.map((s) => s.coordinates!).filter(Boolean);
     if (userLocation) coords.push(userLocation);
-    if (coords.length < 2) return null;
+    if (coords.length < 2 || !size) return null;
     const lats = coords.map((c) => c.lat);
     const lngs = coords.map((c) => c.lng);
     const minLat = Math.min(...lats);
@@ -469,11 +472,13 @@ function MiniMap({
     const maxLng = Math.max(...lngs);
     const dLat = (maxLat - minLat) || 1e-4;
     const dLng = (maxLng - minLng) || 1e-4;
+    const padX = 14, padY = 14;
+    const innerW = Math.max(1, size.w - padX * 2);
+    const innerH = Math.max(1, size.h - padY * 2);
 
     function project(lat: number, lng: number) {
-      // x: lng → left-to-right, y: lat → top-to-bottom (invert)
-      const x = ((lng - minLng) / dLng) * 100;
-      const y = (1 - (lat - minLat) / dLat) * 100;
+      const x = padX + ((lng - minLng) / dLng) * innerW;
+      const y = padY + (1 - (lat - minLat) / dLat) * innerH;
       return { x, y };
     }
 
@@ -481,40 +486,44 @@ function MiniMap({
       services: services.slice(0, 12).map((s) => ({ s, ...project(s.coordinates!.lat, s.coordinates!.lng) })),
       user: userLocation ? project(userLocation.lat, userLocation.lng) : null,
     };
-  }, [services, userLocation]);
-
-  if (!points) return null;
+  }, [services, userLocation, size]);
 
   return (
-    <View style={[styles.miniMap, { backgroundColor: colors.card, borderColor: colors.border }]}>
-      <View style={styles.miniGrid} pointerEvents="none">
-        {[0, 25, 50, 75, 100].map((p) => (
-          <React.Fragment key={p}>
-            <View style={[styles.gridLineH, { top: `${p}%`, backgroundColor: colors.border }]} />
-            <View style={[styles.gridLineV, { left: `${p}%`, backgroundColor: colors.border }]} />
-          </React.Fragment>
-        ))}
-      </View>
+    <View
+      style={[styles.miniMap, { backgroundColor: colors.card, borderColor: colors.border }]}
+      onLayout={(e) => {
+        const { width, height } = e.nativeEvent.layout;
+        setSize((prev) =>
+          prev && Math.abs(prev.w - width) < 1 && Math.abs(prev.h - height) < 1
+            ? prev
+            : { w: width, h: height }
+        );
+      }}
+    >
+      {size && (
+        <View style={styles.miniGrid} pointerEvents="none">
+          {[0, 0.25, 0.5, 0.75, 1].map((p) => (
+            <React.Fragment key={p}>
+              <View style={[styles.gridLineH, { top: p * size.h, backgroundColor: colors.border }]} />
+              <View style={[styles.gridLineV, { left: p * size.w, backgroundColor: colors.border }]} />
+            </React.Fragment>
+          ))}
+        </View>
+      )}
 
-      {points.services.map(({ s, x, y }) => (
+      {projected?.services.map(({ s, x, y }) => (
         <View
           key={s.id}
-          style={[
-            styles.dot,
-            { left: `${x}%`, top: `${y}%` },
-          ]}
+          style={[styles.dot, { left: x, top: y }]}
         >
           <View style={styles.dotPing} />
           <View style={styles.dotCore} />
         </View>
       ))}
 
-      {points.user && (
+      {projected?.user && (
         <View
-          style={[
-            styles.userDot,
-            { left: `${points.user.x}%`, top: `${points.user.y}%` },
-          ]}
+          style={[styles.userDot, { left: projected.user.x, top: projected.user.y }]}
         >
           <View style={styles.userPing} />
           <View style={styles.userCore} />
