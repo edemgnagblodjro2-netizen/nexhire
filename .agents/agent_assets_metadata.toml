@@ -503,3 +503,9 @@ id = "ijrFd_AEjsg49Rv1SBrvl"
 uri = "file://attached_assets/fiches_a_corriger_priorite.csv"
 type = "table"
 title = "Fiches à corriger en priorité (177)"
+
+[[outputs]]
+id = "MOawEeNl0E_QqjsP6rv3E"
+uri = "file://attached_assets/builds/attentezero-v1.0.55-monorepo-FULL.tar.gz"
+type = "unspecified"
+title = "AttenteZéro v1.0.55 (vc52) — monorepo complet"
