@@ -473,3 +473,9 @@ id = "I3zIx9imJbE7yYg3YFGvR"
 uri = "file://exports/attentezero-v1.0.54-sana-20260429-0205.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.54 — SANA Trois-Rivières ajouté et corrigé"
+
+[[outputs]]
+id = "-yzaqFlSOM8o5pMEWF8-8"
+uri = "file://exports/fiches-a-corriger.csv"
+type = "table"
+title = "Fiches à corriger (1760 lignes) — sans adresse, sans GPS, sans téléphone ou téléphone suspect"
