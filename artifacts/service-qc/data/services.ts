@@ -14135,7 +14135,7 @@ export const SERVICES: Service[] = [
   {
     id: "fr-yt-garderie-v53",
     name: "Garderie du petit cheval blanc",
-    category: "childcare",
+    category: "family",
     subcategory: "Garderie francophone",
     city: "Whitehorse",
     province: "YT",
