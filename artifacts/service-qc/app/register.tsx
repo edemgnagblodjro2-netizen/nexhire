@@ -213,7 +213,7 @@ export default function RegisterScreen() {
                   <Text style={styles.planSummaryPrice}>Gratuit</Text>
                 </View>
                 <Text style={styles.planSummaryNote} numberOfLines={2}>
-                  Recherche illimitée · SOS · Carte · Chat IA · Premium 10 $ optionnel à vie
+                  Recherche illimitée · SOS · Carte · Chat IA · Premium 19,99 $ optionnel à vie
                 </Text>
               </View>
 

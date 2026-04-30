@@ -770,7 +770,7 @@ stripeRouter.get("/stripe/payment-cancel", (_req, res) => {
 // ─────────────────────────────────────────────
 async function getOrCreateUserPremiumPriceId(stripe: any): Promise<string> {
   const productName = "AttenteZéro Premium (Utilisateur)";
-  const unitAmount = 1000; // 10.00 CAD
+  const unitAmount = 1999; // 19.99 CAD
 
   const products = await stripe.products.search({
     query: `name:'${productName}' AND active:'true'`,

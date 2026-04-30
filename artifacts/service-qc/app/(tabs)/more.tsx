@@ -243,8 +243,8 @@ export default function MoreScreen() {
                   </Text>
                   <Text style={styles.reminderSub}>
                     {isFr
-                      ? "Vous avez utilisé vos 3 consultations gratuites du jour. Passez Premium 10 $ à vie pour un accès illimité."
-                      : "You have used your 3 free daily lookups. Upgrade to Premium $10 lifetime for unlimited access."}
+                      ? "Vous avez utilisé vos 3 consultations gratuites du jour. Passez Premium 19,99 $ à vie pour un accès illimité."
+                      : "You have used your 3 free daily lookups. Upgrade to Premium $19.99 lifetime for unlimited access."}
                   </Text>
                 </View>
                 <Feather name="chevron-right" size={16} color="rgba(255,255,255,0.7)" />
@@ -272,7 +272,7 @@ export default function MoreScreen() {
                   <Text style={styles.premiumBadgeText}>PREMIUM</Text>
                 </View>
                 <View style={styles.premiumPrice}>
-                  <Text style={styles.premiumAmount}>10 $</Text>
+                  <Text style={styles.premiumAmount}>19,99 $</Text>
                   <Text style={styles.premiumPeriod}>{isFr ? "à vie" : "lifetime"}</Text>
                 </View>
               </View>
@@ -282,8 +282,8 @@ export default function MoreScreen() {
               </Text>
               <Text style={styles.premiumSub}>
                 {isFr
-                  ? "Gratuit : 3 consultations de services par jour. Premium 10 $ une seule fois — accès illimité, sans publicité, à vie."
-                  : "Free: 3 service lookups per day. Premium $10 once — unlimited access, no ads, forever."}
+                  ? "Gratuit : 3 consultations de services par jour. Premium 19,99 $ une seule fois — accès illimité, sans publicité, à vie."
+                  : "Free: 3 service lookups per day. Premium $19.99 once — unlimited access, no ads, forever."}
               </Text>
 
               <View style={styles.premiumFeaturesList}>
