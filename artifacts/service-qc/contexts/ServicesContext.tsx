@@ -7,8 +7,10 @@ import React, {
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SERVICES as STATIC_SERVICES, type Service } from "@/data/services";
+import { apiCategoryToCode } from "@/lib/categoryMapping";
 
-const CACHE_KEY = "attentezero_services_cache_v5";
+// v6 : on bump le cache car le mapping de catégorie change le format stocké.
+const CACHE_KEY = "attentezero_services_cache_v6";
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 type ServicesContextValue = {
@@ -25,11 +27,16 @@ const ServicesContext = createContext<ServicesContextValue>({
   refresh: () => {},
 });
 
-function mapApiService(raw: any): Service {
+function mapApiService(raw: any): Service | null {
+  // Convertit la catégorie BDD (français : "logement") vers le format
+  // utilisé par le code mobile (anglais : "housing"). Si la catégorie est
+  // inconnue, on filtre le service plutôt que d'afficher un badge vide.
+  const code = apiCategoryToCode(raw.category);
+  if (!code) return null;
   return {
     id: raw.id,
     name: raw.name,
-    category: raw.category,
+    category: code,
     subcategory: raw.subcategory ?? "",
     city: raw.city ?? "",
     province: raw.province ?? "QC",
@@ -98,7 +105,11 @@ export function ServicesProvider({ children }: { children: React.ReactNode }) {
       const raw: any[] = await res.json();
       if (!Array.isArray(raw) || raw.length === 0) throw new Error("Empty response");
 
-      const mapped = raw.map(mapApiService);
+      // mapApiService renvoie null si la catégorie BDD est inconnue : on
+      // filtre ces lignes pour éviter d'afficher des badges vides.
+      const mapped = raw
+        .map(mapApiService)
+        .filter((s): s is Service => s !== null);
       setServices(mapped);
       await saveCache(mapped);
     } catch (err: any) {
