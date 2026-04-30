@@ -1,0 +1,32 @@
+PS D:\attentezero-v1.0.55\artifacts\service-qc> CD D:\attentezero-v1.0.55
+PS D:\attentezero-v1.0.55> echo node-linker=hoisted >> .npmrc
+PS D:\attentezero-v1.0.55> echo shamefully-hoist=true >> .npmrc
+PS D:\attentezero-v1.0.55> pnpm install --no-frozen-lockfile
+Scope: all 11 workspace projects
+artifacts/api-server                     |  WARN  deprecated @types/bcryptjs@3.0.0
+ WARN  3 deprecated subdependencies found: glob@7.2.3, inflight@1.0.6, rimraf@3.0.2
+Packages: +1163
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 1118, reused 1111, downloaded 0, added 1163, done
+. preinstall$ node -e "if(!(process.env.npm_config_user_agent||'').startsWith('pnpm')){console.error('Use pnpm instea…
+└─ Running...
+node:child_process:1008
+    throw new ERR_INVALID_ARG_VALUE(propName, arg, 'must be a string without null bytes');
+    ^
+
+TypeError [ERR_INVALID_ARG_VALUE]: The property 'options.env['npm_config___n_o_d_e___l_i_n_k_e_r_']' must be a string without null bytes. Received '\x00h\x00o\x00i\x00s\x00t\x00e\x00d\x00'
+    at validateArgumentNullCheck (node:child_process:1008:11)
+    at normalizeSpawnArguments (node:child_process:735:7)
+    at spawn (node:child_process:789:13)
+    at spawn (C:\Users\sandr\AppData\Local\pnpm\.tools\pnpm\10.26.1_tmp_35060_0\node_modules\pnpm\dist\pnpm.cjs:66915:19)
+    at runCmd_ (C:\Users\sandr\AppData\Local\pnpm\.tools\pnpm\10.26.1_tmp_35060_0\node_modules\pnpm\dist\pnpm.cjs:91542:20)
+    at runCmd (C:\Users\sandr\AppData\Local\pnpm\.tools\pnpm\10.26.1_tmp_35060_0\node_modules\pnpm\dist\pnpm.cjs:91482:9)
+    at runPackageLifecycle (C:\Users\sandr\AppData\Local\pnpm\.tools\pnpm\10.26.1_tmp_35060_0\node_modules\pnpm\dist\pnpm.cjs:91449:7)
+    at Array.<anonymous> (C:\Users\sandr\AppData\Local\pnpm\.tools\pnpm\10.26.1_tmp_35060_0\node_modules\pnpm\dist\pnpm.cjs:90687:12)
+    at LOOP (C:\Users\sandr\AppData\Local\pnpm\.tools\pnpm\10.26.1_tmp_35060_0\node_modules\pnpm\dist\pnpm.cjs:90712:18)
+    at chain (C:\Users\sandr\AppData\Local\pnpm\.tools\pnpm\10.26.1_tmp_35060_0\node_modules\pnpm\dist\pnpm.cjs:90717:9) {
+  code: 'ERR_INVALID_ARG_VALUE'
+}
+
+Node.js v24.14.0
+PS D:\attentezero-v1.0.55>
