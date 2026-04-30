@@ -28,6 +28,7 @@ import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor, CATEGORY_ICONS } from "@/utils/categoryColors";
 import { detectCategory } from "@/utils/detectCategory";
+import { trackSearch } from "@/lib/analytics";
 
 const ALL_CATEGORIES: Category[] = [
   "housing",
@@ -99,7 +100,9 @@ export default function HomeScreen() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     Keyboard.dismiss();
     const result = detectCategory(query);
-    // Best-effort anonymous analytics — never blocks navigation.
+    // Nouveau tracker analytique avec session_id et écran courant.
+    void trackSearch(result.category ?? "all", query.trim().length);
+    // Compatibilité : on continue d'écrire dans search_events historique.
     fetch(`${getApiBaseUrl()}/api/search-events`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

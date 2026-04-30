@@ -10,6 +10,7 @@ import Verifications from "@/pages/Verifications";
 import B2G from "@/pages/B2G";
 import BugReports from "@/pages/BugReports";
 import Stats from "@/pages/Stats";
+import Live from "@/pages/Live";
 import OrgLogin from "@/pages/OrgLogin";
 import OrgDashboard from "@/pages/OrgDashboard";
 import Layout from "@/components/Layout";
@@ -69,6 +70,7 @@ function AdminApp() {
     <Layout onLogout={handleLogout} role={role}>
       <Switch>
         <Route path="/" component={() => <Dashboard adminKey={adminKey!} />} />
+        <Route path="/live" component={() => <Live adminKey={adminKey!} />} />
         <Route path="/services" component={() => <Services adminKey={adminKey!} />} />
         <Route path="/verifications" component={() => <Verifications adminKey={adminKey!} />} />
         <Route path="/b2g" component={() => <B2G adminKey={adminKey!} />} />

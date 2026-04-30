@@ -1,6 +1,7 @@
 import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
+import { uploadPushToken } from "./analytics";
 
 const TOKEN_KEY = "attentezero_push_token_v1";
 const PERMISSION_ASKED_KEY = "attentezero_push_permission_asked_v1";
@@ -58,6 +59,9 @@ export async function registerForPushNotificationsAsync(): Promise<string | null
     const token = tokenResp.data ?? null;
     if (token) {
       await AsyncStorage.setItem(TOKEN_KEY, token);
+      // Best-effort : envoie le token au backend pour permettre l'envoi
+      // de notifications ciblées depuis le panneau admin.
+      void uploadPushToken(token);
     }
     return token;
   } catch {

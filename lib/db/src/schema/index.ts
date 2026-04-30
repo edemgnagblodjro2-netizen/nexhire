@@ -7,5 +7,6 @@ export * from "./organisationMembers";
 export * from "./verifications";
 export * from "./bugReports";
 export * from "./searchEvents";
+export * from "./analytics";
 export * from "./referralCodes";
 export * from "./referralClaims";

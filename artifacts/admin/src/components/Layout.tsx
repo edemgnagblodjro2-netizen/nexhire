@@ -3,6 +3,7 @@ import { type AdminRole } from "@/lib/auth";
 
 const SUPERADMIN_NAV = [
   { href: "/", icon: "📊", label: "Tableau de bord" },
+  { href: "/live", icon: "🟢", label: "En direct" },
   { href: "/services", icon: "🏢", label: "Services" },
   { href: "/verifications", icon: "🛡️", label: "Vérifications" },
   { href: "/b2g", icon: "🏛️", label: "B2G — Régions" },

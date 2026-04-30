@@ -21,6 +21,12 @@ import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 import { getApiBaseUrl } from "@/lib/apiBase";
 import WaitTimeWidget from "@/components/WaitTimeWidget";
 import { addHistoryEntry } from "@/lib/history";
+import {
+  trackServiceCall,
+  trackServiceDirections,
+  trackServiceView,
+  trackServiceWebsite,
+} from "@/lib/analytics";
 
 async function trackServiceAction(serviceId: string, action: "view" | "call" | "click") {
   try {
@@ -50,6 +56,7 @@ export default function ServiceDetailScreen() {
   useEffect(() => {
     if (id) {
       trackServiceAction(id, "view");
+      void trackServiceView(id);
     }
   }, [id]);
 
@@ -80,6 +87,7 @@ export default function ServiceDetailScreen() {
   function handleCall() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     trackServiceAction(service!.id, "call");
+    void trackServiceCall(service!.id);
     Linking.openURL(`tel:${service!.phone.replace(/\s/g, "")}`);
   }
 
@@ -87,7 +95,29 @@ export default function ServiceDetailScreen() {
     if (!service?.website) return;
     Haptics.selectionAsync();
     trackServiceAction(service.id, "click");
+    void trackServiceWebsite(service.id);
     Linking.openURL(service.website);
+  }
+
+  function handleDirections() {
+    if (!service) return;
+    Haptics.selectionAsync();
+    void trackServiceDirections(service.id);
+    const lat = service.coordinates?.lat;
+    const lng = service.coordinates?.lng;
+    const label = encodeURIComponent(service.name);
+    let url: string;
+    if (lat && lng) {
+      url =
+        Platform.OS === "ios"
+          ? `http://maps.apple.com/?ll=${lat},${lng}&q=${label}`
+          : `geo:${lat},${lng}?q=${lat},${lng}(${label})`;
+    } else if (service.address) {
+      url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(service.address)}`;
+    } else {
+      return;
+    }
+    Linking.openURL(url);
   }
 
   return (
@@ -248,6 +278,37 @@ export default function ServiceDetailScreen() {
               <Text style={styles.actionBtnSub}>{service.phone}</Text>
             </View>
           </TouchableOpacity>
+
+          {(service.address || service.coordinates) ? (
+            <TouchableOpacity
+              style={[
+                styles.actionBtn,
+                {
+                  backgroundColor: colors.secondary ?? colors.muted,
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                },
+              ]}
+              onPress={handleDirections}
+              activeOpacity={0.85}
+            >
+              <Feather name="navigation" size={20} color={colors.primary} />
+              <View>
+                <Text style={[styles.actionBtnLabel, { color: colors.primary }]}>
+                  Itinéraire
+                </Text>
+                <Text
+                  style={[
+                    styles.actionBtnSub,
+                    { color: colors.mutedForeground },
+                  ]}
+                  numberOfLines={1}
+                >
+                  Ouvrir dans Cartes
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : null}
 
           {service.website ? (
             <TouchableOpacity

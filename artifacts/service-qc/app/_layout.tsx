@@ -15,16 +15,25 @@ import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import * as SecureStore from "expo-secure-store";
+import { usePathname } from "expo-router";
 import { setAuthTokenGetter, setBaseUrl } from "@/lib/apiClient";
+import {
+  setLocation as setAnalyticsLocation,
+  startAnalytics,
+  trackScreenView,
+} from "@/lib/analytics";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AppSplashScreen } from "@/components/AppSplashScreen";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { AuthProvider, useAuth } from "@/lib/auth";
 import { LanguageProvider } from "@/contexts/LanguageContext";
-import { LocationProvider } from "@/contexts/LocationContext";
+import { LocationProvider, useLocation } from "@/contexts/LocationContext";
 import { ServicesProvider } from "@/contexts/ServicesContext";
-import { UserProvinceProvider } from "@/contexts/UserProvinceContext";
+import {
+  UserProvinceProvider,
+  useUserProvince,
+} from "@/contexts/UserProvinceContext";
 import { useInactivityTimer } from "@/hooks/useInactivityTimer";
 import { hasSeenOnboarding } from "@/lib/onboarding";
 
@@ -40,6 +49,32 @@ setAuthTokenGetter(() => SecureStore.getItemAsync("auth_session_token"));
 SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
+
+function AnalyticsBridge() {
+  const pathname = usePathname();
+  const { userLocation } = useLocation();
+  const { province } = useUserProvince();
+
+  useEffect(() => {
+    void startAnalytics();
+  }, []);
+
+  useEffect(() => {
+    if (pathname) {
+      void trackScreenView(pathname);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    setAnalyticsLocation({
+      province,
+      lat: userLocation?.lat ?? null,
+      lng: userLocation?.lng ?? null,
+    });
+  }, [province, userLocation?.lat, userLocation?.lng]);
+
+  return null;
+}
 
 function AppContent({ fontsReady }: { fontsReady: boolean }) {
   const { isLoading, isAuthenticated, logout } = useAuth();
@@ -120,6 +155,7 @@ function AppContent({ fontsReady }: { fontsReady: boolean }) {
         <Stack.Screen name="ambassador" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false, gestureEnabled: false }} />
       </Stack>
+      <AnalyticsBridge />
       <OfflineBanner />
       <AppSplashScreen visible={splashVisible} />
     </View>

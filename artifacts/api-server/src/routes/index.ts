@@ -11,6 +11,7 @@ import b2gRouter from "./b2g";
 import waitRouter from "./wait";
 import bugReportsRouter from "./bugReports";
 import searchEventsRouter from "./searchEvents";
+import analyticsRouter from "./analytics";
 import referralsRouter from "./referrals";
 
 // Pivot v1.0.33 — sensitive-data modules retired:
@@ -35,6 +36,7 @@ router.use(b2gRouter);
 router.use(waitRouter);
 router.use(bugReportsRouter);
 router.use(searchEventsRouter);
+router.use(analyticsRouter);
 router.use(referralsRouter);
 
 export default router;

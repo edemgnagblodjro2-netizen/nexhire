@@ -9,6 +9,44 @@ type StatsResponse = {
   byCategory: CategoryRow[];
 };
 
+type OverviewResponse = {
+  days: number;
+  activeNow: number;
+  eventsTotal: number;
+  uniqueSessions: number;
+  uniqueUsers: number;
+  screenViews: number;
+  searches: number;
+  serviceViews: number;
+  serviceCalls: number;
+  serviceDirections: number;
+  pushTokens: number;
+  newUsers: number;
+  premiumUsers: number;
+};
+
+type ScreenRow = { screen: string; count: number; uniqueSessions: number };
+type ScreensResponse = { days: number; screens: ScreenRow[] };
+
+type FunnelTopCalled = {
+  serviceId: string;
+  name: string | null;
+  city: string | null;
+  province: string | null;
+  calls: number;
+};
+type FunnelResponse = {
+  days: number;
+  views: number;
+  calls: number;
+  directions: number;
+  websites: number;
+  callRate: number;
+  directionsRate: number;
+  websiteRate: number;
+  topCalled: FunnelTopCalled[];
+};
+
 const PROVINCE_NAMES: Record<string, string> = {
   QC: "Québec",
   ON: "Ontario",
@@ -44,6 +82,9 @@ const CATEGORY_NAMES: Record<string, string> = {
 
 export default function Stats({ adminKey }: { adminKey: string }) {
   const [stats, setStats] = useState<StatsResponse | null>(null);
+  const [overview, setOverview] = useState<OverviewResponse | null>(null);
+  const [screens, setScreens] = useState<ScreensResponse | null>(null);
+  const [funnel, setFunnel] = useState<FunnelResponse | null>(null);
   const [days, setDays] = useState(7);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -54,12 +95,24 @@ export default function Stats({ adminKey }: { adminKey: string }) {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`/api/admin/search-stats?days=${days}`, {
-          headers: { "x-admin-key": adminKey },
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = (await res.json()) as StatsResponse;
-        if (!cancelled) setStats(data);
+        const headers = { "x-admin-key": adminKey };
+        const [r1, r2, r3, r4] = await Promise.all([
+          fetch(`/api/admin/search-stats?days=${days}`, { headers }),
+          fetch(`/api/admin/analytics/overview?days=${days}`, { headers }),
+          fetch(`/api/admin/analytics/screens?days=${days}`, { headers }),
+          fetch(`/api/admin/analytics/funnel?days=${days}`, { headers }),
+        ]);
+        if (!r1.ok) throw new Error(`HTTP ${r1.status}`);
+        const data = (await r1.json()) as StatsResponse;
+        const ov = r2.ok ? ((await r2.json()) as OverviewResponse) : null;
+        const sc = r3.ok ? ((await r3.json()) as ScreensResponse) : null;
+        const fn = r4.ok ? ((await r4.json()) as FunnelResponse) : null;
+        if (!cancelled) {
+          setStats(data);
+          setOverview(ov);
+          setScreens(sc);
+          setFunnel(fn);
+        }
       } catch (err) {
         if (!cancelled) setError((err as Error).message);
       } finally {
@@ -104,9 +157,121 @@ export default function Stats({ adminKey }: { adminKey: string }) {
         </div>
       ) : !stats ? null : (
         <div className="space-y-6">
+          {overview && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <Kpi
+                label="Actifs maintenant"
+                value={overview.activeNow}
+                accent="green"
+                hint="dernier ping < 2 min"
+              />
+              <Kpi
+                label="Sessions uniques"
+                value={overview.uniqueSessions}
+                accent="teal"
+                hint={`${overview.uniqueUsers} comptes connectés`}
+              />
+              <Kpi
+                label="Vues d'écran"
+                value={overview.screenViews}
+                accent="blue"
+                hint={`${overview.eventsTotal} événements`}
+              />
+              <Kpi
+                label="Appareils notifiables"
+                value={overview.pushTokens}
+                accent="purple"
+                hint={`${overview.premiumUsers} comptes premium`}
+              />
+            </div>
+          )}
+
+          {funnel && (
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+              <h2 className="font-semibold text-gray-800 mb-4">
+                Tunnel de conversion (vue → action)
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <FunnelStep
+                  label="Vues de fiches"
+                  value={funnel.views}
+                  rate={null}
+                />
+                <FunnelStep
+                  label="Appels"
+                  value={funnel.calls}
+                  rate={funnel.callRate}
+                />
+                <FunnelStep
+                  label="Itinéraires"
+                  value={funnel.directions}
+                  rate={funnel.directionsRate}
+                />
+                <FunnelStep
+                  label="Sites web"
+                  value={funnel.websites}
+                  rate={funnel.websiteRate}
+                />
+              </div>
+              {funnel.topCalled.length > 0 && (
+                <div className="mt-6">
+                  <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                    Services les plus appelés
+                  </h3>
+                  <div className="space-y-1.5">
+                    {funnel.topCalled.slice(0, 8).map((s) => (
+                      <div
+                        key={s.serviceId}
+                        className="flex items-center justify-between text-sm border-b border-gray-50 pb-1.5"
+                      >
+                        <span className="text-gray-700 truncate">
+                          {s.name ?? s.serviceId}
+                          {s.city && (
+                            <span className="text-gray-400 ml-1">
+                              · {s.city}
+                            </span>
+                          )}
+                        </span>
+                        <span className="font-semibold text-gray-900">
+                          {s.calls}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {screens && screens.screens.length > 0 && (
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+              <h2 className="font-semibold text-gray-800 mb-4">
+                Écrans les plus visités
+              </h2>
+              <div className="space-y-1.5">
+                {screens.screens.slice(0, 15).map((s) => (
+                  <div
+                    key={s.screen}
+                    className="flex items-center justify-between text-sm"
+                  >
+                    <span className="font-mono text-gray-700 truncate flex-1">
+                      {s.screen.replace(/^\//, "") || "accueil"}
+                    </span>
+                    <span className="text-xs text-gray-400 mr-3">
+                      {s.uniqueSessions} sessions
+                    </span>
+                    <span className="font-semibold text-gray-900 w-16 text-right">
+                      {s.count.toLocaleString("fr-CA")}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
             <p className="text-xs uppercase tracking-wide text-gray-400 font-medium">
-              Total recherches
+              Total recherches (legacy)
             </p>
             <p className="text-4xl font-bold text-gray-900 mt-1">
               {stats.total.toLocaleString("fr-CA")}
@@ -168,6 +333,72 @@ export default function Stats({ adminKey }: { adminKey: string }) {
             </div>
           </div>
         </div>
+      )}
+    </div>
+  );
+}
+
+function Kpi({
+  label,
+  value,
+  hint,
+  accent,
+}: {
+  label: string;
+  value: number;
+  hint?: string;
+  accent: "green" | "teal" | "blue" | "purple";
+}) {
+  const ring =
+    accent === "green"
+      ? "border-green-100"
+      : accent === "teal"
+      ? "border-teal-100"
+      : accent === "blue"
+      ? "border-blue-100"
+      : "border-purple-100";
+  const text =
+    accent === "green"
+      ? "text-green-700"
+      : accent === "teal"
+      ? "text-teal-700"
+      : accent === "blue"
+      ? "text-blue-700"
+      : "text-purple-700";
+  return (
+    <div className={`bg-white rounded-2xl border ${ring} p-4 shadow-sm`}>
+      <p className="text-[11px] uppercase tracking-wide text-gray-400 font-medium">
+        {label}
+      </p>
+      <p className={`text-2xl font-bold mt-1 ${text}`}>
+        {value.toLocaleString("fr-CA")}
+      </p>
+      {hint && <p className="text-[11px] text-gray-400 mt-0.5">{hint}</p>}
+    </div>
+  );
+}
+
+function FunnelStep({
+  label,
+  value,
+  rate,
+}: {
+  label: string;
+  value: number;
+  rate: number | null;
+}) {
+  return (
+    <div className="bg-gray-50 rounded-xl p-4">
+      <p className="text-[11px] uppercase tracking-wide text-gray-400 font-medium">
+        {label}
+      </p>
+      <p className="text-2xl font-bold text-gray-900 mt-1">
+        {value.toLocaleString("fr-CA")}
+      </p>
+      {rate !== null && (
+        <p className="text-xs text-teal-700 font-medium mt-0.5">
+          {rate}% des vues
+        </p>
       )}
     </div>
   );
