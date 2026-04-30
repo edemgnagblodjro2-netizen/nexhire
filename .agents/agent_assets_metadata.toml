@@ -521,3 +521,9 @@ id = "3ejAe10Jhl3DxrCu-kmlA"
 uri = "file://exports/attentezero-v1.0.56-vc53-leger-20260430-2104.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.56 / vc53 — version légère (985 Ko)"
+
+[[outputs]]
+id = "5pD0_eYUXUsjlC2VWpUhv"
+uri = "file://exports/fiches-a-corriger-20260430.csv"
+type = "table"
+title = "Fiches à corriger — audit qualité 30 avril 2026"

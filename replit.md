@@ -141,3 +141,20 @@ The project is organized as a pnpm workspace monorepo, with each package managin
 - **Drizzle ORM**: Used for database interaction with PostgreSQL.
 - **Expo**: Framework for building the React Native mobile application.
 - **Google Play Console / Apple App Store Connect**: Platforms for mobile application distribution.
+# Audit qualité & enrichissement (2026-04-30)
+
+## Outils dédiés (`@workspace/scripts`)
+- `pnpm --filter @workspace/scripts run audit-quality` — Crawle tous les sites web actifs (concurrence 20, UA Firefox, double tentative HEAD→GET) et exporte `exports/fiches-a-corriger-AAAAMMJJ.csv` avec les colonnes vides à remplir manuellement (téléphone, site, description, adresse corrigés + colonne action garder|corriger|supprimer).
+  - Catégories de problèmes : `SANS_SITE`, `SANS_DESCRIPTION`, `JAMAIS_VERIFIE`, `ADRESSE_SANS_CODE_POSTAL`, `SITE_HTTP_xxx`, `SITE_TIMEOUT`, `SITE_DNS_MORT`, `SITE_PROBABLEMENT_OK_MAIS_BLOQUE_BOT` (cas spécial : 403/429 ⇒ probablement actif mais Cloudflare/WAF rejette le bot). Beaucoup de `SITE_ERR:fetch failed` peuvent être des faux positifs liés à l'IP de Replit (canada.ca, gnb.ca, novascotia.ca etc. retournent `000` même via curl direct).
+
+- `pnpm --filter @workspace/scripts run import-enrichment` — UPSERT (par id) de fiches communautaires québécoises curées :
+  - 18 Carrefours jeunesse-emploi (CJE) supplémentaires
+  - 16 Offices municipaux d'habitation (OMH)
+  - 12 banques alimentaires/cuisines collectives (RCCQ + Moissons régionales)
+  - 11 ACSM/CMHA filiales québécoises + Revivre, AMI-Québec, AQPS, Phobies-Zéro
+  - Toutes marquées `verified_by='curation-officielle-2026-04-30'`. NE supprime aucune fiche existante.
+
+## État BDD post-enrichissement
+- 1 755 fiches actives au total (+57)
+- 1 550 fiches QC actives (+57)
+- 0 doublon connu
