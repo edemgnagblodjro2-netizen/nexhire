@@ -1,17 +1,23 @@
 # Overview
 
-**Current version: v1.0.54 (versionCode 51) — 2026-04-29**
+**Current version: v1.0.55 (versionCode 52, app.json local 55) — 2026-04-29**
 
-> ⏳ **v1.0.55 EN COURS DE PRÉPARATION** (pas encore publiée — pas de ZIP généré).
+> 🛠️ **v1.0.55 BUILD EAS EN COURS sur D:\attentezero-v1.0.55**
 >
-> L'utilisateur corrige actuellement les fiches dans le panneau admin (téléphones, adresses, sites web). Le ZIP v1.0.55 sera généré **uniquement quand toutes les corrections seront terminées**, pour ne jamais compiler une version qui contient de fausses informations.
+> 177 fiches "à corriger en priorité" rectifiées (153 services province-wide → "N/A — service téléphonique/en ligne", 9 centres 911, 8 services CFS provinciaux, 7 vraies adresses). Bundle services-data.json régénéré (1710 fiches), prod redéployée avec RESEED_SERVICES=1 puis RESEED_SERVICES retiré (mode sécurisé restauré).
 >
-> **Infrastructure déjà en place** :
-> - Script de synchronisation `pnpm --filter @workspace/scripts run sync-services` qui réécrit `artifacts/service-qc/data/services.ts` à partir de la BD admin (source de vérité).
-> - 2 corrections déjà appliquées en BD : CPS Bois-Francs (1-866-277-3553 + adresse 575 Rue des Écoles) et Moisson Outaouais (819-669-2000 + 37 rue Bombardier J8R 0G4).
-> - Doublon connu à traiter : `gat-f1` (vieux numéro Moisson Outaouais) co-existe avec `baq-moisson-outaouais`.
+> ⚠️ **BUG ARCHIVE v1.0.55-monorepo-FULL.tar.gz — `.npmrc` racine MANQUANT**
 >
-> Quand l'utilisateur dira « génère le ZIP », bumper à v1.0.55/vc52, lancer la synchro, créer le ZIP et publier.
+> L'archive shippée à l'utilisateur ne contient pas `.npmrc` (la commande tar liste les fichiers explicitement et oublie les dotfiles). Sans ce `.npmrc` à la racine, `pnpm install` n'utilise pas `node-linker=hoisted` ni `shamefully-hoist=true`, et chaque package n'a pas de `node_modules` plat → EAS local pre-flight check échoue avec "Failed to resolve plugin for module 'expo-router'".
+>
+> Workaround appliqué côté utilisateur : ajouter manuellement à `D:\attentezero-v1.0.55\.npmrc`:
+> ```
+> node-linker=hoisted
+> shamefully-hoist=true
+> ```
+> puis `pnpm install --no-frozen-lockfile`.
+>
+> **À CORRIGER pour v1.0.56 et suivants** : ajouter `.npmrc` (et tout autre dotfile critique : `.easignore`, etc.) à la liste explicite des fichiers tar.
 
 **v1.0.54 (versionCode 51) — 2026-04-29**
 
