@@ -1,0 +1,77 @@
+PS D:\attentezero-v1.0.55\artifacts\service-qc> type app.json
+{
+  "expo": {
+    "name": "AttenteZ\u00e9ro",
+    "slug": "attentezero",
+    "version": "1.0.55",
+    "orientation": "default",
+    "icon": "./assets/images/icon.png",
+    "scheme": "service-qc",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0e7e6e"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.attentezero.app",
+      "icon": "./assets/images/icon.png",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "AttenteZ\u00e9ro utilise votre position pour afficher les services communautaires les plus proches de vous.",
+        "NSLocationAlwaysUsageDescription": "AttenteZ\u00e9ro utilise votre position pour trier les services par distance."
+      }
+    },
+    "android": {
+      "package": "com.attentezero.app",
+      "versionCode": 55,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/icon_transparent.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ],
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/images/icon.png"
+    },
+    "plugins": [
+      [
+        "expo-router",
+        {
+          "origin": "https://replit.com/"
+        }
+      ],
+      "expo-font",
+      "expo-web-browser",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "AttenteZ\u00e9ro utilise votre position pour afficher les services communautaires les plus proches de vous.",
+          "locationWhenInUsePermission": "AttenteZ\u00e9ro utilise votre position pour afficher les services communautaires les plus proches de vous."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#0e7e6e"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {}
+    }
+  }
+}
+PS D:\attentezero-v1.0.55\artifacts\service-qc>
