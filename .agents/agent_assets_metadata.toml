@@ -515,3 +515,9 @@ id = "OJVu0Xcib9eY_sNwj6uuU"
 uri = "file://exports/attentezero-v1.0.56-vc53-audit-20260430-0358.zip"
 type = "unspecified"
 title = "AttenteZéro v1.0.56 / vc53 — monorepo complet (audit)"
+
+[[outputs]]
+id = "3ejAe10Jhl3DxrCu-kmlA"
+uri = "file://exports/attentezero-v1.0.56-vc53-leger-20260430-2104.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.56 / vc53 — version légère (985 Ko)"
