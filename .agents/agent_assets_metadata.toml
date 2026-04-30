@@ -509,3 +509,9 @@ id = "MOawEeNl0E_QqjsP6rv3E"
 uri = "file://attached_assets/builds/attentezero-v1.0.55-monorepo-FULL.tar.gz"
 type = "unspecified"
 title = "AttenteZéro v1.0.55 (vc52) — monorepo complet"
+
+[[outputs]]
+id = "OJVu0Xcib9eY_sNwj6uuU"
+uri = "file://exports/attentezero-v1.0.56-vc53-audit-20260430-0358.zip"
+type = "unspecified"
+title = "AttenteZéro v1.0.56 / vc53 — monorepo complet (audit)"
