@@ -158,3 +158,18 @@ The project is organized as a pnpm workspace monorepo, with each package managin
 - 1 755 fiches actives au total (+57)
 - 1 550 fiches QC actives (+57)
 - 0 doublon connu
+
+## Boucle CSV de validation manuelle (1er mai 2026)
+
+Workflow rodé pour la validation continue par l'utilisateur :
+
+1. **Export** : `pnpm --filter @workspace/scripts run audit-quality`
+   → produit `exports/fiches-a-corriger-AAAAMMJJ.csv`
+2. **L'utilisateur** ouvre le CSV, remplit les colonnes `_corrige` (URL, téléphone, description, adresse) et/ou met `supprimer` dans la colonne action quand pertinent. Toutes les autres lignes sont implicitement « garder ».
+3. **Réimport** : `pnpm --filter @workspace/scripts run apply-corrections -- exports/fiches-correctes-AAAAMMJJ.csv`
+   → marque toutes les fiches du CSV comme `verified_at = now`, `verified_by = "csv-validation-AAAA-MM-JJ"`, applique les corrections d'URL/tel/adresse/description, soft-delete les `supprimer`. Idempotent (pure UPDATE par id).
+
+### Premier passage validé par l'utilisateur (2026-05-01)
+- 361 fiches marquées vérifiées en une opération
+- 110 URLs corrigées (souvent passage de www.x → x ou redirections officielles)
+- Taux de fiches vérifiées : ~17% → **36%**

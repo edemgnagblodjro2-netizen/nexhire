@@ -9,6 +9,7 @@
     "sync-services": "node ../node_modules/tsx/dist/cli.mjs ./src/sync-services-from-db.ts",
     "audit-quality": "node ../node_modules/tsx/dist/cli.mjs ./src/audit-quality-csv.ts",
     "import-enrichment": "node ../node_modules/tsx/dist/cli.mjs ./src/import-quebec-enrichment.ts",
+    "apply-corrections": "node ../node_modules/tsx/dist/cli.mjs ./src/apply-corrections-csv.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
