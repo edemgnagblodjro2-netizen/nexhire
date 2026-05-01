@@ -5,10 +5,15 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 
 const COLORS = ["#0d9488", "#0891b2", "#7c3aed", "#dc2626", "#d97706", "#16a34a"];
 
 export default function Dashboard({ adminKey }: { adminKey: string }) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch, isFetching } = useQuery({
     queryKey: ["meta", adminKey],
     queryFn: () => fetchMeta(adminKey),
     staleTime: 60_000,
+    // Auto-retry every 15s while the request is failing (e.g. API server
+    // restarting). React Query stops polling automatically once the call
+    // succeeds, so the cost is zero in the happy path.
+    refetchInterval: (q) => (q.state.error ? 15_000 : false),
+    refetchOnWindowFocus: true,
   });
 
   if (isLoading) {
@@ -23,10 +28,24 @@ export default function Dashboard({ adminKey }: { adminKey: string }) {
   }
 
   if (error || !data) {
+    const msg = String((error as Error | undefined)?.message ?? "");
+    const isAuth = msg.includes("401") || msg.includes("403");
     return (
       <div className="p-8">
-        <div className="bg-red-50 border border-red-100 rounded-xl p-4 text-sm text-red-700">
-          Erreur lors du chargement des stats. Vérifiez que le serveur API est démarré.
+        <div className="bg-red-50 border border-red-100 rounded-xl p-5 text-sm text-red-700 space-y-3">
+          <div className="font-semibold">Erreur lors du chargement des stats.</div>
+          <div className="text-red-600">
+            {isAuth
+              ? "Votre clé d'accès n'est plus valide. Déconnectez-vous puis reconnectez-vous."
+              : "Le serveur API ne répond pas. Une nouvelle tentative est en cours toutes les 15 secondes."}
+          </div>
+          <button
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-semibold rounded-lg transition"
+          >
+            {isFetching ? "Nouvelle tentative…" : "Réessayer maintenant"}
+          </button>
         </div>
       </div>
     );
