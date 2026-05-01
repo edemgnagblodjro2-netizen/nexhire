@@ -527,3 +527,15 @@ id = "5pD0_eYUXUsjlC2VWpUhv"
 uri = "file://exports/fiches-a-corriger-20260430.csv"
 type = "table"
 title = "Fiches à corriger — audit qualité 30 avril 2026"
+
+[[outputs]]
+id = "wUP4IWS3hWaJFMc_ipHlf"
+uri = "file://exports/top-300-fiches-beton-20260501.csv"
+type = "table"
+title = "Top 300 fiches béton (CSV complet)"
+
+[[outputs]]
+id = "jytpxQFRJ8Bz-LphGMBsJ"
+uri = "file://exports/top-300-ids-20260501.txt"
+type = "text"
+title = "Liste des 300 IDs (texte brut)"

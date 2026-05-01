@@ -10,6 +10,7 @@
     "audit-quality": "node ../node_modules/tsx/dist/cli.mjs ./src/audit-quality-csv.ts",
     "import-enrichment": "node ../node_modules/tsx/dist/cli.mjs ./src/import-quebec-enrichment.ts",
     "apply-corrections": "node ../node_modules/tsx/dist/cli.mjs ./src/apply-corrections-csv.ts",
+    "select-top-300": "node ../node_modules/tsx/dist/cli.mjs ./src/select-top-300.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
