@@ -20,7 +20,23 @@ const EMPTY: Partial<Service> = {
   active: true,
 };
 
-const CITIES = ["Trois-Rivières", "Shawinigan", "Drummondville", "Victoriaville", "Province"];
+const CITIES = [
+  "Province",
+  "Abbotsford", "Alma", "Baie-Comeau", "Blainville", "Brampton", "Brandon",
+  "Brossard", "Calgary", "Charlottetown", "Châteauguay", "Corner Brook",
+  "Dartmouth", "Drummondville", "Edmonton", "Fredericton", "Gatineau",
+  "Granby", "Halifax", "Hamilton", "Iqaluit", "Joliette", "Kelowna",
+  "Kingston", "Laval", "Lethbridge", "Lévis", "London", "Longueuil",
+  "Mascouche", "Medicine Hat", "Mirabel", "Mississauga", "Moncton",
+  "Montréal", "Moose Jaw", "Ottawa", "Prince George", "Québec", "Red Deer",
+  "Regina", "Repentigny", "Rimouski", "Rouyn-Noranda", "Saguenay",
+  "Saint John", "Saint-Hyacinthe", "Saint-Jean-sur-Richelieu", "Saint-Jérôme",
+  "Salaberry-de-Valleyfield", "Saskatoon", "Sept-Îles", "Shawinigan",
+  "Sherbrooke", "St. John's", "Sudbury", "Summerside", "Sydney",
+  "Terrebonne", "Thompson", "Thunder Bay", "Toronto", "Trois-Rivières",
+  "Truro", "Vancouver", "Victoria", "Victoriaville", "Whitehorse",
+  "Windsor", "Winnipeg", "Yellowknife",
+];
 const CATEGORIES = [
   "housing", "food", "mentalHealth", "health", "immigration",
   "employment", "family", "social", "childcare", "realestate",

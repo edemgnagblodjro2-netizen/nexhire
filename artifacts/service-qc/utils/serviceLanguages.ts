@@ -1,4 +1,5 @@
 import type { Service } from "@/data/services";
+import { normalizeCity } from "@/utils/cityMatch";
 
 export type LangCode = "fr" | "en" | "es" | "ar" | "ht" | "zh";
 
@@ -11,12 +12,41 @@ export const LANG_LABELS: Record<LangCode, { fr: string; en: string; flag: strin
   zh: { fr: "Mandarin", en: "Mandarin", flag: "🇨🇳" },
 };
 
-const ENGLISH_CITIES = [
-  "westmount", "hampstead", "côte saint-luc", "cote saint-luc", "dollard",
-  "pointe-claire", "kirkland", "beaconsfield", "baie-d'urfé", "baie d'urfe",
-  "dorval", "lachine", "ndg", "notre-dame-de-grâce", "verdun", "saint-laurent",
-  "west island", "ouest-de-l'île",
+// Quartiers / arrondissements anglophones — matching par SOUS-CHAÎNE car ces
+// noms apparaissent souvent comme partie d'une adresse plus longue.
+const ENGLISH_NEIGHBORHOOD_SUBSTRINGS = [
+  "westmount", "hampstead", "cote saint-luc", "cote-saint-luc",
+  "dollard", "pointe-claire", "pointe claire", "kirkland", "beaconsfield",
+  "baie-d'urfe", "baie durfe", "dorval", "lachine", "ndg",
+  "notre-dame-de-grace", "verdun", "saint-laurent", "saint laurent",
+  "west island", "ouest-de-l'ile", "ouest de lile",
 ];
+
+// Villes anglophones canadiennes — matching EXACT normalisé pour éviter les
+// collisions ("victoria" ⊂ "victoriaville", "london" pourrait matcher autre chose).
+const ENGLISH_FULL_CITIES = new Set<string>([
+  // Ontario
+  "toronto", "ottawa", "mississauga", "brampton", "hamilton", "london",
+  "kingston", "windsor", "sudbury", "thunder bay",
+  // Colombie-Britannique
+  "vancouver", "victoria", "kelowna", "abbotsford", "prince george",
+  // Alberta
+  "calgary", "edmonton", "red deer", "lethbridge", "medicine hat",
+  // Manitoba
+  "winnipeg", "brandon", "thompson",
+  // Saskatchewan
+  "regina", "saskatoon", "moose jaw",
+  // Nouvelle-Écosse
+  "halifax", "dartmouth", "sydney", "truro",
+  // Nouveau-Brunswick (officiellement bilingue, majoritairement anglophone)
+  "moncton", "fredericton", "saint john",
+  // Île-du-Prince-Édouard
+  "charlottetown", "summerside",
+  // Terre-Neuve-et-Labrador
+  "st. johns", "st johns", "corner brook",
+  // Territoires
+  "whitehorse", "yellowknife", "iqaluit",
+].map(normalizeCity));
 
 const ENGLISH_KEYWORDS = [
   "english", "anglais", "anglophone", "international", "multicultural",
@@ -60,9 +90,14 @@ export function inferLanguages(service: Service): LangCode[] {
   const text = `${service.name} ${service.subcategory ?? ""} ${service.description ?? ""}`.toLowerCase();
   const city = (service.city ?? "").toLowerCase();
 
-  // English
+  // English: 3 distinct rules
+  // 1) Exact match on a Canadian English-speaking city (normalized, no diacritics)
+  // 2) Substring match on a Montreal anglophone neighbourhood
+  // 3) Keyword match in name/desc/subcategory
+  const cityNormalized = normalizeCity(service.city);
   if (
-    ENGLISH_CITIES.some((c) => city.includes(c)) ||
+    ENGLISH_FULL_CITIES.has(cityNormalized) ||
+    ENGLISH_NEIGHBORHOOD_SUBSTRINGS.some((c) => city.includes(c)) ||
     ENGLISH_KEYWORDS.some((k) => text.includes(k.toLowerCase()))
   ) {
     langs.add("en");

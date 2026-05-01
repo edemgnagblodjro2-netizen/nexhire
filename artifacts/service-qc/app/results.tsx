@@ -26,6 +26,7 @@ import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor, CATEGORY_ICONS } from "@/utils/categoryColors";
 import { haversineDistance } from "@/utils/location";
+import { normalizeCity } from "@/utils/cityMatch";
 
 type SortMode = "default" | "city" | "distance";
 
@@ -47,9 +48,10 @@ export default function ResultsScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { t, language } = useLanguage();
-  const { query, category } = useLocalSearchParams<{
+  const { query, category, cityExact } = useLocalSearchParams<{
     query: string;
     category: string;
+    cityExact: string;
   }>();
 
   const [selectedCategory, setSelectedCategory] = React.useState<
@@ -66,9 +68,15 @@ export default function ResultsScreen() {
 
   const filtered = useMemo(() => {
     const q = (query ?? "").toLowerCase().trim();
+    // Exact-city mode: clicked from a city chip on the home screen.
+    // Required to avoid substring collisions like "Victoria" ⊂ "Victoriaville".
+    const cityKeyExact = normalizeCity(cityExact ?? "");
     const base = services.filter((s) => {
       const matchesCategory =
         selectedCategory === "all" || s.category === selectedCategory;
+      if (cityKeyExact) {
+        return matchesCategory && !s.isProvinceWide && normalizeCity(s.city) === cityKeyExact;
+      }
       if (!q) return matchesCategory;
       // Province label match: when the user opens results from the province
       // carousel ("Ontario", "Colombie-Britannique", etc.), every service of
@@ -103,7 +111,7 @@ export default function ResultsScreen() {
     }
 
     return base;
-  }, [services, selectedCategory, query, sortMode, userLocation]);
+  }, [services, selectedCategory, query, cityExact, sortMode, userLocation]);
 
   function handleChipPress(cat: Category | "all") {
     Haptics.selectionAsync();
@@ -136,7 +144,7 @@ export default function ResultsScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={[styles.headerTitle, { color: colors.foreground }]} numberOfLines={1}>
-              {query || (selectedCategory !== "all" ? t.categories[selectedCategory] : t.results)}
+              {cityExact || query || (selectedCategory !== "all" ? t.categories[selectedCategory] : t.results)}
             </Text>
             <Text style={[styles.headerCount, { color: colors.mutedForeground }]}>
               {selectedCategory === "childcare"

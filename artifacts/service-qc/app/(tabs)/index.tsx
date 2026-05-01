@@ -2,7 +2,7 @@ import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { LinearGradient } from "@/components/SafeLinearGradient";
 import { useRouter } from "expo-router";
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import {
   Keyboard,
   Platform,
@@ -23,6 +23,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "@/contexts/LocationContext";
 import { getApiBaseUrl } from "@/lib/apiBase";
 import type { Category, ProvinceCode } from "@/data/services";
+import { normalizeCity } from "@/utils/cityMatch";
 import { PROVINCE_LABELS } from "@/data/services";
 import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
@@ -41,6 +42,80 @@ const ALL_CATEGORIES: Category[] = [
   "social",
   "childcare",
   "realestate",
+];
+
+// Module-level constant — never re-created on render.
+const ALL_CITIES: ReadonlyArray<{ key: string; emoji: string }> = [
+  { key: "Trois-Rivières", emoji: "🏙️" },
+  { key: "Shawinigan", emoji: "🌲" },
+  { key: "Drummondville", emoji: "🏘️" },
+  { key: "Victoriaville", emoji: "🍁" },
+  { key: "Montréal", emoji: "🏙️" },
+  { key: "Québec", emoji: "🏛️" },
+  { key: "Laval", emoji: "🌆" },
+  { key: "Longueuil", emoji: "🌉" },
+  { key: "Gatineau", emoji: "🌉" },
+  { key: "Sherbrooke", emoji: "🏞️" },
+  { key: "Saguenay", emoji: "🐋" },
+  { key: "Lévis", emoji: "⚓" },
+  { key: "Brossard", emoji: "🌆" },
+  { key: "Repentigny", emoji: "🏘️" },
+  { key: "Saint-Jérôme", emoji: "🏔️" },
+  { key: "Terrebonne", emoji: "🏘️" },
+  { key: "Saint-Jean-sur-Richelieu", emoji: "🏞️" },
+  { key: "Châteauguay", emoji: "🏘️" },
+  { key: "Granby", emoji: "🦓" },
+  { key: "Blainville", emoji: "🌳" },
+  { key: "Saint-Hyacinthe", emoji: "🌾" },
+  { key: "Mascouche", emoji: "🏘️" },
+  { key: "Mirabel", emoji: "✈️" },
+  { key: "Joliette", emoji: "🏘️" },
+  { key: "Salaberry-de-Valleyfield", emoji: "🌊" },
+  { key: "Rouyn-Noranda", emoji: "⛏️" },
+  { key: "Rimouski", emoji: "🌊" },
+  { key: "Sept-Îles", emoji: "🏝️" },
+  { key: "Baie-Comeau", emoji: "🌊" },
+  { key: "Alma", emoji: "🌲" },
+  { key: "Toronto", emoji: "🏙️" },
+  { key: "Ottawa", emoji: "🏛️" },
+  { key: "Mississauga", emoji: "🌆" },
+  { key: "Brampton", emoji: "🌆" },
+  { key: "Hamilton", emoji: "⚙️" },
+  { key: "London", emoji: "🌳" },
+  { key: "Kingston", emoji: "🏰" },
+  { key: "Windsor", emoji: "🌉" },
+  { key: "Sudbury", emoji: "⛏️" },
+  { key: "Thunder Bay", emoji: "🌲" },
+  { key: "Vancouver", emoji: "🌊" },
+  { key: "Victoria", emoji: "🌺" },
+  { key: "Kelowna", emoji: "🍇" },
+  { key: "Abbotsford", emoji: "🌾" },
+  { key: "Prince George", emoji: "🌲" },
+  { key: "Calgary", emoji: "🤠" },
+  { key: "Edmonton", emoji: "🛢️" },
+  { key: "Red Deer", emoji: "🦌" },
+  { key: "Lethbridge", emoji: "🌾" },
+  { key: "Medicine Hat", emoji: "🌵" },
+  { key: "Winnipeg", emoji: "❄️" },
+  { key: "Brandon", emoji: "🌾" },
+  { key: "Thompson", emoji: "🐻‍❄️" },
+  { key: "Regina", emoji: "🌾" },
+  { key: "Saskatoon", emoji: "🌾" },
+  { key: "Moose Jaw", emoji: "🦌" },
+  { key: "Halifax", emoji: "⚓" },
+  { key: "Dartmouth", emoji: "🌊" },
+  { key: "Sydney", emoji: "⚓" },
+  { key: "Truro", emoji: "🌳" },
+  { key: "Moncton", emoji: "🦞" },
+  { key: "Fredericton", emoji: "🌳" },
+  { key: "Saint John", emoji: "⚓" },
+  { key: "Charlottetown", emoji: "🥔" },
+  { key: "Summerside", emoji: "🦞" },
+  { key: "St. John's", emoji: "⚓" },
+  { key: "Corner Brook", emoji: "🐟" },
+  { key: "Whitehorse", emoji: "🐺" },
+  { key: "Yellowknife", emoji: "💎" },
+  { key: "Iqaluit", emoji: "🐻‍❄️" },
 ];
 
 export default function HomeScreen() {
@@ -78,6 +153,31 @@ export default function HomeScreen() {
     }
     return counts;
   }, [services]);
+
+  // Single-pass O(N) precompute: normalized city name → service count.
+  // Used by the "Find by city" chip row. Substring matching here would
+  // collide ("Victoria" ⊂ "Victoriaville", "Laval" ⊂ "Lavaltrie"), so
+  // we always compare normalized exact strings.
+  const cityCounts = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const s of services) {
+      if (s.isProvinceWide || !s.city) continue;
+      const key = normalizeCity(s.city);
+      if (!key) continue;
+      map.set(key, (map.get(key) ?? 0) + 1);
+    }
+    return map;
+  }, [services]);
+
+  const visibleCities = useMemo(() => {
+    const withCounts = ALL_CITIES.map((c) => ({
+      ...c,
+      count: cityCounts.get(normalizeCity(c.key)) ?? 0,
+    }));
+    const withServices = withCounts.filter((c) => c.count > 0).sort((a, b) => b.count - a.count);
+    const defaults = withCounts.slice(0, 4).filter((c) => c.count === 0);
+    return [...withServices, ...defaults];
+  }, [cityCounts]);
   const totalProvinces = Object.values(provinceCounts).filter((n) => (n ?? 0) > 0).length;
   const PROVINCE_ORDER: { code: ProvinceCode; emoji: string }[] = [
     { code: "QC", emoji: "⚜️" },
@@ -396,53 +496,49 @@ export default function HomeScreen() {
           <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
             {language === "fr" ? "Trouver par ville" : "Find by city"}
           </Text>
-          <View style={styles.cityRow}>
-            {[
-              { key: "Trois-Rivières", emoji: "🏙️" },
-              { key: "Shawinigan", emoji: "🌲" },
-              { key: "Drummondville", emoji: "🏘️" },
-              { key: "Victoriaville", emoji: "🍁" },
-            ].map((city) => {
-              const count = services.filter(
-                (s) => !s.isProvinceWide && s.city?.toLowerCase().includes(city.key.toLowerCase()),
-              ).length;
-              return (
-                <Pressable
-                  key={city.key}
-                  style={({ pressed }) => [
-                    styles.cityChip,
-                    {
-                      backgroundColor: colors.card,
-                      borderColor: colors.border,
-                      opacity: pressed ? 0.85 : 1,
-                    },
-                  ]}
-                  onPress={() => {
-                    Haptics.selectionAsync();
-                    router.push({
-                      pathname: "/results",
-                      params: { query: city.key, category: "all" },
-                    });
-                  }}
-                >
-                  <Text style={styles.cityEmoji}>{city.emoji}</Text>
-                  <View style={{ flex: 1, minWidth: 0 }}>
-                    <Text
-                      style={[styles.cityName, { color: colors.foreground }]}
-                      numberOfLines={1}
-                      adjustsFontSizeToFit
-                      minimumFontScale={0.8}
-                    >
-                      {city.key}
-                    </Text>
-                    <Text style={[styles.cityCount, { color: colors.mutedForeground }]}>
-                      {count} {language === "fr" ? "services" : "services"}
-                    </Text>
-                  </View>
-                </Pressable>
-              );
-            })}
-          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.cityScroll}
+          >
+            {visibleCities.map((city) => (
+              <Pressable
+                key={city.key}
+                style={({ pressed }) => [
+                  styles.cityChip,
+                  {
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
+                    opacity: pressed ? 0.85 : 1,
+                  },
+                ]}
+                onPress={() => {
+                  Haptics.selectionAsync();
+                  router.push({
+                    pathname: "/results",
+                    // cityExact ⇒ exact normalized city match in results.tsx,
+                    // so "Victoria" doesn't bleed into "Victoriaville".
+                    params: { cityExact: city.key, category: "all" },
+                  });
+                }}
+              >
+                <Text style={styles.cityEmoji}>{city.emoji}</Text>
+                <View style={{ flex: 1, minWidth: 0 }}>
+                  <Text
+                    style={[styles.cityName, { color: colors.foreground }]}
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.8}
+                  >
+                    {city.key}
+                  </Text>
+                  <Text style={[styles.cityCount, { color: colors.mutedForeground }]}>
+                    {city.count} {language === "fr" ? "services" : "services"}
+                  </Text>
+                </View>
+              </Pressable>
+            ))}
+          </ScrollView>
         </View>
 
         {/* ── Provinces (Canada) ── */}
@@ -964,6 +1060,11 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: 10,
   },
+  cityScroll: {
+    flexDirection: "row",
+    gap: 10,
+    paddingRight: 16,
+  },
   locationCard: {
     flexDirection: "row",
     alignItems: "center",
@@ -990,15 +1091,14 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   cityChip: {
-    flexBasis: "47%",
-    flexGrow: 1,
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
     padding: 12,
     borderRadius: 14,
     borderWidth: 1,
-    minWidth: 0,
+    minWidth: 150,
+    maxWidth: 200,
   },
   cityEmoji: {
     fontSize: 22,
