@@ -154,22 +154,55 @@ The project is organized as a pnpm workspace monorepo, with each package managin
   - 11 ACSM/CMHA filiales québécoises + Revivre, AMI-Québec, AQPS, Phobies-Zéro
   - Toutes marquées `verified_by='curation-officielle-2026-04-30'`. NE supprime aucune fiche existante.
 
-## État BDD post-enrichissement
-- 1 755 fiches actives au total (+57)
-- 1 550 fiches QC actives (+57)
-- 0 doublon connu
+## État BDD au 2026-05-01 (fin de session)
+- **1 752 fiches actives** (15 désactivées au total)
+- **1 548 fiches QC actives** (88% de la BDD)
+- **672 fiches vérifiées (38%)** ; 1 080 jamais vérifiées
+- 432 fiches validées via CSV le 2026-05-01
 
-## Boucle CSV de validation manuelle (1er mai 2026)
+### Couverture par catégorie (déséquilibre identifié)
+| Catégorie | Fiches | Constat |
+|---|---:|---|
+| santé | 938 (54%) | Sur-représentée |
+| famille | 233 (13%) | Bien |
+| soutienSocial | 122 | OK |
+| santé mentale | 106 | Léger |
+| logement | 100 | Sous-couvert |
+| emploi | 87 | Sous-couvert |
+| alimentation | 81 | Sous-couvert |
+| immigration | 53 | Critique |
+| achatImmobilier | 32 | Critique |
+
+### Couverture par province
+QC 1548 · ON 40 · BC 23 · AB 22 · MB 17 · SK/NS 16 · NB 15 · PE/NL 13 · YT 11 · NT 10 · NU 8
+
+## Boucle CSV de validation manuelle
 
 Workflow rodé pour la validation continue par l'utilisateur :
 
 1. **Export** : `pnpm --filter @workspace/scripts run audit-quality`
    → produit `exports/fiches-a-corriger-AAAAMMJJ.csv`
-2. **L'utilisateur** ouvre le CSV, remplit les colonnes `_corrige` (URL, téléphone, description, adresse) et/ou met `supprimer` dans la colonne action quand pertinent. Toutes les autres lignes sont implicitement « garder ».
+2. **L'utilisateur** ouvre le CSV. Il peut éditer **soit** la colonne `_corrige` (URL, téléphone, description, adresse), **soit** directement la colonne `_actuel` correspondante — le script détecte la différence avec la BDD dans les deux cas. Met `supprimer` dans la colonne action OU `expired`/`offline forever` dans `notes` OU `DOMAINE_*_SUPPRIMER` dans `http_status` pour soft-delete.
 3. **Réimport** : `pnpm --filter @workspace/scripts run apply-corrections -- exports/fiches-correctes-AAAAMMJJ.csv`
-   → marque toutes les fiches du CSV comme `verified_at = now`, `verified_by = "csv-validation-AAAA-MM-JJ"`, applique les corrections d'URL/tel/adresse/description, soft-delete les `supprimer`. Idempotent (pure UPDATE par id).
+   - **Mode strict (par défaut)** : ne marque vérifiée que les fiches avec signal positif (`http_status=OK_200`, correction explicite, ou action `supprimer`/`corriger`). Les autres lignes sont ignorées (pas de validation aveugle).
+   - **Mode `--loose`** : valide toute ligne du CSV (ancien comportement, à utiliser si CSV pré-filtré).
+   - Marque `verified_at = now`, `verified_by = "csv-validation-AAAA-MM-JJ"`, applique les corrections, soft-delete les fiches à supprimer. Idempotent (pure UPDATE par id).
 
-### Premier passage validé par l'utilisateur (2026-05-01)
-- 361 fiches marquées vérifiées en une opération
-- 110 URLs corrigées (souvent passage de www.x → x ou redirections officielles)
-- Taux de fiches vérifiées : ~17% → **36%**
+### Passages effectués (2026-05-01)
+| Passage | Lignes | Vérifiées | URLs corrigées | Désactivées |
+|---|---:|---:|---:|---:|
+| 1. fiches-correctes (audit V1) | 361 | 361 | 110 | 0 |
+| 2. fiches-a-traiter manuellement | 57 | 57 | 47 | 0 |
+| 3. fiches-corrigees-v2 (mode strict) | 1672 | 373 | 126 | 3 |
+| **Cumul** | | **791 actions** | **283** | **3** |
+
+## Prochaines étapes (à reprendre)
+
+L'utilisateur a confirmé la stratégie en 2 temps :
+1. **Court terme** : finir la qualité des 1 080 fiches non vérifiées via la boucle CSV avant d'enrichir
+2. **Ensuite** : enrichissements ciblés par lots de 50-100 fiches vérifiées à la source pour combler les manques (logement hors QC, banques alimentaires, immigration, ON/BC/AB)
+
+Cible globale réaliste discutée : **~2 800 fiches au total** (vs 1 752 actuelles), donc ~1 050 nouvelles fiches **vérifiées** à terme.
+
+## Note technique
+- Le workflow `artifacts/api-server: API Server` était failed en fin de session 2026-05-01. À redémarrer si besoin de l'admin web ; sans impact sur les scripts CSV qui accèdent directement à la BDD.
