@@ -82,10 +82,15 @@ function parseCSV(s: string): Row[] {
 
 const ACTION_KEY = "action (garder|corriger|supprimer)";
 const VERIFIED_BY = `csv-validation-${new Date().toISOString().slice(0, 10)}`;
+let STRICT = true;
 
 async function main() {
   const args = process.argv.slice(2).filter((a) => !a.startsWith("--"));
   const dryRun = process.argv.includes("--dry-run");
+  // Mode strict (par défaut) : ne valide que les fiches avec signal positif
+  // (OK_200, correction explicite, action=supprimer/corriger).
+  // Avec --loose : marque vérifiée toute ligne du CSV (ancien comportement).
+  STRICT = !process.argv.includes("--loose");
   const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
   const csvPath = resolve(
     process.cwd(),
@@ -129,6 +134,7 @@ async function main() {
     adresseCorrigee: 0,
     soitDesactive: 0,
     notesCopiees: 0,
+    skippedStrict: 0,
   };
   const updates: Array<{
     id: string;
@@ -140,7 +146,28 @@ async function main() {
     if (!existingSet.has(r.id)) continue;
     const action = (r[ACTION_KEY] ?? "").toLowerCase();
     const noteText = (r.notes ?? "").toLowerCase();
+    const httpStatus = (r.http_status ?? "").toUpperCase();
     const dbRow = existingMap.get(r.id)!;
+
+    // Mode STRICT : ne valide que si signal positif (OK_200, correction, ou action explicite)
+    const hasCorrection = !!(
+      r.site_corrige ||
+      r.telephone_corrige ||
+      r.description_corrigee ||
+      r.adresse_corrigee
+    );
+    const isExplicitAction =
+      action === "supprimer" ||
+      action === "corriger" ||
+      httpStatus.includes("DOMAINE_") ||
+      noteText.includes("expired") ||
+      noteText.includes("offline forever");
+    const isConfirmedOk = httpStatus === "OK_200";
+    if (STRICT && !hasCorrection && !isExplicitAction && !isConfirmedOk) {
+      stats.skippedStrict++;
+      continue;
+    }
+
     const patch: Record<string, unknown> = {
       verifiedAt: new Date(),
       verifiedBy: VERIFIED_BY,
@@ -192,16 +219,21 @@ async function main() {
       noteParts.push(`Adresse mise à jour`);
     }
 
-    // Désactivation : action explicite OU notes contenant un signal "expired"
+    // Désactivation : action explicite, status DOMAINE_*_SUPPRIMER, ou notes "expired"
     const shouldDeactivate =
       action === "supprimer" ||
+      httpStatus.includes("DOMAINE_") ||
       noteText.includes("expired") ||
       noteText.includes("offline forever") ||
       noteText.includes("définitivement fermé");
     if (shouldDeactivate) {
       patch.active = false;
       stats.soitDesactive++;
-      noteParts.push("Désactivée (site expiré / fermé)");
+      noteParts.push(
+        httpStatus.includes("DOMAINE_")
+          ? `Désactivée (${httpStatus.toLowerCase().replace(/_/g, " ")})`
+          : "Désactivée (site expiré / fermé)",
+      );
     }
     if (r.notes) {
       noteParts.push(`Note user: ${r.notes}`);
@@ -224,6 +256,12 @@ async function main() {
   console.log(`  • Adresses corrigées ........ ${stats.adresseCorrigee}`);
   console.log(`  • Désactivées (supprimer) ... ${stats.soitDesactive}`);
   console.log(`  • Notes user reportées ...... ${stats.notesCopiees}`);
+  if (STRICT) {
+    console.log(`  • Ignorées (mode strict) .... ${stats.skippedStrict}`);
+    console.log(
+      `    (lignes sans signal positif : pas de OK_200, ni correction, ni action)`,
+    );
+  }
 
   if (dryRun) {
     console.log(`\n[dry-run] Aucune modification effectuée.`);
