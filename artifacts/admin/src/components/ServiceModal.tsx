@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import type { Service } from "@/lib/api";
-import { createService, updateService } from "@/lib/api";
+import { useEffect, useRef, useState } from "react";
+import type { Service, AISuggestion } from "@/lib/api";
+import { createService, updateService, aiSuggestService } from "@/lib/api";
 
 const EMPTY: Partial<Service> = {
   id: "",
@@ -24,6 +24,7 @@ const CITIES = ["Trois-Rivières", "Shawinigan", "Drummondville", "Victoriaville
 const CATEGORIES = [
   "housing", "food", "mentalHealth", "health", "immigration",
   "employment", "family", "social", "childcare", "realestate",
+  "legal", "administrative",
 ];
 
 interface Props {
@@ -39,13 +40,102 @@ export default function ServiceModal({ adminKey, service, onClose, onSaved }: Pr
   const [error, setError] = useState<string | null>(null);
   const isEdit = !!service;
 
+  // ── AI pre-fill state ──
+  const [aiQuery, setAiQuery] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiResult, setAiResult] = useState<AISuggestion | null>(null);
+  const [aiError, setAiError] = useState<string | null>(null);
+  const [aiElapsed, setAiElapsed] = useState(0);
+  const aiAbortRef = useRef<AbortController | null>(null);
+
   useEffect(() => {
     setForm(service ?? { ...EMPTY, id: `svc-${Date.now()}` });
     setError(null);
+    setAiQuery("");
+    setAiResult(null);
+    setAiError(null);
   }, [service]);
+
+  // Abort any in-flight AI request when modal unmounts
+  useEffect(() => {
+    return () => {
+      aiAbortRef.current?.abort();
+    };
+  }, []);
+
+  function handleClose() {
+    aiAbortRef.current?.abort();
+    onClose();
+  }
+
+  // Tick elapsed seconds while AI is loading (for UX)
+  useEffect(() => {
+    if (!aiLoading) return;
+    setAiElapsed(0);
+    const start = Date.now();
+    const t = setInterval(() => setAiElapsed(Math.round((Date.now() - start) / 1000)), 500);
+    return () => clearInterval(t);
+  }, [aiLoading]);
 
   function set<K extends keyof Service>(key: K, val: Service[K]) {
     setForm((f) => ({ ...f, [key]: val }));
+  }
+
+  function cancelAiSuggest() {
+    aiAbortRef.current?.abort();
+  }
+
+  async function handleAiSuggest() {
+    const q = aiQuery.trim();
+    if (!q || q.length < 3) {
+      setAiError("Tape au moins 3 caractères (ex: « Maison de la Famille Verdun »).");
+      return;
+    }
+    if (q.length > 200) {
+      setAiError("Trop long (max 200 caractères).");
+      return;
+    }
+    // Abort any previous in-flight request before starting a new one
+    aiAbortRef.current?.abort();
+    const ac = new AbortController();
+    aiAbortRef.current = ac;
+
+    setAiLoading(true);
+    setAiError(null);
+    setAiResult(null);
+    try {
+      const sugg = await aiSuggestService(
+        adminKey,
+        q,
+        { city: form.city || undefined },
+        ac.signal,
+      );
+      // Don't apply if the user already aborted (e.g. closed modal)
+      if (ac.signal.aborted) return;
+      setAiResult(sugg);
+      // Pre-fill the form, but keep the existing id
+      setForm((f) => ({
+        ...f,
+        name: sugg.name || f.name,
+        category: sugg.category || f.category,
+        subcategory: sugg.subcategory || f.subcategory,
+        city: sugg.city || f.city,
+        phone: sugg.phone || f.phone,
+        website: sugg.website || f.website,
+        address: sugg.address || f.address,
+        description: sugg.description || f.description,
+        isProvinceWide: sugg.isProvinceWide ?? f.isProvinceWide,
+      }));
+    } catch (err: any) {
+      if (err?.name === "AbortError" || ac.signal.aborted) {
+        setAiError("Recherche annulée.");
+      } else {
+        setAiError(err?.message || "Erreur lors de la recherche IA.");
+      }
+    } finally {
+      if (aiAbortRef.current === ac) aiAbortRef.current = null;
+      setAiLoading(false);
+    }
   }
 
   async function handleSave() {
@@ -77,7 +167,7 @@ export default function ServiceModal({ adminKey, service, onClose, onSaved }: Pr
             {isEdit ? "Modifier le service" : "Nouveau service"}
           </h2>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition"
           >
             ✕
@@ -85,6 +175,115 @@ export default function ServiceModal({ adminKey, service, onClose, onSaved }: Pr
         </div>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          {!isEdit && (
+            <div className="rounded-2xl border border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50 p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">🪄</span>
+                <h3 className="text-sm font-semibold text-purple-900">
+                  Pré-remplir avec l'IA
+                </h3>
+                <span className="text-xs text-purple-700 bg-purple-100 px-2 py-0.5 rounded-full">
+                  recherche web
+                </span>
+              </div>
+              <p className="text-xs text-purple-800">
+                Tape le nom de l'organisme + ville. L'IA cherche sur le web et remplit le formulaire.
+              </p>
+              <div className="flex gap-2">
+                <input
+                  value={aiQuery}
+                  onChange={(e) => setAiQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !aiLoading) {
+                      e.preventDefault();
+                      handleAiSuggest();
+                    }
+                  }}
+                  disabled={aiLoading}
+                  placeholder="ex: Maison de la Famille de Verdun, Montréal"
+                  className="flex-1 px-3 py-2 text-sm border border-purple-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-purple-300"
+                />
+                {aiLoading ? (
+                  <button
+                    onClick={cancelAiSuggest}
+                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-semibold rounded-xl transition whitespace-nowrap"
+                  >
+                    ✕ Annuler ({aiElapsed}s)
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleAiSuggest}
+                    disabled={!aiQuery.trim()}
+                    className="px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-sm font-semibold rounded-xl transition whitespace-nowrap"
+                  >
+                    🔍 Chercher
+                  </button>
+                )}
+              </div>
+              {aiLoading && (
+                <p className="text-xs text-purple-700 italic">
+                  ⏳ Patience, ça prend généralement 30-60 secondes (l'IA lit plusieurs sites web).
+                </p>
+              )}
+              {aiError && (
+                <div className="p-2 bg-red-50 border border-red-100 rounded-lg text-xs text-red-700">
+                  ⚠️ {aiError}
+                </div>
+              )}
+              {aiResult && (
+                <div className="space-y-2 text-xs">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`px-2 py-0.5 rounded-full font-semibold ${
+                        aiResult.confidence === "high"
+                          ? "bg-green-100 text-green-800"
+                          : aiResult.confidence === "medium"
+                          ? "bg-amber-100 text-amber-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
+                      Fiabilité : {aiResult.confidence}
+                    </span>
+                    {aiResult.mode === "fallback_no_web" && (
+                      <span className="px-2 py-0.5 rounded-full bg-orange-100 text-orange-800 font-semibold">
+                        ⚠️ Sans recherche web
+                      </span>
+                    )}
+                  </div>
+                  {aiResult.warnings.length > 0 && (
+                    <ul className="text-amber-800 bg-amber-50 border border-amber-200 rounded-lg p-2 list-disc pl-5 space-y-0.5">
+                      {aiResult.warnings.map((w, i) => (
+                        <li key={i}>{w}</li>
+                      ))}
+                    </ul>
+                  )}
+                  {aiResult.sources.length > 0 && (
+                    <div>
+                      <p className="text-purple-900 font-medium mb-1">📚 Sources à vérifier :</p>
+                      <ul className="space-y-0.5">
+                        {aiResult.sources.map((s, i) => (
+                          <li key={i}>
+                            <a
+                              href={s.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-purple-700 hover:text-purple-900 underline truncate block"
+                            >
+                              {s.title || s.url}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  <p className="text-purple-700 italic pt-1">
+                    ✏️ Vérifie chaque champ ci-dessous, corrige si besoin, puis clique « Créer ».
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="grid grid-cols-2 gap-4">
             <Field label="ID" required disabled={isEdit}>
               <input
@@ -233,7 +432,7 @@ export default function ServiceModal({ adminKey, service, onClose, onSaved }: Pr
 
         <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-100">
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition"
           >
             Annuler

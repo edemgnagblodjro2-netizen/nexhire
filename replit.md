@@ -242,5 +242,15 @@ Le reste des fiches (1452) reste en BDD active mais non vérifié. Étape suivan
 
 **Auto-seed désactivé par défaut** : la fonction `autoSeedServicesIfEmpty` dans `artifacts/api-server/src/index.ts` ne fait plus rien sauf si `AUTO_SEED_SERVICES=1` est explicitement set. La BDD est désormais la seule source de vérité (le bundle static `artifacts/service-qc/data/services.ts` est conservé mais ignoré). Pour réactiver une importation ponctuelle (ex. déploiement neuf) : `AUTO_SEED_SERVICES=1` (mode safe) ou `RESEED_SERVICES=1` (mode destructif).
 
+### 🪄 Pré-remplissage IA dans l'admin (ajouté 2026-05-01)
+Pour accélérer la saisie des 10 fiches/jour, le modal « Nouveau service » de l'admin contient désormais un bandeau **« Pré-remplir avec l'IA »** :
+- **Endpoint** : `POST /api/admin/services/ai-suggest` (header `x-admin-key`), body `{ query, hint?: { city?, province? } }`
+- **Implémentation** : `artifacts/api-server/src/routes/services.ts` — utilise `openai.responses.create()` avec `tools: [{type: "web_search"}]` et `text.format` JSON Schema strict (modèle `gpt-5-mini`). Fallback automatique sur `chat.completions.create` sans web search si l'outil web_search est indisponible (réponse marquée `mode: "fallback_no_web"`, confidence forcée à `low`).
+- **Garde-fous anti-hallucination** : prompt explicite « NE JAMAIS inventer un téléphone/adresse/URL », `confidence: high|medium|low`, tableau `warnings`, tableau `sources` avec URLs cliquables affichées dans l'UI pour vérification.
+- **Coût/latence** : ~30-60 s par fiche (recherche web + parsing). UI affiche un compteur de secondes pendant le loading.
+- **Workflow utilisateur** : taper « Nom organisme + ville » → cliquer « Chercher » → l'IA pré-remplit le formulaire → vérifier les champs et les sources → cliquer « Créer ». Tous les champs restent éditables.
+- **Catégories autorisées** (enum côté serveur) : housing, food, mentalHealth, health, immigration, employment, family, social, childcare, realestate, legal, administrative.
+- **Provinces autorisées** : QC, ON, BC, AB, MB, SK, NB, NS, PE, NL, YT, NT, NU.
+
 ## Note technique
 - Workflows actifs : `artifacts/admin: web` (Vite admin SPA), `artifacts/api-server: API Server` (Express + Drizzle), `artifacts/service-qc: expo` (mobile RN), `artifacts/mockup-sandbox`.

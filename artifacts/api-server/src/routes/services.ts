@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { db, servicesTable, organisationsTable, subscriptionsTable, verificationRequestsTable } from "@workspace/db";
 import { and, asc, count, desc, eq, ilike, inArray, isNull, isNotNull, or, sql } from "drizzle-orm";
+import { openai } from "@workspace/integrations-openai-ai-server";
 import { logger } from "../lib/logger";
 
 const servicesRouter = Router();
@@ -334,5 +335,357 @@ servicesRouter.delete("/admin/services/:id", requireAdminKey, async (req, res) =
     res.status(500).json({ error: "Internal error" });
   }
 });
+
+// ── POST /api/admin/services/ai-suggest  (AI pre-fill via web search) ─────
+// Body: { query: string, hint?: { city?: string, province?: string } }
+// Returns a draft service object the admin can review and save.
+const VALID_CATEGORIES = [
+  "housing", "food", "mentalHealth", "health", "immigration",
+  "employment", "family", "social", "childcare", "realestate",
+  "legal", "administrative",
+];
+
+const VALID_PROVINCES = [
+  "QC", "ON", "BC", "AB", "MB", "SK", "NB", "NS", "PE", "NL", "YT", "NT", "NU",
+];
+
+const SUGGEST_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: [
+    "name", "category", "subcategory", "city", "province",
+    "phone", "website", "address", "description", "isProvinceWide",
+    "sources", "confidence", "warnings",
+  ],
+  properties: {
+    name: { type: "string", description: "Nom officiel exact de l'organisme." },
+    category: { type: "string", enum: VALID_CATEGORIES },
+    subcategory: { type: "string", description: "Type précis du service (ex: 'Banque alimentaire', 'Hébergement femmes')." },
+    city: { type: "string", description: "Ville principale d'opération." },
+    province: { type: "string", enum: VALID_PROVINCES },
+    phone: { type: "string", description: "Téléphone format 'XXX-XXX-XXXX' ou '1-800-...'. Vide si introuvable." },
+    website: { type: "string", description: "URL officielle complète (https://...). Vide si introuvable." },
+    address: { type: "string", description: "Adresse civique complète. Vide si introuvable." },
+    description: { type: "string", description: "Description courte FR (1-2 phrases) du service offert." },
+    isProvinceWide: { type: "boolean", description: "True si service couvre toute la province (ligne 1-800, etc.)." },
+    sources: {
+      type: "array",
+      description: "URLs sources web utilisées pour vérifier les infos.",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["url", "title"],
+        properties: {
+          url: { type: "string" },
+          title: { type: "string" },
+        },
+      },
+    },
+    confidence: { type: "string", enum: ["high", "medium", "low"] },
+    warnings: {
+      type: "array",
+      description: "Avertissements pour l'humain (champ douteux, info manquante, etc.).",
+      items: { type: "string" },
+    },
+  },
+} as const;
+
+// ── Rate-limit + concurrency for AI suggest (per admin key, in-process) ──
+const AI_SUGGEST_MAX_QUERY_LEN = 200;
+const AI_SUGGEST_WINDOW_MS = 60_000; // 1 minute window
+const AI_SUGGEST_PER_KEY_LIMIT = 12; // 12 calls / minute / key (~1 every 5s)
+const AI_SUGGEST_GLOBAL_LIMIT = 30;  // 30 calls / minute total
+const AI_SUGGEST_TIMEOUT_MS = 90_000; // 90s hard timeout per call
+const aiSuggestCalls = new Map<string, number[]>(); // key → array of timestamps
+const aiSuggestInFlight = new Map<string, number>(); // key → in-flight count
+
+function checkRateLimit(adminKey: string): { ok: true } | { ok: false; retryAfter: number; reason: string } {
+  const now = Date.now();
+  const cutoff = now - AI_SUGGEST_WINDOW_MS;
+
+  // Clean up old entries (and tally global)
+  let globalCount = 0;
+  for (const [k, ts] of aiSuggestCalls) {
+    const fresh = ts.filter((t) => t > cutoff);
+    if (fresh.length === 0) aiSuggestCalls.delete(k);
+    else {
+      aiSuggestCalls.set(k, fresh);
+      globalCount += fresh.length;
+    }
+  }
+
+  if (globalCount >= AI_SUGGEST_GLOBAL_LIMIT) {
+    return { ok: false, retryAfter: Math.ceil(AI_SUGGEST_WINDOW_MS / 1000), reason: "global rate limit" };
+  }
+
+  const keyCalls = aiSuggestCalls.get(adminKey) ?? [];
+  if (keyCalls.length >= AI_SUGGEST_PER_KEY_LIMIT) {
+    return { ok: false, retryAfter: Math.ceil(AI_SUGGEST_WINDOW_MS / 1000), reason: "per-key rate limit" };
+  }
+
+  const inFlight = aiSuggestInFlight.get(adminKey) ?? 0;
+  if (inFlight >= 2) {
+    return { ok: false, retryAfter: 5, reason: "concurrency limit (max 2 simultaneous)" };
+  }
+
+  keyCalls.push(now);
+  aiSuggestCalls.set(adminKey, keyCalls);
+  aiSuggestInFlight.set(adminKey, inFlight + 1);
+  return { ok: true };
+}
+
+function releaseInFlight(adminKey: string) {
+  const cur = aiSuggestInFlight.get(adminKey) ?? 1;
+  if (cur <= 1) aiSuggestInFlight.delete(adminKey);
+  else aiSuggestInFlight.set(adminKey, cur - 1);
+}
+
+// ── Post-AI sanitization: strip anything that doesn't look real ──────────
+const PHONE_RE = /^(?:1-)?\d{3}-\d{3}-\d{4}$|^(?:1-)?(?:8(?:00|33|44|55|66|77|88)-\d{3}-\d{4})$|^[2-9]11$|^\d{3,4}$/;
+
+function sanitizeSuggestion(s: any): { sanitized: any; addedWarnings: string[] } {
+  const warnings: string[] = [];
+
+  // phone: keep only if matches a Canadian-ish format, else clear
+  if (s.phone && !PHONE_RE.test(String(s.phone).trim())) {
+    warnings.push(`Téléphone "${s.phone}" rejeté (format inattendu) — à saisir à la main.`);
+    s.phone = "";
+  }
+
+  // website: must be http(s) URL
+  if (s.website) {
+    try {
+      const u = new URL(s.website);
+      if (u.protocol !== "http:" && u.protocol !== "https:") {
+        warnings.push(`Site web "${s.website}" rejeté (protocole non-http) — à saisir à la main.`);
+        s.website = "";
+      }
+    } catch {
+      warnings.push(`Site web "${s.website}" rejeté (URL invalide) — à saisir à la main.`);
+      s.website = "";
+    }
+  }
+
+  // sources: keep only http(s) URLs
+  if (Array.isArray(s.sources)) {
+    s.sources = s.sources.filter((src: any) => {
+      try {
+        const u = new URL(src?.url ?? "");
+        return u.protocol === "http:" || u.protocol === "https:";
+      } catch {
+        return false;
+      }
+    });
+  } else {
+    s.sources = [];
+  }
+
+  // confidence vs sources sanity check
+  if (s.confidence === "high" && s.sources.length === 0) {
+    warnings.push("⚠️ Aucune source web fournie : fiabilité ramenée à 'low'.");
+    s.confidence = "low";
+  }
+
+  // address sanity: if it looks like just a city/province, clear it
+  if (s.address && s.address.length < 8) {
+    warnings.push(`Adresse "${s.address}" trop courte — à saisir à la main.`);
+    s.address = "";
+  }
+
+  return { sanitized: s, addedWarnings: warnings };
+}
+
+servicesRouter.post("/admin/services/ai-suggest", requireAdminKey, async (req, res) => {
+  const adminKey = req.headers["x-admin-key"] as string;
+  const query = String(req.body?.query ?? "").trim();
+  const hintCity = req.body?.hint?.city ? String(req.body.hint.city) : undefined;
+  const hintProvince = req.body?.hint?.province ? String(req.body.hint.province) : undefined;
+  const allowFallback = req.body?.allowFallback === true;
+
+  if (!query || query.length < 3) {
+    return res.status(400).json({ error: "query is required (min 3 chars)" });
+  }
+  if (query.length > AI_SUGGEST_MAX_QUERY_LEN) {
+    return res.status(400).json({ error: `query too long (max ${AI_SUGGEST_MAX_QUERY_LEN} chars)` });
+  }
+
+  const limit = checkRateLimit(adminKey);
+  if (!limit.ok) {
+    res.setHeader("Retry-After", String(limit.retryAfter));
+    return res.status(429).json({
+      error: "Trop de requêtes IA, réessayez dans quelques secondes.",
+      reason: limit.reason,
+      retryAfter: limit.retryAfter,
+    });
+  }
+
+  const instructions = [
+    "Tu es un assistant qui aide à remplir une fiche d'organisme communautaire au Canada (FR).",
+    "Cherche sur le web l'information OFFICIELLE et la plus à jour pour l'organisme demandé.",
+    "Privilégie : site officiel de l'organisme, sites .gouv.qc.ca / .gc.ca / .ca, 211, Centraide.",
+    "NE JAMAIS inventer un téléphone, une adresse ou une URL. Si tu n'es pas sûr, laisse vide et ajoute un warning.",
+    "Format téléphone : 'XXX-XXX-XXXX' ou '1-800-XXX-XXXX'.",
+    "Catégories autorisées :",
+    "  - housing (logement, hébergement, refuge)",
+    "  - food (alimentation, banque alimentaire, dépannage)",
+    "  - mentalHealth (santé mentale, ligne d'écoute, crise)",
+    "  - health (santé physique, CLSC, clinique)",
+    "  - immigration (accueil immigrants, réfugiés)",
+    "  - employment (emploi, formation, CJE)",
+    "  - family (famille, violence conjugale, jeunesse)",
+    "  - social (entraide, soutien général, Centraide)",
+    "  - childcare (garderie, CPE, services de garde)",
+    "  - realestate (achat immobilier, banque hypothécaire)",
+    "  - legal (aide juridique, droit)",
+    "  - administrative (démarches gouvernementales)",
+    "isProvinceWide = true si l'organisme dessert TOUTE la province (ex: ligne 1-800, ministère).",
+    "Toujours retourner les sources web utilisées (URLs réelles consultées).",
+    "Confidence: 'high' si site officiel trouvé + tél confirmé; 'medium' si une info manque; 'low' si infos partielles.",
+  ].join("\n");
+
+  const userPrompt = [
+    `Recherche : ${query}`,
+    hintCity ? `Indice ville : ${hintCity}` : null,
+    hintProvince ? `Indice province : ${hintProvince}` : null,
+    "Trouve les informations officielles et remplis la fiche selon le schéma JSON.",
+  ].filter(Boolean).join("\n");
+
+  // Hard timeout via AbortController so a hung OpenAI call cannot block forever
+  const ac = new AbortController();
+  const timeoutId = setTimeout(() => ac.abort(), AI_SUGGEST_TIMEOUT_MS);
+
+  try {
+    // Try OpenAI Responses API with web_search tool
+    const response = await (openai as any).responses.create(
+      {
+        model: "gpt-5-mini",
+        instructions,
+        input: userPrompt,
+        tools: [{ type: "web_search" }],
+        text: {
+          format: {
+            type: "json_schema",
+            name: "service_suggestion",
+            strict: true,
+            schema: SUGGEST_SCHEMA,
+          },
+        },
+      },
+      { signal: ac.signal },
+    );
+
+    // Extract the final JSON output from the response
+    const outputText = (response as any).output_text
+      ?? extractJsonFromResponse(response);
+
+    if (!outputText) {
+      logger.error({ response }, "AI suggest: no output_text in response");
+      return res.status(502).json({ error: "AI returned no usable output" });
+    }
+
+    let parsed: any;
+    try {
+      parsed = typeof outputText === "string" ? JSON.parse(outputText) : outputText;
+    } catch (e) {
+      logger.error({ outputText, err: e }, "AI suggest: failed to parse JSON");
+      return res.status(502).json({ error: "AI returned invalid JSON" });
+    }
+
+    // Sanitize before returning to UI (anti-hallucination)
+    const { sanitized, addedWarnings } = sanitizeSuggestion(parsed);
+    sanitized.warnings = [...(Array.isArray(sanitized.warnings) ? sanitized.warnings : []), ...addedWarnings];
+
+    return res.json({
+      ...sanitized,
+      generatedAt: new Date().toISOString(),
+      model: "gpt-5-mini",
+      mode: "web_search",
+    });
+  } catch (err: any) {
+    const wasAborted = ac.signal.aborted;
+    logger.warn({ err: err?.message, aborted: wasAborted, allowFallback }, "AI suggest with web_search failed");
+
+    // Fail closed by default — only run fallback if caller explicitly opted in.
+    // Rationale: a no-web answer can fabricate plausible-but-false phone/address.
+    if (!allowFallback) {
+      const status = wasAborted ? 504 : 502;
+      return res.status(status).json({
+        error: wasAborted
+          ? "Délai dépassé (>90 s). Réessayez dans un instant."
+          : "Recherche web indisponible. Réessayez dans un instant ou saisissez les champs à la main.",
+        detail: err?.message,
+        canRetry: true,
+      });
+    }
+
+    // Explicit opt-in fallback (no web search, lower trust)
+    try {
+      const completion = await openai.chat.completions.create(
+        {
+          model: "gpt-5-mini",
+          messages: [
+            { role: "system", content: instructions + "\n\n⚠️ Tu n'as PAS accès au web — base-toi sur tes connaissances. NE JAMAIS inventer un téléphone/adresse/site, laisse vide en cas de doute. Marque confidence='low'." },
+            { role: "user", content: userPrompt },
+          ],
+          response_format: {
+            type: "json_schema",
+            json_schema: {
+              name: "service_suggestion",
+              strict: true,
+              schema: SUGGEST_SCHEMA as any,
+            },
+          },
+        },
+        { signal: ac.signal },
+      );
+
+      const content = completion.choices[0]?.message?.content;
+      if (!content) {
+        return res.status(502).json({ error: "AI fallback returned no content" });
+      }
+      const parsed = JSON.parse(content);
+
+      // Sanitize + force fail-closed flags
+      const { sanitized, addedWarnings } = sanitizeSuggestion(parsed);
+      const warnings = [...(Array.isArray(sanitized.warnings) ? sanitized.warnings : []), ...addedWarnings];
+      if (!warnings.some((w: string) => w.includes("VÉRIFIER") || w.includes("sans recherche web"))) {
+        warnings.unshift("⚠️ Généré sans recherche web — vérifier toutes les infos avant d'enregistrer.");
+      }
+      return res.json({
+        ...sanitized,
+        warnings,
+        confidence: "low",
+        generatedAt: new Date().toISOString(),
+        model: "gpt-5-mini",
+        mode: "fallback_no_web",
+      });
+    } catch (fallbackErr: any) {
+      logger.error({ err: fallbackErr?.message, original: err?.message }, "AI suggest fallback also failed");
+      return res.status(500).json({
+        error: "AI suggestion failed",
+        detail: fallbackErr?.message ?? err?.message,
+      });
+    }
+  } finally {
+    clearTimeout(timeoutId);
+    releaseInFlight(adminKey);
+  }
+});
+
+function extractJsonFromResponse(response: any): string | null {
+  // Walk the Responses API output array looking for the final assistant text
+  const output = response?.output;
+  if (!Array.isArray(output)) return null;
+  for (let i = output.length - 1; i >= 0; i--) {
+    const item = output[i];
+    if (item?.type === "message" && Array.isArray(item.content)) {
+      for (const c of item.content) {
+        if (c?.type === "output_text" && typeof c.text === "string") return c.text;
+        if (c?.type === "text" && typeof c.text === "string") return c.text;
+      }
+    }
+  }
+  return null;
+}
 
 export default servicesRouter;

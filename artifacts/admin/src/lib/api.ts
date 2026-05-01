@@ -160,6 +160,44 @@ export async function toggleService(
   return updateService(adminKey, id, { active });
 }
 
+export type AISuggestion = {
+  name: string;
+  category: string;
+  subcategory: string;
+  city: string;
+  province: string;
+  phone: string;
+  website: string;
+  address: string;
+  description: string;
+  isProvinceWide: boolean;
+  sources: { url: string; title: string }[];
+  confidence: "high" | "medium" | "low";
+  warnings: string[];
+  generatedAt: string;
+  model: string;
+  mode: "web_search" | "fallback_no_web";
+};
+
+export async function aiSuggestService(
+  adminKey: string,
+  query: string,
+  hint?: { city?: string; province?: string },
+  signal?: AbortSignal,
+): Promise<AISuggestion> {
+  const res = await fetch(`${API_BASE}/api/admin/services/ai-suggest`, {
+    method: "POST",
+    headers: headers(adminKey),
+    body: JSON.stringify({ query, hint }),
+    signal,
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ error: "Unknown error" }));
+    throw new Error(err.error || `HTTP ${res.status}`);
+  }
+  return res.json();
+}
+
 export async function verifyService(
   adminKey: string,
   id: string,
