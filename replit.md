@@ -196,10 +196,33 @@ Workflow rodé pour la validation continue par l'utilisateur :
 | 3. fiches-corrigees-v2 (mode strict) | 1672 | 373 | 126 | 3 |
 | **Cumul** | | **791 actions** | **283** | **3** |
 
+## Priorité absolue de qualité (rappelée par l'utilisateur 2026-05-01)
+
+**Pour l'utilisateur final en détresse : téléphone et adresse > site web.**
+Un site mort n'empêche pas de joindre l'aide ; un mauvais numéro = échec total.
+Hiérarchie de priorité de vérification :
+1. **Téléphone** (le plus critique — la personne doit pouvoir appeler)
+2. **Adresse** (savoir où aller physiquement)
+3. **Site web** (utile mais secondaire)
+
+### État qualité tel/adresse au 2026-05-01
+| Champ | Couverture | Action requise |
+|---|---:|---|
+| Téléphone présent | 1 751/1 752 (100%) | Vérifier qu'ils répondent encore au bon service |
+| Téléphone format invalide | 44 (211/811/etc.) | Pas grave — numéros courts |
+| Adresse présente | 1 725 (98%) | OK |
+| Adresse avec code postal | 1 537 (88%) | 215 fiches à compléter (priorité) |
+| Sans adresse du tout | 27 fiches | À combler |
+
+### TODO pour la prochaine session
+- [ ] Étendre `audit-quality-csv.ts` pour signaler les téléphones suspects (longueur anormale, indicatifs invalides, doublons entre fiches différentes)
+- [ ] Créer un export `fiches-sans-code-postal.csv` (215 lignes) prioritaire
+- [ ] Créer un export `fiches-sans-adresse.csv` (27 lignes) prioritaire
+
 ## Prochaines étapes (à reprendre)
 
 L'utilisateur a confirmé la stratégie en 2 temps :
-1. **Court terme** : finir la qualité des 1 080 fiches non vérifiées via la boucle CSV avant d'enrichir
+1. **Court terme** : finir la qualité des 1 080 fiches non vérifiées via la boucle CSV avant d'enrichir — **en priorisant tel/adresse plutôt que sites web**
 2. **Ensuite** : enrichissements ciblés par lots de 50-100 fiches vérifiées à la source pour combler les manques (logement hors QC, banques alimentaires, immigration, ON/BC/AB)
 
 Cible globale réaliste discutée : **~2 800 fiches au total** (vs 1 752 actuelles), donc ~1 050 nouvelles fiches **vérifiées** à terme.
