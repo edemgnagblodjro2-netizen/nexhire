@@ -234,5 +234,13 @@ Le reste des fiches (1452) reste en BDD active mais non vérifié. Étape suivan
 ### Cibles ultérieures (avant la stratégie top 300)
 - Stratégie alternative à 2 temps (mise en pause) : finir les 1080 non vérifiées via boucle CSV + enrichissements ciblés. Cible historique : ~2 800 fiches.
 
+## Stratégie « 10 services par jour » (décidée 2026-05-01, après reset complet)
+
+**BDD vidée** (1767 → 0 fiches). Backup conservé : `exports/backup-pre-reset-20260501/services-backup-20260501.sql` (à restaurer avec `psql "$DATABASE_URL" < ...` si besoin).
+
+**Nouvelle approche** : ajouter manuellement **10 services vérifiés par jour** via l'admin panel (`artifacts/admin`, page Services, bouton « Nouveau service »). Cible : ~300 fiches solides en 30 jours, par catégorie ET par province/ville. Champs essentiels : nom, adresse, téléphone, site web (+ catégorie + ville/province pour le filtrage).
+
+**Auto-seed désactivé par défaut** : la fonction `autoSeedServicesIfEmpty` dans `artifacts/api-server/src/index.ts` ne fait plus rien sauf si `AUTO_SEED_SERVICES=1` est explicitement set. La BDD est désormais la seule source de vérité (le bundle static `artifacts/service-qc/data/services.ts` est conservé mais ignoré). Pour réactiver une importation ponctuelle (ex. déploiement neuf) : `AUTO_SEED_SERVICES=1` (mode safe) ou `RESEED_SERVICES=1` (mode destructif).
+
 ## Note technique
-- Le workflow `artifacts/api-server: API Server` était failed en fin de session 2026-05-01. À redémarrer si besoin de l'admin web ; sans impact sur les scripts CSV qui accèdent directement à la BDD.
+- Workflows actifs : `artifacts/admin: web` (Vite admin SPA), `artifacts/api-server: API Server` (Express + Drizzle), `artifacts/service-qc: expo` (mobile RN), `artifacts/mockup-sandbox`.

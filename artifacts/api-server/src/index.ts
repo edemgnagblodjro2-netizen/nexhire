@@ -196,6 +196,21 @@ async function ensureDemoAccount() {
 
 async function autoSeedServicesIfEmpty() {
   try {
+    // Auto-seed is OPT-IN since 2026-05-01 — strategy changed to "10 vetted
+    // services per day added manually via the admin panel". The static bundle
+    // (~1700 records) is no longer the source of truth; the database is.
+    // To re-enable a one-shot seed (e.g. for fresh deploys), set
+    // AUTO_SEED_SERVICES=1 (safe mode) or RESEED_SERVICES=1 (destructive).
+    const seedEnabled =
+      process.env.AUTO_SEED_SERVICES === "1" ||
+      process.env.RESEED_SERVICES === "1";
+    if (!seedEnabled) {
+      logger.info(
+        "Auto-seed services disabled (set AUTO_SEED_SERVICES=1 to enable). DB is the source of truth.",
+      );
+      return;
+    }
+
     const count = await db.$count(servicesTable);
     const SERVICES: any[] = (SERVICES_DATA as any[]) ?? [];
     if (SERVICES.length === 0) {
