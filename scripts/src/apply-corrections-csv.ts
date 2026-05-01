@@ -12,10 +12,13 @@ import { resolve } from "node:path";
 //   - Pour CHAQUE ligne du CSV : marque la fiche comme vérifiée
 //     (verifiedAt = maintenant, verifiedBy = label, verificationNote = notes du CSV)
 //   - Si site_corrige non vide → UPDATE website
-//   - Si telephone_corrige non vide → UPDATE phone
-//   - Si description_corrigee non vide → UPDATE description
-//   - Si adresse_corrigee non vide → UPDATE address
-//   - Si action="supprimer" → UPDATE active=false (soft delete)
+//   - SINON, si site_actuel (CSV) diffère du website actuel en BDD → UPDATE website
+//     (cas où l'user a édité site_actuel directement dans son tableur)
+//   - Idem pour telephone_corrige / phone, description_corrigee / description,
+//     adresse_corrigee / address (les colonnes _actuelle ne sont prises en
+//     compte comme correction que si une vraie différence est détectée)
+//   - Si action="supprimer" OU notes contient "expired"/"offline forever"
+//     → UPDATE active=false (soft delete)
 //   - Si action="garder" ou vide → seulement mise à jour vérification
 //
 // Usage :
@@ -95,13 +98,21 @@ async function main() {
   const rows = parseCSV(txt);
   console.log(`  → ${rows.length} fiches dans le CSV`);
 
-  // Validation des ids contre la BDD
+  // Charger les fiches de la BDD pour comparer avec les valeurs _actuelle du CSV
+  // (l'user édite parfois directement les colonnes _actuelle au lieu de remplir _corrige)
   const ids = rows.map((r) => r.id).filter(Boolean);
   const existing = await db
-    .select({ id: servicesTable.id })
+    .select({
+      id: servicesTable.id,
+      website: servicesTable.website,
+      phone: servicesTable.phone,
+      description: servicesTable.description,
+      address: servicesTable.address,
+    })
     .from(servicesTable)
     .where(inArray(servicesTable.id, ids));
   const existingSet = new Set(existing.map((r) => r.id));
+  const existingMap = new Map(existing.map((r) => [r.id, r]));
   const missing = rows.filter((r) => !existingSet.has(r.id));
   if (missing.length) {
     console.log(`\n  ⚠️  ${missing.length} id(s) du CSV introuvables en BDD :`);
@@ -128,6 +139,8 @@ async function main() {
   for (const r of rows) {
     if (!existingSet.has(r.id)) continue;
     const action = (r[ACTION_KEY] ?? "").toLowerCase();
+    const noteText = (r.notes ?? "").toLowerCase();
+    const dbRow = existingMap.get(r.id)!;
     const patch: Record<string, unknown> = {
       verifiedAt: new Date(),
       verifiedBy: VERIFIED_BY,
@@ -135,30 +148,60 @@ async function main() {
     const noteParts: string[] = [];
     stats.valider++;
 
-    if (r.site_corrige) {
+    // Site web : priorité à site_corrige, sinon détecter modification de site_actuel
+    if (r.site_corrige && r.site_corrige !== dbRow.website) {
       patch.website = r.site_corrige;
       stats.siteCorrige++;
-      noteParts.push(`URL corrigée (${r.site_actuel || "vide"} → ${r.site_corrige})`);
+      noteParts.push(`URL corrigée (${dbRow.website || "vide"} → ${r.site_corrige})`);
+    } else if (r.site_actuel && r.site_actuel !== (dbRow.website ?? "")) {
+      patch.website = r.site_actuel;
+      stats.siteCorrige++;
+      noteParts.push(`URL mise à jour (${dbRow.website || "vide"} → ${r.site_actuel})`);
     }
-    if (r.telephone_corrige) {
+    // Téléphone : idem
+    if (r.telephone_corrige && r.telephone_corrige !== dbRow.phone) {
       patch.phone = r.telephone_corrige;
       stats.telCorrige++;
       noteParts.push(`Téléphone corrigé`);
+    } else if (r.telephone_actuel && r.telephone_actuel !== (dbRow.phone ?? "")) {
+      patch.phone = r.telephone_actuel;
+      stats.telCorrige++;
+      noteParts.push(`Téléphone mis à jour`);
     }
-    if (r.description_corrigee) {
+    // Description : idem
+    if (r.description_corrigee && r.description_corrigee !== dbRow.description) {
       patch.description = r.description_corrigee;
       stats.descCorrigee++;
       noteParts.push(`Description corrigée`);
+    } else if (
+      r.description_actuelle &&
+      r.description_actuelle !== (dbRow.description ?? "")
+    ) {
+      patch.description = r.description_actuelle;
+      stats.descCorrigee++;
+      noteParts.push(`Description mise à jour`);
     }
-    if (r.adresse_corrigee) {
+    // Adresse : idem
+    if (r.adresse_corrigee && r.adresse_corrigee !== dbRow.address) {
       patch.address = r.adresse_corrigee;
       stats.adresseCorrigee++;
       noteParts.push(`Adresse corrigée`);
+    } else if (r.adresse_actuelle && r.adresse_actuelle !== (dbRow.address ?? "")) {
+      patch.address = r.adresse_actuelle;
+      stats.adresseCorrigee++;
+      noteParts.push(`Adresse mise à jour`);
     }
-    if (action === "supprimer") {
+
+    // Désactivation : action explicite OU notes contenant un signal "expired"
+    const shouldDeactivate =
+      action === "supprimer" ||
+      noteText.includes("expired") ||
+      noteText.includes("offline forever") ||
+      noteText.includes("définitivement fermé");
+    if (shouldDeactivate) {
       patch.active = false;
       stats.soitDesactive++;
-      noteParts.push("Marquée pour suppression");
+      noteParts.push("Désactivée (site expiré / fermé)");
     }
     if (r.notes) {
       noteParts.push(`Note user: ${r.notes}`);

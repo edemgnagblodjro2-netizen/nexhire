@@ -1,0 +1,166 @@
+id,nom,ville,province,categorie,telephone_actuel,telephone_corrige,site_actuel,site_corrige,http_status,description_actuelle,description_corrigee,adresse_actuelle,adresse_corrigee,problemes,action (garder|corriger|supprimer),notes
+ab-housing-ab,Alberta Seniors and Community Housing,Province de l'Alberta,AB,logement,1-866-716-2333,,https://ascha.com/,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+ab-cfs-ab,Children's Services Alberta,Province de l'Alberta,AB,famille,1-800-387-5437,,https://www.alberta.ca/children-and-family-services,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+ab-child-family-ab,Family Resource Network AB,Province de l'Alberta,AB,famille,1-800-668-2700,,https://www.alberta.ca/family-resource-networks,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+nb-emploi-nb,Emploi NB – Services aux travailleurs,Province du Nouveau-Brunswick,NB,emploi,1-888-762-8600,,https://www.emploisnb.ca/,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+nb-housing-nb,Services de logement NB,Province du Nouveau-Brunswick,NB,logement,1-800-561-4033,,https://soutienssociauxnb.ca/fr/landing/aide-au-logement,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+nb-cfs,Services famille NB,Province du Nouveau-Brunswick,NB,famille,1-888-832-2226,,https://www2.gnb.ca/content/gnb/fr/ministeres/developpement_social/particuliers_familles.html,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+ns-cmha,CMHA Nouvelle-Écosse,Province de la Nouvelle-Écosse,NS,santemental,902-466-6600,,https://novascotia.cmha.ca/,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+ns-cfs,Children and Family Services NS,Province de la Nouvelle-Écosse,NS,famille,1-855-225-2148,,https://novascotia.ca/coms/families/index.html,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+ns-jobsns,Jobs Nova Scotia,Province de la Nouvelle-Écosse,NS,emploi,902-424-5200,,https://jobs.novascotia.ca/,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+ns-housing-ns,Nova Scotia Housing,Province de la Nouvelle-Écosse,NS,logement,902-424-5300,,https://nspha.ca/,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+on-crisis-ontario,Lignes de crise provinciales – Ontario,Province de l'Ontario,ON,santemental,1-866-531-2600,,https://youthhubs.ca/fr/ressources-pour-les-jeunes-en-situation-de-crise,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+on-shelter-housing,Réseau ontarien de refuges (shelter),Province de l'Ontario,ON,logement,1-800-265-0798,,https://www.durham.ca/en/living-here/emergency-shelters.aspx,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+on-health-line,Télésanté Ontario,Province de l'Ontario,ON,sante,1-866-797-0000,,https://data.ontario.ca/fr/dataset/ontario-health-premium-rates,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+imm-arrima,Arrima – Portail du MIFI pour candidats à l'immigration,Province,QC,immigration,1-877-864-9191,,https://www.quebec.ca/en/immigration/online-immigration-services,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+qc-aj-montreal,Bureau aide juridique Montréal – Centre-ville,Montréal,QC,soutienSocial,514-873-3562,,https://www.barreau.qc.ca/fr/trouver-un-avocat/,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+emp-cle-trois-rivieres,Centre local d'emploi (CLE) Trois-Rivières,Trois-Rivières,QC,emploi,819-371-6880,,https://www.quebec.ca/emploi/trouver-emploi-stage/consulter-offres-emplois#c219664,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+sk-health-line,HealthLine Saskatchewan,Province de la Saskatchewan,SK,sante,811,,https://www.saskatchewan.ca/bonjour/health-and-healthy-living,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+sk-lmi,Labour Market Information Saskatchewan,Province de la Saskatchewan,SK,emploi,1-800-667-7590,,https://cecs-sk.ca/fr/guichet-emploi,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+sk-housing-sk,Saskatchewan Housing Corporation,Province de la Saskatchewan,SK,logement,306-787-4177,,https://www.saskatchewan.ca/residents/housing-and-renting,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_404,,Page introuvable — chercher nouvelle URL
+ab-calgary-food,Calgary Food Bank,Calgary,AB,alimentation,403-253-2055,,https://www.calgaryfoodbank.com,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:SSL,,Certificat SSL invalide — vérifier manuellement
+pe-cmha,CMHA Prince Edward Island,Province de l'Île-du-Prince-Édouard,PE,santemental,902-566-3034,,https://pei.cmha.ca/,,ok_200,,,,,SANS_DESCRIPTION|SITE_ERR:SSL,,Certificat SSL invalide — vérifier manuellement
+qc-sm-quebec-robert-giffard,Centre Robert-Giffard – Psychiatrie Québec,Québec,QC,santemental,418-663-5321,,https://www.ciusss-capitalenationale.gouv.qc.ca,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:SSL,,Certificat SSL invalide — vérifier manuellement
+s-pas-rue-mtl,Pas de la rue,Montréal,QC,soutienSocial,514-525-1561,,https://pasdelarue.org,,ok_200,,,,,SANS_DESCRIPTION|SITE_ERR:SSL,,Certificat SSL invalide — vérifier manuellement
+bc-ircc,IRCC – Immigration BC,Province de la Colombie-Britannique,BC,immigration,1-888-242-2100,,https://www.canada.ca/fr/immigration-refugies-citoyennete.html,,OK_200,,,,,SANS_DESCRIPTION|SITE_TIMEOUT,,Serveur lent — réessayer plus tard
+on-ircc-toronto,"IRCC – Immigration, Réfugiés, Citoyenneté Canada",Province de l'Ontario,ON,immigration,1-888-242-2100,,https://www.canada.ca/fr/immigration-refugies-citoyennete.html,,OK_200,,,,,SANS_DESCRIPTION|SITE_TIMEOUT,,Serveur lent — réessayer plus tard
+qc-immo-celiapp,CELIAPP – Compte épargne 1re propriété,Province de Québec,QC,achatImmobilier,1-800-959-7383,,https://www.canada.ca/fr/agence-revenu/services/impot/particuliers/sujets/reer-fonds-enregistres-revenu-retraite/compte-depargne-libre-impot-lachat-dune-premiere-propriete-celiapp.html,,OK_200,,,,,ADRESSE_SANS_CODE_POSTAL|SANS_DESCRIPTION|SITE_TIMEOUT,,Serveur lent — réessayer plus tard
+qc-sm-laval-cite-sante,Cité-de-la-Santé – Unité psychiatrie Laval,Laval,QC,santemental,450-668-1010,,https://www.lavalensante.com/,,OK_200,,,,,SANS_DESCRIPTION|SITE_TIMEOUT,,Serveur lent — réessayer plus tard
+qc-dpj-laval,DPJ – Protection jeunesse Laval,Laval,QC,famille,450-975-4040,,https://www.lavalensante.com/,,OK_200,,,,,SANS_DESCRIPTION|SITE_TIMEOUT,,Serveur lent — réessayer plus tard
+qc-food-gatineau-harvest,Moisson Outaouais – Banque alimentaire Gatineau,Gatineau,QC,alimentation,819-771-9549,,https://www.moissonoutaouais.com/,,OK_200,,,,,SANS_DESCRIPTION|SITE_TIMEOUT,,Serveur lent — réessayer plus tard
+qc-immo-rap-reer,RAP – Régime accession propriété (REER),Province de Québec,QC,achatImmobilier,1-800-959-7383,,https://www.canada.ca/fr/agence-revenu/services/impot/particuliers/sujets/fonds-enregistre-revenu-retraite-ferr.html,,OK_200,,,,,ADRESSE_SANS_CODE_POSTAL|SANS_DESCRIPTION|SITE_TIMEOUT,,Serveur lent — réessayer plus tard
+sk-cmha,CMHA Saskatchewan,Province de la Saskatchewan,SK,santemental,306-525-0575,,https://cmhasaskatoon.ca/,,OK_200,,,,,SANS_DESCRIPTION|SITE_TIMEOUT,,Serveur lent — réessayer plus tard
+ab-habitat-ab,Habitat for Humanity Alberta,Calgary,AB,achatImmobilier,403-263-4184,,https://www.habitatsouthernab.ca/,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+ab-cavac-ab,Victim Services Alberta,Province de l'Alberta,AB,famille,1-866-845-5082,,https://www.alberta.ca/victims-of-crime-assistance-program,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+bc-employ-bc,CJE jeunesse emploi BC,Vancouver,BC,emploi,604-688-1014,,https://www.workbc.ca/plan-career/resources/youth,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+bc-cfs-bc,Children and Family Services BC,Province de la Colombie-Britannique,BC,famille,1-800-663-9122,,https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/ministries/children-and-family-development,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+bc-habitat-bc,Habitat for Humanity BC,Vancouver,BC,achatImmobilier,604-629-3328,,https://habitat.ca/en/restore/find-a-restore,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+bc-cavac-bc,Victim Services BC,Province de la Colombie-Britannique,BC,famille,1-800-563-0808,,https://www2.gov.bc.ca/gov/content/justice/criminal-justice/bcs-criminal-justice-system/understanding-criminal-justice/key-parts/victim-services,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+mb-cmha,CMHA Manitoba,Province du Manitoba,MB,santemental,204-982-6100,,https://www.cmhaacrossmb.ca/,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+mb-habitat,Habitat for Humanity Winnipeg,Winnipeg,MB,achatImmobilier,204-989-4700,,https://www.habitat.mb.ca/,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+mb-iscis,Immigrant and Refugee Community Organization MB,Winnipeg,MB,immigration,204-943-8765,,https://ircom.ca/,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+nb-foodbank-moncton,Banque alimentaire Moncton,Moncton,NB,alimentation,506-857-3800,,https://nb.211.ca/record-detail/71222719/,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+nb-shelter-women,Maison Mathieu-Froment-Savoie – Femmes NB,Moncton,NB,logement,506-855-2615,,https://www.mmfs.org/,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+nl-foodbank-nl,Community Food Sharing Association NL,Province de Terre-Neuve-et-Labrador,NL,alimentation,709-579-9949,,https://cfsa.nf.net/,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+ns-nsar,Nova Scotia Real Estate – NSAR,Halifax,NS,achatImmobilier,902-468-2515,,https://www.nsar.ca,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+nt-legal-aid,Aide juridique TNO,Yellowknife,NT,soutienSocial,867-873-3000,,https://www.justice.gov.nt.ca/fr/aide-juridique/,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+nt-cmha,CMHA Territoires du Nord-Ouest,Yellowknife,NT,santemental,867-920-2330,,https://cmha.ca/fr/,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+nt-foodbank-nt,Yellowknife Food Bank,Yellowknife,NT,alimentation,867-873-4504,,https://www.facebook.com/YKFoodBank/,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+nu-foodbank-nu,Agvvik Society – Aide alimentaire,Iqaluit,NU,alimentation,867-979-1277,,https://qajuqturvik.ca/fr/nos-programmes,,OK_200,,,,,SANS_DESCRIPTION|SITE_ERR:connexion,,Site inaccessible — vérifier manuellement
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+bc-transition-house,BC Society of Transition Houses,Province de la Colombie-Britannique,BC,famille,1-800-563-0808,,https://www.bcsth.ca,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_429,,Erreur serveur temporaire — réessayer
+bc-womens-shelter-bc,BC Women's Shelter – Vancouver,Vancouver,BC,logement,604-872-8212,,https://bcsth.ca,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_429,,Erreur serveur temporaire — réessayer
+mb-health-line,Health Links Manitoba,Province du Manitoba,MB,sante,204-788-8200,,https://www.gov.mb.ca/health/healthlinks/,https://www.manitoba.ca/404.html,OK_200,,,,,SANS_DESCRIPTION,,REDIRIGE vers 404 — corriger URL
+nb-shelter-moncton,Harvest House – Hébergement urgence,Moncton,NB,logement,506-388-0090,,https://www.harvesthouse.ca,https://www.hhcraftsmen.com/,OK_200,,,,,SANS_DESCRIPTION,,DOMAINE_DETOURNE — supprimer
+emp-cje-quebec,Carrefour jeunesse-emploi de la Capitale-Nationale,Québec,QC,emploi,418-525-5526,,https://cjecn.com,https://www.hugedomains.com/domain_profile.cfm?d=cjecn.com,OK_200,,,,,SANS_DESCRIPTION,,DOMAINE_DETOURNE — supprimer
+mh-crise-rond-point-mtl,Centre de crise Le Tournant – Sud-Ouest,Montréal,QC,santemental,514-935-4546,,https://centredecrise.ca,https://zb.fansuite.co/stream/?centredecrise.ca,OK_200,,,,,SANS_DESCRIPTION,,DOMAINE_DETOURNE — supprimer
+mh-revivre-qc,"Revivre – Aide aux troubles anxieux, dépressifs, bipolaires",Montréal,QC,santemental,1-866-738-4873,,https://revivre.org,https://relief.ca:443/,OK_200,,,,,SANS_DESCRIPTION,,FUSIONNÉ avec relief.ca — mettre à jour URL
+qc-sm-provincial-revivre,Revivre – Anxiété et dépression QC,Province de Québec,QC,santemental,514-738-4873,,https://www.revivre.org,https://relief.ca:443/,OK_200,,,,,SANS_DESCRIPTION,,FUSIONNÉ avec relief.ca — mettre à jour URL
+sk-shelter-women,YWCA Regina – Femmes,Regina,SK,logement,306-525-2141,,https://www.ywcaregina.com,,OK_200,,,,,SANS_DESCRIPTION|SITE_HTTP_429,,Erreur serveur temporaire — réessayer
