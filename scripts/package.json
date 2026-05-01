@@ -11,6 +11,7 @@
     "import-enrichment": "node ../node_modules/tsx/dist/cli.mjs ./src/import-quebec-enrichment.ts",
     "apply-corrections": "node ../node_modules/tsx/dist/cli.mjs ./src/apply-corrections-csv.ts",
     "select-top-300": "node ../node_modules/tsx/dist/cli.mjs ./src/select-top-300.ts",
+    "export-review-300": "node ../node_modules/tsx/dist/cli.mjs ./src/export-top-300-for-review.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

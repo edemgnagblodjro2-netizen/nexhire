@@ -221,11 +221,18 @@ Hiérarchie de priorité de vérification :
 
 ## Prochaines étapes (à reprendre)
 
-L'utilisateur a confirmé la stratégie en 2 temps :
-1. **Court terme** : finir la qualité des 1 080 fiches non vérifiées via la boucle CSV avant d'enrichir — **en priorisant tel/adresse plutôt que sites web**
-2. **Ensuite** : enrichissements ciblés par lots de 50-100 fiches vérifiées à la source pour combler les manques (logement hors QC, banques alimentaires, immigration, ON/BC/AB)
+### Stratégie « Top 300 fiches béton » (décidée 2026-05-01)
+Après constat que (a) 211 ne partagera jamais ses données (c'est leur produit), (b) la vérification automatique structurelle ne garantit pas la véracité (cas FCCF : fiche « vérifiée » avec 4 erreurs sur 5 champs), nouvelle approche :
 
-Cible globale réaliste discutée : **~2 800 fiches au total** (vs 1 752 actuelles), donc ~1 050 nouvelles fiches **vérifiées** à terme.
+1. **Sélection** : `pnpm --filter @workspace/scripts run select-top-300` choisit les 300 meilleures fiches selon score qualité (tel/adresse/site/vérification/desc/géo) avec quota équilibré par catégorie. Sortie : `exports/top-300-fiches-beton-AAAAMMJJ.csv` + `exports/top-300-ids-AAAAMMJJ.txt`
+2. **Export révision** : `pnpm --filter @workspace/scripts run export-review-300` produit `exports/revision-top-300-AAAAMMJJ.csv` avec colonnes `_corrige` vides à remplir, trié par catégorie pour bosser par lots
+3. **Vérification manuelle** par l'utilisateur (~10h) : ouvrir chaque site, comparer tél/adresse/ville/province, remplir `action=garder|corriger|supprimer` + colonnes `_corrige` si erreur
+4. **Application** : `pnpm --filter @workspace/scripts run apply-corrections -- exports/revision-top-300-AAAAMMJJ.csv` (mode strict accepte désormais `action=garder` comme signal positif, et supporte `ville_corrigee` + `province_corrigee`)
+
+Le reste des fiches (1452) reste en BDD active mais non vérifié. Étape suivante (à décider) : soft-delete du reste, ou crowdsourcing in-app via bouton « ce numéro ne fonctionne pas ».
+
+### Cibles ultérieures (avant la stratégie top 300)
+- Stratégie alternative à 2 temps (mise en pause) : finir les 1080 non vérifiées via boucle CSV + enrichissements ciblés. Cible historique : ~2 800 fiches.
 
 ## Note technique
 - Le workflow `artifacts/api-server: API Server` était failed en fin de session 2026-05-01. À redémarrer si besoin de l'admin web ; sans impact sur les scripts CSV qui accèdent directement à la BDD.

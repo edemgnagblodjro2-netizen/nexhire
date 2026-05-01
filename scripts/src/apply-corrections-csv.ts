@@ -154,11 +154,16 @@ async function main() {
       r.site_corrige ||
       r.telephone_corrige ||
       r.description_corrigee ||
-      r.adresse_corrigee
+      r.adresse_corrigee ||
+      r.ville_corrigee ||
+      r.province_corrigee
     );
     const isExplicitAction =
       action === "supprimer" ||
       action === "corriger" ||
+      action === "garder" ||
+      action === "garde" ||
+      action === "ok" ||
       httpStatus.includes("DOMAINE_") ||
       noteText.includes("expired") ||
       noteText.includes("offline forever");
@@ -217,6 +222,21 @@ async function main() {
       patch.address = r.adresse_actuelle;
       stats.adresseCorrigee++;
       noteParts.push(`Adresse mise à jour`);
+    }
+    // Ville : idem (récupéré séparément car non chargé dans dbRow)
+    if (r.ville_corrigee) {
+      patch.city = r.ville_corrigee;
+      noteParts.push(`Ville corrigée → ${r.ville_corrigee}`);
+    }
+    // Province : idem (validation : 2 lettres majuscules)
+    if (r.province_corrigee) {
+      const prov = r.province_corrigee.trim().toUpperCase();
+      if (/^[A-Z]{2}$/.test(prov)) {
+        patch.province = prov;
+        noteParts.push(`Province corrigée → ${prov}`);
+      } else {
+        console.warn(`  ⚠️  ${r.id}: province "${r.province_corrigee}" invalide, ignorée (attendu: 2 lettres ex. ON, QC, BC)`);
+      }
     }
 
     // Désactivation : action explicite, status DOMAINE_*_SUPPRIMER, ou notes "expired"

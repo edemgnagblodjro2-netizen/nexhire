@@ -539,3 +539,9 @@ id = "jytpxQFRJ8Bz-LphGMBsJ"
 uri = "file://exports/top-300-ids-20260501.txt"
 type = "text"
 title = "Liste des 300 IDs (texte brut)"
+
+[[outputs]]
+id = "gMm7Wx8Q0HTov_Fi0EiZd"
+uri = "file://exports/revision-top-300-20260501.csv"
+type = "table"
+title = "CSV de révision manuelle - Top 300 (à remplir)"
