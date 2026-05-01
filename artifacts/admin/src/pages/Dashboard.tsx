@@ -22,17 +22,17 @@ export default function Dashboard({ adminKey }: { adminKey: string }) {
     );
   }
 
-  if (error) {
+  if (error || !data) {
     return (
       <div className="p-8">
         <div className="bg-red-50 border border-red-100 rounded-xl p-4 text-sm text-red-700">
-          Erreur lors du chargement des stats.
+          Erreur lors du chargement des stats. Vérifiez que le serveur API est démarré.
         </div>
       </div>
     );
   }
 
-  const { stats, cities, categories } = data!;
+  const { stats, cities, categories } = data;
 
   const statsCards = [
     { label: "Total services", value: stats.total, icon: "🏢", color: "teal" },
