@@ -1,8 +1,10 @@
 # Overview
 
-**v1.0.69 — 2026-05-02 (suite 24) — Expansion 12 provinces/territoires (5 131 services)**
+**v1.0.70 — 2026-05-02 (suite 24) — Expansion 12 provinces/territoires (5 134 services)**
 
-**Total base : 5 131 services** sur **12 provinces/territoires** (2 952 QC · 697 BC · **202 ON** · 167 MB · 90 NB · 861 AB · 15 SK · 4 NL · 1 NS · 1 PE · **88 NU** · **53 NT**), tous géocodés (sauf province-wide). 12 catégories. **263 villes QC + 120 villes AB + 8 villes SK + 24 villes NU + 14 villes NT géocodées**. Seul le YT (Yukon) manque encore.
+**Total base : 5 134 services** sur **12 provinces/territoires** (2 952 QC · 697 BC · **202 ON** · 167 MB · 90 NB · 861 AB · 15 SK · 4 NL · 1 NS · 1 PE · **90 NU** · **54 NT**), tous géocodés (sauf province-wide). 12 catégories. **263 villes QC + 120 villes AB + 8 villes SK + 24 villes NU + 14 villes NT géocodées**. Seul le YT (Yukon) manque encore.
+
+**Bloc 64 (suite 24) — NU + NT child care (3 fiches : 2 NU + 1 NT)** : 3 entrées parsées, 3 postées (0 dup, 0 fail). Couvre Nutrition Education and Information Services Tasiuqtigiit Hand in Hand Society Iqaluit (childcare/nutrition family support, 867-979-6089), Find a Licensed Child Daycare Govt NWT Education NT-wide (licensed daycare directory), List of Licensed Childcare Facilities in Nunavut Govt NU Education NU-wide. Slug : `cc` (childcare).
 
 **Bloc 63 (suite 24) — NU Elders Homes & Continuing Care Centres (5 fiches NU)** : 5 entrées toutes nommées identiquement "Elders Homes and Continuing Care Centres" (Govt NU Health) avec téléphones primaires différents par communauté + ligne secondaire commune 867-975-5941 (bureau central NU Health). **Innovation `PHONE_TO_CITY` mapping** : table de correspondance préfixes téléphone NU → 5 facilités continuing care connues (8679344055→Rankin Inlet, 8678574084→Arviat, 8679794671→Iqaluit, 8673606310→Cambridge Bay, 8679834543→Igloolik). DisplayName différencié par ville suffixe. Catégorie `housing`, sub `elders home / continuing care`. Tous les 5 postés sans dup.
 
