@@ -1,8 +1,10 @@
 # Overview
 
-**v1.0.72 — 2026-05-02 (suite 24) — Expansion COMPLÈTE 13 provinces/territoires (5 139 services)**
+**v1.0.73 — 2026-05-02 (suite 24) — Expansion COMPLÈTE 13 provinces/territoires (5 140 services)**
 
-**Total base : 5 139 services** sur **13 provinces/territoires** (2 952 QC · 697 BC · **202 ON** · 167 MB · 90 NB · 861 AB · 15 SK · 4 NL · 1 NS · 1 PE · **93 NU** · **55 NT** · **1 YT**), tous géocodés (sauf province-wide). 12 catégories. **263 villes QC + 120 villes AB + 8 villes SK + 24 villes NU + 14 villes NT + 1 ville YT géocodées**. **Toutes les provinces/territoires du Canada sont maintenant couvertes** (la dernière, le Yukon, vient d'entrer avec sa première fiche Whitehorse).
+**Total base : 5 140 services** sur **13 provinces/territoires** (2 952 QC · 697 BC · **202 ON** · 167 MB · 90 NB · 861 AB · 15 SK · 4 NL · 1 NS · 1 PE · **93 NU** · **55 NT** · **2 YT**), tous géocodés (sauf province-wide). 12 catégories. **263 villes QC + 120 villes AB + 8 villes SK + 24 villes NU + 14 villes NT + 1 ville YT géocodées**. **Toutes les provinces/territoires du Canada sont maintenant couvertes**.
+
+**Bloc 67 (suite 24) — YT legal aid (1 fiche YT)** : Independent Legal Advice (ILA) Program — Whitehorse (Yukon Department of Justice). Catégorie `legal`, sub `independent legal advice`. Téléphones 867-667-8500 + 1-800-661-0408 poste 8500. Adresse 2nd Floor-210-212 Main Street, Whitehorse, Y1A 2B1. Format source non-Clipboard, payload construit directement.
 
 **Bloc 66 (suite 24) — YT première fiche (1 fiche YT)** : Adult Protection and Decision-Making — Whitehorse (Yukon Health and Social Services). Catégorie `social`, sub `adult protection`. Téléphones 867-456-3946 + 1-800-661-0408 poste 3946. Adresse 3168 3rd Avenue, Whitehorse, Y1A 1G3. Géocodage Whitehorse 60.7212, -135.0568. Format source non-Clipboard donc payload construit directement (pas de parser). **Premier service Yukon enregistré dans la base** — le YT n'avait aucune fiche jusqu'ici.
 
