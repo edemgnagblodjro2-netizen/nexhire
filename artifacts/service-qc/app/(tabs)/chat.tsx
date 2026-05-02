@@ -29,6 +29,7 @@ import { getApiBaseUrl } from "@/lib/apiBase";
 import { authedFetch } from "@/lib/apiClient";
 import { useAuth } from "@/lib/auth";
 import { LinearGradient } from "@/components/SafeLinearGradient";
+import { AIGuidedOnboarding } from "@/components/AIGuidedOnboarding";
 
 type ChatLang = "fr" | "en" | "es" | "ar" | "ht";
 const CHAT_LANGS: { code: ChatLang; label: string; flag: string }[] = [
@@ -1073,26 +1074,32 @@ export default function ChatScreen() {
         }
         ListFooterComponent={
           messages.length <= 1 ? (
-            <View style={styles.quickPromptsWrap}>
-              <Text style={[styles.quickLabel, { color: colors.mutedForeground }]}>
-                {t.aiSuggestions}
-              </Text>
-              <View style={styles.quickPrompts}>
-                {quickPrompts.map((p) => (
-                  <TouchableOpacity
-                    key={p}
-                    style={[
-                      styles.promptChip,
-                      { backgroundColor: colors.card, borderColor: colors.border },
-                    ]}
-                    onPress={() => sendMessage(p)}
-                    activeOpacity={0.8}
-                  >
-                    <Text style={[styles.promptText, { color: colors.foreground }]}>
-                      {p}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
+            <View>
+              <AIGuidedOnboarding
+                language={chatLang}
+                onSubmitPrompt={sendMessage}
+              />
+              <View style={styles.quickPromptsWrap}>
+                <Text style={[styles.quickLabel, { color: colors.mutedForeground }]}>
+                  {t.aiSuggestions}
+                </Text>
+                <View style={styles.quickPrompts}>
+                  {quickPrompts.map((p) => (
+                    <TouchableOpacity
+                      key={p}
+                      style={[
+                        styles.promptChip,
+                        { backgroundColor: colors.card, borderColor: colors.border },
+                      ]}
+                      onPress={() => sendMessage(p)}
+                      activeOpacity={0.8}
+                    >
+                      <Text style={[styles.promptText, { color: colors.foreground }]}>
+                        {p}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
               </View>
             </View>
           ) : null
