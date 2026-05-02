@@ -1,8 +1,10 @@
 # Overview
 
-**v1.0.56 — 2026-05-02 (suite 3) — Expansion multi-provinces : Manitoba + Ontario + Nouveau-Brunswick**
+**v1.0.56 — 2026-05-02 (suite 3) — Expansion 6 provinces : QC + MB + ON + NB + NL + NS**
 
-Ajout de **356 services hors-QC** importés depuis 16 blocs textes 211 collés par l'utilisateur (MB santé/social/alimentation/logement/santé mentale/urgence/emploi + ON Toronto emploi/GTA/Ottawa + ON Toronto santé mentale/santé + ON Toronto santé pro/admin gouv + ON Toronto santé/admin/social + ON ServiceOntario/Ministère Santé + ON Toronto santé autochtone/femmes/aînés + NB logement + ON Toronto santé/SLD/santé Autochtone/Centre Francophone/aînés/Barrie + NB santé francophone/admin Acadie). **Total base : 712 services** (356 QC · 167 MB · 179 ON · 10 NB), tous géocodés (711/712 GPS, seul le 9-1-1 universel sans coords).
+Ajout de **363 services hors-QC** importés depuis 17 blocs textes 211 collés par l'utilisateur. **Total base : 719 services** sur **6 provinces** (356 QC · 167 MB · 180 ON · 11 NB · 4 NL · 1 NS), tous géocodés (718/719 GPS, seul le 9-1-1 universel sans coords).
+
+17e bloc multi-provinces (7 fiches, 1 skip Services aux Autochtones Canada sans tél, 1 fusion Connections for Seniors) : Société d'habitation NL Stephenville (NLHC, provincial), Connections for Seniors St John's NL (fusion programmes aînés + transport 709-699-3063), SCHL/CMHC Bureau national Ottawa (national), Société Elizabeth Fry NB Saint John (legal/femmes judiciarisées, provincial), Anciens Combattants Canada bureau Dartmouth NS (premier service NS, fédéral), Ronald McDonald House NL St John's, NL Min Familles et Abordabilité Revenus/aides sociales 1-877-729-7888 (provincial). 3 nouvelles villes géocodées : Stephenville, St John's, Dartmouth.
 
 16e bloc Nouveau-Brunswick Acadie (2 fiches) : Réseau de santé Vitalité — Centre de santé communautaire de Saint-Isidore (santé francophone Zone Acadie-Bathurst), Service Nouveau-Brunswick Centre de services Tracadie 1-888-762-8600 (administrative provincial). 2 nouvelles villes géocodées : Saint-Isidore, Tracadie-Sheila.
 
@@ -18,9 +20,9 @@ Le 11e bloc Toronto (22 fiches importées, 1 doublon ignoré) couvre : 3 points 
 
 **Bug serveur corrigé** : la route `POST /api/admin/services` et `PUT /api/admin/services/:id` n'extrayaient pas le champ `province` du body, donc toutes les nouvelles fiches MB/ON tombaient à la valeur par défaut `QC` du schéma DB. Patch dans `artifacts/api-server/src/routes/services.ts` (ligne 233 POST et 268 PUT). Bonus : la détection du code PG `23505` (duplicate key) a été corrigée pour aussi regarder `err.cause.code` (drizzle-orm wrap les erreurs PG dans `cause`), ce qui retournait 500 au lieu de 409 sur conflit d'ID.
 
-Distribution finale par catégorie : 160 health · 122 employment · 111 social · 102 mentalHealth · 69 administrative · 43 family · 40 immigration · 22 housing · 20 legal · 10 food · 10 childcare · 3 realestate. Urgents : 45 (15 QC · 18 MB · 11 ON · 1 NB).
+Distribution finale par catégorie : 160 health · 122 employment · 113 social · 102 mentalHealth · 71 administrative · 43 family · 40 immigration · 24 housing · 21 legal · 10 food · 10 childcare · 3 realestate. Urgents : 45 (15 QC · 18 MB · 11 ON · 1 NB).
 
-Villes ajoutées (34 nouvelles, géocodées via Nominatim — cache `/tmp/city_coords.json` 104 villes au total) : **MB** Brandon, Beausejour, Virden, Snow Lake, Thompson, Opaskwayak, Boissevain, Roblin, Swan River, Ste. Rose du Lac, Dauphin, The Pas, Flin Flon, Oak Lake, Elkhorn, Arborg, Selkirk, Morden, Winkler, Gimli, St Laurent, Grand Marais, Altona, Lac du Bonnet ; **ON** Toronto, Mississauga, Etobicoke, Vaughan, Barrie, Ottawa ; **NB** Saint John, Fredericton, St Stephen, Moncton, Hartland, Saint-Isidore, Tracadie-Sheila.
+Villes ajoutées (37 nouvelles, géocodées via Nominatim — cache `/tmp/city_coords.json` 107 villes au total) : **MB** Brandon, Beausejour, Virden, Snow Lake, Thompson, Opaskwayak, Boissevain, Roblin, Swan River, Ste. Rose du Lac, Dauphin, The Pas, Flin Flon, Oak Lake, Elkhorn, Arborg, Selkirk, Morden, Winkler, Gimli, St Laurent, Grand Marais, Altona, Lac du Bonnet ; **ON** Toronto, Mississauga, Etobicoke, Vaughan, Barrie, Ottawa ; **NB** Saint John, Fredericton, St Stephen, Moncton, Hartland, Saint-Isidore, Tracadie-Sheila ; **NL** Stephenville, St John's ; **NS** Dartmouth.
 
 Conventions d'IDs : `<prov2>-<ville3>-<cat1>NNN` (ex: `mb-wpg-h001` santé Winnipeg, `mb-bdn-m001` mental Brandon, `on-tor-e023` emploi Toronto, `nb-sjn-lo001` logement Saint John). Cat1 housing = `lo` (logement) pour éviter collision avec health = `h`. Champ `isProvinceWide=true` pour lignes téléphoniques sans frais provinciales/nationales (ex: Naseeha 1-866-627-3342, Good2Talk 1-866-925-5454, CLEO, Diabète Canada, NB Développement social 1-833-733-7835).
 
