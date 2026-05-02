@@ -2,11 +2,13 @@
 
 **v1.0.56 — 2026-05-02 (suite 3) — Expansion multi-provinces : Manitoba (Winnipeg) + Ontario (Toronto/GTA/Ottawa)**
 
-Ajout de **220 services hors-QC** importés depuis 9 blocs textes 211 collés par l'utilisateur (Manitoba santé, social, alimentation, logement, santé mentale, urgence + Toronto emploi, GTA, Ottawa, santé/santé mentale Toronto). **Total base : 576 services** (356 QC · 137 MB · 83 ON), tous géocodés (575/576 GPS, seul le 9-1-1 universel sans coords).
+Ajout de **240 services hors-QC** importés depuis 10 blocs textes 211 collés par l'utilisateur (Manitoba santé/social/alimentation/logement/santé mentale/urgence + Toronto emploi/GTA/Ottawa + Toronto santé mentale/santé + Toronto santé pro/admin gouvernementale). **Total base : 596 services** (356 QC · 137 MB · 103 ON), tous géocodés (595/596 GPS, seul le 9-1-1 universel sans coords).
+
+Le 10e bloc Toronto santé/admin (20 fiches, IDs `on-tor-h011…h019`, `on-tor-l003…l005`, `on-tor-a005…a009`, `on-tor-m006/m007`, `on-tor-s003`) couvre : Children's Mental Health Ontario, cliniques juridiques travail (OWA/OEA/Workers H&S), ministères ON (Soins longue durée, Travail, OHS, OLRB), tribunaux et ombudsmans (Patient Ombudsman, Commission consentement), associations santé (MS Canada, Cancer Pulmonaire, Diététistes, POGO pédiatrie, Eye See Eye Learn, Réseau Rénal, Mourir dans la dignité), Health Nexus, Santé à domicile Toronto Central, Youthdale (mentalHealth + ligne crise 24h), TMU Medical Centre. Diabetes Canada (170 University) et CLEO Justice pas-à-pas écartés (déjà en base / pas de tél public).
 
 **Bug serveur corrigé** : la route `POST /api/admin/services` et `PUT /api/admin/services/:id` n'extrayaient pas le champ `province` du body, donc toutes les nouvelles fiches MB/ON tombaient à la valeur par défaut `QC` du schéma DB. Patch dans `artifacts/api-server/src/routes/services.ts` (ligne 233 POST et 268 PUT). Bonus : la détection du code PG `23505` (duplicate key) a été corrigée pour aussi regarder `err.cause.code` (drizzle-orm wrap les erreurs PG dans `cause`), ce qui retournait 500 au lieu de 409 sur conflit d'ID.
 
-Distribution finale par catégorie : 116 health · 96 social · 93 employment · 92 mentalHealth · 48 administrative · 41 family · 38 immigration · 15 legal · 12 housing · 10 food · 10 childcare · 3 realestate. Urgents : 38 (15 QC · 18 MB · 5 ON).
+Distribution finale par catégorie : 125 health · 97 social · 94 mentalHealth · 93 employment · 53 administrative · 42 family · 38 immigration · 18 legal · 13 housing · 10 food · 10 childcare · 3 realestate. Urgents : 39 (15 QC · 18 MB · 6 ON).
 
 Villes ajoutées (22 nouvelles, géocodées via Nominatim) : **MB** Brandon, Beausejour, Virden, Snow Lake, Thompson, Opaskwayak, Boissevain, Roblin, Swan River, Ste. Rose du Lac, Dauphin, The Pas, Flin Flon, Oak Lake, Elkhorn, Arborg, Selkirk, Morden, Winkler ; **ON** Toronto, Mississauga, Etobicoke, Vaughan, Barrie, Ottawa.
 
