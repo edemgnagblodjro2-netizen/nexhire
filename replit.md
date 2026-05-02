@@ -16,6 +16,8 @@ Ajouts ponctuels QC — Lignes info CIUSSS Montréal :
 - `qc-mtl-e003` English Montreal School Board (EMSB), 6000 Fielding Avenue H3X 1T4, 514-483-7200 (général) / 514-488-4636 (Adult/Voc) — réseau public anglophone Montréal.
 - `qc-mtl-e004` Lester B. Pearson School Board (LBPSB), 1925 Brookdale Avenue Dorval H9P 2Y7, 514-422-3000 (général) / 514-422-3022 (admissions) / 514-422-3001 (transport) — réseau public anglophone West Island (Dorval géocodé, cache à 126 villes).
 
+**Sync app mobile** : `artifacts/service-qc/data/services.ts` (SERVICES statique de fallback) régénéré depuis l'API → 874 services, 0 catégorie inconnue, typecheck OK. Les nouvelles fiches sont disponibles immédiatement pour les utilisateurs en ligne (cache TTL 1h, fetch `${apiUrl}/api/services`) et présentes dans le bundle hors-ligne.
+
 Ajout ponctuel QC : Coalition montréalaise des Tables de quartier (CMTQ, `qc-mtl-s001`), 5675 rue Lafond Montréal, 514-721-4019, info@cmtq.org — regroupement des Tables de quartier de Montréal (concertation locale, lutte contre la pauvreté, mobilisation citoyenne).
 
 17e bloc multi-provinces (7 fiches, 1 skip Services aux Autochtones Canada sans tél, 1 fusion Connections for Seniors) : Société d'habitation NL Stephenville (NLHC, provincial), Connections for Seniors St John's NL (fusion programmes aînés + transport 709-699-3063), SCHL/CMHC Bureau national Ottawa (national), Société Elizabeth Fry NB Saint John (legal/femmes judiciarisées, provincial), Anciens Combattants Canada bureau Dartmouth NS (premier service NS, fédéral), Ronald McDonald House NL St John's, NL Min Familles et Abordabilité Revenus/aides sociales 1-877-729-7888 (provincial). 3 nouvelles villes géocodées : Stephenville, St John's, Dartmouth.
