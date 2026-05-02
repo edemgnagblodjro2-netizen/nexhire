@@ -2,7 +2,9 @@
 
 **v1.0.56 — 2026-05-02 (suite 3) — Expansion 6 provinces : QC + MB + ON + NB + NL + NS**
 
-Ajout de **364 services hors-QC** importés depuis 17 blocs textes 211 + 1 fiche QC complémentaire (CMTQ Montréal). **Total base : 720 services** sur **6 provinces** (357 QC · 167 MB · 180 ON · 11 NB · 4 NL · 1 NS), tous géocodés (719/720 GPS, seul le 9-1-1 universel sans coords).
+**Total base : 781 services** sur **6 provinces** (418 QC · 167 MB · 180 ON · 11 NB · 4 NL · 1 NS), tous géocodés (780/781 GPS, seul le 9-1-1 universel sans coords). 364 services hors-QC ajoutés depuis 17 blocs 211 + 62 ajouts QC (CMTQ Montréal + bloc CIUSSS Est-de-l'Île de Montréal).
+
+18e bloc QC — CIUSSS de l'Est-de-l'Île de Montréal (61 fiches, 7 fusions appliquées) : 34 cliniques médicales/GMF/cabinets (incluant ImaSanté, Polyclinique Masson, Maisonneuve-Rosemont, Mieux-Être Levasseur/St-Léonard/Hochelaga/Anjou, Référence MD, Collectif Médica, Hochelaga, Saint-André + Saint-André 2, Rivière-des-Prairies, Sherbrooke-Dickson, Santé Saint-Michel, Métro Saint-Michel, cabinets Dr Dinh Hue Luu / Mantha / Dre Cardoso, Cliniques 3000/3600/8260, Anjou, Chaumont, Dr Thanh Minh Le, Montréal-Est, Frongillo, Vivaldi, Jean-Talon-Pie IX, Ruelle d'Hochelaga, Bélanger, Cadillac, Angus), 15 CHSLD/centres d'hébergement (dont 5 fusionnés avec leur centre de jour : Éloria-Lepage, François-Séguenot, Dante, Pierre-Joseph-Triest, Joseph-François-Perrault), 9 CLSC (dont 2 paires CLSC/GMF doublons fusionnées : Saint-Michel et Hochelaga-Maisonneuve), Hôpital Maisonneuve-Rosemont, Hôpital Santa Cabrini Ospedale, Institut universitaire en santé mentale de Montréal (mentalHealth). IDs `qc-mtl-h001` à `h060` + `qc-mtl-m001`.
 
 Ajout ponctuel QC : Coalition montréalaise des Tables de quartier (CMTQ, `qc-mtl-s001`), 5675 rue Lafond Montréal, 514-721-4019, info@cmtq.org — regroupement des Tables de quartier de Montréal (concertation locale, lutte contre la pauvreté, mobilisation citoyenne).
 
@@ -22,7 +24,7 @@ Le 11e bloc Toronto (22 fiches importées, 1 doublon ignoré) couvre : 3 points 
 
 **Bug serveur corrigé** : la route `POST /api/admin/services` et `PUT /api/admin/services/:id` n'extrayaient pas le champ `province` du body, donc toutes les nouvelles fiches MB/ON tombaient à la valeur par défaut `QC` du schéma DB. Patch dans `artifacts/api-server/src/routes/services.ts` (ligne 233 POST et 268 PUT). Bonus : la détection du code PG `23505` (duplicate key) a été corrigée pour aussi regarder `err.cause.code` (drizzle-orm wrap les erreurs PG dans `cause`), ce qui retournait 500 au lieu de 409 sur conflit d'ID.
 
-Distribution finale par catégorie : 160 health · 122 employment · 113 social · 102 mentalHealth · 71 administrative · 43 family · 40 immigration · 24 housing · 21 legal · 10 food · 10 childcare · 3 realestate. Urgents : 45 (15 QC · 18 MB · 11 ON · 1 NB).
+Distribution finale par catégorie : 220 health · 122 employment · 113 social · 103 mentalHealth · 71 administrative · 43 family · 40 immigration · 24 housing · 21 legal · 10 food · 10 childcare · 3 realestate. Urgents : 45 (15 QC · 18 MB · 11 ON · 1 NB).
 
 Villes ajoutées (37 nouvelles, géocodées via Nominatim — cache `/tmp/city_coords.json` 107 villes au total) : **MB** Brandon, Beausejour, Virden, Snow Lake, Thompson, Opaskwayak, Boissevain, Roblin, Swan River, Ste. Rose du Lac, Dauphin, The Pas, Flin Flon, Oak Lake, Elkhorn, Arborg, Selkirk, Morden, Winkler, Gimli, St Laurent, Grand Marais, Altona, Lac du Bonnet ; **ON** Toronto, Mississauga, Etobicoke, Vaughan, Barrie, Ottawa ; **NB** Saint John, Fredericton, St Stephen, Moncton, Hartland, Saint-Isidore, Tracadie-Sheila ; **NL** Stephenville, St John's ; **NS** Dartmouth.
 
