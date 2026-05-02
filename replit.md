@@ -1,8 +1,10 @@
 # Overview
 
-**v1.0.70 — 2026-05-02 (suite 24) — Expansion 12 provinces/territoires (5 134 services)**
+**v1.0.71 — 2026-05-02 (suite 24) — Expansion 12 provinces/territoires (5 138 services)**
 
-**Total base : 5 134 services** sur **12 provinces/territoires** (2 952 QC · 697 BC · **202 ON** · 167 MB · 90 NB · 861 AB · 15 SK · 4 NL · 1 NS · 1 PE · **90 NU** · **54 NT**), tous géocodés (sauf province-wide). 12 catégories. **263 villes QC + 120 villes AB + 8 villes SK + 24 villes NU + 14 villes NT géocodées**. Seul le YT (Yukon) manque encore.
+**Total base : 5 138 services** sur **12 provinces/territoires** (2 952 QC · 697 BC · **202 ON** · 167 MB · 90 NB · 861 AB · 15 SK · 4 NL · 1 NS · 1 PE · **93 NU** · **55 NT**), tous géocodés (sauf province-wide). 12 catégories. **263 villes QC + 120 villes AB + 8 villes SK + 24 villes NU + 14 villes NT géocodées**. Seul le YT (Yukon) manque encore.
+
+**Bloc 65 (suite 24) — NU + NT parent & child programs (4 fiches : 3 NU + 1 NT)** : 31 entrées parsées, 4 nouvelles postées après dedup massif (18 dupExisting du bloc 57 NTHSSA Social Programs and Counselling + Wellness Division YDFN déjà postés ; 9 noProv pour NTHSSA sans ville/adresse ; Nutrition Education déjà bloc 64). Nouveautés : Children's Play Group Iqaluit Parents and Tots Association (Iqaluit, parent-tot program), Ilisaqsivik Family Resource Centre NU-wide (fallback province NU via préfixe 867-924 = Clyde River area code), Parents and Tots Program Ilisaqsivik Clyde River, Family Centre YWCA NWT Yellowknife. **Innovation `nameCityCount` pre-pass + `streetHint`** : détecte les doublons name+city dans le batch et ajoute la première portion d'adresse en suffixe displayName pour différencier (ex. 2 entrées Yellowknife même phone 867-767-9110 mais adresses différentes). **Innovation `fallbackProv`** dans RULES : permet d'attribuer une province par défaut quand absente (Ilisaqsivik = NU). Slug : `fa` (family).
 
 **Bloc 64 (suite 24) — NU + NT child care (3 fiches : 2 NU + 1 NT)** : 3 entrées parsées, 3 postées (0 dup, 0 fail). Couvre Nutrition Education and Information Services Tasiuqtigiit Hand in Hand Society Iqaluit (childcare/nutrition family support, 867-979-6089), Find a Licensed Child Daycare Govt NWT Education NT-wide (licensed daycare directory), List of Licensed Childcare Facilities in Nunavut Govt NU Education NU-wide. Slug : `cc` (childcare).
 
