@@ -70,6 +70,7 @@ servicesRouter.get("/admin/services", requireAdminKey, async (req, res) => {
     const offset = (page - 1) * limit;
     const search = req.query.search as string | undefined;
     const city = req.query.city as string | undefined;
+    const province = req.query.province as string | undefined;
     const category = req.query.category as string | undefined;
     const activeFilter = req.query.active as string | undefined;
     const quality = req.query.quality as string | undefined;
@@ -87,6 +88,7 @@ servicesRouter.get("/admin/services", requireAdminKey, async (req, res) => {
       );
     }
     if (city) conditions.push(eq(servicesTable.city, city));
+    if (province) conditions.push(eq(servicesTable.province, province));
     if (category) conditions.push(eq(servicesTable.category, category));
     if (activeFilter === "true") conditions.push(eq(servicesTable.active, true));
     if (activeFilter === "false") conditions.push(eq(servicesTable.active, false));
@@ -119,6 +121,8 @@ servicesRouter.get("/admin/services", requireAdminKey, async (req, res) => {
           sql`${servicesTable.verifiedAt} < now() - interval '6 months'`,
         ),
       );
+    } else if (quality === "province-wide") {
+      conditions.push(eq(servicesTable.isProvinceWide, true));
     } else if (quality === "needs-fix") {
       // Real data quality problems AND not yet validated by admin.
       // Once an admin clicks "Marquer ✓", the fiche leaves this list
@@ -173,11 +177,20 @@ servicesRouter.get("/admin/services", requireAdminKey, async (req, res) => {
 // ── GET /api/admin/services/meta  (cities + categories list) ───────────────
 servicesRouter.get("/admin/services/meta", requireAdminKey, async (req, res) => {
   try {
-    const [cities, categories, stats] = await Promise.all([
+    const [cities, provinces, categories, stats] = await Promise.all([
       db
         .selectDistinct({ city: servicesTable.city })
         .from(servicesTable)
         .orderBy(asc(servicesTable.city)),
+      db
+        .select({
+          province: servicesTable.province,
+          count: count(),
+        })
+        .from(servicesTable)
+        .where(eq(servicesTable.active, true))
+        .groupBy(servicesTable.province)
+        .orderBy(asc(servicesTable.province)),
       db
         .selectDistinct({ category: servicesTable.category })
         .from(servicesTable)
@@ -202,6 +215,9 @@ servicesRouter.get("/admin/services/meta", requireAdminKey, async (req, res) => 
 
     res.json({
       cities: cities.map((r) => r.city).filter(Boolean),
+      provinces: provinces
+        .filter((r) => r.province)
+        .map((r) => ({ code: r.province as string, count: Number(r.count) })),
       categories: categories.map((r) => r.category).filter(Boolean),
       stats: stats[0],
     });

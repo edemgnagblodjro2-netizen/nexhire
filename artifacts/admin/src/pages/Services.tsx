@@ -6,6 +6,22 @@ import ServiceModal from "@/components/ServiceModal";
 
 const PAGE_SIZE = 25;
 
+const PROVINCE_NAMES: Record<string, string> = {
+  QC: "Québec",
+  ON: "Ontario",
+  BC: "Colombie-Britannique",
+  AB: "Alberta",
+  MB: "Manitoba",
+  SK: "Saskatchewan",
+  NB: "Nouveau-Brunswick",
+  NS: "Nouvelle-Écosse",
+  PE: "Île-du-Prince-Édouard",
+  NL: "Terre-Neuve-et-Labrador",
+  YT: "Yukon",
+  NT: "Territoires du Nord-Ouest",
+  NU: "Nunavut",
+};
+
 const COLOR_MAP: Record<string, { bg: string; text: string; ring: string; activeBg: string }> = {
   emerald: { bg: "bg-emerald-50", text: "text-emerald-700", ring: "ring-emerald-200", activeBg: "bg-emerald-600 text-white" },
   amber:   { bg: "bg-amber-50",   text: "text-amber-700",   ring: "ring-amber-200",   activeBg: "bg-amber-600 text-white" },
@@ -43,6 +59,7 @@ export default function Services({ adminKey }: { adminKey: string }) {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [city, setCity] = useState("");
+  const [province, setProvince] = useState("");
   const [category, setCategory] = useState("");
   const [activeFilter, setActiveFilter] = useState<"" | "true" | "false">("");
   const [quality, setQuality] = useState<QualityFilter>("");
@@ -60,13 +77,14 @@ export default function Services({ adminKey }: { adminKey: string }) {
   }, [search]);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["services", adminKey, page, debouncedSearch, city, category, activeFilter, quality],
+    queryKey: ["services", adminKey, page, debouncedSearch, city, province, category, activeFilter, quality],
     queryFn: () =>
       fetchServices(adminKey, {
         page,
         limit: PAGE_SIZE,
         search: debouncedSearch || undefined,
         city: city || undefined,
+        province: province || undefined,
         category: category || undefined,
         active: activeFilter || undefined,
         quality: quality || undefined,
@@ -216,6 +234,14 @@ export default function Services({ adminKey }: { adminKey: string }) {
               active={quality === "stale"}
               onClick={() => { setQuality(quality === "stale" ? "" : "stale"); setPage(1); }}
             />
+            <QualityChip
+              label="Sans ville (provincial)"
+              value={meta.stats.provinceWide}
+              total={meta.stats.active}
+              color="emerald"
+              active={quality === "province-wide"}
+              onClick={() => { setQuality(quality === "province-wide" ? "" : "province-wide"); setPage(1); }}
+            />
           </div>
         </>
       )}
@@ -228,6 +254,18 @@ export default function Services({ adminKey }: { adminKey: string }) {
             placeholder="Rechercher un service…"
             className="input flex-1 min-w-48"
           />
+          <select
+            value={province}
+            onChange={(e) => { setProvince(e.target.value); setPage(1); }}
+            className="input w-52"
+          >
+            <option value="">Toutes provinces / territoires</option>
+            {meta?.provinces.map((p) => (
+              <option key={p.code} value={p.code}>
+                {PROVINCE_NAMES[p.code] ?? p.code} ({p.count.toLocaleString("fr-CA")})
+              </option>
+            ))}
+          </select>
           <select
             value={city}
             onChange={(e) => { setCity(e.target.value); setPage(1); }}
@@ -276,6 +314,7 @@ export default function Services({ adminKey }: { adminKey: string }) {
                 <tr className="border-b border-gray-100 bg-gray-50">
                   <th className="text-left px-4 py-3 font-medium text-gray-500">Nom</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-500">Catégorie</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-500">Province</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-500">Ville</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-500">Téléphone</th>
                   <th className="text-center px-4 py-3 font-medium text-gray-500">Qualité</th>
@@ -301,7 +340,18 @@ export default function Services({ adminKey }: { adminKey: string }) {
                         {svc.category}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-gray-600">{svc.city || "—"}</td>
+                    <td className="px-4 py-3 text-gray-600 text-xs">
+                      <span title={PROVINCE_NAMES[svc.province] ?? svc.province ?? ""} className="font-mono">
+                        {svc.province || "—"}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-gray-600">
+                      {svc.city || (
+                        <span title="Service à l'échelle provinciale (sans ville spécifique)" className="inline-flex items-center px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded text-[10px] font-semibold">
+                          🌐 Provincial
+                        </span>
+                      )}
+                    </td>
                     <td className="px-4 py-3 text-gray-600 text-xs">{svc.phone || "—"}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center justify-center gap-1 flex-wrap">
@@ -377,7 +427,7 @@ export default function Services({ adminKey }: { adminKey: string }) {
                 ))}
                 {data.data.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="px-4 py-16 text-center text-gray-400">
+                    <td colSpan={8} className="px-4 py-16 text-center text-gray-400">
                       Aucun service trouvé
                     </td>
                   </tr>

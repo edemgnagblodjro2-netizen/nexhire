@@ -6,6 +6,7 @@ export type Service = {
   category: string;
   subcategory: string;
   city: string;
+  province: string;
   phone: string;
   website: string;
   description: string;
@@ -32,7 +33,8 @@ export type QualityFilter =
   | "unverified"
   | "verified"
   | "stale"
-  | "needs-fix";
+  | "needs-fix"
+  | "province-wide";
 
 export type ServiceList = {
   data: Service[];
@@ -42,8 +44,11 @@ export type ServiceList = {
   pages: number;
 };
 
+export type ProvinceEntry = { code: string; count: number };
+
 export type ServiceMeta = {
   cities: string[];
+  provinces: ProvinceEntry[];
   categories: string[];
   stats: {
     total: number;
@@ -81,6 +86,7 @@ export type ListParams = {
   limit?: number;
   search?: string;
   city?: string;
+  province?: string;
   category?: string;
   active?: "true" | "false" | "";
   quality?: QualityFilter;
@@ -95,6 +101,7 @@ export async function fetchServices(
   if (params.limit) q.set("limit", String(params.limit));
   if (params.search) q.set("search", params.search);
   if (params.city) q.set("city", params.city);
+  if (params.province) q.set("province", params.province);
   if (params.category) q.set("category", params.category);
   if (params.active) q.set("active", params.active);
   if (params.quality) q.set("quality", params.quality);
