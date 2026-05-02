@@ -218,6 +218,12 @@ servicesRouter.post("/admin/services", requireAdminKey, async (req, res) => {
     if (!body.id || !body.name || !body.category) {
       return res.status(400).json({ error: "id, name, category are required" });
     }
+    if (!VALID_CATEGORIES.includes(body.category)) {
+      return res.status(400).json({ error: `Invalid category. Allowed: ${VALID_CATEGORIES.join(", ")}` });
+    }
+    if (body.province !== undefined && !VALID_PROVINCES.includes(body.province)) {
+      return res.status(400).json({ error: `Invalid province. Allowed: ${VALID_PROVINCES.join(", ")}` });
+    }
 
     const [created] = await db
       .insert(servicesTable)
@@ -227,6 +233,7 @@ servicesRouter.post("/admin/services", requireAdminKey, async (req, res) => {
         category: body.category,
         subcategory: body.subcategory ?? "",
         city: body.city ?? "",
+        province: body.province ?? "QC",
         phone: body.phone ?? "",
         website: body.website ?? "",
         description: body.description ?? "",
@@ -243,7 +250,9 @@ servicesRouter.post("/admin/services", requireAdminKey, async (req, res) => {
     return res.status(201).json(created);
   } catch (err: any) {
     logger.error({ err }, "POST /api/admin/services error");
-    if (err.code === "23505") {
+    // Drizzle wraps PG errors; check both top-level and .cause
+    const pgCode = err?.code ?? err?.cause?.code;
+    if (pgCode === "23505") {
       return res.status(409).json({ error: "Service ID already exists" });
     }
     return res.status(500).json({ error: "Internal error" });
@@ -256,11 +265,19 @@ servicesRouter.put("/admin/services/:id", requireAdminKey, async (req, res) => {
     const { id } = req.params;
     const body = req.body;
 
+    if (body.category !== undefined && !VALID_CATEGORIES.includes(body.category)) {
+      return res.status(400).json({ error: `Invalid category. Allowed: ${VALID_CATEGORIES.join(", ")}` });
+    }
+    if (body.province !== undefined && !VALID_PROVINCES.includes(body.province)) {
+      return res.status(400).json({ error: `Invalid province. Allowed: ${VALID_PROVINCES.join(", ")}` });
+    }
+
     const update: Partial<typeof servicesTable.$inferInsert> = {};
     if (body.name !== undefined) update.name = body.name;
     if (body.category !== undefined) update.category = body.category;
     if (body.subcategory !== undefined) update.subcategory = body.subcategory;
     if (body.city !== undefined) update.city = body.city;
+    if (body.province !== undefined) update.province = body.province;
     if (body.phone !== undefined) update.phone = body.phone;
     if (body.website !== undefined) update.website = body.website;
     if (body.description !== undefined) update.description = body.description;

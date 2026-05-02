@@ -1,5 +1,25 @@
 # Overview
 
+**v1.0.56 — 2026-05-02 (suite 3) — Expansion multi-provinces : Manitoba (Winnipeg) + Ontario (Toronto/GTA/Ottawa)**
+
+Ajout de **220 services hors-QC** importés depuis 9 blocs textes 211 collés par l'utilisateur (Manitoba santé, social, alimentation, logement, santé mentale, urgence + Toronto emploi, GTA, Ottawa, santé/santé mentale Toronto). **Total base : 576 services** (356 QC · 137 MB · 83 ON), tous géocodés (575/576 GPS, seul le 9-1-1 universel sans coords).
+
+**Bug serveur corrigé** : la route `POST /api/admin/services` et `PUT /api/admin/services/:id` n'extrayaient pas le champ `province` du body, donc toutes les nouvelles fiches MB/ON tombaient à la valeur par défaut `QC` du schéma DB. Patch dans `artifacts/api-server/src/routes/services.ts` (ligne 233 POST et 268 PUT). Bonus : la détection du code PG `23505` (duplicate key) a été corrigée pour aussi regarder `err.cause.code` (drizzle-orm wrap les erreurs PG dans `cause`), ce qui retournait 500 au lieu de 409 sur conflit d'ID.
+
+Distribution finale par catégorie : 116 health · 96 social · 93 employment · 92 mentalHealth · 48 administrative · 41 family · 38 immigration · 15 legal · 12 housing · 10 food · 10 childcare · 3 realestate. Urgents : 38 (15 QC · 18 MB · 5 ON).
+
+Villes ajoutées (22 nouvelles, géocodées via Nominatim) : **MB** Brandon, Beausejour, Virden, Snow Lake, Thompson, Opaskwayak, Boissevain, Roblin, Swan River, Ste. Rose du Lac, Dauphin, The Pas, Flin Flon, Oak Lake, Elkhorn, Arborg, Selkirk, Morden, Winkler ; **ON** Toronto, Mississauga, Etobicoke, Vaughan, Barrie, Ottawa.
+
+Conventions d'IDs : `mb-<ville3>-<cat1>NNN` (ex: `mb-wpg-h001` santé Winnipeg, `mb-bdn-m001` mental Brandon) et `on-<ville3>-<cat1>NNN` (ex: `on-tor-e023` emploi Toronto). Champ `isProvinceWide=true` pour lignes téléphoniques sans frais provinciales/nationales (ex: Naseeha 1-866-627-3342, Good2Talk 1-866-925-5454, CLEO, Diabète Canada).
+
+Doublons gérés : 1 ID `on-tor-h001` était partagé accidentellement entre ProfessionsSantéOntario et YWCA Elm Centre → second réassigné à `on-tor-h010`. ID `mb-wnk-f001` était déjà pris par "Services de sage-femme Winkler" préexistant → Healthy Muslim Families Winkler réassigné à `mb-wnk-f002`. Skipés : Service Canada Jeunes (pas de tél public), Toronto City of (services 311 redondants), Toronto Animal Services (hors-sujet), Cybercrime CAFC (hors-sujet AttenteZéro).
+
+Cache géocodage : `/tmp/city_coords.json` contient maintenant 77 villes (55 QC + 19 MB + 6 ON).
+
+Fichiers PDF des blocs Trois-Rivières/avril sont restés tous vides (0 octet) — l'utilisateur a demandé de ne plus les compter et de n'utiliser que ses blocs collés.
+
+---
+
 **v1.0.56 — 2026-05-02 (suite) — Import en masse Capitale-Nationale / Charlevoix / Portneuf**
 
 Import de **172 organismes** issus de 6 fichiers CSV thématiques 211/CDC couvrant la région de Québec, Charlevoix et Portneuf : entrepreneurs/travailleurs autonomes (27), services aux réfugiés/immigrants (30), santé mentale (35), soins de santé à domicile (46, dont CLSC du CIUSSS Capitale-Nationale), soutien à domicile aux aînés (24), abus/maltraitance des aînés (10).
