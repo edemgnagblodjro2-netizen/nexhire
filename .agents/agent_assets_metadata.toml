@@ -551,3 +551,21 @@ id = "l-et4TsKhdL0fhTbPQj4h"
 uri = "file://exports/bundle-static-20260501.csv"
 type = "table"
 title = "Bundle static AttenteZéro — 314 fiches (CSV)"
+
+[[outputs]]
+id = "q6A0JtRSI0myJ_F-JfGrZ"
+uri = "file://attached_assets/exports/Brome_Missisquoi_LOCAUX_tries.csv"
+type = "table"
+title = "Brome-Missisquoi LOCAUX (155 organismes triés)"
+
+[[outputs]]
+id = "INILd_JOVmJqdROgLV8Dw"
+uri = "file://attached_assets/exports/Brome_Missisquoi_REGIONAUX.csv"
+type = "table"
+title = "Estrie régionaux (3 organismes)"
+
+[[outputs]]
+id = "wji_TTEe5VZUn94EX9j5R"
+uri = "file://attached_assets/exports/Brome_Missisquoi_PROVINCIAUX.csv"
+type = "table"
+title = "Province/Canada (26 organismes — déjà couverts)"
