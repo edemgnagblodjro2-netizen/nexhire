@@ -569,3 +569,9 @@ id = "wji_TTEe5VZUn94EX9j5R"
 uri = "file://attached_assets/exports/Brome_Missisquoi_PROVINCIAUX.csv"
 type = "table"
 title = "Province/Canada (26 organismes — déjà couverts)"
+
+[[outputs]]
+id = "c_4E0ZFZEqvugo3dTjM28"
+uri = "file://exports/releases/attentezero-v1.1.2-20260502.zip"
+type = "unspecified"
+title = "AttenteZéro v1.1.2 — code source production (17 MB)"
