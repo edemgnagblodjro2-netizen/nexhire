@@ -1,8 +1,10 @@
 # Overview
 
-**v1.0.58 — 2026-05-02 (suite 24) — Expansion 12 provinces/territoires (4 991 services, NU + NT ajoutés)**
+**v1.0.59 — 2026-05-02 (suite 24) — Expansion 12 provinces/territoires (4 992 services)**
 
-**Total base : 4 991 services** sur **12 provinces/territoires** (2 952 QC · 697 BC · 187 ON · 167 MB · 90 NB · **857 AB** · **15 SK** · 4 NL · 1 NS · 1 PE · **14 NU** · **6 NT**), tous géocodés (sauf province-wide). 12 catégories. **263 villes QC + 120 villes AB + 8 villes SK + 4 villes NU + 6 villes NT géocodées**. Seul le YT (Yukon) manque encore.
+**Total base : 4 992 services** sur **12 provinces/territoires** (2 952 QC · 697 BC · 187 ON · 167 MB · 90 NB · **857 AB** · **15 SK** · 4 NL · 1 NS · 1 PE · **15 NU** · **6 NT**), tous géocodés (sauf province-wide). 12 catégories. **263 villes QC + 120 villes AB + 8 villes SK + 4 villes NU + 6 villes NT géocodées**. Seul le YT (Yukon) manque encore.
+
+**Bloc 53 (suite 24) — NU disability (1 fiche)** : Nunavummi Disabilities Makinnasuaqtiit Society — Iqaluit (`nu-iqa-s001`, social/disability advocacy). 1-877-354-0916 + 867-979-2228, 8 Storey Building Unit 105, Iqaluit NU X0A 1H0. Postée directement via curl admin (pas de pipeline pour 1 entrée).
 
 **Bloc 52 (suite 24) — NU + NT employment/training (20 fiches : 14 NU + 6 NT)** : 21 entrées parsées (1 sans province), 20 fiches après dedup/no-contact, 0 fail. Catégorie : employment, sous-cat "training and apprenticeship". Couvre Adult Learning and Training Supports, Supports for Apprentices, Training on the Job, Trades Training and Apprenticeship Services (Nunavut Arctic College), Economic Opportunity Fund + Individual Sponsorship Program (Kakivak Association), Skills Development Centre ilinniapaa (Nunavut Wide), Education Culture and Employment Service Centres (NT Inuvik/Fort Simpson/Yellowknife/Norman Wells/Fort Smith/Hay River). **4 villes NU géocodées** : Rankin Inlet, Iqaluit, Pangnirtung, Cambridge Bay. **6 villes NT géocodées** : Inuvik, Fort Simpson, Yellowknife, Norman Wells, Fort Smith, Hay River. **Parser généralisé** : `parse_clipboard_format.js <input.txt> [out.json]` (ex-`parse_sk_community.js` étendu) — accepte input/output en args, regex CITY_LINE relaxée pour rendre `(Nkm)` optionnel (format NU n'a pas de distance), filtre les lignes "Show More"/"Show Less". Builder dédié `build_nu_employment.js` avec 10 villes NU+NT préconfigurées.
 
