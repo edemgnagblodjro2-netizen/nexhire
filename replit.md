@@ -1,8 +1,10 @@
 # Overview
 
-**v1.0.82 — 2026-05-02 (suite 24) — Expansion COMPLÈTE 13 provinces/territoires (5 226 services)**
+**v1.0.83 — 2026-05-02 (suite 24) — Expansion COMPLÈTE 13 provinces/territoires (5 228 services)**
 
-**Total base : 5 226 services** sur **13 provinces/territoires** (**3 038 QC** · 697 BC · **202 ON** · 167 MB · 90 NB · 861 AB · 15 SK · 4 NL · 1 NS · 1 PE · **93 NU** · **55 NT** · **2 YT**), tous géocodés (sauf province-wide). 12 catégories. **267 villes QC + 120 villes AB + 8 villes SK + 24 villes NU + 14 villes NT + 1 ville YT géocodées**. **Toutes les provinces/territoires du Canada sont maintenant couvertes**.
+**Total base : 5 228 services** sur **13 provinces/territoires** (**3 040 QC** · 697 BC · **202 ON** · 167 MB · 90 NB · 861 AB · 15 SK · 4 NL · 1 NS · 1 PE · **93 NU** · **55 NT** · **2 YT**), tous géocodés (sauf province-wide). 12 catégories. **267 villes QC + 120 villes AB + 8 villes SK + 24 villes NU + 14 villes NT + 1 ville YT géocodées**. **Toutes les provinces/territoires du Canada sont maintenant couvertes**.
+
+**Bloc 78 (suite 24) — QC soutien social Mauricie (2 fiches QC)** : 2 entrées format Google Maps, 0 exclu, 0 dup, 2 nouvelles postées sur 2 villes : **Clinique Humanum** (mentalHealth, services psychosociaux Trois-Rivières, qc-tro-mh008) et **Bureau de Services Québec de Shawinigan** (1ʳᵉ fiche `administrative` Shawinigan, qc-sha-ad001). **Innovation détection ville par nom** : si pas d'adresse `City, Quebec`, scan du nom pour détecter une ville présente dans `CITY_COORDS` (ex. "(Trois-Rivières)" dans "Clinique Humanum (Trois-Rivières)" → city = Trois-Rivières) avant fallback DEFAULT_CITY. Permet d'éviter mauvais routing géo quand l'utilisateur fournit un mix multi-villes sans format adresse complet.
 
 **Bloc 77 (suite 24) — QC Shawinigan aide alimentaire (4 fiches QC)** : 4 entrées format Google Maps, 0 exclu, 0 dup, 4 nouvelles postées. Couvre **Centre Roland-Bertrand** (Charity, hub central 1895 Av. Champlain), **Partage Alimentaire du Centre Roland Bertrand** (Grocery store, même adresse/phone), **Partage Centre Mauricie** (Cultural center, même adresse/phone), **Servit Libre Service Alimentaire** (Wholesale grocer, Rue Boisvert). **1ʳᵉˢ fiches `food` Shawinigan** (qc-sha-fd001-004). **Innovation TYPE_MAP context-aware** : `Charity`, `Grocery store`, `Cultural center`, `Wholesale grocer` tous mappés → `food` (override pour contexte aide alimentaire). 3 fiches partagent même phone+address (centre Roland-Bertrand multi-services) — dedup nameKey|phoneKey distingue par nom.
 
