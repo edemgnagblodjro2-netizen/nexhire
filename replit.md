@@ -1,8 +1,10 @@
 # Overview
 
-**v1.0.59 — 2026-05-02 (suite 24) — Expansion 12 provinces/territoires (4 992 services)**
+**v1.0.60 — 2026-05-02 (suite 24) — Expansion 12 provinces/territoires (5 003 services)**
 
-**Total base : 4 992 services** sur **12 provinces/territoires** (2 952 QC · 697 BC · 187 ON · 167 MB · 90 NB · **857 AB** · **15 SK** · 4 NL · 1 NS · 1 PE · **15 NU** · **6 NT**), tous géocodés (sauf province-wide). 12 catégories. **263 villes QC + 120 villes AB + 8 villes SK + 4 villes NU + 6 villes NT géocodées**. Seul le YT (Yukon) manque encore.
+**Total base : 5 003 services** sur **12 provinces/territoires** (2 952 QC · 697 BC · 187 ON · 167 MB · 90 NB · **860 AB** · **15 SK** · 4 NL · 1 NS · 1 PE · **23 NU** · **6 NT**), tous géocodés (sauf province-wide). 12 catégories. **263 villes QC + 120 villes AB + 8 villes SK + 5 villes NU + 6 villes NT géocodées**. Seul le YT (Yukon) manque encore.
+
+**Bloc 54 (suite 24) — NU + NT + AB employment/family (11 fiches : 8 NU + 3 AB)** : 20 entrées parsées, 11 fiches après dedup serveur (8 doublons existants éliminés via fetch+match name+city), 0 fail. Couvre Employment Assistance Services × 3 (Rankin Inlet/Pangnirtung/Cambridge Bay), Group Employment Assistance Services × 3 (mêmes villes), Literacy Programs (Ilitaqsiniq Iqaluit), Personal Development Workshops (Ilisaqsivik Family Resource Centre Clyde River — family), Economics for Success / Our Business World / Our Community (Junior Achievement Northern AB & NWT, Edmonton). **Nouvelle ville NU géocodée** : Clyde River. **Nouveau slug ID** : `ea` (employment assistance), `fa` (family). **Innovation** : `build_bloc54.js` fait un fetch préalable de toutes les fiches existantes (`/api/services?limit=2000`) et dedup par `nameKey|cityKey` avant build, évitant ainsi les doublons quand le slug ID change entre blocs (sinon des fiches identiques se retrouveraient en BDD avec des ids différents).
 
 **Bloc 53 (suite 24) — NU disability (1 fiche)** : Nunavummi Disabilities Makinnasuaqtiit Society — Iqaluit (`nu-iqa-s001`, social/disability advocacy). 1-877-354-0916 + 867-979-2228, 8 Storey Building Unit 105, Iqaluit NU X0A 1H0. Postée directement via curl admin (pas de pipeline pour 1 entrée).
 
