@@ -19,6 +19,10 @@ Ids stables `qbc-<noDossier>` (ex : `qbc-qbc1201` pour ACQ). **Total base : 356 
 - 4 anciennes rétroactivement marquées : 9-1-1, Hôpital Le Royer, Horizon pour Elle (violence conjugale BM), Auberges du Cœur (hébergement ado dépannage 48h BM).
 - Répartition par catégorie : 7 mentalHealth · 5 health · 1 family · 1 social · 1 immigration.
 
+**Géocodage GPS de masse** : 355 / 356 fiches ont maintenant des coordonnées (lat/lng) pour affichage sur carte dans l'app mobile. Géocodage via Nominatim (OpenStreetMap, gratuit, 1 req/sec) sur les **55 villes uniques** une seule fois (puis appliqué aux 356 fiches partageant ces villes). 100 % des villes géocodées avec succès. Cache des coords sauvegardé dans `/tmp/city_coords.json` pour réutilisation future.
+
+Note : le géocodage est au niveau de la ville (centre administratif), pas à l'adresse postale exacte. Sur les 34 fiches qui ont une adresse précise en base, un 2e passage de géocodage adresse-par-adresse pourrait affiner les pins. Seule fiche sans GPS : le 9-1-1 (pas de ville rattachée, service universel).
+
 ---
 
 **v1.0.56 — 2026-05-02 — Import en masse Brome-Missisquoi**
