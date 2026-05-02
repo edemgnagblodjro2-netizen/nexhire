@@ -1,5 +1,19 @@
 # Overview
 
+**v1.0.56 — 2026-05-02 — Import en masse Brome-Missisquoi**
+
+Import de **149 organismes communautaires de la MRC Brome-Missisquoi** depuis le CSV fourni (`attached_assets/Brome_Missisquoi_services_1777691515559.csv`, source 211/CDC). Filtré sur ceux ayant un téléphone (149 sur 155). Catégorisation auto via heuristiques FR (administrative en premier pour ne pas confondre les Hôtels de ville avec « habitation »). Ids stables `bm-<noDossier>` pour traçabilité.
+
+Répartition : 39 social · 34 administrative · 22 family · 11 health · 10 legal · 10 childcare · 10 mentalHealth · 5 food · 5 employment · 2 immigration · 1 housing.
+
+Couverture villes : Cowansville (62), Bedford (19), Farnham (17), Lac-Brome (14), Sutton (9), Bromont (7), Dunham (4), Frelighsburg (3), Abercorn (2), Bedford Canton (2), Sainte-Sabine (2), + Brigham/Bolton-Ouest/Brome/East Farnham/Notre-Dame-de-Stanbridge/Pike River/Saint-Armand/Saint-Ignace-de-Stanbridge/Stanbridge East/Stanbridge Station (1 chacune) + 4 fiches MRC. **Total base : 184 services (35 + 149).**
+
+Note : 184 fiches sur 185 du CSV n'avaient pas de site web (seulement un courriel pour Action communautaire Lac-Brome). À enrichir via le bouton « 🪄 Pré-remplir avec IA » fiche par fiche selon priorité.
+
+CSV de travail (gardés pour référence) : `attached_assets/exports/Brome_Missisquoi_LOCAUX_tries.csv` (155 trié+dédupliqué), `Brome_Missisquoi_REGIONAUX.csv` (3), `Brome_Missisquoi_PROVINCIAUX.csv` (26 hors-MRC, déjà couverts).
+
+---
+
 **Current version: v1.0.55 (versionCode 52, app.json local 55) — 2026-04-29**
 
 > 🛠️ **v1.0.55 BUILD EAS EN COURS sur D:\attentezero-v1.0.55**
