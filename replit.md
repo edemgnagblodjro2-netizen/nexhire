@@ -2,7 +2,9 @@
 
 **v1.0.56 — 2026-05-02 (suite 3) — Expansion 6 provinces : QC + MB + ON + NB + NL + NS**
 
-Ajout de **363 services hors-QC** importés depuis 17 blocs textes 211 collés par l'utilisateur. **Total base : 719 services** sur **6 provinces** (356 QC · 167 MB · 180 ON · 11 NB · 4 NL · 1 NS), tous géocodés (718/719 GPS, seul le 9-1-1 universel sans coords).
+Ajout de **364 services hors-QC** importés depuis 17 blocs textes 211 + 1 fiche QC complémentaire (CMTQ Montréal). **Total base : 720 services** sur **6 provinces** (357 QC · 167 MB · 180 ON · 11 NB · 4 NL · 1 NS), tous géocodés (719/720 GPS, seul le 9-1-1 universel sans coords).
+
+Ajout ponctuel QC : Coalition montréalaise des Tables de quartier (CMTQ, `qc-mtl-s001`), 5675 rue Lafond Montréal, 514-721-4019, info@cmtq.org — regroupement des Tables de quartier de Montréal (concertation locale, lutte contre la pauvreté, mobilisation citoyenne).
 
 17e bloc multi-provinces (7 fiches, 1 skip Services aux Autochtones Canada sans tél, 1 fusion Connections for Seniors) : Société d'habitation NL Stephenville (NLHC, provincial), Connections for Seniors St John's NL (fusion programmes aînés + transport 709-699-3063), SCHL/CMHC Bureau national Ottawa (national), Société Elizabeth Fry NB Saint John (legal/femmes judiciarisées, provincial), Anciens Combattants Canada bureau Dartmouth NS (premier service NS, fédéral), Ronald McDonald House NL St John's, NL Min Familles et Abordabilité Revenus/aides sociales 1-877-729-7888 (provincial). 3 nouvelles villes géocodées : Stephenville, St John's, Dartmouth.
 
