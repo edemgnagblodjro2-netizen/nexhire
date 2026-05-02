@@ -1,5 +1,21 @@
 # Overview
 
+**v1.0.56 — 2026-05-02 (suite) — Import en masse Capitale-Nationale / Charlevoix / Portneuf**
+
+Import de **172 organismes** issus de 6 fichiers CSV thématiques 211/CDC couvrant la région de Québec, Charlevoix et Portneuf : entrepreneurs/travailleurs autonomes (27), services aux réfugiés/immigrants (30), santé mentale (35), soins de santé à domicile (46, dont CLSC du CIUSSS Capitale-Nationale), soutien à domicile aux aînés (24), abus/maltraitance des aînés (10).
+
+Déduplication inter-fichiers : 28 doublons retirés (les CLSC apparaissaient à la fois en santé mentale et en soins santé). Règle spéciale : tout organisme contenant CIUSSS / CLSC / Hôpital / Aire Ouverte est forcé en catégorie `health` (vocation primaire). 10 fiches sans téléphone exclues (Centre de réfugiés, Comité Saint-Yves, Anxiété Canada, We Matter, etc.).
+
+Distribution catégories : 46 health · 35 mentalHealth · 34 social · 30 immigration · 27 employment.
+
+Normalisation villes : tous les "X (Quartier)" et "X (Arrondissement)" → **Québec** (119 fiches consolidées). Autres villes : Donnacona (11), Baie-Saint-Paul (8), La Malbaie (5), Beaupré (4), Saint-Raymond (4), Saint-Basile (2), Wendake (2), Saint-Marc-des-Carrières (2), L'Ancienne-Lorette (2), + 13 villes à 1 fiche chacune (Clermont, Shannon, Portneuf, L'Isle-aux-Coudres, Pont-Rouge, Rivière-à-Pierre, Saint-Siméon, Saint-Ubalde, Saint-Hilarion, Saint-Pierre-de-l'Île-d'Orléans, Notre-Dame-des-Monts, Saint-Augustin-de-Desmaures, Loretteville).
+
+Ids stables `qbc-<noDossier>` (ex : `qbc-qbc1201` pour ACQ). **Total base : 356 services (184 + 172).** 55 villes couvertes au total dans l'app.
+
+À noter : doublons résiduels orthographiques en base (« Baie-Comeau » vs « Baie‑Comeau » avec tiret unicode différent, « Bedford » vs « Bedford (Canton) ») hérités des imports précédents — à fusionner ultérieurement si besoin.
+
+---
+
 **v1.0.56 — 2026-05-02 — Import en masse Brome-Missisquoi**
 
 Import de **149 organismes communautaires de la MRC Brome-Missisquoi** depuis le CSV fourni (`attached_assets/Brome_Missisquoi_services_1777691515559.csv`, source 211/CDC). Filtré sur ceux ayant un téléphone (149 sur 155). Catégorisation auto via heuristiques FR (administrative en premier pour ne pas confondre les Hôtels de ville avec « habitation »). Ids stables `bm-<noDossier>` pour traçabilité.
