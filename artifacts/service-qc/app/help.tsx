@@ -76,6 +76,48 @@ const FAQ: FaqItem[] = [
     a: "En cas de danger immédiat, composez le 911. Pour une crise de santé mentale ou de détresse : 988 (24 h/24, partout au Canada). Le bouton SOS rouge en bas de l'écran rassemble toutes les lignes d'urgence.",
     aEn: "In immediate danger, call 911. For a mental-health crisis: 988 (24/7, everywhere in Canada). The red SOS button at the bottom collects every emergency line.",
   },
+  {
+    q: "Comment fonctionne le Diagnostic IA ?",
+    qEn: "How does the AI Diagnosis work?",
+    a: "Le Diagnostic IA vous pose 4 questions courtes (situation, besoin, langue, options) puis classe nos 5 300+ services selon votre profil. Aucun texte n'est envoyé à Internet : tout le calcul se fait sur votre téléphone. Si aucun résultat ne correspond, l'app vous propose directement le 211 de votre province.",
+    aEn: "The AI Diagnosis asks 4 short questions (situation, need, language, filters) then ranks our 5,300+ services for you. No text leaves your phone — the matching runs locally. If nothing matches, the app sends you straight to your province's 211 line.",
+  },
+  {
+    q: "L'app fonctionne-t-elle dans toutes les provinces ?",
+    qEn: "Does the app work in every province?",
+    a: "Oui — AttenteZéro couvre les 13 provinces et territoires du Canada. La couverture est la plus dense au Québec ; pour les autres régions nous fournissons les services administratifs principaux (Service Canada, service provincial, 211 local). Pour tout besoin spécifique hors Québec, l'IA et le diagnostic vous orientent vers votre 211 régional.",
+    aEn: "Yes — AttenteZéro covers all 13 provinces and territories. Coverage is densest in Quebec; for other regions we provide the core administrative services (Service Canada, provincial service, local 211). For any specific need outside Quebec, the AI and diagnosis route you to your regional 211.",
+  },
+  {
+    q: "L'assistant IA peut-il me parler dans ma langue ?",
+    qEn: "Can the AI assistant speak my language?",
+    a: "Oui : français, anglais, espagnol, arabe et créole haïtien. Choisissez la langue avec le drapeau en haut du chat. Vous pouvez aussi dicter votre message à la voix (icône micro) — la transcription se fait dans la langue choisie.",
+    aEn: "Yes: French, English, Spanish, Arabic and Haitian Creole. Pick a language with the flag at the top of the chat. You can also dictate your message by voice (microphone icon) — transcription happens in your chosen language.",
+  },
+  {
+    q: "Que faire si aucun service ne correspond à mes besoins ?",
+    qEn: "What if no service matches my needs?",
+    a: "Composez le 211 (gratuit, confidentiel, 24 h/24, dans la plupart des provinces). C'est le meilleur point de référence pour les organismes locaux non encore listés. Le diagnostic IA et l'assistant chat vous proposent automatiquement le bon numéro 211 selon votre province.",
+    aEn: "Dial 211 (free, confidential, 24/7 in most provinces). It's the best entry point for local organizations not yet listed. The AI diagnosis and chat assistant automatically offer the right 211 number for your province.",
+  },
+  {
+    q: "Comment trouver un service ouvert maintenant ?",
+    qEn: "How do I find a service open right now?",
+    a: "Activez le filtre « Ouvert maintenant » dans la liste des services ou à l'étape 4 du diagnostic. L'app calcule automatiquement les heures d'ouverture, fuseau horaire de votre province inclus.",
+    aEn: "Turn on the \"Open now\" filter in the services list or at step 4 of the diagnosis. The app automatically computes opening hours, including your province's time zone.",
+  },
+  {
+    q: "L'app fonctionne-t-elle pour les personnes sans-papiers ?",
+    qEn: "Does the app work for undocumented people?",
+    a: "Oui. Aucune création de compte n'est requise pour consulter les services. Plusieurs organismes listés (Médecins du Monde, cliniques communautaires, refuges) offrent des soins et un hébergement sans demander de statut migratoire. L'IA peut filtrer ces options spécifiquement.",
+    aEn: "Yes. No account is required to browse services. Several listed organizations (Doctors of the World, community clinics, shelters) provide care and shelter without asking about immigration status. The AI can filter these options specifically.",
+  },
+  {
+    q: "Comment changer ma province par défaut ?",
+    qEn: "How do I change my default province?",
+    a: "Touchez le sélecteur de province en haut de l'écran d'accueil ou du diagnostic, puis choisissez parmi les 13 provinces et territoires. Votre choix est enregistré localement et tous les résultats (services, IA, 211) sont filtrés en conséquence.",
+    aEn: "Tap the province picker at the top of the home or diagnosis screen, then pick from the 13 provinces and territories. Your choice is saved locally and all results (services, AI, 211) are filtered accordingly.",
+  },
 ];
 
 function FaqRow({ item, isFr, colors }: { item: FaqItem; isFr: boolean; colors: ReturnType<typeof useColors> }) {

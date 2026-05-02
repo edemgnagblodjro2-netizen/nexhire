@@ -25,6 +25,8 @@ import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 import { isOpenNow } from "@/utils/openHours";
 import { haversineDistance } from "@/utils/location";
 import { type LangCode, LANG_LABELS, inferLanguages } from "@/utils/serviceLanguages";
+import { getProvince211 } from "@/utils/province211";
+import { Linking } from "react-native";
 
 /* ─────────── Step definitions ─────────── */
 
@@ -91,10 +93,10 @@ function scoreService(
 ): number {
   let score = 0;
 
-  // Province filter — on garde uniquement les fiches de la province de l'utilisateur,
-  // ainsi que les ressources pancanadiennes (sans province ou marquées CA).
-  const sp = (s.province ?? "QC") as ProvinceCode;
-  if (sp !== userProvince) return -1000;
+  // Province filter — on garde les fiches de la province de l'utilisateur,
+  // ET les ressources pancanadiennes (sans province ou marquées comme couvrant
+  // tout le pays via `isProvinceWide` sans province précise, ex. 988, Jeunesse j'écoute).
+  if (s.province && s.province !== userProvince) return -1000;
 
   // Need / category match
   const needDef = NEEDS.find((n) => n.key === d.need);
@@ -592,16 +594,68 @@ export default function DiagnosticScreen() {
             </View>
           ))}
 
-          {recommendations.length === 0 && (
-            <View style={styles.emptyReco}>
-              <Feather name="search" size={28} color={colors.mutedForeground} />
-              <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>
-                {isFr
-                  ? "Aucun service ne correspond exactement. Essayez de modifier vos critères."
-                  : "No service matches exactly. Try adjusting your criteria."}
-              </Text>
-            </View>
-          )}
+          {recommendations.length === 0 && (() => {
+            const info = getProvince211(userProvince);
+            const provLabel = PROVINCE_LABELS[userProvince];
+            return (
+              <View style={[styles.emptyReco, { borderColor: colors.border, backgroundColor: colors.card }]}>
+                <View style={[styles.empty211Badge, { backgroundColor: colors.primary }]}>
+                  <Feather name="phone-call" size={18} color="#fff" />
+                </View>
+                <Text style={[styles.emptyTitle, { color: colors.foreground }]}>
+                  {isFr
+                    ? `Aucun service trouvé en ${provLabel}`
+                    : `No service found in ${provLabel}`}
+                </Text>
+                <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>
+                  {isFr
+                    ? `Le 211 est gratuit, confidentiel et 24 h/24. Une intervenante de votre région vous orientera vers le bon organisme.`
+                    : `211 is free, confidential and available 24/7. A specialist in your region will direct you to the right organization.`}
+                </Text>
+                <Pressable
+                  onPress={() => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                    Linking.openURL(`tel:${info.dial.replace(/[^0-9+]/g, "")}`);
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={isFr ? `Appeler ${info.display}` : `Call ${info.display}`}
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                  style={({ pressed }) => [
+                    styles.empty211Btn,
+                    { backgroundColor: colors.primary, opacity: pressed ? 0.85 : 1 },
+                  ]}
+                >
+                  <Feather name="phone" size={16} color="#fff" />
+                  <Text style={styles.empty211BtnText}>
+                    {isFr ? `Appeler ${info.display}` : `Call ${info.display}`}
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => {
+                    Haptics.selectionAsync();
+                    Linking.openURL(info.website);
+                  }}
+                  accessibilityRole="link"
+                  accessibilityLabel={isFr ? `Ouvrir le site 211 ${provLabel}` : `Open 211 ${provLabel} website`}
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                  style={({ pressed }) => [
+                    styles.empty211Link,
+                    { borderColor: colors.border, opacity: pressed ? 0.7 : 1 },
+                  ]}
+                >
+                  <Feather name="external-link" size={14} color={colors.foreground} />
+                  <Text style={[styles.empty211LinkText, { color: colors.foreground }]}>
+                    {isFr ? `Voir le site 211 ${provLabel}` : `Visit 211 ${provLabel} website`}
+                  </Text>
+                </Pressable>
+                <Text style={[styles.emptyHint, { color: colors.mutedForeground }]}>
+                  {isFr
+                    ? "Astuce : essayez de changer de province ci-dessus, ou retirez le filtre « ouvert maintenant »."
+                    : "Tip: try changing the province above, or remove the \"open now\" filter."}
+                </Text>
+              </View>
+            );
+          })()}
 
           <Pressable
             onPress={reset}
@@ -1168,15 +1222,69 @@ const styles = StyleSheet.create({
   },
   emptyReco: {
     alignItems: "center",
-    gap: 12,
-    paddingVertical: 32,
+    gap: 10,
+    paddingVertical: 24,
+    paddingHorizontal: 18,
+    borderRadius: 16,
+    borderWidth: 1,
+    marginTop: 8,
+  },
+  empty211Badge: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 4,
+  },
+  emptyTitle: {
+    fontSize: 15,
+    fontFamily: "Inter_700Bold",
+    textAlign: "center",
   },
   emptyText: {
     fontSize: 13,
     fontFamily: "Inter_400Regular",
     textAlign: "center",
     lineHeight: 19,
-    paddingHorizontal: 32,
+    paddingHorizontal: 8,
+  },
+  empty211Btn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    paddingHorizontal: 22,
+    paddingVertical: 12,
+    borderRadius: 12,
+    marginTop: 6,
+  },
+  empty211BtnText: {
+    color: "#fff",
+    fontSize: 14,
+    fontFamily: "Inter_700Bold",
+  },
+  empty211Link: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 9,
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  empty211LinkText: {
+    fontSize: 12,
+    fontFamily: "Inter_600SemiBold",
+  },
+  emptyHint: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+    textAlign: "center",
+    marginTop: 4,
+    paddingHorizontal: 12,
+    lineHeight: 16,
   },
   resetBtn: {
     flexDirection: "row",
