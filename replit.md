@@ -1,8 +1,10 @@
 # Overview
 
-**v1.0.61 — 2026-05-02 (suite 24) — Expansion 12 provinces/territoires (5 010 services)**
+**v1.0.62 — 2026-05-02 (suite 24) — Expansion 12 provinces/territoires (5 011 services)**
 
-**Total base : 5 010 services** sur **12 provinces/territoires** (2 952 QC · 697 BC · **188 ON** · 167 MB · 90 NB · **860 AB** · **15 SK** · 4 NL · 1 NS · 1 PE · **28 NU** · **7 NT**), tous géocodés (sauf province-wide). 12 catégories. **263 villes QC + 120 villes AB + 8 villes SK + 5 villes NU + 6 villes NT géocodées**. Seul le YT (Yukon) manque encore.
+**Total base : 5 011 services** sur **12 provinces/territoires** (2 952 QC · 697 BC · 188 ON · 167 MB · 90 NB · 860 AB · 15 SK · 4 NL · 1 NS · 1 PE · **29 NU** · 7 NT), tous géocodés (sauf province-wide). 12 catégories. **263 villes QC + 120 villes AB + 8 villes SK + 5 villes NU + 6 villes NT géocodées**. Seul le YT (Yukon) manque encore.
+
+**Bloc 56 (suite 24) — NU youth Clyde River (1 fiche)** : Inuit Youth Summer Work Experience Program — Clyde River (Ilisaqsivik Family Resource Centre, `nu-cly-ea001`, employment/youth employment, 867-924-6565). 2 entrées Youth Services - ESDC fédérales sautées car aucun contact extractible (Visit Website seul, parser n'extrait pas l'URL). Postée directement via `post_generic.js` avec payload manuel.
 
 **Bloc 55 (suite 24) — NU + NT + fédéral business/self-employment (7 fiches : 5 NU + 1 NT + 1 ON-fédéral)** : 13 entrées parsées, 7 fiches après dedup serveur (2 doublons existants) + dedup local (1) + fixes manuels, 0 fail. Couvre Self Employment Option × 3 (Rankin Inlet/Pangnirtung/Cambridge Bay, Govt NU FS), Grants and Loans (Kakivak Iqaluit), Services for Businesses (Innovation Sci & Eco Canada Iqaluit — sans téléphone, gardé pour adresse), Business Development Bank of Canada (Yellowknife NT), Canada's Covid-19 Economic Response Plan (fédéral, marqué `isProvinceWide=true` sur ON avec city=null + suffixe `(Canada)` dans displayName). **Innovation `fixEntry()`** : (1) corrige les entrées Yellowknife où la ligne ville oublie le code province NT, (2) tague les entrées fédérales (Indigenous Services Canada, Dept Finance, Global Affairs, Innovation Science Eco Dev) comme `province="ON"` + `_federal=true` → `isProvinceWide=true` + city=null. **Filtre noContact relâché** : `phone || website || address` (au lieu de juste `phone || website`) pour préserver les fiches gouvernementales sans téléphone direct mais avec adresse physique. Slugs ID : `se` (self-employment/business support), `fa` (federal admin).
 
