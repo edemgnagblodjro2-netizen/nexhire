@@ -14,6 +14,11 @@ Ids stables `qbc-<noDossier>` (ex : `qbc-qbc1201` pour ACQ). **Total base : 356 
 
 À noter : doublons résiduels orthographiques en base (« Baie-Comeau » vs « Baie‑Comeau » avec tiret unicode différent, « Bedford » vs « Bedford (Canton) ») hérités des imports précédents — à fusionner ultérieurement si besoin.
 
+**Marquage des services urgents** : 15 fiches `isUrgent=true` au total dans la base après audit (lignes de crise 24h, urgences hospitalières, hébergement violence conjugale, hébergement urgence). Détail :
+- 11 nouvelles QBC : Info-Santé 811, Arc-en-ciel CPS Portneuf (ligne 24h), Centre de crise de Québec, ACSM ligne SAISM, Demi-Lune ligne nuit, OCÉAN ligne intervention, PECH APIR, PECH Camp de base, Maison pour femmes immigrantes, Hôpital régional de Portneuf, Hôpital Sainte-Anne-de-Beaupré.
+- 4 anciennes rétroactivement marquées : 9-1-1, Hôpital Le Royer, Horizon pour Elle (violence conjugale BM), Auberges du Cœur (hébergement ado dépannage 48h BM).
+- Répartition par catégorie : 7 mentalHealth · 5 health · 1 family · 1 social · 1 immigration.
+
 ---
 
 **v1.0.56 — 2026-05-02 — Import en masse Brome-Missisquoi**
