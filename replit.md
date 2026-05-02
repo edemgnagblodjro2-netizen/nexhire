@@ -2,7 +2,7 @@
 
 **v1.0.56 — 2026-05-02 (suite 3) — Expansion 6 provinces : QC + MB + ON + NB + NL + NS**
 
-**Total base : 870 services** sur **6 provinces** (421 QC · 167 MB · 187 ON · 90 NB · 4 NL · 1 NS), tous géocodés (866/868 GPS, seul le 9-1-1 universel et 988 sans coords). 449 services hors-QC ajoutés depuis 18 blocs 211 + 63 ajouts QC.
+**Total base : 871 services** sur **6 provinces** (422 QC · 167 MB · 187 ON · 90 NB · 4 NL · 1 NS), tous géocodés (866/868 GPS, seul le 9-1-1 universel et 988 sans coords). 449 services hors-QC ajoutés depuis 18 blocs 211 + 63 ajouts QC.
 
 19e bloc NB francophone (Acadie-Bathurst + Nord-Ouest + Restigouche + Péninsule acadienne) — 87 fiches importées (fusions internes : 3 entrées NB Dév social/ville → 1 fiche par bureau, fusion Centre santé mentale + Services enfance Restigouche Campbellton car même tél/adresse). Couvre 16 villes nouvelles : Bathurst, Saint-Quentin, Paquetville, Kedgwick, Edmundston (incluant Première Nation Malécite Madawaska), Pointe-Verte, Caraquet, Clair, Belledune, Shippagan, Lamèque, Campbellton, Eel River Bar (Première Nation Ugpi'Ganjig), Dalhousie, Miscou, + ajouts ON (Amputés de guerre Ottawa adultes/enfants, Association canadienne counseling Nepean, CCHST Hamilton, CAMH Parler pour changer Toronto), QC (Centre Wanaki toxicomanie autochtone Maniwaki), national (988 Crise suicide, La Leche League). Inclut Réseau Vitalité (hôpitaux régionaux Chaleur/Saint-Joseph/Edmundston/Lamèque/Restigouche/Campbellton/Enfant-Jésus, Santé publique, CSM, Programmes agression sexuelle, Services traitement dépendances, Services mobiles de crise, Points d'entrée unique), Medavie NB extra-mural (4 bureaux), foyers de soins sans murs (Villa St-Isidore, Manoir Edith B Pinet, Villa Beauséjour, Résidences Jodin/Lucien Saindon/Mgr Chiasson), Anciens Combattants Campbellton, Université de Moncton Edmundston, centres d'activité santé mentale (Le Contact, l'Envol, Les Copains, Rendez-Vous), Maison Notre-Dame House (violence sexuelle), Centre Priorité Jeunesse, Comité accueil nouveaux arrivants Péninsule acadienne, Centre de Bénévolat Péninsule Acadienne (centre communautaire + ressources familiales). 18 nouvelles villes géocodées, cache à 125 villes.
 
@@ -11,6 +11,7 @@
 Ajouts ponctuels QC — Lignes info CIUSSS Montréal :
 - `qc-mtl-a001` CIUSSS de l'Ouest-de-l'Île-de-Montréal — Ligne Info-CIUSSS, 514-630-2123, informations.comtl@ssss.gouv.qc.ca (7j/7, lun-ven 10h-18h, sam-dim 10h-17h).
 - `qc-mtl-a002` CIUSSS du Centre-Sud-de-l'Île-de-Montréal — Ligne info, 514-842-7226, info.ccsmtl@ssss.gouv.qc.ca.
+- `qc-mtl-e001` Centre de services scolaire de Montréal (CSSDM), 5100 rue Sherbrooke Est local 180, 514-596-6000, info@cssdm.gouv.qc.ca — réseau public francophone (primaire, secondaire, FP, FGA).
 
 Ajout ponctuel QC : Coalition montréalaise des Tables de quartier (CMTQ, `qc-mtl-s001`), 5675 rue Lafond Montréal, 514-721-4019, info@cmtq.org — regroupement des Tables de quartier de Montréal (concertation locale, lutte contre la pauvreté, mobilisation citoyenne).
 
