@@ -28,8 +28,16 @@ const SERVICES_TS = resolve(
   "../artifacts/service-qc/data/services.ts",
 );
 
-const ARRAY_START_MARKER = "export const SERVICES: Service[] = [";
-const ARRAY_END_MARKER = "\n];\n";
+// The bundle splits SERVICES into multiple chunks to keep individual arrays
+// below V8's string/array limits during transpile, then re-assembles them via
+// `export const SERVICES: Service[] = [...__SERVICES_CHUNK_0, ...]`.
+//
+// We detect the FIRST chunk declaration as the start, and the SERVICES export
+// line as the end, then regenerate everything in between with the same chunked
+// layout (CHUNK_SIZE services per chunk).
+const FIRST_CHUNK_MARKER = "const __SERVICES_CHUNK_0: Service[] = [";
+const SERVICES_EXPORT_RE = /^export const SERVICES: Service\[\] = \[[^\]]*\];\s*$/m;
+const CHUNK_SIZE = 1500;
 
 type DbRow = {
   id: string;
@@ -91,14 +99,28 @@ function emitEntry(svc: any): string {
 async function main() {
   console.log("📥 Reading bundled services.ts…");
   const fileText = readFileSync(SERVICES_TS, "utf-8");
-  const startIdx = fileText.indexOf(ARRAY_START_MARKER);
-  if (startIdx === -1) throw new Error("Cannot find SERVICES array start marker");
-  const headerEnd = startIdx + ARRAY_START_MARKER.length;
-  const endIdx = fileText.indexOf(ARRAY_END_MARKER, headerEnd);
-  if (endIdx === -1) throw new Error("Cannot find SERVICES array end marker");
 
-  const header = fileText.slice(0, headerEnd);
-  const footer = fileText.slice(endIdx); // starts with "\n];\n"
+  const startIdx = fileText.indexOf(FIRST_CHUNK_MARKER);
+  if (startIdx === -1) {
+    throw new Error(
+      `Cannot find first chunk marker '${FIRST_CHUNK_MARKER}'. ` +
+        `Has the bundle structure changed?`,
+    );
+  }
+
+  const exportMatch = fileText.slice(startIdx).match(SERVICES_EXPORT_RE);
+  if (!exportMatch || exportMatch.index === undefined) {
+    throw new Error(
+      "Cannot find `export const SERVICES: Service[] = [...__SERVICES_CHUNK_*];` line.",
+    );
+  }
+  const exportRelStart = exportMatch.index;
+  const exportEnd = startIdx + exportRelStart + exportMatch[0].length;
+
+  // header = everything up to (and including) the original first-chunk start
+  // footer = everything after the SERVICES export line (helpers, derived consts)
+  const header = fileText.slice(0, startIdx);
+  const footer = fileText.slice(exportEnd);
 
   console.log("📥 Importing bundled SERVICES (for ids and bundle-only fields)…");
   const bundleMod: any = await import(
@@ -156,12 +178,28 @@ async function main() {
 
   console.log(`✏️  Patched: ${patched}  ·  Unchanged: ${unchanged}  ·  Bundle-only (e.g. childcare): ${bundleOnly}`);
 
-  console.log("📝 Writing new services.ts…");
-  const body = "\n" + merged.map(emitEntry).join(",\n") + ",";
-  const out = header + body + footer;
+  console.log("📝 Writing new services.ts (chunked)…");
+  const chunkCount = Math.max(1, Math.ceil(merged.length / CHUNK_SIZE));
+  const chunkBlocks: string[] = [];
+  for (let i = 0; i < chunkCount; i++) {
+    const slice = merged.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
+    const body = slice.map(emitEntry).join(",\n");
+    chunkBlocks.push(
+      `const __SERVICES_CHUNK_${i}: Service[] = [\n${body},\n];`,
+    );
+  }
+  const spreads = Array.from(
+    { length: chunkCount },
+    (_, i) => `...__SERVICES_CHUNK_${i}`,
+  ).join(", ");
+  const exportLine = `export const SERVICES: Service[] = [${spreads}];`;
+
+  const out = header + chunkBlocks.join("\n\n") + "\n\n" + exportLine + footer;
   writeFileSync(SERVICES_TS, out, "utf-8");
 
-  console.log("✅ Done. Total entries written: " + merged.length);
+  console.log(
+    `✅ Done. ${merged.length} entries written across ${chunkCount} chunk(s).`,
+  );
   process.exit(0);
 }
 

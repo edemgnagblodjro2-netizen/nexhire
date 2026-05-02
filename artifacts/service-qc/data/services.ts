@@ -173,9 +173,9 @@ const __SERVICES_CHUNK_0: Service[] = [
     phone: "1 844 925-1257",
     website: "https://pe.211.ca/french",
     description: "Service d'information et de référence vers les ressources communautaires, sociales et gouvernementales de l'Île-du-Prince-Édouard. Assistance gratuite, confidentielle, multilingue. Disponible 24h/24, 7j/7 par téléphone, texto, clavardage et courriel. Aide à trouver des services en santé mentale, aide alimentaire, logement, soutien financier, emploi, services aux aînés, etc.",
-    address: "Queens County",
-    hours: "24h/24, 7j/7",
     isProvinceWide: true,
+    hours: "24h/24, 7j/7",
+    address: "Queens County",
     coordinates: { lat: 46.2382, lng: -63.1311 },
   },
   {
@@ -328,9 +328,9 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "9-8-8",
     description: "Prévention du suicide et soutien par téléphone et messagerie texte au niveau national. Services culturellement adaptés. Accès à des ressources en ligne, lignes d'aide locales et ressources en cas de crise au Canada (site web 988). Partenariat entre le gouvernement et les organismes communautaires (incluant CAMH).",
-    address: "Service téléphonique national, Canada",
     isUrgent: true,
     isProvinceWide: true,
+    address: "Service téléphonique national, Canada",
   },
   {
     id: "ab-red-e004",
@@ -354,8 +354,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "514-348-6666",
     description: "Immigration & naturalization service. Closed · Opens 9 a.m. Mon. Note Google 4.0/5 (146 avis).",
-    address: "3715 Bd Thibeau, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "3715 Bd Thibeau, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -416,8 +416,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-850-0416",
     description: "Non-profit organization. Closed · Opens 9 a.m. Mon. Note Google 5.0/5 (5 avis).",
-    address: "502 Rue Saint-Jean, Drummondville, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "502 Rue Saint-Jean, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -429,8 +429,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "343-997-2879",
     description: "Employment agency. Closed · Opens 12 a.m. Sun.",
-    address: "3+ years in business · 500 Rue du Collège #204, Trois-Rivières, QC",
     hours: "Closed · Opens 12 a.m. Sun",
+    address: "3+ years in business · 500 Rue du Collège #204, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -442,8 +442,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-800-267-4257",
     description: "Société canadienne de la SLA (sclérose latérale amyotrophique) : soutien aux patients et familles, prêt d'équipement, recherche, plaidoyer. Couvre tout l'Ontario incluant Est ontarien. Bureau 416-497-2267.",
-    address: "180 rue Bloor Ouest, bureau 500, Toronto, ON M5S 2V6",
     isProvinceWide: true,
+    address: "180 rue Bloor Ouest, bureau 500, Toronto, ON M5S 2V6",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -645,8 +645,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-477-3354",
     description: "Temp agency. Closed · Opens 8:45 a.m. Mon. Note Google 4.5/5 (2 avis).",
-    address: "10+ years in business · 630 Rue Cormier, Drummondville, QC",
     hours: "Closed · Opens 8:45 a.m. Mon",
+    address: "10+ years in business · 630 Rue Cormier, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -720,8 +720,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-472-9393",
     description: "Employment center. Closed · Opens 8:30 a.m. Mon. Note Google 3.8/5 (4 avis).",
-    address: "2260 Rue Demers, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "2260 Rue Demers, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -745,8 +745,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-855-460-2647",
     description: "Coordination provinciale des soins du cancer en Ontario : prévention, dépistage, traitement.",
-    address: "525 avenue University, unité 500, Toronto, ON M5G 2L3",
     isProvinceWide: true,
+    address: "525 avenue University, unité 500, Toronto, ON M5G 2L3",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -781,8 +781,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-373-1723",
     description: "Association / Organization. Closed · Opens 9 a.m. Mon. Note Google 5.0/5 (3 avis).",
-    address: "1322 Rue Sainte-Julie, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "1322 Rue Sainte-Julie, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -1140,8 +1140,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "AB",
     phone: "403-887- 2241",
     description: "Alberta Health Services - Central Zone. Lignes : 403-887- 2241",
-    address: "Sylvan Lake, AB T4S 1M7",
     isUrgent: true,
+    address: "Sylvan Lake, AB T4S 1M7",
     coordinates: { lat: 52.3083, lng: -114.095 },
   },
   {
@@ -1264,8 +1264,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "416-808-7066",
     description: "Intervention de crise 24h/24 pour victimes de crime, violence et tragédies à Toronto.",
-    address: "40 rue College, rez-de-chaussée, Toronto, ON M5G 2J3",
     isUrgent: true,
+    address: "40 rue College, rez-de-chaussée, Toronto, ON M5G 2J3",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -1316,8 +1316,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-478-8602",
     description: "Mental health service. Closed · Opens 9 a.m. Mon. Note Google 5.0/5 (1 avis).",
-    address: "330 Rue Saint-Jean, Drummondville, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "330 Rue Saint-Jean, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -1454,8 +1454,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-693-0608",
     description: "Employment center. Closed · Opens 8:15 a.m. Mon. Note Google 5.0/5 (3 avis).",
-    address: "1300 Pl. du Technoparc, Trois-Rivières, QC",
     hours: "Closed · Opens 8:15 a.m. Mon",
+    address: "1300 Pl. du Technoparc, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -1554,8 +1554,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-800-267-4023",
     description: "Programme pour enfants amputés : financement de membres artificiels et appareils standard et spécialisés (ajustements et réparations en cours), enfants à amputations multiples (appareils d'assistance pour autonomie), soutien par les pairs, conseillers juniors, programme PLAYSAFE (présentations dans écoles et groupes communautaires).",
-    address: "2827 promenade Riverside, Ottawa, ON K1V 0C4",
     isProvinceWide: true,
+    address: "2827 promenade Riverside, Ottawa, ON K1V 0C4",
     coordinates: { lat: 45.4208777, lng: -75.6901106 },
   },
   {
@@ -1567,8 +1567,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-800-250-3030",
     description: "Programme pour adultes amputés : aide financière pour le coût des membres artificiels, livrets d'information (douleur, membres fantômes, soins, démarche, conduite, emploi). Programme pour les amputés de guerre (vétérans gravement handicapés). Défense des droits face à la discrimination ou refus de financement par le système public ou assurance privée. Ligne alt : 1-877-622-2472.",
-    address: "2827 promenade Riverside, Ottawa, ON K1V 0C4",
     isProvinceWide: true,
+    address: "2827 promenade Riverside, Ottawa, ON K1V 0C4",
     coordinates: { lat: 45.4208777, lng: -75.6901106 },
   },
   {
@@ -1580,8 +1580,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "NB",
     phone: "1-866-522-2022",
     description: "Anciens Combattants Canada — bureau régional. Soutien, services et prestations : pensions d'invalidité, allocations, prestations de décès et d'inhumation, défense des droits, soins de santé physique et mentale, services sociaux, aide à domicile et soins de longue durée, aide en cas de logement précaire, aide à la recherche d'emploi, formation et éducation, assistance juridique professionnelle. Crise : 1-800-268-7708. Crise ATS : 1-800-567-5803. Ligne alt : 1-866-522-2122.",
-    address: "157 rue Water, 5e étage, salle 501, Campbellton, NB E3N 3L4",
     isProvinceWide: true,
+    address: "157 rue Water, 5e étage, salle 501, Campbellton, NB E3N 3L4",
     coordinates: { lat: 48.0046634, lng: -66.6765986 },
   },
   {
@@ -1593,8 +1593,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "NS",
     phone: "1-888-228-3871",
     description: "Aide pour les vétérans canadiens : prestations d'invalidité, soins de santé, soutien transition, aide financière, programmes pour familles de vétérans.",
-    address: "73 promenade Tacoma, Bureau 302, Dartmouth, NS B2W 3Y6",
     isProvinceWide: true,
+    address: "73 promenade Tacoma, Bureau 302, Dartmouth, NS B2W 3Y6",
     coordinates: { lat: 44.6799707, lng: -63.5720232 },
   },
   {
@@ -1606,8 +1606,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "MB",
     phone: "1-866-522-2122",
     description: "Soutien et services pour santé physique, mentale et bien-être des anciens combattants. Compensation pour perte d'audition, blessures, conditions mentales (PTSD, dépression). Ligne de crise : 1-800-268-7708.",
-    address: "400 Ellice Ave, 3rd Floor, Winnipeg, MB R3B 3M3",
     isUrgent: true,
+    address: "400 Ellice Ave, 3rd Floor, Winnipeg, MB R3B 3M3",
     coordinates: { lat: 49.8955367, lng: -97.1384584 },
   },
   {
@@ -1631,9 +1631,9 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "416-920-2605",
     description: "Site Gerrard Est : services santé mentale autochtones. Crise : First Nations and Inuit Hope for Wellness Help Line 1-855-242-3310 (24h).",
-    address: "179 rue Gerrard Est, Toronto, ON M5A 2E5",
     isUrgent: true,
     isProvinceWide: true,
+    address: "179 rue Gerrard Est, Toronto, ON M5A 2E5",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -1657,8 +1657,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "",
     description: "Mental health service. Closed · Opens 8:30 a.m. Mon.",
-    address: "(819) 816-8152, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "(819) 816-8152, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -1670,8 +1670,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "NS",
     phone: "902-765-6777",
     description: "Home health care service. Open 24 hours. Note Google 4.8/5 (18 avis).",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
     coordinates: { lat: 44.9833, lng: -64.95 },
   },
   {
@@ -1683,8 +1683,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-478-1216",
     description: "Association / Organization. Closed · Opens 8:30 a.m. Mon. Note Google 5.0/5 (4 avis).",
-    address: "50 Rue Dunkin bureau 303, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "50 Rue Dunkin bureau 303, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -2043,8 +2043,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-751-2842",
     description: "Mental health service. Closed · Opens 8 a.m. Mon. Note Google 5.0/5 (1 avis).",
-    address: "59 Rue Monfette local 110, Victoriaville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "59 Rue Monfette local 110, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -2102,8 +2102,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-877-765-5565",
     description: "Association nationale bilingue offrant aux conseillers professionnels et psychothérapeutes : programmes de développement professionnel et formation continue, certification et accréditation, contact et mise en réseau avec des pairs et groupes spécialisés. Ligne alt : 613-237-1099.",
-    address: "202-245 rue Menten Sud, Nepean, ON K2H 9E8",
     isProvinceWide: true,
+    address: "202-245 rue Menten Sud, Nepean, ON K2H 9E8",
     coordinates: { lat: 45.2862008, lng: -75.7512324 },
   },
   {
@@ -2323,8 +2323,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-800-267-8097",
     description: "Demande, renouvellement et information sur la carte d'assurance-santé de l'Ontario. ServiceOntario 416-326-1234.",
-    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     isProvinceWide: true,
+    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -2362,8 +2362,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-478-2746",
     description: "Student career counseling office. Closed · Opens 9 a.m. Mon. Note Google 5.0/5 (1 avis).",
-    address: "Édifice Sainte-Croix, 50 Rue Dunkin, Drummondville, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "Édifice Sainte-Croix, 50 Rue Dunkin, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -2387,8 +2387,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "NS",
     phone: "902-471-8464",
     description: "Nursing agency. Open 24 hours. Note Google 5.0/5 (10 avis).",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
     coordinates: { lat: 44.3782, lng: -64.5187 },
   },
   {
@@ -2425,9 +2425,9 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-472-3377",
     description: "Social services organization. Open 24 hours. Note Google 4.6/5 (17 avis).",
-    address: "655 Rue Lindsay, Drummondville, QC",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
+    address: "655 Rue Lindsay, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -2463,8 +2463,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "NU",
     phone: "867-979-0266",
     description: "Lignes : 867-979-0266 Ext. 1007",
-    address: "1077 Akilliq Drive, Second floor, Iqaluit, NU X0A 3H0",
     isUrgent: true,
+    address: "1077 Akilliq Drive, Second floor, Iqaluit, NU X0A 3H0",
     coordinates: { lat: 63.7467, lng: -68.517 },
   },
   {
@@ -2500,8 +2500,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-300-0902",
     description: "Medical clinic. Closed · Opens 8 a.m. Mon. Note Google 4.9/5 (123 avis).",
-    address: "1037 Bd Thibeau, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "1037 Bd Thibeau, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -2553,8 +2553,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     phone: "2-1-1",
     website: "https://www.bcehs.ca",
     description: "Provides paramedic and ambulance services in North America.",
-    address: "150-2955 Virtual Way, Vancouver, BC V5M 4X6",
     isUrgent: true,
+    address: "150-2955 Virtual Way, Vancouver, BC V5M 4X6",
     coordinates: { lat: 49.2827, lng: -123.1207 },
   },
   {
@@ -2708,8 +2708,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "NT",
     phone: "867-766-3400",
     description: "Lignes : 867-766-3400",
-    address: "4926 44 Street, Yellowknife, NT X1A 1J8",
     isUrgent: true,
+    address: "4926 44 Street, Yellowknife, NT X1A 1J8",
     coordinates: { lat: 62.454, lng: -114.3718 },
   },
   {
@@ -2722,8 +2722,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     phone: "2-1-1",
     website: "https://www.vch.ca/locations-services/result?res_id=109",
     description: "Residential care facility for adults ages 19 and up with complex health care needs who require 24-hour care.",
-    address: "Vancouver General Hospital, 2785 Ash Street, Vancouver, BC V5Z 1M9",
     isUrgent: true,
+    address: "Vancouver General Hospital, 2785 Ash Street, Vancouver, BC V5Z 1M9",
     coordinates: { lat: 49.2827, lng: -123.1207 },
   },
   {
@@ -2821,8 +2821,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "NS",
     phone: "902-425-3351",
     description: "Home health care service. Open 24 hours. Note Google 3.1/5 (8 avis).",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
     coordinates: { lat: 44.6488, lng: -63.5752 },
   },
   {
@@ -2883,8 +2883,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "MB",
     phone: "204-268-1076",
     description: "Soins hospitaliers aigus, urgence/cliniques externes, clinique médicale, physio/ergothérapie, soins palliatifs, réadaptation, soins spirituels.",
-    address: "151 1st St S, Beausejour, MB R0E 0C0",
     isUrgent: true,
+    address: "151 1st St S, Beausejour, MB R0E 0C0",
     coordinates: { lat: 50.0619312, lng: -96.5140821 },
   },
   {
@@ -3042,8 +3042,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "833-590-2712",
     description: "Medical laboratory. Closed · Opens 7 a.m. Mon. Note Google 4.3/5 (60 avis).",
-    address: "1900 Boulevard des Récollets, Trois-Rivières, QC",
     hours: "Closed · Opens 7 a.m. Mon",
+    address: "1900 Boulevard des Récollets, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -3153,8 +3153,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-693-5581",
     description: "Non-profit organization. Closed · Opens 8:30 a.m. Tue. Note Google 4.4/5 (404 avis).",
-    address: "45 Rue Fusey, Trois-Rivières, QC",
     hours: "Closed · Opens 8:30 a.m. Tue",
+    address: "45 Rue Fusey, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -3227,8 +3227,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "MB",
     phone: "204-578-4000",
     description: "Établissement de santé complet incluant urgences 24h pour la région Prairie Mountain. Cliniques externes spécialisées, hospitalisation, soins palliatifs, services régionaux.",
-    address: "150 McTavish Ave E, Brandon, MB R7A 2B3",
     isUrgent: true,
+    address: "150 McTavish Ave E, Brandon, MB R7A 2B3",
     coordinates: { lat: 49.8511143, lng: -99.9608924 },
   },
   {
@@ -3470,8 +3470,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     phone: "2-1-1",
     website: "https://www.buchanan-lodge.com",
     description: "Residential care facility for adults with complex health care needs who require 24-hour care.",
-    address: "409 Blair Avenue, New Westminster, BC V3L 4A4",
     isUrgent: true,
+    address: "409 Blair Avenue, New Westminster, BC V3L 4A4",
     coordinates: { lat: 49.2057, lng: -122.911 },
   },
   {
@@ -3522,8 +3522,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-475-8431",
     description: "Government office. Closed · Opens 8:30 a.m. Mon. Note Google 3.5/5 (20 avis).",
-    address: "270 Rue Lindsay, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "270 Rue Lindsay, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -3547,8 +3547,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-536-2601",
     description: "Government office. Closed · Opens 8:30 a.m. Mon. Note Google 3.5/5 (13 avis).",
-    address: "212 6e rue de la Pointe, Shawinigan, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "212 6e rue de la Pointe, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -3560,8 +3560,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-371-6880",
     description: "Government office. Closed · Opens 8:30 a.m. Mon. Note Google 4.0/5 (28 avis).",
-    address: "225 Rue des Forges 3e étage, bureau 300, Trois-Rivières, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "225 Rue des Forges 3e étage, bureau 300, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -3573,8 +3573,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-800-387-0774",
     description: "Conseils gratuits aux petits employeurs sur réclamations CSPAAT et obligations santé/sécurité.",
-    address: "505 avenue de l'Université, 20e étage, Toronto, ON M5G 2P1",
     isProvinceWide: true,
+    address: "505 avenue de l'Université, 20e étage, Toronto, ON M5G 2P1",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -3586,8 +3586,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-800-660-6769",
     description: "Représente travailleurs non syndiqués pour réclamations CSPAAT, représailles santé/sécurité (416-212-5335 / 1-855-659-7744), assurance milieu travail (1-800-435-8980).",
-    address: "123 rue Edward, bureau 1300, Toronto, ON M5G 1E2",
     isProvinceWide: true,
+    address: "123 rue Edward, bureau 1300, Toronto, ON M5G 1E2",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -3787,9 +3787,9 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "416-583-1310",
     description: "Programme du Centre de toxicomanie et de santé mentale (CAMH) conçu pour prévenir les abus sexuels sur les enfants et l'utilisation de matériel d'exploitation sexuelle. Cliniciens formés : traitement et soutien, thérapie, chat en ligne anonyme, ligne d'assistance anonyme. Ligne alt : 1-833-703-3303.",
-    address: "Service en ligne/par téléphone, Toronto, ON",
     isUrgent: true,
     isProvinceWide: true,
+    address: "Service en ligne/par téléphone, Toronto, ON",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -3813,8 +3813,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "NS",
     phone: "902-454-2571",
     description: "Home health care service. Open 24 hours. Note Google 1.7/5 (10 avis).",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
     coordinates: { lat: 44.7333, lng: -63.6667 },
   },
   {
@@ -3837,8 +3837,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-477-8855",
     description: "Mental health service. Open · Closes 9 p.m..",
-    address: "575 Rue des Écoles local 101, Drummondville, QC",
     hours: "Open · Closes 9 p.m.",
+    address: "575 Rue des Écoles local 101, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -4427,8 +4427,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-376-0179",
     description: "Employment center. Closed · Opens 8:30 a.m. Mon. Note Google 4.3/5 (22 avis).",
-    address: "580 Rue Barkoff suite 300, Trois-Rivières, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "580 Rue Barkoff suite 300, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -4440,8 +4440,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "416-408-4420",
     description: "Information juridique gratuite et accessible pour les Ontariens à faible revenu.",
-    address: "180 rue Dundas Ouest, Bureau 506, Toronto, ON M5G 1Z8",
     isProvinceWide: true,
+    address: "180 rue Dundas Ouest, Bureau 506, Toronto, ON M5G 1Z8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -4453,8 +4453,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-731-3773",
     description: "Medical clinic. Closed · Opens 7:30 a.m. Mon. Note Google 4.1/5 (15 avis).",
-    address: "1265 Rue Trudel local 108, Shawinigan, QC",
     hours: "Closed · Opens 7:30 a.m. Mon",
+    address: "1265 Rue Trudel local 108, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -4466,8 +4466,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-539-8371",
     description: "Community health center. Closed · Opens 8 a.m. Sun. Note Google 3.3/5 (28 avis).",
-    address: "1082 Rue Ste Hélène, Shawinigan, QC",
     hours: "Closed · Opens 8 a.m. Sun",
+    address: "1082 Rue Ste Hélène, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -4492,8 +4492,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-474-2572",
     description: "Medical clinic. Closed · Opens 8:15 a.m. Sun. Note Google 4.3/5 (449 avis).",
-    address: "350 Rue Saint-Jean, Drummondville, QC",
     hours: "Closed · Opens 8:15 a.m. Sun",
+    address: "350 Rue Saint-Jean, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -4543,8 +4543,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-758-7281",
     description: "Community health center. Closed · Opens 8 a.m. Mon. Note Google 4.4/5 (14 avis).",
-    address: "100 Rue de l'Ermitage, Victoriaville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "100 Rue de l'Ermitage, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -4556,8 +4556,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-519-3043",
     description: "Blood testing service. Closed · Opens 7 a.m. Mon. Note Google 4.2/5 (25 avis).",
-    address: "932 Blvd. des Bois-Francs Sud, Victoriaville, QC",
     hours: "Closed · Opens 7 a.m. Mon",
+    address: "932 Blvd. des Bois-Francs Sud, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -4777,8 +4777,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     phone: "403-343-4000",
     website: "https://rdpolytech.ca",
     description: "Red Deer Polytechnic. Lignes : 403-343-4000 (Emergency Line) · 403-342-3445 (Non-Emergency Line)",
-    address: "100 College Boulevard, Red Deer, AB T4N 5H5",
     isUrgent: true,
+    address: "100 College Boulevard, Red Deer, AB T4N 5H5",
     coordinates: { lat: 52.2681, lng: -113.8112 },
   },
   {
@@ -4924,8 +4924,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-866-518-0000",
     description: "Services pour personnes sourdes et malentendantes : appareils auditifs, interprétation ASL/LSQ, soutien à l'emploi, counseling, programmes pour aînés. Couvre tout l'Ontario.",
-    address: "Adresse postale — Route Spadina, Toronto, ON",
     isProvinceWide: true,
+    address: "Adresse postale — Route Spadina, Toronto, ON",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -4937,8 +4937,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-800-449-6367",
     description: "Recherche, formation et innovations en santé mentale. Bureau 416-449-6830 ext 250 / 1-855-449-9949.",
-    address: "95 rue King Est, bureau 300, Toronto, ON M5C 1G4",
     isProvinceWide: true,
+    address: "95 rue King Est, bureau 300, Toronto, ON M5C 1G4",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -5042,8 +5042,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     phone: "2-1-1",
     website: "https://sos.cmha.bc.ca",
     description: "Offers mental wellness programs and mental health intervention programs such as suicide prevention training, and mental health first aid.",
-    address: "102-1873 Main Street, Penticton, BC V2A 5H2",
     isUrgent: true,
+    address: "102-1873 Main Street, Penticton, BC V2A 5H2",
     coordinates: { lat: 49.4991, lng: -119.5937 },
   },
   {
@@ -5067,8 +5067,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-888-445-4403",
     description: "Soutien et information aux personnes touchées par le cancer du poumon.",
-    address: "133 rue Richmond Ouest, bureau 208, Toronto, ON M5H 2L3",
     isProvinceWide: true,
+    address: "133 rue Richmond Ouest, bureau 208, Toronto, ON M5H 2L3",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -5080,8 +5080,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "NB",
     phone: "1-866-462-9555",
     description: "Aide aux aînés pour vivre à domicile : ergothérapie, modifications/rénovations, soutien revenu (RPC, SV, SRG, remises chauffage, Prestation aînés faible revenu), recherche logement abordable, transport accessible, embauche aides à domicile, info santé.",
-    address: "440 rue Wilsey, Bureau 102, Fredericton, NB E3B 7G5",
     isProvinceWide: true,
+    address: "440 rue Wilsey, Bureau 102, Fredericton, NB E3B 7G5",
     coordinates: { lat: 45.9488278, lng: -66.6291827 },
   },
   {
@@ -5298,8 +5298,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-475-4646",
     description: "Employment center. Closed · Opens 8:30 a.m. Mon. Note Google 4.8/5 (25 avis).",
-    address: "749 Bd Mercure, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "749 Bd Mercure, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -5311,8 +5311,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-537-3358",
     description: "Employment center. Closed · Opens 10:30 a.m. Mon. Note Google 4.8/5 (20 avis).",
-    address: "432 Av. Willow, Shawinigan, QC",
     hours: "Closed · Opens 10:30 a.m. Mon",
+    address: "432 Av. Willow, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -5421,7 +5421,9 @@ const __SERVICES_CHUNK_0: Service[] = [
     city: "Moncton",
     province: "NB",
     phone: "506-853-0811",
+    website: "https://crossroadsforwomen.ca/fr/programmes-et-services/programmes-residentiels",
     description: "Programme de logement abordable et avec services de soutien pour les survivantes de violence domestique et conjugale. Travailleur de proximité ou gestionnaire de cas attribué.",
+    address: "C.P. 1247 Moncton, N.-B. E1C 8P9",
     coordinates: { lat: 46.0985679, lng: -64.8004265 },
   },
   {
@@ -5432,8 +5434,10 @@ const __SERVICES_CHUNK_0: Service[] = [
     city: "Moncton",
     province: "NB",
     phone: "1-844-853-0811",
+    website: "https://crossroadsforwomen.ca/fr/contact",
     description: "Bâtiment sécuritaire avec programme de logement abordable à long terme et services de soutien pour femmes vivant des problèmes de santé mentale, toxicomanie et/ou victimes de violence conjugale. Bureau 506-377-5444. Ligne de crise : 506-857-8028 poste 2.",
     isUrgent: true,
+    address: "CP 1247 Moncton, NB, E1C 8P9 Canada",
     coordinates: { lat: 46.0985679, lng: -64.8004265 },
   },
   {
@@ -5595,8 +5599,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-370-2100",
     description: "Doctor. Closed · Opens 8 a.m. Sun. Note Google 3.9/5 (73 avis).",
-    address: "155 Rue Toupin, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Sun",
+    address: "155 Rue Toupin, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -5608,8 +5612,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-373-1261",
     description: "Social services organization. Closed · Opens 9 a.m. Mon. Note Google 4.8/5 (21 avis).",
-    address: "1 Rue Fusey local 101, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "1 Rue Fusey local 101, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -5633,8 +5637,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-370-3660",
     description: "Employment center. Closed · Opens 9 a.m. Mon. Note Google 4.3/5 (7 avis).",
-    address: "3910 Bd des Forges Bureau 203, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "3910 Bd des Forges Bureau 203, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -5646,8 +5650,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-376-2566",
     description: "Retirement home. Temporarily closed.",
-    address: "435 Rue St-Roch, Trois-Rivières, QC",
     hours: "Temporarily closed",
+    address: "435 Rue St-Roch, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -5731,9 +5735,9 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-371-1023",
     description: "Homeless shelter. Open 24 hours. Note Google 4.5/5 (55 avis).",
-    address: "1486 Rue Brébeuf, Trois-Rivières, QC",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
+    address: "1486 Rue Brébeuf, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -5745,8 +5749,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-477-1800",
     description: "Medical clinic. Closed · Opens 8:30 a.m. Mon. Note Google 2.4/5 (89 avis).",
-    address: "110 Rue Saint-Jean Bureau 200, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "110 Rue Saint-Jean Bureau 200, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -5758,8 +5762,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-477-6793",
     description: "Medical clinic. Closed · Opens 8 a.m. Sun. Note Google 3.2/5 (65 avis).",
-    address: "2125 Bd Lemire bureau 200, Drummondville, QC",
     hours: "Closed · Opens 8 a.m. Sun",
+    address: "2125 Bd Lemire bureau 200, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -5819,8 +5823,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-537-8851",
     description: "Charity. Closed · Opens 12 a.m. Mon. Note Google 4.6/5 (58 avis).",
-    address: "1895 Av. Champlain, Shawinigan, QC",
     hours: "Closed · Opens 12 a.m. Mon",
+    address: "1895 Av. Champlain, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -5832,8 +5836,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-697-3333",
     description: "Community health center. Closed · Opens 7:30 a.m. Sun. Note Google 3.9/5 (82 avis).",
-    address: "731 Rue Sainte-Julie Local B-200, Trois-Rivières, QC",
     hours: "Closed · Opens 7:30 a.m. Sun",
+    address: "731 Rue Sainte-Julie Local B-200, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -5845,8 +5849,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "1-800-745-4205",
     description: "Cours de bien-être en personne et en ligne pour surmonter les dépendances : mélange de thérapie cognitivo-comportementale (TCC) et d'enseignements anishnabe (mental, émotionnel, physique, spirituel). Cercles de partage hebdomadaires (français/anglais via Zoom). Cours pour travailleurs PNLAADA et travailleurs de première ligne. Ligne alt : 819-449-7000 poste 4227.",
-    address: "50 Wanaki Mikan, Maniwaki, QC J9E 3B3",
     isProvinceWide: true,
+    address: "50 Wanaki Mikan, Maniwaki, QC J9E 3B3",
     coordinates: { lat: 46.3778839, lng: -75.9807967 },
   },
   {
@@ -5870,8 +5874,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-800-668-4284",
     description: "Promotion de la santé physique et mentale au travail, de la sécurité et du bien-être des travailleurs. Ligne alt : 905-572-2981.",
-    address: "135 rue Hunter Est, Hamilton, ON L8N 1M5",
     isProvinceWide: true,
+    address: "135 rue Hunter Est, Hamilton, ON L8N 1M5",
     coordinates: { lat: 43.2560802, lng: -79.8728583 },
   },
   {
@@ -5883,8 +5887,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-877-292-2288",
     description: "Counseling, soutien et services pour survivants de torture et persécution politique. Bureau 416-363-1066.",
-    address: "194 rue Jarvis, 2e étage, Toronto, ON M5B 2B7",
     isProvinceWide: true,
+    address: "194 rue Jarvis, 2e étage, Toronto, ON M5B 2B7",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -6141,8 +6145,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-474-5381",
     description: "Employment agency. Closed · Opens 9 a.m. Mon. Note Google 4.1/5 (7 avis).",
-    address: "10+ years in business · 315 Rue Hériot, Drummondville, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "10+ years in business · 315 Rue Hériot, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -6154,8 +6158,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-537-0354",
     description: "Social services organization. Closed · Opens 9 a.m. Mon. Note Google 4.7/5 (10 avis).",
-    address: "500 Av. Broadway, Shawinigan, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "500 Av. Broadway, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -6314,8 +6318,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-383-8202",
     description: "Psychologist. Closed · Opens 9 a.m. Mon.",
-    address: "90 des casernes, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "90 des casernes, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -6460,8 +6464,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-378-1661",
     description: "Abortion clinic. Closed · Opens 9:30 a.m. Mon. Note Google 4.1/5 (9 avis).",
-    address: "889 Rue du Haut Boc, Trois-Rivières, QC",
     hours: "Closed · Opens 9:30 a.m. Mon",
+    address: "889 Rue du Haut Boc, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -6755,8 +6759,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-375-3111",
     description: "Corporate office. Closed · Opens 8 a.m. Mon. Note Google 2.2/5 (9 avis).",
-    address: "858 Terr. Turcotte, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "858 Terr. Turcotte, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -6791,8 +6795,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-539-9449",
     description: "Community health center. Closed · Opens 8 a.m. Mon.",
-    address: "805 Av. Broadway, Shawinigan, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "805 Av. Broadway, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -6804,8 +6808,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-370-2100",
     description: "Medical Center. Open 24 hours. Note Google 4.2/5 (9 avis).",
-    address: "155 Rue Toupin #133, Trois-Rivières, QC",
     hours: "Open 24 hours",
+    address: "155 Rue Toupin #133, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -6817,8 +6821,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-379-8385",
     description: "Doctor. Closed · Opens 8 a.m. Sun. Note Google 4.8/5 (14 avis).",
-    address: "1785 Bd du Carmel, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Sun",
+    address: "1785 Bd du Carmel, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -6976,8 +6980,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     phone: "2-1-1",
     website: "https://www.parkplaceseniorsliving.com",
     description: "Residential care for adults with complex health care needs who require 24-hour care due to a physical disability or mental or behavioural conditions such as dementia.",
-    address: "3243 Cowichan Lake Road, Duncan, BC V9L 4B8",
     isUrgent: true,
+    address: "3243 Cowichan Lake Road, Duncan, BC V9L 4B8",
     coordinates: { lat: 48.7787, lng: -123.7079 },
   },
   {
@@ -7050,8 +7054,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-860-0541",
     description: "Sexologist. Closed · Opens 9 a.m. Tue.",
-    address: "864 Rue des Ursulines #308, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Tue",
+    address: "864 Rue des Ursulines #308, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -7076,8 +7080,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     phone: "1-800-267-4023",
     website: "http://www.waramps.ca",
     description: "War Amps, The. Lignes : 1-800-267-4023 · 1-800-250-3030 (Customer Service) · 613-731-3821 (Ottawa)",
-    address: "2827 Riverside Drive, Ottawa, ON K1V 0C4",
     isProvinceWide: true,
+    address: "2827 Riverside Drive, Ottawa, ON K1V 0C4",
     coordinates: { lat: 53.9333, lng: -116.5765 },
   },
   {
@@ -7229,8 +7233,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "416-921-2109",
     description: "Association de la santé mentale pour enfants en Ontario — plaidoyer et coordination des centres communautaires.",
-    address: "180 rue Dundas Ouest, bureau 2305, Toronto, ON M5G 1Z8",
     isProvinceWide: true,
+    address: "180 rue Dundas Ouest, bureau 2305, Toronto, ON M5G 1Z8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -7382,9 +7386,9 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-697-3333",
     description: "Doctor. Open 24 hours. Note Google 3.4/5 (221 avis).",
-    address: "1991 Bd du Carmel, Trois-Rivières, QC",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
+    address: "1991 Bd du Carmel, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -7422,8 +7426,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-373-0303",
     description: "Medical clinic. Closed · Opens 8 a.m. Sun. Note Google 3.4/5 (44 avis).",
-    address: "940 Bd des Récollets, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Sun",
+    address: "940 Bd des Récollets, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -7435,8 +7439,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-472-2520",
     description: "Medical clinic. Closed · Opens 8:30 a.m. Mon. Note Google 3.9/5 (17 avis).",
-    address: "581 Rue Hériot, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "581 Rue Hériot, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -7448,8 +7452,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-699-6591",
     description: "Mental health clinic. Closed · Opens 7 a.m. Mon. Note Google 5.0/5 (14 avis).",
-    address: "1545 Rue Saint Maurice, Trois-Rivières, QC",
     hours: "Closed · Opens 7 a.m. Mon",
+    address: "1545 Rue Saint Maurice, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -7461,8 +7465,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-253-0168",
     description: "Medical clinic. Closed · Opens 8 a.m. Mon. Note Google 5.0/5 (236 avis).",
-    address: "950 Rue Ste Thérèse, Drummondville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "950 Rue Ste Thérèse, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -7474,8 +7478,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-536-8181",
     description: "Family practice physician. Closed · Opens 7:30 a.m. Mon. Note Google 4.7/5 (29 avis).",
-    address: "3451 Chem. de Sainte-Flore, Shawinigan, QC",
     hours: "Closed · Opens 7:30 a.m. Mon",
+    address: "3451 Chem. de Sainte-Flore, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -7511,8 +7515,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-376-4444",
     description: "Medical clinic. Closed · Opens 12 a.m. Sun. Note Google 3.9/5 (7 avis).",
-    address: "5050 Bd des Forges, Trois-Rivières, QC",
     hours: "Closed · Opens 12 a.m. Sun",
+    address: "5050 Bd des Forges, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -7536,8 +7540,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "",
     description: "Mental health service. Closed · Opens 9 a.m. Mon.",
-    address: "1253 Bd des Forges, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "1253 Bd des Forges, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -7549,8 +7553,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-472-9494",
     description: "Medical clinic. Closed · Opens 8:30 a.m. Mon. Note Google 3.5/5 (20 avis).",
-    address: "3525 Bd Saint-Joseph, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "3525 Bd Saint-Joseph, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -7562,8 +7566,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-377-5015",
     description: "Community health center. Closed · Opens 8 a.m. Mon. Note Google 3.3/5 (32 avis).",
-    address: "10300 Chem. Sainte-Marguerite, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "10300 Chem. Sainte-Marguerite, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -7575,8 +7579,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-697-0030",
     description: "Medical clinic. Closed · Opens 8:30 a.m. Mon. Note Google 5.0/5 (264 avis).",
-    address: "1543 Bd des Forges, Trois-Rivières, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "1543 Bd des Forges, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -7588,8 +7592,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-370-8106",
     description: "Medical clinic. Closed · Opens 8 a.m. Mon. Note Google 4.1/5 (36 avis).",
-    address: "1920 Rue Bellefeuille local 200, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "1920 Rue Bellefeuille local 200, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -7601,8 +7605,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-840-3006",
     description: "Medical clinic. Closed · Opens 9 a.m. Sun. Note Google 3.0/5 (18 avis).",
-    address: "1785 Bd du Carmel suite 246, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Sun",
+    address: "1785 Bd du Carmel suite 246, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -7626,9 +7630,9 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "450-589-6360",
     description: "Medical clinic. Closed · Opens 8:30 a.m. Mon. Note Google 5.0/5 (16 avis).",
-    address: "1278 Rue Cormier, Drummondville, QC",
-    hours: "Closed · Opens 8:30 a.m. Mon",
     isUrgent: true,
+    hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "1278 Rue Cormier, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -7640,8 +7644,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "873-200-0905",
     description: "Medical clinic. Closed · Opens 8 a.m. Mon. Note Google 5.0/5 (19 avis).",
-    address: "122 Rue Saint-Jean, Drummondville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "122 Rue Saint-Jean, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -7653,8 +7657,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "418-755-1729",
     description: "Specialized clinic. Closed · Opens 9 a.m. Wed. Note Google 5.0/5 (11 avis).",
-    address: "39 Rue Laurier E #5, Victoriaville, QC",
     hours: "Closed · Opens 9 a.m. Wed",
+    address: "39 Rue Laurier E #5, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -7690,8 +7694,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-888-705-8889",
     description: "Aide juridique gratuite pour les personnes vivant avec le VIH/SIDA en Ontario. Bureau 416-340-7790.",
-    address: "55 avenue University, bureau 1400, Toronto, ON M5J 2H7",
     isProvinceWide: true,
+    address: "55 avenue University, bureau 1400, Toronto, ON M5J 2H7",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -7703,8 +7707,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "",
     description: "Medical clinic. Closed · Opens 12 a.m. Sun. Note Google 5.0/5 (3 avis).",
-    address: "39 Rue Laurier E, Victoriaville, QC",
     hours: "Closed · Opens 12 a.m. Sun",
+    address: "39 Rue Laurier E, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -7716,8 +7720,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "1-866-223-3634",
     description: "Medical clinic. Closed · Opens 8:30 a.m. Mon. Note Google 4.0/5 (1 avis).",
-    address: "1785 Bd du Carmel, Trois-Rivières, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "1785 Bd du Carmel, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -7741,8 +7745,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "",
     description: "Nutritionist. Closed · Opens 9 a.m. Mon. Note Google 5.0/5 (2 avis).",
-    address: "1401 Rue Royale, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "1401 Rue Royale, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -7958,8 +7962,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-731-3100",
     description: "Family practice physician. Closed · Opens 9 a.m. Mon. Note Google 5.0/5 (1 avis).",
-    address: "695 Av. de la Station #100, Shawinigan, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "695 Av. de la Station #100, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -8019,8 +8023,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-818-4008",
     description: "Psychologist. Closed · Opens 8 a.m. Mon. Note Google 4.7/5 (7 avis).",
-    address: "150 Rue Hériot bureau 204, Drummondville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "150 Rue Hériot bureau 204, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -8032,8 +8036,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-373-3302",
     description: "Medical Center. Closed · Opens 7:30 a.m. Mon.",
-    address: "1900 Bd des Récollets, Trois-Rivières, QC",
     hours: "Closed · Opens 7:30 a.m. Mon",
+    address: "1900 Bd des Récollets, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -8298,8 +8302,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-795-3814",
     description: "Immigration & naturalization service. Closed · Opens 8:30 a.m. Mon. Note Google 4.0/5 (3 avis).",
-    address: "49 Rue de Courval bureau 100, Victoriaville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "49 Rue de Courval bureau 100, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -8356,8 +8360,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-800-387-0750",
     description: "Indemnisation des travailleurs accidentés et maladies professionnelles. Bureau 416-344-1000. Sans frais 1-888-745-3237. Télécopie sans frais 1-888-313-7373.",
-    address: "Simcoe Place, 200 rue Front Ouest, Toronto, ON M5V 3J1",
     isProvinceWide: true,
+    address: "Simcoe Place, 200 rue Front Ouest, Toronto, ON M5V 3J1",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -8369,8 +8373,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-877-339-3335",
     description: "Tribunal indépendant qui traite des conflits de travail et applications en relations de travail.",
-    address: "505 avenue de l'Université, 2e étage, Toronto, ON M5G 2P1",
     isProvinceWide: true,
+    address: "505 avenue de l'Université, 2e étage, Toronto, ON M5G 2P1",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -8416,8 +8420,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "ON",
     phone: "1-866-282-2179",
     description: "Health Services Appeal and Review Board (HSARB) et Health Professions Appeal and Review Board (HPARB) : recours indépendant sur décisions OHIP, ordres professionnels de santé. Bureau 416-327-8512.",
-    address: "151 rue Bloor Ouest, 9e étage, Toronto, ON M5S 1S4",
     isProvinceWide: true,
+    address: "151 rue Bloor Ouest, 9e étage, Toronto, ON M5S 1S4",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -8520,8 +8524,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     phone: "2-1-1",
     website: "https://www.communitybuilders.ca",
     description: "Develops and provides supportive and affordable housing, single room occupancy services and tenant supports, social enterprise development, and emergency shelter in Vancouver.",
-    address: "325-1130 West Pender Street, Vancouver, BC V6E 4A4",
     isUrgent: true,
+    address: "325-1130 West Pender Street, Vancouver, BC V6E 4A4",
     coordinates: { lat: 49.2827, lng: -123.1207 },
   },
   {
@@ -9386,8 +9390,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     phone: "2-1-1",
     website: "https://www.pclaservices.ca/our-programs",
     description: "10-bed residential program provides crisis intervention for adult clients suffering acute psychiatric symptoms.",
-    address: "220 Sherbrooke Street, New Westminster, BC V3L 3M2",
     isUrgent: true,
+    address: "220 Sherbrooke Street, New Westminster, BC V3L 3M2",
     coordinates: { lat: 49.2057, lng: -122.911 },
   },
   {
@@ -9669,8 +9673,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-478-4243",
     description: "Non-profit organization. Closed · Opens 8:30 a.m. Mon. Note Google 4.5/5 (169 avis).",
-    address: "1655 Rue Corriveau, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "1655 Rue Corriveau, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -9903,8 +9907,8 @@ const __SERVICES_CHUNK_0: Service[] = [
     province: "QC",
     phone: "819-538-2828",
     description: "Doctor. Closed · Opens 9 a.m. Mon. Note Google 4.4/5 (13 avis).",
-    address: "1050 8e Rue #2, Shawinigan, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "1050 8e Rue #2, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -10005,9 +10009,6 @@ const __SERVICES_CHUNK_0: Service[] = [
     address: "810 Canyon Street, Creston, BC V0B 1G0",
     coordinates: { lat: 49.0958, lng: -116.5117 },
   },
-];
-
-const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "qc-vic-mh003",
     name: "Corporation De Développement Communautaire Des Bois-Francs — Victoriaville",
@@ -10017,8 +10018,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-758-5801",
     description: "Association / Organization. Closed · Opens 8:30 a.m. Mon. Note Google 5.0/5 (7 avis).",
-    address: "59 Rue Monfette, Victoriaville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "59 Rue Monfette, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -10192,8 +10193,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-800-435-7308",
     description: "Hébergement, soins de santé, intervention de crise et soutien pour jeunes sans abri (16-24 ans). Bureau 416-598-4898. Ligne de crise 24h : 416-593-4849.",
-    address: "20 rue Gerrard Est, Toronto, ON M5B 2P3",
     isUrgent: true,
+    address: "20 rue Gerrard Est, Toronto, ON M5B 2P3",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -10280,8 +10281,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "2-1-1",
     website: "https://www.vch.ca/en/location-service/long-term-care-creekstone-care-centre",
     description: "Residential care facility for individuals with complex health care needs who require 24-hour care due to physical disability or mental or behavioural conditions such as dementia.",
-    address: "1526 Oxford Street, North Vancouver, BC V7J 1E5",
     isUrgent: true,
+    address: "1526 Oxford Street, North Vancouver, BC V7J 1E5",
     coordinates: { lat: 49.32, lng: -123.0724 },
   },
   {
@@ -10294,8 +10295,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "2-1-1",
     website: "https://www.islandcrisiscaresociety.ca/programs/crescent-house",
     description: "Offers six crisis stabilization/mental health assisted living beds providing support for individuals who are have experienced repeated cycles of crisis and relapse and are in need of additional services to move forward in their recovery.",
-    address: "1126 Seafield Crescent, Nanaimo, BC V9S 5K5",
     isUrgent: true,
+    address: "1126 Seafield Crescent, Nanaimo, BC V9S 5K5",
     coordinates: { lat: 49.1659, lng: -123.9401 },
   },
   {
@@ -10308,8 +10309,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "2-1-1",
     website: "https://www.surreypolice.ca",
     description: "Responds to clients who have contacted police and are dealing with mental health, homelessness, and/or substance use.",
-    address: "10720 King George Boulevard, Surrey, BC V3T 2X3",
     isUrgent: true,
+    address: "10720 King George Boulevard, Surrey, BC V3T 2X3",
     coordinates: { lat: 49.1913, lng: -122.849 },
   },
   {
@@ -10322,8 +10323,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "2-1-1",
     website: "https://www.crisiscentre.bc.ca",
     description: "Programs work to ensure timely access to support, destigmatize suicide and mental health concerns, and increase awareness and skills for mental health.",
-    address: "Vancouver, BC",
     isUrgent: true,
+    address: "Vancouver, BC",
     coordinates: { lat: 49.2827, lng: -123.1207 },
   },
   {
@@ -10335,8 +10336,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "MB",
     phone: "1-888-617-7715",
     description: "Ligne téléphonique de réponse aux crises 24/7, tous âges. Accès aux infirmières en santé mentale aux urgences (Portage, Winkler/Morden, Steinbach), 9h-21h. Mobile Crisis Response (15 ans+) et Crisis Stabilization Unit (18 ans+).",
-    address: "450 Main St, Steinbach, MB R5G 1Z5",
     isUrgent: true,
+    address: "450 Main St, Steinbach, MB R5G 1Z5",
     coordinates: { lat: 49.5254414, lng: -96.6854275 },
   },
   {
@@ -10360,8 +10361,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "BC",
     phone: "2-1-1",
     description: "Mobile, community-led crisis response service provides mental health support to people 13 years and older who are experiencing a mental health crisis.",
-    address: "Prince George, BC",
     isUrgent: true,
+    address: "Prince George, BC",
     coordinates: { lat: 53.9171, lng: -122.7497 },
   },
   {
@@ -10498,8 +10499,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-379-3333",
     description: "Psychologist. Closed · Opens 8 a.m. Sun. Note Google 4.3/5 (12 avis).",
-    address: "725 A Rue des Volontaires, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Sun",
+    address: "725 A Rue des Volontaires, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -10603,8 +10604,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "1-866-426-1527",
     website: "https://www.canada.ca/en/services/benefits/publicpensions/cpp/cpp-death-benefit.html",
     description: "Government of Canada - Employment and Social Development Canada. Lignes : 1-866-426-1527",
-    address: "933 Mivvik Street, Iqaluit, NU X0A 0H0",
     isProvinceWide: true,
+    address: "933 Mivvik Street, Iqaluit, NU X0A 0H0",
     coordinates: { lat: 53.9333, lng: -116.5765 },
   },
   {
@@ -10629,8 +10630,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "1-866-426-1527",
     website: "https://www.canada.ca/en/services/benefits/publicpensions/cpp/cpp-death-benefit.html",
     description: "Government of Canada - Employment and Social Development Canada. Lignes : 1-866-426-1527",
-    address: "5101 Franklin Avenue, Yellowknife, NT X1A 3Z4",
     isProvinceWide: true,
+    address: "5101 Franklin Avenue, Yellowknife, NT X1A 3Z4",
     coordinates: { lat: 53.9333, lng: -116.5765 },
   },
   {
@@ -10680,8 +10681,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-801-0149",
     description: "Dermatologist. Open 24 hours. Note Google 5.0/5 (1 avis).",
-    address: "446 Rue des Forges Suite 200, Trois-Rivières, QC",
     hours: "Open 24 hours",
+    address: "446 Rue des Forges Suite 200, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -10704,8 +10705,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-800-226-8464",
     description: "Soutien et services pour les personnes vivant avec le diabète.",
-    address: "170 avenue University, bureau 1000, Toronto, ON M5H 3B3",
     isProvinceWide: true,
+    address: "170 avenue University, bureau 1000, Toronto, ON M5H 3B3",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -10754,8 +10755,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-877-202-0008",
     description: "Direction du ministère pour signaler dangers, plaintes et infractions à la santé et sécurité au travail.",
-    address: "505 avenue de l'Université, 19e étage, Toronto, ON M7A 1T7",
     isProvinceWide: true,
+    address: "505 avenue de l'Université, 19e étage, Toronto, ON M7A 1T7",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -10842,8 +10843,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-877-721-0876",
     description: "Information nutritionnelle et trouver un diététiste autorisé.",
-    address: "99 avenue Yorkville, 2e étage, Toronto, ON M5R 1C1",
     isProvinceWide: true,
+    address: "99 avenue Yorkville, 2e étage, Toronto, ON M5R 1C1",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -10869,8 +10870,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "2-1-1",
     website: "https://www.vch.ca/locations-services/result?res_id=48",
     description: "Residential care facility for adults ages 19 and up with complex health care needs who require 24-hour care; includes a specialty dementia unit.",
-    address: "500 West 57th Avenue, Vancouver, BC V6P 6E8",
     isUrgent: true,
+    address: "500 West 57th Avenue, Vancouver, BC V6P 6E8",
     coordinates: { lat: 49.2827, lng: -123.1207 },
   },
   {
@@ -10972,8 +10973,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "",
     description: "Psychologist. Closed · Opens 12 p.m. Mon. Note Google 5.0/5 (6 avis).",
-    address: "(819) 816-3701, Drummondville, QC",
     hours: "Closed · Opens 12 p.m. Mon",
+    address: "(819) 816-3701, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -11010,8 +11011,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-477-2500",
     description: "Medical Center. Closed · Opens 8 a.m. Mon. Note Google 2.0/5 (47 avis).",
-    address: "60 Rue Loring, Drummondville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "60 Rue Loring, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -11023,8 +11024,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "1-800-622-6232",
     description: "Federal government office. Closed · Opens 8:30 a.m. Mon. Note Google 4.4/5 (21 avis).",
-    address: "1175 Rue Janelle #103, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "1175 Rue Janelle #103, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -11171,8 +11172,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-373-7828",
     description: "Social services organization. Closed · Opens 8 a.m. Mon. Note Google 4.6/5 (62 avis).",
-    address: "89 Rue St Irénée, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "89 Rue St Irénée, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -11232,8 +11233,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "MB",
     phone: "1-877-435-7170",
     description: "Services complets de santé mentale communautaires. Soins psychiatriques aigus pour jusqu'à 25 personnes (hospitalisation et externe). Pharmacie externe et clinique de dépôt hebdomadaire pour patients sous médication continue. Ligne de crise 24/7 : 1-877-435-7170.",
-    address: "1500 Pembina Ave, Winkler, MB R6W 1T4",
     isUrgent: true,
+    address: "1500 Pembina Ave, Winkler, MB R6W 1T4",
     coordinates: { lat: 49.187089, lng: -97.937622 },
   },
   {
@@ -11498,8 +11499,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "2-1-1",
     website: "https://www.interiorhealth.ca/locations/elkford-urgent-and-primary-care-centre",
     description: "Provides acute care services to assess and treat medical conditions, and stabilize for hospital transfer if required.",
-    address: "212 Alpine Way, Elkford, BC V0B 1H0",
     isUrgent: true,
+    address: "212 Alpine Way, Elkford, BC V0B 1H0",
     coordinates: { lat: 50.0258, lng: -114.9213 },
   },
   {
@@ -11523,8 +11524,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-407-3737",
     description: "Alberta Health Services - Edmonton Zone. Lignes : 780-407-3737 (Unit Desk)",
-    address: "Edmonton, AB T6G 2B7",
     isUrgent: true,
+    address: "Edmonton, AB T6G 2B7",
     coordinates: { lat: 53.5461, lng: -113.4938 },
   },
   {
@@ -11536,8 +11537,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "911",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 911 (Emergencies ONLY) · 403-955-9608 (General Enquiries, Lost and Found, etc.)",
-    address: "Calgary, AB T3N 1A7",
     isUrgent: true,
+    address: "Calgary, AB T3N 1A7",
     coordinates: { lat: 51.0447, lng: -114.0719 },
   },
   {
@@ -11549,8 +11550,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "911",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 911 (Emergencies ONLY) · 780-342-1172 (General Enquiries, Lost and Found, etc.)",
-    address: "Edmonton, AB T5L 2T3",
     isUrgent: true,
+    address: "Edmonton, AB T5L 2T3",
     coordinates: { lat: 53.5461, lng: -113.4938 },
   },
   {
@@ -11562,8 +11563,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "911",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 911 (for emergency only) · 780-342-1172",
-    address: "Stony Plain, AB T7Z 2Y1",
     isUrgent: true,
+    address: "Stony Plain, AB T7Z 2Y1",
     coordinates: { lat: 53.5275, lng: -114.0061 },
   },
   {
@@ -11573,10 +11574,11 @@ const __SERVICES_CHUNK_1: Service[] = [
     subcategory: "non-emergency medical transport",
     city: "",
     province: "AB",
-    phone: "",
+    phone: "811",
     website: "https://www.ahs.ca/EMS/EMS.aspx",
     description: "Alberta Health Services - Provincial Health Services. ",
     isProvinceWide: true,
+    address: "14th Floor, North Tower 10030 – 107 Street NW Edmonton, Alberta T5J 3E4",
     coordinates: { lat: 53.9333, lng: -116.5765 },
   },
   {
@@ -11588,8 +11590,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-675-6000",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-675-6000",
-    address: "Athabasca, AB T9S 1M9",
     isUrgent: true,
+    address: "Athabasca, AB T9S 1M9",
     coordinates: { lat: 54.7167, lng: -113.2833 },
   },
   {
@@ -11601,8 +11603,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "403-641-6100",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 403-641-6100",
-    address: "Bassano, AB T0J 0B0",
     isUrgent: true,
+    address: "Bassano, AB T0J 0B0",
     coordinates: { lat: 50.7833, lng: -112.4667 },
   },
   {
@@ -11614,8 +11616,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "403-653-5234",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 403-653-5234",
-    address: "Cardston, AB T0K 0K0",
     isUrgent: true,
+    address: "Cardston, AB T0K 0K0",
     coordinates: { lat: 49.1958, lng: -113.3008 },
   },
   {
@@ -11627,8 +11629,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "403-682-3761",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 403-682-3761",
-    address: "Claresholm, AB T0L 0T0",
     isUrgent: true,
+    address: "Claresholm, AB T0L 0T0",
     coordinates: { lat: 50.0306, lng: -113.5856 },
   },
   {
@@ -11640,8 +11642,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-374-3746",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-374-3746",
-    address: "Daysland, AB T0B 1A0",
     isUrgent: true,
+    address: "Daysland, AB T0B 1A0",
     coordinates: { lat: 52.8717, lng: -112.2789 },
   },
   {
@@ -11653,8 +11655,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-342-7000",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-342-7000",
-    address: "Devon, AB T9G 1A6",
     isUrgent: true,
+    address: "Devon, AB T9G 1A6",
     coordinates: { lat: 53.3617, lng: -113.735 },
   },
   {
@@ -11666,8 +11668,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "403-823-6500",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 403-823-6500 · 403-820-7223",
-    address: "Drumheller, AB T0J 0Y1",
     isUrgent: true,
+    address: "Drumheller, AB T0J 0Y1",
     coordinates: { lat: 51.4639, lng: -112.7178 },
   },
   {
@@ -11679,8 +11681,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-735-4111",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-735-4111",
-    address: "Edmonton, AB T5H 3V9",
     isUrgent: true,
+    address: "Edmonton, AB T5H 3V9",
     coordinates: { lat: 53.5461, lng: -113.4938 },
   },
   {
@@ -11692,8 +11694,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-735-7120",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-735-7120",
-    address: "Edmonton, AB T6L 5X8",
     isUrgent: true,
+    address: "Edmonton, AB T6L 5X8",
     coordinates: { lat: 53.5461, lng: -113.4938 },
   },
   {
@@ -11705,8 +11707,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-342-4000",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-342-4000",
-    address: "Edmonton, AB T5A 5E4",
     isUrgent: true,
+    address: "Edmonton, AB T5A 5E4",
     coordinates: { lat: 53.5461, lng: -113.4938 },
   },
   {
@@ -11718,8 +11720,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-735-2000",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-735-2000",
-    address: "Edmonton, AB T5R 4H5",
     isUrgent: true,
+    address: "Edmonton, AB T5R 4H5",
     coordinates: { lat: 53.5461, lng: -113.4938 },
   },
   {
@@ -11731,8 +11733,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-407-8822",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-407-8822",
-    address: "Edmonton, AB T6G 2B7",
     isUrgent: true,
+    address: "Edmonton, AB T6G 2B7",
     coordinates: { lat: 53.5461, lng: -113.4938 },
   },
   {
@@ -11744,8 +11746,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-888-3742",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-888-3742 · 780-888-2120 (secondary)",
-    address: "Hardisty, AB T0B 1V0",
     isUrgent: true,
+    address: "Hardisty, AB T0B 1V0",
     coordinates: { lat: 52.6716, lng: -111.3097 },
   },
   {
@@ -11757,8 +11759,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "403-227-7800",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 403-227-7800",
-    address: "Innisfail, AB T4G 1A9",
     isUrgent: true,
+    address: "Innisfail, AB T4G 1A9",
     coordinates: { lat: 52.0297, lng: -113.9569 },
   },
   {
@@ -11770,8 +11772,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "NU",
     phone: "867-979-4422",
     description: "Service incendie et d'urgence local. Lignes : 867-979-4422 · 867-979-5650",
-    address: "1085 Mivvik Street, Iqaluit, NU X0A 0H0",
     isUrgent: true,
+    address: "1085 Mivvik Street, Iqaluit, NU X0A 0H0",
     coordinates: { lat: 63.7467, lng: -68.517 },
   },
   {
@@ -11783,8 +11785,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-385-3741",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-385-3741 · 780-385-3904 (weekdays)",
-    address: "Killam, AB T0B 2L0",
     isUrgent: true,
+    address: "Killam, AB T0B 2L0",
     coordinates: { lat: 52.7811, lng: -111.8597 },
   },
   {
@@ -11796,8 +11798,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "403-786-4963",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 403-786-4963",
-    address: "Lacombe, AB T4L 1G8",
     isUrgent: true,
+    address: "Lacombe, AB T4L 1G8",
     coordinates: { lat: 52.4683, lng: -113.7367 },
   },
   {
@@ -11809,8 +11811,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-980-4500",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-980-4500",
-    address: "Leduc, AB T9E 5Z3",
     isUrgent: true,
+    address: "Leduc, AB T9E 5Z3",
     coordinates: { lat: 53.2611, lng: -113.5494 },
   },
   {
@@ -11822,8 +11824,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "403-388-6301",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 403-388-6301",
-    address: "Lethbridge, AB T1J 1W5",
     isUrgent: true,
+    address: "Lethbridge, AB T1J 1W5",
     coordinates: { lat: 49.6953, lng: -112.8451 },
   },
   {
@@ -11835,8 +11837,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "403-704-8317",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 403-704-8317",
-    address: "Ponoka, AB T4J 1P1",
     isUrgent: true,
+    address: "Ponoka, AB T4J 1P1",
     coordinates: { lat: 52.6781, lng: -113.5747 },
   },
   {
@@ -11848,8 +11850,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "403-752-5411",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 403-752-5411",
-    address: "Raymond, AB T0K 2S0",
     isUrgent: true,
+    address: "Raymond, AB T0K 2S0",
     coordinates: { lat: 49.4583, lng: -112.65 },
   },
   {
@@ -11861,8 +11863,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "403-343-4442",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 403-343-4442",
-    address: "Red Deer, AB T4N 4E7",
     isUrgent: true,
+    address: "Red Deer, AB T4N 4E7",
     coordinates: { lat: 52.2681, lng: -113.8112 },
   },
   {
@@ -11874,8 +11876,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-942-3932",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-942-3932",
-    address: "Redwater, AB T0A 2W0",
     isUrgent: true,
+    address: "Redwater, AB T0A 2W0",
     coordinates: { lat: 53.95, lng: -113.1167 },
   },
   {
@@ -11887,8 +11889,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-342-3464",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-342-3464",
-    address: "Sherwood Park, AB T8H 0J3",
     isUrgent: true,
+    address: "Sherwood Park, AB T8H 0J3",
     coordinates: { lat: 53.5169, lng: -113.3019 },
   },
   {
@@ -11900,8 +11902,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-418-8559",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-418-8559",
-    address: "St Albert, AB T8N 6C4",
     isUrgent: true,
+    address: "St Albert, AB T8N 6C4",
     coordinates: { lat: 53.6305, lng: -113.6256 },
   },
   {
@@ -11913,8 +11915,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-968-3673",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-968-3673",
-    address: "Stony Plain, AB T7Z 2M7",
     isUrgent: true,
+    address: "Stony Plain, AB T7Z 2M7",
     coordinates: { lat: 53.5275, lng: -114.0061 },
   },
   {
@@ -11926,8 +11928,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "403-361-7000",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 403-361-7000",
-    address: "Strathmore, AB T1P 1J9",
     isUrgent: true,
+    address: "Strathmore, AB T1P 1J9",
     coordinates: { lat: 51.0428, lng: -113.4006 },
   },
   {
@@ -11939,8 +11941,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "403-443-2444 ext. 3",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 403-443-2444 ext. 3",
-    address: "Three Hills, AB T0M 2A0",
     isUrgent: true,
+    address: "Three Hills, AB T0M 2A0",
     coordinates: { lat: 51.7053, lng: -113.2697 },
   },
   {
@@ -11952,8 +11954,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-336-4786",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-336-4786",
-    address: "Viking, AB T0B 4N0",
     isUrgent: true,
+    address: "Viking, AB T0B 4N0",
     coordinates: { lat: 53.0958, lng: -111.7831 },
   },
   {
@@ -11965,8 +11967,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "403-485-3315",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 403-485-3315",
-    address: "Vulcan, AB T0L 2B0",
     isUrgent: true,
+    address: "Vulcan, AB T0L 2B0",
     coordinates: { lat: 50.406, lng: -113.2528 },
   },
   {
@@ -11978,8 +11980,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-891-3007",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-891-3007",
-    address: "Wabasca, AB T0G 2K0",
     isUrgent: true,
+    address: "Wabasca, AB T0G 2K0",
     coordinates: { lat: 55.9667, lng: -113.8667 },
   },
   {
@@ -11991,8 +11993,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-350-2001",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-350-2001",
-    address: "Westlock, AB T7P 2G4",
     isUrgent: true,
+    address: "Westlock, AB T7P 2G4",
     coordinates: { lat: 54.1561, lng: -113.8617 },
   },
   {
@@ -12004,8 +12006,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "780-312-3700",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-312-3700",
-    address: "Wetaskiwin, AB T9A 3N3",
     isUrgent: true,
+    address: "Wetaskiwin, AB T9A 3N3",
     coordinates: { lat: 52.9694, lng: -113.3725 },
   },
   {
@@ -12836,8 +12838,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "2-1-1",
     website: "https://www.vch.ca/en/location/evergreen-extended-care",
     description: "Residential care facility for individuals with complex health care needs who require 24-hour care due to physical disability or mental or behavioural conditions such as dementia.",
-    address: "4970 Joyce Avenue, Powell River, BC V8A 5P2",
     isUrgent: true,
+    address: "4970 Joyce Avenue, Powell River, BC V8A 5P2",
     coordinates: { lat: 49.8833, lng: -124.5333 },
   },
   {
@@ -12850,8 +12852,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "2-1-1",
     website: "https://www.vch.ca/en/location/evergreen-house",
     description: "Residential care facility for individuals with complex health care needs who require 24-hour care due to physical disability or mental or behavioural conditions such as dementia.",
-    address: "Lions Gate Hospital, 231 East 15th Street, North Vancouver, BC V7L 2L7",
     isUrgent: true,
+    address: "Lions Gate Hospital, 231 East 15th Street, North Vancouver, BC V7L 2L7",
     coordinates: { lat: 49.32, lng: -123.0724 },
   },
   {
@@ -12863,8 +12865,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-866-670-4094",
     description: "Aide aux nouveaux arrivants pour faire reconnaître leurs qualifications professionnelles en Ontario.",
-    address: "400 avenue University, 3e étage, Toronto, ON M7A 1T7",
     isProvinceWide: true,
+    address: "400 avenue University, 3e étage, Toronto, ON M7A 1T7",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -12876,8 +12878,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-474-6898",
     description: "Recruiter. Closed · Opens 8 a.m. Mon. Note Google 1.8/5 (6 avis).",
-    address: "35+ years in business · 1175 Rue Janelle bureau 201, Drummondville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "35+ years in business · 1175 Rue Janelle bureau 201, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -12915,8 +12917,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "416-978-7355",
     description: "Banque d'yeux : récupération, traitement et distribution de tissus cornéens pour transplantations. Programmes de don d'yeux.",
-    address: "340 rue College, bureau B100, Toronto, ON M5T 3A9",
     isProvinceWide: true,
+    address: "340 rue College, bureau B100, Toronto, ON M5T 3A9",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -13008,8 +13010,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-888-662-6613",
     description: "Ligne pour signaler des facturations illégales pour des services couverts par l'Assurance-santé de l'Ontario (OHIP).",
-    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     isProvinceWide: true,
+    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -13093,8 +13095,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-474-5310",
     description: "Medical clinic. Closed · Opens 8 a.m. Sun. Note Google 3.8/5 (26 avis).",
-    address: "555 Rue Berol, Drummondville, QC",
     hours: "Closed · Opens 8 a.m. Sun",
+    address: "555 Rue Berol, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -13482,8 +13484,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "NU",
     phone: "867-927-4422",
     description: "Service incendie et d'urgence local. Lignes : 867-927-4422",
-    address: "Qikiqtarjuaq, NU X0A 0B0",
     isUrgent: true,
+    address: "Qikiqtarjuaq, NU X0A 0B0",
     coordinates: { lat: 67.5575, lng: -64.0306 },
   },
   {
@@ -13544,8 +13546,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "9-1-1",
     website: "https://www.sylvanlake.ca/public-services/fire-department",
     description: "Town of Sylvan Lake. Lignes : 9-1-1 (24-Hour Emergency) · 403-864-5090 (Main Office)",
-    address: "2 Beacon Hill Drive, Sylvan Lake, AB T4S 0A9",
     isUrgent: true,
+    address: "2 Beacon Hill Drive, Sylvan Lake, AB T4S 0A9",
     coordinates: { lat: 52.3083, lng: -114.095 },
   },
   {
@@ -13582,8 +13584,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "9-1-1",
     website: "http://www.edmonton.ca",
     description: "City of Edmonton. Lignes : 9-1-1 (Emergency - 24 Hours) · 3-1-1 · 780-442-5311 (outside city limits)",
-    address: "10351 96 Street, Edmonton, AB T5H 2H5",
     isUrgent: true,
+    address: "10351 96 Street, Edmonton, AB T5H 2H5",
     coordinates: { lat: 53.5461, lng: -113.4938 },
   },
   {
@@ -13596,8 +13598,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "780-980-8475",
     website: "https://www.leduc.ca",
     description: "City of Leduc. Lignes : 780-980-8475 (non-emergencies) · 9-1-1 (Emergency - 24 Hour)",
-    address: "4119 50 Street, Leduc, AB T9E 7L9",
     isUrgent: true,
+    address: "4119 50 Street, Leduc, AB T9E 7L9",
     coordinates: { lat: 53.2611, lng: -113.5494 },
   },
   {
@@ -13610,8 +13612,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "780-968-8888",
     website: "https://www.parklandcounty.com",
     description: "Parkland County. Lignes : 780-968-8888 · 9-1-1 (Emergencies 24 Hours)",
-    address: "11350 274 Street, Parkland County, AB T7X 6P9",
     isUrgent: true,
+    address: "11350 274 Street, Parkland County, AB T7X 6P9",
     coordinates: { lat: 53.55, lng: -114.4 },
   },
   {
@@ -13624,8 +13626,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "9-1-1",
     website: "https://www.sprucegrove.org",
     description: "City of Spruce Grove. Lignes : 9-1-1 (Emergency Line) · 780-962-4496 (Non-emergency Line)",
-    address: "36 Fifth Avenue, Spruce Grove, AB T7X 3Z1",
     isUrgent: true,
+    address: "36 Fifth Avenue, Spruce Grove, AB T7X 3Z1",
     coordinates: { lat: 53.545, lng: -113.9181 },
   },
   {
@@ -13638,8 +13640,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "780-418-6069",
     website: "https://stalbert.ca/city/eps/fire",
     description: "City of St. Albert. Lignes : 780-418-6069 · 911 (24-Hour Emergency)",
-    address: "20 Gate Avenue, St Albert, AB T8N 4K1",
     isUrgent: true,
+    address: "20 Gate Avenue, St Albert, AB T8N 4K1",
     coordinates: { lat: 53.6305, lng: -113.6256 },
   },
   {
@@ -13652,8 +13654,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "9-1-1",
     website: "https://www.stonyplain.com",
     description: "Town of Stony Plain. Lignes : 9-1-1 (Emergency) · 780-963-3551 (non-emergency administration line)",
-    address: "4000 49 Avenue, Stony Plain, AB T7Z 2J7",
     isUrgent: true,
+    address: "4000 49 Avenue, Stony Plain, AB T7Z 2J7",
     coordinates: { lat: 53.5275, lng: -114.0061 },
   },
   {
@@ -14012,7 +14014,7 @@ const __SERVICES_CHUNK_1: Service[] = [
     city: "",
     province: "AB",
     phone: "",
-    website: "http://www.alberta.ca/ministry-labour.aspx",
+    website: "https://www.alberta.ca/first-nations-development-fund-grant-program",
     description: "Government of Alberta - Ministry of Jobs, Economy, Trade, and Immigration. ",
     isProvinceWide: true,
     coordinates: { lat: 53.9333, lng: -116.5765 },
@@ -14040,8 +14042,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "1-877-346-HOPE",
     website: "http://www.hopeair.ca",
     description: "Hope Air. Lignes : 1-877-346-HOPE (4673) · 416-222-6335",
-    address: "124 Merton Street, Toronto, ON M4S 2Z2",
     isProvinceWide: true,
+    address: "124 Merton Street, Toronto, ON M4S 2Z2",
     coordinates: { lat: 53.9333, lng: -116.5765 },
   },
   {
@@ -14465,8 +14467,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "450-209-2817",
     description: "Mental health service. Closed · Opens 9 a.m. Mon.",
-    address: "201 Bd Lemire 2950 local, Drummondville, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "201 Bd Lemire 2950 local, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -14528,8 +14530,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "2-1-1",
     website: "https://www.vch.ca",
     description: "Residential care facility for adults ages 19 and up with complex health care needs who require 24-hour care.",
-    address: "9580 Williams Road, Richmond, BC V7A 1H2",
     isUrgent: true,
+    address: "9580 Williams Road, Richmond, BC V7A 1H2",
     coordinates: { lat: 49.1666, lng: -123.1336 },
   },
   {
@@ -14637,8 +14639,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-375-6666",
     description: "Medical clinic. Closed · Opens 8 a.m. Sun. Note Google 2.4/5 (105 avis).",
-    address: "#225, 1900 Bd des Récollets, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Sun",
+    address: "#225, 1900 Bd des Récollets, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -14650,8 +14652,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-538-8888",
     description: "Public health department. Closed · Opens 8 a.m. Sun. Note Google 3.8/5 (19 avis).",
-    address: "1050 8e Rue #200, Shawinigan, QC",
     hours: "Closed · Opens 8 a.m. Sun",
+    address: "1050 8e Rue #200, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -14663,8 +14665,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-539-2999",
     description: "Medical group. Closed · Opens 8:30 a.m. Sun. Note Google 4.3/5 (27 avis).",
-    address: "580 Av. du Marché, Shawinigan, QC",
     hours: "Closed · Opens 8:30 a.m. Sun",
+    address: "580 Av. du Marché, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -14760,8 +14762,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-372-3536",
     description: "Medical clinic. Closed · Opens 8 a.m. Sun. Note Google 4.3/5 (24 avis).",
-    address: "731 Rue Sainte-Julie 2e étage, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Sun",
+    address: "731 Rue Sainte-Julie 2e étage, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -14786,8 +14788,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-752-6646",
     description: "Medical Center. Closed · Opens 8 a.m. Mon. Note Google 4.8/5 (4 avis).",
-    address: "4 Bd Labbé S, Victoriaville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "4 Bd Labbé S, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -14963,7 +14965,7 @@ const __SERVICES_CHUNK_1: Service[] = [
     subcategory: "newcomer mental health",
     city: "Edmonton",
     province: "AB",
-    phone: "",
+    phone: "587-882-3210",
     website: "https://www.migrantealberta.ca",
     description: "Migrante Alberta. ",
     address: "10045 156 Street NW, Edmonton, AB T5P 2P7",
@@ -15030,8 +15032,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "MB",
     phone: "204-837-0117",
     description: "Évaluation, diagnostic et traitement de tous les besoins urgents et émergents en santé.",
-    address: "300 Booth Dr, Winnipeg, MB R3J 3M7",
     isUrgent: true,
+    address: "300 Booth Dr, Winnipeg, MB R3J 3M7",
     coordinates: { lat: 49.8955367, lng: -97.1384584 },
   },
   {
@@ -15094,8 +15096,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-539-1001",
     description: "Human resource consulting. Closed · Opens 7:30 a.m. Mon. Note Google 4.5/5 (15 avis).",
-    address: "61 6e rue de la Pointe, Shawinigan, QC",
     hours: "Closed · Opens 7:30 a.m. Mon",
+    address: "61 6e rue de la Pointe, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -15220,8 +15222,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-379-5350",
     description: "Women's health clinic. Closed · Opens 8 a.m. Mon. Note Google 3.3/5 (43 avis).",
-    address: "2237 Avenue 7, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "2237 Avenue 7, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -15346,8 +15348,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-693-5852",
     description: "Medical clinic. Closed · Opens 8 a.m. Mon. Note Google 4.8/5 (35 avis).",
-    address: "Dans le Centre cardiovasculaire de la Mauricie, 6500 Boul Gene-H.-Kruger, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "Dans le Centre cardiovasculaire de la Mauricie, 6500 Boul Gene-H.-Kruger, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -15501,8 +15503,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-800-397-9567",
     description: "Promotion de la santé bilingue : ressources, formations et outils pour communautés et professionnels.",
-    address: "240 rue Richmond Ouest, Toronto, ON M5V 1V6",
     isProvinceWide: true,
+    address: "240 rue Richmond Ouest, Toronto, ON M5V 1V6",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -15551,8 +15553,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "MB",
     phone: "204-787-3167",
     description: "Traitement 24h pour toutes urgences médicales incluant agression sexuelle, violence conjugale et troubles psychiatriques. Références vers counselling et refuges. Infirmière examinatrice agression sexuelle : 204-787-2071.",
-    address: "700 William Ave, Winnipeg, MB R3A 1R9",
     isUrgent: true,
+    address: "700 William Ave, Winnipeg, MB R3A 1R9",
     coordinates: { lat: 49.8955367, lng: -97.1384584 },
   },
   {
@@ -15564,8 +15566,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "MB",
     phone: "204-787-2306",
     description: "Traitement 24h pour toutes urgences médicales pédiatriques incluant agression sexuelle, violence conjugale et troubles psychiatriques. Références vers counselling et refuges.",
-    address: "700 William Ave, Winnipeg, MB R3A 1R9",
     isUrgent: true,
+    address: "700 William Ave, Winnipeg, MB R3A 1R9",
     coordinates: { lat: 49.8955367, lng: -97.1384584 },
   },
   {
@@ -15819,8 +15821,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-609-5551",
     description: "Property management company. Closed · Opens 9 a.m. Mon. Note Google 4.4/5 (7 avis).",
-    address: "3+ years in business · 1613 Rue J.-A.-Bégin, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "3+ years in business · 1613 Rue J.-A.-Bégin, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -15932,8 +15934,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "AB",
     phone: "1-855-371-4122",
     description: "Alberta Health Services - Central Zone. Lignes : 1-855-371-4122 (Continuing Care Access Line) · 306-820-6200",
-    address: "Lloydminster, SK S9V 1Y3",
     isProvinceWide: true,
+    address: "Lloydminster, SK S9V 1Y3",
     coordinates: { lat: 53.9333, lng: -116.5765 },
   },
   {
@@ -16511,8 +16513,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "NS",
     phone: "782-482-3521",
     description: "Home health care service. Open 24 hours. Note Google 4.7/5 (58 avis).",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
     coordinates: { lat: 44.6488, lng: -63.5752 },
   },
   {
@@ -16524,8 +16526,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "NS",
     phone: "902-707-5244",
     description: "Home health care service. Open 24 hours. Note Google 4.8/5 (18 avis).",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
     coordinates: { lat: 46.135, lng: -60.183 },
   },
   {
@@ -16810,8 +16812,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-460-4208",
     description: "Registered general nurse. Closed · Opens 7 a.m. Mon. Note Google 4.7/5 (3 avis).",
-    address: "75-B Rue de l'Hôtel de Ville, Victoriaville, QC",
     hours: "Closed · Opens 7 a.m. Mon",
+    address: "75-B Rue de l'Hôtel de Ville, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -16850,8 +16852,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "418-589-3701",
     website: "https://www.cisss-cotenord.gouv.qc.ca/en/your-cisss/facilities/manicouagan/",
     description: "Hôpital régional offrant des services d'urgence 24 h, des soins médicaux généraux et spécialisés, des services diagnostiques et ambulatoires (imagerie, laboratoire) ainsi que des services de réadaptation et de santé mentale.",
-    address: "635, boulevard Jolliet, Baie-Comeau, QC G5C 1P1",
     isUrgent: true,
+    address: "635, boulevard Jolliet, Baie-Comeau, QC G5C 1P1",
     coordinates: { lat: 49.2118373, lng: -68.1801406 },
   },
   {
@@ -16863,8 +16865,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-536-7500",
     description: "General hospital. Open 24 hours. Note Google 3.1/5 (145 avis).",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
     coordinates: { lat: 46.55, lng: -72.74 },
   },
   {
@@ -17150,8 +17152,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-855-661-9611",
     description: "Organisme national de défense des droits des personnes ayant une déficience intellectuelle et de leurs familles. Bureau 416-661-9611.",
-    address: "850 rue King Ouest, bureau 201, Toronto, ON",
     isProvinceWide: true,
+    address: "850 rue King Ouest, bureau 201, Toronto, ON",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -17403,8 +17405,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-855-460-2647",
     description: "Programme de prévention de la consommation commerciale de tabac chez les communautés autochtones de l'Ontario.",
-    address: "525 avenue University, unité 500, Toronto, ON M5G 2L3",
     isProvinceWide: true,
+    address: "525 avenue University, unité 500, Toronto, ON M5G 2L3",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -17619,8 +17621,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-800-387-0073",
     description: "Commissaire à l'information et à la protection de la vie privée de l'Ontario : plaintes accès information, protection vie privée, supervision des organismes publics et établissements de santé. Bureau 416-326-3333.",
-    address: "2 rue Bloor Est, bureau 1400, Toronto, ON M4W 1A8",
     isProvinceWide: true,
+    address: "2 rue Bloor Est, bureau 1400, Toronto, ON M4W 1A8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -17707,8 +17709,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "BC",
     phone: "2-1-1",
     description: "A mobile crisis response unit (composed of a police officer and a health care professional) which responds to individuals who are experiencing a mental health crisis.",
-    address: "Penticton, BC",
     isUrgent: true,
+    address: "Penticton, BC",
     coordinates: { lat: 49.4991, lng: -119.5937 },
   },
   {
@@ -17783,8 +17785,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "1-888-242-2100",
     website: "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadians/adopt-child-abroad.html",
     description: "Government of Canada - Immigration, Refugees and Citizenship Canada. Lignes : 1-888-242-2100",
-    address: "933 Mivvik Street, Iqaluit, NU X0A 0H0",
     isProvinceWide: true,
+    address: "933 Mivvik Street, Iqaluit, NU X0A 0H0",
     coordinates: { lat: 53.9333, lng: -116.5765 },
   },
   {
@@ -17797,8 +17799,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "1-888-242-2100",
     website: "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadians/adopt-child-abroad.html",
     description: "Government of Canada - Immigration, Refugees and Citizenship Canada. Lignes : 1-888-242-2100",
-    address: "5101 Franklin Avenue, Yellowknife, NT X1A 3Z4",
     isProvinceWide: true,
+    address: "5101 Franklin Avenue, Yellowknife, NT X1A 3Z4",
     coordinates: { lat: 53.9333, lng: -116.5765 },
   },
   {
@@ -17836,8 +17838,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-472-8333",
     description: "Association / Organization. Closed · Opens 8:30 a.m. Mon. Note Google 4.7/5 (34 avis).",
-    address: "142 Rue Hériot, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "142 Rue Hériot, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -17861,8 +17863,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "NU",
     phone: "",
     description: "",
-    address: "Iqaluit, NU X0H 0H0",
     isUrgent: true,
+    address: "Iqaluit, NU X0H 0H0",
     coordinates: { lat: 63.7467, lng: -68.517 },
   },
   {
@@ -18197,8 +18199,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "NB",
     phone: "506-652-5626",
     description: "Finance sociale : MicroWorks (prêts jusqu'à 7 500 $ pour démarrer une entreprise), BuildNB (financement projets logements abordables et carrefours communautaires NB). Formation : Enterprising Women, Youth Entrepreneurship Success (YES). Immobilier à vocation sociale et NB Social Impact Fund.",
-    address: "139 rue Prince Edward, Bureau 300, Saint John, NB E2L 3S3",
     isProvinceWide: true,
+    address: "139 rue Prince Edward, Bureau 300, Saint John, NB E2L 3S3",
     coordinates: { lat: 45.2787992, lng: -66.0585188 },
   },
   {
@@ -18324,7 +18326,7 @@ const __SERVICES_CHUNK_1: Service[] = [
     subcategory: "job search assistance",
     city: "",
     province: "AB",
-    phone: "",
+    phone: "825-772-5959",
     website: "https://mykickstand.ca",
     description: "Kickstand. ",
     isProvinceWide: true,
@@ -18608,8 +18610,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-379-8385",
     description: "Doctor. Closed · Opens 8 a.m. Sun. Note Google 2.8/5 (79 avis).",
-    address: "bureau 200, 1785 Bd du Carmel, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Sun",
+    address: "bureau 200, 1785 Bd du Carmel, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -18621,8 +18623,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-472-8045",
     description: "Non-profit organization. Closed · Opens 8:30 a.m. Mon. Note Google 4.4/5 (9 avis).",
-    address: "2260 Rue Demers #210, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "2260 Rue Demers #210, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -18647,8 +18649,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-800-665-4324",
     description: "Informations sur l'allaitement, y compris des groupes de discussion et des conférenciers.",
-    address: "Service en ligne, Canada",
     isProvinceWide: true,
+    address: "Service en ligne, Canada",
   },
   {
     id: "qc-mtl-h029",
@@ -18800,6 +18802,9 @@ const __SERVICES_CHUNK_1: Service[] = [
     address: "4714 48 Street, Bonnyville, AB T9N 2J7",
     coordinates: { lat: 54.2719, lng: -110.7444 },
   },
+];
+
+const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "ab-col-fpn003",
     name: "Lakeland Family Resource Network — Cold Lake",
@@ -18835,8 +18840,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-472-1215",
     description: "Employment agency. Closed · Opens 8:30 a.m. Mon. Note Google 4.3/5 (22 avis).",
-    address: "30+ years in business · 2565 Rue Saint-Pierre, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "30+ years in business · 2565 Rue Saint-Pierre, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -18965,8 +18970,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-373-1273",
     description: "Employment center. Closed · Opens 8:30 a.m. Mon. Note Google 4.9/5 (25 avis).",
-    address: "925 Rue Laviolette, Trois-Rivières, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "925 Rue Laviolette, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -19127,8 +19132,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-877-696-1620",
     description: "Soins de bien-être pour aînés : physiothérapie, ergothérapie, gestion de la douleur, programmes après hospitalisation, services à domicile.",
-    address: "1 rue Yonge, bureau 402, Toronto, ON M5E 1E6",
     isProvinceWide: true,
+    address: "1 rue Yonge, bureau 402, Toronto, ON M5E 1E6",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -19153,8 +19158,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-800-668-2437",
     description: "Information confidentielle sur santé sexuelle, ITSS, contraception. Bureau 416-392-2437.",
-    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     isProvinceWide: true,
+    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -19326,8 +19331,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "",
     website: "https://www.logisquebec.com/",
     description: "Plateforme québécoise d'annonces immobilières spécialisée dans la location et la vente. Offre des annonces couvrant Alma et l'ensemble du Québec.",
-    address: "606, rue Cathcart, bureau 715, Montréal, Québec, H3B 1K9, Canada",
     isProvinceWide: true,
+    address: "606, rue Cathcart, bureau 715, Montréal, Québec, H3B 1K9, Canada",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -19339,8 +19344,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-371-1555",
     description: "Property management company. Closed · Opens 9 a.m. Mon. Note Google 3.9/5 (77 avis).",
-    address: "7+ years in business · 1955 Rue Royale, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "7+ years in business · 1955 Rue Royale, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -19414,8 +19419,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "NT",
     phone: "867-873-5760",
     description: "Lignes : 867-873-5760",
-    address: "1456 Gitzel Street, Yellowknife, NT X1A 2C9",
     isUrgent: true,
+    address: "1456 Gitzel Street, Yellowknife, NT X1A 2C9",
     coordinates: { lat: 62.454, lng: -114.3718 },
   },
   {
@@ -19449,8 +19454,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-841-2555",
     description: "Medical clinic. Closed · Opens 7:45 a.m. Mon. Note Google 4.5/5 (560 avis).",
-    address: "6560 Bd des Chenaux, Trois-Rivières, QC",
     hours: "Closed · Opens 7:45 a.m. Mon",
+    address: "6560 Bd des Chenaux, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -19487,8 +19492,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-357-9322",
     description: "Medical clinic. Closed · Opens 8 a.m. Mon. Note Google 5.0/5 (7 avis).",
-    address: "39 Rue Laurier E, Victoriaville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "39 Rue Laurier E, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -19536,8 +19541,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-693-7036",
     description: "Social services organization. Closed · Opens 9 a.m. Mon. Note Google 4.3/5 (17 avis).",
-    address: "5593 Rue Jean-Paul-Lavergne, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "5593 Rue Jean-Paul-Lavergne, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -19549,9 +19554,9 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-379-1011",
     description: "Shelter. Open 24 hours. Note Google 3.7/5 (3 avis).",
-    address: "CP 424, Trois-Rivières, QC",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
+    address: "CP 424, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -19563,8 +19568,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-758-3384",
     description: "Association / Organization. Closed · Opens 8:30 a.m. Mon. Note Google 4.8/5 (5 avis).",
-    address: "19 Rue de Courval, Victoriaville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "19 Rue de Courval, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -19599,8 +19604,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-379-2495",
     description: "Nursing home. Closed · Opens 9 a.m. Mon. Note Google 4.0/5 (5 avis).",
-    address: "2325 Avenue 1, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "2325 Avenue 1, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -19739,8 +19744,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "MB",
     phone: "204-787-0600",
     description: "Programme communautaire pour Manitobains nécessitant alimentation par sonde, hydratation IV ou TPN (nutrition parentérale).",
-    address: "790 Sherbrook St, Clinic E 6th Floor, Winnipeg, MB R3A 1M3",
     isProvinceWide: true,
+    address: "790 Sherbrook St, Clinic E 6th Floor, Winnipeg, MB R3A 1M3",
     coordinates: { lat: 49.8955367, lng: -97.1384584 },
   },
   {
@@ -19752,8 +19757,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "MB",
     phone: "1-866-317-3347",
     description: "Bureau régional Interlake : guichet emploi communauté métisse, CV, entrevues, marché du travail, programmes académiques. Bureau 204-646-4091.",
-    address: "28 St. Laurent Dr, St Laurent, MB R0C 2S0",
     isProvinceWide: true,
+    address: "28 St. Laurent Dr, St Laurent, MB R0C 2S0",
     coordinates: { lat: 50.462625, lng: -97.8203767 },
   },
   {
@@ -19765,8 +19770,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "MB",
     phone: "1-888-304-2383",
     description: "Bureau régional Sud-Est : guichet emploi communauté métisse, CV, entrevues, marché du travail. Bureau 204-754-3112.",
-    address: "56 Parkview Ave, Grand Marais, MB R0E 0T0",
     isProvinceWide: true,
+    address: "56 Parkview Ave, Grand Marais, MB R0E 0T0",
     coordinates: { lat: 50.5417568, lng: -96.6174783 },
   },
   {
@@ -19790,8 +19795,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "MB",
     phone: "1-866-282-8041",
     description: "Services d'évaluation et d'emploi pour personnes avec handicap : intérêts professionnels, niveaux académiques, aptitudes, placement, soutien à long terme, accommodements. Bureau 204-975-3010.",
-    address: "825 Sherbrook St, Winnipeg, MB R3A 1M5",
     isProvinceWide: true,
+    address: "825 Sherbrook St, Winnipeg, MB R3A 1M5",
     coordinates: { lat: 49.8955367, lng: -97.1384584 },
   },
   {
@@ -19840,8 +19845,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     phone: "2-1-1",
     website: "https://maplewood.bc.ca",
     description: "Operates Fraser Health-funded residential care homes for adults with complex health care needs who required 24-hour care.",
-    address: "1919 Jackson Street, Abbotsford, BC V2S 2Z8",
     isUrgent: true,
+    address: "1919 Jackson Street, Abbotsford, BC V2S 2Z8",
     coordinates: { lat: 49.0504, lng: -122.3045 },
   },
   {
@@ -19890,9 +19895,9 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-376-4456",
     description: "Non-profit organization. Open 24 hours. Note Google 5.0/5 (2 avis).",
-    address: "25 Rue des Forges #450, Trois-Rivières, QC",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
+    address: "25 Rue des Forges #450, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -19917,8 +19922,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-470-0470",
     description: "Psychotherapist. Closed · Opens 9 a.m. Mon. Note Google 5.0/5 (2 avis).",
-    address: "655 Du Grenache, Drummondville, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "655 Du Grenache, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -19978,8 +19983,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "QC",
     phone: "819-795-4925",
     description: "Nursing home. Closed · Opens 8 a.m. Mon. Note Google 4.6/5 (13 avis).",
-    address: "79 Rue de Bigarré, Victoriaville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "79 Rue de Bigarré, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -20004,8 +20009,8 @@ const __SERVICES_CHUNK_1: Service[] = [
     province: "ON",
     phone: "1-866-532-3161",
     description: "Programme MedsCheck : revue annuelle gratuite des médicaments avec un pharmacien. Bureau 416-327-4327. ServiceOntario 416-314-5518.",
-    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     isProvinceWide: true,
+    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -20046,9 +20051,6 @@ const __SERVICES_CHUNK_1: Service[] = [
     isUrgent: true,
     coordinates: { lat: 50.146986, lng: -96.880188 },
   },
-];
-
-const __SERVICES_CHUNK_2: Service[] = [
   {
     id: "bc-nwm-m002",
     name: "Mental Health Centre - New Westminster",
@@ -20174,8 +20176,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "BC",
     phone: "2-1-1",
     description: "Provides intervention to individuals in Richmond (including Vancouver Airport) for mental health crisis/emergency situations, in response to calls from health care professionals, clients, family members, and the general public.",
-    address: "Richmond, BC",
     isUrgent: true,
+    address: "Richmond, BC",
     coordinates: { lat: 49.1666, lng: -123.1336 },
   },
   {
@@ -20213,8 +20215,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "MB",
     phone: "1-855-630-5362",
     description: "Établit des panels pour examiner si un patient devrait être involontaire, est mentalement compétent pour décisions de traitement, gestion de propriété, etc. Révision de directives en santé.",
-    address: "500 Portage Ave, Ste 102, Winnipeg, MB R3C 3X1",
     isProvinceWide: true,
+    address: "500 Portage Ave, Ste 102, Winnipeg, MB R3C 3X1",
     coordinates: { lat: 49.8955367, lng: -97.1384584 },
   },
   {
@@ -21306,8 +21308,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "2-1-1",
     website: "https://www.vch.ca/locations-services/result?res_id=8",
     description: "Residential care facility for adults ages 19 and up with complex health care needs who require 24-hour care.",
-    address: "7333 Gollner Road, Richmond, BC V6Y 1Y4",
     isUrgent: true,
+    address: "7333 Gollner Road, Richmond, BC V6Y 1Y4",
     coordinates: { lat: 49.1666, lng: -123.1336 },
   },
   {
@@ -21369,8 +21371,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "BC",
     phone: "2-1-1",
     description: "A mobile crisis response unit (composed of a police officer and a health care professional) which responds to individuals who are experiencing a mental health crisis.",
-    address: "Vernon, BC",
     isUrgent: true,
+    address: "Vernon, BC",
     coordinates: { lat: 50.267, lng: -119.272 },
   },
   {
@@ -21397,8 +21399,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "1-855-491-5868",
     website: "https://www.ahs.ca/communityEMS",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 1-855-491-5868 (Healthcare professionals only)",
-    address: "2626 Country Hills Boulevard NE, Calgary, AB T3N 1A7",
     isUrgent: true,
+    address: "2626 Country Hills Boulevard NE, Calgary, AB T3N 1A7",
     coordinates: { lat: 51.0447, lng: -114.0719 },
   },
   {
@@ -21424,8 +21426,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "1-855-491-5868",
     website: "https://www.ahs.ca/communityEMS",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 1-855-491-5868 (Healthcare professionals only)",
-    address: "5527 50 Street, Edmonton, AB T6B 3P1",
     isUrgent: true,
+    address: "5527 50 Street, Edmonton, AB T6B 3P1",
     coordinates: { lat: 53.5461, lng: -113.4938 },
   },
   {
@@ -21438,8 +21440,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "1-855-491-5868",
     website: "https://www.ahs.ca/communityEMS",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 1-855-491-5868 (Healthcare professionals only)",
-    address: "3176 36 Street N, Lethbridge, AB T1H 7E5",
     isUrgent: true,
+    address: "3176 36 Street N, Lethbridge, AB T1H 7E5",
     coordinates: { lat: 49.6953, lng: -112.8451 },
   },
   {
@@ -21465,8 +21467,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "1-855-491-5868",
     website: "https://www.ahs.ca/communityEMS",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 1-855-491-5868 (Healthcare professionals only)",
-    address: "6439 67 Street, Red Deer, AB T4P 1A3",
     isUrgent: true,
+    address: "6439 67 Street, Red Deer, AB T4P 1A3",
     coordinates: { lat: 52.2681, lng: -113.8112 },
   },
   {
@@ -21504,8 +21506,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-371-7778",
     description: "Non-profit organization. Closed · Opens 8 a.m. Mon. Note Google 4.5/5 (45 avis).",
-    address: "1579 Rue Laviolette, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "1579 Rue Laviolette, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -21517,8 +21519,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-371-7778",
     description: "Food bank. Closed · Opens 8 a.m. Mon. Note Google 4.6/5 (19 avis).",
-    address: "2925 Rue Girard, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "2925 Rue Girard, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -21568,8 +21570,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "2-1-1",
     website: "https://seniorsoutreach.ca/more-than-meals",
     description: "Aims to bolster the food security and social connections of vulnerable seniors ages 55 and older in the Central Okanagan through prepared meals, produce hampers, emergency food hampers, delivery of hampers from local food bank, and distributing coupons for the local farmer's market.",
-    address: "155 Asher Road, Kelowna, BC V1X 3H5",
     isUrgent: true,
+    address: "155 Asher Road, Kelowna, BC V1X 3H5",
     coordinates: { lat: 49.888, lng: -119.496 },
   },
   {
@@ -21681,8 +21683,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-833-294-8650",
     description: "Lignes : 1-833-294-8650 · 416-285-9944",
-    address: "Suite 411, 1111 Finch Avenue W, Toronto, ON M3J 2E5",
     isUrgent: true,
+    address: "Suite 411, 1111 Finch Avenue W, Toronto, ON M3J 2E5",
     coordinates: { lat: 43.6532, lng: -79.3832 },
   },
   {
@@ -21706,8 +21708,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-378-5438",
     description: "Housing association. Closed · Opens 9 a.m. Mon. Note Google 4.4/5 (33 avis).",
-    address: "660 Rue Hertel, Trois-Rivières, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "660 Rue Hertel, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -21856,8 +21858,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-833-733-7835",
     description: "Bureau régional du ministère du Développement social du Nouveau-Brunswick. Programmes : enfants et jeunes (adoption, foyers d'accueil), particuliers et familles (aide sociale, fournitures médicales, logement), aînés (bénéfices, services résidentiels, soins de longue durée, protection des adultes), personnes ayant un handicap (Programme de soutien aux personnes ayant un handicap, Programme de soins de longue durée, services à domicile, Meals on Wheels, services résidentiels). Ligne provinciale 1-833-733-7835.",
-    address: "39 rue Notre-Dame, Kedgwick, NB E8B 1H5",
     isProvinceWide: true,
+    address: "39 rue Notre-Dame, Kedgwick, NB E8B 1H5",
     coordinates: { lat: 47.6463746, lng: -67.3468372 },
   },
   {
@@ -21869,8 +21871,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-833-733-7835",
     description: "Bureau régional du ministère du Développement social du Nouveau-Brunswick. Programmes : enfants et jeunes (adoption, foyers d'accueil), particuliers et familles (aide sociale, fournitures médicales, logement), aînés (bénéfices, services résidentiels, soins de longue durée, protection des adultes), personnes ayant un handicap (Programme de soutien aux personnes ayant un handicap, Programme de soins de longue durée, services à domicile, Meals on Wheels, services résidentiels). Ligne provinciale 1-833-733-7835.",
-    address: "18 rue Principale, Lameque, NB E8T 1M4",
     isProvinceWide: true,
+    address: "18 rue Principale, Lameque, NB E8T 1M4",
     coordinates: { lat: 47.7951097, lng: -64.6473971 },
   },
   {
@@ -21882,8 +21884,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-833-733-7835",
     description: "Bureau régional du ministère du Développement social du Nouveau-Brunswick. Programmes : enfants et jeunes (adoption, foyers d'accueil), particuliers et familles (aide sociale, fournitures médicales, logement), aînés (bénéfices, services résidentiels, soins de longue durée, protection des adultes), personnes ayant un handicap (Programme de soutien aux personnes ayant un handicap, Programme de soins de longue durée, services à domicile, Meals on Wheels, services résidentiels). Ligne provinciale 1-833-733-7835.",
-    address: "157 rue Water, Campbellton, NB E3N 3L4",
     isProvinceWide: true,
+    address: "157 rue Water, Campbellton, NB E3N 3L4",
     coordinates: { lat: 48.0046634, lng: -66.6765986 },
   },
   {
@@ -21895,8 +21897,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-833-733-7835",
     description: "Bureau régional du ministère du Développement social du Nouveau-Brunswick. Programmes : enfants et jeunes (adoption, foyers d'accueil), particuliers et familles (aide sociale, fournitures médicales, logement), aînés (bénéfices, services résidentiels, soins de longue durée, protection des adultes), personnes ayant un handicap (Programme de soutien aux personnes ayant un handicap, Programme de soins de longue durée, services à domicile, Meals on Wheels, services résidentiels). Ligne provinciale 1-833-733-7835.",
-    address: "20E boulevard St-Pierre Ouest, Caraquet, NB E1W 1B6",
     isProvinceWide: true,
+    address: "20E boulevard St-Pierre Ouest, Caraquet, NB E1W 1B6",
     coordinates: { lat: 47.7909581, lng: -64.9491778 },
   },
   {
@@ -21908,8 +21910,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-833-733-7835",
     description: "Bureau régional du ministère du Développement social du Nouveau-Brunswick. Programmes : enfants et jeunes (adoption, foyers d'accueil), particuliers et familles (aide sociale, fournitures médicales, logement), aînés (bénéfices, services résidentiels, soins de longue durée, protection des adultes), personnes ayant un handicap (Programme de soutien aux personnes ayant un handicap, Programme de soins de longue durée, services à domicile, Meals on Wheels, services résidentiels). Ligne provinciale 1-833-733-7835.",
-    address: "121 rue de l'Église, Edmundston, NB E3V 1V5",
     isProvinceWide: true,
+    address: "121 rue de l'Église, Edmundston, NB E3V 1V5",
     coordinates: { lat: 47.3637203, lng: -68.3288825 },
   },
   {
@@ -21921,8 +21923,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-833-733-7835",
     description: "Bureau régional du ministère du Développement social du Nouveau-Brunswick. Programmes : enfants et jeunes (adoption, foyers d'accueil), particuliers et familles (aide sociale, fournitures médicales, logement), aînés (bénéfices, services résidentiels, soins de longue durée, protection des adultes), personnes ayant un handicap (Programme de soutien aux personnes ayant un handicap, Programme de soins de longue durée, services à domicile, Meals on Wheels, services résidentiels). Ligne provinciale 1-833-733-7835.",
-    address: "182 boulevard J.D. Gauthier, Shippagan, NB E8S 1P2",
     isProvinceWide: true,
+    address: "182 boulevard J.D. Gauthier, Shippagan, NB E8S 1P2",
     coordinates: { lat: 47.7418049, lng: -64.7181216 },
   },
   {
@@ -21934,8 +21936,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-833-733-7835",
     description: "Bureau régional du ministère du Développement social du Nouveau-Brunswick. Programmes : enfants et jeunes (adoption, foyers d'accueil), particuliers et familles (aide sociale, fournitures médicales, logement), aînés (bénéfices, services résidentiels, soins de longue durée, protection des adultes), personnes ayant un handicap (Programme de soutien aux personnes ayant un handicap, Programme de soins de longue durée, services à domicile, Meals on Wheels, services résidentiels). Ligne provinciale 1-833-733-7835.",
-    address: "137 rue 6e, Shippagan, NB E8S 1B3",
     isProvinceWide: true,
+    address: "137 rue 6e, Shippagan, NB E8S 1B3",
     coordinates: { lat: 47.7418049, lng: -64.7181216 },
   },
   {
@@ -22072,8 +22074,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-866-939-6345",
     description: "Programme d'options d'emploi créatives pour personnes en situation de handicap.",
-    address: "Rideau Community Hub, 815 boulevard Saint-Laurent, Bureau 218, Ottawa, ON K1K 3A7",
     isProvinceWide: true,
+    address: "Rideau Community Hub, 815 boulevard Saint-Laurent, Bureau 218, Ottawa, ON K1K 3A7",
     coordinates: { lat: 45.4208777, lng: -75.6901106 },
   },
   {
@@ -22125,8 +22127,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "2-1-1",
     website: "https://www.phs.ca",
     description: "Provides year-round, low-barrier, overnight emergency housing for 60 homeless adults age 25 and over from 7 pm to 9 am; shelter for individuals of all genders, with a separate space for self-identified women.",
-    address: "356 East Hastings Street, Vancouver, BC V6A 1P4",
     isUrgent: true,
+    address: "356 East Hastings Street, Vancouver, BC V6A 1P4",
     coordinates: { lat: 49.2827, lng: -123.1207 },
   },
   {
@@ -22514,8 +22516,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "MB",
     phone: "1-866-242-1571",
     description: "Numéro d'admission centrale pour jeunes vivant des problèmes santé mentale ou consommation. Hope North: Recovery Centre for Youth.",
-    address: "70 Princeton Dr, Thompson, MB R8N 1W7",
     isUrgent: true,
+    address: "70 Princeton Dr, Thompson, MB R8N 1W7",
     coordinates: { lat: 55.743347, lng: -97.863464 },
   },
   {
@@ -22586,8 +22588,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-967-1989",
     description: "Mental health service. Closed · Opens 8 a.m. Mon.",
-    address: "787 Rue Saint-Pierre, Drummondville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "787 Rue Saint-Pierre, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -22769,8 +22771,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "AB",
     phone: "306-820-6000",
     description: "Alberta Health Services - Central Zone. Lignes : 306-820-6000",
-    address: "Lloydminster, SK S9V 1Y5",
     isProvinceWide: true,
+    address: "Lloydminster, SK S9V 1Y5",
     coordinates: { lat: 53.9333, lng: -116.5765 },
   },
   {
@@ -22868,8 +22870,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-474-1227",
     description: "Low income housing program. Closed · Opens 8:30 a.m. Mon. Note Google 4.1/5 (22 avis).",
-    address: "295 Rue Cockburn, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "295 Rue Cockburn, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -22941,8 +22943,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "581-989-1109",
     description: "Mental health service. Closed · Opens 8 a.m. Mon.",
-    address: "787 Rue Saint-Pierre, Drummondville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "787 Rue Saint-Pierre, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -22954,8 +22956,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-888-321-0339",
     description: "Plaintes contre hôpitaux publics, foyers de soins de longue durée, services de soins à domicile en Ontario.",
-    address: "77 rue Wellesley Ouest, Toronto, ON",
     isProvinceWide: true,
+    address: "77 rue Wellesley Ouest, Toronto, ON",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -23015,8 +23017,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-833-416-2273",
     description: "Soutien aux aidants naturels (proches aidants) en Ontario : information, formation, ligne 24/7. Centre de soutien pour partenaires de soins essentiels : 1-888-877-1626. Bureau 416-362-2273.",
-    address: "180 rue Dundas Ouest, bureau 1425, Toronto, ON M5G 1Z8",
     isProvinceWide: true,
+    address: "180 rue Dundas Ouest, bureau 1425, Toronto, ON M5G 1Z8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -23028,8 +23030,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-877-327-2273",
     description: "Trouver un chiropraticien en Ontario. Bureau 416-860-0070.",
-    address: "70 avenue University, bureau 201, Toronto, ON M5J 2M4",
     isProvinceWide: true,
+    address: "70 avenue University, bureau 201, Toronto, ON M5J 2M4",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -23041,8 +23043,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-877-280-8538",
     description: "Agence provinciale Ontario Health : ligne générale 1-877-280-8538.",
-    address: "505 avenue University, 5e étage, Toronto, ON M5G 2L3",
     isProvinceWide: true,
+    address: "505 avenue University, 5e étage, Toronto, ON M5G 2L3",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -23054,8 +23056,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "416-205-1300",
     description: "Association des hôpitaux de l'Ontario : représentation et soutien aux établissements hospitaliers.",
-    address: "200 rue Front Ouest, bureau 2800, Toronto, ON M5V 3L1",
     isProvinceWide: true,
+    address: "200 rue Front Ouest, bureau 2800, Toronto, ON M5V 3L1",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -23103,8 +23105,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-800-268-7215",
     description: "Association des médecins de l'Ontario : représentation, négociation tarifs, formation continue, plaidoyer pour la profession médicale. Bureau 416-599-2580.",
-    address: "150 rue Bloor Ouest, bureau 900, Toronto, ON M5S 3C1",
     isProvinceWide: true,
+    address: "150 rue Bloor Ouest, bureau 900, Toronto, ON M5S 3C1",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -23116,8 +23118,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-833-425-2445",
     description: "Programme ontarien des services en matière d'autisme (POSA) : financement de services pour enfants et jeunes autistes (jusqu'à 18 ans). Bureau 1-888-444-4530.",
-    address: "101 rue Bloor Ouest, 6e étage, Toronto, ON M5S 2Z7",
     isProvinceWide: true,
+    address: "101 rue Bloor Ouest, 6e étage, Toronto, ON M5S 2Z7",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -23129,8 +23131,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-800-387-5559",
     description: "Plan d'intervention sanitaire en cas d'incident radiologique ou nucléaire. Ligne pour fournisseurs de soins de santé.",
-    address: "1075 rue Bay, bureau 810, Toronto, ON M5S 2B1",
     isProvinceWide: true,
+    address: "1075 rue Bay, bureau 810, Toronto, ON M5S 2B1",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -23154,8 +23156,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "416-923-4050",
     description: "Trouver un psychothérapeute autorisé en Ontario.",
-    address: "189 rue Queen Est, bureau 1, Toronto, ON M5A 1S2",
     isProvinceWide: true,
+    address: "189 rue Queen Est, bureau 1, Toronto, ON M5A 1S2",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -23167,8 +23169,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-800-268-1153",
     description: "Information et plaintes sur foyers de soins de longue durée. ServiceOntario : 1-866-532-3161.",
-    address: "400 avenue Université, 6e étage, Toronto, ON M7A 1N3",
     isProvinceWide: true,
+    address: "400 avenue Université, 6e étage, Toronto, ON M7A 1N3",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -23266,8 +23268,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-751-1515",
     description: "Medical clinic. Closed · Opens 8 a.m. Mon. Note Google 4.2/5 (48 avis).",
-    address: "62 Bd Labbé S, Victoriaville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "62 Bd Labbé S, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -23318,8 +23320,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-844-712-1364",
     description: "Ordre des psychothérapeutes autorisés de l'Ontario — vérification des inscriptions et plaintes.",
-    address: "375 avenue University, bureau 800, Toronto, ON M5G 2J5",
     isProvinceWide: true,
+    address: "375 avenue University, bureau 800, Toronto, ON M5G 2J5",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -23685,8 +23687,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NS",
     phone: "902-421-9191",
     description: "Home health care service. Open 24 hours. Note Google 4.8/5 (53 avis).",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
     coordinates: { lat: 44.6488, lng: -63.5752 },
   },
   {
@@ -23734,8 +23736,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-537-8851",
     description: "Cultural center. Closed · Opens 9 a.m. Mon. Note Google 4.4/5 (69 avis).",
-    address: "1895 Av. Champlain, Shawinigan, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "1895 Av. Champlain, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -23747,8 +23749,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-472-3351",
     description: "Resume service. Closed · Opens 8:30 a.m. Mon. Note Google 4.8/5 (38 avis).",
-    address: "40+ years in business · 157 Rue Lindsay #200, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "40+ years in business · 157 Rue Lindsay #200, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -23799,8 +23801,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "2-1-1",
     website: "https://www.bcehs.ca/our-services/programs-services/patient-transfer-services",
     description: "24-hour provincial service for planning and coordinating inter-facility transfers of patients who require paramedic care.",
-    address: "150-2955 Virtual Way, Vancouver, BC V5M 4X6",
     isUrgent: true,
+    address: "150-2955 Virtual Way, Vancouver, BC V5M 4X6",
     coordinates: { lat: 49.2827, lng: -123.1207 },
   },
   {
@@ -23812,8 +23814,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-374-6291",
     description: "Mental health clinic. Closed · Opens 12 a.m. Mon. Note Google 2.7/5 (3 avis).",
-    address: "1573 Bd des Forges, Trois-Rivières, QC",
     hours: "Closed · Opens 12 a.m. Mon",
+    address: "1573 Bd des Forges, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -23825,8 +23827,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-855-367-7646",
     description: "Soutien aux enfants atteints de cancer et leurs familles en Ontario.",
-    address: "480 avenue University, bureau 1014, Toronto, ON M5G 1V2",
     isProvinceWide: true,
+    address: "480 avenue University, bureau 1014, Toronto, ON M5G 1V2",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -23838,8 +23840,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "MB",
     phone: "1-855-942-6568",
     description: "Ressources actuelles et ateliers santé mentale pour tous les Manitobains. Bibliothèque de prêt, audio/livres numériques, dépliants, fiches.",
-    address: "4 Fort St, Unit 100, Winnipeg, MB R3C 1C4",
     isProvinceWide: true,
+    address: "4 Fort St, Unit 100, Winnipeg, MB R3C 1C4",
     coordinates: { lat: 49.8955367, lng: -97.1384584 },
   },
   {
@@ -23886,8 +23888,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "MB",
     phone: "204-645-2049",
     description: "Protection de l'enfance et services de soutien (violence familiale, gestion colère, parentalité). Services aux enfants pris en charge, foyers d'accueil, adoption. Urgence 24/7 : 1-877-777-2049.",
-    address: "1349 Border St, Unit 1, Winnipeg, MB R3H 0N1",
     isUrgent: true,
+    address: "1349 Border St, Unit 1, Winnipeg, MB R3H 0N1",
     coordinates: { lat: 49.8955367, lng: -97.1384584 },
   },
   {
@@ -24114,8 +24116,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "2-1-1",
     website: "https://www.physicianhealth.com",
     description: "Provides 24-hour confidential information, support, and referrals for physicians, retired physicians, residents, medical students and their families, who are experiencing problems such as personal and family emotional health issues, inappropriate use of alcohol and/or drugs, stress, financial/practice issues, or coping with physical illness.",
-    address: "Vancouver, BC V6J 1X1",
     isUrgent: true,
+    address: "Vancouver, BC V6J 1X1",
     coordinates: { lat: 49.2827, lng: -123.1207 },
   },
   {
@@ -24128,8 +24130,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "2-1-1",
     website: "https://www.parkplaceseniorsliving.com",
     description: "Residential care facility for seniors with complex health care needs who require 24-hour care due to physical disability or mental or behavioural conditions such as dementia.",
-    address: "821 10th Avenue, Salmon Arm, BC V1E 1T2",
     isUrgent: true,
+    address: "821 10th Avenue, Salmon Arm, BC V1E 1T2",
     coordinates: { lat: 50.7001, lng: -119.2838 },
   },
   {
@@ -24153,8 +24155,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "2-1-1",
     website: "https://www.pinegroveplace.com",
     description: "Residential care facility for adults ages 19 and up with complex health care needs who require 24-hour care.",
-    address: "11331 Mellis Drive, Richmond, BC V6X 1L8",
     isUrgent: true,
+    address: "11331 Mellis Drive, Richmond, BC V6X 1L8",
     coordinates: { lat: 49.1666, lng: -123.1336 },
   },
   {
@@ -24214,8 +24216,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "506-445-6298",
     description: "Réseau de santé Vitalité — Zone Nord-Ouest. Point d'entrée unique — Réseau Vitalité. Programme conçu pour faciliter des soins intégrés et répondre aux besoins physiques, mentaux, émotionnels, sociaux et culturels des personnes : évaluation des besoins, suivi personnalisé, coordination des soins, accès facilité aux services de santé et services sociaux.",
-    address: "Services mobiles, Nord-Ouest, NB",
     isProvinceWide: true,
+    address: "Services mobiles, Nord-Ouest, NB",
     coordinates: { lat: 47.3637203, lng: -68.3288825 },
   },
   {
@@ -24289,8 +24291,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "2-1-1",
     website: "https://www.portalbernishelter.com",
     description: "Provides accommodation, emergency shelter, and support services for people who are homeless or at risk of homelessness.",
-    address: "3681 3rd Avenue, Port Alberni, BC V9Y 4E7",
     isUrgent: true,
+    address: "3681 3rd Avenue, Port Alberni, BC V9Y 4E7",
     coordinates: { lat: 49.2339, lng: -124.8025 },
   },
   {
@@ -25148,8 +25150,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-800-596-4046",
     description: "Reconnaissance et intégration des professionnels de la santé en Ontario.",
-    address: "163 rue Queen est, Toronto, ON M5A 1S1",
     isProvinceWide: true,
+    address: "163 rue Queen est, Toronto, ON M5A 1S1",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -25161,8 +25163,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-866-532-3161",
     description: "Programme provincial pour cesser de fumer. Information et accompagnement.",
-    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     isProvinceWide: true,
+    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -25199,8 +25201,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-866-532-3161",
     description: "Programme de financement public de la fécondation in vitro et inséminations. ServiceOntario 416-314-5518.",
-    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     isProvinceWide: true,
+    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -25320,8 +25322,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-800-668-9304",
     description: "Prise de rendez-vous pour mammographies de dépistage du cancer du sein en Ontario. Société canadienne du cancer : 1-888-939-3333.",
-    address: "525 avenue University, unité 500, Toronto, ON M5G 2L3",
     isProvinceWide: true,
+    address: "525 avenue University, unité 500, Toronto, ON M5G 2L3",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -25345,8 +25347,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-800-575-5386",
     description: "Programmes publics de médicaments de l'Ontario. ServiceOntario : 1-866-532-3161.",
-    address: "5700 rue Yonge, Toronto, ON",
     isProvinceWide: true,
+    address: "5700 rue Yonge, Toronto, ON",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -25435,8 +25437,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-995-1365",
     description: "Immigration & naturalization service. Open · Closes 9 p.m.. Note Google 4.0/5 (1 avis).",
-    address: "747 Rue Laviolette, Trois-Rivières, QC",
     hours: "Open · Closes 9 p.m.",
+    address: "747 Rue Laviolette, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -25461,8 +25463,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "403-227-5800",
     website: "https://www.innisfail.ca/protective-services/fire-services",
     description: "Town of Innisfail. Lignes : 403-227-5800 · 9-1-1 (Emergencies 24 Hours)",
-    address: "4949 49 Street, Innisfail, AB T4G 1A5",
     isUrgent: true,
+    address: "4949 49 Street, Innisfail, AB T4G 1A5",
     coordinates: { lat: 52.0297, lng: -113.9569 },
   },
   {
@@ -25501,8 +25503,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "2-1-1",
     website: "https://www.phsa.ca/our-services/programs-services/provincial-language-services",
     description: "Supports the health system's ability to deliver accessible care to BC's linguistically diverse population by providing health-focused interpreting and translation in over 150 languages, 24 hours a day.",
-    address: "1795 Willingdon Avenue, Burnaby, BC V5C 6E3",
     isUrgent: true,
+    address: "1795 Willingdon Avenue, Burnaby, BC V5C 6E3",
     coordinates: { lat: 49.2488, lng: -122.9805 },
   },
   {
@@ -26481,8 +26483,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "306-820-6225",
     website: "http://www.pnrha.ca",
     description: "Alberta Health Services - Central Zone. Lignes : 306-820-6225",
-    address: "4910 50 Street, Lloydminster, SK S9V 0Y5",
     isProvinceWide: true,
+    address: "4910 50 Street, Lloydminster, SK S9V 0Y5",
     coordinates: { lat: 53.9333, lng: -116.5765 },
   },
   {
@@ -26679,8 +26681,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "2-1-1",
     website: "https://www.vch.ca/locations-services/result?res_id=29",
     description: "Residential care facility for adults ages 19 and up with complex health care needs who require 24-hour care.",
-    address: "2221 Wesbrook Mall, Vancouver, BC V6T 2B5",
     isUrgent: true,
+    address: "2221 Wesbrook Mall, Vancouver, BC V6T 2B5",
     coordinates: { lat: 49.2827, lng: -123.1207 },
   },
   {
@@ -26744,8 +26746,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "2-1-1",
     website: "https://www.northernhealth.ca/locations/medical-clinics/quesnel-urgent-and-primary-care-centre",
     description: "Provides same-day access to urgent primary care.",
-    address: "G.R. Baker Memorial Hospital, 523 Front Street, Quesnel, BC V2J 2K7",
     isUrgent: true,
+    address: "G.R. Baker Memorial Hospital, 523 Front Street, Quesnel, BC V2J 2K7",
     coordinates: { lat: 52.9784, lng: -122.4927 },
   },
   {
@@ -26890,8 +26892,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NU",
     phone: "",
     description: "Police fédérale et services d'urgence.",
-    address: "\"V\" Division RCMP Headquarters, Bag 500, Iqaluit, NU X0A 0H0",
     isUrgent: true,
+    address: "\"V\" Division RCMP Headquarters, Bag 500, Iqaluit, NU X0A 0H0",
     coordinates: { lat: 63.7467, lng: -68.517 },
   },
   {
@@ -26903,8 +26905,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NT",
     phone: "9-1-1",
     description: "Police fédérale et services d'urgence. Lignes : 9-1-1",
-    address: "5101 Franklin Avenue, Yellowknife, NT X1A 3Z4",
     isUrgent: true,
+    address: "5101 Franklin Avenue, Yellowknife, NT X1A 3Z4",
     coordinates: { lat: 62.454, lng: -114.3718 },
   },
   {
@@ -26942,8 +26944,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-472-2929",
     description: "Mental health service. Open 24 hours. Note Google 5.0/5 (3 avis).",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -26967,8 +26969,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-375-5553",
     description: "Medical diagnostic imaging center. Closed · Opens 10 a.m. Sun. Note Google 4.3/5 (80 avis).",
-    address: "1785 Bd du Carmel #106, Trois-Rivières, QC",
     hours: "Closed · Opens 10 a.m. Sun",
+    address: "1785 Bd du Carmel #106, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -27018,8 +27020,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-473-7484",
     description: "Employment center. Closed · Opens 8:30 a.m. Mon. Note Google 4.0/5 (45 avis).",
-    address: "235 Rue Hériot #460, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "235 Rue Hériot #460, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -27251,8 +27253,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NS",
     phone: "902-497-0722",
     description: "Home health care service. Open 24 hours. Note Google 4.8/5 (65 avis).",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
     coordinates: { lat: 44.7333, lng: -63.6667 },
   },
   {
@@ -27513,8 +27515,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "2-1-1",
     website: "https://www.vch.ca/locations-services/result?res_id=44",
     description: "Residential care facility for adults ages 19 and up with complex health care needs who require 24-hour care.",
-    address: "9020 Bridgeport Road, Richmond, BC V6X 1S1",
     isUrgent: true,
+    address: "9020 Bridgeport Road, Richmond, BC V6X 1S1",
     coordinates: { lat: 49.1666, lng: -123.1336 },
   },
   {
@@ -27552,8 +27554,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NS",
     phone: "1-844-516-1600",
     description: "Home health care service. Open 24 hours. Note Google 5.0/5 (19 avis).",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
     coordinates: { lat: 44.6488, lng: -63.5752 },
   },
   {
@@ -27565,8 +27567,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NS",
     phone: "1-844-516-1600",
     description: "Home health care service. Open 24 hours. Note Google 5.0/5 (1 avis).",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
     coordinates: { lat: 44.99, lng: -64.137 },
   },
   {
@@ -27778,9 +27780,9 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "873-664-2222",
     description: "Local government office. Open 24 hours. Note Google 2.6/5 (9 avis).",
-    address: "1930 49e Rue, Shawinigan, QC",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
+    address: "1930 49e Rue, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -27792,8 +27794,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-855-460-2647",
     description: "Soutien et coordination des soins pour les patients atteints d'insuffisance rénale en Ontario.",
-    address: "525 avenue University, unité 500, Toronto, ON M5G 2L3",
     isProvinceWide: true,
+    address: "525 avenue University, unité 500, Toronto, ON M5G 2L3",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -27817,8 +27819,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-474-1895",
     description: "Mental health service. Closed · Opens 8:30 a.m. Mon. Note Google 4.5/5 (2 avis).",
-    address: "575 Rue des Écoles #102, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "575 Rue des Écoles #102, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -27854,9 +27856,9 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-855-628-7238",
     description: "Réseau provincial de 37 centres hospitaliers offrant soins médicaux et psychosociaux après agression sexuelle ou violence conjugale. Bureau 416-323-7327.",
-    address: "Women's College Hospital, 76 rue Grenville, Toronto, ON M5S 1B2",
     isUrgent: true,
     isProvinceWide: true,
+    address: "Women's College Hospital, 76 rue Grenville, Toronto, ON M5S 1B2",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -28038,8 +28040,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-800-268-7582",
     description: "Soutien aux personnes vivant avec la sclérose en plaques. Inclut soutien entre pairs, réseau de connaissances, programmes d'activité physique accessibles. Ligne pairs/programmes : 1-844-859-6789.",
-    address: "250 rue Dundas Ouest, bureau 500, Toronto, ON M5T 2Z5",
     isProvinceWide: true,
+    address: "250 rue Dundas Ouest, bureau 500, Toronto, ON M5T 2Z5",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -28090,8 +28092,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "9-1-1",
     website: "http://www.stars.ca",
     description: "Shock Trauma Air Rescue Service. Lignes : 9-1-1 (Emergency - 24 Hour) · 780-890-3131 (Office)",
-    address: "1519 35 Avenue E, Edmonton, AB T9E 0V6",
     isUrgent: true,
+    address: "1519 35 Avenue E, Edmonton, AB T9E 0V6",
     coordinates: { lat: 53.5461, lng: -113.4938 },
   },
   {
@@ -28136,9 +28138,9 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-478-6464",
     description: "Hospital. Open 24 hours. Note Google 3.0/5 (230 avis).",
-    address: "570 Rue Hériot, Drummondville, QC",
-    hours: "Open 24 hours",
     isUrgent: true,
+    hours: "Open 24 hours",
+    address: "570 Rue Hériot, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -28150,8 +28152,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-374-7683",
     description: "Retirement home. Open · Closes 6:59 a.m. Sun. Note Google 5.0/5 (21 avis).",
-    address: "60 Rue Perreault, Trois-Rivières, QC",
     hours: "Open · Closes 6:59 a.m. Sun",
+    address: "60 Rue Perreault, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -28175,8 +28177,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     phone: "2-1-1",
     website: "https://www.covenanthousebc.org",
     description: "Provides year-round, 24-hour, low-barrier shelter for youth ages 16 to 24 struggling with mental health and substance use; accepts couples.",
-    address: "1302 Seymour Street, Vancouver, BC V6B 3P3",
     isUrgent: true,
+    address: "1302 Seymour Street, Vancouver, BC V6B 3P3",
     coordinates: { lat: 49.2827, lng: -123.1207 },
   },
   {
@@ -28285,8 +28287,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "1-866-286-4023",
     description: "Direction de la santé publique : information, signalements, ConnexionSanté Ontario 1-866-797-0000, ServiceOntario 1-866-532-3161, Bureau 416-327-4327. Ligne secondaire 1-800-268-1153.",
-    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     isProvinceWide: true,
+    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -28322,9 +28324,9 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "ON",
     phone: "811",
     description: "Ligne d'information santé 24h/24 par infirmières/iers autorisés. Composez 811. En cas d'urgence appelez le 911.",
-    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     isUrgent: true,
     isProvinceWide: true,
+    address: "777 rue Bay, 5e étage, Toronto, ON M5G 2C8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -28473,8 +28475,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-379-8242",
     description: "Association / Organization. Closed · Opens 8 a.m. Mon. Note Google 4.3/5 (27 avis).",
-    address: "997 Rue St-Roch, Trois-Rivières, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "997 Rue St-Roch, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -29545,8 +29547,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-693-6777",
     description: "Employment center. Closed · Opens 8:30 a.m. Mon. Note Google 5.0/5 (6 avis).",
-    address: "733 Rue Bonaventure, Trois-Rivières, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "733 Rue Bonaventure, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -29570,8 +29572,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-888-762-8600",
     description: "Centre de services local Service Nouveau-Brunswick : informations, références et accès aux services gouvernementaux fédéraux/provinciaux/municipaux, paiements (impôt foncier, contraventions), permis de conduire et examens, immatriculation, certificats (naissance, décès, mariage), cartes d'identité avec photo, Assurance-maladie.",
-    address: "Mall Centre Ville, 157 rue Water, Campbellton, NB E3N 3L4",
     isProvinceWide: true,
+    address: "Mall Centre Ville, 157 rue Water, Campbellton, NB E3N 3L4",
     coordinates: { lat: 48.0046634, lng: -66.6765986 },
   },
   {
@@ -29583,8 +29585,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-888-762-8600",
     description: "Centre de services local Service Nouveau-Brunswick : informations, références et accès aux services gouvernementaux fédéraux/provinciaux/municipaux, paiements (impôt foncier, contraventions), permis de conduire et examens, immatriculation, certificats (naissance, décès, mariage), cartes d'identité avec photo, Assurance-maladie.",
-    address: "127 boulevard St. Pierre Ouest, Caraquet, NB E1W 1B6",
     isProvinceWide: true,
+    address: "127 boulevard St. Pierre Ouest, Caraquet, NB E1W 1B6",
     coordinates: { lat: 47.7909581, lng: -64.9491778 },
   },
   {
@@ -29596,8 +29598,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-888-762-8600",
     description: "Centre de services local Service Nouveau-Brunswick : informations, références et accès aux services gouvernementaux fédéraux/provinciaux/municipaux, paiements (impôt foncier, contraventions), permis de conduire et examens, immatriculation, certificats (naissance, décès, mariage), cartes d'identité avec photo, Assurance-maladie.",
-    address: "Édifice Le Promenade, 410 rue William, Bureau 4, Dalhousie, NB E8C 2X4",
     isProvinceWide: true,
+    address: "Édifice Le Promenade, 410 rue William, Bureau 4, Dalhousie, NB E8C 2X4",
     coordinates: { lat: 48.0634448, lng: -66.369555 },
   },
   {
@@ -29609,8 +29611,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-888-762-8600",
     description: "Centre de services local Service Nouveau-Brunswick : informations, références et accès aux services gouvernementaux fédéraux/provinciaux/municipaux, paiements (impôt foncier, contraventions), permis de conduire et examens, immatriculation, certificats (naissance, décès, mariage), cartes d'identité avec photo, Assurance-maladie.",
-    address: "Carrefour Assomption, 121 rue de l'Église, Edmundston, NB E3V 3L3",
     isProvinceWide: true,
+    address: "Carrefour Assomption, 121 rue de l'Église, Edmundston, NB E3V 3L3",
     coordinates: { lat: 47.3637203, lng: -68.3288825 },
   },
   {
@@ -29622,8 +29624,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-888-762-8600",
     description: "Centre de services local Service Nouveau-Brunswick : informations, références et accès aux services gouvernementaux fédéraux/provinciaux/municipaux, paiements (impôt foncier, contraventions), permis de conduire et examens, immatriculation, certificats (naissance, décès, mariage), cartes d'identité avec photo, Assurance-maladie.",
-    address: "196 rue Notre-Dame, Kedgwick, NB E8B 0A4",
     isProvinceWide: true,
+    address: "196 rue Notre-Dame, Kedgwick, NB E8B 0A4",
     coordinates: { lat: 47.6463746, lng: -67.3468372 },
   },
   {
@@ -29635,8 +29637,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-888-762-8600",
     description: "Centre de services local Service Nouveau-Brunswick : informations, références et accès aux services gouvernementaux fédéraux/provinciaux/municipaux, paiements (impôt foncier, contraventions), permis de conduire et examens, immatriculation, certificats (naissance, décès, mariage), cartes d'identité avec photo, Assurance-maladie.",
-    address: "Ancienne gare, 144B rue Canada, Saint-Quentin, NB E8A 1G7",
     isProvinceWide: true,
+    address: "Ancienne gare, 144B rue Canada, Saint-Quentin, NB E8A 1G7",
     coordinates: { lat: 47.5129555, lng: -67.3906756 },
   },
   {
@@ -29648,8 +29650,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-888-762-8600",
     description: "Centre de services local Service Nouveau-Brunswick : informations, références et accès aux services gouvernementaux fédéraux/provinciaux/municipaux, paiements (impôt foncier, contraventions), permis de conduire et examens, immatriculation, certificats (naissance, décès, mariage), cartes d'identité avec photo, Assurance-maladie.",
-    address: "185B rue 1e, Shippagan, NB E8S 1S8",
     isProvinceWide: true,
+    address: "185B rue 1e, Shippagan, NB E8S 1S8",
     coordinates: { lat: 47.7418049, lng: -64.7181216 },
   },
   {
@@ -29661,8 +29663,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-888-762-8600",
     description: "Centre de services local Service Nouveau-Brunswick : information, références et accès à un large éventail de services gouvernementaux fédéraux, provinciaux et municipaux.",
-    address: "Place du Moulin, 447 rue du Moulin, Tracadie-Sheila, NB E1X 1A4",
     isProvinceWide: true,
+    address: "Place du Moulin, 447 rue du Moulin, Tracadie-Sheila, NB E1X 1A4",
     coordinates: { lat: 47.5169819, lng: -64.9120499 },
   },
   {
@@ -29674,8 +29676,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-375-2196",
     description: "Association / Organization. Closed · Opens 8:30 a.m. Mon. Note Google 4.6/5 (53 avis).",
-    address: "2000 Bd des Récollets entrée B, Trois-Rivières, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "2000 Bd des Récollets entrée B, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -29771,8 +29773,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "MB",
     phone: "911",
     description: "Services médicaux d'urgence. Composer 911. Régions sans 911 : numéros locaux disponibles (Dauphin River, Fairford, Fisher Branch, Gypsumville, etc.).",
-    address: "233 Main St, Unit A, Selkirk, MB R1A 1S1",
     isUrgent: true,
+    address: "233 Main St, Unit A, Selkirk, MB R1A 1S1",
     coordinates: { lat: 50.146986, lng: -96.880188 },
   },
   {
@@ -29867,8 +29869,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NU",
     phone: "",
     description: "",
-    address: "Iqaluit, NU X0H 0H0",
     isUrgent: true,
+    address: "Iqaluit, NU X0H 0H0",
     coordinates: { lat: 63.7467, lng: -68.517 },
   },
   {
@@ -29880,9 +29882,9 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-844-398-4718",
     description: "Réseau de santé Vitalité — Zone Nord-Ouest. Services mobiles de crise — Réseau Vitalité. Réponse coordonnée en cas de dépendance ou de crise de santé mentale (pensées suicidaires, pensées psychotiques, anxiété intense, dépression) : évaluation des risques, intervention, soutien de courte durée, référence vers services de toxicomanie et de santé mentale.",
-    address: "Services mobiles, Nord-Ouest, NB",
     isUrgent: true,
     isProvinceWide: true,
+    address: "Services mobiles, Nord-Ouest, NB",
     coordinates: { lat: 47.3637203, lng: -68.3288825 },
   },
   {
@@ -29894,9 +29896,9 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "506-789-8088",
     description: "Réseau de santé Vitalité — Zone Restigouche. Services mobiles de crise — Réseau Vitalité. Réponse coordonnée en cas de dépendance ou de crise de santé mentale (pensées suicidaires, pensées psychotiques, anxiété intense, dépression) : évaluation des risques, intervention, soutien de courte durée, référence vers services de toxicomanie et de santé mentale.",
-    address: "Services mobiles, Restigouche, NB",
     isUrgent: true,
     isProvinceWide: true,
+    address: "Services mobiles, Restigouche, NB",
     coordinates: { lat: 48.0046634, lng: -66.6765986 },
   },
   {
@@ -29920,8 +29922,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "NB",
     phone: "1-866-355-5550",
     description: "Réseau de santé Vitalité — Zone Nord-Ouest. Services à l'enfance et à la jeunesse — Réseau Vitalité. Psychologues, travailleurs sociaux et conseillers d'orientation francophones. Programmes : santé mentale, toxicomanie, problèmes émotionnels, comportementaux, relations familiales. Services : évaluation, soutien psychologique, intervention de crise, counseling post-traumatique, prévention du suicide. Lignes alternatives : 506-737-4630 (Edmundston), 506-235-7384, 506-473-7458. Crise : 1-800-668-6868.",
-    address: "Carrefour Assomption, 121 rue de l'Église, Bureau 330, Edmundston, NB E3V 1J9",
     isProvinceWide: true,
+    address: "Carrefour Assomption, 121 rue de l'Église, Bureau 330, Edmundston, NB E3V 1J9",
     coordinates: { lat: 47.3637203, lng: -68.3288825 },
   },
   {
@@ -29933,8 +29935,8 @@ const __SERVICES_CHUNK_2: Service[] = [
     province: "QC",
     phone: "819-539-2221",
     description: "Wholesale grocer. Closed · Opens 8 a.m. Mon. Note Google 4.6/5 (37 avis).",
-    address: "1863 Rue Boisvert, Shawinigan, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "1863 Rue Boisvert, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -30074,9 +30076,6 @@ const __SERVICES_CHUNK_2: Service[] = [
     address: "Calgary, AB T2R 0X7",
     coordinates: { lat: 51.0447, lng: -114.0719 },
   },
-];
-
-const __SERVICES_CHUNK_3: Service[] = [
   {
     id: "ab-oko-hlpo001",
     name: "Sexual and Reproductive Health - Clinical Services — Okotoks",
@@ -30195,8 +30194,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "QC",
     phone: "1-800-622-6232",
     description: "Federal government office. Closed · Opens 8:30 a.m. Mon. Note Google 3.4/5 (14 avis).",
-    address: "444 5e rue de la Pointe suite 100, Shawinigan, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "444 5e rue de la Pointe suite 100, Shawinigan, QC",
     coordinates: { lat: 46.5667, lng: -72.75 },
   },
   {
@@ -30348,8 +30347,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "MB",
     phone: "204-358-2300",
     description: "Urgence 24h avec médecin sur appel 24/7. Service ambulance/EMS en semaine, sur appel après les heures et fins de semaine.",
-    address: "100 Lakeshore Dr, Snow Lake, MB R0B 1M0",
     isUrgent: true,
+    address: "100 Lakeshore Dr, Snow Lake, MB R0B 1M0",
     coordinates: { lat: 54.881347, lng: -100.020905 },
   },
   {
@@ -30846,8 +30845,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "NB",
     phone: "1-866-301-8800",
     description: "Soutien aux femmes et filles judiciarisées ou à risque : counseling, accompagnement à la cour, sortie de prison, logement, prévention. Bureau 506-635-8851.",
-    address: "75 rue Adelaide, Saint John, NB E2K 1W4",
     isProvinceWide: true,
+    address: "75 rue Adelaide, Saint John, NB E2K 1W4",
     coordinates: { lat: 45.2787992, lng: -66.0585188 },
   },
   {
@@ -30859,8 +30858,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "ON",
     phone: "1-800-668-2642",
     description: "Société canadienne d'hypothèques et de logement (SCHL) : programmes nationaux de financement, assurance prêt hypothécaire, recherche, données sur le marché immobilier, soutien au logement abordable. Bureau 613-748-2000.",
-    address: "Bureau national, 700 chemin Montreal, Ottawa, ON K1A 0P7",
     isProvinceWide: true,
+    address: "Bureau national, 700 chemin Montreal, Ottawa, ON K1A 0P7",
     coordinates: { lat: 45.4208777, lng: -75.6901106 },
   },
   {
@@ -30896,8 +30895,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "NL",
     phone: "709-643-6826",
     description: "Bureau régional de la Société d'habitation de Terre-Neuve-et-Labrador (NLHC) : logement et refuge, programmes d'aide au logement, location subventionnée.",
-    address: "58 Oregon Dr, Stephenville, NL A2N 2Y1",
     isProvinceWide: true,
+    address: "58 Oregon Dr, Stephenville, NL A2N 2Y1",
     coordinates: { lat: 48.5452022, lng: -58.5871146 },
   },
   {
@@ -30933,8 +30932,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "ON",
     phone: "1-800-321-1433",
     description: "Information, soutien et plaidoyer pour personnes vivant avec l'arthrite au Canada.",
-    address: "220 rue Bay, bureau 300, Toronto, ON M5J 2W4",
     isProvinceWide: true,
+    address: "220 rue Bay, bureau 300, Toronto, ON M5J 2W4",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -30946,8 +30945,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "ON",
     phone: "1-800-321-1433",
     description: "Société de l'arthrite — soutien aux personnes vivant avec l'arthrite.",
-    address: "393 avenue University, bureau 1700, Toronto, ON M5J 2W4",
     isProvinceWide: true,
+    address: "393 avenue University, bureau 1700, Toronto, ON M5J 2W4",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -30959,8 +30958,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "ON",
     phone: "1-844-668-7333",
     description: "Développement économique francophone, emploi et immigration en Ontario.",
-    address: "273 rue Richmond Ouest, bureau 100, Toronto, ON M5V 1X1",
     isProvinceWide: true,
+    address: "273 rue Richmond Ouest, bureau 100, Toronto, ON M5V 1X1",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -30972,8 +30971,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "QC",
     phone: "819-260-1914",
     description: "Sleep clinic. Closed · Opens 8 a.m. Mon. Note Google 5.0/5 (48 avis).",
-    address: "La grande place des Bois-Francs, 1111 Bd Jutras E Unit 102, Victoriaville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "La grande place des Bois-Francs, 1111 Bd Jutras E Unit 102, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -31083,8 +31082,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "2-1-1",
     website: "https://www.sourcesbc.ca/our-services/community-living-residential-programs",
     description: "Provide supportive housing for adults with developmental disabilities and/or autism who require 24-hour assistance to participate in all aspects of daily living.",
-    address: "Ladner Resource Centre, 4807 Georgia Street, Delta, BC V4K 2T1",
     isUrgent: true,
+    address: "Ladner Resource Centre, 4807 Georgia Street, Delta, BC V4K 2T1",
     coordinates: { lat: 49.0847, lng: -123.0586 },
   },
   {
@@ -31123,8 +31122,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "2-1-1",
     website: "https://www.fraserhealth.ca/Service-Directory/Service-at-Location/7/8/Service---South-Delta-After-Hours-Urgent-and-Primary-Care-Centre",
     description: "Provides same-day access to urgent care and primary care for people living in Abbotsford.",
-    address: "1826-4949 Canoe Pass Way, Delta, BC V4M 0B2",
     isUrgent: true,
+    address: "1826-4949 Canoe Pass Way, Delta, BC V4M 0B2",
     coordinates: { lat: 49.0847, lng: -123.0586 },
   },
   {
@@ -31212,8 +31211,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "2-1-1",
     website: "https://www.interiorhealth.ca/locations/sparwood-primary-health-care",
     description: "Primary health care centre provides acute care, x-ray services, and dialysis, and also provides emergency health care 8 am to 7 pm seven days a week.",
-    address: "570 Pine Avenue, Sparwood, BC V0B 2G0",
     isUrgent: true,
+    address: "570 Pine Avenue, Sparwood, BC V0B 2G0",
     coordinates: { lat: 49.7583, lng: -114.8806 },
   },
   {
@@ -31223,7 +31222,7 @@ const __SERVICES_CHUNK_3: Service[] = [
     subcategory: "disability financial assistance",
     city: "",
     province: "AB",
-    phone: "",
+    phone: "211",
     website: "https://www.samaritanclub.ca",
     description: "Samaritan Club of Calgary, The. ",
     isProvinceWide: true,
@@ -31327,8 +31326,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "QC",
     phone: "819-693-2212",
     description: "Social services organization. Closed · Opens 8:30 a.m. Mon. Note Google 4.0/5 (6 avis).",
-    address: "1060 Rue St François Xavier Bureau 305, Trois-Rivières, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "1060 Rue St François Xavier Bureau 305, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -31377,8 +31376,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "MB",
     phone: "204-237-2260",
     description: "Soins d'urgence 24h/24, 7j/7.",
-    address: "409 Taché Ave, Winnipeg, MB R2H 2A6",
     isUrgent: true,
+    address: "409 Taché Ave, Winnipeg, MB R2H 2A6",
     coordinates: { lat: 49.8955367, lng: -97.1384584 },
   },
   {
@@ -31588,8 +31587,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "ON",
     phone: "416-326-6905",
     description: "Stratégie provinciale de mieux-être autochtone — Ministère des Affaires autochtones et Réconciliation économique des Premières Nations.",
-    address: "315 rue Front Ouest, 4e étage, Toronto, ON M7A 0B8",
     isProvinceWide: true,
+    address: "315 rue Front Ouest, 4e étage, Toronto, ON M7A 0B8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -31944,8 +31943,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "NT",
     phone: "867-873-5760",
     description: "Lignes : 867-873-5760",
-    address: "1456 Gitzel Street, Yellowknife, NT X1A 2C9",
     isUrgent: true,
+    address: "1456 Gitzel Street, Yellowknife, NT X1A 2C9",
     coordinates: { lat: 62.454, lng: -114.3718 },
   },
   {
@@ -32118,8 +32117,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "QC",
     phone: "819-752-5305",
     description: "Social services organization. Closed · Opens 8:30 a.m. Mon. Note Google 4.4/5 (27 avis).",
-    address: "59 Rue Monfette, Victoriaville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "59 Rue Monfette, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -32131,8 +32130,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "ON",
     phone: "1-855-577-8838",
     description: "Consultations virtuelles avec médecins, infirmières praticiennes et pharmaciens via l'application TELUS Santé MyCare.",
-    address: "25 rue York, Toronto, ON M5J 2V5",
     isProvinceWide: true,
+    address: "25 rue York, Toronto, ON M5J 2V5",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -32232,8 +32231,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "2-1-1",
     website: "https://www.cmha.bc.ca/programs-services/talk-today",
     description: "A mental health education program designed to help athletes and their supporters learn about mental health and to support players who may be struggling or at risk of suicide.",
-    address: "Vancouver, BC",
     isUrgent: true,
+    address: "Vancouver, BC",
     coordinates: { lat: 49.2827, lng: -123.1207 },
   },
   {
@@ -32270,8 +32269,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "QC",
     phone: "819-752-4549",
     description: "Transportation escort service. Closed · Opens 9 a.m. Mon. Note Google 2.8/5 (67 avis).",
-    address: "3+ years in business · 59 Rue Monfette , Victoriaville, Victoriaville, QC",
     hours: "Closed · Opens 9 a.m. Mon",
+    address: "3+ years in business · 59 Rue Monfette , Victoriaville, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -32487,8 +32486,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "2-1-1",
     website: "https://salvationarmy.ca/britishcolumbia",
     description: "International Christian charitable organization devoted to helping people in need, including families in crisis, single parents, children, seniors, and those experiencing hunger, homelessness, addiction, and abuse.",
-    address: "Divisional Headquarters, 103-3833 Henning Drive, Burnaby, BC V5C 6N5",
     isUrgent: true,
+    address: "Divisional Headquarters, 103-3833 Henning Drive, Burnaby, BC V5C 6N5",
     coordinates: { lat: 49.2488, lng: -122.9805 },
   },
   {
@@ -32578,8 +32577,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "MB",
     phone: "877-677-5353",
     description: "Hôpital général de Thompson. Téléphone gratuit : 877-677-5353. Local : 204-677-2381.",
-    address: "871 Thompson Dr S, Thompson, MB R8N 0C8",
     isUrgent: true,
+    address: "871 Thompson Dr S, Thompson, MB R8N 0C8",
     coordinates: { lat: 55.743347, lng: -97.863464 },
   },
   {
@@ -32641,8 +32640,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "MB",
     phone: "1-866-539-3627",
     description: "Soutien aux nouveaux arrivants : vêtements d'hiver, articles ménagers, ordinateurs/imprimantes, recherche d'emploi/CV, soutien jeunes à risque. Traduction (anglais, français, swahili, luganda).",
-    address: "402 Notre Dame Ave, Winnipeg, MB R3B 1R1",
     isProvinceWide: true,
+    address: "402 Notre Dame Ave, Winnipeg, MB R3B 1R1",
     coordinates: { lat: 49.8955367, lng: -97.1384584 },
   },
   {
@@ -33271,8 +33270,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "2-1-1",
     website: "https://www.raincityhousing.org/about/programs",
     description: "Provides year-round, low-barrier, 24-hour emergency housing for homeless adults (19 men and nine women) who have mental health and/or substance use issues; inclusive of cisgender and transgender individuals.",
-    address: "707 Powell Street, Vancouver, BC V6A 1H5",
     isUrgent: true,
+    address: "707 Powell Street, Vancouver, BC V6A 1H5",
     coordinates: { lat: 49.2827, lng: -123.1207 },
   },
   {
@@ -33284,8 +33283,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "QC",
     phone: "1-800-622-6232",
     description: "Federal government office. Closed · Opens 8:30 a.m. Mon. Note Google 4.2/5 (53 avis).",
-    address: "3450 Boul Gene-H.-Kruger, Trois-Rivières, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "3450 Boul Gene-H.-Kruger, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -33411,8 +33410,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "QC",
     phone: "",
     description: "Psychotherapist. Closed · Opens 8:30 a.m. Mon.",
-    address: "787 Rue Saint-Pierre, Drummondville, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "787 Rue Saint-Pierre, Drummondville, QC",
     coordinates: { lat: 45.8833, lng: -72.4833 },
   },
   {
@@ -33424,8 +33423,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "QC",
     phone: "418-696-1255",
     description: "Sleep clinic. Closed · Opens 8 a.m. Mon. Note Google 5.0/5 (5 avis).",
-    address: "357 Blvd. des Bois Francs S Bureau 45, Victoriaville, QC",
     hours: "Closed · Opens 8 a.m. Mon",
+    address: "357 Blvd. des Bois Francs S Bureau 45, Victoriaville, QC",
     coordinates: { lat: 46.05, lng: -71.9667 },
   },
   {
@@ -33511,8 +33510,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "NB",
     phone: "1-800-363-8336",
     description: "Établissement postsecondaire francophone : ~200 programmes (certificat, diplôme, bac, maîtrise, doctorat). Programmes complets à Edmundston : Aménagement des forêts, Sciences infirmières, Diplôme administration des affaires, Diplôme analyse et action communautaires, DSS. Formation continue, perfectionnement professionnel, formations à distance, immersion en français. Lignes alt : 506-737-5049, 506-858-4000.",
-    address: "165 boulevard Hébert, Edmundston, NB E3V 2S8",
     isProvinceWide: true,
+    address: "165 boulevard Hébert, Edmundston, NB E3V 2S8",
     coordinates: { lat: 47.3637203, lng: -68.3288825 },
   },
   {
@@ -33561,8 +33560,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "AB",
     phone: "780-342-4740",
     description: "Alberta Health Services - Provincial Health Services. Lignes : 780-342-4740",
-    address: "Edmonton, AB T5B 0C2",
     isUrgent: true,
+    address: "Edmonton, AB T5B 0C2",
     coordinates: { lat: 53.5461, lng: -113.4938 },
   },
   {
@@ -33587,8 +33586,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "2-1-1",
     website: "https://www.vch.ca/en/locations?facility=1",
     description: "Provides same-day urgent care for individuals with unexpected, non-life-threatening health concerns when the individual is unable to access a family doctor or care provider.",
-    address: "Richmond City Centre, 110-4671 No 3 Road, Richmond, BC V6X 2C3",
     isUrgent: true,
+    address: "Richmond City Centre, 110-4671 No 3 Road, Richmond, BC V6X 2C3",
     coordinates: { lat: 49.1666, lng: -123.1336 },
   },
   {
@@ -33768,8 +33767,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "NT",
     phone: "1-866-459-1114",
     description: "Lignes : 1-866-459-1114 · 867-873-5509 Ext. 231 · 867-920-2978",
-    address: "5114 49 Street, Yellowknife, NT X1A 2P7",
     isUrgent: true,
+    address: "5114 49 Street, Yellowknife, NT X1A 2P7",
     coordinates: { lat: 62.454, lng: -114.3718 },
   },
   {
@@ -33807,8 +33806,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "2-1-1",
     website: "https://www.thebloomgroup.org/our-work/mental-health",
     description: "Provides supportive housing with 24-hour on-site care for 47 residents with chronic mental health challenges.",
-    address: "353 Cordova Street, Vancouver, BC V6A 1L4",
     isUrgent: true,
+    address: "353 Cordova Street, Vancouver, BC V6A 1L4",
     coordinates: { lat: 49.2827, lng: -123.1207 },
   },
   {
@@ -33892,8 +33891,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "2-1-1",
     website: "https://www.northernhealth.ca/locations/medical-clinics/virtual-clinic",
     description: "Provides non-emergency telemedicine to people who don't have a family doctor or nurse practioner, who need after-hours care, or who are unable to travel and receive care due to seasonal weather.",
-    address: "Prince George, BC",
     isUrgent: true,
+    address: "Prince George, BC",
     coordinates: { lat: 53.9171, lng: -122.7497 },
   },
   {
@@ -34286,8 +34285,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "2-1-1",
     website: "https://www.interiorhealth.ca/locations/west-kelowna-urgent-and-primary-care-centre",
     description: "Provides same-day access to urgent and primary care to people living in West Kelowna.",
-    address: "2484 Main Street, Westbank, BC V4T 1P7",
     isUrgent: true,
+    address: "2484 Main Street, Westbank, BC V4T 1P7",
     coordinates: { lat: 49.8338, lng: -119.6207 },
   },
   {
@@ -34499,8 +34498,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "MB",
     phone: "204-947-2422",
     description: "Traitement communautaire pour tous genres : trouble alimentaire compulsif, boulimie, anorexie, autres troubles alimentaires. Ateliers éducatifs (16 ans+), soutien aux familles. Pour <18 ans, consulter le Programme enfants/ados au Health Sciences Centre.",
-    address: "419 Graham Ave, Unit A, Winnipeg, MB R3C 0M3",
     isProvinceWide: true,
+    address: "419 Graham Ave, Unit A, Winnipeg, MB R3C 0M3",
     coordinates: { lat: 49.8955367, lng: -97.1384584 },
   },
   {
@@ -34576,8 +34575,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "ON",
     phone: "1-877-832-6090",
     description: "Clinique juridique gratuite pour travailleurs sur enjeux de santé/sécurité au travail et indemnisations.",
-    address: "180 rue Dundas Ouest, bureau 2000, Toronto, ON M5G 1Z8",
     isProvinceWide: true,
+    address: "180 rue Dundas Ouest, bureau 2000, Toronto, ON M5G 1Z8",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -34773,8 +34772,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "NT",
     phone: "867-873-2566",
     description: "Lignes : 867-873-2566 Ext. 1 or 2",
-    address: "Yellowknife, NT X1A 1E7",
     isUrgent: true,
+    address: "Yellowknife, NT X1A 1E7",
     coordinates: { lat: 62.454, lng: -114.3718 },
   },
   {
@@ -34875,8 +34874,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "NT",
     phone: "867-766-4673",
     description: "Lignes : 867-766-4673",
-    address: "5114 52 Street, Yellowknife, NT X1A 1T6",
     isUrgent: true,
+    address: "5114 52 Street, Yellowknife, NT X1A 1T6",
     coordinates: { lat: 62.454, lng: -114.3718 },
   },
   {
@@ -35127,8 +35126,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "ON",
     phone: "416-368-4896",
     description: "Traitement de jour et services de soutien communautaire pour jeunes en santé mentale. Ligne de crise : 416-363-9990.",
-    address: "229 rue Yonge, Bureau 300, Toronto, ON M5B 1N9",
     isUrgent: true,
+    address: "229 rue Yonge, Bureau 300, Toronto, ON M5B 1N9",
     coordinates: { lat: 43.6534817, lng: -79.3839347 },
   },
   {
@@ -35153,8 +35152,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "QC",
     phone: "819-691-4459",
     description: "Specialized clinic. Closed · Opens 8:30 a.m. Mon. Note Google 4.9/5 (45 avis).",
-    address: "3110 Rue d'Anjou, Trois-Rivières, QC",
     hours: "Closed · Opens 8:30 a.m. Mon",
+    address: "3110 Rue d'Anjou, Trois-Rivières, QC",
     coordinates: { lat: 46.3432, lng: -72.5432 },
   },
   {
@@ -35193,8 +35192,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "450 646-7809",
     website: "https://abri-rive-sud.org",
     description: "Hébergement d'urgence et de courte durée. Aide, référence et accompagnement dans les démarches (assistance dans la recherche de logement et d'emploi). Services de jour: accès à internet et à une ligne (Précision: Jusqu'à nouvel ordre, l'organisme n'accepte personne sur sa liste d'attente. Les personnes déjà sur celles-ci seront contactées lorsque des places se libèreront. 06/11/2025) Clientèle: personnes en situation d'itinérance de 18 ans et plus.",
-    address: "459, chemin du Coteau-Rouge, Longueuil, QC J4J 1X9",
     isUrgent: true,
+    address: "459, chemin du Coteau-Rouge, Longueuil, QC J4J 1X9",
     coordinates: { lat: 45.5312, lng: -73.5183 },
   },
   {
@@ -35542,8 +35541,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "1 866 586-3839",
     website: "https://www.canada.ca/fr/ombudsman-contribuables.html",
     description: "Service de plaintes pour les contribuables qui estiment avoir été traités de façon inéquitable ou peu professionnelle par l'Agence du revenu du Canada (ARC). Clientèle: contribuables.",
-    address: "171, rue Slater, bureau 1000, Ottawa, QC K1P 5H7",
     isProvinceWide: true,
+    address: "171, rue Slater, bureau 1000, Ottawa, QC K1P 5H7",
   },
   {
     id: "qc-jnq-a001",
@@ -35592,8 +35591,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "1 855 773-0241",
     website: "https://agriculture.canada.ca",
     description: "Exerce des responsabilités gouvernementales en matière de production, d'importation et d'exportation d'animaux ou d'aliments. Soutien technique et financier aux partenaires de l'industrie. Règlementat Clientèle: producteur·rice·s agricoles, public.",
-    address: "1341, chemin Baseline, Ottawa, QC K1A 0C5",
     isProvinceWide: true,
+    address: "1341, chemin Baseline, Ottawa, QC K1A 0C5",
   },
   {
     id: "qc-lng-fd001",
@@ -35669,8 +35668,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "1 877 373-1072",
     website: "https://aiguillage.ca/fr",
     description: "Services généraux Accueil, écoute et soutien. Information et références. Aide alimentaire et vestimentaire d'urgence. Soins infirmiers: dépistage toxicomanie, ITSS, test de grossesse, etc. Ateliers. C Clientèle: personnes dans le besoin, hébergement d'urgence: personnes de 18 ans et plus vivant une situation d'itinérance.",
-    address: "536, rue Chicoine, Vaudreuil-Dorion, QC J7V 7E4",
     isUrgent: true,
+    address: "536, rue Chicoine, Vaudreuil-Dorion, QC J7V 7E4",
     coordinates: { lat: 45.4, lng: -74.0333 },
   },
   {
@@ -35990,8 +35989,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     phone: "514 327-0200",
     website: "https://lamourenaction.org/services.html",
     description: "Hébergement d'urgence. Banque alimentaire et dépannage d'urgence. Repas communautaires. Halte-chaleur: accueil des personnes pendant l'hiver pour dormir, se laver et laver leurs vêtements. Activités s (Précision: Halte-chaleur: ouverte de 18h00 à 8h00, du 1er novembre au 31 mars 2026. 17/11/2025Récupération de dons de vêtements: entre 9h00 et 16h00. Il est préférable d'appeler afin de s'assurer que l'organisme peut accepter les dons: 514 972-3086. 05/12/2025 Le service d'hébergement à long terme est temporairement suspendu. 9/12/2025) Clientèle: personnes à faible revenu, halte-chaleur: hommes et femmes de 18 ans et plus.",
-    address: "10201, avenue des Laurentides, Montréal-Nord, Montréal, QC H1H 4V4",
     isUrgent: true,
+    address: "10201, avenue des Laurentides, Montréal-Nord, Montréal, QC H1H 4V4",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -36479,8 +36478,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "QC",
     phone: "514 953-4806",
     description: "Activités complémentaires aux traitements médicaux à des fin de ressourcement pour le corps, le cour et l'esprit aux personnes touchées par le cancer ainsi qu'aux personnes proches aidantes. Chorale. Clientèle: personnes atteintes par le cancer, personnes proches aidantes, personnes soignantes, personnes sensibles à la cause du cancer.",
-    address: "Montérégie, QC",
     isProvinceWide: true,
+    address: "Montérégie, QC",
   },
   {
     id: "qc-mtl-fd030",
@@ -37651,6 +37650,9 @@ const __SERVICES_CHUNK_3: Service[] = [
     address: "180, boulevard du Mont-Bleu, bureau 203, Gatineau, QC J8Z 3J5",
     coordinates: { lat: 45.4765, lng: -75.7013 },
   },
+];
+
+const __SERVICES_CHUNK_2: Service[] = [
   {
     id: "qc-mtl-s047",
     name: "association québécoise du syndrome de la tourette",
@@ -38282,8 +38284,8 @@ const __SERVICES_CHUNK_3: Service[] = [
     province: "QC",
     phone: "450 736-1661",
     description: "Banque alimentaire accréditée par Moisson Laval, distribution aux 2 semaines. Paniers de Noël. Aide alimentaire d'urgence. (Précision: Paniers de Noël 2025: nombre de paniers limité, pour les personnes résidentes du quartier Vimont Auteuil, gratuit, inscription: par téléphone 450 736-1661 ou sur place à la réception le mardi jusqu'au 28 novembre, cueillette du panier sur place avec fête et goûter, pas de livraison, date de distribution à venir. 28/10/2025 FM) Clientèle: personnes résidentes du quartier Vimont Auteuil.",
-    address: "1645, boulevard des Laurentides, Vimont, Laval, QC H7M 2P2",
     isUrgent: true,
+    address: "1645, boulevard des Laurentides, Vimont, Laval, QC H7M 2P2",
     coordinates: { lat: 45.6066, lng: -73.7124 },
   },
   {
@@ -40247,9 +40249,6 @@ const __SERVICES_CHUNK_3: Service[] = [
     address: "3100, rue Saint-Antoine, Lachine, Montréal, QC H8S 4B8",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
-];
-
-const __SERVICES_CHUNK_4: Service[] = [
   {
     id: "qc-mtl-s132",
     name: "bibliothèques de montréal - bibliothèque william-g.-boll",
@@ -40789,8 +40788,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "",
     website: "https://fr.breadandbeyond.ca",
     description: "Soutien aux organismes oeuvrant pour les personnes en situation d'itinérance ou à risque de le devenir. Programme le Pain: préparation et livraison de sandwiches frais et nutritifs aux refuges de Mont Clientèle: personnes sans-abri ou des personnes à risque de le devenir.",
-    address: "4680, avenue Belmore, Côte-des-Neiges—Notre-Dame-de-Grâce, Montréal, QC H4B 2C2",
     isUrgent: true,
+    address: "4680, avenue Belmore, Côte-des-Neiges—Notre-Dame-de-Grâce, Montréal, QC H4B 2C2",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -41270,8 +41269,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "1 800 686-9243",
     website: "https://www.caaquebec.com",
     description: "Services et produits dans les domaines de l'automobile, du voyage, de l'habitation et des finances. Service routier d'urgence 24 heures, 7 jours. Mandataire de la SAAQ pour l'immatriculation de véhicu",
-    address: "444, rue Bouvier, Québec, QC G2J 1E3",
     isUrgent: true,
+    address: "444, rue Bouvier, Québec, QC G2J 1E3",
     coordinates: { lat: 46.8137431, lng: -71.2084061 },
   },
   {
@@ -41451,8 +41450,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "519 448-1248",
     website: "https://campstim.com",
     description: "Camps de vacances pour les enfants l'été et durant la semaine de relâche en mars visant à aider les jeunes de communautés défavorisées à réaliser leur plein potentiel. Camps: camp commémoratif Tim Hor Clientèle: camps: jeunes, programmes: jeunes de 11 à 16 ans.",
-    address: "R.R. No.2, chemin Glenn Norris Est, St George Brant, QC N0E 1N0",
     isProvinceWide: true,
+    address: "R.R. No.2, chemin Glenn Norris Est, St George Brant, QC N0E 1N0",
   },
   {
     id: "qc-gat-fd008",
@@ -41645,8 +41644,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "514 251-2081",
     website: "https://www.capstbarnabe.org",
     description: "Refuge Bennett. Centre de jour. Suivis psychosociaux. Téléphones disponibles pour les démarches administratives. Diner chaud et café. Éducation populaire, ateliers divers. Dîner de Noël. Logements de Clientèle: personnes en situation d'itinérance, personnes à faible revenu, médiation sociale: partenaires, organisations du milieu, citoyen·ne·s du voisinage.",
-    address: "1475, avenue Bennett, Mercier—Hochelaga-Maisonneuve, Montréal, QC H1V 2S5",
     isUrgent: true,
+    address: "1475, avenue Bennett, Mercier—Hochelaga-Maisonneuve, Montréal, QC H1V 2S5",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -42277,8 +42276,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "1 888 495-8501",
     website: "https://www.antifraudcentre-centreantifraude.ca",
     description: "Collecte de l'information et des renseignements criminels sur les plaintes en matière de fraude, de marketing en masse, de lettres frauduleuses, de fraude par internet ou de vol d'identité. Prévention Clientèle: personnes pensant avoir été victimes d'une fraude, institutions.",
-    address: "Ottawa, QC",
     isProvinceWide: true,
+    address: "Ottawa, QC",
   },
   {
     id: "qc-mtl-s160",
@@ -42355,8 +42354,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "514 384-5330",
     website: "https://www.cefedi.org",
     description: "Aide alimentaire d'urgence sur référence. Comptoir alimentaire. Paniers de Noël. (Précision: Horaire des Fêtes 2025: Fermé du 25 décembre au 6 janvier. Paniers de Noël 2025: toute personne habitant Villeray, Saint-Michel, Saint-Léonard, Parc-Extension ou Rosemont-la Petite-Patrie peut s'inscrire. L'inscription est jusqu'au 1er décembre et se fait sur place ou par téléphone si la personne ne peut pas se déplacer. Une preuve d'identité de tous les membres de la famille, une preuve d'adresse et une preuve de revenu sont exigées. Le service coûte 5$. Un souper de Noël est également organisé et la date sera communiquée lors de l'inscription. 30/10/2025) Clientèle: grand public, aide alimentaire d'urgence: personnes à faible revenu.",
-    address: "8546, boulevard St-Michel, Villeray—Saint-Michel—Parc-Extension, Montréal, QC H1Z 3E8",
     isUrgent: true,
+    address: "8546, boulevard St-Michel, Villeray—Saint-Michel—Parc-Extension, Montréal, QC H1Z 3E8",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -42692,8 +42691,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "450 420-4921",
     website: "https://www.ccjll.qc.ca",
     description: "Services d'aide juridique par des personnes avocates ou des notaires, en droit civil et social, familial, matrimonial, criminel et carcéral, administratif, protection de la jeunesse, jeunes contreven Clientèle: personne ou organisation sans but lucratif résidant au Québec ou contrainte de rester au Québec, financièrement admissible et dont le service juridique demandé est couvert par la Loi.",
-    address: "300, rue Sicard, bureau 210, Sainte-Thérèse, QC J7E 3X5",
     isUrgent: true,
+    address: "300, rue Sicard, bureau 210, Sainte-Thérèse, QC J7E 3X5",
     coordinates: { lat: 45.6333, lng: -73.8333 },
   },
   {
@@ -43584,8 +43583,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "450 277-9911",
     website: "https://www.caalanaudiere.ca",
     description: "Services et programmes pour l'amélioration de la condition de vie des Autochtones. Information et référence. Ligne d'écoute 24 heures, 7 jours: 450 277-9911. Services d'accompagnement et de soutien da Clientèle: personnes autochtones de tous âges.",
-    address: "523, boulevard Sainte-Anne, Joliette, QC J6E 5A3",
     isUrgent: true,
+    address: "523, boulevard Sainte-Anne, Joliette, QC J6E 5A3",
     coordinates: { lat: 46.0167, lng: -73.4333 },
   },
   {
@@ -43933,8 +43932,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "416 962-9725",
     website: "https://cicdi.ca",
     description: "Information sur la procédure de reconnaissance des diplômes. Répertoires et informations sur les études et le travail au Canada et à l'étranger. Outils pour évaluateur·rice·s. (Précision: Le CICDI n'accepte plus aucune visite en personne. Il faut les contacter via leur site web, téléphone ou sur les réseaux sociaux. 21/11/2024)",
-    address: "Toronto, QC",
     isProvinceWide: true,
+    address: "Toronto, QC",
   },
   {
     id: "qc-qcw-a006",
@@ -44576,8 +44575,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "450 432-9300",
     website: "https://www.santelaurentides.gouv.qc.ca/nous-joindre/centres-de-readaptation",
     description: "Protection de la jeunesse. Intervention auprès des jeunes contrevenant·e·s. Recrutement de familles d'accueil et suivi. Services d'adoption et d'adoption internationale Clientèle: enfants et adolescent·e·s en difficulté, jeunes contrevenant·e·s, parents, tuteur·trice·s, personnes intervenantes.",
-    address: "358, rue Laviolette, Saint-Jérôme, QC J7Y 2T1",
     isUrgent: true,
+    address: "358, rue Laviolette, Saint-Jérôme, QC J7Y 2T1",
     coordinates: { lat: 45.7806, lng: -74.0042 },
   },
   {
@@ -44590,8 +44589,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "1 800 229-1152",
     website: "https://www.cisss-lanaudiere.gouv.qc.ca/votre-cisss/coordonnees-et-horaires/centres-de-protection-de-lenfance-et-de-la-jeunessecentres-de-readaptation-pour-les-jeunes-en-difficulte-dadaptation",
     description: "Administration des centres jeunesse et direction de la protection de la jeunesse. Réception et évaluation des signalements d'actes de négligence, de violence, d'abus à l'égard d'un jeune Clientèle: enfants et adolescent·e·s en difficulté, jeunes contrevenant·e·s, parents, tuteur·trice·s, personnes intervenantes.",
-    address: "260, rue Lavaltrie Sud, Joliette, QC J6E 5X7",
     isUrgent: true,
+    address: "260, rue Lavaltrie Sud, Joliette, QC J6E 5X7",
     coordinates: { lat: 46.0167, lng: -73.4333 },
   },
   {
@@ -44604,8 +44603,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "450 436-7607",
     website: "https://www.santelaurentides.gouv.qc.ca/nous-joindre/centres-de-readaptation",
     description: "Administration des Centres jeunesse. Direction de la protection de la jeunesse: réception et Clientèle: enfants et adolescent·e·s en difficulté, jeunes contrevenant·e·s, parents, tuteur·trice·s, intervenant·e·s.",
-    address: "500, boulevard des Laurentides, bureau 241, Saint-Jérôme, QC J7Z 4M2",
     isUrgent: true,
+    address: "500, boulevard des Laurentides, bureau 241, Saint-Jérôme, QC J7Z 4M2",
     coordinates: { lat: 45.7806, lng: -74.0042 },
   },
   {
@@ -44904,8 +44903,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "514 326-4116 poste 4",
     website: "https://ainesstleonard.com",
     description: "Alimentation Aide alimentaire d'urgence. Panier de Noël. Dîners communautaires.Assistance communautaire Intervention psychosociale. Accompagnement et transport. Appels et visites d'amitié. Coupe de ch Clientèle: personnes de 55 ans et plus.",
-    address: "5555, rue Jean-Talon Est, Saint-Léonard, Montréal, QC H1S 1L8",
     isUrgent: true,
+    address: "5555, rue Jean-Talon Est, Saint-Léonard, Montréal, QC H1S 1L8",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -44982,8 +44981,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "514 381-6046",
     website: "https://femmesdeconvictions.org",
     description: "Hébergement d'urgence pour femmes adultes en situation d'itinérance. Information et références. Relation d'aide. Repas inclus. Buanderie sur place. Intervenante sur place. Soutien: aide à la recherche Clientèle: femmes seules de 18 ans et plus en situation d'itinérance.",
-    address: "590, boulevard Crémazie Est, Ahuntsic-Cartierville, Montréal, QC H2M 1L9",
     isUrgent: true,
+    address: "590, boulevard Crémazie Est, Ahuntsic-Cartierville, Montréal, QC H2M 1L9",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -46334,8 +46333,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "450 581-2541",
     website: "https://www.charlemagne.ca",
     description: "Gestion des services municipaux. Gestion et paiement des taxes municipales. Permis de construction. Collecte des matières résiduelles. Licences pour animaux. Système de notification d'urgence. Info-ci",
-    address: "2, boulevard Céline-Dion, 1er étage, Charlemagne, QC J5Z 0G2",
     isUrgent: true,
+    address: "2, boulevard Céline-Dion, 1er étage, Charlemagne, QC J5Z 0G2",
     coordinates: { lat: 45.7167, lng: -73.4833 },
   },
   {
@@ -46374,8 +46373,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "514 937-2341 poste 260",
     website: "https://www.chezdoris.org",
     description: "Hébergements temporaires et permanents pour femmes et centre de santé et de services d'urgence offrant des programmes de soutien et de prévention.Hébergements et centre Centre de jour: répit sécuritai Clientèle: femmes en situation d'itinérance ou en difficulté, femmes inuites ou autochtones.",
-    address: "1430, rue Chomedey, Ville-Marie, Montréal, QC H3H 2A7",
     isUrgent: true,
+    address: "1430, rue Chomedey, Ville-Marie, Montréal, QC H3H 2A7",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -47586,8 +47585,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "1 877 836-7543",
     website: "https://college-ic.ca",
     description: "Organisme de réglementation pour toute personne qui fournit de la représentation ou des conseils en immigration canadienne. Protection de la clientèle. Gestion des plaintes concernant les consulta",
-    address: "5500, North Service Road, bureau 1002, Burlington, QC L7L 6W6",
     isProvinceWide: true,
+    address: "5500, North Service Road, bureau 1002, Burlington, QC L7L 6W6",
   },
   {
     id: "qc-mtl-a034",
@@ -48010,8 +48009,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "1 800 282-1376",
     website: "https://www.priv.gc.ca/fr",
     description: "Défense du droit des Canadiennes et des Canadiens à la protection de la vie privée. Réception et traitement des plaintes. Information sur les pratiques relatives au traitement des renseignements pe",
-    address: "30, rue Victoria, Ottawa, QC K1A 1H3",
     isProvinceWide: true,
+    address: "30, rue Victoria, Ottawa, QC K1A 1H3",
   },
   {
     id: "qc-jlt-e001",
@@ -48114,8 +48113,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "343 883-9984",
     website: "https://communautecongolaise.com",
     description: "Représentation et accompagnement de la communauté congolaise et afrodescendante au Canada.Intégration et cohésion sociale Accompagnement des personnes nouvellement arrivées. Médiation. Traduct Clientèle: communauté congolaise.",
-    address: "23, rue Donald, porte D, bureau 268, Ottawa, QC K1K 4B7",
     isProvinceWide: true,
+    address: "23, rue Donald, porte D, bureau 268, Ottawa, QC K1K 4B7",
   },
   {
     id: "qc-mtl-fd164",
@@ -48483,8 +48482,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "416 962-8100",
     website: "https://www.cmec.ca/fr",
     description: "Instance intergouvernementale collaborative et décisionnelle. Assure le leadership en éducation aux échelons pancanadien et international et aide les provinces et les territoires à exercer leur compét",
-    address: "95, avenue St-Clair Ouest, bureau 1106, Toronto, QC M4V 1N6",
     isProvinceWide: true,
+    address: "95, avenue St-Clair Ouest, bureau 1106, Toronto, QC M4V 1N6",
   },
   {
     id: "qc-mtl-fd169",
@@ -48522,8 +48521,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "1 877 672-2672",
     website: "https://nrc.canada.ca/fr",
     description: "Principale organisation de recherche et de développement du gouvernement canadien. Partenariats de recherche et d'affaire avec les entreprises. Horloge parlante: heure exacte.",
-    address: "1200, chemin Montréal, édifice M-58, Ottawa, QC K1A 0R6",
     isProvinceWide: true,
+    address: "1200, chemin Montréal, édifice M-58, Ottawa, QC K1A 0R6",
   },
   {
     id: "qc-lng-a004",
@@ -49063,8 +49062,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     province: "QC",
     phone: "438 880-4654",
     description: "Garde-mangers communautaires extérieurs en libre-accès et accessibles 24 heures, 7 jours.Ahuntsic-Cartierville Coin rue Fleury Est et rue Garnier, H2C 3B8. Devant 765, rue Legendre Est, H2M 1H1.Côte-d (Précision: Notez bien! L'organisme ne donne pas de nourriture directement. Il s'agit de boîtes (garde-mangers) qui favorisent l'échange de nourriture entre citoyen·ne·s. Consulter les adresses dans la description des services. 13/1/2026) Clientèle: grand public.",
-    address: "Montréal, QC",
     isUrgent: true,
+    address: "Montréal, QC",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -49774,8 +49773,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "418 643-3500",
     website: "https://www.quebec.ca/securite-situations-urgence/services-correctionnels",
     description: "Coordination des services correctionnels sur le territoire. Trouver un établissement de détention: www.quebec.ca/securite-situations-urgence/services-correctionnels/trouver-etablissement-detention Tro",
-    address: "2525, boulevard Laurier, 5e étage, Tour des Laurentides, Québec, QC G1V 2L2",
     isUrgent: true,
+    address: "2525, boulevard Laurier, 5e étage, Tour des Laurentides, Québec, QC G1V 2L2",
     coordinates: { lat: 46.8137431, lng: -71.2084061 },
   },
   {
@@ -49814,8 +49813,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "450 662-4595",
     website: "https://www.laval.ca/police",
     description: "Intervention psychosociale d'urgence et de première ligne. Sinistre: soutien psychosocial, hébergement temporaire et distribution de biens de première nécessité. Décès traumatique (accident, suicide Clientèle: citoyens de 18 ans et plus vivant une situation de crise.",
-    address: "2785, avenue Francis-Hughes, Laval, QC H7L 3J6",
     isUrgent: true,
+    address: "2785, avenue Francis-Hughes, Laval, QC H7L 3J6",
     coordinates: { lat: 45.6066, lng: -73.7124 },
   },
   {
@@ -49828,8 +49827,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "1 800 463-5070",
     website: "https://protecteurducitoyen.qc.ca",
     description: "Traitement des divulgations d'actes répréhensibles à l'égard d'un organisme public et des plaintes relativement à des actes de représailles suite à une divulgation. Service de consultati",
-    address: "Capitale-Nationale, QC",
     isProvinceWide: true,
+    address: "Capitale-Nationale, QC",
   },
   {
     id: "qc-mtl-s245",
@@ -50418,8 +50417,8 @@ const __SERVICES_CHUNK_4: Service[] = [
     phone: "1 800 668-6767",
     website: "https://www.canada.ca/fr/environnement-changement-climatique.html",
     description: "Exerce des responsabilités gouvernementales en matière de protection de l'environnement et du patrimoine, d'application des lois et règlements applicables et de prévisions météorologiques. Cote air sa",
-    address: "200, boulevard Sacré-Coeur, 12e étage, Gatineau, QC K1A 0H3",
     isProvinceWide: true,
+    address: "200, boulevard Sacré-Coeur, 12e étage, Gatineau, QC K1A 0H3",
     coordinates: { lat: 45.4765, lng: -75.7013 },
   },
   {
@@ -50551,9 +50550,6 @@ const __SERVICES_CHUNK_4: Service[] = [
     address: "2060, rue Holmes, 2e étage, Longueuil, QC J4T 1R8",
     coordinates: { lat: 45.5312, lng: -73.5183 },
   },
-];
-
-const __SERVICES_CHUNK_5: Service[] = [
   {
     id: "qc-mtl-s256",
     name: "espace multisoleil",
@@ -51355,8 +51351,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "",
     website: "https://forceamitiemontreal.ca",
     description: "Promotion de l'amitié et la paix entre différentes cultures. Voyages transformateurs. Activités socio-culturelles locales. Création de liens d'amitié. Accueils de visiteurs du réseau FFI. Séjours chez Clientèle: grand public.",
-    address: "Montérégie, QC",
     isProvinceWide: true,
+    address: "Montérégie, QC",
   },
   {
     id: "qc-for-a001",
@@ -51739,8 +51735,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "1 833 212-1438",
     website: "https://www.ccg-gcc.gc.ca",
     description: "Assure la gestion et la coordination des services liés à la sécurité maritime dans les eaux canadiennes. Gestion du trafic maritime et des droits de passage et de services applicables. Sûreté maritime",
-    address: "Ottawa, QC",
     isProvinceWide: true,
+    address: "Ottawa, QC",
   },
   {
     id: "qc-mtl-fd225",
@@ -52296,8 +52292,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "438 823-0301",
     website: "https://montreal.ca/articles/habitations-temporaires-pour-sortir-de-litinerance-88908",
     description: "Habitations transitoires avec accompagnement. Intervenant·e·s présents 24 heures, 7 jours. Services psychosociaux. Aide à la recherche d'un domicile permanent. Aide à la recherche d'un emploi. Clientèle: habitations: personnes itinérantes autonomes de 18 ans et plus qui sont sans enfants et sans enjeux de comportement liés aux dépendances et à la santé mentale, autres services: personnes habitant les habitations transitoires.",
-    address: "Montréal, QC",
     isUrgent: true,
+    address: "Montréal, QC",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -52504,8 +52500,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "450 471-4664",
     website: "https://lahutte.org",
     description: "Halte-chaleur. Répit. Accueil, écoute et référence. Repas chaud. Douche. Buanderie. Dépannage vestimentaire. (Précision: Halte chaleur répit de nuit du 1er novembre au 31 mars, 7 jours de 23h00 à 7h00. 5/11/2025) Clientèle: personnes de 18 ans et plus en situation d'itinérance.",
-    address: "Terrebonne, QC",
     isUrgent: true,
+    address: "Terrebonne, QC",
     coordinates: { lat: 45.7, lng: -73.6333 },
   },
   {
@@ -53200,8 +53196,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "450 632-6880",
     website: "https://www.kscs.ca",
     description: "Soutien psychologique Ligne téléphonique d'urgence pour situations de crise. Intervention psychosociale individuelle, de crise, conjugale et familiale. Gestion de la colère. Soutien pour les problèmes (Précision: *) Clientèle: résident·e·s.",
-    address: "Kahnawake, QC",
     isUrgent: true,
+    address: "Kahnawake, QC",
     coordinates: { lat: 45.4167, lng: -73.6833 },
   },
   {
@@ -53551,8 +53547,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "604 625-1532",
     website: "https://www.languagescanada.ca/fr",
     description: "Association nationale d'enseignement des langues officielles. Référence pour des cours d'anglais et de français. Recherche. Clientèle: étudiants internationaux, personnes désirant apprendre le français ou l'anglais.",
-    address: "27282, avenue 12B, Aldergrove, Metro Vancouver, BC, V4W 2P6",
     isProvinceWide: true,
+    address: "27282, avenue 12B, Aldergrove, Metro Vancouver, BC, V4W 2P6",
   },
   {
     id: "qc-mtl-a005",
@@ -54442,8 +54438,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "450-747-8511",
     website: "https://mhdv.org/?brid=kvUhTp-pwp3xEby0QhN4_A",
     description: "Refuge d'urgence à haut seuil de tolérance avec ou sans hébergement avec intervenant-e sur place. Repas. Douches. Lessive. Intervention psychosociale. Halte-chaleur. Clientèle: personnes de 18 ans et plus sans enfants.",
-    address: "67, rue Wilfrid, Salaberry-de-Valleyfield, QC J6T 2N6",
     isUrgent: true,
+    address: "67, rue Wilfrid, Salaberry-de-Valleyfield, QC J6T 2N6",
     coordinates: { lat: 45.25, lng: -74.1333 },
   },
   {
@@ -55569,8 +55565,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "438 773-0633",
     website: "https://lamaisonentrefamilles.com/fr-ca/",
     description: "Centre de soutien communautaire. Banque alimentaire. Aide alimentaire d'urgence pour victime de feu ou pour la Croix-Rouge. Friperie. Paniers de Noël. Santé et bien-être et communauté de proximité. Év (Précision: Paniers de Noël 2025: Inscription commence à la mi-octobre. Toutes personnes à faible revenu résidant dans le territoire peuvent s'inscrire. Inscription par téléphone. Une preuve de résidence et de revenus sont requises. La distribution se fait en décembre. Le service est gratuit. 11/12/2025) Clientèle: familles vivant avec des difficultés financières.",
-    address: "15739, rue de la Caserne, L'Île-Bizard—Sainte-Geneviève, Montréal, QC H9H 1G3",
     isUrgent: true,
+    address: "15739, rue de la Caserne, L'Île-Bizard—Sainte-Geneviève, Montréal, QC H9H 1G3",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -55699,8 +55695,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "819 623-3719 poste 2232",
     website: "https://www.maisonlysebeauchamp.org/itinerance",
     description: "Hébergement d'urgence. Repas pour les personnes en situation d'itinérance. Distribution de matériel de consommation sécuritaire (CAMI). Distribution de trousses de naloxone (intra-nasale et injectable Clientèle: personnes de 18 ans et plus en situation d'urgence sociale, d'itinérance ou d'errance.",
-    address: "765, rue Vaudreuil, Mont-Laurier, QC J9L 2B8",
     isUrgent: true,
+    address: "765, rue Vaudreuil, Mont-Laurier, QC J9L 2B8",
     coordinates: { lat: 46.55, lng: -75.5 },
   },
   {
@@ -55882,8 +55878,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "514 271-3533",
     website: "https://lamaisonnee.org/fr",
     description: "Assistance matérielle Dépannage alimentaire régulier et d'urgence. Groupes d'achats.Emploi Ateliers de recherche d'emploi, rédaction de CV, suivi individuel, placement en stage et en emploi. Aide à la Clientèle: personnes immigrantes, personnes demandeuses d'asile, service à l'emploi: personnes immigrantes, priorité aux personnes nouvellement arrivées (avec un statut d'immigration).",
-    address: "6865, avenue Christophe-Colomb, Rosemont—La Petite-Patrie, Montréal, QC H2S 2H3",
     isUrgent: true,
+    address: "6865, avenue Christophe-Colomb, Rosemont—La Petite-Patrie, Montréal, QC H2S 2H3",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -55909,8 +55905,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "1 833 863-9323",
     website: "https://www.lesmaisonsdacotelanaudiere.com",
     description: "Logements adaptés pour personnes vivant avec une déficience physique Préposé·e·s aux bénéficiaires sur place 24 heures, 7 jours. Présence d'infirmièr·e·s auxiliaires. Intervention communautaire. Suppl Clientèle: personnes vivant avec un handicap physique de 18 ans et plus.",
-    address: "639, rue Henri-Châlin, Joliette, QC J6E 0A4",
     isUrgent: true,
+    address: "639, rue Henri-Châlin, Joliette, QC J6E 0A4",
     coordinates: { lat: 46.0167, lng: -73.4333 },
   },
   {
@@ -56346,8 +56342,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "514 864-9191",
     website: "https://www.quebec.ca/gouvernement/ministere/immigration",
     description: "Ministère du gouvernement du Québec responsable de l'immigration, de la francisation et de l'intégration des nouveaux arrivants. Sélection des candidats à l'immigration permanente et temporaire, programmes de francisation gratuits, soutien à l'intégration sociale et économique, rapprochement interculturel. Sans frais : 1 877 864-9191. Clientèle : personnes immigrantes, demandeurs d'asile, résidents temporaires, Québécois cherchant de l'information.",
-    address: "1200 Boul. Saint-Laurent, Montréal, QC H2X 0C9",
     hours: "Lun-Ven 8h30-16h30 (fermé fin de semaine)",
+    address: "1200 Boul. Saint-Laurent, Montréal, QC H2X 0C9",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -56399,8 +56395,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "1 888 995-2534",
     website: "https://www.canada.ca/fr/ministere-defense-nationale.html",
     description: "Exerce des responsabilités gouvernementales en matière de défense nationale et de Forces armées canadiennes. Information sur les activités des Forces Canadiennes et de son personnel. Déf",
-    address: "101, promenade Colonel By, Ottawa, QC K1A 0K2",
     isProvinceWide: true,
+    address: "101, promenade Colonel By, Ottawa, QC K1A 0K2",
   },
   {
     id: "qc-mtl-a069",
@@ -56503,8 +56499,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "1 833 712-2292",
     website: "https://www.canada.ca/fr/ministere-finances.html",
     description: "Exerce des responsabilités gouvernementales en matière de préparation de budget et de politiques économiques. Mise en ouvre de politiques et programmes économiques et fiscaux.",
-    address: "90, rue Elgin, 14e étage, Ottawa, QC K1A 0G5",
     isProvinceWide: true,
+    address: "90, rue Elgin, 14e étage, Ottawa, QC K1A 0G5",
   },
   {
     id: "qc-qbc-a009",
@@ -56724,8 +56720,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "514 935-6396",
     website: "https://missionbonaccueil.com",
     description: "Hébergement d'urgence: gîte avec déjeuner et souper quotidiens, vêtements, produits d'hygiène, douches, services-conseils. Programme de transition et de réinsertion socioprofessionnelle. Activités (Précision: Les repas sont seulement pour les usages qui sont hébergés au Centre d'accueil et référencement. 25/10/2022) Clientèle: hommes sans-abri ou dans le besoin de 18 ans et plus, avec ou sans problématique de dépendance, programme Prisme: hommes vivant avec des troubles psychotiques.",
-    address: "1490, rue Saint-Antoine Ouest, Ville-Marie, Montréal, QC H3C 1C3",
     isUrgent: true,
+    address: "1490, rue Saint-Antoine Ouest, Ville-Marie, Montréal, QC H3C 1C3",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -56790,9 +56786,9 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "1 866 313-2827",
     website: "https://www.dayforcecares.com/cf",
     description: "Soutien financier aux familles. Aide financière pour les besoins primaires: nourriture, vêtements, articles ménagers. Aide financière pour l'achat d'appareils médicaux, l'adaptation de domiciles, les (Précision: Pas un service d'aide d'urgence. L'approbation prend au minimum 90 jours.) Clientèle: personnes de 18 ans et plus et familles à revenu faible ou modéré qui ont la citoyenneté canadienne ou ont le statut de résident permanent.",
-    address: "4110, rue Yonge, North York, QC M2P 2B7",
     isUrgent: true,
     isProvinceWide: true,
+    address: "4110, rue Yonge, North York, QC M2P 2B7",
   },
   {
     id: "qc-mtl-fd267",
@@ -56843,8 +56839,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "514 866-6591 poste 0",
     website: "https://www.missionoldbrewery.ca/fr",
     description: "Ensemble de pavillons fournissant refuge, logement, vêtements et repas. Assistance à la recherche d'emploi. Possibilité de travaux compensatoires. Services spécialisés pour adultes itinérants. Pavillo Clientèle: personnes en situation d'itinérance.",
-    address: "915, rue Clark, Ville-Marie, Montréal, QC H2Z 1J8",
     isUrgent: true,
+    address: "915, rue Clark, Ville-Marie, Montréal, QC H2Z 1J8",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -56857,8 +56853,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "514 798-2244",
     website: "https://www.missionoldbrewery.ca/fr",
     description: "Service d'urgence et d'accompagnement vers le logement. Programmes pour personnes vivant un premier épisode d'itinérance et en santé urbaine (santé mentale, santé physique et consommation d'alc Clientèle: hommes en situation d'itinérance de 18 ans et plus.",
-    address: "915, rue Clark, Ville-Marie, Montréal, QC H2Z 1J8",
     isUrgent: true,
+    address: "915, rue Clark, Ville-Marie, Montréal, QC H2Z 1J8",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -57000,10 +56996,13 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "514 727-1403",
     website: "https://monrestosaintmichel.org",
     description: "Alimentation Dîners à prix modiques. Mets surgelés. Cuisines collectives multiculturelles. Aide alimentaire d'urgence et aide alimentaire régulière. Agriculture urbaine. Éducation et suivi alimentaire (Précision: Aide alimentaire régulière: l'organisme ne prend plus de nouvelles inscriptions jusqu'à nouvel ordre. 23/04/2025) Clientèle: aide alimentaire et magasins-partage: personnes à un faible revenu.",
-    address: "8735, boulevard Pie-IX, Villeray—Saint-Michel—Parc-Extension, Montréal, QC H1Z 3T9",
     isUrgent: true,
+    address: "8735, boulevard Pie-IX, Villeray—Saint-Michel—Parc-Extension, Montréal, QC H1Z 3T9",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
+];
+
+const __SERVICES_CHUNK_3: Service[] = [
   {
     id: "qc-mtl-s320",
     name: "mont-royal - loisirs, culture et activités communautaires",
@@ -57416,8 +57415,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "514 481-8125",
     website: "https://montreal-west.ca/fr",
     description: "Gestion des services municipaux. Paiement des taxes municipales. Collecte des matières résiduelles. Permis de construction. Permis de stationnement. Système de notification d'urgence.",
-    address: "50, avenue Westminster Sud, Montréal-Ouest, Montréal, QC H4X 1Y7",
     isUrgent: true,
+    address: "50, avenue Westminster Sud, Montréal-Ouest, Montréal, QC H4X 1Y7",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -57482,8 +57481,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "514 278-9383",
     website: "https://www.mcvicontreleviol.org",
     description: "Groupes de soutien pour femmes victimes de la traite à des fins d'exploitation sexuelle. Consultation individuelle. Intervention de crise et suivi à court ou moyen terme. Accompagnement dans les procé Clientèle: femmes de 14 ans et plus victimes de viol, d'inceste ou d'abus sexuel, mères d'enfants agressé·e·s sexuellement, femmes immigrantes ou demandant l'asile ayant vécu des agressions sexuelles.",
-    address: "Montréal, QC",
     isUrgent: true,
+    address: "Montréal, QC",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -57946,8 +57945,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "311",
     website: "https://www.napierville.ca",
     description: "Gestion des services municipaux. Paiement des taxes municipales. Système de notification d'urgence. Licence pour chien et chat. Information sur la collecte des matières résiduelles. Service des incend",
-    address: "260, rue de l'Église, Napierville, QC J0J 1L0",
     isUrgent: true,
+    address: "260, rue de l'Église, Napierville, QC J0J 1L0",
     coordinates: { lat: 45.1833, lng: -73.4 },
   },
   {
@@ -58177,8 +58176,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "819 778-1325",
     website: "https://loio.ca",
     description: "Aide et soutien au logement pour les familles. Logements d'urgence d'une durée d'occupation de quelques semaines à plusieurs mois. Appartements de transition. Accompagnement et soutien. Évaluation psy Clientèle: familles à faible revenu avec enfants et en difficulté au niveau du logement ou à la rue.",
-    address: "95, rue Lois, Gatineau, QC J8Y 3R5",
     isUrgent: true,
+    address: "95, rue Lois, Gatineau, QC J8Y 3R5",
     coordinates: { lat: 45.4765, lng: -75.7013 },
   },
   {
@@ -58630,8 +58629,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "",
     website: "https://www.kina8at.ca",
     description: "Promotion et transmission de la culture des Autochtones. Ateliers créatifs et art-thérapie. Cours de langues et camps linguistiques. Centre de ressourcement. Programme d'accompagnement traditionnel: s Clientèle: personnes autochtones, familles, grand public, écoles, entreprises, institutions, programme d'accompagnement traditionnel: groupes de personnes autochtones et familles autochtones vivant de la violence physique (psychologique ou émotionnelle).",
-    address: "Laurentides, QC",
     isProvinceWide: true,
+    address: "Laurentides, QC",
   },
   {
     id: "qc-mtl-i022",
@@ -59017,8 +59016,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "1 866 599-4999",
     website: "https://www.parl.ca",
     description: "Fournissent des conseils durant les démarches entreprises auprès des différents ministères, programmes et services fédéraux. Régime de pensions du Canada (RPC). Sécurité de la vieillesse (SV). Passepo",
-    address: "111, rue Wellington, Ottawa, QC K1A 0A6",
     isProvinceWide: true,
+    address: "111, rue Wellington, Ottawa, QC K1A 0A6",
   },
   {
     id: "qc-mtl-fd296",
@@ -59934,8 +59933,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "514 630-1200",
     website: "https://www.pointe-claire.ca/",
     description: "Gestion des services municipaux. Paiement des taxes municipales. Permis de construction. Assermentation. Licence pour chiens. Collecte des matières résiduelles. Système de notification d'urgence. Serv",
-    address: "451, boulevard Saint-Jean, Pointe-Claire, Montréal, QC H9R 3J3",
     isUrgent: true,
+    address: "451, boulevard Saint-Jean, Pointe-Claire, Montréal, QC H9R 3J3",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -59987,8 +59986,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "514 872-3757",
     website: "https://www.apamtl.ca",
     description: "Réhabilitation des pompier·ère·s.? Premiers soins.? Soutien opérationnel au SIM. Assistance lors de sinistres ou autres. Boutique en ligne. Clientèle: pompier·ère·s, intervenant·e·s d'urgence, grand public.",
-    address: "5100, boulevard Saint-Laurent, Le Plateau-Mont-Royal, Montréal, QC H2T 1R8",
     isUrgent: true,
+    address: "5100, boulevard Saint-Laurent, Le Plateau-Mont-Royal, Montréal, QC H2T 1R8",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -60230,8 +60229,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "514 939-1970",
     website: "https://www.opendoortoday.org",
     description: "Refuge et centre de services pour les personnes en situation d'itinérance ou à risque de le devenir. Déjeuner, dîner, souper, collations. Buanderie et distribution de vêtements. Douches. Distribution Clientèle: personnes de 18 ans et plus de toutes identités de genre, en situation d'itinérance ou à risque de le devenir, avec ou sans animaux de compagnie, couples, personnes autochtones et allochtones, les membres des communautés autochtones sont priorisés.",
-    address: "3535, avenue du Parc, Le Plateau-Mont-Royal, Montréal, QC H2X 2H8",
     isUrgent: true,
+    address: "3535, avenue du Parc, Le Plateau-Mont-Royal, Montréal, QC H2X 2H8",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -60372,8 +60371,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "1 877 644-4545",
     website: "https://www.quebec.ca/sante/conseils-et-prevention/vaccination/vaccin-contre-la-covid-19",
     description: "Programme provincial de vaccination contre la COVID-19. Sites de vaccination: https://portal3.clicsante.ca/services/vaccination-contre-la-covid-19 Clientèle: pour la clientèle éligible consulter le site web.",
-    address: "QC",
     isProvinceWide: true,
+    address: "QC",
   },
   {
     id: "qc-mtl-i109",
@@ -60475,8 +60474,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     province: "QC",
     phone: "450 687-7715",
     description: "Aide alimentaire aux familles réfugiés ou demandeuses d'asile. Aide alimentaire d'urgence. Repas pour emporter. Cuisine collective. Intégration et assistance aux familles. Jardin intérieur et extérieu Clientèle: familles demandeuses d'asile, familles réfugiés à faible revenu.",
-    address: "976, boulevard Curé-Labelle, Chomedey, Laval, QC H7V 2V5",
     isUrgent: true,
+    address: "976, boulevard Curé-Labelle, Chomedey, Laval, QC H7V 2V5",
     coordinates: { lat: 45.6066, lng: -73.7124 },
   },
   {
@@ -60528,8 +60527,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     phone: "514 879-3310",
     website: "https://paqc.org",
     description: "Intervention de crise. Repas chauds. Programme Nouveau Départ: soutien holistique aux autochtones nouvellement arrivés en ville. Refuges d'urgence: un étage pour les femmes et un pour les hommes. Cham Clientèle: personnes autochtones de 18 ans et plus, des Premières Nations, Métis et Inuit en situation d'itinérance ou de précarité.",
-    address: "338, rue Saint-Antoine Est, bureau 402, Ville-Marie, Montréal, QC H2Y 1A3",
     isUrgent: true,
+    address: "338, rue Saint-Antoine Est, bureau 402, Ville-Marie, Montréal, QC H2Y 1A3",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -60839,8 +60838,8 @@ const __SERVICES_CHUNK_5: Service[] = [
     province: "QC",
     phone: "438 378-8247",
     description: "Refuge d'urgence. Hébergement, lavage, douches. Souper, déjeuner et collation. Intervention psychosociale sur place. Infirmière practiciennes spécialisées (IPS) sur place. Clientèle: personnes en situation d'itinérance.",
-    address: "3550, boulevard Lévesque Ouest, Laval, QC H7V 1E8",
     isUrgent: true,
+    address: "3550, boulevard Lévesque Ouest, Laval, QC H7V 1E8",
     coordinates: { lat: 45.6066, lng: -73.7124 },
   },
   {
@@ -60882,9 +60881,6 @@ const __SERVICES_CHUNK_5: Service[] = [
     address: "276, rue Saint-Jacques, bureau 301, Ville-Marie, Montréal, QC H2Y 1N3",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
-];
-
-const __SERVICES_CHUNK_6: Service[] = [
   {
     id: "qc-mtl-a106",
     name: "registre foncier du québec",
@@ -61475,8 +61471,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "1 855 525-9293",
     website: "https://ressources-naturelles.canada.ca",
     description: "Exercice des responsabilités gouvernementales cherchant à renforcer le développement et l'utilisation responsables des ressources naturelles du Canada et la compétitivité des produits tirés des ressou",
-    address: "580, rue Booth, Ottawa, QC K1A 0E4",
     isProvinceWide: true,
+    address: "580, rue Booth, Ottawa, QC K1A 0E4",
   },
   {
     id: "qc-mlr-fd002",
@@ -61566,8 +61562,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "1 800 463-5185",
     website: "https://www.rrq.gouv.qc.ca/fr/programmes/regime_rentes/Pages/regime_rentes.aspx",
     description: "Régime d'assurance public et obligatoire pour les travailleur·euse·s de 18 ans et plus dont le revenu annuel dépasse 3 500$. Offre une protection financière de base aux personnes qui travaillent ou qu Clientèle: travailleur·euse·s, personnes retraitées, conjoint·e·s ou enfants survivants, personnes invalides.",
-    address: "Capitale-Nationale, QC",
     isProvinceWide: true,
+    address: "Capitale-Nationale, QC",
   },
   {
     id: "qc-qbc-a016",
@@ -61891,8 +61887,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "514 284-9665",
     website: "https://laruedesfemmes.org",
     description: "Centre de jour et hébergement d'urgence pour femmes en situation d'itinérance. Centre de jour: repas, espace de repos et soins de santé relationnelle. Soutien, relation d'aide, intervention en situati Clientèle: femmes en état d'itinérance ou en difficulté.",
-    address: "1050, rue Jeanne-Mance, Ville-Marie, Montréal, QC H2Z 1L7",
     isUrgent: true,
+    address: "1050, rue Jeanne-Mance, Ville-Marie, Montréal, QC H2Z 1L7",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -61905,8 +61901,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "438 383-4952",
     website: "https://www.laruedesfemmes.org",
     description: "Centre de jour et hébergement d'urgence pour femmes en situation d'itinérance. Soutien et accompagnement. Repas. Activités et services. Clientèle: femmes en état d'itinérance ou en difficulté.",
-    address: "Montréal, QC",
     isUrgent: true,
+    address: "Montréal, QC",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -62062,8 +62058,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "450 472-3135",
     website: "https://www.acjbl.org",
     description: "Hébergement court terme 24 heures, 7 jours. Durée de 1 à 30 jours. Accueil de jour: repas, douches, lavage et accès Internet. Accompagnement dans les démarches de réinsertion. Suivi individuel et réfé Clientèle: personnes de 18 ans et plus itinérantes ou à risque d'itinérance.",
-    address: "305, rue Féré, Saint-Eustache, QC J7R 2V1",
     isUrgent: true,
+    address: "305, rue Féré, Saint-Eustache, QC J7R 2V1",
     coordinates: { lat: 45.5667, lng: -73.9 },
   },
   {
@@ -62544,8 +62540,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "514 932-5353",
     website: "https://www.ymcaquebec.org",
     description: "Hébergement temporaire avec services. Vestiaire d'urgence. Salle familiale et sorties socioculturelles. Information et aide avec le processus d'immigration et d'intégration pour réfugié·e·s. Ateliers Clientèle: réfugié·e·s et demandeur·euse·s d'asile nouvellement arrivé·e·s au Canada, hébergement: réfugié·e·s et demandeur·euse·s d'asile, avec ou sans enfants, arrivé·e·s depuis moins de 10 jours au Québec.",
-    address: "4039, rue Tupper, Westmount, Montréal, QC H3Z 1T5",
     isUrgent: true,
+    address: "4039, rue Tupper, Westmount, Montréal, QC H3Z 1T5",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -62558,8 +62554,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "438 828-8995",
     website: "https://www.resiliencemontreal.com/fr/accueil",
     description: "Refuge pour personnes itinérantes. Halte de jour mixte pour hommes et femmes. Souper et déjeuner. Douche et vestiaire. Espace sécurisé. Soutien médical et psychologique. Accès à des ordinateurs. Distr (Précision: Activités de Noël 2025: festin de Noël et karaoké. 18/12/2025) Clientèle: personnes en situation d'itinérance.",
-    address: "4000, rue Sainte-Catherine Ouest, Westmount, Montréal, QC H3Z 1P1",
     isUrgent: true,
+    address: "4000, rue Sainte-Catherine Ouest, Westmount, Montréal, QC H3Z 1P1",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -63519,8 +63515,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "613 225-2770 poste 501",
     website: "https://www.scouts.ca/fr/conseils/eastern/quebec/home.html",
     description: "Programmes éducationnels pour les jeunes. Visites aux écoles. Programmes sur la nature. Formation en leadership (jeunes et adultes). Développement personnel. Clientèle: jeunes âgés de 5 à 26 ans, adultes de tout âge.",
-    address: "1345, chemin Baseline, bureau 200, Ottawa, QC K2C 0A7",
     isProvinceWide: true,
+    address: "1345, chemin Baseline, bureau 200, Ottawa, QC K2C 0A7",
   },
   {
     id: "qc-mtl-s373",
@@ -64686,8 +64682,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "450 923-6311",
     website: "https://www.brossard.ca/services/services-brossard",
     description: "Hébergement d'urgence pour les personnes se retrouvant sans logement à l'approche du 1er juillet. Références possibles à partir du 25 juin. Clientèle: ménages aillant un bail avec une adresse à Brossard et qui se retrouveront sans logement le 1er juillet.",
-    address: "2001, boulevard de Rome, Brossard, QC J4W 3K5",
     isUrgent: true,
+    address: "2001, boulevard de Rome, Brossard, QC J4W 3K5",
     coordinates: { lat: 45.4509, lng: -73.4684 },
   },
   {
@@ -64804,8 +64800,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "450 663-5551 poste 2",
     website: "https://www.autismelaval.org",
     description: "Répit de fin de semaine avec hébergement et répit dépannage d'urgence. Camps de jour d'été, de la relâche et pour la semaine de Noël. Activités de loisirs: karaté, danse, curling, cinéma, cuisine, etc Clientèle: personnes autistes, activités de jour: personnes semi-autonomes de 21 ans, autistes ou vivant avec un trouble du comportement ou une déficience intellectuelle.",
-    address: "155, boulevard Je-Me-Souviens, Sainte-Rose, Laval, QC H7L 1V6",
     isUrgent: true,
+    address: "155, boulevard Je-Me-Souviens, Sainte-Rose, Laval, QC H7L 1V6",
     coordinates: { lat: 45.6066, lng: -73.7124 },
   },
   {
@@ -65012,8 +65008,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "514 344-1666",
     website: "https://www.hlbs.ca",
     description: "Intervention de crise. Dépannage alimentaire. Aide pour le paiement du loyer. Accompagnement dans les services publics. Aide financière pour frais de camps d'été pour enfants et personnes vivant avec Clientèle: personnes défavorisées de la communauté grecque.",
-    address: "275, rue Houde, bureau 203, Saint-Laurent, Montréal, QC H4N 2J3",
     isUrgent: true,
+    address: "275, rue Houde, bureau 203, Saint-Laurent, Montréal, QC H4N 2J3",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -65051,8 +65047,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "1 800 361-7620",
     website: "https://saaq.gouv.qc.ca",
     description: "Trouver un point de service: saaq.gouv.qc.ca/trouver-point-de-service SAAQClic, portail des services en ligne: saaqclic.saaq.gouv.qc.ca Renseignements concernant l'assurance automobile: permis de cond Clientèle: grand public.",
-    address: "Capitale-Nationale, QC",
     isProvinceWide: true,
+    address: "Capitale-Nationale, QC",
   },
   {
     id: "qc-not-s004",
@@ -65650,8 +65646,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "450 455-8000",
     website: "https://sourcedentraide.org",
     description: "Friperie: vêtements et articles de maison usagés. Aide alimentaire. Garde-manger communautaire. Repas d'urgence dans les écoles et camps de jour. Atelier de couture. Panier de Noël. (Précision: Paniers de Noël 2025: cadeaux, repas surgelés et cartes-cadeaux d'épicerie et de pharmacie. Pour les résident·e·s de Saint-Lazare à faible revenu. Une preuve d'adresse et de revenus sera exigées. Gratuit. Les inscriptions sont acceptées jusqu'au 30 novembre. La livraison du panier sera le samedi 13 décembre en avant-midi. S'inscrire par téléphone 450 455-8000 poste 3 ou par courriel aalavigne@sourcedentraide.org. 14/10/2025 FMOrganisme fermé: du 22 décembre au 5 janvier. De retour à l'horaire régulier dès le lundi 6 janvier. Les dépannages alimentaires mensuels reprendront à la mi-janvier. 14/10/2025 FM) Clientèle: boutique: population générale, services communautaires: personnes vulnérables.",
-    address: "2252, chemin Sainte-Angélique, Saint-Lazare, QC J7T 2H5",
     isUrgent: true,
+    address: "2252, chemin Sainte-Angélique, Saint-Lazare, QC J7T 2H5",
     coordinates: { lat: 45.4, lng: -74.1333 },
   },
   {
@@ -65729,8 +65725,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "1 800 263-1136",
     website: "https://www.statcan.gc.ca/fra",
     description: "Organisme national de statistique. Collecte, compilation, analyse, dépouillement et publication des renseignements statistiques portant sur les activités commerciales, industrielles, financières, soci",
-    address: "Ottawa, QC",
     isProvinceWide: true,
+    address: "Ottawa, QC",
   },
   {
     id: "qc-mtl-a016",
@@ -65755,8 +65751,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "1 800 830-3118",
     website: "https://www.securitepublique.gc.ca",
     description: "Exercice des responsabilités gouvernementales en matière de sécurité nationale, de gestion des urgences et de prévention des crimes. Coordination des ministères et organismes fédéraux ayant pour missi",
-    address: "Ottawa, QC",
     isProvinceWide: true,
+    address: "Ottawa, QC",
   },
   {
     id: "qc-mtl-fd353",
@@ -66248,8 +66244,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "1 866 995-9737",
     website: "https://tc.canada.ca/fr",
     description: "Exerce des responsabilités gouvernementales en matière de transport aérien, maritime, ferroviaire et routier. Régulation et promotions de systèmes de transport sécuritaires. Demandes de licences, de p",
-    address: "330, rue Sparks, Ottawa, QC K1A 0N5",
     isProvinceWide: true,
+    address: "330, rue Sparks, Ottawa, QC K1A 0N5",
   },
   {
     id: "qc-mtl-i124",
@@ -66338,8 +66334,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     province: "QC",
     phone: "450 448-1514",
     description: "Cours de danse. Clientèle: personnes aînées.",
-    address: "Montérégie, QC",
     isProvinceWide: true,
+    address: "Montérégie, QC",
   },
   {
     id: "qc-mtl-s402",
@@ -66416,8 +66412,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "1 800 267-8337 poste 67630",
     website: "https://usherbrooke.ca/uta/prog/lanaudiere",
     description: "Programmation pédagogique répartie en 30 antennes universitaires pour personnes de 50 ans et plus. Activités éducatives de type auditeur·trice libre sans travaux ni examens, non créditées. Différentes Clientèle: personnes de 50 ans et plus, aucun diplôme préalable n'est exigé.",
-    address: "Lanaudière, QC",
     isProvinceWide: true,
+    address: "Lanaudière, QC",
   },
   {
     id: "qc-qcw-s010",
@@ -66429,8 +66425,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "1 800 267-8337 poste 67630",
     website: "https://usherbrooke.ca/uta/prog/laurentides",
     description: "Programmation pédagogique répartie en 30 antennes universitaires pour personnes de 50 ans et plus. Activités éducatives de type auditeur·trice libre sans travaux ni examens, non créditées. Différentes Clientèle: personnes de 50 ans et plus, aucun diplôme préalable n'est exigé.",
-    address: "Laurentides, QC",
     isProvinceWide: true,
+    address: "Laurentides, QC",
   },
   {
     id: "qc-qbc-s003",
@@ -66468,8 +66464,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "1 888 463-1835 poste 61747",
     website: "https://usherbrooke.ca/uta/prog/monteregie",
     description: "Programmation pédagogique répartie en 30 antennes universitaires pour personnes de 50 ans et plus. Activités éducatives de type auditeur·trice libre sans travaux ni examens, non créditées. Différentes Clientèle: personnes de 50 ans et plus, aucun diplôme préalable n'est exigé.",
-    address: "Montérégie, QC",
     isProvinceWide: true,
+    address: "Montérégie, QC",
   },
   {
     id: "qc-mtl-s405",
@@ -67188,8 +67184,8 @@ const __SERVICES_CHUNK_6: Service[] = [
     phone: "514 481-0277",
     website: "https://headandhands.ca/fr",
     description: "Information et références. Services de santé communautaire: cliniques hebdomadaires sans rendez-vous. Aide alimentaire d'urgence. Distribution de condoms et de lubrifiant. Distribution de produits d'h Clientèle: personnes de 12 à 25 ans, jeunesse 2000: personnes de 12 à 17 ans.",
-    address: "3465, avenue Benny, Côte-des-Neiges—Notre-Dame-de-Grâce, Montréal, QC H4B 2R9",
     isUrgent: true,
+    address: "3465, avenue Benny, Côte-des-Neiges—Notre-Dame-de-Grâce, Montréal, QC H4B 2R9",
     coordinates: { lat: 45.5031824, lng: -73.5698065 },
   },
   {
@@ -67840,8 +67836,7 @@ const __SERVICES_CHUNK_6: Service[] = [
   },
 ];
 
-export const SERVICES: Service[] = [...__SERVICES_CHUNK_0, ...__SERVICES_CHUNK_1, ...__SERVICES_CHUNK_2, ...__SERVICES_CHUNK_3, ...__SERVICES_CHUNK_4, ...__SERVICES_CHUNK_5, ...__SERVICES_CHUNK_6];
-
+export const SERVICES: Service[] = [...__SERVICES_CHUNK_0, ...__SERVICES_CHUNK_1, ...__SERVICES_CHUNK_2, ...__SERVICES_CHUNK_3];
 export const URGENT_SERVICES = SERVICES.filter((s) => s.isUrgent);
 export const PROVINCE_WIDE_SERVICES = SERVICES.filter((s) => s.isProvinceWide);
 export const SERVICES_BY_PROVINCE = (code: ProvinceCode): Service[] =>
