@@ -117,6 +117,66 @@ export default function AboutScreen() {
           </Text>
         </View>
 
+        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 4 }}>
+            <Feather name="zap" size={18} color="#0e7e6e" />
+            <Text style={[styles.h2, { color: colors.foreground, marginBottom: 0 }]}>
+              {isFr ? "Nouveautés v1.1.2" : "What's new in v1.1.2"}
+            </Text>
+          </View>
+          <Text style={[styles.p, { color: colors.mutedForeground, fontSize: 12, marginBottom: 8 }]}>
+            {isFr ? "Mai 2026 — 5 338 services dans 13 provinces et territoires" : "May 2026 — 5,338 services across 13 provinces and territories"}
+          </Text>
+          <View style={styles.bulletRow}>
+            <Feather name="message-circle" size={16} color="#0e7e6e" />
+            <Text style={[styles.bulletText, { color: colors.foreground }]}>
+              {isFr
+                ? "Aide IA : nouvel onboarding guidé en 3 étapes (GPS → catégorie → résultats)"
+                : "AI Help: new 3-step guided onboarding (GPS → category → results)"}
+            </Text>
+          </View>
+          <View style={styles.bulletRow}>
+            <Feather name="phone-call" size={16} color="#0e7e6e" />
+            <Text style={[styles.bulletText, { color: colors.foreground }]}>
+              {isFr
+                ? "Diagnostic IA : redirection automatique vers le 211 de votre province si aucun service trouvé"
+                : "AI Diagnosis: auto-redirect to your province's 211 line when no service is found"}
+            </Text>
+          </View>
+          <View style={styles.bulletRow}>
+            <Feather name="globe" size={16} color="#0e7e6e" />
+            <Text style={[styles.bulletText, { color: colors.foreground }]}>
+              {isFr
+                ? "Couverture pancanadienne : 988 et services nationaux désormais inclus partout"
+                : "Pan-Canadian coverage: 988 and national services now included everywhere"}
+            </Text>
+          </View>
+          <View style={styles.bulletRow}>
+            <Feather name="map-pin" size={16} color="#0e7e6e" />
+            <Text style={[styles.bulletText, { color: colors.foreground }]}>
+              {isFr
+                ? "11 nouveaux raccourcis chat (parent monoparental, manteau d'hiver, foyer violent...) en 5 langues"
+                : "11 new chat shortcuts (single parent, winter coat, violent home...) in 5 languages"}
+            </Text>
+          </View>
+          <View style={styles.bulletRow}>
+            <Feather name="info" size={16} color="#0e7e6e" />
+            <Text style={[styles.bulletText, { color: colors.foreground }]}>
+              {isFr
+                ? "7 nouvelles questions fréquentes dans l'écran Aide"
+                : "7 new FAQs in the Help screen"}
+            </Text>
+          </View>
+          <View style={styles.bulletRow}>
+            <Feather name="check-circle" size={16} color="#0e7e6e" />
+            <Text style={[styles.bulletText, { color: colors.foreground }]}>
+              {isFr
+                ? "Fiche MIFI Montréal enrichie (adresse, horaires, ligne directe 514 864-9191)"
+                : "MIFI Montreal entry enriched (address, hours, direct line 514 864-9191)"}
+            </Text>
+          </View>
+        </View>
+
         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
           {isFr ? "Témoignages" : "Testimonials"}
         </Text>
