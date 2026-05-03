@@ -48,19 +48,6 @@ const SECTIONS: Section[] = [
     titleFr: "Logement & alimentation",
     titleEn: "Housing & food",
     categories: ["housing", "food", "realestate"],
-    featuredTiles: [
-      {
-        key: "airbnb-verify",
-        route: "/airbnb-verify",
-        icon: "shield",
-        emoji: "🛡️",
-        titleFr: "Vérifier un Airbnb",
-        titleEn: "Verify an Airbnb",
-        subtitleFr: "Numéro CITQ Québec",
-        subtitleEn: "Quebec CITQ number",
-        color: "#2563eb",
-      },
-    ],
   },
   {
     key: "sante",
