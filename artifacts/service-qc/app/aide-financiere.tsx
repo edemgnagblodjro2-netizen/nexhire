@@ -183,7 +183,7 @@ function computeAides(f: Form): Aide[] {
       eligible: af.eligible,
       noteFr: "Versée par Retraite Québec. Inscription automatique à la naissance.",
       noteEn: "Paid by Retraite Québec. Automatic enrollment at birth.",
-      url: "https://www.rrq.gouv.qc.ca/fr/programmes/soutien_enfants/paiement/Pages/paiement.aspx",
+      url: "https://www.retraitequebec.gouv.qc.ca/fr/enfants/allocation-famille/Pages/allocation-famille.aspx",
     },
     {
       key: "sol",
@@ -238,7 +238,7 @@ function computeAides(f: Form): Aide[] {
       eligible: rqap.eligible,
       noteFr: "Prestations à la naissance/adoption. Vérifiez le calculateur officiel pour le montant.",
       noteEn: "Birth/adoption benefits. Check the official calculator for the amount.",
-      url: "https://www.rqap.gouv.qc.ca/fr",
+      url: "https://www.quebec.ca/famille-et-soutien-aux-personnes/grossesse-parentalite/aide-financiere-prestations/regime-quebecois-assurance-parentale/service-a-la-clientele",
     },
   ];
 }
