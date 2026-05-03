@@ -121,7 +121,7 @@ export default function AboutScreen() {
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 4 }}>
             <Feather name="zap" size={18} color="#0e7e6e" />
             <Text style={[styles.h2, { color: colors.foreground, marginBottom: 0 }]}>
-              {isFr ? "Nouveautés v1.1.4" : "What's new in v1.1.4"}
+              {isFr ? "Nouveautés v1.1.5" : "What's new in v1.1.5"}
             </Text>
           </View>
           <Text style={[styles.p, { color: colors.mutedForeground, fontSize: 12, marginBottom: 8 }]}>

@@ -21,6 +21,7 @@ import { UrgentButton } from "@/components/UrgentButton";
 import { BrandFooter } from "@/components/BrandFooter";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "@/contexts/LocationContext";
+import { useUserProvince } from "@/contexts/UserProvinceContext";
 import { getApiBaseUrl } from "@/lib/apiBase";
 import type { Category, ProvinceCode } from "@/data/services";
 import { normalizeCity } from "@/utils/cityMatch";
@@ -127,6 +128,7 @@ export default function HomeScreen() {
 
   const { services } = useServicesData();
   const { userLocation, locationStatus, requestLocation } = useLocation();
+  const { province: userProvince } = useUserProvince();
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
 
@@ -693,12 +695,16 @@ export default function HomeScreen() {
 
           {/* Compteurs par catégorie (mémorisés inline) */}
           {(() => {
+            // Childcare (La Place 0-5) is QC-only — hide outside Quebec.
+            const visibleCategories = userProvince === "QC"
+              ? ALL_CATEGORIES
+              : ALL_CATEGORIES.filter((c) => c !== "childcare");
             const counts: Record<string, number> = {};
-            for (const c of ALL_CATEGORIES) counts[c] = 0;
+            for (const c of visibleCategories) counts[c] = 0;
             for (const s of services) {
               if (counts[s.category] !== undefined) counts[s.category]++;
             }
-            const sorted = [...ALL_CATEGORIES].sort(
+            const sorted = [...visibleCategories].sort(
               (a, b) => (counts[b] ?? 0) - (counts[a] ?? 0),
             );
 

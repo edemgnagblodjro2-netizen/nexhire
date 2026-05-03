@@ -84,6 +84,7 @@ const CATEGORY_OPTIONS: CategoryOption[] = [
       ht: "Èd legal",
     },
   },
+  // Childcare (La Place 0-5) is QC-only and filtered out for other provinces at render time.
   {
     key: "childcare",
     icon: "users",
@@ -492,7 +493,7 @@ export function AIGuidedOnboarding({ language, onSubmitPrompt }: Props) {
             keyboardShouldPersistTaps="handled"
             contentContainerStyle={styles.catScroll}
           >
-            {CATEGORY_OPTIONS.map((cat) => {
+            {CATEGORY_OPTIONS.filter((cat) => cat.key !== "childcare" || userProvince === "QC").map((cat) => {
               const color = getCategoryColor(cat.key, colors);
               return (
                 <Pressable
