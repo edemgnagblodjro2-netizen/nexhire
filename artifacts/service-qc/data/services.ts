@@ -68015,7 +68015,7 @@ const __SERVICES_CHUNK_5: Service[] = [
   { id: "qc-mov-pro-ld", name: "Déménagement Pro LD", category: "moving", subcategory: "Déménageur Mauricie", city: "Trois-Rivières", province: "QC", phone: "819-840-4040", website: "https://demenagementproldld.com", description: "Service de déménagement résidentiel à Trois-Rivières et environs.", address: "Trois-Rivières, QC" },
 
   // ─── Sherbrooke / Estrie ───
-  { id: "qc-mov-crown", name: "Crown Movers", category: "moving", subcategory: "Déménageur Estrie", city: "Sherbrooke", province: "QC", phone: "1-800-661-3000", website: "https://www.crownmovers.ca", description: "Déménagements longue distance et internationaux depuis Sherbrooke et Montréal. Membre Allied Van Lines.", address: "Sherbrooke, QC", isProvinceWide: true },
+  { id: "qc-mov-crown", name: "Crown Movers — Montréal", category: "moving", subcategory: "Déménageur longue distance / international", city: "Montréal", province: "QC", phone: "514-606-4030", website: "https://www.crownmovers.ca", description: "Déménagements longue distance et internationaux. Membre Allied Van Lines. Ouvert 24h. 5.0/5 sur Google (565 avis).", address: "4030 boul. Côte-Vertu Ouest #111, Montréal (Québec) H4R 1V4", isProvinceWide: true },
   { id: "qc-mov-estrie", name: "Déménagement de l'Estrie", category: "moving", subcategory: "Déménageur Estrie", city: "Sherbrooke", province: "QC", phone: "819-565-9595", website: "https://www.demenagementdelestrie.ca", description: "Déménageur local de Sherbrooke et de toute la région de l'Estrie.", address: "Sherbrooke, QC" },
 
   // ─── Rive-Sud de Montréal ───

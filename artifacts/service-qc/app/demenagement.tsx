@@ -98,6 +98,13 @@ const SECTIONS: Section[] = [
         url: "https://www.demenagementgeneral.ca",
         phone: "514-581-8884",
       },
+      {
+        name: "Crown Movers — Montréal",
+        noteFr: "Longue distance et international (Allied Van Lines). Ouvert 24h. 5.0/5 sur Google.",
+        noteEn: "Long-distance and international (Allied Van Lines). Open 24h. 5.0/5 on Google.",
+        url: "https://www.crownmovers.ca",
+        phone: "514-606-4030",
+      },
     ],
   },
   {
@@ -144,13 +151,6 @@ const SECTIONS: Section[] = [
     titleEn: "🍁 Sherbrooke / Eastern Townships",
     emoji: "🍁",
     movers: [
-      {
-        name: "Crown Movers",
-        noteFr: "Longue distance et international (membre Allied Van Lines).",
-        noteEn: "Long-distance and international (Allied Van Lines member).",
-        url: "https://www.crownmovers.ca",
-        phone: "1-800-661-3000",
-      },
       {
         name: "Déménagement de l'Estrie",
         noteFr: "Local — Sherbrooke et toute l'Estrie.",
