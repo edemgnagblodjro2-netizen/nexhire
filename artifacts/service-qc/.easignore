@@ -1,0 +1,44 @@
+# Dependencies (will be reinstalled on EAS build server)
+node_modules/
+**/node_modules/
+.pnpm-store/
+
+# Version control
+.git/
+.gitignore
+
+# Replit / local agent stuff
+.local/
+.cache/
+.replit
+.config/
+.canvas/
+.agents/
+.replitignore
+attached_assets/
+
+# Expo / build artifacts
+.expo/
+**/.expo/
+dist/
+**/dist/
+build/
+**/build/
+web-build/
+ios/
+android/
+
+# Other artifacts (not part of mobile build)
+artifacts/admin/
+artifacts/api-server/
+artifacts/mockup-sandbox/
+
+# Logs / tmp / exports
+*.log
+exports/
+tmp/
+/tmp/
+
+# Dev DBs / lockfiles too big
+*.db
+*.sqlite

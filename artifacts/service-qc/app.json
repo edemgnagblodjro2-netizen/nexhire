@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "AttenteZ\u00e9ro",
+    "name": "AttenteZéro",
     "slug": "attentezero",
     "version": "1.1.2",
     "orientation": "default",
@@ -18,13 +18,13 @@
       "bundleIdentifier": "com.attentezero.app",
       "icon": "./assets/images/icon.png",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "AttenteZ\u00e9ro utilise votre position pour afficher les services communautaires les plus proches de vous.",
-        "NSLocationAlwaysUsageDescription": "AttenteZ\u00e9ro utilise votre position pour trier les services par distance."
+        "NSLocationWhenInUseUsageDescription": "AttenteZéro utilise votre position pour afficher les services communautaires les plus proches de vous.",
+        "NSLocationAlwaysUsageDescription": "AttenteZéro utilise votre position pour trier les services par distance."
       }
     },
     "android": {
       "package": "com.attentezero.app",
-      "versionCode": 54,
+      "versionCode": 56,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon_transparent.png",
         "backgroundColor": "#ffffff"
@@ -54,8 +54,8 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "AttenteZ\u00e9ro utilise votre position pour afficher les services communautaires les plus proches de vous.",
-          "locationWhenInUsePermission": "AttenteZ\u00e9ro utilise votre position pour afficher les services communautaires les plus proches de vous."
+          "locationAlwaysAndWhenInUsePermission": "AttenteZéro utilise votre position pour afficher les services communautaires les plus proches de vous.",
+          "locationWhenInUsePermission": "AttenteZéro utilise votre position pour afficher les services communautaires les plus proches de vous."
         }
       ],
       [
@@ -69,7 +69,10 @@
       "typedRoutes": true
     },
     "extra": {
-      "eas": {}
-    }
+      "eas": {
+        "projectId": "2ffd9d60-5b6d-442c-9699-d6488cab3e6d"
+      }
+    },
+    "owner": "startupaya2"
   }
 }
