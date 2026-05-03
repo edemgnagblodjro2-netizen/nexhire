@@ -206,7 +206,7 @@ const COMPARE_LINKS: Link[] = [
   {
     titleFr: "411 Déménageur — Annuaire QC",
     titleEn: "411 Déménageur — QC directory",
-    url: "https://www.411demenageur.ca",
+    url: "https://www.411demenageur.com",
     emoji: "📞",
   },
   {
