@@ -29,7 +29,7 @@ const FILTER_LANGUAGES: LangCode[] = ["fr", "en", "es", "ar", "ht", "zh"];
 
 type SortMode = "default" | "az" | "distance" | "urgent";
 
-// Childcare is intentionally excluded — it now redirects to the official La Place 0-5 portal.
+// Childcare is added back for non-QC provinces (La Place 0-5 is QC-only).
 const ALL_CATEGORIES: Category[] = [
   "housing",
   "food",
@@ -39,6 +39,7 @@ const ALL_CATEGORIES: Category[] = [
   "employment",
   "family",
   "social",
+  "childcare",
   "realestate",
 ];
 

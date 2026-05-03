@@ -14,6 +14,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useUserProvince } from "@/contexts/UserProvinceContext";
 import { type Category } from "@/data/services";
 import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
@@ -39,8 +40,10 @@ function CategoryCard({ category }: { category: Category }) {
   const color = getCategoryColor(category, colors);
   const icon = CATEGORY_ICONS[category];
   const { services } = useServicesData();
+  const { province: userProvince } = useUserProvince();
 
-  const isExternalRedirect = category === "childcare";
+  // La Place 0-5 is a Quebec-only government portal — only redirect QC users.
+  const isExternalRedirect = category === "childcare" && userProvince === "QC";
 
   const serviceCount = useMemo(
     () => services.filter((s) => s.category === category).length,

@@ -19,6 +19,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "@/contexts/LocationContext";
 import { useServicesData } from "@/contexts/ServicesContext";
+import { useUserProvince } from "@/contexts/UserProvinceContext";
 import { CATEGORY_LABELS, type Category, type Service } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 import { getFavorites, toggleFavorite } from "@/lib/favorites";
@@ -69,6 +70,7 @@ export default function MapScreen() {
   const { language } = useLanguage();
   const { userLocation, locationStatus, requestLocation } = useLocation();
   const { services } = useServicesData();
+  const { province: userProvince } = useUserProvince();
   const isFr = language !== "en";
 
   const [tab, setTab] = useState<Tab>("nearby");
@@ -95,15 +97,18 @@ export default function MapScreen() {
   );
 
   // Pool of services for the active tab (before category/sort)
-  // Childcare is excluded everywhere — it now redirects to the official La Place 0-5 portal.
+  // Childcare is excluded ONLY in Quebec — it redirects to the official La Place 0-5 portal there.
+  // Other provinces see normal childcare services on the map.
   const tabPool = useMemo(() => {
-    const noChildcare = services.filter((s) => s.category !== "childcare");
+    const filtered = userProvince === "QC"
+      ? services.filter((s) => s.category !== "childcare")
+      : services;
     if (tab === "favorites") {
       const set = new Set(favIds);
-      return noChildcare.filter((s) => set.has(s.id));
+      return filtered.filter((s) => set.has(s.id));
     }
-    return noChildcare.filter((s) => s.coordinates);
-  }, [tab, services, favIds]);
+    return filtered.filter((s) => s.coordinates);
+  }, [tab, services, favIds, userProvince]);
 
   // Per-category counts for chips (within current tab pool)
   const catCounts = useMemo(() => {

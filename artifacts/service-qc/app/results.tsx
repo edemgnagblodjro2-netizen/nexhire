@@ -20,6 +20,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ServiceCard } from "@/components/ServiceCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "@/contexts/LocationContext";
+import { useUserProvince } from "@/contexts/UserProvinceContext";
 import type { Category, ProvinceCode } from "@/data/services";
 import { PROVINCE_LABELS } from "@/data/services";
 import { useServicesData } from "@/contexts/ServicesContext";
@@ -63,6 +64,9 @@ export default function ResultsScreen() {
 
   const { services } = useServicesData();
   const { userLocation, locationStatus, requestLocation } = useLocation();
+  const { province: userProvince } = useUserProvince();
+  // La Place 0-5 redirect only applies to Quebec users (it's a QC government portal).
+  const showChildcarePortal = selectedCategory === "childcare" && userProvince === "QC";
 
   const [sortMode, setSortMode] = React.useState<SortMode>("default");
 
@@ -147,7 +151,7 @@ export default function ResultsScreen() {
               {cityExact || query || (selectedCategory !== "all" ? t.categories[selectedCategory] : t.results)}
             </Text>
             <Text style={[styles.headerCount, { color: colors.mutedForeground }]}>
-              {selectedCategory === "childcare"
+              {showChildcarePortal
                 ? (language === "fr" ? "Portail externe — La Place 0-5" : "External portal — La Place 0-5")
                 : `${filtered.length} ${filtered.length !== 1 ? t.servicesPlural : t.services}`}
             </Text>
@@ -268,7 +272,7 @@ export default function ResultsScreen() {
         ) : null}
       </View>
 
-      {selectedCategory === "childcare" ? (
+      {showChildcarePortal ? (
         <ScrollView
           contentContainerStyle={[
             styles.list,
