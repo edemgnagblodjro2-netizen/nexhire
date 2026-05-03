@@ -126,10 +126,10 @@ const SECTIONS: Section[] = [
     emoji: "🌉",
     movers: [
       {
-        name: "Déménagement Dany St-Germain",
-        noteFr: "Familial bien établi à Trois-Rivières.",
-        noteEn: "Family-run, well established in Trois-Rivières.",
-        phone: "819-373-7700",
+        name: "Transport & Déménagement Dany St-Germain",
+        noteFr: "Familial bien établi à Trois-Rivières (4.0/5).",
+        noteEn: "Family-run, well established in Trois-Rivières (4.0/5).",
+        phone: "819-266-9665",
       },
       {
         name: "Déménagement Pro LD",

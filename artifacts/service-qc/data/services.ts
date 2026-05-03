@@ -68011,7 +68011,7 @@ const __SERVICES_CHUNK_5: Service[] = [
 
   // ─── Trois-Rivières / Mauricie ───
   { id: "qc-mov-general", name: "Déménagement Général", category: "moving", subcategory: "Déménageur Grand Montréal", city: "Montréal", province: "QC", phone: "514-581-8884", website: "https://www.demenagementgeneral.ca", description: "Service Île de Montréal, Rive-Nord et Rive-Sud. Déménagements résidentiels et commerciaux.", address: "Île de Montréal, Rive-Nord, Rive-Sud (Québec)", isProvinceWide: true },
-  { id: "qc-mov-dany-st-germain", name: "Déménagement Dany St-Germain", category: "moving", subcategory: "Déménageur Mauricie", city: "Trois-Rivières", province: "QC", phone: "819-373-7700", website: "https://danystgermain.com", description: "Déménageur familial bien établi à Trois-Rivières.", address: "Trois-Rivières, QC" },
+  { id: "qc-mov-dany-st-germain", name: "Transport & Déménagement Dany St-Germain", category: "moving", subcategory: "Déménageur Mauricie", city: "Trois-Rivières", province: "QC", phone: "819-266-9665", description: "Déménageur familial bien établi à Trois-Rivières. 4.0/5 sur Google (68 avis).", address: "2820 Bd Saint-Michel, Trois-Rivières (Québec) G9A 5E1" },
   { id: "qc-mov-pro-ld", name: "Déménagement Pro LD", category: "moving", subcategory: "Déménageur Mauricie", city: "Trois-Rivières", province: "QC", phone: "819-840-4040", website: "https://demenagementproldld.com", description: "Service de déménagement résidentiel à Trois-Rivières et environs.", address: "Trois-Rivières, QC" },
 
   // ─── Sherbrooke / Estrie ───
