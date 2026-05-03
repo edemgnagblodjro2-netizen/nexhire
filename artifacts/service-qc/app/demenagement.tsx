@@ -197,6 +197,9 @@ const VERIFY_LINKS: Link[] = [
     url: "https://www.opc.gouv.qc.ca",
     emoji: "🛡️",
   },
+];
+
+const COMPARE_LINKS: Link[] = [
   {
     titleFr: "411 Déménageur — Annuaire QC",
     titleEn: "411 Déménageur — QC directory",
@@ -220,6 +223,18 @@ const VERIFY_LINKS: Link[] = [
     titleEn: "Mover.net — International moving",
     url: "https://www.mover.net/fr/find-a-mover/international-moving",
     emoji: "🌍",
+  },
+  {
+    titleFr: "Déménagement Myette — Top déménageurs",
+    titleEn: "Déménagement Myette — Top movers",
+    url: "https://www.demenagementmyette.ca/meilleurs-demenageurs/",
+    emoji: "🏅",
+  },
+  {
+    titleFr: "Top 10 Déménageurs Québec — Prix",
+    titleEn: "Top 10 Movers Quebec — Prices",
+    url: "https://topcompagniesdemenagement.ca/top-10-demenageurs-quebec-prix/",
+    emoji: "📊",
   },
 ];
 
@@ -358,6 +373,44 @@ export default function DemenagementScreen() {
         </View>
 
         {VERIFY_LINKS.map((l) => (
+          <Pressable
+            key={l.url}
+            onPress={() => Linking.openURL(l.url)}
+            style={({ pressed }) => [
+              styles.linkRow,
+              {
+                backgroundColor: colors.card,
+                borderColor: colors.border,
+                opacity: pressed ? 0.6 : 1,
+              },
+            ]}
+          >
+            <Text style={{ fontSize: 18 }}>{l.emoji}</Text>
+            <Text style={[styles.linkText, { color: colors.foreground }]}>
+              {isFr ? l.titleFr : l.titleEn}
+            </Text>
+            <Feather name="external-link" size={16} color={colors.mutedForeground} />
+          </Pressable>
+        ))}
+
+        {/* Comparateurs / annuaires — section séparée */}
+        <Text style={[styles.sectionTitle, { color: colors.foreground, marginTop: 18 }]}>
+          {isFr ? "🔗 Comparateurs & annuaires" : "🔗 Comparators & directories"}
+        </Text>
+        <View
+          style={[
+            styles.intro,
+            { backgroundColor: colors.card, borderColor: colors.border },
+          ]}
+        >
+          <Text style={[styles.introText, { color: colors.foreground }]}>
+            {isFr
+              ? "Pour comparer les prix et lire les avis, utilisez ces plateformes spécialisées."
+              : "To compare prices and read reviews, use these specialized platforms."}
+          </Text>
+        </View>
+
+        {COMPARE_LINKS.map((l) => (
           <Pressable
             key={l.url}
             onPress={() => Linking.openURL(l.url)}
