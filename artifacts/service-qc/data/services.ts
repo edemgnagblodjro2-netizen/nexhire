@@ -27552,7 +27552,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "ns-hal-he001",
     name: "Right at Home Home Care Nova Scotia — Halifax",
-    category: "banking",
+    category: "health",
     subcategory: "soins à domicile",
     city: "Halifax",
     province: "NS",
