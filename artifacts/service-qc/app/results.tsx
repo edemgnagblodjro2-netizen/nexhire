@@ -31,6 +31,20 @@ import { normalizeCity } from "@/utils/cityMatch";
 
 type SortMode = "default" | "city" | "distance";
 
+// Liste figée des villes du Québec (forme normalisée via normalizeCity :
+// minuscules, sans accents, sans apostrophes). Sert de fallback pour
+// décider si une ville filtrée est au QC ou non, quand la donnée API
+// n'est pas (encore) chargée.
+const QC_CITIES = new Set<string>([
+  "trois-rivieres", "shawinigan", "drummondville", "victoriaville",
+  "montreal", "quebec", "laval", "longueuil", "gatineau", "sherbrooke",
+  "saguenay", "levis", "brossard", "repentigny", "saint-jerome",
+  "terrebonne", "saint-jean-sur-richelieu", "chateauguay", "granby",
+  "blainville", "saint-hyacinthe", "mascouche", "mirabel", "joliette",
+  "salaberry-de-valleyfield", "rouyn-noranda", "rimouski", "sept-iles",
+  "baie-comeau", "alma",
+]);
+
 const ALL_CATEGORIES: Category[] = [
   "housing",
   "food",
@@ -74,7 +88,7 @@ export default function ResultsScreen() {
   //   • la province de l'utilisateur (réglages) n'est pas QC, OU
   //   • l'utilisateur consulte explicitement une province ≠ QC via la
   //     recherche (ex: "Ontario" depuis la carte des provinces), OU
-  //   • la ville filtrée appartient à un service hors-QC.
+  //   • la ville filtrée n'est pas une ville du Québec.
   const browsingProvince = useMemo<ProvinceCode | null>(() => {
     const q = (query ?? "").toLowerCase().trim();
     if (q) {
@@ -84,10 +98,16 @@ export default function ResultsScreen() {
     }
     if (cityExact) {
       const cityKey = normalizeCity(cityExact);
+      // Source autoritaire : on regarde dans la liste des services pour
+      // trouver la province d'une ville donnée.
       const match = rawServices.find(
         (s) => normalizeCity(s.city) === cityKey
       );
       if (match) return (match.province ?? "QC") as ProvinceCode;
+      // Fallback : si la donnée n'a pas (encore) cette ville, on consulte
+      // la liste figée des villes du Québec. Toute ville absente de cette
+      // liste est considérée hors-QC ⇒ portail caché par sécurité.
+      if (!QC_CITIES.has(cityKey)) return "ON";
     }
     return null;
   }, [query, cityExact, rawServices]);
