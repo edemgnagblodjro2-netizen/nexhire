@@ -48,7 +48,12 @@ type Need =
   | "employment"
   | "family"
   | "social"
-  | "legal";
+  | "legal"
+  | "moving"
+  | "banking"
+  | "transport"
+  | "tourism"
+  | "financialAid";
 
 interface Diagnosis {
   situation: Situation | null;
@@ -79,6 +84,11 @@ const NEEDS: { key: Need; cat: Category; labelFr: string; labelEn: string }[] = 
   { key: "family", cat: "family", labelFr: "Famille / enfants", labelEn: "Family / children" },
   { key: "social", cat: "social", labelFr: "Soutien social", labelEn: "Social support" },
   { key: "legal", cat: "social", labelFr: "Aide juridique", labelEn: "Legal aid" },
+  { key: "financialAid", cat: "administrative", labelFr: "Aide financière / prestations", labelEn: "Financial aid / benefits" },
+  { key: "moving", cat: "moving", labelFr: "Déménagement", labelEn: "Moving" },
+  { key: "banking", cat: "banking", labelFr: "Banque / finances", labelEn: "Banking / finances" },
+  { key: "transport", cat: "transport", labelFr: "Transport", labelEn: "Transport" },
+  { key: "tourism", cat: "tourism", labelFr: "Tourisme / loisirs", labelEn: "Tourism / leisure" },
 ];
 
 const LANGS: LangCode[] = ["fr", "en", "es", "ar", "ht", "zh"];
