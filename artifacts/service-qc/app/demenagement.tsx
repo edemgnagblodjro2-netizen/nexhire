@@ -44,9 +44,9 @@ const SECTIONS: Section[] = [
         phone: "1-844-937-0707",
       },
       {
-        name: "Déménagement DG",
-        noteFr: "Leader avec 4.9/5 — résidentiel et commercial.",
-        noteEn: "Leader rated 4.9/5 — residential and commercial.",
+        name: "Déménagement et Entreposage DG — Ville de Québec",
+        noteFr: "Leader résidentiel et commercial — 4.9/5 sur Google (1 397 avis).",
+        noteEn: "Residential and commercial leader — 4.9/5 on Google (1,397 reviews).",
         url: "https://www.demenagementdg.com",
         phone: "418-809-3190",
       },
