@@ -373,11 +373,7 @@ export default function AirbnbVerifyScreen() {
             help={t.nfHelp}
           >
             <Pressable
-              onPress={() =>
-                Linking.openURL(
-                  "https://citq.qc.ca/fr/recherche_etablissements_hebergement.php"
-                )
-              }
+              onPress={() => Linking.openURL("https://citq.qc.ca/fr/index.php")}
               style={({ pressed }) => [
                 styles.linkBtn,
                 { borderColor: "#dc2626", opacity: pressed ? 0.7 : 1 },
