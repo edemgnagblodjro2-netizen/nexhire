@@ -45,6 +45,7 @@ const ALL_CATEGORIES: Category[] = [
   "realestate",
   "banking",
   "transport",
+  "tourism",
 ];
 
 // Module-level constant — never re-created on render.

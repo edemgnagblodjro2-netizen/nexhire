@@ -98,6 +98,25 @@ const SECTIONS: Section[] = [
     titleEn: "Transport",
     categories: ["transport"],
   },
+  {
+    key: "tourisme",
+    titleFr: "Tourisme & loisirs",
+    titleEn: "Tourism & leisure",
+    categories: ["tourism"],
+    featuredTiles: [
+      {
+        key: "tourisme-guide",
+        route: "/tourisme",
+        icon: "map",
+        emoji: "📷",
+        titleFr: "Guide touristique",
+        titleEn: "Tourism guide",
+        subtitleFr: "Lieux à visiter",
+        subtitleEn: "Places to visit",
+        color: "#db2777",
+      },
+    ],
+  },
 ];
 
 function FeaturedTileCard({ tile }: { tile: FeaturedTile }) {

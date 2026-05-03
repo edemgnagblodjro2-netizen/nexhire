@@ -110,6 +110,7 @@ export const translations = {
       legal: "Aide juridique",
       banking: "Banques",
       transport: "Transport",
+      tourism: "Tourisme",
     },
   },
   en: {
@@ -220,6 +221,7 @@ export const translations = {
       legal: "Legal Aid",
       banking: "Banking",
       transport: "Transport",
+      tourism: "Tourism",
     },
   },
 } as const;

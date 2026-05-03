@@ -27,6 +27,16 @@ const KEYWORD_MAP: Record<Category, string[]> = {
     "déménagement", "déménager", "move", "moving",
     "freight", "marchandise",
   ],
+  tourism: [
+    "tourisme", "tourist", "touriste", "visiter", "visit",
+    "attraction", "attractions", "incontournable",
+    "vieux-québec", "vieux-montréal", "château frontenac",
+    "mont-royal", "tadoussac", "gaspésie", "saguenay",
+    "fjord", "rocher percé", "valcartier",
+    "musée", "museum", "jardin botanique",
+    "voyage", "vacances", "excursion", "sortie",
+    "balade", "promenade", "patrimoine",
+  ],
   housing: [
     "logement",
     "loger",
@@ -560,6 +570,7 @@ export function detectCategory(input: string): DetectionResult {
     legal: 0,
     banking: 0,
     transport: 0,
+    tourism: 0,
   };
   const matchedKeywords: string[] = [];
 

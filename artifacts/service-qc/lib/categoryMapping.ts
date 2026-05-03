@@ -41,6 +41,7 @@ const API_TO_CODE: Record<string, Category> = {
   legal: "legal",
   banking: "banking",
   transport: "transport",
+  tourism: "tourism",
 };
 
 // Mapping inverse : code TS → nom BDD canonique. On garde les noms BDD
@@ -61,6 +62,7 @@ const CODE_TO_API: Record<Category, string> = {
   legal: "soutienSocial", // pas de catégorie dédiée en BDD → soutien social
   banking: "banking",
   transport: "transport",
+  tourism: "tourism",
 };
 
 /**

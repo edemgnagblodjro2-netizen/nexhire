@@ -12,7 +12,8 @@ export type Category =
   | "administrative"
   | "legal"
   | "banking"
-  | "transport";
+  | "transport"
+  | "tourism";
 
 export interface Coordinates {
   lat: number;
@@ -87,6 +88,7 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   legal: "Aide juridique",
   banking: "Banques",
   transport: "Transport",
+  tourism: "Tourisme",
 };
 
 const __SERVICES_CHUNK_0: Service[] = [
@@ -67958,6 +67960,33 @@ const __SERVICES_CHUNK_4: Service[] = [
   // ─── Aide financière gouvernementale ───
   { id: "ca-arc", name: "Agence du revenu du Canada (ARC)", category: "banking", subcategory: "Service gouvernemental", city: "Ottawa", province: "ON", phone: "1-800-959-7383", website: "https://www.canada.ca/fr/agence-revenu.html", description: "Service à la clientèle pour particuliers — impôts, crédits, prestations (ACE, ACT, SRG).", isProvinceWide: true },
   { id: "qc-revenu-quebec", name: "Revenu Québec — Service à la clientèle", category: "banking", subcategory: "Service gouvernemental", city: "Québec", province: "QC", phone: "1-800-267-6299", website: "https://www.revenuquebec.ca", description: "Impôts, crédits d'impôt, soutien aux familles et aux aînés au Québec.", isProvinceWide: true },
+
+  // ─── Tourisme — Incontournables urbains et historiques ───
+  { id: "qc-tour-vieux-quebec", name: "Vieux-Québec — Site UNESCO", category: "tourism", subcategory: "Site historique", city: "Québec", province: "QC", phone: "418-641-6290", website: "https://www.quebec-cite.com", description: "Seule ville fortifiée au nord du Mexique, site UNESCO. Rues pavées, quartier Petit Champlain, Château Frontenac.", address: "Vieux-Québec, Québec, QC", coordinates: { lat: 46.8123, lng: -71.2074 } },
+  { id: "qc-tour-vieux-montreal", name: "Vieux-Montréal & Vieux-Port", category: "tourism", subcategory: "Site historique", city: "Montréal", province: "QC", phone: "514-496-7678", website: "https://www.vieuxmontreal.qc.ca", description: "Charme européen et modernité. Basilique Notre-Dame, Vieux-Port, place Jacques-Cartier.", address: "Vieux-Montréal, Montréal, QC", coordinates: { lat: 45.5076, lng: -73.5540 } },
+  { id: "qc-tour-mont-royal", name: "Parc du Mont-Royal", category: "tourism", subcategory: "Parc urbain", city: "Montréal", province: "QC", phone: "514-843-8240", website: "https://www.lemontroyal.qc.ca", description: "La plus belle vue panoramique sur Montréal. Belvédère Kondiaronk, lac aux Castors, randonnée.", address: "1260, ch. Remembrance, Montréal, QC", coordinates: { lat: 45.5048, lng: -73.5878 } },
+  { id: "qc-tour-citadelle", name: "La Citadelle de Québec", category: "tourism", subcategory: "Site historique", city: "Québec", province: "QC", phone: "418-694-2815", website: "https://www.lacitadelle.qc.ca", description: "Forteresse militaire active sur les Plaines d'Abraham. Visites guidées, relève de la garde l'été.", address: "1, Côte de la Citadelle, Québec, QC", coordinates: { lat: 46.8073, lng: -71.2074 } },
+
+  // ─── Tourisme — Merveilles naturelles & parcs ───
+  { id: "qc-tour-montmorency", name: "Parc de la Chute-Montmorency", category: "tourism", subcategory: "Parc naturel", city: "Québec", province: "QC", phone: "418-663-3330", website: "https://www.sepaq.com/ct/pcm", description: "Chute de 83 m, plus haute que celles du Niagara. Téléphérique, pont suspendu, escalier panoramique. À 15 min de Québec.", address: "5300, boul. Sainte-Anne, Québec, QC", coordinates: { lat: 46.8908, lng: -71.1473 } },
+  { id: "qc-tour-perce", name: "Rocher Percé & Île Bonaventure", category: "tourism", subcategory: "Site naturel", city: "Percé", province: "QC", phone: "418-782-2240", website: "https://www.sepaq.com/pq/bon", description: "Symbole emblématique de la Gaspésie. Une des plus grandes colonies de fous de Bassan au monde sur l'Île Bonaventure.", address: "4, rue du Quai, Percé, QC", coordinates: { lat: 48.5197, lng: -64.2150 } },
+  { id: "qc-tour-fjord-saguenay", name: "Parc national du Fjord-du-Saguenay", category: "tourism", subcategory: "Parc national", city: "Rivière-Éternité", province: "QC", phone: "418-272-1556", website: "https://www.sepaq.com/pq/sag", description: "Falaises spectaculaires plongeant dans l'eau. Kayak, randonnée, croisières, observation des baleines bélugas.", address: "91, rue Notre-Dame, Rivière-Éternité, QC", coordinates: { lat: 48.2645, lng: -70.2080 } },
+  { id: "qc-tour-mauricie", name: "Parc national de la Mauricie", category: "tourism", subcategory: "Parc national", city: "Shawinigan", province: "QC", phone: "819-538-3232", website: "https://parks.canada.ca/pn-np/qc/mauricie", description: "Plus de 150 lacs, paradis du canoë-camping, randonnée, observation de la faune (orignaux, castors).", address: "2575, ch. Saint-Jean-des-Piles, Shawinigan, QC", coordinates: { lat: 46.7333, lng: -72.8500 } },
+
+  // ─── Tourisme — Expériences uniques ───
+  { id: "qc-tour-tadoussac", name: "Tadoussac — Observation des baleines", category: "tourism", subcategory: "Observation faune", city: "Tadoussac", province: "QC", phone: "418-235-4744", website: "https://www.tadoussac.com", description: "Réputé mondialement pour l'observation des baleines (rorquals, bélugas) dans l'estuaire du Saint-Laurent. Croisières mai-octobre.", address: "197, rue des Pionniers, Tadoussac, QC", coordinates: { lat: 48.1397, lng: -69.7197 } },
+  { id: "qc-tour-valcartier", name: "Village Vacances Valcartier", category: "tourism", subcategory: "Parc d'attractions", city: "Saint-Gabriel-de-Valcartier", province: "QC", phone: "1-888-384-5524", website: "https://www.valcartier.com", description: "Plus grand parc aquatique au Canada (été), glissades sur neige (hiver). Hôtel de Glace en saison.", address: "1860, boul. Valcartier, Saint-Gabriel-de-Valcartier, QC", coordinates: { lat: 46.9333, lng: -71.4833 } },
+  { id: "qc-tour-st-felicien", name: "Zoo Sauvage de Saint-Félicien", category: "tourism", subcategory: "Zoo", city: "Saint-Félicien", province: "QC", phone: "418-679-0543", website: "https://www.zoosauvage.org", description: "Faune canadienne en quasi-liberté (ours, orignaux, loups, caribous). Parcours en train grillagé.", address: "2230, boul. du Jardin, Saint-Félicien, QC", coordinates: { lat: 48.6500, lng: -72.4500 } },
+  { id: "qc-tour-wendake", name: "Wendake — Nation Huronne-Wendat", category: "tourism", subcategory: "Site culturel autochtone", city: "Wendake", province: "QC", phone: "418-847-1835", website: "https://tourismewendake.ca", description: "Découverte de la culture et de l'histoire de la nation Huronne-Wendat. Hôtel-Musée, site traditionnel Onhoüa Chetek8e.", address: "5, place de la Rencontre, Wendake, QC", coordinates: { lat: 46.8650, lng: -71.3608 } },
+
+  // ─── Tourisme — Culture & patrimoine ───
+  { id: "qc-tour-musee-civilisation", name: "Musée de la civilisation — Québec", category: "tourism", subcategory: "Musée", city: "Québec", province: "QC", phone: "418-643-2158", website: "https://www.mcq.org", description: "Expositions interactives sur l'histoire humaine et québécoise. Au cœur du Vieux-Port de Québec.", address: "85, rue Dalhousie, Québec, QC", coordinates: { lat: 46.8137, lng: -71.2018 } },
+  { id: "qc-tour-ste-anne-beaupre", name: "Sanctuaire de Sainte-Anne-de-Beaupré", category: "tourism", subcategory: "Lieu de pèlerinage", city: "Sainte-Anne-de-Beaupré", province: "QC", phone: "418-827-3781", website: "https://www.sanctuairesainteanne.org", description: "Lieu de pèlerinage historique, basilique impressionnante, à 35 min de Québec.", address: "10018, av. Royale, Sainte-Anne-de-Beaupré, QC", coordinates: { lat: 47.0220, lng: -70.9290 } },
+  { id: "qc-tour-jardin-botanique", name: "Jardin botanique de Montréal", category: "tourism", subcategory: "Jardin botanique", city: "Montréal", province: "QC", phone: "514-872-1400", website: "https://espacepourlavie.ca/jardin-botanique", description: "Un des plus importants jardins botaniques au monde. À côté du Biodôme et du Stade olympique.", address: "4101, rue Sherbrooke Est, Montréal, QC", coordinates: { lat: 45.5587, lng: -73.5620 } },
+
+  // ─── Tourisme — Régions panoramiques ───
+  { id: "qc-tour-charlevoix", name: "Région de Charlevoix — Tourisme", category: "tourism", subcategory: "Région touristique", city: "Baie-Saint-Paul", province: "QC", phone: "418-665-4454", website: "https://www.tourisme-charlevoix.com", description: "Réserve mondiale de la biosphère UNESCO. Paysages, gastronomie, art, couleurs spectaculaires en automne.", address: "495, boul. de Comporté, La Malbaie, QC", coordinates: { lat: 47.4400, lng: -70.5025 } },
+  { id: "qc-tour-cantons-est", name: "Cantons-de-l'Est — Tourisme", category: "tourism", subcategory: "Région touristique", city: "Sherbrooke", province: "QC", phone: "1-800-355-5755", website: "https://www.cantonsdelest.com", description: "Vignobles, lacs, montagnes, villages anglo-saxons. Route des vins, couleurs flamboyantes en automne.", address: "20, rue Don-Bosco Sud, Sherbrooke, QC", coordinates: { lat: 45.4042, lng: -71.8929 } },
 ];
 
 export const SERVICES: Service[] = [...__SERVICES_CHUNK_0, ...__SERVICES_CHUNK_1, ...__SERVICES_CHUNK_2, ...__SERVICES_CHUNK_3, ...__SERVICES_CHUNK_4];
