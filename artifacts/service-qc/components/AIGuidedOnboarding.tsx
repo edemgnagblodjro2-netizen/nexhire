@@ -493,7 +493,7 @@ export function AIGuidedOnboarding({ language, onSubmitPrompt }: Props) {
             keyboardShouldPersistTaps="handled"
             contentContainerStyle={styles.catScroll}
           >
-            {CATEGORY_OPTIONS.filter((cat) => cat.key !== "childcare" || userProvince === "QC").map((cat) => {
+            {CATEGORY_OPTIONS.map((cat) => {
               const color = getCategoryColor(cat.key, colors);
               return (
                 <Pressable

@@ -695,10 +695,7 @@ export default function HomeScreen() {
 
           {/* Compteurs par catégorie (mémorisés inline) */}
           {(() => {
-            // Childcare (La Place 0-5) is QC-only — hide outside Quebec.
-            const visibleCategories = userProvince === "QC"
-              ? ALL_CATEGORIES
-              : ALL_CATEGORIES.filter((c) => c !== "childcare");
+            const visibleCategories = ALL_CATEGORIES;
             const counts: Record<string, number> = {};
             for (const c of visibleCategories) counts[c] = 0;
             for (const s of services) {

@@ -131,8 +131,8 @@ export default function AboutScreen() {
             <Feather name="users" size={16} color="#0e7e6e" />
             <Text style={[styles.bulletText, { color: colors.foreground }]}>
               {isFr
-                ? "Garde d'enfants : portail Place 0-5 réservé au Québec (catégorie masquée dans les autres provinces)"
-                : "Childcare: Place 0-5 portal limited to Quebec (category hidden in other provinces)"}
+                ? "Garde d'enfants : portail d'inscription La Place 0-5 réservé au Québec (les services restent visibles dans toutes les provinces)"
+                : "Childcare: La Place 0-5 registration portal limited to Quebec (services remain visible in all provinces)"}
             </Text>
           </View>
           <View style={styles.bulletRow}>

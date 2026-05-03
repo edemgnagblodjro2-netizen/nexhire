@@ -22,7 +22,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useServicesData } from "@/contexts/ServicesContext";
-import { useUserProvince } from "@/contexts/UserProvinceContext";
 import { useColors } from "@/hooks/useColors";
 import { getCategoryColor } from "@/utils/categoryColors";
 import { detectCriticalSituation, type CriticalAlert } from "@/utils/detectCritical";
@@ -473,7 +472,6 @@ export default function ChatScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const { t, language } = useLanguage();
-  const { province: userProvince } = useUserProvince();
   const { isAuthenticated, isLoading: authLoading, getToken } = useAuth();
   const router = useRouter();
   const params = useLocalSearchParams<{ autoPrompt?: string }>();
@@ -499,7 +497,7 @@ export default function ChatScreen() {
   const topPadding = Platform.OS === "web" ? 16 : insets.top;
   const bottomPadding = Math.max(insets.bottom, 8);
 
-  const rawQuickPrompts =
+  const quickPrompts =
     chatLang === "en"
       ? QUICK_PROMPTS_EN
       : chatLang === "es"
@@ -509,23 +507,6 @@ export default function ChatScreen() {
       : chatLang === "ht"
       ? QUICK_PROMPTS_HT
       : QUICK_PROMPTS_FR;
-
-  // Hors-Québec : on retire tous les raccourcis liés à la garderie/childcare
-  // (FR, EN, ES, AR, HT) pour qu'aucun prompt ne déclenche une recherche
-  // childcare en Ontario / BC / Manitoba / etc.
-  const CHILDCARE_PROMPT_KEYWORDS = [
-    "garderie", "childcare", "daycare", "guardería", "guarderia",
-    "حضانة", "رعاية أطفال", "gadri",
-  ];
-  const quickPrompts =
-    userProvince === "QC"
-      ? rawQuickPrompts
-      : rawQuickPrompts.filter(
-          (p) =>
-            !CHILDCARE_PROMPT_KEYWORDS.some((kw) =>
-              p.toLowerCase().includes(kw.toLowerCase())
-            )
-        );
 
   useEffect(() => {
     setMessages([

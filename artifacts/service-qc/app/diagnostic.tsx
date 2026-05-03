@@ -145,9 +145,6 @@ function scoreService(
   if (s.badgeVerified) score += 5;
   if (s.featured) score += 3;
 
-  // Childcare is QC-only (Place 0-5 portal); excluded from diagnostic results everywhere.
-  if (s.category === "childcare") return -1000;
-
   return score;
 }
 

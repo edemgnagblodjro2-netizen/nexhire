@@ -19,7 +19,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "@/contexts/LocationContext";
 import { useServicesData } from "@/contexts/ServicesContext";
-import { useUserProvince } from "@/contexts/UserProvinceContext";
 import { CATEGORY_LABELS, type Category, type Service } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 import { getFavorites, toggleFavorite } from "@/lib/favorites";
@@ -70,7 +69,6 @@ export default function MapScreen() {
   const { language } = useLanguage();
   const { userLocation, locationStatus, requestLocation } = useLocation();
   const { services } = useServicesData();
-  const { province: userProvince } = useUserProvince();
   const isFr = language !== "en";
 
   const [tab, setTab] = useState<Tab>("nearby");
@@ -97,17 +95,13 @@ export default function MapScreen() {
   );
 
   // Pool of services for the active tab (before category/sort)
-  // Childcare is hidden everywhere on the map: in QC it redirects to the
-  // official La Place 0-5 portal, and outside QC the dataset has too few
-  // entries to be useful as a category.
   const tabPool = useMemo(() => {
-    const filtered = services.filter((s) => s.category !== "childcare");
     if (tab === "favorites") {
       const set = new Set(favIds);
-      return filtered.filter((s) => set.has(s.id));
+      return services.filter((s) => set.has(s.id));
     }
-    return filtered.filter((s) => s.coordinates);
-  }, [tab, services, favIds, userProvince]);
+    return services.filter((s) => s.coordinates);
+  }, [tab, services, favIds]);
 
   // Per-category counts for chips (within current tab pool)
   const catCounts = useMemo(() => {

@@ -66,25 +66,12 @@ export default function ResultsScreen() {
   const { userLocation, locationStatus, requestLocation } = useLocation();
   const { province: userProvince } = useUserProvince();
 
-  // Childcare (La Place 0-5) is QC-only:
-  // • In QC, the "childcare" category shows the portal redirect screen.
-  // • Outside QC, the category is hidden from chips and services.
+  // Le portail "Inscription via La Place 0-5" est strictement réservé au
+  // Québec (service gouvernemental QC). Hors-QC, la catégorie childcare
+  // affiche la liste normale des services de garde de la province.
   const showChildcarePortal = selectedCategory === "childcare" && userProvince === "QC";
-  const services = useMemo(
-    () => userProvince === "QC" ? rawServices : rawServices.filter((s) => s.category !== "childcare"),
-    [rawServices, userProvince]
-  );
-  const visibleCategories = useMemo(
-    () => userProvince === "QC" ? ALL_CATEGORIES : ALL_CATEGORIES.filter((c) => c !== "childcare"),
-    [userProvince]
-  );
-
-  // Auto-correct: a non-QC user who lands on ?category=childcare gets reset to "all".
-  React.useEffect(() => {
-    if (userProvince !== "QC" && selectedCategory === "childcare") {
-      setSelectedCategory("all");
-    }
-  }, [userProvince, selectedCategory]);
+  const services = rawServices;
+  const visibleCategories = ALL_CATEGORIES;
 
   const [sortMode, setSortMode] = React.useState<SortMode>("default");
 

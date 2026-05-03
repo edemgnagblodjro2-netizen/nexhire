@@ -18,7 +18,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ServiceCard } from "@/components/ServiceCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "@/contexts/LocationContext";
-import { useUserProvince } from "@/contexts/UserProvinceContext";
 import { type Category } from "@/data/services";
 import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
@@ -49,19 +48,10 @@ export default function ServicesScreen() {
   const insets = useSafeAreaInsets();
   const { t, language } = useLanguage();
   const inputRef = useRef<TextInput>(null);
-  const { services: rawServices } = useServicesData();
+  const { services } = useServicesData();
   const { userLocation, locationStatus, requestLocation } = useLocation();
-  const { province: userProvince } = useUserProvince();
 
-  // Childcare (La Place 0-5) is QC-only — exclude both the chip and its services elsewhere.
-  const services = useMemo(
-    () => userProvince === "QC" ? rawServices : rawServices.filter((s) => s.category !== "childcare"),
-    [rawServices, userProvince]
-  );
-  const visibleCategories = useMemo(
-    () => userProvince === "QC" ? ALL_CATEGORIES : ALL_CATEGORIES.filter((c) => c !== "childcare"),
-    [userProvince]
-  );
+  const visibleCategories = ALL_CATEGORIES;
 
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<Category | null>(null);
