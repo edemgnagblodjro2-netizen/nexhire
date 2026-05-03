@@ -309,11 +309,19 @@ export default function DemenagementScreen() {
               {isFr ? section.titleFr : section.titleEn}
             </Text>
             {section.movers.map((m) => (
-              <View
+              <Pressable
                 key={m.name}
-                style={[
+                onPress={() => {
+                  if (m.url) Linking.openURL(m.url);
+                  else if (m.phone) Linking.openURL(`tel:${m.phone.replace(/[^0-9+]/g, "")}`);
+                }}
+                style={({ pressed }) => [
                   styles.moverCard,
-                  { backgroundColor: colors.card, borderColor: colors.border },
+                  {
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
+                    opacity: pressed ? 0.85 : 1,
+                  },
                 ]}
               >
                 <Text style={[styles.moverName, { color: colors.foreground }]}>
@@ -353,7 +361,7 @@ export default function DemenagementScreen() {
                     </Pressable>
                   )}
                 </View>
-              </View>
+              </Pressable>
             ))}
           </View>
         ))}
