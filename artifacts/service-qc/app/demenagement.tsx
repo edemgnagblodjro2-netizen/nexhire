@@ -180,9 +180,10 @@ const SECTIONS: Section[] = [
       },
       {
         name: "Déménagement Longueuil",
-        noteFr: "Local — résidentiel et petits commerciaux.",
-        noteEn: "Local — residential and small commercial.",
-        phone: "450-616-8585",
+        noteFr: "Résidentiel, commercial, entreposage, transport de véhicules. 4.4/5 sur Google (245 avis).",
+        noteEn: "Residential, commercial, storage, vehicle transport. 4.4/5 on Google (245 reviews).",
+        url: "https://demenagementlongueuil.ca",
+        phone: "450-651-7842",
       },
     ],
   },
