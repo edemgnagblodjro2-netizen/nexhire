@@ -60,6 +60,7 @@ export interface Service {
   city: string;
   province?: ProvinceCode;
   phone: string;
+  email?: string;
   website?: string;
   description: string;
   isUrgent?: boolean;
@@ -67994,7 +67995,7 @@ const __SERVICES_CHUNK_4: Service[] = [
 // ─── CHUNK 5 : Déménagement (entreprises QC + organismes officiels) ──────
 const __SERVICES_CHUNK_5: Service[] = [
   // ─── Incontournables (rayonnement provincial) ───
-  { id: "qc-mov-clan-panneton", name: "Le Clan Panneton — Déménagement", category: "moving", subcategory: "Déménageur provincial", city: "Montréal", province: "QC", phone: "1-800-461-1838", website: "https://www.clanpanneton.com", description: "L'institution québécoise du déménagement. Spécialiste des longues distances et déménagements résidentiels/commerciaux. Membre CTQ.", address: "Service partout au Québec", isProvinceWide: true },
+  { id: "qc-mov-clan-panneton", name: "Le Clan Panneton — Déménagement", category: "moving", subcategory: "Déménageur provincial", city: "Montréal", province: "QC", phone: "1-844-937-0707", email: "info@leclanpanneton.ca", website: "https://www.demenagementleclanpanneton.com", description: "L'institution québécoise du déménagement. Spécialiste des longues distances et déménagements résidentiels/commerciaux. Membre CTQ. Soumission gratuite en ligne.", address: "Service partout au Québec", isProvinceWide: true },
   { id: "qc-mov-dg", name: "Déménagement & Entreposage DG", category: "moving", subcategory: "Déménageur provincial", city: "Québec", province: "QC", phone: "418-833-1313", website: "https://www.demenagementagb.com", description: "Leader résidentiel et commercial avec excellentes notes (4.9/5). Service à Québec, Montréal et tout le Québec. Entreposage disponible.", address: "1290, rue Provinciale, Québec, QC", isProvinceWide: true },
   { id: "qc-mov-la-capitale", name: "Déménagement La Capitale", category: "moving", subcategory: "Déménageur provincial", city: "Québec", province: "QC", phone: "1-844-525-3434", website: "https://www.demenagementlacapitale.com", description: "Déménagements entre Québec, Montréal et autres régions. Spécialiste interurbain et longue distance.", address: "Québec, QC", isProvinceWide: true },
   { id: "qc-mov-total", name: "Déménagement Total", category: "moving", subcategory: "Déménageur provincial", city: "Montréal", province: "QC", phone: "514-364-8888", website: "https://www.demenagementtotal.com", description: "Recommandé pour projets complexes et liaisons inter-provinces (QC ↔ ON, QC ↔ NB).", address: "Montréal, QC", isProvinceWide: true },
