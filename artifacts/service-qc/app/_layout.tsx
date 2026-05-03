@@ -154,6 +154,10 @@ function AppContent({ fontsReady }: { fontsReady: boolean }) {
         <Stack.Screen name="whats-new" options={{ headerShown: false }} />
         <Stack.Screen name="ambassador" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false, gestureEnabled: false }} />
+        <Stack.Screen name="demenagement" options={{ headerShown: false }} />
+        <Stack.Screen name="aide-financiere" options={{ headerShown: false }} />
+        <Stack.Screen name="glossaire" options={{ headerShown: false }} />
+        <Stack.Screen name="top10" options={{ headerShown: false }} />
       </Stack>
       <AnalyticsBridge />
       <OfflineBanner />
