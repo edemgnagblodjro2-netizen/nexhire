@@ -116,7 +116,7 @@ const SECTIONS: Section[] = [
         name: "Armstrong Déménagement",
         noteFr: "Haut de gamme — résidentiel, commercial, international (4.7/5).",
         noteEn: "High-end — residential, commercial, international (4.7/5).",
-        url: "https://www.armstrong.ca",
+        url: "https://www.armmove.com",
         phone: "581-629-1535",
       },
       {

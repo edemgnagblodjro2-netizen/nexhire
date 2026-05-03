@@ -68006,7 +68006,7 @@ const __SERVICES_CHUNK_5: Service[] = [
   { id: "qc-mov-sympathique", name: "Déménagement Sympathique", category: "moving", subcategory: "Déménageur Montréal", city: "Montréal", province: "QC", phone: "514-728-0421", description: "Déménageur réputé du Grand Montréal. Service rapide, équipe professionnelle. 5.0/5 sur Google (656 avis).", address: "6320 Av. Henri-Julien, Montréal (Québec) H2S 2T8" },
 
   // ─── Ville de Québec ───
-  { id: "qc-mov-armstrong", name: "Armstrong Déménagement", category: "moving", subcategory: "Déménageur haut de gamme", city: "Québec", province: "QC", phone: "581-629-1535", website: "https://www.armstrong.ca", description: "Service haut de gamme à Québec. Déménagements résidentiels, commerciaux et internationaux. 4.7/5 sur Google (45 avis).", address: "2891 Ave Kepler, Québec (Québec) G1X 4A8" },
+  { id: "qc-mov-armstrong", name: "Armstrong Déménagement", category: "moving", subcategory: "Déménageur haut de gamme", city: "Québec", province: "QC", phone: "581-629-1535", website: "https://www.armmove.com", description: "Service haut de gamme à Québec. Déménagements résidentiels, commerciaux et internationaux. 4.7/5 sur Google (45 avis).", address: "2891 Ave Kepler, Québec (Québec) G1X 4A8" },
   { id: "qc-mov-pro-efficace", name: "Déménagement Pro-Efficace", category: "moving", subcategory: "Déménageur Québec", city: "Québec", province: "QC", phone: "581-397-4737", description: "Déménageur reconnu de la région de Québec. Résidentiel et commercial. 4.4/5 sur Google (73 avis).", address: "Québec, QC" },
 
   // ─── Trois-Rivières / Mauricie ───
