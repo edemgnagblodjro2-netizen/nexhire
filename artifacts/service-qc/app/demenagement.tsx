@@ -92,6 +92,12 @@ const SECTIONS: Section[] = [
         phone: "514-728-0421",
       },
       {
+        name: "Déménagement Le Capitaine",
+        noteFr: "Résidentiel et entreposage à Montréal. 4.8/5 sur Google (295 avis).",
+        noteEn: "Residential and storage in Montreal. 4.8/5 on Google (295 reviews).",
+        phone: "438-366-0102",
+      },
+      {
         name: "Déménagement Général",
         noteFr: "Île de Montréal, Rive-Nord, Rive-Sud — résidentiel et commercial.",
         noteEn: "Montreal Island, North Shore, South Shore — residential and commercial.",
