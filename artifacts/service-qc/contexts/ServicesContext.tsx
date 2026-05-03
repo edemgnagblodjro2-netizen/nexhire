@@ -2,12 +2,14 @@ import React, {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useState,
   useCallback,
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SERVICES as STATIC_SERVICES, type Service } from "@/data/services";
 import { apiCategoryToCode } from "@/lib/categoryMapping";
+import { useUserProvince } from "@/contexts/UserProvinceContext";
 
 // v6 : on bump le cache car le mapping de catégorie change le format stocké.
 const CACHE_KEY = "attentezero_services_cache_v6";
@@ -78,6 +80,7 @@ async function saveCache(data: Service[]): Promise<void> {
 export function ServicesProvider({ children }: { children: React.ReactNode }) {
   const [services, setServices] = useState<Service[]>(STATIC_SERVICES);
   const [loading, setLoading] = useState(true);
+  const { province: userProvince } = useUserProvince();
   const [error, setError] = useState<string | null>(null);
 
   const fetchServices = useCallback(async (forceRefresh = false) => {
@@ -129,9 +132,20 @@ export function ServicesProvider({ children }: { children: React.ReactNode }) {
     fetchServices(false);
   }, [fetchServices]);
 
+  // Filtre dur à la source : hors-Québec, on retire toutes les garderies
+  // (catégorie "childcare"). Aucun écran, recherche, chat ou IA ne pourra
+  // les faire apparaître pour un utilisateur Ontario/BC/Manitoba/etc.
+  const filteredServices = useMemo(
+    () =>
+      userProvince === "QC"
+        ? services
+        : services.filter((s) => s.category !== "childcare"),
+    [services, userProvince]
+  );
+
   return (
     <ServicesContext.Provider
-      value={{ services, loading, error, refresh: () => fetchServices(true) }}
+      value={{ services: filteredServices, loading, error, refresh: () => fetchServices(true) }}
     >
       {children}
     </ServicesContext.Provider>

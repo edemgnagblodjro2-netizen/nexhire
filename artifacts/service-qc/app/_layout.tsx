@@ -187,11 +187,11 @@ export default function RootLayout() {
               <KeyboardProvider>
                 <LanguageProvider>
                   <LocationProvider>
-                    <ServicesProvider>
-                      <UserProvinceProvider>
+                    <UserProvinceProvider>
+                      <ServicesProvider>
                         <AppContent fontsReady={fontsReady} />
-                      </UserProvinceProvider>
-                    </ServicesProvider>
+                      </ServicesProvider>
+                    </UserProvinceProvider>
                   </LocationProvider>
                 </LanguageProvider>
               </KeyboardProvider>
