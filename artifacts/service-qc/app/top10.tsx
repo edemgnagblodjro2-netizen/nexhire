@@ -1,6 +1,7 @@
 import { Feather } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Stack, useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -98,63 +99,67 @@ const STATUSES: Status[] = [
     subtitleFr: "Permis d'études",
     subtitleEn: "Study permit",
     itemsFr: [
-      "Confirmer son inscription auprès de l'établissement dès l'arrivée.",
-      "Obtenir le NAS si autorisation de travail incluse dans le permis.",
-      "Ouvrir un compte bancaire étudiant — offres spéciales pour étudiants internationaux.",
-      "S'inscrire au régime d'assurance maladie de l'établissement (souvent obligatoire).",
-      "Obtenir la carte d'étudiant — donne accès aux ressources, bibliothèque, transports réduits.",
-      "Trouver un logement — résidence universitaire ou logement privé.",
-      "Vérifier les conditions de travail — maximum 20h/semaine hors campus pendant les sessions.",
-      "Rejoindre les associations étudiantes — réseau, intégration, soutien.",
-      "S'informer sur les voies vers la résidence permanente (PGWP, Expérience canadienne).",
-      "Garder tous ses relevés de notes — essentiels pour les futures demandes d'immigration.",
+      "Confirmer son inscription auprès du Designated Learning Institution (DLI).",
+      "Obtenir le NAS si on travaille (jusqu'à 24 h/semaine hors campus autorisé).",
+      "Ouvrir un compte bancaire étudiant (souvent gratuit dans les grandes banques).",
+      "Souscrire à l'assurance maladie de l'établissement (RAMQ ne couvre pas la majorité des étudiants étrangers).",
+      "Obtenir une carte étudiante — donne accès à de nombreux rabais.",
+      "Trouver un logement étudiant ou en colocation — résidence universitaire ou bail privé.",
+      "Acheter une carte de transport (OPUS au Québec, PRESTO en Ontario).",
+      "Connaître les règles d'emploi : 24 h/sem hors campus pendant les sessions, temps plein durant les pauses.",
+      "Garder les preuves d'inscription et de paiement des droits — utiles pour le PTPD à la fin.",
+      "Préparer le permis de travail post-diplôme (PTPD) avant la fin du programme.",
     ],
     itemsEn: [
-      "Confirm enrollment with the institution upon arrival.",
-      "Get the SIN if work authorization is included in the permit.",
-      "Open a student bank account — special offers for international students.",
-      "Sign up for the institution's health insurance plan (often mandatory).",
-      "Get the student card — access to resources, library, transit discounts.",
-      "Find housing — university residence or private rental.",
-      "Check work conditions — maximum 20h/week off-campus during sessions.",
-      "Join student associations — network, integration, support.",
-      "Learn about pathways to permanent residence (PGWP, Canadian Experience).",
-      "Keep all transcripts — essential for future immigration applications.",
+      "Confirm enrollment with the Designated Learning Institution (DLI).",
+      "Get the SIN if working (up to 24 h/week off-campus allowed).",
+      "Open a student bank account (often free at major banks).",
+      "Get health insurance from the institution (RAMQ does not cover most foreign students).",
+      "Get a student card — gives access to many discounts.",
+      "Find student housing or shared apartment — university residence or private lease.",
+      "Buy a transit card (OPUS in Quebec, PRESTO in Ontario).",
+      "Know the work rules: 24 h/week off-campus during sessions, full-time during breaks.",
+      "Keep proof of enrollment and tuition payment — useful for PGWP at the end.",
+      "Prepare the post-graduate work permit (PGWP) before program ends.",
     ],
   },
   {
-    key: "refugee",
-    emoji: "🛡️",
-    titleFr: "Réfugié (Demandeur d'asile)",
-    titleEn: "Refugee (Asylum seeker)",
-    subtitleFr: "Procédure d'asile au Canada",
-    subtitleEn: "Asylum procedure in Canada",
+    key: "asylum",
+    emoji: "🕊️",
+    titleFr: "Demandeur d'asile",
+    titleEn: "Asylum seeker",
+    subtitleFr: "Protection / Réfugié",
+    subtitleEn: "Protection / Refugee",
     itemsFr: [
-      "Déposer la demande d'asile auprès de la CISR (Commission de l'immigration et du statut de réfugié) — le plus tôt possible.",
-      "Obtenir le document de demandeur d'asile — preuve de statut pour accéder aux services.",
-      "Contacter un organisme d'aide aux réfugiés (ex. : PRAIDA à Montréal, COSTI à Toronto) — aide gratuite et essentielle.",
-      "S'inscrire au Programme d'aide sociale en attendant le traitement du dossier.",
-      "Accéder aux soins de santé via le PFSI (Programme fédéral de santé intérimaire) — couverture temporaire.",
-      "Trouver un hébergement d'urgence si nécessaire — CISR ou organismes communautaires peuvent orienter.",
-      "Obtenir un permis de travail ouvert — demandable après dépôt de la demande d'asile.",
-      "Préparer son dossier de preuve avec un avocat en immigration (souvent gratuit via l'aide juridique).",
-      "Assister à toutes les convocations de la CISR — une absence peut entraîner le rejet automatique.",
-      "S'inscrire aux cours de langue (francisation ou anglais) — renforce aussi le dossier d'intégration.",
+      "Faire la demande d'asile à l'ASFC ou à un bureau d'IRCC dès l'arrivée — entrevue de recevabilité.",
+      "Obtenir le document du demandeur d'asile — preuve de statut, à conserver précieusement.",
+      "Obtenir le PFSI (Programme fédéral de santé intérimaire) — couverture médicale temporaire.",
+      "Demander le permis de travail ouvert (PT) — possible une fois la demande déposée.",
+      "Demander l'aide sociale provinciale (PRAIDA au QC, Services sociaux ON) en attendant le PT.",
+      "Trouver un hébergement — refuges (PRAIDA, YMCA, Logifem) ou logement transitoire.",
+      "S'inscrire à la francisation gratuite (Québec) ou aux cours d'anglais (LINC en ON).",
+      "Préparer son dossier pour la CISR (audience) — preuves, témoins, avocat (Aide juridique gratuite).",
+      "Inscrire les enfants à l'école — droit garanti, gratuit même sans statut final.",
+      "Contacter un organisme communautaire (Maison Haïtienne, ROCMI, TCRI) pour soutien complet.",
     ],
     itemsEn: [
-      "File asylum claim with IRB (Immigration and Refugee Board) — as soon as possible.",
-      "Get the asylum claimant document — proof of status to access services.",
-      "Contact a refugee aid organization (e.g. PRAIDA Montreal, COSTI Toronto) — free and essential help.",
-      "Apply for social assistance while awaiting processing.",
-      "Access healthcare through IFHP (Interim Federal Health Program) — temporary coverage.",
-      "Find emergency shelter if needed — IRB or community organizations can guide.",
-      "Get an open work permit — available after filing the asylum claim.",
-      "Prepare your evidence file with an immigration lawyer (often free via legal aid).",
-      "Attend all IRB hearings — absence may lead to automatic rejection.",
-      "Sign up for language classes (French or English) — also strengthens integration file.",
+      "Apply for asylum at CBSA or IRCC office on arrival — eligibility interview.",
+      "Get the asylum claimant document — proof of status, keep safely.",
+      "Get IFHP (Interim Federal Health Program) — temporary medical coverage.",
+      "Apply for the open work permit (WP) — available once claim is filed.",
+      "Apply for provincial social assistance (PRAIDA in QC, social services in ON) while waiting for WP.",
+      "Find shelter — refuges (PRAIDA, YMCA, Logifem) or transitional housing.",
+      "Enroll in free francisation (Quebec) or English classes (LINC in ON).",
+      "Prepare your IRB hearing file — evidence, witnesses, lawyer (free Legal Aid).",
+      "Enroll children in school — guaranteed right, free even without final status.",
+      "Contact a community organization (Maison Haïtienne, ROCMI, TCRI) for full support.",
     ],
   },
 ];
+
+const STORAGE_KEY = "@top10_progress_v1";
+
+type ProgressMap = Record<string, boolean>; // `${statusKey}:${index}` -> true
 
 export default function Top10Screen() {
   const colors = useColors();
@@ -162,24 +167,79 @@ export default function Top10Screen() {
   const insets = useSafeAreaInsets();
   const { language } = useLanguage();
   const isFr = language === "fr";
-  const [expanded, setExpanded] = useState<string>("visa");
+
+  const [expanded, setExpanded] = useState<string>("worker");
+  const [progress, setProgress] = useState<ProgressMap>({});
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const raw = await AsyncStorage.getItem(STORAGE_KEY);
+        if (raw) setProgress(JSON.parse(raw) as ProgressMap);
+      } catch {
+        // ignore
+      } finally {
+        setLoaded(true);
+      }
+    })();
+  }, []);
+
+  const persist = useCallback(async (next: ProgressMap) => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const toggle = useCallback(
+    (statusKey: string, idx: number) => {
+      const k = `${statusKey}:${idx}`;
+      setProgress((prev) => {
+        const next = { ...prev, [k]: !prev[k] };
+        if (!next[k]) delete next[k];
+        persist(next);
+        return next;
+      });
+    },
+    [persist]
+  );
+
+  const totals = useMemo(() => {
+    const total = STATUSES.reduce((s, st) => s + st.itemsFr.length, 0);
+    const done = Object.keys(progress).filter((k) => progress[k]).length;
+    return { total, done, pct: total === 0 ? 0 : Math.round((done / total) * 100) };
+  }, [progress]);
+
+  const statusDone = useCallback(
+    (statusKey: string, count: number) => {
+      let n = 0;
+      for (let i = 0; i < count; i++) {
+        if (progress[`${statusKey}:${i}`]) n++;
+      }
+      return n;
+    },
+    [progress]
+  );
+
+  const resetAll = useCallback(() => {
+    setProgress({});
+    AsyncStorage.removeItem(STORAGE_KEY).catch(() => {});
+  }, []);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Stack.Screen options={{ headerShown: false }} />
 
       <LinearGradient
-        colors={[colors.primary, colors.primary]}
+        colors={["#0ea5e9", "#0369a1"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={[styles.header, { paddingTop: insets.top + 12 }]}
       >
         <View style={styles.headerRow}>
-          <Pressable
-            onPress={() => router.back()}
-            hitSlop={12}
-            style={styles.backBtn}
-          >
+          <Pressable onPress={() => router.back()} hitSlop={12} style={styles.backBtn}>
             <Feather name="arrow-left" size={22} color="#fff" />
           </Pressable>
           <View style={{ flex: 1 }}>
@@ -188,9 +248,37 @@ export default function Top10Screen() {
             </Text>
             <Text style={styles.headerSubtitle}>
               {isFr
-                ? "Priorités selon votre statut d'immigration"
-                : "Priorities based on your immigration status"}
+                ? "Cochez vos démarches — sauvegarde automatique"
+                : "Check off your steps — auto-saved"}
             </Text>
+          </View>
+          <View style={styles.headerEmoji}>
+            <Text style={{ fontSize: 24 }}>🎯</Text>
+          </View>
+        </View>
+
+        {/* Progress bar */}
+        <View style={styles.progressWrap}>
+          <View style={styles.progressTrack}>
+            <View
+              style={[
+                styles.progressFill,
+                { width: `${totals.pct}%` },
+              ]}
+            />
+          </View>
+          <View style={styles.progressRow}>
+            <Text style={styles.progressText}>
+              {totals.done} / {totals.total} ·{" "}
+              {isFr ? "complétées" : "completed"} ({totals.pct}%)
+            </Text>
+            {totals.done > 0 && (
+              <Pressable onPress={resetAll} hitSlop={8}>
+                <Text style={styles.resetLink}>
+                  {isFr ? "Réinitialiser" : "Reset"}
+                </Text>
+              </Pressable>
+            )}
           </View>
         </View>
       </LinearGradient>
@@ -199,9 +287,22 @@ export default function Top10Screen() {
         contentContainerStyle={{ padding: 16, paddingBottom: 80 }}
         showsVerticalScrollIndicator={false}
       >
+        {totals.pct === 100 && (
+          <View style={[styles.celebrate, { backgroundColor: "#dcfce7", borderColor: "#86efac" }]}>
+            <Text style={{ fontSize: 22 }}>🎉</Text>
+            <Text style={[styles.celebrateText, { color: "#166534" }]}>
+              {isFr
+                ? "Bravo ! Vous avez complété toutes vos démarches."
+                : "Congratulations! You've completed all your steps."}
+            </Text>
+          </View>
+        )}
+
         {STATUSES.map((s) => {
           const open = expanded === s.key;
           const items = isFr ? s.itemsFr : s.itemsEn;
+          const done = statusDone(s.key, items.length);
+          const allDone = done === items.length && items.length > 0;
           return (
             <View
               key={s.key}
@@ -225,6 +326,23 @@ export default function Top10Screen() {
                     {isFr ? s.subtitleFr : s.subtitleEn}
                   </Text>
                 </View>
+                <View
+                  style={[
+                    styles.badge,
+                    {
+                      backgroundColor: allDone ? "#16a34a" : colors.muted,
+                    },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.badgeText,
+                      { color: allDone ? "#fff" : colors.mutedForeground },
+                    ]}
+                  >
+                    {done}/{items.length}
+                  </Text>
+                </View>
                 <Feather
                   name={open ? "chevron-up" : "chevron-down"}
                   size={22}
@@ -234,23 +352,45 @@ export default function Top10Screen() {
 
               {open && (
                 <View style={styles.list}>
-                  {items.map((it, idx) => (
-                    <View key={idx} style={styles.item}>
-                      <View
-                        style={[
-                          styles.num,
-                          { backgroundColor: colors.primary },
+                  {items.map((it, idx) => {
+                    const checked = !!progress[`${s.key}:${idx}`];
+                    return (
+                      <Pressable
+                        key={idx}
+                        onPress={() => toggle(s.key, idx)}
+                        style={({ pressed }) => [
+                          styles.item,
+                          { opacity: pressed ? 0.6 : 1 },
                         ]}
                       >
-                        <Text style={styles.numText}>{idx + 1}</Text>
-                      </View>
-                      <Text
-                        style={[styles.itemText, { color: colors.foreground }]}
-                      >
-                        {it}
-                      </Text>
-                    </View>
-                  ))}
+                        <View
+                          style={[
+                            styles.checkbox,
+                            checked
+                              ? { backgroundColor: "#16a34a", borderColor: "#16a34a" }
+                              : { borderColor: colors.border },
+                          ]}
+                        >
+                          {checked && (
+                            <Feather name="check" size={14} color="#fff" />
+                          )}
+                        </View>
+                        <Text
+                          style={[
+                            styles.itemText,
+                            {
+                              color: checked
+                                ? colors.mutedForeground
+                                : colors.foreground,
+                              textDecorationLine: checked ? "line-through" : "none",
+                            },
+                          ]}
+                        >
+                          {it}
+                        </Text>
+                      </Pressable>
+                    );
+                  })}
                 </View>
               )}
             </View>
@@ -261,8 +401,8 @@ export default function Top10Screen() {
           <Feather name="info" size={16} color={colors.mutedForeground} />
           <Text style={[styles.footerText, { color: colors.mutedForeground }]}>
             {isFr
-              ? "Ces listes sont indicatives. Pour un accompagnement personnalisé, contactez un organisme d'aide aux nouveaux arrivants ou un conseiller en immigration."
-              : "These lists are indicative. For personalized support, contact a newcomer aid organization or immigration advisor."}
+              ? "Vos cases cochées sont sauvegardées sur votre appareil. Pour un accompagnement personnalisé, contactez un organisme d'aide aux nouveaux arrivants."
+              : "Your checked items are saved on your device. For personalized support, contact a newcomer aid organization."}
           </Text>
         </View>
       </ScrollView>
@@ -273,7 +413,7 @@ export default function Top10Screen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   header: {
-    paddingBottom: 18,
+    paddingBottom: 14,
     paddingHorizontal: 16,
   },
   headerRow: { flexDirection: "row", alignItems: "center", gap: 12 },
@@ -287,6 +427,44 @@ const styles = StyleSheet.create({
   },
   headerTitle: { color: "#fff", fontSize: 22, fontWeight: "800" },
   headerSubtitle: { color: "rgba(255,255,255,0.85)", fontSize: 13, marginTop: 2 },
+  headerEmoji: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "rgba(255,255,255,0.18)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  progressWrap: { marginTop: 14 },
+  progressTrack: {
+    height: 8,
+    backgroundColor: "rgba(255,255,255,0.25)",
+    borderRadius: 4,
+    overflow: "hidden",
+  },
+  progressFill: {
+    height: "100%",
+    backgroundColor: "#fff",
+    borderRadius: 4,
+  },
+  progressRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 6,
+  },
+  progressText: { color: "#fff", fontSize: 12, fontWeight: "600" },
+  resetLink: { color: "rgba(255,255,255,0.85)", fontSize: 12, textDecorationLine: "underline" },
+  celebrate: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    padding: 14,
+    borderWidth: 1,
+    borderRadius: 12,
+    marginBottom: 14,
+  },
+  celebrateText: { flex: 1, fontSize: 14, fontWeight: "700" },
   card: {
     borderWidth: 1,
     borderRadius: 16,
@@ -302,17 +480,23 @@ const styles = StyleSheet.create({
   emoji: { fontSize: 28 },
   cardTitle: { fontSize: 16, fontWeight: "700" },
   cardSubtitle: { fontSize: 12, marginTop: 2 },
-  list: { paddingHorizontal: 14, paddingBottom: 14, gap: 10 },
-  item: { flexDirection: "row", gap: 10, alignItems: "flex-start" },
-  num: {
-    width: 24,
-    height: 24,
+  badge: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
     borderRadius: 12,
+  },
+  badgeText: { fontSize: 12, fontWeight: "700" },
+  list: { paddingHorizontal: 14, paddingBottom: 14, gap: 12 },
+  item: { flexDirection: "row", gap: 12, alignItems: "flex-start" },
+  checkbox: {
+    width: 22,
+    height: 22,
+    borderRadius: 6,
+    borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 1,
   },
-  numText: { color: "#fff", fontWeight: "800", fontSize: 12 },
   itemText: { flex: 1, fontSize: 14, lineHeight: 20 },
   footer: {
     flexDirection: "row",
