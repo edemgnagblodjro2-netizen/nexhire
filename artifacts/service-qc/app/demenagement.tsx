@@ -175,7 +175,7 @@ const SECTIONS: Section[] = [
         noteFr: "Réputé sur la Rive-Sud (Longueuil, Brossard, Saint-Hubert).",
         noteEn: "Reputable on the South Shore (Longueuil, Brossard, Saint-Hubert).",
         url: "https://gustavedemenagement.ca",
-        phone: "450-650-1133",
+        phone: "450-445-4499",
       },
       {
         name: "Déménagement Rive-Sud (Déménagez-vous)",
