@@ -41,18 +41,55 @@ type Result = {
 // And expiry near it:
 //   "expire le 2027-05-31" / "expiration":"2027-05-31"
 
+// Decode HTML entities and unicode-escape sequences before searching.
+function decodeHtml(s: string): string {
+  return s
+    .replace(/\\u002F/g, "/")
+    .replace(/\\u0026/g, "&")
+    .replace(/\\"/g, '"')
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&")
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&#x27;/g, "'");
+}
+
+// Match the Quebec CITQ number in many forms. Uses 6-digit primary (CITQ format)
+// but also accepts 5-8 to be safe across provinces / future formats.
 const REG_PATTERNS: RegExp[] = [
-  /"registrationNumber"\s*:\s*"(\d{5,8})"/i,
-  /registration[^A-Za-z0-9]{0,5}(?:number|n[°o]|#)?\s*[:=]?\s*["']?(\d{5,8})/i,
-  /num[ée]ro\s+d['’]enregistrement[^0-9]{0,15}(\d{5,8})/i,
-  /CITQ[^0-9]{0,10}(\d{5,8})/i,
-  /\bCPTAQ\b[^0-9]{0,10}(\d{5,8})/i,
+  // JSON keys (most reliable in Airbnb's deferred state blob)
+  /"registrationNumber"\s*:\s*"?(\d{5,8})"?/i,
+  /"registration_number"\s*:\s*"?(\d{5,8})"?/i,
+  /"licenseNumber"\s*:\s*"?(\d{5,8})"?/i,
+  /"license_number"\s*:\s*"?(\d{5,8})"?/i,
+  /"license"\s*:\s*"(\d{5,8})"/i,
+  /"permitNumber"\s*:\s*"?(\d{5,8})"?/i,
+  /"citqNumber"\s*:\s*"?(\d{5,8})"?/i,
+  /"citq_number"\s*:\s*"?(\d{5,8})"?/i,
+  // Visible text on the listing page (FR / EN)
+  /num[ée]ro\s+d['’\u2019]\s*enregistrement[^0-9]{0,30}(\d{5,8})/i,
+  /num[ée]ro\s+d['’\u2019]\s*inscription[^0-9]{0,30}(\d{5,8})/i,
+  /registration\s+(?:number|no\.?|#)?[^0-9]{0,30}(\d{5,8})/i,
+  /license\s+(?:number|no\.?|#)?[^0-9]{0,30}(\d{5,8})/i,
+  // CITQ / CPTAQ explicit
+  /\bCITQ\b[^0-9]{0,15}(\d{5,8})/i,
+  /\bCPTAQ\b[^0-9]{0,15}(\d{5,8})/i,
+  // Quebec hyphen pattern often shown as "Québec – 309386"
+  /Qu[ée]bec\s*[\u2013\u2014\-]\s*[^0-9]{0,40}(\d{6})/i,
 ];
 
 const EXPIRY_PATTERNS: RegExp[] = [
-  /"(?:expir(?:y|ation)Date|expiresOn|expiryDate)"\s*:\s*"(\d{4}-\d{2}-\d{2})"/i,
-  /expir(?:e|ation|es)[^0-9]{0,20}(\d{4}-\d{2}-\d{2})/i,
-  /expir(?:e|ation|es)[^0-9]{0,20}(\d{2}\/\d{2}\/\d{4})/i,
+  // JSON keys
+  /"(?:expir(?:y|ation)Date|expiresOn|expiryDate|expiration_date|expires_on|expires)"\s*:\s*"(\d{4}-\d{2}-\d{2})"/i,
+  // Visible text variants FR/EN
+  /expir(?:e|ation|es|y)[^0-9]{0,30}(\d{4}-\d{2}-\d{2})/i,
+  /expir(?:e|ation|es|y)[^0-9]{0,30}(\d{2}\/\d{2}\/\d{4})/i,
+  /expir(?:e|ation|es|y)[^0-9]{0,30}(\d{1,2}\s+\w+\s+\d{4})/i,
+  // FR "expire le 2027-05-31"
+  /expire\s+le\s+(\d{4}-\d{2}-\d{2})/i,
 ];
 
 const HOST_PATTERNS: RegExp[] = [
@@ -115,20 +152,32 @@ async function verifyAirbnbListing(rawUrl: string): Promise<Result> {
     };
   }
 
+  // Airbnb sometimes returns a tiny anti-bot stub (~2-3 KB). Detect it.
+  if (html.length < 5000) {
+    return {
+      status: "error",
+      errorMessage:
+        "Airbnb a renvoyé une page vide (protection anti-robot). Réessayez dans quelques secondes ou ouvrez le lien dans le navigateur.",
+    };
+  }
+
+  // Decode escaped HTML for more reliable matching
+  const decoded = decodeHtml(html);
+
   // Extract host name (best effort)
   let hostName: string | undefined;
   for (const p of HOST_PATTERNS) {
-    const m = html.match(p);
+    const m = decoded.match(p);
     if (m && m[1]) {
-      hostName = m[1].replace(/\\u002F/g, "/").trim();
+      hostName = m[1].trim();
       break;
     }
   }
 
-  // Extract registration number
+  // Extract registration number — try both raw and decoded HTML
   let regNumber: string | undefined;
   for (const p of REG_PATTERNS) {
-    const m = html.match(p);
+    const m = decoded.match(p) || html.match(p);
     if (m && m[1]) {
       regNumber = m[1];
       break;
@@ -142,10 +191,12 @@ async function verifyAirbnbListing(rawUrl: string): Promise<Result> {
     };
   }
 
-  // Extract expiry
+  // Extract expiry — search near the registration number first for reliability
   let expiry: string | undefined;
+  const idx = decoded.indexOf(regNumber);
+  const window = idx >= 0 ? decoded.slice(Math.max(0, idx - 500), idx + 500) : decoded;
   for (const p of EXPIRY_PATTERNS) {
-    const m = html.match(p);
+    const m = window.match(p) || decoded.match(p);
     if (m && m[1]) {
       const norm = parseExpiry(m[1]);
       if (norm) {
