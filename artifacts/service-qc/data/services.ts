@@ -706,7 +706,7 @@ const __SERVICES_CHUNK_0: Service[] = [
   {
     id: "ab-sto-hlnt001",
     name: "Accessible Transportation Service — Stony Plain",
-    category: "health",
+    category: "transport",
     subcategory: "non-emergency medical transport",
     city: "Stony Plain",
     province: "AB",
@@ -5978,7 +5978,7 @@ const __SERVICES_CHUNK_0: Service[] = [
   {
     id: "bm-cqe1621",
     name: "Centre d'action bénévole de Cowansville, Volet transport",
-    category: "family",
+    category: "transport",
     subcategory: "",
     city: "Cowansville",
     province: "QC",
@@ -12784,7 +12784,7 @@ const __SERVICES_CHUNK_0: Service[] = [
   {
     id: "ab-cal-hlnt001",
     name: "Essential Transportation Program — Calgary",
-    category: "health",
+    category: "transport",
     subcategory: "non-emergency medical transport",
     city: "Calgary",
     province: "AB",
@@ -19994,7 +19994,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "ab-abw-hlnt009",
     name: "Medical Transportation Services",
-    category: "health",
+    category: "transport",
     subcategory: "non-emergency medical transport",
     city: "",
     province: "AB",
@@ -21293,7 +21293,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "qc-vic-ad006",
     name: "Ministère des Transports du Québec — Victoriaville",
-    category: "administrative",
+    category: "transport",
     subcategory: "ministère transports",
     city: "Victoriaville",
     province: "QC",
@@ -21694,7 +21694,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "qc-vic-ad003",
     name: "Municar Transport Collectif — Victoriaville",
-    category: "administrative",
+    category: "transport",
     subcategory: "transport collectif",
     city: "Victoriaville",
     province: "QC",
@@ -21756,7 +21756,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "bm-cqe1745",
     name: "Municipalité régionale de comté de Brome-Missisquoi, Service de transport adapté et collectif",
-    category: "administrative",
+    category: "transport",
     subcategory: "",
     city: "Cowansville",
     province: "QC",
@@ -27552,7 +27552,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "ns-hal-he001",
     name: "Right at Home Home Care Nova Scotia — Halifax",
-    category: "health",
+    category: "banking",
     subcategory: "soins à domicile",
     city: "Halifax",
     province: "NS",
@@ -27778,7 +27778,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "qc-sha-ad003",
     name: "Régie De Transport En Commun De Shawinigan — Shawinigan",
-    category: "administrative",
+    category: "transport",
     subcategory: "transport en commun municipal",
     city: "Shawinigan",
     province: "QC",
@@ -30205,7 +30205,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "qc-sha-ad002",
     name: "Shawinigan Transport En Commun — Shawinigan",
-    category: "administrative",
+    category: "transport",
     subcategory: "transport en commun municipal",
     city: "Shawinigan",
     province: "QC",
@@ -31954,7 +31954,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "ab-cal-scr001",
     name: "Supported Visits and Transportation Program — Calgary",
-    category: "social",
+    category: "transport",
     subcategory: "community ride",
     city: "Calgary",
     province: "AB",
@@ -32255,7 +32255,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "qc-vic-ad005",
     name: "Taxi Veterans — Victoriaville",
-    category: "administrative",
+    category: "transport",
     subcategory: "taxi",
     city: "Victoriaville",
     province: "QC",
@@ -32267,7 +32267,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "qc-vic-ad002",
     name: "Taxibus Victoriaville — Victoriaville",
-    category: "administrative",
+    category: "transport",
     subcategory: "transport adapté communautaire",
     city: "Victoriaville",
     province: "QC",
@@ -33138,7 +33138,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "ab-inn-hlnt001",
     name: "Transportation Options — Innisfail",
-    category: "health",
+    category: "transport",
     subcategory: "non-emergency medical transport",
     city: "Innisfail",
     province: "AB",
@@ -33151,7 +33151,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "ab-fox-scr001",
     name: "Transportation Program — Fox Creek",
-    category: "social",
+    category: "transport",
     subcategory: "community ride",
     city: "Fox Creek",
     province: "AB",
@@ -33164,7 +33164,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "ab-fox-apt001",
     name: "Transportation Program — Fox Creek",
-    category: "administrative",
+    category: "transport",
     subcategory: "public transit",
     city: "Fox Creek",
     province: "AB",
@@ -33177,7 +33177,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "ab-abw-hlnt013",
     name: "Transportation Services",
-    category: "health",
+    category: "transport",
     subcategory: "non-emergency medical transport",
     city: "",
     province: "AB",
@@ -33190,7 +33190,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "ab-abw-hlnt005",
     name: "Transportation Services for Cancer Patients",
-    category: "health",
+    category: "transport",
     subcategory: "non-emergency medical transport",
     city: "",
     province: "AB",
@@ -33203,7 +33203,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "ab-car-hlnt001",
     name: "Transportation Services — Carstairs",
-    category: "health",
+    category: "transport",
     subcategory: "non-emergency medical transport",
     city: "Carstairs",
     province: "AB",
@@ -33216,7 +33216,7 @@ const __SERVICES_CHUNK_1: Service[] = [
   {
     id: "ab-mil-scr001",
     name: "Transportation Services — Milk River",
-    category: "social",
+    category: "transport",
     subcategory: "community ride",
     city: "Milk River",
     province: "AB",
@@ -56561,7 +56561,7 @@ const __SERVICES_CHUNK_2: Service[] = [
   {
     id: "qc-qbc-a011",
     name: "ministère des transports et de la mobilité durable",
-    category: "administrative",
+    category: "transport",
     subcategory: "le Québec",
     city: "Québec",
     province: "QC",
