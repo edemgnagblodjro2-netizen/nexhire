@@ -18,8 +18,10 @@
       },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://quebec-aid-finder.replit.app",
+        "EAS_NO_VCS": "1",
         "EXPO_ROUTER_APP_ROOT": "./app"
-      }
+      },
+      "prebuildCommand": "expo prebuild --no-install --platform android"
     },
     "production": {
       "android": {
