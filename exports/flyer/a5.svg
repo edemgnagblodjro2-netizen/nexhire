@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1748" height="2480" viewBox="0 0 1748 2480">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e7e6e"/>
+      <stop offset="1" stop-color="#0a5e52"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1748" height="2480" fill="#ffffff"/>
+  <rect x="0" y="0" width="1748" height="780" fill="url(#bg)"/>
+  <circle cx="1668" cy="120" r="220" fill="#ffffff" fill-opacity="0.06"/>
+  <circle cx="120" cy="700" r="180" fill="#ffffff" fill-opacity="0.05"/>
+
+  <g transform="translate(764, 130)">
+    <rect width="220" height="220" rx="48" fill="#ffffff"/>
+    <text x="110" y="158" font-family="DejaVu Sans, sans-serif" font-weight="bold" font-size="120" fill="#0e7e6e" text-anchor="middle">A0</text>
+  </g>
+
+  <text x="874" y="500" font-family="DejaVu Sans, sans-serif" font-weight="bold" font-size="120" fill="#ffffff" text-anchor="middle">AttenteZéro</text>
+  <text x="874" y="600" font-family="DejaVu Sans, sans-serif" font-size="44" fill="#ffffff" text-anchor="middle" fill-opacity="0.95">Le bon service, près de chez vous,</text>
+  <text x="874" y="660" font-family="DejaVu Sans, sans-serif" font-size="44" fill="#ffffff" text-anchor="middle" fill-opacity="0.95">sans attendre.</text>
+
+  <text x="874" y="920" font-family="DejaVu Sans, sans-serif" font-weight="bold" font-size="52" fill="#1a2e2b" text-anchor="middle">Tous les services communautaires</text>
+  <text x="874" y="990" font-family="DejaVu Sans, sans-serif" font-weight="bold" font-size="52" fill="#1a2e2b" text-anchor="middle">du Québec dans votre poche</text>
+
+  <g font-family="DejaVu Sans, sans-serif" fill="#1a2e2b">
+    <g transform="translate(180, 1130)">
+      <circle cx="40" cy="40" r="40" fill="#e6f4f1"/>
+      <text x="120" y="35" font-size="40" font-weight="bold">Plus de 1 000 services</text>
+      <text x="120" y="85" font-size="32" fill="#5a6f6c">Logement, santé, garderies, banques, transport…</text>
+    </g>
+    <g transform="translate(180, 1280)">
+      <circle cx="40" cy="40" r="40" fill="#e6f4f1"/>
+      <text x="120" y="35" font-size="40" font-weight="bold">Assistant IA multilingue</text>
+      <text x="120" y="85" font-size="32" fill="#5a6f6c">FR · EN · ES · AR · HT — réponse instantanée</text>
+    </g>
+    <g transform="translate(180, 1430)">
+      <circle cx="40" cy="40" r="40" fill="#e6f4f1"/>
+      <text x="120" y="35" font-size="40" font-weight="bold">Géolocalisation</text>
+      <text x="120" y="85" font-size="32" fill="#5a6f6c">Les services les plus proches, avec itinéraire</text>
+    </g>
+    <g transform="translate(180, 1580)">
+      <circle cx="40" cy="40" r="40" fill="#e6f4f1"/>
+      <text x="120" y="35" font-size="40" font-weight="bold">Aide urgente 24/7</text>
+      <text x="120" y="85" font-size="32" fill="#5a6f6c">811, 211, hébergement, santé mentale</text>
+    </g>
+  </g>
+
+  <rect x="80" y="1740" width="1588" height="700" rx="32" fill="#e6f4f1"/>
+  <text x="874" y="1800" font-family="DejaVu Sans, sans-serif" font-weight="bold" font-size="42" fill="#0a5e52" text-anchor="middle">Téléchargez gratuitement — scannez le code</text>
+  <rect x="594" y="1810" width="560" height="560" rx="20" fill="#ffffff"/>
+
+  <text x="874" y="2410" font-family="DejaVu Sans, sans-serif" font-weight="bold" font-size="42" fill="#0a5e52" text-anchor="middle">attentezero.ca</text>
+  <text x="874" y="2455" font-family="DejaVu Sans, sans-serif" font-size="28" fill="#5a6f6c" text-anchor="middle">info@attentezero.ca  ·  Disponible sur Google Play</text>
+</svg>

@@ -581,3 +581,21 @@ id = "OTckU9BMgkVwYQxv1WfwC"
 uri = "file://exports/banques.csv"
 type = "table"
 title = "Banques — 53 services (CSV)"
+
+[[outputs]]
+id = "i2iSkie0l3lZMegPB8PRU"
+uri = "file://exports/flyer/AttenteZero_A5.png"
+type = "image"
+title = "AttenteZéro — Dépliant A5 vertical (impression)"
+
+[[outputs]]
+id = "FDWEst5H3ZiOQ9D0NbuOM"
+uri = "file://exports/flyer/AttenteZero_Square.png"
+type = "image"
+title = "AttenteZéro — Visuel carré (réseaux sociaux)"
+
+[[outputs]]
+id = "nUJma4Q_A9id0ZGyMbxre"
+uri = "file://exports/flyer/AttenteZero_QR.png"
+type = "image"
+title = "QR code attentezero.ca (haute résolution)"
