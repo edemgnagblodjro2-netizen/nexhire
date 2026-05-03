@@ -575,3 +575,9 @@ id = "c_4E0ZFZEqvugo3dTjM28"
 uri = "file://exports/releases/attentezero-v1.1.2-20260502.zip"
 type = "unspecified"
 title = "AttenteZéro v1.1.2 — code source production (17 MB)"
+
+[[outputs]]
+id = "OTckU9BMgkVwYQxv1WfwC"
+uri = "file://exports/banques.csv"
+type = "table"
+title = "Banques — 53 services (CSV)"

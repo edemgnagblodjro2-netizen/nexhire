@@ -1,0 +1,54 @@
+id,name,subcategory,city,province,phone,website,address,description
+qc-mtl-bnk001,Banque Nationale — Siège,Banque commerciale,Montréal,QC,1-888-835-6281,https://www.bnc.ca,"800, rue Saint-Jacques, Montréal, QC",Banque Nationale du Canada — siège social. Service à la clientèle particuliers et entreprises.
+qc-mtl-bnk002,Desjardins — Complexe Desjardins,Coopérative financière,Montréal,QC,1-800-224-7737,https://www.desjardins.com,"150, rue Sainte-Catherine Ouest, Montréal, QC","Caisse Desjardins du Complexe Desjardins. Conseils financiers, comptes, prêts."
+qc-que-bnk001,Desjardins — Grande Allée,Coopérative financière,Québec,QC,1-800-224-7737,https://www.desjardins.com,"1150, Grande Allée Ouest, Québec, QC",Caisse Desjardins de Québec — secteur Grande Allée.
+qc-que-bnk002,Banque Nationale — Sainte-Foy,Banque commerciale,Québec,QC,418-644-8000,https://www.bnc.ca,"1170, chemin Sainte-Foy, Québec, QC",Banque Nationale — succursale Sainte-Foy.
+qc-lvl-bnk001,RBC Banque Royale — Saint-Martin,Banque commerciale,Laval,QC,1-800-769-2511,https://www.rbcbanqueroyale.com,"3055, boulevard Saint-Martin Ouest, Laval, QC",RBC Banque Royale — succursale boulevard Saint-Martin.
+qc-gat-bnk001,CIBC — Plateau,Banque commerciale,Gatineau,QC,1-800-465-2422,https://www.cibc.com,"100, boulevard du Plateau, Gatineau, QC",CIBC — succursale du Plateau.
+qc-lng-bnk001,Desjardins — Saint-Charles,Coopérative financière,Longueuil,QC,450-674-4641,https://www.desjardins.com,"1111, rue Saint-Charles Ouest, Longueuil, QC",Caisse Desjardins de Longueuil — rue Saint-Charles.
+qc-shb-bnk001,Banque Scotia — Portland,Banque commerciale,Sherbrooke,QC,1-800-472-6842,https://www.scotiabank.com,"1450, boulevard de Portland, Sherbrooke, QC",Banque Scotia — succursale boulevard de Portland.
+qc-lev-bnk001,Desjardins — Siège social,Coopérative financière,Lévis,QC,1-800-224-7737,https://www.desjardins.com,"100, avenue des Commandeurs, Lévis, QC",Mouvement Desjardins — siège social du Mouvement.
+qc-sag-bnk001,BMO Banque de Montréal — Racine,Banque commerciale,Saguenay,QC,1-877-225-5266,https://www.bmo.com,"161, rue Racine Est, Saguenay, QC",BMO Banque de Montréal — succursale rue Racine Est.
+qc-trv-bnk001,Banque Nationale — Royale,Banque commerciale,Trois-Rivières,QC,819-373-3533,https://www.bnc.ca,"1350, rue Royale, Trois-Rivières, QC",Banque Nationale — succursale rue Royale.
+qc-trb-bnk001,TD Canada Trust — Moody,Banque commerciale,Terrebonne,QC,1-866-222-3456,https://www.td.com,"1185, boulevard Moody, Terrebonne, QC",TD Canada Trust — succursale boulevard Moody.
+qc-stj-bnk001,RBC Banque Royale — Pierre-Caisse,Banque commerciale,Saint-Jean-sur-Richelieu,QC,450-349-5811,https://www.rbcbanqueroyale.com,"600, rue Pierre-Caisse, Saint-Jean-sur-Richelieu, QC",RBC Banque Royale — succursale Pierre-Caisse.
+qc-brs-bnk001,BMO Banque de Montréal — Dix30,Banque commerciale,Brossard,QC,450-672-9110,https://www.bmo.com,"9105, boulevard Leduc (Dix30), Brossard, QC",BMO Banque de Montréal — Quartier Dix30.
+qc-rep-bnk001,Banque Scotia — Louvain,Banque commerciale,Repentigny,QC,450-581-3030,https://www.scotiabank.com,"150, rue Louvain, Repentigny, QC",Banque Scotia — succursale Louvain.
+qc-stj2-bnk001,Desjardins — Saint-Georges,Coopérative financière,Saint-Jérôme,QC,450-438-3545,https://www.desjardins.com,"450, rue Saint-Georges, Saint-Jérôme, QC",Caisse Desjardins de Saint-Jérôme.
+qc-drv-bnk001,Banque Nationale — Drummondville,Banque commerciale,Drummondville,QC,819-477-9494,https://www.bnc.ca,"1950, boul. Saint-Joseph, Drummondville, QC, J2B 1R2",Banque Nationale — succursale Drummondville (boul. Saint-Joseph). Particuliers et entreprises.
+qc-grb-bnk001,CIBC — Principale,Banque commerciale,Granby,QC,450-372-5881,https://www.cibc.com,"50, rue Principale, Granby, QC",CIBC — succursale rue Principale.
+qc-blv-bnk001,TD Canada Trust — Michèle-Bohec,Banque commerciale,Blainville,QC,450-433-2221,https://www.td.com,"1356, boulevard Michèle-Bohec, Blainville, QC",TD Canada Trust — succursale Michèle-Bohec.
+qc-sth-bnk001,RBC Banque Royale — des Cascades,Banque commerciale,Saint-Hyacinthe,QC,450-773-8411,https://www.rbcbanqueroyale.com,"1595, rue des Cascades, Saint-Hyacinthe, QC",RBC Banque Royale — succursale rue des Cascades.
+qc-mir-bnk001,Desjardins — Curé-Labelle,Coopérative financière,Mirabel,QC,450-435-9533,https://www.desjardins.com,"13445, boulevard Curé-Labelle, Mirabel, QC",Caisse Desjardins de Mirabel — boulevard Curé-Labelle.
+qc-ddo-bnk001,Banque Scotia — des Sources,Banque commerciale,Dollard-des-Ormeaux,QC,514-684-9010,https://www.scotiabank.com,"3500, boulevard des Sources, Dollard-des-Ormeaux, QC",Banque Scotia — succursale boulevard des Sources.
+on-tor-bnk001,RBC — Siège social,Banque commerciale,Toronto,ON,1-800-769-2511,https://www.rbcroyalbank.com,"Toronto, ON",Royal Bank of Canada — siège social.
+bc-van-bnk001,Vancity / TD Canada Trust,Coopérative / Banque,Vancouver,BC,1-866-222-3456,https://www.vancity.com,"Vancouver, BC",Vancity Credit Union ou TD Canada Trust — services bancaires.
+ab-cal-bnk001,ATB Financial / RBC,Banque commerciale,Calgary,AB,1-800-332-8383,https://www.atb.com,"Calgary, AB",ATB Financial ou RBC — services bancaires en Alberta.
+mb-win-bnk001,Cambrian Credit Union / Scotia,Coopérative / Banque,Winnipeg,MB,1-800-472-6842,https://www.cambrian.mb.ca,"Winnipeg, MB",Cambrian Credit Union ou Banque Scotia — services bancaires.
+sk-sas-bnk001,Conexus Credit Union / TD,Coopérative / Banque,Saskatoon,SK,1-866-222-3456,https://www.conexus.ca,"Saskatoon, SK",Conexus Credit Union ou TD — services bancaires.
+ns-hal-bnk001,Banque Scotia — Halifax,Banque commerciale,Halifax,NS,1-800-472-6842,https://www.scotiabank.com,"Halifax, NS",Banque Scotia — services bancaires en Nouvelle-Écosse.
+nb-mon-bnk001,UNI Coopération financière,Coopérative financière,Moncton,NB,1-888-359-1357,https://www.uni.ca,"Moncton, NB",UNI Coopération financière — services bancaires francophones du Nouveau-Brunswick.
+nl-stj-bnk001,CIBC — St. John's,Banque commerciale,St. John's,NL,1-800-465-2422,https://www.cibc.com,"St. John's, NL",CIBC — services bancaires à Terre-Neuve-et-Labrador.
+pe-cha-bnk001,Provincial Credit Union,Coopérative financière,Charlottetown,PE,1-902-892-4107,https://www.provincialcu.com,"Charlottetown, PE",Provincial Credit Union — services bancaires à l'Île-du-Prince-Édouard.
+nt-yel-bnk001,First Nations Bank of Canada,Banque autochtone,Yellowknife,NT,1-888-454-3622,https://www.fnbc.ca,"Yellowknife, NT",First Nations Bank of Canada — services bancaires aux T.N.-O.
+yt-whi-bnk001,BMO Banque de Montréal — Whitehorse,Banque commerciale,Whitehorse,YT,1-877-225-5266,https://www.bmo.com,"Whitehorse, YT",BMO Banque de Montréal — services bancaires au Yukon.
+nu-iqa-bnk001,RBC Banque Royale — Iqaluit,Banque commerciale,Iqaluit,NU,1-800-769-2511,https://www.rbcbanqueroyale.com,"Iqaluit, NU",RBC Banque Royale — services bancaires au Nunavut.
+qc-mtl-rbc-stcat,RBC Banque Royale — Sainte-Catherine Ouest,Banque commerciale,Montréal,QC,514-874-2483,https://www.rbcbanqueroyale.com,"1 Place Ville Marie, Montréal, QC",RBC Banque Royale — succursale centre-ville.
+qc-mtl-td-stcat,TD Canada Trust — Centre-ville Montréal,Banque commerciale,Montréal,QC,1-866-222-3456,https://www.td.com,"500, rue Sainte-Catherine Ouest, Montréal, QC",TD Canada Trust — succursale centre-ville Montréal.
+qc-mtl-bmo-mcgill,BMO Banque de Montréal — Place du Canada,Banque commerciale,Montréal,QC,1-877-225-5266,https://www.bmo.com,"129, rue Saint-Jacques, Montréal, QC",BMO Banque de Montréal — succursale Place du Canada.
+qc-mtl-cibc-stcat,CIBC — Place Ville-Marie,Banque commerciale,Montréal,QC,1-800-465-2422,https://www.cibc.com,"1 Place Ville Marie, Montréal, QC",CIBC — succursale Place Ville-Marie.
+qc-mtl-scotia-mcgill,Banque Scotia — McGill,Banque commerciale,Montréal,QC,1-800-472-6842,https://www.scotiabank.com,"1002, rue Sherbrooke Ouest, Montréal, QC",Banque Scotia — succursale rue McGill.
+qc-mtl-tang,Tangerine Banque (en ligne),Banque en ligne,Montréal,QC,1-888-826-4374,https://www.tangerine.ca,,Banque Tangerine (filiale de Scotia) — services bancaires en ligne sans frais mensuels.
+qc-mtl-laurentienne,Banque Laurentienne — Centre-ville Montréal,Banque commerciale,Montréal,QC,1-800-252-1846,https://www.banquelaurentienne.ca,"1360, boul. René-Lévesque Ouest, Montréal, QC",Banque Laurentienne — siège à Montréal. Particuliers et entreprises au Québec.
+qc-mtl-hsbc,HSBC Bank Canada — Montréal,Banque commerciale,Montréal,QC,1-888-310-4722,https://www.hsbc.ca,"2001, av. McGill College, Montréal, QC",HSBC Bank Canada — services bancaires à Montréal (acquise par RBC en 2024).
+qc-mtl-equitable,Banque Équitable / EQ Bank,Banque en ligne,Montréal,QC,1-844-437-2265,https://www.eqbank.ca,,EQ Bank — banque entièrement numérique sans frais.
+qc-mtl-moneymart,Money Mart — Encaissement de chèques,Services financiers alternatifs,Montréal,QC,1-800-361-1407,https://www.moneymart.ca,,"Encaissement de chèques, prêts à court terme, transferts d'argent. Plusieurs succursales au Québec."
+on-tor-td-king,TD Canada Trust — King Street Toronto,Banque commerciale,Toronto,ON,1-866-222-3456,https://www.td.com,"66 Wellington Street West, Toronto, ON",TD Canada Trust — siège King Street.
+on-tor-bmo-king,BMO Bank of Montreal — First Canadian Place,Banque commerciale,Toronto,ON,1-877-225-5266,https://www.bmo.com,"100 King Street West, Toronto, ON",BMO Bank of Montreal — siège torontois First Canadian Place.
+on-tor-cibc-square,CIBC Square — Toronto,Banque commerciale,Toronto,ON,1-800-465-2422,https://www.cibc.com,"81 Bay Street, Toronto, ON",CIBC — siège torontois (CIBC Square).
+on-mer-meridian,Meridian Credit Union — Ontario,Coopérative financière,Toronto,ON,1-866-592-2226,https://www.meridiancu.ca,,Plus grande coopérative de crédit en Ontario.
+ab-cal-atb,ATB Financial — Siège Calgary,Banque provinciale,Calgary,AB,1-800-332-8383,https://www.atb.com,"239 8th Avenue SW, Calgary, AB",ATB Financial — banque appartenant au gouvernement de l'Alberta.
+ab-edm-servus,Servus Credit Union — Edmonton,Coopérative financière,Edmonton,AB,1-877-378-8728,https://www.servus.ca,,Plus grande coopérative de crédit en Alberta.
+bc-van-coast,Coast Capital Savings — Vancouver,Coopérative financière,Vancouver,BC,1-888-517-7000,https://www.coastcapitalsavings.com,,Coopérative de crédit en Colombie-Britannique.
+ca-arc,Agence du revenu du Canada (ARC),Service gouvernemental,Ottawa,ON,1-800-959-7383,https://www.canada.ca/fr/agence-revenu.html,,"Service à la clientèle pour particuliers — impôts, crédits, prestations (ACE, ACT, SRG)."
+qc-revenu-quebec,Revenu Québec — Service à la clientèle,Service gouvernemental,Québec,QC,1-800-267-6299,https://www.revenuquebec.ca,,"Impôts, crédits d'impôt, soutien aux familles et aux aînés au Québec."
