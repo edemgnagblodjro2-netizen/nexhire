@@ -121,12 +121,20 @@ export default function AboutScreen() {
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 4 }}>
             <Feather name="zap" size={18} color="#0e7e6e" />
             <Text style={[styles.h2, { color: colors.foreground, marginBottom: 0 }]}>
-              {isFr ? "Nouveautés v1.1.2" : "What's new in v1.1.2"}
+              {isFr ? "Nouveautés v1.1.3" : "What's new in v1.1.3"}
             </Text>
           </View>
           <Text style={[styles.p, { color: colors.mutedForeground, fontSize: 12, marginBottom: 8 }]}>
             {isFr ? "Mai 2026 — 5 338 services dans 13 provinces et territoires" : "May 2026 — 5,338 services across 13 provinces and territories"}
           </Text>
+          <View style={styles.bulletRow}>
+            <Feather name="users" size={16} color="#0e7e6e" />
+            <Text style={[styles.bulletText, { color: colors.foreground }]}>
+              {isFr
+                ? "Garde d'enfants : portail Place 0-5 désormais affiché uniquement au Québec ; les autres provinces voient les services de garde locaux"
+                : "Childcare: Place 0-5 portal now shown only in Quebec; other provinces see local childcare services"}
+            </Text>
+          </View>
           <View style={styles.bulletRow}>
             <Feather name="message-circle" size={16} color="#0e7e6e" />
             <Text style={[styles.bulletText, { color: colors.foreground }]}>
