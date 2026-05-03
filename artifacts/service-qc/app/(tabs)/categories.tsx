@@ -22,11 +22,24 @@ import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 
+type FeaturedTile = {
+  key: string;
+  route: string;
+  icon: keyof typeof Feather.glyphMap;
+  emoji?: string;
+  titleFr: string;
+  titleEn: string;
+  subtitleFr: string;
+  subtitleEn: string;
+  color: string;
+};
+
 type Section = {
   key: string;
   titleFr: string;
   titleEn: string;
   categories: Category[];
+  featuredTiles?: FeaturedTile[];
 };
 
 const SECTIONS: Section[] = [
@@ -53,6 +66,19 @@ const SECTIONS: Section[] = [
     titleFr: "Emploi & immigration",
     titleEn: "Work & immigration",
     categories: ["employment", "immigration"],
+    featuredTiles: [
+      {
+        key: "top10",
+        route: "/top10",
+        icon: "list",
+        emoji: "🎯",
+        titleFr: "Top 10 à faire",
+        titleEn: "Top 10 to do",
+        subtitleFr: "Selon votre statut",
+        subtitleEn: "Based on your status",
+        color: "#0ea5e9",
+      },
+    ],
   },
   {
     key: "communaute",
@@ -73,6 +99,47 @@ const SECTIONS: Section[] = [
     categories: ["transport"],
   },
 ];
+
+function FeaturedTileCard({ tile }: { tile: FeaturedTile }) {
+  const colors = useColors();
+  const router = useRouter();
+  const { language } = useLanguage();
+  const isFr = language === "fr";
+  const onPress = () => {
+    if (Platform.OS !== "web") {
+      Haptics.selectionAsync().catch(() => {});
+    }
+    router.push(tile.route as never);
+  };
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.tile,
+        {
+          backgroundColor: colors.card,
+          borderColor: colors.border,
+          opacity: pressed ? 0.85 : 1,
+          transform: [{ scale: pressed ? 0.96 : 1 }],
+        },
+      ]}
+    >
+      <View style={[styles.tileIconWrap, { backgroundColor: tile.color + "22" }]}>
+        {tile.emoji ? (
+          <Text style={{ fontSize: 22 }}>{tile.emoji}</Text>
+        ) : (
+          <Feather name={tile.icon} size={22} color={tile.color} />
+        )}
+      </View>
+      <Text style={[styles.tileLabel, { color: colors.foreground }]} numberOfLines={2}>
+        {isFr ? tile.titleFr : tile.titleEn}
+      </Text>
+      <Text style={[styles.tileCount, { color: colors.mutedForeground }]} numberOfLines={1}>
+        {isFr ? tile.subtitleFr : tile.subtitleEn}
+      </Text>
+    </Pressable>
+  );
+}
 
 function CategoryTile({ category }: { category: Category }) {
   const colors = useColors();
@@ -281,11 +348,21 @@ export default function CategoriesScreen() {
                     <CategoryTile category={cat} />
                   </View>
                 ))}
+                {(section.featuredTiles ?? []).map((ft) => (
+                  <View key={ft.key} style={styles.gridCell}>
+                    <FeaturedTileCard tile={ft} />
+                  </View>
+                ))}
                 {/* Spacer cells to keep the last row 3-col aligned */}
-                {section.categories.length % 3 !== 0 &&
-                  Array.from({ length: 3 - (section.categories.length % 3) }).map((_, i) => (
-                    <View key={`spacer-${i}`} style={styles.gridCell} />
-                  ))}
+                {(() => {
+                  const total = section.categories.length + (section.featuredTiles?.length ?? 0);
+                  const rem = total % 3;
+                  return rem !== 0
+                    ? Array.from({ length: 3 - rem }).map((_, i) => (
+                        <View key={`spacer-${i}`} style={styles.gridCell} />
+                      ))
+                    : null;
+                })()}
               </View>
             </View>
           ))
