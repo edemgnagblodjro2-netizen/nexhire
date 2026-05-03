@@ -41,6 +41,8 @@ const ALL_CATEGORIES: Category[] = [
   "social",
   "childcare",
   "realestate",
+  "banking",
+  "transport",
 ];
 
 export default function ServicesScreen() {

@@ -108,6 +108,8 @@ export const translations = {
       realestate: "Achat immobilier",
       administrative: "Démarches administratives",
       legal: "Aide juridique",
+      banking: "Banques",
+      transport: "Transport",
     },
   },
   en: {
@@ -216,6 +218,8 @@ export const translations = {
       realestate: "Home Buying",
       administrative: "Administrative",
       legal: "Legal Aid",
+      banking: "Banking",
+      transport: "Transport",
     },
   },
 } as const;

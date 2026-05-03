@@ -1120,7 +1120,11 @@ export default function ChatScreen() {
           {
             backgroundColor: colors.background,
             borderTopColor: colors.border,
-            paddingBottom: Math.max(bottomPadding, 8),
+            // La barre d'onglets est en position absolute (≈ 56 px sur mobile,
+            // 84 px sur web). Sans cette marge, la zone de saisie disparaît
+            // derrière les onglets et il faut tapoter pour la révéler.
+            paddingBottom:
+              Math.max(bottomPadding, 8) + (Platform.OS === "web" ? 84 : 56),
           },
         ]}
       >

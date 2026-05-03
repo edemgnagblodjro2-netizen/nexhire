@@ -43,6 +43,8 @@ const colors = {
     categorySocial: "#db2777",
     categoryChildcare: "#ea580c",
     categoryRealestate: "#0e5c99",
+    categoryBanking: "#15803d",
+    categoryTransport: "#111827",
   },
 
   dark: {
@@ -89,6 +91,8 @@ const colors = {
     categorySocial: "#f472b6",
     categoryChildcare: "#fb923c",
     categoryRealestate: "#38bdf8",
+    categoryBanking: "#4ade80",
+    categoryTransport: "#e5e7eb",
   },
 
   radius: 12,

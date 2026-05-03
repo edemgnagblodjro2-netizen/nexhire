@@ -9,6 +9,24 @@ interface DetectionResult {
 const KEYWORD_MAP: Record<Category, string[]> = {
   administrative: [],
   legal: [],
+  banking: [
+    "banque", "banques", "banking", "bank",
+    "compte bancaire", "ouvrir un compte", "open account",
+    "carte de crédit", "credit card", "carte de débit",
+    "prêt", "loan", "hypothèque", "mortgage",
+    "desjardins", "rbc", "scotia", "scotiabank", "bmo",
+    "cibc", "td", "td canada trust", "banque nationale",
+    "atb", "vancity", "credit union", "coopérative",
+    "guichet", "atm", "interac", "transfert",
+  ],
+  transport: [
+    "transport", "transporter", "transportation",
+    "uber", "uber eats", "lyft",
+    "taxi", "ride", "course",
+    "livraison", "delivery", "courrier",
+    "déménagement", "déménager", "move", "moving",
+    "freight", "marchandise",
+  ],
   housing: [
     "logement",
     "loger",
@@ -540,6 +558,8 @@ export function detectCategory(input: string): DetectionResult {
     realestate: 0,
     administrative: 0,
     legal: 0,
+    banking: 0,
+    transport: 0,
   };
   const matchedKeywords: string[] = [];
 

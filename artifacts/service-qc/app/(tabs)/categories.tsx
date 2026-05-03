@@ -60,6 +60,18 @@ const SECTIONS: Section[] = [
     titleEn: "Community",
     categories: ["social"],
   },
+  {
+    key: "argent",
+    titleFr: "Argent & banques",
+    titleEn: "Money & banks",
+    categories: ["banking"],
+  },
+  {
+    key: "transport",
+    titleFr: "Transport",
+    titleEn: "Transport",
+    categories: ["transport"],
+  },
 ];
 
 function CategoryTile({ category }: { category: Category }) {
@@ -289,7 +301,7 @@ const styles = StyleSheet.create({
   /* Header */
   header: {
     paddingHorizontal: 18,
-    paddingBottom: 36, // extra so the search bar overlaps cleanly
+    paddingBottom: 18,
     gap: 6,
   },
   headerRow: {
@@ -329,10 +341,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
   },
 
-  /* Search bar (lifted over the header) */
+  /* Search bar */
   searchWrap: {
-    marginTop: -22,
-    marginBottom: 18,
+    marginTop: 14,
+    marginBottom: 14,
     paddingHorizontal: 4,
   },
   searchBar: {

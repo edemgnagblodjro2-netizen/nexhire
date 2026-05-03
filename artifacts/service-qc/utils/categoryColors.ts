@@ -11,6 +11,8 @@ type Colors = {
   categorySocial: string;
   categoryChildcare: string;
   categoryRealestate: string;
+  categoryBanking: string;
+  categoryTransport: string;
 };
 
 export function getCategoryColor(category: Category, colors: Colors): string {
@@ -27,6 +29,8 @@ export function getCategoryColor(category: Category, colors: Colors): string {
     realestate: colors.categoryRealestate,
     administrative: colors.categorySocial,
     legal: colors.categoryFamily,
+    banking: colors.categoryBanking,
+    transport: colors.categoryTransport,
   };
   return map[category];
 }
@@ -44,4 +48,6 @@ export const CATEGORY_ICONS: Record<Category, string> = {
   realestate: "key",
   administrative: "file-text",
   legal: "shield",
+  banking: "credit-card",
+  transport: "navigation",
 };

@@ -10,7 +10,9 @@ export type Category =
   | "childcare"
   | "realestate"
   | "administrative"
-  | "legal";
+  | "legal"
+  | "banking"
+  | "transport";
 
 export interface Coordinates {
   lat: number;
@@ -83,6 +85,8 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   realestate: "Achat immobilier",
   administrative: "Démarches administratives",
   legal: "Aide juridique",
+  banking: "Banques",
+  transport: "Transport",
 };
 
 const __SERVICES_CHUNK_0: Service[] = [
@@ -67836,7 +67840,55 @@ const __SERVICES_CHUNK_3: Service[] = [
   },
 ];
 
-export const SERVICES: Service[] = [...__SERVICES_CHUNK_0, ...__SERVICES_CHUNK_1, ...__SERVICES_CHUNK_2, ...__SERVICES_CHUNK_3];
+// ─── CHUNK 4 : Banques + Transport (Uber) ──────────────────────────────
+// Ajouté pour offrir un point d'entrée téléphonique aux usagers cherchant
+// un service bancaire ou un service de transport partout au Canada.
+const __SERVICES_CHUNK_4: Service[] = [
+  // ─── Banques (QC) ───
+  { id: "qc-mtl-bnk001", name: "Banque Nationale — Siège", category: "banking", subcategory: "Banque commerciale", city: "Montréal", province: "QC", phone: "1-888-835-6281", website: "https://www.bnc.ca", description: "Banque Nationale du Canada — siège social. Service à la clientèle particuliers et entreprises.", address: "800, rue Saint-Jacques, Montréal, QC", coordinates: { lat: 45.5017, lng: -73.5673 } },
+  { id: "qc-mtl-bnk002", name: "Desjardins — Complexe Desjardins", category: "banking", subcategory: "Coopérative financière", city: "Montréal", province: "QC", phone: "1-800-224-7737", website: "https://www.desjardins.com", description: "Caisse Desjardins du Complexe Desjardins. Conseils financiers, comptes, prêts.", address: "150, rue Sainte-Catherine Ouest, Montréal, QC", coordinates: { lat: 45.5075, lng: -73.5658 } },
+  { id: "qc-que-bnk001", name: "Desjardins — Grande Allée", category: "banking", subcategory: "Coopérative financière", city: "Québec", province: "QC", phone: "1-800-224-7737", website: "https://www.desjardins.com", description: "Caisse Desjardins de Québec — secteur Grande Allée.", address: "1150, Grande Allée Ouest, Québec, QC", coordinates: { lat: 46.7910, lng: -71.2400 } },
+  { id: "qc-que-bnk002", name: "Banque Nationale — Sainte-Foy", category: "banking", subcategory: "Banque commerciale", city: "Québec", province: "QC", phone: "418-644-8000", website: "https://www.bnc.ca", description: "Banque Nationale — succursale Sainte-Foy.", address: "1170, chemin Sainte-Foy, Québec, QC", coordinates: { lat: 46.7849, lng: -71.2706 } },
+  { id: "qc-lvl-bnk001", name: "RBC Banque Royale — Saint-Martin", category: "banking", subcategory: "Banque commerciale", city: "Laval", province: "QC", phone: "1-800-769-2511", website: "https://www.rbcbanqueroyale.com", description: "RBC Banque Royale — succursale boulevard Saint-Martin.", address: "3055, boulevard Saint-Martin Ouest, Laval, QC", coordinates: { lat: 45.5660, lng: -73.7430 } },
+  { id: "qc-gat-bnk001", name: "CIBC — Plateau", category: "banking", subcategory: "Banque commerciale", city: "Gatineau", province: "QC", phone: "1-800-465-2422", website: "https://www.cibc.com", description: "CIBC — succursale du Plateau.", address: "100, boulevard du Plateau, Gatineau, QC", coordinates: { lat: 45.4765, lng: -75.7013 } },
+  { id: "qc-lng-bnk001", name: "Desjardins — Saint-Charles", category: "banking", subcategory: "Coopérative financière", city: "Longueuil", province: "QC", phone: "450-674-4641", website: "https://www.desjardins.com", description: "Caisse Desjardins de Longueuil — rue Saint-Charles.", address: "1111, rue Saint-Charles Ouest, Longueuil, QC", coordinates: { lat: 45.5375, lng: -73.5097 } },
+  { id: "qc-shb-bnk001", name: "Banque Scotia — Portland", category: "banking", subcategory: "Banque commerciale", city: "Sherbrooke", province: "QC", phone: "1-800-472-6842", website: "https://www.scotiabank.com", description: "Banque Scotia — succursale boulevard de Portland.", address: "1450, boulevard de Portland, Sherbrooke, QC", coordinates: { lat: 45.4042, lng: -71.8929 } },
+  { id: "qc-lev-bnk001", name: "Desjardins — Siège social", category: "banking", subcategory: "Coopérative financière", city: "Lévis", province: "QC", phone: "1-800-224-7737", website: "https://www.desjardins.com", description: "Mouvement Desjardins — siège social du Mouvement.", address: "100, avenue des Commandeurs, Lévis, QC", coordinates: { lat: 46.7831, lng: -71.1786 } },
+  { id: "qc-sag-bnk001", name: "BMO Banque de Montréal — Racine", category: "banking", subcategory: "Banque commerciale", city: "Saguenay", province: "QC", phone: "1-877-225-5266", website: "https://www.bmo.com", description: "BMO Banque de Montréal — succursale rue Racine Est.", address: "161, rue Racine Est, Saguenay, QC", coordinates: { lat: 48.4185, lng: -71.0578 } },
+  { id: "qc-trv-bnk001", name: "Banque Nationale — Royale", category: "banking", subcategory: "Banque commerciale", city: "Trois-Rivières", province: "QC", phone: "819-373-3533", website: "https://www.bnc.ca", description: "Banque Nationale — succursale rue Royale.", address: "1350, rue Royale, Trois-Rivières, QC", coordinates: { lat: 46.3432, lng: -72.5477 } },
+  { id: "qc-trb-bnk001", name: "TD Canada Trust — Moody", category: "banking", subcategory: "Banque commerciale", city: "Terrebonne", province: "QC", phone: "1-866-222-3456", website: "https://www.td.com", description: "TD Canada Trust — succursale boulevard Moody.", address: "1185, boulevard Moody, Terrebonne, QC", coordinates: { lat: 45.7000, lng: -73.6333 } },
+  { id: "qc-stj-bnk001", name: "RBC Banque Royale — Pierre-Caisse", category: "banking", subcategory: "Banque commerciale", city: "Saint-Jean-sur-Richelieu", province: "QC", phone: "450-349-5811", website: "https://www.rbcbanqueroyale.com", description: "RBC Banque Royale — succursale Pierre-Caisse.", address: "600, rue Pierre-Caisse, Saint-Jean-sur-Richelieu, QC", coordinates: { lat: 45.3076, lng: -73.2624 } },
+  { id: "qc-brs-bnk001", name: "BMO Banque de Montréal — Dix30", category: "banking", subcategory: "Banque commerciale", city: "Brossard", province: "QC", phone: "450-672-9110", website: "https://www.bmo.com", description: "BMO Banque de Montréal — Quartier Dix30.", address: "9105, boulevard Leduc (Dix30), Brossard, QC", coordinates: { lat: 45.4471, lng: -73.4690 } },
+  { id: "qc-rep-bnk001", name: "Banque Scotia — Louvain", category: "banking", subcategory: "Banque commerciale", city: "Repentigny", province: "QC", phone: "450-581-3030", website: "https://www.scotiabank.com", description: "Banque Scotia — succursale Louvain.", address: "150, rue Louvain, Repentigny, QC", coordinates: { lat: 45.7423, lng: -73.4501 } },
+  { id: "qc-stj2-bnk001", name: "Desjardins — Saint-Georges", category: "banking", subcategory: "Coopérative financière", city: "Saint-Jérôme", province: "QC", phone: "450-438-3545", website: "https://www.desjardins.com", description: "Caisse Desjardins de Saint-Jérôme.", address: "450, rue Saint-Georges, Saint-Jérôme, QC", coordinates: { lat: 45.7806, lng: -74.0042 } },
+  { id: "qc-drv-bnk001", name: "Banque Nationale — Hériot", category: "banking", subcategory: "Banque commerciale", city: "Drummondville", province: "QC", phone: "819-478-4171", website: "https://www.bnc.ca", description: "Banque Nationale — succursale rue Hériot.", address: "330, rue Hériot, Drummondville, QC", coordinates: { lat: 45.8800, lng: -72.4837 } },
+  { id: "qc-grb-bnk001", name: "CIBC — Principale", category: "banking", subcategory: "Banque commerciale", city: "Granby", province: "QC", phone: "450-372-5881", website: "https://www.cibc.com", description: "CIBC — succursale rue Principale.", address: "50, rue Principale, Granby, QC", coordinates: { lat: 45.4007, lng: -72.7300 } },
+  { id: "qc-blv-bnk001", name: "TD Canada Trust — Michèle-Bohec", category: "banking", subcategory: "Banque commerciale", city: "Blainville", province: "QC", phone: "450-433-2221", website: "https://www.td.com", description: "TD Canada Trust — succursale Michèle-Bohec.", address: "1356, boulevard Michèle-Bohec, Blainville, QC", coordinates: { lat: 45.6680, lng: -73.8786 } },
+  { id: "qc-sth-bnk001", name: "RBC Banque Royale — des Cascades", category: "banking", subcategory: "Banque commerciale", city: "Saint-Hyacinthe", province: "QC", phone: "450-773-8411", website: "https://www.rbcbanqueroyale.com", description: "RBC Banque Royale — succursale rue des Cascades.", address: "1595, rue des Cascades, Saint-Hyacinthe, QC", coordinates: { lat: 45.6280, lng: -72.9509 } },
+  { id: "qc-mir-bnk001", name: "Desjardins — Curé-Labelle", category: "banking", subcategory: "Coopérative financière", city: "Mirabel", province: "QC", phone: "450-435-9533", website: "https://www.desjardins.com", description: "Caisse Desjardins de Mirabel — boulevard Curé-Labelle.", address: "13445, boulevard Curé-Labelle, Mirabel, QC", coordinates: { lat: 45.6502, lng: -73.8499 } },
+  { id: "qc-ddo-bnk001", name: "Banque Scotia — des Sources", category: "banking", subcategory: "Banque commerciale", city: "Dollard-des-Ormeaux", province: "QC", phone: "514-684-9010", website: "https://www.scotiabank.com", description: "Banque Scotia — succursale boulevard des Sources.", address: "3500, boulevard des Sources, Dollard-des-Ormeaux, QC", coordinates: { lat: 45.4925, lng: -73.8208 } },
+
+  // ─── Banques (autres provinces / territoires) ───
+  { id: "on-tor-bnk001", name: "RBC — Siège social", category: "banking", subcategory: "Banque commerciale", city: "Toronto", province: "ON", phone: "1-800-769-2511", website: "https://www.rbcroyalbank.com", description: "Royal Bank of Canada — siège social.", address: "Toronto, ON", coordinates: { lat: 43.6485, lng: -79.3787 } },
+  { id: "bc-van-bnk001", name: "Vancity / TD Canada Trust", category: "banking", subcategory: "Coopérative / Banque", city: "Vancouver", province: "BC", phone: "1-866-222-3456", website: "https://www.vancity.com", description: "Vancity Credit Union ou TD Canada Trust — services bancaires.", address: "Vancouver, BC", coordinates: { lat: 49.2827, lng: -123.1207 } },
+  { id: "ab-cal-bnk001", name: "ATB Financial / RBC", category: "banking", subcategory: "Banque commerciale", city: "Calgary", province: "AB", phone: "1-800-332-8383", website: "https://www.atb.com", description: "ATB Financial ou RBC — services bancaires en Alberta.", address: "Calgary, AB", coordinates: { lat: 51.0447, lng: -114.0719 } },
+  { id: "mb-win-bnk001", name: "Cambrian Credit Union / Scotia", category: "banking", subcategory: "Coopérative / Banque", city: "Winnipeg", province: "MB", phone: "1-800-472-6842", website: "https://www.cambrian.mb.ca", description: "Cambrian Credit Union ou Banque Scotia — services bancaires.", address: "Winnipeg, MB", coordinates: { lat: 49.8951, lng: -97.1384 } },
+  { id: "sk-sas-bnk001", name: "Conexus Credit Union / TD", category: "banking", subcategory: "Coopérative / Banque", city: "Saskatoon", province: "SK", phone: "1-866-222-3456", website: "https://www.conexus.ca", description: "Conexus Credit Union ou TD — services bancaires.", address: "Saskatoon, SK", coordinates: { lat: 52.1332, lng: -106.6700 } },
+  { id: "ns-hal-bnk001", name: "Banque Scotia — Halifax", category: "banking", subcategory: "Banque commerciale", city: "Halifax", province: "NS", phone: "1-800-472-6842", website: "https://www.scotiabank.com", description: "Banque Scotia — services bancaires en Nouvelle-Écosse.", address: "Halifax, NS", coordinates: { lat: 44.6488, lng: -63.5752 } },
+  { id: "nb-mon-bnk001", name: "UNI Coopération financière", category: "banking", subcategory: "Coopérative financière", city: "Moncton", province: "NB", phone: "1-888-359-1357", website: "https://www.uni.ca", description: "UNI Coopération financière — services bancaires francophones du Nouveau-Brunswick.", address: "Moncton, NB", coordinates: { lat: 46.0878, lng: -64.7782 } },
+  { id: "nl-stj-bnk001", name: "CIBC — St. John's", category: "banking", subcategory: "Banque commerciale", city: "St. John's", province: "NL", phone: "1-800-465-2422", website: "https://www.cibc.com", description: "CIBC — services bancaires à Terre-Neuve-et-Labrador.", address: "St. John's, NL", coordinates: { lat: 47.5615, lng: -52.7126 } },
+  { id: "pe-cha-bnk001", name: "Provincial Credit Union", category: "banking", subcategory: "Coopérative financière", city: "Charlottetown", province: "PE", phone: "1-902-892-4107", website: "https://www.provincialcu.com", description: "Provincial Credit Union — services bancaires à l'Île-du-Prince-Édouard.", address: "Charlottetown, PE", coordinates: { lat: 46.2382, lng: -63.1311 } },
+  { id: "nt-yel-bnk001", name: "First Nations Bank of Canada", category: "banking", subcategory: "Banque autochtone", city: "Yellowknife", province: "NT", phone: "1-888-454-3622", website: "https://www.fnbc.ca", description: "First Nations Bank of Canada — services bancaires aux T.N.-O.", address: "Yellowknife, NT", coordinates: { lat: 62.4540, lng: -114.3718 } },
+  { id: "yt-whi-bnk001", name: "BMO Banque de Montréal — Whitehorse", category: "banking", subcategory: "Banque commerciale", city: "Whitehorse", province: "YT", phone: "1-877-225-5266", website: "https://www.bmo.com", description: "BMO Banque de Montréal — services bancaires au Yukon.", address: "Whitehorse, YT", coordinates: { lat: 60.7212, lng: -135.0568 } },
+  { id: "nu-iqa-bnk001", name: "RBC Banque Royale — Iqaluit", category: "banking", subcategory: "Banque commerciale", city: "Iqaluit", province: "NU", phone: "1-800-769-2511", website: "https://www.rbcbanqueroyale.com", description: "RBC Banque Royale — services bancaires au Nunavut.", address: "Iqaluit, NU", coordinates: { lat: 63.7467, lng: -68.5170 } },
+
+  // ─── Transport (Uber Canada) ───
+  { id: "ca-uber-rider", name: "Uber — Soutien passagers et chauffeurs", category: "transport", subcategory: "Transport partagé", city: "Montréal", province: "QC", phone: "1-833-873-8237", website: "https://help.uber.com", description: "Soutien général Uber au Canada pour passagers et chauffeurs. 1-833-USE-UBER. Utilisez aussi l'icône Aide directement dans l'application Uber.", isProvinceWide: true },
+  { id: "ca-uber-eats", name: "Uber Eats — Soutien marchands et restaurants", category: "transport", subcategory: "Livraison de repas", city: "Montréal", province: "QC", phone: "1-833-275-3287", website: "https://merchants.ubereats.com", description: "Soutien Uber Eats pour marchands et restaurants. 1-833-ASK-EATS.", isProvinceWide: true },
+  { id: "ca-uber-freight", name: "Uber Freight — Soutien transporteurs", category: "transport", subcategory: "Transport de marchandises", city: "Montréal", province: "QC", phone: "1-833-956-0471", website: "https://www.uberfreight.com", description: "Uber Freight — service à la clientèle pour transporteurs. Français : 1-833-956-0471. Anglais / Espagnol : 844-822-8237.", isProvinceWide: true },
+];
+
+export const SERVICES: Service[] = [...__SERVICES_CHUNK_0, ...__SERVICES_CHUNK_1, ...__SERVICES_CHUNK_2, ...__SERVICES_CHUNK_3, ...__SERVICES_CHUNK_4];
 export const URGENT_SERVICES = SERVICES.filter((s) => s.isUrgent);
 export const PROVINCE_WIDE_SERVICES = SERVICES.filter((s) => s.isProvinceWide);
 export const SERVICES_BY_PROVINCE = (code: ProvinceCode): Service[] =>
