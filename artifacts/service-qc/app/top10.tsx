@@ -206,11 +206,20 @@ export default function Top10Screen() {
     [persist]
   );
 
+  const activeStatus = useMemo(
+    () => STATUSES.find((s) => s.key === expanded) ?? null,
+    [expanded]
+  );
+
   const totals = useMemo(() => {
-    const total = STATUSES.reduce((s, st) => s + st.itemsFr.length, 0);
-    const done = Object.keys(progress).filter((k) => progress[k]).length;
+    if (!activeStatus) return { total: 0, done: 0, pct: 0 };
+    const total = activeStatus.itemsFr.length;
+    let done = 0;
+    for (let i = 0; i < total; i++) {
+      if (progress[`${activeStatus.key}:${i}`]) done++;
+    }
     return { total, done, pct: total === 0 ? 0 : Math.round((done / total) * 100) };
-  }, [progress]);
+  }, [progress, activeStatus]);
 
   const statusDone = useCallback(
     (statusKey: string, count: number) => {
@@ -248,8 +257,8 @@ export default function Top10Screen() {
             </Text>
             <Text style={styles.headerSubtitle}>
               {isFr
-                ? "Cochez vos démarches — sauvegarde automatique"
-                : "Check off your steps — auto-saved"}
+                ? "Choisissez votre statut, cochez vos démarches"
+                : "Choose your status, check your steps"}
             </Text>
           </View>
           <View style={styles.headerEmoji}>
@@ -257,30 +266,44 @@ export default function Top10Screen() {
           </View>
         </View>
 
-        {/* Progress bar */}
-        <View style={styles.progressWrap}>
-          <View style={styles.progressTrack}>
-            <View
-              style={[
-                styles.progressFill,
-                { width: `${totals.pct}%` },
-              ]}
-            />
-          </View>
-          <View style={styles.progressRow}>
-            <Text style={styles.progressText}>
-              {totals.done} / {totals.total} ·{" "}
-              {isFr ? "complétées" : "completed"} ({totals.pct}%)
+        {/* Progress bar — for the currently selected status only */}
+        {activeStatus ? (
+          <View style={styles.progressWrap}>
+            <Text style={styles.progressTitle}>
+              {activeStatus.emoji}{" "}
+              {isFr ? activeStatus.titleFr : activeStatus.titleEn}
             </Text>
-            {totals.done > 0 && (
-              <Pressable onPress={resetAll} hitSlop={8}>
-                <Text style={styles.resetLink}>
-                  {isFr ? "Réinitialiser" : "Reset"}
-                </Text>
-              </Pressable>
-            )}
+            <View style={styles.progressTrack}>
+              <View
+                style={[
+                  styles.progressFill,
+                  { width: `${totals.pct}%` },
+                ]}
+              />
+            </View>
+            <View style={styles.progressRow}>
+              <Text style={styles.progressText}>
+                {totals.done} / {totals.total} ·{" "}
+                {isFr ? "complétées" : "completed"} ({totals.pct}%)
+              </Text>
+              {totals.done > 0 && (
+                <Pressable onPress={resetAll} hitSlop={8}>
+                  <Text style={styles.resetLink}>
+                    {isFr ? "Réinitialiser" : "Reset"}
+                  </Text>
+                </Pressable>
+              )}
+            </View>
           </View>
-        </View>
+        ) : (
+          <View style={styles.progressWrap}>
+            <Text style={styles.progressHint}>
+              {isFr
+                ? "👇 Touchez votre statut pour voir vos 10 démarches"
+                : "👇 Tap your status to see your 10 steps"}
+            </Text>
+          </View>
+        )}
       </LinearGradient>
 
       <ScrollView
@@ -436,6 +459,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   progressWrap: { marginTop: 14 },
+  progressTitle: {
+    color: "#fff",
+    fontSize: 13,
+    fontWeight: "700",
+    marginBottom: 6,
+  },
+  progressHint: {
+    color: "rgba(255,255,255,0.9)",
+    fontSize: 13,
+    fontWeight: "600",
+    textAlign: "center",
+    paddingVertical: 6,
+  },
   progressTrack: {
     height: 8,
     backgroundColor: "rgba(255,255,255,0.25)",
