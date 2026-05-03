@@ -13,7 +13,8 @@ export type Category =
   | "legal"
   | "banking"
   | "transport"
-  | "tourism";
+  | "tourism"
+  | "moving";
 
 export interface Coordinates {
   lat: number;
@@ -89,6 +90,7 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   banking: "Banques",
   transport: "Transport",
   tourism: "Tourisme",
+  moving: "Déménagement",
 };
 
 const __SERVICES_CHUNK_0: Service[] = [
@@ -67989,7 +67991,50 @@ const __SERVICES_CHUNK_4: Service[] = [
   { id: "qc-tour-cantons-est", name: "Cantons-de-l'Est — Tourisme", category: "tourism", subcategory: "Région touristique", city: "Sherbrooke", province: "QC", phone: "1-800-355-5755", website: "https://www.cantonsdelest.com", description: "Vignobles, lacs, montagnes, villages anglo-saxons. Route des vins, couleurs flamboyantes en automne.", address: "20, rue Don-Bosco Sud, Sherbrooke, QC", coordinates: { lat: 45.4042, lng: -71.8929 } },
 ];
 
-export const SERVICES: Service[] = [...__SERVICES_CHUNK_0, ...__SERVICES_CHUNK_1, ...__SERVICES_CHUNK_2, ...__SERVICES_CHUNK_3, ...__SERVICES_CHUNK_4];
+// ─── CHUNK 5 : Déménagement (entreprises QC + organismes officiels) ──────
+const __SERVICES_CHUNK_5: Service[] = [
+  // ─── Incontournables (rayonnement provincial) ───
+  { id: "qc-mov-clan-panneton", name: "Le Clan Panneton — Déménagement", category: "moving", subcategory: "Déménageur provincial", city: "Montréal", province: "QC", phone: "1-800-461-1838", website: "https://www.clanpanneton.com", description: "L'institution québécoise du déménagement. Spécialiste des longues distances et déménagements résidentiels/commerciaux. Membre CTQ.", address: "Service partout au Québec", isProvinceWide: true },
+  { id: "qc-mov-dg", name: "Déménagement & Entreposage DG", category: "moving", subcategory: "Déménageur provincial", city: "Québec", province: "QC", phone: "418-833-1313", website: "https://www.demenagementagb.com", description: "Leader résidentiel et commercial avec excellentes notes (4.9/5). Service à Québec, Montréal et tout le Québec. Entreposage disponible.", address: "1290, rue Provinciale, Québec, QC", isProvinceWide: true },
+  { id: "qc-mov-la-capitale", name: "Déménagement La Capitale", category: "moving", subcategory: "Déménageur provincial", city: "Québec", province: "QC", phone: "1-844-525-3434", website: "https://www.demenagementlacapitale.com", description: "Déménagements entre Québec, Montréal et autres régions. Spécialiste interurbain et longue distance.", address: "Québec, QC", isProvinceWide: true },
+  { id: "qc-mov-total", name: "Déménagement Total", category: "moving", subcategory: "Déménageur provincial", city: "Montréal", province: "QC", phone: "514-364-8888", website: "https://www.demenagementtotal.com", description: "Recommandé pour projets complexes et liaisons inter-provinces (QC ↔ ON, QC ↔ NB).", address: "Montréal, QC", isProvinceWide: true },
+
+  // ─── Montréal / Laval ───
+  { id: "qc-mov-puissance", name: "Déménagement Puissance", category: "moving", subcategory: "Déménageur Montréal", city: "Montréal", province: "QC", phone: "514-303-1717", website: "https://demenagementpuissance.ca", description: "Déménageur résidentiel haut de gamme à Montréal et Laval. Très bien noté.", address: "Montréal, QC" },
+  { id: "qc-mov-ebl", name: "Déménagement EBL", category: "moving", subcategory: "Déménageur Montréal", city: "Montréal", province: "QC", phone: "514-922-9551", website: "https://www.demenagementebl.com", description: "Spécialiste résidentiel et commercial, Grand Montréal et Laval.", address: "Montréal, QC" },
+  { id: "qc-mov-sympathique", name: "Déménagement Sympathique", category: "moving", subcategory: "Déménageur Montréal", city: "Montréal", province: "QC", phone: "514-803-3000", website: "https://www.demenagementsympathique.ca", description: "Déménageur réputé du Grand Montréal. Service rapide, équipe professionnelle.", address: "Montréal, QC" },
+
+  // ─── Ville de Québec ───
+  { id: "qc-mov-armstrong", name: "Armstrong Déménagement", category: "moving", subcategory: "Déménageur haut de gamme", city: "Québec", province: "QC", phone: "418-877-9711", website: "https://www.armstrong.ca", description: "Service haut de gamme à Québec. Déménagements résidentiels, commerciaux et internationaux.", address: "Québec, QC" },
+  { id: "qc-mov-pro-efficace", name: "Déménagement Pro-Efficace", category: "moving", subcategory: "Déménageur Québec", city: "Québec", province: "QC", phone: "418-948-2222", website: "https://proefficace.com", description: "Déménageur reconnu de la région de Québec. Résidentiel et commercial.", address: "Québec, QC" },
+
+  // ─── Trois-Rivières / Mauricie ───
+  { id: "qc-mov-general", name: "Déménagement Général", category: "moving", subcategory: "Déménageur Mauricie", city: "Trois-Rivières", province: "QC", phone: "819-373-2433", website: "https://www.demenagementgeneral.ca", description: "Déménageur principal de Trois-Rivières et de la Mauricie. Service local et longue distance.", address: "Trois-Rivières, QC" },
+  { id: "qc-mov-dany-st-germain", name: "Déménagement Dany St-Germain", category: "moving", subcategory: "Déménageur Mauricie", city: "Trois-Rivières", province: "QC", phone: "819-373-7700", website: "https://danystgermain.com", description: "Déménageur familial bien établi à Trois-Rivières.", address: "Trois-Rivières, QC" },
+  { id: "qc-mov-pro-ld", name: "Déménagement Pro LD", category: "moving", subcategory: "Déménageur Mauricie", city: "Trois-Rivières", province: "QC", phone: "819-840-4040", website: "https://demenagementproldld.com", description: "Service de déménagement résidentiel à Trois-Rivières et environs.", address: "Trois-Rivières, QC" },
+
+  // ─── Sherbrooke / Estrie ───
+  { id: "qc-mov-crown", name: "Crown Movers", category: "moving", subcategory: "Déménageur Estrie", city: "Sherbrooke", province: "QC", phone: "1-800-661-3000", website: "https://www.crownmovers.ca", description: "Déménagements longue distance et internationaux depuis Sherbrooke et Montréal. Membre Allied Van Lines.", address: "Sherbrooke, QC", isProvinceWide: true },
+  { id: "qc-mov-estrie", name: "Déménagement de l'Estrie", category: "moving", subcategory: "Déménageur Estrie", city: "Sherbrooke", province: "QC", phone: "819-565-9595", website: "https://www.demenagementdelestrie.ca", description: "Déménageur local de Sherbrooke et de toute la région de l'Estrie.", address: "Sherbrooke, QC" },
+
+  // ─── Rive-Sud de Montréal ───
+  { id: "qc-mov-gustave", name: "Gustave Déménagement", category: "moving", subcategory: "Déménageur Rive-Sud", city: "Longueuil", province: "QC", phone: "450-650-1133", website: "https://gustavedemenagement.ca", description: "Déménageur réputé de la Rive-Sud de Montréal (Longueuil, Brossard, Saint-Hubert).", address: "Longueuil, QC" },
+  { id: "qc-mov-longueuil", name: "Déménagement Longueuil", category: "moving", subcategory: "Déménageur Rive-Sud", city: "Longueuil", province: "QC", phone: "450-616-8585", website: "https://demenagementlongueuil.ca", description: "Service local de la Rive-Sud, déménagements résidentiels et petits commerciaux.", address: "Longueuil, QC" },
+
+  // ─── Comparateurs / annuaires ───
+  { id: "qc-mov-411", name: "411 Déménageur — Annuaire", category: "moving", subcategory: "Annuaire", city: "Province", province: "QC", phone: "1-866-411-3666", website: "https://www.411demenageur.ca", description: "Annuaire des déménageurs professionnels du Québec. Permet de comparer plusieurs artisans locaux par région.", address: "Service en ligne — partout au Québec", isProvinceWide: true },
+  { id: "qc-mov-soumissions", name: "Soumissions Déménageurs", category: "moving", subcategory: "Comparateur", city: "Province", province: "QC", phone: "—", website: "https://soumissionsdemenageurs.ca", description: "Comparateur en ligne — recevez jusqu'à 3 soumissions de déménageurs partenaires gratuitement.", address: "Service en ligne — partout au Québec", isProvinceWide: true },
+  { id: "qc-mov-sirelo", name: "Sirelo — Comparateur de déménageurs", category: "moving", subcategory: "Comparateur international", city: "Montréal", province: "QC", phone: "—", website: "https://ca.sirelo.org/fr/demenageur/montreal/", description: "Plateforme internationale d'avis et comparaison de déménageurs au Canada.", address: "Service en ligne", isProvinceWide: true },
+  { id: "qc-mov-mover-net", name: "Mover.net — Déménagement international", category: "moving", subcategory: "Annuaire international", city: "Province", province: "QC", phone: "—", website: "https://www.mover.net/fr/find-a-mover/international-moving", description: "Annuaire international pour déménagements outre-mer (vers/depuis le Canada).", address: "Service en ligne", isProvinceWide: true },
+  { id: "qc-mov-myette", name: "Déménagement Myette — Top déménageurs", category: "moving", subcategory: "Comparateur", city: "Province", province: "QC", phone: "—", website: "https://www.demenagementmyette.ca/meilleurs-demenageurs/", description: "Guide comparatif des meilleurs déménageurs du Québec par région.", address: "Service en ligne", isProvinceWide: true },
+  { id: "qc-mov-top10", name: "Top 10 Déménageurs Québec — Comparateur", category: "moving", subcategory: "Comparateur", city: "Province", province: "QC", phone: "—", website: "https://topcompagniesdemenagement.ca/top-10-demenageurs-quebec-prix/", description: "Classement et prix des 10 meilleurs déménageurs du Québec.", address: "Service en ligne", isProvinceWide: true },
+
+  // ─── Organismes officiels (à vérifier avant de signer) ───
+  { id: "qc-mov-ctq", name: "CTQ — Commission des transports du Québec", category: "moving", subcategory: "Organisme officiel — permis", city: "Québec", province: "QC", phone: "1-888-461-2433", website: "https://www.ctq.gouv.qc.ca", description: "Tout déménageur sérieux doit détenir un permis valide de la CTQ. Vérifiez-le avant de signer un contrat.", address: "545, boul. Crémazie Est, Montréal, QC", isProvinceWide: true, badgeVerified: true },
+  { id: "qc-mov-opc", name: "OPC — Office de la protection du consommateur", category: "moving", subcategory: "Organisme officiel — plaintes", city: "Québec", province: "QC", phone: "1-888-672-2556", website: "https://www.opc.gouv.qc.ca", description: "Vérifiez si un déménageur a fait l'objet de plaintes par le passé. Médiation et recours en cas de litige.", address: "400, boul. Jean-Lesage, Québec, QC", isProvinceWide: true, badgeVerified: true },
+];
+
+export const SERVICES: Service[] = [...__SERVICES_CHUNK_0, ...__SERVICES_CHUNK_1, ...__SERVICES_CHUNK_2, ...__SERVICES_CHUNK_3, ...__SERVICES_CHUNK_4, ...__SERVICES_CHUNK_5];
 export const URGENT_SERVICES = SERVICES.filter((s) => s.isUrgent);
 export const PROVINCE_WIDE_SERVICES = SERVICES.filter((s) => s.isProvinceWide);
 export const SERVICES_BY_PROVINCE = (code: ProvinceCode): Service[] =>

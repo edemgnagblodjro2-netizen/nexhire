@@ -24,8 +24,18 @@ const KEYWORD_MAP: Record<Category, string[]> = {
     "uber", "uber eats", "lyft",
     "taxi", "ride", "course",
     "livraison", "delivery", "courrier",
-    "déménagement", "déménager", "move", "moving",
     "freight", "marchandise",
+  ],
+  moving: [
+    "déménagement", "déménager", "déménageur", "déménageurs",
+    "move", "moving", "movers", "mover",
+    "boîtes", "cartons", "boxes",
+    "camion déménagement", "moving truck",
+    "1er juillet", "july 1st", "fête du déménagement",
+    "clan panneton", "déménagement dg", "la capitale déménagement",
+    "armstrong déménagement", "crown movers",
+    "ctq", "transporteur",
+    "entreposage", "storage",
   ],
   tourism: [
     "tourisme", "tourist", "touriste", "visiter", "visit",
@@ -571,6 +581,7 @@ export function detectCategory(input: string): DetectionResult {
     banking: 0,
     transport: 0,
     tourism: 0,
+    moving: 0,
   };
   const matchedKeywords: string[] = [];
 

@@ -46,6 +46,7 @@ const colors = {
     categoryBanking: "#15803d",
     categoryTransport: "#111827",
     categoryTourism: "#db2777",
+    categoryMoving: "#a16207",
   },
 
   dark: {
@@ -95,6 +96,7 @@ const colors = {
     categoryBanking: "#4ade80",
     categoryTransport: "#e5e7eb",
     categoryTourism: "#f472b6",
+    categoryMoving: "#facc15",
   },
 
   radius: 12,

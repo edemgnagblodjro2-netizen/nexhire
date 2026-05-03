@@ -47,7 +47,20 @@ const SECTIONS: Section[] = [
     key: "logement",
     titleFr: "Logement & alimentation",
     titleEn: "Housing & food",
-    categories: ["housing", "food", "realestate"],
+    categories: ["housing", "food", "realestate", "moving"],
+    featuredTiles: [
+      {
+        key: "demenagement",
+        route: "/demenagement",
+        icon: "truck",
+        emoji: "📦",
+        titleFr: "Déménagement",
+        titleEn: "Moving",
+        subtitleFr: "Guide & meilleurs déménageurs",
+        subtitleEn: "Guide & top movers",
+        color: "#a16207",
+      },
+    ],
   },
   {
     key: "sante",

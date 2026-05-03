@@ -111,6 +111,7 @@ export const translations = {
       banking: "Banques",
       transport: "Transport",
       tourism: "Tourisme",
+      moving: "Déménagement",
     },
   },
   en: {
@@ -222,6 +223,7 @@ export const translations = {
       banking: "Banking",
       transport: "Transport",
       tourism: "Tourism",
+      moving: "Moving",
     },
   },
 } as const;
