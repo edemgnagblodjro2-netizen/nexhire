@@ -140,9 +140,9 @@ const SECTIONS: Section[] = [
       },
       {
         name: "Déménagement Pro LD",
-        noteFr: "Service résidentiel à Trois-Rivières.",
-        noteEn: "Residential service in Trois-Rivières.",
-        phone: "819-840-4040",
+        noteFr: "Service résidentiel à Trois-Rivières (4.7/5 sur Google, 167 avis).",
+        noteEn: "Residential service in Trois-Rivières (4.7/5 on Google, 167 reviews).",
+        phone: "819-384-3078",
       },
     ],
   },
