@@ -66,12 +66,36 @@ export default function ResultsScreen() {
   const { userLocation, locationStatus, requestLocation } = useLocation();
   const { province: userProvince } = useUserProvince();
 
-  // Le portail "Inscription via La Place 0-5" est strictement réservé au
-  // Québec (service gouvernemental QC). Hors-QC, la catégorie childcare
-  // affiche la liste normale des services de garde de la province.
-  const showChildcarePortal = selectedCategory === "childcare" && userProvince === "QC";
   const services = rawServices;
   const visibleCategories = ALL_CATEGORIES;
+
+  // Le portail "Inscription via La Place 0-5" est strictement réservé au
+  // Québec (service gouvernemental QC). Il ne doit JAMAIS apparaître si :
+  //   • la province de l'utilisateur (réglages) n'est pas QC, OU
+  //   • l'utilisateur consulte explicitement une province ≠ QC via la
+  //     recherche (ex: "Ontario" depuis la carte des provinces), OU
+  //   • la ville filtrée appartient à un service hors-QC.
+  const browsingProvince = useMemo<ProvinceCode | null>(() => {
+    const q = (query ?? "").toLowerCase().trim();
+    if (q) {
+      for (const code of Object.keys(PROVINCE_LABELS) as ProvinceCode[]) {
+        if ((PROVINCE_LABELS[code] ?? "").toLowerCase() === q) return code;
+      }
+    }
+    if (cityExact) {
+      const cityKey = normalizeCity(cityExact);
+      const match = rawServices.find(
+        (s) => normalizeCity(s.city) === cityKey
+      );
+      if (match) return (match.province ?? "QC") as ProvinceCode;
+    }
+    return null;
+  }, [query, cityExact, rawServices]);
+
+  const showChildcarePortal =
+    selectedCategory === "childcare" &&
+    userProvince === "QC" &&
+    (browsingProvince === null || browsingProvince === "QC");
 
   const [sortMode, setSortMode] = React.useState<SortMode>("default");
 
