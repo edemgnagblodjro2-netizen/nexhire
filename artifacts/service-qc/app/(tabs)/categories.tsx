@@ -40,10 +40,9 @@ function CategoryCard({ category }: { category: Category }) {
   const color = getCategoryColor(category, colors);
   const icon = CATEGORY_ICONS[category];
   const { services } = useServicesData();
-  const { province: userProvince } = useUserProvince();
 
-  // La Place 0-5 is a Quebec-only government portal — only redirect QC users.
-  const isExternalRedirect = category === "childcare" && userProvince === "QC";
+  // Childcare is a QC-only feature (linked to La Place 0-5 portal).
+  const isExternalRedirect = category === "childcare";
 
   const serviceCount = useMemo(
     () => services.filter((s) => s.category === category).length,
@@ -116,9 +115,16 @@ export default function CategoriesScreen() {
   const insets = useSafeAreaInsets();
   const { t, language } = useLanguage();
   const { services } = useServicesData();
+  const { province: userProvince } = useUserProvince();
 
   const topPadding = Platform.OS === "web" ? 16 : insets.top;
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
+
+  // Childcare (La Place 0-5) is QC-only — hide the card outside Quebec.
+  const visibleCategories = useMemo(
+    () => userProvince === "QC" ? ALL_CATEGORIES : ALL_CATEGORIES.filter((c) => c !== "childcare"),
+    [userProvince]
+  );
 
   const totalServices = services.length;
 
@@ -139,13 +145,13 @@ export default function CategoriesScreen() {
         </Text>
         <Text style={styles.headerSub}>
           {language === "fr"
-            ? `${ALL_CATEGORIES.length} catégories · ${totalServices} services disponibles`
-            : `${ALL_CATEGORIES.length} categories · ${totalServices} services available`}
+            ? `${visibleCategories.length} catégories · ${totalServices} services disponibles`
+            : `${visibleCategories.length} categories · ${totalServices} services available`}
         </Text>
       </LinearGradient>
 
       <FlatList
-        data={ALL_CATEGORIES}
+        data={visibleCategories}
         keyExtractor={(cat) => cat}
         numColumns={2}
         columnWrapperStyle={styles.row}

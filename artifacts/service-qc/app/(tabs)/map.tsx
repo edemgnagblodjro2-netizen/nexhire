@@ -97,12 +97,11 @@ export default function MapScreen() {
   );
 
   // Pool of services for the active tab (before category/sort)
-  // Childcare is excluded ONLY in Quebec — it redirects to the official La Place 0-5 portal there.
-  // Other provinces see normal childcare services on the map.
+  // Childcare is hidden everywhere on the map: in QC it redirects to the
+  // official La Place 0-5 portal, and outside QC the dataset has too few
+  // entries to be useful as a category.
   const tabPool = useMemo(() => {
-    const filtered = userProvince === "QC"
-      ? services.filter((s) => s.category !== "childcare")
-      : services;
+    const filtered = services.filter((s) => s.category !== "childcare");
     if (tab === "favorites") {
       const set = new Set(favIds);
       return filtered.filter((s) => set.has(s.id));

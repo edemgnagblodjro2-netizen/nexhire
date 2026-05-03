@@ -18,6 +18,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ServiceCard } from "@/components/ServiceCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "@/contexts/LocationContext";
+import { useUserProvince } from "@/contexts/UserProvinceContext";
 import { type Category } from "@/data/services";
 import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
@@ -29,7 +30,7 @@ const FILTER_LANGUAGES: LangCode[] = ["fr", "en", "es", "ar", "ht", "zh"];
 
 type SortMode = "default" | "az" | "distance" | "urgent";
 
-// Childcare is added back for non-QC provinces (La Place 0-5 is QC-only).
+// Childcare (La Place 0-5) is QC-only — filtered out at render time for other provinces.
 const ALL_CATEGORIES: Category[] = [
   "housing",
   "food",
@@ -48,8 +49,19 @@ export default function ServicesScreen() {
   const insets = useSafeAreaInsets();
   const { t, language } = useLanguage();
   const inputRef = useRef<TextInput>(null);
-  const { services } = useServicesData();
+  const { services: rawServices } = useServicesData();
   const { userLocation, locationStatus, requestLocation } = useLocation();
+  const { province: userProvince } = useUserProvince();
+
+  // Childcare (La Place 0-5) is QC-only — exclude both the chip and its services elsewhere.
+  const services = useMemo(
+    () => userProvince === "QC" ? rawServices : rawServices.filter((s) => s.category !== "childcare"),
+    [rawServices, userProvince]
+  );
+  const visibleCategories = useMemo(
+    () => userProvince === "QC" ? ALL_CATEGORIES : ALL_CATEGORIES.filter((c) => c !== "childcare"),
+    [userProvince]
+  );
 
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<Category | null>(null);
@@ -230,7 +242,7 @@ export default function ServicesScreen() {
             </View>
           </TouchableOpacity>
 
-          {ALL_CATEGORIES.map((cat) => {
+          {visibleCategories.map((cat) => {
             const catColor = getCategoryColor(cat, colors);
             const isActive = activeCategory === cat;
             const cnt = categoryCounts[cat] ?? 0;
