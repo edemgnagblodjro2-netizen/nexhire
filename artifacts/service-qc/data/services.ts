@@ -68020,6 +68020,7 @@ const __SERVICES_CHUNK_5: Service[] = [
 
   // ─── Rive-Sud de Montréal ───
   { id: "qc-mov-gustave", name: "Gustave Déménagement", category: "moving", subcategory: "Déménageur Rive-Sud", city: "Longueuil", province: "QC", phone: "450-650-1133", website: "https://gustavedemenagement.ca", description: "Déménageur réputé de la Rive-Sud de Montréal (Longueuil, Brossard, Saint-Hubert).", address: "Longueuil, QC" },
+  { id: "qc-mov-rive-sud", name: "Déménagement Rive-Sud (Déménagez-vous)", category: "moving", subcategory: "Déménageur Rive-Sud", city: "Saint-Hubert", province: "QC", phone: "450-445-4499", website: "https://www.demenagez-vous.ca", description: "Déménageur reconnu de la Rive-Sud (Longueuil, Saint-Hubert, Brossard). Résidentiel et entreposage. 4.9/5 sur Google (585 avis).", address: "3060 Bd Losch, Saint-Hubert (Québec) J3Y 3V6" },
   { id: "qc-mov-longueuil", name: "Déménagement Longueuil", category: "moving", subcategory: "Déménageur Rive-Sud", city: "Longueuil", province: "QC", phone: "450-616-8585", website: "https://demenagementlongueuil.ca", description: "Service local de la Rive-Sud, déménagements résidentiels et petits commerciaux.", address: "Longueuil, QC" },
 
   // ─── Comparateurs / annuaires ───
