@@ -6,11 +6,11 @@ import { getSession, getSessionId } from "../lib/auth.js";
 
 // ── Free-tier daily quota for AI chat ────────────────────────────
 // Main chat tab: 5 messages/day for free users, unlimited for premium.
-// Floating chatbot: 30/day for everyone (free for all), unlimited for premium.
+// Floating chatbot: 15/day for everyone (free for all), unlimited for premium.
 // In-memory map keyed by userId or IP (separate buckets per source).
 // Resets at local midnight (UTC).
 const FREE_DAILY_LIMIT = 5;
-const FLOATING_DAILY_LIMIT = 30;
+const FLOATING_DAILY_LIMIT = 15;
 const aiChatCounts = new Map<string, { day: string; count: number }>();
 
 function todayKey(): string {
