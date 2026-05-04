@@ -4,6 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { Platform, StyleSheet, View, useColorScheme } from "react-native";
 
+import FloatingAIChat from "@/components/FloatingAIChat";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useColors } from "@/hooks/useColors";
 
@@ -135,5 +136,10 @@ function ClassicTabLayout() {
 }
 
 export default function TabLayout() {
-  return <ClassicTabLayout />;
+  return (
+    <>
+      <ClassicTabLayout />
+      <FloatingAIChat />
+    </>
+  );
 }

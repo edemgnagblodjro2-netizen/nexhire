@@ -11,6 +11,21 @@
 (F) **API admin** : `GET /api/admin/organisations?kind=&q=` + `POST /api/admin/organisations/:id/badge {verified:bool}` ajoutés à `verifications.ts` (réutilise `checkAdminKey` HMAC header).
 **Tests curl validés** : honeypot rempli → 400 « anti-bot échouée » ; sans token → « Captcha manquant » ; immédiat (<2s) → « Inscription trop rapide » ; mauvaise réponse → « Réponse au captcha incorrecte » ; bonne réponse + 3s → 200 + tokens créés. Admin endpoints : 401 sans clé. Typechecks OK 3 packages.
 
+**Bloc 110 — Chatbot IA flottant (réponses immédiates partout dans l'app)** :
+Nouveau composant `components/FloatingAIChat.tsx` (~530 lignes) : bouton circulaire flottant en bas-droite + bottom-sheet de chat compact, branché sur le même endpoint streaming `/api/ai/chat` que l'onglet Chat existant.
+- **Bouton flottant (FAB)** : 58×58 cercle vert #0e7e6e, position absolue `bottom: 78 + insets.bottom` (iOS) / 70 (Android) pour passer au-dessus de la tab bar. Halo "pulse" semi-transparent + petit badge rouge "IA" en haut à droite. Haptic léger au tap. zIndex 1000.
+- **Auto-masquage** sur écrans où il n'a pas de sens : `/login`, `/register`, `/onboarding`, `/forgot-password`, `/reset-password`, `/(tabs)/chat` (déjà dans le chat). Détection via `usePathname()`.
+- **Bottom-sheet modal** (78% hauteur, coins arrondis 22px, handle gris en haut, backdrop noir 40% tappable pour fermer) :
+  - Header : icône 🧠 verte + "Assistant AttenteZéro / Réponse immédiate · IA" + bouton ⛶ (ouvre le chat plein écran via `router.push("/(tabs)/chat")`) + bouton ✕.
+  - État vide : 👋 + "Bonjour, comment puis-je vous aider ?" + 4 suggestions cliquables (perte d'emploi, logement Mtl, aide alimentaire, santé mentale 24h — versions FR + EN).
+  - Bulles de chat : user à droite (couleur primary), assistant à gauche (gris), max 86% largeur.
+  - Streaming SSE en direct identique au chat principal (lit `data: {content: "..."}`, fallback non-streaming si `response.body.getReader` indisponible).
+  - Input : multiline, 500 char max, bouton envoi rond circulaire (gris si vide, primary si rempli, spinner pendant requête). `KeyboardAvoidingView` iOS pour clavier.
+- **Auth & quotas** : envoie `Authorization: Bearer <token>` via `getAuthToken()` si user connecté ; sinon req anonyme limitée par IP (5 msg/jour côté server, déjà en place dans `routes/ai.ts`). Erreurs serveur affichées dans la bulle.
+- **Bilingue FR/EN** : titre, suggestions, placeholder, bouton fermer, message d'erreur — tout via `useLanguage`. Couleurs adaptatives via `useColors` (bg sombre `#1c1c1e` en mode dark).
+- **Montage** : `(tabs)/_layout.tsx` rend désormais `<><ClassicTabLayout /><FloatingAIChat /></>`. Le bouton apparaît donc sur tous les onglets (Accueil, Services, Carte, Plus, Profil) sauf Chat lui-même.
+- Typecheck OK 3 packages.
+
 **Bloc 109 — Page « Mon Voyage Canada » (visiteurs France → Canada)** :
 Conversion intégrale du mockup React/HTML (`attached_assets/canada-visiteur-app_*.jsx`, 438 lignes) vers React Native Expo dans `app/visiteur-france.tsx` (~700 lignes). Suit le pattern des pages thématiques existantes (perte-emploi, aide-financiere, demenagement) :
 - **Header navy (#1A1A2E)** avec watermark feuille d'érable 🍁 (opacity 0.06), bouton retour, drapeaux 🇫🇷→🇨🇦, titre "Mon Voyage Canada" + sous-titre.
