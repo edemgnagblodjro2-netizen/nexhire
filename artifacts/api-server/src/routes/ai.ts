@@ -627,15 +627,11 @@ router.post("/ai/chat", async (req, res) => {
     if (q.count > q.limit) {
       res.status(429).json({
         error: language === "en"
-          ? isFloating
-            ? `Daily limit reached for the floating assistant (${q.limit} messages/day). Try again tomorrow.`
-            : `Daily free limit reached (${q.limit} messages/day). Upgrade to Premium for unlimited AI chat.`
-          : isFloating
-            ? `Limite quotidienne atteinte pour l'assistant flottant (${q.limit} messages/jour). Réessayez demain.`
-            : `Limite quotidienne atteinte (${q.limit} messages/jour). Passez à Premium pour un usage illimité.`,
+          ? `You've reached your ${q.limit} free questions. Upgrade to Premium to continue chatting.`
+          : `Vous avez utilisé vos ${q.limit} questions gratuites. Passez à Premium pour continuer à discuter.`,
         quotaExceeded: true,
         limit: q.limit,
-        ...(isFloating ? {} : { upgradeUrl: "/premium" }),
+        upgradeUrl: "/premium",
       });
       return;
     }

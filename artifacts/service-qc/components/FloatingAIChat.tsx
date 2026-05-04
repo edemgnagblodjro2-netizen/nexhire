@@ -26,6 +26,7 @@ type Msg = {
   role: "user" | "assistant";
   content: string;
   isStreaming?: boolean;
+  isQuotaExceeded?: boolean;
 };
 
 const SUGGESTIONS_FR = [
@@ -128,10 +129,32 @@ export default function FloatingAIChat() {
         });
 
         if (!response.ok) {
-          const errData = await response.json().catch(() => ({}));
-          throw new Error(
-            (errData as { error?: string }).error || `HTTP ${response.status}`,
-          );
+          const errData = (await response.json().catch(() => ({}))) as {
+            error?: string;
+            quotaExceeded?: boolean;
+            limit?: number;
+          };
+          // Quota exceeded → show a Premium upsell card instead of a generic error
+          if (response.status === 429 && errData.quotaExceeded) {
+            setMessages((prev) =>
+              prev.map((m) =>
+                m.id === aiMsgId
+                  ? {
+                      ...m,
+                      content:
+                        errData.error ||
+                        (isFr
+                          ? `Vous avez utilisé vos ${errData.limit ?? 15} questions gratuites. Passez à Premium pour continuer à discuter.`
+                          : `You've reached your ${errData.limit ?? 15} free questions. Upgrade to Premium to continue chatting.`),
+                      isStreaming: false,
+                      isQuotaExceeded: true,
+                    }
+                  : m,
+              ),
+            );
+            return;
+          }
+          throw new Error(errData.error || `HTTP ${response.status}`);
         }
 
         let accumulated = "";
@@ -446,6 +469,29 @@ export default function FloatingAIChat() {
                         style={{ marginTop: 6, alignSelf: "flex-start" }}
                       />
                     )}
+                    {m.isQuotaExceeded && (
+                      <Pressable
+                        accessibilityRole="button"
+                        onPress={() => {
+                          setOpen(false);
+                          setTimeout(
+                            () => router.push("/premium" as never),
+                            80,
+                          );
+                        }}
+                        style={({ pressed }) => [
+                          styles.premiumCta,
+                          { opacity: pressed ? 0.85 : 1 },
+                        ]}
+                      >
+                        <Feather name="star" size={15} color="#fff" />
+                        <Text style={styles.premiumCtaText}>
+                          {isFr
+                            ? "Passer à Premium"
+                            : "Upgrade to Premium"}
+                        </Text>
+                      </Pressable>
+                    )}
                   </View>
                 ))
               )}
@@ -684,6 +730,23 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 4,
   },
   bubbleText: { fontSize: 14, lineHeight: 20 },
+  premiumCta: {
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    backgroundColor: "#0e7e6e",
+    paddingHorizontal: 14,
+    paddingVertical: 9,
+    borderRadius: 10,
+    alignSelf: "stretch",
+  },
+  premiumCtaText: {
+    color: "#fff",
+    fontSize: 13,
+    fontWeight: "700",
+  },
 
   /* Input */
   inputBar: {
