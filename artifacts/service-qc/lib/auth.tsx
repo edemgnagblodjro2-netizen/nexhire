@@ -4,7 +4,7 @@ import { getApiBaseUrl } from "./apiBase";
 
 const AUTH_TOKEN_KEY = "auth_session_token";
 
-export type UserRole = "user" | "organisme" | "intervenant";
+export type UserRole = "user" | "organisme" | "intervenant" | "partenaire";
 
 export interface OrganisationInfo {
   organisationName: string;

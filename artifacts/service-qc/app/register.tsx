@@ -13,21 +13,55 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "@/components/SafeLinearGradient";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 
-import { useAuth } from "@/lib/auth";
+import { useAuth, type UserRole } from "@/lib/auth";
 
-// v1.0.33 — single citizen role only.
-// The "intervenant" (Travailleur social terrain — 19 $/mois) and "organisme"
-// (39 $/mois) onboarding flows were retired together with Mode Terrain. The
-// API still accepts those roles for legacy accounts that already exist, but
-// AttenteZéro no longer creates new ones from the mobile app. Org/CIUSSS
-// partnerships now go through direct B2G contracts (out of band). See
-// replit.md > "Pivot stratégique v1.0.33".
+// v1.1.8 — Self-signup re-enabled for Organisme & Partenaire.
+// Three account types are offered up front: Citoyen (default), Organisme
+// (community org / OBNL with public listing) and Partenaire (institutional
+// supporter / donor). Backend route /api/mobile-auth/register accepts the
+// role + organisation fields and creates the right rows in users/orgs/subs.
+
+type AccountType = "user" | "organisme" | "partenaire";
+
+const TYPE_OPTIONS: {
+  id: AccountType;
+  emoji: string;
+  label: string;
+  blurb: string;
+}[] = [
+  {
+    id: "user",
+    emoji: "👤",
+    label: "Citoyen",
+    blurb: "Trouver de l'aide près de chez moi",
+  },
+  {
+    id: "organisme",
+    emoji: "🏢",
+    label: "Organisme",
+    blurb: "OBNL, organisme communautaire, clinique",
+  },
+  {
+    id: "partenaire",
+    emoji: "🤝",
+    label: "Partenaire",
+    blurb: "Institution, donateur, soutien financier",
+  },
+];
 
 export default function RegisterScreen() {
   const { register, isAuthenticated } = useAuth();
   const router = useRouter();
+  const params = useLocalSearchParams<{ type?: string }>();
+
+  // Type d'inscription — peut être préselectionné via deep-link (?type=organisme).
+  const [accountType, setAccountType] = useState<AccountType>(() => {
+    const t = params.type;
+    if (t === "organisme" || t === "partenaire") return t;
+    return "user";
+  });
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -36,6 +70,12 @@ export default function RegisterScreen() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  // Champs spécifiques Organisme / Partenaire
+  const [organisationName, setOrganisationName] = useState("");
+  const [organisationCity, setOrganisationCity] = useState("");
+  const [organisationPhone, setOrganisationPhone] = useState("");
+  const [organisationWebsite, setOrganisationWebsite] = useState("");
 
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -54,9 +94,19 @@ export default function RegisterScreen() {
     ]).start();
   }, []);
 
+  const isOrgType = accountType === "organisme" || accountType === "partenaire";
+
   async function handleRegister() {
     if (!firstName.trim() || !lastName.trim() || !email.trim() || !password) {
       setError("Veuillez remplir tous les champs.");
+      return;
+    }
+    if (isOrgType && !organisationName.trim()) {
+      setError(
+        accountType === "organisme"
+          ? "Veuillez indiquer le nom de votre organisme."
+          : "Veuillez indiquer le nom de votre institution.",
+      );
       return;
     }
     if (password.length < 6) {
@@ -71,13 +121,24 @@ export default function RegisterScreen() {
     setError(null);
     setLoading(true);
 
+    const role: UserRole = accountType;
+    const orgInfo = isOrgType
+      ? {
+          organisationName: organisationName.trim(),
+          organisationCity: organisationCity.trim() || undefined,
+          organisationPhone: organisationPhone.trim() || undefined,
+          organisationWebsite: organisationWebsite.trim() || undefined,
+        }
+      : undefined;
+
     const result = await register(
       email.trim().toLowerCase(),
       password,
       firstName.trim(),
       lastName.trim(),
       address.trim() || undefined,
-      "user",
+      role,
+      orgInfo,
     );
 
     if (result.error) {
@@ -88,6 +149,29 @@ export default function RegisterScreen() {
 
     setLoading(false);
   }
+
+  const planSummary = (() => {
+    switch (accountType) {
+      case "organisme":
+        return {
+          title: "Compte Organisme",
+          price: "Gratuit · 14 j d'essai",
+          note: "Badge vérifié · édition de votre fiche · stats de vues · mise en avant. Forfait à vie 149,99 $ (optionnel).",
+        };
+      case "partenaire":
+        return {
+          title: "Compte Partenaire",
+          price: "Gratuit · 14 j d'essai",
+          note: "Reconnaissance publique · accès anticipé · code promo · support 24h. Forfait à vie 299,99 $ (optionnel).",
+        };
+      default:
+        return {
+          title: "Compte citoyen",
+          price: "Gratuit",
+          note: "Recherche illimitée · SOS · Carte · Chat IA · Premium 19,99 $ optionnel à vie",
+        };
+    }
+  })();
 
   return (
     <LinearGradient colors={["#0a6558", "#0e7e6e", "#1a9f8c"]} style={styles.gradient}>
@@ -115,6 +199,36 @@ export default function RegisterScreen() {
                   Inscription gratuite, sans carte
                 </Text>
               </View>
+            </Animated.View>
+
+            {/* ─── Sélecteur de type de compte ─── */}
+            <Animated.View
+              style={[styles.typeRow, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}
+            >
+              {TYPE_OPTIONS.map((opt) => {
+                const active = accountType === opt.id;
+                return (
+                  <Pressable
+                    key={opt.id}
+                    onPress={() => {
+                      setAccountType(opt.id);
+                      setError(null);
+                    }}
+                    style={[
+                      styles.typeCard,
+                      active && styles.typeCardActive,
+                    ]}
+                  >
+                    <Text style={styles.typeEmoji}>{opt.emoji}</Text>
+                    <Text style={styles.typeLabel} numberOfLines={1} adjustsFontSizeToFit>
+                      {opt.label}
+                    </Text>
+                    <Text style={styles.typeBlurb} numberOfLines={2}>
+                      {opt.blurb}
+                    </Text>
+                  </Pressable>
+                );
+              })}
             </Animated.View>
 
             <Animated.View
@@ -151,7 +265,7 @@ export default function RegisterScreen() {
                 <Feather name="mail" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="Adresse courriel"
+                  placeholder={isOrgType ? "Courriel professionnel" : "Adresse courriel"}
                   placeholderTextColor="rgba(255,255,255,0.5)"
                   value={email}
                   onChangeText={setEmail}
@@ -175,6 +289,82 @@ export default function RegisterScreen() {
                   returnKeyType="next"
                 />
               </View>
+
+              {/* ─── Champs Organisme / Partenaire ─── */}
+              {isOrgType && (
+                <>
+                  <View style={styles.divider}>
+                    <View style={styles.dividerLine} />
+                    <Text style={styles.dividerLabel}>
+                      {accountType === "organisme" ? "Votre organisme" : "Votre institution"}
+                    </Text>
+                    <View style={styles.dividerLine} />
+                  </View>
+
+                  <View style={styles.inputWrapper}>
+                    <Feather
+                      name={accountType === "organisme" ? "home" : "briefcase"}
+                      size={16}
+                      color="rgba(255,255,255,0.7)"
+                      style={styles.inputIcon}
+                    />
+                    <TextInput
+                      style={styles.input}
+                      placeholder={
+                        accountType === "organisme"
+                          ? "Nom de l'organisme (OBNL, clinique...)"
+                          : "Nom de l'institution / partenaire"
+                      }
+                      placeholderTextColor="rgba(255,255,255,0.5)"
+                      value={organisationName}
+                      onChangeText={setOrganisationName}
+                      autoCapitalize="words"
+                      returnKeyType="next"
+                    />
+                  </View>
+
+                  <View style={styles.row}>
+                    <View style={[styles.inputWrapper, styles.flex]}>
+                      <Feather name="map" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Ville"
+                        placeholderTextColor="rgba(255,255,255,0.5)"
+                        value={organisationCity}
+                        onChangeText={setOrganisationCity}
+                        autoCapitalize="words"
+                        returnKeyType="next"
+                      />
+                    </View>
+                    <View style={[styles.inputWrapper, styles.flex]}>
+                      <Feather name="phone" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Téléphone"
+                        placeholderTextColor="rgba(255,255,255,0.5)"
+                        value={organisationPhone}
+                        onChangeText={setOrganisationPhone}
+                        keyboardType="phone-pad"
+                        returnKeyType="next"
+                      />
+                    </View>
+                  </View>
+
+                  <View style={styles.inputWrapper}>
+                    <Feather name="globe" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Site web (optionnel)"
+                      placeholderTextColor="rgba(255,255,255,0.5)"
+                      value={organisationWebsite}
+                      onChangeText={setOrganisationWebsite}
+                      autoCapitalize="none"
+                      keyboardType="url"
+                      returnKeyType="next"
+                    />
+                  </View>
+                </>
+              )}
 
               <View style={styles.inputWrapper}>
                 <Feather name="lock" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
@@ -209,11 +399,11 @@ export default function RegisterScreen() {
               {/* Free / Premium summary */}
               <View style={styles.planSummary}>
                 <View style={styles.planSummaryHead}>
-                  <Text style={styles.planSummaryTitle}>Compte citoyen</Text>
-                  <Text style={styles.planSummaryPrice}>Gratuit</Text>
+                  <Text style={styles.planSummaryTitle}>{planSummary.title}</Text>
+                  <Text style={styles.planSummaryPrice}>{planSummary.price}</Text>
                 </View>
-                <Text style={styles.planSummaryNote} numberOfLines={2}>
-                  Recherche illimitée · SOS · Carte · Chat IA · Premium 19,99 $ optionnel à vie
+                <Text style={styles.planSummaryNote} numberOfLines={3}>
+                  {planSummary.note}
                 </Text>
               </View>
 
@@ -230,7 +420,13 @@ export default function RegisterScreen() {
                 style={({ pressed }) => [styles.registerButton, pressed && { opacity: 0.85 }]}
               >
                 <Text style={styles.registerButtonText} numberOfLines={1} adjustsFontSizeToFit>
-                  {loading ? "Création du compte..." : "Créer mon compte"}
+                  {loading
+                    ? "Création du compte..."
+                    : accountType === "organisme"
+                    ? "Créer mon compte Organisme"
+                    : accountType === "partenaire"
+                    ? "Créer mon compte Partenaire"
+                    : "Créer mon compte"}
                 </Text>
               </Pressable>
             </Animated.View>
@@ -292,6 +488,43 @@ const styles = StyleSheet.create({
     color: "rgba(255,255,255,0.85)",
     marginTop: 2,
   },
+  // ─── Sélecteur de type ───
+  typeRow: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  typeCard: {
+    flex: 1,
+    backgroundColor: "rgba(255,255,255,0.08)",
+    borderRadius: 14,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    alignItems: "center",
+    borderWidth: 1.5,
+    borderColor: "rgba(255,255,255,0.12)",
+    minHeight: 96,
+  },
+  typeCardActive: {
+    backgroundColor: "rgba(255,255,255,0.22)",
+    borderColor: "#ffffff",
+  },
+  typeEmoji: {
+    fontSize: 22,
+    marginBottom: 4,
+  },
+  typeLabel: {
+    color: "#ffffff",
+    fontSize: 13,
+    fontFamily: "Inter_700Bold",
+    textAlign: "center",
+  },
+  typeBlurb: {
+    color: "rgba(255,255,255,0.75)",
+    fontSize: 10,
+    textAlign: "center",
+    marginTop: 3,
+    lineHeight: 13,
+  },
   formCard: {
     backgroundColor: "rgba(255,255,255,0.08)",
     borderRadius: 18,
@@ -319,6 +552,26 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
   },
   eyeBtn: { padding: 6 },
+  // ─── Divider section organisme ───
+  divider: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginTop: 4,
+    marginBottom: 0,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: "rgba(255,255,255,0.18)",
+  },
+  dividerLabel: {
+    color: "rgba(255,255,255,0.85)",
+    fontSize: 11,
+    fontFamily: "Inter_700Bold",
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
+  },
   planSummary: {
     backgroundColor: "rgba(16,185,129,0.18)",
     borderRadius: 12,

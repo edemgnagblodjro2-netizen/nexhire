@@ -403,6 +403,31 @@ export default function PremiumScreen() {
                     </>
                   )}
                 </Pressable>
+
+                {/* Secondary CTA — inscription gratuite pour Organisme / Partenaire */}
+                {tier.ctaKind === "contact" && (
+                  <Pressable
+                    onPress={() => {
+                      Haptics.selectionAsync();
+                      const t =
+                        tier.contactEmail === "partenaires@attentezero.ca"
+                          ? "partenaire"
+                          : "organisme";
+                      router.push(`/register?type=${t}` as any);
+                    }}
+                    style={({ pressed }) => [
+                      styles.ctaSecondary,
+                      { borderColor: tier.color, opacity: pressed ? 0.7 : 1 },
+                    ]}
+                  >
+                    <Feather name="user-plus" size={13} color={tier.color} />
+                    <Text style={[styles.ctaSecondaryText, { color: tier.color }]} numberOfLines={1} adjustsFontSizeToFit>
+                      {tier.contactEmail === "partenaires@attentezero.ca"
+                        ? "S'inscrire comme Partenaire — gratuit"
+                        : "S'inscrire comme Organisme — gratuit"}
+                    </Text>
+                  </Pressable>
+                )}
               </View>
             </View>
             </Animated.View>
@@ -726,6 +751,24 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Inter_600SemiBold",
     color: "#fff",
+    flexShrink: 1,
+  },
+  ctaSecondary: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    borderRadius: 10,
+    paddingVertical: 9,
+    paddingHorizontal: 12,
+    marginTop: 6,
+    borderWidth: 1.5,
+    backgroundColor: "transparent",
+    minHeight: 36,
+  },
+  ctaSecondaryText: {
+    fontSize: 12,
+    fontFamily: "Inter_700Bold",
     flexShrink: 1,
   },
 

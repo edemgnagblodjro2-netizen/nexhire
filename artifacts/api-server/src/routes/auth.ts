@@ -361,14 +361,14 @@ const RegisterBody = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
   address: z.string().optional(),
-  role: z.enum(["user", "organisme", "intervenant"]).optional().default("user"),
+  role: z.enum(["user", "organisme", "intervenant", "partenaire"]).optional().default("user"),
   organisationName: z.string().optional(),
   organisationCity: z.string().optional(),
   organisationPhone: z.string().optional(),
   organisationWebsite: z.string().optional(),
   professionalTitle: z.string().optional(),
   affiliation: z.string().optional(),
-  plan: z.enum(["standard", "plus", "terrain", "organisme", "institution"]).optional().default("standard"),
+  plan: z.enum(["standard", "plus", "terrain", "organisme", "partenaire", "institution"]).optional().default("standard"),
 });
 
 router.post("/mobile-auth/register", async (req: Request, res: Response) => {
@@ -378,24 +378,42 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
     return;
   }
 
-  // v1.0.33 — Public self-signup is restricted to citizen accounts only.
-  // The "organisme" / "intervenant" onboarding flows have been retired with
-  // the Mode Terrain pivot. New B2G partnerships go through direct contracts
-  // and provisioned accounts (out of band), not this public endpoint.
-  // Existing organisme/intervenant accounts continue to work for login,
-  // billing, and data access — this guard only blocks NEW creation.
-  // Public self-signup: only "user" creation is enabled. Type widened so the
-  // dead-code organisme/intervenant branches still compile.
-  const role = "user" as "user" | "organisme" | "intervenant";
-  const organisationName = undefined;
-  const organisationCity = undefined;
-  const organisationPhone = undefined;
-  const organisationWebsite = undefined;
-  const professionalTitle = undefined;
-  const affiliation = undefined;
-  const plan = "standard" as const;
+  // v1.1.8 — Public self-signup re-enabled for organisme + partenaire.
+  // Citizen accounts remain default. Organisme = community org / OBNL with
+  // its own public listing. Partenaire = institutional supporter / donor,
+  // also tracked in organisationsTable but with kind="partenaire" so the
+  // public directory can filter / badge them differently. Privileges are
+  // applied later by reading user.role + org.kind on the client.
+  const {
+    email,
+    password,
+    firstName,
+    lastName,
+    address,
+    role: requestedRole,
+    organisationName,
+    organisationCity,
+    organisationPhone,
+    organisationWebsite,
+    professionalTitle,
+    affiliation,
+  } = parsed.data;
 
-  const { email, password, firstName, lastName, address } = parsed.data;
+  // We map "partenaire" to role="organisme" in the users.role column (which
+  // historically only stores user/organisme/intervenant) but tag the org row
+  // with kind="partenaire" so we can distinguish the two downstream.
+  const role: "user" | "organisme" | "intervenant" =
+    requestedRole === "partenaire" ? "organisme" : requestedRole;
+  const orgKind: "organisme" | "intervenant" | "partenaire" =
+    requestedRole === "partenaire" ? "partenaire" : (role === "intervenant" ? "intervenant" : "organisme");
+  const plan: "standard" | "partenaire" =
+    requestedRole === "partenaire" ? "partenaire" : "standard";
+
+  // Organisme / Partenaire need a name for their public listing.
+  if ((requestedRole === "organisme" || requestedRole === "partenaire") && !organisationName?.trim()) {
+    res.status(400).json({ error: "Le nom de l'organisme est requis." });
+    return;
+  }
 
   try {
     const existing = await db
@@ -431,7 +449,7 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
           city: organisationCity ?? null,
           address: address ?? null,
           badgeVerified: false,
-          kind: "organisme",
+          kind: orgKind,
         })
         .returning();
       organisationId = newOrg.id;
