@@ -96,7 +96,7 @@ const TIERS: Tier[] = [
     gradColors: ["#064e3b", "#0e7e6e"],
     audience: "Organisme — À vie",
     tagline: "Pour les organismes communautaires et OBNL",
-    priceLabel: "119,99 $",
+    priceLabel: "149,99 $",
     priceUnit: "à vie",
     perks: [
       "Accès complet à vie pour votre organisme",
@@ -108,7 +108,7 @@ const TIERS: Tier[] = [
     ctaLabel: "Nous contacter",
     ctaKind: "contact",
     contactEmail: "organismes@attentezero.ca",
-    contactSubject: "Forfait Organisme — 119,99 $ à vie",
+    contactSubject: "Forfait Organisme — 149,99 $ à vie",
   },
   {
     id: "users",
@@ -117,7 +117,7 @@ const TIERS: Tier[] = [
     gradColors: ["#78350f", "#d97706"],
     audience: "Partenaire & Soutien — À vie",
     tagline: "Pour les partenaires institutionnels et donateurs",
-    priceLabel: "119,99 $",
+    priceLabel: "299,99 $",
     priceUnit: "à vie",
     perks: [
       "Accès complet à vie",
@@ -129,7 +129,7 @@ const TIERS: Tier[] = [
     ctaLabel: "Nous contacter",
     ctaKind: "contact",
     contactEmail: "partenaires@attentezero.ca",
-    contactSubject: "Forfait Partenaire & Soutien — 119,99 $ à vie",
+    contactSubject: "Forfait Partenaire & Soutien — 299,99 $ à vie",
   },
 ];
 
