@@ -46,9 +46,15 @@ function ClassicTabLayout() {
           ) : null,
         tabBarLabelStyle: {
           fontSize: 10,
-          fontFamily: "Inter_500Medium",
+          fontWeight: "600",
           marginBottom: isWeb ? 4 : 0,
+          includeFontPadding: false,
         },
+        tabBarItemStyle: {
+          paddingHorizontal: 0,
+          paddingTop: 4,
+        },
+        tabBarAllowFontScaling: false,
       }}
     >
       <Tabs.Screen
