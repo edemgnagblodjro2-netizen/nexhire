@@ -1,0 +1,41 @@
+# Root .easignore — applies to monorepo when EAS uploads from workspace root
+# Goal: keep archive small so compression/upload doesn't OOM in sandbox
+
+# VCS
+.git/
+.gitignore
+
+# Replit / agent / local
+.local/
+.cache/
+.replit
+.config/
+.canvas/
+.agents/
+.replitignore
+attached_assets/
+
+# Other artifacts (only service-qc is being built)
+artifacts/admin/
+artifacts/api-server/
+artifacts/mockup-sandbox/
+
+# Node + build artifacts at every level
+node_modules/
+**/node_modules/
+.pnpm-store/
+.expo/
+**/.expo/
+dist/
+**/dist/
+build/
+**/build/
+web-build/
+**/web-build/
+ios/
+android/
+
+# Logs / tmp
+*.log
+.DS_Store
+Thumbs.db
