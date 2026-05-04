@@ -87,6 +87,17 @@ const SECTIONS: Section[] = [
     categories: ["employment", "immigration"],
     featuredTiles: [
       {
+        key: "perte-emploi",
+        route: "/perte-emploi",
+        icon: "briefcase",
+        emoji: "💼",
+        titleFr: "Perte d'emploi",
+        titleEn: "Job loss",
+        subtitleFr: "Étapes & demande d'AE",
+        subtitleEn: "Steps & EI claim",
+        color: "#1e40af",
+      },
+      {
         key: "top10",
         route: "/top10",
         icon: "list",
