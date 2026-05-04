@@ -138,17 +138,33 @@ export default function MapScreen() {
 
     if (catFilter !== "all") arr = arr.filter((s) => s.category === catFilter);
 
+    // Comparator helpers — distance is rounded to ~10 m so that services
+    // sharing the same building (banks in a tower, organisms in a community
+    // center) get a stable ALPHABETICAL tiebreaker by name instead of a
+    // random order. City is the second-level tiebreaker.
+    const byNameThenCity = (a: Service, b: Service) =>
+      a.name.localeCompare(b.name, "fr", { sensitivity: "base" }) ||
+      (a.city ?? "").localeCompare(b.city ?? "", "fr", { sensitivity: "base" });
+
     if (sortMode === "name") {
-      arr.sort((a, b) => a.name.localeCompare(b.name, "fr"));
+      arr.sort(byNameThenCity);
     } else if (sortMode === "urgent") {
       arr.sort((a, b) => {
         const ua = a.isUrgent ? 0 : 1;
         const ub = b.isUrgent ? 0 : 1;
         if (ua !== ub) return ua - ub;
-        return (a.distKm ?? 1e9) - (b.distKm ?? 1e9);
+        const da = Math.round((a.distKm ?? 1e9) * 100);
+        const db = Math.round((b.distKm ?? 1e9) * 100);
+        if (da !== db) return da - db;
+        return byNameThenCity(a, b);
       });
     } else {
-      arr.sort((a, b) => (a.distKm ?? 1e9) - (b.distKm ?? 1e9));
+      arr.sort((a, b) => {
+        const da = Math.round((a.distKm ?? 1e9) * 100);
+        const db = Math.round((b.distKm ?? 1e9) * 100);
+        if (da !== db) return da - db;
+        return byNameThenCity(a, b);
+      });
     }
 
     return arr.slice(0, tab === "nearby" ? 60 : arr.length);
@@ -180,13 +196,28 @@ export default function MapScreen() {
     if (!s.coordinates) return;
     Haptics.selectionAsync();
     const { lat, lng } = s.coordinates;
-    const label = encodeURIComponent(s.name);
+    // Compose a "name + address" query so the routing app picks the EXACT
+    // branch when several services share the same coordinates (e.g. multiple
+    // banks in the same tower) — falls back gracefully on lat/lng if needed.
+    const fullName = [s.name, s.address, s.city].filter(Boolean).join(", ");
+    const q = encodeURIComponent(fullName);
     const url = Platform.select({
-      ios: `http://maps.apple.com/?q=${label}&ll=${lat},${lng}`,
-      android: `geo:${lat},${lng}?q=${lat},${lng}(${label})`,
-      default: `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=16/${lat}/${lng}`,
+      // Apple Maps: daddr triggers turn-by-turn directions from current location
+      ios: `http://maps.apple.com/?daddr=${q}&ll=${lat},${lng}&q=${encodeURIComponent(s.name)}`,
+      // Google Maps universal directions URL — uses name+address for accuracy,
+      // with lat/lng as an unambiguous fallback target.
+      android: `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&destination_place_id=&travelmode=driving&dir_action=navigate&query=${q}`,
+      default: `https://www.google.com/maps/dir/?api=1&destination=${q}`,
     })!;
-    Linking.openURL(url).catch(() => {});
+    Linking.openURL(url).catch(() => {
+      // Fallback to a plain pin view if the directions URL fails
+      const fallback = Platform.select({
+        ios: `http://maps.apple.com/?q=${encodeURIComponent(s.name)}&ll=${lat},${lng}`,
+        android: `geo:${lat},${lng}?q=${lat},${lng}(${encodeURIComponent(s.name)})`,
+        default: `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=16/${lat}/${lng}`,
+      })!;
+      Linking.openURL(fallback).catch(() => {});
+    });
   }
 
   return (

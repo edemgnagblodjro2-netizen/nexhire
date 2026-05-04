@@ -105,19 +105,32 @@ export default function ServiceDetailScreen() {
     void trackServiceDirections(service.id);
     const lat = service.coordinates?.lat;
     const lng = service.coordinates?.lng;
+    // Build a "name + address + city" query so the routing app picks the
+    // EXACT branch when several services share the same coordinates.
+    const fullName = [service.name, service.address, service.city]
+      .filter(Boolean)
+      .join(", ");
+    const q = encodeURIComponent(fullName);
     const label = encodeURIComponent(service.name);
+
     let url: string;
     if (lat && lng) {
       url =
         Platform.OS === "ios"
-          ? `http://maps.apple.com/?ll=${lat},${lng}&q=${label}`
-          : `geo:${lat},${lng}?q=${lat},${lng}(${label})`;
-    } else if (service.address) {
-      url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(service.address)}`;
+          ? `http://maps.apple.com/?daddr=${q}&ll=${lat},${lng}&q=${label}`
+          : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving&dir_action=navigate&query=${q}`;
+    } else if (service.address || service.name) {
+      // No coordinates — pure name+address routing
+      url = `https://www.google.com/maps/dir/?api=1&destination=${q}`;
     } else {
       return;
     }
-    Linking.openURL(url);
+    Linking.openURL(url).catch(() => {
+      // Last-resort fallback: simple search by name
+      Linking.openURL(
+        `https://www.google.com/maps/search/?api=1&query=${q}`
+      ).catch(() => {});
+    });
   }
 
   return (
