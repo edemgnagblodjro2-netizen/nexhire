@@ -39,7 +39,9 @@ type Tier = {
   trialBadge?: string;
   perks: string[];
   ctaLabel: string;
-  ctaKind: "premium" | "free";
+  ctaKind: "premium" | "free" | "contact";
+  contactEmail?: string;
+  contactSubject?: string;
 };
 
 // Pivot v1.0.33 — pricing simplifié à deux paliers grand public.
@@ -86,6 +88,48 @@ const TIERS: Tier[] = [
     ],
     ctaLabel: "Devenir Premium — 19,99 $",
     ctaKind: "premium",
+  },
+  {
+    id: "users",
+    emoji: "🏢",
+    color: "#0e7e6e",
+    gradColors: ["#064e3b", "#0e7e6e"],
+    audience: "Organisme — À vie",
+    tagline: "Pour les organismes communautaires et OBNL",
+    priceLabel: "119,99 $",
+    priceUnit: "à vie",
+    perks: [
+      "Accès complet à vie pour votre organisme",
+      "Visibilité accrue dans le répertoire",
+      "Support dédié par courriel",
+      "Aucun abonnement — payez une fois",
+      "Vous soutenez un projet 100 % québécois",
+    ],
+    ctaLabel: "Nous contacter",
+    ctaKind: "contact",
+    contactEmail: "organismes@attentezero.ca",
+    contactSubject: "Forfait Organisme — 119,99 $ à vie",
+  },
+  {
+    id: "users",
+    emoji: "🤝",
+    color: "#b45309",
+    gradColors: ["#78350f", "#d97706"],
+    audience: "Partenaire & Soutien — À vie",
+    tagline: "Pour les partenaires institutionnels et donateurs",
+    priceLabel: "119,99 $",
+    priceUnit: "à vie",
+    perks: [
+      "Accès complet à vie",
+      "Reconnaissance comme partenaire de soutien",
+      "Contribution directe à la mission",
+      "Aucun abonnement — payez une fois",
+      "Vous gardez la plateforme vivante",
+    ],
+    ctaLabel: "Nous contacter",
+    ctaKind: "contact",
+    contactEmail: "partenaires@attentezero.ca",
+    contactSubject: "Forfait Partenaire & Soutien — 119,99 $ à vie",
   },
 ];
 
@@ -155,6 +199,13 @@ export default function PremiumScreen() {
 
   function handleTierCta(tier: Tier, _idx: number) {
     if (tier.ctaKind === "premium") return handleUserPremium();
+    if (tier.ctaKind === "contact") {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      const to = tier.contactEmail ?? CONTACT_EMAIL;
+      const subject = encodeURIComponent(tier.contactSubject ?? "Demande d'information — AttenteZéro");
+      Linking.openURL(`mailto:${to}?subject=${subject}`);
+      return;
+    }
     // Free tier — just go back
     Haptics.selectionAsync();
     router.back();
@@ -336,7 +387,13 @@ export default function PremiumScreen() {
                   ) : (
                     <>
                       <Feather
-                        name={tier.ctaKind === "premium" ? "star" : "check"}
+                        name={
+                          tier.ctaKind === "premium"
+                            ? "star"
+                            : tier.ctaKind === "contact"
+                              ? "mail"
+                              : "check"
+                        }
                         size={15}
                         color="#fff"
                       />
