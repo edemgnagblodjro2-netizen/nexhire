@@ -5,9 +5,12 @@ import { eq } from "drizzle-orm";
 import { getSession, getSessionId } from "../lib/auth.js";
 
 // ── Free-tier daily quota for AI chat ────────────────────────────
-// Free users: 5 messages/day. Premium users: unlimited.
-// In-memory map keyed by userId or IP. Resets at local midnight (UTC).
+// Main chat tab: 5 messages/day for free users, unlimited for premium.
+// Floating chatbot: 30/day for everyone (free for all), unlimited for premium.
+// In-memory map keyed by userId or IP (separate buckets per source).
+// Resets at local midnight (UTC).
 const FREE_DAILY_LIMIT = 5;
+const FLOATING_DAILY_LIMIT = 30;
 const aiChatCounts = new Map<string, { day: string; count: number }>();
 
 function todayKey(): string {
@@ -15,12 +18,12 @@ function todayKey(): string {
   return `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
 }
 
-function bumpQuota(key: string): { count: number; limit: number; remaining: number } {
+function bumpQuota(key: string, limit: number = FREE_DAILY_LIMIT): { count: number; limit: number; remaining: number } {
   const today = todayKey();
   const entry = aiChatCounts.get(key);
   if (!entry || entry.day !== today) {
     aiChatCounts.set(key, { day: today, count: 1 });
-    return { count: 1, limit: FREE_DAILY_LIMIT, remaining: FREE_DAILY_LIMIT - 1 };
+    return { count: 1, limit, remaining: limit - 1 };
   }
   entry.count += 1;
   // Periodic GC
@@ -29,7 +32,7 @@ function bumpQuota(key: string): { count: number; limit: number; remaining: numb
       if (v.day !== today) aiChatCounts.delete(k);
     }
   }
-  return { count: entry.count, limit: FREE_DAILY_LIMIT, remaining: Math.max(0, FREE_DAILY_LIMIT - entry.count) };
+  return { count: entry.count, limit, remaining: Math.max(0, limit - entry.count) };
 }
 
 async function getUserPremiumStatus(req: Request): Promise<{ isPremium: boolean; userId: string | null }> {
@@ -574,46 +577,65 @@ Guidelines:
 }
 
 router.post("/ai/chat", async (req, res) => {
+  const {
+    message,
+    language: bodyLanguage = "fr",
+    history = [],
+    source = "main",
+  } = req.body as {
+    message?: string;
+    language?: string;
+    history?: { role: "user" | "assistant"; content: string }[];
+    source?: "main" | "floating";
+  };
+  const language = bodyLanguage;
+  const isFloating = source === "floating";
+
   // ── Authentication guard ───────────────────────────────────────
-  // The mobile app already gates the chat UI behind isAuthenticated, but the
-  // server must enforce the same rule so the endpoint cannot be used as a
-  // public OpenAI proxy by callers who bypass the app.
-  const { language: bodyLanguage = "fr" } = req.body as { language?: string };
+  // Main chat tab: signed-in members only (server-side enforcement so the
+  // endpoint cannot be used as a public OpenAI proxy by callers who bypass
+  // the mobile UI).
+  // Floating chatbot: open to everyone (free for all users) — quota-protected
+  // by IP to keep AI costs bounded.
   const sid = getSessionId(req);
   const session = sid ? await getSession(sid) : null;
-  if (!session?.user?.id) {
+  if (!isFloating && !session?.user?.id) {
     res.status(401).json({
-      error: bodyLanguage === "en"
+      error: language === "en"
         ? "AI chat is reserved for signed-in members."
         : "Le chat IA est réservé aux membres connectés.",
     });
     return;
   }
 
-  const { message, language = "fr", history = [] } = req.body as {
-    message: string;
-    language?: string;
-    history?: { role: "user" | "assistant"; content: string }[];
-  };
-
   if (!message || typeof message !== "string") {
     res.status(400).json({ error: "message is required" });
     return;
   }
 
-  // ── Quota check (free users: 5/day, premium: unlimited) ──────
+  // ── Quota check ──────────────────────────────────────────────
+  // Premium → unlimited everywhere.
+  // Floating chatbot → 30/day per IP/user for everyone (free for all).
+  // Main chat tab (free users) → 5/day per user.
   const { isPremium, userId } = await getUserPremiumStatus(req);
   if (!isPremium) {
-    const key = clientKey(req, userId);
-    const q = bumpQuota(key);
+    const limit = isFloating ? FLOATING_DAILY_LIMIT : FREE_DAILY_LIMIT;
+    // Separate quota bucket per source so floating usage doesn't burn the
+    // main-chat allowance and vice-versa.
+    const key = `${isFloating ? "f:" : "m:"}${clientKey(req, userId)}`;
+    const q = bumpQuota(key, limit);
     if (q.count > q.limit) {
       res.status(429).json({
         error: language === "en"
-          ? `Daily free limit reached (${q.limit} messages/day). Upgrade to Premium for unlimited AI chat.`
-          : `Limite quotidienne atteinte (${q.limit} messages/jour). Passez à Premium pour un usage illimité.`,
+          ? isFloating
+            ? `Daily limit reached for the floating assistant (${q.limit} messages/day). Try again tomorrow.`
+            : `Daily free limit reached (${q.limit} messages/day). Upgrade to Premium for unlimited AI chat.`
+          : isFloating
+            ? `Limite quotidienne atteinte pour l'assistant flottant (${q.limit} messages/jour). Réessayez demain.`
+            : `Limite quotidienne atteinte (${q.limit} messages/jour). Passez à Premium pour un usage illimité.`,
         quotaExceeded: true,
         limit: q.limit,
-        upgradeUrl: "/premium",
+        ...(isFloating ? {} : { upgradeUrl: "/premium" }),
       });
       return;
     }

@@ -123,6 +123,7 @@ export default function FloatingAIChat() {
             message: trimmed,
             language: isFr ? "fr" : "en",
             history,
+            source: "floating",
           }),
         });
 

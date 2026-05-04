@@ -11,6 +11,13 @@
 (F) **API admin** : `GET /api/admin/organisations?kind=&q=` + `POST /api/admin/organisations/:id/badge {verified:bool}` ajoutés à `verifications.ts` (réutilise `checkAdminKey` HMAC header).
 **Tests curl validés** : honeypot rempli → 400 « anti-bot échouée » ; sans token → « Captcha manquant » ; immédiat (<2s) → « Inscription trop rapide » ; mauvaise réponse → « Réponse au captcha incorrecte » ; bonne réponse + 3s → 200 + tokens créés. Admin endpoints : 401 sans clé. Typechecks OK 3 packages.
 
+**Bloc 111 — Chatbot flottant gratuit pour tous (anonymes inclus)** :
+Suite à la demande "cette option sera pour les tous gratuitement". Le canal flottant devient libre d'accès — sans compte requis, sans gating Premium, mais avec un quota plus élevé pour rester gratuit en pratique tout en bornant les coûts OpenAI.
+- **Server `routes/ai.ts`** : ajout du paramètre `source: "main" | "floating"` dans le body. (1) **Auth-gate désactivé pour `floating`** : `if (!isFloating && !session?.user?.id) → 401`. Le canal principal reste réservé aux membres connectés. (2) **Quota séparé** : `FLOATING_DAILY_LIMIT = 30` messages/jour (vs 5 pour le main). `bumpQuota(key, limit)` accepte maintenant un override. Bucket par source via préfixe `f:` ou `m:` sur la clé (`f:ip:1.2.3.4` vs `m:u:userId123`) → l'usage flottant ne consomme pas le quota du chat principal et inversement. (3) **Message d'erreur sur 429** différencié pour le flottant : "Réessayez demain" (pas d'upsell Premium, puisque le canal est gratuit). Premium reste illimité partout.
+- **Client `FloatingAIChat.tsx`** : ajout de `source: "floating"` dans le body POST.
+- **Tests curl validés** : `POST /api/ai/chat {message, source:"floating"}` sans cookie → 200 + streaming SSE (réponse "Bonjour ! Comment puis-je vous aider ..."). `POST /api/ai/chat {message}` sans cookie → 401 "réservé aux membres connectés". Typecheck OK 2 packages.
+- Couvre 5x plus de questions/jour qu'auparavant pour les non-Premium, et fonctionne même sans inscription — idéal pour un visiteur qui veut tester l'app ou un utilisateur qui n'a pas encore créé de compte.
+
 **Bloc 110 — Chatbot IA flottant (réponses immédiates partout dans l'app)** :
 Nouveau composant `components/FloatingAIChat.tsx` (~530 lignes) : bouton circulaire flottant en bas-droite + bottom-sheet de chat compact, branché sur le même endpoint streaming `/api/ai/chat` que l'onglet Chat existant.
 - **Bouton flottant (FAB)** : 58×58 cercle vert #0e7e6e, position absolue `bottom: 78 + insets.bottom` (iOS) / 70 (Android) pour passer au-dessus de la tab bar. Halo "pulse" semi-transparent + petit badge rouge "IA" en haut à droite. Haptic léger au tap. zIndex 1000.
