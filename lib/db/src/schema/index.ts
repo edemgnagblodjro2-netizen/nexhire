@@ -10,3 +10,4 @@ export * from "./searchEvents";
 export * from "./analytics";
 export * from "./referralCodes";
 export * from "./referralClaims";
+export * from "./aiTrials";

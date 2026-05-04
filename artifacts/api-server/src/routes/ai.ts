@@ -1,16 +1,18 @@
 import { Router, type Request } from "express";
 import { openai } from "@workspace/integrations-openai-ai-server";
-import { db, usersTable } from "@workspace/db";
-import { eq } from "drizzle-orm";
+import { db, usersTable, aiTrialsTable } from "@workspace/db";
+import { eq, sql } from "drizzle-orm";
 import { getSession, getSessionId } from "../lib/auth.js";
 
 // ── Free-tier daily quota for AI chat ────────────────────────────
 // Main chat tab: 5 messages/day for free users, unlimited for premium.
-// Floating chatbot: 15/day for everyone (free for all), unlimited for premium.
-// In-memory map keyed by userId or IP (separate buckets per source).
-// Resets at local midnight (UTC).
+// Floating chatbot: 15/day during a 3-day free trial, then Premium required.
+//   - In-memory map for daily count (resets at midnight UTC).
+//   - Persistent table `ai_trials` for the trial start date (resists restarts).
+// Premium users: unlimited everywhere.
 const FREE_DAILY_LIMIT = 5;
 const FLOATING_DAILY_LIMIT = 15;
+const FLOATING_TRIAL_DAYS = 3;
 const aiChatCounts = new Map<string, { day: string; count: number }>();
 
 function todayKey(): string {
@@ -33,6 +35,32 @@ function bumpQuota(key: string, limit: number = FREE_DAILY_LIMIT): { count: numb
     }
   }
   return { count: entry.count, limit, remaining: Math.max(0, limit - entry.count) };
+}
+
+// Returns the timestamp of the user's first floating-chat message, creating
+// the row on first call. Used to enforce the 3-day trial window. Returns null
+// only on DB failure (in which case we fail-open and let the request through
+// — better UX than blocking everyone if the DB hiccups).
+async function getOrCreateTrialStart(clientKey: string): Promise<Date | null> {
+  try {
+    const [row] = await db
+      .insert(aiTrialsTable)
+      .values({ clientKey })
+      .onConflictDoUpdate({
+        target: aiTrialsTable.clientKey,
+        // No-op update so the existing startedAt is returned unchanged.
+        set: { clientKey: sql`${aiTrialsTable.clientKey}` },
+      })
+      .returning({ startedAt: aiTrialsTable.startedAt });
+    return row?.startedAt ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function daysSince(start: Date): number {
+  const ms = Date.now() - start.getTime();
+  return Math.floor(ms / 86_400_000);
 }
 
 async function getUserPremiumStatus(req: Request): Promise<{ isPremium: boolean; userId: string | null }> {
@@ -615,20 +643,41 @@ router.post("/ai/chat", async (req, res) => {
 
   // ── Quota check ──────────────────────────────────────────────
   // Premium → unlimited everywhere.
-  // Floating chatbot → 30/day per IP/user for everyone (free for all).
-  // Main chat tab (free users) → 5/day per user.
+  // Floating chatbot (non-Premium) → 15/day during a 3-day free trial.
+  //   Day 1, 2, 3 from first message: up to 15 questions/day.
+  //   Day 4 and beyond: 429 trialExpired + Premium CTA.
+  // Main chat tab (free users) → 5/day per user (unchanged).
   const { isPremium, userId } = await getUserPremiumStatus(req);
   if (!isPremium) {
     const limit = isFloating ? FLOATING_DAILY_LIMIT : FREE_DAILY_LIMIT;
     // Separate quota bucket per source so floating usage doesn't burn the
     // main-chat allowance and vice-versa.
-    const key = `${isFloating ? "f:" : "m:"}${clientKey(req, userId)}`;
+    const baseKey = clientKey(req, userId);
+    const key = `${isFloating ? "f:" : "m:"}${baseKey}`;
+
+    // Floating: enforce the 3-day trial window (persistent in DB).
+    if (isFloating) {
+      const trialStart = await getOrCreateTrialStart(baseKey);
+      if (trialStart && daysSince(trialStart) >= FLOATING_TRIAL_DAYS) {
+        res.status(429).json({
+          error: language === "en"
+            ? `Your ${FLOATING_TRIAL_DAYS}-day free trial of the AI assistant has ended. Upgrade to Premium to keep chatting.`
+            : `Votre essai gratuit de ${FLOATING_TRIAL_DAYS} jours de l'assistant IA est terminé. Passez à Premium pour continuer à discuter.`,
+          quotaExceeded: true,
+          trialExpired: true,
+          trialDays: FLOATING_TRIAL_DAYS,
+          upgradeUrl: "/premium",
+        });
+        return;
+      }
+    }
+
     const q = bumpQuota(key, limit);
     if (q.count > q.limit) {
       res.status(429).json({
         error: language === "en"
-          ? `You've reached your ${q.limit} free questions. Upgrade to Premium to continue chatting.`
-          : `Vous avez utilisé vos ${q.limit} questions gratuites. Passez à Premium pour continuer à discuter.`,
+          ? `You've reached your ${q.limit} free questions for today. Try again tomorrow or upgrade to Premium for unlimited access.`
+          : `Vous avez utilisé vos ${q.limit} questions gratuites pour aujourd'hui. Réessayez demain ou passez à Premium pour un accès illimité.`,
         quotaExceeded: true,
         limit: q.limit,
         upgradeUrl: "/premium",
