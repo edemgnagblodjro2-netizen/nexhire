@@ -11,6 +11,20 @@
 (F) **API admin** : `GET /api/admin/organisations?kind=&q=` + `POST /api/admin/organisations/:id/badge {verified:bool}` ajoutés à `verifications.ts` (réutilise `checkAdminKey` HMAC header).
 **Tests curl validés** : honeypot rempli → 400 « anti-bot échouée » ; sans token → « Captcha manquant » ; immédiat (<2s) → « Inscription trop rapide » ; mauvaise réponse → « Réponse au captcha incorrecte » ; bonne réponse + 3s → 200 + tokens créés. Admin endpoints : 401 sans clé. Typechecks OK 3 packages.
 
+**Bloc 109 — Page « Mon Voyage Canada » (visiteurs France → Canada)** :
+Conversion intégrale du mockup React/HTML (`attached_assets/canada-visiteur-app_*.jsx`, 438 lignes) vers React Native Expo dans `app/visiteur-france.tsx` (~700 lignes). Suit le pattern des pages thématiques existantes (perte-emploi, aide-financiere, demenagement) :
+- **Header navy (#1A1A2E)** avec watermark feuille d'érable 🍁 (opacity 0.06), bouton retour, drapeaux 🇫🇷→🇨🇦, titre "Mon Voyage Canada" + sous-titre.
+- **4 onglets phases** (scroll horizontal) avec couleurs : Avant le départ #E8572A · À l'arrivée #2A7AE8 · Explorer #27AE60 · Infos pratiques #8E44AD. Bandeau coloré sous l'onglet actif avec compteur "X étapes".
+- **Section intro réservée « Quelques mots avant de partir »** (visible uniquement sur la phase 1) : carte avec emoji 💬, titre, paragraphe d'accueil par défaut sur le voyage France → Canada (2 langues), et label "✏️ Ce mot d'introduction sera personnalisé prochainement" — l'emplacement est prêt pour qu'on y mette les mots définitifs du user.
+- **Cartes étapes** typées `Step` avec emoji, titre, body, tag (pill couleur : Obligatoire/Recommandé/Pratique/Hébergement/etc — 14 tags avec palette claire+sombre), actions URL/tel via `Linking.openURL`. Border-left de la couleur de la phase.
+- **Destinations** (Explorer → Sites touristiques) : sélecteur horizontal de 4 villes (Montréal/Québec/Vancouver/Toronto) avec state local par carte (`activeDest: Record<stepKey, idx>`) et grille de pills "📍 Site" sous le sélecteur (5 sites par ville, FR/EN).
+- **SubItems** (Logement) : pills villes plates sous la carte.
+- **CTA bas « Besoin d'aide personnalisée ? »** → router.push `/(tabs)/chat` (assistant IA).
+- **Bilingue FR/EN intégral** via useLanguage. Couleurs adaptatives via useColors (variantes claires + sombres pour les tags). adjustsFontSizeToFit sur le titre header.
+- **Contenu rafraîchi 2026** : AVE 7 CAD, taux 1 EUR ≈ 1,47 CAD, ArriveCAN clarifié (plus obligatoire depuis 2022), métro STM 3,75 $, urgences 911, Info-Santé 811, ambassade Ottawa + consulats Montréal/Vancouver, séjour ≤ 6 mois, 6 fuseaux horaires, hivers −20 °C.
+- **Enregistrement router** : `Stack.Screen name="visiteur-france"` ajouté dans `_layout.tsx`. **Lien depuis Catégories** : nouvelle tuile dans la section "Tourisme & loisirs" (à côté du Guide touristique) — emoji 🇫🇷, couleur #1A1A2E, titre "Visiteur France → Canada", sous-titre "AVE, logement, sites, urgences".
+- Typecheck OK 3 packages.
+
 **Bloc 108 — Fix layout shift sur la page d'accueil (textes/chiffres mal redimensionnés au chargement)** :
 Plusieurs textes sur l'écran d'accueil n'avaient ni `numberOfLines={1}` ni `adjustsFontSizeToFit`, ce qui causait un wrap puis re-mesure visible (les polices Inter chargent en différé). Correctifs `(tabs)/index.tsx` :
 (A) **Bande stats hero** (5,338 services / 13 villes / 13 provinces / 24/7) : ajout `numberOfLines={1} + adjustsFontSizeToFit + minimumFontScale={0.6}` sur les 4 chiffres et `0.7` sur les 4 libellés. `statItem` : ajout `minWidth: 0` (sinon flex:1 ne rétrécit pas vraiment) + `paddingHorizontal: 4` + `textAlign: "center"`.

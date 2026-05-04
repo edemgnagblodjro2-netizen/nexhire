@@ -169,6 +169,17 @@ const SECTIONS: Section[] = [
         subtitleEn: "Places to visit",
         color: "#db2777",
       },
+      {
+        key: "visiteur-france",
+        route: "/visiteur-france",
+        icon: "send",
+        emoji: "🇫🇷",
+        titleFr: "Visiteur France → Canada",
+        titleEn: "Visitor France → Canada",
+        subtitleFr: "AVE, logement, sites, urgences",
+        subtitleEn: "eTA, lodging, sights, emergencies",
+        color: "#1A1A2E",
+      },
     ],
   },
 ];
