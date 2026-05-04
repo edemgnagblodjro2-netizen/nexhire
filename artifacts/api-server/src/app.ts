@@ -142,6 +142,27 @@ app.use("/api/mobile-auth/register", authLimiter);
 app.use("/api/mobile-auth/forgot-password", passwordResetLimiter);
 app.use("/api/mobile-auth/reset-password", resetConfirmLimiter);
 
+// Admin endpoints — guard against admin-key brute-force. The key is
+// already validated with constant-time compare; this caps attempts.
+const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 60, // 60 attempts / IP / 15 min — enough for normal admin browsing
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Trop de requêtes admin. Réessayez plus tard." },
+});
+app.use("/api/admin", adminLimiter);
+
+// Captcha challenge endpoint — cap to prevent token-farming for replay.
+const captchaLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 30, // 30 fresh challenges / IP / minute
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Trop de demandes de captcha." },
+});
+app.use("/api/captcha/challenge", captchaLimiter);
+
 app.use("/api", router);
 
 app.get(["/api/delete-account", "/delete-account"], (_req, res) => {

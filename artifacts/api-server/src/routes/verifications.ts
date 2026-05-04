@@ -1,17 +1,20 @@
 import { Router, type IRouter, type Request, type Response } from "express";
+import crypto from "crypto";
 import {
   db,
   organisationsTable,
   subscriptionsTable,
   verificationRequestsTable,
+  usersTable,
 } from "@workspace/db";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, or, inArray } from "drizzle-orm";
 import { z } from "zod";
 import { logger } from "../lib/logger";
 
 const router: IRouter = Router();
 
 const ADMIN_KEY = process.env.ADMIN_API_KEY;
+const ADMIN_KEY_BUF = ADMIN_KEY ? Buffer.from(ADMIN_KEY) : null;
 const PAID_PLANS = ["standard", "plus", "terrain", "institution"];
 // Only "active" — trialing is NOT paid yet, so badge stays out of reach.
 const ACTIVE_STATUSES = ["active"];
@@ -27,8 +30,18 @@ function requireAuth(req: Request, res: Response): boolean {
 
 function checkAdminKey(req: Request, res: Response): boolean {
   // Header only — query-string keys leak via logs/referrers.
+  // Constant-time comparison to avoid leaking byte-by-byte timing info.
   const provided = req.headers["x-admin-key"];
-  if (!ADMIN_KEY || provided !== ADMIN_KEY) {
+  if (!ADMIN_KEY_BUF || typeof provided !== "string") {
+    res.status(401).json({ error: "Unauthorized" });
+    return false;
+  }
+  const providedBuf = Buffer.from(provided);
+  if (providedBuf.length !== ADMIN_KEY_BUF.length) {
+    res.status(401).json({ error: "Unauthorized" });
+    return false;
+  }
+  if (!crypto.timingSafeEqual(providedBuf, ADMIN_KEY_BUF)) {
     res.status(401).json({ error: "Unauthorized" });
     return false;
   }
@@ -368,6 +381,91 @@ router.post("/admin/verification/:id/reject", async (req, res) => {
     .where(eq(verificationRequestsTable.id, id));
   logger.info({ requestId: id, reason }, "Verification rejected by admin");
   res.json({ success: true });
+});
+
+// ──────────────────────────────────────────────────────────────────────────
+// Admin — Organismes & Partenaires (manual badge management).
+// Used for manual workflow: after exchanging a few emails with the org/
+// partner contact, the admin can flip the verified badge directly without
+// requiring them to submit a formal verification request.
+// ──────────────────────────────────────────────────────────────────────────
+
+// GET /api/admin/organisations?kind=organisme|partenaire|all&q=search
+router.get("/admin/organisations", async (req, res) => {
+  if (!checkAdminKey(req, res)) return;
+  const kindParam = String(req.query.kind ?? "all");
+  const q = String(req.query.q ?? "").trim().toLowerCase();
+
+  const kindFilter =
+    kindParam === "organisme" || kindParam === "partenaire" || kindParam === "intervenant"
+      ? eq(organisationsTable.kind, kindParam)
+      : inArray(organisationsTable.kind, ["organisme", "partenaire"]);
+
+  const rows = await db
+    .select({
+      org: organisationsTable,
+      user: {
+        id: usersTable.id,
+        email: usersTable.email,
+        firstName: usersTable.firstName,
+        lastName: usersTable.lastName,
+        createdAt: usersTable.createdAt,
+      },
+    })
+    .from(organisationsTable)
+    .leftJoin(usersTable, eq(organisationsTable.userId, usersTable.id))
+    .where(kindFilter)
+    .orderBy(desc(organisationsTable.createdAt))
+    .limit(500);
+
+  const filtered = q
+    ? rows.filter((r) => {
+        const hay = `${r.org.name ?? ""} ${r.org.email ?? ""} ${r.user?.email ?? ""} ${r.org.city ?? ""}`.toLowerCase();
+        return hay.includes(q);
+      })
+    : rows;
+
+  res.json({ organisations: filtered });
+});
+
+// POST /api/admin/organisations/:id/badge { verified: boolean }
+const BadgeBody = z.object({ verified: z.boolean() });
+router.post("/admin/organisations/:id/badge", async (req, res) => {
+  if (!checkAdminKey(req, res)) return;
+  const { id } = req.params;
+  const parsed = BadgeBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: "Champ « verified » requis (boolean)." });
+    return;
+  }
+  const [existing] = await db
+    .select()
+    .from(organisationsTable)
+    .where(eq(organisationsTable.id, id))
+    .limit(1);
+  if (!existing) {
+    res.status(404).json({ error: "Organisme introuvable." });
+    return;
+  }
+  // Defense-in-depth: even if the admin key leaks, the badge primitive can
+  // only flip orgs of kind "organisme" or "partenaire" — never an
+  // intervenant (private self-org) or other future kinds.
+  if (existing.kind !== "organisme" && existing.kind !== "partenaire") {
+    res.status(400).json({
+      error: `Le badge ne peut être appliqué qu'aux organismes et partenaires (kind actuel: ${existing.kind}).`,
+    });
+    return;
+  }
+  const [updated] = await db
+    .update(organisationsTable)
+    .set({ badgeVerified: parsed.data.verified, updatedAt: new Date() })
+    .where(eq(organisationsTable.id, id))
+    .returning();
+  logger.info(
+    { orgId: id, verified: parsed.data.verified, kind: existing.kind },
+    "Badge toggled by admin",
+  );
+  res.json({ organisation: updated });
 });
 
 export default router;

@@ -200,6 +200,50 @@ export async function adminRejectVerification(adminKey: string, id: string, reas
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
 }
 
+// ──────────────────────────────────────────────────────────────────────────
+// Admin — Organismes & Partenaires (manual badge management)
+// ──────────────────────────────────────────────────────────────────────────
+export type AdminOrgRow = {
+  org: Organisation & { kind: "organisme" | "partenaire" | "intervenant"; professionalTitle?: string | null; affiliation?: string | null };
+  user: {
+    id: string;
+    email: string | null;
+    firstName: string | null;
+    lastName: string | null;
+    createdAt: string;
+  } | null;
+};
+
+export async function adminListOrganisations(
+  adminKey: string,
+  kind: "organisme" | "partenaire" | "all" = "all",
+  q = "",
+): Promise<AdminOrgRow[]> {
+  const params = new URLSearchParams({ kind });
+  if (q.trim()) params.set("q", q.trim());
+  const res = await fetch(`/api/admin/organisations?${params.toString()}`, {
+    headers: { "x-admin-key": adminKey },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  return data.organisations as AdminOrgRow[];
+}
+
+export async function adminToggleOrgBadge(
+  adminKey: string,
+  orgId: string,
+  verified: boolean,
+): Promise<Organisation> {
+  const res = await fetch(`/api/admin/organisations/${orgId}/badge`, {
+    method: "POST",
+    headers: { "x-admin-key": adminKey, "Content-Type": "application/json" },
+    body: JSON.stringify({ verified }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+  return data.organisation as Organisation;
+}
+
 export async function startCheckout(
   organisationId: string,
   email: string,

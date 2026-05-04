@@ -77,6 +77,15 @@ export default function RegisterScreen() {
   const [organisationPhone, setOrganisationPhone] = useState("");
   const [organisationWebsite, setOrganisationWebsite] = useState("");
 
+  // ─── Anti-bot : captcha math signé HMAC + honeypot silencieux ───
+  // Affiché seulement pour Organisme/Partenaire. Le honeypot (champ caché)
+  // est envoyé pour TOUS les types ; un bot qui auto-remplit déclenche le piège.
+  const [captchaQuestion, setCaptchaQuestion] = useState<string>("");
+  const [captchaToken, setCaptchaToken] = useState<string>("");
+  const [captchaAnswer, setCaptchaAnswer] = useState<string>("");
+  const [captchaLoading, setCaptchaLoading] = useState(false);
+  const [honeypot, setHoneypot] = useState<string>(""); // jamais visible
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -95,6 +104,32 @@ export default function RegisterScreen() {
   }, []);
 
   const isOrgType = accountType === "organisme" || accountType === "partenaire";
+
+  // Récupère un nouveau défi captcha quand l'utilisateur sélectionne Org/Partenaire.
+  async function fetchCaptcha() {
+    try {
+      setCaptchaLoading(true);
+      const { getApiBaseUrl } = await import("@/lib/apiBase");
+      const res = await fetch(`${getApiBaseUrl()}/api/captcha/challenge`);
+      const data = await res.json();
+      if (data?.token && data?.question) {
+        setCaptchaQuestion(String(data.question));
+        setCaptchaToken(String(data.token));
+        setCaptchaAnswer("");
+      }
+    } catch {
+      // En cas d'erreur réseau, on laisse le champ vide ; le serveur renverra
+      // un message clair lors de la soumission.
+    } finally {
+      setCaptchaLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (isOrgType && !captchaToken) {
+      fetchCaptcha();
+    }
+  }, [isOrgType]);
 
   async function handleRegister() {
     if (!firstName.trim() || !lastName.trim() || !email.trim() || !password) {
@@ -117,6 +152,10 @@ export default function RegisterScreen() {
       setError("Les mots de passe ne correspondent pas.");
       return;
     }
+    if (isOrgType && (!captchaToken || !captchaAnswer.trim())) {
+      setError("Veuillez répondre à la question de vérification.");
+      return;
+    }
 
     setError(null);
     setLoading(true);
@@ -131,6 +170,10 @@ export default function RegisterScreen() {
         }
       : undefined;
 
+    const captchaPayload = isOrgType
+      ? { token: captchaToken, answer: captchaAnswer.trim(), honeypot }
+      : { token: "", answer: "", honeypot }; // honeypot quand même, mais pas de token
+
     const result = await register(
       email.trim().toLowerCase(),
       password,
@@ -139,11 +182,16 @@ export default function RegisterScreen() {
       address.trim() || undefined,
       role,
       orgInfo,
+      isOrgType ? captchaPayload : { token: "", answer: "", honeypot },
     );
 
     if (result.error) {
       setLoading(false);
       setError(result.error);
+      // Sur erreur captcha, on regénère automatiquement.
+      if (isOrgType && /captcha|vérification|anti-bot|trop rapide/i.test(result.error)) {
+        fetchCaptcha();
+      }
       return;
     }
 
@@ -396,6 +444,48 @@ export default function RegisterScreen() {
                 />
               </View>
 
+              {/* ─── Captcha math (Organisme/Partenaire seulement) ─── */}
+              {isOrgType && (
+                <View style={styles.captchaBox}>
+                  <View style={styles.captchaHead}>
+                    <Feather name="shield" size={14} color="#ffffff" />
+                    <Text style={styles.captchaLabel}>Vérification anti-robot</Text>
+                  </View>
+                  <View style={styles.captchaRow}>
+                    <Text style={styles.captchaQuestion}>
+                      {captchaLoading || !captchaQuestion ? "Chargement..." : `${captchaQuestion} = ?`}
+                    </Text>
+                    <TextInput
+                      style={styles.captchaInput}
+                      placeholder="Réponse"
+                      placeholderTextColor="rgba(255,255,255,0.5)"
+                      value={captchaAnswer}
+                      onChangeText={setCaptchaAnswer}
+                      keyboardType="number-pad"
+                      maxLength={3}
+                      editable={!captchaLoading && !!captchaQuestion}
+                    />
+                    <Pressable onPress={fetchCaptcha} style={styles.captchaRefresh} disabled={captchaLoading}>
+                      <Feather name="refresh-cw" size={14} color="rgba(255,255,255,0.85)" />
+                    </Pressable>
+                  </View>
+                  <Text style={styles.captchaHint}>
+                    Une simple addition pour confirmer que vous n'êtes pas un robot.
+                  </Text>
+                </View>
+              )}
+
+              {/* Honeypot — invisible aux humains, piège pour bots qui auto-remplissent */}
+              <View style={styles.honeypot} pointerEvents="none">
+                <TextInput
+                  value={honeypot}
+                  onChangeText={setHoneypot}
+                  autoComplete="off"
+                  importantForAutofill="no"
+                  accessibilityElementsHidden
+                />
+              </View>
+
               {/* Free / Premium summary */}
               <View style={styles.planSummary}>
                 <View style={styles.planSummaryHead}>
@@ -571,6 +661,75 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_700Bold",
     letterSpacing: 0.5,
     textTransform: "uppercase",
+  },
+  // ─── Captcha ───
+  captchaBox: {
+    backgroundColor: "rgba(255,255,255,0.08)",
+    borderRadius: 12,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.18)",
+    gap: 6,
+  },
+  captchaHead: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  captchaLabel: {
+    color: "#fff",
+    fontSize: 12,
+    fontFamily: "Inter_700Bold",
+    letterSpacing: 0.3,
+    textTransform: "uppercase",
+  },
+  captchaRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  captchaQuestion: {
+    color: "#fff",
+    fontSize: 18,
+    fontFamily: "Inter_700Bold",
+    minWidth: 90,
+  },
+  captchaInput: {
+    flex: 1,
+    color: "#fff",
+    fontSize: 16,
+    fontFamily: "Inter_400Regular",
+    backgroundColor: "rgba(255,255,255,0.1)",
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    height: 42,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.2)",
+  },
+  captchaRefresh: {
+    width: 38,
+    height: 38,
+    borderRadius: 10,
+    backgroundColor: "rgba(255,255,255,0.1)",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.18)",
+  },
+  captchaHint: {
+    color: "rgba(255,255,255,0.65)",
+    fontSize: 11,
+    lineHeight: 14,
+  },
+  // Honeypot caché (hors écran). Surface large pour bots, invisible pour humains.
+  honeypot: {
+    position: "absolute",
+    left: -10000,
+    top: -10000,
+    width: 1,
+    height: 1,
+    overflow: "hidden",
+    opacity: 0,
   },
   planSummary: {
     backgroundColor: "rgba(16,185,129,0.18)",

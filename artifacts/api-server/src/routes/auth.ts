@@ -10,6 +10,7 @@ import {
 } from "@workspace/api-zod";
 import { db, usersTable, passwordResetTokensTable, organisationsTable, subscriptionsTable, organisationMembersTable } from "@workspace/db";
 import { claimPendingInvites } from "./team";
+import { verifyCaptcha } from "./captcha";
 import { eq, and, gt, isNull, inArray } from "drizzle-orm";
 import {
   clearSession,
@@ -369,6 +370,11 @@ const RegisterBody = z.object({
   professionalTitle: z.string().optional(),
   affiliation: z.string().optional(),
   plan: z.enum(["standard", "plus", "terrain", "organisme", "partenaire", "institution"]).optional().default("standard"),
+  // Anti-bot fields — required for organisme/partenaire signups (high-stakes).
+  // Citizens get the silent honeypot only.
+  captchaToken: z.string().optional(),
+  captchaAnswer: z.union([z.string(), z.number()]).optional(),
+  honeypot: z.string().optional(),
 });
 
 router.post("/mobile-auth/register", async (req: Request, res: Response) => {
@@ -413,6 +419,30 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
   if ((requestedRole === "organisme" || requestedRole === "partenaire") && !organisationName?.trim()) {
     res.status(400).json({ error: "Le nom de l'organisme est requis." });
     return;
+  }
+
+  // ── Anti-bot defense ─────────────────────────────────────────────────
+  // Honeypot is checked for every signup (citizen included). The signed
+  // math captcha + min-age check is only enforced for organisme/partenaire
+  // — those leads are higher-value and worth the extra friction.
+  const honeypot = parsed.data.honeypot;
+  if (typeof honeypot === "string" && honeypot.trim() !== "") {
+    req.log.warn({ ip: req.ip }, "Honeypot tripped on register");
+    res.status(400).json({ error: "Vérification anti-bot échouée." });
+    return;
+  }
+  if (requestedRole === "organisme" || requestedRole === "partenaire") {
+    const captchaErr = verifyCaptcha({
+      captchaToken: parsed.data.captchaToken,
+      captchaAnswer: parsed.data.captchaAnswer,
+      honeypot,
+      requireHoneypot: true, // bot omitting the hidden field = rejected
+    });
+    if (captchaErr) {
+      req.log.info({ ip: req.ip, role: requestedRole }, "Captcha failed");
+      res.status(400).json({ error: captchaErr });
+      return;
+    }
   }
 
   try {

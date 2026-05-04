@@ -7,6 +7,7 @@ import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import Services from "@/pages/Services";
 import Verifications from "@/pages/Verifications";
+import Organisations from "@/pages/Organisations";
 import B2G from "@/pages/B2G";
 import BugReports from "@/pages/BugReports";
 import Stats from "@/pages/Stats";
@@ -73,6 +74,7 @@ function AdminApp() {
         <Route path="/live" component={() => <Live adminKey={adminKey!} />} />
         <Route path="/services" component={() => <Services adminKey={adminKey!} />} />
         <Route path="/verifications" component={() => <Verifications adminKey={adminKey!} />} />
+        <Route path="/organisations" component={() => <Organisations adminKey={adminKey!} />} />
         <Route path="/b2g" component={() => <B2G adminKey={adminKey!} />} />
         <Route path="/bug-reports" component={() => <BugReports adminKey={adminKey!} />} />
         <Route path="/stats" component={() => <Stats adminKey={adminKey!} />} />

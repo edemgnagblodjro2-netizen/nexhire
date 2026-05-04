@@ -47,6 +47,7 @@ interface AuthContextValue {
     address?: string,
     role?: UserRole,
     org?: OrganisationInfo,
+    captcha?: { token: string; answer: string; honeypot?: string },
   ) => Promise<RegisterResult>;
   updateProfile: (data: { address?: string | null }) => Promise<string | null>;
   refreshUser: () => Promise<void>;
@@ -140,6 +141,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     address?: string,
     role: UserRole = "user",
     org?: OrganisationInfo,
+    captcha?: { token: string; answer: string; honeypot?: string },
   ): Promise<RegisterResult> => {
     try {
       const apiBase = getApiBaseUrl();
@@ -150,12 +152,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         body.organisationPhone = org.organisationPhone;
         body.organisationWebsite = org.organisationWebsite;
         body.plan = org.plan ?? "standard";
+      } else if (role === "partenaire" && org) {
+        body.organisationName = org.organisationName;
+        body.organisationCity = org.organisationCity;
+        body.organisationPhone = org.organisationPhone;
+        body.organisationWebsite = org.organisationWebsite;
+        body.plan = "partenaire";
       } else if (role === "intervenant" && org) {
         body.organisationCity = org.organisationCity;
         body.organisationPhone = org.organisationPhone;
         body.professionalTitle = org.professionalTitle;
         body.affiliation = org.affiliation;
         body.plan = "terrain";
+      }
+      if (captcha) {
+        body.captchaToken = captcha.token;
+        body.captchaAnswer = captcha.answer;
+        body.honeypot = captcha.honeypot ?? "";
       }
 
       const res = await fetch(`${apiBase}/api/mobile-auth/register`, {

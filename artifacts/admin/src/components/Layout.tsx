@@ -6,6 +6,7 @@ const SUPERADMIN_NAV = [
   { href: "/live", icon: "🟢", label: "En direct" },
   { href: "/services", icon: "🏢", label: "Services" },
   { href: "/verifications", icon: "🛡️", label: "Vérifications" },
+  { href: "/organisations", icon: "🏢", label: "Organismes & Partenaires" },
   { href: "/b2g", icon: "🏛️", label: "B2G — Régions" },
   { href: "/bug-reports", icon: "🐛", label: "Signalements" },
   { href: "/stats", icon: "📈", label: "Statistiques" },
