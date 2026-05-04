@@ -11,6 +11,15 @@
 (F) **API admin** : `GET /api/admin/organisations?kind=&q=` + `POST /api/admin/organisations/:id/badge {verified:bool}` ajoutés à `verifications.ts` (réutilise `checkAdminKey` HMAC header).
 **Tests curl validés** : honeypot rempli → 400 « anti-bot échouée » ; sans token → « Captcha manquant » ; immédiat (<2s) → « Inscription trop rapide » ; mauvaise réponse → « Réponse au captcha incorrecte » ; bonne réponse + 3s → 200 + tokens créés. Admin endpoints : 401 sans clé. Typechecks OK 3 packages.
 
+**Bloc 108 — Fix layout shift sur la page d'accueil (textes/chiffres mal redimensionnés au chargement)** :
+Plusieurs textes sur l'écran d'accueil n'avaient ni `numberOfLines={1}` ni `adjustsFontSizeToFit`, ce qui causait un wrap puis re-mesure visible (les polices Inter chargent en différé). Correctifs `(tabs)/index.tsx` :
+(A) **Bande stats hero** (5,338 services / 13 villes / 13 provinces / 24/7) : ajout `numberOfLines={1} + adjustsFontSizeToFit + minimumFontScale={0.6}` sur les 4 chiffres et `0.7` sur les 4 libellés. `statItem` : ajout `minWidth: 0` (sinon flex:1 ne rétrécit pas vraiment) + `paddingHorizontal: 4` + `textAlign: "center"`.
+(B) **Cartes Provinces** (carrousel horizontal) : ajout auto-shrink sur `provinceCode` (QC/ON/BC...), `provinceName` (Québec, Ontario...), `provinceCount` (chiffre du total), `provinceStatus` (✓ disponible / à venir).
+(C) **Cartes Villes** (carrousel) : ajout auto-shrink sur `cityCount` ("153 services").
+(D) **Bandeau Diagnostic IA** : ajout protection sur kicker (DIAGNOSTIC IA), titre principal (« Trouver mon service en 1 minute »), badge NOUVEAU. `diagBannerText` : ajout `minWidth: 0`.
+(E) **Bandeau IA Aide** (carte cpu en bas) : ajout `numberOfLines={1} + adjustsFontSizeToFit` sur le titre, `numberOfLines={2}` sur le sous-titre. `aiBannerText` : ajout `minWidth: 0`.
+Tous les chiffres dynamiques (totaux, comptes par ville/province) ont maintenant un comportement déterministe : ils s'adaptent à la largeur du conteneur dès le 1er rendu (plus de wrap → reflow → re-shrink). Typecheck OK.
+
 **Bloc 107 — Durcissement sécurité suite revue architect** :
 (1) **Anti-replay token captcha** : ajout `jti` (12 octets random base64url) dans payload signé + `Map<jti,exp>` en mémoire des tokens consommés (cleanup périodique 60s, hard cap 50k entrées). Token marqué consommé seulement après succès complet (fat-finger sur la réponse n'invalide pas le token). Test : même token réutilisé → « Ce captcha a déjà été utilisé ».
 (2) **Honeypot maintenant requis** pour Org/Partenaire : ajout flag `requireHoneypot:true` dans `verifyCaptcha` ; bot qui omet le champ entièrement (payload minimal) est rejeté. Test : payload sans `honeypot` → « anti-bot échouée ». Citoyens : honeypot reste optionnel (silencieux si présent et rempli).

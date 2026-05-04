@@ -290,26 +290,84 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* Stats strip */}
+        {/* Stats strip — chaque cellule = 1 ligne max + auto-shrink pour éviter
+            les wraps qui causent un layout shift visible au chargement (les
+            polices Inter ne sont pas dispo immédiatement → mesure tardive). */}
         <View style={styles.statsRow}>
           <View style={styles.statItem}>
-            <Text style={styles.statNum}>{totalServices.toLocaleString(language === "fr" ? "fr-CA" : "en-CA")}</Text>
-            <Text style={styles.statLabel}>{language === "fr" ? "services" : "services"}</Text>
+            <Text
+              style={styles.statNum}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.6}
+            >
+              {totalServices.toLocaleString(language === "fr" ? "fr-CA" : "en-CA")}
+            </Text>
+            <Text
+              style={styles.statLabel}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.7}
+            >
+              {language === "fr" ? "services" : "services"}
+            </Text>
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statItem}>
-            <Text style={styles.statNum}>{totalCities}</Text>
-            <Text style={styles.statLabel}>{language === "fr" ? "villes" : "cities"}</Text>
+            <Text
+              style={styles.statNum}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.6}
+            >
+              {totalCities}
+            </Text>
+            <Text
+              style={styles.statLabel}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.7}
+            >
+              {language === "fr" ? "villes" : "cities"}
+            </Text>
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statItem}>
-            <Text style={styles.statNum}>{totalProvinces}</Text>
-            <Text style={styles.statLabel}>{language === "fr" ? "provinces" : "provinces"}</Text>
+            <Text
+              style={styles.statNum}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.6}
+            >
+              {totalProvinces}
+            </Text>
+            <Text
+              style={styles.statLabel}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.7}
+            >
+              {language === "fr" ? "provinces" : "provinces"}
+            </Text>
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statItem}>
-            <Text style={styles.statNum}>24/7</Text>
-            <Text style={styles.statLabel}>{language === "fr" ? "disponible" : "available"}</Text>
+            <Text
+              style={styles.statNum}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.6}
+            >
+              24/7
+            </Text>
+            <Text
+              style={styles.statLabel}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.7}
+            >
+              {language === "fr" ? "disponible" : "available"}
+            </Text>
           </View>
         </View>
 
@@ -435,13 +493,23 @@ export default function HomeScreen() {
               <View style={styles.diagBannerText}>
                 <View style={styles.diagBannerKickerRow}>
                   <View style={styles.diagBannerNewBadge}>
-                    <Text style={styles.diagBannerNewText}>NOUVEAU</Text>
+                    <Text style={styles.diagBannerNewText} numberOfLines={1}>NOUVEAU</Text>
                   </View>
-                  <Text style={styles.diagBannerKicker}>
+                  <Text
+                    style={styles.diagBannerKicker}
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.8}
+                  >
                     {language === "fr" ? "DIAGNOSTIC IA" : "AI DIAGNOSIS"}
                   </Text>
                 </View>
-                <Text style={styles.diagBannerTitle}>
+                <Text
+                  style={styles.diagBannerTitle}
+                  numberOfLines={1}
+                  adjustsFontSizeToFit
+                  minimumFontScale={0.7}
+                >
                   {language === "fr" ? "Trouver mon service en 1 minute" : "Find my service in 1 minute"}
                 </Text>
                 <Text style={styles.diagBannerSub} numberOfLines={2}>
@@ -537,7 +605,12 @@ export default function HomeScreen() {
                   >
                     {city.key}
                   </Text>
-                  <Text style={[styles.cityCount, { color: colors.mutedForeground }]}>
+                  <Text
+                    style={[styles.cityCount, { color: colors.mutedForeground }]}
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.8}
+                  >
                     {city.count} {language === "fr" ? "services" : "services"}
                   </Text>
                 </View>
@@ -593,19 +666,33 @@ export default function HomeScreen() {
                   <Text
                     style={[styles.provinceCode, { color: isQc ? colors.primary : colors.foreground }]}
                     numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.8}
                   >
                     {code}
                   </Text>
                   <Text
                     style={[styles.provinceName, { color: colors.mutedForeground }]}
                     numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.75}
                   >
                     {PROVINCE_LABELS[code]}
                   </Text>
-                  <Text style={[styles.provinceCount, { color: colors.foreground }]}>
+                  <Text
+                    style={[styles.provinceCount, { color: colors.foreground }]}
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.7}
+                  >
                     {count.toLocaleString(language === "fr" ? "fr-CA" : "en-CA")}
                   </Text>
-                  <Text style={[styles.provinceStatus, { color: available ? "#16a34a" : colors.mutedForeground }]}>
+                  <Text
+                    style={[styles.provinceStatus, { color: available ? "#16a34a" : colors.mutedForeground }]}
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.8}
+                  >
                     {available
                       ? language === "fr" ? "✓ disponible" : "✓ available"
                       : language === "fr" ? "à venir" : "coming soon"}
@@ -636,10 +723,18 @@ export default function HomeScreen() {
             <Feather name="cpu" size={22} color={colors.primary} />
           </View>
           <View style={styles.aiBannerText}>
-            <Text style={[styles.aiBannerTitle, { color: colors.foreground }]}>
+            <Text
+              style={[styles.aiBannerTitle, { color: colors.foreground }]}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.75}
+            >
               {t.aiTitle}
             </Text>
-            <Text style={[styles.aiBannerSub, { color: colors.mutedForeground }]}>
+            <Text
+              style={[styles.aiBannerSub, { color: colors.mutedForeground }]}
+              numberOfLines={2}
+            >
               {t.aiSubtitle}
             </Text>
           </View>
@@ -868,19 +963,23 @@ const styles = StyleSheet.create({
   },
   statItem: {
     flex: 1,
+    minWidth: 0, // permet à flex:1 de réellement rétrécir le contenu
     alignItems: "center",
+    paddingHorizontal: 4, // un peu d'air entre dividers et chiffres
   },
   statNum: {
     fontSize: 17,
     fontWeight: "800",
     fontFamily: "Inter_700Bold",
     color: "#fff",
+    textAlign: "center",
   },
   statLabel: {
     fontSize: 11,
     fontFamily: "Inter_400Regular",
     color: "rgba(255,255,255,0.72)",
     marginTop: 1,
+    textAlign: "center",
   },
   statDivider: {
     width: 1,
@@ -1012,6 +1111,7 @@ const styles = StyleSheet.create({
   },
   diagBannerText: {
     flex: 1,
+    minWidth: 0, // garantit que les Text à l'intérieur peuvent rétrécir
     gap: 4,
   },
   diagBannerKickerRow: {
@@ -1208,7 +1308,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     marginLeft: 6,
   },
-  aiBannerText: { flex: 1, gap: 3 },
+  aiBannerText: { flex: 1, minWidth: 0, gap: 3 },
   aiBannerTitle: {
     fontSize: 15,
     fontWeight: "700",
