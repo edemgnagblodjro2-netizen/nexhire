@@ -69,6 +69,7 @@ A mobile application connecting vulnerable individuals with community and social
 - **Wrong-number reports**: Tagués `[NUMERO ERRONE - service:<id>]` dans le bug-report message → filtrable côté admin.
 
 ## v1.1.9 (en cours)
+- **Phase 2 géocodage Google LIVRÉE** : 2931 fiches re-géocodées via Google Geocoding API (2750 ROOFTOP 20m, 91 RANGE 50m, 90 CENTER 200m). Bilan global : **3686 vertes (≤100m)** vs 845 avant (+335%), 90 jaunes, 93 oranges, 356 rouges restantes (adresses sans numéro de rue, non-fixables automatiquement). Coût réel ~99$ USD vs 16$ estimé (j'ai oublié de marquer les APPROX comme déjà tentées → 333 re-tests inutiles par chunk). Fiches non-fixables maintenant marquées `geocode_source='google-tried-approx'` pour éviter tout retest futur. Script `scripts/src/geocode-google.ts` avec timeout 10s + flag de reprise auto.
 - Captcha MIN_AGE 2000→600ms (fix #1 plainte « inscription bloquée »).
 - Bouton « Signaler un mauvais numéro » sur fiche service → préremplit /bug-report avec serviceId + nom + numéro actuel. Adresse la plainte sur les numéros de banques erronés.
 - Carte : bbox prefilter ~75km avant haversine (10-50× plus rapide sur 5000+ services), favSet O(1) pour les cards.

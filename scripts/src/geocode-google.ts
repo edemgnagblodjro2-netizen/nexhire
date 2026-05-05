@@ -77,11 +77,15 @@ async function geocode(address: string, city: string, province: string): Promise
   const q = `${address}, ${city}, ${province}, Canada`;
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(q)}&region=ca&key=${GOOGLE_KEY}`;
   let res: Response;
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 10_000);
   try {
-    res = await fetch(url);
+    res = await fetch(url, { signal: ctrl.signal });
   } catch (err) {
     console.error(`  ⚠ fetch error: ${(err as Error).message}`);
     return null;
+  } finally {
+    clearTimeout(timer);
   }
   if (!res.ok) {
     console.error(`  ⚠ HTTP ${res.status}`);
