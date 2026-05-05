@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import Services from "@/pages/Services";
+import Corrections from "@/pages/Corrections";
 import Verifications from "@/pages/Verifications";
 import Organisations from "@/pages/Organisations";
 import B2G from "@/pages/B2G";
@@ -73,6 +74,7 @@ function AdminApp() {
         <Route path="/" component={() => <Dashboard adminKey={adminKey!} />} />
         <Route path="/live" component={() => <Live adminKey={adminKey!} />} />
         <Route path="/services" component={() => <Services adminKey={adminKey!} />} />
+        <Route path="/corrections" component={() => <Corrections adminKey={adminKey!} />} />
         <Route path="/verifications" component={() => <Verifications adminKey={adminKey!} />} />
         <Route path="/organisations" component={() => <Organisations adminKey={adminKey!} />} />
         <Route path="/b2g" component={() => <B2G adminKey={adminKey!} />} />

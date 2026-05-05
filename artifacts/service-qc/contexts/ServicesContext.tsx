@@ -10,7 +10,8 @@ import { SERVICES as STATIC_SERVICES, type Service } from "@/data/services";
 import { apiCategoryToCode } from "@/lib/categoryMapping";
 
 // v6 : on bump le cache car le mapping de catégorie change le format stocké.
-const CACHE_KEY = "attentezero_services_cache_v6";
+// v7 : ajout de serviceType + geocodePrecisionM (Phase 1 fiabilité géoloc).
+const CACHE_KEY = "attentezero_services_cache_v7";
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 type ServicesContextValue = {
@@ -51,6 +52,11 @@ function mapApiService(raw: any): Service | null {
       raw.lat != null && raw.lng != null
         ? { lat: raw.lat, lng: raw.lng }
         : undefined,
+    // v1.1.9 — Phase 1 fiabilité géoloc
+    serviceType: raw.serviceType ?? "physical",
+    geocodePrecisionM: raw.geocodePrecisionM ?? undefined,
+    geocodeSource: raw.geocodeSource ?? undefined,
+    verifiedAt: raw.verifiedAt ?? null,
   } as unknown as Service;
 }
 

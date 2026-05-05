@@ -1,4 +1,4 @@
-import { boolean, doublePrecision, index, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { boolean, doublePrecision, index, integer, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
 export const servicesTable = pgTable(
@@ -19,6 +19,19 @@ export const servicesTable = pgTable(
     isProvinceWide: boolean("is_province_wide").notNull().default(false),
     lat: doublePrecision("lat"),
     lng: doublePrecision("lng"),
+    // v1.1.9 — Phase 1 du chantier "fiabilité géolocalisation".
+    // serviceType : sépare lieux physiques / lignes téléphoniques / organismes régionaux
+    //   - 'physical' : a une adresse, doit avoir des coords précises (carte + cercle)
+    //   - 'phone'    : lignes 211/811/911/écoute → AUCUNE coord, n'apparaît pas sur la carte
+    //   - 'regional' : couvre une zone (région/province) → pas un point précis
+    // geocodePrecisionM : rayon en mètres dans lequel on est sûr que le point tombe.
+    //   - 30-100 m  : rooftop / verifié → vert
+    //   - 100-300 m : adresse approximative → jaune
+    //   - > 300 m   : niveau ville/quartier → rouge "position imprécise"
+    //   - null      : pas applicable (phone) ou pas encore calculé
+    serviceType: varchar("service_type", { length: 16 }).notNull().default("physical"),
+    geocodePrecisionM: integer("geocode_precision_m"),
+    geocodeSource: varchar("geocode_source", { length: 32 }), // 'auto-text' | 'google' | 'user-correction' | null
     active: boolean("active").notNull().default(true),
     verifiedAt: timestamp("verified_at", { withTimezone: true }),
     verifiedBy: text("verified_by"),
@@ -29,6 +42,7 @@ export const servicesTable = pgTable(
   (table) => [
     index("IDX_services_city_active").on(table.city, table.active),
     index("IDX_services_active").on(table.active),
+    index("IDX_services_type").on(table.serviceType),
   ],
 );
 

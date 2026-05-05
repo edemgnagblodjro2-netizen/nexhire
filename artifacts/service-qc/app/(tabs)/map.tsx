@@ -110,9 +110,16 @@ export default function MapScreen() {
   // per-keystroke compute by 10-50× on a typical urban Quebec location.
   const tabPool = useMemo(() => {
     if (tab === "favorites") {
+      // Favoris : on n'enlève rien (l'usager a explicitement épinglé), même
+      // les lignes téléphoniques s'il les a sauvegardées.
       return services.filter((s) => favSet.has(s.id));
     }
-    const withCoords = services.filter((s) => s.coordinates);
+    // v1.1.9 — Phase 1 : on cache les services 'phone' (lignes 211/811/911,
+    // hotlines 1-800) de la carte car ils n'ont pas de localisation réelle.
+    // Ils restent accessibles via Recherche et Urgences.
+    const withCoords = services.filter(
+      (s) => s.coordinates && s.serviceType !== "phone",
+    );
     if (!userLocation) return withCoords;
     // 1° lat ≈ 111 km. Lng compresses by cos(lat). Use a generous 75km box
     // so urban users still get ~60 results even when in the suburbs.

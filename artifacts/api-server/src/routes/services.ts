@@ -49,6 +49,9 @@ servicesRouter.get("/services", async (_req, res) => {
       .where(eq(servicesTable.active, true))
       .orderBy(desc(featured), asc(servicesTable.name));
 
+    // v1.1.9 — Phase 1 : on expose serviceType + geocodePrecisionM + geocodeSource
+    // pour permettre au mobile de filtrer la carte (cacher les phone) et dessiner
+    // les cercles de précision colorés (vert/jaune/rouge selon rayon).
     const services = rows.map((r) => ({
       ...r.service,
       organisationId: r.organisationId,

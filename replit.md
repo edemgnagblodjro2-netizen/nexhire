@@ -39,6 +39,7 @@ A mobile application connecting vulnerable individuals with community and social
 - `artifacts/api-server/src/routes/ai.ts`: AI chat and trial logic.
 - `artifacts/api-server/src/routes/auth.ts`: Mobile authentication logic.
 - `artifacts/api-server/src/routes/services.ts`: Service management endpoints.
+- `artifacts/api-server/src/routes/serviceCorrections.ts`: User-submitted location corrections (POST public + admin queue, auto-approve at 3 concordant submissions).
 
 ## Architecture decisions
 - **B2G Pivot**: Shifted from B2B "Field Mode" to B2G, focusing on free citizen services and anonymized data dashboards for public administrations.
@@ -73,6 +74,15 @@ A mobile application connecting vulnerable individuals with community and social
 - Carte : bbox prefilter ~75km avant haversine (10-50× plus rapide sur 5000+ services), favSet O(1) pour les cards.
 - **urgent.tsx BUGFIX** : `sortedServices` dépendait de `urgentServices` au lieu de `filteredServices` → la barre de recherche ne filtrait JAMAIS la liste affichée. Corrigé.
 - **sos.tsx redesign** : bouton 911 refait (icône cerclée rouge + chevron, plus de débordement de texte). Ajout Centre antipoison Québec (1-800-463-5060), Info-Santé 811 et Jeu : Aide et Référence (1-800-461-0140).
+- **Phase 1 fiabilité géolocalisation (LIVRÉE)** :
+  - Schéma : 3 colonnes ajoutées à `services` (`service_type`, `geocode_precision_m`, `geocode_source`) + nouvelle table `service_corrections`.
+  - Migration auto : 4225 physical / 970 phone (211/811/911/1-800) / 143 regional. 845 verts (≤100m) ; 3287 rouges (>1500m, à re-géocoder en Phase 2).
+  - Carte : services `phone` filtrés (n'apparaissent plus comme épingles aléatoires).
+  - Fiche service : bandeau précision coloré (vert/jaune/rouge) + libellé spécial pour `regional`/`phone`.
+  - Bouton mobile « Position fausse ? » → écran `/correction/[id]` avec saisie d'adresse + capture GPS optionnelle (`expo-location`). Anti-spam : sha256(IP+sel), 10/30min/IP.
+  - Auto-validation : 3 corrections concordantes (coords <50m OU adresse normalisée identique) → service mis à jour automatiquement, précision resserrée à 50m.
+  - Panneau admin : nouvelle page `/admin/corrections` avec file pending/approved/auto_approved/rejected + actions Approuver/Refuser.
+- **Phase 2 (à venir, en attente OK user)** : re-géocodage Google des 3287 fiches rouges (~5$ Geocoding API) pour dégrader le rouge.
 - Build vc62 (1.1.8) toujours en cours sur EAS au moment des fixes — attendre instruction « OK lance vc63 » avant relancer.
 
 ## Pointers

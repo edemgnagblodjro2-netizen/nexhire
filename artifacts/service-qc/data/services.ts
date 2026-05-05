@@ -52,6 +52,8 @@ export const PROVINCE_LABELS: Record<ProvinceCode, string> = {
   NU: "Nunavut",
 };
 
+export type ServiceType = "physical" | "phone" | "regional";
+
 export interface Service {
   id: string;
   name: string;
@@ -73,6 +75,11 @@ export interface Service {
   organisationId?: string;
   /** ISO 639-1 codes — fr, en, es, ar, ht, zh. If omitted, inferred from name/city. */
   languages?: string[];
+  // v1.1.9 — Phase 1 fiabilité géolocalisation
+  serviceType?: ServiceType;
+  geocodePrecisionM?: number; // rayon de précision en mètres (null pour 'phone')
+  geocodeSource?: string; // 'auto-text' | 'google' | 'user-correction' | 'auto-text-duplicate'
+  verifiedAt?: string | null;
 }
 
 export const CATEGORY_LABELS: Record<Category, string> = {

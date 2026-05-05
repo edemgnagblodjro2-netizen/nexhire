@@ -258,6 +258,48 @@ export default function ServiceDetailScreen() {
               )}
             </View>
           </View>
+
+          {/* v1.1.9 — Bandeau précision géolocalisation. Affiché seulement
+              pour les lieux physiques quand on a une info de précision. */}
+          {service.serviceType === "physical" && service.geocodePrecisionM != null ? (
+            (() => {
+              const p = service.geocodePrecisionM;
+              const isGood = p <= 100;
+              const isMid = p > 100 && p <= 500;
+              const bg = isGood ? "rgba(14,126,110,0.1)" : isMid ? "rgba(234,179,8,0.12)" : "rgba(239,68,68,0.1)";
+              const fg = isGood ? "#0e7e6e" : isMid ? "#a16207" : "#b91c1c";
+              const icon: keyof typeof Feather.glyphMap = isGood ? "check-circle" : isMid ? "info" : "alert-triangle";
+              const label = isGood
+                ? "Position vérifiée"
+                : isMid
+                  ? `Position approximative (~${Math.round(p / 100) * 100} m)`
+                  : "Position imprécise — l'organisme peut être ailleurs";
+              return (
+                <View style={[styles.precisionBadge, { backgroundColor: bg }]}>
+                  <Feather name={icon} size={14} color={fg} />
+                  <Text style={[styles.precisionTxt, { color: fg }]}>{label}</Text>
+                </View>
+              );
+            })()
+          ) : null}
+
+          {service.serviceType === "regional" ? (
+            <View style={[styles.precisionBadge, { backgroundColor: "rgba(99,102,241,0.1)" }]}>
+              <Feather name="globe" size={14} color="#4338ca" />
+              <Text style={[styles.precisionTxt, { color: "#4338ca" }]}>
+                Organisme régional — couvre une zone, pas un point précis
+              </Text>
+            </View>
+          ) : null}
+
+          {service.serviceType === "phone" ? (
+            <View style={[styles.precisionBadge, { backgroundColor: "rgba(99,102,241,0.1)" }]}>
+              <Feather name="phone" size={14} color="#4338ca" />
+              <Text style={[styles.precisionTxt, { color: "#4338ca" }]}>
+                Service téléphonique — pas d'emplacement physique
+              </Text>
+            </View>
+          ) : null}
         </View>
 
         <View
@@ -350,6 +392,25 @@ export default function ServiceDetailScreen() {
             </TouchableOpacity>
           ) : null}
 
+          {/* v1.1.9 — "Position fausse" : ouvre l'écran de correction
+              dédié (proposition d'adresse / capture GPS). Affiché seulement
+              pour les fiches géolocalisées (pas les lignes téléphoniques). */}
+          {service.serviceType !== "phone" ? (
+            <TouchableOpacity
+              style={[styles.reportBtn, { borderColor: colors.border, backgroundColor: colors.card }]}
+              onPress={() => {
+                Haptics.selectionAsync();
+                router.push(`/correction/${service.id}` as any);
+              }}
+              activeOpacity={0.85}
+            >
+              <Feather name="map-pin" size={16} color={colors.mutedForeground} />
+              <Text style={[styles.reportBtnText, { color: colors.mutedForeground }]}>
+                Position fausse ? Aidez-nous à la corriger
+              </Text>
+            </TouchableOpacity>
+          ) : null}
+
           {service.website ? (
             <TouchableOpacity
               style={[
@@ -414,6 +475,21 @@ const styles = StyleSheet.create({
     height: 36,
     alignItems: "center",
     justifyContent: "center",
+  },
+  precisionBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    marginTop: 4,
+  },
+  precisionTxt: {
+    flex: 1,
+    fontSize: 12,
+    fontFamily: "Inter_500Medium",
+    lineHeight: 16,
   },
   reportBtn: {
     flexDirection: "row",

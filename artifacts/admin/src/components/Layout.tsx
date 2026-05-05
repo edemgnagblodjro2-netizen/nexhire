@@ -5,6 +5,7 @@ const SUPERADMIN_NAV = [
   { href: "/", icon: "📊", label: "Tableau de bord" },
   { href: "/live", icon: "🟢", label: "En direct" },
   { href: "/services", icon: "🏢", label: "Services" },
+  { href: "/corrections", icon: "📍", label: "Corrections géo" },
   { href: "/verifications", icon: "🛡️", label: "Vérifications" },
   { href: "/organisations", icon: "🏢", label: "Organismes & Partenaires" },
   { href: "/b2g", icon: "🏛️", label: "B2G — Régions" },
