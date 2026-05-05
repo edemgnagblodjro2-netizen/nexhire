@@ -188,7 +188,10 @@ export default function UrgentScreen() {
     const provinceWide = withDistance.filter((s) => s.isProvinceWide);
 
     return [...physical, ...provinceWide];
-  }, [urgentServices, userLocation]);
+    // v1.1.9 — BUGFIX : la dépendance était `urgentServices` (toujours stable),
+    // donc la barre de recherche modifiait `searchQuery` → `filteredServices`
+    // sans jamais retrigger ce useMemo → la liste affichée ignorait le filtre.
+  }, [filteredServices, userLocation]);
 
   function handleLocate() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);

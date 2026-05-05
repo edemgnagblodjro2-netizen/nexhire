@@ -198,6 +198,44 @@ const HOTLINE_CATEGORIES: HotlineCategory[] = [
         desc: "Information, aide et référence (toxicomanie, alcool, jeu)",
         descEn: "Information, help and referral (substance abuse, alcohol, gambling)",
       },
+      {
+        name: "Jeu : Aide et Référence",
+        nameEn: "Gambling Help & Referral",
+        phone: "1-800-461-0140",
+        hours: "24h/24, 7j/7 · Anonyme & gratuit",
+        hoursEn: "24/7 · Anonymous & free",
+        desc: "Soutien aux joueurs compulsifs et à leurs proches",
+        descEn: "Support for compulsive gamblers and their loved ones",
+      },
+    ],
+  },
+  // v1.1.9 — Ajout du Centre antipoison + Info-Santé : numéros essentiels
+  // qui manquaient et qui sauvent du temps en urgence non-vitale.
+  {
+    key: "poison-health",
+    icon: "thermometer",
+    color: "#0d9488",
+    label: "Empoisonnement & santé non urgente",
+    labelEn: "Poisoning & non-urgent health",
+    hotlines: [
+      {
+        name: "Centre antipoison du Québec",
+        nameEn: "Quebec Poison Control Centre",
+        phone: "1-800-463-5060",
+        hours: "24h/24, 7j/7 · Gratuit",
+        hoursEn: "24/7 · Free",
+        desc: "Avant d'aller à l'urgence : ingestion, médicaments, produits chimiques",
+        descEn: "Before going to ER: ingestion, medications, chemicals",
+      },
+      {
+        name: "Info-Santé 811 (option 1)",
+        nameEn: "Info-Santé 811 (option 1)",
+        phone: "811",
+        hours: "24h/24, 7j/7",
+        hoursEn: "24/7",
+        desc: "Conseils d'une infirmière pour une situation non urgente",
+        descEn: "Nurse advice for non-urgent situations",
+      },
     ],
   },
 ];
@@ -345,14 +383,21 @@ export default function SOSScreen() {
           style={styles.call911Btn}
           onPress={call911}
           activeOpacity={0.85}
+          accessibilityRole="button"
+          accessibilityLabel={isFr ? "Appeler le 911" : "Call 911"}
         >
-          <Feather name="phone-call" size={28} color="#ef4444" />
-          <View>
-            <Text style={styles.call911Number}>📞 911</Text>
-            <Text style={styles.call911Sub}>
-              {isFr ? "Appeler maintenant — Urgence vitale" : "Call now — Life emergency"}
+          <View style={styles.call911IconWrap}>
+            <Feather name="phone-call" size={26} color="#fff" />
+          </View>
+          <View style={styles.call911TextWrap}>
+            <Text style={styles.call911Number} numberOfLines={1} adjustsFontSizeToFit>
+              911
+            </Text>
+            <Text style={styles.call911Sub} numberOfLines={2}>
+              {isFr ? "Urgence vitale · appeler" : "Life-threatening · call now"}
             </Text>
           </View>
+          <Feather name="chevron-right" size={22} color="#ef4444" />
         </TouchableOpacity>
 
         {locationStatus === "requesting" && (
@@ -710,28 +755,44 @@ const styles = StyleSheet.create({
   call911Btn: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 16,
+    gap: 14,
     backgroundColor: "#fff",
     borderRadius: 18,
-    padding: 18,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.18,
     shadowRadius: 16,
     elevation: 8,
   },
+  call911IconWrap: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: "#ef4444",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  call911TextWrap: {
+    flex: 1,
+    minWidth: 0, // permet au texte de se contracter et déborder proprement
+  },
   call911Number: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: "800",
     fontFamily: "Inter_700Bold",
     color: "#ef4444",
     letterSpacing: -0.5,
+    lineHeight: 32,
   },
   call911Sub: {
     fontSize: 12,
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Inter_500Medium",
     color: "#6b7280",
     marginTop: 2,
+    lineHeight: 16,
   },
 
   locRow: {
