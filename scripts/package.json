@@ -13,6 +13,7 @@
     "select-top-300": "node ../node_modules/tsx/dist/cli.mjs ./src/select-top-300.ts",
     "export-review-300": "node ../node_modules/tsx/dist/cli.mjs ./src/export-top-300-for-review.ts",
     "export-static-bundle": "node ../node_modules/tsx/dist/cli.mjs ./src/export-static-bundle-csv.ts",
+    "geocode-google": "node ../node_modules/tsx/dist/cli.mjs ./src/geocode-google.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
