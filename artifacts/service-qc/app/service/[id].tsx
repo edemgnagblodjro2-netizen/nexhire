@@ -323,6 +323,33 @@ export default function ServiceDetailScreen() {
             </TouchableOpacity>
           ) : null}
 
+          {/* v1.1.9 — "Signaler un mauvais numéro" : permet à l'usager de
+              corriger lui-même les coordonnées erronées (ex : numéros banques).
+              Pré-remplit le formulaire bug-report avec service + numéro actuel. */}
+          {service.phone ? (
+            <TouchableOpacity
+              style={[styles.reportBtn, { borderColor: colors.border, backgroundColor: colors.card }]}
+              onPress={() => {
+                Haptics.selectionAsync();
+                router.push({
+                  pathname: "/bug-report",
+                  params: {
+                    type: "phone",
+                    serviceId: service.id,
+                    serviceName: service.name,
+                    currentPhone: service.phone ?? "",
+                  },
+                } as any);
+              }}
+              activeOpacity={0.85}
+            >
+              <Feather name="alert-circle" size={16} color={colors.mutedForeground} />
+              <Text style={[styles.reportBtnText, { color: colors.mutedForeground }]}>
+                Signaler un mauvais numéro
+              </Text>
+            </TouchableOpacity>
+          ) : null}
+
           {service.website ? (
             <TouchableOpacity
               style={[
@@ -387,6 +414,21 @@ const styles = StyleSheet.create({
     height: 36,
     alignItems: "center",
     justifyContent: "center",
+  },
+  reportBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginTop: 4,
+  },
+  reportBtnText: {
+    fontSize: 13,
+    fontFamily: "Inter_600SemiBold",
   },
   headerTitle: {
     fontSize: 17,

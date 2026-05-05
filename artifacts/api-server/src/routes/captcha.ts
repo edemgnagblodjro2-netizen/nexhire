@@ -7,7 +7,11 @@ const router: IRouter = Router();
 // so losing pending challenges on restart is acceptable.
 const CAPTCHA_HMAC_SECRET = crypto.randomBytes(32);
 const CAPTCHA_TTL_MS = 5 * 60 * 1000;
-const CAPTCHA_MIN_AGE_MS = 2_000;
+// v1.1.9 — Lowered from 2000ms → 600ms. The 2s floor was tripping on real
+// users who solve a 1+9 math problem in <2s ("Inscription trop rapide" error
+// was the #1 signup blocker per user reports). 600ms still catches automated
+// bots that submit instantly while remaining invisible to humans.
+const CAPTCHA_MIN_AGE_MS = 600;
 
 type ChallengePayload = {
   answer: number;

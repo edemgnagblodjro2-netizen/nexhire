@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { LinearGradient } from "@/components/SafeLinearGradient";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import Constants from "expo-constants";
 import React, { useState } from "react";
 import {
@@ -30,11 +30,46 @@ export default function BugReportScreen() {
   const { user } = useAuth();
   const isFr = language !== "en";
 
+  // v1.1.9 — Pre-fill from query params when launched from a service page
+  // (e.g. "Signaler un mauvais numéro" button). This lets users report wrong
+  // phone numbers in 2 taps instead of typing the service name + context.
+  const params = useLocalSearchParams<{
+    serviceId?: string;
+    serviceName?: string;
+    currentPhone?: string;
+    type?: string; // "phone" | "info" | "closed" | etc.
+  }>();
+  const reportType = typeof params.type === "string" ? params.type : "";
+  const serviceName =
+    typeof params.serviceName === "string" ? params.serviceName : "";
+  const currentPhone =
+    typeof params.currentPhone === "string" ? params.currentPhone : "";
+  const serviceId =
+    typeof params.serviceId === "string" ? params.serviceId : "";
+
+  const isPhoneReport = reportType === "phone";
+  const screenTitle = isPhoneReport
+    ? isFr ? "Signaler un mauvais numéro" : "Report wrong phone number"
+    : isFr ? "Signaler un bogue" : "Report a bug";
+  const screenSub = isPhoneReport
+    ? isFr
+      ? "Aidez-nous à corriger les coordonnées erronées en quelques secondes."
+      : "Help us correct wrong contact info in seconds."
+    : isFr
+      ? "Ce formulaire sert uniquement à signaler les bogues et problèmes liés à l'application."
+      : "This form is for reporting bugs and issues with the app only.";
+
+  const prefilledMessage = isPhoneReport && serviceName
+    ? (isFr
+        ? `Mauvais numéro pour : ${serviceName}\nNuméro affiché : ${currentPhone || "(aucun)"}\n\nLe bon numéro est : `
+        : `Wrong phone for: ${serviceName}\nDisplayed: ${currentPhone || "(none)"}\n\nThe correct number is: `)
+    : "";
+
   const [name, setName] = useState(
     `${user?.firstName ?? ""} ${user?.lastName ?? ""}`.trim(),
   );
   const [email, setEmail] = useState(user?.email ?? "");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(prefilledMessage);
   const [submitting, setSubmitting] = useState(false);
 
   function clearForm() {
@@ -68,6 +103,10 @@ export default function BugReportScreen() {
     setSubmitting(true);
     try {
       const appVersion = (Constants.expoConfig?.version as string | undefined) ?? "unknown";
+      // Tag the message so admins can filter wrong-number reports easily.
+      const taggedMsg = isPhoneReport && serviceId
+        ? `[NUMERO ERRONE - service:${serviceId}]\n${trimmedMsg}`
+        : trimmedMsg;
       const res = await fetch(`${getApiBaseUrl()}/api/bug-reports`, {
         method: "POST",
         headers: {
@@ -77,7 +116,7 @@ export default function BugReportScreen() {
         body: JSON.stringify({
           name: trimmedName,
           email: email.trim() || undefined,
-          message: trimmedMsg,
+          message: taggedMsg,
           appVersion,
           platform: Platform.OS,
         }),
@@ -137,14 +176,10 @@ export default function BugReportScreen() {
               <Feather name="chevron-left" size={26} color="#fff" />
             </Pressable>
             <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>
-              {isFr ? "Signaler un bogue" : "Report a bug"}
+              {screenTitle}
             </Text>
           </View>
-          <Text style={styles.headerSub}>
-            {isFr
-              ? "Ce formulaire sert uniquement à signaler les bogues et problèmes liés à l'application."
-              : "This form is for reporting bugs and issues with the app only."}
-          </Text>
+          <Text style={styles.headerSub}>{screenSub}</Text>
         </LinearGradient>
 
         <View style={styles.body}>

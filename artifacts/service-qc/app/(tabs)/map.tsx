@@ -100,14 +100,38 @@ export default function MapScreen() {
     }, [])
   );
 
-  // Pool of services for the active tab (before category/sort)
+  // v1.1.9 — Memoize favorites as a Set for O(1) lookup throughout the
+  // render tree (was O(N) .includes per card across 60+ rendered cards).
+  const favSet = useMemo(() => new Set(favIds), [favIds]);
+
+  // Pool of services for the active tab (before category/sort).
+  // PERF: For "nearby" with a known user location, pre-filter by a coarse
+  // bounding box (~75km) BEFORE running haversine on 5000+ services. Reduces
+  // per-keystroke compute by 10-50× on a typical urban Quebec location.
   const tabPool = useMemo(() => {
     if (tab === "favorites") {
-      const set = new Set(favIds);
-      return services.filter((s) => set.has(s.id));
+      return services.filter((s) => favSet.has(s.id));
     }
-    return services.filter((s) => s.coordinates);
-  }, [tab, services, favIds]);
+    const withCoords = services.filter((s) => s.coordinates);
+    if (!userLocation) return withCoords;
+    // 1° lat ≈ 111 km. Lng compresses by cos(lat). Use a generous 75km box
+    // so urban users still get ~60 results even when in the suburbs.
+    const KM = 75;
+    const dLat = KM / 111;
+    const cosLat = Math.cos((userLocation.lat * Math.PI) / 180) || 1;
+    const dLng = KM / (111 * Math.max(0.1, Math.abs(cosLat)));
+    const minLat = userLocation.lat - dLat;
+    const maxLat = userLocation.lat + dLat;
+    const minLng = userLocation.lng - dLng;
+    const maxLng = userLocation.lng + dLng;
+    const inBox = withCoords.filter((s) => {
+      const c = s.coordinates!;
+      return c.lat >= minLat && c.lat <= maxLat && c.lng >= minLng && c.lng <= maxLng;
+    });
+    // Fallback: if the box is empty (rural user), keep the full pool so the
+    // user still sees something rather than an empty list.
+    return inBox.length >= 10 ? inBox : withCoords;
+  }, [tab, services, favSet, userLocation]);
 
   // Per-category counts for chips (within current tab pool)
   const catCounts = useMemo(() => {
@@ -413,7 +437,7 @@ export default function MapScreen() {
           </View>
         ) : (
           list.map((s) => {
-            const isFav = favIds.includes(s.id);
+            const isFav = favSet.has(s.id);
             const dist = (s as any).distKm as number | undefined;
             return (
               <Pressable
