@@ -259,9 +259,23 @@ export default function MapScreen() {
         end={{ x: 1, y: 1 }}
         style={[styles.header, { paddingTop: (Platform.OS === "web" ? 16 : insets.top) + 14 }]}
       >
-        <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>
-          {isFr ? "Carte & Favoris" : "Map & Favorites"}
-        </Text>
+        <View style={styles.headerTitleRow}>
+          <Pressable
+            onPress={() => {
+              Haptics.selectionAsync();
+              if (router.canGoBack()) router.back();
+              else router.replace("/(tabs)" as any);
+            }}
+            style={styles.backBtn}
+            hitSlop={12}
+            accessibilityLabel={isFr ? "Retour" : "Back"}
+          >
+            <Feather name="chevron-left" size={24} color="#fff" />
+          </Pressable>
+          <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>
+            {isFr ? "Carte & Favoris" : "Map & Favorites"}
+          </Text>
+        </View>
         <Text style={styles.headerSub} numberOfLines={2}>
           {isFr
             ? "Services proches de vous · épinglez vos préférés"
@@ -617,6 +631,18 @@ const styles = StyleSheet.create({
     paddingBottom: 14,
     borderBottomLeftRadius: 22,
     borderBottomRightRadius: 22,
+  },
+  headerTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  backBtn: {
+    width: 36,
+    height: 36,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: -10,
   },
   headerTitle: { color: "#fff", fontSize: 22, fontFamily: "Inter_700Bold" },
   headerSub: { color: "rgba(255,255,255,0.85)", fontSize: 12, marginTop: 2, fontFamily: "Inter_400Regular" },

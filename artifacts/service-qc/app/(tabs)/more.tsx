@@ -145,9 +145,23 @@ export default function MoreScreen() {
           end={{ x: 1, y: 1 }}
           style={[styles.header, { paddingTop: (Platform.OS === "web" ? 16 : insets.top) + 16 }]}
         >
-          <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>
-            {isFr ? "Plus" : "More"}
-          </Text>
+          <View style={styles.headerTitleRow}>
+            <Pressable
+              onPress={() => {
+                Haptics.selectionAsync();
+                if (router.canGoBack()) router.back();
+                else router.replace("/(tabs)" as any);
+              }}
+              style={styles.backBtn}
+              hitSlop={12}
+              accessibilityLabel={isFr ? "Retour" : "Back"}
+            >
+              <Feather name="chevron-left" size={26} color="#fff" />
+            </Pressable>
+            <Text style={styles.headerTitle} numberOfLines={1} adjustsFontSizeToFit>
+              {isFr ? "Plus" : "More"}
+            </Text>
+          </View>
           <Text style={styles.headerSub}>
             {isFr ? "Fonctionnalités et options" : "Features & options"}
           </Text>
@@ -576,6 +590,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 20,
     gap: 4,
+  },
+  headerTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  backBtn: {
+    width: 36,
+    height: 36,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: -10,
   },
   headerTitle: {
     fontSize: 26,
