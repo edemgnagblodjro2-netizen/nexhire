@@ -19,7 +19,8 @@
       "icon": "./assets/images/icon.png",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "AttenteZéro utilise votre position pour afficher les services communautaires les plus proches de vous.",
-        "NSLocationAlwaysUsageDescription": "AttenteZéro utilise votre position pour trier les services par distance."
+        "NSLocationAlwaysUsageDescription": "AttenteZéro utilise votre position pour trier les services par distance.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
