@@ -530,6 +530,62 @@ export default function HomeScreen() {
           </LinearGradient>
         </Pressable>
 
+        {/* ── Calculateur d'aides financières ── */}
+        <Pressable
+          style={({ pressed }) => [
+            styles.calcBanner,
+            { opacity: pressed ? 0.92 : 1 },
+          ]}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            router.push("/aide-financiere" as any);
+          }}
+        >
+          <LinearGradient
+            colors={["#14532d", "#16a34a", "#22c55e"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.calcBannerGrad}
+          >
+            <View style={styles.calcBannerLeft}>
+              <View style={styles.calcBannerIcon}>
+                <Feather name="dollar-sign" size={22} color="#16a34a" />
+              </View>
+              <View style={styles.calcBannerText}>
+                <View style={styles.calcBannerKickerRow}>
+                  <View style={styles.calcBannerNewBadge}>
+                    <Text style={styles.calcBannerNewText} numberOfLines={1}>POPULAIRE</Text>
+                  </View>
+                  <Text
+                    style={styles.calcBannerKicker}
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.8}
+                  >
+                    {language === "fr" ? "CALCULATEUR D'AIDES" : "BENEFITS CALCULATOR"}
+                  </Text>
+                </View>
+                <Text
+                  style={styles.calcBannerTitle}
+                  numberOfLines={1}
+                  adjustsFontSizeToFit
+                  minimumFontScale={0.7}
+                >
+                  {language === "fr" ? "Combien j'ai droit ?" : "How much can I get?"}
+                </Text>
+                <Text style={styles.calcBannerSub} numberOfLines={2}>
+                  {language === "fr"
+                    ? "30 secondes · estimation Canada + Québec · ACE, Solidarité, ACT, SRG…"
+                    : "30 seconds · Canada + Quebec estimate · CCB, Solidarity, CWB, GIS…"}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.calcBannerArrow}>
+              <Feather name="arrow-right" size={20} color="#fff" />
+            </View>
+          </LinearGradient>
+        </Pressable>
+
         {/* ── Localisation ── */}
         <View style={styles.section}>
           <Pressable
@@ -1088,6 +1144,91 @@ const styles = StyleSheet.create({
   },
 
   /* Diagnostic IA Banner */
+  calcBanner: {
+    marginHorizontal: 16,
+    marginBottom: 16,
+    borderRadius: 18,
+    overflow: "hidden",
+    shadowColor: "#16a34a",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 6,
+  },
+  calcBannerGrad: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    gap: 12,
+  },
+  calcBannerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+    gap: 14,
+    minWidth: 0,
+  },
+  calcBannerIcon: {
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  calcBannerText: {
+    flex: 1,
+    minWidth: 0,
+  },
+  calcBannerKickerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 4,
+  },
+  calcBannerNewBadge: {
+    backgroundColor: "rgba(255,255,255,0.95)",
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 6,
+  },
+  calcBannerNewText: {
+    fontSize: 10,
+    fontFamily: "Inter_700Bold",
+    fontWeight: "700",
+    color: "#14532d",
+    letterSpacing: 0.4,
+  },
+  calcBannerKicker: {
+    fontSize: 11,
+    fontFamily: "Inter_700Bold",
+    fontWeight: "700",
+    color: "rgba(255,255,255,0.95)",
+    letterSpacing: 1,
+    flexShrink: 1,
+  },
+  calcBannerTitle: {
+    fontSize: 18,
+    fontFamily: "Inter_700Bold",
+    fontWeight: "700",
+    color: "#fff",
+  },
+  calcBannerSub: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.92)",
+    marginTop: 2,
+    lineHeight: 16,
+  },
+  calcBannerArrow: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   diagBanner: {
     marginBottom: 14,
     borderRadius: 16,

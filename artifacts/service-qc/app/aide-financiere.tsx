@@ -442,6 +442,9 @@ export default function AideFinanciereScreen() {
               <Text style={[styles.totalValue, { color: "#166534" }]}>
                 ~ {totalEligible.toLocaleString(isFr ? "fr-CA" : "en-CA")} $/{isFr ? "an" : "yr"}
               </Text>
+              <Text style={[styles.totalMonthly, { color: "#15803d" }]}>
+                ≈ {Math.round(totalEligible / 12).toLocaleString(isFr ? "fr-CA" : "en-CA")} $/{isFr ? "mois" : "month"}
+              </Text>
               <Text style={[styles.totalSub, { color: "#166534" }]}>
                 {isFr
                   ? "Estimation indicative — confirmer avec les services officiels"
@@ -704,6 +707,13 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   totalLabel: { fontSize: 13, fontWeight: "700" },
+  totalMonthly: {
+    fontSize: 16,
+    fontFamily: "Inter_600SemiBold",
+    fontWeight: "600",
+    marginTop: 2,
+    textAlign: "center" as const,
+  },
   totalValue: { fontSize: 28, fontWeight: "900", marginVertical: 4 },
   totalSub: { fontSize: 11, fontStyle: "italic" },
   aide: {

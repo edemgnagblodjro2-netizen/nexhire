@@ -7,6 +7,7 @@ import {
   Platform,
   Pressable,
   ScrollView,
+  Share,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -20,6 +21,7 @@ import { useColors } from "@/hooks/useColors";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 import { getApiBaseUrl } from "@/lib/apiBase";
 import WaitTimeWidget from "@/components/WaitTimeWidget";
+import { ServiceRating } from "@/components/ServiceRating";
 import { addHistoryEntry } from "@/lib/history";
 import {
   trackServiceCall,
@@ -97,6 +99,33 @@ export default function ServiceDetailScreen() {
     trackServiceAction(service.id, "click");
     void trackServiceWebsite(service.id);
     Linking.openURL(service.website);
+  }
+
+  async function handleShare() {
+    if (!service) return;
+    Haptics.selectionAsync();
+    const baseUrl =
+      (process.env.EXPO_PUBLIC_SHARE_BASE_URL as string | undefined) ??
+      "https://attentezero.ca";
+    const url = `${baseUrl}/s/${service.id}`;
+    const lines = [
+      `📍 ${service.name}`,
+      service.city ? `🏙️ ${service.city}${service.address ? ` — ${service.address}` : ""}` : null,
+      service.phone ? `📞 ${service.phone}` : null,
+      service.hours ? `🕒 ${service.hours}` : null,
+      "",
+      `Trouvé sur AttenteZéro — l'app gratuite pour les services communautaires du Québec.`,
+      url,
+    ].filter(Boolean);
+    try {
+      await Share.share({
+        message: lines.join("\n"),
+        url, // iOS will use this as the rich link preview
+        title: service.name,
+      });
+    } catch {
+      // user cancelled or share failed silently
+    }
   }
 
   function handleDirections() {
@@ -321,7 +350,25 @@ export default function ServiceDetailScreen() {
 
         <WaitTimeWidget serviceId={service.id} accentColor={categoryColor} />
 
+        <ServiceRating serviceId={service.id} accentColor={categoryColor} />
+
         <View style={styles.actionsSection}>
+          <TouchableOpacity
+            style={[styles.actionBtn, { backgroundColor: "#0e7e6e" }]}
+            onPress={handleShare}
+            activeOpacity={0.85}
+          >
+            <Feather name="share-2" size={20} color="#fff" />
+            <View>
+              <Text style={styles.actionBtnLabel}>
+                Partager cette fiche
+              </Text>
+              <Text style={styles.actionBtnSub}>
+                WhatsApp, SMS, courriel…
+              </Text>
+            </View>
+          </TouchableOpacity>
+
           <TouchableOpacity
             style={[styles.actionBtn, { backgroundColor: colors.primary }]}
             onPress={handleCall}
