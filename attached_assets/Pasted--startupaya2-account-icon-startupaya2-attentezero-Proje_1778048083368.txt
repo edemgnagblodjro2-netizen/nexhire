@@ -1,0 +1,293 @@
+
+
+
+
+
+startupaya2 account icon
+startupaya2
+
+
+attentezero
+
+
+Project
+
+
+
+
+Develop
+
+
+
+Deploy
+
+
+
+
+Over-the-air updates
+
+
+
+Entities
+
+
+Project settings
+
+
+
+
+
+
+Builds
+
+98b29a77
+
+
+Copy error as prompt
+
+Compare
+This build does not count towards your EAS Build usage.
+iOS App Store build
+
+Profile
+
+
+Environment
+
+SDK version
+
+Version
+
+Fingerprint
+
+Git Ref
+
+Created by
+
+production
+
+production
+
+54.0.0
+
+ 1.1.9 (7)
+
+a02ce0a
+
+None
+
+startupaya2 account icon
+startupaya2
+
+Build artifact
+
+Status
+
+Start time
+
+Wait time
+
+Queue time
+
+
+Build time
+
+Total time
+
+Availability
+
+
+Errored
+
+May 6, 2026 2:08 AM
+104ms
+
+43s
+
+1m 44s
+
+2m 28s
+
+29 days
+
+Logs
+
+Waiting to start
+
+3s
+
+
+Spin up build environment
+
+40s
+
+
+Prepare project
+
+3s
+
+
+Pre-install hook
+
+25s
+
+
+Read eas.json
+
+1ms
+
+
+Read package.json
+
+2ms
+
+
+Install dependencies
+
+3s
+
+
+Read app config
+
+453ms
+
+
+Prepare credentials
+
+3s
+
+
+Prebuild
+
+5s
+
+
+Install pods
+
+27s
+
+
+Configure Xcode project
+
+58ms
+
+
+Bundle JavaScript
+
+14s
+
+
+Run fastlane
+
+
+1
+10s
+
+
+Creating Gymfile
+Gymfile created
+Successfully loaded '/Users/expo/workingdir/build/artifacts/service-qc/ios/Gymfile' 📄
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                  Detected Values from './Gymfile'                                                                   |
++-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
+| suppress_xcode_output | true                                                                                                                                        |
+| clean                 | false                                                                                                                                       |
+| scheme                | AttenteZro                                                                                                                                  |
+| configuration         | Release                                                                                                                                     |
+| export_options        |                                                                                                                                             |
+| export_xcargs         | OTHER_CODE_SIGN_FLAGS="--keychain /var/folders/5_/4knlryn57n39p2c_jw8567z00000gn/T/eas-build-76fcb0ad-7b39-4ecb-bff6-0661fc918e3b.keychain" |
+| disable_xcpretty      | true                                                                                                                                        |
+| buildlog_path         | /Users/expo/workingdir/logs                                                                                                                 |
+| derived_data_path     | ./build                                                                                                                                     |
+| result_bundle         | true                                                                                                                                        |
+| result_bundle_path    | /var/folders/5_/4knlryn57n39p2c_jw8567z00000gn/T/result-bundle-1778047838399.xcresult                                                       |
+| output_directory      | ./build                                                                                                                                     |
++-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
+Resolving Swift Package Manager dependencies...
+$ xcodebuild -resolvePackageDependencies -workspace ./AttenteZro.xcworkspace -scheme AttenteZro -configuration Release -derivedDataPath ./build
+▸ Command line invocation:
+▸     /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -resolvePackageDependencies -workspace ./AttenteZro.xcworkspace -scheme AttenteZro -configuration Release -derivedDataPath ./build
+▸ resolved source packages:
+$ xcodebuild -showBuildSettings -workspace ./AttenteZro.xcworkspace -scheme AttenteZro -configuration Release -derivedDataPath ./build 2>&1
+Detected provisioning profile mapping: {:"com.attentezero.app"=>"47fa5027-4856-4559-a06d-93e27ab889f4"}
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                        Summary for gym 2.228.0                                                                                        |
++---------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
+| workspace                                               | ./AttenteZro.xcworkspace                                                                                                                    |
+| scheme                                                  | AttenteZro                                                                                                                                  |
+| clean                                                   | false                                                                                                                                       |
+| output_directory                                        | ./build                                                                                                                                     |
+| output_name                                             | AttenteZro                                                                                                                                  |
+| configuration                                           | Release                                                                                                                                     |
+| silent                                                  | false                                                                                                                                       |
+| skip_package_ipa                                        | false                                                                                                                                       |
+| skip_package_pkg                                        | false                                                                                                                                       |
+| export_options.method                                   | app-store                                                                                                                                   |
+| export_options.provisioningProfiles.com.attentezero.app | 47fa5027-4856-4559-a06d-93e27ab889f4                                                                                                        |
+| export_xcargs                                           | OTHER_CODE_SIGN_FLAGS="--keychain /var/folders/5_/4knlryn57n39p2c_jw8567z00000gn/T/eas-build-76fcb0ad-7b39-4ecb-bff6-0661fc918e3b.keychain" |
+| build_path                                              | /Users/expo/Library/Developer/Xcode/Archives/2026-05-05                                                                                     |
+| derived_data_path                                       | ./build                                                                                                                                     |
+| result_bundle                                           | true                                                                                                                                        |
+| result_bundle_path                                      | /var/folders/5_/4knlryn57n39p2c_jw8567z00000gn/T/result-bundle-1778047838399.xcresult                                                       |
+| buildlog_path                                           | /Users/expo/workingdir/logs                                                                                                                 |
+| destination                                             | generic/platform=iOS                                                                                                                        |
+| suppress_xcode_output                                   | true                                                                                                                                        |
+| xcodebuild_formatter                                    | xcpretty                                                                                                                                    |
+| build_timing_summary                                    | false                                                                                                                                       |
+| disable_xcpretty                                        | true                                                                                                                                        |
+| skip_profile_detection                                  | false                                                                                                                                       |
+| xcodebuild_command                                      | xcodebuild                                                                                                                                  |
+| skip_package_dependencies_resolution                    | false                                                                                                                                       |
+| disable_package_automatic_updates                       | false                                                                                                                                       |
+| use_system_scm                                          | false                                                                                                                                       |
+| xcode_path                                              | /Applications/Xcode.app                                                                                                                     |
++---------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
+$ set -o pipefail && xcodebuild -workspace ./AttenteZro.xcworkspace -scheme AttenteZro -configuration Release -derivedDataPath ./build -destination 'generic/platform=iOS' -archivePath /Users/expo/Library/Developer/Xcode/Archives/2026-05-05/AttenteZro\ 2026-05-05\ 23.10.43.xcarchive -resultBundlePath '/var/folders/5_/4knlryn57n39p2c_jw8567z00000gn/T/result-bundle-1778047838399.xcresult' archive | tee /Users/expo/workingdir/logs/AttenteZro-AttenteZro.log > /dev/null
+    Run script build phase '[CP-User] [Hermes] Replace Hermes for the right configuration, if needed' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'hermes-engine' from project 'Pods')
+▸ ** ARCHIVE FAILED **
+▸ The following build commands failed:
+▸ 	Archiving workspace AttenteZro with scheme AttenteZro
+▸ (1 failure)
+Exit status: 65
++---------------------------------------+
+|           Build environment           |
++-------------+-------------------------+
+| xcode_path  | /Applications/Xcode.app |
+| gym_version | 2.228.0                 |
+| sdk         | iPhoneOS26.0.sdk        |
++-------------+-------------------------+
+Looks like fastlane ran into a build/archive error with your project
+It's hard to tell what's causing the error, so we wrote some guides on how
+to troubleshoot build and signing issues: https://docs.fastlane.tools/codesigning/getting-started/
+Before submitting an issue on GitHub, please follow the guide above and make
+sure your project is set up correctly.
+fastlane uses `xcodebuild` commands to generate your binary, you can see the
+the full commands printed out in yellow in the above log.
+Make sure to inspect the output above, as usually you'll find more error information there
+[!] Error building the application - see the log above
+Error: The "Run fastlane" step failed because of an error in the Xcode build process. We automatically detected following errors in your Xcode build logs:
+- Provisioning profile "*[expo] com.attentezero.app AppStore 2026-05-06T03:16:29.589Z" doesn't support the Associated Domains capability.  (in target 'AttenteZro' from project 'AttenteZro')
+- Provisioning profile "*[expo] com.attentezero.app AppStore 2026-05-06T03:16:29.589Z" doesn't include the com.apple.developer.associated-domains entitlement. (in target 'AttenteZro' from project 'AttenteZro')
+Refer to "Xcode Logs" below for additional, more detailed logs.
+Clean up credentials
+
+752ms
+
+
+Fail job
+
+1ms
+
+
+Build failed: The "Run fastlane" step failed because of an error in the Xcode build process. We automatically detected following errors in your Xcode build logs:
+- Provisioning profile "*[expo] com.attentezero.app AppStore 2026-05-06T03:16:29.589Z" doesn't support the Associated Domains capability.  (in target 'AttenteZro' from project 'AttenteZro')
+- Provisioning profile "*[expo] com.attentezero.app AppStore 2026-05-06T03:16:29.589Z" doesn't include the com.apple.developer.associated-domains entitlement. (in target 'AttenteZro' from project 'AttenteZro')
+Refer to "Xcode Logs" below for additional, more detailed logs.
+Xcode Logs
+
+The logs are not displayed by default because the content is too large.
+
+
+Download
+
+View in the browser
