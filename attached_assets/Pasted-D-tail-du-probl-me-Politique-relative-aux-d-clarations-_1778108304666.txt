@@ -1,0 +1,17 @@
+Détail du problème
+Politique relative aux déclarations trompeuses : Non-respect de la politique relative aux déclarations trompeuses
+Votre appli présente le ou les problèmes de fonctionnalité suivants :
+
+Absence de lien vers la source pour les renseignements gouvernementaux
+Votre appli fournit des renseignements gouvernementaux, mais il lui manque au moins une URL ou au moins un lien clair et accessible vers la ou les sources originales (par exemple, les domaines .gov).
+
+Votre application comprend du contenu qui ne respecte pas la politique relative aux déclarations trompeuses. Nous avons adopté cette politique pour promouvoir la confiance et créer une expérience sécurisée pour les utilisateurs. C'est pourquoi les applis qui fournissent des renseignements gouvernementaux, qu'elles soient ou non affiliées au gouvernement, doivent respecter strictement notre politique relative aux déclarations trompeuses.
+
+
+Où ce problème a été détecté
+Ce problème peut aussi se produire dans d'autres zones. Vérifiez tous les éléments de votre appli en corrigeant ce problème.
+
+Emplacement
+Preuve
+Description complète (fr-CA)
+⚠️ AVIS IMPORTANT AttenteZéro est une application indépendante développée par Startupaya. Elle n’est pas affiliée, approuvée ni soutenue par un organisme gouvernemental ou public. Cette application est un service privé qui facilite l’accès aux ressources communautaires au Québec. 📱 DESCRIPTION Trouvez rapidement des services communautaires près de vous au Québec. AttenteZéro vous permet d’accéder facilement à des ressources essentielles : alimentation, logement, santé mentale, aide juridique, soutien aux familles, et plus encore. 🎯 POUR QUI ? Personnes en situation de besoin ou d’urgence Familles à faible revenu Nouveaux arrivants Intervenants et travailleurs sociaux Toute personne cherchant de l’aide au Québec 🗺️ SERVICES DISPONIBLES Accédez à 500+ services communautaires : banques alimentaires, hébergement, soutien psychosocial, aide aux femmes, ressources jeunesse, services aux aînés, etc. 📍 RECHERCHE RAPIDE ET GÉOLOCALISÉE Trouvez les ressources proches de vous avec : adresse téléphone horaires itinéraire 🤖 ASSISTANT INTELLIGENT Décrivez votre besoin simplement — l’application vous suggère des services adaptés. 🆘 AIDE EN CAS DE CRISE Accès rapide aux ressources d’urgence (ex. : 911, lignes d’aide). ⚠️ AttenteZéro ne remplace pas les services d’urgence. 🌍 MULTILINGUE Disponible en 5 langues : français, anglais, espagnol, arabe et créole haïtien. 🔒 CONFIDENTIALITÉ Aucune vente de données Aucune publicité intrusive Données protégées 📊 SOURCES DES DONNÉES Les informations proviennent de sources publiques fiables (répertoires communautaires, sites officiels, etc.). Les utilisateurs sont invités à valider les informations auprès des organismes. 💚 COMPLÉMENTAIRE À 211 QUÉBEC AttenteZéro complète l'offre de 211 Québec avec une réponse géolocalisée plus rapide, une recherche par catégorie, et un assistant IA disponible 24/7. 📞 CONTACT attentezero5@gmail.com
