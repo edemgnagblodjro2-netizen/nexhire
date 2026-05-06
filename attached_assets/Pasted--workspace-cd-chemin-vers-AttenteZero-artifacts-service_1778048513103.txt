@@ -1,0 +1,57 @@
+~/workspace$ cd /chemin/vers/AttenteZero/artifacts/service-qc
+npx eas-cli credentials --platform ios
+bash: cd: /chemin/vers/AttenteZero/artifacts/service-qc: No such file or directory
+npm warn Unknown project config "auto-install-peers". This will stop working in the next major version of npm.
+npm warn Unknown project config "strict-peer-dependencies". This will stop working in the next major version of npm.
+npm warn Unknown project config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+npm warn Unknown project config "public-hoist-pattern". This will stop working in the next major version of npm.
+npm warn Unknown project config "confirm-modules-purge". This will stop working in the next major version of npm.
+★ eas-cli@18.11.0 is now available.
+To upgrade, run:
+npm install -g eas-cli
+Proceeding with outdated version.
+
+Found eas-cli in your project dependencies.
+It's recommended to use the "cli.version" field in eas.json to enforce the eas-cli version for your project.
+Learn more: https://github.com/expo/eas-cli#enforcing-eas-cli-version-for-your-project
+
+EAS project not configured.
+✔ Existing EAS project found for @startupaya2/workspace (id = 70e859da-1d99-446b-a27b-fa748abbd3eb). Configure this project? … yes
+✔ Linked local project to EAS project 70e859da-1d99-446b-a27b-fa748abbd3eb
+eas.json could not be found at /home/runner/workspace/eas.json. Learn more at https://expo.fyi/eas-json
+    Error: credentials command failed.
+~/workspace$ ^C
+~/workspace$ mkdir ~/eas-creds && cd ~/eas-creds
+npm install -g eas-cli
+eas login          # ton compte Expo
+eas credentials --platform ios
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated rimraf@2.4.5: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated lodash.get@4.4.2: This package is deprecated. Use the optional chaining (?.) operator instead.
+npm warn deprecated glob@6.0.4: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated @xmldom/xmldom@0.7.13: this version has critical issues, please update to the latest version
+npm warn deprecated uuid@7.0.3: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+npm warn deprecated uuid@8.3.2: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+npm warn deprecated uuid@8.3.2: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+npm warn deprecated uuid@9.0.1: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated tar@7.5.7: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+added 514 packages in 15s
+
+65 packages are looking for funding
+  run `npm fund` for details
+EXPO_TOKEN is set in your environment, and is being used for all EAS authentication. To use username/password authentication, unset EXPO_TOKEN in your environment and re-run the command.
+    Error: account:login command failed.
+Run this command inside a project directory.
+    Error: credentials command failed.
+~/eas-creds$ cd /chemin/vers/AttenteZero/artifacts/service-qc
+npx eas-cli credentials --platform ios
+bash: cd: /chemin/vers/AttenteZero/artifacts/service-qc: No such file or directory
+Run this command inside a project directory.
+    Error: credentials command failed.
+~/eas-creds$ ^C
+~/eas-creds$ 
