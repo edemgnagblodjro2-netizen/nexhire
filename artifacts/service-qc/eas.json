@@ -48,7 +48,8 @@
         "ascApiKeyPath": "./asc-api-key.p8",
         "ascApiKeyId": "T82TVVZ6A3",
         "ascApiKeyIssuerId": "a26b1f80-8f7a-400c-b8bf-16829f9c37d0",
-        "appleTeamId": "2KS29FQVHX"
+        "appleTeamId": "2KS29FQVHX",
+        "ascAppId": "6766750916"
       }
     }
   }

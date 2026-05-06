@@ -68,6 +68,19 @@ A mobile application connecting vulnerable individuals with community and social
 - **Captcha MIN_AGE**: 600ms (was 2000ms — bloquait les humains rapides). À ne PAS remonter sans repenser l'UX (auto-retry visible + loading state).
 - **Wrong-number reports**: Tagués `[NUMERO ERRONE - service:<id>]` dans le bug-report message → filtrable côté admin.
 
+## iOS / TestFlight setup (LIVRÉ 6 mai)
+- Compte Apple Developer payé + approuvé.
+- Clé App Store Connect API (.p8) générée, stockée en secrets Replit (`APP_STORE_CONNECT_KEY_ID`, `APP_STORE_CONNECT_ISSUER_ID`, `APP_STORE_CONNECT_PRIVATE_KEY`, `APPLE_TEAM_ID`).
+- ⚠️ Clé .p8 leakée 1× dans logs bash (Replit n'a pas masqué) — à révoquer/régénérer post-launch par sécurité.
+- `artifacts/service-qc/asc-api-key.p8` reformatée en PEM proprement, gitignorée (`*.p8`).
+- `eas.json` : profil iOS production ajouté (resourceClass=m-medium, autoIncrement=buildNumber) + submit profile complet (ascApiKeyPath, ascApiKeyId, ascApiKeyIssuerId, appleTeamId, ascAppId=6766750916).
+- `app.json` : `ITSAppUsesNonExemptEncryption=false` (évite question manuelle Apple à chaque submit), `buildNumber=4`.
+- App créée sur App Store Connect : Apple ID **6766750916** (bundle `com.attentezero.app`, langue fr-CA, SKU `attentezero-ios`). ⚠️ Création app via ASC API impossible (Apple bloque CREATE), web UI obligatoire.
+- Override pnpm `@xmldom/xmldom: ^0.8.10` (root package.json) → fix prebuild crash sur EAS server (incompatibilité xmldom 0.9 ↔ @expo/plist 0.4.8).
+- Build #1 iOS : `aaabc171-553a-49b7-862f-3da9a4c44415` ✅ (v1.1.9 build 4).
+- Submit TestFlight #1 : `3d968bce-6392-4348-8933-b7b63ba9dad7` ⏳ en cours.
+- **Gotcha credentials** : tout premier `eas build --platform ios` exige mode interactif (Apple ID + 2FA), même avec ASC API key. Ensuite stockés sur EAS, builds suivants tournent en `--non-interactive`.
+
 ## v1.1.9 (en cours)
 - **Phase 2 géocodage Google LIVRÉE** : 2931 fiches re-géocodées via Google Geocoding API (2750 ROOFTOP 20m, 91 RANGE 50m, 90 CENTER 200m). Bilan global : **3686 vertes (≤100m)** vs 845 avant (+335%), 90 jaunes, 93 oranges, 356 rouges restantes (adresses sans numéro de rue, non-fixables automatiquement). Coût réel ~99$ USD vs 16$ estimé (j'ai oublié de marquer les APPROX comme déjà tentées → 333 re-tests inutiles par chunk). Fiches non-fixables maintenant marquées `geocode_source='google-tried-approx'` pour éviter tout retest futur. Script `scripts/src/geocode-google.ts` avec timeout 10s + flag de reprise auto.
 - Captcha MIN_AGE 2000→600ms (fix #1 plainte « inscription bloquée »).
