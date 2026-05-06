@@ -4,6 +4,7 @@ import { LinearGradient } from "@/components/SafeLinearGradient";
 import { useRouter } from "expo-router";
 import React, { useMemo, useRef, useState } from "react";
 import {
+  Image,
   Keyboard,
   Platform,
   Pressable,
@@ -256,7 +257,11 @@ export default function HomeScreen() {
         <View style={styles.heroTop}>
           <View style={styles.heroLeft}>
             <View style={styles.logoBadge}>
-              <Feather name="heart" size={18} color={colors.primary} />
+              <Image
+                source={require("../../assets/images/icon_transparent.png")}
+                style={styles.logoImg}
+                resizeMode="contain"
+              />
             </View>
             <View style={{ flex: 1, minWidth: 0 }}>
               <Text
@@ -890,6 +895,11 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,0.95)",
     alignItems: "center",
     justifyContent: "center",
+    overflow: "hidden",
+  },
+  logoImg: {
+    width: 32,
+    height: 32,
   },
   heroAppName: {
     fontSize: 22,
