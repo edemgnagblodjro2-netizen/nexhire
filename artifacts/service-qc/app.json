@@ -21,7 +21,8 @@
         "NSLocationWhenInUseUsageDescription": "AttenteZéro utilise votre position pour afficher les services communautaires les plus proches de vous.",
         "NSLocationAlwaysUsageDescription": "AttenteZéro utilise votre position pour trier les services par distance.",
         "ITSAppUsesNonExemptEncryption": false
-      }
+      },
+      "buildNumber": "2"
     },
     "android": {
       "package": "com.attentezero.app",
