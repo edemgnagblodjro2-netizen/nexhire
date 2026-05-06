@@ -15,7 +15,7 @@ async function geocode(address: string, city: string): Promise<{ lat: number; ln
   try {
     const res = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
     if (!res.ok) return null;
-    const data: any[] = await res.json();
+    const data = (await res.json()) as any[];
     if (!data.length) return null;
     const lat = parseFloat(data[0].lat);
     const lng = parseFloat(data[0].lon);
