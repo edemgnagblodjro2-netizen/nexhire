@@ -18,12 +18,16 @@ import { useFocusEffect, useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import * as WebBrowser from "expo-web-browser";
 
+import * as ImagePicker from "expo-image-picker";
+
 import { useAuth } from "@/lib/auth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useColors } from "@/hooks/useColors";
 import { authedFetch } from "@/lib/apiClient";
 import { getApiBaseUrl } from "@/lib/apiBase";
 import { getHistory, clearHistory, type HistoryEntry } from "@/lib/history";
+import { getAvatarUri, setAvatarUri } from "@/lib/avatar";
+import { UserAvatar } from "@/components/UserAvatar";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 import { type Category } from "@/data/services";
 
@@ -41,28 +45,6 @@ const FUNDING_OPTIONS = [
   { icon: "tag" as const, color: "#059669", bg: "#f0fdf4", darkBg: "#052e1c", titleFr: "Publicité locale responsable", titleEn: "Local responsible advertising", descFr: "Pour organismes et institutions seulement — zéro pub intrusive", descEn: "For orgs and institutions only — zero intrusive ads", badgeFr: "Bientôt", badgeEn: "Soon", badgeColor: "#059669", route: null },
 ];
 
-function InitialsAvatar({ firstName, lastName, size = 80 }: { firstName: string | null; lastName: string | null; size?: number }) {
-  const colors = useColors();
-  const initials = [firstName, lastName]
-    .filter(Boolean)
-    .map((n) => n![0].toUpperCase())
-    .join("") || "?";
-  return (
-    <View
-      style={[
-        styles.avatar,
-        {
-          width: size,
-          height: size,
-          borderRadius: size / 2,
-          backgroundColor: colors.primary,
-        },
-      ]}
-    >
-      <Text style={[styles.avatarText, { fontSize: size * 0.38 }]}>{initials}</Text>
-    </View>
-  );
-}
 
 function HistoryCard({ isFr }: { isFr: boolean }) {
   const colors = useColors();
@@ -182,8 +164,82 @@ export default function ProfileScreen() {
   const [addressValue, setAddressValue] = useState(user?.address || "");
   const [saving, setSaving] = useState(false);
   const [pendingInvitesCount, setPendingInvitesCount] = useState(0);
+  const [avatarVersion, setAvatarVersion] = useState(0);
 
   const isFr = language === "fr";
+
+  const pickAvatar = React.useCallback(async () => {
+    Haptics.selectionAsync();
+    const current = await getAvatarUri();
+    Alert.alert(
+      isFr ? "Photo de profil" : "Profile photo",
+      isFr ? "Choisissez une option" : "Choose an option",
+      [
+        {
+          text: isFr ? "Prendre une photo" : "Take a photo",
+          onPress: async () => {
+            const perm = await ImagePicker.requestCameraPermissionsAsync();
+            if (!perm.granted) {
+              Alert.alert(
+                isFr ? "Accès refusé" : "Permission denied",
+                isFr ? "Autorisez l'accès à l'appareil photo dans les réglages." : "Allow camera access in settings.",
+              );
+              return;
+            }
+            const r = await ImagePicker.launchCameraAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.Images,
+              allowsEditing: true,
+              aspect: [1, 1],
+              quality: 0.7,
+            });
+            if (!r.canceled && r.assets?.[0]?.uri) {
+              await setAvatarUri(r.assets[0].uri);
+              setAvatarVersion((v) => v + 1);
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            }
+          },
+        },
+        {
+          text: isFr ? "Choisir dans la galerie" : "Choose from library",
+          onPress: async () => {
+            const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (!perm.granted) {
+              Alert.alert(
+                isFr ? "Accès refusé" : "Permission denied",
+                isFr ? "Autorisez l'accès aux photos dans les réglages." : "Allow photo access in settings.",
+              );
+              return;
+            }
+            const r = await ImagePicker.launchImageLibraryAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.Images,
+              allowsEditing: true,
+              aspect: [1, 1],
+              quality: 0.7,
+            });
+            if (!r.canceled && r.assets?.[0]?.uri) {
+              await setAvatarUri(r.assets[0].uri);
+              setAvatarVersion((v) => v + 1);
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            }
+          },
+        },
+        ...(current
+          ? [
+              {
+                text: isFr ? "Retirer la photo" : "Remove photo",
+                style: "destructive" as const,
+                onPress: async () => {
+                  await setAvatarUri(null);
+                  setAvatarVersion((v) => v + 1);
+                  Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+                },
+              },
+            ]
+          : []),
+        { text: isFr ? "Annuler" : "Cancel", style: "cancel" as const },
+      ],
+    );
+  }, [isFr]);
 
   const loadPendingInvites = React.useCallback(async () => {
     try {
@@ -326,9 +382,22 @@ export default function ProfileScreen() {
           end={{ x: 1, y: 1 }}
           style={styles.heroBanner}
         >
-          <View style={styles.avatarRing}>
-            <InitialsAvatar firstName={user?.firstName ?? null} lastName={user?.lastName ?? null} size={80} />
-          </View>
+          <Pressable
+            onPress={pickAvatar}
+            style={styles.avatarRing}
+            accessibilityLabel={isFr ? "Changer la photo de profil" : "Change profile photo"}
+            hitSlop={8}
+          >
+            <UserAvatar
+              firstName={user?.firstName ?? null}
+              lastName={user?.lastName ?? null}
+              size={80}
+              key={avatarVersion}
+            />
+            <View style={styles.avatarEditBadge}>
+              <Feather name="camera" size={13} color="#fff" />
+            </View>
+          </Pressable>
           <Text style={styles.heroName} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7}>{fullName}</Text>
           <View style={styles.heroBadge}>
             <Feather name="mail" size={11} color="rgba(255,255,255,0.8)" />
@@ -789,6 +858,20 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: "rgba(255,255,255,0.25)",
     marginBottom: 4,
+    position: "relative",
+  },
+  avatarEditBadge: {
+    position: "absolute",
+    bottom: 2,
+    right: 2,
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: "#0a5e52",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: "#ffffff",
   },
   heroName: {
     fontSize: 22,

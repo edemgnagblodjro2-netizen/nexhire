@@ -18,6 +18,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import PremiumGateModal from "@/components/PremiumGateModal";
 import { BrandFooter } from "@/components/BrandFooter";
+import { UserAvatar } from "@/components/UserAvatar";
 import { useColors } from "@/hooks/useColors";
 import { usePremiumGate } from "@/hooks/usePremiumGate";
 import { usePlanGate } from "@/hooks/usePlanGate";
@@ -188,14 +189,13 @@ export default function MoreScreen() {
             >
               <View style={styles.accountAvatarWrap}>
                 {user ? (
-                  <View style={styles.accountAvatar}>
-                    <Text style={styles.accountAvatarText}>
-                      {[user.firstName, user.lastName]
-                        .filter(Boolean)
-                        .map((n) => n![0].toUpperCase())
-                        .join("") || "?"}
-                    </Text>
-                  </View>
+                  <UserAvatar
+                    firstName={user.firstName ?? null}
+                    lastName={user.lastName ?? null}
+                    size={54}
+                    bgColor="#ffffff"
+                    textColor="#0e7e6e"
+                  />
                 ) : (
                   <View style={styles.accountAvatar}>
                     <Feather name="user" size={26} color="#0e7e6e" />
