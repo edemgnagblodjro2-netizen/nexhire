@@ -979,6 +979,18 @@ export default function ChatScreen() {
         ]}
       >
         <View style={styles.headerLeft}>
+          <Pressable
+            onPress={() => {
+              Haptics.selectionAsync();
+              if (router.canGoBack()) router.back();
+              else router.replace("/(tabs)" as any);
+            }}
+            style={styles.backBtn}
+            hitSlop={12}
+            accessibilityLabel="Retour"
+          >
+            <Feather name="chevron-left" size={26} color={colors.foreground} />
+          </Pressable>
           <View style={[styles.aiBadge, { backgroundColor: colors.primary }]}>
             <Feather name="cpu" size={14} color="#fff" />
           </View>
@@ -1277,10 +1289,17 @@ const styles = StyleSheet.create({
   headerLeft: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    gap: 8,
     flex: 1,
     flexShrink: 1,
     marginRight: 8,
+  },
+  backBtn: {
+    width: 36,
+    height: 36,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: -8,
   },
   aiBadge: {
     width: 36,
