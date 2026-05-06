@@ -22,7 +22,7 @@
         "NSLocationAlwaysUsageDescription": "AttenteZéro utilise votre position pour trier les services par distance.",
         "ITSAppUsesNonExemptEncryption": false
       },
-      "buildNumber": "2"
+      "buildNumber": "3"
     },
     "android": {
       "package": "com.attentezero.app",
