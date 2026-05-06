@@ -1,6 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { LinearGradient } from "@/components/SafeLinearGradient";
+import { useRouter } from "expo-router";
 import React, { useMemo, useRef, useState } from "react";
 import {
   FlatList,
@@ -49,6 +50,7 @@ const ALL_CATEGORIES: Category[] = [
 export default function ServicesScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const { t, language } = useLanguage();
   const inputRef = useRef<TextInput>(null);
   const { services } = useServicesData();
@@ -146,6 +148,18 @@ export default function ServicesScreen() {
         <View style={styles.heroOrb2} />
 
         <View style={styles.headerTop}>
+          <Pressable
+            onPress={() => {
+              Haptics.selectionAsync();
+              if (router.canGoBack()) router.back();
+              else router.replace("/(tabs)" as any);
+            }}
+            style={styles.backBtn}
+            hitSlop={12}
+            accessibilityLabel={isFr ? "Retour" : "Back"}
+          >
+            <Feather name="chevron-left" size={26} color="#fff" />
+          </Pressable>
           <View style={styles.headerBadge}>
             <Feather name="grid" size={16} color="#0e7e6e" />
           </View>
@@ -447,7 +461,14 @@ const styles = StyleSheet.create({
   headerTop: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    gap: 8,
+  },
+  backBtn: {
+    width: 36,
+    height: 36,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: -8,
   },
   headerBadge: {
     width: 38,
