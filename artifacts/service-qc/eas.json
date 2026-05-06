@@ -27,12 +27,15 @@
       "android": {
         "buildType": "app-bundle"
       },
+      "ios": {
+        "resourceClass": "m-medium",
+        "autoIncrement": "buildNumber"
+      },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://quebec-aid-finder.replit.app",
         "EAS_NO_VCS": "1",
         "EXPO_ROUTER_APP_ROOT": "./app"
-      },
-      "prebuildCommand": "expo prebuild --no-install --platform android"
+      }
     }
   },
   "submit": {
@@ -40,6 +43,12 @@
       "android": {
         "serviceAccountKeyPath": "./google-service-account.json",
         "track": "internal"
+      },
+      "ios": {
+        "ascApiKeyPath": "./asc-api-key.p8",
+        "ascApiKeyId": "$APP_STORE_CONNECT_KEY_ID",
+        "ascApiKeyIssuerId": "$APP_STORE_CONNECT_ISSUER_ID",
+        "appleTeamId": "$APPLE_TEAM_ID"
       }
     }
   }

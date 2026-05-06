@@ -39,3 +39,7 @@ yarn-error.*
 .vercel
 
 .env
+
+# Apple App Store Connect API key (sensitive)
+asc-api-key.p8
+*.p8
