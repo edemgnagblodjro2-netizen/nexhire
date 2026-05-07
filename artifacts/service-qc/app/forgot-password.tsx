@@ -126,9 +126,10 @@ export default function ForgotPasswordScreen() {
                   </View>
                   <Text style={styles.codeLabel}>Vérifiez votre courriel</Text>
                   <Text style={styles.codeNote}>
-                    Si un compte existe pour cette adresse, un lien de réinitialisation vous a été envoyé.{"\n\n"}
-                    Copiez le code de réinitialisation depuis le courriel et collez-le dans l'écran suivant.{"\n"}
-                    Le code est valide 15 minutes.
+                    Si un compte existe pour cette adresse, un courriel vient de vous être envoyé.{"\n\n"}
+                    Vous y trouverez un <Text style={{ fontFamily: "Inter_700Bold", color: "#fff" }}>code à 6 chiffres</Text> à taper dans l'écran suivant — OU un lien magique à cliquer.{"\n\n"}
+                    Pensez à vérifier vos courriels indésirables.{"\n"}
+                    Code valide pendant 15 minutes.
                   </Text>
                   <Pressable
                     onPress={() => router.push({ pathname: "/reset-password", params: { email } })}

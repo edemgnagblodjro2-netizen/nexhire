@@ -36,7 +36,9 @@ export const passwordResetTokensTable = pgTable("password_reset_tokens", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
   email: varchar("email").notNull(),
   code: varchar("code", { length: 64 }).notNull(),
+  shortCode: varchar("short_code", { length: 6 }),
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
   usedAt: timestamp("used_at", { withTimezone: true }),
+  attempts: integer("attempts").notNull().default(0),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });

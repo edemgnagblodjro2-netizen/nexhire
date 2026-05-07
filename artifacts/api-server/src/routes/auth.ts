@@ -25,6 +25,7 @@ import {
   SESSION_TTL,
   type SessionData,
 } from "../lib/auth";
+import { sendEmailTo } from "../lib/notify";
 
 const OIDC_COOKIE_TTL = 10 * 60 * 1000;
 
@@ -738,23 +739,65 @@ router.post("/mobile-auth/forgot-password", async (req: Request, res: Response) 
         )
       );
 
-    // Generate a cryptographically secure 32-byte (256-bit) token.
-    const { randomBytes } = await import("node:crypto");
+    // Generate a cryptographically secure 32-byte (256-bit) token (used in
+    // the magic link) AND a 6-digit short code (used for manual entry).
+    const { randomBytes, randomInt } = await import("node:crypto");
     const code = randomBytes(32).toString("hex");
+    const shortCode = String(randomInt(0, 1_000_000)).padStart(6, "0");
     const expiresAt = new Date(Date.now() + RESET_TOKEN_TTL_MS);
 
     await db.insert(passwordResetTokensTable).values({
       email: normalizedEmail,
       code,
+      shortCode,
       expiresAt,
     });
 
-    // Never log the token itself, and never return it to the client.
-    // The token must be delivered out-of-band (email/SMS) by a trusted channel.
+    // Never log the codes themselves, and never return them to the client.
     req.log.info({ userId: user.id }, "Password reset token generated");
 
-    // TODO: integrate email delivery (e.g., Resend/SendGrid) to send the token.
-    // For now, the operator must read the token from server-side records.
+    // Send the email (best-effort — never block the response on email).
+    const origin = process.env.APP_PUBLIC_URL ?? "https://attentezero.ca";
+    const link = `${origin}/reset-password?email=${encodeURIComponent(normalizedEmail)}&code=${code}`;
+    const subject = "AttenteZéro — Réinitialisation de votre mot de passe";
+    const text =
+`Bonjour,
+
+Vous avez demandé à réinitialiser votre mot de passe AttenteZéro.
+
+VOTRE CODE DE VÉRIFICATION : ${shortCode}
+(Tapez ces 6 chiffres dans l'écran de l'app)
+
+OU cliquez sur ce lien :
+${link}
+
+Ce code et ce lien sont valides pendant 15 minutes.
+
+Si vous n'êtes pas à l'origine de cette demande, ignorez ce message — votre mot de passe ne sera pas modifié.
+
+— L'équipe AttenteZéro`;
+    const html =
+`<div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:520px;margin:0 auto;padding:24px;color:#0f172a">
+  <h2 style="color:#0e7e6e;margin:0 0 16px">Réinitialisation de votre mot de passe</h2>
+  <p style="font-size:15px;line-height:1.5">Bonjour,<br>Vous avez demandé à réinitialiser votre mot de passe AttenteZéro.</p>
+  <div style="background:#f1f5f9;border:2px dashed #0e7e6e;border-radius:12px;padding:18px;text-align:center;margin:20px 0">
+    <div style="font-size:13px;color:#475569;margin-bottom:6px">Votre code de vérification</div>
+    <div style="font-size:32px;font-weight:700;letter-spacing:8px;color:#0e7e6e;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">${shortCode}</div>
+  </div>
+  <p style="font-size:14px;text-align:center;margin:20px 0">— OU —</p>
+  <p style="text-align:center;margin:16px 0">
+    <a href="${link}" style="display:inline-block;background:#0e7e6e;color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:600">Réinitialiser maintenant</a>
+  </p>
+  <p style="font-size:13px;color:#64748b;line-height:1.5;margin-top:24px">Ce code et ce lien sont valides pendant <b>15 minutes</b>.<br>Si vous n'êtes pas à l'origine de cette demande, ignorez ce message.</p>
+  <p style="font-size:12px;color:#94a3b8;margin-top:24px;border-top:1px solid #e2e8f0;padding-top:12px">— L'équipe AttenteZéro</p>
+</div>`;
+
+    sendEmailTo(normalizedEmail, { subject, text, html })
+      .then((r) => {
+        if (!r.sent) req.log.warn({ reason: r.reason }, "Reset email not sent");
+      })
+      .catch((err) => req.log.warn({ err }, "Reset email exception"));
+
     res.json(neutralResponse);
   } catch (err) {
     req.log.error({ err }, "Forgot password error");
@@ -764,7 +807,11 @@ router.post("/mobile-auth/forgot-password", async (req: Request, res: Response) 
 
 const ResetPasswordBody = z.object({
   email: z.string().email(),
-  code: z.string().length(64).regex(/^[0-9a-f]+$/),
+  // Accept either the 64-char hex magic-link token OR the 6-digit short code.
+  code: z.string().refine(
+    (v) => /^[0-9a-f]{64}$/.test(v) || /^[0-9]{6}$/.test(v),
+    { message: "Code invalide." },
+  ),
   newPassword: z.string().min(6),
 });
 
@@ -776,22 +823,55 @@ router.post("/mobile-auth/reset-password", async (req: Request, res: Response) =
   }
 
   const { email, code, newPassword } = parsed.data;
+  const isShortCode = /^[0-9]{6}$/.test(code);
+  const MAX_SHORT_CODE_ATTEMPTS = 5;
 
   try {
+    // Look up the most recent live token for this email (any non-expired,
+    // unused token). We then check the supplied code against EITHER the
+    // long magic-link token OR the 6-digit short code.
     const [token] = await db
       .select()
       .from(passwordResetTokensTable)
       .where(
         and(
           eq(passwordResetTokensTable.email, email.toLowerCase()),
-          eq(passwordResetTokensTable.code, code),
           gt(passwordResetTokensTable.expiresAt, new Date()),
           isNull(passwordResetTokensTable.usedAt)
         )
       )
+      .orderBy(passwordResetTokensTable.createdAt)
       .limit(1);
 
     if (!token) {
+      res.status(400).json({ error: "Code invalide ou expiré." });
+      return;
+    }
+
+    // Enforce attempt cap on the 6-digit code (low entropy = brute-forceable
+    // without a cap). The 64-char magic-link token is high-entropy and does
+    // not need a cap.
+    if (isShortCode && (token.attempts ?? 0) >= MAX_SHORT_CODE_ATTEMPTS) {
+      // Burn the token so the attacker cannot keep guessing.
+      await db
+        .update(passwordResetTokensTable)
+        .set({ usedAt: new Date() })
+        .where(eq(passwordResetTokensTable.id, token.id));
+      res.status(400).json({ error: "Trop de tentatives. Demandez un nouveau code." });
+      return;
+    }
+
+    const matches = isShortCode
+      ? token.shortCode === code
+      : token.code === code;
+
+    if (!matches) {
+      if (isShortCode) {
+        await db
+          .update(passwordResetTokensTable)
+          .set({ attempts: (token.attempts ?? 0) + 1 })
+          .where(eq(passwordResetTokensTable.id, token.id));
+      }
       res.status(400).json({ error: "Code invalide ou expiré." });
       return;
     }

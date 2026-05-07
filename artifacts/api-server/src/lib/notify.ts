@@ -18,12 +18,26 @@ export interface NotifyEmailInput {
 }
 
 export async function sendOwnerEmail(input: NotifyEmailInput): Promise<{ sent: boolean; reason?: string }> {
-  const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.NOTIFY_EMAIL;
+  if (!to) {
+    console.log(`[notify] (skipped — NOTIFY_EMAIL missing) ${input.subject}`);
+    return { sent: false, reason: "missing-config" };
+  }
+  return sendEmailTo(to, input);
+}
+
+// Sends a transactional email to an arbitrary recipient (e.g. password reset
+// codes to end users). Returns { sent: false } on missing config / failure
+// — callers should treat email delivery as best-effort.
+export async function sendEmailTo(
+  to: string,
+  input: NotifyEmailInput,
+): Promise<{ sent: boolean; reason?: string }> {
+  const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.NOTIFY_FROM_EMAIL ?? "AttenteZéro <onboarding@resend.dev>";
 
-  if (!apiKey || !to) {
-    console.log(`[notify] (skipped — RESEND_API_KEY or NOTIFY_EMAIL missing) ${input.subject}`);
+  if (!apiKey) {
+    console.log(`[notify] (skipped — RESEND_API_KEY missing) ${input.subject} → ${to}`);
     return { sent: false, reason: "missing-config" };
   }
 

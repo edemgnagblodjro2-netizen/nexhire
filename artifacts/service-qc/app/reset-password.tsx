@@ -45,8 +45,11 @@ export default function ResetPasswordScreen() {
       setError("Veuillez remplir tous les champs.");
       return;
     }
-    if (code.trim().length !== 64 || !/^[0-9a-f]+$/.test(code.trim())) {
-      setError("Code de réinitialisation invalide. Vérifiez que vous l'avez copié en entier depuis le courriel.");
+    const trimmedCode = code.trim();
+    const isShort = /^[0-9]{6}$/.test(trimmedCode);
+    const isLong = /^[0-9a-f]{64}$/.test(trimmedCode);
+    if (!isShort && !isLong) {
+      setError("Code invalide. Entrez les 6 chiffres reçus par courriel.");
       return;
     }
     if (newPassword.length < 6) {
@@ -120,12 +123,14 @@ export default function ResetPasswordScreen() {
                     <Feather name="hash" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
                     <TextInput
                       style={styles.input}
-                      placeholder="Code de réinitialisation (depuis le courriel)"
+                      placeholder="Code à 6 chiffres (depuis le courriel)"
                       placeholderTextColor="rgba(255,255,255,0.5)"
                       value={code}
                       onChangeText={(t) => setCode(t.trim().toLowerCase())}
                       autoCapitalize="none"
                       autoCorrect={false}
+                      keyboardType="number-pad"
+                      maxLength={64}
                       returnKeyType="next"
                     />
                   </View>
