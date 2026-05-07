@@ -88,6 +88,23 @@ const TEL_JEUNES: Fallback24h = {
 };
 
 /**
+ * Universal 24/7 helplines — surfaced when the user activates the "24/7"
+ * filter on the results screen. These cover the most common emergency
+ * categories without overwhelming the list. Order is intentional: most
+ * commonly needed first.
+ */
+export const UNIVERSAL_24H_LINES: Fallback24h[] = [
+  INFO_SANTE,
+  SUICIDE_988,
+  RESSOURCES_211,
+  VIOLENCE_CONJUGALE,
+  LIGNE_PARENTS,
+  TEL_JEUNES,
+  DROGUE_AIDE,
+  URGENCE_911,
+];
+
+/**
  * Returns the most relevant 24/7 alternatives when a service of the given
  * category is closed. 911 is reserved for categories with a real
  * life-threatening risk (santé, santé mentale, famille). For non-urgent

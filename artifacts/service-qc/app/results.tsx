@@ -29,9 +29,10 @@ import { getCategoryColor, CATEGORY_ICONS } from "@/utils/categoryColors";
 import { haversineDistance } from "@/utils/location";
 import { normalizeCity } from "@/utils/cityMatch";
 import { getOpenStatus } from "@/utils/openHours";
+import { UNIVERSAL_24H_LINES } from "@/utils/fallback24h";
 
 type SortMode = "default" | "city" | "distance";
-type OpenFilter = "any" | "open" | "247";
+type OpenFilter = "any" | "247";
 
 // Liste figée des villes du Québec (forme normalisée via normalizeCity :
 // minuscules, sans accents, sans apostrophes). Sert de fallback pour
@@ -134,14 +135,13 @@ export default function ResultsScreen() {
       const matchesCategory =
         selectedCategory === "all" || s.category === selectedCategory;
 
-      // Open-now / 24/7 filter — applied to ALL search modes
-      if (openFilter !== "any") {
+      // 24/7 filter — restrict to genuinely round-the-clock services.
+      // Note: with our current dataset only ~1 service is parsable as 24/7,
+      // so the FlatList will be near-empty for this filter — the value
+      // comes from the helpline header injected above the list.
+      if (openFilter === "247") {
         const status = getOpenStatus(s.hours);
-        if (openFilter === "247") {
-          if (status.kind !== "always") return false;
-        } else if (openFilter === "open") {
-          if (status.kind !== "open" && status.kind !== "always") return false;
-        }
+        if (status.kind !== "always") return false;
       }
 
       if (cityKeyExact) {
@@ -342,12 +342,11 @@ export default function ResultsScreen() {
         <View style={styles.openFilterRow}>
           {([
             { key: "any" as const, label: language === "fr" ? "Tous" : "All", icon: "list" as const },
-            { key: "open" as const, label: language === "fr" ? "Ouvert maintenant" : "Open now", icon: "check-circle" as const },
-            { key: "247" as const, label: "24/7", icon: "clock" as const },
+            { key: "247" as const, label: language === "fr" ? "Lignes 24/7" : "24/7 lines", icon: "phone-call" as const },
           ]).map((opt) => {
             const isSelected = openFilter === opt.key;
             const isAccent = opt.key !== "any";
-            const accentColor = opt.key === "247" ? "#16a34a" : "#0e7e6e";
+            const accentColor = "#16a34a";
             return (
               <Pressable
                 key={opt.key}
@@ -462,7 +461,56 @@ export default function ResultsScreen() {
         scrollEnabled={!!filtered.length}
         renderItem={({ item }) => <ServiceCard service={item} />}
         ListHeaderComponent={
-          selectedCategory === "realestate" ? (
+          openFilter === "247" ? (
+            <View style={[styles.helplinesCard, { backgroundColor: "#ecfdf5", borderColor: "#86efac" }]}>
+              <View style={styles.helplinesHeader}>
+                <Feather name="phone-call" size={16} color="#15803d" />
+                <Text style={styles.helplinesTitle}>
+                  {language === "fr"
+                    ? "Lignes téléphoniques 24h/24"
+                    : "24/7 phone helplines"}
+                </Text>
+              </View>
+              <Text style={styles.helplinesSubtitle}>
+                {language === "fr"
+                  ? "Disponibles à tout moment, partout au Québec. Touchez pour appeler."
+                  : "Available anytime, anywhere in Quebec. Tap to call."}
+              </Text>
+              {UNIVERSAL_24H_LINES.map((line) => (
+                <Pressable
+                  key={line.phone}
+                  style={({ pressed }) => [
+                    styles.helplineRow,
+                    {
+                      backgroundColor: pressed ? "#f0fdf4" : "#fff",
+                      borderColor: line.isEmergency ? "#dc2626" : "#86efac",
+                    },
+                  ]}
+                  onPress={() => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                    Linking.openURL(`tel:${line.phone.replace(/[^0-9]/g, "")}`);
+                  }}
+                >
+                  <View
+                    style={[
+                      styles.helplinePhoneIcon,
+                      { backgroundColor: line.isEmergency ? "#dc2626" : "#15803d" },
+                    ]}
+                  >
+                    <Feather name="phone" size={14} color="#fff" />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.helplineName}>
+                      {line.name}
+                      <Text style={styles.helplinePhoneInline}>  ·  {line.phoneDisplay}</Text>
+                    </Text>
+                    <Text style={styles.helplineHint}>{line.hint}</Text>
+                  </View>
+                  <Feather name="chevron-right" size={16} color="#15803d" />
+                </Pressable>
+              ))}
+            </View>
+          ) : selectedCategory === "realestate" ? (
             <Pressable
               style={({ pressed }) => [
                 styles.guideBanner,
@@ -532,6 +580,62 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "Inter_600SemiBold",
     fontWeight: "600",
+  },
+  helplinesCard: {
+    marginHorizontal: 16,
+    marginTop: 12,
+    marginBottom: 8,
+    padding: 14,
+    borderRadius: 16,
+    borderWidth: 1,
+    gap: 10,
+  },
+  helplinesHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  helplinesTitle: {
+    color: "#15803d",
+    fontSize: 14,
+    fontFamily: "Inter_700Bold",
+  },
+  helplinesSubtitle: {
+    color: "#166534",
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    lineHeight: 16,
+  },
+  helplineRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    padding: 10,
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  helplinePhoneIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  helplineName: {
+    color: "#1f2937",
+    fontSize: 13,
+    fontFamily: "Inter_700Bold",
+  },
+  helplinePhoneInline: {
+    color: "#15803d",
+    fontFamily: "Inter_700Bold",
+  },
+  helplineHint: {
+    color: "#6b7280",
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
+    marginTop: 2,
+    lineHeight: 14,
   },
   container: {
     flex: 1,

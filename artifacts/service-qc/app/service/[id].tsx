@@ -92,15 +92,16 @@ export default function ServiceDetailScreen() {
   const tags = deriveServiceTags(service, lang);
   const eligibility = deriveEligibilityHint(service, lang);
   const openStatus = getOpenStatus(service.hours);
-  // Show the 24/7 fallback banner when the user is likely STUCK right now:
-  // service is closed today, or won't open for at least an hour. We never
-  // show it for 24/7 services or for services that are open right now.
-  // Note: when label parsing fails we intentionally fall back to "show the
-  // banner" — the safer-than-sorry default. Worst case the user sees an
-  // extra helpline option, never the opposite (hiding help when needed).
+  // Show the 24/7 fallback banner whenever the user could be STUCK:
+  //   - service closed today
+  //   - won't open for at least an hour
+  //   - hours are UNKNOWN (we can't promise it's open, so always offer Plan B)
+  // Skipped only for services already open right now or 24/7.
+  // We exclude `phone` services because their "address" already IS a phone line.
   const showFallback =
     service.serviceType !== "phone" &&
     (openStatus.kind === "closed" ||
+      openStatus.kind === "unknown" ||
       (openStatus.kind === "opens-at" &&
         (() => {
           const m = openStatus.label.match(/^(\d{1,2})h(\d{0,2})$/);
@@ -415,15 +416,23 @@ export default function ServiceDetailScreen() {
                   ? lang === "fr"
                     ? `Ce service ouvre à ${openStatus.label}`
                     : `This service opens at ${openStatus.label}`
-                  : lang === "fr"
-                    ? "Ce service est fermé en ce moment"
-                    : "This service is closed right now"}
+                  : openStatus.kind === "unknown"
+                    ? lang === "fr"
+                      ? "Horaires non confirmés"
+                      : "Hours not confirmed"
+                    : lang === "fr"
+                      ? "Ce service est fermé en ce moment"
+                      : "This service is closed right now"}
               </Text>
             </View>
             <Text style={styles.fallbackSubtitle}>
-              {lang === "fr"
-                ? "Besoin d'aide tout de suite ? Voici qui appeler maintenant :"
-                : "Need help right now? Here's who to call:"}
+              {openStatus.kind === "unknown"
+                ? lang === "fr"
+                  ? "Pour être sûr·e que quelqu'un répond tout de suite, vous pouvez appeler :"
+                  : "To make sure someone answers right now, you can call:"
+                : lang === "fr"
+                  ? "Besoin d'aide tout de suite ? Voici qui appeler maintenant :"
+                  : "Need help right now? Here's who to call:"}
             </Text>
 
             {fallbacks.map((fb) => (
