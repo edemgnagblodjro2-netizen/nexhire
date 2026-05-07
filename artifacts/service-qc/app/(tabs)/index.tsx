@@ -428,6 +428,9 @@ export default function HomeScreen() {
 
       <View style={styles.body}>
 
+        {/* ── Bannière slide (auto-rotation) — remontée au-dessus des tuiles ── */}
+        <HomeBannerSlider />
+
         {/* ── Tuiles principales (style mockup épuré) ── */}
         <View style={styles.heroTilesGrid}>
           {([
@@ -481,9 +484,6 @@ export default function HomeScreen() {
           </Text>
           <Feather name="chevron-right" size={14} color={colors.primary} />
         </Pressable>
-
-        {/* ── Bannière slide (auto-rotation) ── */}
-        <HomeBannerSlider />
 
         {/* ── Urgence ── */}
         <View style={styles.urgentWrap}>
@@ -885,90 +885,6 @@ export default function HomeScreen() {
               </TouchableOpacity>
             ))}
           </ScrollView>
-        </View>
-
-        {/* ── Catégories (carrousel horizontal avec compteurs) ── */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeaderRow}>
-            <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: 0 }]}>
-              {t.sectionCategories}
-            </Text>
-            <Pressable
-              onPress={() => {
-                Haptics.selectionAsync();
-                router.push("/(tabs)/categories" as any);
-              }}
-              hitSlop={8}
-            >
-              <Text style={[styles.sectionLink, { color: colors.primary }]}>
-                {language === "fr" ? "Tout voir" : "See all"} ›
-              </Text>
-            </Pressable>
-          </View>
-
-          {/* Compteurs par catégorie (mémorisés inline) */}
-          {(() => {
-            const visibleCategories = ALL_CATEGORIES;
-            const counts: Record<string, number> = {};
-            for (const c of visibleCategories) counts[c] = 0;
-            for (const s of services) {
-              if (counts[s.category] !== undefined) counts[s.category]++;
-            }
-            const sorted = [...visibleCategories].sort(
-              (a, b) => (counts[b] ?? 0) - (counts[a] ?? 0),
-            );
-
-            return (
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.catScrollContent}
-                decelerationRate="fast"
-                snapToInterval={132}
-                snapToAlignment="start"
-              >
-                {sorted.map((cat) => {
-                  const color = getCategoryColor(cat, colors);
-                  const icon = CATEGORY_ICONS[cat] as keyof typeof Feather.glyphMap;
-                  const count = counts[cat] ?? 0;
-                  return (
-                    <Pressable
-                      key={cat}
-                      style={({ pressed }) => [
-                        styles.catCardH,
-                        {
-                          backgroundColor: colors.card,
-                          borderColor: colors.border,
-                          opacity: pressed ? 0.82 : 1,
-                        },
-                      ]}
-                      onPress={() => handleCategoryPress(cat)}
-                    >
-                      <LinearGradient
-                        colors={[color + "26", color + "10"]}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 1 }}
-                        style={styles.catIconWrapH}
-                      >
-                        <Feather name={icon} size={26} color={color} />
-                      </LinearGradient>
-                      <Text
-                        style={[styles.catLabelH, { color: colors.foreground }]}
-                        numberOfLines={2}
-                      >
-                        {t.categories[cat]}
-                      </Text>
-                      <View style={[styles.catCountBadge, { backgroundColor: color + "18" }]}>
-                        <Text style={[styles.catCountText, { color }]}>
-                          {count}
-                        </Text>
-                      </View>
-                    </Pressable>
-                  );
-                })}
-              </ScrollView>
-            );
-          })()}
         </View>
 
         <BrandFooter />
