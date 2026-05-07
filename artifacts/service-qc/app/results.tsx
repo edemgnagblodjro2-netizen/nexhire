@@ -131,7 +131,9 @@ export default function ResultsScreen() {
       const matchesCategory =
         selectedCategory === "all" || s.category === selectedCategory;
       if (cityKeyExact) {
-        return matchesCategory && !s.isProvinceWide && normalizeCity(s.city) === cityKeyExact;
+        // Show city-specific matches AND province-wide services (e.g. rental
+        // platforms, helplines) — they are useful regardless of city.
+        return matchesCategory && (s.isProvinceWide || normalizeCity(s.city) === cityKeyExact);
       }
       if (!q) return matchesCategory;
       // Province label match: when the user opens results from the province
