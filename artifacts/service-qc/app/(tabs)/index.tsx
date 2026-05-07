@@ -428,6 +428,60 @@ export default function HomeScreen() {
 
       <View style={styles.body}>
 
+        {/* ── Tuiles principales (style mockup épuré) ── */}
+        <View style={styles.heroTilesGrid}>
+          {([
+            { cat: "food" as Category, icon: "shopping-bag" as const, label: language === "fr" ? "Aide alimentaire" : "Food aid" },
+            { cat: "housing" as Category, icon: "home" as const, label: language === "fr" ? "Logement" : "Housing" },
+            { cat: "health" as Category, icon: "heart" as const, label: language === "fr" ? "Santé" : "Health" },
+            { cat: "employment" as Category, icon: "briefcase" as const, label: language === "fr" ? "Emploi" : "Employment" },
+            { cat: "social" as Category, icon: "users" as const, label: language === "fr" ? "Soutien social" : "Social support" },
+            { cat: "immigration" as Category, icon: "globe" as const, label: language === "fr" ? "Immigration" : "Immigration" },
+          ]).map((tile) => (
+            <Pressable
+              key={tile.cat}
+              style={({ pressed }) => [
+                styles.heroTile,
+                {
+                  backgroundColor: colors.card,
+                  borderColor: colors.border,
+                  opacity: pressed ? 0.85 : 1,
+                  transform: [{ scale: pressed ? 0.97 : 1 }],
+                },
+              ]}
+              onPress={() => handleCategoryPress(tile.cat)}
+            >
+              <Feather name={tile.icon} size={42} color={colors.primary} strokeWidth={1.5} />
+              <Text
+                style={[styles.heroTileLabel, { color: colors.foreground }]}
+                numberOfLines={2}
+                adjustsFontSizeToFit
+                minimumFontScale={0.8}
+              >
+                {tile.label.toUpperCase()}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
+
+        {/* Lien vers toutes les catégories */}
+        <Pressable
+          onPress={() => {
+            Haptics.selectionAsync();
+            router.push("/(tabs)/categories" as any);
+          }}
+          style={({ pressed }) => [
+            styles.allCategoriesLink,
+            { borderColor: colors.border, opacity: pressed ? 0.7 : 1 },
+          ]}
+        >
+          <Feather name="grid" size={14} color={colors.primary} />
+          <Text style={[styles.allCategoriesLinkText, { color: colors.primary }]}>
+            {language === "fr" ? "Voir toutes les catégories" : "See all categories"}
+          </Text>
+          <Feather name="chevron-right" size={14} color={colors.primary} />
+        </Pressable>
+
         {/* ── Bannière slide (auto-rotation) ── */}
         <HomeBannerSlider />
 
@@ -1603,5 +1657,54 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontFamily: "Inter_600SemiBold",
     lineHeight: 17,
+  },
+
+  /* Hero tiles (mockup-style 2-col grid) */
+  heroTilesGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginHorizontal: -6,
+    marginTop: 4,
+    marginBottom: 8,
+  },
+  heroTile: {
+    width: "50%",
+    aspectRatio: 1.15,
+    paddingHorizontal: 6,
+    marginBottom: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 12,
+    borderRadius: 18,
+    borderWidth: 1,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  heroTileLabel: {
+    fontSize: 13,
+    fontWeight: "800",
+    fontFamily: "Inter_700Bold",
+    textAlign: "center",
+    letterSpacing: 0.4,
+    paddingHorizontal: 8,
+  },
+  allCategoriesLink: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginBottom: 14,
+  },
+  allCategoriesLinkText: {
+    fontSize: 13,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
   },
 });
