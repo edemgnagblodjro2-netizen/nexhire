@@ -44,47 +44,28 @@ type Section = {
 
 const SECTIONS: Section[] = [
   {
-    key: "logement",
-    titleFr: "Logement & alimentation",
-    titleEn: "Housing & food",
-    categories: ["housing", "food", "hypermarche", "pharmacie", "realestate"],
+    key: "essentiels",
+    titleFr: "Essentiels du quotidien",
+    titleEn: "Daily essentials",
+    categories: ["food", "hypermarche", "pharmacie", "housing", "realestate", "moving", "transport"],
   },
   {
-    key: "demenagement",
-    titleFr: "Déménagement",
-    titleEn: "Moving",
-    categories: ["moving"],
-    featuredTiles: [
-      {
-        key: "demenagement-guide",
-        route: "/demenagement",
-        icon: "truck",
-        emoji: "📦",
-        titleFr: "Guide déménagement",
-        titleEn: "Moving guide",
-        subtitleFr: "Meilleurs déménageurs & conseils",
-        subtitleEn: "Top movers & tips",
-        color: "#a16207",
-      },
-    ],
+    key: "sante-famille",
+    titleFr: "Santé & famille",
+    titleEn: "Health & family",
+    categories: ["health", "mentalHealth", "family", "childcare", "social"],
   },
   {
-    key: "sante",
-    titleFr: "Santé & bien-être",
-    titleEn: "Health & wellness",
-    categories: ["health", "mentalHealth"],
+    key: "demarches",
+    titleFr: "Démarches & services",
+    titleEn: "Services & paperwork",
+    categories: ["employment", "immigration", "administrative", "legal", "banking", "tourism"],
   },
   {
-    key: "famille",
-    titleFr: "Famille & enfance",
-    titleEn: "Family & children",
-    categories: ["family", "childcare"],
-  },
-  {
-    key: "emploi",
-    titleFr: "Emploi & immigration",
-    titleEn: "Work & immigration",
-    categories: ["employment", "immigration"],
+    key: "guides",
+    titleFr: "Guides & outils",
+    titleEn: "Guides & tools",
+    categories: [],
     featuredTiles: [
       {
         key: "perte-emploi",
@@ -93,8 +74,8 @@ const SECTIONS: Section[] = [
         emoji: "💼",
         titleFr: "Perte d'emploi",
         titleEn: "Job loss",
-        subtitleFr: "Étapes & demande d'AE",
-        subtitleEn: "Steps & EI claim",
+        subtitleFr: "Étapes & AE",
+        subtitleEn: "Steps & EI",
         color: "#1e40af",
       },
       {
@@ -104,9 +85,31 @@ const SECTIONS: Section[] = [
         emoji: "🎯",
         titleFr: "Top 10 à faire",
         titleEn: "Top 10 to do",
-        subtitleFr: "Suivi avec progression",
-        subtitleEn: "Track with progress",
+        subtitleFr: "Avec progression",
+        subtitleEn: "With progress",
         color: "#0ea5e9",
+      },
+      {
+        key: "aide-financiere",
+        route: "/aide-financiere",
+        icon: "dollar-sign",
+        emoji: "💰",
+        titleFr: "Aide financière",
+        titleEn: "Financial aid",
+        subtitleFr: "Mes prestations",
+        subtitleEn: "My benefits",
+        color: "#16a34a",
+      },
+      {
+        key: "demenagement-guide",
+        route: "/demenagement",
+        icon: "truck",
+        emoji: "📦",
+        titleFr: "Guide déménagement",
+        titleEn: "Moving guide",
+        subtitleFr: "Déménageurs & conseils",
+        subtitleEn: "Movers & tips",
+        color: "#a16207",
       },
       {
         key: "glossaire",
@@ -119,45 +122,6 @@ const SECTIONS: Section[] = [
         subtitleEn: "Canadian acronyms",
         color: "#7c3aed",
       },
-    ],
-  },
-  {
-    key: "communaute",
-    titleFr: "Communauté",
-    titleEn: "Community",
-    categories: ["social"],
-  },
-  {
-    key: "argent",
-    titleFr: "Argent & banques",
-    titleEn: "Money & banks",
-    categories: ["banking"],
-    featuredTiles: [
-      {
-        key: "aide-financiere",
-        route: "/aide-financiere",
-        icon: "dollar-sign",
-        emoji: "💰",
-        titleFr: "Aide financière",
-        titleEn: "Financial aid",
-        subtitleFr: "Estimer mes prestations",
-        subtitleEn: "Estimate my benefits",
-        color: "#16a34a",
-      },
-    ],
-  },
-  {
-    key: "transport",
-    titleFr: "Transport",
-    titleEn: "Transport",
-    categories: ["transport"],
-  },
-  {
-    key: "tourisme",
-    titleFr: "Tourisme & loisirs",
-    titleEn: "Tourism & leisure",
-    categories: ["tourism"],
-    featuredTiles: [
       {
         key: "tourisme-guide",
         route: "/tourisme",
@@ -174,10 +138,10 @@ const SECTIONS: Section[] = [
         route: "/visiteur-france",
         icon: "send",
         emoji: "🇫🇷",
-        titleFr: "Visiteur France → Canada",
-        titleEn: "Visitor France → Canada",
-        subtitleFr: "AVE, logement, sites, urgences",
-        subtitleEn: "eTA, lodging, sights, emergencies",
+        titleFr: "Visiteur France",
+        titleEn: "Visitor France",
+        subtitleFr: "AVE, logement, sites",
+        subtitleEn: "eTA, lodging, sights",
         color: "#1A1A2E",
       },
     ],
@@ -437,12 +401,13 @@ export default function CategoriesScreen() {
                     <FeaturedTileCard tile={ft} />
                   </View>
                 ))}
-                {/* Spacer cells to keep the last row 3-col aligned */}
+                {/* Spacer cells to keep the last row 4-col aligned */}
                 {(() => {
                   const total = section.categories.length + (section.featuredTiles?.length ?? 0);
-                  const rem = total % 3;
+                  if (total === 0) return null;
+                  const rem = total % 4;
                   return rem !== 0
-                    ? Array.from({ length: 3 - rem }).map((_, i) => (
+                    ? Array.from({ length: 4 - rem }).map((_, i) => (
                         <View key={`spacer-${i}`} style={styles.gridCell} />
                       ))
                     : null;
@@ -565,21 +530,21 @@ const styles = StyleSheet.create({
     marginHorizontal: -5,
   },
   gridCell: {
-    width: "33.333%",
-    paddingHorizontal: 5,
-    marginBottom: 10,
+    width: "25%",
+    paddingHorizontal: 4,
+    marginBottom: 8,
   },
 
   /* Tile */
   tile: {
-    borderRadius: 16,
+    borderRadius: 14,
     borderWidth: 1,
-    paddingVertical: 16,
-    paddingHorizontal: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 4,
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
-    minHeight: 118,
+    gap: 6,
+    minHeight: 102,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.04,
@@ -587,9 +552,9 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   tileIconWrap: {
-    width: 50,
-    height: 50,
-    borderRadius: 14,
+    width: 42,
+    height: 42,
+    borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
@@ -607,14 +572,14 @@ const styles = StyleSheet.create({
     borderColor: "#fff",
   },
   tileLabel: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "700",
     fontFamily: "Inter_700Bold",
     textAlign: "center",
-    lineHeight: 15,
+    lineHeight: 13,
   },
   tileCount: {
-    fontSize: 10,
+    fontSize: 9,
     fontFamily: "Inter_500Medium",
     textAlign: "center",
   },
