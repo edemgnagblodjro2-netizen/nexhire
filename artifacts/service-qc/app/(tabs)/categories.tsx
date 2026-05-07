@@ -47,7 +47,7 @@ const SECTIONS: Section[] = [
     key: "logement",
     titleFr: "Logement & alimentation",
     titleEn: "Housing & food",
-    categories: ["housing", "food", "realestate"],
+    categories: ["housing", "food", "hypermarche", "realestate"],
   },
   {
     key: "demenagement",

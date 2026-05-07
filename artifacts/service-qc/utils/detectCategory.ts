@@ -9,6 +9,12 @@ interface DetectionResult {
 const KEYWORD_MAP: Record<Category, string[]> = {
   administrative: [],
   legal: [],
+  hypermarche: [
+    "walmart", "supercentre", "supercenter",
+    "hypermarché", "hypermarche", "hypermarchés",
+    "costco", "maxi", "super c", "super-c",
+    "loblaws", "métro", "iga",
+  ],
   banking: [
     "banque", "banques", "banking", "bank",
     "compte bancaire", "ouvrir un compte", "open account",
@@ -582,6 +588,7 @@ export function detectCategory(input: string): DetectionResult {
     transport: 0,
     tourism: 0,
     moving: 0,
+    hypermarche: 0,
   };
   const matchedKeywords: string[] = [];
 

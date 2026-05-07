@@ -14,7 +14,8 @@ export type Category =
   | "banking"
   | "transport"
   | "tourism"
-  | "moving";
+  | "moving"
+  | "hypermarche";
 
 export interface Coordinates {
   lat: number;
@@ -99,6 +100,7 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   transport: "Transport",
   tourism: "Tourisme",
   moving: "Déménagement",
+  hypermarche: "Hypermarchés",
 };
 
 const __SERVICES_CHUNK_0: Service[] = [
