@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Communauté — Services de proximité</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F2EB;
+    --card: #FDFAF5;
+    --ink: #1A1208;
+    --muted: #7A6E5F;
+    --accent: #D4572A;
+    --accent2: #2A8B6E;
+    --accent3: #5B4FD4;
+    --border: #DDD6C8;
+    --tag-bg: #EDE8DF;
+    --shadow: 0 2px 12px rgba(26,18,8,0.08);
+    --radius: 14px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 15px;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    padding: 18px 24px 16px;
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; gap: 16px;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: #F5F2EB;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+
+  .logo span { color: var(--accent); }
+
+  .search-bar {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 0 14px;
+    gap: 10px;
+  }
+
+  .search-bar input {
+    background: none;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .search-bar input::placeholder { color: rgba(255,255,255,0.45); }
+
+  .search-icon { color: rgba(255,255,255,0.5); font-size: 16px; flex-shrink: 0; }
+
+  .loc-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--accent);
+    color: #fff;
+    border: none; cursor: pointer;
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: opacity .2s;
+  }
+  .loc-btn:hover { opacity: .85; }
+
+  /* LOCATION BANNER */
+  .loc-banner {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 24px;
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--muted);
+  }
+  .loc-banner strong { color: var(--ink); }
+  .loc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent2); flex-shrink: 0; }
+
+  /* CATEGORIES */
+  .cats {
+    padding: 18px 24px 10px;
+    display: flex; gap: 10px; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .cats::-webkit-scrollbar { display: none; }
+
+  .cat-pill {
+    display: flex; align-items: center; gap: 7px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    background: var(--card);
+    cursor: pointer;
+    font-size: 13px; font-weight: 500;
+    white-space: nowrap;
+    transition: all .2s;
+    flex-shrink: 0;
+  }
+  .cat-pill:hover, .cat-pill.active {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+  }
+  .cat-pill .emoji { font-size: 15px; }
+
+  /* FILTERS BAR */
+  .filters {
+    padding: 0 24px 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .filter-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+  .filter-chip {
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    font-size: 12px; cursor: pointer;
+    transition: all .15s;
+  }
+  .filter-chip:hover, .filter-chip.on { border-color: var(--accent2); color: var(--accent2); background: #EAF5F0; }
+
+  .sort-select {
+    margin-left: auto;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 12px;
+    background: var(--card);
+    cursor: pointer;
+    color: var(--ink);
+  }
+
+  /* VIEW TOGGLE */
+  .view-toggle {
+    display: flex;
+    margin-right: 0;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    overflow: hidden;
+  }
+  .vt-btn {
+    padding: 5px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    background: var(--card);
+    border: none;
+    color: var(--muted);
+    transition: all .15s;
+  }
+  .vt-btn.active { background: var(--ink); color: #fff; }
+
+  /* RESULTS AREA */
+  .results-area { padding: 0 24px 32px; }
+
+  .results-header {
+    display: flex; align-items: baseline; gap: 8px;
+    margin-bottom: 14px;
+  }
+  .results-count {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 700;
+  }
+  .results-sub { font-size: 13px; color: var(--muted); }
+
+  /* CARDS GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    cursor: pointer;
+    transition: box-shadow .2s, transform .15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card:hover {
+    box-shadow: 0 8px 28px rgba(26,18,8,0.12);
+    transform: translateY(-2px);
+  }
+
+  .card-accent-bar {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
+  .card-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .card-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .card-actions { display: flex; gap: 6px; }
+
+  .icon-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    transition: all .15s;
+    color: var(--muted);
+  }
+  .icon-btn:hover { border-color: var(--accent); color: var(--accent); background: #FDF0EB; }
+  .icon-btn.fav.active { color: var(--accent); border-color: var(--accent); background: #FDF0EB; }
+
+  .card-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .card-org { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+
+  .card-tags {
+    display: flex; flex-wrap: wrap; gap: 5px;
+    margin-bottom: 12px;
+  }
+
+  .tag {
+    padding: 3px 9px;
+    border-radius: 5px;
+    background: var(--tag-bg);
+    font-size: 11px; font-weight: 500;
+    color: var(--muted);
+  }
+
+  .card-meta {
+    display: flex; flex-direction: column; gap: 5px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .meta-row {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--muted);
+  }
+  .meta-row strong { color: var(--ink); }
+
+  .status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .open { background: var(--accent2); }
+  .closed { background: #C0392B; }
+  .soon { background: #E67E22; }
+
+  .dist-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px;
+    background: #EDE8DF;
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-weight: 500;
+  }
+
+  /* MAP PLACEHOLDER */
+  .map-view {
+    display: none;
+    height: 480px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, #e8e3d8 0%, #d5cfc3 100%);
+    position: relative;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--muted);
+  }
+  .map-view.show { display: flex; }
+
+  .map-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: .5;
+  }
+
+  .map-pin {
+    position: absolute;
+    width: 36px; height: 36px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.2);
+    cursor: pointer;
+    transition: transform .2s;
+  }
+  .map-pin:hover { transform: rotate(-45deg) scale(1.2); }
+  .map-pin span { transform: rotate(45deg); }
+
+  .map-label { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; z-index:1; }
+  .map-sub { font-size: 13px; z-index: 1; }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(26,18,8,.5);
+    z-index: 200;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+
+  .modal {
+    background: var(--card);
+    border-radius: 20px 20px 0 0;
+    width: 100%; max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 28px 28px 40px;
+    animation: slideUp .3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal-handle {
+    width: 40px; height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 auto 20px;
+  }
+
+  .modal-header {
+    display: flex; gap: 14px; align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .modal-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; flex-shrink: 0;
+  }
+
+  .modal-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .modal-org { font-size: 13px; color: var(--muted); }
+
+  .modal-section { margin-bottom: 20px; }
+  .modal-section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .8px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .info-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .info-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  .modal-actions {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-top: 24px;
+  }
+
+  .btn {
+    padding: 13px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: opacity .2s;
+  }
+  .btn:hover { opacity: .85; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-secondary { background: var(--tag-bg); color: var(--ink); }
+  .btn-full { grid-column: 1/-1; }
+
+  .lang-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .lang-chip {
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-size: 12px;
+    background: var(--bg);
+  }
+
+  .eligibility-box {
+    background: #EAF5F0;
+    border: 1px solid #BDE0D4;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #1A5C42;
+    line-height: 1.5;
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .empty-state .big { font-size: 48px; margin-bottom: 12px; }
+  .empty-state h3 { font-family: 'Syne', sans-serif; font-size: 18px; color: var(--ink); margin-bottom: 6px; }
+
+  /* SKELETON */
+  .skeleton {
+    background: linear-gradient(90deg, #EDE8DF 25%, #E0DAD0 50%, #EDE8DF 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 6px;
+  }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--ink); color: #fff;
+    padding: 11px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    opacity: 0;
+    transition: all .3s;
+    z-index: 300;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* NEARBY ALERT */
+  .nearby-alert {
+    margin: 0 24px 14px;
+    background: #EAF5F0;
+    border: 1px solid #BDE0D4;
+    border-radius: 10px;
+    padding: 11px 14px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: #1A5C42;
+  }
+
+  @media (max-width: 580px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    header { flex-wrap: wrap; }
+    .logo { width: 100%; }
+    .modal-actions { grid-template-columns: 1fr; }
+    .btn-full { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Com<span>•</span>munauté</div>
+  <div class="search-bar">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Rechercher un service, une ressource…" oninput="filterCards()">
+  </div>
+  <button class="loc-btn" onclick="showToast('📍 Localisation activée — Montréal, QC')">
+    📍 Ma position
+  </button>
+</header>
+
+<div class="loc-banner">
+  <div class="loc-dot"></div>
+  <span>Près de <strong>Montréal, QC</strong> · Rayon de <strong>5 km</strong> · <span id="live-time"></span></span>
+</div>
+
+<div class="cats">
+  <div class="cat-pill active" onclick="filterCat(this, 'all')"><span class="emoji">🗂</span> Tout</div>
+  <div class="cat-pill" onclick="filterCat(this, 'alimentation')"><span class="emoji">🍱</span> Alimentation</div>
+  <div class="cat-pill" onclick="filterCat(this, 'sante')"><span class="emoji">🏥</span> Santé</div>
+  <div class="cat-pill" onclick="filterCat(this, 'logement')"><span class="emoji">🏠</span> Logement</div>
+  <div class="cat-pill" onclick="filterCat(this, 'emploi')"><span class="emoji">💼</span> Emploi</div>
+  <div class="cat-pill" onclick="filterCat(this, 'soutien')"><span class="emoji">💬</span> Soutien</div>
+  <div class="cat-pill" onclick="filterCat(this, 'enfants')"><span class="emoji">👶</span> Enfants</div>
+  <div class="cat-pill" onclick="filterCat(this, 'legal')"><span class="emoji">⚖️</span> Aide juridique</div>
+</div>
+
+<div class="filters">
+  <span class="filter-label">Filtres :</span>
+  <div class="filter-chip" onclick="toggleFilter(this)">Ouvert maintenant</div>
+  <div class="filter-chip" onclick="toggleFilter(this)">Sans rendez-vous</div>
+  <div class="filter-chip" onclick="toggleFilter(this)">Gratuit</div>
+  <select class="sort-select">
+    <option>Trier : Distance</option>
+    <option>Trier : Pertinence</option>
+    <option>Trier : Évaluation</option>
+  </select>
+  <div class="view-toggle">
+    <button class="vt-btn active" id="listBtn" onclick="setView('list')">☰</button>
+    <button class="vt-btn" id="mapBtn" onclick="setView('map')">🗺</button>
+  </div>
+</div>
+
+<div class="nearby-alert">
+  ✨ <span><strong>3 services</strong> ont ouvert récemment près de vous — <a href="#" style="color:var(--accent2);text-decoration:underline" onclick="showToast('Nouveaux services chargés!')">Voir</a></span>
+</div>
+
+<div class="results-area">
+  <div class="results-header">
+    <span class="results-count" id="countEl">12</span>
+    <span class="results-sub">services trouvés</span>
+  </div>
+
+  <div class="cards-grid" id="cardsGrid"></div>
+
+  <div class="map-view" id="mapView">
+    <div class="map-grid"></div>
+    <div class="map-pin" style="background:#D4572A;top:38%;left:28%" onclick="openModal(0)"><span>🍱</span></div>
+    <div class="map-pin" style="background:#2A8B6E;top:55%;left:45%" onclick="openModal(1)"><span>🏥</span></div>
+    <div class="map-pin" style="background:#5B4FD4;top:30%;left:60%" onclick="openModal(2)"><span>🏠</span></div>
+    <div class="map-pin" style="background:#D4572A;top:65%;left:70%" onclick="openModal(3)"><span>💼</span></div>
+    <div class="map-pin" style="background:#2A8B6E;top:45%;left:20%" onclick="openModal(4)"><span>💬</span></div>
+    <div class="map-label">Vue carte — Montréal</div>
+    <div class="map-sub">Cliquez sur un repère pour voir les détails</div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalContent">
+    <div class="modal-handle"></div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const services = [
+  {
+    id: 0,
+    name: "Comptoir alimentaire Saint-Laurent",
+    org: "Centre communautaire Bois-de-Boulogne",
+    cat: "alimentation",
+    icon: "🍱",
+    color: "#D4572A",
+    iconBg: "#FDF0EB",
+    tags: ["Gratuit", "Sans rendez-vous", "Familles"],
+    status: "open",
+    statusLabel: "Ouvert",
+    hours: "Lun–Ven 9h–17h · Sam 10h–14h",
+    address: "4455 rue Saint-Laurent, Montréal",
+    distance: "0.8 km",
+    phone: "514 000-1234",
+    langs: ["Français", "Anglais", "Espagnol"],
+    eligibility: "Tout résident du quartier. Aucune preuve de revenu exigée. Présenter une pièce d'identité avec adresse.",
+    desc: "Distribution de paniers alimentaires, épicerie à prix réduit et repas communautaires chaque mercredi soir."
+  },
+  {
+    id: 1,
+    name: "Clinique de santé communautaire",
+    org: "CLSC Parc-Extension",
+    cat: "sante",
+    icon: "🏥",
+    color: "#2A8B6E",
+    iconBg: "#EAF5F0",
+    tags: ["Sur rendez-vous", "Tarif réduit"],
+    status: "open",
+    statusLabel: "Ouvert",
+    hours: "Lun–Ven 8h–20h · Sam 9h–16h",
+    address: "7085 rue Hutchison, Montréal",
+    distance: "1.2 km",
+    phone: "514 000-5678",
+    langs: ["Français", "Anglais", "Arabe", "Hindi"],
+    eligibility: "Résidents sans médecin de famille prioritaires. Carte d'assurance maladie requise.",
+    desc: "Soins primaires, vaccination, santé mentale de base, accompagnement pour nouveaux arrivants."
+  },
+  {
+    id: 2,
+    name: "Hébergement d'urgence Espoir",
+    org: "Mission Old Brewery",
+    cat: "logement",
+    icon: "🏠",
+    color: "#5B4FD4",
+    iconBg: "#F0EEFC",
+    tags: ["Urgence 24/7", "Gratuit"],
+    status: "open",
+    statusLabel: "Ouvert",
+    hours: "24h/24, 7j/7",
+    address: "1860 boul. de Maisonneuve O., Montréal",
+    distance: "1.9 km",
+    phone: "514 000-9012",
+    langs: ["Français", "Anglais"],
+    eligibility: "Toute personne en situation d'itinérance. Aucun document requis. Animaux acceptés.",
+    desc: "Hébergement temporaire d'urgence, repas chauds, douches et accompagnement vers des ressources stables."
+  },
+  {
+    id: 3,
+    name: "Carrefour emploi et intégration",
+    org: "Emploi-Québec partenaire",
+    cat: "emploi",
+    icon: "💼",
+    color: "#D4572A",
+    iconBg: "#FDF0EB",
+    tags: ["Gratuit", "Sur rendez-vous", "En ligne"],
+    status: "soon",
+    statusLabel: "Ouvre à 13h",
+    hours: "Mar–Ven 13h–18h",
+    address: "1234 rue Jean-Talon E., Montréal",
+    distance: "2.3 km",
+    phone: "514 000-3456",
+    langs: ["Français", "Anglais", "Créole"],
+    eligibility: "Toute personne en recherche d'emploi, incluant les personnes immigrantes et les jeunes 16–35 ans.",
+    desc: "Aide à la rédaction de CV, préparation aux entretiens, accès aux offres d'emploi et ateliers de recherche d'emploi."
+  },
+  {
+    id: 4,
+    name: "Ligne d'écoute et soutien psychosocial",
+    org: "Tel-Aide Québec",
+    cat: "soutien",
+    icon: "💬",
+    color: "#2A8B6E",
+    iconBg: "#EAF5F0",
+    tags: ["Anonyme", "Gratuit", "24/7"],
+    status: "open",
+    statusLabel: "Disponible",
+    hours: "24h/24, 7j/7",
+    address: "Service téléphonique — partout au Québec",
+    distance: "En ligne",
+    phone: "514 935-1101",
+    langs: ["Français", "Anglais"],
+    eligibility: "Toute personne vivant une détresse émotionnelle. Service confidentiel et anonyme.",
+    desc: "Écoute bienveillante, soutien en situation de crise, référencement vers des ressources spécialisées."
+  },
+  {
+    id: 5,
+    name: "Centre petite enfance Arc-en-Ciel",
+    org: "Réseau des CPE du Québec",
+    cat: "enfants",
+    icon: "👶",
+    color: "#E67E22",
+    iconBg: "#FEF5EA",
+    tags: ["Subventionné", "Liste d'attente"],
+    status: "closed",
+    statusLabel: "Fermé",
+    hours: "Lun–Ven 7h30–17h30",
+    address: "2020 avenue du Parc, Montréal",
+    distance: "2.8 km",
+    phone: "514 000-7890",
+    langs: ["Français"],
+    eligibility: "Enfants de 0 à 5 ans. Inscription via le portail La Place 0-5. Priorité aux familles à faible revenu.",
+    desc: "Garde éducative subventionnée à 9,10$/jour. Programme d'éveil, activités artistiques et plein air."
+  },
+  {
+    id: 6,
+    name: "Clinique juridique communautaire",
+    org: "Aide juridique Montréal",
+    cat: "legal",
+    icon: "⚖️",
+    color: "#5B4FD4",
+    iconBg: "#F0EEFC",
+    tags: ["Gratuit", "Sur rendez-vous"],
+    status: "open",
+    statusLabel: "Ouvert",
+    hours: "Lun·Mer·Ven 9h–16h",
+    address: "800 boul. de Maisonneuve E., Montréal",
+    distance: "3.1 km",
+    phone: "514 000-2345",
+    langs: ["Français", "Anglais", "Espagnol"],
+    eligibility: "Personnes à faible ou moyen revenu selon les barèmes de l'aide juridique du Québec.",
+    desc: "Consultations gratuites en droit du logement, droit de la famille, immigration et droit du travail."
+  },
+  {
+    id: 7,
+    name: "Banque alimentaire Plateau",
+    org: "Moisson Montréal",
+    cat: "alimentation",
+    icon: "🍱",
+    color: "#D4572A",
+    iconBg: "#FDF0EB",
+    tags: ["Gratuit", "Sur rendez-vous"],
+    status: "open",
+    statusLabel: "Ouvert",
+    hours: "Mar·Jeu 10h–15h",
+    address: "4000 rue Rachel E., Montréal",
+    distance: "3.5 km",
+    phone: "514 000-6789",
+    langs: ["Français", "Anglais"],
+    eligibility: "Toute personne dans le besoin. Référence d'un intervenant social recommandée mais non obligatoire.",
+    desc: "Distribution de denrées non périssables, produits frais et articles d'hygiène essentiels."
+  }
+];
+
+let activeCategory = 'all';
+let searchTerm = '';
+let favorites = new Set();
+
+function renderCards() {
+  const grid = document.getElementById('cardsGrid');
+  const filtered = services.filter(s => {
+    const matchCat = activeCategory === 'all' || s.cat === activeCategory;
+    const matchSearch = s.name.toLowerCase().includes(searchTerm) ||
+                        s.org.toLowerCase().includes(searchTerm) ||
+                        s.tags.some(t => t.toLowerCase().includes(searchTerm));
+    return matchCat && matchSearch;
+  });
+
+  document.getElementById('countEl').textContent = filtered.length;
+
+  grid.innerHTML = filtered.map(s => `
+    <div class="service-card" onclick="openModal(${s.id})">
+      <div class="card-accent-bar" style="background:${s.color}"></div>
+      <div class="card-top">
+        <div class="card-icon" style="background:${s.iconBg}">${s.icon}</div>
+        <div class="card-actions">
+          <button class="icon-btn fav ${favorites.has(s.id)?'active':''}" onclick="toggleFav(event,${s.id})" title="Sauvegarder">♡</button>
+          <button class="icon-btn" onclick="shareService(event,'${s.name}')" title="Partager">↗</button>
+        </div>
+      </div>
+      <div class="card-name">${s.name}</div>
+      <div class="card-org">${s.org}</div>
+      <div class="card-tags">${s.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <div class="card-meta">
+        <div class="meta-row">
+          <div class="status-dot ${s.status}"></div>
+          <strong>${s.statusLabel}</strong>
+          <span>· ${s.hours.split('·')[0].trim()}</span>
+        </div>
+        <div class="meta-row">
+          <span>📍</span> ${s.address}
+          <span class="dist-badge">📏 ${s.distance}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCat(el, cat) {
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  activeCategory = cat;
+  renderCards();
+}
+
+function filterCards() {
+  searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  renderCards();
+}
+
+function toggleFilter(el) { el.classList.toggle('on'); }
+
+function toggleFav(e, id) {
+  e.stopPropagation();
+  if (favorites.has(id)) {
+    favorites.delete(id);
+    showToast('Retiré des favoris');
+  } else {
+    favorites.add(id);
+    showToast('❤️ Ajouté aux favoris');
+  }
+  renderCards();
+}
+
+function shareService(e, name) {
+  e.stopPropagation();
+  showToast(`📤 Lien copié — ${name.slice(0,25)}…`);
+}
+
+function openModal(id) {
+  const s = services.find(x => x.id === id);
+  if (!s) return;
+  document.getElementById('modalBody').innerHTML = `
+    <div class="modal-header">
+      <div class="modal-icon" style="background:${s.iconBg}">${s.icon}</div>
+      <div>
+        <div class="modal-title">${s.name}</div>
+        <div class="modal-org">${s.org}</div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">À propos</div>
+      <p style="font-size:14px;line-height:1.6;color:var(--muted)">${s.desc}</p>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Informations pratiques</div>
+      <div class="info-row"><span class="info-icon">🕐</span><div><strong>Horaires</strong><br>${s.hours}</div></div>
+      <div class="info-row"><span class="info-icon">📍</span><div><strong>Adresse</strong><br>${s.address}</div></div>
+      <div class="info-row"><span class="info-icon">📞</span><div><strong>Téléphone</strong><br>${s.phone}</div></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Langues parlées</div>
+      <div class="lang-chips">${s.langs.map(l=>`<span class="lang-chip">${l}</span>`).join('')}</div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Admissibilité</div>
+      <div class="eligibility-box">✅ ${s.eligibility}</div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="showToast('📞 Appel en cours…')">📞 Appeler</button>
+      <button class="btn btn-secondary" onclick="showToast('🗺 Itinéraire ouvert')">🗺 Itinéraire</button>
+      <button class="btn btn-secondary" onclick="showToast('📤 Lien copié!')">📤 Partager</button>
+      <button class="btn btn-secondary" onclick="showToast('⚑ Signalement envoyé — merci!')">⚑ Signaler une erreur</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) {
+    document.getElementById('modalOverlay').classList.remove('show');
+  }
+}
+
+function setView(v) {
+  const grid = document.getElementById('cardsGrid');
+  const map = document.getElementById('mapView');
+  document.getElementById('listBtn').classList.toggle('active', v === 'list');
+  document.getElementById('mapBtn').classList.toggle('active', v === 'map');
+  grid.style.display = v === 'list' ? 'grid' : 'none';
+  map.classList.toggle('show', v === 'map');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function updateTime() {
+  const now = new Date();
+  document.getElementById('live-time').textContent = now.toLocaleTimeString('fr-CA', {hour:'2-digit',minute:'2-digit'});
+}
+
+renderCards();
+updateTime();
+setInterval(updateTime, 30000);
+</script>
+</body>
+</html>
