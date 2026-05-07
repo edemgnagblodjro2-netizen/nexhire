@@ -20,6 +20,8 @@ import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 import { deriveEligibilityHint, deriveServiceTags } from "@/utils/serviceTags";
+import { getOpenStatus } from "@/utils/openHours";
+import { getFallbacks24h } from "@/utils/fallback24h";
 import { getApiBaseUrl } from "@/lib/apiBase";
 import WaitTimeWidget from "@/components/WaitTimeWidget";
 import { ServiceRating } from "@/components/ServiceRating";
@@ -89,6 +91,30 @@ export default function ServiceDetailScreen() {
   const lang = language === "fr" ? "fr" : "en";
   const tags = deriveServiceTags(service, lang);
   const eligibility = deriveEligibilityHint(service, lang);
+  const openStatus = getOpenStatus(service.hours);
+  // Show the 24/7 fallback banner when the user is likely STUCK right now:
+  // service is closed today, or won't open for at least an hour. We never
+  // show it for 24/7 services or for services that are open right now.
+  // Note: when label parsing fails we intentionally fall back to "show the
+  // banner" — the safer-than-sorry default. Worst case the user sees an
+  // extra helpline option, never the opposite (hiding help when needed).
+  const showFallback =
+    service.serviceType !== "phone" &&
+    (openStatus.kind === "closed" ||
+      (openStatus.kind === "opens-at" &&
+        (() => {
+          const m = openStatus.label.match(/^(\d{1,2})h(\d{0,2})$/);
+          if (!m) return true;
+          const target = parseInt(m[1], 10) * 60 + (m[2] ? parseInt(m[2], 10) : 0);
+          const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
+          return target - nowMin >= 60;
+        })()));
+  const fallbacks = showFallback ? getFallbacks24h(service.category) : [];
+
+  function handleFallbackCall(phone: string) {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    Linking.openURL(`tel:${phone.replace(/[^0-9]/g, "")}`);
+  }
 
   const LANG_LABELS_FR: Record<string, string> = {
     fr: "Français", en: "Anglais", es: "Espagnol", ar: "Arabe",
@@ -379,6 +405,62 @@ export default function ServiceDetailScreen() {
             </Text>
           </View>
         </View>
+
+        {showFallback && fallbacks.length > 0 ? (
+          <View style={styles.fallbackCard}>
+            <View style={styles.fallbackHeader}>
+              <Feather name="moon" size={18} color="#fff" />
+              <Text style={styles.fallbackHeaderText}>
+                {openStatus.kind === "opens-at"
+                  ? lang === "fr"
+                    ? `Ce service ouvre à ${openStatus.label}`
+                    : `This service opens at ${openStatus.label}`
+                  : lang === "fr"
+                    ? "Ce service est fermé en ce moment"
+                    : "This service is closed right now"}
+              </Text>
+            </View>
+            <Text style={styles.fallbackSubtitle}>
+              {lang === "fr"
+                ? "Besoin d'aide tout de suite ? Voici qui appeler maintenant :"
+                : "Need help right now? Here's who to call:"}
+            </Text>
+
+            {fallbacks.map((fb) => (
+              <TouchableOpacity
+                key={fb.phone}
+                style={[
+                  styles.fallbackOption,
+                  fb.isEmergency && styles.fallbackOptionEmergency,
+                ]}
+                onPress={() => handleFallbackCall(fb.phone)}
+                activeOpacity={0.85}
+              >
+                <View
+                  style={[
+                    styles.fallbackPhoneIcon,
+                    fb.isEmergency && { backgroundColor: "#dc2626" },
+                  ]}
+                >
+                  <Feather name="phone" size={16} color="#fff" />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text
+                    style={[
+                      styles.fallbackName,
+                      fb.isEmergency && { color: "#7f1d1d" },
+                    ]}
+                  >
+                    {fb.name}
+                    <Text style={styles.fallbackPhoneInline}>  ·  {fb.phoneDisplay}</Text>
+                  </Text>
+                  <Text style={styles.fallbackHint}>{fb.hint}</Text>
+                </View>
+                <Feather name="chevron-right" size={18} color="#7f1d1d" />
+              </TouchableOpacity>
+            ))}
+          </View>
+        ) : null}
 
         {eligibility ? (
           <View
@@ -826,6 +908,80 @@ const styles = StyleSheet.create({
   langChipText: {
     fontSize: 12,
     fontFamily: "Inter_500Medium",
+  },
+  fallbackCard: {
+    backgroundColor: "#FEF2F2",
+    borderWidth: 1,
+    borderColor: "#FCA5A5",
+    borderRadius: 16,
+    padding: 14,
+    gap: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  fallbackHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    backgroundColor: "#b91c1c",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 10,
+    marginHorizontal: -4,
+    marginTop: -4,
+  },
+  fallbackHeaderText: {
+    color: "#fff",
+    fontSize: 14,
+    fontFamily: "Inter_700Bold",
+    flex: 1,
+  },
+  fallbackSubtitle: {
+    color: "#7f1d1d",
+    fontSize: 13,
+    fontFamily: "Inter_500Medium",
+    lineHeight: 18,
+  },
+  fallbackOption: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#FCA5A5",
+    borderRadius: 12,
+    padding: 12,
+  },
+  fallbackOptionEmergency: {
+    borderColor: "#dc2626",
+    backgroundColor: "#fff7f7",
+  },
+  fallbackPhoneIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "#0e7e6e",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  fallbackName: {
+    color: "#1f2937",
+    fontSize: 14,
+    fontFamily: "Inter_700Bold",
+  },
+  fallbackPhoneInline: {
+    color: "#0e7e6e",
+    fontFamily: "Inter_700Bold",
+  },
+  fallbackHint: {
+    color: "#6b7280",
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    marginTop: 2,
+    lineHeight: 16,
   },
 });
 

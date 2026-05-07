@@ -28,8 +28,10 @@ import { useColors } from "@/hooks/useColors";
 import { getCategoryColor, CATEGORY_ICONS } from "@/utils/categoryColors";
 import { haversineDistance } from "@/utils/location";
 import { normalizeCity } from "@/utils/cityMatch";
+import { getOpenStatus } from "@/utils/openHours";
 
 type SortMode = "default" | "city" | "distance";
+type OpenFilter = "any" | "open" | "247";
 
 // Liste figée des villes du Québec (forme normalisée via normalizeCity :
 // minuscules, sans accents, sans apostrophes). Sert de fallback pour
@@ -121,6 +123,7 @@ export default function ResultsScreen() {
     (browsingProvince === null || browsingProvince === "QC");
 
   const [sortMode, setSortMode] = React.useState<SortMode>("default");
+  const [openFilter, setOpenFilter] = React.useState<OpenFilter>("any");
 
   const filtered = useMemo(() => {
     const q = (query ?? "").toLowerCase().trim();
@@ -130,6 +133,17 @@ export default function ResultsScreen() {
     const base = services.filter((s) => {
       const matchesCategory =
         selectedCategory === "all" || s.category === selectedCategory;
+
+      // Open-now / 24/7 filter — applied to ALL search modes
+      if (openFilter !== "any") {
+        const status = getOpenStatus(s.hours);
+        if (openFilter === "247") {
+          if (status.kind !== "always") return false;
+        } else if (openFilter === "open") {
+          if (status.kind !== "open" && status.kind !== "always") return false;
+        }
+      }
+
       if (cityKeyExact) {
         // Show city-specific matches AND province-wide services (e.g. rental
         // platforms, helplines) — they are useful regardless of city.
@@ -169,7 +183,7 @@ export default function ResultsScreen() {
     }
 
     return base;
-  }, [services, selectedCategory, query, cityExact, sortMode, userLocation]);
+  }, [services, selectedCategory, query, cityExact, sortMode, userLocation, openFilter]);
 
   function handleChipPress(cat: Category | "all") {
     Haptics.selectionAsync();
@@ -324,6 +338,52 @@ export default function ResultsScreen() {
               : "Enable location to sort by proximity."}
           </Text>
         ) : null}
+
+        <View style={styles.openFilterRow}>
+          {([
+            { key: "any" as const, label: language === "fr" ? "Tous" : "All", icon: "list" as const },
+            { key: "open" as const, label: language === "fr" ? "Ouvert maintenant" : "Open now", icon: "check-circle" as const },
+            { key: "247" as const, label: "24/7", icon: "clock" as const },
+          ]).map((opt) => {
+            const isSelected = openFilter === opt.key;
+            const isAccent = opt.key !== "any";
+            const accentColor = opt.key === "247" ? "#16a34a" : "#0e7e6e";
+            return (
+              <Pressable
+                key={opt.key}
+                style={[
+                  styles.openChip,
+                  {
+                    backgroundColor: isSelected
+                      ? isAccent ? accentColor : colors.foreground
+                      : colors.card,
+                    borderColor: isSelected
+                      ? isAccent ? accentColor : colors.foreground
+                      : colors.border,
+                  },
+                ]}
+                onPress={() => {
+                  Haptics.selectionAsync();
+                  setOpenFilter(opt.key);
+                }}
+              >
+                <Feather
+                  name={opt.icon}
+                  size={12}
+                  color={isSelected ? "#fff" : isAccent ? accentColor : colors.foreground}
+                />
+                <Text
+                  style={[
+                    styles.openChipText,
+                    { color: isSelected ? "#fff" : isAccent ? accentColor : colors.foreground },
+                  ]}
+                >
+                  {opt.label}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
       </View>
 
       {showChildcarePortal ? (
@@ -452,6 +512,27 @@ export default function ResultsScreen() {
 }
 
 const styles = StyleSheet.create({
+  openFilterRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 6,
+    marginTop: 8,
+    paddingHorizontal: 16,
+  },
+  openChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 16,
+    borderWidth: 1,
+  },
+  openChipText: {
+    fontSize: 12,
+    fontFamily: "Inter_600SemiBold",
+    fontWeight: "600",
+  },
   container: {
     flex: 1,
   },
