@@ -1,0 +1,41 @@
+Détail du problème
+Politique relative aux déclarations trompeuses : Non-respect de la politique relative aux déclarations trompeuses
+Votre appli présente le ou les problèmes de fonctionnalité suivants :
+
+Absence de lien vers la source pour les renseignements gouvernementaux
+Votre appli fournit des renseignements gouvernementaux, mais il lui manque au moins une URL ou au moins un lien clair et accessible vers la ou les sources originales (par exemple, les domaines .gov).
+
+Votre application comprend du contenu qui ne respecte pas la politique relative aux déclarations trompeuses. Nous avons adopté cette politique pour promouvoir la confiance et créer une expérience sécurisée pour les utilisateurs. C'est pourquoi les applis qui fournissent des renseignements gouvernementaux, qu'elles soient ou non affiliées au gouvernement, doivent respecter strictement notre politique relative aux déclarations trompeuses.
+
+
+Où ce problème a été détecté
+Ce problème peut aussi se produire dans d'autres zones. Vérifiez tous les éléments de votre appli en corrigeant ce problème.
+
+Emplacement
+Preuve
+Description complète (en-CA)
+AttenteZéro helps you quickly find the right community services in Quebec—in seconds instead of waiting for hours. 🎯 WHO IS IT FOR? Families facing financial difficulties People in urgent situations (housing, food, safety) Newcomers and immigrants Social workers, caseworkers, and organizations Anyone looking for practical help in Quebec 🗺️ OVER 530 SERVICES LISTED Food banks, emergency shelters, mental health support, legal aid, women’s support services, youth resources, senior services, immigrant integration, and more. 15 régions couvertes : Montréal, Québec City, Laval, Longueuil, Sherbrooke, Trois-Rivières, Saguenay, Gatineau, Lévis, Drummondville, Granby, Saint-Jérôme, Rimouski, Rouyn-Noranda, Val-d’Or. 🤖 ARTIFICIAL INTELLIGENCE An intelligent assistant helps you express your needs and guides you to the right resources—even if you don’t know where to start. 🆘 CRISIS DETECTION In case of distress (suicidal thoughts, domestic violence, or emergencies), the app immediately directs you to appropriate resources: 911, 1-866-APPELLE hotline, shelters, and support centers. 🌍 MULTILINGUAL Available in French, English, Spanish, Arabic, and Haitian Creole. 📍 GEOLOCATION Find the nearest services with opening hours, phone numbers, addresses, and directions. ⭐ FREE FEATURES Unlimited search Geolocation Full access to service listings Available in 5 languages 💎 PREMIUM OPTION ($10 one-time payment) — Optional Unlimited AI chat Synced favorites Ad-free experience 🏢 ORGANIZATION PLANS Field Plan ($19/month): for individual workers Organization Plan ($39/month): for community teams Institution Plan ($199/month): for CIUSSS, CISSS, municipalities 14-day free trial 🔒 PRIVACY & DATA PROTECTION Compliant with Quebec Law 25 No targeted advertising No data selling Offline mode available 🤝 COMPLIMENTS 211 QUEBEC AttenteZéro does not replace the 211 Quebec service—it complements it by providing faster, location-based results, available 24/7 in 5 languages, with an AI assistant to better define your needs. ⚠️ IN CASE OF EMERGENCY Call 911 immediately. AttenteZéro is not an emergency service. 📧 Contact: attentezero5@gmail.com 🌐 Privacy Policy: https://quebec-aid-finder.replit.app/api/privacy A Quebec-based initiative to reduce isolation and improve access to community services. If you want, I can also create a shorter version optimized for Play Store keywords (ASO) to boost downloads 🚀
+Dépannage
+Si vous disposez d'un document écrit prouvant votre affiliation gouvernementale ou l'autorisation de fournir des services gouvernementaux au moyen de votre appli, procédez comme suit :
+Faites appel. Si vous l'avez déjà fait, veuillez attendre une réponse après la création du dossier d'appel.
+Si vous n'avez pas d'affiliation gouvernementale ou n'êtes pas autorisé à fournir des services gouvernementaux au moyen de votre appli, procédez comme suit :
+Clarifiez et/ou complétez les informations de votre appli.
+Identifiez et fournissez au moins une source claire, officielle, valide et fonctionnelle pour tous les renseignements gouvernementaux partagés dans votre appli.
+Incluez dans la description de votre appli une clause de non-responsabilité bien visible indiquant que l'appli ne représente pas une entité gouvernementale.
+Assurez-vous de respecter toutes les autres politiques du programme pour les développeurs.
+Soumettez la mise à jour de votre appli.
+
+Cette info est-elle utile ?
+Version précédente disponible sur Google Play
+Appliqué le
+7 mai
+Erreur, 7 mai
+Ressources associées
+Allégations mensongères
+En savoir plus sur le respect des règles
+Besoin d'aide supplémentaire ?
+Demander à la communauté d'aide Play
+Échangez avec notre communauté d'Experts Produit
+Obtenir de l'aide
+Écrivez à l'équipe de spécialistes du règlement de Play
+Faire appel
