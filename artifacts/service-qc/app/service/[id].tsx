@@ -19,6 +19,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
+import { deriveEligibilityHint, deriveServiceTags } from "@/utils/serviceTags";
 import { getApiBaseUrl } from "@/lib/apiBase";
 import WaitTimeWidget from "@/components/WaitTimeWidget";
 import { ServiceRating } from "@/components/ServiceRating";
@@ -46,7 +47,7 @@ export default function ServiceDetailScreen() {
   const colors = useColors();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { services } = useServicesData();
 
@@ -85,6 +86,19 @@ export default function ServiceDetailScreen() {
 
   const categoryColor = getCategoryColor(service.category, colors);
   const icon = CATEGORY_ICONS[service.category] as keyof typeof Feather.glyphMap;
+  const lang = language === "fr" ? "fr" : "en";
+  const tags = deriveServiceTags(service, lang);
+  const eligibility = deriveEligibilityHint(service, lang);
+
+  const LANG_LABELS_FR: Record<string, string> = {
+    fr: "Français", en: "Anglais", es: "Espagnol", ar: "Arabe",
+    ht: "Créole haïtien", zh: "Chinois", pt: "Portugais", it: "Italien",
+  };
+  const LANG_LABELS_EN: Record<string, string> = {
+    fr: "French", en: "English", es: "Spanish", ar: "Arabic",
+    ht: "Haitian Creole", zh: "Chinese", pt: "Portuguese", it: "Italian",
+  };
+  const langLabels = lang === "fr" ? LANG_LABELS_FR : LANG_LABELS_EN;
 
   function handleCall() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -249,6 +263,24 @@ export default function ServiceDetailScreen() {
           <Text style={[styles.subcategory, { color: colors.mutedForeground }]}>
             {service.subcategory}
           </Text>
+
+          {tags.length > 0 ? (
+            <View style={styles.tagsRow}>
+              {tags.map((tag) => {
+                const palette = TAG_PALETTE[tag.tone];
+                return (
+                  <View
+                    key={tag.label}
+                    style={[styles.tagChip, { backgroundColor: palette.bg }]}
+                  >
+                    <Text style={[styles.tagText, { color: palette.fg }]}>
+                      {tag.label}
+                    </Text>
+                  </View>
+                );
+              })}
+            </View>
+          ) : null}
         </View>
 
         <View
@@ -347,6 +379,48 @@ export default function ServiceDetailScreen() {
             </Text>
           </View>
         </View>
+
+        {eligibility ? (
+          <View
+            style={[
+              styles.infoCard,
+              { backgroundColor: colors.card, borderColor: colors.border },
+            ]}
+          >
+            <Text style={[styles.infoTitle, { color: colors.foreground }]}>
+              {lang === "fr" ? "Admissibilité" : "Eligibility"}
+            </Text>
+            <View style={styles.eligibilityBox}>
+              <Feather name="check-circle" size={16} color="#1A5C42" style={{ marginTop: 2 }} />
+              <Text style={styles.eligibilityText}>{eligibility}</Text>
+            </View>
+          </View>
+        ) : null}
+
+        {service.languages && service.languages.length > 0 ? (
+          <View
+            style={[
+              styles.infoCard,
+              { backgroundColor: colors.card, borderColor: colors.border },
+            ]}
+          >
+            <Text style={[styles.infoTitle, { color: colors.foreground }]}>
+              {lang === "fr" ? "Langues parlées" : "Languages spoken"}
+            </Text>
+            <View style={styles.langChipsRow}>
+              {service.languages.map((code) => (
+                <View
+                  key={code}
+                  style={[styles.langChip, { borderColor: colors.border, backgroundColor: colors.background }]}
+                >
+                  <Text style={[styles.langChipText, { color: colors.foreground }]}>
+                    {langLabels[code] ?? code.toUpperCase()}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        ) : null}
 
         <WaitTimeWidget serviceId={service.id} accentColor={categoryColor} />
 
@@ -706,4 +780,58 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     marginTop: 2,
   },
+  tagsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 6,
+    marginTop: 4,
+  },
+  tagChip: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  tagText: {
+    fontSize: 12,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
+  },
+  eligibilityBox: {
+    flexDirection: "row",
+    gap: 10,
+    backgroundColor: "#EAF5F0",
+    borderWidth: 1,
+    borderColor: "#BDE0D4",
+    borderRadius: 12,
+    padding: 14,
+  },
+  eligibilityText: {
+    flex: 1,
+    fontSize: 14,
+    lineHeight: 21,
+    color: "#1A5C42",
+    fontFamily: "Inter_500Medium",
+  },
+  langChipsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 6,
+  },
+  langChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  langChipText: {
+    fontSize: 12,
+    fontFamily: "Inter_500Medium",
+  },
 });
+
+const TAG_PALETTE = {
+  positive: { bg: "#EAF5F0", fg: "#1A5C42" },
+  info: { bg: "#EEF2FF", fg: "#3730A3" },
+  neutral: { bg: "#EDE8DF", fg: "#5C5341" },
+  warn: { bg: "#FEF3C7", fg: "#92400E" },
+} as const;

@@ -146,3 +146,103 @@ export function isOpenNow(hoursRaw: string | undefined | null, now: Date = new D
 
   return foundAnyApplicable ? false : null;
 }
+
+/**
+ * Rich status helper used by the card status pill.
+ *
+ * Returns:
+ *   - "always"      → 24/7 service
+ *   - "open"        → currently open today
+ *   - "opens-at"    → closed now but opens later TODAY (label="13h")
+ *   - "closed"      → closed today, no future range today
+ *   - "unknown"     → could not parse hours
+ */
+export type OpenStatus =
+  | { kind: "always" }
+  | { kind: "open" }
+  | { kind: "opens-at"; label: string }
+  | { kind: "closed" }
+  | { kind: "unknown" };
+
+function formatMinutes(mins: number): string {
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  return m === 0 ? `${h}h` : `${h}h${String(m).padStart(2, "0")}`;
+}
+
+export function getOpenStatus(
+  hoursRaw: string | undefined | null,
+  now: Date = new Date(),
+): OpenStatus {
+  if (!hoursRaw) return { kind: "unknown" };
+  const hours = hoursRaw.trim();
+  if (!hours) return { kind: "unknown" };
+
+  for (const re of ALWAYS_OPEN_PATTERNS) if (re.test(hours)) return { kind: "always" };
+
+  const minutesNow = now.getHours() * 60 + now.getMinutes();
+  const today = now.getDay();
+  const segments = hours.split(/[;|·]/);
+
+  let foundAnyApplicableToday = false;
+  let nextOpenToday: number | null = null;
+
+  for (const segRaw of segments) {
+    const seg = segRaw.trim();
+    if (!seg) continue;
+
+    let applicableDays: number[] = [];
+    const isSeven = SEVEN_DAY_PATTERNS.some((re) => re.test(seg));
+    if (isSeven) {
+      applicableDays = ALL_DAYS;
+    } else {
+      const rangeMatch = seg.match(
+        /(lun|mar|mer|jeu|ven|sam|dim|mon|tue|wed|thu|fri|sat|sun|lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche|monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s*(?:[-–]|au|to)\s*(lun|mar|mer|jeu|ven|sam|dim|mon|tue|wed|thu|fri|sat|sun|lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche|monday|tuesday|wednesday|thursday|friday|saturday|sunday)/i,
+      );
+      if (rangeMatch) {
+        const a = dayCodeToIndex(rangeMatch[1]);
+        const b = dayCodeToIndex(rangeMatch[2]);
+        if (a !== null && b !== null) {
+          if (a <= b) for (let d = a; d <= b; d++) applicableDays.push(d);
+          else {
+            for (let d = a; d <= 6; d++) applicableDays.push(d);
+            for (let d = 0; d <= b; d++) applicableDays.push(d);
+          }
+        }
+      } else {
+        const dayMatches = seg.matchAll(
+          /\b(lun|mar|mer|jeu|ven|sam|dim|mon|tue|wed|thu|fri|sat|sun|lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche|monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/gi,
+        );
+        for (const m of dayMatches) {
+          const idx = dayCodeToIndex(m[1]);
+          if (idx !== null) applicableDays.push(idx);
+        }
+      }
+    }
+    if (applicableDays.length === 0) applicableDays = ALL_DAYS;
+    if (!applicableDays.includes(today)) continue;
+
+    foundAnyApplicableToday = true;
+    const rangeRegex = /(\d{1,2}(?:[h:]\d{0,2})?(?:\s*[ap]m)?)\s*[-–à]\s*(\d{1,2}(?:[h:]\d{0,2})?(?:\s*[ap]m)?)/gi;
+    let m: RegExpExecArray | null;
+    while ((m = rangeRegex.exec(seg))) {
+      const start = parseTime(m[1]);
+      const end = parseTime(m[2]);
+      if (start === null || end === null) continue;
+      if (start <= end) {
+        if (minutesNow >= start && minutesNow < end) return { kind: "open" };
+        if (start > minutesNow && (nextOpenToday === null || start < nextOpenToday)) {
+          nextOpenToday = start;
+        }
+      } else {
+        if (minutesNow >= start || minutesNow < end) return { kind: "open" };
+      }
+    }
+  }
+
+  if (nextOpenToday !== null) {
+    return { kind: "opens-at", label: formatMinutes(nextOpenToday) };
+  }
+  return foundAnyApplicableToday ? { kind: "closed" } : { kind: "unknown" };
+}
+

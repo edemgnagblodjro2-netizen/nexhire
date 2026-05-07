@@ -16,19 +16,31 @@ import type { Service } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 import { usePremiumGate } from "@/hooks/usePremiumGate";
 import { getCategoryColor } from "@/utils/categoryColors";
-import { isOpenNow } from "@/utils/openHours";
+import { getOpenStatus } from "@/utils/openHours";
+import { deriveServiceTags } from "@/utils/serviceTags";
 
 interface ServiceCardProps {
   service: Service;
   compact?: boolean;
 }
 
+const TAG_PALETTE = {
+  positive: { bg: "#EAF5F0", fg: "#1A5C42" },
+  info: { bg: "#EEF2FF", fg: "#3730A3" },
+  neutral: { bg: "#EDE8DF", fg: "#5C5341" },
+  warn: { bg: "#FEF3C7", fg: "#92400E" },
+} as const;
+
 export function ServiceCard({ service, compact = false }: ServiceCardProps) {
   const colors = useColors();
   const router = useRouter();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const categoryColor = getCategoryColor(service.category, colors);
   const { recordAttempt } = usePremiumGate();
+  const tags = React.useMemo(
+    () => deriveServiceTags(service, language === "fr" ? "fr" : "en"),
+    [service, language],
+  );
 
   async function handlePress() {
     Haptics.selectionAsync();
@@ -83,8 +95,8 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
           </View>
         )}
         {(() => {
-          const open = isOpenNow(service.hours);
-          if (service.hours?.includes("24h/24") || service.hours?.includes("24/7")) {
+          const status = getOpenStatus(service.hours);
+          if (status.kind === "always") {
             return (
               <View style={styles.alwaysOpenBadge}>
                 <Feather name="clock" size={10} color="#fff" />
@@ -92,11 +104,29 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
               </View>
             );
           }
-          if (open === true) {
+          if (status.kind === "open") {
             return (
               <View style={styles.openNowBadge}>
                 <View style={styles.openDot} />
-                <Text style={styles.openNowText}>Ouvert</Text>
+                <Text style={styles.openNowText}>{language === "fr" ? "Ouvert" : "Open"}</Text>
+              </View>
+            );
+          }
+          if (status.kind === "opens-at") {
+            return (
+              <View style={styles.opensAtBadge}>
+                <Feather name="clock" size={10} color="#a16207" />
+                <Text style={styles.opensAtText}>
+                  {language === "fr" ? `Ouvre à ${status.label}` : `Opens at ${status.label}`}
+                </Text>
+              </View>
+            );
+          }
+          if (status.kind === "closed") {
+            return (
+              <View style={styles.closedBadge}>
+                <View style={styles.closedDot} />
+                <Text style={styles.closedText}>{language === "fr" ? "Fermé" : "Closed"}</Text>
               </View>
             );
           }
@@ -125,6 +155,22 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
           {service.description}
         </Text>
       )}
+
+      {tags.length > 0 ? (
+        <View style={styles.tagsRow}>
+          {tags.map((tag) => {
+            const palette = TAG_PALETTE[tag.tone];
+            return (
+              <View
+                key={tag.label}
+                style={[styles.tagChip, { backgroundColor: palette.bg }]}
+              >
+                <Text style={[styles.tagText, { color: palette.fg }]}>{tag.label}</Text>
+              </View>
+            );
+          })}
+        </View>
+      ) : null}
 
       <View style={styles.footer}>
         <View style={styles.cityRow}>
@@ -224,6 +270,58 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontFamily: "Inter_700Bold",
     color: "#fff",
+  },
+  opensAtBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    backgroundColor: "#fef3c7",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 20,
+  },
+  opensAtText: {
+    fontSize: 11,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+    color: "#a16207",
+  },
+  closedBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    backgroundColor: "#fee2e2",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 20,
+  },
+  closedDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: "#b91c1c",
+  },
+  closedText: {
+    fontSize: 11,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+    color: "#b91c1c",
+  },
+  tagsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 5,
+    marginTop: 2,
+  },
+  tagChip: {
+    paddingHorizontal: 9,
+    paddingVertical: 3,
+    borderRadius: 6,
+  },
+  tagText: {
+    fontSize: 11,
+    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
   },
   verifiedBadge: {
     flexDirection: "row",
