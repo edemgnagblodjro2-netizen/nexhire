@@ -122,6 +122,7 @@ export const translations = {
       tourism: "Tourisme",
       moving: "Déménagement",
       hypermarche: "Hypermarchés",
+      pharmacie: "Pharmacies",
     },
   },
   en: {
@@ -244,6 +245,7 @@ export const translations = {
       tourism: "Tourism",
       moving: "Moving",
       hypermarche: "Hypermarkets",
+      pharmacie: "Pharmacies",
     },
   },
 } as const;

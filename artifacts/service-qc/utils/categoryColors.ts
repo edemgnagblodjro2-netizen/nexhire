@@ -16,6 +16,7 @@ type Colors = {
   categoryTourism: string;
   categoryMoving: string;
   categoryHypermarche: string;
+  categoryPharmacie: string;
 };
 
 export function getCategoryColor(category: Category, colors: Colors): string {
@@ -37,6 +38,7 @@ export function getCategoryColor(category: Category, colors: Colors): string {
     tourism: colors.categoryTourism,
     moving: colors.categoryMoving,
     hypermarche: colors.categoryHypermarche,
+    pharmacie: colors.categoryPharmacie,
   };
   return map[category];
 }
@@ -59,4 +61,5 @@ export const CATEGORY_ICONS: Record<Category, string> = {
   tourism: "camera",
   moving: "truck",
   hypermarche: "shopping-cart",
+  pharmacie: "plus-square",
 };
