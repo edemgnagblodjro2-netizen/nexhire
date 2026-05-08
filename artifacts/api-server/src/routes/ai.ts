@@ -236,6 +236,43 @@ AUTRES RÉGIONS:
 - ID:lev-h1 | Maison Revivre Lévis | Hébergement Lévis | Logement urgent
 - ID:jol-h1 | Centre Hébergement Joliette | Hébergement Lanaudière | Logement urgent
 
+AÎNÉS — LIGNES PROVINCIALES & SOUTIEN (province-wide):
+- ID:qc-prov-seniors-001 | Ligne Aide Abus Aînés | Maltraitance aînés 7j/7 8h-20h | Tél:1-888-489-2287 | URGENT
+- ID:qc-prov-seniors-002 | Tel-Aînés | Écoute 50+ isolement solitude détresse | Tél:514-353-2463
+- ID:qc-prov-seniors-003 | Info-Abus Aînés (211) | Référence locale aînés gratuite 7j/7 | Tél:211
+- ID:qc-prov-seniors-004 | Petits Frères | Jumelage bénévole aînés isolés (MTL/QC/TR/Sherb/Granby/Lanaudière) | Tél:514-527-8653
+- ID:qc-prov-seniors-005 | Présâges | Crise aînés isolement abus négligence | Tél:514-273-4774
+- ID:qc-prov-seniors-006 | FADOQ — Réseau provincial | Carte rabais + activités locales aînés | Tél:1-800-544-9058
+- ID:qc-prov-seniors-007 | Société Alzheimer du Québec | Info Alzheimer/démence + 20 sociétés régionales | Tél:1-800-444-8762
+- ID:qc-prov-seniors-008 | L'Appui proches aidants | Info-aidant 8h-20h 7j/7 gratuit | Tél:1-855-852-7784
+- ID:qc-prov-seniors-009 | Curateur public du Québec | Protection aînés inaptes mandat | Tél:1-844-532-8728
+- ID:qc-prov-seniors-010 | Pension Sécurité vieillesse (PSV) | 65+ Service Canada | Tél:1-800-277-9915
+- ID:qc-prov-seniors-011 | Supplément revenu garanti (SRG) | Aînés faible revenu (avec PSV) | Tél:1-800-277-9915
+- ID:qc-prov-seniors-012 | Retraite Québec (RRQ) | Rente retraite 60-65+ | Tél:1-800-463-5185
+- ID:qc-prov-seniors-013 | Crédit maintien à domicile (RAMQ) | 70+ jusqu'à 38% services à domicile | Tél:1-855-291-6467
+- ID:qc-prov-seniors-014 | Commissaire local aux plaintes | Plainte CHSLD/RPA/CLSC/hôpital | Tél:811
+- ID:qc-prov-seniors-015 | AQDR | Défense droits aînés 40 sections QC | Tél:514-935-1551
+
+AÎNÉS — POPOTE ROULANTE & TRANSPORT ADAPTÉ (régional):
+- ID:qc-mtl-seniors-001 | Popote roulante Montréal métropolitain | Repas chauds ~7$ MTL+Laval | Tél:514-256-5571
+- ID:qc-mtl-seniors-002 | Transport adapté STM | Porte-à-porte aînés/PMR Montréal réservation 24h | Tél:514-280-8211
+- ID:qc-mtl-seniors-003 | Société Alzheimer de Montréal | Soutien proches + groupes répit | Tél:514-369-0800
+- ID:qc-mtl-seniors-004 | FADOQ — Île de Montréal | Activités/rabais aînés MTL | Tél:514-271-1411
+- ID:qc-qc-seniors-001 | Popote roulante Québec (CAB Québec) | Popote + transport médical aînés | Tél:418-681-3501
+- ID:qc-qc-seniors-002 | Transport adapté STAC (RTC Québec) | PMR/aînés région Québec | Tél:418-687-2641
+- ID:qc-qc-seniors-003 | Société Alzheimer Québec | Soutien + ateliers stimulation cognitive | Tél:418-527-4294
+- ID:qc-qc-seniors-004 | FADOQ — Québec et Chaudière-Appalaches | Clubs aînés régionaux | Tél:418-650-3552
+- ID:qc-lvl-seniors-001 | Popote roulante Laval (Centre du Sablon) | Repas chauds aînés Laval | Tél:450-688-3247
+- ID:qc-lvl-seniors-002 | Transport adapté STL (Laval) | PMR/aînés Laval | Tél:450-662-5400
+- ID:qc-lng-seniors-001 | Popote roulante Longueuil (CAB Rive-Sud) | Popote + accompagnement transport + visites | Tél:450-651-9356
+- ID:qc-lng-seniors-002 | Transport adapté RTL (Longueuil) | PMR/aînés Rive-Sud | Tél:450-463-0131
+- ID:qc-gat-seniors-001 | Popote roulante Gatineau (Entr'Aînés) | Repas + visites + accompagnement Outaouais | Tél:819-243-2727
+- ID:qc-gat-seniors-002 | Transport adapté STO (Gatineau) | PMR/aînés Outaouais | Tél:819-595-3999
+- ID:qc-shrb-seniors-001 | Popote roulante Sherbrooke | Repas chauds aînés/convalescents lun-ven | Tél:819-823-2792
+- ID:qc-shrb-seniors-002 | Société Alzheimer Estrie | Soutien Alzheimer + proches aidants | Tél:819-821-5127
+- ID:qc-tr-seniors-001 | Popote roulante Trois-Rivières (CAB Laviolette) | Popote + transport médical + visites | Tél:819-373-0709
+- ID:qc-sag-seniors-001 | Popote roulante Saguenay (CAB Saguenay) | Popote + transport bénévole + visites | Tél:418-545-7888
+
 SERVICES DE GARDE — CPE & GARDERIES (province-wide):
 - ID:cpe-pw1 | Mon Enfant – Liste d'attente CPE | Portail inscription CPE/garderies subventionnées (~10$/jour) | Tél:1-877-644-4545 | Site:monenfant.ca
 - ID:cpe-pw2 | Ministère de la Famille – Aide financière garde | Subventions, aide urgence, crédit d'impôt frais de garde | Tél:1-877-644-4545
@@ -586,6 +623,13 @@ When recommending services, include their IDs in this exact format at the END of
 [SERVICES: id1, id2, id3]
 
 Only include service IDs from the catalogs below. For urgent situations, prefer services marked "urgent". Match the city/region when known.
+
+CITATION OBLIGATOIRE — pour CHAQUE service recommandé dans le corps du message, tu DOIS écrire en clair :
+- Le nom EXACT du service (en gras avec **nom**)
+- Le numéro de téléphone EXACT tel qu'il apparaît après "Tél:" dans le catalogue
+- Format : « **Nom du service** — appelez le 514-XXX-XXXX » ou « **Nom** (Tél. 1-800-XXX-XXXX) »
+- N'invente JAMAIS un numéro. Si un service n'a pas de "Tél:" dans le catalogue, ne mets pas de numéro.
+- Pour la catégorie aînés (isolement, abus, popote roulante, transport adapté, Alzheimer, FADOQ, retraite, proches aidants, maintien à domicile, CHSLD), pioche EN PRIORITÉ dans les sections "AÎNÉS" du catalogue ci-dessous.
 
 EMERGENCY SERVICES CATALOG:
 (Note : la section "AUTRES PROVINCES ET TERRITOIRES" sert UNIQUEMENT à rediriger un Québécois qui aurait un proche hors-Québec ou qui prévoit déménager. Elle ne doit JAMAIS être proposée comme service principal — l'utilisateur de l'app est au Québec.)
