@@ -327,18 +327,6 @@ const QUICK_PROMPTS_FR = [
   "Comment obtenir mon permis de conduire au Québec ?",
   "Comment utiliser le transport en commun à Montréal / Québec ?",
   "Quoi visiter au Québec cette fin de semaine ?",
-  "Je suis en Ontario, services administratifs",
-  "Je suis en Alberta, démarches gouvernementales",
-  "Je suis en Colombie-Britannique, j'ai besoin d'aide",
-  "Je suis au Manitoba, démarches administratives",
-  "Je suis en Saskatchewan, services gouvernementaux",
-  "Je suis au Nouveau-Brunswick, démarches",
-  "Je suis en Nouvelle-Écosse, services administratifs",
-  "Je suis à l'Île-du-Prince-Édouard, j'ai besoin d'aide",
-  "Je suis à Terre-Neuve-et-Labrador, démarches",
-  "Je suis au Yukon, services administratifs",
-  "Je suis aux Territoires du Nord-Ouest, démarches",
-  "Je suis au Nunavut, services administratifs",
 ];
 
 const QUICK_PROMPTS_EN = [
@@ -370,18 +358,6 @@ const QUICK_PROMPTS_EN = [
   "How do I get my Quebec driver's license?",
   "How do I use public transit in Montreal / Quebec City?",
   "What to visit in Quebec this weekend?",
-  "I'm in Ontario, administrative services",
-  "I'm in Alberta, government services",
-  "I'm in British Columbia, I need help",
-  "I'm in Manitoba, administrative help",
-  "I'm in Saskatchewan, government services",
-  "I'm in New Brunswick, administrative help",
-  "I'm in Nova Scotia, administrative services",
-  "I'm in Prince Edward Island, I need help",
-  "I'm in Newfoundland and Labrador, services",
-  "I'm in Yukon, administrative services",
-  "I'm in Northwest Territories, services",
-  "I'm in Nunavut, administrative services",
 ];
 
 const QUICK_PROMPTS_ES = [
@@ -413,18 +389,6 @@ const QUICK_PROMPTS_ES = [
   "¿Cómo obtener mi licencia de conducir de Quebec?",
   "¿Cómo usar el transporte público en Montreal / Quebec?",
   "¿Qué visitar en Quebec este fin de semana?",
-  "Estoy en Ontario, servicios administrativos",
-  "Estoy en Alberta, trámites gubernamentales",
-  "Estoy en Columbia Británica, necesito ayuda",
-  "Estoy en Manitoba, trámites administrativos",
-  "Estoy en Saskatchewan, servicios gubernamentales",
-  "Estoy en Nuevo Brunswick, trámites",
-  "Estoy en Nueva Escocia, servicios administrativos",
-  "Estoy en Isla del Príncipe Eduardo, necesito ayuda",
-  "Estoy en Terranova y Labrador, trámites",
-  "Estoy en Yukón, servicios administrativos",
-  "Estoy en Territorios del Noroeste, trámites",
-  "Estoy en Nunavut, servicios administrativos",
 ];
 
 const QUICK_PROMPTS_AR = [
@@ -456,18 +420,6 @@ const QUICK_PROMPTS_AR = [
   "كيف أحصل على رخصة القيادة في كيبيك؟",
   "كيف أستخدم المواصلات العامة في مونتريال / كيبيك؟",
   "ماذا أزور في كيبيك هذا الأسبوع؟",
-  "أنا في أونتاريو، خدمات إدارية",
-  "أنا في ألبرتا، إجراءات حكومية",
-  "أنا في كولومبيا البريطانية، أحتاج إلى مساعدة",
-  "أنا في مانيتوبا، إجراءات إدارية",
-  "أنا في ساسكاتشوان، خدمات حكومية",
-  "أنا في نيو برونزويك، إجراءات",
-  "أنا في نوفا سكوشا، خدمات إدارية",
-  "أنا في جزيرة الأمير إدوارد، أحتاج إلى مساعدة",
-  "أنا في نيوفاوندلاند ولابرادور، إجراءات",
-  "أنا في يوكون، خدمات إدارية",
-  "أنا في الأقاليم الشمالية الغربية، إجراءات",
-  "أنا في نونافوت، خدمات إدارية",
 ];
 
 const QUICK_PROMPTS_HT = [
@@ -499,18 +451,6 @@ const QUICK_PROMPTS_HT = [
   "Kijan pou mwen jwenn pèmi kondui Kebèk mwen?",
   "Kijan pou itilize transpò an komen nan Monreyal / Kebèk?",
   "Kisa pou vizite nan Kebèk wikenn sa a?",
-  "Mwen nan Ontario, sèvis administratif",
-  "Mwen nan Alberta, demach gouvènmantal",
-  "Mwen nan Kolonbi Britanik, mwen bezwen èd",
-  "Mwen nan Manitoba, demach administratif",
-  "Mwen nan Saskatchewan, sèvis gouvènmantal",
-  "Mwen nan Nouvo Brunswick, demach",
-  "Mwen nan Nouvèl Ekòs, sèvis administratif",
-  "Mwen nan Il Prens Edward, mwen bezwen èd",
-  "Mwen nan Tèneuv ak Labrador, demach",
-  "Mwen nan Yukon, sèvis administratif",
-  "Mwen nan Teritwa Nòdwès, demach",
-  "Mwen nan Nunavut, sèvis administratif",
 ];
 
 export default function ChatScreen() {
