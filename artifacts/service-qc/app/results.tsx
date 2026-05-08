@@ -131,7 +131,15 @@ export default function ResultsScreen() {
     // Exact-city mode: clicked from a city chip on the home screen.
     // Required to avoid substring collisions like "Victoria" ⊂ "Victoriaville".
     const cityKeyExact = normalizeCity(cityExact ?? "");
+    // Filtre province : l'app est Québec-first. On affiche uniquement les
+    // services QC + province-wide, SAUF si l'utilisateur navigue
+    // explicitement vers une autre province (via le carrousel ou une ville
+    // hors-QC) — dans ce cas browsingProvince est défini.
+    const effectiveProvince: ProvinceCode = browsingProvince ?? "QC";
     const base = services.filter((s) => {
+      const sProv = (s.province ?? "QC") as ProvinceCode;
+      if (!s.isProvinceWide && sProv !== effectiveProvince) return false;
+
       const matchesCategory =
         selectedCategory === "all" || s.category === selectedCategory;
 

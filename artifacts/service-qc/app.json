@@ -2,7 +2,7 @@
   "expo": {
     "name": "AttenteZéro",
     "slug": "attentezero",
-    "version": "1.1.12",
+    "version": "1.1.13",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "service-qc",
@@ -24,11 +24,11 @@
         "NSCameraUsageDescription": "AttenteZéro utilise l'appareil photo pour prendre une photo de profil.",
         "ITSAppUsesNonExemptEncryption": false
       },
-      "buildNumber": "21"
+      "buildNumber": "22"
     },
     "android": {
       "package": "com.attentezero.app",
-      "versionCode": 67,
+      "versionCode": 68,
       "intentFilters": [
         {
           "action": "VIEW",
