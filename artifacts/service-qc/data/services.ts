@@ -1,3 +1,5 @@
+import { SENIORS_STATIC_SERVICES } from "./services-seniors";
+
 export type Category =
   | "housing"
   | "food"
@@ -68086,7 +68088,7 @@ const __SERVICES_CHUNK_5: Service[] = [
   { id: "qc-mov-opc", name: "OPC — Office de la protection du consommateur", category: "moving", subcategory: "Organisme officiel — plaintes", city: "Québec", province: "QC", phone: "418-643-1484", website: "https://www.opc.gouv.qc.ca", description: "Vérifiez si un déménageur a fait l'objet de plaintes par le passé. Médiation et recours en cas de litige. Bureau Québec : 418-643-1484. Sans frais : 1-888-672-2556. 2.4/5 sur Google (72 avis).", address: "400 Bd Jean-Lesage, bureau 450, Québec (Québec) G1K 8W4 (Les Façades de la Gare)", isProvinceWide: true, badgeVerified: true },
 ];
 
-export const SERVICES: Service[] = [...__SERVICES_CHUNK_0, ...__SERVICES_CHUNK_1, ...__SERVICES_CHUNK_2, ...__SERVICES_CHUNK_3, ...__SERVICES_CHUNK_4, ...__SERVICES_CHUNK_5];
+export const SERVICES: Service[] = [...__SERVICES_CHUNK_0, ...__SERVICES_CHUNK_1, ...__SERVICES_CHUNK_2, ...__SERVICES_CHUNK_3, ...__SERVICES_CHUNK_4, ...__SERVICES_CHUNK_5, ...SENIORS_STATIC_SERVICES];
 export const URGENT_SERVICES = SERVICES.filter((s) => s.isUrgent);
 export const PROVINCE_WIDE_SERVICES = SERVICES.filter((s) => s.isProvinceWide);
 export const SERVICES_BY_PROVINCE = (code: ProvinceCode): Service[] =>
