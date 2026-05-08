@@ -13,7 +13,7 @@ import { apiCategoryToCode } from "@/lib/categoryMapping";
 // v7 : ajout de serviceType + geocodePrecisionM (Phase 1 fiabilité géoloc).
 // v8 : pivot Québec — bump pour invalider les caches qui contiennent des services hors-QC.
 // v9 : on ré-inclut les services province-wide (Centris, Kijiji, Realtor, etc.) qui avaient été virés par erreur en v8.
-const CACHE_KEY = "attentezero_services_cache_v13";
+const CACHE_KEY = "attentezero_services_cache_v14";
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 type ServicesContextValue = {
@@ -122,7 +122,14 @@ export function ServicesProvider({ children }: { children: React.ReactNode }) {
       const mapped = raw
         .map(mapApiService)
         .filter((s): s is Service => s !== null)
-        .filter((s) => (s.province ?? "QC") === "QC" || s.isProvinceWide);
+        .filter((s) => {
+          const prov = (s.province ?? "QC") as string;
+          if (prov === "QC") return true;
+          // Pan-canadiens (Kijiji, Centris, Realtor, lignes 1-800) :
+          // isProvinceWide ET province === "CA". Refuse "211 Alberta" etc.
+          if (s.isProvinceWide && prov === "CA") return true;
+          return false;
+        });
       setServices(mapped);
       await saveCache(mapped);
     } catch (err: any) {

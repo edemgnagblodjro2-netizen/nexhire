@@ -68096,7 +68096,15 @@ const __SERVICES_CHUNK_5: Service[] = [
 // (Centris, Kijiji, lignes 1-800, etc.) restent utiles aux Québécois.
 const __ALL_STATIC_SERVICES: Service[] = [...__SERVICES_CHUNK_0, ...__SERVICES_CHUNK_1, ...__SERVICES_CHUNK_2, ...__SERVICES_CHUNK_3, ...__SERVICES_CHUNK_4, ...__SERVICES_CHUNK_5, ...SENIORS_STATIC_SERVICES];
 export const SERVICES: Service[] = __ALL_STATIC_SERVICES.filter(
-  (s) => (s.province ?? "QC") === "QC" || s.isProvinceWide,
+  (s) => {
+    const prov = (s.province ?? "QC") as string;
+    if (prov === "QC") return true;
+    // Pan-canadiens utiles (Kijiji, Centris, Realtor, lignes 1-800)
+    // doivent être marqués isProvinceWide ET province ∈ {CA, QC}.
+    // Refuse "211 Alberta", "211 BC", etc. — province-wide d'AUTRES provinces.
+    if (s.isProvinceWide && prov === "CA") return true;
+    return false;
+  },
 );
 export const URGENT_SERVICES = SERVICES.filter((s) => s.isUrgent);
 export const PROVINCE_WIDE_SERVICES = SERVICES.filter((s) => s.isProvinceWide);
