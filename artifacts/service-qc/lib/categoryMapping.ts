@@ -50,6 +50,10 @@ const API_TO_CODE: Record<string, Category> = {
   pharmacie: "pharmacie",
   pharmacies: "pharmacie",
   pharmacy: "pharmacie",
+  seniors: "seniors",
+  aines: "seniors",
+  "aînés": "seniors",
+  aines_qc: "seniors",
 };
 
 // Mapping inverse : code TS → nom BDD canonique. On garde les noms BDD
@@ -74,6 +78,7 @@ const CODE_TO_API: Record<Category, string> = {
   moving: "moving",
   hypermarche: "hypermarche",
   pharmacie: "pharmacie",
+  seniors: "seniors",
 };
 
 /**

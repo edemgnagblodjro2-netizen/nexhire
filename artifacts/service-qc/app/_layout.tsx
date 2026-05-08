@@ -30,6 +30,7 @@ import { AuthProvider, useAuth } from "@/lib/auth";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { LocationProvider, useLocation } from "@/contexts/LocationContext";
 import { ServicesProvider } from "@/contexts/ServicesContext";
+import { SeniorModeProvider } from "@/contexts/SeniorModeContext";
 import {
   UserProvinceProvider,
   useUserProvince,
@@ -195,7 +196,9 @@ export default function RootLayout() {
                   <LocationProvider>
                     <UserProvinceProvider>
                       <ServicesProvider>
-                        <AppContent fontsReady={fontsReady} />
+                        <SeniorModeProvider>
+                          <AppContent fontsReady={fontsReady} />
+                        </SeniorModeProvider>
                       </ServicesProvider>
                     </UserProvinceProvider>
                   </LocationProvider>

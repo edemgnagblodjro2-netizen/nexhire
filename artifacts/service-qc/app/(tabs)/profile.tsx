@@ -22,6 +22,7 @@ import * as ImagePicker from "expo-image-picker";
 
 import { useAuth } from "@/lib/auth";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSeniorMode } from "@/contexts/SeniorModeContext";
 import { useColors } from "@/hooks/useColors";
 import { authedFetch } from "@/lib/apiClient";
 import { getApiBaseUrl } from "@/lib/apiBase";
@@ -156,6 +157,7 @@ function InfoRow({ icon, label, value }: { icon: keyof typeof Feather.glyphMap; 
 export default function ProfileScreen() {
   const { user, logout, updateProfile, isAuthenticated, getToken } = useAuth();
   const { language, toggleLanguage } = useLanguage();
+  const { seniorMode, toggleSeniorMode } = useSeniorMode();
   const colors = useColors();
   const router = useRouter();
   const isDark = colors.background === "#09090b" || colors.background === "#0a0a0a";
@@ -588,7 +590,7 @@ export default function ProfileScreen() {
             onPress={() => { Haptics.selectionAsync(); toggleLanguage(); }}
             style={({ pressed }) => [
               styles.actionRow,
-              { borderBottomColor: "transparent", opacity: pressed ? 0.7 : 1 },
+              { borderBottomColor: colors.border, opacity: pressed ? 0.7 : 1 },
             ]}
           >
             <View style={[styles.infoIcon, { backgroundColor: colors.primary + "15" }]}>
@@ -599,6 +601,48 @@ export default function ProfileScreen() {
             </Text>
             <View style={[styles.langPill, { backgroundColor: colors.primary }]}>
               <Text style={styles.langPillText}>{language === "fr" ? "FR → EN" : "EN → FR"}</Text>
+            </View>
+          </Pressable>
+
+          <Pressable
+            onPress={() => { Haptics.selectionAsync(); toggleSeniorMode(); }}
+            style={({ pressed }) => [
+              styles.actionRow,
+              { borderBottomColor: "transparent", opacity: pressed ? 0.7 : 1 },
+            ]}
+          >
+            <View style={[styles.infoIcon, { backgroundColor: "#9333ea15" }]}>
+              <Feather name="user-check" size={15} color="#9333ea" />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.actionText, { color: colors.foreground }]}>
+                {isFr ? "Mode Senior" : "Senior Mode"}
+              </Text>
+              <Text style={{ fontSize: 12, color: colors.mutedForeground, marginTop: 2 }}>
+                {isFr
+                  ? "Texte plus grand, contraste accru"
+                  : "Larger text, higher contrast"}
+              </Text>
+            </View>
+            <View
+              style={{
+                width: 48,
+                height: 28,
+                borderRadius: 14,
+                backgroundColor: seniorMode ? "#9333ea" : colors.muted,
+                padding: 3,
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  width: 22,
+                  height: 22,
+                  borderRadius: 11,
+                  backgroundColor: "#fff",
+                  alignSelf: seniorMode ? "flex-end" : "flex-start",
+                }}
+              />
             </View>
           </Pressable>
         </View>

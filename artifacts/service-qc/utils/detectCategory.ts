@@ -9,6 +9,22 @@ interface DetectionResult {
 const KEYWORD_MAP: Record<Category, string[]> = {
   administrative: [],
   legal: [],
+  seniors: [
+    "aîné", "aînés", "aine", "aines", "personne âgée", "personnes âgées",
+    "âgée", "âgé", "vieillesse", "retraite", "retraité", "retraités",
+    "popote roulante", "transport adapté", "fadoq", "petits frères",
+    "présâges", "presages", "alzheimer", "démence", "demence", "parkinson",
+    "maintien à domicile", "soins à domicile", "rpa", "chsld",
+    "ressource intermédiaire", "centre de jour", "pension de vieillesse",
+    "supplément revenu garanti", "srg", "rrq", "régie des rentes",
+    "abus aîné", "abus aînés", "maltraitance aîné", "maltraitance aînés",
+    "elder", "elderly", "senior", "seniors", "old age", "pension",
+    "meals on wheels", "elder abuse", "alzheimer's", "dementia",
+    "nursing home", "retirement home", "home care",
+    "ma mère âgée", "mon père âgé", "mes parents âgés",
+    "grand-mère", "grand-père", "grand maman", "grand papa",
+    "grandma", "grandpa", "grandmother", "grandfather",
+  ],
   pharmacie: [
     "pharmacie", "pharmacy", "pharmaprix", "jean coutu", "pjc",
     "uniprix", "brunet", "proxim", "familiprix", "accès pharma",
@@ -595,6 +611,7 @@ export function detectCategory(input: string): DetectionResult {
     moving: 0,
     hypermarche: 0,
     pharmacie: 0,
+    seniors: 0,
   };
   const matchedKeywords: string[] = [];
 

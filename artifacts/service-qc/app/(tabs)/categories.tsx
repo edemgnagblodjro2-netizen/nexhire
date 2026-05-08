@@ -53,7 +53,7 @@ const SECTIONS: Section[] = [
     key: "sante-famille",
     titleFr: "Santé & famille",
     titleEn: "Health & family",
-    categories: ["health", "mentalHealth", "family", "childcare", "social"],
+    categories: ["health", "mentalHealth", "seniors", "family", "childcare", "social"],
   },
   {
     key: "demarches",

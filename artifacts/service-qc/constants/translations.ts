@@ -123,6 +123,7 @@ export const translations = {
       moving: "Déménagement",
       hypermarche: "Hypermarchés",
       pharmacie: "Pharmacies",
+      seniors: "Aînés",
     },
   },
   en: {
@@ -246,6 +247,7 @@ export const translations = {
       moving: "Moving",
       hypermarche: "Hypermarkets",
       pharmacie: "Pharmacies",
+      seniors: "Seniors",
     },
   },
 } as const;

@@ -12,6 +12,7 @@ import {
 } from "react-native";
 
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSeniorScale } from "@/contexts/SeniorModeContext";
 import type { Service } from "@/data/services";
 import { useColors } from "@/hooks/useColors";
 import { usePremiumGate } from "@/hooks/usePremiumGate";
@@ -35,6 +36,7 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
   const colors = useColors();
   const router = useRouter();
   const { t, language } = useLanguage();
+  const seniorScale = useSeniorScale();
   const categoryColor = getCategoryColor(service.category, colors);
   const { recordAttempt } = usePremiumGate();
   const tags = React.useMemo(
@@ -141,7 +143,7 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
       </View>
 
       <Text
-        style={[styles.name, { color: colors.foreground }]}
+        style={[styles.name, { color: colors.foreground, fontSize: 16 * seniorScale, lineHeight: 22 * seniorScale }]}
         numberOfLines={2}
       >
         {service.name}
@@ -149,7 +151,7 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
 
       {!compact && (
         <Text
-          style={[styles.description, { color: colors.mutedForeground }]}
+          style={[styles.description, { color: colors.mutedForeground, fontSize: 13 * seniorScale, lineHeight: 18 * seniorScale }]}
           numberOfLines={2}
         >
           {service.description}
@@ -181,12 +183,12 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
         </View>
 
         <TouchableOpacity
-          style={[styles.callButton, { backgroundColor: colors.primary }]}
+          style={[styles.callButton, { backgroundColor: colors.primary, paddingVertical: 8 * seniorScale, paddingHorizontal: 12 * seniorScale }]}
           onPress={handleCall}
           activeOpacity={0.8}
         >
-          <Feather name="phone" size={13} color="#fff" />
-          <Text style={styles.callText}>{service.phone}</Text>
+          <Feather name="phone" size={13 * seniorScale} color="#fff" />
+          <Text style={[styles.callText, { fontSize: 13 * seniorScale }]}>{service.phone}</Text>
         </TouchableOpacity>
       </View>
     </Pressable>

@@ -45,6 +45,7 @@ const CAT_ICONS: Record<Category, keyof typeof Feather.glyphMap> = {
   moving: "truck",
   hypermarche: "shopping-cart",
   pharmacie: "plus-square",
+  seniors: "user-check",
 };
 
 const CAT_LABELS_EN: Record<Category, string> = {
@@ -56,6 +57,7 @@ const CAT_LABELS_EN: Record<Category, string> = {
   moving: "Moving",
   hypermarche: "Hypermarkets",
   pharmacie: "Pharmacies",
+  seniors: "Seniors",
 };
 
 function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number) {

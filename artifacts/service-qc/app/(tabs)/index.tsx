@@ -21,6 +21,7 @@ import { HomeBannerSlider } from "@/components/HomeBannerSlider";
 import { UrgentButton } from "@/components/UrgentButton";
 import { BrandFooter } from "@/components/BrandFooter";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSeniorScale } from "@/contexts/SeniorModeContext";
 import { useLocation } from "@/contexts/LocationContext";
 import { useUserProvince } from "@/contexts/UserProvinceContext";
 import { getApiBaseUrl } from "@/lib/apiBase";
@@ -90,6 +91,7 @@ export default function HomeScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { t, language, toggleLanguage } = useLanguage();
+  const seniorScale = useSeniorScale();
   const inputRef = useRef<TextInput>(null);
 
   const { services } = useServicesData();
@@ -227,14 +229,14 @@ export default function HomeScreen() {
             </View>
             <View style={{ flex: 1, minWidth: 0 }}>
               <Text
-                style={styles.heroAppName}
+                style={[styles.heroAppName, { fontSize: 22 * seniorScale }]}
                 numberOfLines={1}
                 adjustsFontSizeToFit
                 minimumFontScale={0.7}
               >
-                AttenteZéro <Text style={{ fontSize: 16 }}>⚜️</Text>
+                AttenteZéro <Text style={{ fontSize: 16 * seniorScale }}>⚜️</Text>
               </Text>
-              <Text style={styles.heroTagline} numberOfLines={1}>{t.tagline}</Text>
+              <Text style={[styles.heroTagline, { fontSize: 12 * seniorScale }]} numberOfLines={1}>{t.tagline}</Text>
             </View>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
