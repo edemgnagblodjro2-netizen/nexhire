@@ -61,6 +61,7 @@ export default function ServicesScreen() {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<Category | null>(null);
   const [activeLanguage, setActiveLanguage] = useState<LangCode | null>(null);
+  const [activeCity, setActiveCity] = useState<string | null>(null);
   const [sortMode, setSortMode] = useState<SortMode>("default");
 
   const isFr = language !== "en";
@@ -76,6 +77,31 @@ export default function ServicesScreen() {
     return counts;
   }, [services]);
 
+  // Liste des villes disponibles (top 60 par fréquence) — basée sur le sous-ensemble
+  // déjà filtré par catégorie/langue pour que le filtre Ville reste pertinent.
+  const cityCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    const baseSet = services.filter((s) => {
+      if (activeCategory && s.category !== activeCategory) return false;
+      if (activeLanguage && !inferLanguages(s).includes(activeLanguage)) return false;
+      return true;
+    });
+    for (const s of baseSet) {
+      const c = (s.city ?? "").trim();
+      if (!c) continue;
+      counts[c] = (counts[c] || 0) + 1;
+    }
+    return counts;
+  }, [services, activeCategory, activeLanguage]);
+
+  const availableCities = useMemo(
+    () =>
+      Object.entries(cityCounts)
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "fr"))
+        .slice(0, 60),
+    [cityCounts],
+  );
+
   const filtered = useMemo(() => {
     let result = services;
     if (activeCategory) {
@@ -83,6 +109,10 @@ export default function ServicesScreen() {
     }
     if (activeLanguage) {
       result = result.filter((s) => inferLanguages(s).includes(activeLanguage));
+    }
+    if (activeCity) {
+      const target = activeCity.toLowerCase();
+      result = result.filter((s) => (s.city ?? "").trim().toLowerCase() === target);
     }
     if (query.trim()) {
       const q = query.trim().toLowerCase();
@@ -112,7 +142,7 @@ export default function ServicesScreen() {
       });
     }
     return result;
-  }, [services, query, activeCategory, activeLanguage, sortMode, userLocation]);
+  }, [services, query, activeCategory, activeLanguage, activeCity, sortMode, userLocation]);
 
   const count = filtered.length;
   const totalCount = services.length;
@@ -129,11 +159,12 @@ export default function ServicesScreen() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setActiveCategory(null);
     setActiveLanguage(null);
+    setActiveCity(null);
     setQuery("");
     setSortMode("default");
   }
 
-  const hasActiveFilter = !!activeCategory || !!activeLanguage || !!query.trim() || sortMode !== "default";
+  const hasActiveFilter = !!activeCategory || !!activeLanguage || !!activeCity || !!query.trim() || sortMode !== "default";
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -330,6 +361,74 @@ export default function ServicesScreen() {
                 >
                   {isFr ? meta.fr : meta.en}
                 </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+
+        {/* City filter row */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.langStrip}
+        >
+          <View style={styles.langStripLabel}>
+            <Feather name="map-pin" size={11} color={colors.mutedForeground} />
+            <Text style={[styles.langStripLabelText, { color: colors.mutedForeground }]}>
+              {isFr ? "Ville" : "City"}
+            </Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => { Haptics.selectionAsync(); setActiveCity(null); }}
+            style={[
+              styles.langChip,
+              {
+                backgroundColor: activeCity === null ? colors.primary + "18" : colors.card,
+                borderColor: activeCity === null ? colors.primary : colors.border,
+              },
+            ]}
+            activeOpacity={0.85}
+          >
+            <Text
+              style={[
+                styles.langChipText,
+                { color: activeCity === null ? colors.primary : colors.foreground },
+              ]}
+            >
+              {isFr ? "Toutes" : "All"}
+            </Text>
+          </TouchableOpacity>
+          {availableCities.map(([city, cnt]) => {
+            const isActive = activeCity === city;
+            return (
+              <TouchableOpacity
+                key={city}
+                onPress={() => {
+                  Haptics.selectionAsync();
+                  setActiveCity(isActive ? null : city);
+                }}
+                style={[
+                  styles.langChip,
+                  {
+                    backgroundColor: isActive ? colors.primary + "18" : colors.card,
+                    borderColor: isActive ? colors.primary : colors.border,
+                  },
+                ]}
+                activeOpacity={0.85}
+              >
+                <Text
+                  style={[
+                    styles.langChipText,
+                    { color: isActive ? colors.primary : colors.foreground },
+                  ]}
+                >
+                  {city}
+                </Text>
+                <View style={[styles.chipCount, { backgroundColor: isActive ? colors.primary + "22" : colors.muted }]}>
+                  <Text style={[styles.chipCountText, { color: isActive ? colors.primary : colors.mutedForeground }]}>
+                    {cnt > 999 ? "999+" : cnt}
+                  </Text>
+                </View>
               </TouchableOpacity>
             );
           })}
