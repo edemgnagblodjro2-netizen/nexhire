@@ -50,11 +50,8 @@ const ALL_CATEGORIES: Category[] = [
 ];
 
 // Module-level constant — never re-created on render.
+// Pivot Québec : villes QC seulement.
 const ALL_CITIES: ReadonlyArray<{ key: string; emoji: string }> = [
-  { key: "Trois-Rivières", emoji: "🏙️" },
-  { key: "Shawinigan", emoji: "🌲" },
-  { key: "Drummondville", emoji: "🏘️" },
-  { key: "Victoriaville", emoji: "🍁" },
   { key: "Montréal", emoji: "🏙️" },
   { key: "Québec", emoji: "🏛️" },
   { key: "Laval", emoji: "🌆" },
@@ -63,7 +60,9 @@ const ALL_CITIES: ReadonlyArray<{ key: string; emoji: string }> = [
   { key: "Sherbrooke", emoji: "🏞️" },
   { key: "Saguenay", emoji: "🐋" },
   { key: "Lévis", emoji: "⚓" },
+  { key: "Trois-Rivières", emoji: "🏙️" },
   { key: "Brossard", emoji: "🌆" },
+  { key: "Drummondville", emoji: "🏘️" },
   { key: "Repentigny", emoji: "🏘️" },
   { key: "Saint-Jérôme", emoji: "🏔️" },
   { key: "Terrebonne", emoji: "🏘️" },
@@ -72,6 +71,8 @@ const ALL_CITIES: ReadonlyArray<{ key: string; emoji: string }> = [
   { key: "Granby", emoji: "🦓" },
   { key: "Blainville", emoji: "🌳" },
   { key: "Saint-Hyacinthe", emoji: "🌾" },
+  { key: "Shawinigan", emoji: "🌲" },
+  { key: "Victoriaville", emoji: "🍁" },
   { key: "Mascouche", emoji: "🏘️" },
   { key: "Mirabel", emoji: "✈️" },
   { key: "Joliette", emoji: "🏘️" },
@@ -81,46 +82,6 @@ const ALL_CITIES: ReadonlyArray<{ key: string; emoji: string }> = [
   { key: "Sept-Îles", emoji: "🏝️" },
   { key: "Baie-Comeau", emoji: "🌊" },
   { key: "Alma", emoji: "🌲" },
-  { key: "Toronto", emoji: "🏙️" },
-  { key: "Ottawa", emoji: "🏛️" },
-  { key: "Mississauga", emoji: "🌆" },
-  { key: "Brampton", emoji: "🌆" },
-  { key: "Hamilton", emoji: "⚙️" },
-  { key: "London", emoji: "🌳" },
-  { key: "Kingston", emoji: "🏰" },
-  { key: "Windsor", emoji: "🌉" },
-  { key: "Sudbury", emoji: "⛏️" },
-  { key: "Thunder Bay", emoji: "🌲" },
-  { key: "Vancouver", emoji: "🌊" },
-  { key: "Victoria", emoji: "🌺" },
-  { key: "Kelowna", emoji: "🍇" },
-  { key: "Abbotsford", emoji: "🌾" },
-  { key: "Prince George", emoji: "🌲" },
-  { key: "Calgary", emoji: "🤠" },
-  { key: "Edmonton", emoji: "🛢️" },
-  { key: "Red Deer", emoji: "🦌" },
-  { key: "Lethbridge", emoji: "🌾" },
-  { key: "Medicine Hat", emoji: "🌵" },
-  { key: "Winnipeg", emoji: "❄️" },
-  { key: "Brandon", emoji: "🌾" },
-  { key: "Thompson", emoji: "🐻‍❄️" },
-  { key: "Regina", emoji: "🌾" },
-  { key: "Saskatoon", emoji: "🌾" },
-  { key: "Moose Jaw", emoji: "🦌" },
-  { key: "Halifax", emoji: "⚓" },
-  { key: "Dartmouth", emoji: "🌊" },
-  { key: "Sydney", emoji: "⚓" },
-  { key: "Truro", emoji: "🌳" },
-  { key: "Moncton", emoji: "🦞" },
-  { key: "Fredericton", emoji: "🌳" },
-  { key: "Saint John", emoji: "⚓" },
-  { key: "Charlottetown", emoji: "🥔" },
-  { key: "Summerside", emoji: "🦞" },
-  { key: "St. John's", emoji: "⚓" },
-  { key: "Corner Brook", emoji: "🐟" },
-  { key: "Whitehorse", emoji: "🐺" },
-  { key: "Yellowknife", emoji: "💎" },
-  { key: "Iqaluit", emoji: "🐻‍❄️" },
 ];
 
 export default function HomeScreen() {
@@ -270,7 +231,7 @@ export default function HomeScreen() {
                 adjustsFontSizeToFit
                 minimumFontScale={0.7}
               >
-                AttenteZéro
+                AttenteZéro <Text style={{ fontSize: 16 }}>⚜️</Text>
               </Text>
               <Text style={styles.heroTagline} numberOfLines={1}>{t.tagline}</Text>
             </View>
@@ -334,25 +295,6 @@ export default function HomeScreen() {
               minimumFontScale={0.7}
             >
               {language === "fr" ? "villes" : "cities"}
-            </Text>
-          </View>
-          <View style={styles.statDivider} />
-          <View style={styles.statItem}>
-            <Text
-              style={styles.statNum}
-              numberOfLines={1}
-              adjustsFontSizeToFit
-              minimumFontScale={0.6}
-            >
-              {totalProvinces}
-            </Text>
-            <Text
-              style={styles.statLabel}
-              numberOfLines={1}
-              adjustsFontSizeToFit
-              minimumFontScale={0.7}
-            >
-              {language === "fr" ? "provinces" : "provinces"}
             </Text>
           </View>
           <View style={styles.statDivider} />
@@ -731,90 +673,6 @@ export default function HomeScreen() {
                 </View>
               </Pressable>
             ))}
-          </ScrollView>
-        </View>
-
-        {/* ── Provinces (Canada) ── */}
-        <View style={styles.section}>
-          <View style={styles.provinceHeader}>
-            <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
-              {language === "fr" ? "Trouver par province" : "Find by province"}
-            </Text>
-            <View style={[styles.provinceTotalBadge, { backgroundColor: colors.primary + "15", borderColor: colors.primary + "40" }]}>
-              <Text style={[styles.provinceTotalText, { color: colors.primary }]}>
-                🇨🇦 {totalServices.toLocaleString(language === "fr" ? "fr-CA" : "en-CA")} {language === "fr" ? "services" : "services"}
-              </Text>
-            </View>
-          </View>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.provinceScroll}
-          >
-            {PROVINCE_ORDER.map(({ code, emoji }) => {
-              const count = provinceCounts[code] ?? 0;
-              const available = count > 0;
-              const isQc = code === "QC";
-              return (
-                <Pressable
-                  key={code}
-                  disabled={!available}
-                  style={({ pressed }) => [
-                    styles.provinceChip,
-                    {
-                      backgroundColor: colors.card,
-                      borderColor: isQc ? colors.primary : colors.border,
-                      borderWidth: isQc ? 1.5 : 1,
-                      opacity: !available ? 0.55 : pressed ? 0.85 : 1,
-                    },
-                  ]}
-                  onPress={() => {
-                    if (!available) return;
-                    Haptics.selectionAsync();
-                    router.push({
-                      pathname: "/results",
-                      params: { query: PROVINCE_LABELS[code], category: "all" },
-                    });
-                  }}
-                >
-                  <Text style={styles.provinceEmoji}>{emoji}</Text>
-                  <Text
-                    style={[styles.provinceCode, { color: isQc ? colors.primary : colors.foreground }]}
-                    numberOfLines={1}
-                    adjustsFontSizeToFit
-                    minimumFontScale={0.8}
-                  >
-                    {code}
-                  </Text>
-                  <Text
-                    style={[styles.provinceName, { color: colors.mutedForeground }]}
-                    numberOfLines={1}
-                    adjustsFontSizeToFit
-                    minimumFontScale={0.75}
-                  >
-                    {PROVINCE_LABELS[code]}
-                  </Text>
-                  <Text
-                    style={[styles.provinceCount, { color: colors.foreground }]}
-                    numberOfLines={1}
-                    adjustsFontSizeToFit
-                    minimumFontScale={0.7}
-                  >
-                    {count.toLocaleString(language === "fr" ? "fr-CA" : "en-CA")}
-                  </Text>
-                  <Text
-                    style={[styles.provinceStatus, { color: available ? "#16a34a" : colors.mutedForeground }]}
-                    numberOfLines={1}
-                    adjustsFontSizeToFit
-                    minimumFontScale={0.8}
-                  >
-                    {available
-                      ? language === "fr" ? "✓ disponible" : "✓ available"
-                      : language === "fr" ? "à venir" : "coming soon"}
-                  </Text>
-                </Pressable>
-              );
-            })}
           </ScrollView>
         </View>
 

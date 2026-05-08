@@ -3,7 +3,7 @@ export type Language = "fr" | "en";
 export const translations = {
   fr: {
     appName: "AttenteZéro",
-    tagline: "Services communautaires du Québec",
+    tagline: "L'app québécoise pour trouver l'aide",
     locateMe: "Me localiser",
     locating: "Localisation en cours...",
     locationGranted: "Trié par distance",
@@ -127,7 +127,7 @@ export const translations = {
   },
   en: {
     appName: "AttenteZéro",
-    tagline: "Community Services in Quebec",
+    tagline: "The Quebec app to find help",
     locateMe: "Use my location",
     locating: "Locating...",
     locationGranted: "Sorted by distance",
