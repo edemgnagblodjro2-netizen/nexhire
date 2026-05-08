@@ -13,11 +13,12 @@ import {
 
 import { useColors } from "@/hooks/useColors";
 
+// Pivot Québec : on retire banner-canada qui montrait la feuille d'érable
+// (héritage pan-Canada). On garde 3 bannières communautaires.
 const BANNERS: ImageSourcePropType[] = [
   require("@/assets/images/banner-community.png"),
   require("@/assets/images/banner-help.png"),
   require("@/assets/images/banner-terrain.png"),
-  require("@/assets/images/banner-canada.png"),
 ];
 
 const AUTO_ROTATE_MS = 4000;

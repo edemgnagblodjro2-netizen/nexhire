@@ -32,6 +32,7 @@ import { useColors } from "@/hooks/useColors";
 import { getCategoryColor, CATEGORY_ICONS } from "@/utils/categoryColors";
 import { detectCategory } from "@/utils/detectCategory";
 import { trackSearch } from "@/lib/analytics";
+import { openAIChat } from "@/lib/aiChatBus";
 
 const ALL_CATEGORIES: Category[] = [
   "housing",
@@ -369,6 +370,34 @@ export default function HomeScreen() {
       </LinearGradient>
 
       <View style={styles.body}>
+
+        {/* ── CTA principal : Demander à l'AI (24/7) ── */}
+        <Pressable
+          onPress={() => {
+            Haptics.selectionAsync();
+            openAIChat();
+          }}
+          style={({ pressed }) => [
+            styles.aiCta,
+            { opacity: pressed ? 0.88 : 1, transform: [{ scale: pressed ? 0.98 : 1 }] },
+          ]}
+          accessibilityLabel={language === "fr" ? "Demander à l'assistant AI" : "Ask the AI assistant"}
+        >
+          <View style={styles.aiCtaIconWrap}>
+            <Feather name="message-circle" size={22} color="#fff" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.aiCtaTitle}>
+              {language === "fr" ? "Demander à l'assistant AI" : "Ask the AI assistant"}
+            </Text>
+            <Text style={styles.aiCtaSubtitle}>
+              {language === "fr"
+                ? "Réponse immédiate · 24/7 · gratuit"
+                : "Instant answer · 24/7 · free"}
+            </Text>
+          </View>
+          <Feather name="chevron-right" size={20} color="#fff" />
+        </Pressable>
 
         {/* ── Bannière slide (auto-rotation) — remontée au-dessus des tuiles ── */}
         <HomeBannerSlider />
@@ -754,6 +783,42 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+
+  /* CTA AI principal */
+  aiCta: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    backgroundColor: "#0e7e6e",
+    borderRadius: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    marginBottom: 14,
+    shadowColor: "#0e7e6e",
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 3,
+  },
+  aiCtaIconWrap: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255,255,255,0.18)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  aiCtaTitle: {
+    fontSize: 15,
+    fontFamily: "Inter_700Bold",
+    color: "#fff",
+  },
+  aiCtaSubtitle: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.85)",
+    marginTop: 2,
+  },
 
   /* Hero */
   hero: {

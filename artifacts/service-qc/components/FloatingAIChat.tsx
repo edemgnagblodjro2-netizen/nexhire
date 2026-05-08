@@ -20,6 +20,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useColors } from "@/hooks/useColors";
 import { getApiBaseUrl } from "@/lib/apiBase";
 import { getAuthToken } from "@/lib/apiClient";
+import { subscribeOpenAIChat } from "@/lib/aiChatBus";
 
 type Msg = {
   id: string;
@@ -67,6 +68,11 @@ export default function FloatingAIChat() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<ScrollView | null>(null);
+
+  // Permet aux autres écrans (ex: bouton CTA accueil) d'ouvrir le chat.
+  useEffect(() => {
+    return subscribeOpenAIChat(() => setOpen(true));
+  }, []);
 
   // Hide button on certain screens
   const isHidden = HIDDEN_ROUTES.some(
