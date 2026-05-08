@@ -12,7 +12,8 @@ import { apiCategoryToCode } from "@/lib/categoryMapping";
 // v6 : on bump le cache car le mapping de catégorie change le format stocké.
 // v7 : ajout de serviceType + geocodePrecisionM (Phase 1 fiabilité géoloc).
 // v8 : pivot Québec — bump pour invalider les caches qui contiennent des services hors-QC.
-const CACHE_KEY = "attentezero_services_cache_v8";
+// v9 : on ré-inclut les services province-wide (Centris, Kijiji, Realtor, etc.) qui avaient été virés par erreur en v8.
+const CACHE_KEY = "attentezero_services_cache_v9";
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 type ServicesContextValue = {
@@ -114,11 +115,14 @@ export function ServicesProvider({ children }: { children: React.ReactNode }) {
 
       // mapApiService renvoie null si la catégorie BDD est inconnue : on
       // filtre ces lignes pour éviter d'afficher des badges vides.
-      // Pivot Québec : on filtre aussi les services hors-QC à la source.
+      // Pivot Québec : on filtre les services hors-QC à la source.
+      // Exception : les services pan-canadiens marqués isProvinceWide
+      // (Centris, Kijiji, Realtor, etc.) restent visibles car utiles aux
+      // Québécois (plateformes de logement, lignes 1-800, etc.).
       const mapped = raw
         .map(mapApiService)
         .filter((s): s is Service => s !== null)
-        .filter((s) => (s.province ?? "QC") === "QC");
+        .filter((s) => (s.province ?? "QC") === "QC" || s.isProvinceWide);
       setServices(mapped);
       await saveCache(mapped);
     } catch (err: any) {
