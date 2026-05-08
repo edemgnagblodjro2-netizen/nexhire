@@ -599,3 +599,9 @@ id = "nUJma4Q_A9id0ZGyMbxre"
 uri = "file://exports/flyer/AttenteZero_QR.png"
 type = "image"
 title = "QR code attentezero.ca (haute résolution)"
+
+[[outputs]]
+id = "vJBK_KWmszyK_LBTNARDG"
+uri = "file://attached_assets/services-a-charger-2026-05-08.csv"
+type = "table"
+title = "Services à charger — 52 fiches à valider"
