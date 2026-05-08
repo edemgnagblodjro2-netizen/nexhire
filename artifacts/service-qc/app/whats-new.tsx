@@ -21,21 +21,21 @@ interface UpdateEntry {
 const UPDATES: UpdateEntry[] = [
   {
     date: "Avril 2026",
-    title: "Couverture Canada complète",
-    titleEn: "Full Canada coverage",
+    title: "Couverture Québec complète",
+    titleEn: "Full Quebec coverage",
     icon: "map",
     color: "#0e7e6e",
     bullets: [
-      "Yukon, T.N.-O. et Nunavut désormais couverts.",
-      "5 800+ services dans 13 provinces et territoires.",
-      "Numéros 211 provinciaux ajoutés (24 h/24, gratuits).",
-      "311 municipal ajouté pour Montréal et Toronto.",
+      "3 268+ services partout au Québec, du Saguenay à la Gaspésie.",
+      "Filtre par ville (60 villes) sur la page Services.",
+      "Numéro 211 Québec disponible 24 h/24, gratuit.",
+      "311 municipal ajouté pour Montréal et Québec.",
     ],
     bulletsEn: [
-      "Yukon, NWT and Nunavut now covered.",
-      "5,800+ services across 13 provinces and territories.",
-      "Provincial 211 numbers added (24/7, toll-free).",
-      "Municipal 311 added for Montréal and Toronto.",
+      "3,268+ services across Quebec, from Saguenay to Gaspésie.",
+      "City filter (60 cities) on the Services page.",
+      "Quebec 211 number available 24/7, toll-free.",
+      "Municipal 311 added for Montréal and Québec City.",
     ],
   },
   {

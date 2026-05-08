@@ -37,8 +37,8 @@ const FAQ: FaqItem[] = [
   {
     q: "Pourquoi certains services affichent « Bientôt » ?",
     qEn: "Why do some services show \"Coming soon\"?",
-    a: "Nous étendons progressivement la couverture vers les 13 provinces et territoires. Si un organisme de votre région n'apparaît pas, signalez-le via « Signaler un bogue » et nous l'ajouterons en priorité.",
-    aEn: "We're rolling coverage out to all 13 provinces and territories. If your local organization is missing, send us a note via \"Report a bug\" and we'll prioritize it.",
+    a: "AttenteZéro couvre actuellement 3 268 services partout au Québec. Si un organisme de votre région n'apparaît pas, signalez-le via « Signaler un bogue » et nous l'ajouterons en priorité.",
+    aEn: "AttenteZéro currently covers 3,268 services across Quebec. If your local organization is missing, send us a note via \"Report a bug\" and we'll prioritize it.",
   },
   {
     q: "Qu'est-ce que le « 211 » ?",
@@ -85,8 +85,8 @@ const FAQ: FaqItem[] = [
   {
     q: "L'app fonctionne-t-elle dans toutes les provinces ?",
     qEn: "Does the app work in every province?",
-    a: "Oui — AttenteZéro couvre les 13 provinces et territoires du Canada. La couverture est la plus dense au Québec ; pour les autres régions nous fournissons les services administratifs principaux (Service Canada, service provincial, 211 local). Pour tout besoin spécifique hors Québec, l'IA et le diagnostic vous orientent vers votre 211 régional.",
-    aEn: "Yes — AttenteZéro covers all 13 provinces and territories. Coverage is densest in Quebec; for other regions we provide the core administrative services (Service Canada, provincial service, local 211). For any specific need outside Quebec, the AI and diagnosis route you to your regional 211.",
+    a: "AttenteZéro est dédiée au Québec : 3 268 services communautaires, sociaux et administratifs partout dans la province. Pour les services fédéraux pan-canadiens (Service Canada, ARC, Sécurité de la vieillesse), ils restent accessibles dans l'app peu importe votre région.",
+    aEn: "AttenteZéro is dedicated to Quebec: 3,268 community, social and administrative services across the province. Federal pan-Canadian services (Service Canada, CRA, Old Age Security) remain accessible in the app regardless of your region.",
   },
   {
     q: "L'assistant IA peut-il me parler dans ma langue ?",
@@ -115,8 +115,8 @@ const FAQ: FaqItem[] = [
   {
     q: "Comment changer ma province par défaut ?",
     qEn: "How do I change my default province?",
-    a: "Touchez le sélecteur de province en haut de l'écran d'accueil ou du diagnostic, puis choisissez parmi les 13 provinces et territoires. Votre choix est enregistré localement et tous les résultats (services, IA, 211) sont filtrés en conséquence.",
-    aEn: "Tap the province picker at the top of the home or diagnosis screen, then pick from the 13 provinces and territories. Your choice is saved locally and all results (services, AI, 211) are filtered accordingly.",
+    a: "AttenteZéro est centrée sur le Québec : la liste de services est filtrée automatiquement à la province. Utilisez le filtre Ville en haut de la page Services pour cibler votre région.",
+    aEn: "AttenteZéro focuses on Quebec: the service list is automatically filtered to the province. Use the City filter at the top of the Services page to target your region.",
   },
 ];
 

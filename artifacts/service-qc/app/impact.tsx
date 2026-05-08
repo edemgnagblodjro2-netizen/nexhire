@@ -34,13 +34,13 @@ export default function ImpactScreen() {
   const milestones = isFr
     ? [
         { date: "2025", text: "Lancement de la version bêta à Montréal." },
-        { date: "Début 2026", text: "Couverture étendue aux 13 provinces et territoires canadiens." },
+        { date: "Début 2026", text: "Couverture renforcée à 3 268 services partout au Québec." },
         { date: "2026", text: "Publication sur Google Play et conformité Loi 25." },
         { date: "Objectif 2027", text: "Partenariat avec 50 organismes communautaires québécois." },
       ]
     : [
         { date: "2025", text: "Beta launch in Montreal." },
-        { date: "Early 2026", text: "Coverage extended to all 13 Canadian provinces and territories." },
+        { date: "Early 2026", text: "Coverage strengthened to 3,268 services across Quebec." },
         { date: "2026", text: "Google Play release and Law 25 compliance." },
         { date: "2027 goal", text: "Partner with 50 Quebec community organizations." },
       ];

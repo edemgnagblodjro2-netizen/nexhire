@@ -125,7 +125,7 @@ export default function AboutScreen() {
             </Text>
           </View>
           <Text style={[styles.p, { color: colors.mutedForeground, fontSize: 12, marginBottom: 8 }]}>
-            {isFr ? "Mai 2026 — 5 338 services dans 13 provinces et territoires" : "May 2026 — 5,338 services across 13 provinces and territories"}
+            {isFr ? "Mai 2026 — 3 268 services au Québec" : "May 2026 — 3,268 services across Quebec"}
           </Text>
           <View style={styles.bulletRow}>
             <Feather name="users" size={16} color="#0e7e6e" />
