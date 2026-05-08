@@ -24,10 +24,6 @@ import { useServicesData } from "@/contexts/ServicesContext";
 import { useColors } from "@/hooks/useColors";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
 import { haversineDistance } from "@/utils/location";
-import { type LangCode, LANG_LABELS, inferLanguages } from "@/utils/serviceLanguages";
-
-const FILTER_LANGUAGES: LangCode[] = ["fr", "en", "es", "ar", "ht", "zh"];
-
 type SortMode = "default" | "az" | "distance" | "urgent";
 
 // Childcare (La Place 0-5) is QC-only — filtered out at render time for other provinces.
@@ -60,7 +56,6 @@ export default function ServicesScreen() {
 
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<Category | null>(null);
-  const [activeLanguage, setActiveLanguage] = useState<LangCode | null>(null);
   const [activeCity, setActiveCity] = useState<string | null>(null);
   const [sortMode, setSortMode] = useState<SortMode>("default");
 
@@ -78,21 +73,19 @@ export default function ServicesScreen() {
   }, [services]);
 
   // Liste des villes disponibles (top 60 par fréquence) — basée sur le sous-ensemble
-  // déjà filtré par catégorie/langue pour que le filtre Ville reste pertinent.
+  // déjà filtré par catégorie pour que le filtre Ville reste pertinent.
   const cityCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    const baseSet = services.filter((s) => {
-      if (activeCategory && s.category !== activeCategory) return false;
-      if (activeLanguage && !inferLanguages(s).includes(activeLanguage)) return false;
-      return true;
-    });
+    const baseSet = activeCategory
+      ? services.filter((s) => s.category === activeCategory)
+      : services;
     for (const s of baseSet) {
       const c = (s.city ?? "").trim();
       if (!c) continue;
       counts[c] = (counts[c] || 0) + 1;
     }
     return counts;
-  }, [services, activeCategory, activeLanguage]);
+  }, [services, activeCategory]);
 
   const availableCities = useMemo(
     () =>
@@ -106,9 +99,6 @@ export default function ServicesScreen() {
     let result = services;
     if (activeCategory) {
       result = result.filter((s) => s.category === activeCategory);
-    }
-    if (activeLanguage) {
-      result = result.filter((s) => inferLanguages(s).includes(activeLanguage));
     }
     if (activeCity) {
       const target = activeCity.toLowerCase();
@@ -142,7 +132,7 @@ export default function ServicesScreen() {
       });
     }
     return result;
-  }, [services, query, activeCategory, activeLanguage, activeCity, sortMode, userLocation]);
+  }, [services, query, activeCategory, activeCity, sortMode, userLocation]);
 
   const count = filtered.length;
   const totalCount = services.length;
@@ -158,13 +148,12 @@ export default function ServicesScreen() {
   function clearFilters() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setActiveCategory(null);
-    setActiveLanguage(null);
     setActiveCity(null);
     setQuery("");
     setSortMode("default");
   }
 
-  const hasActiveFilter = !!activeCategory || !!activeLanguage || !!activeCity || !!query.trim() || sortMode !== "default";
+  const hasActiveFilter = !!activeCategory || !!activeCity || !!query.trim() || sortMode !== "default";
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -316,51 +305,6 @@ export default function ServicesScreen() {
                     </Text>
                   </View>
                 )}
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
-
-        {/* Language filter row */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.langStrip}
-        >
-          <View style={styles.langStripLabel}>
-            <Feather name="message-circle" size={11} color={colors.mutedForeground} />
-            <Text style={[styles.langStripLabelText, { color: colors.mutedForeground }]}>
-              {isFr ? "Langue parlée" : "Language spoken"}
-            </Text>
-          </View>
-          {FILTER_LANGUAGES.map((lang) => {
-            const meta = LANG_LABELS[lang];
-            const isActive = activeLanguage === lang;
-            return (
-              <TouchableOpacity
-                key={lang}
-                onPress={() => {
-                  Haptics.selectionAsync();
-                  setActiveLanguage(isActive ? null : lang);
-                }}
-                style={[
-                  styles.langChip,
-                  {
-                    backgroundColor: isActive ? colors.primary + "18" : colors.card,
-                    borderColor: isActive ? colors.primary : colors.border,
-                  },
-                ]}
-                activeOpacity={0.85}
-              >
-                <Text style={styles.langChipFlag}>{meta.flag}</Text>
-                <Text
-                  style={[
-                    styles.langChipText,
-                    { color: isActive ? colors.primary : colors.foreground },
-                  ]}
-                >
-                  {isFr ? meta.fr : meta.en}
-                </Text>
               </TouchableOpacity>
             );
           })}
