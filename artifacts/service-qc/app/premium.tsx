@@ -76,7 +76,7 @@ const TIERS: Tier[] = [
     gradColors: ["#4c1d95", "#7c3aed"],
     audience: "Premium — Soutien",
     tagline: "Débloquez le chat IA illimité et les favoris à vie",
-    priceLabel: "10 $",
+    priceLabel: "20 $",
     priceUnit: "une seule fois",
     perks: [
       "Tout du forfait gratuit",
@@ -86,7 +86,7 @@ const TIERS: Tier[] = [
       "Aucun abonnement — payez une fois, gardez à vie",
       "Vous soutenez un projet 100 % québécois",
     ],
-    ctaLabel: "Devenir Premium — 10 $",
+    ctaLabel: "Devenir Premium — 20 $",
     ctaKind: "premium",
   },
   {
