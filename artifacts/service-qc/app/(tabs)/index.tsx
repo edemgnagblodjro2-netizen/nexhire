@@ -407,29 +407,29 @@ export default function HomeScreen() {
         {/* ── Tuiles principales (style mockup épuré) ── */}
         <View style={styles.heroTilesGrid}>
           {([
-            { cat: "food" as Category, icon: "shopping-bag" as const, label: language === "fr" ? "Aide alimentaire" : "Food aid" },
-            { cat: "housing" as Category, icon: "home" as const, label: language === "fr" ? "Logement" : "Housing" },
-            { cat: "health" as Category, icon: "heart" as const, label: language === "fr" ? "Santé" : "Health" },
-            { cat: "employment" as Category, icon: "briefcase" as const, label: language === "fr" ? "Emploi" : "Employment" },
-            { cat: "social" as Category, icon: "users" as const, label: language === "fr" ? "Soutien social" : "Social support" },
-            { cat: "immigration" as Category, icon: "globe" as const, label: language === "fr" ? "Immigration" : "Immigration" },
+            { cat: "food" as Category, icon: "shopping-bag" as const, label: language === "fr" ? "Aide alimentaire" : "Food aid", bg: "#FFF4E6", accent: "#EA580C", border: "#FED7AA" },
+            { cat: "housing" as Category, icon: "home" as const, label: language === "fr" ? "Logement" : "Housing", bg: "#E6F0FF", accent: "#2563EB", border: "#BFDBFE" },
+            { cat: "health" as Category, icon: "heart" as const, label: language === "fr" ? "Santé" : "Health", bg: "#FFE6EC", accent: "#E11D48", border: "#FECDD3" },
+            { cat: "employment" as Category, icon: "briefcase" as const, label: language === "fr" ? "Emploi" : "Employment", bg: "#F0E7FF", accent: "#7C3AED", border: "#DDD6FE" },
+            { cat: "social" as Category, icon: "users" as const, label: language === "fr" ? "Soutien social" : "Social support", bg: "#E6F7F3", accent: "#0E7E6E", border: "#A7E5D5" },
+            { cat: "immigration" as Category, icon: "globe" as const, label: language === "fr" ? "Immigration" : "Immigration", bg: "#FEF5E0", accent: "#D97706", border: "#FDE68A" },
           ]).map((tile) => (
             <Pressable
               key={tile.cat}
               style={({ pressed }) => [
                 styles.heroTile,
                 {
-                  backgroundColor: colors.card,
-                  borderColor: colors.border,
+                  backgroundColor: tile.bg,
+                  borderColor: tile.border,
                   opacity: pressed ? 0.85 : 1,
                   transform: [{ scale: pressed ? 0.97 : 1 }],
                 },
               ]}
               onPress={() => handleCategoryPress(tile.cat)}
             >
-              <Feather name={tile.icon} size={42} color={colors.primary} strokeWidth={1.5} />
+              <Feather name={tile.icon} size={42} color={tile.accent} strokeWidth={1.75} />
               <Text
-                style={[styles.heroTileLabel, { color: colors.foreground }]}
+                style={[styles.heroTileLabel, { color: tile.accent }]}
                 numberOfLines={2}
                 adjustsFontSizeToFit
                 minimumFontScale={0.8}
