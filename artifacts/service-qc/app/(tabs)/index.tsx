@@ -1506,7 +1506,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     marginHorizontal: -6,
     marginTop: 4,
-    marginBottom: 12,
+    marginBottom: 0,
   },
   heroTile: {
     width: "50%",
@@ -1541,8 +1541,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 12,
     borderWidth: 1,
-    marginTop: 12,
-    marginBottom: 18,
+    marginTop: 0,
+    marginBottom: 14,
   },
   allCategoriesLinkText: {
     fontSize: 13,
