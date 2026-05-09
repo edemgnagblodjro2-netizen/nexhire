@@ -77,6 +77,11 @@ export default function Layout({
             <span>🚪</span>
             Se déconnecter
           </button>
+          <p className="text-[10px] text-gray-400 text-center mt-3 leading-tight">
+            © {new Date().getFullYear()} CivicAI
+            <br />
+            <span className="text-gray-300">AttenteZéro est un produit CivicAI</span>
+          </p>
         </div>
       </aside>
 
