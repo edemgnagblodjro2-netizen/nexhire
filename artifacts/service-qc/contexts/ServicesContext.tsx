@@ -13,8 +13,8 @@ import { apiCategoryToCode } from "@/lib/categoryMapping";
 // v7 : ajout de serviceType + geocodePrecisionM (Phase 1 fiabilité géoloc).
 // v8 : pivot Québec — bump pour invalider les caches qui contiennent des services hors-QC.
 // v9 : on ré-inclut les services province-wide (Centris, Kijiji, Realtor, etc.) qui avaient été virés par erreur en v8.
-// v19 : nettoyage prod — suppression 10 fiches assurance-* + correction Accueil Bonneau (Montréal).
-const CACHE_KEY = "attentezero_services_cache_v19";
+// v20 : import massif Ouest-de-l'Île — +90 fiches (Pointe-Claire, Pierrefonds, Dorval, Beaconsfield, etc.). PROD = 1799 services.
+const CACHE_KEY = "attentezero_services_cache_v20";
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 type ServicesContextValue = {

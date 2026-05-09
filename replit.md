@@ -96,6 +96,10 @@ A mobile application connecting vulnerable individuals with community and social
 - Submit TestFlight #1 : `3d968bce-6392-4348-8933-b7b63ba9dad7` ⏳ en cours.
 - **Gotcha credentials** : tout premier `eas build --platform ios` exige mode interactif (Apple ID + 2FA), même avec ASC API key. Ensuite stockés sur EAS, builds suivants tournent en `--non-interactive`.
 
+## v1.1.13 vc75 (en attente OK build) — Import massif Ouest-de-l'Île
+- **+90 fiches Ouest-de-l'Île** importées depuis le PDF officiel `montreal-ouest-de-l-ile-west-island-fr.pdf` (247 pages, 623 fiches au total). Pipeline : `scripts/src/parse-owi-pdf.ts` (parser PDF→JSON) → dédup auto vs prod (97 doublons détectés, dont les 8 ajouts manuels du matin) → filtres exclusion (bibliothèques municipales, sociétés savantes nationales) → géocodage Google parallèle (83 ROOFTOP, 6 GEOMETRIC_CENTER, 1 échec exclu) → POST batch parallèle via API admin. **PROD : 1709 → 1799 services actifs**. Distribution : Pointe-Claire 24, Pierrefonds-Roxboro 20, Dorval 17, Beaconsfield 10, Sainte-Anne 9, Kirkland 8, DDO 8, Baie-d'Urfé 3, L'Île-Bizard 3, Senneville 1. Coût Google Geocoding : ~0,50$ USD.
+- Cache mobile bumpé v19→v20. Bundle `services-data.json` + `services.ts` régénérés depuis prod live.
+
 ## v1.1.13 vc74 (en attente OK build)
 - **BUG MAJEUR FIXÉ — bundle mobile désynchronisé de la DB** : `data/services.ts` (bundle Expo) avait des IDs au format `qc-gat-fd001` (vieux) tandis que la DB (dev + prod) utilise `qc-imm-gatineau-aco` (format actuel via `services-data.json`). Conséquence : POST `/rate`, `/track`, `/wait` → 404 sur tous les services bundlés en TestFlight/Android internal (race au boot avant fetch API). Fix : régénération de `services.ts` depuis `services-data.json` (1710 services, IDs alignés avec l'API). 0 modification DB prod (le 1 vote `ab-211` reste intact). Cache mobile bumpé v17→v18 pour invalider les caches contenant les anciens IDs.
 - **Script permanent** : `pnpm --filter @workspace/scripts run regen-mobile-bundle` — à relancer chaque fois que `services-data.json` change pour garder bundle et DB synchros.
