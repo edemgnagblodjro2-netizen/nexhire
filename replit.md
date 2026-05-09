@@ -6,6 +6,7 @@ A mobile application connecting vulnerable individuals with community and social
 - **AttenteZéro** est un produit de CivicAI (produit citoyen gratuit, modèle B2G).
 - Domaine produit : `attentezero.ca` (DNS Cloudflare, alias email actifs, pas encore de site web).
 - À prévoir post-launch : site vitrine `attentezero.ca` (one-pager produit) + éventuellement site corporate `civicai.ca`/`.com` pour démarchage B2G.
+- **TODO post-launch — site vitrine `attentezero.ca`** : créer un nouvel artifact `marketing-site` dans le monorepo Replit (React/Vite, one-pager : hero + boutons App Store/Play Store + 3 blocs features + stats + footer mentions légales). Servir aussi `/.well-known/assetlinks.json` pour vérifier les deep links Android. Pointer le domaine `attentezero.ca` via Cloudflare (CNAME → URL Replit).
 - Mentions à jour à pousser progressivement : footer admin, page « À propos » mobile, App Store/Play Store « Développeur », signatures emails transactionnels.
 
 ## Run & Operate
