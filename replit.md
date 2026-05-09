@@ -96,6 +96,12 @@ A mobile application connecting vulnerable individuals with community and social
 - Submit TestFlight #1 : `3d968bce-6392-4348-8933-b7b63ba9dad7` ⏳ en cours.
 - **Gotcha credentials** : tout premier `eas build --platform ios` exige mode interactif (Apple ID + 2FA), même avec ASC API key. Ensuite stockés sur EAS, builds suivants tournent en `--non-interactive`.
 
+## v1.1.13 vc74 (en attente OK build)
+- **BUG MAJEUR FIXÉ — bundle mobile désynchronisé de la DB** : `data/services.ts` (bundle Expo) avait des IDs au format `qc-gat-fd001` (vieux) tandis que la DB (dev + prod) utilise `qc-imm-gatineau-aco` (format actuel via `services-data.json`). Conséquence : POST `/rate`, `/track`, `/wait` → 404 sur tous les services bundlés en TestFlight/Android internal (race au boot avant fetch API). Fix : régénération de `services.ts` depuis `services-data.json` (1710 services, IDs alignés avec l'API). 0 modification DB prod (le 1 vote `ab-211` reste intact). Cache mobile bumpé v17→v18 pour invalider les caches contenant les anciens IDs.
+- **Script permanent** : `pnpm --filter @workspace/scripts run regen-mobile-bundle` — à relancer chaque fois que `services-data.json` change pour garder bundle et DB synchros.
+- Tuiles home : `aspectRatio` 1.15→1.7 + marginBottom 14→10 (réduction grille de 174px = vrai fix du « gros vide »). AI CTA remis taille originale (padding 8/12, icône 26px). `allCategoriesLink` marginTop=0.
+- iOS buildNumber 78→79, Android versionCode 71→72.
+
 ## v1.1.9 (en cours)
 - **Phase 2 géocodage Google LIVRÉE** : 2931 fiches re-géocodées via Google Geocoding API (2750 ROOFTOP 20m, 91 RANGE 50m, 90 CENTER 200m). Bilan global : **3686 vertes (≤100m)** vs 845 avant (+335%), 90 jaunes, 93 oranges, 356 rouges restantes (adresses sans numéro de rue, non-fixables automatiquement). Coût réel ~99$ USD vs 16$ estimé (j'ai oublié de marquer les APPROX comme déjà tentées → 333 re-tests inutiles par chunk). Fiches non-fixables maintenant marquées `geocode_source='google-tried-approx'` pour éviter tout retest futur. Script `scripts/src/geocode-google.ts` avec timeout 10s + flag de reprise auto.
 - Captcha MIN_AGE 2000→600ms (fix #1 plainte « inscription bloquée »).
