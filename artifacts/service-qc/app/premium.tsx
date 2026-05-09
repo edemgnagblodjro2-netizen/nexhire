@@ -101,6 +101,8 @@ const TIERS: Tier[] = [
     perks: [
       "Accès complet à vie pour votre organisme",
       "Visibilité accrue dans le répertoire",
+      "Intégration de nouvelles institutions construites pour plus de visibilité",
+      "Promotion de nouvelles activités et services offerts",
       "Support dédié par courriel",
       "Aucun abonnement — payez une fois",
       "Vous soutenez un projet 100 % québécois",
@@ -122,6 +124,8 @@ const TIERS: Tier[] = [
     perks: [
       "Accès complet à vie",
       "Reconnaissance comme partenaire de soutien",
+      "Intégration de nouvelles institutions construites pour plus de visibilité",
+      "Promotion de nouvelles activités et services offerts",
       "Contribution directe à la mission",
       "Aucun abonnement — payez une fois",
       "Vous gardez la plateforme vivante",
