@@ -507,6 +507,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-abrimex",
+    "name": "ABRIMEX",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Drummondville",
+    "province": "QC",
+    "phone": "819 477-3354, poste 24",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.abrimex.com",
+    "address": "630, rue Cormier, Drummondville (Québec) J2C5C4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-acc-s-sant-mentale-cible-travail",
+    "name": "ACCÈS SANTÉ MENTALE CIBLE TRAVAIL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 525-8888",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.acces-cible.org",
+    "address": "5650, rue D’Iberville, bureau 600, Montréal (Québec) H2G2B3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-acc-s-travail",
+    "name": "ACCÈS TRAVAIL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Drummondville",
+    "province": "QC",
+    "phone": "819 758-1661, poste 222",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.accestravail.com",
+    "address": "2260, rue Demers, bureau 230, Drummondville (Québec) J2B0L1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-acc-s-travail-de-montr-al",
+    "name": "ACCÈS-TRAVAIL DE MONTRÉAL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 259-4690",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.accestravail.qc.ca",
+    "address": "2030, boul. Pie-IX, bureau 214, Montréal (Québec) H1V2C8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-acc-s-travail-femmes-inc",
+    "name": "ACCÈS-TRAVAIL-FEMMES INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Jonquière",
+    "province": "QC",
+    "phone": "418 695-0834",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.atfquebec.ca",
+    "address": "2240, rue Montpetit 3 ième étage, Jonquière (Québec) G7X6A3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "mh-acsm-quebec",
     "name": "ACSM – Filiale Québec",
     "category": "mentalHealth",
@@ -531,6 +596,82 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://acsmmontreal.qc.ca",
     "address": "55, av. du Mont-Royal Ouest, bureau 605, Montréal, QC H2T 2S6",
     "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi."
+  },
+  {
+    "id": "qc-emp-action-emploi-haute-yamaska",
+    "name": "ACTION EMPLOI HAUTE-YAMASKA",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 771-4500",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "1305, des Cascades, bureau 4, Saint-Hyacinthe (Québec) J2S3H3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-action-emploi-papineau-inc",
+    "name": "ACTION EMPLOI PAPINEAU INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 986-5248",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://cjepapineau.qc.ca/qui-sommes-nous/mission-de-aep/",
+    "address": "112, Maclaren Est, Gatineau (Québec) J8L1K1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-action-main-d-oeuvre-m-t-l-inc",
+    "name": "ACTION MAIN-D’OEUVRE M.T.L. INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 721-4941",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "3320, Boul. Rosemont, Montréal (Québec) H1X1K3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-action-rh-lanaudi-re",
+    "name": "ACTION RH LANAUDIÈRE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "438 341-5144",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.actionrh.ca",
+    "address": "3395, boulevard de la Pinière, bureau 130, Terrebonne (Québec) J6X4N1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-action-travail-chaleurs-inc",
+    "name": "ACTION TRAVAIL CHALEURS INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Bonaventure",
+    "province": "QC",
+    "phone": "418 534-3993",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.publicationsduquebec.gouv.qc.ca/lois-et-reglements/",
+    "address": "193, Grand-Pré, bureau B, Bonaventure (Québec) G0C1E0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-action-r-insertion",
+    "name": "ACTION-RÉINSERTION",
+    "category": "employment",
+    "subcategory": "",
+    "city": "MONTRÉAL",
+    "province": "QC",
+    "phone": "514 507-7015",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://lesacados.org/",
+    "address": "222, rue SAINTE-CATHERINE EST, MONTRÉAL (Québec) H2X1L1",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-fam-adhara-anciennement-continuit-famille-aupr-s-des-d-tenues-cf",
@@ -558,6 +699,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Services d'accueil, intégration, références."
   },
   {
+    "id": "qc-emp-agence-ometz",
+    "name": "AGENCE OMETZ",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 342-0000",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.ometz.ca",
+    "address": "1, carré Cummings, Montréal (Québec) H3W1M6",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-imm-montreal-agir",
     "name": "AGIR – Accueil et intégration immigrants",
     "category": "immigration",
@@ -569,6 +723,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.agirimmigration.org",
     "address": "6660, boul. Saint-Laurent, Montréal, QC H2S 3C7",
     "hours": "Lun-ven 8h30-16h30. Services d'accueil, intégration, références."
+  },
+  {
+    "id": "qc-emp-aim-croit",
+    "name": "AIM CROIT",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 744-2944",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.aimcroitqc.org",
+    "address": "433, Chabanel Ouest, mezzanine 2, bureau 304, Montréal (Québec) H2N2J4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-alac-alliance-pour-l-accueil-et-l-int-gration-des-immigrants",
+    "name": "ALAC (ALLIANCE POUR L’ACCUEIL ET L’INTÉGRATION DES IMMIGRANTS-ES)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 737-3642",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.alac.qc.ca",
+    "address": "5165, Ch.Queen Mary, bureau 350, Montréal (Québec) H3W1X7",
+    "hours": "Voir site web"
   },
   {
     "id": "ab-alis",
@@ -690,6 +870,70 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30.",
     "isProvinceWide": true
+  },
+  {
+    "id": "qc-emp-association-midi-quarante-inc",
+    "name": "ASSOCIATION MIDI-QUARANTE INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 664-0711, poste 270",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.assmq.com",
+    "address": "3100, boulevard de la Concorde est, bureau 204, Laval (Québec) H7E2B8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-atelier-action-jeunesse-t-r-inc",
+    "name": "ATELIER ACTION JEUNESSE T.R. INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Trois-Rivières",
+    "province": "QC",
+    "phone": "819 375-1099",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "3275, rue Girard, Trois-Rivières (Québec) G8Z2M5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-atelier-de-preparation-a-l-emploi-a-p-e-inc",
+    "name": "ATELIER DE PREPARATION A L’EMPLOI (A.P.E.) INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418 628-6389",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.ape.qc.ca",
+    "address": "710, rue Bouvier, bureau 275, Québec (Québec) G2J1C2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-atelier-de-tri-des-mati-res-plastiques-recyclables-du-qu-bec",
+    "name": "ATELIER DE TRI DES MATIÈRES PLASTIQUES RECYCLABLES DU QUÉBEC INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 667-5347",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.atmprq.com",
+    "address": "3405, boulevard Industriel, Laval (Québec) H7L4S3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-atelier-sp-cialis-les-moulins",
+    "name": "ATELIER SPÉCIALISÉ LES MOULINS",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "450 471-1067",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.atelierspecialiselesmoulins.org",
+    "address": "7245, Clark, bureau 201, Montréal (Québec) H2R2Y4",
+    "hours": "Voir site web"
   },
   {
     "id": "aves-coop-ration-internationale-cap",
@@ -2656,6 +2900,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "aaqnaq.com",
     "address": "21, rue Brodeur, Gatineau, Outaouais, QC, J8Y 2P6",
     "hours": "saison estivale: lundi au jeudi 8h30 à 12h00 et 13h00 à 17h00, saison hivernale: 8h30 à 12h00 et 12h45 à 16h30"
+  },
+  {
+    "id": "qc-emp-alliance-carri-re-travail-act",
+    "name": "Alliance Carrière Travail (ACT)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 462-2003",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://alliancect.ca/",
+    "address": "7845, boul. Taschereau, bureau 201, Brossard (Québec) J4Y1A4",
+    "hours": "Voir site web"
   },
   {
     "id": "alliance-carri-re-travail-act-ce-mtg-2",
@@ -8802,6 +9059,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-bois-urbain-meubles",
+    "name": "BOIS URBAIN - MEUBLES",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 388-5338, poste 205",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.boisurbain.org",
+    "address": "9015, rue Meilleur, Montréal (Québec) H2N2A3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "baie-comeau-h-tel-de-ville-cn",
     "name": "Baie-Comeau. Hôtel de ville",
     "category": "social",
@@ -10988,6 +11258,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-cari-st-laurent",
+    "name": "CARI ST-LAURENT",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Laurent",
+    "province": "QC",
+    "phone": "514 748-2007",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cari.qc.ca",
+    "address": "774, boulevard Décarie, bureau 300, Saint-Laurent (Québec) H4L3L5",
+    "hours": "Voir site web"
+  },
+  {
     "id": "imm-cari-mtl",
     "name": "CARI Saint-Laurent (Centre d'accueil et de référence pour immigrants)",
     "category": "immigration",
@@ -11012,6 +11295,591 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cari-stlaurent.qc.ca",
     "address": "1575, boul. Henri-Bourassa Ouest, Montréal, QC H3M 2Y4",
     "hours": "Lun-ven 8h30-16h30. Services d'accueil, intégration, références."
+  },
+  {
+    "id": "qc-emp-carrefour-ble",
+    "name": "CARREFOUR BLE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 279-3669",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.carrefourble.qc.ca",
+    "address": "12049, boulevard Laurentien, Montréal (Québec) H4K1M8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-ahuntsic-bordeaux-cartierville",
+    "name": "CARREFOUR JEUNESSE EMPLOI AHUNTSIC BORDEAUX CARTIERVILLE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 383-1136",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cje-abc.qc.ca",
+    "address": "10794, rue Lajeunesse, bureau 105, Montréal (Québec) H3L2E8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-arthabaska",
+    "name": "CARREFOUR JEUNESSE EMPLOI ARTHABASKA",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Victoriaville",
+    "province": "QC",
+    "phone": "819 758-1661",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cje-arthabaska.ca",
+    "address": "108, rue Olivier, 1er étage, Victoriaville (Québec) G6P6V6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-comt-johnson",
+    "name": "CARREFOUR JEUNESSE EMPLOI COMTÉ JOHNSON",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Acton Vale",
+    "province": "QC",
+    "phone": "450 546-0311",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjejohnson.org",
+    "address": "975, Boulay, bureau 202, Acton Vale (Québec) J0H1A0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-la-haute-c-te-nord-cjehcn",
+    "name": "CARREFOUR JEUNESSE EMPLOI DE LA HAUTE-CÔTE-NORD (CJEHCN)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Bergeronnes",
+    "province": "QC",
+    "phone": "581 324-1110",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjehcn.qc.ca",
+    "address": "427, rue de la Mer - 2e étage, Bergeronnes (Québec) G0T1G0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-la-mrc-de-coaticook",
+    "name": "CARREFOUR JEUNESSE EMPLOI DE LA MRC DE COATICOOK",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Coaticook",
+    "province": "QC",
+    "phone": "819 849-0440",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjemrccoaticook.qc.ca",
+    "address": "102, rue Child, Coaticook (Québec) J1A2B3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-la-mrc-deux-montagnes",
+    "name": "CARREFOUR JEUNESSE EMPLOI DE LA MRC DEUX-MONTAGNES",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Deux-Montagnes",
+    "province": "QC",
+    "phone": "450 974-1635",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjedm.qc.ca",
+    "address": "2705, boulevard Des Promenades suite 10, Deux-Montagnes (Québec) J7R0A6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-laval-c-j-e-l",
+    "name": "CARREFOUR JEUNESSE EMPLOI DE LAVAL (C.J.E.L.)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 967-2535",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjelaval.qc.ca",
+    "address": "500, Boul Saint-Martin Ouest, bureau 150, Laval (Québec) H7M3Y2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-mirabel",
+    "name": "CARREFOUR JEUNESSE EMPLOI DE MIRABEL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Mirabel",
+    "province": "QC",
+    "phone": "450 420-6262",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjemirabel.ca",
+    "address": "13 936, boulevard du Curé-Labelle, Mirabel (Québec) J7J1L3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-pierre-de-saurel",
+    "name": "CARREFOUR JEUNESSE EMPLOI DE PIERRE-DE SAUREL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 743-1441",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cje-pierredesaurel.com",
+    "address": "37, Du Roi, bureau 200, Sorel-Tracy (Québec) J3P4M6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-rivi-re-des-prairies",
+    "name": "CARREFOUR JEUNESSE EMPLOI DE RIVIÈRE-DES-PRAIRIES",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 648-8008",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cje-rdp.org/",
+    "address": "11965, Rita-Levi-Montalcini, Montréal (Québec) H1E5K7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-des-moulins",
+    "name": "CARREFOUR JEUNESSE EMPLOI DES MOULINS",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 492-0088",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjemoulins.org",
+    "address": "491, Boulevard des Seigneurs, Terrebonne (Québec) J6W1T5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-du-comt-de-richmond",
+    "name": "CARREFOUR JEUNESSE EMPLOI DU COMTÉ DE RICHMOND",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Val-des-Sources",
+    "province": "QC",
+    "phone": "819 879-7667",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjerichmond.qc.ca",
+    "address": "557, 1 ère Avenue, Val-des-Sources (Québec) J1T4K4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-d-abitibi-est",
+    "name": "CARREFOUR JEUNESSE EMPLOI D’ABITIBI-EST",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Val d’Or",
+    "province": "QC",
+    "phone": "819 825-5627, poste 213",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.carrefourvo.ca",
+    "address": "1100, 3e Avenue Ouest, Val d’Or (Québec) J9P1T6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-d-abitibi-ouest",
+    "name": "CARREFOUR JEUNESSE EMPLOI D’ABITIBI-OUEST",
+    "category": "employment",
+    "subcategory": "",
+    "city": "La Sarre",
+    "province": "QC",
+    "phone": "819 333-1110",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjeao.qc.ca",
+    "address": "299, rue Principale, La Sarre (Québec) J9Z1Z1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-d-argenteuil",
+    "name": "CARREFOUR JEUNESSE EMPLOI D’ARGENTEUIL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lachute",
+    "province": "QC",
+    "phone": "450 566-5766",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjea.org",
+    "address": "483, rue Principale, Lachute (Québec) J8H1Y5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-haute-gasp-sie",
+    "name": "CARREFOUR JEUNESSE EMPLOI HAUTE-GASPÉSIE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sainte-Anne-des-Monts",
+    "province": "QC",
+    "phone": "418 763-2308",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://cjehautegaspesie.org/",
+    "address": "92, 3e rue Ouest, Sainte-Anne-des-Monts (Québec) G4V1P9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-huntingdon",
+    "name": "CARREFOUR JEUNESSE EMPLOI HUNTINGDON",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Huntingdon",
+    "province": "QC",
+    "phone": "450 264-5858",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjehuntingdon.org",
+    "address": "2E, rue Henderson, bureau 1, Huntingdon (Québec) J0S1H0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-matawinie",
+    "name": "CARREFOUR JEUNESSE EMPLOI MATAWINIE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Jean-de-Matha",
+    "province": "QC",
+    "phone": "438 881-1288",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjematawinie.qc.ca",
+    "address": "105, rue Principale, Saint-Jean-de-Matha (Québec) J0K2S0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-mrc-maskinong",
+    "name": "CARREFOUR JEUNESSE EMPLOI MRC MASKINONGÉ",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Louiseville",
+    "province": "QC",
+    "phone": "819 228-0676",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjemaskinonge.qc.ca",
+    "address": "401, avenue Saint-Laurent, Louiseville (Québec) J5V1K4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-papineau",
+    "name": "CARREFOUR JEUNESSE EMPLOI PAPINEAU",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 986-5248",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjepapineau.qc.ca",
+    "address": "112, rue Maclaren Est, Gatineau (Québec) J8L1K1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-saint-laurent",
+    "name": "CARREFOUR JEUNESSE EMPLOI SAINT-LAURENT",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Laurent",
+    "province": "QC",
+    "phone": "514 855-1616",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjestlaurent.org",
+    "address": "404, boulevard Décarie, bureau 300, Saint-Laurent (Québec) H4L5E6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-anjou-saint-justin",
+    "name": "CARREFOUR JEUNESSE-EMPLOI ANJOU/SAINT-JUSTIN",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Anjou",
+    "province": "QC",
+    "phone": "514 353-5400",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjeanjou.com",
+    "address": "7400, boulevard les Galeries d’Anjou, bureau 230, Anjou (Québec) H1M3M2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-beauharnois-salaberry",
+    "name": "CARREFOUR JEUNESSE-EMPLOI BEAUHARNOIS-SALABERRY",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 373-6767",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjeb-s.ca",
+    "address": "100, rue Ste-Cécile, suite 100, Salaberry-de-Valleyfield (Québec) J6T1M1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-centre-nord",
+    "name": "CARREFOUR JEUNESSE-EMPLOI CENTRE-NORD",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 729-9777",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cje-centrenord.com",
+    "address": "3565, rue Jarry Est, bureau 401, Montréal (Québec) H1Z4K6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-comt-s-iberville-st-jean",
+    "name": "CARREFOUR JEUNESSE-EMPLOI COMTÉS IBERVILLE/ST-JEAN",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Farnham",
+    "province": "QC",
+    "phone": "450 347-4717",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cje-isj.com",
+    "address": "151, rue principale Est, Farnham (Québec) J2N1L2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-c-te-des-neiges-cjecdn",
+    "name": "CARREFOUR JEUNESSE-EMPLOI DE CÔTE-DES-NEIGES (CJECDN)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 872-5946",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjecdn.qc.ca",
+    "address": "6555, Chemin de la Côte-des-Neiges, bureau 240, Montréal (Québec) H3S2A6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-d-autray-joliette",
+    "name": "CARREFOUR JEUNESSE-EMPLOI DE D’AUTRAY-JOLIETTE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 755-2226",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.moncje.com",
+    "address": "580, rue Richard, Joliette (Québec) J6E2T4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-la-jam-sie",
+    "name": "CARREFOUR JEUNESSE-EMPLOI DE LA JAMÉSIE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Matagami",
+    "province": "QC",
+    "phone": "866 739-4455",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjejamesie.ca",
+    "address": "110, boulevard Matagami, case postale 669, Matagami (Québec) J0Y2A0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-la-mrc-des-laurentides",
+    "name": "CARREFOUR JEUNESSE-EMPLOI DE LA MRC DES LAURENTIDES",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Mont-Tremblant",
+    "province": "QC",
+    "phone": "819 321-1774, poste 224",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjelaurentides.org",
+    "address": "763, rue de Saint-Jovite, Mont-Tremblant (Québec) J8E3J8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-la-mrc-la-c-te-de-gasp",
+    "name": "CARREFOUR JEUNESSE-EMPLOI DE LA MRC LA CÔTE-DE-GASPÉ",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Gaspé",
+    "province": "QC",
+    "phone": "418 368-2121",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjecotedegaspe.ca",
+    "address": "122, Boulevard de Gaspé, Gaspé (Québec) G4X1A9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-marquette",
+    "name": "CARREFOUR JEUNESSE-EMPLOI DE MARQUETTE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lachine",
+    "province": "QC",
+    "phone": "514 634-0450",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjemarquette.qc.ca",
+    "address": "735, Notre-Dame, bureau 101, Lachine (Québec) H8S2B5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-montcalm",
+    "name": "CARREFOUR JEUNESSE-EMPLOI DE MONTCALM",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sainte-Julienne",
+    "province": "QC",
+    "phone": "450 831-3930",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjemontcalm.qc.ca",
+    "address": "2417, rue Victoria, Sainte-Julienne (Québec) J0K2T0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-t-miscouata",
+    "name": "CARREFOUR JEUNESSE-EMPLOI DE TÉMISCOUATA",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Louis-du-Ha! Ha!",
+    "province": "QC",
+    "phone": "418 854-5530",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjetemiscouata.qc.ca",
+    "address": "234, rue Gauvin, Saint-Louis-du-Ha! Ha! (Québec) G0L3S0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-des-pays-d-en-haut",
+    "name": "CARREFOUR JEUNESSE-EMPLOI DES PAYS-D’EN-HAUT",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Sauveur",
+    "province": "QC",
+    "phone": "450 227-0074",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjepdh.ca",
+    "address": "22, rue Goyer, Saint-Sauveur (Québec) J0R1R0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-des-les",
+    "name": "CARREFOUR JEUNESSE-EMPLOI DES ÎLES",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Cap-aux-Meules",
+    "province": "QC",
+    "phone": "418 986-2536",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjedesiles.qc.ca",
+    "address": "210, chemin Principal, Cap-aux-Meules (Québec) G4T1C7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-du-haut-saint-fran-ois",
+    "name": "CARREFOUR JEUNESSE-EMPLOI DU HAUT-SAINT-FRANÇOIS",
+    "category": "employment",
+    "subcategory": "",
+    "city": "East Angus",
+    "province": "QC",
+    "phone": "819 832-1513",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjehsf.qc.ca",
+    "address": "150, rue Angus Sud, bureau 1A, East Angus (Québec) J0B1R0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-du-t-miscamingue",
+    "name": "CARREFOUR JEUNESSE-EMPLOI DU TÉMISCAMINGUE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Ville-Marie",
+    "province": "QC",
+    "phone": "819 622-2538",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjet.qc.ca",
+    "address": "4, rue St-Michel, Ville-Marie (Québec) J9V2B5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-memphr-magog",
+    "name": "CARREFOUR JEUNESSE-EMPLOI MEMPHRÉMAGOG",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Magog",
+    "province": "QC",
+    "phone": "819 843-3007",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjemm.com",
+    "address": "612, rue Sherbrooke, Magog (Québec) J1X2S6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-montr-al-centre-ville",
+    "name": "CARREFOUR JEUNESSE-EMPLOI MONTRÉAL CENTRE-VILLE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 875-9770",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjemontreal.org",
+    "address": "460, Sainte-Catherine Ouest, bureau 602, Montréal (Québec) H3B1A7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-notre-dame-de-gr-ce",
+    "name": "CARREFOUR JEUNESSE-EMPLOI NOTRE-DAME-DE-GRÂCE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 482-6665",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cje-ndg.com",
+    "address": "6370, rue Sherbrooke Ouest, Montréal (Québec) H4B1M9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-rivi-re-du-nord",
+    "name": "CARREFOUR JEUNESSE-EMPLOI RIVIÈRE-DU-NORD",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Jérôme",
+    "province": "QC",
+    "phone": "450 431-5253",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjern.qc.ca",
+    "address": "10, rue Saint-Joseph, bureau 301, Saint-Jérôme (Québec) J7Z7G7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-saguenay-inc",
+    "name": "CARREFOUR JEUNESSE-EMPLOI SAGUENAY INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saguenay",
+    "province": "QC",
+    "phone": "418 697-0634",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjesag.qc.ca",
+    "address": "942, de la Fabrique, Saguenay (Québec) G7B2T1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-th-r-se-de-blainville",
+    "name": "CARREFOUR JEUNESSE-EMPLOI THÉRÈSE-DE-BLAINVILLE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sainte-Thérèse",
+    "province": "QC",
+    "phone": "450 437-1635",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cje-tdb.qc.ca",
+    "address": "100, boulevard Ducharme, bureau 230, Sainte-Thérèse (Québec) J7E4R6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-trois-rivi-res-mrc-des-chenaux",
+    "name": "CARREFOUR JEUNESSE-EMPLOI TROIS-RIVIÈRES/MRC DES CHENAUX",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Trois-Rivières",
+    "province": "QC",
+    "phone": "819 376-0179",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjetrdeschenaux.com",
+    "address": "580, rue Barkoff, bureau 300, Trois-Rivières (Québec) G8T9T7",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-cavac-sherbrooke",
@@ -11195,6 +12063,343 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Épargnez jusqu'à 40 000 $ (8 000 $/an) à l'abri de l'impôt pour acheter votre première maison. Cotisations déductibles du revenu. Disponible dans toutes les banques et caisses.",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
     "isProvinceWide": true
+  },
+  {
+    "id": "qc-emp-centre-communautaire-tyndale-st-georges",
+    "name": "CENTRE COMMUNAUTAIRE TYNDALE ST-GEORGES",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 931-6265, poste 23",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.tyndalestgeorges.com",
+    "address": "870, Place Richmond, Montréal (Québec) H3J1V7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-de-formation-a-l-emploi-inicio",
+    "name": "CENTRE DE FORMATION A L’EMPLOI INICIO",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 731-3419",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.ersyouth.ca/",
+    "address": "8255, Mountain Sights, bureau 140, Montréal (Québec) H4P2B5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-de-formation-et-d-aide-la-recherche-d-emploi-cfare",
+    "name": "CENTRE DE FORMATION ET D’AIDE À LA RECHERCHE D’EMPLOI (CFARE)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Marieville",
+    "province": "QC",
+    "phone": "450 460-5225",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cfare.net",
+    "address": "1450, rue du Pont, Marieville (Québec) J3M1G2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-de-formation-option-travail-ste-foy",
+    "name": "CENTRE DE FORMATION OPTION-TRAVAIL STE-FOY",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418 651-6415",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.optiontravail.com",
+    "address": "1155, Avenue Germain-des-Prés, bureau 4220, Québec (Québec) G1V4K5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-de-main-d-oeuvre-opex",
+    "name": "CENTRE DE MAIN-D’OEUVRE OPEX",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Drummondville",
+    "province": "QC",
+    "phone": "819 474-5381",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.opexemploi.com",
+    "address": "315, Rue Hériot, bureau 200, Drummondville (Québec) J2B1A6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-de-recherche-d-emploi-beauce-etchemins-inc",
+    "name": "CENTRE DE RECHERCHE D’EMPLOI BEAUCE-ETCHEMINS INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "St-Georges",
+    "province": "QC",
+    "phone": "418 227-5445",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.crebe.qc.ca",
+    "address": "11400, 1ère Avenue, bureau 110, St-Georges (Québec) G5Y5S4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-de-recherche-d-emploi-c-te-des-neiges-crecn",
+    "name": "CENTRE DE RECHERCHE D’EMPLOI CÔTE DES NEIGES (CRECN)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 733-3026",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.crecdn.com",
+    "address": "3600, avenue Barclay, bureau 421, Montréal (Québec) H3S1K5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-de-recherche-d-emploi-de-la-mauricie",
+    "name": "CENTRE DE RECHERCHE D’EMPLOI DE LA MAURICIE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Trois-Rivières",
+    "province": "QC",
+    "phone": "819 370-3660",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cremauricie.com",
+    "address": "3910, boul. des Forges, bureau 203, Trois-Rivières (Québec) G8Y1V7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-des-femmes-de-montr-al",
+    "name": "CENTRE DES FEMMES DE MONTRÉAL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 842-6652",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.centredesfemmesdemtl.org",
+    "address": "3585, rue Saint-Urbain, Montréal (Québec) H2X2N6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-des-femmes-du-plateau-mont-royal",
+    "name": "CENTRE DES FEMMES DU PLATEAU MONT-ROYAL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 527-3324",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cfemmesplateau.org",
+    "address": "1022, boulevard St-Joseph Est, Montréal (Québec) H2J1L1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-d-aide-professionnelle-pour-l-emploi",
+    "name": "CENTRE D’AIDE PROFESSIONNELLE POUR L’EMPLOI",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Jérôme",
+    "province": "QC",
+    "phone": "450 565-4707",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.capemploi.ca",
+    "address": "338, rue Labelle, Saint-Jérôme (Québec) J7Z5L3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-d-amiti-autochtone-de-val-d-or-inc",
+    "name": "CENTRE D’AMITIÉ AUTOCHTONE DE VAL D’OR INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Val d’Or",
+    "province": "QC",
+    "phone": "819 825-8299, poste 230",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.caavd.ca",
+    "address": "1272, 7e Rue, Val d’Or (Québec) J9P6W6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-d-appui-aux-communaut-s-immigrantes-de-bordeaux-carti",
+    "name": "CENTRE D’APPUI AUX COMMUNAUTÉS IMMIGRANTES DE BORDEAUX-CARTIERVILLE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 856-3511",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.caci-bc.org",
+    "address": "12049, boulevard Laurentien, Montréal (Québec) H4K1M8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-d-entraide-et-d-amiti-autochtone-de-senneterre",
+    "name": "CENTRE D’ENTRAIDE ET D’AMITIÉ AUTOCHTONE DE SENNETERRE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "SENNETERRE (QUÉBEC)",
+    "province": "QC",
+    "phone": "819 737-2324, poste 227",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.publicationsduquebec.gouv.qc.ca/lois-et-reglements/",
+    "address": "910, 10 ÈME AVENUE, SENNETERRE (QUÉBEC) (Québec) J0Y2M0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-d-entraide-sociale-du-bas-de-la-falaise",
+    "name": "CENTRE D’ENTRAIDE SOCIALE DU BAS DE LA FALAISE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418 529-5711",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.lajonction.org",
+    "address": "265, rue de la Couronne, bureau 302, Québec (Québec) G1K6E1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-d-int-gration-au-march-de-l-emploi-cime",
+    "name": "CENTRE D’INTÉGRATION AU MARCHÉ DE L’EMPLOI (CIME)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sherbrooke",
+    "province": "QC",
+    "phone": "819 564-0202",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cime-emploi.com",
+    "address": "309, rue Marquette, Sherbrooke (Québec) J1H1M2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-d-int-gration-en-emploi-laurentides-c-i-e-laurentides",
+    "name": "CENTRE D’INTÉGRATION EN EMPLOI LAURENTIDES (C.I.E. LAURENTIDES)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "St-Jérôme",
+    "province": "QC",
+    "phone": "450 431-0028",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cielaurentides.com",
+    "address": "340, rue Labelle, St-Jérôme (Québec) J7Z5L3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-d-int-gration-multi-services-de-l-ouest-de-l-le-c-i-m",
+    "name": "CENTRE D’INTÉGRATION MULTI-SERVICES DE L’OUEST DE L’ÎLE (C.I.M.O.I.)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Pierrefonds",
+    "province": "QC",
+    "phone": "514 305-1616",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cimoi.com",
+    "address": "15650, Boulevard Pierrefonds, Pierrefonds (Québec) H9H4K3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-d-orientation-et-de-formation-pour-femmes-en-recherch",
+    "name": "CENTRE D’ORIENTATION ET DE FORMATION POUR FEMMES EN RECHERCHE D’EMPLOI (C.O.F.F.R.E.) INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "St-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-6101, poste 225",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.coffre.ca",
+    "address": "49, rue Saint-Jacques, St-Jean-sur-Richelieu (Québec) J3B2J8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-eur-ka-inc",
+    "name": "CENTRE EURÊKA INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 937-8998",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.centreeureka.org",
+    "address": "4377, rue Notre-Dame Ouest, Montréal (Québec) H4C1R9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-g-n-ration-emploi",
+    "name": "CENTRE GÉNÉRATION EMPLOI",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 948-0000, poste 223",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.generationemploi.org",
+    "address": "7000, avenue du Parc, bureau 414, Montréal (Québec) H3N1X1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-jean-bosco-de-maniwaki-inc",
+    "name": "CENTRE JEAN BOSCO DE MANIWAKI INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 449-4057",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://www.centrejeanbosco.ca/",
+    "address": "204, rue Laurier, Maniwaki (Québec) J9E2K9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-point-d-appui-de-lanaudi-re",
+    "name": "CENTRE POINT D’APPUI DE LANAUDIÈRE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 755-3855",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "463, rue de Lanaudière, Joliette (Québec) J6E3M3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-ressources-jeunesse-de-l-abitibi-t-miscamingue",
+    "name": "CENTRE RESSOURCES JEUNESSE DE L’ABITIBI-TÉMISCAMINGUE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Rouyn-Noranda",
+    "province": "QC",
+    "phone": "819 762-0715",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.carrefour-rn.com",
+    "address": "80, rue Monseigneur Tessier Est, bureau 102, Rouyn-Noranda (Québec) J9X3B9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-social-d-aide-aux-immigrants",
+    "name": "CENTRE SOCIAL D’AIDE AUX IMMIGRANTS",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 932-2953, poste 205",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.centrecsai.org",
+    "address": "6201, Laurendeau, Montréal (Québec) H4E3X8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-mersion-manicouagan-inc",
+    "name": "CENTRE-ÉMERSION (MANICOUAGAN) INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418 296-6388",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.emersion.qc.ca",
+    "address": "22, Place Lasalle, Baie-Comeau (Québec) G4Z1K3",
+    "hours": "Voir site web"
   },
   {
     "id": "cerf-volant-de-portneuf-cap",
@@ -12658,6 +13863,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "qc-emp-cible-retour-l-emploi",
+    "name": "CIBLE RETOUR À L’EMPLOI",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Verdun",
+    "province": "QC",
+    "phone": "514 362-7340",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cibleretour.com",
+    "address": "4740, rue Wellington, bureau 302, Verdun (Québec) H4G1X3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "tr-immig1",
     "name": "CITIM — Comité d'intégration et régionalisation de l'immigration Mauricie",
     "category": "immigration",
@@ -12682,6 +13900,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Pour urgence: 811 (Info-Santé) ou urgence hospitalière."
   },
   {
+    "id": "qc-emp-cje-beauce-sud",
+    "name": "CJE BEAUCE-SUD",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418 228-9610, poste 107",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "11920, 1re Avenue, Saint-Georges (Québec) G5Y2E1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-cje-etchemins",
+    "name": "CJE ETCHEMINS",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418 625-2533",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjeetchemins.ca",
+    "address": "1554, Route 277, bureau 2, Lac-Etchemin (Québec) G0R1S0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "bc-employ-bc",
     "name": "CJE jeunesse emploi BC",
     "category": "employment",
@@ -12693,6 +13936,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.youthworkbc.ca",
     "address": "815, W. Hastings St, Vancouver, BC V6C 1B4",
     "hours": "Service essentiel Colombie-Britannique."
+  },
+  {
+    "id": "qc-emp-clam-carrefour-de-liaison-et-d-aide-multi-ethnique",
+    "name": "CLAM (CARREFOUR DE LIAISON ET D’AIDE MULTI-ETHNIQUE)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 271-8207, poste 223",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.leclam.ca",
+    "address": "7200, rue Hutchison, bureau 300, Montréal (Québec) H3N1Z2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-clef-pour-l-int-gration-au-travail-des-immigrants",
+    "name": "CLEF POUR L’INTÉGRATION AU TRAVAIL DES IMMIGRANTS",
+    "category": "employment",
+    "subcategory": "",
+    "city": "MONTRÉAL",
+    "province": "QC",
+    "phone": "514 987-1759, poste 261",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.citim.org",
+    "address": "1259, Berri, bureau 900, MONTRÉAL (Québec) H2L4C7",
+    "hours": "Voir site web"
   },
   {
     "id": "h-clos-mtl",
@@ -15881,6 +17150,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
+    "id": "qc-emp-club-de-recherche-d-emploi-de-thetford-mines-inc",
+    "name": "CLUB DE RECHERCHE D’EMPLOI DE THETFORD-MINES INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418 335-2961",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.publicationsduquebec.gouv.qc.ca/lois-et-reglements/",
+    "address": "222, boulevard Frontenac Ouest, bureau 210, Thetford Mines (Québec) G6G6N7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-club-de-recherche-d-emploi-montr-al-centre-nord-cremcn-inc",
+    "name": "CLUB DE RECHERCHE D’EMPLOI MONTRÉAL CENTRE-NORD (CREMCN) INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 858-6611",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cremcn.org",
+    "address": "1600, boulevard Henri-Bourassa Ouest, bureau 370, Montréal (Québec) H3M3E2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "mb-cmha",
     "name": "CMHA Manitoba",
     "category": "mentalHealth",
@@ -15983,6 +17278,109 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cmhayukon.ca",
     "address": "105, Elliott St, Whitehorse, YT Y1A 6E3",
     "hours": "Service essentiel provincial."
+  },
+  {
+    "id": "qc-emp-collectif-des-entreprises-d-insertion-du-qu-bec-inc",
+    "name": "COLLECTIF DES ENTREPRISES D’INSERTION DU QUÉBEC INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "MONTRÉAL",
+    "province": "QC",
+    "phone": "514 270-4905",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.collectif.qc.ca",
+    "address": "4100, ANDRÉ-LAURENDEAU, bureau 200, MONTRÉAL (Québec) H1Y3N6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-collectif-des-femmes-immigrantes-du-qu-bec",
+    "name": "COLLECTIF DES FEMMES IMMIGRANTES DU QUÉBEC",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 279-4246",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cfiq.ca",
+    "address": "7124, rue Boyer, Montréal (Québec) H2S2J8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-coll-ge-d-enseignement-g-n-ral-et-professionnel-de-l-outaoua",
+    "name": "COLLÈGE D’ENSEIGNEMENT GÉNÉRAL ET PROFESSIONNEL DE L’OUTAOUAIS",
+    "category": "employment",
+    "subcategory": "",
+    "city": "GATINEAU",
+    "province": "QC",
+    "phone": "819 770-2647",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://cegepoutaouais.qc.ca/",
+    "address": "333, BOUL. DE LA CITE DES JEUNES, GATINEAU (Québec) J8Y6M4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-comit-r-gional-d-int-gration-au-travail-inc",
+    "name": "COMITÉ RÉGIONAL D’INTÉGRATION AU TRAVAIL INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "800 646-6096",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.sdem-semo.org",
+    "address": "365, rue Saint-Jean, bureau 125, Longueuil (Québec) J4H2X7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-comsep-emploi-inc",
+    "name": "COMSEP - EMPLOI INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Trois-Rivières",
+    "province": "QC",
+    "phone": "819 378-6963",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "1060, rue Saint-François-Xavier, Trois-Rivières (Québec) G9A1R8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-corporation-de-d-veloppement-communautaire-bellechasse",
+    "name": "CORPORATION DE DÉVELOPPEMENT COMMUNAUTAIRE BELLECHASSE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "St-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418 883-1587, poste 202",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cdcbellechasse.com",
+    "address": "110 B, rue Principale, St-Lazare-de-Bellechasse (Québec) G0R3J0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-corporation-de-d-veloppement-conomique-communautaire-de-lasa",
+    "name": "CORPORATION DE DÉVELOPPEMENT ÉCONOMIQUE COMMUNAUTAIRE DE LASALLE-LACHINE (CDEC LASALLE-LACHINE) INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lachine",
+    "province": "QC",
+    "phone": "514 469-0288",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cdec-lasallelachine.ca",
+    "address": "735, Notre-Dame, bureau 103, Lachine (Québec) H8S2B5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-corporation-r-gionale-de-d-veloppement-de-la-r-cup-ration-et",
+    "name": "CORPORATION RÉGIONALE DE DÉVELOPPEMENT DE LA RÉCUPÉRATION ET DU RECYCLAGE RÉGION 02",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Alma",
+    "province": "QC",
+    "phone": "418 668-1234",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.coderr.ca",
+    "address": "420, RUE de la Science, Alma (Québec) G8C0J7",
+    "hours": "Voir site web"
   },
   {
     "id": "on-costi-toronto",
@@ -16381,6 +17779,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "qc-emp-cpsp-centre-de-placement-sp-cialis-du-portage",
+    "name": "CPSP-Centre de placement spécialisé du Portage",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-2777, poste 212",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://rehabex.ca/fr",
+    "address": "59, rue Marengère, Gatineau (Québec) J8T3T7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "crc-le-pavillon-cap",
     "name": "CRC Le Pavillon",
     "category": "housing",
@@ -16391,6 +17802,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Maison de transition offrant des programmes de réhabilitation et de réinsertion sociale pour hommes adultes délinquants Hébergement Soutien et services psychosociaux * accueil, évaluation, orientation ... [Plus] | Clientèle : Hommes et hommes transgenres contrevenants vivant l'une ou l'autre des étapes du processus judiciaire ou correctionnel (permission de sortir, libération conditionnelle, probation et ordonnance d'emprisonnement avec sursis) * services correctionnels | Âges : 18 an(s) et plus",
     "website": "http://crclepavillon.com",
     "address": "3894 Bd Sainte-Anne, Québec, QC G1E 0K5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-cremcv-centre-de-ressources-en-employabilit-montr-al-centre-",
+    "name": "CREMCV (Centre de Ressources en Employabilité Montréal Centre-Ville)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 286-9595",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cremcv.com",
+    "address": "550, rue Sherbrooke Ouest, 17e étage, bureau 1770, Montréal (Québec) H3A1B9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-creso-centre-conseil-en-emploi",
+    "name": "CRESO Centre-conseil en emploi",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 377-4889",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.creso-emploi.ca",
+    "address": "139, rue Victoria, Salaberry-de-Valleyfield (Québec) J6T1A4",
     "hours": "Voir site web"
   },
   {
@@ -16416,6 +17853,32 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-295-3499",
     "description": "Lieu de rencontre, de soutien, d'entraide et de réadaptation visant à briser l'isolement et améliorer la qualité de vie des adultes ayant un problème de santé mentale ou vivant des difficultés émotion ... [Plus] | Clientèle : Adultes ayant une problématique de santé mentale ou vivant des difficultés émotionnelles | Âges : 18 an(s) et plus",
     "address": "842 Rue de Puyjalon, Baie-Comeau, QC G5C 1L5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-cuisine-collective-hochelaga-maisonneuve",
+    "name": "CUISINE COLLECTIVE HOCHELAGA-MAISONNEUVE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 529-0789, poste 6",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cuisinecollectivehm.com",
+    "address": "3568, rue Adam, Montréal (Québec) H1W1Y9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-cybercap",
+    "name": "CYBERCAP",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 861-7700, poste 306",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cybercap.qc.ca",
+    "address": "33, rue Prince, bureau 301, Montréal (Québec) H3C2M7",
     "hours": "Voir site web"
   },
   {
@@ -17745,6 +19208,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi au vendredi 8h30 à 15h00, samedi 8h30 à 12h00"
   },
   {
+    "id": "qc-emp-carrefour-emploi-haut-st-maurice",
+    "name": "Carrefour Emploi Haut St-Maurice",
+    "category": "employment",
+    "subcategory": "",
+    "city": "La Tuque",
+    "province": "QC",
+    "phone": "819 523-9274",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cje-hsm.qc.ca",
+    "address": "545, rue St-Antoine, La Tuque (Québec) G9X2Y5",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-emp-quebec-mcle",
     "name": "Carrefour Emploi Québec",
     "category": "employment",
@@ -17756,6 +19232,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.carrefouremploi.org",
     "address": "399, boul. Jean-Lesage, Québec, QC G1K 8W3",
     "hours": "Lun-ven 8h30-16h30. Services gratuits aide CV, RV, orientation professionnelle."
+  },
+  {
+    "id": "qc-emp-carrefour-emploi-des-collines",
+    "name": "Carrefour Emploi des Collines",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Cantley",
+    "province": "QC",
+    "phone": "819 457-4480",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.toncec.ca",
+    "address": "1694, Montée de la Source, Cantley (Québec) J8V3H6",
+    "hours": "Voir site web"
   },
   {
     "id": "carrefour-en-sant-mentale-pour-l-mtg",
@@ -17835,6 +19324,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 12h15 et 13h00 à 16h00"
   },
   {
+    "id": "qc-emp-carrefour-jeunesse-marguerite-d-youville",
+    "name": "Carrefour JEunesse Marguerite-d’Youville",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 449-9541",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjemy.com",
+    "address": "95, boulevard de Mortagne, bureau D, Boucherville (Québec) J4B6G4",
+    "hours": "Voir site web"
+  },
+  {
     "id": "carrefour-jeunesse-de-sainte-ros-lav",
     "name": "Carrefour Jeunesse De Sainte-Rose",
     "category": "social",
@@ -17858,6 +19360,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "cjeo.qc.ca",
     "address": "350, boulevard de la Gappe, Gatineau, Outaouais, QC, J8T 7T9",
     "hours": "lundi, mercredi et jeudi 8h30 à 17h00, mardi 8h30 à 20h00, vendredi de 8h30 à12h00"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-et-option-emploi-du-rocher-perc",
+    "name": "Carrefour Jeunesse Emploi et Option Emploi du Rocher-Percé",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Chandler",
+    "province": "QC",
+    "phone": "418 689-6402",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjeoptionemploi.ca",
+    "address": "409, boul. René Lévesque Ouest, Chandler (Québec) G0C1K0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-de-shawinigan",
+    "name": "Carrefour Jeunesse de Shawinigan",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Shawinigan",
+    "province": "QC",
+    "phone": "819 537-3358",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjeshawinigan.org",
+    "address": "432, avenue Willow Casier postal 132, Shawinigan (Québec) G9N1X2",
+    "hours": "Voir site web"
   },
   {
     "id": "carrefour-jeunesse-emploi-ch-tea-mtg",
@@ -18362,6 +19890,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-carrefour-emploi-m-kinac",
+    "name": "Carrefour emploi Mékinac",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Tite",
+    "province": "QC",
+    "phone": "418 365-7070",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjemekinac.org",
+    "address": "581, rue Saint-Paul, bureau 101, Saint-Tite (Québec) G0X3H0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "carrefour-employabilit-travail-d-ca",
     "name": "Carrefour employabilité - Travail de rue (Le)-immigration",
     "category": "family",
@@ -18486,6 +20027,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Accueil des jeunes en définition de projet de vie et accompagnement vers une intégration au marché du travail, un retour aux études ou le démarrage d'un projet personnel Services individuels * aide et ... [Plus] | Clientèle : Jeunes adultes | Âges : 15 an(s) - 35 an(s)",
     "website": "http://www.cjecn.qc.ca",
     "address": "265 R. de la Couronne Bureau 200, Québec, QC G1K 6E1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-des-bleuets",
+    "name": "Carrefour jeunesse emploi des Bleuets",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Félicien",
+    "province": "QC",
+    "phone": "418 679-3686",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjedesbleuets.ca",
+    "address": "1112, boulevard du Sacré-Coeur, bureau 202, Saint-Félicien (Québec) G8K1A2",
     "hours": "Voir site web"
   },
   {
@@ -18708,6 +20262,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cjesherbrooke.org",
     "address": "2, rue Wellington Nord, Sherbrooke, QC J1H 5B5",
     "hours": "Lun-ven 8h30-16h30. Services gratuits aide CV, RV, orientation professionnelle."
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-comt-nicolet-b-cancour",
+    "name": "Carrefour jeunesse-emploi comté Nicolet-Bécancour",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Nicolet",
+    "province": "QC",
+    "phone": "819 293-2592, poste 1226",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjenicbec.org",
+    "address": "1330, boulevard Louis-Fréchette, CP 28, Nicolet (Québec) J3T1A1",
+    "hours": "Voir site web"
   },
   {
     "id": "carrefour-jeunesse-emploi-de-bea-ca",
@@ -18954,6 +20521,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cje-sherbrooke.qc.ca",
     "address": "187, rue Belvédère Sud, Sherbrooke, QC J1H 4B6",
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service."
+  },
+  {
+    "id": "qc-emp-carrefour-jeunesse-emploi-de-verdun",
+    "name": "Carrefour jeunesse-emploi de Verdun",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Verdun",
+    "province": "QC",
+    "phone": "514 767-9971",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjeverdun.org",
+    "address": "4005, Wellington, Verdun (Québec) H4G1V6",
+    "hours": "Voir site web"
   },
   {
     "id": "emp-cje-quebec",
@@ -24758,6 +26338,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-centre-horizon-carri-re",
+    "name": "Centre Horizon Carrière",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 256-1645",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.horizoncarriere.ca",
+    "address": "5960, rue Jean-Talon Est, bureau 308, Montréal (Québec) H1S1M2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-hopital-montreal-centre-hospitalier-de-l-universite-de-montreal",
     "name": "Centre Hospitalier De L'Université De Montréal",
     "category": "health",
@@ -25039,6 +26632,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "address": "2187 Rue Bonneau, Jonquière, QC G7S 4B3",
     "hours": "Hébergement d'urgence 24h/24. Présentation directe ou appel."
+  },
+  {
+    "id": "qc-emp-centre-le-pont",
+    "name": "Centre Le PONT",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Trois-Rivières",
+    "province": "QC",
+    "phone": "819 373-1273",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.centrelepont.com",
+    "address": "925, rue Laviolette 2e étage, Trois-Rivières (Québec) G9A1V9",
+    "hours": "Voir site web"
   },
   {
     "id": "centre-le-rucher-cap",
@@ -25891,6 +27497,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CISSS Des Laurentides. Source: MSSS – Fichier M02 des installations.",
     "address": "125-A, chemin Tour-du-Lac, Sainte-Agathe-des-Monts, QC J8C 3A1",
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
+  },
+  {
+    "id": "qc-emp-centre-multiservices-pour-autochtones-en-milieu-urbain-a-k-b",
+    "name": "Centre Multiservices pour Autochtones en Milieu Urbain a Kébek - MAMUK",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418 476-8083",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "8155, 1re Avenue, Québec (Québec) G1G4B8",
+    "hours": "Voir site web"
   },
   {
     "id": "msss-hopital-montreal-centre-metropolitain-de-chirurgie-plastique",
@@ -27724,6 +29342,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "qc-emp-centre-de-formation-adapt-e-petite-nation",
+    "name": "Centre de Formation Adaptée Petite-Nation",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 983-6373",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://www.atelierfspn.ca",
+    "address": "358, rue Rossy, Saint-André-Avellin (Québec) J0V1W0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-de-formation-professionnelle-rep",
     "name": "Centre de Formation Professionnelle des Riverains - Salon de Coiffure",
     "category": "social",
@@ -28794,6 +30425,31 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Aide aux personnes et familles à développer leur potentiel * promotion de la solidarité à l'intérieur de la communauté militaire de l'est du Québec. Sensibilisation de la communauté civile au mode de ... [Plus] | Clientèle : Membres des forces armées et leur famille * membres de la réserve militaire et leur famille * vétérans et leur famille * programme FORT pour la population anglophone",
     "website": "http://crfmv.com/fr",
     "address": "Edifice 93 C.P. 1000, Succursale Forces, Courcelette, QC G0A 4Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-de-ressources-pour-personnes-judiciaris-es-inc",
+    "name": "Centre de ressources pour personnes judiciarisées inc.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sherbrooke",
+    "province": "QC",
+    "phone": "819 565-1866",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.opexemploi.com",
+    "address": "202, rue Wellington Nord, bureau 140, Sherbrooke (Québec) J1H5C6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-de-r-adaptation-mab-mackay",
+    "name": "Centre de réadaptation MAB-Mackay",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 488-5552",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "7000, rue Sherbrooke O, Montréal (Québec) H4B1R3",
     "hours": "Voir site web"
   },
   {
@@ -30902,6 +32558,31 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "819-561-5196",
     "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
     "address": "1312, rue Saint-Louis, Gatineau (Québec) J8T 2M7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-d-innovation-des-premiers-peuples",
+    "name": "Centre d’Innovation des Premiers Peuples",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 685-2424, poste 102",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cipp-fpic.com",
+    "address": "85, Promenade du Portage, bureau B, Gatineau (Québec) J8X2K2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-centre-d-intervention-en-d-pendances-adrienne-roy",
+    "name": "Centre d’intervention en dépendances Adrienne-Roy",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Shawinigan",
+    "province": "QC",
+    "phone": "819 539-9285",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "2092, rue Lavergne, Shawinigan (Québec) G9N3S9",
     "hours": "Voir site web"
   },
   {
@@ -36881,6 +38562,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-cl-d-acc-s",
+    "name": "Clé d’accès",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Chibougamau",
+    "province": "QC",
+    "phone": "418 748-2239, poste 4",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://cledacces.com/",
+    "address": "317, rue Lanctôt, bureau 1, Chibougamau (Québec) G8P2P5",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-clsc-mistissini-cmc-mistissini",
     "name": "Cmc Mistissini",
     "category": "health",
@@ -39283,6 +40977,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-connexion-emploi-inc",
+    "name": "Connexion emploi inc.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-3044",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.crevdf.ca",
+    "address": "315, rue Macdonald, bureau 202, Saint-Jean-sur-Richelieu (Québec) J3B8J3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "conseil-canadien-des-aveugles-de-mtg",
     "name": "Conseil Canadien Des Aveugles De Longueuil",
     "category": "social",
@@ -39487,6 +41194,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Promotion et soutien du développement économique et de la création d'emplois * services d'aide au démarrage, consolidation et développement des entreprises pour entrepreneurs potentiels ou en activité ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
     "website": "http://www.cebeauce.com",
     "address": "11515 1re Avenue #201, Saint-Georges, QC G5Y 2C7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-conseillers-en-d-veloppement-de-la-main-d-oeuvre",
+    "name": "Conseillers en développement de la Main-d’oeuvre",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 522-9151",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "425, Sherbrooke est, bureau 11, Montréal (Québec) H2L1J9",
     "hours": "Voir site web"
   },
   {
@@ -42504,6 +44223,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-destination-travail-du-sud-ouest-de-l-le-de-montr-al-inc",
+    "name": "DESTINATION TRAVAIL DU SUD-OUEST DE L’ÎLE DE MONTRÉAL INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 368-1832",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.destinationtravail.org",
+    "address": "7576, Centrale, Montréal (Québec) H8P1K5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-doc-formation",
+    "name": "DOC FORMATION",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Mont-Saint-Hilaire",
+    "province": "QC",
+    "phone": "450 464-5950",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.doc-sc.qc.ca",
+    "address": "370, Boulevard Sir-Wilfrid-Laurier, bureau 210, Mont-Saint-Hilaire (Québec) J3H5V3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "pw4",
     "name": "DPJ – Protection de la jeunesse",
     "category": "family",
@@ -42606,6 +44351,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.ciusss-saglacsaintjean.gouv.qc.ca",
     "address": "3885, boul. Harvey, Saguenay, QC G7X 3B4",
     "hours": "Lun-ven 8h-20h. Sam-dim 8h-16h. Urgences 24h: appeler le même numéro."
+  },
+  {
+    "id": "qc-emp-droit-l-emploi-d-e",
+    "name": "DROIT À L’EMPLOI (D.E.)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-6692",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.quartierdelemploi.ca",
+    "address": "49, rue Saint-Jacques, Saint-Jean-sur-Richelieu (Québec) J3B2J8",
+    "hours": "Voir site web"
   },
   {
     "id": "dahlia-le-groupe-d-entraide-en-s-mtg",
@@ -44237,6 +45995,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "qc-emp-eclipse-entreprise-d-insertion",
+    "name": "ECLIPSE, ENTREPRISE D’INSERTION",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Jérôme",
+    "province": "QC",
+    "phone": "450 436-7111",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.ateliereclipse.com",
+    "address": "321, rue Saint-Georges, Saint-Jérôme (Québec) J7Z5A2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-entreprise-d-entra-nement-mitis-neigette",
+    "name": "ENTREPRISE D’ENTRAÎNEMENT MITIS-NEIGETTE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Rimouski",
+    "province": "QC",
+    "phone": "418 723-2427",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.charbonexinter.qc.ca",
+    "address": "320, rue Saint-Germain Est, bureau 201, Rimouski (Québec) G5L1C2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-entreprise-cole-recypro-d-argenteuil",
+    "name": "ENTREPRISE-ÉCOLE RECYPRO D’ARGENTEUIL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "LACHUTE QC",
+    "province": "QC",
+    "phone": "450 562-7740, poste 103",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.recypro.com",
+    "address": "70, RUE SIMON, LACHUTE QC (Québec) J8H3R8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "espace-chaudi-re-appalaches-ca",
     "name": "ESPACE Chaudière-Appalaches",
     "category": "mentalHealth",
@@ -45332,6 +47129,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-espace-avenir-m",
+    "name": "Espace Avenir M",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Matane",
+    "province": "QC",
+    "phone": "418 566-6749, poste 203",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "548, av. du Phare Est, bureau 202, Matane (Québec) G4W1A7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "espace-c-te-nord-cn",
     "name": "Espace Côte-Nord",
     "category": "mentalHealth",
@@ -45421,6 +47230,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "qc-emp-espace-pivot",
+    "name": "Espace Pivot",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "450 671-8949",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cijad-cjelaporte.org",
+    "address": "465, avenue Victoria, bureau 500, Saint-Lambert (Québec) J4P2J2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "espace-pivot-carrefour-jeunesse--mtg",
     "name": "Espace Pivot - Carrefour Jeunesse-Emploi Laporte",
     "category": "social",
@@ -45458,6 +47280,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "espacesansviolence.org/suroit",
     "address": "394, rue Dufferin, bureau 202, Salaberry-de-Valleyfield, Montérégie, QC, J6S 2A8",
     "hours": "septembre à juin, lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "qc-emp-espace-carri-re",
+    "name": "Espace carrière",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 771-4500",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.espacecarriere.org",
+    "address": "1305, des Cascades, bureau 4, Saint-Hyacinthe (Québec) J2S3H3",
+    "hours": "Voir site web"
   },
   {
     "id": "espace-culturel-du-quartier-sain-ca",
@@ -46245,6 +48080,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://fohm.org",
     "address": "1000, rue Amherst, bureau 200, Montréal, QC H2L 3K5",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "qc-emp-formation-acc-s-int-gration-travail-fait-inc",
+    "name": "FORMATION ACCÈS INTÉGRATION TRAVAIL (FAIT) INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Trois-Rivières",
+    "province": "QC",
+    "phone": "819 379-9996",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "1110, Boul. Thibeau, Trois-Rivières (Québec) G8T7B2",
+    "hours": "Voir site web"
   },
   {
     "id": "h-frapru",
@@ -48936,6 +50783,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "bureau: lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00, horaire des groupes: sur le site Internet"
   },
   {
+    "id": "qc-emp-gestion-jeunesse-inc",
+    "name": "GESTION JEUNESSE INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418 648-2351, poste 307",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.gestionjeunesse.qc.ca",
+    "address": "245, rue Soumande, bureau 290, Québec (Québec) G1M3H6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-git-soci-t-inc",
+    "name": "GIT SOCIÉTÉ INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418 686-1888",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.git.qc.ca",
+    "address": "245, rue Soumande, bureau 280, Québec (Québec) G1M3H6",
+    "hours": "Voir site web"
+  },
+  {
     "id": "git-services-conseils-en-emploi-cap",
     "name": "GIT Services-conseils en emploi",
     "category": "employment",
@@ -48946,6 +50819,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Accompagnement, préparation et mobilisation des personnes désirant intégrer rapidement le marché du travail Services-conseils personnalisés : * rédaction de curriculum vitæ, lettres de présentation, m ... [Plus] | Âges : 18 an(s) et plus",
     "website": "http://www.git.qc.ca",
     "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-grenier-populaire-des-basses-laurentides",
+    "name": "GRENIER POPULAIRE DES BASSES-LAURENTIDES",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Eustache",
+    "province": "QC",
+    "phone": "450 623-5891, poste 205",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.grenierpopulaire.com",
+    "address": "217, rue St-Laurent, Saint-Eustache (Québec) J7P4W4",
     "hours": "Voir site web"
   },
   {
@@ -48972,6 +50858,70 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Organisme communautaire d'éducation et de sensibilisation assurant la promotion d'une vision positive de la diversité sexuelle et de la pluralité des genres * formation aux personnes et milieux de tra ... [Plus] | Clientèle : Personnes faisant partie de la diversité sexuelle ou de la pluralité des genres ou en questionnement * personnel de l'éducation, de la santé, des services sociaux, des milieux communautaires et professionnels* parents et proche de personnes LGBTQ+ | Âges : 12 an(s) et plus",
     "website": "http://www.grisquebec.org",
     "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-groupe-conseil-st-denis-inc",
+    "name": "GROUPE CONSEIL ST-DENIS INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 278-7211",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.gcsd.qc.ca",
+    "address": "1453, Beaubien Est, bureau 302, Montréal (Québec) H2G3C6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-groupe-humanova",
+    "name": "GROUPE HUMANOVA",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sainte-Thérèse",
+    "province": "QC",
+    "phone": "450 435-5462",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://groupehumanova.ca",
+    "address": "100, Boulevard Ducharme, bureau 250, Sainte-Thérèse (Québec) J7E4R6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-groupe-paradoxe",
+    "name": "GROUPE PARADOXE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 931-5204, poste 224",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://paradoxe.ca",
+    "address": "5959, Boulevard Monk, Montréal (Québec) H4E3H5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-groupe-plein-emploi-inc",
+    "name": "GROUPE PLEIN EMPLOI INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 274-5522",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.pleinemploi.ca",
+    "address": "5800, rue Saint-Denis, bureau 205, Montréal (Québec) H2S3L5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-groupe-populaire-d-clic",
+    "name": "GROUPE POPULAIRE DÉCLIC",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Berthierville",
+    "province": "QC",
+    "phone": "450 836-1079",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "720 B, rue Montcalm, Berthierville (Québec) J0K1A0",
     "hours": "Voir site web"
   },
   {
@@ -49282,6 +51232,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-568-7670 poste 1102",
     "website": "http://municipalitegodbout.ca",
     "address": "Godbout, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-goodwill-renaissance-qu-bec",
+    "name": "Goodwill Renaissance Québec",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 276-3626",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.renaissancequebec.ca",
+    "address": "7245, Clark, bureau 201, Montréal (Québec) H2R2Y4",
     "hours": "Voir site web"
   },
   {
@@ -50130,6 +52093,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-groupe-exzeco",
+    "name": "Groupe Exzeco",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Témiscouata-sur-le-Lac",
+    "province": "QC",
+    "phone": "418 855-2777",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.accesemploi.org",
+    "address": "851, rue Commerciale Nord, Témiscouata-sur-le-Lac (Québec) G0L1E0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "groupe-femmes-politique-et-d-moc-cap",
     "name": "Groupe Femmes, Politique et Démocratie",
     "category": "social",
@@ -50140,6 +52116,44 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Éducation de la population à l'action citoyenne et démocratique * particulièrement des femmes * accompagnement * réseautage (Club politique féminin Les Elles du pouvoir) * soutien de l'exercice plein ... [Plus] | Clientèle : Soutien pour les femmes qui prévoient se présenter au sein de diverses sphères décisionnelles, dont en politique * le grand public | Âges : 16 an(s) et plus",
     "website": "http://www.gfpd.ca",
     "address": "801 Grande Allée O bureau 130, Québec, QC G1S 1C1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-groupe-inclusia",
+    "name": "Groupe Inclusia",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Jonquière",
+    "province": "QC",
+    "phone": "418 548-3445",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://groupeinclusia.com",
+    "address": "2455, Rue Cantin, Jonquière (Québec) G7X8S7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-groupe-information-travail-inc",
+    "name": "Groupe Information Travail inc.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 526-1651",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.groupeinfotravail.ca",
+    "address": "1585, boul René-Lévesque Est, Montréal (Québec) H2L4L2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-groupe-orientation-emploi",
+    "name": "Groupe Orientation Emploi",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 593-7809",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "3750, Crémazie Est, bureau 110, Montréal (Québec) H2A1B6",
     "hours": "Voir site web"
   },
   {
@@ -50167,6 +52181,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.groupeprioritetravail.com",
     "address": "665, boulevard Curé-Labelle, Chomedey, Laval, QC, H7V 2T8",
     "hours": "lundi au vendredi 8h00 à 16h30"
+  },
+  {
+    "id": "qc-emp-groupe-pro-vert",
+    "name": "Groupe Pro-Vert",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 768-2709, poste 206",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.provert.org",
+    "address": "75, Square Sir-George-Étienne-Cartier, bureau 021, Montréal (Québec) H4C3A1",
+    "hours": "Voir site web"
   },
   {
     "id": "groupe-promo-sant-lav",
@@ -50553,6 +52580,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-groupe-quitem",
+    "name": "Groupe Équitem",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Alma",
+    "province": "QC",
+    "phone": "418 275-7241",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://equitem.ca/",
+    "address": "400, Sacré-Cœur O, Alma (Québec) G8B1L9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-groupe-quitem-employabilit-inc",
+    "name": "Groupe Équitem - Employabilité inc.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Alma",
+    "province": "QC",
+    "phone": "418 275-7241",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.equitem.ca",
+    "address": "424, Avenue Sacré-Coeur Ouest, Alma (Québec) G8B1L9",
+    "hours": "Voir site web"
+  },
+  {
     "id": "groupes-de-m-decine-de-famille-u-mtg",
     "name": "Groupes De Médecine De Famille Universitaire Richelieu-Yamaska",
     "category": "family",
@@ -50680,6 +52733,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Aide et hébergement pour femmes victimes de violence conjugale et leurs enfants * écoute téléphonique * accueil * hébergement * accompagnement dans les démarches * suivi individuel et de groupe, sans ... [Plus] | Clientèle : Femmes victimes de violence conjugale et leurs enfants de moins de 18 ans",
     "website": "http://www.lagitee.ca",
     "address": "CP 363, Thetford Mines, QC G6G 0C2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-habitations-l-escalier-de-montr-al",
+    "name": "HABITATIONS L’ESCALIER DE MONTRÉAL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 529-5974",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.distributionsescalier.com",
+    "address": "4455, rue de Rouen, Montréal (Québec) H1V1H1",
     "hours": "Voir site web"
   },
   {
@@ -51618,6 +53684,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Coopérative de travail favorisant la création d'emplois et l'intégration des personnes handicapées sur le marché du travail * fabrication de planches de clôture | Clientèle : Personnes présentant un handicap physique, psychique ou mental",
     "website": "http://horisol.ca",
     "address": "31 Rue Legros, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-horizon-emploi",
+    "name": "Horizon Emploi",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Bonaventure",
+    "province": "QC",
+    "phone": "418 534-3714",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.horizonemploi.com",
+    "address": "105, avenue de Grand-Pré, bureau 102, Bonaventure (Québec) G0C1E0",
     "hours": "Voir site web"
   },
   {
@@ -52968,6 +55047,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-impact-emploi-de-l-rable",
+    "name": "IMPACT EMPLOI DE L’ÉRABLE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Plessisville",
+    "province": "QC",
+    "phone": "819 362-1233",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.impactemploi.ca",
+    "address": "1800, avenue Saint-Laurent, Plessisville (Québec) G6L2P8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-imprime-emploi",
+    "name": "IMPRIME-EMPLOI",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 277-7535",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.imprime-emploi.com",
+    "address": "5500, rue Fullum, bureau 318, Montréal (Québec) H2G2H3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-impulsion-travail",
+    "name": "IMPULSION-TRAVAIL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal-Nord",
+    "province": "QC",
+    "phone": "514 327-1363, poste 201",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.impulsion-travail.com",
+    "address": "5181, rue d’Amiens, bureau 300, Montréal-Nord (Québec) H1G6N9",
+    "hours": "Voir site web"
+  },
+  {
     "id": "v-inca-canada",
     "name": "INCA — Institut national canadien pour les aveugles",
     "category": "social",
@@ -52979,6 +55097,71 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30.",
     "isProvinceWide": true
+  },
+  {
+    "id": "qc-emp-inici-immigrer-int-grer-innover",
+    "name": "INICI (Immigrer, Intégrer, Innover)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 255-3900",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://inici.ca",
+    "address": "2030, Boul. Pie IX, bureau 309, Montréal (Québec) H1V2C8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-insertech-angus",
+    "name": "INSERTECH ANGUS",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 596-2842, poste 414",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.insertech.ca",
+    "address": "4820, rue Molson, Montréal (Québec) H1Y3J8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-integration-travail-laurentides-inc",
+    "name": "INTEGRATION - TRAVAIL LAURENTIDES INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Jérôme",
+    "province": "QC",
+    "phone": "450 436-4024",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.i-tl.org",
+    "address": "55, rue Castonguay, bureau 102, Saint-Jérôme (Québec) J7Y2H9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-intervention-travail-inc",
+    "name": "INTERVENTION TRAVAIL INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Alma",
+    "province": "QC",
+    "phone": "418 668-5092, poste 224",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.giat.ca",
+    "address": "424, Sacré-Coeur ouest, Alma (Québec) G8B1L9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-intro-travail-et-carrefour-jeunesse-emploi-du-granit-inc",
+    "name": "INTRO-TRAVAIL ET CARREFOUR JEUNESSE EMPLOI DU GRANIT INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lac-Mégantic",
+    "province": "QC",
+    "phone": "819 583-1101",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.introcje.ca",
+    "address": "3639, rue Laval, Lac-Mégantic (Québec) G6B1A5",
+    "hours": "Voir site web"
   },
   {
     "id": "bc-ircc",
@@ -53952,6 +56135,31 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Éducation des jeunes aux valeurs de l'entreprise, aux affaires et à l'économie * développement des aptitudes d'entrepreneur et de leader Programmes : Primaire * Notre monde des affaires : initiation a ... [Plus] | Clientèle : Élèves du primaire * étudiants du secondaire et collégial | Âges : 8 an(s) - 18 an(s)",
     "website": "https://jaquebec.org",
     "address": "265 Boulevard René-Lévesque O, Québec, QC G1R 2A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-je-raccroche",
+    "name": "JE RACCROCHE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Rimouski",
+    "province": "QC",
+    "phone": "418 722-4922, poste 1238",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "424, Avenue Ross, Rimouski (Québec) G5L6J2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-jeunes-au-travail",
+    "name": "JEUNES AU TRAVAIL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 661-1251, poste 224",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.jeunesautravail.ca",
+    "address": "2595, rang du Haut-Saint-François, Laval (Québec) H7E4P2",
     "hours": "Voir site web"
   },
   {
@@ -55383,6 +57591,344 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "qc-emp-la-bivoie-inc",
+    "name": "LA BIVOIE INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Alma",
+    "province": "QC",
+    "phone": "418 668-0105, poste 221",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://bivoie.com",
+    "address": "420, rue Collard ouest, Alma (Québec) G8B1N2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-la-bourgade-inc",
+    "name": "LA BOURGADE INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 526-0887",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.letape.org",
+    "address": "1001, boulevard de Maisonneuve Est, bureau 527, Montréal (Québec) H2L4P9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-la-c-l-e-f-centre-lanaudi-re-d-emploi-pour-femmes",
+    "name": "LA C.L.E.F., CENTRE LANAUDIÈRE D’EMPLOI POUR FEMMES",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 755-3244, poste 104",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.laclef-perspectives.com",
+    "address": "245, rue Papineau, Joliette (Québec) J6E2K8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-la-crois-e-s-i-t-inc",
+    "name": "LA CROISÉE S.I.T. INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418 529-6841",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.lacroise.ca",
+    "address": "5000, boulevard des Gradins, bureau 105, Québec (Québec) G2J1N3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-la-fondation-travail-sans-frontieres-inc",
+    "name": "LA FONDATION TRAVAIL SANS FRONTIERES INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 499-0606",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.tsf.qc.ca",
+    "address": "4535, boul. St-Laurent, Montréal (Québec) H2T1R2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-la-passerelle-centre-d-entraide-professionnelle-et-spirituel",
+    "name": "LA PASSERELLE - CENTRE D’ENTRAIDE PROFESSIONNELLE ET SPIRITUELLE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 866-5982",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.lapasserelle.ca",
+    "address": "1255, place Phillips, bureau 903, Montréal (Québec) H3B3G1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-la-puce-ressource-informatique",
+    "name": "LA PUCE RESSOURCE INFORMATIQUE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 259-3126, poste 223",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.puce.qc.ca",
+    "address": "4689, Avenue Papineau, bureau 203, Montréal (Québec) H2H1V4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-la-relance-outaouais-inc",
+    "name": "LA RELANCE OUTAOUAIS INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-6444",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.larelance.ca",
+    "address": "270, Boulevard des Allumettières, Gatineau (Québec) J8X1N3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-le-campus-emploi-inc",
+    "name": "LE CAMPUS EMPLOI INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 398-0687",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.campusemploi.org",
+    "address": "92, Place Bourget Nord, Joliette (Québec) J6E5E5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-le-centre-d-apprentissage-intensif-de-qu-bec",
+    "name": "LE CENTRE D’APPRENTISSAGE INTENSIF DE QUÉBEC",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418 522-6445",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://caiquebec.ca",
+    "address": "503, rue du Prince-Edouard, bureau 101, Québec (Québec) G1K2M8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-le-centre-d-apprentissage-parall-le-de-montr-al-c-a-p",
+    "name": "LE CENTRE D’APPRENTISSAGE PARALLÈLE DE MONTRÉAL C.A.P.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 843-5658, poste 223",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.ateliersducap.org",
+    "address": "4865, boulevard Saint-Laurent, Montréal (Québec) H2T1R6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-le-chic-resto-pop-inc",
+    "name": "LE CHIC RESTO-POP INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 521-4089, poste 223",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.chicrestopop.com",
+    "address": "1500, avenue d’Orléans, Montréal (Québec) H1W3R1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-le-club-de-recherche-d-emplois-du-pontiac",
+    "name": "LE CLUB DE RECHERCHE D’EMPLOIS DU PONTIAC",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Campbell’s Bay",
+    "province": "QC",
+    "phone": "819 648-5065",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjepontiac.ca",
+    "address": "80, Leslie, case postale 219, Campbell’s Bay (Québec) J0X1K0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-le-garde-manger-pour-tous",
+    "name": "LE GARDE-MANGER POUR TOUS",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 931-8830",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.garde-manger.qc.ca",
+    "address": "755, rue des Seigneurs, Montréal (Québec) H3J1Y2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-le-groupe-alpha-laval",
+    "name": "LE GROUPE ALPHA LAVAL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 669-3232",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.groupealphalaval.com",
+    "address": "485, boulevard des Laurentides, bureau 105, Laval (Québec) H7G2V2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-le-groupe-c-p-o-1998",
+    "name": "LE GROUPE C.P.O. (1998)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 773-8866",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.novitek.qc.ca",
+    "address": "1895, rue des Cascades, Saint-Hyacinthe (Québec) J2S3J4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-le-groupe-communautaire-l-itin-raire",
+    "name": "LE GROUPE COMMUNAUTAIRE L’ITINÉRAIRE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 597-0238, poste 222",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.itineraire.ca",
+    "address": "2103, rue Sainte-Catherine Est, Montréal (Québec) H2K2H9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-le-programme-de-portage-relatif-la-d-pendance-de-la-drogue-i",
+    "name": "LE PROGRAMME DE PORTAGE RELATIF À LA DÉPENDANCE DE LA DROGUE INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 939-0202",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.portage.ca",
+    "address": "865, place Richmond, Montréal (Québec) H3J1V8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-le-tournant-3f-inc",
+    "name": "LE TOURNANT 3F INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Dolbeau-Mistassini",
+    "province": "QC",
+    "phone": "418 879-0285",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.tournant3f.com",
+    "address": "1201, rue des Érables, Dolbeau-Mistassini (Québec) G8L1C2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-le-v-lo-vert-inc",
+    "name": "LE VÉLO VERT INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418 661-1661, poste 102",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.levelovert.com",
+    "address": "3030, boul. Ste-Anne, Québec (Québec) G1E6N1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-les-ateliers-d-antoine",
+    "name": "LES ATELIERS D’ANTOINE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 256-5557, poste 224",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.lesateliersdantoine.com",
+    "address": "4800, rue de Rouen, bureau 100, Montréal (Québec) H1V3T4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-les-jardins-de-la-terre",
+    "name": "LES JARDINS DE LA TERRE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Paul-D’Abbotsford",
+    "province": "QC",
+    "phone": "450 379-5079",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.jardinsdelaterre.org",
+    "address": "305, rue Principale Ouest, Saint-Paul-D’Abbotsford (Québec) J0E1A0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-les-oeuvres-de-la-maison-dauphine-inc",
+    "name": "LES OEUVRES DE LA MAISON DAUPHINE INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418 694-9616, poste 115",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.maisondauphine.org",
+    "address": "31, D’Auteuil, Québec (Québec) G1R4B9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-les-services-de-main-d-oeuvre-l-appui-inc",
+    "name": "LES SERVICES DE MAIN-D’OEUVRE L’APPUI INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Baie-Saint-Paul",
+    "province": "QC",
+    "phone": "418 435-2503",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cje-appui.qc.ca",
+    "address": "39, rue St-Jean-Baptiste, Baie-Saint-Paul (Québec) G3Z1M3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-les-ymca-du-qu-bec",
+    "name": "LES YMCA DU QUÉBEC",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 849-8062, poste 21785",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.ymcaquebec.org",
+    "address": "1435, Rue Drummond, Montréal (Québec) H3G1W4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-libre-emploi-centre-libre-service-d-aide-la-recherche-d-empl",
+    "name": "LIBRE EMPLOI, CENTRE LIBRE-SERVICE D’AIDE À LA RECHERCHE D’EMPLOI",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418 648-0044",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.libreemploi.qc.ca",
+    "address": "320, Chemin de la Canardière, bureau 200, Québec (Québec) G1L2V2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-refuge-qc-lauberiviere",
     "name": "La Bouchée Généreuse – L'Auberivière Québec",
     "category": "housing",
@@ -56089,6 +58635,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "qc-emp-la-sph-re-de-l-emploi",
+    "name": "La Sphère de l’emploi",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Rimouski",
+    "province": "QC",
+    "phone": "418 722-8102",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjerimouskineigette.ca",
+    "address": "145, rue Lepage, Rimouski (Québec) G5L8W2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-fam-la-station-de-l-aventure-maison-de-la-famille",
     "name": "La Station de l’Aventure Maison de la famille",
     "category": "family",
@@ -56773,6 +59332,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "qc-emp-le-carrefour-employabilit-travail-de-rue",
+    "name": "Le Carrefour Employabilité - Travail de rue",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Anselme",
+    "province": "QC",
+    "phone": "418 887-7117",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "580, Boulevard Bégin, Saint-Anselme (Québec) G0R2N0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-fam-le-carrefour-des-petits-soleils",
     "name": "Le Carrefour des Petits Soleils",
     "category": "family",
@@ -56917,6 +59488,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-648-0598",
     "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
     "address": "271, rue Saint-Vallier Ouest, Québec (Québec) G1K 1K5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-le-piolet",
+    "name": "Le Piolet",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418 842-7462",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.lepiolet.com",
+    "address": "103, rue Racine, Québec (Québec) G2B1C9",
     "hours": "Voir site web"
   },
   {
@@ -58819,6 +61403,43 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-l-annexe-roland-plateau-d-exp-rimentation-de-travail",
+    "name": "L’ANNEXE À ROLAND, PLATEAU D’EXPÉRIMENTATION DE TRAVAIL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 756-2999",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "400, rue Baby, Joliette (Québec) J6E2W1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-l-arrimage-inc",
+    "name": "L’ARRIMAGE INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 967-9611",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "500, boul. Saint-Martin O, bureau 370, Laval (Québec) H7M3Y2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-l-atelier-d-artisanat-centre-ville-inc",
+    "name": "L’ATELIER D’ARTISANAT CENTRE-VILLE INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 844-6458",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.atelierobnl.com",
+    "address": "3680, rue Jeanne-Mance, bureau 213, Montréal (Québec) H2X2K5",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-fam-l-association-des-familles-monoparentales-et-recompos-es-des",
     "name": "L’Association des familles monoparentales et recomposées des Grandes-Rivières (AFMR)",
     "category": "family",
@@ -58828,6 +61449,32 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-276-0556",
     "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
     "address": "1519-1, rue des Érables, Dolbeau-Mistassini (Québec) G8L 1C4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-l-enjeu-cap-sur-l-emploi-inc",
+    "name": "L’ENJEU: CAP SUR L’EMPLOI INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 858-5288",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.lenjeu.org",
+    "address": "2215, rue Jean-Talon Est, bureau 204, Montréal (Québec) H2E1V5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-l-envol-s-r-t-service-de-retour-au-travail",
+    "name": "L’ENVOL S.R.T. SERVICE DE RETOUR AU TRAVAIL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-1622",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.envolsrt.org",
+    "address": "92, boulevard St-Raymond, bureau 302, Gatineau (Québec) J8Y1S7",
     "hours": "Voir site web"
   },
   {
@@ -58867,6 +61514,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-l-hirondelle-services-d-accueil-et-d-integration-des-immigra",
+    "name": "L’HIRONDELLE, SERVICES D’ACCUEIL ET D’INTEGRATION DES IMMIGRANTS",
+    "category": "employment",
+    "subcategory": "",
+    "city": "MONTRÉAL",
+    "province": "QC",
+    "phone": "514 281-5696, poste 236",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.hirondelle.qc.ca",
+    "address": "4450, rue Saint-Hubert, bureau 5e ét, MONTRÉAL (Québec) H2J2W9",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-fam-l-oasis-des-enfants-de-rosemont",
     "name": "L’Oasis des Enfants de Rosemont",
     "category": "family",
@@ -58876,6 +61536,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "514-374-9111",
     "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
     "address": "2555, Rue Holt, Montréal (Québec) H1Y 1N4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-l-orienth-que-centre-d-orientation-et-services-d-int-gration",
+    "name": "L’Orienthèque, centre d’orientation et services d’intégration de la main-d’oeuvre",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 730-0181",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.orientheque.ca",
+    "address": "343, Boulevard Poliquin, Sorel-Tracy (Québec) J3P7W1",
     "hours": "Voir site web"
   },
   {
@@ -58891,6 +61564,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-l-cole-entreprise-formetal-inc",
+    "name": "L’ÉCOLE ENTREPRISE FORMETAL INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 939-2510, poste 28",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.formetal.qc.ca",
+    "address": "1850, rue Le Ber, Montréal (Québec) H3K2A4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-l-tape-normandie-rivi-re-du-loup",
+    "name": "L’ÉTAPE NORMANDIE/RIVIÈRE-DU-LOUP",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Rivière du Loup",
+    "province": "QC",
+    "phone": "418 862-8277, poste 3692",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.publicationsduquebec.gouv.qc.ca/lois-et-reglements/",
+    "address": "30, rue Delage, Rivière du Loup (Québec) G5R3N8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "m-ado-jeunes-out",
     "name": "M-Ado Jeunes",
     "category": "social",
@@ -58901,6 +61600,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Lieu d'activités et de rencontres pour jeunes.* Écoute, accompagnement et référence.* Activités sociales et récréatives.* Soutien scolaire.* Interventions individuelles.* Soutien à la famille.* Horaire des activités: www.madojeunes.ca/activites* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Distribution de naloxone. | Clientèle: personnes de 10 à 17 ans | Territoire: Buckingham, Masson-Angers | Statut: organisme à but non lucratif",
     "website": "www.madojeunes.ca",
     "address": "948, rue Georges, Gatineau, Outaouais, QC, J8L 2E5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-maison-internationale-de-la-rive-sud-inc",
+    "name": "MAISON INTERNATIONALE DE LA RIVE SUD INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "BROSSARD",
+    "province": "QC",
+    "phone": "450 445-8777, poste 229",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.mirs.qc.ca",
+    "address": "2500, BOUL LAPINIÈRE, BROSSARD (Québec) J4Z3V1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-maison-radisson-inc",
+    "name": "MAISON RADISSON INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Trois-Rivières",
+    "province": "QC",
+    "phone": "819 379-3598",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.mradisson.ca",
+    "address": "962, rue Sainte-Geneviève case postale 1075, Trois-Rivières (Québec) G9A5K4",
     "hours": "Voir site web"
   },
   {
@@ -58969,6 +61694,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "qc-emp-mire-le-mouvement-pour-l-int-gration-et-la-r-tention-en-empl",
+    "name": "MIRE (LE MOUVEMENT POUR L’INTÉGRATION ET LA RÉTENTION EN EMPLOI)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 598-7474",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://WWW.projetmire.com",
+    "address": "865, Place Richmond, Montréal (Québec) H3J1V8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "bc-mosaic",
     "name": "MOSAIC – Immigrant Services",
     "category": "immigration",
@@ -58980,6 +61718,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.mosaicbc.org",
     "address": "31 East Hastings St, Vancouver, BC V6A 1M9",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "qc-emp-mouvement-de-la-rel-ve-d-amos-r-gion-inc",
+    "name": "MOUVEMENT DE LA RELÈVE D’AMOS-RÉGION INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Amos",
+    "province": "QC",
+    "phone": "819 732-8739",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.mrar.qc.ca",
+    "address": "162, boulevard Mercier, bureau 2, Amos (Québec) J9T2P3",
+    "hours": "Voir site web"
   },
   {
     "id": "mrc-l-assomption-lasm",
@@ -65829,6 +68580,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-moelle-pini-re-et-motricit-qu-bec",
+    "name": "Moelle épinière et motricité Québec",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 341-7272, poste 14",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.moelleepiniere.com",
+    "address": "6020, rue Jean-Talon Est, bureau 400, Montréal (Québec) H1S3B1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "baq-moisson-abitibi",
     "name": "Moisson Abitibi-Témiscamingue",
     "category": "food",
@@ -68328,6 +71092,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "qc-emp-objectif-emploi",
+    "name": "OBJECTIF EMPLOI",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 381-1171, poste 236",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.oe2.ca",
+    "address": "35, rue Port Royal, bureau 300, Montréal (Québec) H3L3T1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "oboulo-granby-hy",
     "name": "OBOULO Granby",
     "category": "employment",
@@ -68352,6 +71129,30 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.oeildimmigrant.ca",
     "address": "4350, boul. Saint-Martin Ouest, Laval, QC H7T 1C1",
     "hours": "Lun-ven 8h30-16h30. Services d'accueil, intégration, références."
+  },
+  {
+    "id": "qc-emp-opex-82",
+    "name": "OPEX 82",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-7160",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "485, boul. des Laurentides, bureau 102, Laval (Québec) H7G2V2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-opex-82-laval",
+    "name": "OPEX 82-LAVAL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-7160",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "485, boulevard des Laurentides, bureau 102, Laval (Québec) H7G2V2",
+    "hours": "Voir site web"
   },
   {
     "id": "hlth-pw3",
@@ -68391,6 +71192,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.orea.com",
     "address": "99 Duncan Mill Rd, Toronto, ON M3B 1Z2",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h."
+  },
+  {
+    "id": "qc-emp-orientation-travail",
+    "name": "ORIENTATION TRAVAIL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sherbrooke",
+    "province": "QC",
+    "phone": "819 822-3226",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.orientationtravail.org",
+    "address": "101, rue Abénaquis, bureau 102, Sherbrooke (Québec) J1H1H1",
+    "hours": "Voir site web"
   },
   {
     "id": "otj-saint-m-thode-ca",
@@ -70150,6 +72964,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "qc-emp-palettes-fgl",
+    "name": "PALETTES FGL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Blainville",
+    "province": "QC",
+    "phone": "450 437-1146, poste 223",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.palettesfgl.org",
+    "address": "16, rue Rolland-Brière, Blainville (Québec) J7C5N2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-part-du-chef",
+    "name": "PART DU CHEF",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 526-7278",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.groupepart.ca",
+    "address": "4100, rue André-Laurendeau, bureau 215, Montréal (Québec) H1Y3N6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-partenaires-r-gionaux-pour-l-insertion-sociale-par-l-conomiq",
+    "name": "PARTENAIRES RÉGIONAUX POUR L’INSERTION SOCIALE PAR L’ÉCONOMIQUE (PRISE)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Victoriaville",
+    "province": "QC",
+    "phone": "819 751-6631, poste 2126",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.prise.ca",
+    "address": "265, boulevard Labbé Nord, Victoriaville (Québec) G6P1A7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-passage-vers-l-emploi",
+    "name": "PASSAGE VERS L’EMPLOI",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450 776-7700",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.passage.qc.ca",
+    "address": "425, rue Cabana, Granby (Québec) J2G1P3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "pe-foodbank-pe",
     "name": "PEI Food Banks",
     "category": "food",
@@ -70175,6 +73041,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.princeedwardisland.ca/housing",
     "address": "PO Box 2000, Charlottetown, PE C1A 7N8",
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
+  },
+  {
+    "id": "qc-emp-perspectives-nouvelles-inc",
+    "name": "PERSPECTIVES NOUVELLES INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 755-3244",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.laclef-perspectives.com",
+    "address": "245, rue Papineau, Joliette (Québec) J6E2K8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-petites-mains",
+    "name": "PETITES-MAINS",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 738-8989",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.petitesmains.com",
+    "address": "7595, boulevard Saint-Laurent, Montréal (Québec) H2R1W9",
+    "hours": "Voir site web"
   },
   {
     "id": "pme-mtl-ouest-de-l-ile-drv",
@@ -70212,6 +73104,71 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Contribuer au développement des ressources humaines du milieu et aider à la création, à l’organisation et au soutien de projets communautaires * alphabétisation et éducation populaire, nous aidons les ... [Plus] | Clientèle : ***Adultes faiblement alphabétisés, faibles lecteurs, personnes immigrantes",
     "website": "http://www.popco.qc.ca",
     "address": "4c Bd des Îles, Port-Cartier, QC G5B 1V6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-portes-ouvertes-sur-le-lac",
+    "name": "PORTES OUVERTES SUR LE LAC",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Félicien",
+    "province": "QC",
+    "phone": "418 307-5058",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.portesouvertessurlelac.org/",
+    "address": "1209, rue Sacré-Coeur, case postale 7000, Saint-Félicien (Québec) G8K2R5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-post-script-jeunesse",
+    "name": "POST SCRIPT JEUNESSE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 377-9155",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.psjeunesse.org",
+    "address": "99, rue Salaberry, Salaberry-de-Valleyfield (Québec) J6T2H5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-productions-jeun-est",
+    "name": "PRODUCTIONS JEUN’EST",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 493-6830",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.jeunest.qc.ca",
+    "address": "4560, rue Adam, Montréal (Québec) H1V1V2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-programme-d-information-sur-le-travail-et-la-recherche-d-emp",
+    "name": "PROGRAMME D’INFORMATION SUR LE TRAVAIL ET LA RECHERCHE D’EMPLOI DE MONTRÉAL (PITREM)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 356-3226, poste 236",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.pitrem.org",
+    "address": "7962, rue Hochelaga, bureau 2, Montréal (Québec) H1L2K8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-projektion-16-35",
+    "name": "PROJEKTION 16-35",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Pascal",
+    "province": "QC",
+    "phone": "418 492-9127",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.projektion16-35.ca",
+    "address": "580, rue Côté, bureau C, Saint-Pascal (Québec) G0L3Y0",
     "hours": "Voir site web"
   },
   {
@@ -70984,6 +73941,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Comptoir alimentaire. | Clientèle: personnes à faible revenu | Territoire: Sainte-Julie | Statut: organisme à but non lucratif",
     "address": "879, chemin du Fer-à-Cheval, Sainte-Julie, Montérégie, QC, J3E 1Y2",
     "hours": "réservation: lundi au mercredi 18h00 à 20h00, distribution: jeudi 12h30 à 13h00"
+  },
+  {
+    "id": "qc-emp-partance-centre-d-emploi-pour-femmes-inc",
+    "name": "Partance, centre d’emploi pour femmes inc.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Drummondville",
+    "province": "QC",
+    "phone": "819 472-3351",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.emploi-partance.com",
+    "address": "157, rue Lindsay, bureau 200, Drummondville (Québec) J2C1N7",
+    "hours": "Voir site web"
   },
   {
     "id": "partenaires-communautaires-jeffe-cap",
@@ -72212,6 +75182,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://pleinsdroits.org",
     "address": "10A, boulevard Brien, bureau 80, Repentigny, Lanaudière, QC, J6A 4R7",
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, sur rendez-vous seulement"
+  },
+  {
+    "id": "qc-emp-pleins-rayons",
+    "name": "Pleins rayons",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Cowansville",
+    "province": "QC",
+    "phone": "450 775-0957",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "790, rue du Sud, Cowansville (Québec) J2K2Y3",
+    "hours": "Voir site web"
   },
   {
     "id": "point-de-rencontre-cn",
@@ -75381,6 +78363,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-recyclo-centre-inc",
+    "name": "RECYCLO-CENTRE INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 746-4559",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.recyclo-centre.ca",
+    "address": "165, avenue de l’Hôtel-Dieu, Sorel-Tracy (Québec) J3P1M2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-regroupement-conomique-et-social-du-sud-ouest-reso",
+    "name": "REGROUPEMENT ÉCONOMIQUE ET SOCIAL DU SUD-OUEST (RESO)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 931-5737",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.resomtl.com",
+    "address": "3181, Saint-Jacques, Montréal (Québec) H4C1G7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "emp-rocaq",
     "name": "RGPAQ – Regroupement des groupes populaires en alphabétisation du Québec",
     "category": "employment",
@@ -75421,6 +78429,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "1135, Grande Allée Ouest, bureau 240, Québec, QC G1S 1E7",
     "hours": "Lun-ven 8h30-16h30.",
     "isProvinceWide": true
+  },
+  {
+    "id": "qc-emp-rond-point-jeunesse-au-travail",
+    "name": "ROND-POINT JEUNESSE AU TRAVAIL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 327-5555, poste 234",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.cjebourassasauve.com",
+    "address": "11 000, boul. Saint-Vital, Montréal (Québec) H1H4T6",
+    "hours": "Voir site web"
   },
   {
     "id": "urgent-rqcalacs",
@@ -77636,6 +80657,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-r-cupex-sherbrooke-inc",
+    "name": "RÉCUPEX (SHERBROOKE) INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sherbrooke",
+    "province": "QC",
+    "phone": "819 820-1300",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.recupexinc.com",
+    "address": "2345, rue Hertel, Sherbrooke (Québec) J1J2J1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "r-hab-ca",
     "name": "RÉHAB",
     "category": "social",
@@ -77763,6 +80797,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Ressource intermédiaire pour adultes avec des problématiques de santé mentale Capacité d'hébergement 9 résidents | Clientèle : Adultes avec des problématiques de santé mentale | Âges : 18 an(s) et plus",
     "website": "http://www.rehabqc.com/programmes/residence-henri-dutil/",
     "address": "305 Rue de Saint-Romuald, Lévis, QC G6W 3H7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-r-seau-de-l-int-gration-l-emploi-de-l-abitibi-t-miscamingue",
+    "name": "RÉSEAU DE L’INTÉGRATION À L’EMPLOI DE L’ABITIBI-TÉMISCAMINGUE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Rouyn-Noranda",
+    "province": "QC",
+    "phone": "819 763-8959",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "380, Avenue Richard, Rouyn-Noranda (Québec) J9X4L3",
     "hours": "Voir site web"
   },
   {
@@ -78489,6 +81535,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "qc-emp-r-seaux-employabilit-immigration-entrepreneuriat",
+    "name": "Réseaux Employabilité Immigration Entrepreneuriat",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 424-5727",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.ree.qc.ca",
+    "address": "430, boulevard Harwood, bureau 130, Vaudreuil-Dorion (Québec) J7V7H4",
+    "hours": "Voir site web"
+  },
+  {
     "id": "r-seau-surdit-mont-r-gie-mtg",
     "name": "Réseau|Surdité|Montérégie",
     "category": "social",
@@ -78800,6 +81859,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "s-au-s.org/fr",
     "address": "9, rue Montcalm Nord, bureau 505, CANDIAC, Montérégie, QC, J5R 3L5",
     "hours": "bureau: lundi au vendredi 8h30 à 17h00, service de répit: mardi à vendredi 8h30 à 16h30, camps Oasis: juin et juillet"
+  },
+  {
+    "id": "qc-emp-s-i-m-o-service-d-int-gration-au-march-du-travail-par-object",
+    "name": "S.I.M.O. ( SERVICE D’INTÉGRATION AU MARCHÉ DU TRAVAIL PAR OBJECTIFS)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 277-6776",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.simo-emplois.com/",
+    "address": "6833, Avenue de l’Épée, bureau 302, Montréal (Québec) H3N2C7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-s-o-s-emploi-abitibi-est",
+    "name": "S.O.S. EMPLOI (ABITIBI-EST)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Val d’Or",
+    "province": "QC",
+    "phone": "819 824-2647",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.technobois.ca",
+    "address": "140, rue Gilbert-Bossé, Val d’Or (Québec) J9P0L1",
+    "hours": "Voir site web"
   },
   {
     "id": "s-o-s-pr-delt-mtg",
@@ -79181,6 +82266,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "qc-emp-semo",
+    "name": "SEMO",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Chibougamau (Québec)",
+    "province": "QC",
+    "phone": "418 770-4567",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://semo02.com/",
+    "address": "333, 3e Rue, Chibougamau (Québec) (Québec) G8P1N4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-semo-chaudiere-appalaches-service-externe-de-main-d-oeuvre",
+    "name": "SEMO CHAUDIERE-APPALACHES (SERVICE EXTERNE DE MAIN-D’OEUVRE)",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418 838-3036",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "2055, Boulevard Guillaume-Couture, bureau 116, Lévis (Québec) G6W2S5",
+    "hours": "Voir site web"
+  },
+  {
     "id": "semo-c-te-nord-cn",
     "name": "SEMO Côte-Nord",
     "category": "mentalHealth",
@@ -79246,6 +82356,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-semo-mauricie-inc",
+    "name": "SEMO MAURICIE INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Trois-Rivières",
+    "province": "QC",
+    "phone": "819 379-8242, poste 103",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.semo-mauricie.org",
+    "address": "997, rue St-Roch, Trois-Rivières (Québec) G8Z1Y1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "emp-semo-mtl",
     "name": "SEMO – Action main-d'œuvre",
     "category": "employment",
@@ -79257,6 +82380,173 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://actionmaindoeuvre.ca",
     "address": "55, av. du Mont-Royal Ouest, bureau 800, Montréal, QC H2T 2S6",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "qc-emp-service-acc-s-travail-de-portneuf",
+    "name": "SERVICE ACCÈS TRAVAIL DE PORTNEUF",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Donnacona",
+    "province": "QC",
+    "phone": "418 329-2511",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.accestravailportneuf.com",
+    "address": "162, rue Notre-Dame, bureau 101, Donnacona (Québec) G3M1G4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-service-de-d-veloppement-d-employabilit-de-la-mont-r-gie",
+    "name": "SERVICE DE DÉVELOPPEMENT D’EMPLOYABILITÉ DE LA MONTÉRÉGIE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-1595, poste 228",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.sdem-semo.org",
+    "address": "365, rue Saint-Jean, bureau 125, Longueuil (Québec) J4H2X7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-service-de-transition-en-emploi",
+    "name": "SERVICE DE TRANSITION EN EMPLOI",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Rimouski",
+    "province": "QC",
+    "phone": "418 725-0996",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.transitionemploi.com",
+    "address": "183, rue Saint-Germain Ouest, Rimouski (Québec) G5L4B8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-service-d-aide-et-de-liaison-pour-immigrants-la-maisonn-e",
+    "name": "SERVICE D’AIDE ET DE LIAISON POUR IMMIGRANTS LA MAISONNÉE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 271-3533",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://lamaisonnee.org/fr/",
+    "address": "6865, Avenue Christophe-Colomb, Montréal (Québec) H2S2H3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-service-d-aide-l-emploi-d-avignon",
+    "name": "SERVICE D’AIDE À L’EMPLOI D’AVIGNON",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Carleton",
+    "province": "QC",
+    "phone": "418 364-6679",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "314, boulevard Perron, bureau C, Carleton (Québec) G0C1J0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-service-d-aide-l-emploi-transit",
+    "name": "SERVICE D’AIDE À L’EMPLOI TRANSIT",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sainte-Anne-des-Monts",
+    "province": "QC",
+    "phone": "418 763-5812",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "10J, boulevard Sainte-Anne Ouest, Sainte-Anne-des-Monts (Québec) G4V1P3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-service-d-entretien-pro-pr-t-inc",
+    "name": "SERVICE D’ENTRETIEN PRO-PRÊT INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 279-3627",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.propret.org",
+    "address": "5500, rue Fullum, bureau 300, Montréal (Québec) H2G2H3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-service-d-int-gration-au-march-du-travail-de-la-mont-r-gie-i",
+    "name": "SERVICE D’INTÉGRATION AU MARCHÉ DU TRAVAIL DE LA MONTÉRÉGIE INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-7311",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.imtm.ca",
+    "address": "2884, chemin de Chambly, Longueuil (Québec) J4L1N1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-service-externe-de-main-d-oeuvre-s-e-m-o-de-granby-et-region",
+    "name": "SERVICE EXTERNE DE MAIN-D’OEUVRE (S.E.M.O.) DE GRANBY ET REGION",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450 777-3771",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.semogranby.ca",
+    "address": "6, rue Court, case postale 1124, Granby (Québec) J2G9G6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-service-externe-de-main-d-oeuvre-de-drummond-semo-inc",
+    "name": "SERVICE EXTERNE DE MAIN-D’OEUVRE DE DRUMMOND (SEMO) INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Drummondville",
+    "province": "QC",
+    "phone": "819 478-4277",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.semocq.com",
+    "address": "50, rue Dunkin, bureau 302, Drummondville (Québec) J2B8B1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-service-externe-de-main-d-oeuvre-s-e-m-o-gaspesie-les-iles",
+    "name": "SERVICE EXTERNE DE MAIN-D’OEUVRE S.E.M.O. GASPESIE - LES ILES",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Maria",
+    "province": "QC",
+    "phone": "418 759-0049",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.semogim.org/#!teachers/c2271",
+    "address": "473, boulevard Perron, bureau 111, Maria (Québec) G0C1Y0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-service-sp-cialis-de-main-d-oeuvre-l-lan",
+    "name": "SERVICE SPÉCIALISÉ DE MAIN-D’OEUVRE L’ÉLAN",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Rimouski",
+    "province": "QC",
+    "phone": "418 723-7658",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.ssmo-elan.net",
+    "address": "320, rue Saint-Germain Est, bureau 600, Rimouski (Québec) G5L1C2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-services-int-gr-s-pour-l-emploi",
+    "name": "SERVICES INTÉGRÉS POUR L’EMPLOI",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Victoriaville",
+    "province": "QC",
+    "phone": "819 758-1975",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.siemploi.com",
+    "address": "103, rue de Bigarré, bureau 107, Victoriaville (Québec) G6P9P6",
+    "hours": "Voir site web"
   },
   {
     "id": "tr-garde-sherly",
@@ -79375,6 +82665,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.soc-sherbrooke.ca",
     "address": "30, rue Belvédère Nord, Sherbrooke, QC J1H 4A7",
     "hours": "Lun-ven 8h30-16h30. Services d'accueil, intégration, références."
+  },
+  {
+    "id": "qc-emp-solutions-carri-re",
+    "name": "SOLUTIONS CARRIÈRE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "514 369-7027",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "418, avenue St-Charles, bureau 315, Vaudreuil-Dorion (Québec) J7V2N1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-sorif-inc",
+    "name": "SORIF INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 271-3866",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.sorif.org",
+    "address": "5150, rue Saint-Hubert, Montréal (Québec) H2J2Y3",
+    "hours": "Voir site web"
   },
   {
     "id": "sos-accueil-cap",
@@ -79518,6 +82833,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Coordination et accompagnement pour le développement et la mise en œuvre de projets en complémentarité avec ses partenaires et tout autre acteur concerné afin de faciliter l’intégration en emploi des ... [Plus] | Clientèle : Partenaires et employeurs * personnes ou travailleurs indépendants en situation de handicap",
     "website": "http://www.sphere-qc.ca",
     "address": "210 Boulevard Charest E, Québec, QC G1K 5W8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-strat-gie-carri-re",
+    "name": "STRATÉGIE CARRIÈRE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Trois-Rivières",
+    "province": "QC",
+    "phone": "819 373-1726, poste 228",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.strategiecarriere.com",
+    "address": "7175, rue Marion, bureau 310, Trois-Rivières (Québec) G9A5Z9",
     "hours": "Voir site web"
   },
   {
@@ -83710,6 +87038,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-emp-service-d-aide-aux-n-o-canadiens-sherbrooke-inc",
+    "name": "Service d’aide aux Néo-Canadiens (Sherbrooke) inc.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sherbrooke",
+    "province": "QC",
+    "phone": "819 566-5373",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.sanc-sherbrooke.ca",
+    "address": "530, rue Prospect, Sherbrooke (Québec) J1H1A8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "service-d-aide-communautaire-de--cap",
     "name": "Service d’aide communautaire de Charlevoix-Est",
     "category": "social",
@@ -83940,6 +87281,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.autismelaval.org",
     "address": "155, boulevard Je-Me-Souviens, Sainte-Rose, Laval, QC, H7L 1V6",
     "hours": "lundi au vendredi 8h30 à 15h00"
+  },
+  {
+    "id": "qc-emp-services-oboulo",
+    "name": "Services Oboulo",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450 378-2107",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.oboulo.ca",
+    "address": "125, boulevard Lord, Granby (Québec) J2G5K1",
+    "hours": "Voir site web"
   },
   {
     "id": "emp-services-quebec-centre",
@@ -84342,6 +87696,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Service d'aide à l'emploi personnalisé aux personnes ayant des limitations fonctionnelles * évaluation et orientation * élaboration d'un plan d'action * accompagnement après le plan d'action * soutien ... [Plus] | Clientèle : Personnes ayant une limitation fonctionnelle telle que handicap physique et sensoriel, trouble de santé mentale, déficience intellectuelle et trouble du spectre de l'autisme (TSA)",
     "website": "http://cje-appui.qc.ca/services-specialises-de-main-doeuvre",
     "address": "39 Rue St Jean Baptiste, Baie-Saint-Paul, QC G3Z 1M3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-services-de-placement-horizon-travail",
+    "name": "Services de placement Horizon-travail",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 933-1141",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.horizon-travail.org",
+    "address": "666, Sherbrooke ouest, bureau 401, Montréal (Québec) H3A1E7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-services-d-aide-l-emploi-kamouraska",
+    "name": "Services d’aide à l’emploi Kamouraska",
+    "category": "employment",
+    "subcategory": "",
+    "city": "La Pocatière",
+    "province": "QC",
+    "phone": "418 856-4288, poste 201",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://unEmploi.ca",
+    "address": "1011, 6e avenue Pilote, La Pocatière (Québec) G0R1Z0",
     "hours": "Voir site web"
   },
   {
@@ -88376,6 +91756,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "variables"
   },
   {
+    "id": "qc-emp-tandem-emploi-vall-e-du-richelieu",
+    "name": "TANDEM EMPLOI VALLÉE DU RICHELIEU",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 464-5323, poste 210",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.tandem-emploi.org",
+    "address": "545, boulevard Sir-Wilfrid-Laurier, bureau 301, Beloeil (Québec) J3G4H8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "imm-tcri",
     "name": "TCRI – Table de concertation des organismes au service des personnes réfugiées et immigrantes",
     "category": "immigration",
@@ -88430,6 +91823,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "qc-emp-tremplin-travail-vall-e-de-la-matap-dia-inc",
+    "name": "TREMPLIN TRAVAIL VALLÉE DE LA MATAPÉDIA INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Amqui",
+    "province": "QC",
+    "phone": "418 629-2572",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.tremplintravail.com",
+    "address": "65, boulevard Saint-Benoit Ouest, Amqui (Québec) G5J2E5",
+    "hours": "Voir site web"
+  },
+  {
     "id": "trip-jeunesse-beauport-cap",
     "name": "TRIP Jeunesse Beauport",
     "category": "family",
@@ -88440,6 +91846,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Rejoindre principalement les jeunes et les personnes plus vulnérables dans leurs différents milieux de vie et les accompagner par la pratique du travail de rue et de l'intervention de milieu * aide, é ... [Plus] | Clientèle : Coordination clinique, Natacha Breton-Dallaire 418-262-2055 (cell.) | Âges : 12 an(s) et plus",
     "website": "http://www.tripjeunesse.org",
     "address": "2100 Av. Deblois, Québec, QC G1E 1V1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-trousso-direction-emploi",
+    "name": "TROUSSO DIRECTION EMPLOI",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lachute",
+    "province": "QC",
+    "phone": "450 562-6006",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://trousso.ca/",
+    "address": "206, avenue Béthany, Lachute (Québec) J8H2M5",
     "hours": "Voir site web"
   },
   {
@@ -90434,6 +93853,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30."
   },
   {
+    "id": "qc-emp-univers-emploi",
+    "name": "UNIVERS EMPLOI",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Rivière-du-Loup",
+    "province": "QC",
+    "phone": "418 314-0404, poste 2051",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "address": "37, Delage, Rivière-du-Loup (Québec) G5R3P2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ultimate-qu-bec-cap",
     "name": "Ultimate Québec",
     "category": "social",
@@ -90895,6 +94326,45 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Sensibilisation aux problématiques reliées à l'agriculture et à l'environnement * ateliers, conférences et discussions sur le thème de l'agroenvironnement * bulletin d'information électronique * centr ... [Plus]",
     "website": "http://viaagro.wixsite.com/via-agro-ecologie",
     "address": "Rue Marie Fitzbach, Cité-Universitaire, QC G1V 2J2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-via-travail-inc",
+    "name": "VIA-TRAVAIL INC.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 381-7276",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.viatravail.ca",
+    "address": "9419, rue Lajeunesse, Montréal (Québec) H2M1S4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-vision-comp-tences",
+    "name": "VISION COMPÉTENCES",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Acton Vale",
+    "province": "QC",
+    "phone": "450 546-0311",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.publicationsduquebec.gouv.qc.ca/lois-et-reglements/",
+    "address": "975, rue Boulay, bureau 202, Acton Vale (Québec) J0H1A0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-vision-travail-abitibi-temiscamingue",
+    "name": "VISION TRAVAIL ABITIBI-TEMISCAMINGUE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Rouyn-Noranda",
+    "province": "QC",
+    "phone": "819 797-0822",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.vision-travail.qc.ca",
+    "address": "1, du Terminus Est, Rouyn-Noranda (Québec) J9X3B5",
     "hours": "Voir site web"
   },
   {
@@ -91828,6 +95298,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "qc-emp-y-des-femmes-de-montr-al",
+    "name": "Y DES FEMMES DE MONTRÉAL",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514 866-9941",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "https://www.ydesfemmesmtl.org/",
+    "address": "1275, avenue De Lorimier, Montréal (Québec) H2K0G1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "s-yslm-mtl",
     "name": "Y des femmes de Montréal (YWCA)",
     "category": "social",
@@ -91994,6 +95477,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.yukonhousing.ca",
     "address": "410 Jarvis St, Whitehorse, YT Y1A 2H5",
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
+  },
+  {
+    "id": "qc-emp-zone-emploi-d-antoine-labelle",
+    "name": "ZONE EMPLOI D’ANTOINE-LABELLE",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Mont-Laurier",
+    "province": "QC",
+    "phone": "819 623-5051",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.publicationsduquebec.gouv.qc.ca/lois-et-reglements/",
+    "address": "3-601, rue de la Madone, Mont-Laurier (Québec) J9L1S8",
+    "hours": "Voir site web"
   },
   {
     "id": "zone-ados-secteur-cote-boisee-trb",
@@ -92187,6 +95683,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Shawinigan. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "821, 5e Avenue, Shawinigan QC G9T 2M9",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "qc-emp-les-mara-chers-du-coeur",
+    "name": "les Maraîchers du Coeur",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Rimouski",
+    "province": "QC",
+    "phone": "418 732-6022",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.lesmaraichersducoeur.com",
+    "address": "133, rue Julien-Réhel, bureau 208, Rimouski (Québec) G5L9B1",
+    "hours": "Voir site web"
   },
   {
     "id": "tr-garde-les-petits-loups",
@@ -93268,6 +96777,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Amélioration des conditions socioéconomiques des femmes en contribuant à leur intégration au marché du travail * session d'orientation axée sur la diversification professionnelle * formation préparato ... [Plus] | Clientèle : Femmes désirant intégrer le marché du travail, changer d'emploi, retourner aux études ou démarrer leur propre entreprise * personnes prenant soin d'une personne | Âges : 18 an(s) et plus",
     "website": "http://www.etape-emploi.ca",
     "address": "3100 Av. du Bourg-Royal bureau 100, Québec, QC G1C 5S7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-emp-tape-emploi-inc",
+    "name": "Étape emploi inc.",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418 529-8052",
+    "description": "Organisme spécialisé en employabilité — aide à la recherche d'emploi, formation, insertion professionnelle. Répertoire officiel Québec.ca.",
+    "website": "http://www.centre-etape.qc.ca",
+    "address": "3100, Avenue Bourg-Royal, bureau 100, Québec (Québec) G1C5S7",
     "hours": "Voir site web"
   },
   {
