@@ -216,7 +216,7 @@ export default function RegisterScreen() {
         return {
           title: "Compte citoyen",
           price: "Gratuit",
-          note: "Recherche illimitée · SOS · Carte · Chat IA · Premium 19,99 $ optionnel à vie",
+          note: "Recherche illimitée · SOS · Carte · Chat IA · Premium 10 $ optionnel à vie",
         };
     }
   })();
