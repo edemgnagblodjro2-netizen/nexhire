@@ -337,6 +337,29 @@ servicesRouter.post("/admin/services", requireAdminKey, async (req, res) => {
   }
 });
 
+// ── POST /api/admin/services/backdate-recent  (one-shot: recule createdAt
+//     des services importés récemment pour ne pas spammer la cloche "Quoi de neuf") ──
+servicesRouter.post("/admin/services/backdate-recent", requireAdminKey, async (req, res) => {
+  try {
+    const newerThanHours = Math.max(1, Math.min(168, Number(req.body?.newerThanHours) || 24));
+    const backdateDays = Math.max(31, Math.min(365, Number(req.body?.backdateDays) || 60));
+    const result = await db.execute(sql`
+      UPDATE ${servicesTable}
+      SET created_at = now() - (${backdateDays}::int || ' days')::interval
+      WHERE created_at > now() - (${newerThanHours}::int || ' hours')::interval
+    `);
+    return res.json({
+      ok: true,
+      updated: (result as any).rowCount ?? (result as any).count ?? null,
+      newerThanHours,
+      backdateDays,
+    });
+  } catch (err: any) {
+    logger.error({ err }, "POST /api/admin/services/backdate-recent error");
+    return res.status(500).json({ error: err?.message ?? "Internal error" });
+  }
+});
+
 // ── POST /api/admin/services/bulk  (batch create — bypass rate-limit pour imports massifs) ──
 servicesRouter.post("/admin/services/bulk", requireAdminKey, async (req, res) => {
   try {
