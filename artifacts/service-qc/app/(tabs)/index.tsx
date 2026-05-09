@@ -1607,7 +1607,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 12,
     borderWidth: 1,
-    marginTop: 0,
+    marginTop: -10,
     marginBottom: 14,
   },
   allCategoriesLinkText: {
