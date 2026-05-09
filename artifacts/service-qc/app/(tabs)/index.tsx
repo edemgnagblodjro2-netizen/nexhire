@@ -422,7 +422,7 @@ export default function HomeScreen() {
           accessibilityLabel={language === "fr" ? "Demander à l'assistant AI" : "Ask the AI assistant"}
         >
           <View style={styles.aiCtaIconWrap}>
-            <Feather name="message-circle" size={22} color="#fff" />
+            <Feather name="message-circle" size={14} color="#fff" />
           </View>
           <View style={{ flex: 1 }}>
             <Text style={styles.aiCtaTitle}>
@@ -434,7 +434,7 @@ export default function HomeScreen() {
                 : "Instant answer · 24/7 · free"}
             </Text>
           </View>
-          <Feather name="chevron-right" size={20} color="#fff" />
+          <Feather name="chevron-right" size={14} color="#fff" />
         </Pressable>
 
         {/* ── Bannière slide (auto-rotation) — remontée au-dessus des tuiles ── */}
@@ -822,40 +822,40 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
 
-  /* CTA AI principal */
+  /* CTA AI principal — taille compacte (alignée sur le bandeau "Application indépendante") */
   aiCta: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    gap: 8,
     backgroundColor: "#0e7e6e",
-    borderRadius: 16,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
     marginBottom: 14,
     shadowColor: "#0e7e6e",
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 3,
+    shadowOpacity: 0.18,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
   },
   aiCtaIconWrap: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 26,
+    height: 26,
+    borderRadius: 13,
     backgroundColor: "rgba(255,255,255,0.18)",
     alignItems: "center",
     justifyContent: "center",
   },
   aiCtaTitle: {
-    fontSize: 15,
+    fontSize: 12,
     fontFamily: "Inter_700Bold",
     color: "#fff",
   },
   aiCtaSubtitle: {
-    fontSize: 12,
+    fontSize: 10,
     fontFamily: "Inter_400Regular",
     color: "rgba(255,255,255,0.85)",
-    marginTop: 2,
+    marginTop: 1,
   },
 
   /* Hero */
@@ -1607,7 +1607,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 12,
     borderWidth: 1,
-    marginTop: -10,
+    marginTop: 14,
     marginBottom: 14,
   },
   allCategoriesLinkText: {
