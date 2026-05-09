@@ -336,6 +336,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "friperie: lundi au mercredi 10h00 à 17h00, jeudi 10h00 à 19h00, vendredi 10h00 à 21h00, samedi 9h00 à 17h00, dimanche 10h00 à 17h00, distribution alimentaire: lundi au vendredi 13h30 à 18h30, samedi et dimanche 13h30 à 18h30"
   },
   {
+    "id": "3e-imp-rial-centre-d-essai-en-ar-hy",
+    "name": "3e impérial, centre d'essai en art actuel",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-7261",
+    "description": "Soutien la pratique et l'avancement des disciplines des arts actuels * production et diffusion * programme de résidence d'artiste * médiation culturelle avec les organismes et institutions de la régio ... [Plus] | Clientèle : Artistes et amateurs d'art actuel, étudiants, chercheurs et historiens, etc.",
+    "website": "http://www.3e-imperial.org",
+    "address": "164 Rue Cowie, Granby, QC J2G 3V3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "4-loisirs-de-sainte-foy-cap",
     "name": "4 loisirs de Sainte-Foy",
     "category": "social",
@@ -770,6 +783,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "afio.ca",
     "address": "109, rue Wright, unité 9, Gatineau, Outaouais, QC, J8X 2G7",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, été: vendredi 8h30 à 13h00, horaires spécifiques pour certaines activités"
+  },
+  {
+    "id": "accorderie-de-granby-et-r-gion-hy",
+    "name": "Accorderie de Granby et région",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "579-420-2468",
+    "description": "Échange de services et d'entraide solidaire entre personnes d’âge, de genre, de culture et de revenu différents * réseau d'échange de services entre individus qui valorise les talents de chacun et uti ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.accorderie.ca/granby-accueil/",
+    "address": "170 Rue Saint Antoine N #317, Granby, QC J2G 5G7, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "accorderie-de-qu-bec-l-cap",
@@ -1373,6 +1399,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "activitesprescolaires.com",
     "address": "1025, chemin des Prairies, Brossard, Montérégie, QC, J4Y 1E7",
     "hours": "consulter le site Internet"
+  },
+  {
+    "id": "activit-s-jeunesse-et-loisirs-de-hy",
+    "name": "Activités jeunesse et loisirs de Saint-Joachim",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Joachim-de-Shefford",
+    "province": "QC",
+    "phone": "450-539-3201",
+    "description": "Promotion des activités et services de loisirs pour la jeunesse et la population locale * activités culturelles, sportives et autres * 4 sessions d'activités par année * camp de jour estival Événement ... [Plus] | Clientèle : Population locale et environnante",
+    "address": "556 Rue des Loisirs, Saint-Joachim-de-Shefford, QC J0E 2G0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "adaptavie-cap",
@@ -2456,6 +2494,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "alcooliques-anonymes-r-gion-87-s-hy",
+    "name": "Alcooliques anonymes, Région 87 - Sud-Ouest du Québec, Granby Cowansville Bromont Farnham",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-405-9321",
+    "description": "Encadrement et soutien pour aider à maintenir et atteindre la sobriété de façon stable pour les personnes alcooliques * information et écoute * service d'écoute téléphonique * service d'information pu ... [Plus] | Clientèle : Personnes ayant un problème d'alcool et qui expriment le désir d'arrêter de consommer",
+    "website": "http://www.aa87.org",
+    "address": "Cowansville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "alcooliques-anonymes-r-gion-89-n-cap",
     "name": "Alcooliques anonymes, Région 89 - Nord-Est",
     "category": "mentalHealth",
@@ -2645,6 +2696,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Augmentation des habiletés en lecture, écriture, calcul et informatique afin d'améliorer les conditions de vie et l'autonomie des personnes Alphabétisation : * Ateliers en lecture, écriture, calcul, c ... [Plus] | Clientèle : Centre d'accès communautaire à Internet 418-885-1587 poste 108",
     "website": "http://alphabellechasse.org",
     "address": "5 Rue Morin, Saint-Anselme, QC G0R 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "alpha-haute-yamaska-hy",
+    "name": "Alpha Haute-Yamaska",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-9788",
+    "description": "Amélioration des conditions de vie des adultes par l'apprentissage de la lecture, de l'écriture et du calcul * ateliers d'enseignement individuel en français et en calcul * ateliers d'informatique off ... [Plus] | Clientèle : Aide pour remplir les formulaires prendre rendez-vous avec Charles Dion | Âges : 18 an(s) et plus",
+    "website": "http://centrealphadegranby.ca",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -2991,6 +3055,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "Information 418-663-0890",
     "description": "Aide aux personnes en deuil de leur conjoint à ne pas se sentir seules dans cette épreuve * rencontres-partage * dîners fraternels au restaurant * rencontres informelles, pique-niques | Clientèle : Personnes en deuil de leur conjoint",
     "address": "840 Rue Raoul-Jobin, Québec, QC G1N 1S7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "ami-bus-hy",
+    "name": "Ami-Bus",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-2069",
+    "description": "Service de transport * transport adapté : service de porte-à-porte sur réservation et adapté aux besoins particuliers des personnes à mobilité réduite * transport collectif pour incapacité temporaire ... [Plus] | Clientèle : * transport collectif régional : offert à toutes clientèles désirant voyager à Saint-Paul-d'Abbotsford ou entre Granby et Saint-Paul-d'Abbotsford",
+    "website": "http://www.amibus.org",
+    "address": "65 Rue Saint-Jude S, Granby, QC J2J 2N4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -4572,6 +4649,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi 9h00 à 12h00"
   },
   {
+    "id": "association-granby-pour-la-d-fic-hy",
+    "name": "Association Granby pour la déficience intellectuelle et l'autisme",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-0694",
+    "description": "Défense des droits et promotion des intérêts des personnes vivant avec une déficience intellectuelle (DI) et/ou un trouble du spectre autistique (TSA) * intégration dans la société pour qu'elles parti ... [Plus] | Clientèle : Personnes ayant une déficience intellectuelle et/ou un trouble du spectre autistique et leur famille | Âges : 6 an(s) et plus",
+    "website": "http://www.agdia.org",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-handami-pour-personnes-sll",
     "name": "Association Handami pour Personnes Handicapées et Leur Famille",
     "category": "social",
@@ -4889,6 +4979,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-837-0702",
     "description": "Développement d'une relation franco-québécoise directe et privilégiée * programmes jeunesse : vendanges, échanges inter-municipalités, concours photo * programmes culturels : Prix Marie-Claire-Blais, ... [Plus] | Âges : 18 an(s) et plus",
     "address": "9 Pl. Royale, Québec, QC G1K 4G2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-qu-bec-france-haute--hy",
+    "name": "Association Québec-France - Haute-Yamaska",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-2764",
+    "description": "Réseau de relations sociales, directes et privilégiées entre les membres de la Fédération France-Québec/francophonie et le Réseau Québec-France/francophonie et leurs instances représentatives * découv ... [Plus] | Clientèle : Personnes voulant découvrir la France et la francophonie en général | Âges : 18 an(s) et plus",
+    "website": "http://www.regionalehauteyamaska.com",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -5251,6 +5354,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-coop-rative-d-conomi-hy",
+    "name": "Association coopérative d'économie familiale Montérégie-Est",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-1443",
+    "description": "Sensibilisation et information en matière de budget, d'endettement, de consommation et de logement * consultations et interventions budgétaires * cours et aide sur le budget et l'endettement * défense ... [Plus]",
+    "website": "http://www.acefme.org",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-coop-rative-d-conomi-cap",
     "name": "Association coopérative d'économie familiale de Québec",
     "category": "social",
@@ -5548,6 +5664,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lundi au jeudi 9h00 à 16h00, sur rendez-vous"
   },
   {
+    "id": "association-de-la-colonie-de-vac-hy",
+    "name": "Association de la colonie de vacances de Granby",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-9787",
+    "description": "Financement afin de permettre à des enfants provenant d'un milieu défavorisé ou malades de passer du temps dans un camp de vacances * coopération avec le CSSS de la Haute-Yamaska, la pédiatrie sociale ... [Plus] | Clientèle : Enfants défavorisés ou malades | Âges : 18 an(s) et moins",
+    "website": "http://www.coloniegranby.org",
+    "address": "135 Rue Principale, Granby, QC J2G 2V1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-de-la-construction-d-cap",
     "name": "Association de la construction du Québec",
     "category": "social",
@@ -5558,6 +5687,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Accompagnement des entreprises de construction dans la gestion quotidienne de leurs activités en soutien à leur développement et croissance * répertoire des membres https://www.acq.org/repertoire-des- ... [Plus]",
     "website": "http://www.acq.org",
     "address": "375 Rue de Verdun, Québec, QC G1N 3N8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-de-la-fibromyalgie-d-hy",
+    "name": "Association de la fibromyalgie de l'Estrie, Groupe de Granby",
+    "category": "health",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Résidence 450-361-2347",
+    "description": "Soutien aux personnes atteintes de fibromyalgie * activité, conférences et entraide * groupe d'entraide abordant des sujets variés * conférences * cours adaptés (yoga) * centre de documentation | Clientèle : Personnes atteintes de la fibromyalgie",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -5610,6 +5751,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Valorisation et développement du sport de la natation * soutien au développement et à la compétence des nageurs, entraîneurs, officiels et administrateurs de l'association Répertoire des clubs membres ... [Plus]",
     "website": "http://www.fnq.qc.ca",
     "address": "3178 Ch Ste-Foy, Québec, QC G1X 1R4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-de-paralysie-c-r-bra-hy",
+    "name": "Association de paralysie cérébrale du Québec, Bureau de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-2907",
+    "description": "Promotion et défense des droits des personnes vivant avec la paralysie cérébrale * aide à l'intégration sociale et scolaire * amélioration de la qualité de vie de ces personnes * information, référenc ... [Plus] | Clientèle : Personnes vivant avec la paralysie cérébrale et leurs proches",
+    "website": "http://www.paralysiecerebrale.com",
+    "address": "170 Rue Saint Antoine N bureau 220, Granby, QC J2G 5G8, Canada",
     "hours": "Voir site web"
   },
   {
@@ -6121,6 +6275,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-des-personnes-aphasi-hy",
+    "name": "Association des personnes aphasiques Granby-Région",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-7896",
+    "description": "Défense des droits et soutien des personnes atteintes d'aphasie et leurs proches * information et services permettant l'amélioration de la qualité de vie et intégration dans la société * rencontres he ... [Plus] | Clientèle : Personnes atteintes d'aphasie et leurs proches | Âges : 18 an(s) et plus",
+    "website": "http://www.apag.ca",
+    "address": "170 Rue Saint Antoine N bureau 318, Granby, QC J2G 5G8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-des-personnes-attein-cap",
     "name": "Association des personnes atteintes de sclérose en plaques du comté de Portneuf",
     "category": "social",
@@ -6288,6 +6455,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-des-professionnels-d-hy",
+    "name": "Association des professionnels de la construction et de l'habitation du Québec",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Alphonse-de-Granby",
+    "province": "QC",
+    "phone": "450-777-3177",
+    "description": "Services aux entreprises de construction * formation * information * relations de travail * formations juridiques et techniques | Clientèle : Entrepreneurs en construction",
+    "website": "http://www.apchq.com/hauteyamaska",
+    "address": "Saint-Alphonse-de-Granby, QC J0E 2A0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-des-propri-taires-du-ca",
     "name": "Association des propriétaires du lac à la Truite",
     "category": "social",
@@ -6348,6 +6528,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Promotion et défense des intérêts et droits culturels, sociaux et économiques de ses membres et des personnes aînées * assistance relatives aux régimes de retraite (RREGOP, RRE, RRCE) * aide relative ... [Plus] | Clientèle : Personnes retraitées issues d'un syndicat affilié à la CSQ | Âges : 60 an(s) et plus",
     "website": "http://quebec-chaudiere-appalaches.areq.lacsq.org",
     "address": "Pavillon Alphonse-Desjardins, 2325 Rue de l'Université, Québec, QC G1V 0B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-retrait-es-et-re-hy",
+    "name": "Association des retraitées et retraités de l'éducation et des autres services publics du Québec, Secteur Areq Granby La Pommeraie, Le mouvement des personnes retraitées CSQ",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-263-9212",
+    "description": "Promotion du maintien du pouvoir d'achat des membres * intérêt marqué pour la sociopolitique, la condition des femmes et des hommes * information sur des dossiers impliquant les retraités du Québec * ... [Plus] | Clientèle : Les personnes retraitées de la CSQ | Âges : 55 an(s) et plus",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -6696,6 +6888,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-f-ministe-d-ducation-hy",
+    "name": "Association féministe d'éducation et d'action sociale, Association locale secteur Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-578-0208",
+    "description": "Défense de l'égalité hommes femmes * défense des intérêts des femmes auprès des diverses instances * sensibilisation des membres à leurs responsabilités * engagement à faire face aux exigences de la f ... [Plus] | Âges : 16 an(s) et plus",
+    "website": "http://www.afeas.qc.ca",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-f-ministe-d-ducation-ca-4",
     "name": "Association féministe d'éducation et d'action sociale, Association locale secteur Lévis, Secrétariat régional Québec - Chaudière-Appalaches",
     "category": "social",
@@ -6810,6 +7015,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Promotion des droits des femmes et amélioration de la société par l'éducation et l'action sociale * soutien à l'obtention d'identité propre, statut égal, liberté de choix et autonomie des femmes * act ... [Plus] | Clientèle : Femmes | Âges : 18 an(s) et plus",
     "website": "https://afeas.qc.ca/",
     "address": "Cap-Saint-Ignace, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-g-n-rale-des-tudiant-hy",
+    "name": "Association générale des étudiants et des étudiantes de l'antenne universitaire du troisième âge de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-5695",
+    "description": "Cours et activités pour les personnes de 50 ans et plus * soutien à l'acquisition des connaissances * aide contre l'isolement * promotion des échanges et soutien à l'intégration Diverses matières * hi ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "https://www.ageautag.org/",
+    "address": "135 Rue Principale, Granby, QC J2G 2V1, Canada",
     "hours": "Voir site web"
   },
   {
@@ -7055,6 +7273,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-qu-b-coise-de-d-fens-hy",
+    "name": "Association québécoise de défense des droits des personnes retraitées et préretraitées - Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-3038",
+    "description": "Défense des droits culturels, économiques, politiques et sociaux des personnes à la retraite * amélioration de la qualité de vie des personnes plus vulnérables * conférences mensuelles sur différents ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "http://www.aqdrgranby.org",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-qu-b-coise-de-d-fens-ca-2",
     "name": "Association québécoise de défense des droits des personnes retraitées et préretraitées Montmagny - L'Islet",
     "category": "social",
@@ -7209,6 +7440,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Promotion et défense des droits et intérêts économiques, financiers, culturels, intellectuels et sociaux de ses membres et de l'ensemble des aînés du Québec * aide téléphonique Mieux-être, référence e ... [Plus] | Clientèle : Personnes retraitées ou préretraitées des secteurs public et parapublic * personnes retraitées qui souscrivent aux objectifs de l'association * aide téléphonique en défense des droits pour membres et non-membres | Âges : 55 an(s) et plus",
     "website": "http://www.aqrp.ca",
     "address": "5400 Bd des Galeries, Québec, QC G2K 2B4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-qu-b-coise-pour-l-av-hy",
+    "name": "Association québécoise pour l'avancement des Nations-Unies, Section Granby et région",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Secrétariat administratif de l'AQANU (Gatineau) 819-568-7462",
+    "description": "Sensibilisation liés au développement international durable * développement de l'intérêt pour la solidarité internationale, plus spécifiquement en Haïti * protection de l'environnement. * information ... [Plus] | Clientèle : Personnes intéressées par la coopération internationale | Âges : 18 an(s) et plus",
+    "website": "http://www.aqanu.org",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -7427,6 +7671,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Pour urgence: 811 (Info-Santé) ou urgence hospitalière.",
     "isProvinceWide": true
+  },
+  {
+    "id": "atelier-19-hy",
+    "name": "Atelier 19",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-9339",
+    "description": "Accompagnement des jeunes dans leur désir de se connaître, de s’accomplir, d’innover et d’agir ensemble via l'art, la création, la co-création * association avec le milieu éducatif et la communauté * ... [Plus] | Âges : 7 an(s) - 17 an(s)",
+    "website": "http://www.atelier19.org",
+    "address": "Centre culturel France-Arbour, 279 Rue Principale #301, Granby, QC J2G 2W1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "atelier-bleu-m-ajjjiiik-l-ca",
@@ -8100,6 +8357,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "autre-versant-l-alternative-en-s-hy",
+    "name": "Autre Versant (L') Alternative en santé mentale",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-7611",
+    "description": "Milieu de vie, d’accueil, partage, réadaptation et participation sociale * accompagnement et soutien dans une démarche de rétablissement * prévention de l'isolement * outils pour se réapproprier le po ... [Plus] | Clientèle : Hommes et femmes ayant des problèmes de santé mentale | Âges : 18 an(s) - 64 an(s)",
+    "website": "http://www.autreversant.com",
+    "address": "20 Rue Drummond, Granby, QC J2G 2S3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "aux-go-ts-du-jour-les-oeuvres-de-out",
     "name": "Aux Goûts Du Jour (Les Oeuvres De Charité)",
     "category": "food",
@@ -8251,6 +8521,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Accompagner les jeunes dans leur cheminement afin d'améliorer leur qualité de vie.* Soutien individuel et familial.* Atelier en sensibilisation, en prévention et en adaptation sociale.* Programmes d'emploi et de formation pour les jeunes.* Activités collaboratives créant un milieu de vie stimulant.* Lieu de rencontres et d'activités: Maison des jeunes Antrados, Maison du parc de l'Île, Maison les Deschênés.* Hébergement: Auberge du cour Héberge-Ados.* Suivi post-hébergement. | Clientèle: jeunes de 13 à 17 ans, jeunes vivant des problèmes personnels ou familiaux et qui a besoin d'un hébergement | Territoire: Outaouais | Statut: organisme à but non lucratif",
     "website": "avenuedesjeunes.com",
     "address": "10, rue Bériault, Gatineau, Outaouais, QC, J8X 1A3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "avenue-profession-elle-hy",
+    "name": "Avenue profession'elle",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-2212",
+    "description": "Intégration socioprofessionnelle des femmes en les soutenant dans l'apprentissage et la pratique d'un métier à prédominance masculine * démarche d'orientation * soutien et accompagnement à la recherch ... [Plus] | Clientèle : Femmes",
+    "website": "http://www.passage.qc.ca",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -9373,6 +9656,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 10h00 à 21h00, samedi et dimanche 10h00 à 17h00"
   },
   {
+    "id": "biblioth-que-paul-o-tr-panier-hy",
+    "name": "Bibliothèque Paul-O.-Trépanier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-8320",
+    "description": "Accès pour tous les citoyens à une collection d'ouvrages sur tous les sujets * accès libre aux collections * prêts de livres (imprimé, numérique, audio), de magazines, de jeux de société, de méthodes ... [Plus]",
+    "website": "http://www.biblio.ville.granby.qc.ca",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "biblioth-que-publique-waterloo-hy",
+    "name": "Bibliothèque publique Waterloo",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-2268",
+    "description": "Offre accès à tous les citoyens à une collection d'ouvrages variés * prêts de livres * référence et information * accès internet * livres et revues en anglais et en français",
+    "website": "http://www.cacwaterloo.qc.ca/biblio",
+    "address": "650 Rue de la Cour, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "nb-wellness-nb",
     "name": "Bien-être NB",
     "category": "mentalHealth",
@@ -9565,6 +9874,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Club de natation compétitive situé à Fermont | Clientèle : Enfants * adolescents | Âges : 5 an(s) - 17 an(s)",
     "website": "http://www.fnq.qc.ca/marqueurs/le-boreal-de-fermont",
     "address": "Rue Boréale, Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "bor-art-centre-d-exposition-en-a-hy",
+    "name": "Boréart, Centre d'exposition en arts visuels",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-361-6081",
+    "description": "Promotion des arts visuels et des artistes tout en sensibilisant la population à l'importance de cette richesse culturelle collective * expositions * conférences Programmation : https://www.vccgranby. ... [Plus] | Clientèle : Amateurs d'art",
+    "website": "http://www.boreart.org",
+    "address": "279 Rue Principale, Granby, QC J2G 2W1, Canada",
     "hours": "Voir site web"
   },
   {
@@ -10301,6 +10623,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Agir, accompagner et soutenir les responsables de service de garde éducatif en milieu familial * évaluation des futurs service de garde en milieu familial * traiter les plaintes concernant les personn ... [Plus]",
     "website": "https://gw.micro-acces.com/bchautesmarees/Publique/Accueil.aspx",
     "address": "2750 Ch Ste-Foy, Québec, QC G1V 1V6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "bureau-d-accueil-touristique-de--hy",
+    "name": "Bureau d'accueil touristique de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-7056",
+    "description": "Promotion des activités touristiques de la Haute-Yamaska et des Cantons-de-l'Est * renseignements aux visiteurs * informations touristiques pour la région de la Haute-Yamaska * produits du terroir",
+    "website": "http://www.granbyregion.com",
+    "address": "111 Rue Denison E, Granby, QC J2G 4C4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -15929,6 +16264,30 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "cadets-canada-corps-de-cadet-de--hy",
+    "name": "Cadets Canada, Corps de Cadet de la marine 242 Granby",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-775-7474",
+    "description": "Soutien pour les jeunes dans leur développement dans un contexte de formation relatif aux affaires maritimes * développement du leadership, respect et les connaissances générales * activités diverses ... [Plus] | Âges : 12 an(s) - 18 an(s)",
+    "address": "de la, 15 CH Grande Ligne, Granby, QC J2J 0K7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cadets-canada-corps-de-cadets-24-hy",
+    "name": "Cadets Canada, Corps de Cadets 2470 de Granby",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-558-8760",
+    "description": "Formations pour les jeunes dans l'optique de devenir de meilleurs citoyens * promotion de l'activité physique chez les jeunes * survie en forêt * développement du leadership * accès à des camps d'été ... [Plus] | Clientèle : Garçons et filles | Âges : 12 an(s) - 18 an(s)",
+    "address": "135 Rue Principale, Granby, QC J2G 2V1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "cadets-canada-corps-de-cadets-26-cap",
     "name": "Cadets Canada, Corps de Cadets 2600 de Sainte-Foy",
     "category": "social",
@@ -16080,6 +16439,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Programme jeunesse encourageant les adolescents à devenir des citoyens responsables et engagés au sein de leur collectivité * promotion de la bonne condition physique et acquisition de compétence en n ... [Plus] | Clientèle : Adolescents (garçons et filles) | Âges : 12 an(s) - 19 an(s)",
     "website": "https://sites.google.com/view/ccmrc287cap-rouge",
     "address": "4473 Rue Saint-Félix, Québec, QC G1Y 3A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cadets-canada-corps-de-cadets-de-hy",
+    "name": "Cadets Canada, Corps de Cadets de la marine 291 Waterloo",
+    "category": "family",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-405-6251",
+    "description": "Aide les jeunes à se développer dans un contexte de formation relatif aux affaires maritimes * développement du leadership, respect et connaissances générales. * activités hebdomadaires : soirées d'en ... [Plus] | Clientèle : Garçons et filles | Âges : 12 an(s) - 18 an(s)",
+    "website": "http://www.cadets.ca",
+    "address": "Waterloo, QC J0E, Canada",
     "hours": "Voir site web"
   },
   {
@@ -16729,6 +17101,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "canada-service-canada-centre-ser-hy",
+    "name": "Canada. Service Canada, Centre Service Canada Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "",
+    "description": "Guichet gouvernemental unique pour un accès à une variété de programmes et de services * aide à la localisation et au dépôt de demande pour les programmes gouvernementaux Services Canadiens * demande ... [Plus]",
+    "website": "http://www.canada.ca",
+    "address": "82 Rue Robinson S, Granby, QC J2G 7L4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "canada-service-canada-centre-ser-cap-2",
     "name": "Canada. Service Canada, Centre Service Canada La Cité - Limoilou",
     "category": "social",
@@ -16869,6 +17254,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Guichet gouvernemental unique pour un accès à une variété de programmes et de services * aide à la localisation et au dépôt de demande pour les programmes gouvernementaux * information et soutien avec ... [Plus]",
     "website": "http://www.servicecanada.gc.ca",
     "address": "Sacré-Coeur, QC G0T 1Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "canada-service-correctionnel-can-hy",
+    "name": "Canada. Service correctionnel Canada, Bureau de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-5861",
+    "description": "Soutien à la réinsertion sociale du détenu incarcéré dans une institution fédérale * réinsertion sociale du délinquant et protection de la société | Clientèle : Personnes libérées sous conditions",
+    "address": "180 Rue Principale, Granby, QC J2G 2V6, Canada",
     "hours": "Voir site web"
   },
   {
@@ -18396,6 +18793,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "carrefour-jeunesse-emploi-des-ca-hy",
+    "name": "Carrefour jeunesse-emploi des Cantons de l'Est",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-7700",
+    "description": "Soutien aux jeunes adultes pour définir leurs buts dans la vie et dans leur carrière * soutien dans leurs projets et leurs démarches de recherche d'emploi afin de leur donner la chance de faire préval ... [Plus] | Âges : 16 an(s) - 35 an(s)",
+    "website": "http://cje.passage.qc.ca/",
+    "address": "425 Rue Cabana, Granby, QC J2G 1P3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-des-ca-hy-2",
+    "name": "Carrefour jeunesse-emploi des Cantons de l'Est, Point de service Waterloo",
+    "category": "family",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-0700",
+    "description": "Aide à l'intégration professionnelle et sociale des jeunes adultes * services avec ou sans rendez-vous * emploi : curriculum vitæ, lettre de présentation, entrevue, marché caché de l'emploi * orientat ... [Plus] | Clientèle : Jeunes adultes | Âges : 16 an(s) - 35 an(s)",
+    "website": "http://passage.qc.ca/cje",
+    "address": "Waterloo, QC J0E, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "carrefour-les-ramilles-cap",
     "name": "Carrefour les Ramilles",
     "category": "social",
@@ -18458,6 +18881,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.ccscan.ca",
     "address": "1140 Warden Ave, Toronto, ON M1R 5A4",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "catholic-women-s-league-st-patri-hy",
+    "name": "Catholic Women's League - St-Patrick's Council",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-0811 poste 324",
+    "description": "Assistance aux familles démunies de la paroisse et aux organismes de charité et sociaux * bénévolat * transport pour examens médicaux * aide aux familles démunies * apport financier aux organismes de ... [Plus] | Clientèle : Familles dans le besoin | Âges : 16 an(s) et plus",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "cayamant-municipalit-out",
@@ -22744,18 +23179,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
-    "id": "msss-hopital-montreal-centre-de-services-ambulatoires-bois-de-boulogne",
-    "name": "Centre De Services Ambulatoires Bois-De-Boulogne",
-    "category": "health",
-    "subcategory": "Hôpital",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "",
-    "address": "1575, boulevard Henri-Bourassa Ouest, Montréal, QC H3M 3A9",
-    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
-  },
-  {
     "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-de-services-ambulatoires-bois-de-boulogne",
     "name": "Centre De Services Ambulatoires Bois-De-Boulogne",
     "category": "mentalHealth",
@@ -22766,6 +23189,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
     "address": "1575, boulevard Henri-Bourassa Ouest, Montréal, QC H3M 3A9",
     "hours": "Service de crise disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "msss-hopital-montreal-centre-de-services-ambulatoires-bois-de-boulogne",
+    "name": "Centre De Services Ambulatoires Bois-De-Boulogne",
+    "category": "health",
+    "subcategory": "Hôpital",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "",
+    "address": "1575, boulevard Henri-Bourassa Ouest, Montréal, QC H3M 3A9",
+    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
     "id": "msss-centre-hospitalier-psychiatrique-quebec-centre-de-services-ambulatoires-boulevard-laurier",
@@ -25605,6 +26040,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "clinique 2026: 1er au 31 mars, lundi au vendredi 9h00 à 17h00, sur rendez-vous"
   },
   {
+    "id": "centre-sportif-l-onard-grondin-hy",
+    "name": "Centre Sportif Léonard-Grondin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-8350",
+    "description": "Programmes et des installations de loisirs pour la population * activités sportives, récréatives et sociales * location",
+    "website": "http://www.granbymultisports.ca",
+    "address": "601 Rue Léon-Harmel, Granby, QC J2G 3G6, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-chsld-mashteuiatsh-centre-tshishemishk",
     "name": "Centre Tshishemishk",
     "category": "health",
@@ -25718,6 +26166,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Service téléphonique d'urgence 24/7 répondant à des situations d'intoxication aiguë (empoisonnement) chez les humains (aucune réponse pour les intoxications des animaux) | Clientèle : Administration 418-654-2731",
     "website": "http://www.antipoison.ca",
     "address": "1306 Av. Lavigerie, Québec, QC G1H 2X1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-aquatique-desjardins-de-g-hy",
+    "name": "Centre aquatique Desjardins de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-8242",
+    "description": "Soutien la pratique et l'apprentissage de la natation * activités libres : marche, nage, exercices statiques, waterpolo * bain libre : glissoire à hydrofrein, paniers de basket, tremplins, mur d'escal ... [Plus] | Clientèle : Le grand public pour les activités libres. Les cours sont réservées aux personnes détentrices d'une carte-loisirs.",
+    "website": "https://granby.ca/fr/piscines-horner-et-cadg",
+    "address": "560 Rue Léon-Harmel, Granby, QC J2G 3G7, Canada",
     "hours": "Voir site web"
   },
   {
@@ -26068,6 +26529,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-d-action-b-n-vole-aux-4-v-hy",
+    "name": "Centre d'action bénévole aux 4 vents",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-2395",
+    "description": "Promotion et développement de l'action bénévole dans les différents secteurs de l'activité humaine en favorisant un espace d'engagement bénévole autour des enjeux (socio-communautaire-humanitaire) qui ... [Plus] | Clientèle : Personnes âgées en perte d'autonomie * Familles et individus dans le besoin * Bénévoles * Organismes",
+    "website": "http://www.cabaux4vents.com",
+    "address": "107 Rue Lewis O, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-d-action-b-n-vole-de-char-cap",
     "name": "Centre d'action bénévole de Charlevoix",
     "category": "social",
@@ -26091,6 +26565,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Action bénévole offrant des services de maintien à domicile aux personnes âgées, ayant un handicap, en perte d'autonomie, convalescentes ainsi qu'aux mères vivant une grossesse difficile * aux famille ... [Plus] | Clientèle : Angéla Girard, Coordonnatrice des services alimentaires",
     "website": "http://www.abcharlevoix.com",
     "address": "1 Rang St Antoine, Notre-Dame-des-Monts, QC G0T 1L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-gran-hy",
+    "name": "Centre d'action bénévole de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-5033",
+    "description": "Promotion de l'action bénévole dans les différents champs de l'activité humaine * soutien les besoins du milieu par l'action bénévole Services aux personnes aînées (voir fiche Services aux personnes a ... [Plus] | Clientèle : Personnes dans le besoin * personnes âgées vulnérables * bénévoles et organismes",
+    "website": "http://www.cabgranby.ca",
+    "address": "84 Rue Court, Granby, QC J2G 4Y5, Canada",
     "hours": "Voir site web"
   },
   {
@@ -26315,6 +26802,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-d-aide-aux-entreprises-ha-hy",
+    "name": "Centre d'aide aux entreprises Haute-Yamaska et région",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-2294",
+    "description": "Soutien au développement économique des petites et moyennes entreprises * aide financière et services-conseils pour stimuler la création et le maintien d'emplois | Clientèle : Petites et moyennes entreprises (PME) * travailleurs autonomes | Âges : 18 an(s) et plus",
+    "website": "http://www.caehyr.com",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-d-aide-aux-entreprises-mo-ca",
     "name": "Centre d'aide aux entreprises Montmagny-L’Islet",
     "category": "social",
@@ -26378,6 +26878,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Aide aux victimes et aux témoins d'acte criminel, ainsi qu'à leurs proches * consultation téléphonique * intervention post-traumatique et psychosociojudiciaire * information sur les droits et recours ... [Plus] | Clientèle : Prendre rendez-vous avec un intervenant de Baie-Comeau",
     "website": "http://cavac.qc.ca",
     "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-aide-et-de-lutte-contre-hy",
+    "name": "Centre d'aide et de lutte contre les agressions à caractère sexuel (CALACS) des Rivières Haute-Yamaska Brome-Missisquoi",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-3338",
+    "description": "Lutte contre les agressions sexuelles et toute autre forme de violence sexuelle * accueil, écoute et intervention auprès des personnes de 12 ans et plus, victimes d'agression à caractère sexuel (ACS) ... [Plus] | Clientèle : Femmes agressées ou exploitées sexuellement * proches d'une victime * intervenants ou personnes qui œuvrent auprès des victimes de violences sexuelles | Âges : 12 an(s) et plus",
+    "website": "https://calacsdesrivieres.ca/",
+    "address": "P. 63, C, Granby, QC J2G 8E2, Canada",
     "hours": "Voir site web"
   },
   {
@@ -26678,6 +27191,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-d-entraide-granby-hy",
+    "name": "Centre d'entraide Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-330-3317",
+    "description": "Magasin communautaire * marché alimentaire économique * vente de mobiliers, appareils ménagers, vêtements et autres articles usagés à prix modiques * paniers alimentaires * service de ramassage pour l ... [Plus]",
+    "website": "http://www.centredentraidegranby.org",
+    "address": "231 Rue Saint Charles S Local A, Granby, QC J2G 3W5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-entraide-alimentaire",
     "name": "Centre d'entraide alimentaire",
     "category": "food",
@@ -26754,6 +27280,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-d-entraide-la-boussole-hy",
+    "name": "Centre d'entraide la boussole",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-6116",
+    "description": "Réhabilitation et réinsertion sociale des contrevenants adultes ayant des problèmes avec l'alcool, la drogue ou les médicaments et un trouble de violence * programme pour les hommes victimes de violen ... [Plus] | Clientèle : Personnes alcooliques et/ou toxicomanes et délinquantes, personnes avec dépendance affective et hommes violentés dans leur relation intime | Âges : 18 an(s) et plus",
+    "website": "http://www.centrelaboussole.ca",
+    "address": "112 Rue Saint-Jacques H, Granby, QC J2G 8V9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-d-entraide-le-spot-ca",
     "name": "Centre d'entraide le Spot",
     "category": "food",
@@ -26814,6 +27353,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-583-2223",
     "description": "Centre d’interprétation et nombreux panneaux d’interprétation sur la première ville industrielle de la Côte-Nord",
     "address": "160 Rue du Moulin, Clarke City, QC G0G 1H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-interpr-tation-de-la-na-hy",
+    "name": "Centre d'interprétation de la nature du lac Boivin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-3861",
+    "description": "Préservation du territoire du CINLB * sensibilisation du public sur la biodiversité * sentiers de randonnées * pistes de ski de fond * piste multifonctionnelle * passerelles et tours d'observation * a ... [Plus]",
+    "website": "http://www.cinlb.org",
+    "address": "700 Rue Drummond, Granby, QC J2H 0K6, Canada",
     "hours": "Voir site web"
   },
   {
@@ -27037,6 +27589,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "centre-de-collaboration-et-de-la-hy",
+    "name": "Centre de collaboration et de la réintégration sociale en Montérégie",
+    "category": "immigration",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-361-3939",
+    "description": "Soutien et encadrement aux personnes immigrantes et accompagnement dans les interventions auprès de divers organismes * lutte contre la discrimination raciale dans les entreprises * encadrement des je ... [Plus] | Clientèle : Personnes immigrantes * personnes âgées | Âges : 12 an(s) et plus",
+    "address": "de la, 15 CH Grande Ligne, Granby, QC J2J 0K7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "mh-crise-iris-mtl",
     "name": "Centre de crise IRIS",
     "category": "mentalHealth",
@@ -27126,6 +27690,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Établissement de formation offrant des programmes d'éducation aux adultes et de formation professionnelle * formation à temps plein ou partiel * formation continue * information sur le marché du trava ... [Plus] | Clientèle : Jeunes adultes et adultes | Âges : 16 an(s) et plus",
     "website": "https://www.wendake.ca/",
     "address": "Wendake, QC G2A 3Z6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-femmes-entr-elles-hy",
+    "name": "Centre de femmes Entr'elles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Bureau administrative 450-375-4042",
+    "description": "Entr’elles est un centre de femmes dont la mission consiste à informer et à aider toute femme majeure de la Haute-Yamaska à accroître le pouvoir sur sa vie et à exercer une citoyenneté plus active. Le ... [Plus] | Clientèle : Femmes | Âges : 18 an(s) et plus",
+    "website": "http://www.entrelles.ca",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -27309,6 +27886,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-de-la-petite-enfance-fami-hy",
+    "name": "Centre de la petite enfance Familigarde",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-8080",
+    "description": "Coordination des services de garde en milieu familial et en garderie * soutien de la qualité de ces services * favorise le développement de l'enfant dans son ensemble (affectif, social, intellectuel, ... [Plus] | Clientèle : Enfants | Âges : 5 an(s) et moins",
+    "website": "http://www.familigarde.ca",
+    "address": "840 Rue Maisonneuve, Granby, QC J2J 2T9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-de-la-petite-enfance-jard-cap",
     "name": "Centre de la petite enfance Jardin bleu",
     "category": "family",
@@ -27382,6 +27972,30 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-de-la-petite-enfance-le-g-hy",
+    "name": "Centre de la petite enfance Le Grand Chapiteau",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-1762",
+    "description": "Service de garde avec groupe spécialisé pour les enfants ayants un spectre de l'autisme dans une approche évolutive * service de garde de jour pour les enfants * soutien pour les enfants ayant des bes ... [Plus] | Clientèle : Attention spéciale aux enfants avec besoins particuliers | Âges : 5 an(s) et moins",
+    "address": "111 Rue Robinson N, Granby, QC J2G 6L3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-le-s-hy",
+    "name": "Centre de la petite enfance Le Soleil de Jeannot",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-4277",
+    "description": "Le CPE Le Soleil de Jeannot compte trois installations qui accueillent 212 enfants à Granby. Le CPE favorise l’égalité des chances des enfants qui lui sont confiés en veillant à leur bien-être, à leur ... [Plus] | Clientèle : Enfants | Âges : 5 an(s) et moins",
+    "address": "1000 Rue Le Corbusier, Granby, QC J2G 8V4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-de-la-petite-enfance-magi-cn",
     "name": "Centre de la petite enfance Magimuse",
     "category": "family",
@@ -27392,6 +28006,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre de la petite enfance * service de garde incluant 4 installations et un bureau de coordonnateur de la garde en milieu familial CPE * Les Gamins d'ici, 22, ave Plessis, Baie-Comeau * 1000 Petits ... [Plus] | Âges : 5 an(s) et moins",
     "website": "http://www.cpemagimuse.ca",
     "address": "37 Rte 138, Ragueneau, QC G0H 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-nez--hy",
+    "name": "Centre de la petite enfance Nez à nez",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-7700",
+    "description": "Garderies à but non lucratif qui répondent aux besoins de garde * programme éducatif de qualité avec une dimension sportive pour les enfants de 3 à 5 ans * garde et éducation des enfants Autres instal ... [Plus] | Clientèle : Enfants | Âges : 5 an(s) et moins",
+    "website": "https://www.cpenezanez.com/",
+    "address": "425 Rue Horner, Granby, QC J2G 3T6, Canada",
     "hours": "Voir site web"
   },
   {
@@ -27520,6 +28147,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-de-la-petite-enfance-les--hy",
+    "name": "Centre de la petite enfance les jeunes pousses",
+    "category": "health",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-2327",
+    "description": "Services éducatifs assurant la santé, la sécurité et le bien-être des enfants * accompagnement dans le développement global des enfants * approche démocratique et entretien du climat familial | Clientèle : Enfants | Âges : 5 an(s) et moins",
+    "address": "21 Rue Young, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-de-la-petite-enfance-les--ca",
     "name": "Centre de la petite enfance les mousses",
     "category": "social",
@@ -27529,6 +28168,45 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-831-6181",
     "description": "Centre de la petite enfance * 80 places dont 14 pour poupons (17 mois et moins) | Clientèle : Bébés et enfants d'âge préscolaire | Âges : 5 an(s) et moins",
     "address": "Ctre de la petite enfance Les Mousses, 170 12e Rue, Saint-Rédempteur, QC G6K 1G3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-rayo-hy",
+    "name": "Centre de la petite enfance rayons de Soleil",
+    "category": "social",
+    "subcategory": "",
+    "city": "Roxton Pond",
+    "province": "QC",
+    "phone": "450-372-7117",
+    "description": "Âges : 5 an(s) et moins",
+    "website": "http://www.cperayonsdesoleil.com",
+    "address": "800 Rue Laro, Roxton Pond, QC J0E 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-rayo-hy-2",
+    "name": "Centre de la petite enfance rayons de Soleil, Sainte-Cécile-de-Milton",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Cécile-de-Milton",
+    "province": "QC",
+    "phone": "450-372-7117 poste 2",
+    "description": "Âges : 5 an(s) et moins",
+    "website": "http://www.cperayonsdesoleil.com",
+    "address": "800 Rue Laro, Roxton Pond, QC J0E 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-main-d-uvre-opex-point-hy",
+    "name": "Centre de main d'œuvre Opex, Point de service Granby",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-6331",
+    "description": "Services de recherche d'emploi spécialisé et gratuit pour personnes adultes judiciarisées * recherche d'emploi : curriculum vitæ, lettre de présentation, entrevue * visites promotionnelles dans les en ... [Plus] | Clientèle : Personnes adultes judiciarisées | Âges : 18 an(s) et plus",
+    "website": "http://opexemploi.com",
+    "address": "96 Rue Principale bureau 107-A, Granby, QC J2G 2T4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -27595,6 +28273,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Prévention du suicide * intervention auprès des personnes aux prises avec des idées suicidaires, des proches et des personnes endeuillées par le suicide ainsi qu'auprès des intervenants * intervention ... [Plus] | Clientèle : Personnes ayant des idées suicidaires et leurs proches * personnes endeuillées par le suicide * personnes avec une problématique de santé mentale * intervenants | Âges : 14 an(s) et plus",
     "website": "http://www.preventionsuicidecotenord.ca",
     "address": "750 Rue de Puyjalon, Baie-Comeau, QC G5C 1M8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-pr-vention-du-suicide--hy",
+    "name": "Centre de prévention du suicide Haute-Yamaska et Brome-Missisquoi",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Ligne d'intervention 450-375-4252",
+    "description": "Prévenir le suicide en intervenant auprès des personnes suicidaires, de leur entourage et des personnes endeuillées par suicide, tout en offrant des activités de sensibilisation et de formation * inte ... [Plus] | Clientèle : Bureau 450-375-6949",
+    "website": "https://cpshybm.ca/",
+    "address": "328 Rue Principale, Granby, QC J2G 2W4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -27687,6 +28378,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Soutien aux enfants et à leur famille en situation de vulnérabilité et désaffiliés du système de santé public pour assurer le mieux-être et le développement optimal des enfants, dans le respect de leu ... [Plus] | Clientèle : Enfants issus d'un milieu vulnérable * familles désaffiliées du système de santé public | Âges : 18 an(s) et moins",
     "website": "http://pediatriesocialequebec.org",
     "address": "2301 1re Av., Québec, QC G1L 3M9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-p-diatrie-sociale-de-l-hy",
+    "name": "Centre de pédiatrie sociale de la Haute-Yamaska",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Granby 450-361-6140",
+    "description": "Accompagnement des enfants et leur famille vivant en contexte de grande vulnérabilité * soutient dans l’atteinte de leur plein développement et le respect de leurs droits, en collaboration avec la com ... [Plus] | Clientèle : Waterloo 450-734-0700 | Âges : 18 an(s) et moins",
+    "website": "http://cpschy.org",
+    "address": "442 Rue St Jean, Granby, QC J2G 2H4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -29346,6 +30050,357 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-de-services-scolaire-du-v-hy",
+    "name": "Centre de services scolaire du Val-des-Cerfs",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Général 450-372-0221",
+    "description": "Regroupement de 37 écoles primaires, six écoles secondaires, deux centres d'éducation aux adultes, un point de service et deux centres de formation professionnelle sur le territoire Écoles primaires E ... [Plus] | Clientèle : Service à la clientèle 450-372-4636 | Âges : 4 an(s) et plus",
+    "website": "http://cssvdc.gouv.qc.ca",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-3",
+    "name": "Centre de services scolaire du Val-des-Cerfs, Centre régional intégré de formation",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-8544",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Jeunes et adultes | Âges : 16 an(s) et plus",
+    "website": "http://crif.cssvdc.gouv.qc.ca",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-25",
+    "name": "Centre de services scolaire du Val-des-Cerfs, Pavillon Saint-Bernardin, École de l'Orée-des-Cantons",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-2696",
+    "description": "Éducation primaire (2e et 3e cycles) * services éducatifs primaires et classe Horizon (Difficulté grave d'apprentissage) * service de garde pour les écoles Saint-Bernardin et Notre-Dame | Clientèle : Jeunes de niveaux primaires (3e, 4e, 5e et 6e année) | Âges : 4 an(s) - 13 an(s)",
+    "website": "http://www.oree-des-cantons.csvdc.qc.ca/",
+    "address": "50 Rue Young, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-26",
+    "name": "Centre de services scolaire du Val-des-Cerfs, Pavillon Saint-Eugène, École du Phénix",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-1155",
+    "description": "Éducation primaire (2e et 3e cycles). * services éducatifs * classes-ressources * service de garde | Clientèle : Jeunes de niveaux primaire (3e, 4e, 5e et 6e année) et classes-ressources | Âges : 8 an(s) - 12 an(s)",
+    "website": "http://phenix.csvdc.qc.ca/",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-27",
+    "name": "Centre de services scolaire du Val-des-Cerfs, Pavillon Saint-Luc, École de l'Étincelle",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-4260 poste 2",
+    "description": "Éducation primaire (2e et 3e cycles) * services éducatifs * 3 classes en adaptation scolaire (les classes accueillent des élèves de tout le territoire de la CSVDC) * service de garde au pavillon Saint ... [Plus] | Clientèle : Jeunes de niveau primaire (3e, 4e, 5e, 6e année) | Âges : 4 an(s) - 13 an(s)",
+    "website": "http://etincelle.csvdc.qc.ca/",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-2",
+    "name": "Centre de services scolaire du Val-des-Cerfs, Services d'accueil, de référence, de conseil et d'accompagnement",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-8544",
+    "description": "Accueil, référence, conseil et accompagnement, démarche d'orientation et suivi en formation pour les adultes sans diplôme afin de les aider à déterminer leur projet de vie * accompagnement à travers l ... [Plus] | Clientèle : Adultes sans diplôme * adultes qui ne fréquentent pas un établissement d'enseignement * adultes intéressés par la formation professionnelle ou l'éducation des adultes offerte dans un Centre de services scolaire | Âges : 16 an(s) et plus",
+    "website": "http://crif.cssvdc.gouv.qc.ca/services/sarca",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-4",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École Ave Maria",
+    "category": "food",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-7925",
+    "description": "Éducation préscolaire et primaire. * services éducatifs * garderie * repas chauds | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 4 an(s) - 13 an(s)",
+    "website": "http://www.ave-maria.csvdc.qc.ca/",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-5",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École Centrale",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joachim-de-Shefford",
+    "province": "QC",
+    "phone": "450-539-1816",
+    "description": "Éducation préscolaire et primaire * services éducatifs avec volet international * service de garde | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 4 an(s) - 11 an(s)",
+    "website": "http://www.centrale.csvdc.qc.ca",
+    "address": "682 Rue Principale, Saint-Joachim-de-Shefford, QC J0E 2G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-13",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École Eurêka",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-9079",
+    "description": "Éducation préscolaire et primaire * services éducatifs * service de garde | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 5 an(s) - 12 an(s)",
+    "website": "http://www.eureka.csvdc.qc.ca",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-14",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École Joseph-Poitevin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-3804",
+    "description": "Éducation préscolaire et primaire. * services éducatifs * service de garde | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 4 an(s) - 13 an(s)",
+    "website": "http://www.j-poitevin.csvdc.qc.ca",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-15",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École Saint-André",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-8419",
+    "description": "Éducation préscolaire et primaire. * services éducatifs * service de garde | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 4 an(s) - 13 an(s)",
+    "website": "http://www.st-andre.csvdc.qc.ca",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-16",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École Saint-Bernard",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-5655",
+    "description": "Éducation préscolaire et primaire * services éducatifs * service de garde | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 4 an(s) - 13 an(s)",
+    "website": "http://www.st-bernard.csvdc.qc.ca/",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-19",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École Saint-Jean",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-7290",
+    "description": "Éducation préscolaire et primaire. * services éducatifs * service de garde * classe en besoin spécifique | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 5 an(s) - 12 an(s)",
+    "website": "http://www.st-jean.csvdc.qc.ca/",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-20",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École Saint-Joseph",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-7767",
+    "description": "Éducation primaire * services éducatifs * service de garde | Clientèle : Jeunes de niveau primaire | Âges : 4 an(s) - 13 an(s)",
+    "website": "http://www.st-joseph.csvdc.qc.ca",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-17",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École Sainte-Cécile",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Cécile-de-Milton",
+    "province": "QC",
+    "phone": "450-378-2221",
+    "description": "Éducation préscolaire et primaire. * services éducatifs * service de garde | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 4 an(s) - 13 an(s)",
+    "website": "http://www.ste-cecile.csvdc.qc.ca",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-18",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École Sainte-Famille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-9330",
+    "description": "Éducation préscolaire et primaire. * services éducatifs * service de garde | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 5 an(s) - 13 an(s)",
+    "website": "http://www.ste-famille.csvdc.qc.ca",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-10",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École de Roxton Pond",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Roxton Pond",
+    "province": "QC",
+    "phone": "450-372-2723",
+    "description": "Éducation préscolaire et primaire. * orthopédagogie * psychoéducation * psychologie * orthophonie * technicienne en éducation spécialisée * préposées aux élèves handicapés * service de garde * animati ... [Plus] | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 4 an(s) - 13 an(s)",
+    "website": "http://www.roxtonpond.csvdc.qc.ca/",
+    "address": "676 Av. du Lac, Roxton Pond, QC J0E 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-7",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École de l'Assomption",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-1316",
+    "description": "Éducation préscolaire et primaire. * services éducatifs * garderie * cafétéria | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 4 an(s) - 13 an(s)",
+    "website": "http://www.assomption.csvdc.qc.ca/",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-9",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École de l'Orée-des-Cantons",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-2696",
+    "description": "Éducation préscolaire et primaire (1er cycle) * services éducatifs * service de garde au pavillon Saint-Bernardin | Clientèle : Jeunes de niveaux préscolaire et primaire (1ère et 2e année) | Âges : 5 an(s) - 8 an(s)",
+    "website": "http://oree-des-cantons.csvdc.qc.ca/",
+    "address": "50 Rue Young, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-8",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École de l'Étincelle",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-4260",
+    "description": "Éducation préscolaire et primaire (1er cycle). * services éducatifs * service de garde | Clientèle : Jeunes de niveaux préscolaire et primaire (1re et 2e année) | Âges : 5 an(s) - 8 an(s)",
+    "website": "http://etincelle.csvdc.qc.ca/",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-6",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École de la Moisson-d'Or",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Alphonse-de-Granby",
+    "province": "QC",
+    "phone": "450-375-4701",
+    "description": "Éducation préscolaire et primaire * services éducatifs | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 4 an(s) - 13 an(s)",
+    "website": "http://www.moisson-dor.csvdc.qc.ca",
+    "address": "309 Rue Principale, Saint-Alphonse-de-Granby, QC J0E 2A0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-11",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École des Bâtisseurs",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-4417",
+    "description": "Éducation préscolaire et primaire * services éducatifs * service de garde | Clientèle : Jeunes de niveau préscolaire et primaire | Âges : 5 an(s) - 12 an(s)",
+    "website": "http://batisseurs.cssvdc.gouv.qc.ca/",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-12",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École du Phénix",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-1155",
+    "description": "Éducation préscolaire et primaire (1er cycle) * services éducatifs * service de garde * 2 classes spécialisées ESI Événements/activités : * Campagne de financement, vente d'agrumes (annuelle), mois d' ... [Plus] | Clientèle : Jeunes de niveaux préscolaire et primaire (1re et 2e année) | Âges : 4 an(s) - 13 an(s)",
+    "website": "http://phenix.csvdc.qc.ca/",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-22",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École secondaire Joseph-Hermas-Leclerc",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-9981",
+    "description": "Enseignement secondaire (2e cycle). Instruire, qualifier et socialiser. * cours académiques * services éducatifs * adaptation scolaire Événements/activités : * Portes Ouvertes (annuelles), mois d'octo ... [Plus] | Clientèle : Jeunes de niveau secondaire (3e, 4e et 5e) | Âges : 12 an(s) - 18 an(s)",
+    "website": "http://www.jhl.csvdc.qc.ca",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-24",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École secondaire Wilfrid-Léger",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-0910",
+    "description": "Éducation secondaire. * services éducatifs * bibliothèque * cafétéria * animation * service social et autres | Clientèle : Jeunes de niveau secondaire | Âges : 12 an(s) - 18 an(s)",
+    "website": "http://www.wl.csvdc.qc.ca",
+    "address": "185 Rue Lewis O, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-21",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École secondaire de la Haute-Ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-5454",
+    "description": "Éducation secondaire. * services éducatifs | Clientèle : Jeunes de niveau secondaire | Âges : 12 an(s) - 18 an(s)",
+    "website": "http://www.hauteville.csvdc.qc.ca",
+    "address": "55 Rue Court, Granby, QC J2G 9N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-v-hy-23",
+    "name": "Centre de services scolaire du Val-des-Cerfs, École secondaire l'Envolée",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-7536",
+    "description": "Éducation secondaire (1er cycle) * services éducatifs * midis-conférences | Clientèle : Jeunes de niveau secondaire (1er et 2e) | Âges : 12 an(s) - 18 an(s)",
+    "website": "http://www.lenvolee.csvdc.qc.ca",
+    "address": "549 Rue Fournier, Granby, QC J2J 2K5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-de-stimulation-l-intercom-ca",
     "name": "Centre de stimulation l'Intercom",
     "category": "family",
@@ -30788,6 +31843,148 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-int-gr-de-sant-et-de-serv-hy",
+    "name": "Centre intégré de santé et de services sociaux de la Montérégie-Ouest, Centre de réadaptation en déficience intellectuelle et en troubles envahissants du développement de la Montérégie-Est",
+    "category": "health",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-0437",
+    "description": "Services aux personnes présentant une déficience intellectuelle ou un trouble envahissant du développement (TED) incluant l'autisme * soutien à l'entourage * soutien à la personne (enfant, adolescent, ... [Plus] | Clientèle : Enfants et adultes présentant une déficience intellectuelle ou un trouble envahissant du développement (TED), incluant l'autisme",
+    "website": "http://www.santemonteregie.qc.ca/ouest",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-hy-2",
+    "name": "Centre intégré de santé et de services sociaux de la Montérégie-Ouest, Centre de réadaptation en dépendance Le Virage",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-0022",
+    "description": "Service de réadaptation aux personnes désirant modifier leur comportement à l'égard de la consommation d'alcool, de drogues, de médicaments, du jeu excessif et de l'utilisation problématique d'Interne ... [Plus] | Clientèle : Adolescents et adultes ayant un problème de consommation (alcool, drogues, médicaments), de jeu excessif ou d'utilisation problématique d'Internet (jeux vidéos et réseaux sociaux) ainsi que leurs proches",
+    "website": "http://santemonteregie.qc.ca/services/dependances",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-universitaire-de-s-hy-4",
+    "name": "Centre intégré universitaire de santé et de services sociaux de l'Estrie - Centre hospitalier universitaire de Sherbrooke, CLSC Notre-Dame",
+    "category": "health",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-1442 poste 66229",
+    "description": "Services sociaux pour la clientèle enfance-jeunesse, santé scolaire, santé publique et l'action communautaire. Inscription à la liste d’attente pour avoir accès à un médecin de famille http://gamf.gou ... [Plus]",
+    "website": "http://www.santeestrie.qc.ca",
+    "address": "300 Rue King E, Sherbrooke, QC J1G 1B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-universitaire-de-s-hy-5",
+    "name": "Centre intégré universitaire de santé et de services sociaux de l'Estrie - Centre hospitalier universitaire de Sherbrooke, CLSC Waterloo",
+    "category": "health",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-375-1691",
+    "description": "Offre, en première ligne, à la population du territoire qu'il dessert, des services de santé et des services sociaux courants * soins et services généraux de santé * prélèvements * consultation d'une ... [Plus] | Clientèle : Guichet d'inscription à un médecin de famille 450-375-1442 poste 66288",
+    "website": "http://www.santeestrie.qc.ca",
+    "address": "300 Rue King E, Sherbrooke, QC J1G 1B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-universitaire-de-s-hy-7",
+    "name": "Centre intégré universitaire de santé et de services sociaux de l'Estrie - Centre hospitalier universitaire de Sherbrooke, CLSC Yvan-Duquette",
+    "category": "health",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-1442",
+    "description": "Services de soutien à domicile, clinique jeunesse, clinique diabète, clinique de soins et vaccination. Clinique jeunesse (12-25 ans) * santé sexuelle * grossesse * infection transmise sexuellement ou ... [Plus]",
+    "website": "http://www.santeestrie.qc.ca",
+    "address": "300 Rue King E, Sherbrooke, QC J1G 1B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-universitaire-de-s-hy-6",
+    "name": "Centre intégré universitaire de santé et de services sociaux de l'Estrie - Centre hospitalier universitaire de Sherbrooke, CLSC Yvan-Duquette, Clinique d'accès de Granby",
+    "category": "health",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-1442 poste 62571",
+    "description": "Clinique d'accès qui accueille la clientèle AVEC rendez-vous seulement ou sur référence d'un médecin de l'urgence de l'Hôpital de Granby * renouvellement de prescription * urgence mineure (mal de gorg ... [Plus]",
+    "website": "http://sante.gouv.qc.ca/repertoire-ressources/recherche/ressource/?nofiche=806344&ch_type%5B2%5D=1801%2C1802&bt_rechType=&ch_code=J2L2K3&ch_rayon=3",
+    "address": "300 Rue King E, Sherbrooke, QC J1G 1B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-universitaire-de-s-hy-3",
+    "name": "Centre intégré universitaire de santé et de services sociaux de l'Estrie - Centre hospitalier universitaire de Sherbrooke, CLSC de Saint-Joseph",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-1442 poste 66149",
+    "description": "Services dédiés à la petite enfance (0 à 5 ans inclusivement). * clinique du nourrisson * allaitement maternel * clinique prénatale * congé précoce * halte-garderie * services psychosociaux * SIPPE (s ... [Plus]",
+    "website": "http://www.santeestrie.qc.ca",
+    "address": "300 Rue King E, Sherbrooke, QC J1G 1B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-universitaire-de-s-hy-2",
+    "name": "Centre intégré universitaire de santé et de services sociaux de l'Estrie - Centre hospitalier universitaire de Sherbrooke, Centre Providence",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Réception 450-375-8000",
+    "description": "Desservir la population en fonction de ses besoins en santé mentale et services sociaux * évaluation et traitement de la clientèle psychiatrique * clinique externe (adultes et enfants) * hôpital de jo ... [Plus] | Clientèle : Toute personne ayant besoin de services psychiatriques, de santé mentale ou de services sociaux",
+    "website": "http://www.santeestrie.qc.ca",
+    "address": "300 Rue King E, Sherbrooke, QC J1G 1B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-universitaire-de-s-hy",
+    "name": "Centre intégré universitaire de santé et de services sociaux de l'Estrie - Centre hospitalier universitaire de Sherbrooke, Centre de réadaptation en dépendance de Granby",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-0022",
+    "description": "Services spécialisés de réadaptation et de réinsertion sociale pour jeunes et adultes aux prises avec une problématique de dépendance à l’alcool, aux drogues, aux jeux de hasard et d’argent ou liée à ... [Plus] | Clientèle : Adolescents, adultes et aînés abusant ou dépendant de substances psychoactives (alcool, drogues, médicaments)",
+    "website": "http://www.santeestrie.qc.ca",
+    "address": "300 Rue King E, Sherbrooke, QC J1G 1B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-universitaire-de-s-hy-8",
+    "name": "Centre intégré universitaire de santé et de services sociaux de l'Estrie - Centre hospitalier universitaire de Sherbrooke, Direction de la protection de la jeunesse - Point de service - Granby",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-770-8404",
+    "description": "Protection sociale des enfants et des adolescents * protection de la jeunesse, adoption * ressources d'hébergement en milieu de réadaptation et en milieu familial * loi sur le système de justice pénal ... [Plus] | Âges : 18 an(s) et moins",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-universitaire-de-s-hy-9",
+    "name": "Centre intégré universitaire de santé et de services sociaux de l'Estrie - Centre hospitalier universitaire de Sherbrooke, Hôpital de Granby",
+    "category": "health",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-8000",
+    "description": "Maintenir et améliorer l'état de santé de la population, prévenir la maladie et promouvoir la santé. * services hospitaliers médicaux généraux et spécialisés * services sociaux généraux et spécialisés ... [Plus] | Clientèle : Personnes ayant des besoins en services de santé ou services sociaux",
+    "website": "http://www.santeestrie.qc.ca",
+    "address": "300 Rue King E, Sherbrooke, QC J1G 1B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-int-gr-universitaire-de-s-cap",
     "name": "Centre intégré universitaire de santé et de services sociaux de la Capitale-Nationale",
     "category": "health",
@@ -31553,6 +32750,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h30. Information et orientation juridique sans RV."
   },
   {
+    "id": "centre-l-envol-e-hy",
+    "name": "Centre l'envolée",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Shefford",
+    "province": "QC",
+    "phone": "",
+    "description": "Centre de traitement des dépendances pour hommes * thérapie avec hébergement et services résidentiels | Clientèle : Hommes ayant une problématique de drogue ou d'alcool | Âges : 18 an(s) et plus",
+    "website": "http://centrelenvolee.com",
+    "address": "350 Chem. Ostiguy, Shefford, QC J2M 2A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-la-croisee-rep",
     "name": "Centre la Croisée",
     "category": "social",
@@ -32039,6 +33249,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-hy-3",
+    "name": "Cercles de Fermières du Québec, Cercle Saint-Eugène-de-Granby, Fédération 17 - Montérégie-Est",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-525-8096",
+    "description": "Association vouée aux intérêts des femmes * développement et implication socioéconomique, promotion de la famille * transmission du patrimoine culturel et artisanal * briser l'isolement de la femme * ... [Plus] | Clientèle : Femmes et filles | Âges : 14 an(s) et plus",
+    "address": "Montérégie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-hy-2",
+    "name": "Cercles de Fermières du Québec, Cercle Sainte-Trinité, Fédération 17 - Montérégie-Est",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Résidence 450-770-2088",
+    "description": "Amélioration des conditions de vie des femmes et de la famille * transmission du patrimoine culturel et artisanal * ateliers d'artisanat * tissage * broderie * tricot à la broche * tricot au crochet * ... [Plus] | Clientèle : Femmes et filles | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca/",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "cercles-de-fermi-res-du-qu-bec-c-cap",
     "name": "Cercles de Fermières du Québec, Cercle de Fermières Bourg-Royal, Fédération 11 Québec Est / Charlevoix",
     "category": "family",
@@ -32338,6 +33573,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-hy",
+    "name": "Cercles de Fermières du Québec, Cercle de Roxton Pond, Fédération 17 - Montérégie-Est",
+    "category": "family",
+    "subcategory": "",
+    "city": "Roxton Pond",
+    "province": "QC",
+    "phone": "450-372-0578",
+    "description": "Amélioration des conditions de vie des femmes et des familles * transmission du patrimoine artisanal et culturel * ateliers avec 14 métiers à tisser * réunions mensuelles * cafés-rencontres hebdomadai ... [Plus] | Clientèle : Femmes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "Roxton Pond, QC J0E, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "cercles-de-fermi-res-du-qu-bec-c-ca-3",
     "name": "Cercles de Fermières du Québec, Cercle des Fermières Christ-Roi, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
     "category": "family",
@@ -32622,6 +33870,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "cercles-de-fermi-res-du-qu-bec-s-hy",
+    "name": "Cercles de Fermières du Québec, Sainte-Famille de Granby, Fédération 17 - Montérégie-Est",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-991-3443",
+    "description": "Association vouée aux intérêts des femmes * développement et implication socioéconomique, maintien des traditions * artisanat * tissage * couture * tricot * broderie * courtepointe * dons d'articles d ... [Plus] | Clientèle : Femmes * filles | Âges : 14 an(s) et plus",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "chambly-ville-mtg",
     "name": "Chambly - Ville",
     "category": "social",
@@ -32697,6 +33957,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Développement socioéconomique des 11 municipalités de la MRC de la Nouvelle-Beauce * activités de réseautage et événements | Clientèle : Commerçants * entrepreneurs * industriels * professionnels * travailleurs autonomes * entreprises * entreprises de services * commerces * organismes | Âges : 18 an(s) et plus",
     "website": "http://www.ccinb.ca",
     "address": "280 Bd Vachon N bureau 315, Sainte-Marie, QC G6E 0H2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chambre-de-commerce-et-de-l-indu-hy",
+    "name": "Chambre de commerce et de l'industrie Haute-Yamaska",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-6100",
+    "description": "Stimulation de la prospérité des entreprises et le développement socioéconomique * valorisation de la culture entrepreneuriale * consolidation du réseau de contacts des membres * formation * référence ... [Plus] | Clientèle : Gens d'affaires et entreprises",
+    "website": "http://www.ccihy.com",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -32934,6 +34207,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "chevaliers-de-colomb-de-granby-c-hy",
+    "name": "Chevaliers de Colomb de Granby, conseil 9842",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-994-9842",
+    "description": "Écoute des besoins de la paroisse, de l'Église et de la communauté * aide morale et financière aux personnes et organismes dans le besoin Événements/activités : * Bingo, tous les samedis, 12 h 30-15 h ... [Plus] | Âges : 18 an(s) et plus",
+    "address": "620 Rue Dufferin, Granby, QC J2H 0Z2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "chevaliers-de-colomb-de-lauzon-c-ca",
     "name": "Chevaliers de Colomb de Lauzon, conseil 10650",
     "category": "social",
@@ -33045,6 +34330,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Mouvement catholique laïque et masculin assurant dans sa paroisse, la promotion d'œuvres éducatives, charitables, religieuses et sociales * aide aux personnes et familles à faible revenu * paniers de ... [Plus] | Clientèle : Personnes et familles à faible revenu * aînés * organismes communautaires",
     "website": "http://www.chevaliersdecolombst-emile.org",
     "address": "2200 Rue de la Faune, Québec, QC G3E 1K6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-de-waterloo-hy",
+    "name": "Chevaliers de Colomb de Waterloo",
+    "category": "health",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-372-0238",
+    "description": "Porter assistance aux personnes démunies, handicapées, aux organismes communautaires et aux paroisses * clinique de sang * aide financière * promouvoir la catéchèse Événements/activités : * Guignolée, ... [Plus] | Clientèle : Paroisses et personnes dans le besoin",
+    "website": "http://chevaliersdecolomb.com",
+    "address": "5005 Rue Foster, Waterloo, QC J0E 2N0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -33411,6 +34709,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "chevaliers-de-colomb-conseil-de--hy",
+    "name": "Chevaliers de Colomb, conseil de Granby no 1093",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-1093",
+    "description": "Soutien fraternel des membres * aide à la communauté et aux personnes démunies * aide aux organismes communautaires * œuvres de jeunesse * aide aux enfants et familles dans le besoin | Clientèle : Membres, enfants, familles et personnes démunies",
+    "address": "620 Rue Dufferin, Granby, QC J2H 0Z2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "tr-garde-chez-annie",
     "name": "Chez Annie",
     "category": "family",
@@ -33640,6 +34950,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.choeurquibat.ca",
     "address": "479, boulevard des Hautes-Plaines, Gatineau, Outaouais, QC, J8Z 2H8",
     "hours": "répétition: septembre à juin, mardi 19h00 à 21?h?30, samedis chantants: un samedi par mois, 9?h?30 à 15?h?30"
+  },
+  {
+    "id": "choeur-classique-de-l-estrie-hy",
+    "name": "Choeur classique de l'Estrie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-6395",
+    "description": "Promotion et interpértation d'un répertoire choral classique de qualité accessible à tous * pratiques Événements/activités : * 2 concerts par année | Âges : 18 an(s) et plus",
+    "website": "http://www.choeurclassiquedelestrie.org",
+    "address": "Rue de l'Estrie, Granby, QC J0E, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "choeur-de-l-amiti-de-granby-le-hy",
+    "name": "Choeur de l'amitié de Granby (Le)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Cellulaire 450-531-2516",
+    "description": "Promotion du chant choral * divertissements et loisirs pour les membres | Âges : 16 an(s) et plus",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "nl-family-nl",
@@ -35248,6 +36583,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "distribution alimentaire à Montréal: mercredi 18h00 à 19h30, distribution alimentaire à Longueuil: mercredi 13h00 à 16h00, horaire de fêtes: fermés du 25 décembre au 7 janvier"
   },
   {
+    "id": "coeurs-vaillants-de-saint-joachi-hy",
+    "name": "Coeurs vaillants de Saint-Joachim-de-Shefford (Les)",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Joachim-de-Shefford",
+    "province": "QC",
+    "phone": "Résidence 450-204-2645",
+    "description": "Divertissement et amusement pour les aînés et les plus jeunes * danse en ligne * organisation de soirées thématiques * table de billard * cuisine collective, thématique * cours selon la demande * inte ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "http://www.st-joachim.ca/loisirs/associations/coeurs-vaillants/",
+    "address": "Saint-Joachim-de-Shefford, QC J0E 2G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "collaboration-sant-international-cap",
     "name": "Collaboration santé internationale",
     "category": "health",
@@ -35375,6 +36723,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Promotion de l'alphabétisation et recrutement de bénévoles qui offrent des activités d'alphabétisation, en complémentarité avec les ressources du milieu * animation et formation * tutorat individuel e ... [Plus] | Clientèle : Étudiants * immigrants * adultes désirant améliorer leur capacité de lecture, d'écriture et de calcul * enfants * aînés",
     "website": "http://www.collegefrontiere.ca/Programmes/Par-Lieu/Quebec/Quebec-City",
     "address": "2305 Rue de l'Université bureau 2222, Québec, QC G1V 0B3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coll-ge-mont-sacr-coeur-hy",
+    "name": "Collège Mont-Sacré-Coeur",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-6882",
+    "description": "École privée de formation générale au secondaire * aide à l'élève * orientation * pastorale | Clientèle : Jeunes de niveau secondaire | Âges : 12 an(s) - 16 an(s)",
+    "website": "https://www.college-msc.qc.ca/",
+    "address": "210 Rue Denison E, Granby, QC J2H 0R7, Canada",
     "hours": "Voir site web"
   },
   {
@@ -36294,6 +37655,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "comit-des-loisirs-de-warden-hy",
+    "name": "Comité des loisirs de Warden",
+    "category": "social",
+    "subcategory": "",
+    "city": "Warden",
+    "province": "QC",
+    "phone": "Résidence 450-539-1349",
+    "description": "Activités et équipements en loisirs selon les besoins | Clientèle : Population",
+    "address": "Warden, QC J0E, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "comit-des-loisirs-de-la-p-tite-c-ca",
     "name": "Comité des loisirs de la p'tite école",
     "category": "social",
@@ -36432,6 +37805,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Promotion et protection des droits des usagers recevant des services en santé mentale du CIUSSS de la Capitale-Nationale * défense des droits et intérêts des usagers * information relative aux droits ... [Plus] | Âges : 18 an(s) et plus",
     "website": "http://www.ciusss-capitalenationale.gouv.qc.ca/a-propos/cucr",
     "address": "2525 Chem. de la Canardière, Québec, QC G1J 2G3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-de-la-haute-ya-hy",
+    "name": "Comité des usagers de la Haute-Yamaska",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-8000 poste 62066",
+    "description": "Promotion et défense des droits et intérêts des usagers afin de contribuer au maintien et à l'amélioration de la qualité des services et des conditions de vie de la clientèle * renseignements sur les ... [Plus]",
+    "website": "http://www.santeestrie.qc.ca/ciusss/conseils-comites/comite-des-usagers-et-des-residents-ciusss-de-lestrie-chus",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -36693,6 +38079,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "commerce-tourisme-granby-r-gion-hy",
+    "name": "Commerce tourisme Granby région",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-361-6065",
+    "description": "Promotion de l'industrie touristique et commerciale de la région * développement de l'offre touristique * développement commercial de la Ville de Granby et animation du centre-ville * gestion de l'acc ... [Plus] | Clientèle : Commerces de tous genres et entreprises touristiques",
+    "website": "http://www.tourismegranby.com",
+    "address": "50 Rue Dufferin, Granby, QC J2G 4W7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "commission-de-protection-du-terr-mtg",
     "name": "Commission De Protection Du Territoire Agricole Du Québec",
     "category": "employment",
@@ -36834,6 +38233,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Âges : 16 an(s) et plus",
     "website": "http://www.essb.qc.ca/school_center_websites_adult-ed.html",
     "address": "530 Av. Brochu, Sept-Îles, QC G4R 2X3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "commission-scolaire-eastern-town-hy-2",
+    "name": "Commission scolaire Eastern Townships, École primaire Parkview",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-6058",
+    "description": "Éducation en langue anglaise de niveaux préscolaire et primaire * services éducatifs en anglais | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 4 an(s) - 12 an(s)",
+    "website": "http://www.parkview.etsb.qc.ca",
+    "address": "50 Rue Lorne, Granby, QC J2G 4W2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "commission-scolaire-eastern-town-hy",
+    "name": "Commission scolaire Eastern Townships, École primaire de Waterloo",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-0162",
+    "description": "Éducation en langue anglaise de niveaux préscolaire et primaire * services éducatifs en anglais * compétitions interécole : basketball, volleyball, hockey-balle, badminton, cross-country, athlétisme É ... [Plus] | Clientèle : Jeunes de niveaux préscolaire et primaire | Âges : 4 an(s) - 13 an(s)",
+    "website": "http://waterloo.etsb.qc.ca/",
+    "address": "Waterloo, QC J0E, Canada",
     "hours": "Voir site web"
   },
   {
@@ -37024,6 +38449,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Première et plus ancienne troupe de théâtre communautaire de langue anglaise de la ville de Québec * production de pièces de théâtre et de comédies musicales | Clientèle : Grand public",
     "website": "http://quebecartcompany.com",
     "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "compagnie-de-th-tre-sauvageau-hy",
+    "name": "Compagnie de Théâtre Sauvageau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-3909",
+    "description": "Promotion du théâtre amateur * Découverte et formation de nouveaux talents * ateliers de formation * pièces de théâtre | Clientèle : 6 ans - 13 ans : cours de théâtre. Les adolescents et les adultes peuvent participer bénévolement à une production soit comme comédien(ne), à la réalisation des décors, costumes, maquillage, etc.",
+    "website": "http://www.theatresauvageau.com",
+    "address": "Waterloo, QC J0E, Canada",
     "hours": "Voir site web"
   },
   {
@@ -37361,6 +38799,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "comptoir-vestimentaire-familial--hy",
+    "name": "Comptoir vestimentaire familial de Waterloo",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "",
+    "description": "Il n'est possible de joindre le comptoir familial par téléphone. Présentez-vous sur les heures d'ouverture.",
+    "address": "Waterloo, QC J0E, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "comquat-mtg",
     "name": "Comquat",
     "category": "social",
@@ -37593,6 +39043,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "conseil-r-gional-ftq-haute-yamas-hy",
+    "name": "Conseil régional FTQ - Haute-Yamaska",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-3557",
+    "description": "Regroupement pour les travailleurs et les travailleuses de la FTQ de la Haute-Yamaska * Formation et information * prêt de locaux * services de bureau * documentation * formation * soutien | Clientèle : Travailleurs(euses) de la FTQ",
+    "address": "161 Rue Saint-Jacques, Granby, QC J2G 9A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "conseil-r-gional-de-l-environnem-cap",
     "name": "Conseil régional de l'environnement - Région de la Capitale-Nationale",
     "category": "social",
@@ -37812,6 +39274,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.cooprivesud.com",
     "address": "79, rue Leblanc ouest, Longueuil, Montérégie, QC, J4J 1K1",
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "coop-autonomie-chez-soi-hy",
+    "name": "Coop Autonomie Chez-soi",
+    "category": "food",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-1000",
+    "description": "Participer au maintien à domicile des personnes en perte d'autonomie. Aide domestique * entretien ménager et grand ménage * courses et commissions * préparation de repas * lessive et repassage * lavag ... [Plus] | Clientèle : Particulièrement les personnes en perte d'autonomie ayant besoin d'aide pour leur maintien à domicile | Âges : 18 an(s) et plus",
+    "website": "http://www.coopautonomie.com",
+    "address": "508 Rue Guy, Granby, QC J2G 7J8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "coop-des-1001-corv-es-la-out",
@@ -38832,6 +40307,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Regroupement d'organismes communautaires favorisant leur participation au développement socioéconomique du territoire * promotion et défense des intérêts de la population et des organismes communautai ... [Plus] | Clientèle : Organismes communautaires",
     "website": "http://www.cdclevis.ca",
     "address": "6150 Rue Saint-Georges, Lévis, QC G6V 4J8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-d-veloppement-com-hy",
+    "name": "Corporation de développement communautaire de la Haute-Yamaska",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-0151",
+    "description": "Regroupement d'organismes qui assure la participation active du mouvement populaire et communautaire au développement socioéconomique de la communauté * concertation * information * offre de formation ... [Plus] | Clientèle : Organismes communautaires",
+    "website": "http://www.cdchauteyamaska.ca/",
+    "address": "170 Rue Saint Antoine N, Granby, QC J2G 5G8, Canada",
     "hours": "Voir site web"
   },
   {
@@ -39872,6 +41360,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "croix-rouge-canadienne-section-h-hy",
+    "name": "Croix-Rouge canadienne, Section Haute-Yamaska",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Information générale pour devenir bénévole et pour les dons 514-258-0963",
+    "description": "Soutien aux personnes qui ont tout perdu lors d'un sinistre * hébergement, habillement et nourriture * hébergement d'urgence, habillement et nourriture pour une durée de 72 heures * cours de secourism ... [Plus]",
+    "website": "http://www.croixrouge.ca",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "croque-ton-quartier-cap",
     "name": "Croque ton quartier",
     "category": "social",
@@ -39973,6 +41474,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 16h00, vendredi 8h30 à 12h00"
   },
   {
+    "id": "cuisines-collectives-haute-yamas-hy",
+    "name": "Cuisines collectives Haute-Yamaska",
+    "category": "food",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-6616",
+    "description": "Accompagnement de groupes de personnes désirant cuisiner ensemble * service de garde gratuit pour les enfants de 0 à 5 ans * réunion mensuelle de planification : les participants se divisent les tâche ... [Plus] | Âges : 5 an(s) et plus",
+    "website": "http://www.cuisinescollectivesmonteregie.ca/",
+    "address": "170 Rue Saint Antoine N bureau 120, Granby, QC J2G 5G8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "culture-capitale-nationale-et-ch-cap",
     "name": "Culture Capitale-Nationale et Chaudière-Appalaches",
     "category": "employment",
@@ -40049,6 +41563,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cyber-cible.org",
     "address": "3131, 5e Avenue, Rawdon, Lanaudière, QC, J0K 1S0",
     "hours": "bureau: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00, centre de copies: mardi au jeudi 9h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "cyclones-de-granby-les-hy",
+    "name": "Cyclones de Granby (Les)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "",
+    "description": "Club de vélo cyclosportif offrant à ses membres des sorties sur route en pelotons par catégorie de façon encadrée et sécuritaire * maximum de 15 personnes par peloton * catégorie selon une référence d ... [Plus] | Clientèle : Les nouveaux membres doivent avoir une expérience minimale en vélo de route, posséder leur propre vélo et participer aux formations initiales à la fin avril (référence sur le site Internet) Casque obligatoire, guidon de triathlon interdit | Âges : 18 an(s) et plus",
+    "website": "http://www.cyclonesgranby.ca",
+    "address": "595 Mnt des Seigneurs #104, Granby, QC J2J 0A1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "cyclorizon-cap",
@@ -40347,6 +41874,44 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Établissement d'enseignement collégial offrant des programmes préuniversitaires et techniques à ses campus de Forestville et de Saguenay * location de locaux * formation en classe * formations en lign ... [Plus] | Clientèle : Variable selon les programmes et les domaines d'étude | Âges : 17 an(s) et plus",
     "website": "https://cchic.ca/forestville",
     "address": "Forestville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "c-gep-de-granby-hy",
+    "name": "Cégep de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-6614",
+    "description": "Maison d'enseignement supérieur * enseignement général et technique * formation continue et reconnaissance des acquis * services aux entreprises Frigo communautaire (voir dossier individuel) Événement ... [Plus]",
+    "website": "http://www.cegepgranby.qc.ca",
+    "address": "235 Rue Saint-Jacques, Granby, QC J2G 3N1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "c-gep-de-granby-clinique-sant-hy",
+    "name": "Cégep de Granby, Clinique santé",
+    "category": "health",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-6614 option 6",
+    "description": "Offerts avec prescription : * prélèvements sanguins * retraits d'agrafes et de sutures * pansements * injections * vaccination Offerts sans prescription: * lavage d'oreilles * suivi et dépistage pour ... [Plus] | Âges : 14 an(s) et plus",
+    "website": "http://www.cegepgranby.qc.ca/clinique",
+    "address": "235 Rue Saint-Jacques, Granby, QC J2G 3N1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "c-gep-de-granby-frigo-communauta-hy",
+    "name": "Cégep de Granby, Frigo communautaire",
+    "category": "food",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "",
+    "description": "Frigo de denrées et de repas qui peuvent être pris par tous les étudiants et membres du personnel. * situé au premier étage, bloc B * peut contenir entre 10 et 40 plats * le frigo est bleu",
+    "address": "235 Rue Saint-Jacques, Granby, QC J2G 3N1, Canada",
     "hours": "Voir site web"
   },
   {
@@ -40889,6 +42454,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Aide et soutien aux personnes diabétiques * objectif de regroupement des personnes atteintes par le diabète du type un ou du type deux * information et conférences * prêt de cassettes * chaîne télépho ... [Plus] | Clientèle : Personnes diabétiques",
     "website": "https://repertoire.lappui.org/fr/organisation/les-diabetiques-de-sept-iles",
     "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "diab-tiques-de-la-haute-yamaska--hy",
+    "name": "Diabétiques de la Haute-Yamaska (Les)",
+    "category": "health",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-1151",
+    "description": "Informations pour les personnes qui vivent avec le diabète et leur famille pour mieux comprendre leur état de santé, obtenir un meilleur contrôle et éviter les complications à court, moyen et long ter ... [Plus] | Clientèle : Personnes qui vivent avec le diabète et leur famille",
+    "website": "https://www.diabetiqueshy.ca/",
+    "address": "170 Rue Saint Antoine N #321, Granby, QC J2G 5G8, Canada",
     "hours": "Voir site web"
   },
   {
@@ -41569,6 +43147,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "divers-gens-hy",
+    "name": "Divers-Gens",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "579-488-8004",
+    "description": "Éducation, sensibilisation, démystification et entraide sur les enjeux LGBPTQIA2+ * soutien principalement aux jeunes 14-25 ans ainsi que leurs proches, en Haute-Yamaska et Brome-Missisquoi * outils p ... [Plus] | Clientèle : Personnes de la diversité d'orientation sexuelle et d'identité de genre et/ou en questionnement ainsi que leur entourage immédiat | Âges : 6 an(s) et plus",
+    "website": "http://www.diversgens.org",
+    "address": "170 Rue Saint-Antoine N bureau 213, Granby, QC J2G 5G8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "division-urgence-sociale-du-serv-lav",
     "name": "Division Urgence Sociale Du Service De Police De Laval",
     "category": "social",
@@ -41906,6 +43497,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "dynamique-des-handicap-s-de-gran-hy",
+    "name": "Dynamique des handicapés de Granby et région",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-0270",
+    "description": "Promotion des droits collectifs des personnes handicapées ou en situation de handicap * information et soutien pour l'accès au transport adapté * actions de promotion des droits collectifs * référence ... [Plus] | Clientèle : Toutes personnes handicapées et/ou en perte d'autonomie et leur famille",
+    "website": "http://www.dynamiquehandicape.ca",
+    "address": "170 Rue Saint-Antoine N bureau 106, Granby, QC J2G 5G8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "d-clic-action-pavillon-la-maison-lav",
     "name": "Déclic Action - Pavillon La Maisonnée",
     "category": "mentalHealth",
@@ -42123,6 +43727,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "d-veloppement-industriel-granby--hy",
+    "name": "Développement industriel Granby et région",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-2707",
+    "description": "Soutien à la mise en place des nouvelles entreprises industrielles dans la région * participation à la croissance de ces dernières par la suite * l'implantation des nouvelles entreprises ou à la reloc ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.granby-industriel.com",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "d-veloppement-conomique-de-la-vi-lav",
     "name": "Développement Économique De La Ville De Laval",
     "category": "employment",
@@ -42236,6 +43853,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Assume des responsabilités en : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres Fait partie de : * MRC Le ... [Plus] | Clientèle : Bibliothèque 418-351-1329",
     "website": "http://municipaliteeastbroughton.com",
     "address": "10e Avenue S, East Broughton, QC G0N 1H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "eau-vive-l-centre-de-formation-c-hy",
+    "name": "Eau Vive (L') - Centre de formation charismatique",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-1161",
+    "description": "Formation charismatique et catholique. * biblique * liturgique * spirituelle * écoute active",
+    "website": "http://www.centreleauvive.com",
+    "address": "11 Rue Saint-André E, Granby, QC J2G 8R8, Canada",
     "hours": "Voir site web"
   },
   {
@@ -42552,6 +44182,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Chant gospel et arts de la scène * accent mis sur la technique vocale spécifique au Gospel, l'interprétation, l'harmonie des voix et l'implication des choristes * spectacles * participation à des évén ... [Plus] | Âges : 18 an(s) et plus",
     "website": "http://www.echogospel.com",
     "address": "Saint-Jean-Chrysostome, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "ensemble-vocal-plus-hy",
+    "name": "Ensemble vocal plus",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-204-8035",
+    "description": "Activité de chorale et production de spectacles * techniques de respiration et vocales * initiation à la scène Événements/activités : concert de fin d'année en mai | Clientèle : Hommes, femmes et adolescents | Âges : 16 an(s) - 80 an(s)",
+    "website": "http://www.ensemblevocalplus.com",
+    "address": "279 Rue Principale, Granby, QC J2G 2W1, Canada",
     "hours": "Voir site web"
   },
   {
@@ -43000,6 +44643,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.entredeuxroues.org",
     "address": "124, rue Sainte-Marie, Gatineau, Outaouais, QC, J8Y 2B1",
     "hours": "lundi, mardi, jeudi 8h30 à 17h00, mercredi et vendredi 8h30 à 20h00"
+  },
+  {
+    "id": "entrepreneuriat-haute-yamaska-hy",
+    "name": "Entrepreneuriat Haute-Yamaska",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-2707",
+    "description": "Stimulation de l’entrepreneuriat local en accompagnant les entrepreneurs dans leur projet d'affaires, sur les plans techniques et financiers * validation d'un projet d'affaires * démarrage d'une entre ... [Plus]",
+    "website": "http://www.eh-y.ca",
+    "address": "1300 Bd Industriel, Granby, QC J2J 0E5, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "entreprise-de-formation-dimensio-cap",
@@ -43596,6 +45252,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "fadoq-club-fadoq-waterloo-hy",
+    "name": "FADOQ. Club FADOQ Waterloo",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-777-3480",
+    "description": "Soutien à l'épanouissement des personnes âgées * divertissement à la maison gériatrique Courville * prévention de l'isolement des personnes âgées * bingo * jeux de cartes * baseball-poche * pétanque a ... [Plus] | Âges : 50 an(s) et plus",
+    "address": "Ville de Waterloo, QC J0E, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-granby-hy",
+    "name": "FADOQ. Club Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-0886",
+    "description": "Activités sociales et récréatives * cours de danse variés * soirées de danse * soupers * VIACTIVE * billard, dard, baseball-poche, palet * voyages Accréditations/affiliations : FADOQ - région Richelie ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "http://granby.fadoqry.ca/",
+    "address": "95 boul, Granby, QC J2H 2R1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fadoq-club-les-pionniers-cn",
     "name": "FADOQ. Club Les Pionniers",
     "category": "social",
@@ -43631,6 +45312,31 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
     "website": "http://club.fadoq.ca/L080",
     "address": "Pintendre, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-roxton-pond-hy",
+    "name": "FADOQ. Club Roxton Pond",
+    "category": "social",
+    "subcategory": "",
+    "city": "Roxton Pond",
+    "province": "QC",
+    "phone": "450-372-0279",
+    "description": "Divertissement pour les personnes du troisième âge par toutes sortes d'activités sociales et récréatives * soirées de danse * baseball-poche * galets * babette * pétanque Accréditations/affiliations : ... [Plus] | Âges : 50 an(s) et plus",
+    "address": "Roxton Pond, QC J0E 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-saint-alphonse-de-gra-hy",
+    "name": "FADOQ. Club Saint-Alphonse-de-Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Alphonse-de-Granby",
+    "province": "QC",
+    "phone": "450-375-8740",
+    "description": "Divertissement pour les personnes âgées * activités récréatives * brunch * jeux de cartes * jeux de poches * pétanque et pétanque atout (intérieur) * galets Accréditations/affiliations : FADOQ - régio ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "http://www.fadoqry.ca/club?id=21",
+    "address": "Saint-Alphonse-de-Granby, QC J0E 2A0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -43670,6 +45376,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
     "website": "http://club.fadoq.ca/T075",
     "address": "Saint-Mathieu, QC J0L, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-sainte-c-cile-de-milt-hy",
+    "name": "FADOQ. Club Sainte-Cécile-de-Milton",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Cécile-de-Milton",
+    "province": "QC",
+    "phone": "450-361-2776",
+    "description": "Regroupement pour les gens de 50 ans et plus pour les amuser et les divertir * jeux de société * activités diverses Accréditations/affiliations : FADOQ - région Richelieu-Yamaska * Réseau FADOQ | Âges : 50 an(s) et plus",
+    "website": "http://www.fadoqry.ca/club?id=47",
+    "address": "Sainte-Cécile-de-Milton, QC J0E 2C0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -44051,6 +45770,56 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi au jeudi 9h00 à 15h00, lundi 9h00 à 15h00 mais fermé au public"
   },
   {
+    "id": "fabrique-de-la-paroisse-saint-al-hy",
+    "name": "Fabrique de la paroisse Saint-Alphonse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Alphonse-de-Granby",
+    "province": "QC",
+    "phone": "Presbytère 450-375-4602 Fabrique 450-375-4378",
+    "description": "Promotion de la foi chrétienne, service de culte et pastorale * baptême * confirmation * mariage * eucharistie * pardon * onction des malades * funérailles * éveil religieux * messe | Clientèle : Communauté chrétienne",
+    "address": "Saint-Alphonse-de-Granby, QC J0E 2A0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fabrique-de-la-paroisse-saint-be-hy",
+    "name": "Fabrique de la paroisse Saint-Bernardin de Waterloo",
+    "category": "family",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-1888 poste 230",
+    "description": "Promotion de la foi catholique * messes * éducation de la foi avec les enfants * fête de l'amour * service d'entraide \" Coup de Pouce\" (biens matériels offerts aux gens) * plusieurs autres services et ... [Plus] | Clientèle : Catholiques",
+    "website": "http://www.paroissestbernardin.com",
+    "address": "Waterloo, QC J0E, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fabrique-de-la-paroisse-saint-jo-hy",
+    "name": "Fabrique de la paroisse Saint-Joachim-de-Shefford",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joachim-de-Shefford",
+    "province": "QC",
+    "phone": "450-539-1888",
+    "description": "Promotion de la foi chrétienne. * service de culte et pastorale * comité de liturgie * location de salle Événements/activités : * Encan paroissial (annuel), 1er dimanche d'août, Alain Desrosiers (resp ... [Plus] | Clientèle : Tous les catholiques",
+    "website": "http://www.paroissestbernardin.com",
+    "address": "Saint-Joachim-de-Shefford, QC J0E 2G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fabrique-de-la-paroisse-sainte-c-hy",
+    "name": "Fabrique de la paroisse Sainte-Cécile-de-Milton",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Cécile-de-Milton",
+    "province": "QC",
+    "phone": "450-378-7144",
+    "description": "Promotion de la religion catholique romaine *service de culte *pastorale et office religieux Soutien des projets humanitaires et religieux * célébration eucharistique * catéchèse * prière * sacrements ... [Plus] | Clientèle : Paroissiens de Sainte-Cécile-de-Milton",
+    "address": "Sainte-Cécile-de-Milton, QC J0E 2C0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fabrique-de-la-paroisse-sainte-f-ca",
     "name": "Fabrique de la paroisse Sainte-Famille-de-Beauce - Communauté de l'Enfant-Jésus",
     "category": "mentalHealth",
@@ -44060,6 +45829,30 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-253-5355",
     "description": "Service d'aide alimentaire aux personnes à faible revenu offert par les Chevaliers de Colomb * dépannage alimentaire * bons d'achat à l'épicerie locale (sauf boissons alcoolisées, cigarettes et loteri ... [Plus] | Clientèle : Personnes à faible revenu",
     "address": "477 Rue Principale, Saint-Patrice-de-Beaurivage, QC G0S 1B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fabrique-de-la-paroisse-tr-s-sai-hy",
+    "name": "Fabrique de la paroisse Très-Sainte-Trinité",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-3389",
+    "description": "Promotion de la foi chrétienne et services aux paroissiens * pastorale paroissiale du baptême et du mariage * comité de liturgie * catéchèse initiatique * sacrements * eucharistie | Clientèle : Tous les catholiques",
+    "address": "de la, 15 CH Grande Ligne, Granby, QC J2J 0K7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fabrique-de-la-paroisse-de-saint-hy",
+    "name": "Fabrique de la paroisse de Sainte-Pudentienne",
+    "category": "social",
+    "subcategory": "",
+    "city": "Roxton Pond",
+    "province": "QC",
+    "phone": "450-372-5104",
+    "description": "Enseignement religieux * service de culte et pastorale * messe | Clientèle : Tous les catholiques",
+    "address": "Roxton Pond, QC J0E 1Z0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -44512,6 +46305,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "festival-international-de-la-cha-hy",
+    "name": "Festival international de la chanson de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-7555",
+    "description": "Événement de la chanson francophone d'ici et d'ailleurs * grand concours pour les artistes de la relève (auteurs-compositeurs-interprètes, groupes et interprètes) * spectacles extérieurs grand public ... [Plus]",
+    "website": "http://www.ficg.qc.ca",
+    "address": "de la, 15 CH Grande Ligne, Granby, QC J2J 0K7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fibromyalgie-laval-lav",
     "name": "Fibromyalgie Laval",
     "category": "social",
@@ -44650,6 +46456,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Trait d’union entre les services existants dans le réseau public (CLSC, cliniques médicales) et les organismes communautaires, pour améliorer la qualité de vie des aînés et briser leur isolement * ser ... [Plus] | Clientèle : Aînés * intervenants des milieux communautaires et de la santé",
     "website": "http://fondationages.org",
     "address": "155 Boulevard Charest E bureau 120, Québec, QC G1K 3G6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-alzheimer-granby-et-r--hy",
+    "name": "Fondation Alzheimer Granby et région",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-956-3356",
+    "description": "Aider à protéger les personnes atteintes de la maladie d’Alzheimer et à sécuriser davantage leur lieu de résidence en leur fournissant les équipements adéquats en matière de sécurité pour permettre à ... [Plus]",
+    "website": "http://www.fondation-alzheimer.ca/",
+    "address": "89 Rue Alexandra, Granby, QC J2G 2P4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -44818,6 +46637,44 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Aide aux personnes à faible revenu et services de maintien à domicile * visites à domicile * soins infirmiers auxiliaires | Clientèle : Aînés seuls * personnes à faible revenu et malades",
     "website": "http://www.gilleskegle.org",
     "address": "380 Rue du Pont, Québec, QC G1K 6M7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-g-rard-boss-hy",
+    "name": "Fondation Gérard-Bossé",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-991-6626",
+    "description": "Organisme philanthropique de charité qui vient en aide aux jeunes gens à faible revenu, en difficulté ou à risque de le devenir * aide par l'éducation ou la réinsertion sociale * soutien aux organisme ... [Plus] | Clientèle : 450-361-1656 | Âges : 15 an(s) - 35 an(s)",
+    "address": "Rue Gérard, Granby, QC J2H, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-hermas-hy",
+    "name": "Fondation Hermas",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-9981",
+    "description": "Bourses d'études au niveau de la formation professionnelle, collégiale et universitaire pour les étudiants à faible revenu | Clientèle : Élèves de 5e secondaire à l’école Joseph-Hermas-Leclerc * élèves dans le besoin | Âges : 17 an(s) - 25 an(s)",
+    "website": "http://www.jhl.csvdc.qc.ca",
+    "address": "1111 Rue Simonds S, Granby, QC J2G 9H7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-je-pars-du-bon-pied-hy",
+    "name": "Fondation Je pars du bon pied",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-531-5918",
+    "description": "Achat et distribution de bottes d'hiver, espadrilles neuves et ensembles de neiges neufs à des jeunes Granbyens, issus de milieux défavorisés, fréquentant école, organisme ou garderie/CPE à Granby Ach ... [Plus] | Clientèle : Jeunes Granbyens provenant de milieux défavorisés | Âges : 5 an(s) - 12 an(s)",
+    "website": "http://www.jeparsdubonpied.org",
+    "address": "160 Rue Principale bureau 301, Granby, QC J2G 2V6, Canada",
     "hours": "Voir site web"
   },
   {
@@ -45015,6 +46872,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "fondation-pierre-breton-hy",
+    "name": "Fondation Pierre Breton",
+    "category": "health",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-531-7008",
+    "description": "Déjeuners ou collation santé pour les enfants du secteur primaire issus de milieux défavorisés de la circonscription de Shefford afin d'augmenter leur capacité d'attention et de concentration à l'écol ... [Plus] | Clientèle : Élèves du primaire | Âges : 5 an(s) - 12 an(s)",
+    "address": "Rue Breton, Granby, QC J2G, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-pierre-jules-crevier-hy",
+    "name": "Fondation Pierre Jules Crevier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-1153",
+    "description": "Soutien aux aînés à demeurer à domicile * bourses et soutien pour les étudiants * transport d'accompagnement * formulaires gouvernementaux * commissaire à l'assermentation * programme PAIR : préventio ... [Plus] | Clientèle : Aînés * étudiants (bourses d'études) | Âges : 60 an(s) et plus",
+    "website": "http://www.fondationcrevier.ca",
+    "address": "116 Rue Principale, Granby, QC J2G 2V2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fondation-pour-les-a-n-s-de-l-ou-out",
     "name": "Fondation Pour Les Aînés De L'Outaouais",
     "category": "social",
@@ -45038,6 +46920,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Promotion de la philanthropie par la création de fonds de dotation et l'attribution d'aide financière Soutenir, pour toujours, la cause qui vous tient à cœur ! * encouragement aux individus, familles, ... [Plus] | Clientèle : Adultes * aide financière aux organismes à but non lucratif (OBNL) | Âges : 18 an(s) et plus",
     "website": "http://www.quebecphilanthrope.org",
     "address": "1040 Av. Belvédère local 100, Québec, QC G1S 3G3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-roger-talbot-hy",
+    "name": "Fondation Roger Talbot",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-2243",
+    "description": "Intégration des adultes vivant avec une déficience intellectuelle * soutien aux personnes à faible revenu * planification d'activités socioculturelles * vacances spécialisées avec séjour (été) * camps ... [Plus] | Clientèle : Population générale * personnes ayant une déficience intellectuelle d'âge adulte * personnes à faible revenu",
+    "website": "http://www.fondationrogertalbot.org",
+    "address": "107 Rue Principale, Granby, QC J2G 2T9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-roger-talbot-vestiaire-hy",
+    "name": "Fondation Roger Talbot, Vestiaire économique",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-2243",
+    "description": "Soutien aux personnes ayant une déficience intellectuelle ainsi qu'aux personnes vivant une situation de précarité * vacances spécialisées avec séjour (en juillet et août) * session de cours de cuisin ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.fondationrogertalbot.org",
+    "address": "107 Rue Principale, Granby, QC J2G 2T9, Canada",
     "hours": "Voir site web"
   },
   {
@@ -45183,6 +47091,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "fondation-de-soccer-jean-yves-ph-hy",
+    "name": "Fondation de soccer Jean-Yves Phaneuf",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-0914",
+    "description": "Soutien aux jeunes défavorisés voulant jouer au soccer et aux athlètes de niveau excellence. * bourses aux athlètes * paiement des frais d'inscription et de l'équipement pour les jeunes défavorisés Év ... [Plus] | Clientèle : Jeunes défavorisés voulant jouer au soccer",
+    "website": "http://www.fondationsoccer.com",
+    "address": "Parc Jean-Yves-Phaneuf, 515 Rue Fournier, Granby, QC J2J 1P4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fondation-des-sourds-du-qu-bec-cap",
     "name": "Fondation des Sourds du Québec",
     "category": "social",
@@ -45232,6 +47153,44 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Réponse aux besoins particuliers qui ne sont pas couverts par d'autres services, quand aucune autre ressource n'est disponible * aide aux enfants de familles à faible revenu qui sont dans l'incapacité ... [Plus] | Clientèle : Enfants de famille à faible revenu qui sont dans l'incapacité de satisfaire leurs besoins de base * location d'équipements pour personnes ayant des incapacités temporaire",
     "website": "http://www.cisssca.com/cisss/fondations/fondation-du-clsc-region-de-thetford/",
     "address": "17 Rue Notre Dame E, Thetford Mines, QC G6G 2J6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-du-centre-hospitalier--hy",
+    "name": "Fondation du Centre hospitalier de Granby",
+    "category": "health",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-8030",
+    "description": "Mobilisation de la communauté et soutien du CIUSSS de l'Estrie - CHUS et réseaux locaux de services Haute-Yamaska (Hôpital de Granby, CLSC, CHSLD) dans son engagement à améliorer la santé et le mieux- ... [Plus] | Clientèle : Population régionale",
+    "website": "http://www.fondationchg.org",
+    "address": "205 Bd Leclerc O, Granby, QC J2G 1T7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-du-coll-ge-mont-sacr-c-hy",
+    "name": "Fondation du Collège Mont-Sacré-Coeur de Granby",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-6882 poste 221",
+    "description": "Organisation d'activités dans le but d'amasser des fonds pour des bourses d'études aux enfants de la région * financement de projets propres à assurer l'excellence du Collège * projets de pointe * prê ... [Plus] | Clientèle : Étudiants | Âges : 12 an(s) - 17 an(s)",
+    "address": "210 Rue Denison E, Granby, QC J2H 0R7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-du-c-gep-de-granby-hy",
+    "name": "Fondation du Cégep de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-6614 poste 1125",
+    "description": "Fonds de dépannage pour les étudiants vivant une situation financière difficile * bourses variées aux étudiants (persévérance, excellence, réussite-sports, inspiration, etc) * bourses d'appui aux proj ... [Plus] | Clientèle : La communauté collégiale : principalement les personnes étudiantes et enseignantes",
+    "website": "https://fondationcegepgranby.ca/",
+    "address": "235 Rue Saint-Jacques, Granby, QC J2G 3N1, Canada",
     "hours": "Voir site web"
   },
   {
@@ -45309,6 +47268,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Aide aux jeunes en difficulté qui veulent reprendre pied afin qu'ils puissent développer un projet de vie porteur d'espoir et ainsi entrevoir un avenir où ils seront artisans à part entière de la soci ... [Plus] | Clientèle : Jeunes qui reçoivent ou qui ont reçu des services de la direction de la protection de la jeunesse. | Âges : 18 an(s) et moins",
     "website": "https://fondationpjq.com/",
     "address": "2915 Av. du Bourg-Royal, Québec, QC G1C 3S2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-pour-la-sauvegarde-des-hy",
+    "name": "Fondation pour la sauvegarde des écosystèmes du territoire de la Haute-Yamaska",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-994-3173",
+    "description": "Guidance et accompagnement des citoyens de la Haute-Yamaska, dont les propriétaires de milieux naturels, dans leur volonté commune de protection et de restauration des écosystèmes et de la biodiversit ... [Plus]",
+    "website": "http://www.fondationsethy.org",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -46427,6 +48399,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "gamblers-anonymes-granby-hy",
+    "name": "Gamblers anonymes, Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "514-484-6666",
+    "description": "Aide les gens qui désirent arrêter de jouer * thérapies de groupe * conférences * réunions | Clientèle : Tous ceux qui désirent arrêter de jouer",
+    "website": "http://www.gaquebec.org/",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "gamblers-anonymes-r-gions-de-la--cap",
     "name": "Gamblers anonymes, Régions de la Capitale-Nationale et de la Chaudière-Appalaches",
     "category": "social",
@@ -46773,6 +48758,58 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Soutien aux parents et proches pour le développement global des enfants et leur réussite scolaire * halte-garderie : éducative, multi-âge, motrice ou plein-air * joujouthèque tous âges : prêt de jeux, ... [Plus] | Clientèle : Parents et leurs enfants * grands-parents et proches impliqués dans le développement des enfants * aînés",
     "website": "http://www.grainsdesoleil.org",
     "address": "Chute-aux-Outardes, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "granby-multi-sports-hy",
+    "name": "Granby multi-sports",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-8350",
+    "description": "Activités physiques et sportives pour la population * gestion des équipements dédiés exclusivement aux sports et aux activités physiques * soutien aux organismes sportifs * animation de programmes d'a ... [Plus]",
+    "website": "https://granbymultisports.ca/",
+    "address": "601 Rue Léon-Harmel, Granby, QC J2G 3G6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "granby-h-tel-de-ville-hy",
+    "name": "Granby. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-8282",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque Paul-O.-Trépanier 450-776-8320",
+    "website": "http://www.granby.ca",
+    "address": "87 Rue Principale, Granby, QC J2G 2T8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "granby-h-tel-de-ville-service-de-hy",
+    "name": "Granby. Hôtel de ville, Service de police",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-3333",
+    "description": "Protection de la vie et de la propriété des citoyens, prévention de la criminalité * prévention du crime et des accidents routiers * protection publique",
+    "website": "http://www.ville.granby.qc.ca/fr/citoyen/nav/servicedepolice.html",
+    "address": "87 Rue Principale, Granby, QC J2G 2T8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "granby-h-tel-de-ville-transport--hy",
+    "name": "Granby. Hôtel de ville, Transport urbain Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Service de transport en commun offrant plusieurs circuits d'autobus dans les différents secteurs de la ville Carte des circuits d'autobus www.ville.granby.qc.ca/webconcepteurcontent63/000024200000/upl ... [Plus]",
+    "description": "Ville de Granby 450-776-8302 * Autobus Fleur de Lys 450-522-1834",
+    "website": "http://www.granby.ca/fr/transport-urbain-granby",
+    "address": "87 Rue Principale, Granby, QC J2G 2T8, Canada",
     "hours": "Voir site web"
   },
   {
@@ -47607,6 +49644,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "groupe-actions-solutions-pauvret-hy",
+    "name": "Groupe actions solutions pauvreté",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-0990",
+    "description": "Table de concertation intersectorielle ayant comme mandat de mettre en commun les forces de tous les partenaires dans la recherche d'actions et de solutions concrètes aux problèmes de pauvreté et d'ex ... [Plus] | Clientèle : Organismes",
+    "website": "http://www.gasph-y.net",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "groupe-d-accompagnement-jonathan-ca",
     "name": "Groupe d'accompagnement Jonathan",
     "category": "mentalHealth",
@@ -47771,6 +49821,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Fait connaître et protège la faune ailée * sensibilise la population à la découverte des oiseaux * excursions d'observation * recensements d'oiseaux | Clientèle : Personnes intéressées par l'ornithologie",
     "website": "http://www.gobe-qc.com",
     "address": "11600 Bd Lacroix, Saint-Georges, QC G5Y 1L2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-scout-georges-p-pin-de-gr-hy",
+    "name": "Groupe scout Georges-Pépin de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-522-8348",
+    "description": "Mouvement éducatif qui permet d'apprendre le respect de la nature, le respect de soi et des autres ainsi que le partage et l'entraide dans un environnement sécuritaire et amusant * scoutisme Événement ... [Plus] | Clientèle : Garçons et filles | Âges : 7 an(s) - 17 an(s)",
+    "website": "http://www.scoutgeorgespepin.org",
+    "address": "100 Rue Mountain, Granby, QC J2H 1T7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-scout-saint-joseph-de-gra-hy",
+    "name": "Groupe scout Saint-Joseph de Granby",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "",
+    "description": "Programme destiné à rendre les jeunes autonomes, responsables d'eux-mêmes et capables de jouer un rôle utile dans la société * développement d'une culture dans une perspective ouverte et respectueuse ... [Plus] | Clientèle : Adulte bénévole 18 ans et plus | Âges : 7 an(s) - 25 an(s)",
+    "website": "http://scoutsstjosephdegranby.ca",
+    "address": "96 Rue Langlois, Granby, QC J2G 6J7, Canada",
     "hours": "Voir site web"
   },
   {
@@ -47965,6 +50041,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.gymno.org/article/271-gymno-monteregie.html",
     "address": "2080, rue Bordas, Sainte-Julie, Montérégie, QC, J3E 2L5",
     "hours": "automne, hiver et printemps, dimanche 10h00 à 12h00"
+  },
+  {
+    "id": "g-n-ration-avenir-hy",
+    "name": "Génération Avenir",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "",
+    "description": "Établissement d'un réseau de contacts et d'échange entre jeunes gens d'affaires de Granby et de la région * conférences * ateliers * réseautage Événements et activités en collaboration avec la Chambre ... [Plus] | Clientèle : Jeunes gens d'affaires | Âges : 18 an(s) et plus",
+    "website": "http://www.generationavenir.qc.ca",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "generation-elles-drv",
@@ -48297,6 +50386,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "habitations-roxton-sur-le-lac-le-hy",
+    "name": "Habitations Roxton sur le lac (Les)",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Roxton Pond",
+    "province": "QC",
+    "phone": "579-420-1628",
+    "description": "Logements pour personnes âgées, retraitées et autonomes de 50 ans et plus | Clientèle : 50 ans et plus",
+    "address": "Roxton Pond, QC J0E 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "habitations-saint-christophe-les-lav",
     "name": "Habitations Saint-Christophe (Les)",
     "category": "social",
@@ -48437,6 +50538,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "harmonie-de-granby-hy",
+    "name": "Harmonie de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-405-9897",
+    "description": "Présentation de concerts pour toutes occasions * chapeaute l'Orchestre à vents de Granby, l'Harmonie-école, Musicado, Quintette de cuivres, Quatuor de saxophones et le Stage band * répétitions hebdoma ... [Plus] | Clientèle : Ensembles musicaux ouverts aux musiciens débutants (École de l'Harmonie), intermédiaires (Harmonie Relève) à expérimentés (Harmonie de Granby dites Sénior), 9 ans + ( Musicado) | Âges : 9 an(s) et plus",
+    "website": "http://www.harmoniegranby.org",
+    "address": "279 Rue Principale Local 100, Granby, QC J2G 2W1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "harmonie-de-loretteville-cap",
     "name": "Harmonie de Loretteville",
     "category": "social",
@@ -48511,6 +50625,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Groupe de musiciens instrumentistes * concerts de musique * organisation du festival Québec en Harmonies à Beauport * tournées canadiennes et européennes * promotion de la musique d'harmonie * service ... [Plus]",
     "website": "http://harmoniedescascades.ca",
     "address": "50 Av. des Cascades, Québec, QC G1E 2J7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "harmonie-jeunesse-granby-haute-y-hy",
+    "name": "Harmonie jeunesse Granby Haute-Yamaska",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450 372-6882",
+    "description": "Découvrir de jeunes musiciens talentueux et les aider à développer leurs talents tout en vivant une expérience de groupe. * prêt d'instruments * enseignement de la musique * services musicaux bénévole ... [Plus] | Âges : 10 an(s) et plus",
+    "website": "http://www.harmoniejeunesse.ca",
+    "address": "210 Rue Denison E, Granby, QC J2H 2R6, Canada",
     "hours": "Voir site web"
   },
   {
@@ -48739,6 +50866,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://hirondelle.qc.ca",
     "address": "4652, rue Jeanne-Mance, Montréal, QC H2V 4J4",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "hirondelles-de-granby-les-hy",
+    "name": "Hirondelles de Granby (Les)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-775-4489",
+    "description": "Activités sportives de gymnastique aux filles et aux garçons * participation à des compétitions en gymnastique artistique * cours * compétitions * fête d'enfant | Âges : 2 an(s) - 25 an(s)",
+    "website": "http://www.hirondellesgymnastique.com/",
+    "address": "210 Rue Denison E, Granby, QC J2G 8E3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "hockey-charlesbourg-cap",
@@ -50385,6 +52525,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi à jeudi 9h00 à 17h30"
   },
   {
+    "id": "impact-de-rue-haute-yamaska-hy",
+    "name": "Impact de rue Haute-Yamaska",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-204-6646",
+    "description": "Services en travail de rue et prévention des dépendances * écoute * prévention et sensibilisation * éducation et information * référence personnalisée * accompagnement individualisé * intervention de ... [Plus] | Clientèle : Certain travailleurs de rue priorisent une clientèle jeunesse de 14 à 29 ans",
+    "website": "http://www.impactderuehy.ca",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "info-justice-capitale-nationale--cap",
     "name": "Info Justice Capitale-Nationale-Chaudière-Appalaches",
     "category": "social",
@@ -50727,18 +52880,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
-    "id": "msss-centre-hospitalier-psychiatrique-montreal-institut-universitaire-en-sante-mentale-de-montreal",
-    "name": "Institut Universitaire En Santé Mentale De Montréal",
-    "category": "mentalHealth",
-    "subcategory": "Centre hospitalier psychiatrique",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS De L'Est-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
-    "address": "7401, rue Hochelaga, Montréal, QC H1N 3M5",
-    "hours": "Service de crise disponible 24h/24, 7j/7"
-  },
-  {
     "id": "msss-chsld-montreal-institut-universitaire-en-sante-mentale-de-montreal",
     "name": "Institut Universitaire En Santé Mentale De Montréal",
     "category": "health",
@@ -50749,6 +52890,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "address": "7401, rue Hochelaga, Montréal, QC H1N 3M5",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "msss-centre-hospitalier-psychiatrique-montreal-institut-universitaire-en-sante-mentale-de-montreal",
+    "name": "Institut Universitaire En Santé Mentale De Montréal",
+    "category": "mentalHealth",
+    "subcategory": "Centre hospitalier psychiatrique",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS De L'Est-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
+    "address": "7401, rue Hochelaga, Montréal, QC H1N 3M5",
+    "hours": "Service de crise disponible 24h/24, 7j/7"
   },
   {
     "id": "msss-chsld-quebec-institut-universitaire-en-sante-mentale-de-quebec",
@@ -51138,6 +53291,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "j-entreprends-la-rel-ve-hy",
+    "name": "J'entreprends la relève",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-574-8078",
+    "description": "Éducation et inspiration pour les jeunes aux valeurs et aux qualités entrepreneuriales * soutien à comprendre les affaires et l'économie * développement des aptitudes d'entrepreneur et de leader * pro ... [Plus] | Âges : 10 an(s) - 18 an(s)",
+    "website": "http://www.jentreprendslareleve.com",
+    "address": "90 Rue Robinson S #102, Granby, QC J2G 7L4, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "ja-qu-bec-capitale-nationale-cha-cap",
@@ -52040,6 +54206,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, animation de groupe: mardi soir"
   },
   {
+    "id": "justice-alternative-et-m-diation-hy",
+    "name": "Justice alternative et médiation",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-4208",
+    "description": "Développement et maintien d'une pratique différente en matière de justice pour les mineurs * participation à l'application des mesures et sanctions prévues à la loi sur le système de justice pénale po ... [Plus] | Clientèle : Adolescents de 12 à 17 ans ayant commis des actes criminels, leurs parents, victimes d'actes criminels, citoyens, écoles et organismes",
+    "website": "http://www.jamed.org",
+    "address": "181 Rue Decelles, Granby, QC J2G 7P6, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "nu-crisis-nu",
     "name": "Kamatsiaqtut Helpline – Nunavut",
     "category": "mentalHealth",
@@ -52710,6 +54889,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.maisondamisducoeur.ca",
     "address": "95, rue Madeleine, Gatineau, QC J8Y 1S4",
     "hours": "Hébergement confidentiel 24h/24. Appeler d'abord."
+  },
+  {
+    "id": "la-maison-h-bergement-transitoir-hy",
+    "name": "La Maison, Hébergement transitoire en santé mentale",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-1541",
+    "description": "Maison d’hébergement supervisé de transition pour les adultes avec des problématiques de santé mentale, des problèmes émotionnels, des difficultés de fonctionnement dans leur vie quotidienne et à risq ... [Plus] | Âges : 18 an(s) - 55 an(s)",
+    "website": "https://lamaisonsantementale.org/",
+    "address": "3 Rue Cairns, Granby, QC J2G 2S4, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "la-malbaie-h-tel-de-ville-cap",
@@ -53555,6 +55747,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "le-regroupement-des-auberges-du--hy",
+    "name": "Le Regroupement des Auberges du cœur du Québec, Auberge sous mon toit",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-4269",
+    "description": "Hébergement, relation d’aide et réinsertion sociale pour hommes * centre d'hébergement communautaire pour hommes répondant à l'entente de service avec le service correctionnel du Québec * hébergement ... [Plus] | Clientèle : Hommes ou une personnes transmasculines non-judiciarisés de 18 ans et plus, avec la motivation de reprendre sa vie en main * | Âges : 18 an(s) et plus",
+    "website": "http://www.aubergesousmontoit.org",
+    "address": "317 Rue Chapais, Granby, QC J2G 7E7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "le-regroupement-des-auberges-du--cap",
     "name": "Le Regroupement des Auberges du cœur du Québec, Gîte jeunesse",
     "category": "housing",
@@ -53848,6 +56053,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque Blanche-Lamontagne 581-322-1080",
     "website": "http://www.escoumins.ca",
     "address": "Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "les-groupes-familiaux-al-anon-al-hy",
+    "name": "Les Groupes Familiaux Al-Anon / Alateen",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "819-471-2749",
+    "description": "Information et soutien aux familles et amis des personnes alcooliques nécessaire pour se rétablir des conséquences de la consommation d'alcool d'une personne de leur entourage * réunions * service tél ... [Plus] | Clientèle : Famille et amis de personnes alcooliques | Âges : 12 an(s) et plus",
+    "website": "http://al-anon.org/fr",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -54743,6 +56961,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "loisirs-sainte-c-cile-hy",
+    "name": "Loisirs Sainte-Cécile",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Cécile-de-Milton",
+    "province": "QC",
+    "phone": "",
+    "description": "Mobilisation des citoyens à participer au développement d'activités culturelles, scientifiques et communautaires * épanouissement et accomplissement des concitoyens | Clientèle : Résidents de Sainte-Cécile-de-Milton",
+    "address": "112 Rue Principale, Sainte-Cécile-de-Milton, QC J0E 2C0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "loisirs-vanier-cap",
     "name": "Loisirs Vanier",
     "category": "social",
@@ -55050,6 +57280,30 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Aide aux vétérans, aux membres en service actif des Forces armées canadiennes et de la Gendarmerie royale du Canada et leur famille * défense de leurs droits et intérêts * promotion du Souvenir * camp ... [Plus] | Clientèle : Responsable des adhésions 418-835-6097",
     "website": "https://xn--lgionfilliale012levis-b5b.com/",
     "address": "Bd Alphonse-Desjardins, Lévis, QC G6V, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "l-gion-royale-canadienne-filiale-hy",
+    "name": "Légion royale canadienne, Filiale 06-077, Dames auxiliaires de la Légion Royale Canadienne de Waterloo (Les)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "Résidence 450-361-0509",
+    "description": "Soutien les vétérans dans leurs œuvres * soutien aux besoins des vétérans * assistance diverse Accréditations/affiliations : La Légion Royale Canadienne du Canada | Clientèle : Femmes et vétérans | Âges : 18 an(s) et plus",
+    "address": "77 Rue Lewis E, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "l-gion-royale-canadienne-filiale-hy-2",
+    "name": "Légion royale canadienne, Filiale 06-077, Shefford Waterloo",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-0005",
+    "description": "Aide aux anciens combattants, à la communauté et aux organismes communautaires * prêt d'accessoires aux malades * aide financière et physique * services à la communauté * loisirs * bourses aux étudian ... [Plus] | Clientèle : Les vétérans, les organismes communautaires et la communauté | Âges : 18 an(s) et plus",
+    "address": "77 Rue Lewis E, Waterloo, QC J0E 2N0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -55482,6 +57736,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "maison-la-hy",
+    "name": "Maison (La)",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-1541",
+    "description": "Aide à des hommes et des femmes qui vivent des problèmes de santé mentale suffisamment importants pour provoquer une désorganisation au niveau du fonctionnement de leur vie quotidienne * hébergement t ... [Plus] | Clientèle : Hommes et femmes de 18 à 55 ans ayant d'importants problèmes de santé mentale | Âges : 18 an(s) - 55 an(s)",
+    "website": "http://www.lamaisonsantementale.org",
+    "address": "43 Rue Patrick-Hackett, Granby, QC J2H 3J5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-adhemar-dion-la-trb",
     "name": "Maison Adhémar-Dion (la)",
     "category": "health",
@@ -55506,6 +57773,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.maisonalcideclement.com",
     "address": "132, rue Saint-Jacques, Gatineau, Outaouais, QC, J8X 2Z4",
     "hours": "lundi 8h00 à 12h00 et 13h00 à 16h00, mercredi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "maison-alice-desmarais-hy",
+    "name": "Maison Alice-Desmarais",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-9297 Ligne d'écoute",
+    "description": "Aide aux femmes, avec ou sans enfants, victimes de violence de partenaires intimes en leur offrant un lieu sécuritaire et confidentiel * oeuvre à un changement social visant une société non violente e ... [Plus] | Clientèle : Femmes victimes de violence de partenaires intimes avec ou sans enfants",
+    "website": "http://www.maisonad.org",
+    "address": "Rue Desmarais, Granby, QC J0E, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "maison-alonzo-wright-out",
@@ -57261,6 +59541,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "maison-joins-toi-hy",
+    "name": "Maison Joins-toi",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-9924 poste 2224",
+    "description": "Réhabilitation et réinsertion sociale, surveillance des libérés, sursitaires ou probationnaires * prévention de la criminalité en aidant l'ex-contrevenant à résoudre socialement ses problèmes * héberg ... [Plus] | Clientèle : Détenus et ex-contrevenants référés par les Services correctionnels du Québec et du Canada | Âges : 18 an(s) et plus",
+    "website": "http://www.maisonjoinstoi.org",
+    "address": "479 Rue Principale, Granby, QC J2G 2W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-kekpart-action-jeunesse-s-mtg",
     "name": "Maison Kekpart - Action Jeunesse Saint-Pie-X De Longueuil",
     "category": "employment",
@@ -58279,6 +60572,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "maison-de-r-pit-d-ragon-hy",
+    "name": "Maison de répit Déragon",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-1111",
+    "description": "Répit aux familles de personnes vivant avec la déficience intellectuelle. * service d'hébergement de fin de semaine pour les membres (personnes avec déficience intellectuelle) * insertion sociale par ... [Plus] | Clientèle : Personnes ayant une déficience intellectuelle ou un trouble envahissant du développement avec ou sans handicap physique | Âges : 6 an(s) et plus",
+    "address": "348 Rue Deragon, Granby, QC J2G 5J7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-de-spiritualit-des-trinit-hy",
+    "name": "Maison de spiritualité des Trinitaires",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-5125 poste 212",
+    "description": "Ressourcement spirituel * accueil et hébergement aux membres des organismes à but non lucratif dont la mission est le soutien à la personne humaine * écoute et accompagnement * rencontres de ressource ... [Plus] | Clientèle : Tous âges",
+    "website": "http://www.maisontrinitaires.com",
+    "address": "200 Bd Robert, Granby, QC J2H 0R2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-des-entreprises-de-c-ur-l-cap",
     "name": "Maison des Entreprises de Cœur (La)",
     "category": "social",
@@ -58417,6 +60735,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Service de soutien aux familles pendant la grossesse et à la naissance * cours prénataux, sur l'allaitement, portage * relevailles * accompagnement à une interruption de grossesse et dépression postpa ... [Plus]",
     "website": "http://www.mdfbc.org",
     "address": "985 Bd Joliet, Baie-Comeau, QC G5C 1P7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-familles-de-granby-et-hy",
+    "name": "Maison des familles de Granby et région (La)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-2232",
+    "description": "Milieu de vie et d'appartenance ouvert à tous les parents voulant partager leurs expériences et bénéficier de services, d'ateliers et d'activités élaborés pour eux et leurs enfants * aide et référence ... [Plus] | Clientèle : Toutes les familles",
+    "website": "http://www.mfgr.org",
+    "address": "162 Rue St Charles S, Granby, QC J2G 7A4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-familles-de-granby-et-hy-2",
+    "name": "Maison des familles de Granby et région (La), Espace Familles Waterloo et région",
+    "category": "family",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-776-2232",
+    "description": "Milieu de vie offrant du soutien et des services adaptés aux parents et aux enfants pour favoriser l’harmonie et l'équilibre familial * soutien * écoute * activités ludiques entre-parents * stimulatio ... [Plus] | Clientèle : Pour toutes les familles",
+    "website": "http://www.mfgr.org",
+    "address": "5005 Rue Foster, Waterloo, QC J0E 2N0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -58915,6 +61259,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "maison-des-jeunes-de-granby-la-b-hy",
+    "name": "Maison des jeunes de Granby La Barak (La)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-0448",
+    "description": "Lieu de rencontre encadré pour adolescents * activités diverses pour leur permettre de se responsabiliser * lieu de rassemblement animé pour les 12 à 17 ans * terrain multisports 4 saisons * activités ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.labarak.com",
+    "address": "445 Rue Notre Dame, Granby, QC J2G 3L7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-granby-la-b-hy-2",
+    "name": "Maison des jeunes de Granby La Barak (La), Coop d'initiation à l'entreprenariat collectif",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-0448",
+    "description": "Organisme communautaire autonome ayant pour mission d'offrir un lieu de rassemblement volontaire et encadré pour les adolescents * favorisant leur développement personnel, social et communautaire Serv ... [Plus] | Clientèle : Adolescents | Âges : 13 an(s) - 17 an(s)",
+    "website": "http://www.labarak.com",
+    "address": "445 Rue Notre Dame, Granby, QC J2G 3L7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-des-jeunes-de-havre-saint-cn",
     "name": "Maison des jeunes de Havre-Saint-Pierre La Source Minganie",
     "category": "family",
@@ -59177,6 +61547,18 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-236-4801",
     "description": "Notre principale mission est d’offrir aux jeunes de 11 à 17 ans un lieu de rencontres animées, où, au contact d’adultes significatifs peuvent pratiquer diverses activités éducatives et de loisirs. Nou ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
     "address": "Sacré-Coeur, QC G0T 1Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-saint-alpho-hy",
+    "name": "Maison des jeunes de Saint-Alphonse-de-Granby Le Chalet (La)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Alphonse-de-Granby",
+    "province": "QC",
+    "phone": "450-375-4570",
+    "description": "Endroit où se retrouver entre jeunes sous la supervision d'adultes significatifs présents pour les encadrer * activités | Âges : 11 an(s) - 17 an(s)",
+    "address": "Saint-Alphonse-de-Granby, QC J0E 2A0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -59546,6 +61928,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "maison-des-jeunes-de-waterloo-l--hy",
+    "name": "Maison des jeunes de Waterloo L'Exit",
+    "category": "food",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-4578",
+    "description": "Lieu de rencontre pour les adolescents * aide ceux-ci à devenir des citoyens critiques, actifs et responsables * animation * accompagnement * référence * écoute * emploi * formation * repas midi * jar ... [Plus] | Clientèle : St-Joachim-de-Shefford 450-539-2222 | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://mdjexit.ca",
+    "address": "350 Rue Waterloo, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-des-jeunes-de-wendake-cap",
     "name": "Maison des jeunes de Wendake",
     "category": "family",
@@ -59911,6 +62306,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Maison d'hébergement offrant aide aux femmes immigrantes et québécoises victimes de violence conjugale ainsi qu'à leurs enfants Services offerts dans le respect de la culture * hébergement (7 chambres ... [Plus] | Clientèle : Banque d'interprètes 418-573-3035 | Âges : 18 an(s) et plus",
     "website": "http://www.maisonpourfemmesimmigrantes.com",
     "address": "Québec City, QC G1R 4L4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-soutien-aux-aidants-la-hy",
+    "name": "Maison soutien aux aidants (La)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-9115",
+    "description": "Prévention de l'épuisement des proches aidants * soutien des familles qui s'occupent d'un proche malade ou en perte d'autonomie * défense des intérêts et des droits des personnes proches aidantes Inte ... [Plus] | Clientèle : Proches aidants prenant soin d’une personne malade et/ou en perte d’autonomie",
+    "website": "http://www.servicesauxaidants.ca",
+    "address": "197 Rue Paré, Granby, QC J2G 5E4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -61997,6 +64405,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, disponibilité en soirée sur rendez-vous, aide aux devoirs: 15h00 à 17h30, service des droits d'accès: samedi et dimanche 8h00 à 17h00 sur rendez-vous"
   },
   {
+    "id": "mouvement-action-handicap-s-de-g-hy",
+    "name": "Mouvement action handicapés de Granby et la région (Le)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-2713",
+    "description": "Activités de loisirs et défense des droits et intégration des personnes ayant un handicap | Clientèle : Toute personne ayant une ou des limitations physiques ou sensorielles | Âges : 18 an(s) et plus",
+    "address": "135 Rue Principale, Granby, QC J2G 2V1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "mouvement-d-animation-artistique-cap",
     "name": "Mouvement d'animation artistique de Cap-Rouge",
     "category": "family",
@@ -62703,6 +65123,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "municipalit-r-gionale-de-comt-de-hy",
+    "name": "Municipalité régionale de comté de La Haute-Yamaska",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-9975",
+    "description": "Soutien l'administration et le développement de la MRC de La Haute-Yamaska en favorisant une approche durable et intégrée * schéma d'aménagement et de développement * services d'évaluation municipale ... [Plus]",
+    "website": "http://www.haute-yamaska.ca",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "municipalit-r-gionale-de-comt-de-cap-5",
     "name": "Municipalité régionale de comté de La Jacques-Cartier",
     "category": "social",
@@ -62909,6 +65342,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.mrvs.qc.ca",
     "address": "431, avenue Saint-Charles, VAUDREUIL-DORION, Montérégie, QC, J7V 2N3",
     "hours": "mardi au vendredi 9h00 à 12h00 et 13h00 à 16h30, samedi et dimanche 13h00 à 16h30, période estivale: mardi au vendredi 9h00 à 16h30, samedi et dimanche 13h00 à 16h30"
+  },
+  {
+    "id": "mus-e-canadien-de-l-arme-et-du-b-hy",
+    "name": "Musée canadien de l'arme et du bronze",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-405-4585",
+    "description": "Préservation du patrimoine, agit comme témoin du passé * conserve un héritage pour les générations futures * éveille les consciences à ses beautés et à ses enjeux * expositions d’armes civiles et mili ... [Plus]",
+    "website": "http://www.museemab.com",
+    "address": "53 Rue Dufferin, Granby, QC J2G 4W8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "mus-e-r-gional-de-la-c-te-nord-cn",
@@ -63453,6 +65899,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "nourri-source-mont-r-gie-nourri--hy",
+    "name": "Nourri-Source Montérégie, Nourri-Source Haute-Yamaska-Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "514-425-0805",
+    "description": "Mouvement d’entraide pour l’allaitement maternel, composé de marraines d’allaitement formées au soutien et à l'accompagnement des mères * soutien par une marraine d'allaitement : jumelage téléphonique ... [Plus] | Clientèle : Femmes enceintes et mères qui allaitent",
+    "website": "http://nourrisourcemonteregie.org",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "nouveaux-sentiers-de-la-mrc-de-l-ca",
     "name": "Nouveaux sentiers de la MRC de L'Islet (Les)",
     "category": "mentalHealth",
@@ -63659,6 +66118,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi au samedi 9h00 à 17h00"
   },
   {
+    "id": "o-e-i-l-l-hy",
+    "name": "O.E.I.L. (L')",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-991-0777",
+    "description": "Soutien et aide aux personnes vivant avec un handicap visuel pour sortir de l'isolement * information sur les ressources disponibles * sensibilisation de la population à la déficience visuelle * cours ... [Plus] | Clientèle : Personnes handicapées visuelles (complètement ou partiellement) | Âges : 18 an(s) et plus",
+    "website": "http://www.oeilgranby.ca",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-immo-oaciq",
     "name": "OACIQ – Organisme courtage immobilier QC",
     "category": "realestate",
@@ -63682,6 +66154,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Vérifiez qu'un courtier est certifié au Québec. Accès à la procédure officielle d'achat immobilier, vos droits comme acheteur, et résolution de litiges. Gratuit.",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
     "isProvinceWide": true
+  },
+  {
+    "id": "oboulo-granby-hy",
+    "name": "OBOULO Granby",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-2107",
+    "description": "Soutien aux chercheurs d'emploi à intégrer le marché du travail * service individuel ou de groupe en fonction des besoins de la clientèle * création et correction de curriculum vitae et lettres de mot ... [Plus] | Clientèle : Chercheurs d'emploi | Âges : 18 an(s) et plus",
+    "website": "http://www.oboulo.ca",
+    "address": "125 Bd Lord, Granby, QC J2G 5K1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-imm-laval-oeil",
@@ -63795,6 +66280,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-533-2056",
     "description": "Résidence pour aînés autonomes ou semi-autonomes * chambres avec salle de bain privée * séjours pour répit ou convalescence * salon communautaire, buanderie, stationnement * terrasse avec coin jardina ... [Plus] | Âges : 65 an(s) et plus",
     "address": "Aguanish, QC G0G 1A0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "oasis-sant-mentale-granby-et-r-g-hy",
+    "name": "Oasis santé mentale Granby et région",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-7131",
+    "description": "Regroupement des membres de l'entourage d'une personne atteinte d'un trouble de santé mentale * soutien afin de leur permettre d'actualiser leur potentiel * interventions psychosociales * accompagneme ... [Plus] | Clientèle : Membres de l'entourage d'une personne atteinte d'un trouble de santé mentale",
+    "website": "http://www.oasissantementale.org",
+    "address": "177 Rue Denison E, Granby, QC J2G 4C4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -64066,6 +66564,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Offrir aux personnes seules et aux familles à faible revenu ou à revenu modique, des logements subventionnés, dans un milieu de vie de qualité et sécuritaire, sur tout le territoire de la MRC Manicoua ... [Plus] | Clientèle : Personnes autonomes | Âges : 18 an(s) et plus",
     "website": "https://www.ohmanicouagan.com/",
     "address": "1780 Bd Joliet, Baie-Comeau, QC G5C 1R4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "office-d-habitation-de-la-haute--hy",
+    "name": "Office d'habitation de la Haute-Yamaska-Rouville",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-1300",
+    "description": "Location de logements pour les personnes âgées et les familles à faible revenu * location de logements à prix modique * inscription pour les HLM pendant toute l'année * inscription pour les logis-étud ... [Plus] | Clientèle : Personnes et familles à faible revenu | Âges : 18 an(s) et plus",
+    "website": "http://www.ohhyr.ca",
+    "address": "100 Rue Robinson S bureau 127, Granby, QC J2G 7L4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -65097,6 +67608,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h00, activités: variable"
   },
   {
+    "id": "organisme-de-bassin-versant-de-l-hy",
+    "name": "Organisme de bassin versant de la Yamaska",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-956-1164",
+    "description": "Gestion intégrée de l'eau dans le bassin versant de la Yamaska * mobilisation et regroupement des intervenants afin d'établir et réaliser des plans d'action pour améliorer la qualité de l'eau * échant ... [Plus] | Clientèle : Les personnes désirant participer à l'amélioration de la qualité de l'eau",
+    "website": "http://www.obv-yamaska.qc.ca",
+    "address": "160 Rue Cowie, Granby, QC J2G 3V3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "organisme-de-bassins-versants-ch-cap",
     "name": "Organisme de bassins versants Charlevoix - Montmorency",
     "category": "social",
@@ -65185,6 +67709,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Organisation d'activités favorisant l'apprentissage, le développement de l'autonomie, l'intégration et la participation sociale des personnes vivant avec une déficience intellectuelle légère ou moyenn ... [Plus] | Clientèle : Activités pour adultes (17 ans et plus) ayant un handicap intellectuel léger ou moyen pouvant fonctionner à l'intérieur d'un ratio d'un accompagnateur pour 8 usagers | Âges : 17 an(s) et plus",
     "website": "http://apprenti-loisirs.org",
     "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "orientation-jeunesse-de-la-haute-hy",
+    "name": "Orientation jeunesse de la Haute-Yamaska",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-2122",
+    "description": "Soutien et accompagnement pour adolescents aux prises avec divers problèmes * aide, écoute * références au besoin | Clientèle : Jeunes du niveau primaire et secondaire, cégep (jusqu'à 17 ans inclusivement) | Âges : 10 an(s) - 17 an(s)",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -65314,6 +67850,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à Ccsss De La Baie James. Source: MSSS – Fichier M02 des installations.",
     "address": "68, rue Opatica, C. P. 37, Oujé-Bougoumou, QC G0W 3C0",
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
+  },
+  {
+    "id": "outremangeurs-anonymes-groupe-li-hy",
+    "name": "Outremangeurs anonymes, Groupe Liberté nouvelle",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-9555 représentante Granby",
+    "description": "Soutien et une écoute active aux personnes vivant avec une obsession de la nourriture * accompagnement dans leur rétablissement * rencontres hebdomadaires | Clientèle : Personnes compulsives et obsédées par la nourriture",
+    "website": "http://www.outremangeurs.org",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "outremangeurs-anonymes-intergrou-cap",
@@ -65519,6 +68068,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Distribution de paniers d'épicerie.* Paniers de Noël pour les membres. | Clientèle: personnes à faible revenu Capacité: 25 personnes par jour | Territoire: Maniwaki | Statut: organisme à but non lucratif",
     "address": "128, rue du Christ-Roi, Maniwaki, Outaouais, QC, J9E 2C9",
     "hours": "3 mardis et 3 mercredis durant le mois de 9h30 à 10h45."
+  },
+  {
+    "id": "palace-de-granby-le-hy",
+    "name": "Palace de Granby (Le)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Billetterie 450-375-2262 poste 1",
+    "description": "Diffusion de spectacles * location de locaux * service de billetterie * aide à l'organisation de spectacles",
+    "website": "http://www.palacedegranby.com",
+    "address": "135 Rue Principale, Granby, QC J2G 2V1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "palais-de-justice-de-campbell-s--out",
@@ -65806,6 +68368,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "parkinson-estrie-bureau-r-gional-hy",
+    "name": "Parkinson Estrie, Bureau régional Haute-Yamaska",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "819-239-6232",
+    "description": "Amélioration de la qualité de vie des personnes atteintes de la maladie de Parkinson ainsi que de leurs proches aidants et leur famille * services visant à soulager et contribuer à construire un monde ... [Plus] | Clientèle : Toutes personnes atteintes, les proches aidants, les familles, les professionnels de la santé du réseau et du milieu communautaires",
+    "address": "300 Rue du Conseil #318, Sherbrooke, QC J1G 1J4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "parkinson-outaouais-out",
     "name": "Parkinson Outaouais",
     "category": "social",
@@ -65817,6 +68391,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "parkinsonoutaouais.com",
     "address": "160, boulevard de l'Hôpital, bureau 50, Gatineau, Outaouais, QC, J8T 8J1",
     "hours": "lundi au vendredi 9h00 à 16h30"
+  },
+  {
+    "id": "paroisse-notre-dame-de-granby-hy",
+    "name": "Paroisse Notre-Dame de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Église Saint-Eugène 450-375-1001",
+    "description": "Promotion de la foi chrétienne, service de culte et pastorale * célébrations eucharistiques * sacrements * Vie montante * accompagnement spirituel * écoute * halte Saint-Joseph (22, rue Saint-Joseph à ... [Plus] | Clientèle : Église Immaculée-Conception 450-378-2133",
+    "website": "http://eglisecatholiquedegranby.org",
+    "address": "97 Rue Laval S, Granby, QC J2G 7G6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "paroisse-saint-fran-ois-de-laval-cap",
@@ -66026,6 +68613,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 16h00"
   },
   {
+    "id": "partage-notre-dame-hy",
+    "name": "Partage Notre-Dame",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-1111",
+    "description": "Plusieurs services sous le même toit * soupe populaire * friperie AZimut (voir dossier individuel) | Clientèle : Personne désirant briser l'isolement, démunie, itinérance | Âges : 18 an(s) et plus",
+    "website": "http://www.partagenotredame.org",
+    "address": "309 Rue Racine, Granby, QC J2G 3B6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "partage-notre-dame-azimut-hy",
+    "name": "Partage Notre-Dame, AZimut",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-775-9303",
+    "description": "Soutien à toute personne âgée de 18 ans et plus vivant de l'isolement social ou des difficultés particulières * lieu qui permet des rencontres, des interventions individuelles et de groupe * diffusion ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://partagenotredame.org",
+    "address": "309 Rue Racine, Granby, QC J2G 3B6, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "partage-st-francois-sherbrooke",
     "name": "Partage Saint-François",
     "category": "food",
@@ -66179,6 +68792,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre de thérapie externe fournissant une aide aux proches de la personne ayant une dépendance, aux proches de personnes judiciarisées, aux personnes vivant de la dépendance affective ou des liens de ... [Plus] | Clientèle : Proches des personnes ayant une dépendance à l'alcool, drogues, jeu, médicaments et autres * proches des personnes judiciarisées * personnes vivant de la dépendance affective ou des liens de codépendance | Âges : 14 an(s) et plus",
     "website": "http://www.centrelepassage.org",
     "address": "735 Av. Nérée-Tremblay, Québec, QC G1V 4W5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "passant-le-hy",
+    "name": "Passant (Le)",
+    "category": "food",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-4404",
+    "description": "Hébergement à court terme pour hommes en difficulté * accueil * repas * référence et soutien * refuge pour hommes sans-abri | Clientèle : Hommes en difficulté (sans-abri, toxicomanie, alcoolisme, jeu compulsif, rupture amoureuse, conflit familial, violence conjugale, trouble de comportement, ordonnance de cour). | Âges : 18 an(s) et plus",
+    "website": "http://www.lepassant.org",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -66582,6 +69208,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "peintres-associ-s-de-granby-les-hy",
+    "name": "Peintres associés de Granby (Les)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-7123",
+    "description": "Conseils artistiques et favorise des rencontres entre peintres * ateliers de peinture hebdomadaires avec un directeur artistique * expositions | Clientèle : Personne possédant une base en dessin et en peinture",
+    "address": "135 Rue Principale, Granby, QC J2G 2V1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "peintres-unis-de-waterloo-les-hy",
+    "name": "Peintres unis de Waterloo (Les)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-1871",
+    "description": "Promotion du goût de peindre et soutien envers les peintres à participer à l'exposition annuelle * exposition annuelle en mai ( André Côté, responsable) * symposium de peinture en août ( Carré Foster) ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.symposiumdewaterloo.com",
+    "address": "Waterloo, QC J0E, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "pepper-pod-le-out",
     "name": "Pepper Pod (Le)",
     "category": "mentalHealth",
@@ -66829,6 +69480,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
+    "id": "petits-fr-res-les-granby-hy",
+    "name": "Petits Frères (Les), Granby",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-915-6222",
+    "description": "Accueil et accompagnement des personnes seules du grand âge, afin de contrer leur isolement, en créant autour d'elles une famille engagée et fidèle jusqu'à la fin de leur vie * jumelage avec bénévole ... [Plus] | Clientèle : Personnes aînées vivant de l'isolement ou de la solitude | Âges : 75 an(s) et plus",
+    "website": "http://www.petitsfreres.ca",
+    "address": "330 Rue St Charles S, Granby, QC J2G 0B9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "petits-fr-res-les-l-vis-ca",
     "name": "Petits Frères (Les), Lévis",
     "category": "family",
@@ -66942,6 +69606,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Chorale formant les enfants aux chants profanes et sacrés, favorisant le développement musical de jeunes choristes * pratiques hebdomadaires * camps musicaux * enregistrements, concerts et tournées * ... [Plus] | Clientèle : Garçons et filles de 7-18 ans * hommes de 18 ans et plus pour les voix de ténor et basse | Âges : 7 an(s) - 18 an(s)",
     "website": "http://www.petitschanteursdecharlesbourg.com",
     "address": "Charlesbourg, Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "petits-chanteurs-de-granby-les-hy",
+    "name": "Petits chanteurs de Granby (Les)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-1144",
+    "description": "Promotion du chant auprès des jeunes tout en socialisant et en inculquant la discipline * cours de chant * solfège * maintien * diction Accréditations/affiliations : Alliance des chorales du Québec * ... [Plus] | Clientèle : Jeunes de 8 à 18 ans et hommes (voix basse et ténor) | Âges : 8 an(s) - 18 an(s)",
+    "website": "http://www.pcg.quebec",
+    "address": "331 Bd Leclerc O, Granby, QC J2G 1V2, Canada",
     "hours": "Voir site web"
   },
   {
@@ -67934,6 +70611,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Ateliers, soutien parental, activités familiales."
   },
   {
+    "id": "pro-def-estrie-point-de-service--hy",
+    "name": "Pro-Def Estrie, Point de service Granby",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "1-800-561-0363",
+    "description": "Promotion et défense des droits des personnes vivant ou ayant vécu un problème de santé mentale * droits de tout citoyen à part entière, fondés sur des principes de justice sociale, de liberté et d’ég ... [Plus] | Âges : 14 an(s) et plus",
+    "website": "http://www.prodefestrie.qc.ca",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "pro-vision-laval-lav",
     "name": "Pro-Vision Laval",
     "category": "food",
@@ -68619,6 +71309,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qu-bec-centre-communautaire-juri-hy",
+    "name": "Québec. Centre communautaire juridique de la Rive-Sud, Bureau d'aide juridique de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-7157",
+    "description": "Aide juridique aux personnes à faible revenu du territoire Les services d'aide juridique couverts par le régime sont rendus aux personnes financièrement admissibles, gratuitement ou moyennant le verse ... [Plus] | Clientèle : Personnes admissibles à l'aide juridique en vertu de la loi",
+    "website": "http://www.ccjrs.com",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qu-bec-commission-d-acc-s-l-info-cap",
     "name": "Québec. Commission d'accès à l'information du Québec",
     "category": "social",
@@ -69047,6 +71750,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qu-bec-minist-re-de-l-emploi-et--hy",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Granby",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-7134",
+    "description": "Guichet multiservice des services gouvernementaux provinciaux offerts aux individus et aux entreprises offrant un accès simplifié aux services publics * renseignements généraux sur les programmes et s ... [Plus]",
+    "website": "http://www.quebec.ca/services-quebec",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qu-bec-minist-re-de-l-emploi-et--cn-3",
     "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Havre-Saint-Pierre",
     "category": "employment",
@@ -69346,6 +72062,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qu-bec-minist-re-de-la-justice-p-hy",
+    "name": "Québec. Ministère de la Justice, Palais de justice - Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-7110",
+    "description": "Services juridiques de la Cour supérieure et de la Cour du Québec * services à la Cour supérieure : civil, familial, criminel, faillite, mariage et union civile * services à la Cour du Québec : civil, ... [Plus] | Clientèle : Population locale, avocats et notaires",
+    "website": "http://www.justice.gouv.qc.ca",
+    "address": "Édifice Roger-Paré, 77 Rue Principale Bureau 1.32, Granby, QC J2G 9B3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qu-bec-minist-re-de-la-sant-et-d-cap",
     "name": "Québec. Ministère de la Santé et des Services sociaux",
     "category": "health",
@@ -69398,6 +72127,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qu-bec-minist-re-de-la-sant-et-d-hy",
+    "name": "Québec. Ministère de la Santé et des Services sociaux, Programme intégré d'équilibre dynamique (PIED), Haute-Yamaska",
+    "category": "health",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "",
+    "description": "Prévention des chutes chez les aînés vivant à domicile * programme d’exercices de groupe visant principalement l’amélioration de l’équilibre, de la force des jambes et de l'assouplissement * capsules ... [Plus] | Clientèle : Personnes qui vivent à domicile et qui sont préoccupées par les chutes ou par leur équilibre | Âges : 65 an(s) et plus",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qu-bec-minist-re-de-la-sant-et-d-cap-5",
     "name": "Québec. Ministère de la Santé et des Services sociaux, Super-cliniques - Groupes de médecine de famille - GMF-A - GMF-R - GMF-U",
     "category": "health",
@@ -69434,6 +72175,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Réception et examen des plaintes formulées à l’endroit des policiers, agents de protection de la faune, constables spéciaux, contrôleurs routiers et enquêteurs de l’UPAC et enquêteurs du BEI qui aurai ... [Plus] | Clientèle : Montréal 514-864-1784",
     "website": "http://deontologie-policiere.gouv.qc.ca/",
     "address": "2535 Boul Laurier, Québec, QC G1V 4M3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-la-s-curit-p-hy",
+    "name": "Québec. Ministère de la Sécurité publique, Direction des services professionnels correctionnels",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-7162",
+    "description": "Suivi auprès des gens sous probation * assistance aux tribunaux pour les sentences et la réinsertion sociale * évaluation * recommandation * suivi | Clientèle : Personnes sous probation",
+    "website": "https://www.quebec.ca/securite-situations-urgence/services-correctionnels",
+    "address": "161 Rue Principale, Granby, QC J2G 2V5, Canada",
     "hours": "Voir site web"
   },
   {
@@ -69840,6 +72594,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-hy",
+    "name": "Québec. Société de l'assurance automobile du Québec, Centre de services de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "",
+    "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "240 Rue St.-Jude N, Granby, QC J2J 0C2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qu-bec-soci-t-de-l-assurance-aut-ca",
     "name": "Québec. Société de l'assurance automobile du Québec, Centre de services de Lévis",
     "category": "social",
@@ -69941,6 +72708,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
     "website": "http://www.saaq.gouv.qc.ca",
     "address": "222 Bd Frontenac O, Thetford Mines, QC G6G 6N7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-hy-2",
+    "name": "Québec. Société de l'assurance automobile du Québec, Centre de services de Waterloo",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-3060",
+    "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "417 Rue de la Cour, Waterloo, QC J0E 2N0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -70139,6 +72919,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qu-bec-soci-t-des-tablissements--hy",
+    "name": "Québec. Société des établissements de plein air du Québec, Parc national de la Yamaska",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Roxton Pond",
+    "province": "QC",
+    "phone": "450-776-7182",
+    "description": "Promotion de la pratique d'une variété d'activités de plein air dans un environnement protégé * camping * chalet 4 saisons * baignade (surveillance de mi-juin à la fête du Travail) * jeux d'eau * pêch ... [Plus]",
+    "website": "http://www.sepaq.com/pq/yam/",
+    "address": "Yamaska ​​National Park, 1780 Bd David-Bouchard, Roxton Pond, QC J0E 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qu-bec-tribunal-administratif-du-cn",
     "name": "Québec. Tribunal administratif du logement, Bureau de Baie-Comeau",
     "category": "housing",
@@ -70149,6 +72942,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Tribunal spécialisé exerçant sa compétence en matière de bail résidentiel : décisions relatives aux litiges dont il est saisi dans le cadre d'une procédure simple et respectueuse des règles de justice ... [Plus] | Clientèle : Le grand public * locataires et propriétaires",
     "website": "http://www.tal.gouv.qc.ca",
     "address": "625 Bd Laflèche, Baie-Comeau, QC G5C 1C5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-tribunal-administratif-du-hy",
+    "name": "Québec. Tribunal administratif du logement, Bureau de Granby",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "",
+    "description": "Tribunal spécialisé exerçant sa compétence en matière de bail résidentiel : décisions relatives aux litiges dont il est saisi dans le cadre d'une procédure simple et respectueuse des règles de justice ... [Plus]",
+    "website": "http://www.tal.gouv.qc.ca",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -70876,6 +73682,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-843-6186",
     "description": "Maintien et développement de l'autonomie des aînés afin qu'ils puissent demeurer le plus longtemps possible dans leur milieu * activités récréatives : animation, cours, ateliers, voyages, sorties, cho ... [Plus] | Âges : 55 an(s) et plus",
     "address": "Saint-Émile, Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "regroupement-des-bingos-de-la-ha-hy",
+    "name": "Regroupement des bingos de la Haute-Yamaska - Carrefour Bingo",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-2666",
+    "description": "Organisation et administration d'événements de bingo ainsi que d'activités pouvant générer des sources de financement dans le but de remettre les fonds aux organismes à but non lucratif membres du reg ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.carrefourbingo.ca",
+    "address": "94 Rue Robinson S, Granby, QC J2G 7L4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -71870,6 +74689,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "ressource-pour-hommes-de-la-haut-hy",
+    "name": "Ressource pour hommes de La Haute-Yamaska",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-6680",
+    "description": "Soutien psychosocial aux hommes en difficulté selon nos 4 volets d'intervention * violence pour les hommes et les femmes ayant des comportements violents et/ou les hommes subissant de la violence conj ... [Plus]",
+    "website": "http://www.rhhy.qc.ca",
+    "address": "739 Rue Dufferin, Granby, QC J2H 2H5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "ressource-pour-hommes-de-la-haut-hy-2",
+    "name": "Ressource pour hommes de La Haute-Yamaska, Maison Oxygène des Yamaska",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-558-8950",
+    "description": "Ressource d'aide et d'hébergement pour les pères qui vivent des moments difficiles et qui souhaitent garder et faire grandir le lien avec leurs enfants * hébergement * soutien individuel, communautair ... [Plus] | Âges : 18 an(s) et plus",
+    "address": "739 Rue Dufferin, Granby, QC J2H 2H5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ressourcerie-beauce-sartigan-ca",
     "name": "Ressourcerie Beauce-Sartigan",
     "category": "social",
@@ -72373,6 +75217,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Soutien à l'autonomie des cyclistes dans l'entretien, la réparation et l'utilisation de leur vélo comme moyen de transport * espace de travail et équipement d'entretien en libre-service * service-cons ... [Plus]",
     "website": "http://cooprouelibre.com",
     "address": "250 Rue Dorchester, Québec, QC G1K 5Z5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "roxton-pond-h-tel-de-ville-hy",
+    "name": "Roxton Pond. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Roxton Pond",
+    "province": "QC",
+    "phone": "450-372-6875",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Contribuables",
+    "website": "http://www.roxtonpond.ca",
+    "address": "901 Rue Saint-Jean, Roxton Pond, QC J0E 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "roxton-pond-h-tel-de-ville-frigo-hy",
+    "name": "Roxton Pond. Hôtel de ville, Frigo de nos récoltes",
+    "category": "social",
+    "subcategory": "",
+    "city": "Roxton Pond",
+    "province": "QC",
+    "phone": "450-372-6875",
+    "description": "Armoire et réfrigérateur en libre-service servant au partage des fruits et légumes pendant la saison des récoltes * don de denrées par le public, producteurs et épiceries * fruits et légumes disponibl ... [Plus]",
+    "website": "http://www.roxtonpond.ca",
+    "address": "901 Rue Saint-Jean, Roxton Pond, QC J0E 1Z0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -73828,6 +76698,18 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "re-pw1",
+    "name": "SCHL – Société canadienne d'hypothèques",
+    "category": "realestate",
+    "subcategory": "Programme gouvernemental",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-668-2642",
+    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
+    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
+    "isProvinceWide": true
+  },
+  {
     "id": "on-cmhc-on",
     "name": "SCHL – Société canadienne d'hypothèques",
     "category": "realestate",
@@ -73838,18 +76720,6 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "website": "https://www.cmhc-schl.gc.ca",
     "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
-    "isProvinceWide": true
-  },
-  {
-    "id": "re-pw1",
-    "name": "SCHL – Société canadienne d'hypothèques",
-    "category": "realestate",
-    "subcategory": "Programme gouvernemental",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-668-2642",
-    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
     "isProvinceWide": true
   },
@@ -74414,6 +77284,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
     "website": "http://www.st-alfred.qc.ca",
     "address": "Saint-Alfred, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-alphonse-de-granby-h-tel-d-hy",
+    "name": "Saint-Alphonse-de-Granby. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Alphonse-de-Granby",
+    "province": "QC",
+    "phone": "450-375-4570",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Contribuables",
+    "website": "http://www.st-alphonse.qc.ca",
+    "address": "Saint-Alphonse-de-Granby, QC J0E 2A0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-alphonse-de-granby-h-tel-d-hy-2",
+    "name": "Saint-Alphonse-de-Granby. Hôtel de ville, Loisirs de Saint-Alphonse-de-Granby",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Alphonse-de-Granby",
+    "province": "QC",
+    "phone": "450-375-4570",
+    "description": "Organisation d'activités récréatives et sportives * activités récréatives et sportives * aréna * terrains de baseball, soccer et tennis et jeux d'eau * bibliothèque * maison des jeunes * centre commun ... [Plus] | Clientèle : Résidents et ceux qui ont la carte de loisirs",
+    "website": "http://www.st-alphonse.qc.ca",
+    "address": "Saint-Alphonse-de-Granby, QC J0E 2A0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -75220,6 +78116,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Service de protection contre les incendies * prévention * mesures d'urgence Véhicules et équipement * 115 Chevrolet Silverado chief 2020 (partagé avec le service des travaux publics) * 415 Freightline ... [Plus]",
     "website": "http://st-jean.iledorleans.com",
     "address": "4623 Chem. Royal, Saint-Jean-de-l'Île-d'Orléans, QC G0A 3W0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-joachim-de-shefford-h-tel--hy",
+    "name": "Saint-Joachim-de-Shefford. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joachim-de-Shefford",
+    "province": "QC",
+    "phone": "450-539-3201",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Contribuables",
+    "website": "http://www.st-joachim.ca",
+    "address": "Saint-Joachim-de-Shefford, QC J0E 2G0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -76198,6 +79107,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "sainte-c-cile-de-milton-h-tel-de-hy",
+    "name": "Sainte-Cécile-de-Milton. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Cécile-de-Milton",
+    "province": "QC",
+    "phone": "450-378-1942",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Contribuables",
+    "website": "http://www.miltonqc.ca",
+    "address": "Sainte-Cécile-de-Milton, QC J0E 2C0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "sainte-euph-mie-sur-rivi-re-du-s-ca",
     "name": "Sainte-Euphémie-sur-Rivière-du-Sud. Hôtel de ville",
     "category": "social",
@@ -76701,6 +79623,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "sclerodermie.ca",
     "address": "550, chemin Chambly, bureau 040, Longueuil, Montérégie, QC, J4H 3L8",
     "hours": "lundi au vendredi 9h00 à 16h00, écoute téléphonique: 10h00 à 16h00"
+  },
+  {
+    "id": "scl-rose-en-plaques-haute-yamask-hy",
+    "name": "Sclérose en plaques Haute-Yamaska-Richelieu",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "SEPHYR 450-776-1106",
+    "description": "Soutien les personnes atteintes de la SEP et leurs proches ainsi que les personnes ayant une maladie chronique apparentée avec la SEP * information, soutien et coordination avec les professionnels et ... [Plus] | Clientèle : Livres de l'espoir 450-776-2612",
+    "website": "http://www.sephyr.org",
+    "address": "24 Rue Saint-Joseph, Granby, QC J2G 6T6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "scl-rose-en-plaques-du-grand-cha-cap",
@@ -78120,6 +81055,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "service-de-d-veloppement-de-l-em-hy",
+    "name": "Service de développement de l'employabilité de la Montérégie",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-646-1595",
+    "description": "Intégration en emploi pour les personnes handicapées * choix professionnel et orientation * approche individuelle * évaluation * counselling d'emploi * méthodes de recherche d'emploi * suivi * assista ... [Plus] | Clientèle : Personnes handicapées avec déficience (visuelle, auditive, physique, intellectuelle, psychique et/ou neurologique) | Âges : 16 an(s) et plus",
+    "website": "http://www.sdem-semo.org",
+    "address": "127 Bd Saint-Jean-Baptiste, Châteauguay, QC J6K 3B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "service-de-formation-en-alphab-t-cap",
     "name": "Service de formation en alphabétisation de Charlevoix",
     "category": "social",
@@ -78361,6 +81309,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "service-des-incendies-de-granby-hy",
+    "name": "Service des incendies de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Bureau 450-776-8344",
+    "description": "Prévention des incendies, inspection des maisons et des bâtiments * intervention rapide lors d'incendies * sessions d'information * prévention",
+    "website": "https://granby.ca/fr/incendie/accueil",
+    "address": "725 Rue Léon-Harmel, Granby, QC J2J 1P7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "service-d-aide-communautaire-de--cap",
     "name": "Service d’aide communautaire de Charlevoix-Est",
     "category": "social",
@@ -78383,6 +81344,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-389-7883",
     "description": "Aide aux personnes à faible revenu en leur fournissant nourriture et vêtements * soutien financier à la mission des organismes communautaires de la communauté * soutien au logement | Clientèle : Personnes à faible revenu * organismes communautaires de la région | Âges : 5 an(s) - 80 an(s)",
     "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-externe-de-main-d-oeuvre-hy",
+    "name": "Service externe de main-d'oeuvre de Granby et région",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-3771 poste 207",
+    "description": "Accompagnement dans les recherches d'emploi * services aux employeurs * aide à la recherche d'emploi : curriculum vitae efficace, lettre de présentation, préparation aux entrevues, marché caché de l'e ... [Plus] | Âges : 45 an(s) et plus",
+    "website": "http://www.semogranby.ca",
+    "address": "Granby, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -78674,6 +81648,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service.",
     "isProvinceWide": true
+  },
+  {
+    "id": "services-de-perfectionnement-300-hy",
+    "name": "Services de Perfectionnement 3000",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-0005",
+    "description": "Permet aux personnes désireuses d'acquérir des compétences liées au domaine de l'administration et de la bureautique de retourner sur le marché du travail avec des compétences élargies * ateliers de f ... [Plus] | Clientèle : Chercheurs d'emploi | Âges : 18 an(s) et plus",
+    "website": "http://www.sp3000.org",
+    "address": "47 Rue Drummond, Granby, QC J2G 2S3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "drum-garde-milieu-familial",
@@ -79100,6 +82087,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au mercredi 9h00 à 16h00"
   },
   {
+    "id": "shefford-h-tel-de-ville-hy",
+    "name": "Shefford. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Shefford",
+    "province": "QC",
+    "phone": "450-539-2258",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Contribuables",
+    "website": "http://cantonshefford.qc.ca/",
+    "address": "Shefford, QC J2M 1H9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "shop-bulles-la-cap",
     "name": "Shop à bulles (La)",
     "category": "social",
@@ -79159,6 +82159,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-849-9054",
     "description": "Club de ski de fond de la région de Québec * ski de fond * randonnée pédestre * raquette * location de salle * location d'équipements",
     "address": "375 Rue de l'Aventure, Québec, QC G2M 0M6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-alzheimer-brome-missisquo-hy",
+    "name": "Société Alzheimer Brome-Missisquoi et Haute-Yamaska, Société Alzheimer Granby et région",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-3363",
+    "description": "Allège les conséquences personnelles et sociales de la maladie d'Alzheimer * promotion de la recherche biomédicale et psychosociale * répit-stimulation * rencontres individuelles ou de groupes * souti ... [Plus] | Clientèle : Personnes concernées par la maladie d'Alzheimer ou par des affections connexes ainsi que leurs proches | Âges : 40 an(s) et plus",
+    "website": "http://www.alzheimergranby.ca",
+    "address": "328 Rue Principale local 240, Granby, QC J2G 2W4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -80257,6 +83270,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "soci-t-d-histoire-de-la-haute-ya-hy",
+    "name": "Société d'histoire de la Haute-Yamaska",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-4500",
+    "description": "Promouvoir et diffuser l'histoire régionale. Recueillir et conserver les archives d'intérêt régional et national. Favoriser la préservation du patrimoine. * service de généalogie * bibliothèque de réf ... [Plus] | Âges : 7 an(s) - 99 an(s)",
+    "website": "http://www.shhy.info",
+    "address": "142 Rue Dufferin #200, Granby, QC J2G 4X1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "soci-t-d-histoire-et-de-g-n-alog-cap",
     "name": "Société d'histoire et de généalogie de Charlesbourg",
     "category": "social",
@@ -80319,6 +83345,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Regroupement de personnes intéressées par l'horticulture et la préservation de l'environnement * conférences mensuelles * cours, ateliers et voyages * échange de plantes et semences * bibliothèque * r ... [Plus]",
     "website": "http://www.horticulturebeauport.ca",
     "address": "999 Av. De Rochebelle local 121, Québec, QC G1V 0J6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-horticulture-de-granby-hy",
+    "name": "Société d'horticulture de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-1400",
+    "description": "Faire connaître et aimer la nature et favoriser l'embellissement de nos milieux de vie * conférences (dernier mercredi du mois, sauf en juillet et août) * cours * ateliers * jardin de fleurs ouvert à ... [Plus] | Clientèle : Amateurs d'horticulture et ceux qui désirent apprendre",
+    "address": "135 Rue Principale, Granby, QC J2G 2V1, Canada",
     "hours": "Voir site web"
   },
   {
@@ -81597,6 +84635,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "soci-t-du-verbe-divin-hy",
+    "name": "Société du Verbe Divin",
+    "category": "immigration",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-7732",
+    "description": "Communauté religieuse de pastorale biblique catholique et de pastorale auprès des immigrants d'origine latine. * centre de pastorale biblique * retraites * conférences * ateliers bibliques * cours de ... [Plus] | Clientèle : Immigrants d'origine latine et travailleurs saisonniers",
+    "address": "Rue du Verbe-Divin, Granby, QC J0E, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "soci-t-du-domaine-maizerets-cap",
     "name": "Société du domaine Maizerets",
     "category": "social",
@@ -81966,6 +85016,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "soci-t-protectrice-des-animaux-d-hy",
+    "name": "Société protectrice des animaux des Cantons",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-263-1117",
+    "description": "Amélioration de la qualité de vie des animaux domestiques en contribuant à leur santé, bien-être et sécurité * promotion du respect de la vie animale * réception, cueillette, hébergement et soins des ... [Plus]",
+    "website": "http://spadescantons.com",
+    "address": "1507 Rue Principale, Granby, QC J2J 0S4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "soci-t-qu-b-coise-d-ethnologie-cap",
     "name": "Société québécoise d'ethnologie",
     "category": "social",
@@ -82092,6 +85155,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "",
     "description": "Instance de mobilisation de personnes et d'organisations de la MRC de Portneuf préoccupées par la sécurité alimentaire * Regroupement de partenaires qui collaborent pour assurer un accès digne et dura ... [Plus] | Clientèle : Organismes communautaires * grand public",
     "address": "Saint-Marc-des-Carrières, QC G0A, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "solidarit-ethnique-r-gionale-de--hy",
+    "name": "Solidarité ethnique régionale de la Yamaska",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Réception 450-777-7213",
+    "description": "Intégration des personnes immigrantes dans les divers milieux de la ville de Granby et de la région environnante * aide à l'installation : informations sur le logement * référencement * francisation * ... [Plus] | Clientèle : Personnes immigrantes",
+    "website": "http://www.sery-granby.org",
+    "address": "369 Rue Saint-Jacques, Granby, QC J2G 3N3, Canada",
     "hours": "Voir site web"
   },
   {
@@ -84084,6 +87160,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "transition-pour-elles-hy",
+    "name": "Transition pour elles",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-1565",
+    "description": "Hébergement pour les femmes de toutes conditions (perte d'emploi, rupture, dépression, problèmes de santé mentale et autres) afin d'acquérir le plus d'autonomie possible dans un environnement chaleure ... [Plus] | Clientèle : Femmes | Âges : 18 an(s) et plus",
+    "website": "http://www.transitionpourelles.ca/",
+    "address": "110 Rue Dufferin, Granby, QC J2G 4W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "transiti-n-qu-bec-out",
     "name": "Transitiôn Québec",
     "category": "housing",
@@ -84158,6 +87247,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Transport adapté aux personnes ayant un handicap et transport collectif selon les places disponibles | Clientèle : Personnes admises ayant un handicap intellectuel, ambulatoire ou psychique * le grand public selon les places disponibles",
     "website": "http://www.transadaptelislet.ca",
     "address": "240 Rue Saint-Pierre, Saint-Pamphile, QC G0R 3X0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "transport-adapt-pour-nous-hy",
+    "name": "Transport adapté pour nous",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-4711",
+    "description": "Transport adapté aux personnes handicapées et à mobilité réduite | Clientèle : Personnes à mobilité réduite admissibles au transport adapté selon les critères du Ministère des Transports du Québec (MTQ)",
+    "website": "http://www.tapournous.ca",
+    "address": "5401 Rue Foster, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "transport-collectif-en-milieu-ru-hy",
+    "name": "Transport collectif en milieu rural de la MRC de la Haute-Yamaska",
+    "category": "health",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-4515",
+    "description": "Tansport collectif pour les citoyens des municipalités rurales de la MRC de La Haute-Yamaska * service de transport en direction de Granby pour des soins de santé, loisirs, travail et études * service ... [Plus] | Clientèle : Citoyens de la MRC de La Haute-Yamaska",
+    "website": "http://www.haute-yamaska.ca",
+    "address": "Waterloo, QC J0E, Canada",
     "hours": "Voir site web"
   },
   {
@@ -84512,6 +87627,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi de 8h00 à 16h00, mardi 18h00 à 20h00"
   },
   {
+    "id": "troupe-musicophonie-la-hy",
+    "name": "Troupe Musicophonie (La)",
+    "category": "health",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-521-3920",
+    "description": "Spectacles de chant dans le but de recueillir des fonds pour la Fondation Louis-Philippe Janvier qui vient en aide des jeunes adultes atteints de cancer * chorale d'environ 70 bénévoles * pratiques * ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.musicophonie.com",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "troupe-paramonde-cap",
     "name": "Troupe Paramonde",
     "category": "social",
@@ -84559,6 +87687,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Arts de la scène * production, diffusion de spectacles de variété et de comédies musicales | Âges : 10 an(s) et plus",
     "website": "http://chaudbiz.ca",
     "address": "300 Bd la Salle, Baie-Comeau, QC G4Z 0A6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "troupe-de-l-atelier-th-tre-de-gr-hy",
+    "name": "Troupe de l'Atelier Théâtre de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-991-1297",
+    "description": "Promotion du théâtre et réalisation d'une pièce devant public * développement de diverses habiletés en lien avec cet objectif * présentation chaque année d'une pièce de qualité aux fervents de théâtre ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "http://www.theatregranby.com",
+    "address": "135 Rue Principale, Granby, QC J2G 2V1, Canada",
     "hours": "Voir site web"
   },
   {
@@ -84646,6 +87787,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "581-985-3730",
     "description": "Promotion de la danse folklorique internationale à travers les différentes cultures * cours * organisation de soirées de danse | Clientèle : Le grand public",
     "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "t-l-communautaire-de-waterloo-hy",
+    "name": "Télé communautaire de Waterloo",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-2282 poste 281",
+    "description": "Promouvoir et produire des émissions télévisuelles locales et communautaires. * production vidéo * formation * copie et transfert DVD Accréditations/affiliations : Fédération des télévisions communaut ... [Plus] | Clientèle : Clients de Vidéotron et via Internet",
+    "website": "http://www.tvcw.tv",
+    "address": "Waterloo, QC J0E, Canada",
     "hours": "Voir site web"
   },
   {
@@ -84777,6 +87931,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Télévision communautaire faisant connaître la vie des gens de la région par une programmation axée sur l'information, l'éducation et le divertissement * conception, réalisation, montage et diffusion d ... [Plus]",
     "website": "http://www.tvcotv.com",
     "address": "63 Rue Ambroise Fafard local 1130, Baie-Saint-Paul, QC G3Z 2J7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "t-l-vision-locale-de-granby-matv-hy",
+    "name": "Télévision locale de Granby - MAtv",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-574-3250",
+    "description": "Production et diffusion d'émissions de télévision | Clientèle : Clients de Vidéotron (chaîne 9 et 609)",
+    "website": "http://www.matv.ca",
+    "address": "135 Rue Principale, Granby, QC J2G 2V1, Canada",
     "hours": "Voir site web"
   },
   {
@@ -84956,6 +88123,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Promotion et soutien au développement du loisir et du sport de la région de la Capitale-Nationale, en partenariat avec les intervenants du milieu, afin d'en favoriser l'accessibilité à l'ensemble de l ... [Plus] | Clientèle : Organismes en loisir et sport",
     "website": "http://www.ulscn.qc.ca",
     "address": "1000 Ave Saint-Jean-Baptiste, Québec City, QC G2E 5G5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "unit-de-sauvetage-haute-yamaska-hy",
+    "name": "Unité de sauvetage Haute-Yamaska",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-2611",
+    "description": "Services bénévoles spécialisés en sauvetage et survie * aide aux sinistrés * premiers soins (pour activités diverses) * recherche en forêt * sauvetage général (homme-araignée) Service d'intervention d ... [Plus]",
+    "website": "http://www.ushy.org",
+    "address": "581 Rue Rutherford, Granby, QC J2G 3Z2, Canada",
     "hours": "Voir site web"
   },
   {
@@ -85542,6 +88722,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "vics-les-hy",
+    "name": "Vics (Les)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "",
+    "description": "Soutien au développement des jeunes joueurs de hockey de catégorie élite pour les aider à accéder aux niveaux supérieurs * formation * pratiques * parties et tournois | Clientèle : Communication par courriel seulement | Âges : 9 an(s) - 17 an(s)",
+    "address": "601 Rue Léon-Harmel, Granby, QC J2G 3G5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ab-cavac-ab",
     "name": "Victim Services Alberta",
     "category": "family",
@@ -85579,6 +88771,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.victimservicestoronto.com",
     "address": "40, College St, Toronto, ON M5G 2J3",
     "hours": "Service essentiel Ontario."
+  },
+  {
+    "id": "vie-culturelle-et-communautaire--hy",
+    "name": "Vie culturelle et communautaire de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-361-6081",
+    "description": "Activités et des événements à caractère culturel et communautaire pour la population * animation des programmes d'activités (cours et ateliers) * gestion du programme des camps de jour et de la semain ... [Plus]",
+    "website": "http://vccgranby.org",
+    "address": "279 Rue Principale bureau 211, Granby, QC J2G 2W1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "vieux-longueuil-arrondissement-mtg",
@@ -85889,6 +89094,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "voitures-anciennes-de-granby-hy",
+    "name": "Voitures anciennes de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-777-1330",
+    "description": "Conseils pour la conservation et la restauration de voitures anciennes * Organisation des rencontres et des expositions * service de recherche de pièces pour les voitures anciennes Événements/activité ... [Plus] | Clientèle : Amateurs de voitures | Âges : 5 an(s) - 99 an(s)",
+    "website": "http://www.vagi.qc.ca",
+    "address": "1498 Rue Principale, Granby, QC J2J 2A3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "voix-et-solidarit-des-aidants-na-out",
     "name": "Voix Et Solidarité Des Aidants Naturels De La Vallée De La Gatineau",
     "category": "social",
@@ -85965,6 +89183,70 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.municipalitedewaltham.ca",
     "address": "69, rue de l'Hôtel-de-Ville, Waltham, Outaouais, QC, J0X 3H0",
     "hours": "lundi à jeudi 08h30 à 16h00"
+  },
+  {
+    "id": "warden-h-tel-de-ville-hy",
+    "name": "Warden. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Warden",
+    "province": "QC",
+    "phone": "450-539-1349",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Contribuables",
+    "address": "Warden, QC J0E, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "waterloo-h-tel-de-ville-hy",
+    "name": "Waterloo. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-2282",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Contribuables",
+    "website": "http://www.ville.waterloo.qc.ca",
+    "address": "417 Rue de la Cour, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "waterloo-h-tel-de-ville-ar-na-ja-hy",
+    "name": "Waterloo. Hôtel de ville, Aréna Jacques-Chagnon de Waterloo",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-2282 poste 423",
+    "description": "Offrir la possibilité de pratiquer des sports sur glace * hockey * patinage artistique * patinage libre * location salle commune | Âges : 2 an(s) et plus",
+    "website": "http://www.ville.waterloo.qc.ca",
+    "address": "417 Rue de la Cour, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "waterloo-h-tel-de-ville-ar-na-ja-hy-2",
+    "name": "Waterloo. Hôtel de ville, Aréna Jacques-Chagnon de Waterloo, Service des loisirs, Club de patinage artistique de Waterloo",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-531-5669",
+    "description": "Programmes de patinage artistique pour tous les niveaux et toutes les habiletés * soutien l'accomplissement personnel * \" Mini glace\" programme d'initiation au patinage artistique qui s'adresse aux je ... [Plus] | Âges : 3 an(s) et plus",
+    "website": "http://www.cpawaterloo.com",
+    "address": "205 Rue Lewis O, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "waterloo-h-tel-de-ville-service--hy",
+    "name": "Waterloo. Hôtel de ville, Service des loisirs",
+    "category": "social",
+    "subcategory": "",
+    "city": "Waterloo",
+    "province": "QC",
+    "phone": "450-539-2282",
+    "description": "Programmes et installations de loisirs pour la population * activités de loisirs * terrains de soccer * terrains de tennis * patinoires * parc de planches à roulettes * piste de poussée de bobsleigh * ... [Plus]",
+    "website": "http://www.ville.waterloo.qc.ca",
+    "address": "417 Rue de la Cour, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "imm-wmc-mtl",
@@ -86216,6 +89498,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "young-at-heart-and-shuffleboard-hy",
+    "name": "Young at Heart and Shuffleboard",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "Résidence 450-372-8354",
+    "description": "Activités sociales anglophones pour les personnes âgées de la région * réunions mensuelles * jeux de cartes * jeux de table * shuffleboard * autres activités | Clientèle : Personnes âgées parlant principalement en anglais | Âges : 50 an(s) et plus",
+    "address": "Granby, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "yt-yhss",
     "name": "Yukon Health and Social Services",
     "category": "health",
@@ -86279,6 +89573,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://zooecomuseum.ca/fr",
     "address": "21125, chemin Sainte-Marie, Sainte-Anne-de-Bellevue, Montréal, QC, H9X 3Y7",
     "hours": "7 jours, 9h00 à 17h00"
+  },
+  {
+    "id": "zoo-de-granby-hy",
+    "name": "Zoo de Granby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-372-9113",
+    "description": "Institution de conservation et d'éducation présentant des espèces exotiques d'animaux, un aquarium, un parc aquatique et un parc de manèges * visites de groupes * programmes spécifiques auprès des éta ... [Plus]",
+    "website": "http://www.zoodegranby.com",
+    "address": "1050 Boulevard David-Bouchard N, Granby, QC J2G 5L8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "z-bre-rouge-le-mtg",
@@ -86921,6 +90228,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "cole-secondaire-du-verbe-divin-hy",
+    "name": "École secondaire du Verbe Divin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-1074",
+    "description": "Éducation secondaire privée * services éducatifs * programme immersion anglaise, découverte * concentrations : danse, tennis, soccer, vélo de montagne, équitation, hockey LHPS M-12, M13, M15, M16, M17 ... [Plus] | Clientèle : Jeunes de niveau secondaire",
+    "website": "http://www.verbedivin.com",
+    "address": "1021 Rue Cowie, Granby, QC J2G 8W8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "colivres-ca",
     "name": "Écolivres",
     "category": "social",
@@ -86996,6 +90316,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.educ-a-tout.ca",
     "address": "2002, avenue de l'Union, Saint-Césaire, Montérégie, QC, J0L 1T0",
     "hours": "lundi au vendredi 9h00 à 16h00, sur rendez-vous"
+  },
+  {
+    "id": "glise-fusion-hy",
+    "name": "Église Fusion",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-375-6946",
+    "description": "Église chrétienne évangélique accréditée par l'Association Chrétienne pour la Francophonie (ACF) * célébrations (louange et prédication) * baptêmes, mariages et funérailles * prière * aide communautai ... [Plus]",
+    "website": "http://eglisefusion.com/",
+    "address": "223 Rue St Charles S, Granby, QC J2G 7A5, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "eglise-presbyterienne-st-columba-by-pcl",
@@ -87151,6 +90484,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "cabiberville.org",
     "address": "290, avenue des Conseillers, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 1Z8",
     "hours": "mardi et mercredi 13h00 à 16h00, jeudi et vendredi 8h30 à 11h30"
+  },
+  {
+    "id": "pilepsie-mont-r-gie-hy",
+    "name": "Épilepsie Montérégie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-378-8876",
+    "description": "Organisme de sensibilisation, d'accompagnement, de promotion et de défenses du droit des personnes qui vivent avec l'épilepsie. * aide individuelle et de groupe * accompagnement * ateliers et rencontr ... [Plus] | Clientèle : Personnes qui vivent avec l'épilepsie et l'entourage",
+    "website": "http://www.epilepsiemonteregie.org",
+    "address": "18 Rue Court, Granby, QC J2G 4Y6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "pilepsie-section-de-qu-bec-cap",
