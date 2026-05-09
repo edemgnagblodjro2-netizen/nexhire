@@ -533,6 +533,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi."
   },
   {
+    "id": "qc-fam-adhara-anciennement-continuit-famille-aupr-s-des-d-tenues-cf",
+    "name": "ADHARA – Anciennement Continuité-famille auprès des détenues (CFAD)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-989-9891",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "2685 Rue Allard, Montréal (Québec) H4E 2L7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-imm-gatineau-aco",
     "name": "AFIO – Accompagnement femmes immigrantes Outaouais",
     "category": "immigration",
@@ -1118,6 +1130,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "qc-fam-action-famille-lanoraie",
+    "name": "Action Famille Lanoraie",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lanoraie",
+    "province": "QC",
+    "phone": "450-887-2624",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "42, avenue Louis-Joseph-Doucet, Lanoraie (Québec) J0K 1E0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "action-familles-de-la-plaine-trb",
     "name": "Action Familles de la Plaine",
     "category": "food",
@@ -1386,6 +1410,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://aide.org",
     "address": "342, rue Bowen Sud, Sherbrooke, QC J1G 2E2",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "qc-fam-actions-familles-ste-martine-st-urbain",
+    "name": "Actions familles Ste-Martine/St-Urbain",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Martine",
+    "province": "QC",
+    "phone": "450-427-1576",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "122, rue Saint-Joseph, suite 1, Sainte-Martine (Québec) J0S 1V0",
+    "hours": "Voir site web"
   },
   {
     "id": "activit-s-pr-scolaires-de-brossa-mtg",
@@ -1968,6 +2004,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Accompagnement pratique pour l'installation des nouveaux arrivants : logement, école pour les enfants, services médicaux, documents officiels et orientation.",
     "address": "919, boulevard du Saint-Maurice, Trois-Rivières, QC G9A 3R1",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "qc-fam-aide-parents-plus",
+    "name": "Aide-Parents Plus",
+    "category": "family",
+    "subcategory": "",
+    "city": "Jonquière",
+    "province": "QC",
+    "phone": "418-547-4792",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "3842, boulevard Harvey, suite 101, Jonquière (Québec) G7X 2Z4",
+    "hours": "Voir site web"
   },
   {
     "id": "aidons-lait-cap",
@@ -3297,6 +3345,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au dimanche"
   },
   {
+    "id": "qc-fam-amiti-soleil",
+    "name": "Amitié Soleil",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-937-5876",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "715, rue Chatham, Montréal (Québec) H3J 1Z3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ampli-de-qu-bec-cap",
     "name": "Ampli de Québec",
     "category": "social",
@@ -3603,6 +3663,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Ateliers permettant aux adultes d'acquérir des compétences de base * acquisition et enrichissement de la connaissance en langue française des personnes immigrantes * aide au raccrochage scolaire, sout ... [Plus] | Clientèle : Jeunes, adultes et aînés ayant des difficultés en écriture, calcul et lecture * personnes immigrantes * bibliothèque mobile pour enfants de 0-5 ans et leurs parents",
     "website": "http://www.apprendre-autrement.com",
     "address": "2A Pl. de l'Église, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-apprendre-en-c-ur",
+    "name": "Apprendre en cœur",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Rémi",
+    "province": "QC",
+    "phone": "450-454-0400",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "25, rue Saint-Sauveur, Saint-Rémi (Québec) J0L 2L0",
     "hours": "Voir site web"
   },
   {
@@ -4144,6 +4216,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "agapeassociationinc.com",
     "address": "3950, boulevard Notre-Dame, Chomedey, Laval, QC, H7W 1S7",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "qc-fam-association-carrefour-famille-montcalm",
+    "name": "Association Carrefour Famille Montcalm",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Lin-Laurentides",
+    "province": "QC",
+    "phone": "450-439-2669",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "20, chemin Payette, Saint-Lin-Laurentides (Québec) J5M 0L4",
+    "hours": "Voir site web"
   },
   {
     "id": "association-carrefour-famille-montc-sll",
@@ -5856,6 +5940,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-association-des-familles-du-centre-sud",
+    "name": "Association des Familles du Centre-Sud",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-564-3063",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1489, Rue Dufresne, Montréal (Québec) H2K 3J4",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-des-nig-riens-de-qu--ca",
     "name": "Association des Nigériens de Québec",
     "category": "social",
@@ -6044,6 +6140,30 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Regroupement de familles de victimes, assassinées ou disparues offrant accompagnement, conseils et défense des intérêts Forum Internet et conférences Accompagnement des familles * accompagnement et pr ... [Plus] | Clientèle : Familles d'une personne assassinée ou disparue criminellement",
     "website": "http://www.afpad.ca",
     "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-association-des-familles-monoparentales-et-recompos-es-la-so",
+    "name": "Association des familles monoparentales et recomposées La Source (AFMR La Source)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Victoriaville",
+    "province": "QC",
+    "phone": "819-758-4144",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "59, rue Monfette, Bureau 218, Victoriaville (Québec) G6P 1J8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-association-des-familles-monoparentales-et-recompos-es-de-l-",
+    "name": "Association des familles monoparentales et recomposées de l’Outaouais (AFMRO)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819-771-3269",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "85, boulevard St-Joseph, Gatineau (Québec) J8Y 3W6",
     "hours": "Voir site web"
   },
   {
@@ -6246,6 +6366,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Regroupement de Musulmans de Lévis dotant cette communauté d'un lieu de culte * promotion de l'intégration des membres dans la société québécoise * rencontres sociales * information, conférences et do ... [Plus] | Clientèle : Membres de la communauté musulmane * le grand public",
     "website": "http://mosqueedelevis.com",
     "address": "5020 Bd Guillaume-Couture, Lévis, QC G6V, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-association-des-parents-de-c-te-des-neiges",
+    "name": "Association des parents de Côte-des-Neiges",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-341-2844",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "6767, chemin de la Côte-Des-Neiges, bureau 498, Montréal (Québec) H3S 2T6",
     "hours": "Voir site web"
   },
   {
@@ -8903,6 +9035,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "qc-fam-baobab-familial",
+    "name": "Baobab familial",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-734-4097",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "6767, chemin de la Côte-des-Neiges, bureau 599, Montréal (Québec) H3S 2T6",
+    "hours": "Voir site web"
+  },
+  {
     "id": "baratte-la-cap",
     "name": "Baratte (La)",
     "category": "social",
@@ -9160,6 +9304,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Service de protection contre les incendies * prévention * sécurité civile Véhicules et équipement * 201 Ford F-150 / Maxi-Métal 2001 : camionnette * 301 Freightliner M2 / Levasseur 2007 : autopompe * ... [Plus]",
     "website": "http://www.villedebeaupre.com",
     "address": "11330 Bd Sainte-Anne, Beaupré, QC G0A 1E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-bedon-bout-chou-anciennement-naissance-renaissance-estrie",
+    "name": "Bedon & bout’chou (anciennement Naissance Renaissance Estrie)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sherbrooke",
+    "province": "QC",
+    "phone": "819-569-3119",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1190, rue Bowen Sud, Sherbrooke (Québec) J1G 2H1",
     "hours": "Voir site web"
   },
   {
@@ -10701,6 +10857,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.amendes.qc.ca",
     "address": "200, rue Saint-Marc, bureau RC-36, Joliette, Lanaudière, QC, J6E 8C2",
     "hours": "lundi, mardi, jeudi et vendredi 8h30 à 12h00 et 13h00 à 16h30, mercredi 10h00 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "qc-fam-bureau-d-aide-et-d-assistance-familiale-baaf",
+    "name": "Bureau d’aide et d’assistance familiale (BAAF)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450-681-9979",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1885, avenue Dumouchel, bureau 202, Laval (Québec) H7S 1J7",
+    "hours": "Voir site web"
   },
   {
     "id": "butineuse-de-vanier-la-cap",
@@ -17642,6 +17810,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00, activités en soirée"
   },
   {
+    "id": "qc-fam-carrefour-familial-hochelaga",
+    "name": "Carrefour Familial Hochelaga",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-523-9283",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1611, avenue d’Orléans, Montréal (Québec) H1W 3R4",
+    "hours": "Voir site web"
+  },
+  {
     "id": "carrefour-familial-des-moulins-trb",
     "name": "Carrefour Familial des Moulins",
     "category": "employment",
@@ -17926,6 +18106,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "qc-fam-carrefour-parenfants",
+    "name": "Carrefour Parenfants",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-259-6127",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "4650, rue Ontario Est, Montréal (Québec) H1V 1L2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "carrefour-point-tournant-mtg",
     "name": "Carrefour Point Tournant",
     "category": "mentalHealth",
@@ -18039,6 +18231,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Organisation d'activités de loisirs pour les aînés * danse en ligne * conditionnement physique * stretching * zumba * tennis et pickleball * soirée * location de salle | Clientèle : Location de locaux 581-985-4040 | Âges : 50 an(s) et plus",
     "website": "http://sites.google.com/view/carrefour-de-lauvergne",
     "address": "6350 3e Avenue E, Québec, QC G1H 3K8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-carrefour-de-la-mis-ricorde",
+    "name": "Carrefour de la Miséricorde",
+    "category": "family",
+    "subcategory": "",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819-643-5797",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "355, rue Laviolette, Gatineau (Québec) J8P 5Z1",
     "hours": "Voir site web"
   },
   {
@@ -18197,6 +18401,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-carrefour-familial-de-manseau",
+    "name": "Carrefour familial de Manseau",
+    "category": "family",
+    "subcategory": "",
+    "city": "Manseau",
+    "province": "QC",
+    "phone": "819-356-2010",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "210-B, rue St-Alphonse, Manseau (Québec) G0X 1V0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "carrefour-familial-des-personnes-cap",
     "name": "Carrefour familial des personnes handicapées",
     "category": "social",
@@ -18207,6 +18423,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Aide et entraide pour les personnes handicapées et leurs proches Aide et entraide * interventions individuelles auprès des personnes ayant des limitations motrices * soutien aux démarches administrati ... [Plus] | Clientèle : Personnes ayant un handicap physique | Âges : 12 an(s) et plus",
     "website": "http://www.cfph.org",
     "address": "360 Rue du Pont, Québec, QC G1K 6M6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-carrefour-familial-les-pitchou",
+    "name": "Carrefour familial les Pitchou",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-640-6200",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "14115 rue Prince-Arthur Est, bureau 330, Montréal (Québec) H1A 1A8",
     "hours": "Voir site web"
   },
   {
@@ -18829,6 +19057,30 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Soutien aux personnes en démarche de reprise en main face à la rupture du projet familial afin de briser l'isolement et réorganiser leur mode de vie * accueil, écoute téléphonique et référence * accom ... [Plus] | Clientèle : Familles monoparentales * familles recomposées * personnes seules * cuisine collective pour personnes seules et familles monoparentales ou recomposées à faible revenu",
     "website": "http://carrefourfmportneuf.com",
     "address": "759 Rue St Cyrille, Saint-Raymond, QC G3L 1W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-carrefour-naissance-famille",
+    "name": "Carrefour naissance-famille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450-743-0359",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "5750, chemin St-Roch, Sorel-Tracy (Québec) J3R 3L9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-carrefour-p-ri-naissance-et-familial",
+    "name": "Carrefour péri-naissance et familial",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Eustache",
+    "province": "QC",
+    "phone": "450-472-2555",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "509, chemin de la Grande-Côte, Saint-Eustache (Québec) J7P 1K5",
     "hours": "Voir site web"
   },
   {
@@ -24941,18 +25193,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
-    "id": "msss-clsc-nicolet-centre-multiservices-de-sante-et-de-services-sociaux-christ-",
-    "name": "Centre Multiservices De Santé Et De Services Sociaux Christ-Roi",
-    "category": "health",
-    "subcategory": "CLSC",
-    "city": "Nicolet",
-    "province": "QC",
-    "phone": "819-293-2071",
-    "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CIUSSS De La Mauricie-Et-Du-Centre-Du-Québec. Source: MSSS – Fichier M02 des installations.",
-    "address": "675, rue Saint-Jean-Baptiste, Nicolet, QC J3T 1S4",
-    "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
-  },
-  {
     "id": "msss-clsc-quebec-centre-multiservices-de-sante-et-de-services-sociaux-christ-",
     "name": "Centre Multiservices De Santé Et De Services Sociaux Christ-Roi",
     "category": "health",
@@ -24962,6 +25202,18 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-525-4444",
     "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CIUSSS De La Capitale-Nationale. Source: MSSS – Fichier M02 des installations.",
     "address": "900, boulevard Wilfrid-Hamel, Québec, QC G1M 2R9",
+    "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
+  },
+  {
+    "id": "msss-clsc-nicolet-centre-multiservices-de-sante-et-de-services-sociaux-christ-",
+    "name": "Centre Multiservices De Santé Et De Services Sociaux Christ-Roi",
+    "category": "health",
+    "subcategory": "CLSC",
+    "city": "Nicolet",
+    "province": "QC",
+    "phone": "819-293-2071",
+    "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CIUSSS De La Mauricie-Et-Du-Centre-Du-Québec. Source: MSSS – Fichier M02 des installations.",
+    "address": "675, rue Saint-Jean-Baptiste, Nicolet, QC J3T 1S4",
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
@@ -26063,6 +26315,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à Pekuakamiulnuatsh Takuhikan. Source: MSSS – Fichier M02 des installations.",
     "address": "1823, rue Amishk, Mashteuiatsh, QC G0W 2H0",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "qc-fam-centre-unissons-la-famille",
+    "name": "Centre Unissons la Famille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Matagami",
+    "province": "QC",
+    "phone": "819-739-2404",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "180, Place du Commerce C.P. 2050 Local 107, Matagami (Québec) J0Y 2A0",
+    "hours": "Voir site web"
   },
   {
     "id": "centre-yvon-mercier-ca",
@@ -27525,6 +27789,30 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h"
   },
   {
+    "id": "qc-fam-centre-de-ressources-familiales-du-haut-st-laurent",
+    "name": "Centre de Ressources Familiales du Haut St-Laurent",
+    "category": "family",
+    "subcategory": "",
+    "city": "Huntingdon",
+    "province": "QC",
+    "phone": "450-264-4598",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "16, rue King, Huntingdon (Québec) J0S 1H0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-centre-de-ressources-p-rinatales-autour-du-b-b",
+    "name": "Centre de Ressources Périnatales, Autour du bébé",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-667-0584",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1270-1290, rue Fleury Est, Montréal (Québec) H2C 1R1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-de-ressources-pour-hommes-du-msc",
     "name": "Centre de Ressources pour Hommes du Sud de Lanaudière",
     "category": "family",
@@ -27873,6 +28161,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-centre-de-la-famille-st-pie",
+    "name": "Centre de la Famille St-Pie",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Pie",
+    "province": "QC",
+    "phone": "450-772-6828",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "70, Avenue St-François, Saint-Pie (Québec) J0H1W0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-de-la-francophonie-des-am-cap",
     "name": "Centre de la francophonie des Amériques",
     "category": "social",
@@ -28194,6 +28494,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Âges : 5 an(s) et moins",
     "website": "http://www.cperayonsdesoleil.com",
     "address": "800 Rue Laro, Roxton Pond, QC J0E 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-centre-de-l-enfant-pont-magique",
+    "name": "Centre de l’enfant Pont Magique",
+    "category": "family",
+    "subcategory": "",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819-930-9123",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "20, bd Lorrain, Gatineau (Québec) J8P 2C8",
     "hours": "Voir site web"
   },
   {
@@ -30453,6 +30765,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-centre-des-familles-monoparentales-et-recompos-es-de-qu-bec-",
+    "name": "Centre des Familles monoparentales et recomposées de Québec (CFMRQ)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418-529-0137",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1750 Avenu De Vitré, Suite 102, Québec (Québec) G1J 1Z6",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-des-femmes-west-island-pcl",
     "name": "Centre des Femmes West Island",
     "category": "social",
@@ -30489,6 +30813,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Diffuseur de spectacles pluridisciplinaires accomplissant le mandat de la gestion du Centre des arts de Baie-Comeau * activités culturelles et éducatives * salle à l’italienne de 840 places * salle à ... [Plus] | Clientèle : Billetterie 418-295-2000",
     "website": "http://centredesartsbc.com",
     "address": "1660 Rue de Bretagne, Baie-Comeau, QC G5C 3S3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-centre-des-enfants",
+    "name": "Centre des enfants",
+    "category": "family",
+    "subcategory": "",
+    "city": "Chicoutimi",
+    "province": "QC",
+    "phone": "418-602-1834",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "522, rue Sainte-Anne, Chicoutimi (Québec) G7J 2N4",
     "hours": "Voir site web"
   },
   {
@@ -30554,6 +30890,30 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre de loisirs * salle de quille * billard * gymnase * location de salle pour événements et réunions",
     "website": "http://www.sainteannedebeaupre.com",
     "address": "10000 Bd Sainte-Anne, Sainte-Anne-de-Beaupré, QC G0A 3C0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-centre-d-animation-familiale",
+    "name": "Centre d’Animation Familiale",
+    "category": "family",
+    "subcategory": "",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819-561-5196",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1312, rue Saint-Louis, Gatineau (Québec) J8T 2M7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-centre-d-intervention-familiale-le-transit",
+    "name": "Centre d’intervention familiale Le Transit",
+    "category": "family",
+    "subcategory": "",
+    "city": "Jonquière",
+    "province": "QC",
+    "phone": "418-695-2780",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "2469, rue Saint-Dominique, Jonquière (Québec) G7X 6K4",
     "hours": "Voir site web"
   },
   {
@@ -32812,6 +33172,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Communauté chrétienne de personnes voulant vivre la vie marianiste et s'y engageant selon leurs dons, goûts et disponibilités * écoute-prière en personne ou au téléphone * sessions pour grandir dans l ... [Plus]",
     "website": "http://www.centremarianiste.org",
     "address": "1525 Chem. du Bord-de-l'Eau, Saint-Henri, QC G0R 3E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-centre-multi-ressources-de-lachine",
+    "name": "Centre multi-ressources de Lachine",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-634-3658",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "514, 19ème Avenue, Bureau 309, Montréal (Québec) H8S 3S5",
     "hours": "Voir site web"
   },
   {
@@ -35379,6 +35751,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-cible-famille-brandon",
+    "name": "Cible Famille Brandon",
+    "category": "family",
+    "subcategory": "",
+    "city": "QC",
+    "province": "QC",
+    "phone": "450-835-9094",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "15, rue Monday, St-Gabriel-de-Brandon, QC (Québec) J0K2N0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "cienov-rep",
     "name": "Cienov",
     "category": "employment",
@@ -36344,6 +36728,18 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "819 522-6695",
     "description": "* Activités récréatives: jeux de cartes, pétanques, quilles, etc.* Repas communtaires.* Souper dansant. | Clientèle: grand public | Territoire: Outaouais | Statut: organisme à but non lucratif",
     "address": "267, rue Notre-Dame, Notre-Dame-De-La-Paix, Outaouais, QC, J0V 1P0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-club-parentaide-beauce-centre",
+    "name": "Club Parentaide Beauce Centre",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Jules",
+    "province": "QC",
+    "phone": "418-397-1460",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "390-A, rue Principale, Saint-Jules (Québec) G0N 1R0",
     "hours": "Voir site web"
   },
   {
@@ -37962,19 +38358,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
-    "id": "qc-log-laval-cll",
-    "name": "Comité logement de Laval",
-    "category": "housing",
-    "subcategory": "Droits locataires",
-    "city": "Laval",
-    "province": "QC",
-    "phone": "450-661-7906",
-    "description": "",
-    "website": "https://www.comitelogementlaval.ca",
-    "address": "1326, boul. Saint-Martin Est, Laval, QC H7E 3M1",
-    "hours": "Lun-ven 9h-17h. Consultation et défense des droits des locataires."
-  },
-  {
     "id": "h-cl-laval",
     "name": "Comité logement de Laval",
     "category": "housing",
@@ -37986,6 +38369,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://comitelogementlaval.org",
     "address": "295, boul. Cartier Ouest, bureau 5, Laval, QC H7N 2J5",
     "hours": "Lun-ven 9h-17h. Consultations sur RV."
+  },
+  {
+    "id": "qc-log-laval-cll",
+    "name": "Comité logement de Laval",
+    "category": "housing",
+    "subcategory": "Droits locataires",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450-661-7906",
+    "description": "",
+    "website": "https://www.comitelogementlaval.ca",
+    "address": "1326, boul. Saint-Martin Est, Laval, QC H7E 3M1",
+    "hours": "Lun-ven 9h-17h. Consultation et défense des droits des locataires."
   },
   {
     "id": "qc-log-sherbrooke-cls",
@@ -39260,6 +39656,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Ligne d'écoute active destinée à toute personne ressentant le besoin de parler, de briser l'isolement et d'exprimer une détresse | Clientèle : Ligne d'écoute pour Lévis 418-838-4095 | Âges : 18 an(s) et plus",
     "website": "http://www.benevoleenaction.com/tel-ecoute-du-littoral/le-service",
     "address": "10 Rue Giguère, Lévis, QC G6V 1N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-coop-re",
+    "name": "CooPÈRE",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-419-4736",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "3958, rue Dandurand, Montréal (Québec) H1X 1P7",
     "hours": "Voir site web"
   },
   {
@@ -43379,20 +43787,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
-    "id": "mh-drogue-aide",
-    "name": "Drogue : aide et référence",
-    "category": "mentalHealth",
-    "subcategory": "Dépendance substances",
-    "city": "Province",
-    "province": "QC",
-    "phone": "1-800-265-2626",
-    "description": "Ligne provinciale gratuite 24/7 pour problèmes de consommation. Source: aidedrogue.ca.",
-    "website": "https://aidedrogue.ca",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi.",
-    "isProvinceWide": true
-  },
-  {
     "id": "urgent-drogue-aide",
     "name": "Drogue : aide et référence",
     "category": "mentalHealth",
@@ -43404,6 +43798,20 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
     "isUrgent": true,
+    "isProvinceWide": true
+  },
+  {
+    "id": "mh-drogue-aide",
+    "name": "Drogue : aide et référence",
+    "category": "mentalHealth",
+    "subcategory": "Dépendance substances",
+    "city": "Province",
+    "province": "QC",
+    "phone": "1-800-265-2626",
+    "description": "Ligne provinciale gratuite 24/7 pour problèmes de consommation. Source: aidedrogue.ca.",
+    "website": "https://aidedrogue.ca",
+    "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi.",
     "isProvinceWide": true
   },
   {
@@ -43546,6 +43954,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre de formation spirituelle * programme résidentiel de 14-18 mois fondé sur l'acceptation des principes bibliques comme moyen de transformation * cours, mini-conférences, travaux, activités * suiv ... [Plus] | Clientèle : Hommes avec problèmes psychosociaux, en rupture avec leur entourage et désirant se prendre en main avec l'aide de Dieu | Âges : 18 an(s) et plus",
     "website": "http://www.defijeunesse.org",
     "address": "878 Rang St François, Lotbinière, QC G0S 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-d-fi-famille-matawinie",
+    "name": "Défi-Famille Matawinie",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Jean-de-Matha",
+    "province": "QC",
+    "phone": "450-886-0458",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "244, rue Ste-Louise, Saint-Jean-de-Matha (Québec) J0K 2S0",
     "hours": "Voir site web"
   },
   {
@@ -43977,19 +44397,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
-    "id": "pw7",
-    "name": "Emploi-Québec",
-    "category": "employment",
-    "subcategory": "Services d'emploi",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-888-643-4721",
-    "description": "Services publics d'emploi. Aide à la recherche d'emploi, formations professionnelles et prestations.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service.",
-    "isProvinceWide": true
-  },
-  {
     "id": "emp-emploi-quebec",
     "name": "Emploi-Québec",
     "category": "employment",
@@ -44001,6 +44408,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.emploiquebec.gouv.qc.ca",
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30.",
+    "isProvinceWide": true
+  },
+  {
+    "id": "pw7",
+    "name": "Emploi-Québec",
+    "category": "employment",
+    "subcategory": "Services d'emploi",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-888-643-4721",
+    "description": "Services publics d'emploi. Aide à la recherche d'emploi, formations professionnelles et prestations.",
+    "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service.",
     "isProvinceWide": true
   },
   {
@@ -44403,6 +44823,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-entraide-parents",
+    "name": "Entraide Parents",
+    "category": "family",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418-684-0050",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1450, boulevard Père-Lelièvre, local H, Québec (Québec) G1M 1N9",
+    "hours": "Voir site web"
+  },
+  {
     "id": "entraide-parkinson-beauce-ca",
     "name": "Entraide Parkinson Beauce",
     "category": "social",
@@ -44425,6 +44857,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Regroupement de personnes ayant un handicap et leur famille * sensibilisation de la population aux besoins et capacités de la personne ayant un handicap * collaboration avec les bénévoles et partenair ... [Plus] | Clientèle : Personnes ayant une déficience physique, intellectuelle, sensorielle, un trouble envahissant du développement (TED), problème de santé mentale et leurs proches | Âges : 15 an(s) et plus",
     "website": "http://www.entraidepascaltache.org",
     "address": "147 Rue Labbé, L'Islet, QC G0R 2B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-entraide-pont-viau",
+    "name": "Entraide Pont Viau",
+    "category": "family",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450-663-8039",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "664, rue Saint-André, Laval (Québec) H7G 3A5",
     "hours": "Voir site web"
   },
   {
@@ -44645,6 +45089,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi, mardi, jeudi 8h30 à 17h00, mercredi et vendredi 8h30 à 20h00"
   },
   {
+    "id": "qc-fam-entre-parents-de-montr-al-nord",
+    "name": "Entre Parents de Montréal-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal-Nord",
+    "province": "QC",
+    "phone": "514-329-1233",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "4828, boulevard Gouin Est, Montréal-Nord (Québec) H1H 1G4",
+    "hours": "Voir site web"
+  },
+  {
     "id": "entrepreneuriat-haute-yamaska-hy",
     "name": "Entrepreneuriat Haute-Yamaska",
     "category": "social",
@@ -44839,6 +45295,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
+    "id": "qc-fam-escale-famille-le-triolet",
+    "name": "Escale Famille Le Triolet",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-252-0289",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "6910, avenue Pierre-De Coubertin, Montréal (Québec) H1N 1T6",
+    "hours": "Voir site web"
+  },
+  {
     "id": "escale-saint-rosaire-l-out",
     "name": "Escale Saint-Rosaire (L')",
     "category": "social",
@@ -44900,6 +45368,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Création, production et diffusion d'événements de théâtre professionnel destinés au grand public de la région * troupe de théâtre * aide à la rédaction de textes * formation et développement de la dra ... [Plus] | Clientèle : Artistes * auteurs * interprètes indépendants",
     "website": "http://www.espacektheatre.com",
     "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-espace-ludiko",
+    "name": "Espace Ludiko",
+    "category": "family",
+    "subcategory": "",
+    "city": "Val-David",
+    "province": "QC",
+    "phone": "819-323-6881",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1280 Rue Dion, Val-David (Québec) J0T 2N0",
     "hours": "Voir site web"
   },
   {
@@ -45006,6 +45486,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-espace-famille-villeray",
+    "name": "Espace-Famille Villeray",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-858-1878",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "7626, rue Saint-Hubert, Montréal (Québec) H2R 2N6",
+    "hours": "Voir site web"
+  },
+  {
     "id": "espacelab-cap",
     "name": "EspaceLab",
     "category": "social",
@@ -45016,6 +45508,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Ressource communautaire du réseau « Fab labs » donnant accès à des machines-outils numériques pour la fabrication d'objets * partage du catalogue évolutif d'un noyau de capacités pour fabriquer n'impo ... [Plus] | Âges : 8 an(s) et plus",
     "website": "https://espace-lab.org/",
     "address": "3643 Av. des Compagnons, Québec, QC G1X 3Z6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-espoir-rosalie",
+    "name": "Espoir Rosalie",
+    "category": "family",
+    "subcategory": "",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819-243-7663",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "763, rue St-Louis, Gatineau (Québec) J8T 2S9",
     "hours": "Voir site web"
   },
   {
@@ -45992,6 +46496,42 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "danse: 2e dimanche du mois, pétanque: mardi et jeudi soir"
   },
   {
+    "id": "qc-fam-famijeunes",
+    "name": "Famijeunes",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-931-5115",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "3904, rue Notre-Dame Ouest, Montréal (Québec) H4C 1R1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-famille-espoir",
+    "name": "Famille Espoir",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sherbrooke",
+    "province": "QC",
+    "phone": "819-569-7923",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1520, rue Dunant, Sherbrooke (Québec) J1H 4A2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-famille-plus",
+    "name": "Famille Plus",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sherbrooke",
+    "province": "QC",
+    "phone": "819-822-0835",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1035, rue Genest, Sherbrooke (Québec) J1K 2A2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "famille-secours-ste-rose-de-lima-out",
     "name": "Famille Secours - Ste-Rose De Lima",
     "category": "food",
@@ -46017,6 +46557,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00, certains soirs et fins de semaine"
   },
   {
+    "id": "qc-fam-famille-c-ur",
+    "name": "Famille à Cœur",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450-346-1734",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "130, rue Saint-Georges, Saint-Jean-sur-Richelieu (Québec) J3B 2S8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "familles-d-abord-out",
     "name": "Familles D'Abord",
     "category": "social",
@@ -46028,6 +46580,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "famillesdabord.com",
     "address": "38, rue Principale, Gracefield, Outaouais, QC, J0X 1W0",
     "hours": "lundi au jeudi 8h00 à 16h00"
+  },
+  {
+    "id": "qc-fam-familles-en-action",
+    "name": "Familles en action",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-932-6373",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1909, rue Centre, Montréal (Québec) H3K 1J1",
+    "hours": "Voir site web"
   },
   {
     "id": "ab-child-family-ab",
@@ -46108,6 +46672,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.fsgv.ca",
     "address": "1638 E Broadway, Vancouver, BC V5N 1W1",
     "hours": "Lun-ven 8h30-16h30. Sur RV."
+  },
+  {
+    "id": "qc-fam-family-ties-carrefour-famille-new-carlisle",
+    "name": "Family Ties – Carrefour Famille New Carlisle",
+    "category": "family",
+    "subcategory": "",
+    "city": "New Carlisle",
+    "province": "QC",
+    "phone": "418-752-7265",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "208 A, Boulevard Gérard D.-Levesque, C.P. 279, New Carlisle (Québec) G0C 1Z0",
+    "hours": "Voir site web"
   },
   {
     "id": "pe-family-pe",
@@ -49824,6 +50400,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-groupe-d-entraide-maternelle-de-la-petite-patrie-gem",
+    "name": "Groupe d’entraide maternelle de la Petite Patrie (GEM)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-495-3494",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "6848, avenue Christophe-Colomb, Montréal (Québec) H2S 2H2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "groupe-scout-georges-p-pin-de-gr-hy",
     "name": "Groupe scout Georges-Pépin de Granby",
     "category": "social",
@@ -50522,6 +51110,30 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Inciter et orienter les personnes vivant des difficultés * briser l'isolement * lieu d’accueil, d’écoute et d’échange * jeux",
     "website": "https://www.paroissendf.com/prier-et-partager/halte-st-joseph",
     "address": "820 Rue du Chanoine-Martin, Québec, QC G1V 3P6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-halte-parents-de-la-vall-e-maison-de-la-famille-de-l-estran",
+    "name": "Halte-Parents de la Vallée – Maison de la Famille de l’Estran",
+    "category": "family",
+    "subcategory": "",
+    "city": "Grande-Vallée",
+    "province": "QC",
+    "phone": "418-393-2023",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "15, rue St-François-Xavier Est, Grande-Vallée (Québec) G0E 1K0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-halte-famille-la-pirouette",
+    "name": "Halte-famille La Pirouette",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-527-4828",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1901, rue Gilford, #2, Montréal (Québec) H2H 1G8",
     "hours": "Voir site web"
   },
   {
@@ -51997,18 +52609,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
-    "id": "msss-hopital-montreal-hopital-general-juif",
-    "name": "Hôpital Général Juif",
-    "category": "health",
-    "subcategory": "Hôpital",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "",
-    "address": "4335, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E4",
-    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
-  },
-  {
     "id": "msss-hopital-montreal-hopital-general-juif-2",
     "name": "Hôpital Général Juif",
     "category": "health",
@@ -52020,6 +52620,18 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "3755, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E2",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "msss-hopital-montreal-hopital-general-juif",
+    "name": "Hôpital Général Juif",
+    "category": "health",
+    "subcategory": "Hôpital",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "",
+    "address": "4335, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E4",
+    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
     "id": "msss-hopital-saint-hyacinthe-hopital-honore-mercier",
@@ -52880,18 +53492,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
-    "id": "msss-chsld-montreal-institut-universitaire-en-sante-mentale-de-montreal",
-    "name": "Institut Universitaire En Santé Mentale De Montréal",
-    "category": "health",
-    "subcategory": "CHSLD",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "",
-    "address": "7401, rue Hochelaga, Montréal, QC H1N 3M5",
-    "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
-  },
-  {
     "id": "msss-centre-hospitalier-psychiatrique-montreal-institut-universitaire-en-sante-mentale-de-montreal",
     "name": "Institut Universitaire En Santé Mentale De Montréal",
     "category": "mentalHealth",
@@ -52902,6 +53502,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS De L'Est-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
     "address": "7401, rue Hochelaga, Montréal, QC H1N 3M5",
     "hours": "Service de crise disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "msss-chsld-montreal-institut-universitaire-en-sante-mentale-de-montreal",
+    "name": "Institut Universitaire En Santé Mentale De Montréal",
+    "category": "health",
+    "subcategory": "CHSLD",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "",
+    "address": "7401, rue Hochelaga, Montréal, QC H1N 3M5",
+    "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
     "id": "msss-chsld-quebec-institut-universitaire-en-sante-mentale-de-quebec",
@@ -53067,6 +53679,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Maison d'hébergement de 2e étape pour femmes et enfants victimes de violence conjugale et familiale * 20 logements | Clientèle : Administration 418-353-2874",
     "website": "http://www.interelles.ca",
     "address": "400 3e Ave, Québec City, QC G1L 2V8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-interaction-famille-hochelaga-maisonneuve",
+    "name": "Interaction Famille Hochelaga-Maisonneuve",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-251-4671",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "2560, rue Théodore, Montréal (Québec) H1V 3C6",
     "hours": "Voir site web"
   },
   {
@@ -53238,6 +53862,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu de formation adapté aux adultes présentant un trouble du spectre de l'autisme visant le maintien et le développement de l'autonomie des participants ainsi que leur socialisation et participatio ... [Plus] | Clientèle : Adultes présentant un trouble du spectre de l'autisme (TSA) | Âges : 18 an(s) et plus",
     "website": "http://www.integrationtsa.com",
     "address": "5255 Rue Rideau, Québec, QC G2E 5H5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-int-gration-sociale-des-enfants-en-milieu-de-garde-isemg",
+    "name": "Intégration sociale des enfants en milieu de garde (ISEMG)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450-646-2714",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "386, de Gentilly Ouest, Suite 105, Longueuil (Québec) J4H 2A1",
     "hours": "Voir site web"
   },
   {
@@ -53932,6 +54568,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.joujouthequefarfouille.org",
     "address": "845, rue Saint-Louis, Joliette, Lanaudière, QC, J6E 3A3",
     "hours": "mardi 9h00 à 17h00, mercredi 9h00 à 20h00, jeudi 9h00 à 17h00, vendredi et samedi 9h00 à 15h00"
+  },
+  {
+    "id": "qc-fam-joujouth-que-st-michel",
+    "name": "Joujouthèque St-Michel",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-381-9974",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "9480, rue Irène-Joly, Montréal (Québec) H1Z 4L2",
+    "hours": "Voir site web"
   },
   {
     "id": "journal-le-hublot-ca",
@@ -54852,6 +55500,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-la-halte-familiale",
+    "name": "La Halte Familiale",
+    "category": "family",
+    "subcategory": "",
+    "city": "Beauharnois",
+    "province": "QC",
+    "phone": "450-225-2725",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "600, rue Ellice, bureau 303, Beauharnois (Québec) J6N 3P7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-hopital-quebec-la-maison-michel-sarrazin",
     "name": "La Maison Michel-Sarrazin",
     "category": "health",
@@ -54863,6 +55523,30 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "2101, chemin Saint-Louis, Québec, QC G1T 1P5",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "qc-fam-la-maison-ouverte",
+    "name": "La Maison Ouverte",
+    "category": "family",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418-627-0904",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "111, 58e Rue Est, Secteur Charlesbourg, Québec (Québec) G1H 2E7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-pause-parent",
+    "name": "La Maison Pause-Parent",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Jérôme",
+    "province": "QC",
+    "phone": "450-565-0015",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "424, rue du Palais, Saint-Jérôme (Québec) J7Z 1Y1",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-vc-montreal-cri",
@@ -54878,6 +55562,150 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Hébergement confidentiel 24h/24. Appeler d'abord."
   },
   {
+    "id": "qc-fam-la-maison-de-quartier-de-fabreville",
+    "name": "La Maison de Quartier de Fabreville",
+    "category": "family",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450-625-5453",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "3031, boulevard Dagenais Ouest, Laval (Québec) H7P 1T4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-de-la-famille-de-chibougamau-mirador-des-marmots",
+    "name": "La Maison de la Famille de Chibougamau – Mirador des Marmots",
+    "category": "family",
+    "subcategory": "",
+    "city": "Chibougamau",
+    "province": "QC",
+    "phone": "418-748-2463",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "501, 4e Rue, Chibougamau (Québec) G8P 1S4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-de-la-famille-de-malartic",
+    "name": "La Maison de la Famille de Malartic",
+    "category": "family",
+    "subcategory": "",
+    "city": "Malartic",
+    "province": "QC",
+    "phone": "819-757-6755",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "161, avenue Abitibi, Malartic (Québec) J0Y 1Z0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-de-la-famille-de-saint-l-onard",
+    "name": "La Maison de la Famille de Saint-Léonard",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-852-6161",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "8180, rue Collerette, Montréal (Québec) H1P 2V5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-de-la-famille-des-maskoutains",
+    "name": "La Maison de la Famille des Maskoutains",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450-771-4010",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "2130, avenue Mailhot, Saint-Hyacinthe (Québec) J2S 9E1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-de-la-famille-du-nord",
+    "name": "La Maison de la Famille du Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Mont-Tremblant",
+    "province": "QC",
+    "phone": "819-425-5407",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "725, rue Saint-Jovite, Mont-Tremblant (Québec) J8E 3J8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-de-la-famille-la-mosaik-mosaik-family-resource-cen",
+    "name": "La Maison de la Famille la Mosaik/Mosaik Family Resource Center",
+    "category": "family",
+    "subcategory": "",
+    "city": "Hampstead",
+    "province": "QC",
+    "phone": "514-227-1270",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "6215, chemin de la Côte-Saint-Luc, Hampstead (Québec) H3X 2H3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-de-la-famille-mrc-bonaventure",
+    "name": "La Maison de la Famille-MRC Bonaventure",
+    "category": "family",
+    "subcategory": "",
+    "city": "Bonaventure",
+    "province": "QC",
+    "phone": "418-534-4449",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "105, avenue Grand-Pré, local 104, Bonaventure (Québec) G0C 1E0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-de-la-famille-avignon",
+    "name": "La Maison de la famille Avignon",
+    "category": "family",
+    "subcategory": "",
+    "city": "Pointe-à-la-Croix",
+    "province": "QC",
+    "phone": "418-788-3359",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "30B, rue Chouinard, Pointe-à-la-Croix (Québec) G0C 1L0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-de-la-famille-de-longue-rive",
+    "name": "La Maison de la famille de Longue-Rive",
+    "category": "family",
+    "subcategory": "",
+    "city": "Longue-Rive",
+    "province": "QC",
+    "phone": "418-231-2037",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "350, route 138, C.P. 611, Longue-Rive (Québec) G0T 1Z0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-de-la-famille-de-rouyn-noranda",
+    "name": "La Maison de la famille de Rouyn-Noranda",
+    "category": "family",
+    "subcategory": "",
+    "city": "Rouyn-Noranda",
+    "province": "QC",
+    "phone": "819-764-5243",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "380, avenue Richard, local 110, Rouyn-Noranda (Québec) J9X 4L3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-de-la-famille-de-sherbrooke",
+    "name": "La Maison de la famille de Sherbrooke",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sherbrooke",
+    "province": "QC",
+    "phone": "819-791-4142",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "72, rue Victoria, Sherbrooke (Québec) J1H 3H7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-vc-gatineau-maison-amis",
     "name": "La Maison des Amis du coeur – Gatineau",
     "category": "housing",
@@ -54891,6 +55719,138 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Hébergement confidentiel 24h/24. Appeler d'abord."
   },
   {
+    "id": "qc-fam-la-maison-des-enfants-de-la-mont-r-gie",
+    "name": "La Maison des Enfants de la Montérégie",
+    "category": "family",
+    "subcategory": "",
+    "city": "Varennes",
+    "province": "QC",
+    "phone": "450-929-1488",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "Espace des Bâtisseurs – 2022 Place du 350e, bureau 203, Varennes (Québec) J3X 0K9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-des-familles-famillaction",
+    "name": "La Maison des Familles FamillAction",
+    "category": "family",
+    "subcategory": "",
+    "city": "Val-des-Sources",
+    "province": "QC",
+    "phone": "819-879-0902",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "454, rue Binette, Val-des-Sources (Québec) J1T 3Z1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-des-familles-de-victoriaville",
+    "name": "La Maison des Familles de Victoriaville",
+    "category": "family",
+    "subcategory": "",
+    "city": "Victoriaville",
+    "province": "QC",
+    "phone": "819-758-4041",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "86, rue St-Paul, Victoriaville (Québec) G6P 9C8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-des-parents-de-bordeaux-cartierville",
+    "name": "La Maison des Parents de Bordeaux-Cartierville",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-745-1144",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "5680, rue Salaberry, # 2, Montréal (Québec) H4J 1J7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-des-parents-du-qu-bec",
+    "name": "La Maison des Parents du Québec",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Jérôme",
+    "province": "QC",
+    "phone": "450-438-7708",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "117, rue Saint-Georges, Saint-Jérôme (Québec) J7Z 4Z8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-des-enfants-de-l-le-de-montr-al",
+    "name": "La Maison des enfants de l’île de Montréal",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-526-9128",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1844, boulevard Pie-IX, Montréal (Québec) H1V 2C6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-des-enfants-le-dauphin-de-laval",
+    "name": "La Maison des enfants le Dauphin de Laval",
+    "category": "family",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450-978-2664",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "799, rue Loranger, Laval (Québec) H7V 1Z5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-des-familles-de-granby-et-r-gion",
+    "name": "La Maison des familles de Granby et région",
+    "category": "family",
+    "subcategory": "",
+    "city": "Granby",
+    "province": "QC",
+    "phone": "450-776-2232",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "162, rue St-Charles Sud, Granby (Québec) J2G 7A4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-des-familles-de-mercier-est",
+    "name": "La Maison des familles de Mercier-Est",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-354-6044",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "700, rue Georges-Bizet, Montréal (Québec) H1L 5S9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-des-familles-de-la-mitis",
+    "name": "La Maison des familles de la Mitis",
+    "category": "family",
+    "subcategory": "",
+    "city": "Mont-Joli",
+    "province": "QC",
+    "phone": "418-775-9193",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "46, avenue Pierre-Normand, Mont-Joli (Québec) G5H 2A4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-petits-pas",
+    "name": "La Maison À Petits Pas",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-522-6461",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "3511, rue de Rouen, Montréal (Québec) H1W 1L8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "la-maison-h-bergement-transitoir-hy",
     "name": "La Maison, Hébergement transitoire en santé mentale",
     "category": "housing",
@@ -54901,6 +55861,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Maison d’hébergement supervisé de transition pour les adultes avec des problématiques de santé mentale, des problèmes émotionnels, des difficultés de fonctionnement dans leur vie quotidienne et à risq ... [Plus] | Âges : 18 an(s) - 55 an(s)",
     "website": "https://lamaisonsantementale.org/",
     "address": "3 Rue Cairns, Granby, QC J2G 2S4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maisonnette-des-parents",
+    "name": "La Maisonnette des Parents",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-272-7507",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "6651, boulevard Saint-Laurent, Montréal (Québec) H2S 3C5",
     "hours": "Voir site web"
   },
   {
@@ -54941,6 +55913,54 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://moissonmaskoutaine.org",
     "address": "2540, rue Saint-Charles, Saint-Hyacinthe, QC J2T 1V6",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
+  },
+  {
+    "id": "qc-fam-la-m-reveille-naissance-renaissance-des-hautes-laurentides-c",
+    "name": "La Mèreveille naissance-renaissance des hautes-laurentides – centre de ressources périnatales",
+    "category": "family",
+    "subcategory": "",
+    "city": "Mont-Laurier",
+    "province": "QC",
+    "phone": "819-623-3009",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "2797, chemin Adolphe-Chapleau, Mont-Laurier (Québec) J9L 2N7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-nich-e",
+    "name": "La Nichée",
+    "category": "family",
+    "subcategory": "",
+    "city": "Alma",
+    "province": "QC",
+    "phone": "418-668-3738",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "705, avenue du Pont Nord, C.P. 2051, Alma (Québec) G8B 5W1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-parent-le-de-laval",
+    "name": "La Parentèle de Laval",
+    "category": "family",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450-662-9835",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "196, 7e avenue, Laval (Québec) H7N 4J6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-petite-maison-de-pointe-calumet",
+    "name": "La Petite Maison de Pointe-Calumet",
+    "category": "family",
+    "subcategory": "",
+    "city": "Pointe-Calumet",
+    "province": "QC",
+    "phone": "450-974-7556",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "861, boulevard de la Chapelle, Pointe-Calumet (Québec) J0N 1G1",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-refuge-laval-croix-chemin",
@@ -54995,6 +56015,30 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h00"
   },
   {
+    "id": "qc-fam-la-relance-jeunes-et-familles",
+    "name": "La Relance Jeunes et familles",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-525-1508",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "2260, rue Ontario Est, Montréal (Québec) H2K 1V8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-rel-ve-du-haut-saint-fran-ois",
+    "name": "La Relève du Haut-Saint-François",
+    "category": "family",
+    "subcategory": "",
+    "city": "Cookshire-Eaton",
+    "province": "QC",
+    "phone": "819-875-5050",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "54, rue Bibeau, Cookshire-Eaton (Québec) J0B 1M0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "la-romaine-conseil-de-la-nation--cn",
     "name": "La Romaine. Conseil de la Nation innue",
     "category": "health",
@@ -55045,6 +56089,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "qc-fam-la-station-de-l-aventure-maison-de-la-famille",
+    "name": "La Station de l’Aventure Maison de la famille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Léry",
+    "province": "QC",
+    "phone": "450-691-4897",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "540, chemin du Lac St-Louis, Léry (Québec) J6N 1A3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "tableedeschefs-qc",
     "name": "La Tablée des Chefs",
     "category": "food",
@@ -55058,6 +56114,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
   },
   {
+    "id": "qc-fam-la-boussole-centre-de-ressources-la-famille",
+    "name": "La boussole : Centre de ressources à la famille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Amable",
+    "province": "QC",
+    "phone": "514-929-2732",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "404, rue Alain, suite 3, Saint-Amable (Québec) J0L 1N0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "la-ch-vre-et-le-chou-ca",
     "name": "La chèvre et le chou",
     "category": "social",
@@ -55068,6 +56136,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Marché de proximité * produits locaux et artisanaux en ligne regroupant plus de 1500 produits de la région de Montmagny-L'Islet * marché passant du virtuel au physique lors des périodes de cueillette ... [Plus]",
     "website": "http://lachevreetlechou.ca",
     "address": "15 Rue Jacob, Cap-Saint-Ignace, QC G0R 1H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-la-maison-tremplin-de-longueuil",
+    "name": "La maison Tremplin de Longueuil",
+    "category": "family",
+    "subcategory": "",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450-442-4019",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "267, rue Toulouse, Longueuil (Québec) J4L 4X1",
     "hours": "Voir site web"
   },
   {
@@ -55643,6 +56723,30 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "qc-fam-le-berceau-saint-georges",
+    "name": "Le Berceau – Saint-Georges",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-0356",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "255, 136e rue, Saint-Georges (Québec) G5Y 2N6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-le-berceau-vall-e-jonction",
+    "name": "Le Berceau – Vallée-Jonction",
+    "category": "family",
+    "subcategory": "",
+    "city": "Vallée-Jonction",
+    "province": "QC",
+    "phone": "418-387-7974",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "420, rue Principale, Suite 102, Vallée-Jonction (Québec) G0S 3J0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "s-bunker-mtl",
     "name": "Le Bunker – Hébergement jeunes",
     "category": "social",
@@ -55669,6 +56773,42 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "qc-fam-le-carrefour-des-petits-soleils",
+    "name": "Le Carrefour des Petits Soleils",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-270-5471",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "5115, rue Rivard, Montréal (Québec) H2J 2P2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-le-centre-communautaire-val-martin-ccvm",
+    "name": "Le Centre communautaire Val-Martin (CCVM)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450-973-8787",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "828, 79e Avenue, Laval (Québec) H7V 3J1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-le-centre-de-la-famille-des-hautes-laurentides",
+    "name": "Le Centre de la famille des Hautes-Laurentides",
+    "category": "family",
+    "subcategory": "",
+    "city": "Mont-Laurier",
+    "province": "QC",
+    "phone": "819-623-7215",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "362, rue Salaberry, Mont-Laurier (Québec) J9L 1N7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "le-comptoir-d-aide-le-fouillis-ca",
     "name": "Le Comptoir d'aide Le Fouillis",
     "category": "social",
@@ -55679,6 +56819,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Comptoir d'aide à prix symbolique (vêtements, objets du quotidien, livres, jouets, vaisselle, literie...) * lieu d'accueil, d'implication et de réinsertion * réhabilitation sociale * valorisation des ... [Plus] | Clientèle : Personnes à faible revenu * le grand public",
     "website": "http://www.lefouillis.ca",
     "address": "47 Rue Saint-Joseph, Lévis, QC G6V 1A8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-le-fablier",
+    "name": "Le Fablier",
+    "category": "family",
+    "subcategory": "",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450-616-0620",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "2014, Chemin de Chambly, Longueuil (Québec) J4J 3Y2",
     "hours": "Voir site web"
   },
   {
@@ -55696,6 +56848,42 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "qc-fam-le-groupe-marraine-tendresse",
+    "name": "Le Groupe Marraine Tendresse",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Thérèse",
+    "province": "QC",
+    "phone": "450-435-6924",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "3, rue Blainville Est, Sainte-Thérèse (Québec) J7E 1L4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-le-jardin-du-coin-de-chicoutimi-nord",
+    "name": "Le Jardin du Coin de Chicoutimi-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Chicoutimi",
+    "province": "QC",
+    "phone": "418-698-6117",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "230, rue Diamant, Chicoutimi (Québec) G7G 3Z5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-le-lien-maison-de-la-famille",
+    "name": "Le Lien Maison de la Famille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Pierreville",
+    "province": "QC",
+    "phone": "450-568-1010",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "81, rue Maurault, # 579, Pierreville (Québec) J0G 1J0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "drum-garde-le-petit-monde-de-nancy",
     "name": "Le Petit Monde de Nancy",
     "category": "family",
@@ -55706,6 +56894,30 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "qc-fam-le-petit-r-pit",
+    "name": "Le Petit Répit",
+    "category": "family",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418-525-0858",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "157, des Chênes Ouest, bureau 220, Québec (Québec) G1L 1K6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-le-pignon-bleu-la-maison-pour-grandir",
+    "name": "Le Pignon Bleu – La Maison pour grandir",
+    "category": "family",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418-648-0598",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "271, rue Saint-Vallier Ouest, Québec (Québec) G1K 1K5",
+    "hours": "Voir site web"
   },
   {
     "id": "le-reflet-cap",
@@ -55864,6 +57076,42 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-le-relais-du-quartier",
+    "name": "Le Relais du Quartier",
+    "category": "family",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450-664-4711",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "4899, Rue Saint-Joseph, Laval (Québec) H7C1H6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-le-relais-familial-d-auteuil",
+    "name": "Le Relais familial d’Auteuil",
+    "category": "family",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450-628-3246",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "6135, boulevard des Laurentides, suite 1, Laval (Québec) H7H 2V3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-le-rendez-vous-familial",
+    "name": "Le Rendez-vous Familial",
+    "category": "family",
+    "subcategory": "",
+    "city": "Drummondville",
+    "province": "QC",
+    "phone": "819-478-9322",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "4520-B, boulevard St-Joseph, Drummondville (Québec) J2A 1B2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "le-rep-re-manicouagan-cn",
     "name": "Le Repère Manicouagan",
     "category": "family",
@@ -55914,6 +57162,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi."
   },
   {
+    "id": "qc-fam-le-centre-d-aide-aux-familles-les-enfants-de-l-espoir-de-hul",
+    "name": "Le centre d’aide aux familles – Les Enfants de l’Espoir de Hull",
+    "category": "family",
+    "subcategory": "",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819-778-5259",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "107 Rue Dollard-des Ormeaux, Gatineau (Québec) J8X 3M2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "tr-garde-le-monde-des-souris",
     "name": "Le monde des souris",
     "category": "family",
@@ -55925,6 +57185,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "qc-fam-le-petit-train",
+    "name": "Le petit train",
+    "category": "family",
+    "subcategory": "",
+    "city": "Chapais",
+    "province": "QC",
+    "phone": "418-745-3411",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1, rue du Rondpoint, Chapais (Québec) G0W 1H0",
+    "hours": "Voir site web"
   },
   {
     "id": "tr-garde-le-petit-voyage",
@@ -55979,6 +57251,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "qc-fam-les-animations-pace-ge",
+    "name": "Les Animations PACE-Âge",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lebel-sur-Quévillon",
+    "province": "QC",
+    "phone": "819-755-4247",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "73, place Quévillon, Lebel-sur-Quévillon (Québec) J0Y 1X0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "les-apprentis-centre-d-apprentis-out",
     "name": "Les Apprentis - Centre D'Apprentissage Pour La Déficience Intellectuelle",
     "category": "employment",
@@ -55990,6 +57274,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "lesapprentis.ca",
     "address": "410, boulevard Maloney Ouest, Gatineau, Outaouais, QC, J8P 6W2",
     "hours": "lundi au jeudi 8h00 à 15h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "qc-fam-les-ateliers-jardin-du-coin-st-honor-falardeau",
+    "name": "Les Ateliers Jardin du Coin St-Honoré-Falardeau",
+    "category": "family",
+    "subcategory": "",
+    "city": "St-Honoré",
+    "province": "QC",
+    "phone": "418-673-7105",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "3560, boulevard Martel, St-Honoré (Québec) G0V 1L0",
+    "hours": "Voir site web"
   },
   {
     "id": "les-bergeronnes-h-tel-de-ville-cn",
@@ -56069,6 +57365,30 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-les-jardins-du-coin-l-j-c-laterri-re-jonqui-re-chicoutimi",
+    "name": "Les Jardins du Coin L.J.C. (Laterrière-Jonquière-Chicoutimi)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Chicoutimi",
+    "province": "QC",
+    "phone": "418-545-7347",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "129, rue Jacques-Cartier Est, Chicoutimi (Québec) G7H 1Y4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-les-matin-es-parents-enfants",
+    "name": "Les Matinées parents-enfants",
+    "category": "family",
+    "subcategory": "",
+    "city": "Mont-Saint-Hilaire",
+    "province": "QC",
+    "phone": "438-887-0880",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "418 boul. Sir-Wilfrid-Laurier, Mont-Saint-Hilaire (Québec) J3H 3N9",
+    "hours": "Voir site web"
+  },
+  {
     "id": "drum-garde-les-petits-renards-futes",
     "name": "Les Petits Renards futés",
     "category": "family",
@@ -56103,6 +57423,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "qc-fam-les-relevailles-de-montr-al",
+    "name": "Les Relevailles de Montréal",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-640-6741",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "14115, rue Prince-Arthur, bureau 341, Montréal (Québec) H1A 1A8",
+    "hours": "Voir site web"
   },
   {
     "id": "les-souliers-nergiques-ca",
@@ -56378,18 +57710,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
-    "id": "v-ligne-parents",
-    "name": "LigneParents",
-    "category": "family",
-    "subcategory": "Soutien parental",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-361-5085",
-    "description": "Service d'écoute et d'intervention pour parents d'enfants 0-20 ans. Anonyme, confidentiel, gratuit. Téléphone, texto, clavardage. Disponible 24h/24.",
-    "hours": "Lun-ven 8h30-16h30. Sur RV.",
-    "isProvinceWide": true
-  },
-  {
     "id": "pw-ligneparents-famille",
     "name": "LigneParents",
     "category": "family",
@@ -56400,6 +57720,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "website": "https://www.ligneparents.com/",
     "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Sur RV.",
+    "isProvinceWide": true
+  },
+  {
+    "id": "v-ligne-parents",
+    "name": "LigneParents",
+    "category": "family",
+    "subcategory": "Soutien parental",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-361-5085",
+    "description": "Service d'écoute et d'intervention pour parents d'enfants 0-20 ans. Anonyme, confidentiel, gratuit. Téléphone, texto, clavardage. Disponible 24h/24.",
     "hours": "Lun-ven 8h30-16h30. Sur RV.",
     "isProvinceWide": true
   },
@@ -57180,6 +58512,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "qc-fam-lu-nid-maison-de-la-famille",
+    "name": "Lu-Nid, Maison de la Famille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Nicolet",
+    "province": "QC",
+    "phone": "819-293-8020",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "690, rue de Monseigneur Panet, local 105, Nicolet (Québec) J3T 1W1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ludoth-que-de-l-vis-ca",
     "name": "Ludothèque de Lévis",
     "category": "family",
@@ -57460,6 +58804,90 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Élus municipaux Maire Gilles Lehouillier Président du comité exécutif gilles.lehouillier@ville.levis.qc.ca District 1 Secteur Saint-Étienne Serge Bonin, conseiller sbonin@ville.levis.qc.ca District 2 ... [Plus]",
     "website": "http://www.ville.levis.qc.ca/la-ville/conseil-municipal/elus",
     "address": "2175 Chem. du Fleuve, Lévis, QC G6W 7W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-l-abc-de-la-famille",
+    "name": "L’ABC de la Famille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450-377-4380",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "20, rue St-Pierre, Salaberry-de-Valleyfield (Québec) J6T 3R7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-l-association-des-familles-monoparentales-et-recompos-es-des",
+    "name": "L’Association des familles monoparentales et recomposées des Grandes-Rivières (AFMR)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Dolbeau-Mistassini",
+    "province": "QC",
+    "phone": "418-276-0556",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1519-1, rue des Érables, Dolbeau-Mistassini (Québec) G8L 1C4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-l-envol-programme-d-aide-aux-jeunes-m-res",
+    "name": "L’Envol programme d’aide aux jeunes mères",
+    "category": "family",
+    "subcategory": "",
+    "city": "Longueuil (Secteur LeMoyne)",
+    "province": "QC",
+    "phone": "450-465-2584",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1660, rue de l’Église, Longueuil (Secteur LeMoyne) (Québec) J4P 2C8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-l-envol-maison-de-la-famille",
+    "name": "L’Envol – Maison de la famille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-1525",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "652, avenue de Quen, Sept-Îles (Québec) G4R 2R5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-l-escale-familiale-de-boucherville-ex-la-bambinerie-de-bouch",
+    "name": "L’Escale familiale de Boucherville (ex- La Bambinerie de Boucherville)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450-641-2366",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1075, rue Lionel-Daunais, Boucherville (Québec) J4B 8N5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-l-oasis-des-enfants-de-rosemont",
+    "name": "L’Oasis des Enfants de Rosemont",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-374-9111",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "2555, Rue Holt, Montréal (Québec) H1Y 1N4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-l-organisme-les-apprentis",
+    "name": "L’organisme Les Apprentis",
+    "category": "family",
+    "subcategory": "",
+    "city": "La Baie",
+    "province": "QC",
+    "phone": "418-697-6555",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1331, 2e Avenue, local #3, La Baie (Québec) G7B 1M6",
     "hours": "Voir site web"
   },
   {
@@ -59892,6 +61320,30 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-maison-parenfant-des-basses-laurentides",
+    "name": "Maison Parenfant des Basses-Laurentides",
+    "category": "family",
+    "subcategory": "",
+    "city": "Boisbriand",
+    "province": "QC",
+    "phone": "450-434-9934",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "183, chemin de la Grande-Côte, Boisbriand (Québec) J7G 1B6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-parent-aise",
+    "name": "Maison Parent-Aise",
+    "category": "family",
+    "subcategory": "",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450-752-0582",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "98, rue St-Pierre Sud, Joliette (Québec) J6E 5Y6",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-pauline-bonin-jol",
     "name": "Maison Pauline Bonin",
     "category": "employment",
@@ -60032,6 +61484,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "maisonvictor-gadbois.com",
     "address": "1000, rue Chabot, Saint-Mathieu-de-Beloeil, Montérégie, QC, J3G 0R8",
     "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "qc-fam-maison-citoyenne-des-familles-de-shawinigan",
+    "name": "Maison citoyenne des familles de Shawinigan",
+    "category": "family",
+    "subcategory": "",
+    "city": "Quebec",
+    "province": "QC",
+    "phone": "819-539-9464",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "383, rue Frigon, Shawinigan, Quebec (Québec) G9N 3X4",
+    "hours": "Voir site web"
   },
   {
     "id": "maison-communautaire-missinak-cap",
@@ -60188,6 +61652,90 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-maison-de-la-famille-de-bois-des-filion",
+    "name": "Maison de la Famille  de Bois-des-Filion",
+    "category": "family",
+    "subcategory": "",
+    "city": "Bois-des-Filion",
+    "province": "QC",
+    "phone": "450-965-0666",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "Maison de la Famille de Bois-des-Filion, 395, boulevard Adolphe-Chapleau, Bois-des-Filion (Québec) J6Z 1H5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-au-vent-du-lac",
+    "name": "Maison de la Famille Au Vent du Lac",
+    "category": "family",
+    "subcategory": "",
+    "city": "Ville-Marie",
+    "province": "QC",
+    "phone": "819-629-5505",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "57, rue Sainte-Anne, local 4, Ville-Marie (Québec) J9V 2B6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-d-a-c",
+    "name": "Maison de la Famille D.A.C.",
+    "category": "family",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418-623-5705",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "5560, 1re Avenue, Québec (Québec) G1H 2V7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-drummond",
+    "name": "Maison de la Famille Drummond",
+    "category": "family",
+    "subcategory": "",
+    "city": "Drummondville",
+    "province": "QC",
+    "phone": "819-478-9307",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "152, rue Saint-Damase, Drummondville (Québec) J2B 6G5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-kateri",
+    "name": "Maison de la Famille Kateri",
+    "category": "family",
+    "subcategory": "",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "450-659-9188",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "200, avenue de Balmoral, La Prairie (Québec) J5R 4L5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-la-parenth-se",
+    "name": "Maison de la Famille La Parenthèse",
+    "category": "family",
+    "subcategory": "",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450-582-2677",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "222, Boulevard Notre-Dame-des-Champs, Repentigny (Québec) J6A 3B5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-lemoyne",
+    "name": "Maison de la Famille LeMoyne",
+    "category": "family",
+    "subcategory": "",
+    "city": "Longueuil (Secteur LeMoyne)",
+    "province": "QC",
+    "phone": "450-465-3571",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1882, rue St-Georges, bureau 503, Longueuil (Secteur LeMoyne) (Québec) J4P 3J4",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-de-la-famille-nouvelle-be-ca",
     "name": "Maison de la Famille Nouvelle-Beauce et Centre de pédiatrie sociale en communauté",
     "category": "family",
@@ -60198,6 +61746,222 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Service de soutien, référencement et éducation pour favoriser l’adaptation, le bien-être et le fonctionnement des familles à toutes les étapes de la vie * halte-garderie (enfants de 0-5 ans sans milie ... [Plus] | Clientèle : * Familles * enfants * adolescents * adultes * couples * parents * grands-parents * aînés",
     "website": "http://www.maisonfamillenb.com",
     "address": "392 Av. Proulx, Sainte-Marie, QC G6E 4B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-pierre-bienvenu-noailles",
+    "name": "Maison de la Famille Pierre Bienvenu Noailles",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-337-1522",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "4350, rue de Salaberry, Montréal (Québec) H4J 1H3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-t-miscaming",
+    "name": "Maison de la Famille Témiscaming",
+    "category": "family",
+    "subcategory": "",
+    "city": "Témiscaming",
+    "province": "QC",
+    "phone": "819-627-7018",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "201, chemin Kipawa, C.P.1189, Témiscaming (Québec) J0Z 3R0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-valoise",
+    "name": "Maison de la Famille Valoise",
+    "category": "family",
+    "subcategory": "",
+    "city": "Acton Vale",
+    "province": "QC",
+    "phone": "450-546-4627",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "962, Rue Dubois, Acton Vale (Québec) J0H1A0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-vaudreuil-soulanges",
+    "name": "Maison de la Famille Vaudreuil-Soulanges",
+    "category": "family",
+    "subcategory": "",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450-218-0561",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "15, Rue Louise-Josephte, Vaudreuil-Dorion (Québec) J7V 6Y9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-vaudreuil-soulanges-saint-zotique",
+    "name": "Maison de la Famille Vaudreuil-Soulanges (Saint-Zotique)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Zotique",
+    "province": "QC",
+    "phone": "450-217-2177",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1008, rue Principale, Saint-Zotique (Québec) J0P 1Z0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-de-port-cartier",
+    "name": "Maison de la Famille de Port-Cartier",
+    "category": "family",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-8666",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "20-B, boulevard des Îles, C.P. 152, Port-Cartier (Québec) G5B 2G8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-de-senneterre",
+    "name": "Maison de la Famille de Senneterre",
+    "category": "family",
+    "subcategory": "",
+    "city": "Senneterre",
+    "province": "QC",
+    "phone": "819-737-4976",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "671, 10e Avenue, Senneterre (Québec) J0Y 2M0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-de-val-d-or",
+    "name": "Maison de la Famille de Val-d’Or",
+    "category": "family",
+    "subcategory": "",
+    "city": "Val-d’Or",
+    "province": "QC",
+    "phone": "819-874-3383",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1009, 6e Rue, Val-d’Or (Québec) J9P 3W4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-de-la-basse-c-te-nord",
+    "name": "Maison de la Famille de la Basse-Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Rivière Saint-Paul",
+    "province": "QC",
+    "phone": "",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "313, boulevard Bonne-Espérance, Rivière Saint-Paul (Québec) G0G 2P0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-de-la-vall-e-du-richelieu",
+    "name": "Maison de la Famille de la Vallée du Richelieu",
+    "category": "family",
+    "subcategory": "",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450-446-0852",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "91, boulevard Cartier, Beloeil (Québec) J3G 6R4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-des-basques",
+    "name": "Maison de la Famille des Basques",
+    "category": "family",
+    "subcategory": "",
+    "city": "Trois-Pistoles",
+    "province": "QC",
+    "phone": "418-851-2662",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "340, rue Jean Rioux, Trois-Pistoles (Québec) G0L 4K0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-des-fronti-res",
+    "name": "Maison de la Famille des Frontières",
+    "category": "family",
+    "subcategory": "",
+    "city": "Bedford",
+    "province": "QC",
+    "phone": "450-248-0595",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "213, rue Rivière, Bedford (Québec) J0J 1A0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-des-pays-d-en-haut",
+    "name": "Maison de la Famille des Pays-d’en-Haut",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Adèle",
+    "province": "QC",
+    "phone": "450-229-3354",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "480, rue des Capucines, Sainte-Adèle (Québec) J8B 1W5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-du-bassin-maskinong",
+    "name": "Maison de la Famille du Bassin Maskinongé",
+    "category": "family",
+    "subcategory": "",
+    "city": "Louiseville",
+    "province": "QC",
+    "phone": "819-228-8888",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "75, avenue Saint-Jacques, Louiseville (Québec) J5V 1C3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-du-grand-portage",
+    "name": "Maison de la Famille du Grand-Portage",
+    "category": "family",
+    "subcategory": "",
+    "city": "Rivière-du-Loup",
+    "province": "QC",
+    "phone": "418-860-4818",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "29, rue de la Cour, Rivière-du-Loup (Québec) G5R 1J1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-du-granit",
+    "name": "Maison de la Famille du Granit",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lac-Mégantic",
+    "province": "QC",
+    "phone": "819-583-1824",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "4284, rue Laval, Lac-Mégantic (Québec) G6B 1B6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-du-t-miscouata",
+    "name": "Maison de la Famille du Témiscouata",
+    "category": "family",
+    "subcategory": "",
+    "city": "Biencourt",
+    "province": "QC",
+    "phone": "418-499-2633",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "2, rue Principale Est, C.P. 114, Biencourt (Québec) G0K 1T0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-d-amos",
+    "name": "Maison de la Famille d’Amos",
+    "category": "family",
+    "subcategory": "",
+    "city": "Amos",
+    "province": "QC",
+    "phone": "819-727-2054",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "192, 2e Avenue Ouest, Amos (Québec) J9T 1S5",
     "hours": "Voir site web"
   },
   {
@@ -60224,6 +61988,30 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Réponse aux besoins de formation artistique et culturelle de la population et diffusion des arts de la scène * spectacles et cinéma * cours et ateliers (sessions automne et hiver) : musique, arts visu ... [Plus]",
     "website": "http://www.culturebellechasse.qc.ca",
     "address": "163c Rue Commerciale, Saint-Damien-de-Buckland, QC G0R 2Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-au-c-ur-des-g-n-rations-d-argenteuil",
+    "name": "Maison de la famille Au cœur des générations d’Argenteuil",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lachute",
+    "province": "QC",
+    "phone": "450-562-0503",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "232, avenue Béthany, C.P. 840, Lachute (Québec) J8H 2M8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-aux-quatre-vents",
+    "name": "Maison de la famille Aux quatre vents",
+    "category": "family",
+    "subcategory": "",
+    "city": "Berthierville",
+    "province": "QC",
+    "phone": "450-836-3770",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "85, rue Iberville, Berthierville (Québec) J0K 1A0",
     "hours": "Voir site web"
   },
   {
@@ -60265,6 +62053,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-maison-de-la-famille-c-ur-rivi-re",
+    "name": "Maison de la famille Cœur à Rivière",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-494-6555",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "9140, boulevard Perras, Montréal (Québec) H1E 7E4",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-de-la-famille-d-v-s-cap",
     "name": "Maison de la famille D.V.S.",
     "category": "family",
@@ -60278,6 +62078,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-maison-de-la-famille-des-chenaux",
+    "name": "Maison de la famille Des Chenaux",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Anne-de-la-Pérade",
+    "province": "QC",
+    "phone": "418-325-2120",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "100, rue de la Fabrique, Sainte-Anne-de-la-Pérade (Québec) G0X 2J0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-de-la-famille-droit-d-acc-cap",
     "name": "Maison de la famille Droit d'accès de Charlesbourg",
     "category": "family",
@@ -60288,6 +62100,54 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Prévention et aide aux individus, couples, parents et familles qui vivent des difficultés d'ordre relationnel ou d'adaptation * accueil, référence et écoute téléphonique * supervision droits de visite ... [Plus] | Clientèle : Individus, couples, parents et familles vivant des difficultés d'ordre relationnel ou d'adaptation",
     "website": "http://www.mfcharlesbourg.org",
     "address": "5560 1re Av., Québec, QC G1H 2V7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-joli-c-ur",
+    "name": "Maison de la famille Joli-Cœur",
+    "category": "family",
+    "subcategory": "",
+    "city": "Contrecoeur",
+    "province": "QC",
+    "phone": "450-587-2965",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "4865, rue Legendre, Contrecoeur (Québec) J0L 1C0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-les-arbrisseaux",
+    "name": "Maison de la famille Les Arbrisseaux",
+    "category": "family",
+    "subcategory": "",
+    "city": "Windsor",
+    "province": "QC",
+    "phone": "819-628-0077",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "111-115, rue St-Georges, Windsor (Québec) J1S 1J7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-memphr-magog",
+    "name": "Maison de la famille Memphrémagog",
+    "category": "family",
+    "subcategory": "",
+    "city": "Magog",
+    "province": "QC",
+    "phone": "819-868-0145",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "40, rue Jean-Paul II, Magog (Québec) J1X 1E3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-parenfant-de-gasp",
+    "name": "Maison de la famille Parenfant de Gaspé",
+    "category": "family",
+    "subcategory": "",
+    "city": "Gaspé",
+    "province": "QC",
+    "phone": "418-368-6028",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "12, rue de la Cathédrale, Gaspé (Québec) G4X 1N8",
     "hours": "Voir site web"
   },
   {
@@ -60327,6 +62187,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Accompagnement des personnes vivant des difficultés ou qui veulent les prévenir, dans les différentes étapes de leur vie personnelle et familiale * aide alimentaire * frigo-partage * consultation indi ... [Plus] | Clientèle : Individus * familles * aînés",
     "website": "http://mamfsa.org",
     "address": "3490 Rte de l'Aéroport, Québec, QC G3K 1X5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-contre-vents-et-mar-es",
+    "name": "Maison de la famille contre Vents et Marées",
+    "category": "family",
+    "subcategory": "",
+    "city": "Chandler",
+    "province": "QC",
+    "phone": "418-689-4048",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "630, rue Hôtel de Ville, Chandler (Québec) G0C 1K0",
     "hours": "Voir site web"
   },
   {
@@ -60419,6 +62291,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-maison-de-la-famille-de-mirabel",
+    "name": "Maison de la famille de Mirabel",
+    "category": "family",
+    "subcategory": "",
+    "city": "Mirabel",
+    "province": "QC",
+    "phone": "450-414-2121",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "15093, rue de Saint-Augustin, Mirabel (Québec) J7N 1X2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-mf-montreal-mdf",
     "name": "Maison de la famille de Montréal",
     "category": "family",
@@ -60470,6 +62354,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Ateliers, soutien parental, activités familiales."
   },
   {
+    "id": "qc-fam-maison-de-la-famille-de-sainte-anne-des-plaines",
+    "name": "Maison de la famille de Sainte-Anne-des-Plaines",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Anne-des-Plaines",
+    "province": "QC",
+    "phone": "450-478-6537",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "238, rue Beaupré, Sainte-Anne-des-Plaines (Québec) J0N 1H0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-de-la-famille-de-sept-les-cn",
     "name": "Maison de la famille de Sept-Îles - L'Envol",
     "category": "food",
@@ -60496,6 +62392,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Ateliers, soutien parental, activités familiales."
   },
   {
+    "id": "qc-fam-maison-de-la-famille-de-la-mrc-de-coaticook",
+    "name": "Maison de la famille de la MRC de Coaticook",
+    "category": "family",
+    "subcategory": "",
+    "city": "Coaticook",
+    "province": "QC",
+    "phone": "819-804-1010",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "50, rue Court, Coaticook (Québec) J1A 1K9",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-de-la-famille-de-la-mrc-d-ca",
     "name": "Maison de la famille de la MRC de L'Islet",
     "category": "family",
@@ -60519,6 +62427,42 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Vente à bas prix de meubles, électroménagers, jouets, livres et articles de maison usagés * vente de meubles, électroménagers, jouets, livres, articles ménagers, etc. * aide matérielle auprès des fami ... [Plus] | Clientèle : Le grand public",
     "website": "http://maisonfamillemrclislet.com/activites-et-services-suite/depano-meubles",
     "address": "80 Av. de Gaspé E, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-du-kamouraska",
+    "name": "Maison de la famille du Kamouraska",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Pascal",
+    "province": "QC",
+    "phone": "418-492-5993",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "266, rue Rochette, Saint-Pascal (Québec) G0L 3Y0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-du-mont-bruno",
+    "name": "Maison de la famille du Mont-Bruno",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Bruno-de-Montarville",
+    "province": "QC",
+    "phone": "514-445-5173",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "53, de la Rabastalière Est, Saint-Bruno-de-Montarville (Québec) J3V 2A4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-de-la-famille-veil-naissance",
+    "name": "Maison de la famille Éveil-Naissance",
+    "category": "family",
+    "subcategory": "",
+    "city": "Roberval",
+    "province": "QC",
+    "phone": "418-275-6581",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "415, avenue F.-X. Bouchard, Roberval (Québec) G8H 3R1",
     "hours": "Voir site web"
   },
   {
@@ -60623,6 +62567,102 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-maison-des-familles-chemin-du-roi",
+    "name": "Maison des Familles Chemin du Roi",
+    "category": "family",
+    "subcategory": "",
+    "city": "Trois-rivières",
+    "province": "QC",
+    "phone": "819-693-7665",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "385, Côte Richelieu, Trois-rivières (Québec) G9A 2Y9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-des-familles-de-chicoutimi",
+    "name": "Maison des Familles de Chicoutimi",
+    "category": "family",
+    "subcategory": "",
+    "city": "Chicoutimi",
+    "province": "QC",
+    "phone": "418-698-3057",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "700, rue Bégin, Chicoutimi (Québec) G7H 7Y6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-des-familles-de-la-baie",
+    "name": "Maison des Familles de La Baie",
+    "category": "family",
+    "subcategory": "",
+    "city": "La Baie",
+    "province": "QC",
+    "phone": "418-544-0222",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "864, rue de La Fabrique, La Baie (Québec) G7B 2S8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-des-familles-de-rimouski-neigette",
+    "name": "Maison des Familles de Rimouski-Neigette",
+    "category": "family",
+    "subcategory": "",
+    "city": "Rimouski",
+    "province": "QC",
+    "phone": "418-725-5315",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "215, rue Tessier, Rimouski (Québec) G5L 8X9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-des-familles-de-la-matanie",
+    "name": "Maison des Familles de la Matanie",
+    "category": "family",
+    "subcategory": "",
+    "city": "Matane",
+    "province": "QC",
+    "phone": "418-562-0918",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "350, rue St-Joseph, Matane (Québec) G4W 1N8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-des-familles-de-l-rable",
+    "name": "Maison des Familles de l’Érable",
+    "category": "family",
+    "subcategory": "",
+    "city": "Plessisville",
+    "province": "QC",
+    "phone": "819-362-2336",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1457, avenue Saint-Édouard, Plessisville (Québec) G6L 2K4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-des-familles-d-abitibi-ouest",
+    "name": "Maison des Familles d’Abitibi-Ouest",
+    "category": "family",
+    "subcategory": "",
+    "city": "La Sarre",
+    "province": "QC",
+    "phone": "819-333-2670",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "10, rue Lapierre, La Sarre (Québec) J9Z 2Y4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-des-grands-parents-de-sherbrooke",
+    "name": "Maison des Grands-Parents de Sherbrooke",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sherbrooke",
+    "province": "QC",
+    "phone": "819-820-9803",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1265, rue Belvédère Sud, Sherbrooke (Québec) J1H 4E2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-des-jeunes-a-ma-baie-pfd",
     "name": "Maison des Jeunes A-Ma-Baie",
     "category": "social",
@@ -60712,6 +62752,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-maison-des-familles-la-cigogne-lac-saint-jean-est",
+    "name": "Maison des familles La Cigogne Lac-Saint-Jean Est",
+    "category": "family",
+    "subcategory": "",
+    "city": "Alma",
+    "province": "QC",
+    "phone": "418-662-3690",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "155, rue St-Joseph Sud, C.P. 2205, Alma (Québec) G8B 5W1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-des-familles-de-baie-come-cn",
     "name": "Maison des familles de Baie-Comeau",
     "category": "food",
@@ -60761,6 +62813,66 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu de vie offrant du soutien et des services adaptés aux parents et aux enfants pour favoriser l’harmonie et l'équilibre familial * soutien * écoute * activités ludiques entre-parents * stimulatio ... [Plus] | Clientèle : Pour toutes les familles",
     "website": "http://www.mfgr.org",
     "address": "5005 Rue Foster, Waterloo, QC J0E 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-des-familles-de-lasalle",
+    "name": "Maison des familles de LaSalle",
+    "category": "family",
+    "subcategory": "",
+    "city": "LaSalle",
+    "province": "QC",
+    "phone": "514-364-1332",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "535, avenue Lafleur, LaSalle (Québec) H8R 3J3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-des-familles-de-m-kinac",
+    "name": "Maison des familles de Mékinac",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Tite",
+    "province": "QC",
+    "phone": "418-365-4405",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "261, du Moulin, Saint-Tite (Québec) G0X 3H0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-des-familles-de-verdun",
+    "name": "Maison des familles de Verdun",
+    "category": "family",
+    "subcategory": "",
+    "city": "Verdun",
+    "province": "QC",
+    "phone": "514-762-3399",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "257, 1re avenue, # 2, Verdun (Québec) H4G 2V6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-des-familles-de-la-matap-dia",
+    "name": "Maison des familles de la Matapédia",
+    "category": "family",
+    "subcategory": "",
+    "city": "Amqui",
+    "province": "QC",
+    "phone": "418-629-1241",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "169, avenue Gaétan-Archambault, Amqui (Québec) G5J 2K9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-maison-des-familles-du-rivage",
+    "name": "Maison des familles du Rivage",
+    "category": "family",
+    "subcategory": "",
+    "city": "Trois-Rivières",
+    "province": "QC",
+    "phone": "819-371-1633",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "405, boulevard Ste-Madeleine, Trois-Rivières (Québec) G8T 3N1",
     "hours": "Voir site web"
   },
   {
@@ -62731,6 +64843,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h15 à 12h00 et 13h15 à 16h30"
   },
   {
+    "id": "qc-fam-maternaide-du-qu-bec",
+    "name": "Maternaide du Québec",
+    "category": "family",
+    "subcategory": "",
+    "city": "Trois-Rivières",
+    "province": "QC",
+    "phone": "819-372-4800",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "707, rue Sainte-Catherine, Trois-Rivières (Québec) G9A 3L4",
+    "hours": "Voir site web"
+  },
+  {
     "id": "matimekush-lac-john-conseil-de-l-cn",
     "name": "Matimekush - Lac-John. Conseil de la Nation innue",
     "category": "health",
@@ -62756,6 +64880,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-matinee-frimousses-copy",
+    "name": "Matinee Frimousses Copy",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Brigitte-de-Laval",
+    "province": "QC",
+    "phone": "418-663-9664",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "Matinée Frimousses –, Sainte-Brigitte-de-Laval, 7, rue de la Patinoire, Sainte-Brigitte-de-Laval (Québec) G0A 3K0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "matin-e-frimousses-cap",
     "name": "Matinée Frimousses",
     "category": "family",
@@ -62766,6 +64902,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre de ressources pour parents et enfants 0-5 ans * soutien aux nouvelles mamans et familles faisant le choix de rester à la maison ou en congé parental * socialisation des enfants * Maman crée-act ... [Plus] | Clientèle : Femmes enceintes * parents et enfants (0-5 ans)",
     "website": "http://www.matineefrimousses.org",
     "address": "153 Av. des Sablonnières, Québec, QC G1B 1B9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-matin-e-frimousses-beauport",
+    "name": "Matinée Frimousses – Beauport",
+    "category": "family",
+    "subcategory": "",
+    "city": "Beauport",
+    "province": "QC",
+    "phone": "418-663-9664",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "153, avenue des Sablonnières, Beauport (Québec) G1B 1B8",
     "hours": "Voir site web"
   },
   {
@@ -64327,6 +66475,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 16h00, fermé l'été"
   },
   {
+    "id": "qc-fam-mouvement-organis-des-m-res-solidaires-m-o-m-s",
+    "name": "Mouvement Organisé des Mères Solidaires (M.O.M.S.)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450-961-9107",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "640, rue Langlois, Terrebonne (Québec) J6W 4P3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "mouvement-personne-d-abord-de-la-lav",
     "name": "Mouvement Personne D'Abord De Laval",
     "category": "social",
@@ -64375,6 +66535,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Défense des droits des personnes confiées à l'adoption, parents biologiques et adoptants * sensibilisation à la problématique des retrouvailles en vue d'éliminer les tabous face à l'adoption * soutien ... [Plus] | Clientèle : Adultes concernés par l'adoption | Âges : 18 an(s) et plus",
     "website": "http://www.mouvement-retrouvailles.qc.ca",
     "address": "Bas-Saint-Laurent, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-mouvement-sem",
+    "name": "Mouvement SEM",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450-348-0209",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "366-368, rue Laurier, Saint-Jean-sur-Richelieu (Québec) J3B 6L3",
     "hours": "Voir site web"
   },
   {
@@ -67583,6 +69755,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 16h00, vendredi 9h00 à 12h00"
   },
   {
+    "id": "qc-fam-organisme-communautaire-famille-l-embellie",
+    "name": "Organisme communautaire Famille L’Embellie",
+    "category": "family",
+    "subcategory": "",
+    "city": "L’Étang-du-Nord",
+    "province": "QC",
+    "phone": "418-969-4040",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "239, chemin Chiasson, L’Étang-du-Nord (Québec) G4T 3K2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "organisme-insertion-socio",
     "name": "Organisme d'insertion socioprofessionnelle",
     "category": "employment",
@@ -67875,6 +70059,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Regroupement de personnes ayant un trouble alimentaire et d'outremangeurs compulsifs dans le but de se rétablir de la compulsion alimentaire * partage d'expériences personnelles donnant force et espoi ... [Plus] | Clientèle : Personnes ayant un trouble alimentaire tel que compulsion alimentaire, boulimie, anorexie ou autre",
     "website": "http://www.oaquebec.org",
     "address": "Galeries, 4250 1re Av. CP 40022, Québec, QC G1H 3N2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-outremont-en-famille",
+    "name": "Outremont en famille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-244-9710",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "999, avenue McEachran, Montréal (Québec) H2V 3E6",
     "hours": "Voir site web"
   },
   {
@@ -68264,6 +70460,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-parenfant",
+    "name": "Parenfant",
+    "category": "family",
+    "subcategory": "",
+    "city": "Alma",
+    "province": "QC",
+    "phone": "418-662-8454",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "191 Avenue du Pont Nord, Alma (Québec) G8B 5C4",
+    "hours": "Voir site web"
+  },
+  {
     "id": "parenfants-de-mascouche-maison-de-l-msc",
     "name": "Parenfants de Mascouche - Maison de la Famille",
     "category": "social",
@@ -68275,6 +70483,30 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.parenfants.org",
     "address": "2492, chemin Sainte-Marie, Mascouche, Lanaudière, QC, J7K 1M5",
     "hours": "lundi au vendredi 9h00 à 16h00, samedi selon les activités"
+  },
+  {
+    "id": "qc-fam-parensemble",
+    "name": "Parensemble",
+    "category": "family",
+    "subcategory": "",
+    "city": "Dolbeau-Mistassini",
+    "province": "QC",
+    "phone": "418-239-0339",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1879, rue des Mélèzes, Dolbeau-Mistassini (Québec) G8L 2E5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-parent-d-abord-mrc-de-matane",
+    "name": "Parent D’Abord MRC de Matane",
+    "category": "family",
+    "subcategory": "",
+    "city": "Matane",
+    "province": "QC",
+    "phone": "418-562-8388",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "235, St-Jérôme, Local 109, Matane (Québec) G4W3A7",
+    "hours": "Voir site web"
   },
   {
     "id": "parentaime-maison-de-la-famille--ca",
@@ -68300,6 +70532,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Soutien aux parents et familles dans leur rôle parental * aide au développement optimal de l'enfant * écoute téléphonique * ateliers prénataux * aide postnatale pour les parents * ateliers de purées * ... [Plus] | Clientèle : Familles avec enfants de 0-17 ans | Âges : 17 an(s) et moins",
     "website": "http://www.parentaime.com",
     "address": "Saint-Prosper, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-parents-uniques-des-laurentides",
+    "name": "Parents Uniques des Laurentides",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Agathe-des-Monts",
+    "province": "QC",
+    "phone": "819-324-1004",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "28 rue Brissette, Sainte-Agathe-des-Monts (Québec) J8C 1T4",
     "hours": "Voir site web"
   },
   {
@@ -69025,6 +71269,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Assure la sécurité et les premiers secours aux victimes d'accidents dans un centre de ski * formation de premiers soins",
     "website": "https://www.skipatrol.ca/quebec/informations-des-zones/",
     "address": "1166 Bd Laure, Sept-Îles, QC G4S 1C4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-pause-famille",
+    "name": "Pause Famille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-382-3224",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "10780 Rue Laverdure, Montréal (Québec) H3L2L9",
     "hours": "Voir site web"
   },
   {
@@ -70560,6 +72816,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://premierspaschamplain.org",
     "address": "78, rue Saint-Louis, Longueuil, Montérégie, QC, J4R 2L4",
     "hours": "lundi au jeudi 8h30 à 17h00, vendredi et samedi 9h00 à 12h00"
+  },
+  {
+    "id": "qc-fam-premiers-pas-home-start",
+    "name": "Premiers Pas/Home–Start",
+    "category": "family",
+    "subcategory": "",
+    "city": "Longueuil (Secteur LeMoyne)",
+    "province": "QC",
+    "phone": "450-923-4138",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "78, rue Saint-Louis, Longueuil (Secteur LeMoyne) (Québec) J4R 2L4",
+    "hours": "Voir site web"
   },
   {
     "id": "premiers-secours-ca",
@@ -73023,6 +75291,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-r-a-f-a-l-ressources-action-familles-lac-st-charles",
+    "name": "R.A.F.A.L. (Ressources Action Familles à Lac-St-Charles)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418-316-5211",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "530, rue Delage, suite 4, Québec (Québec) G3G 1J2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "hlth-pw1",
     "name": "RAMQ – Régie de l'assurance maladie",
     "category": "health",
@@ -73314,6 +75594,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-re-source-familles",
+    "name": "Re-Source Familles",
+    "category": "family",
+    "subcategory": "",
+    "city": "Témiscouata-sur-le-Lac",
+    "province": "QC",
+    "phone": "418-497-1515",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1 Carré Fraser, Témiscouata-sur-le-Lac (Québec) G0L 1E0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "re-source-int-gration-out",
     "name": "Re-Source Intégration",
     "category": "employment",
@@ -73350,6 +75642,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Intégration sociale des personnes ayant un handicap, en complémentarité avec les ressources existantes * promotion de l'accessibilité des commerces et édifices publics * sensibilisation, représentatio ... [Plus] | Clientèle : Personnes ayant un handicap physique ou sensoriel * leur famille et proches",
     "website": "http://www.repers.org",
     "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-rep-re",
+    "name": "RePère",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-381-3511",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "2595, Boul Henri-Bourassa Est, Montréal (Québec) H2B 1V4",
     "hours": "Voir site web"
   },
   {
@@ -73530,6 +75834,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.reginafoodbank.ca",
     "address": "1440 Scarth St, Regina, SK S4R 2E9",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
+  },
+  {
+    "id": "qc-fam-regroupement-acti-familles",
+    "name": "Regroupement Acti-Familles",
+    "category": "family",
+    "subcategory": "",
+    "city": "Pohénégamook",
+    "province": "QC",
+    "phone": "418-893-5389",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "474, rue des Étudiants, Pohénégamook (Québec) G0L 1J0",
+    "hours": "Voir site web"
   },
   {
     "id": "regroupement-des-associations-de-out",
@@ -74031,6 +76347,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Regroupement de parents qui ont un enfant, adolescent ou adulte, qui vit avec une déficience intellectuelle, un retard de développement, de l'autisme ou autre * aide à briser l'isolement * soutien et ... [Plus] | Clientèle : Familles ayant un enfant, adolescent ou adulte, vivant avec un handicap intellectuel, un retard intellectuel, des difficultés d'apprentissage, un retard de développement, de l'autisme ou autre",
     "website": "http://www.lerisc.com",
     "address": "La Malbaie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-regroupement-pour-la-valorisation-de-la-paternit",
+    "name": "Regroupement pour la Valorisation de la Paternité",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-528-9227",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "7245, rue Clark, bureau 303, Montréal (Québec) H2R 2Y4",
     "hours": "Voir site web"
   },
   {
@@ -74598,6 +76926,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 16h00"
   },
   {
+    "id": "qc-fam-rep-re-familial-vall-e-de-la-gatineau",
+    "name": "Repère familial Vallée-de-la-Gatineau",
+    "category": "family",
+    "subcategory": "",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819-441-0282",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "251 Rue Cartier, Maniwaki (Québec) J9E 1R4",
+    "hours": "Voir site web"
+  },
+  {
     "id": "rescousse-amicale-la-rwd",
     "name": "Rescousse Amicale (la)",
     "category": "food",
@@ -74637,6 +76977,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "qc-fam-ressource-faire",
+    "name": "Ressource FAIRE",
+    "category": "family",
+    "subcategory": "",
+    "city": "Trois-Rivières",
+    "province": "QC",
+    "phone": "819-379-6002",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1209, place Georges H. Robichon, Trois-Rivières (Québec) G8Y 2L1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ressource-genesis-charlevoix-cap",
     "name": "Ressource Genesis Charlevoix",
     "category": "mentalHealth",
@@ -74660,6 +77012,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Promotion du bien-être des familles * promotion du lien parent-enfant * augmentation du réseau social * prêt de tire-lait * outils et informations * conférences, webinaires * ateliers * activités de g ... [Plus] | Clientèle : Familles",
     "website": "https://ressourceparenfants.com/",
     "address": "514 Rue du Boisé, Grandes-Bergeronnes, QC G0T 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-ressource-parent-ailes",
+    "name": "Ressource Parent-Ailes",
+    "category": "family",
+    "subcategory": "",
+    "city": "La Tuque",
+    "province": "QC",
+    "phone": "819-676-8722",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "752, boulevard Ducharme, La Tuque (Québec) G9X 3B6",
     "hours": "Voir site web"
   },
   {
@@ -75555,6 +77919,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: lundi au vendredi 9h00 à 16h00, services: 24 heures, 7 jours"
   },
   {
+    "id": "qc-fam-r-pit-providence-maison-hochelaga-maisonneuve",
+    "name": "Répit Providence Maison Hochelaga Maisonneuve",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-523-5747",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1855, rue Dézéry, Montréal (Québec) H1W 2S1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "r-pit-richelieu-cn",
     "name": "Répit Richelieu",
     "category": "housing",
@@ -76033,6 +78409,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Contribuer à la persévérance scolaire et à la réussite scolaire, ainsi qu’au développement de la personne en milieu étudiant * promotion de la santé * pratique de sport (athlétisme, badminton, basketb ... [Plus]",
     "website": "https://rseqcn.ca/",
     "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-r-seau-d-appui-aux-familles-monoparentales-et-recompos-es-de",
+    "name": "Réseau d’appui aux familles monoparentales et recomposées de l’Estrie (RAME)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sherbrooke",
+    "province": "QC",
+    "phone": "819-822-3451",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1050, rue des Jardins-Fleuris, Sherbrooke (Québec) J1E 1J5",
     "hours": "Voir site web"
   },
   {
@@ -85326,6 +87714,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-sources-vives-au-coeur-de-la-famille",
+    "name": "Sources Vives au coeur de la famille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418-623-8121",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1924, avenue du Cheminot, Québec (Québec) G1E 4M1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "sources-vives-au-c-ur-de-la-fami-cap",
     "name": "Sources Vives au cœur de la famille",
     "category": "family",
@@ -85492,6 +87892,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Promotion et encouragement du sport gaélique dans la ville de Québec * gestion de l'équipe de football gaélique Les Patriotes de Québec | Clientèle : Grand public | Âges : 14 an(s) et plus",
     "website": "http://patriotesdequebec.com",
     "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-station-familles",
+    "name": "Station Familles",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-762-2525",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "2385, rue Jolicoeur, Montréal (Québec) H4E 1X9",
     "hours": "Voir site web"
   },
   {
@@ -86301,6 +88713,30 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qc-fam-table-des-organismes-communautaires-famille-de-laval-tocfl",
+    "name": "Table des organismes communautaires Famille de Laval (TOCFL)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450-662-0580",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "1747 rue Lavoie, Laval (Québec) H7M 2N1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-table-des-organismes-communautaires-famille-de-la-gasp-sie-e",
+    "name": "Table des organismes communautaires famille de la Gaspésie et des Îles-de-la-Madeleine",
+    "category": "family",
+    "subcategory": "",
+    "city": "Cap-aux-Meules",
+    "province": "QC",
+    "phone": "418-986-4141",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "5-315, chemin Principal, Cap-aux-Meules (Québec) G4T 0L7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "table-r-gionale-des-organismes-c-ca",
     "name": "Table régionale des organismes communautaires actifs en santé mentale Région 12",
     "category": "mentalHealth",
@@ -86337,6 +88773,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Regroupement régional d'organismes d'action communautaire autonome * interlocuteur officiel pour les dossiers d'intérêt commun * tables d'organismes communautaires (TOC) dans chaque MRC * soutien et f ... [Plus] | Clientèle : Organismes d'action communautaire autonome",
     "website": "https://troc09.org/",
     "address": "767 Rue de Puyjalon, Baie-Comeau, QC G5C 1M9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-table-r-gionale-des-organismes-communautaires-famille-de-lan",
+    "name": "Table régionale des organismes communautaires famille de Lanaudière (TROCFL)",
+    "category": "family",
+    "subcategory": "",
+    "city": "St-Gabriel",
+    "province": "QC",
+    "phone": "450-835-9094",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "15, rue Monday, St-Gabriel (Québec) J0K 2N0",
     "hours": "Voir site web"
   },
   {
@@ -88009,6 +90457,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Collecte et redistribution de vêtements d'hiver.* Items acceptés: habits de neige, manteaux, bottes d'hiver et accessoires (mitaines, gants, tuques, cache-cous et foulards).* Trouver un point de collecte: carte | Clientèle: personnes et familles dans le besoin | Territoire: Laval | Statut: organisme à but non lucratif",
     "website": "relais-communautaire.org/page/un-habit-pour-un-ami",
     "address": "111, boulevard des Laurentides, bureau 101, Pont-Viau, Laval, QC, H7G 2T2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qc-fam-une-affaire-de-famille",
+    "name": "Une Affaire de famille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Ormstown",
+    "province": "QC",
+    "phone": "450-829-3782",
+    "description": "Organisme communautaire Famille (OCF) — soutien, accompagnement et activités pour les familles. Membre de la FQOCF.",
+    "address": "19, rue Bridge, Ormstown (Québec) J0S 1K0",
     "hours": "Voir site web"
   },
   {
