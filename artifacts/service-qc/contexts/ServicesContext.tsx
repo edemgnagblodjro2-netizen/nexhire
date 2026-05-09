@@ -13,8 +13,8 @@ import { apiCategoryToCode } from "@/lib/categoryMapping";
 // v7 : ajout de serviceType + geocodePrecisionM (Phase 1 fiabilité géoloc).
 // v8 : pivot Québec — bump pour invalider les caches qui contiennent des services hors-QC.
 // v9 : on ré-inclut les services province-wide (Centris, Kijiji, Realtor, etc.) qui avaient été virés par erreur en v8.
-// v31 : import CIUSSS-EMTL — +46 installations santé Est-Île-Montréal. PROD ~7623.
-const CACHE_KEY = "attentezero_services_cache_v31";
+// v32 : +4 logement Rive-Sud (Comité Logement, OHL, TAL, AILIA). PROD ~7627.
+const CACHE_KEY = "attentezero_services_cache_v32";
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 type ServicesContextValue = {
