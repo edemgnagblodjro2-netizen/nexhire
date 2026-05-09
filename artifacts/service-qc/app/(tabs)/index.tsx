@@ -257,7 +257,12 @@ export default function HomeScreen() {
               >
                 AttenteZéro <Text style={{ fontSize: 16 * seniorScale }}>⚜️</Text>
               </Text>
-              <Text style={[styles.heroTagline, { fontSize: 12 * seniorScale }]} numberOfLines={1}>{t.tagline}</Text>
+              <Text
+                style={[styles.heroTagline, { fontSize: 12 * seniorScale }]}
+                numberOfLines={2}
+                adjustsFontSizeToFit
+                minimumFontScale={0.75}
+              >{t.tagline}</Text>
             </View>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
