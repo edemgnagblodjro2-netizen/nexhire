@@ -13,8 +13,8 @@ import { apiCategoryToCode } from "@/lib/categoryMapping";
 // v7 : ajout de serviceType + geocodePrecisionM (Phase 1 fiabilité géoloc).
 // v8 : pivot Québec — bump pour invalider les caches qui contiennent des services hors-QC.
 // v9 : on ré-inclut les services province-wide (Centris, Kijiji, Realtor, etc.) qui avaient été virés par erreur en v8.
-// v30 : import Quebec.ca emploi — +273 organismes employabilité toutes régions QC. PROD ~7577.
-const CACHE_KEY = "attentezero_services_cache_v30";
+// v31 : import CIUSSS-EMTL — +46 installations santé Est-Île-Montréal. PROD ~7623.
+const CACHE_KEY = "attentezero_services_cache_v31";
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 type ServicesContextValue = {
