@@ -1,204 +1,297 @@
 import { Feather } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import React from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import * as Haptics from "expo-haptics";
+import { Stack, useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useColors } from "@/hooks/useColors";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useUserProvince } from "@/contexts/UserProvinceContext";
+import { getApiBaseUrl } from "@/lib/apiBase";
 
-interface UpdateEntry {
-  date: string;
-  title: string;
-  titleEn: string;
-  bullets: string[];
-  bulletsEn: string[];
-  icon: keyof typeof Feather.glyphMap;
-  color: string;
-}
+type NewService = {
+  id: string;
+  name: string;
+  category: string;
+  city: string | null;
+  province: string | null;
+  createdAt: string;
+};
 
-// Most recent first.
-const UPDATES: UpdateEntry[] = [
-  {
-    date: "Avril 2026",
-    title: "Couverture Québec complète",
-    titleEn: "Full Quebec coverage",
-    icon: "map",
-    color: "#0e7e6e",
-    bullets: [
-      "3 268+ services partout au Québec, du Saguenay à la Gaspésie.",
-      "Filtre par ville (60 villes) sur la page Services.",
-      "Numéro 211 Québec disponible 24 h/24, gratuit.",
-      "311 municipal ajouté pour Montréal et Québec.",
-    ],
-    bulletsEn: [
-      "3,268+ services across Quebec, from Saguenay to Gaspésie.",
-      "City filter (60 cities) on the Services page.",
-      "Quebec 211 number available 24/7, toll-free.",
-      "Municipal 311 added for Montréal and Québec City.",
-    ],
-  },
-  {
-    date: "Avril 2026",
-    title: "Signaler un bogue, en deux touches",
-    titleEn: "Report a bug, in two taps",
-    icon: "alert-triangle",
-    color: "#ea580c",
-    bullets: [
-      "Nouveau formulaire dans « Plus » → « Aide & support ».",
-      "Anti-spam intégré, lecture quotidienne par notre équipe.",
-      "Notification courriel automatique vers la responsable produit.",
-    ],
-    bulletsEn: [
-      "New form under \"More\" → \"Help & support\".",
-      "Built-in anti-spam, read daily by our team.",
-      "Automatic email notification to the product owner.",
-    ],
-  },
-  {
-    date: "Avril 2026",
-    title: "Programme ambassadeur",
-    titleEn: "Ambassador program",
-    icon: "users",
-    color: "#0284c7",
-    bullets: [
-      "Recevez votre code unique pour le partager.",
-      "Chaque inscription compte vers vos récompenses futures.",
-      "Suivez votre impact en temps réel.",
-    ],
-    bulletsEn: [
-      "Get your unique code to share.",
-      "Each sign-up counts toward future rewards.",
-      "Track your impact in real time.",
-    ],
-  },
-  {
-    date: "Mars 2026",
-    title: "Recherche par province intelligente",
-    titleEn: "Smarter province search",
-    icon: "search",
-    color: "#7c3aed",
-    bullets: [
-      "Cliquer sur une province affiche désormais TOUS les services de la région.",
-      "Plus rapide pour trouver le bon organisme.",
-    ],
-    bulletsEn: [
-      "Tapping a province now shows ALL services in the region.",
-      "Faster to find the right organization.",
-    ],
-  },
-  {
-    date: "Mars 2026",
-    title: "Assistant IA bilingue",
-    titleEn: "Bilingual AI assistant",
-    icon: "cpu",
-    color: "#7c3aed",
-    bullets: [
-      "Posez votre question en français ou en anglais.",
-      "L'assistant suggère les services les plus pertinents.",
-      "Données 100 % locales et anonymes.",
-    ],
-    bulletsEn: [
-      "Ask your question in French or English.",
-      "The assistant suggests the most relevant services.",
-      "100% local and anonymous data.",
-    ],
-  },
-];
+const STORAGE_KEY = "attentezero_whatsnew_lastseen_v1";
 
 export default function WhatsNewScreen() {
   const colors = useColors();
-  const insets = useSafeAreaInsets();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const { language } = useLanguage();
-  const isFr = language !== "en";
+  const { province } = useUserProvince();
+
+  const [loading, setLoading] = useState(true);
+  const [services, setServices] = useState<NewService[]>([]);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const lastSeen = (await AsyncStorage.getItem(STORAGE_KEY))
+          || new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+        const url = `${getApiBaseUrl()}/api/services/new-since?since=${encodeURIComponent(lastSeen)}${province ? `&province=${province}` : ""}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("fetch failed");
+        const data = await res.json();
+        if (cancelled) return;
+        setCount(Number(data?.count ?? 0));
+        setServices(Array.isArray(data?.services) ? data.services : []);
+        // Marquer comme vu maintenant
+        await AsyncStorage.setItem(STORAGE_KEY, new Date().toISOString());
+      } catch {
+        if (!cancelled) {
+          setServices([]);
+          setCount(0);
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [province]);
+
+  const formatDate = (iso: string): string => {
+    try {
+      const d = new Date(iso);
+      const now = Date.now();
+      const diffMs = now - d.getTime();
+      const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      if (diffDays === 0) return language === "fr" ? "Aujourd'hui" : "Today";
+      if (diffDays === 1) return language === "fr" ? "Hier" : "Yesterday";
+      if (diffDays < 7) return language === "fr" ? `Il y a ${diffDays} jours` : `${diffDays} days ago`;
+      return d.toLocaleDateString(language === "fr" ? "fr-CA" : "en-CA", { day: "numeric", month: "short" });
+    } catch {
+      return "";
+    }
+  };
 
   return (
-    <View style={[styles.root, { backgroundColor: colors.background, paddingTop: insets.top }]}>
+    <View style={[styles.container, { backgroundColor: colors.background, paddingTop: insets.top }]}>
+      <Stack.Screen options={{ headerShown: false }} />
+
+      {/* Header */}
       <View style={[styles.header, { borderBottomColor: colors.border }]}>
         <Pressable
-          onPress={() => router.back()}
-          hitSlop={12}
-          style={({ pressed }) => [styles.back, { opacity: pressed ? 0.6 : 1 }]}
+          onPress={() => { Haptics.selectionAsync(); router.back(); }}
+          style={({ pressed }) => [styles.backBtn, { opacity: pressed ? 0.6 : 1 }]}
+          accessibilityLabel={language === "fr" ? "Retour" : "Back"}
         >
-          <Feather name="chevron-left" size={24} color={colors.foreground} />
+          <Feather name="arrow-left" size={24} color={colors.foreground} />
         </Pressable>
-        <Text style={[styles.title, { color: colors.foreground }]}>
-          {isFr ? "Quoi de neuf" : "What's new"}
-        </Text>
-        <View style={{ width: 24 }} />
+        <View style={styles.headerTitleWrap}>
+          <Feather name="bell" size={18} color="#0E7E6E" />
+          <Text style={[styles.headerTitle, { color: colors.foreground }]}>
+            {language === "fr" ? "Quoi de neuf" : "What's new"}
+          </Text>
+        </View>
+        <View style={{ width: 40 }} />
       </View>
 
-      <ScrollView
-        contentContainerStyle={[styles.scroll, { paddingBottom: insets.bottom + 32 }]}
-        showsVerticalScrollIndicator={false}
-      >
-        {UPDATES.map((u, idx) => (
-          <View
-            key={idx}
-            style={[
-              styles.entry,
-              { backgroundColor: colors.card, borderColor: colors.border },
-            ]}
-          >
-            <View style={styles.entryHeader}>
-              <View style={[styles.entryIconWrap, { backgroundColor: u.color + "20" }]}>
-                <Feather name={u.icon} size={18} color={u.color} />
+      {loading ? (
+        <View style={styles.loadingWrap}>
+          <ActivityIndicator size="large" color="#0E7E6E" />
+        </View>
+      ) : services.length === 0 ? (
+        <View style={styles.emptyWrap}>
+          <View style={[styles.emptyIcon, { backgroundColor: "#E6F7F3" }]}>
+            <Feather name="check-circle" size={40} color="#0E7E6E" />
+          </View>
+          <Text style={[styles.emptyTitle, { color: colors.foreground }]}>
+            {language === "fr" ? "Vous êtes à jour !" : "You're all caught up!"}
+          </Text>
+          <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>
+            {language === "fr"
+              ? "Aucun nouveau service depuis votre dernière visite. Revenez bientôt."
+              : "No new services since your last visit. Come back soon."}
+          </Text>
+        </View>
+      ) : (
+        <ScrollView
+          contentContainerStyle={{ padding: 16, paddingBottom: insets.bottom + 32 }}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.summaryCard}>
+            <Text style={styles.summaryNum}>{count}</Text>
+            <Text style={styles.summaryLabel}>
+              {language === "fr"
+                ? `nouveau${count > 1 ? "x" : ""} service${count > 1 ? "s" : ""}${province ? ` au ${province}` : ""}`
+                : `new service${count > 1 ? "s" : ""}${province ? ` in ${province}` : ""}`}
+            </Text>
+          </View>
+
+          {services.map((svc) => (
+            <Pressable
+              key={svc.id}
+              onPress={() => {
+                Haptics.selectionAsync();
+                router.push(`/service/${svc.id}` as any);
+              }}
+              style={({ pressed }) => [
+                styles.serviceCard,
+                {
+                  backgroundColor: colors.card,
+                  borderColor: colors.border,
+                  opacity: pressed ? 0.7 : 1,
+                },
+              ]}
+            >
+              <View style={styles.serviceCardLeft}>
+                <View style={styles.newBadge}>
+                  <Text style={styles.newBadgeText}>NEW</Text>
+                </View>
               </View>
               <View style={{ flex: 1 }}>
-                <Text style={[styles.entryDate, { color: colors.mutedForeground }]}>
-                  {u.date}
+                <Text style={[styles.serviceName, { color: colors.foreground }]} numberOfLines={2}>
+                  {svc.name}
                 </Text>
-                <Text style={[styles.entryTitle, { color: colors.foreground }]}>
-                  {isFr ? u.title : u.titleEn}
+                <Text style={[styles.serviceMeta, { color: colors.mutedForeground }]} numberOfLines={1}>
+                  {[svc.city, svc.province].filter(Boolean).join(" • ") || svc.category}
+                </Text>
+                <Text style={[styles.serviceDate, { color: colors.mutedForeground }]}>
+                  {formatDate(svc.createdAt)}
                 </Text>
               </View>
-            </View>
-            <View style={{ marginTop: 10 }}>
-              {(isFr ? u.bullets : u.bulletsEn).map((b, i) => (
-                <View key={i} style={styles.bulletRow}>
-                  <Text style={[styles.bulletDot, { color: u.color }]}>•</Text>
-                  <Text style={[styles.bulletText, { color: colors.foreground }]}>{b}</Text>
-                </View>
-              ))}
-            </View>
-          </View>
-        ))}
-      </ScrollView>
+              <Feather name="chevron-right" size={20} color={colors.mutedForeground} />
+            </Pressable>
+          ))}
+        </ScrollView>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1 },
+  container: { flex: 1 },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
   },
-  back: { width: 24, alignItems: "flex-start" },
-  title: { fontSize: 17, fontWeight: "700" },
-  scroll: { paddingHorizontal: 16, paddingTop: 12 },
-  entry: {
-    borderRadius: 16,
-    borderWidth: StyleSheet.hairlineWidth,
-    padding: 16,
-    marginBottom: 12,
-  },
-  entryHeader: { flexDirection: "row", alignItems: "center", gap: 12 },
-  entryIconWrap: {
+  backBtn: {
     width: 40,
     height: 40,
-    borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
   },
-  entryDate: { fontSize: 11, textTransform: "uppercase", letterSpacing: 0.5, fontWeight: "600" },
-  entryTitle: { fontSize: 16, fontWeight: "700", marginTop: 2 },
-  bulletRow: { flexDirection: "row", alignItems: "flex-start", gap: 8, marginTop: 6 },
-  bulletDot: { fontSize: 18, lineHeight: 20, fontWeight: "700" },
-  bulletText: { flex: 1, fontSize: 14, lineHeight: 20 },
+  headerTitleWrap: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  headerTitle: {
+    fontSize: 17,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+  },
+  loadingWrap: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  emptyWrap: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 32,
+  },
+  emptyIcon: {
+    width: 88,
+    height: 88,
+    borderRadius: 44,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 16,
+  },
+  emptyTitle: {
+    fontSize: 20,
+    fontWeight: "800",
+    fontFamily: "Inter_700Bold",
+    marginBottom: 8,
+    textAlign: "center",
+  },
+  emptyText: {
+    fontSize: 14,
+    textAlign: "center",
+    lineHeight: 20,
+  },
+  summaryCard: {
+    backgroundColor: "#0E7E6E",
+    borderRadius: 16,
+    padding: 18,
+    marginBottom: 16,
+    alignItems: "center",
+  },
+  summaryNum: {
+    color: "#fff",
+    fontSize: 38,
+    fontWeight: "800",
+    fontFamily: "Inter_700Bold",
+    lineHeight: 42,
+  },
+  summaryLabel: {
+    color: "rgba(255,255,255,0.92)",
+    fontSize: 13,
+    marginTop: 4,
+    textAlign: "center",
+  },
+  serviceCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginBottom: 10,
+  },
+  serviceCardLeft: {
+    width: 44,
+    alignItems: "center",
+  },
+  newBadge: {
+    backgroundColor: "#EF4444",
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
+  },
+  newBadgeText: {
+    color: "#fff",
+    fontSize: 10,
+    fontWeight: "800",
+    fontFamily: "Inter_700Bold",
+    letterSpacing: 0.5,
+  },
+  serviceName: {
+    fontSize: 15,
+    fontWeight: "700",
+    fontFamily: "Inter_700Bold",
+    marginBottom: 4,
+  },
+  serviceMeta: {
+    fontSize: 13,
+    marginBottom: 2,
+  },
+  serviceDate: {
+    fontSize: 11,
+    fontStyle: "italic",
+  },
 });

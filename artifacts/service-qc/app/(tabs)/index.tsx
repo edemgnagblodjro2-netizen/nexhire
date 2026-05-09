@@ -2,7 +2,8 @@ import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { LinearGradient } from "@/components/SafeLinearGradient";
 import { useRouter } from "expo-router";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   Image,
   Keyboard,
@@ -98,6 +99,26 @@ export default function HomeScreen() {
   const { userLocation, locationStatus, requestLocation } = useLocation();
   const { province: userProvince } = useUserProvince();
   const [query, setQuery] = useState("");
+  const [newCount, setNewCount] = useState(0);
+
+  // Cloche "quoi de neuf" — compte les services ajoutés depuis la dernière visite
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const lastSeen = (await AsyncStorage.getItem("attentezero_whatsnew_lastseen_v1"))
+          || new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+        const url = `${getApiBaseUrl()}/api/services/new-since?since=${encodeURIComponent(lastSeen)}${userProvince ? `&province=${userProvince}` : ""}`;
+        const res = await fetch(url);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!cancelled) setNewCount(Number(data?.count ?? 0));
+      } catch {
+        // silencieux : la cloche n'est pas critique
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [userProvince]);
   const [focused, setFocused] = useState(false);
 
   async function handleRefreshLocation() {
@@ -240,6 +261,21 @@ export default function HomeScreen() {
             </View>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+            <TouchableOpacity
+              style={styles.bellBtn}
+              onPress={() => { Haptics.selectionAsync(); router.push("/whats-new" as any); }}
+              activeOpacity={0.75}
+              accessibilityLabel={language === "fr" ? "Nouveautés" : "What's new"}
+            >
+              <Feather name="bell" size={18} color="#fff" />
+              {newCount > 0 && (
+                <View style={styles.bellBadge}>
+                  <Text style={styles.bellBadgeText} numberOfLines={1}>
+                    {newCount > 99 ? "99+" : String(newCount)}
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.langBtn}
               onPress={() => { Haptics.selectionAsync(); toggleLanguage(); }}
@@ -1500,6 +1536,36 @@ const styles = StyleSheet.create({
     lineHeight: 17,
   },
 
+  bellBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "rgba(255,255,255,0.18)",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+  },
+  bellBadge: {
+    position: "absolute",
+    top: -4,
+    right: -4,
+    minWidth: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: "#EF4444",
+    paddingHorizontal: 4,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1.5,
+    borderColor: "#0E7E6E",
+  },
+  bellBadgeText: {
+    color: "#fff",
+    fontSize: 10,
+    fontWeight: "800",
+    fontFamily: "Inter_700Bold",
+    lineHeight: 12,
+  },
   /* Hero tiles (mockup-style 2-col grid) */
   heroTilesGrid: {
     flexDirection: "row",

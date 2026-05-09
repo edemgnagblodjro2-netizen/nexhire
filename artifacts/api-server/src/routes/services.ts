@@ -65,6 +65,65 @@ servicesRouter.get("/services", async (_req, res) => {
   }
 });
 
+// ── GET /api/services/new-since  (public — pour cloche "quoi de neuf") ─────
+// Renvoie le nombre + la liste légère des services créés depuis ?since=ISO.
+// Filtré par ?province= si fourni (pour cibler la province de l'utilisateur).
+// Limité à 50 résultats max pour rester léger.
+servicesRouter.get("/services/new-since", async (req, res) => {
+  try {
+    const sinceParam = req.query.since as string | undefined;
+    const province = req.query.province as string | undefined;
+    let sinceDate: Date;
+    if (sinceParam) {
+      const parsed = new Date(sinceParam);
+      if (isNaN(parsed.getTime())) {
+        return res.status(400).json({ error: "Invalid 'since' (ISO date expected)" });
+      }
+      // Cap à 30 jours pour éviter abus / résultats énormes
+      const maxAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+      sinceDate = parsed < maxAgo ? maxAgo : parsed;
+    } else {
+      sinceDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    }
+
+    const conditions = [
+      eq(servicesTable.active, true),
+      sql`${servicesTable.createdAt} > ${sinceDate.toISOString()}`,
+    ];
+    if (province) {
+      conditions.push(eq(servicesTable.province, province));
+    }
+
+    const rows = await db
+      .select({
+        id: servicesTable.id,
+        name: servicesTable.name,
+        category: servicesTable.category,
+        city: servicesTable.city,
+        province: servicesTable.province,
+        createdAt: servicesTable.createdAt,
+      })
+      .from(servicesTable)
+      .where(and(...conditions))
+      .orderBy(desc(servicesTable.createdAt))
+      .limit(50);
+
+    const totalCount = await db
+      .select({ c: count() })
+      .from(servicesTable)
+      .where(and(...conditions));
+
+    return res.json({
+      count: Number(totalCount[0]?.c ?? 0),
+      services: rows,
+      since: sinceDate.toISOString(),
+    });
+  } catch (err) {
+    logger.error({ err }, "GET /api/services/new-since error");
+    return res.status(500).json({ error: "Internal error" });
+  }
+});
+
 // ── GET /api/admin/services  (paginated, filtered) ─────────────────────────
 servicesRouter.get("/admin/services", requireAdminKey, async (req, res) => {
   try {
