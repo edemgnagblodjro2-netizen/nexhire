@@ -1,6 +1,13 @@
 # AttenteZéro
 A mobile application connecting vulnerable individuals with community and social services across Canada.
 
+## Société
+- **CivicAI** — Entreprise de services informatiques spécialisée en intelligence artificielle appliquée aux services publics et privés.
+- **AttenteZéro** est un produit de CivicAI (produit citoyen gratuit, modèle B2G).
+- Domaine produit : `attentezero.ca` (DNS Cloudflare, alias email actifs, pas encore de site web).
+- À prévoir post-launch : site vitrine `attentezero.ca` (one-pager produit) + éventuellement site corporate `civicai.ca`/`.com` pour démarchage B2G.
+- Mentions à jour à pousser progressivement : footer admin, page « À propos » mobile, App Store/Play Store « Développeur », signatures emails transactionnels.
+
 ## Run & Operate
 - `pnpm --filter @workspace/service-qc run start`: Runs the Expo mobile app.
 - `pnpm --filter @workspace/admin run dev`: Starts the Admin panel web app.
