@@ -1576,9 +1576,9 @@ const styles = StyleSheet.create({
   },
   heroTile: {
     width: "50%",
-    aspectRatio: 1.15,
+    aspectRatio: 1.7,
     paddingHorizontal: 6,
-    marginBottom: 14,
+    marginBottom: 10,
     alignItems: "center",
     justifyContent: "center",
     gap: 12,
