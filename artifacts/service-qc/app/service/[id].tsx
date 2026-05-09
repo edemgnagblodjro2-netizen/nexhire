@@ -139,7 +139,11 @@ export default function ServiceDetailScreen() {
     Haptics.selectionAsync();
     trackServiceAction(service.id, "click");
     void trackServiceWebsite(service.id);
-    Linking.openURL(service.website);
+    // Normalise l'URL : si la BD contient un domaine nu (ex: "le1313chomedey.com"),
+    // préfixe https:// — sinon Linking le traite comme un chemin relatif et ouvre /service/<domaine>.
+    const raw = service.website.trim();
+    const url = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+    Linking.openURL(url);
   }
 
   async function handleShare() {
