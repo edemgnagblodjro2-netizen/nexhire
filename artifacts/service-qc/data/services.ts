@@ -364,6 +364,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "9e-groupe-scout-st-thomas-de-vil-mtg",
+    "name": "9E Groupe Scout St-Thomas De Villeneuve",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 676-9620",
+    "description": "Programmes éducatifs pour jeunes.* Activités de plein air.* Développement physique, intellectuel, affectif, spirituel et social.* Prévention du décrochage scolaire et promotion du volontariat. | Clientèle: jeunes de 7 à 26 ans, adultes de tous âges | Territoire: Saint-Hubert | Statut: organisme à but non lucratif",
+    "website": "www.9egroupescout.ca",
+    "address": "4775, rue Quevillon, Longueuil, Montérégie, QC, J3Y 2V3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "a-b-c-des-manoirs-trb",
     "name": "A.b.c. des Manoirs",
     "category": "social",
@@ -538,6 +551,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "abri-de-la-rive-sud-mtg",
+    "name": "Abri De La Rive-Sud",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-7809",
+    "description": "Hébergement d'urgence et de courte durée.* Aide, référence et accompagnement dans les démarches (assistance dans la recherche de logement et d'emploi).* Services de jour: accès à internet et à une ligne téléphonique, douche.* Service d'échange de vêtements.* Échange de seringues.* Service postal.* Distribution de Naloxone. | Clientèle: personnes en situation d'itinérance de 18 ans et plus Capacité: 30 places en chambre individuelle | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "abri-rive-sud.org",
+    "address": "459, chemin du Coteau-Rouge, Longueuil, Montérégie, QC, J4J 1X9",
+    "hours": "hébergement: 24 heures, 7 jours, services de jour: lundi, mercredi au vendredi 9h00 à 12h00 et 13h00 à 16h00, mardi 13h00 à 16h00, casiers postaux: en tout temps sauf le mardi matin"
+  },
+  {
     "id": "acad-mie-des-retrait-s-de-l-outa-out",
     "name": "Académie Des Retraités De L'Outaouais",
     "category": "social",
@@ -549,6 +575,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://academiedesretraites.ca/",
     "address": "331, boulevard de la Cité-des-Jeunes, Gatineau, Outaouais, QC, J8Y 6T3",
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "acad-mie-z-nith-mtg",
+    "name": "Académie Zénith",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 332-4406",
+    "description": "Centre de jour visant à maintenir et développer les acquis travaillés à l'école.* Activités sociales et ateliers de travail adaptés.* Activités artistiques et visites culturelles.* Centre de répit la fin de semaine (jour et nuit). | Clientèle: personnes de 21 ans et plus vivant avec une déficience intellectuelle, avec ou sans handicap physique ou d'un trouble du spectre de l'autisme | Territoire: Boucherville, Brossard, Longueuil, Saint-Lambert, Calixa-Lavallée, Contrecoeur, Saint- Amable, Saint-Bruno-De-Montarville, Sainte-Julie | Statut: organisme à but non lucratif",
+    "website": "academiezenith.com",
+    "address": "480, rue LeMoyne Ouest, Longueuil, Montérégie, QC, J4H 1X1",
+    "hours": "lundi au vendredi 8h30 à 16h30, centre de répit: vendredi 16h00 au dimanche 16h00"
+  },
+  {
+    "id": "accessibilit-m-dia-inc-mtg",
+    "name": "Accessibilité Média Inc.",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 844 398-0947",
+    "description": "* Média francophone présentant un contenu entièrement avec vidéodescription. | Clientèle: personnes vivant avec une limitation visuelle | Territoire: Canada | Statut: organisme à but non lucratif",
+    "website": "www.amitele.ca",
+    "address": "1111, rue Saint-Charles Ouest, bureau 260, Tour est, Longueuil, Montérégie, QC, J4K 5G4",
+    "hours": "9h00 à 17h00"
+  },
+  {
+    "id": "accolade-sant-mentale-l-mtg",
+    "name": "Accolade Santé Mentale (L')",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "1 866 699-7059",
+    "description": "* Intervention psychosociale.* Formations sur les différentes maladies mentales.* Programmes de sensibilisation aux maladies mentales.* Accompagnement pour la présentation d'une requête d'évaluation psychiatrique.* Groupe d'entraide mensuel à Châteauguay.* Conférences, documentation. | Clientèle: famille et proches de personnes vivant avec un problème majeur de santé mentale Capacité: groupes ouverts de soutien ou d'entraide ou fermés de formation: 10 à 15 participant·e·s par rencontre | Territoire: territoire du CSSS Jardins-Roussillon | Statut: organisme à but non lucratif",
+    "website": "www.accoladesantementale.org",
+    "address": "101, boulevard Saint-Jean-Baptiste, bureau 215, Châteauguay, Montérégie, QC, J6J 3H9",
+    "hours": "lundi au vendredi 9h00 à 16h30, groupes de soutien et d'entraide en soirée"
   },
   {
     "id": "accompagnement-des-femmes-immigr-out",
@@ -653,6 +718,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi de 8h30 à 16h30"
   },
   {
+    "id": "acc-s-r-gion-mtg",
+    "name": "Accès-Région",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 730-0181",
+    "description": "Accompagnement pour l'établissement dans la région.* Ateliers d'informations et de réseautage.* Accompagnement des personnes immigrantes vers l'emploi.* Régionalisation de l'immigration, visite exploratoire, conférence sur la région. | Clientèle: personnes nouvellement arrivées, personnes immigrantes | Territoire: MRC Pierre-De Saurel, Contrecoeur, Calixa-Lavallée, Verchères | Statut: organisme à but non lucratif",
+    "website": "www.orientheque.ca",
+    "address": "343, boulevard Poliquin, SOREL-TRACY, Montérégie, QC, J3P 7W1",
+    "hours": "lundi, mardi et jeudi 8h30 à 12h00 et 13h00 à 16h30, mercredi 10h00 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h30"
+  },
+  {
     "id": "qc-immo-acceslogis",
     "name": "AccèsLogis Québec – SHQ",
     "category": "realestate",
@@ -677,6 +755,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "actionautisme.org",
     "address": "1705, boulevard des Laurentides, bureau 250, Vimont, Laval, QC, H7M 2P5",
     "hours": "sur demande"
+  },
+  {
+    "id": "action-b-n-vole-de-varennes-mtg",
+    "name": "Action Bénévole De Varennes",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Varennes",
+    "province": "QC",
+    "phone": "450 652-5256",
+    "description": "* Aide alimentaire.* Popote roulante.* Clinique d'impôts.* Accompagnement-transport.* Activités Ludi-cité: jeux de société | Clientèle: personnes et familles à faible revenu, personnes en perte d'autonomie, personnes isolées, personnes aînées | Territoire: Varennes | Statut: organisme à but non lucratif",
+    "website": "actionbenevolevarennes.org",
+    "address": "50, rue de la Fabrique, Varennes, Montérégie, QC, J3X 1R1",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h00, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "action-b-n-vole-de-varennes-clin-mtg",
+    "name": "Action Bénévole De Varennes - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Varennes",
+    "province": "QC",
+    "phone": "450 652-5256",
+    "description": "* Clinique d'impôts sans rendez-vous. | Clientèle: personnes ou couples à faible revenu | Territoire: Varennes | Statut: organisme à but non lucratif",
+    "website": "actionbenevolevarennes.org",
+    "address": "50, rue de la Fabrique, Varennes, Montérégie, QC, J3X 1R1",
+    "hours": "clinique d'impôts 2026: 11-18-25 mars 13h00 à 15h30, 8-15-22 avril 13h00 à 15h30"
   },
   {
     "id": "action-dignite-lanaudiere-jol",
@@ -714,6 +818,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://hypoglycemie.qc.ca",
     "address": "491, boulevard Des Seigneurs, Terrebonne, Lanaudière, QC, J6W 1T5",
     "hours": "5 jours par semaine, répondeur: 24 heures, 7 jours"
+  },
+  {
+    "id": "action-int-gration-en-d-ficience-mtg",
+    "name": "Action Intégration En Déficience Intellectuelle",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 676-5058",
+    "description": "Soutien et activités pour personnes vivant avec une déficience intellectuelle ou un trouble du spectre de l'autisme et leur famille.* Activités de loisirs.* Centre de jour.* Soutien à l'intégration sociale.* Service de répit.* Appartements supervisés. | Clientèle: personnes de 16 ans et plus vivant avec une déficience intellectuelle ou un trouble du spectre de l'autisme | Territoire: Rive-Sud, de Sainte-Catherine à Varennes | Statut: organisme à but non lucratif",
+    "website": "actionintegration.org",
+    "address": "6180, rue Agathe, Brossard, Montérégie, QC, J4Z 1E1",
+    "hours": "bureau: lundi au vendredi 8h30 à 16h30, activités: 7 jours"
+  },
+  {
+    "id": "action-jeunesse-roussillon-mtg",
+    "name": "Action Jeunesse Roussillon",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "450 993-1616",
+    "description": "Maison de jeunes.* Écoute, animation et références.* Aide aux devoirs.* Salle d'arts et de musique.* Activités intérieurs et extérieurs: sports, jeux, activités culturelles. * Ateliers culinaires.* Ateliers variés: préventions, santé mentale.* Kiosque dans les écoles à l'heure du midi. * Projets variés.* Rencontre inter- maisons des jeunes. | Clientèle: jeunes de 11 à 17 ans | Territoire: Saint-Constant | Statut: organisme à but non lucratif",
+    "website": "mdjstconstant.com",
+    "address": "223, rue Sainte-Catherine, local 300-400, Saint-Constant, Montérégie, QC, J5A 1R5",
+    "hours": "mardi au samedi 16h00 à 20h00"
   },
   {
     "id": "action-jeunesse-de-l-ouest-de-l-ile-ibsg",
@@ -794,6 +924,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi, mercredi, jeudi et vendredi 9h00 à 16h00, mardi 13h00 à 16h00"
   },
   {
+    "id": "actions-d-pendances-mtg",
+    "name": "Actions Dépendances",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-6472",
+    "description": "Information, éducation et sensibilisation sur la consommation d'alcool et de drogues.* Prévention des dépendances.* Ateliers, conférences et formation.* Hébergement temporaire d'urgence. | Clientèle: jeunes, adultes, intervenant·e·s et personnes en situation d'itinérance Capacité: 14 lits d'urgence | Territoire: CLSC Richelieu, CLSC Vallée-des-Forts, CLSC Jardins-du-Québec | Statut: organisme à but non lucratif",
+    "website": "actionsdependances.org",
+    "address": "34, rue de la Pépinière, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 5P3",
+    "hours": "service de prévention: lundi au vendredi 8h00 à 16h00, hébergement d'urgence: 24 jours, 7 jours"
+  },
+  {
+    "id": "actions-d-pendances-h-bergement--mtg",
+    "name": "Actions Dépendances - Hébergement Temporaire D'Urgence",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-6472",
+    "description": "* Hébergement temporaire d'urgence.* Soutien et accompagnement vers une stabilité résidentielle. | Clientèle: personnes de 18 ans et plus vivant en situation d'itinérance épisodique ou chronique Capacité: 14 lits d'urgence: 10 lits femmes et 4 lits hommes | Territoire: CLSC Richelieu, CLSC Vallée-des-Forts, CLSC Jardins-du-Québec | Statut: organisme à but non lucratif",
+    "website": "actionsdependances.org",
+    "address": "240 Jacques-Cartier Nord, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 6T4",
+    "hours": "hébergement d'urgence: 24 heures, 7 jours"
+  },
+  {
     "id": "imm-actions-interculturelles-estrie",
     "name": "Actions Interculturelles",
     "category": "immigration",
@@ -805,6 +961,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://aide.org",
     "address": "342, rue Bowen Sud, Sherbrooke, QC J1G 2E2",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "activit-s-pr-scolaires-de-brossa-mtg",
+    "name": "Activités Préscolaires De Brossard",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 619-7765",
+    "description": "École préscolaire.* Cours à la carte.* Préparation à la maternelle.* Éveil à la lecture.* Activités physiques et artistiques et de développement des habiletés.* Sorties: cueillette de pommes, cabane à sucre.* Divers évènements pour le temps des fêtes. | Clientèle: enfants de 2 à 5 ans | Territoire: Brossard | Statut: organisme à but non lucratif",
+    "website": "activitesprescolaires.com",
+    "address": "1025, chemin des Prairies, Brossard, Montérégie, QC, J4Y 1E7",
+    "hours": "consulter le site Internet"
   },
   {
     "id": "adojeune-out",
@@ -846,6 +1015,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "adomissile-l-maison-des-jeunes-s-mtg",
+    "name": "Adomissile (L') - Maison Des Jeunes - Saint-Rémi",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Rémi",
+    "province": "QC",
+    "phone": "450 454-6657",
+    "description": "Lieu de rencontre pour jeunes.* Échange, information et soutien quotidien.* Activités musicales, sportives et créatives.* Sorties.* Accès à plusieurs équipements: ordinateurs, cuisine, salle de musique, articles sportifs et de cirques, tables de billard, ping-pong, baby-foot, jeux vidéos, jeux de société, matériel d'arts etc.* Aide aux devoirs.* Éducation populaire.* Travail de milieu, intervention et prévention d'ITSS, violence, toxicomanie et délinquance. | Clientèle: personnes de 12 à 17 ans | Territoire: Saint-Isidore, Saint-Michel, Saint-Rémi, Sainte-Clotilde | Statut: organisme à but non lucratif",
+    "website": "adomissile.com",
+    "address": "100, rue de la Gare, Saint-Rémi, Montérégie, QC, J0L 2L0",
+    "hours": "lundi 16h00 à 21h00, mardi et mercredi 12h00 à 13h00 et 16h00 à 21h00, jeudi 16h00 à 21h00, vendredi 16h00 à 22h30"
+  },
+  {
     "id": "nu-foodbank-nu",
     "name": "Agvvik Society – Aide alimentaire",
     "category": "food",
@@ -857,6 +1039,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.agvvik.ca",
     "address": "Iqaluit, NU X0A 0H0",
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
+  },
+  {
+    "id": "aidants-des-seigneuries-les-mtg",
+    "name": "Aidants Des Seigneuries (Les)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Amable",
+    "province": "QC",
+    "phone": "450 649-0604",
+    "description": "Organisme qui prévient l'épuisement chez les personnes qui accompagnent un proche en perte d'autonomie.* Soutien individuel et de groupe.* Accompagnement au deuil.* Formations.* Rencontres thématiques.* Conférences.* Déjeuners-causeries, une fois par mois. | Clientèle: familles et proches accompagnant une personne en perte d'autonomie, de Saint-Amable, Boucherville, Calixa-Lavallée, Contrecour, Sainte-Julie, Varennes et Verchères. | Territoire: Saint-Amable, Boucherville, Calixa-Lavallée, Contrecour, Sainte-Julie, Varennes et Verchères. | Statut: organisme à but non lucratif",
+    "website": "aidantsdesseigneuries.org",
+    "address": "297, rue Principale, Saint-Amable, Montérégie, QC, J0L 1N0",
+    "hours": "lundi au jeudi 9h00 à 16h00"
+  },
+  {
+    "id": "aide-aux-familles-paroisse-saint-mtg",
+    "name": "Aide Aux Familles - Paroisse Saint-Hubert",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 676-2030",
+    "description": "* Aide alimentaire: nourriture périssable, non périssable et bons d'achat.* Paniers de Noël. | Clientèle: personnes et familles à faible revenu | Territoire: paroisse Saint-Hubert | Statut: organisme à but non lucratif",
+    "website": "paroissesthubert.org/pastorale-sociale-laide-aux-familles",
+    "address": "5310, chemin Chambly, Longueuil, Montérégie, QC, J3Y 3N7",
+    "hours": "sur rendez vous, distribution alimentaire: jeudi 9h00 à 11h00, dépannage d'urgence: sur appel"
   },
   {
     "id": "ab-legal-aid-ab",
@@ -1079,6 +1287,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "ainsi-soit-elle-centre-de-femmes-mtg",
+    "name": "Ainsi Soit-Elle - Centre De Femmes",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Chambly",
+    "province": "QC",
+    "phone": "450 447-3576",
+    "description": "Centre d'aide, d'écoute et de rencontres.* Consultation individuelle liées à diverses problématiques: situation de violence, période demaladie, deuil, problèmes de dépendance, santé mentale, détresse psychologique, conflits relationnels, difficultés financières, etc.* Écoute téléphonique.* Accompagment socio- juridique et médical dans les démarches à la suite d'une agression sexuelle, en situation de violence, lors d'une séparation ou d'un divorce, etc.* Groupe d'entraide.* Rencontre avec un avocat sur rendez-vous.* Accès à des postes informatiques.* Informations et références.* Ateliers et conférences thématiques. | Clientèle: femmes | Territoire: CLSC du Richelieu | Statut: organisme à but non lucratif",
+    "website": "ainsisoitellecdf.ca",
+    "address": "1224, rue Notre-Dame, Chambly, Montérégie, QC, J3L 1K3",
+    "hours": "lundi 12h00 à 16h30, mardi au jeudi 8h30 à 16h30"
+  },
+  {
+    "id": "aire-ouverte-de-brossard-mtg",
+    "name": "Aire Ouverte De Brossard",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 445-4474",
+    "description": "Services confidentiels variés, avec ou sans rendez-vous, pour les jeunes de 12 à 25 ans.* Suivi psychosocial individuel.* Clinique de santé sexuelle.* Prévention, éducation et information sur la consommation d'alcool, de drogues, de jeux de hasard et d'argent, d'utilisation problématique d'Internet, etc.* Soutien au logement.* Formation, emploi et finances: orientation scolaire et professionnelle, aide à la recherche d'emploi, prévention du décrochage scolaire, etc.* Assistance juridique générale. | Clientèle: jeunes de 12 à 25 ans | Territoire: Montérégie-Centre | Statut: organisme du gouvernement provincial",
+    "website": "www.santemonteregie.qc.ca/centre/aire-ouverte-brossard",
+    "address": "5811, boulevard Taschereau, local 30, Brossard, Montérégie, QC, J4Z 1A5",
+    "hours": "lundi au vendredi sur rendez-vous, sans rendez-vous: mardi et jeudi 13h00 à 20h00"
+  },
+  {
     "id": "msss-clsc-montreal-aire-ouverte-de-cote-des-neiges",
     "name": "Aire Ouverte De Côte-Des-Neiges",
     "category": "health",
@@ -1234,6 +1468,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CISSS De Chaudière-Appalaches. Source: MSSS – Fichier M02 des installations.",
     "address": "2385, boulevard Dionne, Saint-Georges, QC G5Y 3X6",
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
+  },
+  {
+    "id": "aire-ouverte-de-saint-jean-sur-r-mtg",
+    "name": "Aire Ouverte De Saint-Jean-Sur-Richelieu",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 358-8922",
+    "description": "Aire ouverte* Suivi psychosocial individuel.* Clinique de santé sexuelle.* Prévention, éducation et information sur la consommation d'alcool, de drogues, de jeux de hasard et d'argent, d'utilisation problématique d'Internet, etc.* Soutien au logement.* Formation, emploi et finances: orientation scolaire et professionnelle, aide à la recherche d'emploi, prévention du décrochage scolaire, etc.* Assistance juridique générale.CLSC* Contraception.* Pose et retrait d'un stérilet.* Intervention psychosociale.* Prévention du suicide.* Vaccination.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Récupération des seringues et des aiguilles usagées. | Clientèle: personnes de 12 à 25 ans | Territoire: CISSS Montérégie-Centre | Statut: organisme du gouvernement provincial",
+    "website": "www.santemonteregie.qc.ca/installations/clsc-et-aire-ouverte-de-la-rue-champlain-clinique- jeunesse-12-25-ans",
+    "address": "185, rue Champlain, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 6V5",
+    "hours": "sans rendez-vous: mardi au jeudi 13h00 à 20h00, sur rendez-vous: lundi et vendredi 9h00 à 17h00, mardi à jeudi 9h00 à 20h00, CLSC: lundi et vendredi 9h00 à 17h00, mardi et jeudi 13h00 à 20h00, mercredi 9h30 à 20h00"
   },
   {
     "id": "msss-clsc-saint-jerome-aire-ouverte-de-saint-jerome",
@@ -1420,6 +1667,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "un mardi sur deux 9h00 à 16h00, accueil téléphonique: lundi, mardi, vendredi et samedi 9h00 à 17h00, mercredi et jeudi 11h00 à 19h00"
   },
   {
+    "id": "albatros-en-mont-r-gie-mtg",
+    "name": "Albatros En Montérégie",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "438 455-4558",
+    "description": "* Accompagnement pour personnes atteintes d'une maladie grave ou en soins palliatifs et jusqu'au dernier stade de vie.* Formations pour l'accompagnement en fin de vie et en soins palliatifs.* Répit et soutien aux proches. | Clientèle: personnes de 18 ans et plus en fin de vie, en deuil, leurs familles et proches aidant·e·s | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.albatrosenmonteregie.org",
+    "address": "740, chemin du Coteau-Rouge, bureau 302, Longueuil, Montérégie, QC, J4J 1Z3",
+    "hours": "bureau: lundi au vendredi 9h00 à 16h30, accompagnement: lundi au dimanche"
+  },
+  {
     "id": "albatros-gatineau-la-li-vre-out",
     "name": "Albatros Gatineau - La Lièvre",
     "category": "social",
@@ -1538,6 +1798,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "saison estivale: lundi au jeudi 8h30 à 12h00 et 13h00 à 17h00, saison hivernale: 8h30 à 12h00 et 12h45 à 16h30"
   },
   {
+    "id": "alliance-carri-re-travail-act-ce-mtg-2",
+    "name": "Alliance Carrière Travail (Act) - Centre De Services De Brossard",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 462-2003",
+    "description": "Organisme visant le développement socioprofessionnel et l'autonomie pour faciliter l'intégration sur le marché du travail.* Services aux individus: recherche d'emploi, intégration sur le marché du travail au Québec, orientation de carrière, découverte de son plein potentiel, formations, prédémarrage d'entreprise, développement de projets, etc.* Services aux entreprises: rencontre de candidat·e·s potentiel·le·s, café- rencontre, déjeuners conférences, soirs de l'emploi, banque de candidat·e·s, recrutement de personnel, affichage de poste et salons de l'emploi. | Clientèle: personnes de 16 ans et plus | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "alliancect.ca",
+    "address": "7845, boulevard Taschereau, bureau 201, Brossard, Montérégie, QC, J4Y 1A4",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "alpha-iota-mtg",
+    "name": "Alpha Iota",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 466-0076",
+    "description": "* Alphabétisation populaire.* Ateliers d'apprentissage de lecture, d'écriture et de calculs pour favoriser l'autonomie et l'intégration sociale (en petits groupes ou en jumelage).* Activités et sorties éducatives variées. | Clientèle: adultes ayant des difficultés en lecture, en écriture et peu scolarisés | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "alphaiota.ca",
+    "address": "200, rue Saint-Louis, Longueuil, Montérégie, QC, J4R 2L6",
+    "hours": "lundi au vendredi 8h45 à 16h00, période d'activité: du début du mois de septembre jusqu'au 24 juin de chaque année"
+  },
+  {
     "id": "alphabetisation-sans-limites-pcl",
     "name": "Alphabétisation Sans Limites (Literacy Unlimited)",
     "category": "social",
@@ -1551,6 +1837,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-jeu 9h-16h. Fermé mi-juin à septembre."
   },
   {
+    "id": "alternative-aliment-terre-mtg",
+    "name": "Alternative Aliment-Terre",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Marieville",
+    "province": "QC",
+    "phone": "438 521-9136",
+    "description": "* Partage-don-ta-bouffe: frigos communautaires.* Vente de produits selon une tarification sociale.* Activité de glanage au champ.* Occasion de bénévolat. | Clientèle: grand public | Territoire: MRC de la Montérégie-Ouest, MRC Rouville, MRC le Haut-Richelieu, Chambly, Carignan | Statut: organisme à but non lucratif",
+    "website": "www.aliment-terre.org",
+    "address": "146, chemin du Ruisseau-Barré, Marieville, Montérégie, QC, J3M 1P2",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "alternative-centregens-mtg",
+    "name": "Alternative Centregens",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 651-0651",
+    "description": "* Interventions psychosociales.* Activités sociales et physiques.* Activités artistiques et créatives.* Sorties et activités extérieures.* Fêtes thématiques.* Moisson et repas.* Information, formations et conférences. | Clientèle: adultes vivant une problématique en santé mentale | Territoire: agglomération de Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.centregens.com",
+    "address": "582, chemin du Coteau-Rouge, Longueuil, Montérégie, QC, J4J 1Y6",
+    "hours": "lundi 9h00 à 19h00, mardi 9h00 à 18h00, mercredi au vendredi 9h00 à 16h00"
+  },
+  {
     "id": "alternative-outaouais-l-out",
     "name": "Alternative Outaouais (L')",
     "category": "family",
@@ -1562,6 +1874,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.laltou.com",
     "address": "885, boulevard de la Carrière, bureau 201, Gatineau, Outaouais, QC, J8Y 6S6",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "ami-aide-alimentaire-l-mtg",
+    "name": "Ami Aide Alimentaire (L')",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "438 523-6881",
+    "description": "* Dépannage alimentaire hebdomadaire et d'urgence.* Cuisine collective.* Consultation budgétaire. | Clientèle: personnes et familles à faible revenu | Territoire: MRC Le Haut-Richelieu | Statut: organisme à but non lucratif",
+    "address": "345, 6e Avenue, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 1R1",
+    "hours": "lundi 9h00 à 11h00, mercredi 13h00 à 15h00, jeudi 9h30 à 15h00"
   },
   {
     "id": "amicale-de-saint-vincent-de-paul-lav",
@@ -1653,6 +1977,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "bureau: lundi au vendredi 9h00 à 16h30, plusieurs activités et groupes de soutien en soirée"
   },
   {
+    "id": "amis-soleils-de-saint-bruno-les-mtg",
+    "name": "Amis-Soleils De Saint-Bruno (Les)",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Bruno-de-Montarville",
+    "province": "QC",
+    "phone": "438 499-7372",
+    "description": "Loisirs adaptés pour personnes vivant avec une déficience intellectuelle ou troubles du développement.* Camp de jour d'été et pour la semaine de relâche.* Activités en semaine de maintien des acquis pour les personnes de 21 ans et plus.* Activités de fin de semaine: loisirs, piscine.* Activités artistiques, sportives et culturelles. | Clientèle: enfants de 5 ans et plus, personnes vivant avec une déficience intellectuelle ou un trouble du spectre de l'autisme avec ou sans troubles associés et leurs parents | Territoire: Longueuil, MRC La Vallée-du-Richelieu, Saint-Bruno-de-Montarville | Statut: organisme à but non lucratif",
+    "website": "www.lesamissoleils.org",
+    "address": "1585, rue Montarville, Saint-Bruno-de-Montarville, Montérégie, QC, J3V 3T8",
+    "hours": "mardi au vendredi 8h00 à 16h00, samedi 10h00 à 16h30, dimanche: variable, été: lundi au vendredi 8h00 à 18h00"
+  },
+  {
+    "id": "amiti-matern-elle-mtg",
+    "name": "Amitié Matern'Elle",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Candiac",
+    "province": "QC",
+    "phone": "450 659-7661",
+    "description": "* Soutien pour l'allaitement.* Pré-jumelage.* Soutien téléphonique et par courriel.* Matinées avec bébé: premiers soins, massage pour bébés, portage, nutrition, etc.* Café-causerie.* Clinique du nourrisson.* Matinée partage: rencontre avec des personnes aînées dans un CHSLD. | Clientèle: personnes enceintes, familles avec des nourrissons, familles avec des enfants de 0 à 5 ans | Territoire: territoire du CLSC Kateri | Statut: organisme à but non lucratif",
+    "website": "www.amitiematernelle.com",
+    "address": "90, boulevard Marie-Victorin, Candiac, Montérégie, QC, J5R 1C1",
+    "hours": "lundi au dimanche"
+  },
+  {
+    "id": "am-lys-service-d-aide-domicile-mtg",
+    "name": "Amélys - Service D'Aide À Domicile",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 466-8444",
+    "description": "* Entretien ménager.* Assistance personnelle.* Répit pour personnes proches aidantes.* Gestion des services alimentaires en résidences pour personnes aînées. | Clientèle: personnes aînées de 65 ans et plus, personnes proches aidantes | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "amelys.ca",
+    "address": "3323, Grande Allée, Longueuil, Montérégie, QC, J4T 2S9",
+    "hours": "8h00 à 16h00"
+  },
+  {
+    "id": "ancre-l-immigration-en-r-gion-mtg",
+    "name": "Ancre (L') - Immigration En Région",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-6101",
+    "description": "* Service d'accompagnement en employabilité: orientation professionnelle à court terme, aide à la recherche d'emploi.* Service d'accueil et de régionalisation: permettre aux immigrant·e·s demeurant à l'extérieur du territoire de s'établir en région.* Service d'accompagnement aux entreprises: sensibilisation de la diversité culturelle auprès des entrepreneur·euse·s de la région. | Clientèle: personnes immigrantes depuis moins de cinq ans | Territoire: MRC Le Haut-Richelieu | Statut: organisme à but non lucratif",
+    "website": "lancre.ca",
+    "address": "49, rue Saint-Jacques, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2J8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "pe-shelter-women",
     "name": "Anderson House – Femmes IPE",
     "category": "housing",
@@ -1703,6 +2079,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "antichambre-12-17-h-bergement-je-mtg",
+    "name": "Antichambre 12-17 Hébergement Jeunesse Du Suroît (L')",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 373-9887",
+    "description": "Intervention et hébergement social de première ligne pour jeunes.* Hébergement d'urgence.* Hébergement temporaire.* Écoute et soutien.* Références et accompagnement.* Intervention en situation de crise.* Travail de milieu.* Soutien familial.* Soutien scolaire, social et professionnel.* Information et sensibilisation sur divers sujets. | Clientèle: jeunes de 12 à 17 ans Capacité: 3 places | Territoire: MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.lantichambre12-17.ca",
+    "address": "323, chemin Larocque, Salaberry-de-Valleyfield, Montérégie, QC, J6T 4C1",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "antre-hulloises-l-out",
     "name": "Antre-Hulloises (L')",
     "category": "social",
@@ -1714,6 +2103,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.antrehulloise.org",
     "address": "16, rue Bériault, Gatineau, Outaouais, QC, J8X 1A3",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "antre-temps-longueuil-l-mtg",
+    "name": "Antre-Temps Longueuil (L')",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 651-0125",
+    "description": "* Maison d'hébergement pour jeunes en difficulté: séjour variant d'une journée à six mois, sur une base volontaire.* Gîte et couvert.* Suivi psychosocial.* Soutien dans la recherche d'emploi et de logement.* Maintien ou retour aux études.* Groupe de soutien hebdomadaire pour les parents.* Aide au budget.* Information et référence.* Suivi post-hébergement et accompagnement.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit). | Clientèle: jeunes en difficulté de 16 à 21 ans, groupe de soutien: parents de jeunes de 12 ans et plus Capacité: 14 places, groupes de soutien: 5 à 10 parents | Territoire: priorité à la Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "www.antre-temps.org",
+    "address": "950, boulevard Roland-Therrien, Longueuil, Montérégie, QC, J4J 5H3",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "antre-temps-longueuil-l-logement-mtg",
+    "name": "Antre-Temps Longueuil (L') - Logements De Transition",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 651-0125",
+    "description": "* Maison d'hébergement avec possibilité de séjours jusqu'à six mois pour jeunes en difficulté, sur une base volontaire. | Clientèle: jeunes en difficulté de 16 à 21 ans Capacité: 14 | Territoire: priorité à la Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "antre-temps.org",
+    "address": "950, boulevard Roland-Therrien, Longueuil, Montérégie, QC, J4J 5H3",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "aphasie-rive-sud-mtg",
+    "name": "Aphasie Rive-Sud",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "438 454-4922",
+    "description": "* Ateliers: conversation, écriture, lecture, théâtre, chorale, jeux récréatifs, scrabble adapté, diner rencontre, détente sur chaise, etc.* Programme Apprivoiser L'APP.* Services pour les proches aidant·e·s: soutien psychosocial, accompagnement des dyades vers une meilleure communication, groupe de soutien Café du bien.* Activités socioculturelles, éducation populaire, etc. | Clientèle: adultes aphasiques, proches aidant·e·s | Territoire: Rive-Sud de Montréal | Statut: organisme à but non lucratif",
+    "website": "aphasierivesud.ca",
+    "address": "1400, boulevard Édouard, local 110, Longueuil, Montérégie, QC, J4T 3T2",
+    "hours": "lundi au jeudi 9h00 à 16h00, vendredi 9h00 à 12h30, rencontres et ateliers: lundi au vendredi 9h30 à 11h30"
   },
   {
     "id": "appart-adojeune-l-out",
@@ -1729,6 +2157,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "appart-moi-l-mtg",
+    "name": "Appart À Moi (L')",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "514 290-0408",
+    "description": "Milieu de vie stable, permanent et sécuritaire.* Intégration sociale. | Clientèle: personnes de 18 et plus vivant avec la trisomie 21 ou une déficience intellectuelle sans trouble du comportement Capacité: 9 | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "lappartamoi.ca",
+    "address": "5210, chemin de Chambly, bureau 102, Longueuil, Montérégie, QC, J3Y 3N6",
+    "hours": "Voir site web"
+  },
+  {
     "id": "appartement-aylmer-arms-out",
     "name": "Appartement Aylmer Arms",
     "category": "social",
@@ -1742,6 +2183,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "7 jours, 9h00 à 15h00"
   },
   {
+    "id": "apprendre-en-coeur-mtg",
+    "name": "Apprendre En Coeur",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Rémi",
+    "province": "QC",
+    "phone": "450 454-0400",
+    "description": "Promotion du développement du langage chez les enfants.* Stimulation et éveil à la lecture, à l'écriture et à la communication.* Heure du conte.* Ateliers dans les bibliothèques.* ALI: activités de lecture interactive.* Stimulaction: camp d'été.* Projet intergénérationnel Lire en coeur: des contes pour les enfants écrits par des aîné·e·s. | Clientèle: familles avec enfants de 0 à 5 ans | Territoire: MRC Les Jardins-de-Napierville | Statut: organisme à but non lucratif",
+    "website": "apprendreencoeur.org",
+    "address": "25, rue Saint-Sauveur, Saint-Rémi, Montérégie, QC, J0L 2L0",
+    "hours": "lundi au vendredi 9h00 à 16h00, sur rendez-vous"
+  },
+  {
+    "id": "arc-assistance-and-referral-cent-mtg",
+    "name": "Arc - Assistance And Referral Centre",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "514 605-9500",
+    "description": "Promotion de l'accès aux services sociaux et de santé en anglais.* Information et référence.* Ateliers Jog your Mind et de santé.* Aide pour remplir des formulaires en français et traduire des documents du français vers l'anglais.* Collaboration avec les instances publiques et groupes communautaires pour faciliter l'accès.* ReCharge: ateliers de 6 semaines et activités de pleine conscience pour aidants naturels.* Formation et accompagnement des professionels de la santé.* Travail de milieu et sensibilisation dans les écoles.* Centre de bien-être et activités pour les personnes âgées. | Clientèle: communauté d'expression anglaise | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "www.arc-hss.ca",
+    "address": "91, boulevard Churchill, Longueuil, Montérégie, QC, J4V 3L8",
+    "hours": "bureau: lundi au jeudi 8h30 à 16h30"
+  },
+  {
+    "id": "arc-en-ciel-des-seigneuries-grou-mtg",
+    "name": "Arc-En-Ciel Des Seigneuries - Groupe D'Entraide En Santé Mentale (L')",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Varennes",
+    "province": "QC",
+    "phone": "450 985-0522",
+    "description": "Réseau d'entraide afin de favoriser l'intégration sociale et briser l'isolement.* Groupe d'entraide.* Art- thérapie.* Autogestion de la santé mentale: anxiété, dépression et estime de soi.* Ateliers d'éducation populaire.* Sorties culturelles et saisonnières.* Écoute et références.* Vie associative.* Prévention et sensibilisation. | Clientèle: personnes vivant ou ayant vécu avec des problèmes de santé mentale | Territoire: Boucherville, Calixa-Lavallée, Contrecour, Saint-Amable, Sainte-Julie, Varennes, Verchères | Statut: organisme à but non lucratif",
+    "website": "www.arcencieldesseigneuries.org",
+    "address": "2082, boulevard Marie-Victorin, local 201, Varennes, Montérégie, QC, J3X 2C7",
+    "hours": "lundi au jeudi 9h00 à 16h30, occasionnellement les soirs et fins de semaine"
+  },
+  {
+    "id": "arc-en-ciel-vaudreuil-soulanges-mtg",
+    "name": "Arc-En-Ciel Vaudreuil-Soulanges",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 424-7006",
+    "description": "Entraide en santé mentale.* Hébergement à court et long terme.* Programme d'insertion sociale.* Relation d'aide.* Interventions individuelles et de groupe.* Accompagnement.* Soutien aux membres hospitalisés et aux membres de la résidence « Mi-Chemin ».* Ateliers de croissance personnelle.* Cours d'art.* Activités sportives et de loisirs.* Activités sociales annuelles. | Clientèle: personnes à faible revenu, personnes vivant avec des problèmes en santé mentale, personnes en réinsertion sociale Capacité: 5 résidences comptant chacune entre 5 et 9 logements | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "arcencielvs.org",
+    "address": "60, rue de l'Église, Vaudreuil-Dorion, Montérégie, QC, J7V 1W4",
+    "hours": "bureau: lundi au vendredi 8h00 à 16h00"
+  },
+  {
     "id": "arche-lanaudiere-l-jol",
     "name": "Arche Lanaudière (l')",
     "category": "social",
@@ -1753,6 +2246,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.larchelanaudiere.ca/fr",
     "address": "160, rue Saint-Charles-Borromée Sud, Joliette, Lanaudière, QC, J6E 4T3",
     "hours": "administration: lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "arche-mont-r-gie-l-mtg",
+    "name": "Arche Montérégie (L')",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 446-1061",
+    "description": "Hébergement supervisé pour personnes vivant avec une déficience intellectuelle.* 3 foyers: Fleur de Soleil, l'Envolée, la Montagne.* Soutien et accompagnement.* Ateliers artistiques, cuisine, jardin et entretien. | Clientèle: personnes de 18 ans et plus vivant avec une déficience intellectuelle Capacité: 17 personnes | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "larchemonteregie.org",
+    "address": "250, rue Hubert, Beloeil, Montérégie, QC, J3G 2S9",
+    "hours": "24 heures, 7 jours"
   },
   {
     "id": "arche-outaouais-out",
@@ -1792,6 +2298,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "salvationarmy.ca/quebec/home/emplacements/centre-outaouais/?lang=fr",
     "address": "815, boulevard Saint-René Ouest, bureau D1, Gatineau, Outaouais, QC, J8T 8M3",
     "hours": "sur rendez-vous"
+  },
+  {
+    "id": "arm-e-du-salut-glise-communautai-mtg",
+    "name": "Armée Du Salut - Église Communautaire De La Rive-Sud",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "",
+    "description": "* Distribution de sacs de nourriture.* Dépannage alimentaire.* Paniers de Noël pour les membres.* Distribution de fournitures scolaires. | Clientèle: personnes à faible revenu | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "address": "335, rue de Springfield, Longueuil, Montérégie, QC, J4V 1X7",
+    "hours": "jeudi sur rendez-vous"
   },
   {
     "id": "qc-refuge-montreal-armeedusalut",
@@ -1873,6 +2391,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "variable"
   },
   {
+    "id": "association-communautaire-horizo-mtg",
+    "name": "Association Communautaire Horizon De Châteauguay",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "",
+    "description": "Organisme desservant la communauté noire de Châteauguay.* Travail de milieu.* Visites amicales à la maison et à l'hôpital.* Paniers de cadeaux pour la naissance d'un enfant.* Bourses pour étudiant·e·s du cégep.* Programme et camp d'été. | Clientèle: communauté noire de Châteauguay | Territoire: Châteauguay | Statut: organisme à but non lucratif",
+    "website": "chateauguayhorizon.weebly.com",
+    "address": "319, rue Brault, Châteauguay, Montérégie, QC, J6J 4M9",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-coop-rative-d-conomi-lav",
     "name": "Association Coopérative D'Économie Familiale - Île Jésus",
     "category": "employment",
@@ -1897,6 +2428,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "acefo.org",
     "address": "109, rue Wright, bureau 102, Gatineau, Outaouais, QC, J8X 2G7",
     "hours": "lundi au jeudi 9h00 à 17h30"
+  },
+  {
+    "id": "association-coop-rative-d-conomi-mtg",
+    "name": "Association Coopérative D'Économie Familiale De La Rive-Sud",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 677-6394",
+    "description": "* Protection et promotion des intérêts des consommateur·rice·s.* Références et aide en consommation.* Aide téléphonique.* Consultation budgétaire, cours sur le budget, conférences offertes à des groupes.* Prêt du Fonds d'entraide.* Rencontres sur les solutions aux dettes.* Aide aux ententes de paiement d'Hydro-Québec.* Point de service Bonhomme à lunettes: lunettes à prix modique. | Clientèle: grand public, principalement les consommateur·rice·s ayant un faible et moyen revenu, prêt du Fonds d'entraide: personnes éprouvant des difficultés financières et faisant face à des dépenses ponctuelles d'urgence | Territoire: agglomération de Longueuil, MRC La Vallée-du-Richelieu, MRC Le Haut-Richelieu, MRC Les Jardins-de-Napierville, MRC Marguerite-D'Youville, MRC Roussillon | Statut: organisme à but non lucratif",
+    "website": "www.acefrsm.com",
+    "address": "2010, chemin de Chambly, LONGUEUIL, Montérégie, QC, J4J 3Y2",
+    "hours": "accueil téléphonique: lundi, mardi et jeudi 13h00 à 16h30, autres services: sur rendez-vous, bonhomme à lunettes: sans rendez-vous, jeudi 17h00 à 20h00, vendredi 9h00 à 12h00 et 13h30 à 16h00"
+  },
+  {
+    "id": "association-coop-rative-d-conomi-mtg-2",
+    "name": "Association Coopérative D'Économie Familiale Montérégie-Est - Sorel-Tracy",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 908-0929",
+    "description": "Éducation, information et sensibilisation en matière de finances personnelles, de consommation responsable et de logement.* Consultations budgétaires.* Défense des droits des consommateurs.* Fonds d'entraide Desjardins: évaluation budgétaire et petit prêt.* Aide aux ententes de paiement d'Hydro-Québec. | Clientèle: consommateurs | Territoire: MRC d'Acton, MRC Brome-Missisquoi, MRC Haute-Yamaska, MRC Les Maskoutains, MRC Rouville, MRC Pierre-De Saurel | Statut: entreprise commerciale (coopérative)",
+    "website": "acefme.org",
+    "address": "56, rue Charlotte, bureau 362, Sorel-Tracy, Montérégie, QC, J3P 1G3",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "association-cooperative-d-economie-jol",
@@ -1925,6 +2482,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 15h00"
   },
   {
+    "id": "association-d-habitation-de-la-l-mtg",
+    "name": "Association D'Habitation De La Légion Du Lakeshore",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Hudson",
+    "province": "QC",
+    "phone": "450 458-4810",
+    "description": "Logements abordables pour personnes aînées.* Studio, 3½ et 4½. | Clientèle: personnes âgées de 55 ans et plus, autonomes ou en légère perte d'autonomie, à faible ou modeste revenu Capacité: 87 logements | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "address": "404, rue Main, Hudson, Montérégie, QC, J0P 1H0",
+    "hours": "lundi au jeudi 8h30 à 14h30"
+  },
+  {
+    "id": "association-d-informations-en-lo-mtg",
+    "name": "Association D'Informations En Logements Et Immeubles Adaptés",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-4343",
+    "description": "Référence régionale en matière d'habitation adaptée et d'accessibilité universelle.?* Soutien à la recherche de logements accessibles.* Aide aux démarches concernant les programmes d'adaptation de domicile ou allocation au logement.* Ressource d'information pour l'accessibilité universelle. | Clientèle: personnes de tous âges vivant avec un handicap ou tous types de déficiences | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.ailia.info",
+    "address": "150, rue Grant, bureau 228, Longueuil, Montérégie, QC, J4H 3H6",
+    "hours": "lundi au vendredi 9h30 à 17h00"
+  },
+  {
     "id": "association-de-balle-des-jeunes--lav",
     "name": "Association De Balle Des Jeunes Handicapées De Laval",
     "category": "social",
@@ -1948,6 +2530,58 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.adoo.ca",
     "address": "15, rue du Sommet, Gatineau, Outaouais, QC, J8Z 3M2",
     "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "association-de-la-d-ficience-int-mtg",
+    "name": "Association De La Déficience Intellectuelle De La Région De Sorel",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 743-0664",
+    "description": "Promotion des droits et défense des intérêts des personnes ayant une déficience intellectuelle et ou un trouble du spectre de l'autisme et de leurs personnes proches aidants.* Écoute et support.* Jumelage.* Déjeuners-causerie et soirée de parents.* Groupe de soutien pour les parents.* Activités sociales, culturelles et récréative avec ou sans maintien des acquis.* Activités spéciales, fêtes familiales et sorties.* Défense des droits et sensibilisation. | Clientèle: personnes vivant avec une déficience intellectuelle ou un trouble du spectre de l'autisme, leur famille | Territoire: Contrecoeur, MRC Pierre-De Saurel | Statut: organisme à but non lucratif",
+    "website": "adirs.ca",
+    "address": "1275, chemin des Patriotes, Sorel-Tracy, Montérégie, QC, J3P 2N4",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "association-de-la-fibromyalgie-r-mtg",
+    "name": "Association De La Fibromyalgie - Région Montérégie",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 928-1261",
+    "description": "* Écoute téléphonique.* Soutien, information, conférences et ateliers.* Cours et activités physiques adaptés.* Groupes de soutien (animés par une intervenante communautaire) et d'entraide (animés par des pairs) dans divers points de services.* Centre de documentation. | Clientèle: personnes vivant avec la fibromyalgie, personnes atteintes de douleurs ou de fatigue chronique, leurs proches | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.fibromyalgiemonteregie.ca",
+    "address": "570, boulevard Roland-Therrien, bureau 220, Longueuil, Montérégie, QC, J4H 3V9",
+    "hours": "sur rendez-vous"
+  },
+  {
+    "id": "association-de-paralysie-c-r-bra-mtg",
+    "name": "Association De Paralysie Cérébrale Du Québec",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "1 800 311-3770",
+    "description": "Promotion de l'intégration et de l'amélioration de la qualité de vie des gens vivant avec la paralysie cérébrale.* Information et orientation.* Aide financière de dépannage.* Défense des droits.* Avancement de la recherche: collaboration avec la chaire de recherche en paralysie cérébrale de l'Université Laval. | Clientèle: personnes vivant avec la paralysie cérébrale | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "paralysiecerebrale.com",
+    "address": "320, boulevard du Séminaire Nord, local 112, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 5K9",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "association-de-parents-de-l-enfa-mtg",
+    "name": "Association De Parents De L'Enfance En Difficulté",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-9310",
+    "description": "* Soutien téléphonique, accompagnement.* Information, référence.* Rencontres individuelles.* Soirées conférences, sessions de formation, ateliers.* Répit.* Groupes d'entraide thématiques.* Loisirs du samedi.* Camp de répit pour les jeunes.* Camps de jour spécialisés.* Balado. | Clientèle: parents d'un enfant autiste ou vivant avec une déficience intellectuelle, un déficit de l'attention avec ou sans hyperactivité, des troubles du comportement ou un problème de santé mentale, services jeunesse: jeunes de 5 à 21 ans autistes, vivant avec une déficience intellectuelle ou un trouble de santé mentale | Territoire: Rive-sud | Statut: organisme à but non lucratif",
+    "website": "aped.org",
+    "address": "1050, boulevard Curé-Poirier Ouest, bureau 100, Longueuil, Montérégie, QC, J4K 2E4",
+    "hours": "lundi au jeudi 8h30 à 16h30, vendredi sur rendez-vous seulement, groupes d'entraide et formations: soir"
   },
   {
     "id": "association-des-familles-monopar-out",
@@ -1976,6 +2610,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-des-grands-parents-d-mtg",
+    "name": "Association Des Grands-Parents Du Québec",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 866 745-6110",
+    "description": "Défense des droits des grands-parents du Québec.* Écoute téléphonique et référence.* Groupes d'entraide.* Cafés-rencontres.* Conférences.* Séances d'informations générales, juridiques et psychologiques. | Clientèle: grands-parents, personnes aînées, petits-enfants, familles élargies | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.grands-parents.qc.ca",
+    "address": "365, rue Saint-Jean, bureau 035, Longueuil, Montérégie, QC, J4H 2X7",
+    "hours": "service téléphonique: lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "association-des-infirmi-res-et-i-mtg",
+    "name": "Association Des Infirmières Et Infirmiers En Soins Podologiques Du Québec",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "",
+    "description": "Regroupement d'infirmiers et d'infirmières en soins podologiques.* Promotion de la profession et maintien de la qualité des services.* Bottin des membres infirmiers et infirmières en soins podologiques: aiispq.org/a-propos/bottin-des-membres | Clientèle: infirmier·ière·s en soins podologiques, grand public, personnes diabétiques, CLSC, résidences privées pour personnes aînées | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "aiispq.org",
+    "address": "2160, chemin du Tremblay, bureau 205, Longueuil, Montérégie, QC, J4N 1A8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-des-neurotraumatis-s-out",
     "name": "Association Des Neurotraumatisés - Région De L'Outaouais",
     "category": "employment",
@@ -1989,6 +2649,83 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
+    "id": "association-des-paniers-de-no-l--mtg",
+    "name": "Association Des Paniers De Noël De Greenfield Park",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 463-7100",
+    "description": "Paniers de Noël. | Clientèle: personnes à faible revenu résidant à Greenfield Park | Territoire: Greenfield Park | Statut: organisme à but non lucratif",
+    "website": "gpkchristmasbaskets.ca/fr",
+    "address": "195, rue Empire, Longueuil, Montérégie, QC, J4V 1T9",
+    "hours": "mardi au jeudi 11h00 à 16h00"
+  },
+  {
+    "id": "association-des-parents-des-enfa-mtg",
+    "name": "Association Des Parents Des Enfants Handicapés Richelieu-Val-Maska",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "1 855 681-8556",
+    "description": "Entraide et soutien aux familles de personnes vivant avec un handicap.* Défense des droits individuels et collectifs.* Soutien et accompagnement: annonce du diagnostic, plan d'interventions, formulaires à remplir, etc.* Rencontres entre parents.* Sensibilisation de la population: conférences, kiosques et soirées d'informations.* Bibliothèque spécialisée.* Prêt de matériels adaptés.* Atelier Un moment pour toi!: activités récréatives et sociales pour les frères et les soeurs des enfants ayant un handicap.* Mentorat pour adolescent·e·s et jeunes adultes ayant un trouble du spectre de l'autisme ou un handicap physique.* Journal Parent'hèse: diffusion d'informations à l'intention des parents et des organismes communautaires.* Activités familiales. | Clientèle: familles de personnes vivant avec un handicap physique, intellectuel ou un trouble du spectre de l'autisme | Territoire: Beloeil, McMasterville, Mont-Saint-Hilaire, MRC Acton, MRC les Maskoutains, MRC Rouville, Otterburn Park, Saint-Charles-sur-Richelieu, Saint-Denis-sur-Richelieu, Saint-Jean-Baptiste, Saint- Mathieu-de-Beloeil | Statut: organisme à but non lucratif",
+    "website": "apehrvm.org",
+    "address": "16675, avenue Desrochers, Saint-Hyacinthe, Montérégie, QC, J2T 3K3",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "association-des-parents-et-des-h-mtg",
+    "name": "Association Des Parents Et Des Handicapés De La Rive-Sud Métropolitaine",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 674-5224",
+    "description": "* Activités de sports et de loisirs thérapeutiques et spécialisées. | Clientèle: adultes présentant une déficience intellectuelle avec ou sans incapacités associées, adultes autistes Capacité: variable selon les activités | Territoire: Boucherville, Brossard, Candiac, Delson, La Prairie, Longueuil, Saint-Constant, Saint- Lambert, Sainte-Julie | Statut: organisme à but non lucratif",
+    "website": "aphrsm.org",
+    "address": "2545, rue De Lorimier, bureau 110, LONGUEUIL, Montérégie, QC, J4K 3P7",
+    "hours": "lundi au jeudi 8h30 à 16h30"
+  },
+  {
+    "id": "association-des-personnes-d-orig-mtg",
+    "name": "Association Des Personnes D'Origine Africaines Et Caribéenne",
+    "category": "immigration",
+    "subcategory": "Immigration et communautés culturelles",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "438 995-6143",
+    "description": "* Rassemblement, soutien et encadrement des personnes d'origine Afro-caribéenne dans leur milieu de vie.* Sensibilisation, éducation, référence et création de liens avec les services, les municipalités et les organismes.* Partage des cultures afro-caribéennes et promotion de l'intégration sociale positive des communautés afro-caribéennes. | Clientèle: communauté africaine et caribéenne, toutes personnes intéressées par la culture afro-caribéenne | Territoire: MRC Vaudreuil-Soulanges, Beauharnois, Salaberry-de-Valleyfield | Statut: organisme à but non lucratif",
+    "address": "412, boulevard Harwood, bureau 204, Vaudreuil-Dorion, Montérégie, QC, J7V 7H4",
+    "hours": "lundi au vendredi 9h00 à 16h30"
+  },
+  {
+    "id": "association-des-personnes-handic-mtg",
+    "name": "Association Des Personnes Handicapées De La Rive-Sud Ouest",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "450 659-6519",
+    "description": "Promotion des droits et intérêts des personnes vivant avec des limitations fonctionnelles.* Écoute, information, référence.* Soutien-conseil.* Accompagnement dans les démarches. | Clientèle: personnes vivant avec une limitation fonctionnelle, leur famille | Territoire: MRC Roussillon | Statut: organisme à but non lucratif",
+    "website": "www.aphrso.org",
+    "address": "100, rue Sainte-Marie, La Prairie, Montérégie, QC, J5R 1E8",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "association-des-personnes-handic-mtg-2",
+    "name": "Association Des Personnes Handicapées De La Vallée Du Richelieu",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 464-7445",
+    "description": "* Défense collective et promotion des droits des personnes vivant avec un handicap physique et en perte d'autonomie: accessibilité des lieux et des équipements publics, transport adapté, logement adapté, etc.* Références.* Sorties récréatives et activités sportives pour favoriser la création de liens sociaux. | Clientèle: personnes vivant avec un handicap physique, personnes en perte d'autonomie, leurs familles | Territoire: MRC La Vallée-du-Richelieu | Statut: organisme à but non lucratif",
+    "website": "www.aphvr.org",
+    "address": "308, rue Montsabré, bureau D-209, Beloeil, Montérégie, QC, J3G 2H5",
+    "hours": "lundi au jeudi 9h30 à 16h30"
+  },
+  {
     "id": "association-des-personnes-vivant-lav",
     "name": "Association Des Personnes Vivant Avec Une Surdité De Laval",
     "category": "social",
@@ -1999,6 +2736,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Sensibilisation aux conséquences de la surdité.* Communication: explication de textes en LSQ, rédaction de documents officiels, réalisation de vidéos en LSQ.* Intervention communautaire: soutien et référence vers les ressources appropriées.* Activités: conférences, sorties, visites culturelles et récréatives. | Clientèle: personnes vivant avec une surdité | Territoire: Laval | Statut: organisme à but non lucratif",
     "address": "387, boulevard des Prairies, bureau 211, Laval-des-Rapides, Laval, QC, H7N 2W4",
     "hours": "lundi au vendredi 9h00 à 16h30"
+  },
+  {
+    "id": "association-des-pompiers-auxilia-mtg",
+    "name": "Association Des Pompiers Auxiliaires De La Montérégie",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Rougemont",
+    "province": "QC",
+    "phone": "450 469-3177",
+    "description": "* Assistance directe aux citoyen·ne·s sinistré·e·s sur un lieu d'urgence et soutien aux intervenant·e·s (pompier·ière·s, policier·ière·s ou ambulancier·ière·s). | Clientèle: personnes sinistrées sur un lieu d'urgence, intervenant·e·s concerné·e·s par l'événement | Territoire: Agglomération de Longueuil, MRC La Vallée-du-Richelieu, MRC Marguerite-D'Youville, MRC Les Maskoutains, MRC La Haute-Yamaska, MRC Brome-Missisquoi, MRC Rouville | Statut: organisme à but non lucratif",
+    "website": "apam.net",
+    "address": "200, rue Josée, Rougemont, Montérégie, QC, J0L 1M0",
+    "hours": "Voir site web"
   },
   {
     "id": "association-des-popotes-roulante-lav",
@@ -2025,6 +2775,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "ochampfleury.org",
     "address": "2585, boulevard des Oiseaux, Sainte-Rose, Laval, QC, H7L 4M4",
     "hours": "centre communautaire Champfleury: lundi au vendredi 9h00 à 23h00, samedi et dimanche 8h30 à 18h00, service à la clientèle: lundi au jeudi 9h00 à 20h30, vendredi 9h00 à 16h00, samedi 9h00 à 13h00"
+  },
+  {
+    "id": "association-des-stomis-s-de-la-m-mtg",
+    "name": "Association Des Stomisés De La Montérégie",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 768-3835",
+    "description": "Renseigner et soutenir ses membres dans leurs efforts de réadaptation physique, psychologique et sociale.* Aide aux personnes ayant une chirurgie (stomie).* Défense des droits des stomisé·es.* Groupe de soutien aux nouveaux stomisé·es.* Séances d'information sur les soins de santé des stomisé·es.* Activités sociales.* Écoute téléphonique et support. | Clientèle: personnes ayant une stomie (secondaire à une maladie inflammatoire de l'intestin, un cancer intestinal ou urinaire, ou suite à un traumatisme nécessitant l'installation d'une stomie) et les personnes n'ayant pas de stomie, mais qui souffrent de maladie inflammatoire de l'intestin | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "stomisesmonteregie.com",
+    "address": "C.P. 183, SAINT-HYACINTHE, Montérégie, QC, J2S 7B4",
+    "hours": "dimanche au samedi 8h00 à 20h00"
+  },
+  {
+    "id": "association-des-usagers-du-trans-mtg",
+    "name": "Association Des Usagers Du Transport Adapté De Longueuil",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-2224",
+    "description": "* Référence et soutien téléphonique.* Représentation, soutien et accompagnement dans les plaintes et toutes démarches visant à l'amélioration du transport adapté et collectif.* Promotion des intérêts et défense des droits. | Clientèle: personnes handicapées utilisant les services du transport adapté et collectif de l'agglomération de Longueuil | Territoire: agglomération de Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.autal.org",
+    "address": "150, rue Grant, bureau 118, Longueuil, Montérégie, QC, J4H 3H6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "association-du-diab-te-laval-lav",
@@ -2066,6 +2842,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "variable"
   },
   {
+    "id": "association-du-syndrome-de-sj-gr-mtg",
+    "name": "Association Du Syndrome De Sjögren, Sjögren Québec",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "1 877 934-3666",
+    "description": "* Groupe de soutien pour les personnes vivant avec le syndrome de Sjögren.* Information pour les patient·e·s et leur famille. | Clientèle: personnes ayant reçu un diagnostic de syndrome de Sjögren, leurs proches | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "sjogren.ca",
+    "address": "706, rue Laurier, bureau 100A, Beloeil, Montérégie, QC, J3G 4J6",
+    "hours": "5 jours par semaine, boîte vocale: 24 heures, 7 jours"
+  },
+  {
     "id": "association-dysphasie-lav",
     "name": "Association Dysphasie +",
     "category": "family",
@@ -2077,6 +2866,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "dysphasieplus.com",
     "address": "3235, boulevard Saint-Martin Est, bureau 216, Duvernay, Laval, QC, H7E 5G8",
     "hours": "variable"
+  },
+  {
+    "id": "association-f-ministe-d-ducation-mtg",
+    "name": "Association Féministe D'Éducation Et D'Action Sociale - Richelieu-Yamaska",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 209-7011",
+    "description": "Information et promotion des questions reliées à la condition féminine.* Action sociale.* Défense des intérêts des femmes. | Clientèle: femmes de 16 ans et plus | Territoire: MRC Acton, MRC La Vallée-du-Richelieu, MRC Les Maskoutains | Statut: organisme à but non lucratif",
+    "website": "www.afeas.qc.ca",
+    "address": "5330, rue des Seigneurs Est, Saint-Hyacinthe, Montérégie, QC, J2R 1Z8",
+    "hours": "mardi 9h00 à 12h00"
   },
   {
     "id": "association-handami-pour-personnes-sll",
@@ -2116,6 +2918,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "assoiris.ca",
     "address": "3542, boulevard de la Concorde Est, Duvernay, Laval, QC, H7E 3A4",
     "hours": "lundi au samedi 10h00 à 17h00"
+  },
+  {
+    "id": "association-l-aide-aux-vieux-ami-mtg",
+    "name": "Association L'Aide Aux Vieux Amis",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-5003",
+    "description": "* Écoute téléphonique.* Visites à la maison ou à l'hôpital.* Dépannage alimentaire. | Clientèle: personnes de 70 ans et plus seules, défavorisées, vivant avec un handicap physique ou intellectuel | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "address": "1235, chemin du Tremblay, porte 732, Longueuil, Montérégie, QC, J4N 1T7",
+    "hours": "Voir site web"
   },
   {
     "id": "association-lavalloise-de-parent-lav",
@@ -2170,6 +2984,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 9h00 à 12h00"
   },
   {
+    "id": "association-panda-les-deux-rives-mtg",
+    "name": "Association Panda Les Deux-Rives",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Contrecoeur",
+    "province": "QC",
+    "phone": "438 793-8188",
+    "description": "Aide aux personnes ayant un trouble du déficit de l'attention (TDAH).* Soutien.* Écoute téléphonique.* Promotion du développement de services adaptés.* Cafés-rencontres.* Activités familiales.* Conférences, ateliers d'information.* Autres points de service à Varennes, Sorel-Tracy et Sainte-Julie. | Clientèle: parents d'enfants ayant un trouble de déficit de l'attention (TDA) avec ou sans hyperactivité | Territoire: MRC Marguerite-d'Youville, MRC Pierre-De Saurel | Statut: organisme à but non lucratif",
+    "website": "www.pandalesdeuxrives.com",
+    "address": "4889, route Marie-Victorin, Contrecoeur, Montérégie, QC, J0L 1C0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-panda-vaudreuil-soul-mtg",
+    "name": "Association Panda Vaudreuil-Soulanges",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "438 496-2121",
+    "description": "Aide aux personnes ayant un trouble du déficit de l'attention (TDAH).* Aide et références: soutien téléphonique et par courriel.* Conférences offertes en présentiel ou virtuelles par des experts du domaine du TDAH.* Ateliers et autres activités favorisant l'interaction entre les participants.* Matériathèque: prêt de livres, matériel éducatif et outils sensoriels.* Groupe de soutien et ateliers parents-enfants. | Clientèle: personnes touchées par le trouble de déficit de l'attention avec ou sans hyperactivité | Territoire: CSSS Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "pandavstdah.org",
+    "address": "418, avenue Saint-Charles, bureau 316, Vaudreuil-Dorion, Montérégie, QC, J7V 2N1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-panda-mrc-les-moulins-trb",
     "name": "Association Panda-MRC les Moulins",
     "category": "family",
@@ -2181,6 +3021,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.associationpandalanaudiere.org",
     "address": "737, rue de la Soeur-Marie-Rose, Terrebonne, Lanaudière, QC, J6V 1P1",
     "hours": "bureau: variable"
+  },
+  {
+    "id": "association-pause-mtg",
+    "name": "Association Pause",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-2324",
+    "description": "Association de soutien aux personnes autistes et aux personnes vivant avec une déficience intellectuelle.* Informations et référence.* Activités d'intégration sociale.* Camp de jour.* Répit par les loisirs.* Défense et promotion des droits.* Écoute et soutien téléphonique. | Clientèle: personnes vivant avec une déficience intellectuelle, personnes autistes, ayant ou non une déficience physique, leur famille | Territoire: MRC Le Haut-Richelieu | Statut: organisme à but non lucratif",
+    "website": "www.associationpause.org",
+    "address": "375, avenue Bessette, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 2N8",
+    "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
     "id": "association-pour-ain-s-r-sidant--lav",
@@ -2272,6 +3125,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.quebec-france-laval.org",
     "address": "3235, boulevard Saint-Martin Est, Duvernay, Laval, QC, H7E 5G8",
     "hours": "Voir site web"
+  },
+  {
+    "id": "association-qu-b-coise-des-paren-mtg",
+    "name": "Association Québécoise Des Parents D'Enfants Handicapés Visuels",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 888 849-8729",
+    "description": "* Référence téléphonique.* Intervention et soutien.* Journées d'échange: conférences et ateliers.* Groupes de soutien.* Production de documents spécialisés. | Clientèle: parents d'enfants vivant avec un handicap visuel ou un trouble neurovisuel de 0 à 21 ans | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.aqpehv.qc.ca",
+    "address": "10, boulevard Churchill, bureau 203, Longueuil, Montérégie, QC, J4V 2L7",
+    "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
     "id": "association-qu-b-coise-des-traum-lav",
@@ -2677,6 +3543,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "atelier-industriel-saint-jean-mtg",
+    "name": "Atelier Industriel Saint-Jean",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-2616",
+    "description": "Entreprise d'insertion professionnelle pour personnes en situation de handicap.* Échantillonnage, emballage, embouteillage, ensachage, scellage, etc. | Clientèle: personnes vivant avec un handicap physique ou intellectuel | Territoire: Grand Montréal | Statut: organisme à but non lucratif",
+    "website": "atelierindustriel.ca",
+    "address": "277, rue Langlois, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 4S4",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "atelier-la-fl-che-de-fer-l-affi-mtg",
+    "name": "Atelier La Flèche De Fer (L') - Affi",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 552-9150",
+    "description": "Entreprise adaptée favorisant l'emploi de personnes vivant avec un handicap.* Activités de logistique à valeur ajoutée: préparation de commandes, assemblage, emballage, distribution, entreposage, inspection. | Clientèle: personnes vivant avec un handicap physique ou un handicap intellectuel, personnes autistes | Territoire: île de Montréal, Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "groupeaffi.ca",
+    "address": "1730, rue Eiffel, Boucherville, Montérégie, QC, J4B 7W1",
+    "hours": "lundi au vendredi 8h00 à 16h30"
+  },
+  {
     "id": "atelier-les-jouets-d-arc-en-ciel-out",
     "name": "Atelier Les Jouets D'Arc-En-Ciel (L')",
     "category": "employment",
@@ -2703,6 +3595,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lundi: 18h00, variables selon les activtés"
   },
   {
+    "id": "ateliers-transition-les-mtg",
+    "name": "Ateliers Transition (Les)",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 771-2747",
+    "description": "Réintégration sociale et professionnelle.* Réhabilitation professionnelle, accompagnement et orientation.* Opportunités de travail adapté.* Récupération des bicyclettes usagées. | Clientèle: personnes vivant avec un handicap, personnes vivant de l'exclusion du marché du travail Capacité: 93 | Territoire: Acton Vale, Beloeil, Boucherville, Brossard, Chambly, Granby, Longueuil, Marieville, McMasterville, Mont-Saint-Hilaire, Rougemont, Roxton Falls, Roxton Pond, Saint-Amable, Saint-Bruno-de- Montarville, Saint-Césaire, Saint-Hyacinthe, Sainte-Julie | Statut: organisme à but non lucratif",
+    "website": "www.atelierstransition.com",
+    "address": "5460, rue Martineau, Saint-Hyacinthe, Montérégie, QC, J2R 1T8",
+    "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 15h00"
+  },
+  {
+    "id": "au-coeur-des-mots-mtg",
+    "name": "Au Coeur Des Mots",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Lacolle",
+    "province": "QC",
+    "phone": "450 246-4131",
+    "description": "* Alphabétisation: lecture, écriture et mathématique.* Alpha-francisation.* Vente et récupération de livres usagés. | Clientèle: personnes de 16 ans et plus peu ou pas alphabétisées | Territoire: MRC Le Haut-Richelieu, MRC Les Jardins-de-Napierville | Statut: organisme à but non lucratif",
+    "address": "12B, rue Sainte-Marie, Lacolle, Montérégie, QC, J0J 1J0",
+    "hours": "lundi au jeudi 8h00 à 15h00"
+  },
+  {
     "id": "au-jardin-de-la-famille-de-fabre-lav",
     "name": "Au Jardin De La Famille De Fabreville Inc.",
     "category": "social",
@@ -2727,6 +3644,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "au-moulin-de-la-source-centre-va-mtg",
+    "name": "Au Moulin De La Source - Centre Valleyfield",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 377-5254",
+    "description": "Centre de jour pour personnes vivant avec un handicap physique.* Répit.* Activités sociales visant l'autonomie.* Éducation et animation socioculturelle. | Clientèle: personnes vivant avec un handicap physique, parents, bénéficiaires, proches | Territoire: MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.moulindelasource.com",
+    "address": "226, rue Montcalm, Salaberry-de-Valleyfield, Montérégie, QC, J6T 2E4",
+    "hours": "lundi au vendredi 8h30 à 16h00"
   },
   {
     "id": "au-panier-lav",
@@ -2781,6 +3711,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "auberge-du-coeur-le-baluchon-mtg",
+    "name": "Auberge Du Coeur Le Baluchon",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "1 866 263-8794",
+    "description": "Logement et soutien pour les jeunes sans-abri ou en difficulté.* Hébergement de courte durée.* Appartements supervisés.* Suivi en post-hébergement.* Soutien à l'intégration sociale.* Suivi individuel, familial et de groupe.* Soutien et accompagnement dans les démarches.* Information et références.* Prévention et sensibilisation.* Ateliers éducatifs, culturels et sportifs.* Activités diversifiées.* Implication communautaire et promotion des droits des jeunes. | Clientèle: hébergement de courte durée: jeunes en difficulté de 12 à 17 ans Capacité: 9 places et 1 lit de dépannage | Territoire: MRC Acton, MRC La Haute-Yamaska, MRC La Vallée-du-Richelieu, MRC Les Maskoutains, MRC Pierre-De Saurel, MRC Rouville | Statut: organisme à but non lucratif",
+    "website": "www.maisonlebaluchon.org",
+    "address": "2290, avenue Saint-Joseph, Saint-Hyacinthe, Montérégie, QC, J2S 5L4",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "auberge-du-coeur-le-baluchon-log-mtg",
+    "name": "Auberge Du Coeur Le Baluchon - Logements Supervisés",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "1 866 263-8794",
+    "description": "* Bail-Bye: appartements supervisés. | Clientèle: jeunes de 16 à 23 ans en difficulté, sans-abri ou à risque imminent de le devenir Capacité: 15 places | Territoire: MRC Acton, MRC La Haute-Yamaska, MRC La Vallée-du-Richelieu, MRC Les Maskoutains, MRC Pierre-De Saurel, MRC Rouville | Statut: organisme à but non lucratif",
+    "website": "www.maisonlebaluchon.org",
+    "address": "2290, avenue Saint-Joseph, Saint-Hyacinthe, Montérégie, QC, J2S 5L4",
+    "hours": "Voir site web"
+  },
+  {
     "id": "auberge-du-coeur-roland-gauvreau-jol",
     "name": "Auberge du Coeur Roland-Gauvreau",
     "category": "family",
@@ -2805,6 +3761,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "aumond.ca",
     "address": "664, rue Principale, Aumond, Outaouais, QC, J0W 1W0",
     "hours": "lundi au jeudi 8h30 à 12h00 et 12h30 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "autisme-mont-r-gie-mtg",
+    "name": "Autisme Montérégie",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 888 424-1212",
+    "description": "* Accueil, soutien téléphonique, références.* Groupes d'entraide pour adultes et leurs parents.* Information et formation.* Sensibilisation et promotion des droits* Répit.* Liste de gardien·ne·s et d'accompagnateurs·trices spécialisé·e·s. | Clientèle: personnes vivant avec un trouble du spectre de l'autisme (TSA), leur famille, leurs proches | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.autismemonteregie.org",
+    "address": "755, Chemin du Coteau Rouge, bureau 210, Longueuil, Montérégie, QC, J4J 1Z4",
+    "hours": "lundi au jeudi 9h00 à 16h00, vendredi 9h00 à 13h00, été: lundi au jeudi 9h00 à 16h00, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "autismopolis-mtg",
+    "name": "Autismopolis",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 895-1470",
+    "description": "* Projet de préparation à l'emploi d'une durée de 14 à 52 semaines.* Activités de socialisation pour les 13 ans et plus. | Clientèle: personnes autistes sans déficience intellectuelle Capacité: 12 personnes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "autismopolis.com",
+    "address": "415, boulevard du Séminaire nord, bureau B, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 5L4",
+    "hours": "lundi au jeudi 8h30 à 16h00, vendredi sur rendez-vous"
   },
   {
     "id": "autonhomme-pontiac-out",
@@ -2832,6 +3814,83 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "dépannage alimentaire: sur rendez-vous uniquement, téléphoner avant mercredi 12h00, distribution le vendredi matin, friperie: mardi au vendredi 10h00 à 15h00"
   },
   {
+    "id": "aux-sources-du-bassin-de-chambly-mtg",
+    "name": "Aux Sources Du Bassin De Chambly",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Chambly",
+    "province": "QC",
+    "phone": "450 658-1568",
+    "description": "* Accueil psychosocial.* Épicerie économique.* Distribution de nourriture hebdomadaire.* Friperie du bassin: vente à bas prix de vêtements, articles de maison, petits appareils électriques, jouets, livres, vaisselle, literie, articles de sports, etc.* Dons ponctuels d'articles.* Paniers de Noël. | Clientèle: soutien alimentaire: personnes dans le besoin, friperie du bassin: grand public | Territoire: Carignan, Chambly | Statut: organisme à but non lucratif",
+    "website": "as-bc.org",
+    "address": "1369, avenue Bourgogne, Chambly, Montérégie, QC, J3L 1Y4",
+    "hours": "soutien alimentaire: mardi, mercredi et vendredi 9h00 à 12h00 et 13h00 à 16h00, jeudi 9h00 à 12h00 et 13h00 à 17h30, friperie du bassin: lundi au mercredi, samedi et dimanche 9h00 à 16h00, jeudi et vendredi 9h00 à 20h00, administration: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "avant-garde-en-sant-mentale-l-mtg",
+    "name": "Avant-Garde En Santé Mentale (L')",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "450 444-9661",
+    "description": "Organisme proposant une approche personnalisée et un environnement accueillant et inclusif dédié aux échanges et à l'exploration autour de la santé mentale.* Groupes d'entraide, gestion du quotidien et accompagnement.* Actions collectives, éducation populaire, activités, etc. | Clientèle: toute personne ayant un intérêt pour les enjeux en santé mentale, vivant ou croyant vivre des problèmes de santé mentale Capacité: groupe d'entraide: 10 à 15 participants par rencontre | Territoire: La Prairie, Delson, Candiac, Sainte-Catherine, Saint-Philippe, Saint-Mathieu, Saint- Constant | Statut: organisme à but non lucratif",
+    "website": "lavantgarde.ca",
+    "address": "462, rue Saint-Paul, La Prairie, Montérégie, QC, J5R 2R5",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "avant-garde-en-sant-mentale-l-ma-mtg",
+    "name": "Avant-Garde En Santé Mentale (L') - Maison D'Hébergement - Transition",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "450 907-1333",
+    "description": "Maison d'hébergement pour les personnes vivant une situation d'itinérance.* Écoute, soutien et accompagnement.* Information, orientation, outils et références. | Clientèle: personnes en situation d'itinérance Capacité: 8 | Territoire: MRC Roussillon | Statut: organisme à but non lucratif",
+    "website": "agsmlaprairie.org/volet-hebergement",
+    "address": "636, chemin de Saint-Jean, La Prairie, Montérégie, QC, J5R 2L3",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "avant-garde-en-sant-mentale-l-ma-mtg-2",
+    "name": "Avant-Garde En Santé Mentale (L') - Maison D'Hébergement - Urgence",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "450 907-1333",
+    "description": "Hébergement d'urgence pour les personnes vivant une situation d'itinérance. | Clientèle: personnes en situation d'itinérance Capacité: 3 lits | Territoire: MRC Roussillon | Statut: organisme à but non lucratif",
+    "website": "agsmlaprairie.org/volet-hebergement",
+    "address": "636, chemin de Saint-Jean, La Prairie, Montérégie, QC, J5R 2L3",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "avant-garde-en-sant-mentale-l-sa-mtg",
+    "name": "Avant-Garde En Santé Mentale (L') - Saint-Rémi",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Rémi",
+    "province": "QC",
+    "phone": "450 615-0699",
+    "description": "Organisme proposant une approche personnalisée et un environnement accueillant et inclusif dédié aux échanges et à l'exploration autour de la santé mentale.* Groupes d'entraide, gestion du quotidien et accompagnement.* Actions collectives, éducation populaire, activités, etc. | Clientèle: toute personne ayant un intérêt pour les enjeux en santé mentale, vivant ou croyant vivre des problèmes de santé mentale Capacité: groupe d'entraide: 10 à 15 participants par rencontre | Territoire: Saint-Rémi | Statut: organisme à but non lucratif",
+    "address": "94, rue St-André, Saint-Rémi, Montérégie, QC, J0L 2L0",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "avant-to-t-maison-d-h-bergement--mtg",
+    "name": "Avant-Toît, Maison D'Hébergement (L') - Halte-Chaleur",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "450 907-1333",
+    "description": "Halte-chaleur.* Douches, repas, buanderie.* Accompagnement vers la stabilité résidentielle, services de soutien, orientation vers d'autres ressources. | Clientèle: personnes en situation d'itinérance ou d'instabilité résidentielle Capacité: 10 | Territoire: MRC Roussillon | Statut: organisme à but non lucratif",
+    "website": "lavantgarde.ca/volet-hebergement",
+    "address": "636, chemin de Saint-Jean, La Prairie, Montérégie, QC, J5R 2L3",
+    "hours": "1er décembre 2025 au 31 mars 2026, lundi au vendredi 12h00 à 20h00 (462, rue Saint-Paul), samedi et dimanche 12h00 à 20h00 (636, chemin de Saint-Jean)"
+  },
+  {
     "id": "avc-aphasie-laval-lav",
     "name": "Avc-Aphasie Laval",
     "category": "social",
@@ -2856,6 +3915,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "avenuedesjeunes.com",
     "address": "10, rue Bériault, Gatineau, Outaouais, QC, J8X 1A3",
     "hours": "Voir site web"
+  },
+  {
+    "id": "avif-action-sur-la-violence-et-i-mtg",
+    "name": "Avif - Action Sur La Violence Et Intervention Familiale",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 692-7313",
+    "description": "Volet hommes auteurs de violence conjugale, familiale ou dans un contexte autre* Rencontres individuelles.* Groupe de soutien.* Ateliers de sensibilisation.Volet hommes en difficulté ou subissant de la violence* Rencontres individuelles.Volet jeunesse famille* Rencontres individuelles.* Activités de prevention.* Formation aux parents.* Groupe de soutien aux parents. | Clientèle: hommes qui utilisent des comportements violents, hommes qui subissent de la violence, hommes en difficulté, adolescent·e·s de 12 à 17 ans, parents d'adolescents qui utilisent des comportements violents | Territoire: MRC Roussillon, MRC Jardins de Napierville | Statut: organisme à but non lucratif",
+    "website": "www.avif.ca",
+    "address": "330, rue Pierre-Boursier, bureau 1200, Châteauguay, Montérégie, QC, J6J 0E3",
+    "hours": "sur rendez-vous, lundi au jeudi 9h00 à 17h00, vendredi 9h00 à 12h00, rencontres de groupe: en soirée"
   },
   {
     "id": "aviron-l-h-bergement-communautai-lav",
@@ -2979,6 +4051,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 13h00"
   },
   {
+    "id": "banque-alimentaire-paroisse-sain-mtg",
+    "name": "Banque Alimentaire - Paroisse Saint-Jean Xxiii (Saint-Hubert)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 676-7906",
+    "description": "* Dépannage alimentaire d'urgence mensuel.* Distribution hebdomadaire de fruits et de légumes.* Distribution de bons d'achat et de nourriture non périssable.* Paniers de Noël: en collaboration avec Action dignité Saint-Hubert. | Clientèle: familles et personnes à faible revenu | Territoire: paroisse Jean-XXIII (anciennement les paroisses Saint-Jean-de-la-Lande, Saint-Isaac- Jogues et Saint-Thomas-de-Villeneuve) | Statut: organisme à but non lucratif",
+    "website": "sj23.ca",
+    "address": "4850, rue Quévillon, Longueuil, Montérégie, QC, J3Y 2V4",
+    "hours": "distribution de pain, de fruits et de légumes: lundi sur rendez-vous, aide alimentaire d'urgence: 7 jours"
+  },
+  {
     "id": "banque-alimentaire-glise-assembl-lav",
     "name": "Banque Alimentaire - Église Assemblée Chrétienne De Vimont-Auteuil",
     "category": "food",
@@ -3082,6 +4167,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h30 à 16h30"
   },
   {
+    "id": "barreau-de-longueuil-mtg",
+    "name": "Barreau De Longueuil",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 468-2609",
+    "description": "Association professionnelle.* Service de référence pour la population. | Clientèle: avocat·e·s membres du district, grand public | Territoire: agglomération de Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.barreaudelongueuil.qc.ca",
+    "address": "1111, boulevard Jacques-Cartier Est, Longueuil, Montérégie, QC, J4M 2J6",
+    "hours": "lundi au jeudi 8h30 à 12h30 et 13h00 à 16h30, vendredi 8h30 à 13h30"
+  },
+  {
+    "id": "barreau-de-richelieu-mtg",
+    "name": "Barreau De Richelieu",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 359-1313",
+    "description": "Association professionnelle.* Information et sensibilisation aux droits.* Référence vers des avocat·e·s. | Clientèle: avocat·e·s membres du district, grand public | Territoire: Acton Vale, Beloeil, Châteauguay, Mont-Saint-Hilaire, Saint-Hyacinthe, Saint-Jean-sur- Richelieu, Salaberry-de-Valleyfield, Sorel-Tracy, Varennes, Vaudreuil-Dorion, Verchères | Statut: organisme à but non lucratif",
+    "website": "barreaurichelieu.ca",
+    "address": "109, rue St-Charles, casier 2, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2C2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "beaconsfield-service-des-loisirs-bcf",
     "name": "Beaconsfield - Service des Loisirs",
     "category": "social",
@@ -3108,6 +4219,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h45, vendredi 8h00 à 12h00"
   },
   {
+    "id": "beauharnois-cocentre-mtg",
+    "name": "Beauharnois - Écocentre",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Beauharnois",
+    "province": "QC",
+    "phone": "450 225-0650",
+    "description": "Site de réemploi et récupération des matières résiduelles.* Matériaux de construction et résidus de démolition.* Appareils électriques et électroménagers.* Appareils informatiques et électroniques.* Carton.* Pneus, batterie d'auto, essence.* Divans, tapis et matelas.* Résidus domestiques dangereux: peinture, huile, piles, ampoules fluocompactes, bonbonnes de propane, aérosols, etc. | Clientèle: personnes résidant à Beauharnois Capacité: maximum de 3 mètres cubes par visite | Territoire: Beauharnois, Saint-Étienne-de-Beauharnois, Léry, Saint-Urbain-Premier | Statut: organisme municipal",
+    "website": "ville.beauharnois.qc.ca/ecocentre",
+    "address": "50, chemin des Hauts-Fourneaux, Beauharnois, Montérégie, QC, J6N 1W5",
+    "hours": "jeudi au samedi 8h00 à 15h45, été: jeudi au samedi 8h00 à 15h45, dimanche 8h00 à 12h45"
+  },
+  {
+    "id": "beloeil-cour-municipale-mtg",
+    "name": "Beloeil - Cour Municipale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 467-2835",
+    "description": "Cour de justice de première instance où sont entendus les litiges en matière de règlements municipaux, d'infractions au Code de la sécurité routière ainsi que certaines infractions criminelles (conduites avec facultés affaiblies, vols de moins de 5000$ et méfaits). * Paiement ou contestation de contraventions.* Recouvrement de sommes dues.* Travaux compensatoires. | Territoire: Beloeil, McMasterville, Saint-Basile-Le-Grand, MRC de La Vallée-du-Richelieu | Statut: organisme municipal",
+    "website": "beloeil.ca/servir/affaires-juridiques/contraventions-et-cour-municipale",
+    "address": "777, rue Laurier, Beloeil, Montérégie, QC, J3G 4S9",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00, vendredi 8h00 à 12h30"
+  },
+  {
+    "id": "beloeil-ville-mtg",
+    "name": "Beloeil - Ville",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 467-2835",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Licence pour animaux.* Calendrier des collectes des matières résiduelles: www.beloeil.ca/servir/environnement/collectes-residentielles* Subvention pour produits hygiéniques réutilisables: couches lavables, produits d'hygiène féminine.* Subventions pour actions environnementales: plantation d'arbre, achat de baril récupérateur d'eau de pluie, etc.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système automatisés d'alerte en cas d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles.* Signalement d'obstacle à l'accessibilité et plaintes en lien avec le transport adapté. | Clientèle: grand public | Territoire: Beloeil | Statut: organisme municipal",
+    "website": "beloeil.ca",
+    "address": "777, rue Laurier, Beloeil, Montérégie, QC, J3G 4S9",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00, vendredi 8h00 à 12h30, services téléphoniques: lundi au dimanche 8h00 à 20h00"
+  },
+  {
+    "id": "benado-mtg",
+    "name": "Benado",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Delson",
+    "province": "QC",
+    "phone": "450 632-1640",
+    "description": "Prévention de la délinquance junévile.* Centre de jour pour jeunes à risque de décrochage scolaire.* Activités manuelles et de connaissance de soi.* Développement et application des mesures extrajudiciaires et judiciaires en vertu de la Loi sur le système de justice pénale pour personnes adolescentes.* Information et consultation auprès des personnes victimes d'actes criminels.* Prévention du crime en milieu scolaire.* Soutien à la communauté dans l'implantation de programmes en lien avec la résolution de conflits. | Clientèle: volet alternatives au décrochage scolaire: jeunes de 13 à 18 ans ayant des difficultés scolaires, familiales ou sociales, volet justice alternative: jeunes de 12 à 18 ans, victimes, parents et communauté | Territoire: MRC de Roussillon, MRC Les Jardins-de-Napierville | Statut: organisme à but non lucratif",
+    "website": "benado.org",
+    "address": "197, chemin Saint-François-Xavier, Delson, Montérégie, QC, J5B 1X7",
+    "hours": "lundi, mardi, jeudi et vendredi 8h30 à 17h00, mercredi 8h30 à 20h30"
+  },
+  {
     "id": "biblioth-que-aur-lien-doucet-out",
     "name": "Bibliothèque Aurélien-Doucet",
     "category": "family",
@@ -3132,6 +4295,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.gatineau.ca/page.asp?p=quoi_faire/bibliotheque",
     "address": "181, rue Joseph, Gatineau, Outaouais, QC, J8L 1G6",
     "hours": "lundi 10h00 à 20h00, mardi au vendredi 13h00 à 20h00, samedi et dimanche 10h00 à 16h00"
+  },
+  {
+    "id": "biblioth-que-communautaire-d-hem-mtg",
+    "name": "Bibliothèque Communautaire D'Hemmingford",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Hemmingford",
+    "province": "QC",
+    "phone": "450 247-0010",
+    "description": "Prêt et consultation de livres et de documents.* Club de lecture pour enfants.* Cours de conversation espagnole.* Ateliers d'artisanat.* Contes pour enfants.* Projection de films. | Territoire: Hemmingford | Statut: organisme municipal",
+    "website": "mabibliotheque.ca/hemmingford",
+    "address": "552, avenue Goyette, Hemmingford, Montérégie, QC, J0L 1H0",
+    "hours": "mardi et jeudi 14h00 à 17h00, samedi 10h00 à 13h00"
   },
   {
     "id": "biblioth-que-de-la-maison-du-cit-out",
@@ -3171,6 +4347,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.ville.gatineau.qc.ca/page.asp?p=quoi_faire/bibliotheque",
     "address": "20, boulevard Lorrain, Gatineau, Outaouais, QC, J8P 2C8",
     "hours": "lundi au jeudi 16h00 à 20h00, samedi 12h00 à 16h00"
+  },
+  {
+    "id": "biblioth-que-gaby-farmer-denis-mtg",
+    "name": "Bibliothèque Gaby-Farmer-Denis",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Les Cèdres",
+    "province": "QC",
+    "phone": "450 452-4250",
+    "description": "Prêt et consultation de documents imprimés.* Postes informatiques et accès à Internet.* Jeux de société.* Heure du conte.* Expositions et ateliers. | Territoire: Les Cèdres | Statut: organisme municipal",
+    "website": "www.reseaubibliomonteregie.qc.ca/fr/bibliotheques-horaire-et-localisation/b19/bibliotheque-des- cedres-gaby-farmer-denis",
+    "address": "141, rue Valade, Les Cèdres, Montérégie, QC, J7T 1S9",
+    "hours": "lundi et vendredi 10h00 à 16h00, mardi et jeudi 10h00 à 20h00, mercredi 15h00 à 20h00, samedi 9h00 à 12h00"
   },
   {
     "id": "biblioth-que-jean-marie-caron-out",
@@ -3225,6 +4414,266 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi et mardi 17h00 à 20h00, mercredi 8h30 à 11h30 et 17h00 à 20h00, samedi 12h00 à 16h00"
   },
   {
+    "id": "biblioth-que-municipale-saint-ma-mtg",
+    "name": "Bibliothèque Municipale - Saint-Mathieu",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Mathieu",
+    "province": "QC",
+    "phone": "450 632-9528",
+    "description": "Prêt et consultation de livres et de documents.* Heure du conte.* Accès à Internet.* Club de lecture pour enfants.* Programme croque-livres.* Rencontres amicales et jeux de société. | Territoire: Saint-Mathieu | Statut: organisme municipal",
+    "website": "municipalite.saint-mathieu.qc.ca/bibliotheque",
+    "address": "299, chemin Saint-Édouard, Saint-Mathieu, Montérégie, QC, J0L 2H0",
+    "hours": "mardi 10h00 à 20h30, jeudi 16h30 à 20h30, vendredi et samedi 8h00 à 12h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-beloe-mtg",
+    "name": "Bibliothèque Municipale De Beloeil",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 467-7872",
+    "description": "* Prêt et consultation de documents imprimés et audiovisuels.* Ordinateurs et accès à Internet.* Heure du conte.* Ateliers d'informatique.* Expositions, conférences et événements.* Don de livres. | Clientèle: grand public | Territoire: Beloeil | Statut: organisme municipal",
+    "website": "bibliotheque.beloeil.ca",
+    "address": "301, rue Hertel, Beloeil, Montérégie, QC, J3G 6E7",
+    "hours": "mardi 10h00 à 18h00, mercredi au vendredi 10h00 à 21h00, samedi 10h00 à 16h00, dimanche 12h00 à 16h00, période estivale: lundi 12h00 à 16h00, mardi 10h00 à 18h00, mercredi au vendredi 10h00 à 21h00, samedi 10h00 à 16h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-bouch-mtg",
+    "name": "Bibliothèque Municipale De Boucherville",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 449-8650",
+    "description": "* Prêt et consultation de documents imprimés et audiovisuels.* Ordinateurs, accès à Internet et outils d'impression.* Club de lecture pour adultes.* Club de lecture pour enfants.* Heure du conte.* Spectacles, conférences et rencontres.* Biblio-Santé.* Services adaptés aux personnes vivant avec des troubles liés à la mobilité, l'audition, la vision, la parole, les facultés intellectuelles et les troubles d'apprentissage. | Territoire: Boucherville | Statut: organisme municipal",
+    "website": "bibliotheque.boucherville.ca",
+    "address": "501, chemin du Lac, Boucherville, Montérégie, QC, J4B 6V6",
+    "hours": "lundi au mercredi 10h00 à 21h00, jeudi et vendredi 12h00 à 21h00, samedi et dimanche 10h00 à 17h00, accueil des familles avec enfants ayant des besoins particuliers: dimanche 9h00 à 10h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-chamb-mtg",
+    "name": "Bibliothèque Municipale De Chambly",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Chambly",
+    "province": "QC",
+    "phone": "450 658-2711",
+    "description": "Prêt et consultation de documents imprimés, audiovisuels et numériques.* Club de lecture pour adultes.* Club de lecture pour enfants.* Accès à Internet et postes informatiques.* Activités d'animation.* Livraison à domicile pour personnes à mobilité réduite.* Collection pour personnes avec une déficience visuelle.* Prêt de jeux de société et de jeux vidéos.* Programmes d'éveil à la lecture et de stimulation du langage. | Clientèle: grand public | Territoire: Chambly | Statut: organisme municipal",
+    "website": "ville.chambly.qc.ca/bibliotheque",
+    "address": "1625, boulevard De Périgny, Chambly, Montérégie, QC, J3L 1X1",
+    "hours": "mardi au jeudi 9h00 à 21h00, lundi et vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-delso-mtg",
+    "name": "Bibliothèque Municipale De Delson",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Delson",
+    "province": "QC",
+    "phone": "450 632-1050",
+    "description": "* Prêt et consultation de documents imprimés et audiovisuels.* Ordinateurs et accès à Internet.* Heure du conte.* Activités d'animation et programmes de littératie.* Cours d'informatique, niveau débutant. | Territoire: Delson | Statut: organisme municipal",
+    "website": "ville.delson.qc.ca/loisirs-culture-et-communautaire/loisirs-et-culture/bibliotheque/",
+    "address": "1, 1ère Avenue, Delson, Montérégie, QC, J5B 1M9",
+    "hours": "mardi au jeudi 13h00 à 20h30, vendredi et samedi 10h00 à 16h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-l-le--mtg",
+    "name": "Bibliothèque Municipale De L'Île-Perrot",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "L'Île-Perrot",
+    "province": "QC",
+    "phone": "514 453-1751",
+    "description": "Bibliothèque publique: prêts et accès à des documents imprimés, numériques et audiovisuels.* Ordinateurs et accès à Internet.* Bases de données de recherche.* Impression et photocopie.* Heure du conte.* Une naissance, un livre: trousse d'initiation à la lecture pour les enfants de 0 à 12 mois.* Activités et évènements culturels. | Territoire: L'Île-Perrot | Statut: organisme municipal",
+    "website": "www.ile-perrot.qc.ca/culture-et-loisirs/bibliotheque",
+    "address": "120, boulevard Perrot, L'Île-Perrot, Montérégie, QC, J7V 3G1",
+    "hours": "mardi 12h30 à 20h30, mercredi 10h00 à 20h30, jeudi 10h00 à 20h30, vendredi 10h00 à 17h00, samedi et dimanche 10h00 à 17h00, été: lundi 12h30 à 20h30, mardi 10h00 à 20h30, mercredi 10h00 à 20h30, jeudi 10h00 à 17h00, vendredi et samedi 10h00 à 17h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-mcmas-mtg",
+    "name": "Bibliothèque Municipale De Mcmasterville",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Mcmasterville",
+    "province": "QC",
+    "phone": "450 467-4222",
+    "description": "Prêt de livres et de documents.* Heure du conte.* Dossier d'emprunt en ligne: réservation, renouvellement, historique de prêts, etc. * Catalogue en ligne. * Programme Une naissance un livre: trousse pour bébé-lecteur lors de l'abonnement d'un enfant de 12 mois et moins. | Clientèle: personnes résidant à McMasterville | Territoire: McMasterville | Statut: organisme municipal",
+    "website": "www.mcmasterville.ca/loisirs-et-culture/bibliotheque-municipale-et-scolaire",
+    "address": "720, rue Morin, Mcmasterville, Montérégie, QC, J3G 1H1",
+    "hours": "mardi et jeudi 10h00 à 12h00 et 18h00 à 21h00, mercredi 14h00 à 16h00, vendredi 18h00 à 21h00, samedi 10h00 à 16h00, chute à livres: lundi 9h15 à samedi 15h45"
+  },
+  {
+    "id": "biblioth-que-municipale-de-point-mtg",
+    "name": "Bibliothèque Municipale De Pointe-Des-Cascades",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Pointe-des-Cascades",
+    "province": "QC",
+    "phone": "450 455-3414",
+    "description": "Prêt et consultation de documents.* Ordinateurs et accès à Internet. | Territoire: Pointe-des-Cascades | Statut: organisme municipal",
+    "website": "www.pointe-des-cascades.com/culture-et-loisirs/culture/bibliotheque-adrienne-de-montigny- clement",
+    "address": "85, chemin du Fleuve, Pointe-des-Cascades, Montérégie, QC, J0P 1M0 ?",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, été: lundi au jeudi 18h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-rigau-mtg",
+    "name": "Bibliothèque Municipale De Rigaud",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Rigaud",
+    "province": "QC",
+    "phone": "450 451-0869",
+    "description": "* Prêt et consultation de documents imprimés et audiovisuels.* Heure du conte.* Prêt à domicile pour personnes à mobilité réduite.* Expositions. | Territoire: Rigaud | Statut: organisme municipal",
+    "website": "www.ville.rigaud.qc.ca",
+    "address": "102, rue Saint-Pierre, Rigaud, Montérégie, QC, J0P 1P0",
+    "hours": "mardi et mercredi 11h00 à 19h00, jeudi 12h00 à 18h00, vendredi 12h00 à 20h00, samedi 9h00 à 15h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-rivi--mtg",
+    "name": "Bibliothèque Municipale De Rivière-Beaudette",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Rivière-Beaudette",
+    "province": "QC",
+    "phone": "450 269-2931",
+    "description": "* Prêt de documents imprimés et audiovisuels.* Espace multimédia.* Ordinateurs.* Heure du conte. | Clientèle: grand public, enfants de 12 ans et moins: accompagné·e·s par un parent | Territoire: Rivière-Beaudette | Statut: organisme municipal",
+    "website": "riviere-beaudette.com/bib2",
+    "address": "663, chemin Frontière, Rivière-Beaudette, Montérégie, QC, J0P 1R0",
+    "hours": "mardi 9h00 à 12h00 et 13h00 à 15h00, jeudi 16h30 à 19h30, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-saint-mtg-12",
+    "name": "Bibliothèque Municipale De Saint-Clet",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Clet",
+    "province": "QC",
+    "phone": "450 456-3175",
+    "description": "* Prêt et consultation de documents imprimés et audiovisuels.* Heure du conte.* Club de lecture pour enfants. | Territoire: Saint-Clet | Statut: organisme municipal",
+    "website": "st-clet.com/fr/bibliotheque",
+    "address": "25, rue Piché, Saint-Clet, Montérégie, QC, J0P 1S0",
+    "hours": "mardi 19h00 à 20h30, mercredi 13h00 à 16h00, samedi 10h30 à 12h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-saint-mtg-10",
+    "name": "Bibliothèque Municipale De Saint-Constant",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "450 638-2010",
+    "description": "* Prêt et consultation de documents imprimés et audiovisuels.* Ordinateurs, accès à Internet et outils d'impression.* Salles de travail.* Heure du conte.* Club de lecture pour enfants.* Club de lecture pour adultes.* Conférences, ateliers.* Bibio-semences.* Portail en ligne: saint-constant-prod.bibliomondo.com | Territoire: Saint-Constant | Statut: organisme municipal",
+    "website": "saint-constant.ca/fr/bibliotheque-municipale",
+    "address": "162, boulevard Monchamp, Saint-Constant, Montérégie, QC, J5A 2K8",
+    "hours": "lundi au mercredi 12h00 à 20h00, jeudi 9h30 à 20h00, vendredi 13h00 à 17h00, samedi 10h00 à 15h00, dimanche 12h00 à 16h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-saint-mtg-15",
+    "name": "Bibliothèque Municipale De Saint-Jacques-Le-Mineur",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Saint-Jacques-le-Mineur",
+    "province": "QC",
+    "phone": "450 347-5446",
+    "description": "Prêt et consultation de livres et de documents.* Accès à Internet.* Ludothèque: prêt et jeux sur place.* Activités diverses. | Clientèle: résident·e·s Capacité: 30 personnes | Territoire: Saint-Jacques-le-Mineur | Statut: organisme à but non lucratif",
+    "website": "www.reseaubibliomonteregie.qc.ca/fr/bibliotheques-horaire-et-localisation/b31/bibliotheque-de- saint-jacques-le-mineur",
+    "address": "89, rue Principale, Saint-Jacques-le-Mineur, Montérégie, QC, J0J 1Z0",
+    "hours": "lundi et mercredi 13h00 à 20h00, vendredi 13h00 à 16h00, samedi 10h30 à 12h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-saint-mtg-11",
+    "name": "Bibliothèque Municipale De Saint-Michel",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Michel",
+    "province": "QC",
+    "phone": "450 454-7995",
+    "description": "Prêt et consultation de documents imprimés, audiovisuels et numériques.* Postes informatiques et accès à Internet.* Ateliers d'informatique.* Club de lecture pour enfants.* Activités ponctuelles. | Territoire: Saint-Michel | Statut: organisme municipal",
+    "website": "www.reseaubibliomonteregie.qc.ca/fr/bibliotheques-horaire-et-localisation/b25/bibliotheque-de- saint-michel-claire-lazure",
+    "address": "440, place Saint-Michel, Saint-Michel, Montérégie, QC, J0L 2J0",
+    "hours": "lundi, jeudi et vendredi 14h00 à 17h00, mardi et mercredi et 14h00 à 20h00, samedi 10h00 à 14h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-saint-mtg-13",
+    "name": "Bibliothèque Municipale De Saint-Polycarpe",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Polycarpe",
+    "province": "QC",
+    "phone": "450 265-3444",
+    "description": "* Prêt et consultation de livres et de documents.* Ordinateurs.* Heure du conte.* Club de lecture pour enfants.* Bibliothèque de semences.* Jeux de société. | Territoire: Saint-Polycarpe | Statut: organisme municipal",
+    "website": "stpolycarpe.ca/bibliotheque",
+    "address": "7, rue Sainte-Catherine, Saint-Polycarpe, Montérégie, QC, J0P 1X0",
+    "hours": "mardi et vendredi 18h30 à 20h30, mercredi 14h00 à 16h00, samedi 10h00 à 14h00, été: mardi 17h30 à 20h30, mercredi 10h00 à 13h00, vendredi 14h00 à 17h00, samedi 10h00 à 13h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-saint-mtg-14",
+    "name": "Bibliothèque Municipale De Saint-Rémi",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Rémi",
+    "province": "QC",
+    "phone": "450 454-3993",
+    "description": "Prêt et consultation de documents imprimés et audiovisuels.* Ordinateurs, accès à Internet, impression et photocopies.* Heure du conte.* Club de lecture pour enfants.* Biblio-Santé: informations pour les usagers du système de santé et leurs proches.* Biblio-Jeux: prêt de jeux de stimulation du langage.* Une naissance un livre: trousse d'initiation à la lecture.* Activités et conférences. | Territoire: Saint-Rémi | Statut: organisme municipal",
+    "website": "www.saint-remi.ca/loisirs-et-culture/bibliotheque",
+    "address": "25, rue Saint-Sauveur, Saint-Rémi, Montérégie, QC, J0L 2L0",
+    "hours": "mardi et mercredi 14h00 à 20h00, jeudi et vendredi 9h00 à 12h00 et 14h00 à 20h00, samedi 10h00 à 16h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-saint-mtg-9",
+    "name": "Bibliothèque Municipale De Saint-Édouard",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Édouard",
+    "province": "QC",
+    "phone": "450 454-6333",
+    "description": "Prêt et consultation de documents imprimés, numériques et audiovisuels.* Postes informatiques et accès à Internet.* Club de lecture pour enfants.* Une naissance un livre: trousse d'initiation à la lecture pour les bébés.* Trousses d'information pour les personnes aînées.* Heure du conte.* Prêt de jeux éducatifs.* Ateliers, conférences. | Territoire: Saint-Édouard | Statut: organisme municipal",
+    "website": "www.reseaubibliomonteregie.qc.ca/fr/bibliotheques-horaire-et-localisation/b29/bibliotheque-de- saint-edouard",
+    "address": "405B, montée Lussier, Saint-Édouard, Montérégie, QC, J0L 1Y0",
+    "hours": "mardi 13h00 à 16h00, mercredi et jeudi 18h00 à 20h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-saint-mtg-16",
+    "name": "Bibliothèque Municipale De Sainte-Clotilde",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Sainte-Clotilde",
+    "province": "QC",
+    "phone": "450 826-0150",
+    "description": "Prêt et consultation de documents.* Ordinateurs et accès à Internet. | Territoire: Sainte-Clotilde | Statut: organisme municipal",
+    "website": "www.reseaubibliomonteregie.qc.ca/fr/bibliotheques-horaire-et-localisation/b101/bibliotheque-de- sainte-clotilde",
+    "address": "2412, chemin de l'Église, Sainte-Clotilde, Montérégie, QC, J0L 1W0",
+    "hours": "lundi 14h30 à 17h30, mercredi 14h00 to 20h30, samedi 9h00 à 12h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-tr-s--mtg",
+    "name": "Bibliothèque Municipale De Très-Saint-Rédempteur",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Très-Saint-Rédempteur",
+    "province": "QC",
+    "phone": "450 451-5203",
+    "description": "* Prêt et consultation de livres et de documents.* Ordinateurs, accès à Internet.* Club de lecture pour enfants. | Territoire: Très-Saint-Rédempteur | Statut: organisme municipal",
+    "website": "tressaintredempteur.ca/loisirs-et-culture/bibliotheque",
+    "address": "769, route Principale, Très-Saint-Rédempteur, Montérégie, QC, J0P 1P1",
+    "hours": "mercredi 19h00 à 21h00, samedi 10h00 à 12h00"
+  },
+  {
+    "id": "biblioth-que-municipale-de-vaudr-mtg",
+    "name": "Bibliothèque Municipale De Vaudreuil-Dorion",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-5588",
+    "description": "Prêt et consultation de documents imprimés et audiovisuels.* Ordinateurs, accès à Internet et outils d'impression.* Cours d'informatique.* Heure du conte.* Club de lecture pour enfants.* Club de tricot.* Expositions, conférences et ateliers. | Clientèle: grand public | Territoire: Vaudreuil-Dorion, Vaudreuil-Sur-Le-Lac | Statut: organisme municipal",
+    "website": "www.ville.vaudreuil-dorion.qc.ca/fr/loisirs-et-culture/bibliotheque",
+    "address": "2000, rue Émile-Bouchard, Vaudreuil-Dorion, Montérégie, QC, J7V 1A5",
+    "hours": "lundi au vendredi 10h00 à 21h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
     "id": "nb-wellness-nb",
     "name": "Bien-être NB",
     "category": "mentalHealth",
@@ -3237,6 +4686,18 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi.",
     "isProvinceWide": true
+  },
+  {
+    "id": "bienville-allons-de-l-avant-mtg",
+    "name": "Bienville, Allons De L'Avant!",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 677-5608",
+    "description": "Association de locataires.* Information, référence, accompagnement.* Défense des droits.* Activités sociales: évènements, cafés-rencontres et ateliers.* Dépannage alimentaire d'urgence. | Clientèle: locataires des HLM de Bienville et Desaulniers | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "address": "91, rue Quinn, Longueuil, Montérégie, QC, J4H 0A5",
+    "hours": "accueil: lundi au jeudi 8h00 à 17h00, variable selon les activités"
   },
   {
     "id": "ab-shelter-edmonton",
@@ -3330,6 +4791,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 10h00 à 16h00"
   },
   {
+    "id": "boucherville-loisir-culture-et-v-mtg",
+    "name": "Boucherville - Loisir, Culture Et Vie Communautaire",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 449-8640",
+    "description": "* Activités communautaires, socioculturelles, artistiques et sportives.* Centre aquatique et piscines, centre d'art, centre sportif, aréna, patinoires, parcs, terrains sportifs et aires de jeux.* Camp de jour estival.* Événements, spectacles et expositions.* Coordination avec les organismes communautaires du milieu.* Bien vieillir à Boucherville: initiatives et programmations pour les personnes aînées bouchervilloises.* Maison du bénévolat Ronald-Beaupré. | Clientèle: personnes possédant une carte accès-Boucherville | Territoire: Boucherville | Statut: organisme municipal",
+    "website": "boucherville.ca/sports",
+    "address": "490, chemin du Lac, Boucherville, Montérégie, QC, J4B 6X3",
+    "hours": "centre multifonctionnel Francine-Gadbois: lundi au jeudi 10h00 à 16h30, samedi et dimanche 10h00 à 16h30, galerie Vincent-d'Indy: mardi au vendredi 13h00 à 16h00 et 18h00 à 21h00, samedi et dimanche 13h00 à 16h00, complexe aquatique Laurie-Ève-Cormier: lundi au vendredi 6h15 à 21h15, samedi et dimanche 8h00 à 20h00"
+  },
+  {
+    "id": "boucherville-ville-mtg",
+    "name": "Boucherville - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 449-8100",
+    "description": "Gestion des services municipaux. * Gestion et paiement des taxes municipales.* Collecte des articles volumineux, feuilles mortes et branches, surplus de carton et sapin, ordures ménagères et matières recyclables.* Permis de construction.* Location de salles de réunion intérieures et d'espaces sportifs extérieurs.* Bottin des récupérateurs: www.bottinrecuperateurs.boucherville.ca.* Système automatisé de messagerie en cas de situation d'urgence. | Territoire: Boucherville | Statut: organisme municipal",
+    "website": "www.boucherville.ca",
+    "address": "500, rue de la Rivière-aux-Pins, Boucherville, Montérégie, QC, J4B 2Z7",
+    "hours": "administration: lundi au vendredi 8h30 à 12h00 et 13h15 à 16h30, horaire estival du 10 juin au 30 août: lundi au jeudi 8h30 à 12h00 et 13h15 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
     "id": "bouchette-municipalit-out",
     "name": "Bouchette - Municipalité",
     "category": "social",
@@ -3343,6 +4830,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 10h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "bouffe-du-carrefour-la-mtg",
+    "name": "Bouffe Du Carrefour (La)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 926-2386",
+    "description": "* Cuisines collectives.* Cuisines jeunesse.* Ateliers de cuisine thématiques.* Ateliers en collaboration avec d'autres organismes communautaires.* Dîner communautaire.* Jardins à partager.* Marché ambulant.* Traiteur communautaire et service de mets préparés surgelés. | Territoire: Saint-Hubert et les environs | Statut: organisme à but non lucratif",
+    "website": "labouffeducarrefour.org",
+    "address": "3780, Grande Allée, Longueuil, Montérégie, QC, J4T 2V7",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "bouffe-partage-mtg",
+    "name": "Bouffe Partage",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 844-4889",
+    "description": "* Banque alimentaire. | Clientèle: personnes et familles à faible revenu | Territoire: Châteauguay et les environs | Statut: organisme à but non lucratif",
+    "address": "299, boulevard d'Anjou, Châteauguay, Montérégie, QC, J6J 2R5",
+    "hours": "sur rendez-vous, distribution: jeudi après-midi"
+  },
+  {
     "id": "bouffe-pontiac-out",
     "name": "Bouffe Pontiac",
     "category": "food",
@@ -3353,6 +4865,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Dépannage alimentaire.* Magasin-partage.* Friperie et récupération sur place: vêtements et meubles usagés.* Cuisines collectives.* Jardin collectif.* Paniers de Noël. | Clientèle: personnes à faible revenu | Territoire: MRC Pontiac | Statut: organisme à but non lucratif",
     "address": "2, rue Elsie, Campbell's Bay, Outaouais, QC, J0X 1K0",
     "hours": "lundi, mercredi, jeudi et vendredi 9h00 à 15h30"
+  },
+  {
+    "id": "bouffe-pour-tous-mtg",
+    "name": "Bouffe Pour Tous",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 670-5449",
+    "description": "* Banque alimentaire.* Accueil des personnes nouvellement arrivées.* Paniers de Noël.* Distribution de vêtements et de meubles. | Clientèle: familles et personnes seules à faible revenu Capacité: 100 | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.bouffepourtous.org",
+    "address": "911, boulevard Roland-Therrien, Longueuil, Montérégie, QC, J4J 4L3",
+    "hours": "distribution aide alimentaire: mercredi 18h00 à 20h30, temps des fêtes: fermé du 19 décembre au 8 janvier"
   },
   {
     "id": "boulev-art-de-la-vall-e-le-out",
@@ -3391,6 +4916,45 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "boussole-centre-de-ressources-la-mtg",
+    "name": "Boussole - Centre De Ressources À La Famille (La)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Amable",
+    "province": "QC",
+    "phone": "514 929-2732",
+    "description": "Soutien à la famille.* Halte-garderie communautaire.* Second Souffle: service de soutien à domicile temporaire pour parents d'enfants de 0 à 5 ans.* Intervenante familiale pour les parents d'enfants de 0 à 17 ans: soutien personnalisé, écoute, accompagnement, références et informations sur les ressources disponibles.* Ateliers et conférences. | Clientèle: familles Capacité: halte-garderie: 6 enfants, activités: 25 personnes | Territoire: Saint-Amable | Statut: organisme à but non lucratif",
+    "website": "www.crflaboussole.com",
+    "address": "404, rue Alain, bureau 3, Saint-Amable, Montérégie, QC, J0L 1N0",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "boutik-de-la-fabrik-la-paroisse--mtg",
+    "name": "Boutik De La Fabrik (La) - Paroisse Saint-Jean Xxiii (Saint-Hubert)",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 812-9486",
+    "description": "Comptoir familial.* Items à prix modiques: vêtements, meubles, articles de maison, jouets, etc.* Récupération de dons sur place. | Territoire: Saint-Hubert | Statut: organisme à but non lucratif",
+    "website": "sj23.ca",
+    "address": "4990, rue Redmond, Longueuil, Montérégie, QC, J3Y 2C2",
+    "hours": "mardi 12h00 à 16h00, jeudi 12h00 à 17h00"
+  },
+  {
+    "id": "boutique-co-mtg",
+    "name": "Boutique Éco",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Napierville",
+    "province": "QC",
+    "phone": "450 245-3335",
+    "description": "* Magasin d'aubaine et récupération d'articles usagés: vêtements, livres, vaisselle, etc.* Aide alimentaire: bons d'achats alimentaires.* Jumelage de dons. | Clientèle: grand public, aide alimentaire: personnes avec un faible revenu | Territoire: MRC Les Jardins-de-Napierville | Statut: organisme à but non lucratif",
+    "website": "ecofriperie.com",
+    "address": "459, rue Saint-Jacques, Napierville, Montérégie, QC, J0J 1L0",
+    "hours": "lundi au vendredi 10h00 à 16h30, samedi et dimanche 10h00 à 16h00"
   },
   {
     "id": "boutiques-d-occasion-pour-nova-beac-bcf",
@@ -3458,6 +5022,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "bo-te-lettres-de-longueuil-mtg",
+    "name": "Boîte À Lettres De Longueuil",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-9273",
+    "description": "Alphabétisation et prévention de l'analphabétisme.* Ateliers pour apprendre autrement la lecture et l'écriture.* Fournitures scolaires offertes gratuitement aux participant·e·s.* Conférences et formation. | Clientèle: personnes de 16 à 25 ans | Territoire: agglomération de Longueuil | Statut: organisme à but non lucratif",
+    "website": "boitealettres.ca",
+    "address": "1178, chemin de Coteau-Rouge, Longueuil, Montérégie, QC, J4K 1W9",
+    "hours": "lundi au vendredi 9h00 à 16h30"
+  },
+  {
     "id": "bristol-municipalit-out",
     "name": "Bristol - Municipalité",
     "category": "social",
@@ -3469,6 +5046,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.bristolmunicipality.qc.ca",
     "address": "32, chemin d'Aylmer, Bristol, Outaouais, QC, J0X 1G0",
     "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "brossard-ville-mtg",
+    "name": "Brossard - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 923-6311",
+    "description": "Gestion des services municipaux.* Paiement des taxes municipales.* Collecte des matières résiduelles.* Licence pour animaux.* Permis de construction.* Info-travaux: informations sur les projets routiers.* Service de sécurité incendie. * Plan d'urgence de la Ville: www.brossard.ca/services/sante-securite-et- animaux/types-de-situations-d-urgence* B-CITI: services en ligne.* Loisir, culture et vie communautaire. | Territoire: Brossard | Statut: organisme municipal",
+    "website": "brossard.ca",
+    "address": "2001, boulevard de Rome, Brossard, Montérégie, QC, J4W 3K5",
+    "hours": "lundi, mercredi et vendredi 8h30 à 16h30, mardi et jeudi 8h30 à 19h30, samedi 9h00 à 12h00"
   },
   {
     "id": "ns-shelter-women",
@@ -3549,6 +5139,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, service de garde téléphonique: 24 heures, 7 jours"
   },
   {
+    "id": "bureau-d-aide-juridique-ch-teaug-mtg",
+    "name": "Bureau D'Aide Juridique - Châteauguay",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 691-4325",
+    "description": "Services juridiques gratuits ou à bas prix aux personnesadmissibles financièrement.* Reçoit et traite les demandes d'aide juridique. | Clientèle: personne ou organisation sans but lucratif résidant au Québec ou contrainte de rester au Québec, financièrement admissible et dont le service juridique demandé est couvert par la Loi | Territoire: Châteauguay, Saint-Constant, Delson, Kahnawake | Statut: organisme parapublic",
+    "website": "ccjrs.com/bureaux/chateauguay",
+    "address": "147, boulevard Saint-Jean-Baptiste, Châteauguay, Montérégie, QC, J6K 3B1",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "bureau-d-aide-juridique-droit-ci-mtg",
+    "name": "Bureau D'Aide Juridique - Droit Civil - Longueuil",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 928-7659",
+    "description": "Services juridiques en matière de droit civil et familial gratuits ou à bas prix aux personnesadmissibles financièrement.* Reçoit et traite les demandes d'aide juridique. | Clientèle: personne ou organisation sans but lucratif résidant au Québec ou contrainte de rester au Québec, financièrement admissible et dont le service juridique demandé est couvert par la Loi | Territoire: Boucherville, Brossard, Candiac, Greenfield Park, La Prairie, Longueuil, Saint-Basile-le- Grand, Saint-Bruno-de-Montarville, Saint-Hubert, Saint-Lambert, Sainte-Julie | Statut: organisme à but non lucratif",
+    "website": "ccjrs.com/bureaux/longueuil-civil",
+    "address": "101, boulevard Roland-Therrien, bureau 200, Longueuil, Montérégie, QC, J4H 4B9",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "bureau-d-aide-juridique-droit-cr-mtg",
+    "name": "Bureau D'Aide Juridique - Droit Criminel Et De La Jeunesse - Longueuil",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 928-7666",
+    "description": "Services juridiques en matière de droit de la jeunesse ou de droit criminel gratuits ou à bas prix aux personnesadmissibles financièrement.* Reçoit et traite les demandes d'aide juridique. | Clientèle: personne ou organisation sans but lucratif résidant au Québec ou contrainte de rester au Québec, financièrement admissible et dont le service juridique demandé est couvert par la Loi | Territoire: agglomération de Longueuil | Statut: organisme parapublic",
+    "website": "ccjrs.com/bureaux/longueuil-criminel-et-jeunesse",
+    "address": "1732, boulevard Marie-Victorin, Longueuil, Montérégie, QC, J4G 1A5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "bureau-d-aide-juridique-gatineau-out-4",
     "name": "Bureau D'Aide Juridique - Gatineau - Droit Criminel",
     "category": "social",
@@ -3614,6 +5243,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, sur rendez-vous seulement, sauf urgence"
   },
   {
+    "id": "bureau-d-aide-juridique-salaberr-mtg",
+    "name": "Bureau D'Aide Juridique - Salaberry-De-Valleyfield",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 370-3064",
+    "description": "Services juridiques gratuits ou à bas prix aux personnes admissibles financièrement.* Reçoit et traite les demandes d'aide juridique. | Clientèle: personne ou organisation sans but lucratif résidant au Québec ou contrainte de rester au Québec, financièrement admissible et dont le service juridique demandé est couvert par la Loi | Territoire: MRC Beauharnois-Salaberry, Vaudreuil-Dorion | Statut: organisme à but non lucratif",
+    "website": "aidejuridique.quebec/bureau-rive-sud",
+    "address": "151, rue Salaberry Ouest, Salaberry-de-Valleyfield, Montérégie, QC, J6T 2H8",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "bureau-d-aide-juridique-terrebonne-trb",
     "name": "Bureau D'Aide Juridique - Terrebonne",
     "category": "social",
@@ -3638,6 +5280,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.canada.ca/fr/immigration-refugies-citoyennete/services/passeports-canadiens.html",
     "address": "210, rue Champlain, Gatineau, Outaouais, QC, J8X 3R5",
     "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "bureau-des-infractions-et-amende-mtg",
+    "name": "Bureau Des Infractions Et Amendes - Longueuil",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Traitement des constats d'infraction liés à la majorité des lois pénales du Québec et à certaines lois fédérales concernant la sécurité routière, les relations de travail dans le domaine de la construction, les produits alimentaires et autres.* Recouvrement des amendes et des frais judiciaires non acquittés.* Services de paiement en ligne des dossiers de cour et des constats d'infraction. | Territoire: districts judiciaires de Longueuil, Saint-Hyacinthe, Saint-Jean-sur-Richelieu, Salaberry-de- Valleyfield, Sorel-Tracy | Statut: organisme du gouvernement provincial",
+    "website": "www.amendes.qc.ca",
+    "address": "1111, boulevard Jacques-Cartier Est, bureau RC-25, Longueuil, Montérégie, QC, J4M 2J6",
+    "hours": "lundi, mardi, jeudi et vendredi 8h30 à 16h30, mercredi 10h00 à 16h30, renseignement par téléphone: lundi, mardi, jeudi et vendredi 8h30 à 12h00 et 13h00 à 16h30, mercredi 10h00 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "bureau-r-gional-d-action-sida-de-out",
@@ -9214,6 +10869,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "cadets-de-l-air-saint-jean-iberv-mtg",
+    "name": "Cadets De L'Air Saint-Jean-Iberville",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "438 858-4883",
+    "description": "Programme pour les jeunes ayant pour but de développer les qualités de leader, l'implication au sein de la communauté, la bonne forme physique et de stimuler un intérêt envers l'aviation et l'aérospatial. | Clientèle: jeunes de 12 à 18 ans, bénévoles adultes | Territoire: Saint-Jean-sur-Richelieu | Statut: organisme à but non lucratif",
+    "website": "escadron613.ca",
+    "address": "25, chemin du Grand Bernier Sud, Saint-Jean-sur-Richelieu, Montérégie, QC, J0J 1R0",
+    "hours": "instructions régulières: mardi 18h30 à 21h"
+  },
+  {
     "id": "cafgraf-groupe-d-entraide-en-san-lav",
     "name": "Cafgraf (Groupe D'Entraide En Santé Mentale De Laval)",
     "category": "mentalHealth",
@@ -9227,6 +10895,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: mardi au vendredi 9h00 à 17h00, centre de jour: mardi à vendredi 13h00 à 16h00"
   },
   {
+    "id": "caf-de-la-d-brouille-le-mtg",
+    "name": "Café De La Débrouille (Le)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Rigaud",
+    "province": "QC",
+    "phone": "450 206-1008",
+    "description": "* Paniers alimentaires.* Cuisines collectives et éducatives.* Clinique d'impôts.* Travaux compensatoires. | Clientèle: personnes et familles à faible revenu | Territoire: Pointe-Fortune, Rigaud, Très-Saint-Rédempteur | Statut: organisme à but non lucratif",
+    "website": "www.lecafedeladebrouille.ca",
+    "address": "19, rue Saint-Jean-Baptiste Est, Rigaud, Montérégie, QC, J0P 1P0",
+    "hours": "lundi au jeudi 10h00 à 15h00"
+  },
+  {
+    "id": "caf-de-la-d-brouille-le-clinique-mtg",
+    "name": "Café De La Débrouille (Le) - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Rigaud",
+    "province": "QC",
+    "phone": "450 206-1008",
+    "description": "* Clinique d'impôts ouverte à l'année. | Clientèle: personne seule vivant avec un revenu de 40 000$ et moins, couples vivant avec un revenu de 55 000$ et moins, adultes avec un enfant vivant avec un revenu de 45 000$ et moins (5 000$ de plus pour chaque enfant à charge supplémentaire) | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.lecafedeladebrouille.ca/services/service-2",
+    "address": "19, rue Saint-Jean-Baptiste Est, Rigaud, Montérégie, QC, J0P 1P0",
+    "hours": "mars et avril: mardi 18h00 à 19h00, vendredi 13h00 à 14h00, mai à décembre: sur rendez-vous"
+  },
+  {
     "id": "caf-le-rendez-vous-out",
     "name": "Café Le Rendez-Vous",
     "category": "mentalHealth",
@@ -9238,6 +10932,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "maisonrealite.org",
     "address": "116, boulevard Saint-Joseph, Gatineau, Outaouais, QC, J8Y 3W8",
     "hours": "lundi au vendredi 10h00 à 15h00"
+  },
+  {
+    "id": "caf-libert-50-de-saint-philippe--mtg",
+    "name": "Café Liberté 50 De Saint-Philippe (Le)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Philippe",
+    "province": "QC",
+    "phone": "450 659-4108",
+    "description": "* Activités sociales et récréatives pour personnes aînées.* Activités physiques.* Sorties.* Conférences. | Clientèle: personnes de 50 ans et plus | Territoire: Saint-Philippe | Statut: organisme à but non lucratif",
+    "address": "2235, route Édouard-VII, Saint-Philippe, Montérégie, QC, J0L 2K0",
+    "hours": "Voir site web"
   },
   {
     "id": "cafe-de-rue-de-terrebonne-trb",
@@ -9277,6 +10983,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://calgaryhousing.com",
     "address": "205-1000 7 Ave SW, Calgary, AB T2P 5L5",
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
+  },
+  {
+    "id": "calixa-lavall-e-municipalit-mtg",
+    "name": "Calixa-Lavallée - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Calixa-Lavallée",
+    "province": "QC",
+    "phone": "450 583-6470",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.margueritedyouville.ca/environnement/matieres-residuelles/tri-facile-pour-une-saine-gestion-de-vos- matieres-residuelles * Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Calixa-Lavallée | Statut: organisme municipal",
+    "website": "www.calixa-lavallee.ca",
+    "address": "771, chemin de la Beauce, Calixa-Lavallée, Montérégie, QC, J0L 1A0",
+    "hours": "lundi au jeudi 8h30 à 16h30"
+  },
+  {
+    "id": "camp-bosco-mtg",
+    "name": "Camp Bosco",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 371-4816",
+    "description": "Camp d'été.* Programme d'intégration pour enfants vivant avec un handicap ou des besoins particuliers: jumelage avec un animateur-accompagnateur, salles de stimulations sensorielles, salles de repos.* Programme Vacances Familles: hébergement, repas et activités.* Programme Passez à l'action santé:activités récréatives et sportives, ateliers de cuisine.* Programme Vraie beauté: atelier divers, estime de soi, saines habitudes de vie, prévention des troubles alimentaires.* Projet OUF: services de répit pour familles, activités récréatives, resserrer les liens familiaux, prévention des abus physiques et psychologiques. | Clientèle: enfants de 4 à 12 ans, familles, programme Vacances familles: familles à faibles revenus, programme Passez à l'action santé: jeunes de 17 ans et moins et leurs familles, programme Vraie beauté: filles de 9 à 12 ans, projet OUF: familles vivant des difficultés avec un ou des enfants de 3 à 12 ans | Territoire: MRC Vaudreuil-Soulanges, MRC du Haut-Saint-Laurent, MRC Beauharnois-Salaberry | Statut: organisme à but non lucratif",
+    "website": "www.lafras.com/camp-bosco",
+    "address": "663, boulevard du Bord-de-l'eau, Salaberry-de-Valleyfield, Montérégie, QC, J6S 0B5",
+    "hours": "Voir site web"
   },
   {
     "id": "camp-familial-saint-urbain-cht",
@@ -9344,6 +11076,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "campus-de-longueuil-r-adaptation-mtg",
+    "name": "Campus De Longueuil - Réadaptation En Internat Et Services Psychosociaux",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-6630",
+    "description": "* Point de services psychosociaux et de réadaptation en internat. | Clientèle: enfants et adolescent·e·s en difficulté, parents, tuteur·rice·s, intervenant·e·s | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/campus-de-longueuil-readaptation-en-internat-et-services- psychosociaux",
+    "address": "1251, rue Beauregard, Longueuil, Montérégie, QC, J4K 2M3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "campus-de-valleyfield-r-adaptati-mtg",
+    "name": "Campus De Valleyfield - Réadaptation En Internat Et Services Psychosociaux",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 373-0281",
+    "description": "* Point de services psychosociaux. | Clientèle: enfants et adolescent·e·s en difficulté, parents, tuteur·rice·s, intervenant·e·s | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/campus-de-valleyfield-readaptation-en-internat-et-services- psychosociaux",
+    "address": "301, rue Jacques-Cartier, Salaberry-de-Valleyfield, Montérégie, QC, J6T 5H3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "campus-emploi-le-point-de-service-r-rep",
     "name": "Campus Emploi (le) - Point de Service Repentigny",
     "category": "employment",
@@ -9383,6 +11141,44 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "rencontres: 3e mercredi du mois 13h30 à 15h30"
   },
   {
+    "id": "candiac-cour-municipale-mtg",
+    "name": "Candiac - Cour Municipale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Candiac",
+    "province": "QC",
+    "phone": "450 444-6060",
+    "description": "Cour de justice de première instance où sont entendus les litiges en matière de règlements municipaux, d'infractions au Code de la sécurité routière ainsi que certaines infractions criminelles (conduite avec facultés affaiblies, vols de moins de 5000$ et méfaits). * Paiement ou contestation de contraventions.* Recouvrement de sommes dues.* Travaux compensatoires. | Territoire: Candiac et Sainte-Catherine | Statut: organisme municipal",
+    "website": "candiac.ca/services/services-municipaux/cour-municipale",
+    "address": "100, boulevard Montcalm Nord, 2e étage, Candiac, Montérégie, QC, J5R 3L8",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 13h00"
+  },
+  {
+    "id": "candiac-ville-mtg",
+    "name": "Candiac - Ville",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Candiac",
+    "province": "QC",
+    "phone": "450 444-6000",
+    "description": "Gestion des services municipaux. * Paiement des taxes municipales.* Permis de construction.* Collecte des matières résiduelles, articles volumineux, feuilles mortes et branches: info-collectes.ca/calendrier- des-collectes/candiac* Licences pour animaux.* Info-travaux: information sur les travaux de la voirie.* Ramassage d'animaux morts sur des lieux résidentiels.* Assermentation. | Territoire: Candiac | Statut: organisme municipal",
+    "website": "candiac.ca",
+    "address": "100, boulevard Montcalm Nord, Candiac, Montérégie, QC, J5R 3L8",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 13h00"
+  },
+  {
+    "id": "candiac-wednesday-group-mtg",
+    "name": "Candiac Wednesday Group",
+    "category": "social",
+    "subcategory": "Sexe et genre",
+    "city": "Candiac",
+    "province": "QC",
+    "phone": "450 638-2846",
+    "description": "Groupe communautaire pour femmes.* Activités sociales et culturelles: conférences, ateliers, artisanat, cuisine, sorties, discussion.* Sensibilisation de la communauté.* Service de garde disponible lors des activités. | Clientèle: femmes de 18 ans et plus Capacité: 30 à 60 personnes | Territoire: Candiac et les environs | Statut: organisme à but non lucratif",
+    "address": "125, chemin Haendal, Candiac, Montérégie, QC, J5R 1R7",
+    "hours": "mercredi 9h15 à 11h15, de septembre à mai"
+  },
+  {
     "id": "cantley-municipalit-out",
     "name": "Cantley - Municipalité",
     "category": "social",
@@ -9407,6 +11203,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "capsante-outaouais.org",
     "address": "92, boulevard Saint-Raymond, bureau 304, Gatineau, Outaouais, QC, J8Y 1S7",
     "hours": "sur rendez-vous uniquement"
+  },
+  {
+    "id": "carat-centre-d-aide-et-de-r-habi-mtg",
+    "name": "Carat - Centre D'Aide Et De Réhabilitation Pour Alcooliques Et Toxicomanes",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Sainte-Brigide-d'Iberville",
+    "province": "QC",
+    "phone": "450 293-3570",
+    "description": "Centre de thérapie interne à durée variable.* Programme distinct pour les dépendances aux substances.* Programme interne d'une durée de 25 semaines.* Programmes de 3 mois pour personnes non- judiciarisées.* Thérapie de groupe et rencontres individuelles.* Modules de croissance personnelle.* Service d'agent de liaison: évaluation personnalisée et accompagnement à la cour.* Soutien et accompagnement à la réintégration sociale.* Possibilité pour les résidents d'effectuer des travaux communautaires.* Certifié pour la distribution de produits de substitution.* Hébergement reconnu par les services correctionnels pour les personnes prévenues, en libération conditionnelle ou sous probation. | Clientèle: hommes de 18 ans et plus ayant une problématique de dépendance (alcool, drogue) Capacité: 45 personnes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.therapie-carat.com",
+    "address": "460, rue Principale, Sainte-Brigide-d'Iberville, Montérégie, QC, J0J 1X0",
+    "hours": "admissions: lundi au dimanche 8h00 à 20h00"
+  },
+  {
+    "id": "carignan-ville-mtg",
+    "name": "Carignan - Ville",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Carignan",
+    "province": "QC",
+    "phone": "450 658-1066",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.carignan.quebec/services/services-municipaux/collectes-et-recyclage* Subvention pour produits hygiéniques réutilisables: couches lavables, produits d'hygiène féminine.* Subvention pour action environnementale: toilette à faible consommation d'eau, baril de récupération d'eau de pluie.* Commissaire à l'assermentation.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Service d'alertes téléphoniques d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Locations d'équipement sportifs.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Carignan | Statut: organisme à but non lucratif",
+    "website": "www.carignan.quebec",
+    "address": "2379, chemin de Chambly, bureau 210, Carignan, Montérégie, QC, J3L 4N4",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 12h00"
   },
   {
     "id": "drum-garde-carmen-cinthya-romero-espinoza",
@@ -9485,6 +11307,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00"
   },
   {
+    "id": "carrefour-de-l-espoir-saint-mich-mtg",
+    "name": "Carrefour De L'Espoir Saint-Michel",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 218-3100",
+    "description": "Magasin d'aubaines.* Vente d'articles usagés: meubles, électroménagers, articles de maison, matériel informatique, mobilier de bureau, matelas, livres et vélos.* Collecte sur place et à domicile. | Clientèle: grand public | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "address": "73, route de Lotbinière, Vaudreuil-Dorion, Montérégie, QC, J7V 1Y8",
+    "hours": "mardi au vendredi 8h30 à 15h00, samedi 8h30 à 12h00"
+  },
+  {
     "id": "qc-emp-quebec-mcle",
     "name": "Carrefour Emploi Québec",
     "category": "employment",
@@ -9498,6 +11332,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Services gratuits aide CV, RV, orientation professionnelle."
   },
   {
+    "id": "carrefour-en-sant-mentale-pour-l-mtg",
+    "name": "Carrefour En Santé Mentale Pour Les Familles Et L'Entourage",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 766-0524",
+    "description": "* Interventions psychosociales individuelles, familiales ou de couple.* Intervention de crise famille.* Groupes d'entraide pour les proches.* Conférences, formations et sensibilisation pour les familles et proches d'une personne vivant un problème de santé mentale.* Ateliers thématiques.* Et toi dans tout ça: programme jeunesse pour les 14 à 25 ans.* Répit à la famille. | Clientèle: adultes et jeunes de 14 ans et plus dont un proche vit avec un problème de santé mentale | Territoire: agglomération de Longueuil, MRC Marguerite-D'Youville | Statut: organisme à but non lucratif",
+    "website": "apammrs.org",
+    "address": "10, boulevard Churchill, bureau 206 et 208, Longueuil, Montérégie, QC, J4V 2L7",
+    "hours": "administration: lundi au vendredi 9h00 à 17h00, formations et conférences pour familles: jours et soirs de semaine"
+  },
+  {
     "id": "carrefour-espoir-et-sobri-t-lav",
     "name": "Carrefour Espoir Et Sobriété",
     "category": "mentalHealth",
@@ -9509,6 +11356,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.carrefourespoir.org",
     "address": "415, 66e Avenue, Chomedey, Laval, QC, H7V 2L2",
     "hours": "lundi au jeudi 8h00 à 18h00"
+  },
+  {
+    "id": "carrefour-familial-de-sainte-jul-mtg",
+    "name": "Carrefour Familial De Sainte-Julie",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Sainte-Julie",
+    "province": "QC",
+    "phone": "450 922-7179",
+    "description": "* Ateliers de stimulation pour enfants de 2 à 5 ans.* Matinées-conférences.* Halte-garderie pour enfants de 0 à 5 ans.* Activités parent-enfants.* Intervenante de milieu pour parents d'enfants de 0 à 5 ans: soutien personnalisé, écoute, accompagnement, références et informations sur les ressources disponibles.* Aide financière pour les services de halte-garderie pour familles à faibles revenus.* Ateliers préparatoires à la maternelle pour enfants de 4 ans.* Soutien à domicile.* Activité de fin de semaine pour les 6 à 12 ans.* Cuisine collective.* Local aux familles: espace d'échanges entre parents et de jeux libres pour enfants.* Camp de jour estival à la journée pour jeunes de 6 à 9 ans. | Clientèle: familles, futures parents, enfants de 0 à 12 ans | Territoire: Sainte-Julie | Statut: organisme à but non lucratif",
+    "website": "www.carrefourfamilialsj.org",
+    "address": "461, boulevard Saint-Joseph, local 93, Sainte-Julie, Montérégie, QC, J3E 1W8",
+    "hours": "halte-garderie: mardi au vendredi 8h30 à 15h30, activités: variable, selon la programmation"
+  },
+  {
+    "id": "carrefour-familial-du-richelieu-mtg",
+    "name": "Carrefour Familial Du Richelieu",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Chambly",
+    "province": "QC",
+    "phone": "1 800 508-9969",
+    "description": "* Halte-garderie répit.* Activités pour parents avec enfants de 0 à 5 ans.* Stimulation précoce.* Ateliers et conférences thématiques.* Activités pour les grands-parents et leurs petits-enfants. | Clientèle: enfants de 0 à 17 ans et leurs familles | Territoire: CLSC Richelieu | Statut: organisme à but non lucratif",
+    "website": "carrefourfamilial.org",
+    "address": "856, Grand Boulevard, Chambly, Montérégie, QC, J3L 1V9",
+    "hours": "lundi au vendredi 9h00 à 17h00, activités en soirée"
   },
   {
     "id": "carrefour-familial-des-moulins-trb",
@@ -9547,6 +11420,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "cjeo.qc.ca",
     "address": "350, boulevard de la Gappe, Gatineau, Outaouais, QC, J8T 7T9",
     "hours": "lundi, mercredi et jeudi 8h30 à 17h00, mardi 8h30 à 20h00, vendredi de 8h30 à12h00"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-ch-tea-mtg",
+    "name": "Carrefour Jeunesse-Emploi Châteauguay",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 699-8001",
+    "description": "* Aide à la recherche d'emploi: information professionnelle, aide pour la rédaction de CV, préparation aux entrevues, ateliers de recherche d'emploi, orientation, etc.* Orientation et information scolaire: connaissance de soi, réorientation ou planification de carrière, bilan de compétences, etc.* Centre de documentation.* Soutien technique.* Information sur les programmes jeunesse.* Sensibilisation à l'entrepreneuriat jeunesse. | Clientèle: personnes de 15 à 35 ans | Territoire: MRC Roussillon | Statut: organisme à but non lucratif",
+    "website": "cjechateauguay.org",
+    "address": "180, boulevard D'Anjou, local 260, Châteauguay, Montérégie, QC, J6K 1C4",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "carrefour-jeunesse-emploi-de-la--out",
@@ -9601,6 +11487,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "carrefour-jeunesse-emploi-huntin-mtg",
+    "name": "Carrefour Jeunesse-Emploi Huntingdon - Point De Service Saint-Rémi",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Rémi",
+    "province": "QC",
+    "phone": "450 454-5814",
+    "description": "* Aide à la recherche d'emploi: rédaction de CV, référence, simulation d'entrevue.* Orientation scolaire et professionnelle.* Aide au démarrage d'entreprise.* Super Ado - Coopérative jeunesse de services.* Desjardins - Jeunes au travail: programme de création de stages.* Jeunes volontaires: programme de réalisation de projets.* Centre libre-service: documentation, accès à Internet, support technique, etc.* Point de rendez-vous à Napierville.* Services aux employeurs. | Clientèle: personnes de 16 à 35 ans, Super Ado: personnes de 13 à 17 ans, Jeunes volontaires: personnes de 16 à 29 ans | Territoire: MRC Les Jardins-de-Napierville | Statut: organisme à but non lucratif",
+    "website": "cjehuntingdon.org",
+    "address": "18, rue de l'Église, Saint-Rémi, Montérégie, QC, J0L 2L0",
+    "hours": "lundi et mardi 8h30 à 12h00 et 13h00 à 16h30, mercredi 10h30 à 12h00 et 13h00 à 16h30, jeudi et vendredi 8h30 à 12h00 et 13h00 à 16h30, en soirée: sur rendez-vous"
+  },
+  {
     "id": "carrefour-jeunesse-emploi-l-assompt-rep",
     "name": "Carrefour Jeunesse-Emploi L'Assomption",
     "category": "social",
@@ -9639,6 +11538,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "carrefour-jeunesse-emploi-roussi-mtg",
+    "name": "Carrefour Jeunesse-Emploi Roussillon",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Delson",
+    "province": "QC",
+    "phone": "450 845-3848",
+    "description": "* Aide à la recherche d'emploi.* Aide avec le retour aux études.* Orientation et bilan de carrière.* Service aux employeur·euse·s.* Insertion socioprofessionnelle.* Persévérance scolaire.* Entrepreneuriat. | Clientèle: jeunes adultes de 14 à 35 ans | Territoire: Candiac, Delson, La Prairie, Saint-Constant, Saint-Mathieu, Saint-Philippe, Sainte- Catherine | Statut: organisme à but non lucratif",
+    "website": "www.cjer.ca",
+    "address": "45, boulevard Georges-Gagné Sud, local 9, Delson, Montérégie, QC, J5B 2E5",
+    "hours": "lundi, mardi et jeudi 8h30 à 12h00 et 13h00 à 17h00, mercredi 8h30 à 12h00 et 13h00 à 18h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-saint--mtg",
+    "name": "Carrefour Jeunesse-Emploi Saint-Hubert",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 678-7644",
+    "description": "Aide en employabilité.* Orientation de carrière.* Information scolaire et professionnelle.* Entrepreneuriat jeunesse.* Stratégies de recherche d'emploi. | Clientèle: personnes de 16 à 35 ans | Territoire: Saint-Hubert | Statut: organisme à but non lucratif",
+    "website": "www.cjesh.org",
+    "address": "6110, chemin de Chambly, Longueuil, Montérégie, QC, J3Y 3R5",
+    "hours": "lundi 8h30 à 15h00, mardi au vendredi 8h30 à 16h30, été: vendredi 8h30 à 12h00 (entre la Fête Nationale du Québec et la fête du travail)"
+  },
+  {
     "id": "emp-cje-trois-rivieres",
     "name": "Carrefour Jeunesse-Emploi Trois-Rivières / Des Chenaux",
     "category": "employment",
@@ -9650,6 +11575,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cjetrdc.com/",
     "address": "580, rue Barkoff, suite 300, Trois-Rivières, QC G8T 9T7",
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service."
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-vaudre-mtg",
+    "name": "Carrefour Jeunesse-Emploi Vaudreuil-Soulanges",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-3185",
+    "description": "Aide en employabilité.* Information, référence et accompagnement.* Soutien pour le retour aux études.* Évaluation et orientation professionnelle.* Aide à la recherche d'emploi.* Soutien au développement de l'autonomie.* Soutien à l'implication citoyenne.* Sensibilisation à l'entrepreneuriat, prédémarrage d'entreprise.* Projets spéciaux visant le développement de l'employabilité et la persévérance scolaire. | Clientèle: personnes de 15 à 35 ans | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.cjevs.org",
+    "address": "400, boulevard Harwood, Vaudreuil-Dorion, Montérégie, QC, J7V 7H4",
+    "hours": "lundi 8h30 à 16h30 et 18h00 à 20h00, mardi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00, été: lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-vaudre-mtg-2",
+    "name": "Carrefour Jeunesse-Emploi Vaudreuil-Soulanges - Point De Service Rigaud",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Rigaud",
+    "province": "QC",
+    "phone": "450 455-3185",
+    "description": "Aide en employabilité.* Information et référence, accompagnement.* Soutien pour le retour aux études.* Évaluation et orientation professionnelle.* Aide à la recherche d'emploi.* Soutien au developpement de l'autonomie.* Soutien à l'implication citoyenne.* Sensibilisation à l'entrepreneuriat.* Projets spéciaux visant le développement de l'employabilité et la persévérance scolaire. | Clientèle: personnes de 15 à 35 ans | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.cjevs.org",
+    "address": "102, rue Saint-Pierre, RIGAUD, Montérégie, QC, J0P 1P0",
+    "hours": "jeudi après-midi sur rendez-vous"
   },
   {
     "id": "carrefour-jeunesse-emploi-de-l-oues-pcl",
@@ -9676,6 +11627,58 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cjeshawinigan.org",
     "address": "432, avenue Willow, C.P. 132, Shawinigan, QC G9N 1X2",
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service."
+  },
+  {
+    "id": "carrefour-le-moutier-mtg",
+    "name": "Carrefour Le Moutier",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-7111",
+    "description": "Centre d'accueil, d'écoute et de référence.* Service d'écoute en personne et au téléphone.* Soutien personnalisé: 3 à 10 rencontres d'écoute sur rendez-vous.* Service d'information et de référence.?* Réseau Sentinelles: prévention de la détresse dans la communauté.* Ateliers divers de formation: écoute, processus de la détresse, parcours migratoire, etc.* Soutien à l'établissement des nouveaux arrivants: rencontres individuelles, séances d'information, cours de francisation à temps partiel, ateliers de conversation en français, service de traduction et d'assermentation de documents et aide à la recherche de garderie.* Implication sociale et travail en concertation avec d'autres acteurs du milieu. | Clientèle: grand public, immigrant·e·s, nouveaux·elles arrivant·e·s | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "carrefourmoutier.org",
+    "address": "219, rue Saint-Charles Ouest, Longueuil, Montérégie, QC, J4H 1E1",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "carrefour-le-moutier-clinique-d--mtg",
+    "name": "Carrefour Le Moutier - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-7111",
+    "description": "Clinique d'impôts sur rendez-vous. | Clientèle: personnes immigrantes, dont il s'agit de la première déclaration d'impôt au Canada et qui sont arivées en 2025 | Territoire: agglomération de Longueuil | Statut: organisme à but non lucratif",
+    "website": "carrefourmoutier.org",
+    "address": "219, rue Saint-Charles Ouest, Longueuil, Montérégie, QC, J4H 1E1",
+    "hours": "clinique 2026: du 30 mars au 7 avril, lundi au vendredi 9h30 à 16h30. Fermée pour le long congé de Pâques"
+  },
+  {
+    "id": "carrefour-le-moutier-r-seau-sent-mtg",
+    "name": "Carrefour Le Moutier - Réseau Sentinelles",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-7111",
+    "description": "Travail de milieu en prévention de la détresse.* Formation de sentinelles bénévoles. | Clientèle: personnes en détresse sociale et psychologique | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "carrefourmoutier.org",
+    "address": "219, rue Saint-Charles Ouest, Longueuil, Montérégie, QC, J4H 1E1",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "carrefour-point-tournant-mtg",
+    "name": "Carrefour Point Tournant",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 651-0418",
+    "description": "Centre de réadaptation interne de 3 mois.* Programme distinct pour les dépendances aux substances.* Programme thérapeutique de 12 semaines avec hébergement.* Accueil et évaluation.* Rencontres individuelles hebdomadaires.* Plan d'intervention individualisé.* Ateliers de groupe sur diverses thématiques.* Thérapie de groupe.* Réunions de fraternités anonymes.* Plan de sortie et programme postcure. | Clientèle: hommes de 18 ans et plus présentant une problématique dominante aux substances psychoactives (alcool, drogues, médicament) Capacité: 14 personnes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.carrefourlepointtournant.com",
+    "address": "1111, rue Beauregard, Longueuil, Montérégie, QC, J4K 2L2",
+    "hours": "admissions: 24 heures, 7 jours, administration: lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "carrefour-pour-a-n-s-semi-autono-lav",
@@ -10305,6 +12308,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 16h00"
   },
   {
+    "id": "centre-alpha-sourd-rive-sud-mtg",
+    "name": "Centre Alpha-Sourd Rive-Sud",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "438 806-5149",
+    "description": "Ateliers d'alphabétisation pour personnes sourdes, sourdes-usher et sourdes-aveugles.* Cours de français en lecture et écriture.* Cours de mathématiques.* Cours d'informatique.* Cuisine communautaire.* Activités sociales et artistiques.* Sorties culturelles et éducatives avec animatrices et animateurs. | Clientèle: personnes sourdes, sourdes-usher et sourdes-aveugles Capacité: 25 | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.casourdrivesud.org/alpha-sourd-rive-sud",
+    "address": "2010, chemin de Chambly, local B, Longueuil, Montérégie, QC, J4J 3Y2",
+    "hours": "sur rendez-vous, lundi 9h00 à 16h00, mardi au jeudi 9h00 à 15h00"
+  },
+  {
+    "id": "centre-amiti-jeunesse-chambly-mtg",
+    "name": "Centre Amitié-Jeunesse Chambly",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Chambly",
+    "province": "QC",
+    "phone": "450 658-6810",
+    "description": "Maison de jeunes.?* Activités en soirées: ateliers éducatifs, préventifs, sportifs et récréatifs.* Service de dîner.* Danses thématiques mensuelles.* Activités pour la semaine de relâche et la période estivale.* Écoute et intervention.* Aide aux devoirs.* Cours de gardiens avertis. | Clientèle: jeunes de 12 à 17 ans, danses thématiques mensuelles: jeunes de 10 à 13 ans | Territoire: Chambly | Statut: organisme à but non lucratif",
+    "address": "505, boulevard Brassard, Chambly, Montérégie, QC, J3L 4N5",
+    "hours": "mardi 10h50 à 11h50 et 14h40 à 18h00, mercredi et jeudi 10h50 à 11h50 et 14h40 à 19h00, vendredi 10h50 à 11h50 et 14h40 à 20h00"
+  },
+  {
     "id": "centre-bienvenue-pfd",
     "name": "Centre Bienvenue",
     "category": "employment",
@@ -10316,6 +12344,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.centrebienvenue.org",
     "address": "12694, boulevard Gouin Ouest, Pierrefonds-Roxboro, Montréal, QC, H8Z 1W4",
     "hours": "lundi au mercredi et vendredi 9h00 à 15h00, jeudi 12h30 à 19h00"
+  },
+  {
+    "id": "centre-communautaire-de-ch-teaug-mtg-2",
+    "name": "Centre Communautaire De Châteauguay",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 699-3464",
+    "description": "* Réinsertion professionnelle: recyclage.* Dépannage matériel: vêtements et articles de maison.* Frigo-Partage.* Point de service Congélateur Complices Alimentaires. | Clientèle: personnes en situation de précarité et/ou vulnérabilité | Territoire: MRC Roussillon | Statut: organisme à but non lucratif",
+    "website": "centrecommunautairechateauguay.com",
+    "address": "3, rue Principale, Châteauguay, Montérégie, QC, J6K 1E7",
+    "hours": "lundi au mercredi, samedi et dimanche 9h00 à 18h00, jeudi et vendredi 9h00 à 21h00"
+  },
+  {
+    "id": "centre-communautaire-de-ch-teaug-mtg",
+    "name": "Centre Communautaire De Châteauguay - Récupération D'Articles Usagés",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 699-3464",
+    "description": "Récupération d'articles usagés: électroménagers, meubles, articles de maison, vêtements, livres.* Collecte à domicile. | Territoire: Delson, Candiac, Châteauguay, La Prairie, Sainte-Catherine, Saint-Constant | Statut: organisme à but non lucratif",
+    "website": "centrecommunautairechateauguay.com",
+    "address": "3, rue Principale, Châteauguay, Montérégie, QC, J6K 1E7",
+    "hours": "lundi au mercredi 9h00 à 18h00, samedi et dimanche 9h00 à 17h00, jeudi et vendredi 9h00 à 21h00"
+  },
+  {
+    "id": "centre-communautaire-des-a-n-s-v-mtg",
+    "name": "Centre Communautaire Des Aînés Vaudreuil-Soulanges",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Polycarpe",
+    "province": "QC",
+    "phone": "1 855 510-3548",
+    "description": "* Assistance alimentaire: popote roulante, vente de mets surgelés et repas communautaires.* Journées d'activités.* Formations et conférences sur des sujets variés relatifs aux personnes aînées. | Clientèle: personnes de 50 ans et plus, personnes en perte d'autonomie ou vivant avec une déficience physique | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.centredesainesvs.com",
+    "address": "12, rue Curé-Cholet, Saint-Polycarpe, Montérégie, QC, J0P 1X0",
+    "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
     "id": "centre-communautaire-eben-ezer-lav",
@@ -10367,6 +12434,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.aidejuridiqueoutaouais.ca",
     "address": "510, boulevard Maloney Est, bureau 201, Gatineau, Outaouais, QC, J8P 1E7",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "centre-communautaire-juridique-d-mtg",
+    "name": "Centre Communautaire Juridique De La Rive-Sud",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 928-7655",
+    "description": "Services d'aide juridique, gratuits ou à bas prix aux personnes admissibles financièrement, par des avocat·e·s, ou des notaires, en droit civil et social, familial, matrimonial, criminel et carcéral, protection de la jeunesse, jeunes contrevenant·e·s, immigration, administratif. * Représentation devant un tribunal en première instance ou en appel, en demande ou en défense.* Assistance dans certains cas expressément prévus par la loi.* Consultation juridique.* Consultation téléphonique: accessible 24 heures, 7 jours lors d'une arrestation ou en cas de détention.* Information juridique sur les droits et obligations des bénéficiaires.* Implication communautaire.* Réception des plaintes. | Clientèle: personnes ou organisations sans but lucratif résidant au Québec ou contrainte de rester au Québec, financièrement admissible et dont le service juridique demandé est couvert par la Loi | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "ccjrs.com",
+    "address": "101, boulevard Roland-Therrien, bureau 301, Longueuil, Montérégie, QC, J4H 4B9",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "centre-communautaire-laurent-venne-rep",
@@ -10549,6 +12629,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "clinique 2023: à l'année, lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "centre-d-action-b-n-vole-d-iberv-mtg-3",
+    "name": "Centre D'Action Bénévole D'Iberville Et De La Région - Boutique Familiale",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-1172",
+    "description": "Boutique d'articles usagés.* Points de dons sur tout le territoire desservi. | Clientèle: population générale, personnes et familles à faible revenu | Territoire: Saint-Jean-sur-Richelieu: secteurs Iberville et St-Athanase, Mont Saint-Grégoire | Statut: organisme à but non lucratif",
+    "website": "cabiberville.org/boutique-familiale",
+    "address": "285, 3e Avenue, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 4R6",
+    "hours": "lundi au dimanche 9h00 à 16h00"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-d-iberv-mtg-2",
+    "name": "Centre D'Action Bénévole D'Iberville Et De La Région - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-1172",
+    "description": "Clinique d'impôts à l'année. | Clientèle: personnes avec un revenu de moins de 35 000$ pour une personne seule, 45 000$ pour un couple, seuil haussé de 2 500$ par enfant | Territoire: Saint-Jean-sur-Richelieu: secteurs Iberville et Saint-Athanase, Mont Saint-Grégoire | Statut: organisme à but non lucratif",
+    "website": "cabiberville.org",
+    "address": "290, avenue des Conseillers, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 1Z8",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-bouc-mtg-2",
+    "name": "Centre D'Action Bénévole De Boucherville - Accompagnement-Transport",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 655-9081",
+    "description": "* Accompagnement et transport médical et pour les courses par des bénévoles. | Clientèle: personnes vivant avec une difficulté permanente ou temporaire, personnes aînées, personnes proches aidantes | Territoire: Boucherville | Statut: organisme à but non lucratif",
+    "website": "www.cabboucherville.ca",
+    "address": "11, rue Louis-H. la Fontaine Nord, bureau 201, Boucherville, Montérégie, QC, J4B 4Y2",
+    "hours": "inscription: lundi au vendredi 9h00 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-bouc-mtg-3",
+    "name": "Centre D'Action Bénévole De Boucherville - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 655-9081",
+    "description": "Clinique d'impôts sans rendez-vous offerte à l'année.* Service à domicile.* Déclarations pour les années précédentes. | Clientèle: personnes à faible revenu, excluant les faillites ainsi que les déclarations de personnes décédées et de travailleur·euse·s autonomes Capacité: 200 | Territoire: Boucherville | Statut: organisme à but non lucratif",
+    "website": "www.cabboucherville.ca",
+    "address": "11, rue Louis-H.-La Fontaine Nord, bureau 201, BOUCHERVILLE, Montérégie, QC, J4B 4Y2",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-cont-mtg-3",
+    "name": "Centre D'Action Bénévole De Contrecoeur - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Contrecoeur",
+    "province": "QC",
+    "phone": "450 587-8227",
+    "description": "* Clinique d'impôts sans rendez-vous. | Clientèle: personnes vivant avec un revenu maximal de 40 000$ | Territoire: Contrecoeur | Statut: organisme à but non lucratif",
+    "website": "cabcontrecoeur.ca",
+    "address": "4956, rue Legendre, Contrecoeur, Montérégie, QC, J0L 1C0",
+    "hours": "clinique d'impôt 2026: jusqu'au 28 avril, mardi et jeudi 9h00 à 11h30"
+  },
+  {
     "id": "centre-d-action-b-n-vole-de-gati-out",
     "name": "Centre D'Action Bénévole De Gatineau (Le)",
     "category": "social",
@@ -10627,6 +12772,84 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 15h30"
   },
   {
+    "id": "centre-d-action-b-n-vole-de-sain-mtg-4",
+    "name": "Centre D'Action Bénévole De Saint-Césaire - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Césaire",
+    "province": "QC",
+    "phone": "450 469-3279",
+    "description": "Clinique d'impôts à l'année. | Clientèle: personnes seules ayant 45 000$ ou moins de revenu, familles monoparentales ayant 45 000$ plus 2000$ par enfant à charge ou moins de revenu, couples sans enfant ayant 50 000$ ou moins de revenu, couples avec enfant ayant 50 000$ plus 2000$ par enfant à charge ou moins de revenu | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.cabacoeur.org",
+    "address": "1100, rue Leclaire, Saint-Césaire, Montérégie, QC, J0L 1T0",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-sain-mtg-3",
+    "name": "Centre D'Action Bénévole De Saint-Hubert - Accompagnement-Transport",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 656-9110",
+    "description": "* Accompagnement et transport médical par des bénévoles. | Clientèle: personnes autonomes de 60 ans et plus | Territoire: Saint-Hubert, déplacements: Grand Montréal | Statut: organisme à but non lucratif",
+    "website": "www.cab-saint-hubert.org",
+    "address": "3339, Grande Allée, Longueuil, Montérégie, QC, J4T 2S9",
+    "hours": "prise de rendez-vous: lundi au vendredi 8h30 à 16h00, service accompagnement-transport: selon les disponibilités"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-sain-mtg-5",
+    "name": "Centre D'Action Bénévole De Saint-Hubert - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 656-9110",
+    "description": "Clinique d'impôts sans rendez-vous. | Clientèle: personnes ayant des revenus ne dépassant pas 35 000$ pour une personne seule, 45 000$ pour un couple ou un adulte avec un enfant, 2 500$ en plus par personne à charge supplémentaire | Territoire: Saint-Hubert | Statut: organisme à but non lucratif",
+    "website": "www.cab-saint-hubert.org",
+    "address": "3339, Grande Allée, Longueuil, Montérégie, QC, J4T 2S9",
+    "hours": "clinique 2026: 2 mars au 1er mai, lundi, mardi, mercredi et vendredi 9h00 à 11h30 et 13h00 à 15h30, fermerture du 23 mars au 3 avril 2026 (le 25, 25 et 31 mars, et le 1er avril, le service sera temporairement à la Paroisse de Saint-Hubert, 5310 Chemin de Chambly)."
+  },
+  {
+    "id": "centre-d-action-b-n-vole-du-gran-mtg-2",
+    "name": "Centre D'Action Bénévole Du Grand Châteauguay - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "438 396-9215",
+    "description": "* Clinique d'impôts sans rendez-vous. | Clientèle: personnes à faible ou modeste revenu, personnes seules: moins de 40 000$, couples: moins de 55 000$, plus 5 000$ par personne à charge | Territoire: Châteauguay, Mercier, Saint-Urbain-Premier, Saint-Isidore, Sainte-Martine, Léry | Statut: organisme à but non lucratif",
+    "website": "www.cabchateauguay.org/impot.html",
+    "address": "10, rue Gilmour, Châteauguay, Montérégie, QC, J6J 1K4",
+    "hours": "mars et avril, consulter le calendrier des cliniques d'impôts sur le site web"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-l-actue-mtg-3",
+    "name": "Centre D'Action Bénévole L'Actuel - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-3331",
+    "description": "* Clinique d'impôts à l'année, sur rendez-vous. | Clientèle: personnes à faible revenu avec des situations fiscales simples | Territoire: Vaudreuil-Dorion, Les Cèdres, Saint-Lazare, L'Île-Perrot, Pincourt, Terrasse-Vaudreuil, Hudson, Vaudreuil-sur-le-Lac, Pointe-des-Cascades, L'Île-Cadieux, Notre-Dame-de-l'Île-Perrot | Statut: organisme à but non lucratif",
+    "website": "www.lactuel.org",
+    "address": "88, rue Adèle, Vaudreuil-Dorion, Montérégie, QC, J7V 1S7",
+    "hours": "clinique 2026 (période intensive): 2 mars au 16 avril 2026, sur rendez-vous seulement, rendez-vous tout au long de l'année selon les besoins"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-les-p-t-mtg-3",
+    "name": "Centre D'Action Bénévole Les P'Tits Bonheurs - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Bruno-de-Montarville",
+    "province": "QC",
+    "phone": "450 441-0807",
+    "description": "Clinique d'impôts sur rendez-vous. | Clientèle: personnes à faible revenu de Saint-Bruno-de-Montarville: 38 000$ pour une personne seule, 49 000$ pour un adulte avec un enfant, 49 000$ pour un couple sans enfant, 3 500$ par personne à charge supplémentaire, 1 100$ maximum pour les revenus de dividendes ou d'intérêts, aucun revenu d'entreprise, de location, de cas de faillite, de vente de résidence, de gain ou perte en capital ou de cas de décès ne sera accepté | Territoire: Saint-Bruno-de-Montarville | Statut: organisme à but non lucratif",
+    "website": "www.cabstbruno.org",
+    "address": "1665, rue Montarville, Saint-Bruno-de-Montarville, Montérégie, QC, J3V 3T8",
+    "hours": "clinique 2026: 1 mars au 30 avril, lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, sur rendez-vous"
+  },
+  {
     "id": "centre-d-action-benevole-mrc-l-asso-rep",
     "name": "Centre D'Action Bénévole MRC L'Assomption",
     "category": "social",
@@ -10651,6 +12874,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cabvwi.org",
     "address": "1, rue de l'Église, Sainte-Anne-de-Bellevue, Montréal, QC, H9X 1W4",
     "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 13h00"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-soulang-mtg-3",
+    "name": "Centre D'Action Bénévole Soulanges - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Polycarpe",
+    "province": "QC",
+    "phone": "450 265-3134",
+    "description": "Clinique d'impôts à l'année sur rendez-vous. | Clientèle: personnes dont le revenu est de moins de 35 000$ pour une personne seule et de moins de 45 000$ pour un couple | Territoire: Côteau-du-Lac, Les Côteaux, Rivière-Beaudette, Saint-Clet, Sainte-Justine-de-Newton, Saint-Polycarpe, Saint-Télesphore, Saint-Zotique, Sainte-Marthe | Statut: organisme à but non lucratif",
+    "website": "www.cabsoulanges.com",
+    "address": "371, rue Sainte-Catherine, Saint-Polycarpe, Montérégie, QC, J0P 1X0",
+    "hours": "clinique 2025: inscription par téléphone à compter du 17 février, période de rédaction: 3 mars au 30 avril"
   },
   {
     "id": "centre-d-action-benevole-des-moulin-trb",
@@ -10704,6 +12940,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "centre-d-aide-aux-entreprises-de-mtg",
+    "name": "Centre D'Aide Aux Entreprises De La Rive-Sud",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 446-3650",
+    "description": "* Accompagnement et formation en prédémarrage d'entreprise. * Accompagnement en innovation.* Soutien au travail autonome: encadrement, conseils techniques et soutien financiers aux candidat·e·s admissibles.* Contribution à l'essor de l'économie régionale.* Financement dans le développement des entreprises.* Promotion de la création et du maintien d'emploi. | Clientèle: entreprises, personnes de 18 ans et plus voulant démarrer une entreprise | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "www.caecapital.com",
+    "address": "270, boulevard Sir-Wilfrid-Laurier, bureau 200, Beloeil, Montérégie, QC, J3G 4G7",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "centre-d-aide-aux-entreprises-ha-mtg",
+    "name": "Centre D'Aide Aux Entreprises Haute-Montérégie",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 357-9800",
+    "description": "Promotion du développement économique de la région et de la création d'emplois par le soutien à l'entreprenariat.* Services aux jeunes entreprises et aux entreprises en démarrage: services-conseils, aide technique, programme de mentorat, réseautage et accompagnement individuel.* Financement d'appoint non conventionnel: programme stratégie jeunesse, programme fond régulier. | Clientèle: entreprises, entrepreneurs, personnes qui souhaitent partir une entreprise, programme stratégie jeunesse: personnes de 18 à 39 ans | Territoire: MRC Le Haut-Richelieu, MRC Les Jardins-de-Napierville, MRC Brome-Missisquoi | Statut: organisme à but non lucratif",
+    "website": "www.caehm.com",
+    "address": "45, chemin de l'Aéroport, bureau 22, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 7B5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "centre-d-aide-aux-victimes-d-act-out",
     "name": "Centre D'Aide Aux Victimes D'Actes Criminels De L'Outaouais",
     "category": "family",
@@ -10714,6 +12976,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Services confidentiels de première ligne adaptés à chacune des étapes du processus judiciaire.* Évaluation des besoins.* Soutien et accompagnement dans les démarches.* Information sur le processus judiciaire, les droits et les recours des victimes.* Référence vers des services spécialisés, tels que les ressources juridiques, médicales, sociales et communautaires.* Assistance et aide technique pour remplir les formulaires. | Clientèle: personnes victimes d'actes criminels, leurs proches | Territoire: Outaouais | Statut: organisme à but non lucratif",
     "website": "www.cavac.qc.ca/contact/joindre-un-cavac/#outaouais",
     "address": "729, boulevard Saint-Joseph, bureau 104, Gatineau, Outaouais, QC, J8Y 4B6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "centre-d-aide-aux-victimes-d-act-mtg",
+    "name": "Centre D'Aide Aux Victimes D'Actes Criminels De La Montérégie",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 888 670-3401",
+    "description": "* Intervention psycho-socio-judiciaire et post-traumatique.* Accompagnement dans les démarches.* Information et référence: droits et recours, ressources existantes, etc. | Clientèle: victimes d'actes criminels, leurs proches | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "cavac.qc.ca",
+    "address": "370, chemin de Chambly, bureau 200, Longueuil, Montérégie, QC, J4H 3Z6",
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
@@ -10780,6 +13055,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "cafoutaouais.ca",
     "address": "104, rue du Barry, Gatineau, Outaouais, QC, J8T 5E2",
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "centre-d-animation-m-re-enfant-d-mtg",
+    "name": "Centre D'Animation Mère-Enfant De Saint-Bruno",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Bruno-de-Montarville",
+    "province": "QC",
+    "phone": "514 445-5173",
+    "description": "* Activités parents-enfants.* Halte-garderie.* Café-rencontres.* Rencontres et conférences sur des sujets variés.* Bazar: articles usagés pour les enfants et récupération d'articles.* Sorties familiales et culturelles. | Clientèle: parents avec enfants de 0 à 5 ans Capacité: 100 personnes | Territoire: Saint-Bruno-de-Montarville | Statut: organisme à but non lucratif",
+    "website": "camestbruno.com",
+    "address": "53, chemin de la Rabastalière Est, Saint-Bruno-de-Montarville, Montérégie, QC, J3V 2A4",
+    "hours": "café-rencontres: mardi, halte-garderie: mardi au vendredi 8h45 à 16h15"
   },
   {
     "id": "centre-d-assistance-et-d-accompa-lav",
@@ -10886,6 +13174,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 17h30"
   },
   {
+    "id": "centre-d-entraide-r-gional-d-hen-mtg-2",
+    "name": "Centre D'Entraide Régional D'Henryville",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Henryville",
+    "province": "QC",
+    "phone": "450 299-1117",
+    "description": "* Dépannage alimentaire.* Popote roulante.* Dîners communautaires.* Paniers de Noël.* Fournitures scolaires.* Comptoir familial: vêtements, meubles usagés, articles ménagers et jouets à prix modique.* Informations et références.* Clinique d'impôts.* Photocopies and télécopies.* Accompagnement-transport. | Clientèle: personnes démunies financièrement, physiquement, psychologiquement ou socialement | Territoire: Henryville, Sabrevois, Saint-Alexandre, Saint-Sébastien, Venise-en-Québec | Statut: organisme à but non lucratif",
+    "website": "www.centreentraidehenryville.com",
+    "address": "791, rue Saint-Jean-Baptiste, Henryville, Montérégie, QC, J0J 1E0",
+    "hours": "lundi au mercredi 8h30 à 16h00, jeudi de 8h30 à 18h00, vendredi 9h00 à 12h00"
+  },
+  {
     "id": "centre-d-entraide-de-mascouche-msc",
     "name": "Centre D'Entraide de Mascouche",
     "category": "food",
@@ -10948,6 +13249,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "centre-d-h-bergement-andr-e-perr-mtg",
+    "name": "Centre D'Hébergement Andrée-Perreault",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 771-4536",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée.* Centre de jour offrant des services thérapeutiques afin de maintenir l'autonomie de personnes non-hébergées.* Soins de fin de vie et palliatifs. | Clientèle: personnes aînées et personnes en perte d'autonomie | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/centre-dhebergement-andree-perrault",
+    "address": "1955, avenue Pratte, Saint-Hyacinthe, Montérégie, QC, J2S 7W5",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-chsld-montreal-centre-d-hebergement-armand-lavergne",
     "name": "Centre D'Hébergement Armand-Lavergne",
     "category": "health",
@@ -11007,6 +13321,32 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "637, 13e Avenue, Montréal, QC H8S 4K4",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30",
     "isUrgent": true
+  },
+  {
+    "id": "centre-d-h-bergement-champagnat-mtg",
+    "name": "Centre D'Hébergement Champagnat",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-3769",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée.* Centre de jour. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/chsld-champagnat",
+    "address": "370, 5e Avenue, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 1V1",
+    "hours": "CLSC de la Vallée-des-Forts: lundi au vendredi 10h00 à 14h45"
+  },
+  {
+    "id": "centre-d-h-bergement-champlain-mtg",
+    "name": "Centre D'Hébergement Champlain",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 443-0000",
+    "description": "Centre d'hébergement public pour aînés et personnes en perte d'autonomie.* Hébergement et soins de longue durée.* Centre de jour.* Soins de fin de vie - soins palliatifs. | Clientèle: personnes aînées et personnes en perte d'autonomie | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/chsld-champlain",
+    "address": "5050, place Nogent, Brossard, Montérégie, QC, J4Y 2K3",
+    "hours": "CLSC Samuel-de-Champlain: lundi à vendredi 10h00 à 14h45"
   },
   {
     "id": "msss-chsld-levis-centre-d-hebergement-champlain-chanoine-audet",
@@ -11151,6 +13491,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à CIUSSS Du Saguenay – Lac-Saint-Jean. Source: MSSS – Fichier M02 des installations.",
     "address": "562, rue Victoria, Saguenay, QC G7B 3M6",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "centre-d-h-bergement-de-contreco-mtg",
+    "name": "Centre D'Hébergement De Contrecoeur",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Contrecoeur",
+    "province": "QC",
+    "phone": "450 468-8410",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée.* Soins de fin de vie et palliatifs. | Clientèle: personnes aînées, en perte d'autonomie | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/centre-dhebergement-de-contrecoeur",
+    "address": "4700, route Marie-Victorin, Contrecoeur, Montérégie, QC, J0L 1C0",
+    "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
     "id": "msss-chsld-gracefield-centre-d-hebergement-de-gracefield",
@@ -12212,6 +14565,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "centre-d-h-bergement-henriette-c-mtg",
+    "name": "Centre D'Hébergement Henriette-Céré",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 678-3291",
+    "description": "Centre d'hébergement public pour aînés et personnes en perte d'autonomie.* Hébergement et soins de longue durée.* Centre de jour. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/chsld-henriette-cere",
+    "address": "6435, chemin de Chambly, Longueuil, Montérégie, QC, J3Y 3R6",
+    "hours": "CLSC Samuel-de-Champlain: lundi au vendredi 10h00 à 14h45"
+  },
+  {
     "id": "msss-chsld-rosemere-centre-d-hebergement-hubert-maisonneuve",
     "name": "Centre D'Hébergement Hubert-Maisonneuve",
     "category": "health",
@@ -12283,6 +14649,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à CIUSSS Du Centre-Sud-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
     "address": "4255, avenue Papineau, Montréal, QC H2H 2P6",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "centre-d-h-bergement-jeanne-crev-mtg",
+    "name": "Centre D'Hébergement Jeanne-Crevier",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 468-0590",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée.* Centre de jour offrant des services thérapeutiques afin de maintenir l'autonomie de personnes non-hébergées.* Soins de fin de vie et palliatifs. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Boucherville | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/centre-dhebergement-jeanne-crevier",
+    "address": "151, rue De Muy, Boucherville, Montérégie, QC, J4B 4W7",
+    "hours": "Voir site web"
   },
   {
     "id": "msss-chsld-montreal-centre-d-hebergement-jeanne-mance",
@@ -12635,6 +15014,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "centre-d-h-bergement-sainte-croi-mtg",
+    "name": "Centre D'Hébergement Sainte-Croix",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Marieville",
+    "province": "QC",
+    "phone": "450 460-4475",
+    "description": "Centre d'hébergement public pour aînés et personnes en perte d'autonomie.* Hébergement et soins de longue durée.* Centre de jour.* Réadaptation physique. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/chsld-sainte-croix",
+    "address": "300, rue du Docteur-Poulin, Marieville, Montérégie, QC, J3M 1L7",
+    "hours": "CLSC de la Vallée-des-Forts: lundi au vendredi 10h00 à 14h45"
+  },
+  {
     "id": "msss-chsld-laval-centre-d-hebergement-sainte-dorothee",
     "name": "Centre D'Hébergement Sainte-Dorothée",
     "category": "health",
@@ -12705,6 +15097,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.• Hébergement et soins de longue durée. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Lanaudière | Statut: organisme parapublic",
     "website": "https://www.cisss-lanaudiere.gouv.qc.ca/liste-de-soins-et-services/liste-par-clientele/personnes- agees/hebergement",
     "address": "200, rue Marie-Curie, Joliette, Lanaudière, QC, J6E 7M7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-h-bergement-val-joli-mtg",
+    "name": "Centre D'Hébergement Val-Joli",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Césaire",
+    "province": "QC",
+    "phone": "450 469-3194",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/chsld-val-joli",
+    "address": "1425, rue Notre-Dame, Saint-Césaire, Montérégie, QC, J0L 1T0",
     "hours": "Voir site web"
   },
   {
@@ -12807,6 +15212,43 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "centre-d-intervention-en-violenc-mtg",
+    "name": "Centre D'Intervention En Violence Et Agressions Sexuelles De La Montérégie",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 616-6969",
+    "description": "* Activités thérapeutiques en 3 phases s'échelonnant sur 20 mois.* Suivi individuel ou de groupe.* Évaluation spécialisée.* Groupe de soutien.* Rencontres individuelles de soutien: pour les adolescents de 14 à 18 ans et pour les proches.* Rencontres individuelles de prévention des comportements sexuels à risque pour les jeunes à partir de 12 ans.* Groupe d'éducation et de sensibilisation pour les hommes ayant une dépendance à la pornographie. | Clientèle: personnes de 12 ans et plus | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "civasmonteregie.ca",
+    "address": "550, chemin Chambly, bureau 300, Longueuil, Montérégie, QC, J4H 3L8",
+    "hours": "lundi au vendredi, sur rendez-vous"
+  },
+  {
+    "id": "centre-d-intervention-jeunesse-d-mtg",
+    "name": "Centre D'Intervention Jeunesse Des Maskoutains (Le)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 278-4395",
+    "description": "* Travail de rue.* Coin de rue: volet centre de jour.* Coin de rue: volet hébergement d'urgence en itinérance.* Information et référence.* Échange et distribution de seringues et de matériel pour les personnes utilisatrices de drogues par injection ou inhalation.* Distribution de condoms, de naloxone et de bandelettes de test du fentanyl. | Territoire: Saint-Hyacinthe, MRC Les Maskoutains | Statut: organisme à but non lucratif",
+    "address": "120, avenue de la Concorde Nord, Saint-Hyacinthe, Montérégie, QC, J2S 0M5",
+    "hours": "hébergement d'urgence en itinérance: 24 heures, 7 jours"
+  },
+  {
+    "id": "centre-d-intervention-jeunesse-d-mtg-2",
+    "name": "Centre D'Intervention Jeunesse Des Maskoutains (Le) - Coin De Rue",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 768-4395",
+    "description": "Refuge d'urgence de nuit pour personnes en situation d'itinérance.* Hébergement d'urgence de nuit.* Déjeuner. | Clientèle: personnes majeures en situation d'itinérance Capacité: 6 personnes | Territoire: Saint-Hyacinthe | Statut: organisme à but non lucratif",
+    "address": "120, avenue de la Concorde Nord, Saint-Hyacinthe, Montérégie, QC, J2S 0M5",
+    "hours": "lundi au vendredi 16h00 à 8h00, samedi et dimanche 20h00 à 8h00"
+  },
+  {
     "id": "centre-d-integration-multi-services-drv",
     "name": "Centre D'Intégration Multi-Services de L'Ouest de L'Île - Dorval",
     "category": "food",
@@ -12844,6 +15286,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cipl.ca",
     "address": "547, rue Leclerc, bureau 200, Repentigny, Lanaudière, QC, J6A 8B4",
     "hours": "lundi au jeudi 8h30 à 12h00 et 12h45 à 16h00, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "centre-d-orientation-et-de-forma-mtg",
+    "name": "Centre D'Orientation Et De Formation Pour Femmes En Recherche D'Emploi",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-6101",
+    "description": "Intégration des femmes dans les métiers traditionnels et non traditionnels.* Formation et information.* Orientation professionnelle par le biais d'ateliers: connaissance de soi, techniques de recherche d'emploi.* Stage en entreprise.* Accompagnement individuel.* Accompagnement en entreprise. | Clientèle: femmes sans emploi, éloignées du marché du travail ou qui souhaite être accompagnées vers un métier non traditionnel | Territoire: MRC Le Haut-Richelieu | Statut: organisme à but non lucratif",
+    "website": "coffre.ca",
+    "address": "49, rue Saint-Jacques, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2J8",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
   },
   {
     "id": "centre-d-ducation-aux-adultes-l--out",
@@ -13015,6 +15470,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-d-ducation-populaire-mtg",
+    "name": "Centre D'Éducation Populaire",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 699-9955",
+    "description": "Développement des compétences personnelles.* Alphabétisation et Francisation.* Formation de base en français et en calcul.* Rattrapage scolaire: préparation au Test de Développement Général (TDG) et Test d'équivalence de niveau secondaire (TENS).* Cours d'anglais débutant et de conversation.* Initiation à l'informatique.* Écrivain de rue: aide pour la rédaction de lettres, formulaires, etc. | Clientèle: personnes de 16 ans et plus qui ne fréquentent plus l'école sur une base régulière | Territoire: Grand Châteauguay: Beauharnois, Châteauguay, Kahnawake, Léry, Mercier, Saint- Isidore, Saint-Rémi, Saint-Urbain-Premier, Sainte-Martine | Statut: organisme à but non lucratif",
+    "website": "cep-alphabetisation.com",
+    "address": "18, boulevard d'Anjou, Châteauguay, Montérégie, QC, J6K 1B7",
+    "hours": "bureau: lundi au vendredi 8h30 à 16h30, activités: lundi au jeudi, variable"
+  },
+  {
+    "id": "centre-de-b-n-volat-de-la-rive-s-mtg-3",
+    "name": "Centre De Bénévolat De La Rive-Sud - Point De Service De Chambly",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Chambly",
+    "province": "QC",
+    "phone": "450 658-4325",
+    "description": "Maintien à domicile* Popote roulante: repas chauds livrés à domicile.* Aide aux commissions.* Aide pour remplir les formulaires.* Visites et téléphones d'amitié.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV).* Formation et soutien aux personnes proches aidantes.* Accompagnement- transport médical.Action communautaire* Accueil et référence.* Clinique d'impôts.* Conférences.Assistance matérielle* Prêt de matériel orthopédique.* Comptoir familial Coup de Pouce: vêtements, jouets, articles de cuisine, petits appareils.* Dépannage vestimentaire ou matériel aux organismes et individus après évaluation. | Clientèle: popote roulante: personnes aînées de 65 ans et plus, personnes malades ou en convalescence, personnes ayant une déficience physique ou intellectuelle, mères célibataires, personnes dans le besoin, comptoir Coup de Pouce: personnes et familles à faible revenu | Territoire: Chambly, Carignan | Statut: organisme à but non lucratif",
+    "website": "www.benevolatrivesud.qc.ca",
+    "address": "1410, avenue de Salaberry, Chambly, Montérégie, QC, J3L 1R7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-de-b-n-volat-de-la-rive-s-mtg-4",
+    "name": "Centre De Bénévolat De La Rive-Sud - Point De Service De Longueuil",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 677-5281",
+    "description": "Maintien à domicile* Popote roulante: repas chauds livrés à domicile.* Aide aux commissions.* Aide pour remplir les formulaires.* Programme Sécuricab: appels informatisés de sécurité et de rappel pour la prise de médicaments.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV).Action communautaire* Accueil et référence.* Clinique d'impôts.* Conférences.* Programme de travaux compensatoires.Assistance matérielle* Prêt de matériel orthopédique. | Clientèle: adultes et personnes aînées en perte d'autonomie, qui vivent seules ou en convalescence | Territoire: Longueuil, ITMAV: Vieux-Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.benevolatrivesud.qc.ca",
+    "address": "16, rue Montcalm, LONGUEUIL, Montérégie, QC, J4J 2K6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "centre-de-b-n-volat-de-la-rive-s-mtg-5",
+    "name": "Centre De Bénévolat De La Rive-Sud - Point De Service Saint-Lambert",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "450 465-6130",
+    "description": "Maintien à domicile* Popote roulante: repas chauds et congelés livrés à domicile.* Aide pour remplir les formulaires.* Visites et téléphones d'amitié.* Accompagnement-transport.* Aide aux commissions.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV).Action communautaire* Accueil et référence.* Clinique d'impôts.* Soupe et Conférence: programme pour briser l'isolement des personnes aînées.Assistance matérielle* Prêt de matériel orthopédique. | Clientèle: personnes de 65 ans et plus, personnes malades, en convalescence ou vivant avec une déficience physique ou intellectuelle | Territoire: Saint-Lambert, Greenfield Park, Le Moyne, Brossard | Statut: organisme à but non lucratif",
+    "website": "www.benevolatrivesud.qc.ca",
+    "address": "45, rue Argyle, Saint-Lambert, Montérégie, QC, J4P 2H2",
+    "hours": "lundi au vendredi 8h30 à 16h30, popote roulante: mardi et jeudi 10h00 à 12h30"
+  },
+  {
+    "id": "centre-de-b-n-volat-de-la-rive-s-mtg-6",
+    "name": "Centre De Bénévolat De La Rive-Sud - Programme De Travaux Compensatoires",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 866 679-8770",
+    "description": "* Programme offrant la possibilité d'effectuer des travaux compensatoires au profit d'un organisme communautaire. | Clientèle: adultes | Territoire: Montérégie: de Valleyfield à Sorel-Tracy | Statut: organisme à but non lucratif",
+    "website": "www.benevolatrivesud.qc.ca/services-aux-organismes/programme-de-travaux-compensatoires",
+    "address": "18, rue Montcalm, LONGUEUIL, Montérégie, QC, J4J 2K6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "centre-de-b-n-volat-et-moisson-l-lav",
     "name": "Centre De Bénévolat Et Moisson Laval",
     "category": "social",
@@ -13041,6 +15561,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au dimanche, réserver au minimum 1 semaine à l'avance"
   },
   {
+    "id": "centre-de-conservation-des-oisea-mtg",
+    "name": "Centre De Conservation Des Oiseaux Sauvages - Nichoir (Le)",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Hudson",
+    "province": "QC",
+    "phone": "450 458-2809",
+    "description": "Centre de réhabilitation pour oiseaux sauvages.* Soins aux oiseaux sauvages blessés et orphelins.* Réintégration des oiseaux dans la nature.* Programmes éducatifs pour jeunes et adultes.* Événements de renseignements annuels ouverts au public.* Boutique. | Territoire: Canada | Statut: organisme à but non lucratif",
+    "website": "lenichoir.org/fr",
+    "address": "637, rue Main, HUDSON, Montérégie, QC, J0P 1H0",
+    "hours": "accueil des oiseaux et heures d'ouverture: lundi au dimanche 9h00 à 17h00"
+  },
+  {
     "id": "msss-chsld-montreal-centre-de-crise-emile-nelligan",
     "name": "Centre De Crise Émile-Nelligan",
     "category": "health",
@@ -13051,6 +15584,44 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à CIUSSS De L'Est-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
     "address": "6705, suite 211 rue Jean-Talon Est, Montréal, QC H1S 1N2",
     "hours": "Service disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "centre-de-femmes-du-haut-richeli-mtg",
+    "name": "Centre De Femmes Du Haut-Richelieu",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-0662",
+    "description": "* Accueil, intervention et référence.* Conférences.* Café-rencontre.* Milieu de vie.* Ateliers.* Cuisines collectives.* Jardins communautaires. | Clientèle: femmes de 18 ans et plus Capacité: 350 membres | Territoire: MRC Le Haut-Richelieu | Statut: None or unknown",
+    "website": "www.centrefemmeshautrichelieu.ca",
+    "address": "390, rue Georges-Phaneuf, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 1K2",
+    "hours": "lundi au mercredi 8h30 à 12h00 et 13h00 à 16h30, jeudi 8h30 à 12h00 et 13h00 à 16h30 et 17h30 à 20h30"
+  },
+  {
+    "id": "centre-de-femmes-l-essentielle-mtg",
+    "name": "Centre De Femmes L'Essentielle",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 467-3418",
+    "description": "Lieu d'appartenance géré par et pour les femmes.* Accueil, écoute et référence.* Ateliers et cafés- rencontres.* Repas communautaire.* Réseau d'éducation et d'action. | Clientèle: femmes | Territoire: MRC La Vallée-du-Richelieu et les environs | Statut: organisme à but non lucratif",
+    "website": "www.cfessentielle.org",
+    "address": "231, rue Brillon, Beloeil, Montérégie, QC, J3G 2T5",
+    "hours": "lundi 8h30 à 12h00, mardi au jeudi 8h30 à 12h00 et 13h15 à 16h30, repas communautaire: mercredi 12h00"
+  },
+  {
+    "id": "centre-de-femmes-la-marg-elle-mtg",
+    "name": "Centre De Femmes La Marg'Elle",
+    "category": "social",
+    "subcategory": "Sexe et genre",
+    "city": "Saint-Rémi",
+    "province": "QC",
+    "phone": "450 454-1199",
+    "description": "Centre de jour.* Interventions individuelles ou en groupe.* Ateliers.* Cafés-rencontres.* Accompagnement à la cour.* Écoute téléphonique. | Clientèle: femmes de 14 ans et plus Capacité: 40 | Territoire: MRC Les Jardins de Napierville | Statut: organisme à but non lucratif",
+    "address": "87, rue Perras, Saint-Rémi, Montérégie, QC, J0L 2L0",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "centre-de-jour-des-mille-les-lav",
@@ -13131,6 +15702,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h00, vendredi 8h30 à 12h00 et 13h00 à 15h00"
   },
   {
+    "id": "centre-de-partage-communautaire--mtg",
+    "name": "Centre De Partage Communautaire Johannais",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-6711",
+    "description": "* Friperie familiale.* Dépannage ponctuel: vêtements, meubles, etc.* Intégration socioprofessionnelle: formation et entreprise d'insertion.* Recyclage et récupération d'articles usagés: vêtements, meubles, articles de maison, jouets, équipement de loisirs, livres, fournitures scolaires.* Collecte de dons à domicile: meubles seulement (autres objets acceptés lors de la collecte d'un meuble). | Clientèle: personnes dans le besoin | Territoire: Saint-Jean-sur-Richelieu | Statut: organisme à but non lucratif",
+    "website": "cpcjohannais.com",
+    "address": "280, rue Mercier, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 6H4",
+    "hours": "mardi au samedi 10h00 à 17h00"
+  },
+  {
+    "id": "centre-de-partage-communautaire--mtg-2",
+    "name": "Centre De Partage Communautaire Johannais - Meublerie",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-6711",
+    "description": "Magasin d'aubaines.* Vente d'articles usagés.* Récupération d'articles usagés: jouets, articles saisonniers, meubles, électroniques, articles de loisirs et de maison. | Territoire: Saint-Jean-sur-Richelieu | Statut: organisme à but non lucratif",
+    "website": "cpcjohannais.com",
+    "address": "150, rue Foch, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2A8",
+    "hours": "mardi au samedi 10h00 à 17h00, récupération de dons de meuble: mardi au samedi 10h00 à 15h30, service non disponible du 24 juin au 9 juillet"
+  },
+  {
     "id": "centre-de-protection-de-l-enfanc-lav",
     "name": "Centre De Protection De L'Enfance Et De La Jeunesse Avenue Laval",
     "category": "family",
@@ -13207,6 +15804,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h00"
   },
   {
+    "id": "centre-de-p-diatrie-sociale-en-c-mtg",
+    "name": "Centre De Pédiatrie Sociale En Communauté De Longueuil",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 332-0243",
+    "description": "Centre de pédiatrie sociale.* Service de médecine sociale intégrée.* Services psychosociaux.* Consultation juridique, médiation.* Service de référence aux organismes partenaires et institutionnel.* Activités de prévention, suivi et soutien. | Clientèle: personnes de 0 à 18 ans et leur famille | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "cpsclg.org",
+    "address": "215, rue Toulouse, Longueuil, Montérégie, QC, J4L 4X1",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "centre-de-p-rinatalit-l-autre-ma-mtg",
+    "name": "Centre De Périnatalité L'Autre Maison",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 332-9833",
+    "description": "Groupe de médecine familiale.* Rencontres d'accueil et d'information.* Suivi de grossesse et suivi pédiatrique.* Urgence pédiatrique pour les enfants déjà inscrits à l'Autre maison.* Cours et ateliers en périnatalité. | Clientèle: femmes enceintes, couples, enfants | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "lautremaison.ca",
+    "address": "575, rue Saint-Charles Est, Longueuil, Montérégie, QC, J4H 1B8",
+    "hours": "centre: lundi au jeudi 8h00 à 19h30, vendredi 8h00 à 18h00, urgence pédiatrique: sur rendez-vous, lundi au vendredi 7h30 à 12h00, samedi et dimanche 8h30 à 13h00"
+  },
+  {
     "id": "msss-hopital-montreal-centre-de-recherche-du-centre-hospitalier-de-l-universite-de",
     "name": "Centre De Recherche Du Centre Hospitalier De L'Université De Montréal",
     "category": "health",
@@ -13259,6 +15882,58 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-de-r-adaptation-en-d-fici-mtg",
+    "name": "Centre De Réadaptation En Déficience Physique - Châteauguay",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 692-3171",
+    "description": "* Réadaptation physique.* Service d'aides techniques à la posture et à la mobilité. | Clientèle: personne vivant avec une déficience physique ou sensorielle ou ayant des limitations fonctionnelles liées à la posture ou à la mobilité | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/installations/centre-de-readaptation-en-deficience-physique-de- chateauguay",
+    "address": "250, chemin du Christ-Roi, Châteauguay, Montérégie, QC, J6J 4G7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-r-adaptation-en-d-fici-mtg-2",
+    "name": "Centre De Réadaptation En Déficience Physique - Saint-Bruno",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Bruno-de-Montarville",
+    "province": "QC",
+    "phone": "450 441-5503",
+    "description": "* Réadaptation physique.* Équipements et aides techniques. | Clientèle: personnes vivant avec une déficience physique ou sensorielle | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/centre-de-readaptation-en-deficience-physique-de-saint- bruno",
+    "address": "265, boulevard Seigneurial Ouest, Saint-Bruno-de-Montarville, Montérégie, QC, J3V 2H4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-r-adaptation-en-d-fici-mtg-3",
+    "name": "Centre De Réadaptation En Déficience Physique De La Rue Chicoine",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-2625",
+    "description": "* Réadaptation physique.* Équipements et aides techniques. | Clientèle: jeunes ou adultes vivant avec une déficience physique | Territoire: Vaudreuil-Dorion | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/services-specialises-dadaptation-et-de-readaptation-en-deficience- physique-dp-deficience-motrice-dm",
+    "address": "486, rue Chicoine, bureau 100, Vaudreuil-Dorion, Montérégie, QC, J7V 7E4",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-de-r-adaptation-en-d-fici-mtg-4",
+    "name": "Centre De Réadaptation En Déficience Physique De La Rue Lamarre",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 928-4727",
+    "description": "* Réadaptation physique.* Équipements et aides techniques. | Clientèle: personnes vivant avec une déficience physique ou sensorielle | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/services-specialises-dadaptation-et-de-readaptation-en-deficience- physique-dp-deficience-motrice-dm",
+    "address": "388, rue Lamarre, Longueuil, Montérégie, QC, J4J 1T2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-clsc-gatineau-centre-de-readaptation-en-deficience-physique-et-aire-ouvert",
     "name": "Centre De Réadaptation En Déficience Physique Et Aire Ouverte Saint-Raymond",
     "category": "health",
@@ -13307,6 +15982,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "lavalensante.com",
     "address": "306, boulevard Cartier Ouest, Laval-des-Rapides, Laval, QC, H7N 2J2",
     "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-r-habilitation-avc-mtg",
+    "name": "Centre De Réhabilitation Avc",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "514 775-5347",
+    "description": "Réhabilitation sensori-motrice, verbale, cognitive et psychologique à long terme à la suite d'un AVC.* Activités cognitives: vocalisation, orthophonie, jeux axés sur la concentration et la mémoire.* Activités socioculturelles: cinéma, cabane à sucre, sorties culturelles, fête de Noël, etc.* Activités physiques adaptées: exercices sur chaise, quilles, poches et fléchettes.* Activités créatives: peinture, bricolage et chant.* Ateliers variés: musicothérapie, alimentation, relaxation, etc.* Activités d'information et conférences.* Réunions hebdomadaires. | Clientèle: personnes ayant vécu un accident vasculaire-cérébral, leurs proches aidant·e·s | Territoire: Rive-Sud de Montréal | Statut: organisme à but non lucratif",
+    "website": "www.centrerehabilitationavc.com",
+    "address": "500, rue Saint-Laurent, La Prairie, Montérégie, QC, J5R 5X2",
+    "hours": "mercredi 9h15 à 15h30"
+  },
+  {
+    "id": "centre-de-r-pit-d-pannage-aux-qu-mtg",
+    "name": "Centre De Répit-Dépannage Aux Quatre Poches Inc.",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 641-1255",
+    "description": "Séjours aux enfants et adultes vivant avec une déficience intellectuelle ou un trouble du spectre de l'autisme, avec ou sans handicap physique.* Répit.* Programme 21 ans et plus.* Services de garde scolaires.* Camp de jour. | Clientèle: personnes de 3 ans et plus avec une déficience intellectuelle légère ou profonde ou un trouble du spectre de l'autisme, avec ou sans handicap physique Capacité: 20 participant·e·s le jour, 12 participant·e·s la nuit | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.4poches.org",
+    "address": "560, chemin du Lac, BOUCHERVILLE, Montérégie, QC, J4B 6X3",
+    "hours": "fins de semaine: vendredi 17h00 au dimanche 17h00, garde scolaire: 7h00 à 8h30 et 15h00 à 17h30, programme 21 ans +: septembre à juin, 8h30 à 16h00, camps d'été: 9h00 à 16h00"
   },
   {
     "id": "msss-clsc-mont-joli-centre-de-sante-et-de-services-sociaux-de-la-mitis",
@@ -13367,6 +16068,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à Centre De Santé Tulattavik De L'Ungava. Source: MSSS – Fichier M02 des installations.",
     "address": "Kuujjuaq, Kuujjuaq, QC J0M 1C0",
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
+  },
+  {
+    "id": "centre-de-service-en-emploi-et-f-mtg",
+    "name": "Centre De Service En Emploi Et Formation De Montréal",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Kahnawake",
+    "province": "QC",
+    "phone": "514 283-0901",
+    "description": "Développement de l'emploi des personnes autochtones.* Aide à la recherche d'emploi.* Intégration professionnelle.* Financement des études professionnelles et éducations aux adultes. | Clientèle: personnes autochtones | Territoire: Montréal, Laval, Laurentides, Lanaudière, Estrie, Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.cdrhpnq-fnhrdcq.ca",
+    "address": "2, chemin River, Kahnawake, Montérégie, QC, J0L 1B0",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h15, vendredi 8h00 à 12h00"
   },
   {
     "id": "msss-hopital-montreal-centre-de-services-ambulatoires-allan-memorial",
@@ -14219,6 +16933,45 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-de-services-psychosociaux-mtg",
+    "name": "Centre De Services Psychosociaux Beloeil",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 461-5888",
+    "description": "* Point de services psychosociaux. | Clientèle: enfants et adolescent·e·s en difficulté, parents, tuteur·rice·s, intervenant·e·s | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/centre-de-services-psychosociaux-beloeil",
+    "address": "535, boulevard Sir Wilfrid Laurier, Beloeil, Montérégie, QC, J3G 5E9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-psychosociaux-mtg-2",
+    "name": "Centre De Services Psychosociaux Sorel-Tracy",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "1 800 339-6114",
+    "description": "Point de services psychosociaux. | Clientèle: enfants et adolescent·e·s en difficulté, parents, tuteur·ice·s, intervenant·e·s | Territoire: Montérégie-Est | Statut: organisme du gouvernement provincial",
+    "website": "santemonteregie.qc.ca/installations/centre-de-services-psychosociaux-sorel-tracy",
+    "address": "61, rue Morgan, Sorel-Tracy, Montérégie, QC, J3P 3B6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-psychosociaux-mtg-3",
+    "name": "Centre De Services Psychosociaux Vaudreuil-Dorion",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "1 800 641-3254",
+    "description": "* Point de services psychosociaux. | Clientèle: enfants et adolescent·e·s en difficulté, parents, tuteur·rice·s, intervenant·e·s | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/centre-de-services-psychosociaux-vaudreuil-dorion",
+    "address": "2555, rue Dutrisac, bureau RC 24, Vaudreuil-Dorion, Montérégie, QC, J7V 7E6",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-de-services-scolaire-au-c-out",
     "name": "Centre De Services Scolaire Au Coeur-Des-Vallées",
     "category": "social",
@@ -14258,6 +17011,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "centre-de-services-scolaire-des--mtg",
+    "name": "Centre De Services Scolaire Des Grandes-Seigneuries",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "514 380-8899",
+    "description": "Centre de services scolaire francophone regroupant écoles primaires, secondaires et spécialisées.* Formation professionnelle et aux adultes: services d'aide et d'orientation.* Test d'équivalence de niveau secondaire (TENS): évaluation des connaissances des adultes n'ayant pas terminé leurs études secondaires en vue d'obtenir une attestation d'équivalence de niveau de scolarité (AENS) facilitant l'accession à certains emplois et formations professionnelles.* Programme Passe-partout.* Francisation.* Formation à distance.* Services aux entreprises.* Centre administratif Jacques-de-Lignery: 1250, boulevard Taschereau, La Prairie, Québec, J5R 1X2.* Coordination du transport scolaire. | Territoire: MRC Roussillon, MRC Les Jardins-de-Napierville (sauf Saint-Jacques-le-Mineur) | Statut: organisme parapublic",
+    "website": "www.cssdgs.gouv.qc.ca",
+    "address": "50, boulevard Taschereau, 2e étage, La Prairie, Montérégie, QC, J5R 4V3",
+    "hours": "lundi au vendredi 8h15 à 12h00 et 13h00 à 16h15, Centre administratif Jacques-de-Lignery: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--mtg-2",
+    "name": "Centre De Services Scolaire Des Hautes-Rivières",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 359-6411",
+    "description": "Centre de services scolaire francophone regroupant écoles primaires, secondaires et spécialisées.* Formation professionnelle et aux adultes: services d'aide et d'orientation.* Test d'équivalence de niveau secondaire (TENS): évaluation des connaissances des adultes n'ayant pas terminé leurs études secondaires en vue d'obtenir une attestation d'équivalence de niveau de scolarité (AENS) facilitant l'accession à certains emplois et formations professionnelles.* Francisation, services d'intégration.* Formation à distance.* Service aux entreprises.* Coordination du transport scolaire. | Territoire: MRC Rouville, MRC Le Haut-Richelieu, Saint-Jacques-le-Mineur | Statut: organisme parapublic",
+    "website": "www.csdhr.qc.ca",
+    "address": "210, rue Notre-Dame, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 6N3",
+    "hours": "administration: lundi au vendredi 8h30 à 11h45 et 13h00 à 16h00"
+  },
+  {
     "id": "centre-de-services-scolaire-des--out-2",
     "name": "Centre De Services Scolaire Des Hauts-Bois-De-L'Outaouais",
     "category": "social",
@@ -14269,6 +17048,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.csshbo.gouv.qc.ca",
     "address": "331, rue du Couvent, Maniwaki, Outaouais, QC, J9E 1H5",
     "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--mtg-3",
+    "name": "Centre De Services Scolaire Des Patriotes",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Bruno-de-Montarville",
+    "province": "QC",
+    "phone": "1 877 449-2919",
+    "description": "Regroupement d'écoles primaires, secondaires et spécialisées francophones.* Formation professionnelle et aux adultes: services d'aide et d'orientation.* Test d'équivalence de niveau secondaire (TENS): évaluation des connaissances des adultes n'ayant pas terminé leurs études secondaires en vue d'obtenir une attestation d'équivalence de niveau de scolarité (AENS) facilitant l'accession à certains emplois et formations professionnelles.* Services d'intégration socioprofessionnelle (ISP) et d'insertion sociale (IS).* Francisation.* Formation à distance.* Services aux entreprises.* Coordination du transport scolaire.* Programme Passe-Partout. | Territoire: MRC La Vallée-du-Richelieu, MRC Marguerite-D'Youville, Saint-Bruno-de-Montarville, Boucherville | Statut: organisme parapublic",
+    "website": "cssp.gouv.qc.ca",
+    "address": "1740, rue Roberval, Saint-Bruno-de-Montarville, Montérégie, QC, J3V 3R3",
+    "hours": "administration: lundi au vendredi 8h15 à 12h00 et 13h00 à 16h15"
   },
   {
     "id": "centre-de-services-scolaire-des--out-3",
@@ -14284,6 +17076,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi à vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "centre-de-services-scolaire-des--mtg-4",
+    "name": "Centre De Services Scolaire Des Trois-Lacs",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "514 477-7000",
+    "description": "Centre de services scolaire francophone regroupant écoles primaires, secondaires et spécialisées.* Formation professionnelle et aux adultes: services d'aide et d'orientation.* Test d'équivalence de niveau secondaire (TENS): évaluation des connaissances des adultes n'ayant pas terminé leurs études secondaires en vue d'obtenir une attestation d'équivalence de niveau de scolarité (AENS) facilitant l'accession à certains emplois et formations professionnelles.* Service aux entreprises.* Coordination du transport scolaire. | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme parapublic",
+    "website": "www.cstrois-lacs.qc.ca",
+    "address": "400, avenue Saint-Charles, Vaudreuil-Dorion, Montérégie, QC, J7V 6B1",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "centre-de-services-scolaire-mari-mtg",
+    "name": "Centre De Services Scolaire Marie-Victorin",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 670-0730",
+    "description": "Centre de services scolaire francophone regroupant écoles primaires, secondaires et spécialisées.* Formation professionnelle et aux adultes: services d'aide et d'orientation.* Test d'équivalence de niveau secondaire (TENS): évaluation des connaissances des adultes n'ayant pas terminé leurs études secondaires en vue d'obtenir une attestation d'équivalence de niveau de scolarité (AENS) facilitant l'accession à certains emplois et formations professionnelles.* Formation à distance.* Service aux entreprises et développement international (SAEDI).* Coordination du transport scolaire.* Réception de plaintes. | Territoire: Brossard, Longueuil, Saint-Lambert | Statut: organisme parapublic",
+    "website": "cssmv.gouv.qc.ca",
+    "address": "13, rue Saint-Laurent Est, Longueuil, Montérégie, QC, J4H 4B7",
+    "hours": "administration: lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "msss-chsld-montreal-centre-de-soins-prolonges-grace-dart",
     "name": "Centre De Soins Prolongés Grace Dart",
     "category": "health",
@@ -14294,6 +17112,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à Centre De Soins Prolongés Grace Dart. Source: MSSS – Fichier M02 des installations.",
     "address": "5155, rue Sainte-Catherine Est, Montréal, QC H1V 2A5",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "centre-de-soutien-en-sant-mental-mtg",
+    "name": "Centre De Soutien En Santé Mentale - Montérégie",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 486-1609",
+    "description": "Soutien et accompagnement.* Interventions sur place.* Psychothérapie, rencontres individuelles ou de groupe, suivi psychosocial.* Ateliers: gestion des émotions, groupe pour les personnes qui entendent des voix, café-rencontre.* Activités: gym, yoga sur chaise, cours d'anglais, cours d'espagnol, cours d'informatique, art-thérapie, jeux d'écriture.* Accompagnement pour la présentation d'une requête d'évaluation psychiatrique.* Formations, centre de renseignements et conférences.* PAAS Action: programme d'Emploi-Québec permettant la réinsertion sociale par le biais d'activités (anglais, informatique, arts plastiques, activités physiques).* Accompagnement et soutien en Cour pour les familles. | Clientèle: personnes de 18 ans et plus vivant avec une maladie mentale, leurs proches Capacité: 12 par activités | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "cssm-m.ca",
+    "address": "2046, boulevard Édouard, Longueuil, Montérégie, QC, J4T 1Z7",
+    "hours": "lundi au jeudi 8h30 à 16h00, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "centre-de-soutien-entr-aidants-mtg",
+    "name": "Centre De Soutien Entr'Aidants",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 465-2520",
+    "description": "Soutien aux proches aidant·e·s.* Information et référence.* Soutien individuel.* Groupes de soutien mensuels, formations et conférences: Ressourc'É-MOI, L'aidant et l'accompagnement en fin de vie, É-MOI...Je m'estime, Destress'É-MOI, café-rencontre.* Aide avec les démarches.* Transport pour les activités.* Répit à domicile lors des activités.* Répit Évasion: 50 heures. | Clientèle: proches aidant·e·s de personnes aînées | Territoire: Brossard, Longueuil, Saint-Lambert | Statut: organisme à but non lucratif",
+    "website": "www.centredesoutienentraidants.com",
+    "address": "1688, rue Gustave-Désourdy, Longueuil, Montérégie, QC, J4T 1Y6",
+    "hours": "lundi au vendredi 9h00 à 16h00, groupes de soutien de jour et de soir"
   },
   {
     "id": "centre-de-travail-laro-out",
@@ -14322,6 +17166,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi et mercredi de 13h00 à 16h30, vendredi de 13h00 à 20h30"
   },
   {
+    "id": "centre-des-femmes-de-longueuil-mtg",
+    "name": "Centre Des Femmes De Longueuil",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 670-0111",
+    "description": "* Accueil, écoute et référence.* Soutien individuel ponctuel.* Groupes de soutien divers: pour femmes ayant des comportements violents, soutien à la séparation, groupe d'entraide pour femmes immigrantes, etc.* Ateliers divers: droits des femmes, santé, autodéfense, art militant, etc.* Activités d'éducation populaire et sorties.* Espace salon avec ordinateurs, accès internet et bibliothèque féministe.* Actions collectives et implication citoyenne (animation, comités, militance, etc.). | Clientèle: femmes | Territoire: agglomération de Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.centredefemmeslongueuil.org",
+    "address": "1529, boulevard Lafayette, Longueuil, Montérégie, QC, J4K 3B6",
+    "hours": "lundi 13h00 à 16h30, mardi et mercredi 8h30 à 16h30, jeudi 13h00 à 20h30"
+  },
+  {
     "id": "centre-des-femmes-dynamiques-de--lav",
     "name": "Centre Des Femmes Dynamiques De Laval",
     "category": "social",
@@ -14332,6 +17189,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Lieu de rencontre, de référence et de soutien.* Activités communautaires et éducatives.* Conférences.* Écoute et information.* Activités physiques.* Ateliers de prévention en santé globale.* Dîners communautaires.* Sorties. | Clientèle: femmes de 50 ans et plus | Territoire: Grand Montréal | Statut: organisme à but non lucratif",
     "address": "3509, boulevard de la Concorde Est, bureau 202, Duvernay, Laval, QC, H7E 2C6",
     "hours": "lundi au jeudi 9h00 à 16h00"
+  },
+  {
+    "id": "centre-des-femmes-la-moisson-mtg",
+    "name": "Centre Des Femmes La Moisson",
+    "category": "social",
+    "subcategory": "Sexe et genre",
+    "city": "L'Île-Perrot",
+    "province": "QC",
+    "phone": "514 453-8720",
+    "description": "* Relation d'aide individuelle.* Groupes de croissance et d'entraide.* Cafés-rencontres et conférences. | Clientèle: femmes de 18 ans et plus | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "centredefemmeslamoisson.com",
+    "address": "64, Grand Boulevard, L'Île-Perrot, Montérégie, QC, J7V 4W2",
+    "hours": "lundi au jeudi 8h30 à 16h30"
   },
   {
     "id": "centre-du-sablon-lav",
@@ -14488,6 +17358,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-hospitalier-h-tel-dieu-de-mtg",
+    "name": "Centre Hospitalier Hôtel-Dieu De Sorel",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 746-6000",
+    "description": "Centre hospitalier de soins généraux et spécialisés. * Urgences et soins intensifs.* Chirurgie d'un jour.* Oncologie.* Soins palliatifs.* Obstétrique et pédiatrie.* Groupe de soutien pour les parents vivant un deuil périnatal.* Clinique externe et hospitalisation en santé mentale.* Centre de prélèvements.* Désintoxication.* Distribution et récupération de matériel d'injection.* Distribution de matériel d'injection aux personnes qui consomment des drogues. | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/installations/hotel-dieu-de-sorel",
+    "address": "400, avenue de l'Hôtel-Dieu, Sorel-Tracy, Montérégie, QC, J3P 1N5",
+    "hours": "24 heures, 7 jours, centre de prélèvements: sur rendez-vous"
+  },
+  {
     "id": "msss-hopital-kahnawake-centre-hospitalier-kateri-memorial-tehsakotitsen-tha",
     "name": "Centre Hospitalier Kateri Memorial Tehsakotitsen : Tha",
     "category": "health",
@@ -14551,6 +17434,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.inter-section.ca",
     "address": "1232, boulevard Saint-René Ouest, Gatineau, Outaouais, QC, J8T 6H3",
     "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-mtg",
+    "name": "Centre Intégré De Santé Et De Services Sociaux De La Montérégie-Centre",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 466-5000",
+    "description": "Planification, coordination et organisation de l'offre de services sociaux et de santé.* Prise en charge de l'ensemble de la population du territoire, notamment des clientèles plus vulnérables.* Gestion de l'accès simplifié aux services.* Administration de partenariats avec les ressources intermédiaires en hébergement.* Traitement des plaintes en matière d'insatisfaction et de violation des droits des personnes usagères. | Territoire: Montérégie-Centre: Réseau local de service Champlain, Réseau local de service du Haut- Richelieu-Rouville | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/centre",
+    "address": "3141, boulevard Taschereau, bureau 220, Longueuil, Montérégie, QC, J4V 2H2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-mtg-2",
+    "name": "Centre Intégré De Santé Et De Services Sociaux De La Montérégie-Est",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 771-3333",
+    "description": "Planification, coordination et organisation de l'offre de services sociaux et de santé. * Prise en charge de l'ensemble de la population du territoire, notamment des clientèles plus vulnérables.* Gestion de l'accès simplifié aux services.* Administration de partenariats avec les ressources intermédiaires en hébergement.* Traitement des plaintes en matière d'insatisfaction et de violation des droits des personnes usagères. | Territoire: Montérégie-Est: CSSS Pierre-Boucher, CSSS Pierre-De-Saurel, CSSS Richelieu- Yamaska, Centre jeunesse de la Montérégie | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/est",
+    "address": "2750, boulevard Laframboise , Saint-Hyacinthe, Montérégie, QC, J2S 4Y8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-mtg-3",
+    "name": "Centre Intégré De Santé Et De Services Sociaux De La Montérégie-Ouest",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "1 800 700-0621",
+    "description": "Planification, coordination et organisation de l'offre de services sociaux et de santé. * Prise en charge de l'ensemble de la population du territoire, notamment des clientèles plus vulnérables.* Gestion de l'accès simplifié aux services.* Administration de partenariats avec les ressources intermédiaires en hébergement.* Traitement des plaintes en matière d'insatisfaction et de violation des droits des personnes usagères. | Clientèle: grand public | Territoire: Montérégie-Ouest: CSSS Jardins-Roussillon, Suroît, Haut-Saint-Laurent, Vaudreuil- Soulanges, CRDITED de la Montérégie-Est et SRSOR, Centre Montérégien de Réadaptation, Le Virage et Foster | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/ouest",
+    "address": "200, boulevard Brisebois, Châteauguay, Montérégie, QC, J6K 4W8",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "centre-int-gr-de-sant-et-de-serv-lav",
@@ -14693,6 +17615,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 17h00"
   },
   {
+    "id": "centre-louise-bibeau-mtg",
+    "name": "Centre Louise Bibeau",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 773-7321",
+    "description": "Maison de répit.* Répit-dépannage.* Musicothérapie.* Zoothérapie.* Sorties. | Clientèle: personnes vivant avec une déficience intellectuelle avec ou sans déficience physique Capacité: 12 personnes par jour | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "centrelouisebibeau.com",
+    "address": "2110, avenue Mailhot, Saint-Hyacinthe, Montérégie, QC, J2S 9E1",
+    "hours": "répit-dépannage: fin de semaine, camp de vacances: été"
+  },
+  {
     "id": "centre-marcelle-et-jean-coutu-lav",
     "name": "Centre Marcelle Et Jean Coutu",
     "category": "social",
@@ -14704,6 +17639,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.lepilier.org/les-services/le-centre-marcelle-et-jean-coutu",
     "address": "425, place Jean-Coutu, Auteuil, Laval, QC, H7H 3C8",
     "hours": "activités et camp de jour: lundi au vendredi 9h30 à 15h30, répit de fin de semaine: vendredi 16h00 au dimanche 19h00, répit estival: lundi au vendredi 9h00 à 15h00, hébergement en alternance: lundi soir au vendredi matin"
+  },
+  {
+    "id": "centre-multifonctionnel-horizon-mtg",
+    "name": "Centre Multifonctionnel Horizon",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Léry",
+    "province": "QC",
+    "phone": "450 692-6000",
+    "description": "Soutien et activités pour personnes vivant avec un trouble du spectre de l'autisme ou personnes vivant avec un handicap ou une déficience.* Centre de jour: activités durant la semaine pour adultes.* Répit à domicile: service flexible, semaine ou fin de semaine.* Répit de fin de semaine avec ou sans hébergement de nuit.* Ateliers d'apprentissage à la vie autonome.* Dépannage d'urgence de courte durée: répit pour personnes proches aidantes.* Camp estival pour adolescent·e·s et jeunes adultes. | Clientèle: personnes de 6 ans et plus vivant avec une déficience intellectuelle ou physique, personnes vivant avec un trouble du spectre de l'autisme de de 6 ans et plus, leur famille, répit à domicile: personnes de 6 ans et plus vivant avec un handicap, camp estival: personnes de 12 à 21 ans vivant avec un handicap, centre de jour: personnes de 21 ans et plus vivant avec un handicap Capacité: variable, répit: 8 lits | Territoire: MRC Roussillon, MRC Beauharnois-Salaberry, MRC Les Jardins-de-Napierville, MRC Haut-Saint-Laurent | Statut: organisme à but non lucratif",
+    "website": "centre-multifonctionnel-horizon.ca",
+    "address": "78, chemin du Lac-Saint-Louis, Léry, Montérégie, QC, J6N 1A1",
+    "hours": "lundi au vendredi 7h00 à 18h00, répit: vendredi 19h00 au dimanche 19h00"
   },
   {
     "id": "msss-hopital-montreal-centre-multiservice-de-sante-et-de-services-sociaux-de-saint",
@@ -14755,18 +17703,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
-    "id": "msss-clsc-nicolet-centre-multiservices-de-sante-et-de-services-sociaux-christ-",
-    "name": "Centre Multiservices De Santé Et De Services Sociaux Christ-Roi",
-    "category": "health",
-    "subcategory": "CLSC",
-    "city": "Nicolet",
-    "province": "QC",
-    "phone": "819-293-2071",
-    "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CIUSSS De La Mauricie-Et-Du-Centre-Du-Québec. Source: MSSS – Fichier M02 des installations.",
-    "address": "675, rue Saint-Jean-Baptiste, Nicolet, QC J3T 1S4",
-    "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
-  },
-  {
     "id": "msss-clsc-quebec-centre-multiservices-de-sante-et-de-services-sociaux-christ-",
     "name": "Centre Multiservices De Santé Et De Services Sociaux Christ-Roi",
     "category": "health",
@@ -14776,6 +17712,18 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-525-4444",
     "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CIUSSS De La Capitale-Nationale. Source: MSSS – Fichier M02 des installations.",
     "address": "900, boulevard Wilfrid-Hamel, Québec, QC G1M 2R9",
+    "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
+  },
+  {
+    "id": "msss-clsc-nicolet-centre-multiservices-de-sante-et-de-services-sociaux-christ-",
+    "name": "Centre Multiservices De Santé Et De Services Sociaux Christ-Roi",
+    "category": "health",
+    "subcategory": "CLSC",
+    "city": "Nicolet",
+    "province": "QC",
+    "phone": "819-293-2071",
+    "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CIUSSS De La Mauricie-Et-Du-Centre-Du-Québec. Source: MSSS – Fichier M02 des installations.",
+    "address": "675, rue Saint-Jean-Baptiste, Nicolet, QC J3T 1S4",
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
@@ -15468,6 +18416,110 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-notre-dame-de-fatima-mtg",
+    "name": "Centre Notre-Dame De Fatima",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "514 453-7600",
+    "description": "* Programme Arc-en-ciel: accompagnement en camp de jour pour enfants avec des besoins particuliers.* Camp de vacances pour enfants et adultes avec des besoins particuliers.* Répits pour enfants, adolescents et adultes avec des besoins particuliers.* Hébergement de groupes pour clientèle avec des besoins particuliers. | Clientèle: enfants et adultes vivant avec une déficience auditive, du langage, intellectuelle, une multi-déficience ou un trouble du spectre de l'autisme, camp de vacances et répit: personnes de 4 à 21 ans, adultes de 18 ans et plus, camp de jour Arc-en-ciel: jeunes de 4 à 14 ans Capacité: jusqu'à 60 campeur·euse·s en hébergement | Territoire: le Québec, Ontario | Statut: organisme à but non lucratif",
+    "website": "mon-camp.ca",
+    "address": "2464, boulevard Perrot, Vaudreuil-Dorion, Montérégie, QC, J7W 2Y9",
+    "hours": "administration: lundi au vendredi 8h00 à 17h00"
+  },
+  {
+    "id": "centre-petite-chelle-mtg",
+    "name": "Centre Petite Échelle",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 674-2201",
+    "description": "* Services de stimulation pour enfants de 0 à 12 ans ayant des besoins particuliers.* Services de répit pour la famille.* Services de maintien des acquis chez les jeunes adultes ayant des besoins particuliers. | Clientèle: jeunes ayant un diagnostic d'autisme ou en attente d'un diagnostic, jeunes ayant un retard de développement langagier ou intellectuel, jeunes ayant une maladie orpheline, un diagnostic de Trisomie 21, de paralysie cérébrale ou tous autres syndromes affectant le développement physique, langagier ou intellectuel Capacité: 10 personnes | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "petiteechelle.org",
+    "address": "540, rue Antoinette-Robidoux, Longueuil, Montérégie, QC, J4J 2V7",
+    "hours": "7 jours, 9h00 à 16h00"
+  },
+  {
+    "id": "centre-pour-femmes-impact-mtg",
+    "name": "Centre Pour Femmes Impact",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Varennes",
+    "province": "QC",
+    "phone": "450 652-0004",
+    "description": "Centre pour contrer l'isolement des femmes.* Conférences, ateliers, cours, rencontres, sorties et autres activités variées.* Information et référence. | Clientèle: femmes de 18 ans et plus, incluant les nouvelles arrivantes et celles vivant avec un handicap | Territoire: Calixa-Lavallée, Contrecour, Saint-Amable, Sainte-Julie, Varennes, Verchères | Statut: organisme à but non lucratif",
+    "website": "centreimpact.org",
+    "address": "2022, place du 350e, Varennes, Montérégie, QC, J3X 0K9",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-pr-natal-et-jeunes-famill-mtg",
+    "name": "Centre Prénatal Et Jeunes Familles",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 424-7867",
+    "description": "Soutien aux futurs parents et aux familles.* Accompagnement à la naissance, ostéopathie pédiatrique et familiale.* Ateliers et conférences: portage, périnatalité, coparentalité, etc.* Ateliers préscolaires et parents-enfants.* Ateliers d'éveil musical, à la lecture et à l'écriture.* Yoga prénatal et postnatal.* Rencontres prénatales.* Cours prénataux.* Halte-répit: bloc de 3 heures.* Groupes de soutien.* Soutien à l'allaitement avec Nourri-Source.* Formations: RCR/DEA.* Service Les Relevailles: visites à domicile par une assistante périnatale. | Clientèle: parents d'enfants de 0 à 5 ans, futurs parents, familles, service de relevailles: nouveaux parents ayant un poupon de moins de 12 mois, halte-répit: enfants de 0 à 18 mois Capacité: 16 personnes | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "centrepjf.org",
+    "address": "640A, rue Chicoine, Vaudreuil-Dorion, Montérégie, QC, J7V 9J4",
+    "hours": "lundi au vendredi 8h00 à 15h30"
+  },
+  {
+    "id": "centre-psychosocial-richelieu-ya-mtg",
+    "name": "Centre Psychosocial Richelieu-Yamaska (Le) - Acton Vale",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Acton Vale",
+    "province": "QC",
+    "phone": "450 773-1022",
+    "description": "Suivi d'intensité variable offert directement dans le milieu de vie de la personne.* Activités de soutien de réadaptation et d'intégration sociale.* Accompagnement spécialisé et personnalisé selon les besoins. | Clientèle: personnes de 18 ans et plus vivant un problème de santé mentale | Territoire: MRC La Vallée-du-Richelieu, MRC des Maskoutains, MRC Acton | Statut: organisme à but non lucratif",
+    "website": "www.centrepsychosocial.org",
+    "address": "960, rue Daigneault, Acton Vale, Montérégie, QC, J0H 1A0",
+    "hours": "variables"
+  },
+  {
+    "id": "centre-psychosocial-richelieu-ya-mtg-2",
+    "name": "Centre Psychosocial Richelieu-Yamaska (Le) - Beloeil",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 714-1317",
+    "description": "Suivi d'intensité variable offert directement dans le milieu de vie de la personne.* Activités de soutien de réadaptation et d'intégration sociale.* Accompagnement spécialisé et personnalisé selon les besoins. | Clientèle: personnes de 18 ans et plus vivant avec un problème de santé mentale | Territoire: MRC Acton, MRC des Maskoutains, MRC La Vallée-du-Richelieu | Statut: organisme à but non lucratif",
+    "website": "www.centrepsychosocial.org",
+    "address": "545, boulevard Laurier, bureau 210, Beloeil, Montérégie, QC, J3G 4H8",
+    "hours": "lundi au vendredi 8h30 à 16h00, sur rendez-vous"
+  },
+  {
+    "id": "centre-psychosocial-richelieu-ya-mtg-3",
+    "name": "Centre Psychosocial Richelieu-Yamaska (Le) - Siège Social",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 773-1022",
+    "description": "Centre de jour et services aux personnes vivant avec des problèmes de santé mentale.* Centre de jour: accueil, écoute, lieu de rencontre et activités de soutien, de réadaptation et d'intégration sociale.* Suivi d'intensité variable offert dans le milieu de vie de la personne.* Accompagnement spécialisé et personnalisé selon les besoins. | Clientèle: personnes de 18 ans et plus vivant un avec un problème de santé mentale | Territoire: MRC La Vallée-du-Richelieu, MRC des Maskoutains, MRC Acton | Statut: organisme à but non lucratif",
+    "website": "www.centrepsychosocial.org",
+    "address": "2090, rue Dessaulles, Saint-Hyacinthe, Montérégie, QC, J2S 2T5",
+    "hours": "variable selon les services"
+  },
+  {
+    "id": "centre-p-rinatal-le-berceau-mtg",
+    "name": "Centre Périnatal Le Berceau",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 446-7760",
+    "description": "Accompagnement des futurs et nouveaux parents, de la naissance jusqu'au premier anniversaire de leur bébé.* Information, soutien et référence.* Les Mères-Veilleuses: groupe de soutien pour la dépression post-partum.* Relevailles à domicile: soins du bébé et des enfants, entretien ménager léger, soutien à l'organisation globale, aide à la préparation des repas, etc.* Rencontres prénatales: vécu de grossesse et devenir parent, l'attachement, développement du fotus, allaitement et retour à l'enfance, l'accouchement, la douleur, préparation au postnatal.* Soutien à l'allaitement.* Cours de premiers soins et RCR pour bébés et enfants.* Groupe de soutien au deuil périnatal.* Location d'accessoires: porte-bébé, tire-lait, livres et vêtements de maternité.* Friperie et récupération d'articles usagés: vêtements de maternité et d'allaitement, vêtements pour bébés, chaussures et bottes 0-2 ans, couches lavables, tapis d'éveil, literie, écharpes et porte-bébés ergonomiques, accessoires.* Activités parents-bébés: grandes variétés d'activités dont des activités spéciales entre pères et leurs bébés.* Location de salles multifonctions. | Clientèle: personnes enceintes, futurs parents et parents avec un enfant de moins de 2 ans | Territoire: Rive-sud | Statut: organisme à but non lucratif",
+    "website": "leberceau.org",
+    "address": "733, rue Laurier, Beloeil, Montérégie, QC, J3G 4J7",
+    "hours": "lundi au vendredi 8h30 à 16h30, samedi 9h00 à 16h00"
+  },
+  {
     "id": "qc-sm-quebec-robert-giffard",
     "name": "Centre Robert-Giffard – Psychiatrie Québec",
     "category": "mentalHealth",
@@ -15518,6 +18570,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.crcjoliette.ca",
     "address": "785, boulevard Manseau, Joliette, Lanaudière, QC, J6E 3G1",
     "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "centre-saint-lambert-mtg",
+    "name": "Centre Saint-Lambert",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "450 672-3320",
+    "description": "* Réadaptation physique.* Hébergement.* Hôpital de jour: services d'évaluation diagnostique, de traitement, de formation, d'orientation et de soutien. | Clientèle: hôpital de jour: personnes aînées présentant une ou des problématiques sur le plan physique, psychologique ou social, leurs proches, intervenant·e·s du réseau | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/centre-saint-lambert",
+    "address": "831, avenue Notre-Dame, Saint-Lambert, Montérégie, QC, J4R 1S1",
+    "hours": "Voir site web"
   },
   {
     "id": "centre-serge-b-lair-out",
@@ -15595,6 +18660,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.canada.ca/fr/emploi-developpement-social/ministere/coordonnees/centres-service-canada.html",
     "address": "2400 boulevard des Sources, bureau 106, Pointe-Claire, QC H9R 0E9",
     "hours": "Lun-ven 8h30-16h"
+  },
+  {
+    "id": "centre-sino-qu-bec-de-la-rive-su-mtg-2",
+    "name": "Centre Sino-Québec De La Rive-Sud - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 445-6666",
+    "description": "Clinique d'impôts sur rendez-vous. | Clientèle: personnes à faible revenu | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.centresinoquebec.com",
+    "address": "7209, boulevard Taschereau, bureau 108, BROSSARD, Montérégie, QC, J4Y 1A1",
+    "hours": "clinique 2026: 1er au 31 mars, lundi au vendredi 9h00 à 17h00, sur rendez-vous"
   },
   {
     "id": "msss-chsld-mashteuiatsh-centre-tshishemishk",
@@ -16169,6 +19247,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV."
   },
   {
+    "id": "cercles-de-fermi-res-du-qu-bec-l-mtg",
+    "name": "Cercles De Fermières Du Québec (Les)",
+    "category": "social",
+    "subcategory": "Sexe et genre",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 442-3983",
+    "description": "Amélioration des conditions de vie de la femme et de la famille.* Transmission du patrimoine culturel et artisanal: partage des connaissances et du savoir-faire.* Diffusion d'information et organisation de conférences.* Engagement et implication dans des causes sociales, bénévolat.* Publication de matériel d'information sur l'artisanat et l'art culinaire. | Clientèle: femmes âgées de 14 ans et plus | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "cfq.qc.ca",
+    "address": "1193, rue Maisonneuve, Longueuil, Montérégie, QC, J4K 2S7",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "chambly-ville-mtg",
+    "name": "Chambly - Ville",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Chambly",
+    "province": "QC",
+    "phone": "450 658-8788",
+    "description": "Gestion des services municipaux.* Comptoir municipal: information sur les permis, subventions et taxes, paiement des taxes.* Calendrier des collectes de matières recyclables et ordures et information sur la gestion des matières résiduelles: http://ville.chambly.qc.ca/environnement/matieres-residuelles* Sécurité publique: service de sécurité incendie, Régie intermunicipale de police Richelieu.* Système automatisé d'alertes pour les urgences et le déneigement: ville.chambly.qc.ca/systeme-dappels-automatises-pour-les- urgences/* Services en ligne: paiement et contestation de contravention, licences pour animaux, permis de construction et de rénovation, évaluation foncière et consultation du rôle d'évaluation, requêtes de travaux publics, etc.: ville.chambly.qc.ca/servicesenligne* Loisirs et culture. | Territoire: Chambly | Statut: organisme municipal",
+    "website": "ville.chambly.qc.ca",
+    "address": "56, rue Martel, Chambly, Montérégie, QC, J3L 1V3",
+    "hours": "lundi au jeudi 8h15 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
     "id": "chambre-de-commerce-et-d-industrie-trb",
     "name": "Chambre de Commerce et D'Industrie les Moulins",
     "category": "employment",
@@ -16273,6 +19377,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "distribution: jeudi 14h00 à 17h30, sur rendez-vous seulement"
   },
   {
+    "id": "chevaliers-de-colomb-clinique-d--mtg",
+    "name": "Chevaliers De Colomb - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 864-1211",
+    "description": "* Clinique d'impôts sur rendez-vous. | Clientèle: personnes seules vivant avec un revenu de 40 000$ et moins, couple vivant avec un revenu de 55 000$ | Territoire: Beloeil, McMasterville, Mont-Saint-Hilaire, Saint-Antoine-Sur-Richelieu, Saint-Basile-Le- Grand, Saint-Jean-Baptiste, Saint-Marc-Sur-Richelieu, Saint-Mathieu-de-Beloeil, Sainte-Madeleine | Statut: organisme à but non lucratif",
+    "website": "www.cdecbeloeil.com",
+    "address": "287, boulevard Cartier, Beloeil, Montérégie, QC, J3G 3R2",
+    "hours": "clinique d'impôt 2026: sur rendez-vous seulement, 2 mars au 30 avril, lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00, mardi et mercredi 16h30 à 18h30"
+  },
+  {
     "id": "tr-garde-chez-annie",
     "name": "Chez Annie",
     "category": "family",
@@ -16322,6 +19439,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "chez-nous-solidaire-mtg",
+    "name": "Chez-Nous Solidaire",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Mercier",
+    "province": "QC",
+    "phone": "514-673-2360",
+    "description": "Logements supervisés pour personnes autonomes avec une déficience intellectuelle de modérée à légère avec ou sans trouble du spectre de l'autisme.* Supervision.* Soutien à l'autonomie et animation.* Service de repas.* Supervision de la prise des médicaments.* Salles de lavage.* Salles communes. | Clientèle: personnes autonomes avec une déficience intellectuelle de modérée à légère avec ou sans trouble du spectre de l'autisme Capacité: 19 unités de 3 1/2, 4 pour personnes en déficience légère | Territoire: le Québec, MRC de Roussillon, Beauharnois-Salaberry et Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.chez-noussolidaire.org",
+    "address": "12, rue Marleau, bureau 111, Mercier, Montérégie, QC, J6R 0L9",
+    "hours": "24 heures, 7 jours"
   },
   {
     "id": "chichester-municipalit-out",
@@ -16492,6 +19622,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV."
   },
   {
+    "id": "chsld-de-ch-teauguay-mtg",
+    "name": "Chsld De Châteauguay",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 692-8231",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée.* Centre de jour offrant des services thérapeutiques afin de maintenir l'autonomie de personnes vivant à domicile. | Clientèle: personnes aînées, personnes en perte d'autonomie Capacité: centre de jour: 10 à 20 personnes par jour | Territoire: Châteauguay | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/installations/chsld-de-chateauguay",
+    "address": "95, chemin de la Haute-Rivière, Châteauguay, Montérégie, QC, J6K 3P1",
+    "hours": "centre de jour: mardi au vendredi 8h00 à 16h00"
+  },
+  {
     "id": "chsld-de-la-petite-nation-out",
     "name": "Chsld De La Petite-Nation",
     "category": "social",
@@ -16542,6 +19685,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "cisss-outaouais.gouv.qc.ca/chsld/wakefield",
     "address": "101, chemin Burnside, Wakefield, Outaouais, QC, J0X 3G0",
     "hours": "heures de visite régulières: lundi au dimanche 8h00 à 20h00"
+  },
+  {
+    "id": "chsld-et-clsc-de-coteau-du-lac-mtg",
+    "name": "Chsld Et Clsc De Coteau-Du-Lac",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Coteau-du-Lac",
+    "province": "QC",
+    "phone": "450 763-5951",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie et de services de première ligne en matière de santé et de services sociaux.* Hébergement et soins de longue durée.* Consultation avec une personne infirmère.* Chirurgie mineure.* Cours prénataux.* Tire-lait (location).* Aide aux personnes aînées victimes d'abus.* Béquilles, cannes et fauteuils roulants (location).* Orthèse et prothèse.* Soutien à domicile.* Vaccination.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (services gratuit). | Clientèle: CHSLD: personnes aînées, personnes en perte d'autonomie | Territoire: Coteau-Du-Lac | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/chsld-et-clsc-de-coteau-du-lac",
+    "address": "341, chemin du Fleuve, Coteau-du-Lac, Montérégie, QC, J0P 1B0",
+    "hours": "CLSC: lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "chsld-fernand-larocque-lav",
@@ -16646,6 +19802,32 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "580, rue Bowen Sud, Sherbrooke, QC J1G 2E8",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "ch-teauguay-cour-municipale-mtg",
+    "name": "Châteauguay - Cour Municipale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 698-3246",
+    "description": "Cour de justice de première instance où sont entendus les litiges en matière de règlements municipaux, d'infractions au Code de la sécurité routière ainsi que certaines infractions criminelles (conduite avec facultés affaiblies, vols de moins de 5000$ et méfaits). * Paiement ou contestation de contraventions.* Recouvrement de sommes dues.* Travaux compensatoires. | Territoire: Châteauguay, Léry, Beauharnois, Saint-Isidore | Statut: organisme municipal",
+    "website": "www.ville.chateauguay.qc.ca/informations-cour-municipale",
+    "address": "71, rue Principale, Châteauguay, Montérégie, QC, J6K 1N1",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h15 à 17h00, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "ch-teauguay-ville-mtg",
+    "name": "Châteauguay - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 698-3000",
+    "description": "Gestion des services municipaux.* Gestion et paiement des taxes municipales.* Collecte des matières résiduelles.* Service d'incendie.* Service de police.* Permis de construction.* Licences pour animaux.* Système de notification d'urgence.* Assermentation.* Portail en ligne pour les personnes citoyennes: mondossier.ville.chateauguay.qc.ca/s/dossierregister?language=fr | Territoire: Châteauguay | Statut: organisme municipal",
+    "website": "ville.chateauguay.qc.ca",
+    "address": "5, boulevard D'Youville, Châteauguay, Montérégie, QC, J6J 2P8",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h15 à 17h00, vendredi 8h30 à 12h00"
   },
   {
     "id": "ch-n-ville-municipalit-out",
@@ -16827,6 +20009,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 15h00"
   },
   {
+    "id": "clinique-des-jeunes-du-bassin-de-mtg",
+    "name": "Clinique Des Jeunes Du Bassin De Chambly",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Chambly",
+    "province": "QC",
+    "phone": "450 658-2016",
+    "description": "Services préventifs et curatifs en matière de santé sexuelle et d'ITSS, de contraception, d'alimentation ou d'habitudes de vie.* Information.* Clinique jeunesse avec accès à des médecins, infirmières et intervenant·e·s psychosociaux.* Dépistage du VIH et des ITSS.* Test de grossesse.* Références pour des interruptions de grossesses.* Centre d'accès au matériel d'injection (CAMI) et récupération de seringue. | Clientèle: personnes de 12 à 25 ans | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "santemonteregie.qc.ca/installations/clinique-des-jeunes-du-bassin-de-chambly",
+    "address": "650, rue Sénécal, Chambly, Montérégie, QC, J3L 1N9",
+    "hours": "lundi, mardi et mercredi: heures variables"
+  },
+  {
     "id": "clinique-des-r-fugi-s-lav",
     "name": "Clinique Des Réfugiés",
     "category": "family",
@@ -16864,6 +20059,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
+    "id": "clinique-pep-ch-teauguay-mtg",
+    "name": "Clinique Pep - Châteauguay",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 692-0002",
+    "description": "Clinique spécialisée pour les personnes de 18 à 35 ans vivant un premier épisode psychotique non traité.* Accueil et évaluation.* Traitement et réadaptation. | Clientèle: personnes de 18 à 35 ans ayant vécu un premier épisode psychotique, incluant tous types de psychoses confondues, à l'exception des psychoses secondaires dues à un trouble physique | Territoire: Châteauguay | Statut: organisme parapublic",
+    "address": "230, boulevard Brisebois, bureau 401, Châteauguay, Montérégie, QC, J6K 0J6",
+    "hours": "Voir site web"
+  },
+  {
     "id": "imm-clic-mtl",
     "name": "Clinique pour la Justice migrante",
     "category": "immigration",
@@ -16888,6 +20095,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.famillescloverdale.org",
     "address": "9542, boulevard Gouin Ouest, Pierrefonds-Roxboro, Montréal, QC, H8Y 1R3",
     "hours": "lundi au vendredi 8h00 à 17h00, bonhomme à lunette: sans rendez-vous, jeudi 9h30 à 11h30"
+  },
+  {
+    "id": "clsc-de-beauharnois-mtg",
+    "name": "Clsc De Beauharnois",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Beauharnois",
+    "province": "QC",
+    "phone": "450 429-6455",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Cessation tabagisme.* Dépistage.* Désintoxication.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* CAMI.* Prévention de dépendance en toxicomanie (alcool, drogues, médicaments).* Récupération des seringues et des aiguilles usagées (SIRSAU).* Traitement lié à la toxicomanie (alcool, drogues, médicaments).* Services complets listés ici: Répertoire des ressources en santé et services sociaux | Territoire: territoire du CISSS de la Montérégie-Ouest | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=1633",
+    "address": "142, rue Saint-Laurent, Beauharnois, Montérégie, QC, J6N 1V9",
+    "hours": "Voir site web"
   },
   {
     "id": "clsc-de-cantley-out",
@@ -16916,6 +20136,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00, 13h00 à 16h30"
   },
   {
+    "id": "clsc-de-ch-teauguay-mtg",
+    "name": "Clsc De Châteauguay",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 699-3333",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Authentification de la carte d'assurance maladie.* Aide aux personnes aînées victimes d'abus.* Cessation du tabagisme.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Information sur la sexualité.* Médecine familiale.* Récupération des seringues et des aiguilles usagées.* Salle d'allaitement.* Soutien à domicile.* Vaccination générale.* Vaccination contre la grippe: portal3.clicsante.ca | Territoire: territoire du CISSS de la Montérégie-Ouest | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=1232",
+    "address": "95, avenue de la Verdure, Châteauguay, Montérégie, QC, J6K 0E8",
+    "hours": "lundi au vendredi 6h30 à 20h00, samedi et dimanche 8h00 à 12h00 et 13h30 à 16h00, centre de prélèvements: lundi au vendredi 6h30 à 9h00"
+  },
+  {
+    "id": "clsc-de-huntingdon-mtg",
+    "name": "Clsc De Huntingdon",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Huntingdon",
+    "province": "QC",
+    "phone": "450 829-2321",
+    "description": "Services de première ligne en matière de santé et de services sociaux. * Cessation tabagisme.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Récupération des seringues et des aiguilles usagées (SIRSAU).* SIDEP - Service intégré de dépistage et de prévention des ITSS.* Services complets listés ici: Répertoire des ressources en santé et services sociaux | Territoire: territoire du CISSS de la Montérégie-Ouest | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=1123",
+    "address": "10, rue King, bureau 200, Huntingdon, Montérégie, QC, J0S 1H0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "clsc-de-la-petite-nation-out",
     "name": "Clsc De La Petite-Nation",
     "category": "social",
@@ -16926,6 +20172,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Services de première ligne en matière de santé et de services sociaux, avec un accès amélioré aux services en santé mentale.* Aide aux personnes aînées victimes d'abus.* Authentification de la carte d'assurance maladie.* Consultation d'une infirmière.* Consultations médicales le jour même ou le lendemain (pour tous).* Prêt et location de matériel et équipement.* Contraception.* Contraception orale d'urgence.* Dépistage.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Récupération des seringues et des aiguilles usagées.* Salle d'allaitement.* Réinsertion sociale.* Soins et soutien à domicile. | Territoire: Outaouais | Statut: organisme parapublic",
     "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=31580",
     "address": "14, rue Saint-André, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "clsc-de-la-vall-e-des-forts-mtg",
+    "name": "Clsc De La Vallée-Des-Forts",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 358-2572",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Cessation tabagisme.* Dépistage.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Récupération des seringues et des aiguilles usagées.* SIDEP - Service intégré de dépistage et de prévention des ITSS.* Services complets listés ici: Répertoire des ressources en santé et services sociaux | Territoire: territoire du CISSS de la Montérégie-Centre | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=57297",
+    "address": "978, boulevard du Séminaire Nord, Saint-Jean-sur-Richelieu, Montérégie, QC, J3A 1E5",
     "hours": "Voir site web"
   },
   {
@@ -16955,6 +20214,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "clsc-de-saint-chrysostome-mtg",
+    "name": "Clsc De Saint-Chrysostome",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Chrysostome",
+    "province": "QC",
+    "phone": "450 829-2321",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Cessation tabagisme.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Récupération des seringues et des aiguilles usagées.* SIDEP - Service intégré de dépistage et de prévention des ITSS.* Services complets listés ici: Répertoire des ressources en santé et services sociaux | Territoire: territoire du CISSS de la Montérégie-Ouest | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=1565",
+    "address": "21, rang Sainte-Anne, Saint-Chrysostome, Montérégie, QC, J0S 1R0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "clsc-de-saint-polycarpe-mtg",
+    "name": "Clsc De Saint-Polycarpe",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Polycarpe",
+    "province": "QC",
+    "phone": "450 265-3771",
+    "description": "Services de première ligne en matière de santé et de services sociaux. * Authentification de la carte d'assurance maladie.* Location de tire-lait.* Changement et suivi de pansement.* Chirurgie mineure.* Consultation d'une infirmière.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Médecine familiale.* Prêt d'urgence de fauteuil roulant.* Prélèvements.* Récupération des seringues et des aiguilles usagées.* Salle d'allaitement.* Aide aux personnes aînées victimes d'abus.* Soins en fin de vie.* Soutien à domicile.* Vaccination générale.* Vaccination contre la grippe: portal3.clicsante.ca | Territoire: territoire du CISSS de la montérégie-Ouest | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=1688",
+    "address": "11, chemin de la Cité des Jeunes, Saint-Polycarpe, Montérégie, QC, J0P 1X0",
+    "hours": "lundi, mardi, jeudi, vendredi 8h00 à 12h00 et 13h00 à 16h00, mercredi 8h00 à 12h00 et 13h00 à 20h30, centre de prélèvements: lundi au vendredi 7h00 à 10h05"
+  },
+  {
     "id": "clsc-de-sainte-rose-lav",
     "name": "Clsc De Sainte-Rose",
     "category": "health",
@@ -16966,6 +20251,83 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "sante.gouv.qc.ca/repertoire- ressources/ressource/?nofiche=1193&ch_type%5B6%5D=1201&bt_rechType=&theme=clsc&ch_choixReg=&c h_rayon=0&ch_code=H7L4L2",
     "address": "280, boulevard du Roi-du-Nord, Sainte-Rose, Laval, QC, H7L 4L2",
     "hours": "lundi au vendredi 7h30 à 20h00, samedi et dimanche 8h00 à 17h00, centre de prélèvements: lundi au vendredi 7h00 à 12h00 et 13h15 à 15h00"
+  },
+  {
+    "id": "clsc-de-vaudreuil-dorion-paroles-mtg",
+    "name": "Clsc De Vaudreuil-Dorion - Paroles Aux Anges",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-6171",
+    "description": "* Groupes de soutien bimensuels pour parents endeuillés par une grossesse inachevée ou une mortalité post-natale.* Possibilité de suivi individuel. | Clientèle: parents ayant vécu une fausse couche, une interruption de grossesse à la suite de la découverte d'une anomalie chez le bébé, une grossesse ectopique, un enfant mort-né ou le décès de l'enfant dans les jours ou les semaines suivant la naissance | Territoire: Grand Montréal, suivi individuel: CISSS Montérégie-Ouest | Statut: organisme à but non lucratif",
+    "address": "3031, boulevard de la Gare, Vaudreuil-Dorion, Montérégie, QC, J7V 9R2",
+    "hours": "groupes de soutien: 4e jeudi du mois 19h00 à 21h30, 2e mercredi du mois 19h00 à 21h30 au CLSC Kateri"
+  },
+  {
+    "id": "clsc-des-patriotes-mtg",
+    "name": "Clsc Des Patriotes",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 536-2572",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Authentification de la carte d'assurance maladie.* Aide aux personnes aînées victimes d'abus.* Cours prénataux.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Information sur la sexualité.* Récupération des seringues et des aiguilles usagées.* SIDEP - Service intégré de dépistage et de prévention des ITSS.* Soins en fin de vie.* Soutien à domicile.* Vaccination contre la grippe: www.clicsante.ca | Territoire: territoire du CISSS de la Montérégie-Est | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/installations/clsc-des-patriotes",
+    "address": "300, boulevard Serge-Pepin, Beloeil, Montérégie, QC, J3G 0B8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "clsc-des-patriotes-point-de-serv-mtg",
+    "name": "Clsc Des Patriotes - Point De Service Saint-Bruno",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Bruno-de-Montarville",
+    "province": "QC",
+    "phone": "450 461-1012",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Authentification de la carte d'assurance maladie.* Centre de prélèvements.* Intervention de crise et prévention du suicide.* Services psychosociaux.* Cours prénataux.* Soutien à l'allaitement.* Suivi après accouchement.* Deuil périnatal.* Soins palliatifs.* Réadaptation physique.* Services pour personnes autistes et personnes vivant avec une déficience intellectuelle.* Consultation en nutrition.* Vaccination pour jeunes et adultes.* Vaccination contre la grippe: portal3.clicsante.ca | Territoire: territoire du CISSS de la Montérégie-Est | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/clsc-des-patriotes-point-de-service-saint-bruno",
+    "address": "50, chemin de la Rabastalière Est, bureau 10, Saint-Bruno-de-Montarville, Montérégie, QC, J3V 2A5",
+    "hours": "lundi, mercredi jeudi et vendredi 7h00 à 12h00 et 13h00 à 16h30, mardi 7h00 à 12h00 et 13h00 à 18h30, centre de prélèvements: sur rendez-vous"
+  },
+  {
+    "id": "clsc-des-seigneuries-de-boucherv-mtg",
+    "name": "Clsc Des Seigneuries De Boucherville",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 468-3530",
+    "description": "Services de première ligne en matière de santé et de services sociaux. * Authentification de la carte d'assurance maladie.* Cessation du tabagisme.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Intervenant psychosocial.* Prélèvements.* Prévention et traitement de la dépendance en toxicomanie.* Récupération des seringues et des aiguilles usagées.* Soins en fin de vie.* Aide aux personnes victimes d'actes criminels.* Vaccination générale. | Territoire: territoire du CISSS de la Montérégie-Est | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=1676",
+    "address": "160, boulevard de Montarville, Boucherville, Montérégie, QC, J4B 6S2",
+    "hours": "lundi au vendredi 8h30 à 16h30, centre de prélèvements: sur rendez-vous"
+  },
+  {
+    "id": "clsc-des-seigneuries-de-sainte-j-mtg",
+    "name": "Clsc Des Seigneuries De Sainte-Julie",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Sainte-Julie",
+    "province": "QC",
+    "phone": "450 468-3670",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Authentification de la carte d'assurance maladie.* Contraception.* Clinique jeunesse.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Information sur la sexualité.* Récupération des seringues et des aiguilles usagées.* Salle d'allaitement.* Vaccination générale. | Territoire: territoire du CISSS de la Montérégie-Est | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=908",
+    "address": "461, boulevard Saint-Joseph, bureau 112, Sainte-Julie, Montérégie, QC, J3E 1W8",
+    "hours": "lundi, mardi, jeudi et vendredi 8h30 à 12h00 et 13h00 à 16h30, mercredi 8h30 à 12h00 et 13h00 à 20h30, centre de prélèvements: sur rendez-vous"
+  },
+  {
+    "id": "clsc-des-seigneuries-de-varennes-mtg",
+    "name": "Clsc Des Seigneuries De Varennes",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Varennes",
+    "province": "QC",
+    "phone": "450 677-2917",
+    "description": "Services de première ligne en matière de santé et de services sociaux. * Authentification de la carte d'assurance maladie.* Aide aux personnes aînées victimes d'abus.* Canne (location).* Chirurgie mineure.* Contraception.* Clinique jeunesse.* Cours prénataux.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Fauteuil roulant (location et dépannage d'urgence).* Information sur la sexualité.* Médecine familiale.* Récupération des seringues et des aiguilles usagées.* Prévention de dépendance en toxicomanie (alcool, drogues, médicaments).* Prévention du suicide.* Salle d'allaitement.* Test de cholestérol.* Tire-lait (location).* Vaccination régulière.* Visites à domicile.* Vaccination contre la grippe: www.clicsante.ca | Territoire: territoire du CISSS de la Montérégie | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=1221",
+    "address": "2220, boulevard René-Gaultier, Varennes, Montérégie, QC, J3X 1E3",
+    "hours": "lundi au vendredi 8h00 à 21h00, samedi et dimanche 8h00 à 16h00"
   },
   {
     "id": "clsc-du-marigot-boulevard-cartie-lav",
@@ -16994,6 +20356,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 7h00 à 20h00, samedi et dimanche 7h30 à 12h00, centre de prélèvements: lundi au vendredi 7h00 à 11h30 et 13h15 à 15h00"
   },
   {
+    "id": "clsc-du-richelieu-mtg",
+    "name": "Clsc Du Richelieu",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Richelieu",
+    "province": "QC",
+    "phone": "450 658-7561",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Cessation tabagisme.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Intervenant psychosocial, avec ou sans rendez-vous.* Récupération des seringues et des aiguilles usagées.* Services complets listés ici: Répertoire des ressources en santé et services sociaux | Territoire: territoire du CISSS de la Montérégie-Centre | Statut: organisme parapublic",
+    "website": "www.sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=1138750",
+    "address": "300, chemin de Marieville, Richelieu, Montérégie, QC, J3L 3V8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "clsc-du-ruisseau-papineau-rue-du-lav",
     "name": "Clsc Du Ruisseau-Papineau - Rue Du Couvent",
     "category": "social",
@@ -17005,6 +20380,71 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "sante.gouv.qc.ca/repertoire- ressources/ressource/?nofiche=840&ch_type%5B6%5D=1201&bt_rechType=&theme=clsc&ch_choixReg=&ch _rayon=0&ch_code=H7W3A8",
     "address": "1665, rue du Couvent, Chomedey, Laval, QC, H7W 3A8",
     "hours": "lundi au vendredi 7h30 à 20h00, sans rendez-vous: lundi au vendredi 9h à 19h30, samedi, dimanche et jours fériés 9h00 à 17h00"
+  },
+  {
+    "id": "clsc-et-centre-de-services-ambul-mtg",
+    "name": "Clsc Et Centre De Services Ambulatoires De Vaudreuil-Dorion",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-6171",
+    "description": "Services de première ligne en matière de santé et de services sociaux. * Authentification de la carte d'assurance maladie.* Avortement: interruption volontaire de grossesse (IVG), renseignements et références.* Cessation du tabagisme.* Contraception.* Contraception orale d'urgence.* Cours prénataux.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Récupération des seringues et des aiguilles usagées.* Information sur la sexualité.* Aide pour les personnes aînées victimes d'abus.* Soutien et soins à domicile.* Visites à domicile.* Vaccination générale.* Vaccination contre la grippe: portal3.clicsante.ca | Territoire: territoire du CISSS de la Montérégie-Ouest | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=1240",
+    "address": "3031, boulevard de la Gare, Vaudreuil-Dorion, Montérégie, QC, J7V 9R2",
+    "hours": "lundi au vendredi 8h00 à 21h00, samedi et dimanche 8h00 à 16h00, centre de prélèvements: lundi au vendredi 7h00 à 11h30"
+  },
+  {
+    "id": "clsc-jardin-du-qu-bec-napiervill-mtg",
+    "name": "Clsc Jardin Du Québec - Napierville",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Napierville",
+    "province": "QC",
+    "phone": "450 245-3336",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Authentification de la carte d'assurance maladie.* Aide aux personnes aînées victimes d'abus.* Location de tire-lait.* Chirurgie mineure.* Information sur la sexualité.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues.* Récupération des seringues et des aiguilles usagées.* Soins et soutien à domicile.* Vaccination générale.* Vaccination contre la grippe: portal3.clicsante.ca | Territoire: territoire du CISSS de la Montérégie-Ouest | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=42457",
+    "address": "509, rue Saint-Jacques, Napierville, Montérégie, QC, J0J 1L0",
+    "hours": "lundi, mercredi et vendredi 8h00 à 16h00, mardi et jeudi 8h00 à 20h00, samedi et dimanche: fermé mais couvert par le CLSC de Saint-Rémi, centre de prélèvements: mardi et jeudi 6h30 à 10h30"
+  },
+  {
+    "id": "clsc-kateri-mtg",
+    "name": "Clsc Kateri",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Candiac",
+    "province": "QC",
+    "phone": "450 659-7661",
+    "description": "Services de première ligne en matière de santé et de services sociaux, avec accès amélioré aux services en santé mentale.. * Services psychosociaux comprenant l'accueil, l'analyse, l'orientation et la référence (AAOR).* Authentification de la carte d'assurance maladie.* Changement et suivi de pansement.* Consultation d'une infirmière.* Cours prénataux.* Cessation du tabagisme.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Information sur la sexualité.* Prélèvements.* Récupération des seringues et des aiguilles usagées.* Salle d'allaitement.* Aide aux personnes aînées victimes d'abus.* Sièges d'auto pour bébés.* Soins de plaies.* Soins et soutien à domicile.* Télésanté.* Location de tire-lait.* Vaccination générale.* Vaccination contre la grippe: portal3.clicsante.ca | Territoire: territoire du CISSS de la Montérégie-Ouest | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=1235",
+    "address": "90, boulevard Marie-Victorin, Candiac, Montérégie, QC, J5R 1C1",
+    "hours": "lundi au vendredi 6h30 à 20h00, samedi et dimanche 8h00 à 12h00 et 13h30 à 16h00, centre de prélèvements: lundi au vendredi 6h30 à 9h00"
+  },
+  {
+    "id": "clsc-saint-hubert-mtg",
+    "name": "Clsc Saint-Hubert",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 443-7400",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Contraception.* Dépistage.* Avortements: interruption volontaire de grossesse, renseignements et références.* Information sur la sexualité.* Cessation du tabagisme.* Cours prénataux.* Clinique de santé sexuelle avec rendez-vous infirmière.* Distribution gratuite de matériel d'injection neuf aux personnes qui consomment des drogues.* Récupération des seringues et des aiguilles usagées.* Aide aux personnes aînées victimes d'abus.* Médecine familiale.* Soutien à domicile.* Vaccination générale.* Vaccination contre la grippe: www.clicsante.ca | Territoire: territoire du CISSS de la Montérégie-Centre | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=1226",
+    "address": "6800, boulevard Cousineau, Longueuil, Montérégie, QC, J3Y 8Z4",
+    "hours": "lundi au vendredi 7h45 à 20h00, samedi 7h45 à 16h00, centre de prélèvements: lundi, mercredi et vendredi 6h30 à 9h15, mardi et jeudi 6h30 à 9h15 et 12h00 à 14h15"
+  },
+  {
+    "id": "clsc-samuel-de-champlain-mtg",
+    "name": "Clsc Samuel-De-Champlain",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 445-4452",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Authentification de la carte d'assurance maladie.* Contraception.* Contraception orale d'urgence.* Dépistage.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Information sur la sexualité.* Programme Fédéral de Santé Intérimaire (PFSI).* Clinique d'évaluation pour personnes réfugiées.* Cessation du tabagisme.* Prélèvements.* Services intégrés de dépistage et de prévention SIDEP+.* Récupération des seringues et des aiguilles usagées.* Salle d'allaitement.* SIDEP - Service intégré de dépistage et de prévention des ITSS.* Services intégrés de dépistage et de prévention (SIDEP).* Aide aux personnes aînées victimes d'abus.* Soins et soutien à domicile.* Vaccination générale.* Vaccination pour les enfants, SIDEP.* Vaccination contre la grippe: www.clicsante.ca | Territoire: territoire du CISSS de la Montérégie-Centre | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=1225",
+    "address": "5811, boulevard Taschereau, Brossard, Montérégie, QC, J4Z 1A5",
+    "hours": "lundi au vendredi 7h45 à 20h00, centre de prélèvements: lundi et mercredi 6h30 à 9h15 et 12h00 à 14h15, mardi, jeudi et vendredi: 6h30 à 9h15"
   },
   {
     "id": "club-55-de-kirkland-krk",
@@ -17044,6 +20484,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "septembre à mai, variable"
   },
   {
+    "id": "club-d-ge-d-or-les-c-dres-mtg",
+    "name": "Club D'Âge D'Or Les Cèdres",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Les Cèdres",
+    "province": "QC",
+    "phone": "514 824-4731",
+    "description": "* Souper dansant mensuel.* Activités récréatives: danse en ligne, baseball-poches, jeu de palet, pickleball, groupe de marche, jeux de cartes et de société, pétanque.* Sorties.* Activités caritatives. | Clientèle: personnes de 50 ans et plus | Territoire: Les Cèdres et les environs | Statut: organisme à but non lucratif",
+    "address": "1060, chemin du Fleuve, Les Cèdres, Montérégie, QC, J7T 1A1",
+    "hours": "souper: 3e vendredi du mois, jeux de cartes et de société, danse en ligne, baseball-poches: mercredi"
+  },
+  {
+    "id": "club-de-gymnastique-gymini-de-va-mtg",
+    "name": "Club De Gymnastique Gymini De Vaudreuil",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-3141",
+    "description": "Club de sports acrobatiques.* Gymnastique, cirque, parkour, trampoline, cheerleading, etc.* Programme Karibou: activités motrices parents-enfants.* Programme Kaméléon: accompagnement en loisir spécialisé en développement moteur pour les enfants vivant avec un handicap.* Camps de la relâche, camps de jour. | Clientèle: programme Karibou: enfants de 1 à 4 ans, programme Kaméléon: jeunes de 4 à 14 ans vivant avec un handicap physique ou intellectuel, un trouble du langage ou du comportement, jeunes autistes | Territoire: Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.clubgymini.org",
+    "address": "3093, boulevard de la Gare, C-145, Vaudreuil-Dorion, Montérégie, QC, J7V 9R2",
+    "hours": "gymnase: lundi au vendredi 9h00 à 20h00, samedi 8h00 à 20h00, dimanche 8h00 à 18h00, administration: lundi au vendredi 9h00 à 17h00"
+  },
+  {
     "id": "club-de-gymnastique-laval-excell-lav",
     "name": "Club De Gymnastique Laval Excellence",
     "category": "family",
@@ -17079,6 +20544,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Activités récréatives et sociales: bingo, cartes, jeux, bridge, pétanque, etc.* Activités physiques: aquaforme.?* Soupers dansants.* Sorties.?* Bibliothèque.* Ateliers d'informatique.* Location de salle. | Clientèle: personnes aînées | Territoire: Laval | Statut: organisme à but non lucratif",
     "address": "2525A, avenue du Havre-des-Îles, Chomedey, Laval, QC, H7W 4C4",
     "hours": "Voir site web"
+  },
+  {
+    "id": "club-de-l-ge-d-or-de-saint-bruno-mtg",
+    "name": "Club De L'Âge D'Or De Saint-Bruno",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Bruno-de-Montarville",
+    "province": "QC",
+    "phone": "450 461-0127",
+    "description": "* Activités sociales et récréatives: billard, bingo, scrabble, cartes, quilles.* Groupe saisonnier de pétanque. | Clientèle: personnes de 50 ans et plus | Territoire: Saint-Bruno-de-Montarville | Statut: organisme à but non lucratif",
+    "website": "www.fadoq.ca",
+    "address": "1741, rue Montarville, Saint-Bruno-de-Montarville, Montérégie, QC, J3V 3V2",
+    "hours": "lundi au jeudi 13h00 à 16h00"
   },
   {
     "id": "club-de-l-ge-d-or-de-vimont-lav",
@@ -17165,6 +20643,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "septembre à juin, mardi 8h00 à 15h30"
   },
   {
+    "id": "club-des-petits-d-jeuners-le-mtg",
+    "name": "Club Des Petits Déjeuners (Le)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "1 888 442-1217",
+    "description": "Petits-déjeuners complets et nutritifs dans les écoles.* Activités sur l'estime de soi. | Clientèle: écoles | Territoire: Canada | Statut: organisme à but non lucratif",
+    "website": "www.breakfastclubcanada.org/fr",
+    "address": "135, boulevard de Mortagne, bureau G, Boucherville, Montérégie, QC, J4B 6G4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "club-informatique-mont-bruno-mtg",
+    "name": "Club Informatique Mont-Bruno",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Bruno-de-Montarville",
+    "province": "QC",
+    "phone": "438 763-5036",
+    "description": "* Partage de connaissances: familiarisation avec le vocabulaire informatique par le partage.* Entraide: assistance par courriel et à domicile.* Activités soiales et journées d'information. | Territoire: Saint-Bruno-de-Montarville | Statut: organisme à but non lucratif",
+    "website": "cimbcc.org",
+    "address": "2020, rue de Ormes, Saint-Bruno-de-Montarville, Montérégie, QC, J3V 4G7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "club-joie-de-vivre-pour-personne-mtg",
+    "name": "Club Joie De Vivre Pour Personne Vivant Avec Une Di/Tsa",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 377-1213",
+    "description": "Club de loisirs pour personnes vivant avec une déficience intellectuelle ou personnes autistes.* Activités ludiques, éducatives et de socialisation.* Promotion de l'intégration sociale et du maintien de l'autonomie.* Fêtes thématiques occasionnelles. | Clientèle: personnes de 21 ans et plus vivant avec une déficience intellectuelle, personnes de 21 ans et plus autistes | Territoire: MRC Beauharnois-Salaberry, MRC Haut-Saint-Laurent, MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.clubjv.ca",
+    "address": "748, avenue Grande-Île, Salaberry-de-Valleyfield, Montérégie, QC, J6S 3N8",
+    "hours": "lundi au vendredi 9h00 à 15h00, samedi 9h00 à 15h00"
+  },
+  {
     "id": "club-la-paix-d-or-out",
     "name": "Club La Paix D'Or",
     "category": "social",
@@ -17188,6 +20705,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.richelieurepentigny.org",
     "address": "50, rue Thouin, Repentigny, Lanaudière, QC, J6A 4J4",
     "hours": "Voir site web"
+  },
+  {
+    "id": "club-social-de-gentilly-mtg",
+    "name": "Club Social De Gentilly",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 647-5968",
+    "description": "* Activités sociales et récréatives variées: cartes, bingo, jeux de poches.* Repas communautaires et soirées thématiques.* Dîner de Noël. | Clientèle: personnes de 25 ans et plus | Territoire: Grand Montréal Rive-sud | Statut: organisme à but non lucratif",
+    "address": "1545, boulevard Jacques-Cartier Est, Longueuil, Montérégie, QC, J4M 2X1",
+    "hours": "lundi 13h00 à 16h00, fermé de juin à septembre"
   },
   {
     "id": "club-de-l-age-d-or-de-repentigny-rep",
@@ -17264,6 +20793,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
+    "id": "cl-des-champs-sainte-julie-la-mtg",
+    "name": "Clé Des Champs Sainte-Julie (La)",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Sainte-Julie",
+    "province": "QC",
+    "phone": "514 805-8196",
+    "description": "* Organisation d'activités culturelles, sportives et récréatives.* Répit du samedi.* Camp de jour estival. | Clientèle: jeunes autistes ou jeunes vivant avec un handicap intellectuel, avec ou sans handicap physique | Territoire: Sainte-Julie | Statut: organisme à but non lucratif",
+    "website": "lacdc.ca",
+    "address": "27, rue du Plateau, SAINTE-JULIE, Montérégie, QC, J3E 3N6",
+    "hours": "septembre à mai: samedi 9h30 à 15h00, camp de jour estival: de la fin juin à la mi-août, lundi au jeudi 7h30 à 17h30"
+  },
+  {
+    "id": "cl-des-mots-la-mtg",
+    "name": "Clé Des Mots (La)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "450 635-1411",
+    "description": "* Ateliers: alphabétisation, alphafrancisation et scrapbooking.* Boutique de livres usagés et autres items.* Mardi social: jeux de société. | Clientèle: personnes de 16 ans et plus Capacité: 60 | Territoire: Saint-Constant | Statut: organisme à but non lucratif",
+    "website": "www.lacledesmots.ca",
+    "address": "200, rue Saint-Pierre, bureau 103, Saint-Constant, Montérégie, QC, J5A 2G9",
+    "hours": "atelier: lundi au vendredi 9h00 à 16h00, bouquinerie: lundi au vendredi 9h00 à 16h00 et le premier dimanche du mois, juillet et août: fermé, sauf le premier dimanche du mois"
+  },
+  {
     "id": "msss-clsc-mistissini-cmc-mistissini",
     "name": "Cmc Mistissini",
     "category": "health",
@@ -17334,6 +20889,45 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à Ccsss De La Baie James. Source: MSSS – Fichier M02 des installations.",
     "address": "425, rue Nisk, Whapmagoostui, QC J0M 1G0",
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
+  },
+  {
+    "id": "coeliaque-qu-bec-mtg",
+    "name": "Coeliaque Québec",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "514 529-8806",
+    "description": "Information sur la maladie coeliaque, la sensibilité au gluten non coeliaque et le régime sans gluten.* Aide par courriel ou par téléphone.* Forum de discussion sur Internet.* Formation sur l'alimentation sans gluten, livres de recettes.* Formation et guide papier pour apprendre à lire les étiquettes.* Formation pour les nutritionnistes et les médecins.* Guide pour les CPE, garderies et écoles.* Guide pour les résidences pour personnes ainées, établissements d'hébergement public et popotes roulantes.* Et si c'était le gluten: guide pour les médecins.* Colloques. | Clientèle: personnes vivant avec une maladie induite par le gluten (maladie coeliaque, dermatite herpétiforme, ataxie au gluten ou sensibilité au gluten non coeliaque), professionnel·le·s de la santé, nutritionnistes et entreprises intéressées par le sujet | Territoire: Canada | Statut: organisme à but non lucratif",
+    "website": "www.coeliaque.quebec",
+    "address": "1235, rue Gay-Lussac, Boucherville, Montérégie, QC, J4B 7K1",
+    "hours": "lundi au vendredi 9h00 à 16h30"
+  },
+  {
+    "id": "coeur-pour-les-autres-un-mtg",
+    "name": "Coeur Pour Les Autres (Un)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-1919",
+    "description": "* Distribution de repas chauds.* Distribution de couvertures et de vêtements.* Distribution de sacs de nourriture.* Premiers soins.* Écoute, accompagnement, référence.* Fêtes de Noël et de Pâques. | Clientèle: personnes en situation d'itinérance, personnes en difficulté Capacité: 250 places | Territoire: Longueuil, île de Montréal | Statut: organisme à but non lucratif",
+    "website": "www.uncoeurpourlesautres.org",
+    "address": "836, rue Le Moyne Ouest, Longueuil, Montérégie, QC, J4K 1G3",
+    "hours": "distribution alimentaire à Montréal: mercredi 18h00 à 19h30, distribution alimentaire à Longueuil: mercredi 13h00 à 16h00, horaire de fêtes: fermés du 25 décembre au 7 janvier"
+  },
+  {
+    "id": "collectif-de-d-fense-des-droits--mtg",
+    "name": "Collectif De Défense Des Droits De La Montérégie",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 674-2410",
+    "description": "* Défense des droits des personnes vivant ou ayant vécu des problèmes d'ordre émotionnel.* Dénonciation des abus de la psychiatrie.* Formation, mobilisation, éducation populaire. | Clientèle: personnes vivant ou ayant vécu des problèmes émotionnels, psychologiques ou psychiatriques | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.cddm.qc.ca",
+    "address": "1295, chemin Chambly, Longueuil, Montérégie, QC, J4J 3X1",
+    "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
     "id": "collectif-r-gional-de-lutte-l-it-out",
@@ -17414,6 +21008,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 15h00, février à mai et de septembre à décembre seulement"
   },
   {
+    "id": "colonie-sainte-jeanne-d-arc-mtg",
+    "name": "Colonie Sainte-Jeanne D'Arc",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Contrecoeur",
+    "province": "QC",
+    "phone": "1 800 363-0098",
+    "description": "Camp de vacances estival pour jeunes filles.* Activités sportives et artistiques.* Séjours de 6 nuitées.* Transport gratuit entre Montréal et la colonie.* Programme d'accessibilité financière. | Clientèle: jeunes filles de 6 à 16 ans Capacité: 100 | Territoire: Grand Montréal | Statut: organisme à but non lucratif",
+    "website": "csjd.qc.ca",
+    "address": "10020, route Marie-Victorin, Contrecoeur, Montérégie, QC, J0L 1C0",
+    "hours": "secrétariat: lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "com-femme-mtg",
+    "name": "Com'Femme",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 676-7719",
+    "description": "Centre de femmes.* Activités, conférences et formation.* Milieu de vie ouvert.* Écoute individuelle.* Ateliers de développement personnel.* Aide à l'intégration des nouvelles arrivantes.* Vie associative et participation citoyenne.* Action communautaire et éducation populaire.* Intervention féministe.* Programmation d'été, d'automne et d'hiver. | Clientèle: femmes de 18 ans et plus | Territoire: Brossard, Saint-Hubert, Saint-Lambert, Le Moyne, Greenfield Park | Statut: organisme à but non lucratif",
+    "website": "comfemme.org",
+    "address": "6035, rue Adam, Brossard, Montérégie, QC, J4Z 1A9",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 17h00, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "comit-ch-mage-du-haut-richelieu--mtg",
+    "name": "Comité Chômage Du Haut-Richelieu Et Du Suroît",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "1 877 357-1162",
+    "description": "* Information et formations sur la Loi de l'assurance-emploi.* Accompagnement dans les démarches: remplir des formulaires, demande d'assurance-emploi, révision administrative, accompagnement au tribunal, etc.* Défense des droits des chômeur·euses. | Clientèle: personnes avec ou sans emploi | Territoire: MRC Le Haut-Richelieu, MRC Roussillon, MRC Rouville, MRC Vaudreuil-Soulanges, MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent | Statut: organisme à but non lucratif",
+    "website": "www.lecnc.com/haut-richelieu",
+    "address": "198, rue Mercier, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 6G9",
+    "hours": "lundi au jeudi 8h00 à 16h00"
+  },
+  {
     "id": "comit-d-action-en-s-curit-alimen-lav",
     "name": "Comité D'Action En Sécurité Alimentaire De Laval",
     "category": "social",
@@ -17464,6 +21097,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi au vendredi 13h00 à 16h30"
   },
   {
+    "id": "comit-d-allaitement-maternel-cal-mtg",
+    "name": "Comité D'Allaitement Maternel Calm",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Varennes",
+    "province": "QC",
+    "phone": "438 772-2256",
+    "description": "Groupe de bénévoles offrant du soutien et de l'information pré et postnatale sur l'allaitement maternel.* Haltes-allaitement.* Rencontres prénatales mensuelles.* Moment CALM: conférences mensuelles variées.* Marraines d'allaitement.* Service de relevailles.* Groupes d'entraide.* Location de tire-lait. | Clientèle: nouveaux parents | Territoire: Boucherville, Calixa-Lavallée, Contrecoeur, Saint-Amable, Sainte-Julie, Varennes, Verchères | Statut: None or unknown",
+    "website": "www.allaitementcalm.org",
+    "address": "1463, boulevard Lionel-Boulet, bureau 101-B, Varennes, Montérégie, QC, J3X 1P7",
+    "hours": "lundi au jeudi 9h30 à 12h30, vendredi 13h00 à 15h00"
+  },
+  {
     "id": "comit-d-animation-du-troisi-me-g-lav",
     "name": "Comité D'Animation Du Troisième Âge De Laval",
     "category": "social",
@@ -17488,6 +21134,57 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.lecatal.ca",
     "address": "140, rue Nadon, Sainte-Rose, Laval, QC, H7L 1T5",
     "hours": "clinique année fiscale 2025: lundi au jeudi en mars et avril, sur rendez-vous"
+  },
+  {
+    "id": "comit-d-entraide-unit-pastorale--mtg",
+    "name": "Comité D'Entraide - Unité Pastorale Saint-Lambert",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "450 671-5721",
+    "description": "* Dépannage alimentaire: sacs de nourriture, distribution de pains.* Dons de vêtements (deux fois par année).* Paniers de Noël.* Fête de Noël pour les familles et les enfants fréquentant déjà l'organisme.* Fête des maïs en été.* Redistribution de meubles.* Dons de bicyclettes.* Atelier de conversation française en ligne pour les personnes nouvellement arrivées ayant déjà commencé leurs démarches de francisation. | Clientèle: personnes ayant un faible revenu, personnes immigrantes | Territoire: Saint-Lambert | Statut: organisme à but non lucratif",
+    "website": "www.saintlambert-saintthomasdaquin.org/fr/entreaide",
+    "address": "311, rue Saint-Thomas, Saint-Lambert, Montérégie, QC, J4R 1Y2",
+    "hours": "lundi au jeudi 10h00 à 12h00 et 14h00 à 16h00"
+  },
+  {
+    "id": "comit-d-entraide-de-boucherville-mtg",
+    "name": "Comité D'Entraide De Boucherville",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "514 236-5042",
+    "description": "* Le Garde-Manger: banque alimentaire sous forme d'épicerie où les personnes peuvent choisir leurs denrées aux trois semaines.* Aide financière pour des besoins variés: articles ménagers, vêtements et frais de transports.* Paniers de Noël.* Organisation de la Guignolée de Boucherville.* Fournitures scolaires: aide matérielle et financière pour les membres. | Clientèle: personnes dans le besoin résidents de Boucherville | Territoire: Boucherville | Statut: organisme à but non lucratif",
+    "website": "www.comite-entraide-boucherville.org",
+    "address": "11, rue Louis-H.-La Fontaine Nord, local 101, Boucherville, Montérégie, QC, J4B 4Y2",
+    "hours": "lundi au vendredi 9h00 à 17h00, banque alimentaire: mardi après-midi, mardi soir 18h00 à 19h30, mercredi matin sur rendez-vous"
+  },
+  {
+    "id": "comit-d-entraide-de-verch-res-cl-mtg",
+    "name": "Comité D'Entraide De Verchères - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Verchères",
+    "province": "QC",
+    "phone": "450 583-5888",
+    "description": "Clinique d'impôts sans rendez-vous. | Clientèle: personnes et familles à faible revenu | Territoire: Verchères | Statut: organisme à but non lucratif",
+    "address": "579, route Marie-Victorin, bureau 101, Verchères, Montérégie, QC, J0L 2R0",
+    "hours": "clinique 2025: sans rendez-vous, lundis du mois de mars 10h00 à 11h30"
+  },
+  {
+    "id": "comit-de-d-pannage-de-l-acadie-mtg",
+    "name": "Comité De Dépannage De L'Acadie",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 357-2386",
+    "description": "* Aide alimentaire par remise de bons d'achats.* Cuisine collective.* Jardin collectif.* Accompagnement occasionnel pour rendez-vous de soins de santé non urgent.* Paniers de Noël. | Clientèle: personnes et familles ayant une situation financière difficile de façon temporaire Capacité: 50 | Territoire: Saint-Jean-sur-Richelieu, secteur de l'Acadie seulement | Statut: organisme à but non lucratif",
+    "website": "www.lacadiehautrichelieu.com",
+    "address": "1322, chemin du Clocher, Saint-Jean-sur-Richelieu, Montérégie, QC, J2Y 1A4",
+    "hours": "sur rendez-vous"
   },
   {
     "id": "comit-de-d-veloppement-local-de--lav",
@@ -17529,6 +21226,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "comit-des-usagers-continu-instit-mtg",
+    "name": "Comité Des Usagers Continué - Institut Nazareth Et Louis-Braille",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 800 361-7063",
+    "description": "Comité des personnes usagères.* Renseignements sur les droits et obligations.* Défense des droits et intérêts.* Accompagnement dans les démarches et pour porter plainte. | Clientèle: personnes usagères de l'institut Nazareth et Louis-Braille | Territoire: île de Montréal, Laval, Montérégie | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/centre/organisation/comites-des-usagers/comite-des-usagers- continue-institut-nazareth-et-louis",
+    "address": "1111, rue Saint-Charles Ouest, Tour Ouest, 3e étage, Longueuil, Montérégie, QC, J4K 5G4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-de-champlain-c-mtg",
+    "name": "Comité Des Usagers De Champlain - Charles-Le Moyne",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 466-5000",
+    "description": "Comité des personnes usagères.* Renseignements sur les droits et obligations.* Défense des droits et intérêts.* Accompagnement dans les démarches pour porter plainte. | Clientèle: personnes usagères du réseau local de services Champlain-Charles-Le Moyne | Territoire: territoire du CISSS de la Montérégie-Centre | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/centre/organisation/comites-des-usagers/comite-des-usagers-de- champlain-charles-le-moyne",
+    "address": "3120, boulevard Taschereau, local AS-003A, Longueuil, Montérégie, QC, J3Y 3R6",
+    "hours": "lundi au vendredi 8h00 à 15h30"
+  },
+  {
+    "id": "comit-des-usagers-de-jardins-rou-mtg",
+    "name": "Comité Des Usagers De Jardins-Roussillon",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 699-2521",
+    "description": "Comité des personnes usagères.* Renseignements sur les droits et obligations.* Défense des droits et intérêts.* Accompagnement dans les démarches et pour porter plainte. | Clientèle: personnes usagères du CSSS Jardins-Roussillon | Territoire: territoire du CISSS de la Montérégie-Ouest | Statut: organisme parapublic",
+    "website": "comitedesusagers.ca",
+    "address": "200, boulevard Brisebois, Châteauguay, Montérégie, QC, J6K 4W8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-du-centre-de-r-mtg",
+    "name": "Comité Des Usagers Du Centre De Réadaptation En Déficience Physique",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 888 815-6883",
+    "description": "Comité des personnes usagères.* Renseignements sur les droits et obligations.* Défense des droits et intérêts.* Accompagnement dans les démarches et pour porter plainte. | Clientèle: personnes usagères des centres de réadaptation en déficience physique de la Montérégie | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/ouest/organisation/comite-des-usagers",
+    "address": "5300, chemin de Chambly, Longueuil, Montérégie, QC, J3Y 3N7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-du-centre-de-r-mtg-2",
+    "name": "Comité Des Usagers Du Centre De Réadaptation En Dépendance Le Virage",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 443-6373",
+    "description": "Comité des personnes usagères.* Renseignements sur les droits et obligations.* Défense des droits et intérêts.* Accompagnement dans les démarches et pour porter plainte. | Clientèle: personnes usagères du centre de réadaptation en dépendance le Virage | Territoire: territoire du CISSS de la Montérégie-Ouest | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/ouest/organisation/comite-des-usagers",
+    "address": "5110, boulevard Cousineau, Longueuil, Montérégie, QC, J3Y 7G5",
+    "hours": "Voir site web"
+  },
+  {
     "id": "comit-des-usagers-du-centre-int--lav",
     "name": "Comité Des Usagers Du Centre Intégré (Cuci)",
     "category": "social",
@@ -17555,6 +21317,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "comit-des-usagers-du-r-seau-loca-mtg",
+    "name": "Comité Des Usagers Du Réseau Local De Services Du Haut-Richelieu - Rouville",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "1 866 967-4825",
+    "description": "Comité des personnes usagères.* Renseignements sur les droits et obligations.* Défense des droits et intérêts.* Accompagnement dans les démarches pour porter plainte. | Clientèle: personnes usagères du réseau local de services du Haut-Richelieu-Rouville | Territoire: territoire du CISSS de la Montérégie-Centre | Statut: organisme parapublic",
+    "website": "comitedesusagers-hrr.com",
+    "address": "978, boulevard du Séminaire Nord, Saint-Jean-sur-Richelieu, Montérégie, QC, J3A 1E5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-pierre-boucher-mtg",
+    "name": "Comité Des Usagers Pierre-Boucher",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 463-2850",
+    "description": "Comité des personnes usagères.* Renseignements sur les droits et obligations.* Défense des droits et intérêts.* Accompagnement dans les démarches et pour porter plainte. | Clientèle: personnes usagères du CSSS Pierre-Boucher | Territoire: territoire du CISSS de la Montérégie-Est | Statut: organisme parapublic",
+    "website": "cdupierreboucher.org",
+    "address": "1303, boulevard Jacques-Cartier Est, bureau 2020, Longueuil, Montérégie, QC, J4M 2A5",
+    "hours": "mardi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "comit-des-usagers-pierre-de-saur-mtg",
+    "name": "Comité Des Usagers Pierre-De Saurel",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 746-6000",
+    "description": "Comité des personnes usagères.* Renseignements sur les droits et obligations.* Défense des droits et intérêts.* Accompagnement dans les démarches et pour porter plainte. | Clientèle: personnes usagères du CSSS Pierre-De Saurel | Territoire: territoire du CISSS de la Montérégie-Est | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/est/organisation/comite-des-usagers",
+    "address": "400, avenue de l'Hôtel-Dieu, Sorel-Tracy, Montérégie, QC, J3P 1N5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-richelieu-yama-mtg",
+    "name": "Comité Des Usagers Richelieu-Yamaska",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "1 888 713-0312",
+    "description": "Comité des personnes usagères.* Renseignements sur les droits et obligations.* Défense des droits et intérêts.* Accompagnement dans les démarches et pour porter plainte. | Clientèle: personnes usagères du CSSS Richelieu-Yamaska | Territoire: territoire du CISSS de la Montérégie-Est | Statut: organisme parapublic",
+    "website": "cury.qc.ca",
+    "address": "1800, rue Dessaulles, local E-2055, Saint-Hyacinthe, Montérégie, QC, J2S 2T2",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "qc-log-quebec-clq",
     "name": "Comité Logement Rive-Nord Québec",
     "category": "housing",
@@ -17566,6 +21380,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.clrnquebec.org",
     "address": "455, rue de la Couronne, Québec, QC G1K 6E6",
     "hours": "Lun-ven 9h-17h. Consultation et défense des droits des locataires."
+  },
+  {
+    "id": "comit-logement-rive-sud-bureau-d-mtg",
+    "name": "Comité Logement Rive-Sud - Bureau De Châteauguay",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 699-3060",
+    "description": "Groupe de ressources techniques.* Promotion et développement de projets de logements sociaux.* Défense des droits des locataires.* Service d'information téléphonique.* Rencontres individuelles.* Préparation et accompagnement à une audience du Tribunal administratif du logement.* Support dans la rédaction de lettres types. | Clientèle: locataires | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "www.comite-logement.org",
+    "address": "311, rue McLeod, Châteauguay, Montérégie, QC, J6J 2H8",
+    "hours": "lundi au vendredi 9h30 à 12h00 et 13h00 à 17h00"
+  },
+  {
+    "id": "comit-logement-rive-sud-bureau-d-mtg-2",
+    "name": "Comité Logement Rive-Sud - Bureau De Longueuil",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 866 399-3060",
+    "description": "Groupe de ressources techniques.* Promotion et développement de projets de logements sociaux.* Défense des droits des locataires.* Service d'information téléphonique.* Rencontres individuelles.* Préparation et accompagnement à une audience du Tribunal administratif du logement.* Support dans la rédaction de lettres types. | Clientèle: locataires | Territoire: Rive-Sud de Montréal | Statut: organisme à but non lucratif",
+    "website": "www.comite-logement.org",
+    "address": "173, rue Sainte-Catherine, Longueuil, Montérégie, QC, J4H 2B4",
+    "hours": "lundi au vendredi 9h30 à 12h00 et 13h00 à 17h00"
   },
   {
     "id": "comit-partage-saint-pierre-chane-out",
@@ -17710,19 +21550,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-17h. Consultation et défense des droits des locataires."
   },
   {
-    "id": "h-cl-laval",
-    "name": "Comité logement de Laval",
-    "category": "housing",
-    "subcategory": "Comité logement",
-    "city": "Laval",
-    "province": "QC",
-    "phone": "450-967-3138",
-    "description": "Défense des locataires de Laval. Source: comitelogementlaval.org.",
-    "website": "https://comitelogementlaval.org",
-    "address": "295, boul. Cartier Ouest, bureau 5, Laval, QC H7N 2J5",
-    "hours": "Lun-ven 9h-17h. Consultations sur RV."
-  },
-  {
     "id": "qc-log-laval-cll",
     "name": "Comité logement de Laval",
     "category": "housing",
@@ -17734,6 +21561,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.comitelogementlaval.ca",
     "address": "1326, boul. Saint-Martin Est, Laval, QC H7E 3M1",
     "hours": "Lun-ven 9h-17h. Consultation et défense des droits des locataires."
+  },
+  {
+    "id": "h-cl-laval",
+    "name": "Comité logement de Laval",
+    "category": "housing",
+    "subcategory": "Comité logement",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450-967-3138",
+    "description": "Défense des locataires de Laval. Source: comitelogementlaval.org.",
+    "website": "https://comitelogementlaval.org",
+    "address": "295, boul. Cartier Ouest, bureau 5, Laval, QC H7N 2J5",
+    "hours": "Lun-ven 9h-17h. Consultations sur RV."
   },
   {
     "id": "qc-log-sherbrooke-cls",
@@ -17788,6 +21628,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-17h. Consultations sur RV."
   },
   {
+    "id": "commission-de-protection-du-terr-mtg",
+    "name": "Commission De Protection Du Territoire Agricole Du Québec",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 800 361-2090",
+    "description": "Application de la Loi sur la protection du territoire et des activités agricoles et de la Loi sur l'acquisition de terres agricoles par des non-résidents.* Information générale et spécialisée.* Traitement des demandes individuelles d'autorisation: inclusion, aliénation, lotissement, coupe d'érables, etc.* Émission de permis et d'attestation.* Gestion des dénonciations: vérification et enquête.* Gestion des plaintes. | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "www.cptaq.gouv.qc.ca",
+    "address": "1010, rue de Sérigny, bureau 700, 7e étage, Longueuil, Montérégie, QC, J4K 5C7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "commission-scolaire-lester-b-pearso-drv",
     "name": "Commission Scolaire Lester-B.-Pearson",
     "category": "social",
@@ -17799,6 +21652,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.lbpsb.qc.ca/fr",
     "address": "1925, avenue Brookdale, Dorval, Montréal, QC, H9P 2Y7",
     "hours": "Voir site web"
+  },
+  {
+    "id": "commission-scolaire-new-frontier-mtg",
+    "name": "Commission Scolaire New Frontiers",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 691-1440",
+    "description": "Commission scolaire anglophone regroupant écoles primaires, secondaires et spécialisées.* Éducation bilingue.* Formation professionnelle et aux adultes: services d'aide et d'orientation.* Test d'équivalence de niveau secondaire (TENS): évaluation des connaissances des adultes n'ayant pas terminé leurs études secondaires en vue d'obtenir une attestation d'équivalence de niveau de scolarité (AENS) facilitant l'accession à certains emplois et formations professionnelles.* Coordination du transport scolaire.* Réception de plaintes. | Territoire: sud-ouest du Québec: délimité par le fleuve Saint-Laurent au nord, l'autoroute 15 à l'est, la frontière américaine au sud et la frontière ontarienne à l'ouest | Statut: organisme parapublic",
+    "website": "www.nfsb.qc.ca/fr",
+    "address": "214, rue McLeod, Châteauguay, Montérégie, QC, J6J 2H4",
+    "hours": "lundi au jeudi 8h30 à 16h00, vendredi 8h30 à 15h30"
+  },
+  {
+    "id": "commission-scolaire-riverside-mtg",
+    "name": "Commission Scolaire Riverside",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 672-4010",
+    "description": "Commission scolaire anglophone regroupant écoles primaires, secondaires et spécialisées.* Formation professionnelle.* Éducation des adultes.* Formation professionnelle et aux adultes: services d'aide et d'orientation.* Test d'équivalence de niveau secondaire (TENS): évaluation des connaissances des adultes n'ayant pas terminé leurs études secondaires en vue d'obtenir une attestation d'équivalence de niveau de scolarité (AENS) facilitant l'accession à certains emplois et formations professionnelles.* Cours de langues.* Éducation internationale.* Coordination du transport scolaire. | Territoire: Rive-Sud: délimité par Sorel au nord, Sainte-Catherine à l'ouest, la frontière des États- Unis au sud et plusieurs kilomètres à l'est de la rivière Richelieu | Statut: organisme parapublic",
+    "website": "www.rsb.qc.ca/fr",
+    "address": "7525, chemin de Chambly, Longueuil, Montérégie, QC, J3Y 0N7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "soc-drt1",
@@ -17903,6 +21782,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au samedi 9h30 à 16h00"
   },
   {
+    "id": "comptoir-familial-des-filles-d-i-mtg",
+    "name": "Comptoir Familial Des Filles D'Isabelle - Boucherville",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 641-0902",
+    "description": "* Comptoir familial: vente d'objets usagés à bas prix (vêtements, livres, petits articles de maison et jouets).* Redistribution des profits à certains organismes et fondations de la ville. | Territoire: Boucherville | Statut: organisme à but non lucratif",
+    "address": "11, rue Louis-Hippolyte Lafontaine Nord, Boucherville, Montérégie, QC, J4B 4Y2",
+    "hours": "mardi et jeudi 8h45 à 11h15 et 13h00 à 15h15, samedi toutes les deux semaines: 8h45 à 12h30"
+  },
+  {
+    "id": "comptoir-familial-les-c-dres-mtg",
+    "name": "Comptoir Familial Les Cèdres",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Les Cèdres",
+    "province": "QC",
+    "phone": "450 200-0788",
+    "description": "* Friperie.* Journée ponctuelle de ventes spéciales.* Récupération d'articles usagés sur place: vêtements, souliers, articles de cuisine, literie, livres, bibelots, bijoux, jouets, petits objets.* Paniers de Noël. | Clientèle: grand public | Territoire: Les Cèdres | Statut: organisme à but non lucratif",
+    "website": "www.paroissestjoseph.org/communaute/comptoirs-d-entraide",
+    "address": "138, rue Valade, Les Cèdres, Montérégie, QC, J7T 1C1",
+    "hours": "lundi 9h00 à 15h00, mercredi 9h00 à 14h00, premier samedi du mois9h00 à 14h00, journée ponctuelle de ventes spéciales: variable"
+  },
+  {
     "id": "comptoir-familial-de-terrebonne-trb",
     "name": "Comptoir Familial de Terrebonne",
     "category": "social",
@@ -17914,6 +21818,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cfterrebonne.ca",
     "address": "529, rue Saint-Louis, Terrebonne, Lanaudière, QC, J6W 1J1",
     "hours": "lundi au mercredi 9h00 à 18h00, jeudi et vendredi 9h00 à 21h00, samedi 9h00 à 17h00, dimanche 12h00 à 17h00"
+  },
+  {
+    "id": "comptoir-notre-dame-de-lorette-mtg",
+    "name": "Comptoir Notre-Dame-De-Lorette",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Pincourt",
+    "province": "QC",
+    "phone": "514 453-5662",
+    "description": "* Banque alimentaire.* Magasin d'aubaine: vêtements généraux, vêtements pour bébés, cuisines, petites articles, etc.* Paniers de Noël. | Clientèle: personnes et familles à faible revenu | Territoire: Pincourt, L'île-Perrot: Terrasse-Vaudreuil | Statut: organisme à but non lucratif",
+    "address": "33, avenue Lussier, Pincourt, Montérégie, QC, J7V 5B1",
+    "hours": "mercredi 12h30 à 16h30"
   },
   {
     "id": "comptoir-saint-pierre-de-fort-co-out",
@@ -17928,6 +21844,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 16h00"
   },
   {
+    "id": "comptoir-sainte-rose-de-lima-mtg",
+    "name": "Comptoir Sainte-Rose-De-Lima",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "L'Île-Perrot",
+    "province": "QC",
+    "phone": "514 453-5662",
+    "description": "* Récupération et vente d'objets usagés: vêtements, jouets, petits articles de maison, livres.* Aide alimentaire.* Paniers de Noël. | Clientèle: personnes dans le besoin Capacité: aide alimentaire: 30 | Territoire: L'Île-Perrot, Notre-Dame-de-l'Île-Perrot | Statut: organisme à but non lucratif",
+    "website": "www.paroissesjc.org",
+    "address": "300, boulevard Perrot, L'Île-Perrot, Montérégie, QC, J7V 3G1",
+    "hours": "vente d'objets usagés: mercredi et samedi 9h00 à 15h00, aide alimentaire: 3e mercredi du mois"
+  },
+  {
     "id": "comptoir-st-vincent-de-paul",
     "name": "Comptoir alimentaire St-Vincent-de-Paul",
     "category": "food",
@@ -17938,6 +21867,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Dépannage alimentaire d'urgence et épicerie à prix modique. La Société Saint-Vincent-de-Paul offre aide immédiate aux familles en difficulté.",
     "address": "2580, rue Royale, Trois-Rivières, QC G9A 4L5",
     "hours": "Dépannage lun-ven 8h30-16h30, sam 9h-12h. Appeler avant de se présenter."
+  },
+  {
+    "id": "comquat-mtg",
+    "name": "Comquat",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "L'Île-Perrot",
+    "province": "QC",
+    "phone": "514 453-3632",
+    "description": "Services d'alphabétisation et de français langue seconde.* Formations en alphabétisation: français écrit, lecture, calcul, informatique, conversation, préparation au test d'équivalence au niveau secondaire, tutorat individuel.* Formations en français langue seconde: sessions de conversation et cours débutant et intermédiaire.* Service d'écrivain public. | Clientèle: personnes de 16 ans et plus | Territoire: Hudson, L'Île-Cadieux, L'Île-Perrot, Notre-Dame-de-l'Île-Perrot, Ouest-de-l'Île (Beaconsfield, Kirkland, Pointe-Claire), Pincourt, Terrasse-Vaudreuil, Vaudreuil-Dorion, Vaudreuil-sur-le-Lac | Statut: organisme à but non lucratif",
+    "website": "www.comquat.ca",
+    "address": "25, boulevard Don Quichotte, local 132A, L'Île-Perrot, Montérégie, QC, J7V 7X4",
+    "hours": "bureau: lundi au jeudi 9h00 à 16h30, cours: lundi au jeudi, matin, après-midi et soir"
+  },
+  {
+    "id": "conseil-canadien-des-aveugles-de-mtg",
+    "name": "Conseil Canadien Des Aveugles De Longueuil",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 442-2008",
+    "description": "Amélioration de la qualité de vie des personnes vivant avec une déficience visuelle.* Activités récréatives et éducatives.* Soutien individuel et collectif.* Sorties. | Clientèle: personnes vivant avec une perte de vision partielle ou totale | Territoire: agglomération de Longueuil | Statut: organisme à but non lucratif",
+    "website": "ccalongueuil.org",
+    "address": "1255, rue Beauregard, bureau 2509, Longueuil, Montérégie, QC, J4K 2M3",
+    "hours": "activités hebdomadaires: variables, sorties: un samedi par mois"
   },
   {
     "id": "conseil-de-la-radiodiffusion-et--out",
@@ -17951,6 +21906,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "crtc.gc.ca/fra/accueil-home.htm",
     "address": "1, Promenade du Portage, Gatineau, Outaouais, QC, J8X 4B1",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "conseil-de-litt-ratie-de-la-rive-mtg",
+    "name": "Conseil De Littératie De La Rive-Sud",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 671-4375",
+    "description": "Organisme d'alphabétisation.* Tutorat individuel: programme de lecture pour adultes et jeunes.* Programme de lecture pour la famille.* Formation pour les nouveaux·elles tuteur·rice·s.* Programme d'alphabétisation tout au long de la vie. | Clientèle: grand public | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "www.southshoreliteracy.org",
+    "address": "279, rue Hubert, bureau 4, Longueuil, Montérégie, QC, J4V 1R9",
+    "hours": "lundi au jeudi 10h00 to 15h00"
+  },
+  {
+    "id": "conseil-mohawk-de-kahnawake-mtg",
+    "name": "Conseil Mohawk De Kahnawake",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Kahnawake",
+    "province": "QC",
+    "phone": "450 632-7500",
+    "description": "Organisation responsable des services gouvernementaux, administratifs et exécutifs de la communauté de Kahnawake.* Services d'urgences: gardien·ne·s de la paix, pompier·ère·s et ambulancier·ère·s.* Aide sociale.* Assistance au logement.* Asbestos Working Group (AWG): développement d'une stratégie globale en lien avec les problèmes d'amiante.* Centre de sports et de loisirs.* Centre de formation sur le langage et la culture.* Sken:nen A'Onsonton: résolution de conflits.* Distribution de permis de tournages, d'alcool et d'enfouissement.* Soutien aux différents programmes et services: gestion des sinistres, aménagement du territoire, gestions des déchets, routes et infrastructures, finances, plan d'assurance de la communauté, commission des jeux de hasard, bureau du travail, tribunal. | Territoire: Kahnawake | Statut: organisme municipal",
+    "website": "kahnawake.com",
+    "address": "1, chemin Church , Kahnawake, Montérégie, QC, J0L 1B0",
+    "hours": "lundi au vendredi 8h30 à 16h00"
   },
   {
     "id": "conseil-r-gional-de-l-environnem-lav",
@@ -17977,6 +21958,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://crelanaudiere.ca",
     "address": "481, route 131, Notre-Dame-des-Prairies, Lanaudière, QC, J6E 0M1",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "contact-richelieu-yamaska-mtg",
+    "name": "Contact Richelieu Yamaska",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "1 844 774-6952",
+    "description": "* Intervention téléphonique.* Ligne de crise 24 heures, 7 jours.* Intervention face à face.* Hébergement de crise, de un à dix jours.* Suivi et référence.* Postvention et interventions suite à un décès tragique.* Soutien à l'entourage de personnes suicidaires et pour personnes endeuillées par le suicide.* Promotion de la santé mentale. | Clientèle: personnes en situation de crise de tous types, personnes suicidaires, personne vivant avec une problématique en santé mentale, leurs proches Capacité: 4 | Territoire: MRC Les Maskoutains, excluant Saint-Marcel-de-Richelieu, MRC d'Acton, MRC de La Vallée-du-Richelieu, excluant Carignan et Chambly | Statut: organisme à but non lucratif",
+    "website": "contactry.qc.ca",
+    "address": "420, rue de la Concorde Nord, Saint-Hyacinthe, Montérégie, QC, J2S 4N9",
+    "hours": "24 heures, 7 jours, intervention face à face: 9h00 à 21h00"
+  },
+  {
+    "id": "coop-aide-chez-soi-rive-sud-mtg",
+    "name": "Coop Aide Chez Soi Rive-Sud",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-2433",
+    "description": "* Entretien ménager, grand ménage.* Répit aux proches aidant·e·s.* Coiffure.* Préparation de repas, services alimentaires en résidence pour aîné·e·s.* Courses et commissions.* Lessive et entretien des vêtements.* Aide à la personne. | Clientèle: personnes ayant des limitations physiques permanentes ou temporaires, personnes de 65 ans et plus, grand public | Territoire: Longueuil, Calixa-Lavallée, Brossard, Boucherville, Varennes, Saint-Lambert, Sainte-Julie, Saint-Amable, Verchères | Statut: Nonprofit - Incorporated",
+    "website": "www.cooprivesud.com",
+    "address": "79, rue Leblanc ouest, Longueuil, Montérégie, QC, J4J 1K1",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "coop-des-1001-corv-es-la-out",
@@ -18069,6 +22076,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "bureau: lundi au vendredi 8h00 à 16h00, agent·e à la clientèle: jeudi 8h00 à 16h00 au CLSC de Gracefield"
   },
   {
+    "id": "coop-rative-de-solidarit-d-aide--mtg",
+    "name": "Coopérative De Solidarité D'Aide À Domicile Aide Atout",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "1 877 446-2108",
+    "description": "* Entretien ménager léger et lourd.* Aide à la vie quotidienne: lessive, déplacement, lever, coucher, soins d'hygiène et surveillance sécurisée.* Répit aux personnes proches aidantes.* Menus travaux et travaux saisonniers.* Aide aux petites courses.* Préparation de repas à domicile. | Clientèle: personnes de 18 ans et plus avec une limitation physique ou fonctionnelle | Territoire: MRC La Vallée-du-Richelieu, Saint-Bruno-de-Montarville | Statut: organisme à but non lucratif",
+    "website": "aideatout.com",
+    "address": "545, boulevard Sir-Wilfrid-Laurier, bureau 310, Beloeil, Montérégie, QC, J3G 4H8",
+    "hours": "bureau: lundi au vendredi 8h00 à 16h00, services: semaine (jour et soir) et fin de semaine"
+  },
+  {
     "id": "coop-rative-de-solidarit-de-l-un-out",
     "name": "Coopérative De Solidarité De L'Unicité",
     "category": "food",
@@ -18080,6 +22100,57 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.serresbiodeloutaouais.com",
     "address": "895, rue Dollard, Gatineau, Outaouais, QC, J8L 3T4",
     "hours": "lundi au vendredi 8h00 à 15h00"
+  },
+  {
+    "id": "coop-rative-de-solidarit-en-habi-mtg",
+    "name": "Coopérative De Solidarité En Habitation La Seigneurie De Boucherville",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 356-3100",
+    "description": "Coopérative d'habitation pour personnes aînées.* Salle à manger.* Ascenseur.* Système de surveillance.* Activités récréatives. | Clientèle: logements subventionnés: personnes autonomes de 70 ans et plus ayant des revenus inférieurs à 42 000$ pour une personne seule ou 81 000$ pour un couple, habitant Boucherville ou qui ont déjà vécu à Boucherville ou ayant des enfants qui habitent la ville Capacité: 80 appartements | Territoire: Boucherville | Statut: entreprise commerciale (coopérative)",
+    "website": "coopseigneurieboucherville.com",
+    "address": "810, rue Jean-Deslauriers, Boucherville, Montérégie, QC, J4B 0L3",
+    "hours": "administration: lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "coop-rative-de-solidarit-en-serv-mtg",
+    "name": "Coopérative De Solidarité En Service D'Aide À Domicile Mobil'Aide",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-1011",
+    "description": "* Entretien ménager léger et lourd (grand ménage, vitres).* Aide à la préparation des repas.* Aide aux commissions.* Aide pour l'entretien des vêtements.* Assistance pour faire les boîtes lors de déménagement.* Référence vers d'autres organismes. | Clientèle: personnes de 65 ans et plus à l'exception des anciens combattants et des bénéficiaires de la CNESST ou SAAQ qui ont déjà un programme d'aide à l'entretien | Territoire: territoire du CLSC de la Vallée-des-Forts et du Richelieu (Réseau local de santé 1612) | Statut: entreprise commerciale (coopérative)",
+    "address": "55, 5e Avenue, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 1T1",
+    "hours": "bureau: lundi au vendredi 7h30 à 16h00"
+  },
+  {
+    "id": "coop-rative-de-solidarit-sant-la-mtg",
+    "name": "Coopérative De Solidarité Santé Lac Champlain",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Venise-en-Québec",
+    "province": "QC",
+    "phone": "450 244-5350",
+    "description": "Organisme offrant une gamme étendue de soins de santé accessibles et de qualités aux membres et à la population.* Rendez-vous de suivi en médecine familiale.* Consultations d'urgence.* Suivi en personne ou par téléphone par le personnel infirmier.* Conseil, prévention.* Cryothérapie, infiltrations, chirurgies mineures.* Ostéopathie.* Physiothérapie.* Prélèvements sanguins.* Psychologie pour adulte.* Soins en santé mentale pour jeunes, adolescents et adulte.* Soins podologiques. | Territoire: MRC Le Haut-Richelieu | Statut: organisme à but non lucratif",
+    "website": "coopsantelacchamplain.ca",
+    "address": "211, 16e avenue Ouest, bureau 100, Venise-en-Québec, Montérégie, QC, J0J 2K0",
+    "hours": "lundi au vendredi 8h00 à 16h30"
+  },
+  {
+    "id": "coop-rative-de-solidarit-sant-de-mtg",
+    "name": "Coopérative De Solidarité-Santé De Contrecoeur",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Contrecoeur",
+    "province": "QC",
+    "phone": "450 587-2667",
+    "description": "* Clinique médicale sans rendez-vous pour les clients ayant déjà un dossier.* Clinique d'infiltration de médicaments.* Clinique Reversa pour personnes ayant un diabète de type II.* Clinique chiropratique.* Thérapeute en physiothérapie.* Orthésiste.* Audioprothésiste. | Clientèle: clinique jeunesse: personnes de 12 à 18 ans, autres services: grand public | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "www.coopcontrecoeur.com",
+    "address": "4915, route Marie-Victorin, Contrecoeur, Montérégie, QC, J0L 1C0",
+    "hours": "lundi 8h00 à 17h00, mardi, mercredi, jeudi 8h00 à 20h00, vendredi 8h00 à 16h00"
   },
   {
     "id": "coop-rative-de-soutien-domicile--lav",
@@ -18212,6 +22283,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-jeu sur rendez-vous"
   },
   {
+    "id": "corne-d-abondance-entraide-alime-mtg",
+    "name": "Corne D'Abondance - Entraide Alimentaire Et Solidarité (La)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Chambly",
+    "province": "QC",
+    "phone": "450 447-3414",
+    "description": "Entraide, éducation et sensibilisation en alimentation.* Cuisines collectives et thématiques.* Cuisine parent-enfant.* Ateliers sur place et dans les écoles.* Halte-garderie lors des activités.* Camp d'été pour cuistots de 8 à 13 ans. Capacité: 8 participant·e·s par cuisine | Territoire: Carignan, Chambly, Marieville, Richelieu, Rougemont, Saint-Césaire, Saint-Mathias-sur- Richelieu, Sainte-Angèle-de-Monnoir | Statut: organisme à but non lucratif",
+    "website": "cornedabondance.com",
+    "address": "727, avenue de Salaberry, bureau 201, Chambly, Montérégie, QC, J3L 1R2",
+    "hours": "lundi, mardi et vendredi au dimanche 8h30 à 16h30, mercredi et jeudi 18h30 à 21h30"
+  },
+  {
+    "id": "corporation-d-habitation-des-deu-mtg",
+    "name": "Corporation D'Habitation Des Deux Coteaux (La)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Les Coteaux",
+    "province": "QC",
+    "phone": "514 378-6790",
+    "description": "* Logements subventionnés pour personnes aînées. | Clientèle: personnes aînées de 50 ans et plus, autonomes ou en légère perte d'autonomie Capacité: logements subventionnés: 10 | Territoire: Les Coteaux | Statut: organisme à but non lucratif",
+    "address": "44, rue Rémillard, Les Coteaux, Montérégie, QC, J7X 1B1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "corporation-de-d-veloppement-com-lav",
     "name": "Corporation De Développement Communautaire De Laval",
     "category": "social",
@@ -18342,6 +22438,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 16h30"
   },
   {
+    "id": "coteau-du-lac-ville-mtg",
+    "name": "Coteau-Du-Lac - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Coteau-du-Lac",
+    "province": "QC",
+    "phone": "450 763-5822",
+    "description": "Gestion des services municipaux. * Paiement des taxes municipales.* Assermentation.* Permis de construction.* Collecte des matières recyclables et ordures.* Service de sécurité civile et incendie.* Bibliothèque municipale.* Émission de certificats d'autorisation pour l'abattage d'arbres. | Territoire: Coteau-du-Lac | Statut: organisme municipal",
+    "website": "coteau-du-lac.com",
+    "address": "342, chemin du Fleuve, Coteau-du-Lac, Montérégie, QC, J0P 1B0",
+    "hours": "lundi au vendredi 8h30 à 16h30, horaire estival: lundi au jeudi 8h00 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
     "id": "couleurs-de-la-vie-lanaudiere-aux-jol",
     "name": "Couleurs de la Vie Lanaudière (aux)",
     "category": "social",
@@ -18353,6 +22462,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://auxcouleursdelavie.org",
     "address": "190, rue Montcalm, JOLIETTE, Lanaudière, QC, J6E 5G4",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "coup-de-pouce-des-moissons-mtg",
+    "name": "Coup De Pouce Des Moissons",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Beauharnois",
+    "province": "QC",
+    "phone": "1 888 429-4229",
+    "description": "* Entretien ménager léger et lourd.* Lessive et repassage.* Préparation de repas sans diète.* Soins d'aide à la personne.* Répit gardiennage.* Aide pour faire des boîtes lors de déménagement. | Clientèle: personnes âgées, malades, vivant avec un handicap ou en perte d'autonomie | Territoire: MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Roussillon | Statut: organisme à but non lucratif",
+    "website": "cpmaide.ca",
+    "address": "196, chemin Saint-Louis, Beauharnois, Montérégie, QC, J6N 2J1",
+    "hours": "lundi 8h30 à 12h00 et 13h00 à 15h30, mardi au jeudi 8h30 à 12h00 et 13h00 à 16h00, vendredi 8h00 à 12h00"
   },
   {
     "id": "cour-du-qu-bec-chambre-civile-la-lav",
@@ -18368,6 +22490,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "cour-du-qu-bec-chambre-civile-lo-mtg",
+    "name": "Cour Du Québec - Chambre Civile - Longueuil",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-4009",
+    "description": "Cour de justice de l'appareil judiciaire du Québec. * Audition de causes où la somme en litige est inférieure à 100 000$.* Audition de certaines demandes portant sur les affaires municipales et scolaires.* Audition des demandes d'évaluation psychiatrique: administration des jugements en matière de garde provisoire et autorisée en vue d'une évaluation psychiatrique ou à la suite de celle-ci.* Compétence exclusive pour entendre les appels portant sur des décisions rendues par certains tribunaux administratifs, comme le Tribunal administratif du logement.* Demande de dépôt volontaire. | Territoire: Rive-Sud de Montréal: district judiciaire de Longueuil | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-longueuil",
+    "address": "1111, boulevard Jacques-Cartier Est, Longueuil, Montérégie, QC, J4M 2J6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-civile-sa-mtg",
+    "name": "Cour Du Québec - Chambre Civile - Saint-Hyacinthe",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition de causes où la somme en litige est inférieure à 100 000$.* Audition de certaines demandes portant sur les affaires municipales et scolaires.* Audition des demandes d'évaluation psychiatrique: administration des jugements en matière de garde provisoire et autorisée en vue d'une évaluation psychiatrique ou à la suite de celle-ci.* Compétence exclusive pour entendre les appels portant sur des décisions rendues par certains tribunaux administratifs, comme le Tribunal administratif du logement.* Demande de dépôt volontaire.* Conférence de règlement à l'amiable présidée par un juge.* Service de médiation.* Documents pertinents pour l'ensemble des régions: www.courduquebec.ca/centre-de-documentation/documents-pertinents-pour-lensemble-des-regions * Horaire des audiences en ligne: www.roles.tribunaux.qc.ca | Clientèle: grand public | Territoire: district judiciaire de Saint-Hyacinthe: Beloeil, Mcmasterville, Mont-Saint-Hilaire, Otterburn Park, Saint-Charles-Sur-Richelieu, Saint-Denis-Sur-Richelieu, Saint-Jean-Baptiste, Saint-Mathieu-De-Beloeil, Acton Vale, La Présentation, Marieville, Richelieu, Rougemont, Saint-Barnabé-Sud, Saint-Bernard-De- Michaudville, Saint-Césaire, Saint-Damase, Saint-Dominique, Saint-Hugues, Saint-Hyacinthe, Saint-Jude, Saint-Liboire, Saint-Mathias-Sur-Richelieu, Saint-Paul-D'abbotsford, Saint-Pie, Saint-Simon, Saint-Théodore- D'acton, Sainte-Angèle-De-Monnoir, Sainte-Christine, Sainte-Hélène-De-Bagot, Sainte-Madeleine, Sainte- Marie-Madeleine, Upton, Ange-Gardien | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-saint- hyacinthe",
+    "address": "3800, avenue Cusson, Saint-Hyacinthe, Montérégie, QC, J2S 8V6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-civile-sa-mtg-2",
+    "name": "Cour Du Québec - Chambre Civile - Saint-Jean-Sur-Richelieu",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-3716",
+    "description": "Cour de justice de l'appareil judiciaire du Québec. * Audition de causes où la somme en litige est inférieure à 100 000$.* Audition de certaines demandes portant sur les affaires municipales et scolaires.* Audition des demandes d'évaluation psychiatrique: administration des jugements en matière de garde provisoire et autorisée en vue d'une évaluation psychiatrique ou à la suite de celle-ci.* Compétence exclusive pour entendre les appels portant sur des décisions rendues par certains tribunaux administratifs, comme le Tribunal administratif du logement.* Demande de dépôt volontaire. | Territoire: Montérégie: district judiciaire d'Iberville | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-saint-jean- sur-richelieu/",
+    "address": "109, rue Saint-Charles, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2C2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-civile-sa-mtg-3",
+    "name": "Cour Du Québec - Chambre Civile - Salaberry-De-Valleyfield",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition de causes où la somme en litige est inférieure à 100 000$.* Audition de certaines demandes portant sur les affaires municipales et scolaires.* Audition des demandes d'évaluation psychiatrique: administration des jugements en matière de garde provisoire et autorisée en vue d'une évaluation psychiatrique ou à la suite de celle-ci.* Compétence exclusive pour entendre les appels portant sur des décisions rendues par certains tribunaux administratifs, comme le Tribunal administratif du logement.* Demande de dépôt volontaire.* Conférence de règlement à l'amiable présidée par un·e juge.* Service de médiation.* Documents pertinents pour l'ensemble des régions: www.courduquebec.ca/centre-de-documentation/documents-pertinents-pour-lensemble-des-regions* Horaire des audiences en ligne: www.roles.tribunaux.qc.ca | Clientèle: grand public | Territoire: district judiciaire de Beauharnois: MRC Beauharnois-Salaberry, MRC Vaudreuil-Soulanges | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-salaberry- de-valleyfield",
+    "address": "74, rue Académie, Salaberry-de-Valleyfield, Montérégie, QC, J6T 0B8",
+    "hours": "lundi au vendredi 8h30 à 12h45 et 13h45 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-civile-so-mtg",
+    "name": "Cour Du Québec - Chambre Civile - Sorel-Tracy",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 746-7394",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition de causes où la somme en litige est inférieure à 100 000$.* Audition de certaines demandes portant sur les affaires municipales et scolaires.* Audition des demandes d'évaluation psychiatrique: administration des jugements en matière de garde provisoire et autorisée en vue d'une évaluation psychiatrique ou à la suite de celle-ci.* Compétence exclusive pour entendre les appels portant sur des décisions rendues par certains tribunaux administratifs, comme le Tribunal administratif du logement.* Demande de dépôt volontaire.* Conférence de règlement à l'amiable présidée par un juge.* Service de médiation.* Documents pertinents pour l'ensemble des régions: cliquer ici* Horaire des audiences en ligne: cliquer ici | Clientèle: grand public | Territoire: district judiciaire de Richelieu: MRC Pierre-De Saurel, MRC Marguerite-D'Youville | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-sorel-tracy",
+    "address": "46, rue Charlotte, Sorel-Tracy, Montérégie, QC, J3P 6N5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "cour-du-qu-bec-chambre-criminell-lav",
     "name": "Cour Du Québec - Chambre Criminelle Et Pénale - Laval",
     "category": "social",
@@ -18379,6 +22566,71 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-laval",
     "address": "2800, boulevard Saint-Martin Ouest, Chomedey, Laval, QC, H7T 2S9",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-criminell-mtg",
+    "name": "Cour Du Québec - Chambre Criminelle Et Pénale - Longueuil",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-4011",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition des poursuites entreprises en vertu du Code criminel, du Code de procédure pénale ou de toute autre loi pénale. | Territoire: Rive-Sud de Montréal: district judiciaire de Longueuil | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-longueuil",
+    "address": "1111, boulevard Jacques-Cartier Est, Longueuil, Montérégie, QC, J4M 2J6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-criminell-mtg-2",
+    "name": "Cour Du Québec - Chambre Criminelle Et Pénale - Saint-Hyacinthe",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition des poursuites entreprises en vertu du Code criminel, du Code de procédure pénale ou de toute autre loi pénale.* Conférence de facilitation en matières criminelle et pénale.* Documents pertinents pour l'ensemble des régions: www.courduquebec.ca/centre-de-documentation/documents-pertinents-pour-lensemble-des-regions * Horaire des audiences en ligne: www.roles.tribunaux.qc.ca | Clientèle: grand public | Territoire: district judiciaire de Saint-Hyacinthe: Beloeil, Mcmasterville, Mont-Saint-Hilaire, Otterburn Park, Saint-Charles-Sur-Richelieu, Saint-Denis-Sur-Richelieu, Saint-Jean-Baptiste, Saint-Mathieu-De-Beloeil, Acton Vale, La Présentation, Marieville, Richelieu, Rougemont, Saint-Barnabé-Sud, Saint-Bernard-De- Michaudville, Saint-Césaire, Saint-Damase, Saint-Dominique, Saint-Hugues, Saint-Hyacinthe, Saint-Jude, Saint-Liboire, Saint-Mathias-Sur-Richelieu, Saint-Paul-D'abbotsford, Saint-Pie, Saint-Simon, Saint-Théodore- D'acton, Sainte-Angèle-De-Monnoir, Sainte-Christine, Sainte-Hélène-De-Bagot, Sainte-Madeleine, Sainte- Marie-Madeleine, Upton, Ange-Gardien | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-saint- hyacinthe",
+    "address": "3800, avenue Cusson, Saint-Hyacinthe, Montérégie, QC, J2S 8V6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-criminell-mtg-3",
+    "name": "Cour Du Québec - Chambre Criminelle Et Pénale - Saint-Jean-Sur-Richelieu",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-3715",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition des poursuites entreprises en vertu du Code criminel, du Code de procédure pénale ou de toute autre loi pénale. | Territoire: Montérégie: district judiciaire d'Iberville | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-saint-jean- sur-richelieu/",
+    "address": "109, rue Saint-Charles, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2C2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-criminell-mtg-4",
+    "name": "Cour Du Québec - Chambre Criminelle Et Pénale - Salaberry-De-Valleyfield",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition des poursuites entreprises en vertu du Code criminel, du Code de procédure pénale ou de toute autre loi pénale.* Conférence de facilitation en matières criminelle et pénale.* Documents pertinents pour l'ensemble des régions: www.courduquebec.ca/centre-de-documentation/documents-pertinents-pour-lensemble-des-regions* Horaire des audiences en ligne: www.roles.tribunaux.qc.ca | Clientèle: grand public | Territoire: district judiciaire de Beauharnois: MRC Beauharnois-Salaberry, MRC Vaudreuil-Soulanges | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-salaberry- de-valleyfield",
+    "address": "74, rue Académie, Salaberry-de-Valleyfield, Montérégie, QC, J6T 0B8",
+    "hours": "lundi au vendredi 8h30 à 12h45 et 13h45 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-criminell-mtg-5",
+    "name": "Cour Du Québec - Chambre Criminelle Et Pénale - Sorel-Tracy",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 746-7394",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition des poursuites entreprises en vertu du Code criminel, du Code de procédure pénale ou de toute autre loi pénale.* Conférence de facilitation en matières criminelle et pénale.* Documents pertinents pour l'ensemble des régions: cliquer ici* Horaire des audiences en ligne: cliquer ici | Territoire: district judiciaire de Richelieu: MRC Pierre-De Saurel, MRC Marguerite-D'Youville | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-sorel-tracy",
+    "address": "46, rue Charlotte, Sorel-Tracy, Montérégie, QC, J3P 6N5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "cour-du-qu-bec-chambre-de-la-jeu-lav",
@@ -18394,6 +22646,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "cour-du-qu-bec-chambre-de-la-jeu-mtg",
+    "name": "Cour Du Québec - Chambre De La Jeunesse - Longueuil",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-4004",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition de toutes les causes impliquant une personne mineure.* Audition des causes d'adoption. | Territoire: Rive-Sud de Montréal: district judiciaire de Longueuil | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-longueuil",
+    "address": "1111, boulevard Jacques-Cartier Est, Longueuil, Montérégie, QC, J4M 2J6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-de-la-jeu-mtg-2",
+    "name": "Cour Du Québec - Chambre De La Jeunesse - Saint-Hyacinthe",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition de toutes les causes impliquant une personne mineure.* Audition des causes d'adoption.* Conférence de règlement à l'amiable en matière de protection de la jeunesse.* Documents pertinents pour l'ensemble des régions: www.courduquebec.ca/centre- de-documentation/documents-pertinents-pour-lensemble-des-regions* Horaire des audiences en ligne: www.roles.tribunaux.qc.ca | Clientèle: grand public | Territoire: district judiciaire de Saint-Hyacinthe: Beloeil, Mcmasterville, Mont-Saint-Hilaire, Otterburn Park, Saint-Charles-Sur-Richelieu, Saint-Denis-Sur-Richelieu, Saint-Jean-Baptiste, Saint-Mathieu-De-Beloeil, Acton Vale, La Présentation, Marieville, Richelieu, Rougemont, Saint-Barnabé-Sud, Saint-Bernard-De- Michaudville, Saint-Césaire, Saint-Damase, Saint-Dominique, Saint-Hugues, Saint-Hyacinthe, Saint-Jude, Saint-Liboire, Saint-Mathias-Sur-Richelieu, Saint-Paul-D'abbotsford, Saint-Pie, Saint-Simon, Saint-Théodore- D'acton, Sainte-Angèle-De-Monnoir, Sainte-Christine, Sainte-Hélène-De-Bagot, Sainte-Madeleine, Sainte- Marie-Madeleine, Upton, Ange-Gardien | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-saint- hyacinthe",
+    "address": "3800, avenue Cusson, Saint-Hyacinthe, Montérégie, QC, J2S 8V6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-de-la-jeu-mtg-3",
+    "name": "Cour Du Québec - Chambre De La Jeunesse - Saint-Jean-Sur-Richelieu",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-5743",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition de toutes les causes impliquant une personne mineure.* Audition des causes d'adoption. | Territoire: Montérégie: district judiciaire d'Iberville | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-saint-jean- sur-richelieu/",
+    "address": "109, rue Saint-Charles, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2C2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-de-la-jeu-mtg-4",
+    "name": "Cour Du Québec - Chambre De La Jeunesse - Salaberry-De-Valleyfield",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition de toutes les causes impliquant une personne mineure.* Audition des causes d'adoption.* Conférence de règlement à l'amiable en matière de protection de la jeunesse.* Documents pertinents pour l'ensemble des régions: www.courduquebec.ca/centre- de-documentation/documents-pertinents-pour-lensemble-des-regions* Horaire des audiences en ligne: www.roles.tribunaux.qc.ca | Clientèle: grand public | Territoire: district judiciaire de Beauharnois: MRC Beauharnois-Salaberry, MRC Vaudreuil-Soulanges | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-salaberry- de-valleyfield",
+    "address": "74, rue Académie, Salaberry-de-Valleyfield, Montérégie, QC, J6T 0B8",
+    "hours": "lundi au vendredi 8h30 à 12h45 et 13h45 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-de-la-jeu-mtg-5",
+    "name": "Cour Du Québec - Chambre De La Jeunesse - Sorel-Tracy",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition de toutes les causes impliquant une personne mineure.* Audition des causes d'adoption.* Conférence de règlement à l'amiable en matière de protection de la jeunesse.* Documents pertinents pour l'ensemble des régions: cliquer ici* Horaire des audiences en ligne: cliquer ici | Territoire: district judiciaire de Richelieu: MRC Pierre-De Saurel, MRC Marguerite-D'Youville | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-sorel-tracy",
+    "address": "46, rue Charlotte, Sorel-Tracy, Montérégie, QC, J3P 6N5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "cour-du-qu-bec-division-des-peti-lav",
     "name": "Cour Du Québec - Division Des Petites Créances - Laval",
     "category": "social",
@@ -18405,6 +22722,71 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-laval",
     "address": "2800, boulevard Saint-Martin Ouest, Chomedey, Laval, QC, H7T 2S9",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-division-des-peti-mtg",
+    "name": "Cour Du Québec - Division Des Petites Créances - Longueuil",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-4067",
+    "description": "Tribunal qui entend les causes dont la somme d'argent en litige est inférieure à 15 000$ et où les gens se représentent eux-mêmes, sans avocat·e.* Service de médiation gratuit aux parties souhaitant régler leur litige par une entente avant l'audition de leur cause par le ou la juge. | Clientèle: personne physique ou morale et société ayant employé au plus 10 personnes au cours des 12 mois précédant la date de la réclamation | Territoire: Rive-Sud de Montréal: district judiciaire de Longueuil | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-longueuil",
+    "address": "1111, boulevard Jacques-Cartier Est, Longueuil, Montérégie, QC, J4M 2J6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-division-des-peti-mtg-2",
+    "name": "Cour Du Québec - Division Des Petites Créances - Saint-Hyacinthe",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Sous-division de la Chambre civile de la Cour de justice.* Audition de causes où la somme en litige est inférieure à 15 000$ et où les gens se représentent eux-mêmes, sans avocat.* Aide équitable et impartiale dans les démarches par les juges.* Service de médiation.* Outils, aide mémoire et guide: www.courduquebec.ca/petites-creances-15-000-et-moins * Horaire des audiences en ligne: www.roles.tribunaux.qc.ca | Clientèle: personne physique ou morale et société ayant employé au plus 10 personnes au cours des 12 mois précédant la date de la réclamation | Territoire: district judiciaire de Saint-Hyacinthe: Beloeil, Mcmasterville, Mont-Saint-Hilaire, Otterburn Park, Saint-Charles-Sur-Richelieu, Saint-Denis-Sur-Richelieu, Saint-Jean-Baptiste, Saint-Mathieu-De-Beloeil, Acton Vale, La Présentation, Marieville, Richelieu, Rougemont, Saint-Barnabé-Sud, Saint-Bernard-De- Michaudville, Saint-Césaire, Saint-Damase, Saint-Dominique, Saint-Hugues, Saint-Hyacinthe, Saint-Jude, Saint-Liboire, Saint-Mathias-Sur-Richelieu, Saint-Paul-D'abbotsford, Saint-Pie, Saint-Simon, Saint-Théodore- D'acton, Sainte-Angèle-De-Monnoir, Sainte-Christine, Sainte-Hélène-De-Bagot, Sainte-Madeleine, Sainte- Marie-Madeleine, Upton, Ange-Gardien | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-saint- hyacinthe",
+    "address": "3800, avenue Cusson, Saint-Hyacinthe, Montérégie, QC, J2S 8V6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-division-des-peti-mtg-3",
+    "name": "Cour Du Québec - Division Des Petites Créances - Saint-Jean-Sur-Richelieu",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-1653",
+    "description": "Tribunal qui entend les causes dont la somme d'argent en litige est inférieure à 15 000$ et où les gens se représentent eux-mêmes, sans avocat.* Service de médiation gratuit aux parties souhaitant régler leur litige par une entente avant l'audition de leur cause par le ou la juge. | Clientèle: personne physique ou morale et société ayant employé au plus 10 personnes au cours des 12 mois précédant la date de la réclamation | Territoire: Montérégie: district judiciaire d'Iberville | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-saint-jean- sur-richelieu/",
+    "address": "109, rue Saint-Charles, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2C2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-division-des-peti-mtg-4",
+    "name": "Cour Du Québec - Division Des Petites Créances - Salaberry-De-Valleyfield",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Sous-division de la Chambre civile de la Cour de justice.* Audition de causes où la somme en litige est inférieure à 15 000$ et où les gens se représentent eux-mêmes, sans avocat.* Aide équitable et impartiale dans les démarches par les juges.* Service de médiation.* Outils, aide mémoire et guide: www.courduquebec.ca/petites-creances-15-000-et-moins* Horaire des audiences en ligne: www.roles.tribunaux.qc.ca* Autres points de service: 265, boulevard Anjou, Châteauguay et 280, boulevard Harwood, Vaudreuil-Dorion. | Clientèle: personne physique ou morale et société ayant employé au plus 10 personnes au cours des 12 mois précédant la date de la réclamation | Territoire: district judiciaire de Beauharnois: MRC Beauharnois-Salaberry, MRC Vaudreuil-Soulanges | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-salaberry- de-valleyfield",
+    "address": "74, rue Académie, Salaberry-de-Valleyfield, Montérégie, QC, J6T 0B8",
+    "hours": "lundi au vendredi 8h30 à 12h45 et 13h45 à 16h30, sur rendez-vous"
+  },
+  {
+    "id": "cour-du-qu-bec-division-des-peti-mtg-5",
+    "name": "Cour Du Québec - Division Des Petites Créances - Sorel-Tracy",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Sous-division de la Chambre civile de la Cour de justice.* Audition de causes où la somme en litige est inférieure à 15 000$ et où les gens se représentent eux-mêmes, sans avocat.* Aide équitable et impartiale dans les démarches par les juges.* Service de médiation.* Outils, aide mémoire et guide: cliquer ici* Horaire des audiences en ligne: cliquer ici | Clientèle: personne physique ou morale et société ayant employé au plus 10 personnes au cours des 12 mois précédant la date de la réclamation | Territoire: district judiciaire de Richelieu: MRC Pierre-De Saurel, MRC Marguerite-D'Youville | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-sorel-tracy",
+    "address": "46, rue Charlotte, Sorel-Tracy, Montérégie, QC, J3P 6N5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, sur rendez-vous"
   },
   {
     "id": "cour-municipale-out",
@@ -18431,6 +22813,71 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-laval",
     "address": "2800, boulevard Saint-Martin Ouest, Chomedey, Laval, QC, H7T 2S9",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-sup-rieure-longueuil-mtg",
+    "name": "Cour Supérieure - Longueuil",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-4009",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Auditions des causes dont la somme en litige est supérieure à 75 000$ et les litiges administratif, familial et de faillite.* Auditions des procès devant jury en matière pénale et des appels en matière de poursuites sommaires. | Territoire: Rive-Sud de Montréal: district judiciaire de Longueuil | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-longueuil",
+    "address": "1111, boulevard Jacques-Cartier Est, Longueuil, Montérégie, QC, J4M 2J6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-sup-rieure-saint-hyacinthe-mtg",
+    "name": "Cour Supérieure - Saint-Hyacinthe",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition des causes dont la somme en litige est de 75 000$ ou plus et des litiges administratifs, familiaux et de faillite.* Audition des procès devant jury en matière pénale et des appels en matière de poursuites sommaires.* Audition de toutes causes qu'une loi n'a pas confiée à un autre tribunal.* Registre des actions collectives: www.registredesactionscollectives.quebec/fr/Consulter/RecherchePublique * Horaire des audiences en ligne: www.roles.tribunaux.qc.ca | Clientèle: grand public | Territoire: district judiciaire de Saint-Hyacinthe: Beloeil, Mcmasterville, Mont-Saint-Hilaire, Otterburn Park, Saint-Charles-Sur-Richelieu, Saint-Denis-Sur-Richelieu, Saint-Jean-Baptiste, Saint-Mathieu-De-Beloeil, Acton Vale, La Présentation, Marieville, Richelieu, Rougemont, Saint-Barnabé-Sud, Saint-Bernard-De- Michaudville, Saint-Césaire, Saint-Damase, Saint-Dominique, Saint-Hugues, Saint-Hyacinthe, Saint-Jude, Saint-Liboire, Saint-Mathias-Sur-Richelieu, Saint-Paul-D'abbotsford, Saint-Pie, Saint-Simon, Saint-Théodore- D'acton, Sainte-Angèle-De-Monnoir, Sainte-Christine, Sainte-Hélène-De-Bagot, Sainte-Madeleine, Sainte- Marie-Madeleine, Upton, Ange-Gardien | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-saint- hyacinthe",
+    "address": "3800, avenue Cusson, Saint-Hyacinthe, Montérégie, QC, J2S 8V6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "cour-sup-rieure-saint-jean-sur-r-mtg",
+    "name": "Cour Supérieure - Saint-Jean-Sur-Richelieu",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-3716",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Entend les causes dont la somme en litige est supérieure à 70 000$ et les litiges administratifs, familiaux et de faillite.* Entend les procès devant jury en matière pénale et les appels en matière de poursuites sommaires. | Territoire: Montérégie: district judiciaire d'Iberville | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-saint-jean- sur-richelieu",
+    "address": "109, rue Saint-Charles, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2C2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "cour-sup-rieure-salaberry-de-val-mtg",
+    "name": "Cour Supérieure - Salaberry-De-Valleyfield",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition des causes dont la somme en litige est de 85 000$ ou plus et des litiges administratifs, familiaux et de faillite.* Audition des procès devant jury en matière pénale et des appels en matière de poursuites sommaires.* Audition de toutes causes qu'une loi n'a pas confiée à un autre tribunal.* Registre des actions collectives: www.registredesactionscollectives.quebec/fr/Consulter/RecherchePublique* Horaire des audiences en ligne: www.roles.tribunaux.qc.ca | Clientèle: grand public | Territoire: district judiciaire de Beauharnois: MRC Beauharnois-Salaberry, MRC Vaudreuil-Soulanges | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-salaberry- de-valleyfield",
+    "address": "74, rue Académie, Salaberry-de-Valleyfield, Montérégie, QC, J6T 0B8",
+    "hours": "lundi au vendredi 8h30 à 12h45 et 13h45 à 16h30"
+  },
+  {
+    "id": "cour-sup-rieure-sorel-tracy-mtg",
+    "name": "Cour Supérieure - Sorel-Tracy",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition des causes dont la somme en litige est de 85 000$ ou plus et des litiges administratifs, familiaux et de faillite.* Audition des procès devant jury en matière pénale et des appels en matière de poursuites sommaires.* Audition de toutes causes qu'une loi n'a pas confiée à un autre tribunal.* Horaire des audiences en ligne: cliquer ici* Registre des actions collectives: cliquer ici | Clientèle: grand public | Territoire: district judiciaire de Richelieu: MRC Pierre-De Saurel, MRC Marguerite-D'Youville | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-sorel-tracy",
+    "address": "46, rue Charlotte, Sorel-Tracy, Montérégie, QC, J3P 6N5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "cour-du-quebec-chambre-civile-jolie-jol",
@@ -18510,6 +22957,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.crisiscommunication.ca",
     "address": "230-115 2 Ave N, Saskatoon, SK S7K 2B1",
     "hours": "Service disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "crois-e-de-longueuil-la-r-cup-ra-mtg",
+    "name": "Croisée De Longueuil (La) - Récupération D'Articles Usagés",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 677-8918",
+    "description": "Récupération sur place et collecte à domicile de dons: vêtements, mobilier de maison, mobilier de bureau, petits articles de maison, jouets et équipement de loisirs. | Territoire: agglomération de Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.lacroiseedelongueuil.qc.ca",
+    "address": "1230, rue Green, Longueuil, Montérégie, QC, J4K 4Z5",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 15h30, vendredi 9h00 à 12h00"
   },
   {
     "id": "urgent-croix-rouge",
@@ -18603,6 +23063,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "curateur-public-direction-territ-mtg",
+    "name": "Curateur Public - Direction Territoriale Sud Et Bureau De Longueuil",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 877 663-8174",
+    "description": "* Protection des droits et intérêts et administration des biens des personnes inaptes dont le tribunal lui a confié la tutelle ou la curatelle.* Information, assistance et accompagnement des familles et des proches qui représentent une personne inapte, qui administrent son patrimoine ou celui d'un mineur ou encore qui participent à un conseil de tutelle. | Clientèle: personnes inaptes, notamment, en raison d'une maladie mentale ou d'une maladie dégénérative, d'un accident vasculaire cérébral, d'un handicap intellectuel, d'un traumatisme crânien ou d'un affaiblissement en raison de l'âge, qui altère les facultés mentales ou l'aptitude physique à exprimer sa volonté, représentées par le Curateur public, sous administration provisoire, sous tutelle ou sous curatelle privée, tuteurs et curateurs privés | Territoire: Montérégie, Estrie, Centre-du-Québec | Statut: organisme du gouvernement provincial",
+    "website": "www.quebec.ca/gouvernement/ministeres-et-organismes/curateur-public",
+    "address": "201, place Charles-Le Moyne, RC 02, Longueuil, Montérégie, QC, J4K 2T5",
+    "hours": "lundi, mardi, jeudi et vendredi 8h30 à 12h00 et 13h00 à 16h30, mercredi 10h00 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "cyber-cible-rwd",
     "name": "Cyber-Cible",
     "category": "employment",
@@ -18614,6 +23087,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cyber-cible.org",
     "address": "3131, 5e Avenue, Rawdon, Lanaudière, QC, J0K 1S0",
     "hours": "bureau: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00, centre de copies: mardi au jeudi 9h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "c-dres-les-loisirs-culture-et-vi-mtg",
+    "name": "Cèdres (Les) - Loisirs, Culture Et Vie Communautaire",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Les Cèdres",
+    "province": "QC",
+    "phone": "450 452-4651",
+    "description": "* Activités sportives, culturelles et de loisir.* Parcs, terrains de sports.* Location de salles. | Territoire: Les Cèdres | Statut: organisme municipal",
+    "website": "www.ville.lescedres.qc.ca/fr/services-aux-citoyens/loisirs-culture-et-vie-communautaire",
+    "address": "1060, chemin du Fleuve, Les Cèdres, Montérégie, QC, J7T 1A1",
+    "hours": "Voir site web"
   },
   {
     "id": "c-gep-de-l-outaouais-out",
@@ -18642,6 +23128,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "septembre à décembre: lundi, mardi, jeudi et vendredi 8h00 à 16h00, février à mai: mardi et vendredi 8h00 à 16h30"
   },
   {
+    "id": "c-gep-de-valleyfield-mtg",
+    "name": "Cégep De Valleyfield",
+    "category": "immigration",
+    "subcategory": "Immigration et communautés culturelles",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "1 877 373-9441",
+    "description": "Établissement public d'enseignement de niveau collégial.* Programmes préuniversitaires et techniques (DEC).* Attestation d'études collégiales (AEC).* Formation continue et services aux entreprises.* Centre d'éducation international.* Test d'évaluation de français (TEF). | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.cegepvalleyfield.ca",
+    "address": "169, rue Champlain, Salaberry-de-Valleyfield, Montérégie, QC, J6T 1X6",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "cegep-gerald-godin-ibsg",
     "name": "Cégep Gérald-Godin",
     "category": "social",
@@ -18666,6 +23165,58 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cegep-lanaudiere.qc.ca/joliette",
     "address": "20, rue Saint-Charles-Borromée Sud, Joliette, Lanaudière, QC, J6E 4T1",
     "hours": "CPE: lundi au jeudi 7h15 à 18h15, vendredi et pendant période estival: 7h00 à 18h00"
+  },
+  {
+    "id": "c-gep-douard-montpetit-clinique--mtg-2",
+    "name": "Cégep Édouard-Montpetit - Clinique D'Hygiène Dentaire",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-2631",
+    "description": "Gamme de soins d'hygiène dentaires à prix modique prodigués par les personnes étudiantes de 2e et de 3e année sous la supervision du personnel enseignant.* Radiographies.* Diagnostic buccodentaire.* Détartrage et polissage des dents.* Application de fluorure.* Scellement de puits et fissures.* Dentisterie opératoire.* Protecteur buccal.* Suivi préventif.* Blanchiment (sous certaines conditions). | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "www.cegepmontpetit.ca/cegep/communaute/cliniques/hygiene-dentaire",
+    "address": "945, chemin de Chambly, local B-223, Longueuil, Montérégie, QC, J4H 3M6",
+    "hours": "lundi 8h00 à 20h00, mardi au vendredi 8h00 à 17h00, fermée durant la période estivale"
+  },
+  {
+    "id": "c-gep-douard-montpetit-clinique--mtg-3",
+    "name": "Cégep Édouard-Montpetit - Clinique De Denturologie",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-2631",
+    "description": "Fabrication, à prix modique, de prothèses dentaires complètes et partielles par les stagiaires du programme Techniques de denturologie qui ont déjà acquis les connaissances scientifiques requises, sous la supervision du personnel enseignant. | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "www.cegepmontpetit.ca/cegep/communaute/cliniques/denturologie",
+    "address": "945, chemin de Chambly, local A-220, Longueuil, Montérégie, QC, J4H 3M6",
+    "hours": "lundi au vendredi, durant l'année scolaire"
+  },
+  {
+    "id": "c-gep-douard-montpetit-clinique--mtg",
+    "name": "Cégep Édouard-Montpetit - Clinique De La Santé",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-2631",
+    "description": "Services de soins de santé offerts par des personnes infirmières et étudiantes sous la supervision d'un·e professeur·e en Soins infirmiers.* Consultations cliniques: prélèvements sanguins, évaluation de la santé, traitement d'infection urinaire et de glycémie capillaire, vaccins couverts par la RAMQ, lavage d'oreilles, retrait d'agrafes et de sutures, suivi de plaies et de pression artérielle.* Consultation avec des stagiaires et au besoin, une infirmière praticienne spécialisée en soins de première ligne (IPS-PL) du CISSS-MÉ:diagnostiques et traitements des maladies courantes, dépistage des maladies chroniques, prévention des maladies. Ce service est uniquement offert aux personnes étudiantes et aux personnes employées du cégep* Clinique jeunesse en partenariat avec le Centre intégré de santé et de services sociaux de la Montérégie- Est:contraceptions, test de grossesse, service de soutien à la décision quant à la poursuite ou l'interruption d'une grossesse, dépistage des ITSS, vaccinations contre le VPH et les hépatites A et B. | Clientèle: soins offerts par les stagiaires en soins infirmiers et consultation avec une personne infirmière praticienne spécialisée en soins de première ligne: personnes résidentes de Longueuil, communauté étudiante et aux membres du personnel du cégep Édouard-Montpetit et de l'École nationale d'aérotechnique, clinique jeunesse: personnes de 12 à 24 ans résidant à Longueuil, communauté étudiante et aux membres du personnel du cégep Édouard-Montpetit et de l'École nationale d'aérotechnique | Territoire: Longueuil | Statut: organisme parapublic",
+    "website": "www.cegepmontpetit.ca/cegep/communaute/cliniques/clinique-de-la-sante",
+    "address": "945, chemin de Chambly, local A-3, Longueuil, Montérégie, QC, J4H 3M6",
+    "hours": "clinique jeunesse: mardi 9h00 à 16h00, consultation avec une personne infirmière: mardi au vendredi, horaire variable, personnes étudiantes en soins infirmiers: horaire variable"
+  },
+  {
+    "id": "c-gep-douard-montpetit-lunetteri-mtg",
+    "name": "Cégep Édouard-Montpetit - Lunetterie Et Clinique De Lentilles Cornéennes",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-2631",
+    "description": "Stagiaires en Optique et lunetterie encadré·e·s par des professeur·e·s opticien·ne·s pour la lunetterie et la clinique de lentilles de contact.* Examen de la vue et prescription par une personne optométriste diplômée.* Achat, ajustement et remplacement de lentilles cornéennes et de lunettes à prix modique.* Conseils sur le choix de lentilles et de lunettes par des personnes étudiantes en Techniques d'orthèses visuelles. | Clientèle: grand public | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "www.cegepmontpetit.ca/cegep/communaute/cliniques/lunetterie-clinique-de-lentilles",
+    "address": "945, chemin de Chambly, local A-225-6, Longueuil, Montérégie, QC, J4H 3M6",
+    "hours": "durant l'année scolaire, sur rendez-vous"
   },
   {
     "id": "pw4",
@@ -18772,6 +23323,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim 8h-16h. Urgences 24h: appeler le même numéro."
   },
   {
+    "id": "dahlia-le-groupe-d-entraide-en-s-mtg",
+    "name": "Dahlia (Le) - Groupe D'Entraide En Santé Mentale",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Beauharnois",
+    "province": "QC",
+    "phone": "450 225-0696",
+    "description": "Centre de jour et milieu de vie en santé mentale.* Écoute, soutien, référence et relation d'aide.* Suivi individuel ou de groupe.* Formation, prévention et sensibilisation.* Ateliers divers: autogestion, estime de soi, sexualité, etc.* Activités thérapeutiques.* Ateliers pour les hommes.* Dîners et plats pour emporter.* Cafés- rencontres et sorties.* Journées de beauté. | Clientèle: personnes vivant ou ayant vécu des problèmes de santé mentale ou de détresse émotionnelle | Territoire: MRC Beauharnois-Salaberry, MRC Roussillon | Statut: organisme à but non lucratif",
+    "address": "185, rue Ellice, Beauharnois, Montérégie, QC, J6N 1W9",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
     "id": "on-daily-bread",
     "name": "Daily Bread Food Bank",
     "category": "food",
@@ -18785,6 +23348,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "de-soi-l-emploi-mtg",
+    "name": "De Soi À L'Emploi",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "450 465-4078",
+    "description": "Programme d'orientation et de préparation à l'emploi de 12 semaines avec stage en entreprise de 2 semaines.* Exploration en profondeur du marché du travail.* Développement d'une meilleure connaissance de soi.* Plan d'action personnalisé.* Coaching en emploi.* Autonomie financière.* Estime de soi.* Aide au maintien en emploi. | Clientèle: femmes de 18 ans et plus ayant un besoin de réorientation de carrière et d'aide à la recherche d'emploi | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.tandem-emploi.org",
+    "address": "2035, avenue Victoria, bureau 201, SAINT-LAMBERT, Montérégie, QC, J4S 1H1",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h00, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "delson-ville-mtg",
+    "name": "Delson - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Delson",
+    "province": "QC",
+    "phone": "450 632-1050",
+    "description": "Gestion des services municipaux.* Gestion et paiement de la taxe municipale.* Information sur la collecte des matières résiduelles.* Permis de construction.* Assermentation. * Traitement des réclamations pour dommages matériels et corporels causés par l'eau et refoulement d'égout. * Programme annuel de don d'arbres. * COMALERTE: informations par texto, courriel ou téléphone automatisé sur les fermetures de rue, le déneigement, les avis d'ébullition et autres informations urgentes alerte.delson.ca* Services en ligne: demande de permis, de subvention, inscription à l'infolettre, à COMALERTE www.ville.delson.qc.ca/fr/services-en-ligne | Territoire: Delson | Statut: organisme municipal",
+    "website": "www.ville.delson.qc.ca",
+    "address": "50, rue Sainte-Thérèse, Delson, Montérégie, QC, J5B 2B2",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 13h00"
+  },
+  {
     "id": "denholm-municipalit-out",
     "name": "Denholm - Municipalité",
     "category": "social",
@@ -18796,6 +23385,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "denholm.ca",
     "address": "419, chemin du Poisson Blanc, Denholm, Outaouais, QC, J8N 9C8",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "diab-te-mont-r-gie-mtg",
+    "name": "Diabète Montérégie",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 928-3422",
+    "description": "Association de proximité pour personnes diabétiques.* Référence, soutien et rencontres.* Communication par infolettre, bulletin, courriel, Facebook et site Internet.* Dîner communautaire deux fois par année.* Camp pour jeunes diabétiques de type 1 de la Montérégie. | Clientèle: personnes diabétiques ou prédiabétiques, leurs proches | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "gpsdiabete.com",
+    "address": "150, rue Grant, bureau 114, Longueuil, Montérégie, QC, J4H 3H6",
+    "hours": "lundi au vendredi 10h00 à 15h00, sur rendez-vous"
   },
   {
     "id": "diab-te-outaouais-out",
@@ -18863,6 +23465,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi à jeudi de 8h30 à 16h30 et vendredi de 8h00 à 15h30"
   },
   {
+    "id": "dioc-se-de-saint-hyacinthe-mtg",
+    "name": "Diocèse De Saint-Hyacinthe",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 773-8581",
+    "description": "Activités diocésaines.* Liste des paroisses: www.ecdsh.org/paroisses | Territoire: MRC Acton, MRC Brome-Mississquoi, MRC La Haute-Yamaska, MRC du Haut-Richelieu, MRC Les Maskoutains, MRC La Vallée-du-Richelieu, MRC Pierre-De Sorel, MRC Rouville | Statut: organisme à but non lucratif",
+    "website": "www.ecdsh.org",
+    "address": "1900, rue Girouard Ouest, Saint-Hyacinthe, Montérégie, QC, J2S 7B4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "dioc-se-de-valleyfield-mtg",
+    "name": "Diocèse De Valleyfield",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 373-8122",
+    "description": "Activités diocésaines.* Liste des paroisses et églises: www.diocesevalleyfield.org/fr/paroisses | Territoire: MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges, Châteauguay, Hemmingford | Statut: organisme à but non lucratif",
+    "website": "www.diocesevalleyfield.org",
+    "address": "11, rue de l'Église, Salaberry-de-Valleyfield, Montérégie, QC, J6T 1J5",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h30 à 16h30"
+  },
+  {
     "id": "diocese-de-joliette-jol",
     "name": "Diocèse de Joliette",
     "category": "social",
@@ -18927,6 +23555,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "direction-de-la-sant-publique-de-mtg",
+    "name": "Direction De La Santé Publique De La Montérégie",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 928-6777",
+    "description": "Surveillance continue de la santé publique.* Informer la population de l'état de santé général des populations, des problèmes de santé prioritaires, des groupes vulnérables, des principaux facteurs de risque et des interventions efficaces.* Identification des situations susceptibles de porter atteinte à la santé.* Prévention et promotion de la santé. | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/conseils-sante",
+    "address": "1255, rue Beauregard, Longueuil, Montérégie, QC, J4K 2M3",
+    "hours": "lundi au vendredi 8h00 à 17h00"
+  },
+  {
     "id": "direction-de-la-sant-publique-de-lav",
     "name": "Direction De La Santé Publique De Laval",
     "category": "health",
@@ -18937,6 +23578,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Information, prévention, promotion et protection de l'état de santé général des personnes. * Vigie et surveillance de ce qui peut améliorer ou constituer une menace à l'état de santé actuel.* Promotion d'orientations et de solutions.* Services-conseils au réseau de la santé. | Territoire: Laval | Statut: organisme parapublic",
     "website": "www.lavalensante.com/employes-et-medecins/direction-de-sante-publique",
     "address": "800, boulevard Chomedey, tour A, 3e étage, Chomedey, Laval, QC, H7V 3Y4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "direction-des-services-correctio-mtg",
+    "name": "Direction Des Services Correctionnels - Montérégie",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "1 855 816-3942",
+    "description": "Instance responsable des activités relatives à l'évaluation et au suivi des personnes contrevenantes.* Évaluation des personnes contrevenantes.* Élaboration des plans d'intervention correctionnels.* Administration des sentences dans la communauté. | Clientèle: personnes contrevenantes condamnées à des peines inférieures à deux ans, personnes prévenues | Territoire: Montérégie | Statut: organisme du gouvernement provincial",
+    "website": "www.quebec.ca/securite-situations-urgence/services-correctionnels",
+    "address": "400, rue Auber, Sorel-Tracy, Montérégie, QC, J3P 0S3",
     "hours": "Voir site web"
   },
   {
@@ -19176,6 +23830,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "bureau: lundi au jeudi 8h00 à 20h00, vendredi 8h00 à 16h00"
   },
   {
+    "id": "dorion-dream-center-mtg",
+    "name": "Dorion Dream Center",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 601-4598",
+    "description": "* Banque alimentaire.* Dons de fournitures scolaires.* Dons de couches, de poussettes et de vêtements de maternité.* Récupération de denrées non périssables et de couches.* Paniers de Noël réservé aux membres. | Clientèle: enfants, familles, couches, poussettes et dons de vêtements de maternité: femmes enceintes Capacité: 140 familles par semaine | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.doriondreamcenter.com/fr",
+    "address": "490, rue Chicoine, Vaudreuil-Dorion, Montérégie, QC, J7V 7E4",
+    "hours": "distribution alimentaire : jeudi 15h00 à 18h00 avec rendez vous, par téléphone ou email: lundi au vendredi 10h00 à 17h00"
+  },
+  {
     "id": "dorval-loisirs-et-de-la-culture-drv",
     "name": "Dorval - Loisirs et de la Culture",
     "category": "social",
@@ -19254,6 +23921,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "Point de contact TR – coordonnées sur demande (ligne téléphonique principale)",
     "hours": "Service disponible 24h/24, 7j/7",
     "isUrgent": true
+  },
+  {
+    "id": "droit-l-emploi-mtg",
+    "name": "Droit À L'Emploi",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-6101",
+    "description": "Organisme d'intégration socioprofessionnelle.* Vers l'Emploi: soutien et accompagnement à la recherche active d'emploi.* Déclic-45: orientation et soutien à la recherche d'emploi.* Cibl'Emploi: orientation et soutien à la recherche d'emploi pouvant inclure une subvention salariale, après évaluation.* L'ANCRE: accompagnement et aide en recherche d'emploi pour les nouveaux·elles arrivant·e·s. | Clientèle: Vers l'Emploi: grand public, Déclic-45: personnes de 45 ans et plus, L'ANCRE: personnes immigrantes, Cibl'Emploi: personnes de 55 ans et plus | Territoire: MRC Le Haut-Richelieu | Statut: organisme à but non lucratif",
+    "website": "www.coffre.ca",
+    "address": "49, rue Saint-Jacques, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2J8",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
   },
   {
     "id": "droits-acc-s-de-l-outaouais-out",
@@ -19345,6 +24025,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous: mardi et jeudi 10h00 et 12h30, mercredi 16h30 à 18h30"
   },
   {
+    "id": "d-phy-moi-signature-mtg",
+    "name": "Déphy-Moi Signature",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Candiac",
+    "province": "QC",
+    "phone": "450 718-8058",
+    "description": "Groupe de soutien aux personnes vivant avec une déficience physique.* Activités physiques adaptées et activités sociales pour diminuer l'isolement.* Groupes d'exercices adaptés et supervisés visant à atténuer la progession des maladies. | Clientèle: personnes vivant avec une déficience physique | Territoire: MRC Roussillon, MRC Jardins-de-Napierville | Statut: organisme à but non lucratif",
+    "website": "www.dephymoisignature.com",
+    "address": "55, avenue du Dauphiné, Candiac, Montérégie, QC, J5R 6V3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "developpement-social-lanaudiere-jol",
     "name": "Développement Social Lanaudière",
     "category": "social",
@@ -19356,6 +24049,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://dslanaudiere.org",
     "address": "200, rue De Salaberry, JOLIETTE, Lanaudière, QC, J6E 4G1",
     "hours": "lundi au vendredi 8h30 à 17h00"
+  },
+  {
+    "id": "d-veloppement-vaudreuil-soulange-mtg",
+    "name": "Développement Vaudreuil-Soulanges",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 424-2262",
+    "description": "Stimuler et soutenir le développement économique.* Aide au démarrage et à l'expansion d'entreprises: services-conseils, soutien technique et aide financière.* Programme de soutien aux jeunes entrepreneur·euse·s.* Programme de soutien aux travailleur·euse·s autonomes. | Clientèle: entreprises, entrepreneur·euse·s | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.developpementvs.com",
+    "address": "280, boulevard Harwood, Vaudreuil-Dorion, Montérégie, QC, J7V 1Y5",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
   },
   {
     "id": "d-veloppement-conomique-de-la-vi-lav",
@@ -19384,19 +24090,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
-    "id": "ab-edmonton-food",
-    "name": "Edmonton Food Bank",
-    "category": "food",
-    "subcategory": "Banque alimentaire",
-    "city": "Edmonton",
-    "province": "AB",
-    "phone": "780-425-4190",
-    "description": "",
-    "website": "https://www.edmontonsfoodbank.com",
-    "address": "11508, 120 Street NW, Edmonton AB T5G 2Y2",
-    "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
-  },
-  {
     "id": "ab-foodbank-edmonton",
     "name": "Edmonton Food Bank",
     "category": "food",
@@ -19408,6 +24101,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.edmontonsfoodbank.com",
     "address": "11508, 120 Street NW, Edmonton AB T5G 2Y2",
     "hours": "Service essentiel Alberta."
+  },
+  {
+    "id": "ab-edmonton-food",
+    "name": "Edmonton Food Bank",
+    "category": "food",
+    "subcategory": "Banque alimentaire",
+    "city": "Edmonton",
+    "province": "AB",
+    "phone": "780-425-4190",
+    "description": "",
+    "website": "https://www.edmontonsfoodbank.com",
+    "address": "11508, 120 Street NW, Edmonton AB T5G 2Y2",
+    "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
     "id": "egan-sud-municipalit-out",
@@ -19583,6 +24289,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "entourage-sant-mentale-mtg",
+    "name": "Entourage Santé Mentale",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "1 855 272-7837",
+    "description": "* Soutien et écoute téléphonique.* Intervention psychosociale.* Accompagnement lors de requêtes pour évaluation psychiatrique.* Activités d'information et centre de documentation.* Groupes de soutien et d'entraide.* Sensibilisation. | Clientèle: personnes de 14 ans et plus, membres de l'entourage de personnes vivant avec des problèmes de santé mentale | Territoire: CLSC Vallée-des-Forts, CLSC Richelieu | Statut: organisme à but non lucratif",
+    "website": "www.entouragesantementale.ca",
+    "address": "144, rue Jacques-Cartier Nord, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 6S6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "entraide-pont-viau-et-laval-des--lav",
     "name": "Entraide (Pont-Viau Et Laval Des Rapides) Inc. (L')",
     "category": "social",
@@ -19594,6 +24313,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.entraidelaval.org",
     "address": "664, rue Saint-André, Pont-Viau, Laval, QC, H7G 3A5",
     "hours": "variables"
+  },
+  {
+    "id": "entraide-chez-nous-l-clinique-d--mtg",
+    "name": "Entraide Chez Nous (L') - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 468-1726",
+    "description": "* Clinique d'impôts sans rendez-vous pour l'année d'imposition en cours.* Service offert à l'année sur rendez-vous pour les 10 dernières années d'imposition. | Clientèle: personnes à faible revenu, sauf pour les cas suivants: faillite, succession, nouveaux arrivants immigrés, travailleur·euse·s autonomes, succession, personnes ayant des revenus autres (par exemple des placements) | Territoire: Longueuil: secteurs Sacré-Coeur, Carillon Saint-Pie X (de rue de Gentilly Est à rue Roberval Est et chemin de Chambly à boulevard Roland-Therrien) | Statut: organisme à but non lucratif",
+    "website": "www.entraidecheznous.org",
+    "address": "155, rue Brodeur, LONGUEUIL, Montérégie, QC, J4J 2S3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "entraide-chez-nous-l-r-cup-ratio-mtg",
+    "name": "Entraide Chez Nous (L') - Récupération D'Articles Usagés",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 468-1726",
+    "description": "* Collecte de meubles à domicile.* Récupération de nourriture et d'articles usagés sur place: vêtements, mobilier, matelas, articles de maison, jouets, livres. | Territoire: collecte: agglomération de Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.entraidecheznous.org",
+    "address": "155, rue Brodeur, LONGUEUIL, Montérégie, QC, J4J 2S3",
+    "hours": "lundi 10h00 à 12h00 et 13h00 à 16h00, mardi, mercredi et vendredi 9h00 à 12h00 et 13h00 à 16h00, jeudi 13h00 à 18h45, collecte: mardi au vendredi 13h00 à 16h00"
   },
   {
     "id": "entraide-de-la-vall-e-l-out",
@@ -19632,6 +24377,70 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.entraidefamiliale.com",
     "address": "276-A, boulevard Saint-Joseph, Gatineau, Outaouais, QC, J8Y 3Y3",
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h00, vendredi 8h30 à 11h30, cueillette de dons: sur rendez- vous"
+  },
+  {
+    "id": "entraide-mercier-mtg",
+    "name": "Entraide Mercier",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Mercier",
+    "province": "QC",
+    "phone": "450 698-2137",
+    "description": "* Friperie communautaire: vêtements, vaisselle, jouets, livres, articles de maison, matériel informatique et appareils électroniques.* Frigo communautaire.* Centre intérieur de réception des dons au 941, rue Saint-Joseph à Mercier.* Distribution de fournitures scolaires. | Clientèle: grand public | Territoire: Châteauguay, Mercier, Léry, Sainte-Martine, Saint-Urbain, Saint-Isidore | Statut: organisme à but non lucratif",
+    "website": "www.entraidemercier.ca",
+    "address": "959, rue Saint-Joseph, Mercier, Montérégie, QC, J6R 2K9",
+    "hours": "lundi à mercredi 9h00 à 18h00, jeudi et vendredi 9h00 à 21h00, samedi et dimanche 9h30 à 17h00, centre intérieur de réception des dons: 7 jours, 8h00 à 17h00, fermé les jours fériés"
+  },
+  {
+    "id": "entraide-pour-familles-monoparen-mtg",
+    "name": "Entraide Pour Familles Monoparentales Et Familles Recomposées Du Suroît",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 373-4047",
+    "description": "* Accueil, écoute, information et références.* Groupe d'entraide pour parents.* Groupe d'entraide pour enfants de familles séparées de 6 à 12 ans.* Ateliers.* Relation d'aide.* Activités familiales.* Joujouthèque: jeux de société seulement.* Ordinateur disponible avec Internet. | Clientèle: familles avec enfants de 6 à 17 ans, familles monoparentales, familles recomposées | Territoire: MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.entraidedusuroit.ca",
+    "address": "489, chemin Larocque, Salaberry-de-Valleyfield, Montérégie, QC, J6T 4C8",
+    "hours": "joujouthèque: sur rendez-vous"
+  },
+  {
+    "id": "entraide-pour-hommes-l-mtg",
+    "name": "Entraide Pour Hommes (L')",
+    "category": "social",
+    "subcategory": "Sexe et genre",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "1 833 651-4447",
+    "description": "* Accueil et référence par téléphone.* Groupes d'intervention pour hommes auteurs de violence dans un contexte conjugal et familial.* Groupes d'intervention pour hommes victimes de violence dans un contexte conjugal et familial. | Clientèle: hommes de 18 ans et plus | Territoire: Montérégie: points de service à Beloeil, Longueuil et Saint-Hyacinthe | Statut: organisme à but non lucratif",
+    "website": "www.entraidepourhommes.org",
+    "address": "535, boulevard Sir-Wilfrid-Laurier, bureau 312, Beloeil, Montérégie, QC, J3G 5E9",
+    "hours": "lundi et vendredi 9h00 à 16h00, mardi à jeudi 13h30 à 21h30"
+  },
+  {
+    "id": "entraide-pour-hommes-l-point-de--mtg",
+    "name": "Entraide Pour Hommes (L') - Point De Service Grand Longueuil",
+    "category": "social",
+    "subcategory": "Sexe et genre",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 651-4447",
+    "description": "* Accueil et référence par téléphone.* Groupes d'intervention pour hommes auteurs de violence dans un contexte conjugal et familial.* Groupes d'intervention pour hommes victimes de violence dans un contexte conjugal et familial. | Clientèle: hommes de 18 ans et plus | Territoire: Montérégie, points de service à Longueuil, Beloeil et Saint-Hyacinthe | Statut: organisme à but non lucratif",
+    "website": "www.entraidepourhommes.org",
+    "address": "1078, rue Sainte-Hélène, Longueuil, Montérégie, QC, J4K 3R9",
+    "hours": "lundi et vendredi 10h00 à 16h00, mardi à jeudi 13h00 à 21h00"
+  },
+  {
+    "id": "entraide-saint-mathieu-l-mtg",
+    "name": "Entraide Saint-Mathieu (L')",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-Mathieu",
+    "province": "QC",
+    "phone": "450 632-9528",
+    "description": "* Dépannage alimentaire mensuel.* Jardins communautaire.* Frigo communautaire.* Paniers de Noël. | Clientèle: personnes dans le besoin | Territoire: Saint-Mathieu | Statut: organisme à but non lucratif",
+    "address": "288, rue Principale, Saint-Mathieu, Montérégie, QC, J0L 2H0",
+    "hours": "sur rendez-vous, Frigo communautaire: mai à octobre"
   },
   {
     "id": "entraide-deuil-de-l-outaouais-out",
@@ -19686,6 +24495,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "envol-l-programme-d-aide-aux-jeu-mtg",
+    "name": "Envol (L') Programme D'Aide Aux Jeunes Mères",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 465-2584",
+    "description": "Centre de jour.* Aide et accompagnement.* Visite à domicile visant le développement des compétences parentales.* Visite supervisée.* Prévention des toxicomanies.* Escale: retour progressif aux études (français et mathématiques).* Atelier prénatal.* Garderie Les Coucous de l'Envol.* Halte-garderie.* Ateliers de stimulation mère-enfant.* Centre de pédiatrie sociale de l'Envol.* Dépannage alimentaire.* Ateliers de groupes, sorties.* Dépistage et prévention des ITSS.* Transport en minibus.* Aide alimentaire, transport et halte-garderie pour les participantes seulement. | Clientèle: femmes enceintes et mères de moins de 25 ans, Escale: mères de moins de 30 ans, dépannage alimentaire, halte-garderie et transport: pour les usagères seulement | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "lenvol.org",
+    "address": "1660, rue de l'Église, Longueuil, Montérégie, QC, J4P 2C8",
+    "hours": "lundi au vendredi 9h00 à 16h00, garderie Les Coucous de l'Envol: lundi au vendredi 7h00 à 18h00"
+  },
+  {
     "id": "envol-l-btv",
     "name": "Envol (l')",
     "category": "mentalHealth",
@@ -19710,6 +24532,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.envolsrt.org",
     "address": "92, boulevard Saint-Raymond, bureau 302, Gatineau, Outaouais, QC, J8Y 1S7",
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "envol-e-l-centre-d-action-b-n-vo-mtg-2",
+    "name": "Envolée (L'), Centre D'Action Bénévole Sainte-Julie - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Sainte-Julie",
+    "province": "QC",
+    "phone": "450 649-8874",
+    "description": "Clinique d'impôts sur rendez-vous. | Clientèle: personnes aînées, personnes à faible revenu | Territoire: Sainte-Julie | Statut: organisme à but non lucratif",
+    "website": "lenvolee.org",
+    "address": "695, montée Sainte-Julie, SAINTE-JULIE, Montérégie, QC, J3E 1W8",
+    "hours": "clinique 2026: mars, sur rendez-vous"
+  },
+  {
+    "id": "escale-familiale-de-boucherville-mtg",
+    "name": "Escale Familiale De Boucherville (L')",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 641-2366",
+    "description": "Activités et services pour familles.* Matinées-rencontres.* Halte-garderie communautaire.* Activités et salle de jeux: groupe 0 à 5 ans et groupe 6 à 12 ans.* Activités papas-enfants 0 à 5 ans.* Ateliers préparatoires à la maternelle.* Aide aux devoirs.* Ateliers créatifs, conférences et fêtes thématiques.* Soupers entre papas.* Intervention individuelle: écoute, soutien, relevailles et accompagnement personnalisé. | Clientèle: familles, enfants de 0 à 12 ans, aide aux devoirs: enfants d'âge primaire | Territoire: Boucherville | Statut: organisme à but non lucratif",
+    "website": "escalefamiliale.com",
+    "address": "1075, rue Lionel-Daunais, bureau 108, Boucherville, Montérégie, QC, J4B 8N5",
+    "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
     "id": "escale-saint-rosaire-l-out",
@@ -19737,6 +24585,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "variable, lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "espace-mam-mtg",
+    "name": "Espace Mam",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "514 990-9626",
+    "description": "Accueil, accompagnement et information pour les femmes et leurs familles lors de la période périnatale.* Jumelage téléphonique avec une marraine expérimentée.* Rencontres prénatales.* Cours de yoga avec bébé.* Clinique d'allaitement.* Accompagnement à la naissance.* Relevailles.* Groupes de soutien par les pairs: santé mentale périnatale, deuil périnatal, accouchement traumatique, violences obstétricales.* Consultante IBCLC: spécialiste en lactation.* Achat et location de tire-lait.* Activités parents-enfants.* Friperie. | Clientèle: femmes et personnes enceintes ou allaitantes, bébés, famille | Territoire: Beloeil, Longueuil, McMasterville, Otterburn Park, Saint-Antoine-sur-Richelieu, Saint- Basile-le-Grand, Saint-Bruno-de-Montarville, Saint-Charles-sur-Richelieu, Saint-Denis-sur-Richelieu, Mont- Saint-Hilaire, Saint-Jean-Baptiste, Saint-Marc-sur-Richelieu, Saint-Mathieu-de-Beloeil | Statut: organisme à but non lucratif",
+    "website": "www.mam.qc.ca",
+    "address": "2060, rue Holmes, 2e étage, Longueuil, Montérégie, QC, J4T 1R8",
+    "hours": "lundi au jeudi 8h30 à 14h00, vendredi 8h30 à 12h00, boutique MAM: lundi au jeudi 8h30 à 14h00, fermé les jours fériés"
+  },
+  {
     "id": "espace-outaouais-out",
     "name": "Espace Outaouais",
     "category": "social",
@@ -19750,6 +24611,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "espace-pivot-carrefour-jeunesse--mtg",
+    "name": "Espace Pivot - Carrefour Jeunesse-Emploi Laporte",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "450 671-8949",
+    "description": "* Aide à la recherche d'emploi: rencontres individuelles, rédaction de CV et lettre de présentation, techniques de recherche d'emploi, centre de documentation, postes internet.* Orientation scolaire et professionnelle.* Sensibilisation à l'entrepreneuriat et accompagnement en prédémarrage d'entreprise.* Jeunes volontaires.* Développement de projet de bénévolat, de volontariat, d'entrepreneuriat, d'autonomie personnelle et sociale et de persévérance scolaire.* Service aux entreprises. | Clientèle: personnes de 16 ans et plus à la recherche d'un emploi, en orientation ou réorientation scolaire ou professionnelle | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "espacepivot.ca",
+    "address": "465, rue Victoria, local 500, Saint-Lambert, Montérégie, QC, J4P 2J2",
+    "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "espace-proche-aidance-mtg",
+    "name": "Espace Proche Aidance",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 928-0776",
+    "description": "* Écoute et soutien psychologique, individuel et de groupe.* Intervention d'urgence.* Conférences et ateliers.* Information et référence. | Clientèle: personnes proches aidantes | Territoire: territoire du CISSS de la Montérégie-Est | Statut: organisme à but non lucratif",
+    "website": "espaceprocheaidance.org",
+    "address": "17, rue Ste-Catherine, LONGUEUIL, Montérégie, QC, J4H 2A8",
+    "hours": "lundi et vendredi 8h30 à 16h30, mardi au jeudi 8h30 à 20h00"
+  },
+  {
+    "id": "espace-suro-t-mtg",
+    "name": "Espace Suroît",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 371-8096",
+    "description": "Prévention et sensibilisation de la violence faite aux enfants.* Programmes et ateliers éducatifs dans les écoles primaires et les garderies. | Clientèle: enfants de 3 à 12 ans, parents, professeurs, intervenant·e·s | Territoire: MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "espacesansviolence.org/suroit",
+    "address": "394, rue Dufferin, bureau 202, Salaberry-de-Valleyfield, Montérégie, QC, J6S 2A8",
+    "hours": "septembre à juin, lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "espoir-rosalie-de-gatineau-out",
     "name": "Espoir Rosalie De Gatineau",
     "category": "social",
@@ -19761,6 +24661,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.espoirrosalie.org",
     "address": "763, rue Saint-Louis, Gatineau, Outaouais, QC, J8T 2S9",
     "hours": "lundi au mercredi 8h30 à 15h30, jeudi 8h30 à 15h30 et 17h00 à 20h00"
+  },
+  {
+    "id": "estrade-l-mtg",
+    "name": "Estrade (L')",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Delson",
+    "province": "QC",
+    "phone": "450 692-2358",
+    "description": "Travail de rue.* Accueil, écoute, soutien, accompagnement et référence.* Accompagnement dans les démarches.* Interventions préventives: itinérance, dépendance, thématiques concernant les jeunes.* Aide et soutien à la recherche de logement.* Distribution de matériel d'injection.* Distribution de matériel de prévention: ITSS, grossesse, consommation, hygiène et autres. | Clientèle: personnes de tous âges, marginalisées ou en situation de précarité, adultes ou jeunes personnes émancipées en situation d'itinérance ou à risque de le devenir | Territoire: le territoire des villes de Kateri: Candiac, Sainte-Catherine, Saint-Constant, Delson, La Prairie, Saint-Philippe et Saint-Mathieu. | Statut: organisme à but non lucratif",
+    "address": "98, rue Principale Sud, Delson, Montérégie, QC, J5B 1Z8",
+    "hours": "lundi au vendredi 9h00 à 23h00"
   },
   {
     "id": "evol-lanaudiere-sja",
@@ -19869,6 +24781,68 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "fablier-une-histoire-de-familles-mtg",
+    "name": "Fablier, Une Histoire De Familles (Le)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 616-0620",
+    "description": "Alphabétisation familiale pour parents et enfants.* Milieu de vie, café-rencontres et comités d'implication.* Sensibilisation, mobilisation et concertation. | Clientèle: parents et enfants de 0 à 12 ans | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.lefablier.org",
+    "address": "2014, chemin de Chambly, Longueuil, Montérégie, QC, J4J 3Y2",
+    "hours": "mardi au jeudi 9h00 à 15h00, lundi 9h00 à 15h00 mais fermé au public"
+  },
+  {
+    "id": "fadoq-boucherville-mtg",
+    "name": "Fadoq - Boucherville",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 655-5014",
+    "description": "Club social pour personnes aînées.* Activités récréatives et sociales.* Activités physiques.* Cours d'informatique.* Chorale.* Club de tricot.* Cours de peinture.* Groupe de musique.* Troupe de théâtre.* Conférences.* Sorties et voyages. | Clientèle: personnes aînées de 50 ans et plus | Territoire: Boucherville | Statut: organisme à but non lucratif",
+    "website": "fadoqboucherville.org",
+    "address": "31, rue Pierre-Boucher, Boucherville, Montérégie, QC, J4B 5A8",
+    "hours": "lundi au jeudi 10h00 à 16h00, été: lundi au jeudi 10h00 à 13h00"
+  },
+  {
+    "id": "fadoq-clarenceville-noyan-mtg",
+    "name": "Fadoq - Clarenceville - Noyan",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Noyan",
+    "province": "QC",
+    "phone": "450 294-2307",
+    "description": "Activités récréatives et de loisirs pour personnes aînées.* Danse en ligne, pétanque, quilles.* Bingo une fois par mois.* Sorties et voyages.* Fête de Noël. | Clientèle: personnes aînées | Territoire: Clarenceville, Noyan | Statut: organisme à but non lucratif",
+    "address": "1, rue Tourangeau, Noyan, Montérégie, QC, J0J 1B0",
+    "hours": "mardi 12h30 à 16h00"
+  },
+  {
+    "id": "fadoq-club-de-l-ge-d-or-de-saint-mtg",
+    "name": "Fadoq - Club De L'Âge D'Or De Saint-Mathieu",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Mathieu",
+    "province": "QC",
+    "phone": "450 444-0329",
+    "description": "Activités récréatives et de loisirs pour personnes aînées. | Clientèle: personnes aînées Capacité: 90 membres | Territoire: Saint-Mathieu | Statut: organisme à but non lucratif",
+    "address": "299, chemin Saint-Édouard, Saint-Mathieu, Montérégie, QC, J0L 2H0",
+    "hours": "variables"
+  },
+  {
+    "id": "fadoq-napierville-mtg",
+    "name": "Fadoq - Napierville",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Napierville",
+    "province": "QC",
+    "phone": "450 245-7956",
+    "description": "Activités sociales et récréatives pour personnes aînées. | Clientèle: personnes de 50 ans et plus | Territoire: Napierville | Statut: organisme à but non lucratif",
+    "address": "262B, rue de l'Église, Napierville, Montérégie, QC, J0J 1L0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fadoq-r-gion-de-laval-lav",
     "name": "Fadoq - Région De Laval",
     "category": "social",
@@ -19908,6 +24882,54 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "fadoq-r-gion-sherrington-mtg",
+    "name": "Fadoq - Région Sherrington",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Patrice-de-Sherrington",
+    "province": "QC",
+    "phone": "514 926-9963",
+    "description": "Activités sociales et récréatives pour personnes aînées.* Cartes, bingo, pétanque, whist militaire.* Cours de danse, activités de danse en ligne.* Repas thématiques. | Clientèle: personnes aînées de 50 ans et plus | Territoire: Saint-Patrice-de-Sherrington | Statut: organisme à but non lucratif",
+    "address": "234, rue des Loisirs, Saint-Patrice-de-Sherrington, Montérégie, QC, J0L 2N0",
+    "hours": "lundi, mardi et jeudi 13h00 à 16h00, cours de danse: mardi 13h30 à 15h30 au centre communautaire"
+  },
+  {
+    "id": "fadoq-saint-r-mi-mtg",
+    "name": "Fadoq - Saint-Rémi",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Rémi",
+    "province": "QC",
+    "phone": "450 454-4708",
+    "description": "Activités récréatives et sociales pour personnes aînées.* Cours de danse en ligne.* Soirées récréatives avec jeu de poches, cartes et bingo.* Souper mensuel. | Clientèle: personnes aînées | Territoire: Saint-Rémi | Statut: organisme à but non lucratif",
+    "address": "25, rue Saint-Sauveur, bureau 104, Saint-Rémi, Montérégie, QC, J0L 2L0",
+    "hours": "variables"
+  },
+  {
+    "id": "fadoq-saint-douard-mtg",
+    "name": "Fadoq - Saint-Édouard",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Édouard",
+    "province": "QC",
+    "phone": "450 454-2681",
+    "description": "* Activités sociales et récréatives pour personnes aînées: pétanque, jeux de cartes, etc. | Clientèle: personnes de 50 ans et plus | Territoire: Saint-Édouard | Statut: organisme à but non lucratif",
+    "address": "405, montée Lussier, Saint-Édouard, Montérégie, QC, J0L 1Y0",
+    "hours": "variable"
+  },
+  {
+    "id": "fadoq-mont-st-gr-goire-mtg",
+    "name": "Fadoq Mont St-Grégoire",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Mont-Saint-Grégoire",
+    "province": "QC",
+    "phone": "450 347-3951",
+    "description": "* Activités sociales et récréatives: danse en ligne, jeux de cartes, pétanque.* Repas communautaires. | Clientèle: personnes de 50 ans et plus | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "address": "45, rang de la Montagne, Mont-Saint-Grégoire, Montérégie, QC, J0J 1K0",
+    "hours": "danse: 2e dimanche du mois, pétanque: mardi et jeudi soir"
+  },
+  {
     "id": "famille-secours-ste-rose-de-lima-out",
     "name": "Famille Secours - Ste-Rose De Lima",
     "category": "food",
@@ -19918,6 +24940,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Dépannage alimentaire.* Paniers alimentaires mensuels.* Paniers de Noël. | Clientèle: personnes seules à faible revenu, familles à faible revenu | Territoire: Sainte-Rose-de-Lima | Statut: organisme à but non lucratif",
     "address": "861, boulevard Saint-René Est, bureau E5, Gatineau, Outaouais, QC, J8P 1V1",
     "hours": "service alimentaire: mardi 13h00 à 15h00, temps des fêtes: fermé du 17 décembre 2025 au 5 janvier"
+  },
+  {
+    "id": "famille-coeur-mtg",
+    "name": "Famille À Coeur",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-1734",
+    "description": "Maison de la famille.* Accueil et référence.* Ressources périnatales.* Ateliers, activités et conférences.* Activités familiales.* Halte-garderie et halte-répit.* Courrier des enfants.* Vérification de sièges d'auto.* Prêt de tire-lait.* Relevailles à domicile.* Soirées pour pères.* Relation d'aide familiale, soutien et accompagnement. | Clientèle: familles | Territoire: MRC Le Haut-Richelieu | Statut: organisme à but non lucratif",
+    "website": "familleacoeur.qc.ca",
+    "address": "130, rue Saint-Georges, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2S8",
+    "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00, certains soirs et fins de semaine"
   },
   {
     "id": "familles-d-abord-out",
@@ -20157,6 +25192,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "fondation-cypihot-ouellette-mtg",
+    "name": "Fondation Cypihot-Ouellette",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "",
+    "description": "Soutien financier aux personnes vivant avec une déficience visuelle.* Soutien financier aux études: bourse soutien, bourse mérite, bourse excellence.* Soutien financier pour l'inclusion sociale: activités culturelles, artistiques, récréatives, sportives, scientifiques ou technologiques, individuelles et en groupe.* Soutien à la recherche et au développement communautaire. | Clientèle: personnes vivant avec une déficience visuelle, organismes et personnes ouvrant dans la recherche ou le développement de projets pour les personnes vivant avec une déficience visuelle, soutien aux études: personnes vivant avec une déficience visuelle, ayant le statut de citoyen canadien ou de résident permanent et inscrites aux études à temps plein dans un programme de formation reconnu par le MEES | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "cypihotouellette.org",
+    "address": "2820 rue Berthon, Longueuil, Montérégie, QC, J4M 1X1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-de-la-cit-des-jeunes-mtg",
+    "name": "Fondation De La Cité-Des-Jeunes",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 319-1192",
+    "description": "Soutien la réussite scolaire des élèves de l'école secondaire de la Cité-des-Jeunes.* Financement de projets scolaires.* Aide financière aux élèves vivant des difficultés d'apprentissage leur donnant accès à des évaluations et des spécialistes.* Bourses de reconnaissance pour la persévérance et l'excellence scolaire.* Aide financière aux élèves pour les frais d'activités parascolaires. | Clientèle: jeunes de l'école secondaire de la Cité-des-Jeunes, familles à faible revenu | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.fondationcdj.com",
+    "address": "400, avenue St-Charles, Vaudreuil-Dorion, Montérégie, QC, J7V 6B1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-des-gouverneurs-de-l-e-mtg",
+    "name": "Fondation Des Gouverneurs De L'Espoir",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "438 838-8588",
+    "description": "* Aide financière mensuelle sous forme de cartes-cadeaux. | Clientèle: famille d'enfants de 17 ans et moins sous traitement contre le cancer ou ayant une maladie grave qui menace sa vie à court terme. | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "fondationdesgouverneurs.org",
+    "address": "1, boulevard d'Anjou, Châteauguay, Montérégie, QC, J6J 2P6",
+    "hours": "lundi au jeudi 9h00 à 16h00, vendredi 9h00 à 12h00"
+  },
+  {
     "id": "fondation-le-pilier-lav",
     "name": "Fondation Le Pilier",
     "category": "social",
@@ -20168,6 +25242,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.lepilier.org",
     "address": "425, place Jean-Coutu, Auteuil, Laval, QC, H7H 3C8",
     "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "fondation-le-renfort-mtg",
+    "name": "Fondation Le Renfort",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "579 362-5262",
+    "description": "Amélioration de la qualité de vie des personnes vivant avec une déficience intellectuelle ou un trouble du spectre de l'autisme.* Soutien et accompagnement.* Aide financière: soins de santé, camps de jour, besoins de base, etc.* Maison Tourbillon et Diapason: maison de répit.* Maison des arts. | Clientèle: personnes vivant avec un diagnostic de déficience intellectuelle ou de trouble du spectre de l'autisme, leur famille | Territoire: MRC Le Haut-Richelieu, MRC Les Jardins-de-Napierville, MRC Rouville, certaines villes de la MRC Brome-Missisquoi, Chambly, Carignan | Statut: organisme à but non lucratif",
+    "website": "lerenfort.com",
+    "address": "315, rue MacDonald, bureau 105, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 8J3",
+    "hours": "août à mai: lundi au vendredi 9h00 à 17h00, juin à juillet: lundi au jeudi 9h00 à 17h00"
+  },
+  {
+    "id": "fondation-mira-la-mtg",
+    "name": "Fondation Mira (La)",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Sainte-Madeleine",
+    "province": "QC",
+    "phone": "1 800 799-6472",
+    "description": "Promotion de l'autonomie et de l'intégration des personnes vivant avec un handicap.* École de chiens-guides: chiens développés et entraînés pour répondre aux besoins en adaptation et réadaptation.* Récupération de cartouches et de cellulaires. | Clientèle: personnes vivant avec un ou plusieurs handicaps visuels ou moteurs, jeunes autistes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.mira.ca",
+    "address": "1820, rang Nord-Ouest, Sainte-Madeleine, Montérégie, QC, J0H 1S0",
+    "hours": "lundi au vendredi 8h00 à 16h30"
+  },
+  {
+    "id": "fondation-papillon-camp-de-grand-mtg",
+    "name": "Fondation Papillon - Camp De Grandpré",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Otterburn Park",
+    "province": "QC",
+    "phone": "1 877 937-6171",
+    "description": "* Camp mixte.* Chalets adaptés à louer.* Classes nature. | Clientèle: personnes vivant avec un handicap intellectuel ou TSA de différents groupes d'âge Capacité: 178 personnes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "fondationpapillon.ca/services-adaptes/camp-de-grandpre",
+    "address": "756, chemin des Patriotes Sud, Otterburn Park, Montérégie, QC, J3H 1Z5",
+    "hours": "information: lundi au vendredi"
   },
   {
     "id": "fondation-papillon-camp-papillon-sain",
@@ -20194,6 +25307,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "cabaneenboisrond.com",
     "address": "331, boulevard de la Cité-des-Jeunes, Gatineau, Outaouais, QC, J8Y 6T3",
     "hours": "lundi au vendredi 8h00 à 16h30"
+  },
+  {
+    "id": "fondation-se-reconstruire-centre-mtg",
+    "name": "Fondation Se Reconstruire, Centre De Santé Du Sein",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "438 527-7346",
+    "description": "Soutien pour personnes atteintes du cancer du sein, à tous les stades de la maladie, à travers le traitement de la douleur physique et sa dimension psychologique.Services et soins* Tatouage: mamelon et aréole, effet 3D.* Art-thérapie. * Consultation pour chirurgie du sein.* Drainage lymphatique.* Acupuncture spécialisée en oncologie.* Endermothérapie spécialisée en oncologie.* Kinésiologie.* Massothérapie.* Naturopathie.* Neuroptimal.* Psychologie.* Tatouage: sourcils et cils, pré ou post chimiothérapie.* Reiki. Ateliers sans frais* Ateliers d'information: amoindrir la peur de l'inconnu. * Atelier soin cheveux.* Groupe de soutien.* Groupe entraînement.* Atelier onco-esthétique.Produits - Mastectomie* Prothèse mammaire externe: volume ajustable, totale et partielle.* Soutien-gorge post-opératoire.* Soutien-gorge adapté.* Camisole de convalescence.* Vêtement de compression.* Mamelon auto-adhérant.Produits - Soins capillaires* Produits d'entretien du cuir chevelu.* Prothèses capillaires.* Bonnet de chimio and bandana. | Clientèle: personnes atteintes du cancer du sein ou ayant subi une mastectomie | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.centresereconstruire.ca",
+    "address": "67, rue Sainte-Elizabeth, Longueuil, Montérégie, QC, J4H 1J3",
+    "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
     "id": "fondation-voboc-la-pcl",
@@ -20246,6 +25372,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.foodbanksquebec.com",
     "address": "6775, av. de Darlington, Montréal, QC H3S 1V5",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Apporter pièce identité et preuve de résidence."
+  },
+  {
+    "id": "formatio-mtg",
+    "name": "Formatio",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 656-3348",
+    "description": "Formations en informatique.* Formations en ligne ou en présentiel pour des groupes de 6 participants maximum.* Salles de cours sur place et possibilité de donner les formations dans les salles d'autres organismes ou entreprises.* Cours privés.* Club informatique. | Clientèle: adultes | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "www.formatio.info",
+    "address": "3205, boulevard de Rome, Brossard, Montérégie, QC, J4Y 1R2",
+    "hours": "bureau: lundi au jeudi 9h00 à 16h00, formations: lundi au vendredi 9h00 à 21h00"
   },
   {
     "id": "fort-coulonge-municipalit-out",
@@ -20386,6 +25525,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "friperie: lundi, mercredi, vendredi et samedi: 10h00 à 15h00, aide alimentaire: sur rendez-vous seulement"
   },
   {
+    "id": "friperie-de-l-cluse-mtg",
+    "name": "Friperie De L'Écluse",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Sainte-Catherine",
+    "province": "QC",
+    "phone": "514 805-4230",
+    "description": "Vente de vêtements et d'articles à prix modique.* Récupération d'articles usagés sur place: vêtements, petits articles de maison, jouets et équipement de loisirs. | Clientèle: familles Capacité: 15 | Territoire: Sainte-Catherine | Statut: organisme à but non lucratif",
+    "address": "5367, boulevard Marie-Victorin, Sainte-Catherine, Montérégie, QC, J5C 1L9",
+    "hours": "mercredi 13h00 à 18h00"
+  },
+  {
     "id": "friperie-le-papillon-repentigny-rep",
     "name": "Friperie le Papillon - Repentigny",
     "category": "social",
@@ -20397,6 +25548,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://lamaisonadhemardion.ca/friperies",
     "address": "555, boulevard Lacombe, Repentigny, Lanaudière, QC, J5Z 1T5",
     "hours": "mardi au vendredi 10h00 à 18h00, samedi 10h00 à 16h00"
+  },
+  {
+    "id": "friperie-co-100-local-mtg",
+    "name": "Friperie Éco 100% Local",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Saint-Rémi",
+    "province": "QC",
+    "phone": "450 454-1331",
+    "description": "* Friperie.* Récupération de vêtements (hommes, femmes, enfants), de jouets, d'articles pour enfants et d'articles de cuisine sur place.* Bacs disponibles pour les dépôts. | Clientèle: grand public | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.souriresansfin.org",
+    "address": "2-A, rue Sainte-Famille, Saint-Rémi, Montérégie, QC, J0L 2L0",
+    "hours": "lundi au mercredi 9h00 à 17h00, jeudi 9h00 à 20h00, vendredi 9h00 à 18h00, samedi et dimanche 10h00 à 17h00"
   },
   {
     "id": "tr-garde-frederique-bergeron",
@@ -20423,6 +25587,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.federationcja.org/fr",
     "address": "96, rue Roger-Pilon, Dollard-Des Ormeaux, Montréal, QC, H9B 2E1",
     "hours": "lundi au jeudi 9h00 à 17h00, vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "f-d-ration-des-coop-ratives-d-ha-mtg",
+    "name": "Fédération Des Coopératives D'Habitation Montérégiennes",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 888 651-5520",
+    "description": "Représentation et services aux coopératives d'habitation.* Transmission d'un savoir collectif.* Représentation d'une force commune pour promouvoir, développer et défendre les droits collectifs.* Ressources et références.* Formation.* Soutien à la gestion en fonction des besoins des membres tout en favorisant l'autonomie.* Promotion du Mouvement québécois des coopératives d'habitation. | Clientèle: coopératives d'habitation, personnes à la recherche d'un logement Capacité: 100 coopératives | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "cooperativehabitation.coop/monteregie",
+    "address": "150, rue Grant, bureau 124, Longueuil, Montérégie, QC, J4H 3H6",
+    "hours": "lundi, mercredi, jeudi 9h00 à 12h00 et 13h00 à 16h00, télétravail: mardi et vendredi 9h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "f-d-ration-des-osbl-d-habitation-out",
@@ -20564,6 +25741,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "g-e-m-e-groupe-d-entraide-pour-u-mtg",
+    "name": "G.E.M.E. Groupe D'Entraide Pour Un Mieux-Être - La Prairie",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "1 866 443-4363",
+    "description": "* Groupes de soutien en personne et virtuels (sur Zoom).* Consultations individuelles en personne et virtuels (sur Zoom).* Groupes de méditation.* Documentation et outils pour gérer les troubles anxieux: capsules vidéos, témoignages, livres, CD de visualisation.* Ateliers et conférences virtuels et en personne à la demande des organisations. | Clientèle: personnes de 18 ans et plus vivant avec des troubles anxieux: stress, phobie simple ou sociale, agoraphobie, trouble panique, burn-out, dépression, stress post-traumatique Capacité: groupes de soutien: 15 à 33 personnes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.groupegeme.com",
+    "address": "462, rue Saint-Paul, La Prairie, Montérégie, QC, J5R 2R5",
+    "hours": "bureau: lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00, horaire des groupes: sur le site Internet"
+  },
+  {
     "id": "g-e-m-e-groupe-d-entraide-pour-u-lav",
     "name": "G.E.M.E. Groupe D'Entraide Pour Un Mieux-Être - Laval",
     "category": "mentalHealth",
@@ -20574,6 +25764,58 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Groupes de soutien en personne et virtuels (sur Zoom).* Consultations individuelles en personne et virtuels (sur Zoom).* Groupes de méditation.* Documentation et outils pour gérer les troubles anxieux: capsules vidéos, témoignages, livres, CD de visualisation.* Ateliers et conférences virtuels et en personne à la demande des organisations. | Clientèle: personnes de 18 ans et plus avec des troubles anxieux: stress, phobie simple ou sociale, agoraphobie, trouble panique, burnout, dépression, stress post-traumatique Capacité: groupes de soutien: 15 à 33 personnes | Territoire: le Québec | Statut: organisme à but non lucratif",
     "website": "www.groupegeme.com",
     "address": "25, rue Saint-Louis, Pont-Viau, Laval, QC, H7G 4W3",
+    "hours": "bureau: lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00, horaire des groupes: sur le site Internet"
+  },
+  {
+    "id": "g-e-m-e-groupe-d-entraide-pour-u-mtg-2",
+    "name": "G.E.M.E. Groupe D'Entraide Pour Un Mieux-Être - Longueuil",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 866 443-4363",
+    "description": "* Groupes de soutien en personne et virtuels (sur Zoom).* Consultations individuelles en personne et virtuels (sur Zoom).* Groupes de méditation.* Documentation et outils pour gérer les troubles anxieux: capsules vidéos, témoignages, livres, CD de visualisation.* Ateliers et conférences virtuels et en personne à la demande des organisations. | Clientèle: personnes de 18 ans et plus avec des troubles anxieux: stress, phobie simple ou sociale, agoraphobie, trouble panique, burn-out, dépression, stress post-traumatique Capacité: groupes de soutien: 15 à 33 personnes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.groupegeme.com",
+    "address": "1085, chemin du Coteau-Rouge, bureau 232, Longueuil, Montérégie, QC, J4K 1W7",
+    "hours": "bureau: lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00, horaire des groupes: sur le site Internet"
+  },
+  {
+    "id": "g-e-m-e-groupe-d-entraide-pour-u-mtg-3",
+    "name": "G.E.M.E. Groupe D'Entraide Pour Un Mieux-Être - Saint-Bruno",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Bruno-de-Montarville",
+    "province": "QC",
+    "phone": "1 866 443-4363",
+    "description": "* Groupes de soutien en personne et virtuels (sur Zoom).* Consultations individuelles en personne et virtuels (sur Zoom).* Groupes de méditation.* Documentation et outils pour gérer les troubles anxieux: capsules vidéos, témoignages, livres, CD de visualisation.* Ateliers et conférences virtuels et en personne à la demande des organisations. | Clientèle: personnes de 18 ans et plus avec des troubles anxieux: stress, phobie simple ou sociale, agoraphobie, trouble panique, burn-out, dépression, stress post-traumatique Capacité: groupes de soutien: 15 à 33 personnes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.groupegeme.com",
+    "address": "82, boulevard Seigneurial Ouest, Saint-Bruno-de-Montarville, Montérégie, QC, J3V 5N7",
+    "hours": "bureau: lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00, horaire des groupes: sur le site Internet"
+  },
+  {
+    "id": "g-e-m-e-groupe-d-entraide-pour-u-mtg-4",
+    "name": "G.E.M.E. Groupe D'Entraide Pour Un Mieux-Être - Saint-Hubert",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 866 443-4363",
+    "description": "* Groupes de soutien en personne et virtuels (sur Zoom).* Consultations individuelles en personne et virtuels (sur Zoom).* Groupes de méditation.* Documentation et outils pour gérer les troubles anxieux: capsules vidéos, témoignages, livres, CD de visualisation.* Ateliers et conférences virtuels et en personne à la demande des organisations. | Clientèle: personnes de 18 ans et plus avec des troubles anxieux: stress, phobie simple ou sociale, agoraphobie, trouble panique, burn-out, dépression, stress post-traumatique Capacité: groupes de soutien: 15 à 33 personnes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.groupegeme.com",
+    "address": "525, rue Latour, Longueuil, Montérégie, QC, J3Y 6A9",
+    "hours": "bureau: lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00, horaire des groupes: sur le site Internet"
+  },
+  {
+    "id": "g-e-m-e-groupe-d-entraide-pour-u-mtg-5",
+    "name": "G.E.M.E. Groupe D'Entraide Pour Un Mieux-Être - Saint-Jean-Sur-Richelieu",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "1 866 443-4363",
+    "description": "* Groupes de soutien en personne et virtuels (sur Zoom).* Consultations individuelles en personne et virtuels (sur Zoom).* Groupes de méditation.* Documentation et outils pour gérer les troubles anxieux: capsules vidéos, témoignages, livres, CD de visualisation.* Ateliers et conférences virtuels et en personne à la demande des organisations. | Clientèle: personnes de 18 ans et plus vivant avec des troubles anxieux: stress, phobie simple ou sociale, agoraphobie, trouble panique, burn-out, dépression, stress post-traumatique Capacité: groupes de soutien: 15 à 33 personnes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.groupegeme.com",
+    "address": "375, avenue Bessette, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 2N8",
     "hours": "bureau: lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00, horaire des groupes: sur le site Internet"
   },
   {
@@ -20823,6 +26065,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "grain-d-sel-de-la-vall-e-du-rich-mtg",
+    "name": "Grain D'Sel De La Vallée-Du-Richelieu (Le)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 467-5733",
+    "description": "* Comptoir alimentaire.* Épicerie économique.* Resto pop.* Jardin communautaire. | Clientèle: personnes et familles vivant en difficulté financière | Territoire: Beloeil, McMasterville, Saint-Mathieu-de-Beloeil, Mont-Saint-Hilaire, Saint-Jean-Baptiste, Saint-Marc-sur-Richelieu, Saint-Charles-sur-Richelieu, Saint-Antoine-sur-Richelieu, Saint-Denis-sur-Richelieu, Otterburn Park, Sainte-Madeleine | Statut: organisme à but non lucratif",
+    "website": "graindesel.ca",
+    "address": "544, boulevard Laurier, Beloeil, Montérégie, QC, J3G 4H9",
+    "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 12h00"
+  },
+  {
     "id": "grand-remous-municipalit-out",
     "name": "Grand-Remous - Municipalité",
     "category": "social",
@@ -20836,6 +26091,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "grands-fr-res-grandes-soeurs-de--mtg",
+    "name": "Grands Frères Grandes Soeurs De La Montérégie",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "1 866 464-6188",
+    "description": "Service de mentorat pour les jeunes de 6 à 21 ans.* Programme traditionnel: jumelage entre un adulte et un jeune de 6 à 21 ans.* Programme 16I21: Jumelage entre un adulte et un jeune de 16 à 21 ans ayant un historique de placement et de services avec la DPJ ou la LSJPA.* Programme scolaire: Jumelage à l'école entre un adulte et un jeune de 6 à 17 ans. | Clientèle: jeunes de 6 à 21 ans | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.gfgsm.org",
+    "address": "2949 rue Picard, bureau 201, Saint-Hyacinthe, Montérégie, QC, J2S 1H2",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
     "id": "bc-greater-vancouver-food",
     "name": "Greater Vancouver Food Bank",
     "category": "food",
@@ -20847,6 +26115,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.foodbank.bc.ca",
     "address": "1150 Station St, Vancouver, BC V6A 4C7",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
+  },
+  {
+    "id": "greenfield-park-arrondissement-mtg",
+    "name": "Greenfield Park - Arrondissement",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 463-7311",
+    "description": "Bureau de la présidence d'arrondissement.* Veille à la mise en place et au maintien d'un milieu de vie qui répond aux besoins des citoyen·ne·s.* Veille à la vitalité économique du territoire.* Service de l'urbanisme. | Territoire: Greenfield Park | Statut: organisme municipal",
+    "website": "www.longueuil.quebec/fr/bureau-de-larrondissement-de-greenfield-park",
+    "address": "156, boulevard Churchill, Longueuil, Montérégie, QC, J4V 2M3",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, été: lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "grenier-aux-trouvailles-partage--mtg",
+    "name": "Grenier Aux Trouvailles - Partage Sans Faim",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Lacolle",
+    "province": "QC",
+    "phone": "450 246-4032",
+    "description": "* Aide alimentaire.* Dépannage alimentaire d'urgence.* Comptoir vestimentaire et vente d'articles usagés: vêtements, jouets, livres, bicylettes.* Groupe d'achats coopératifs.* Réinsertion à l'emploi.* Développement et maintien de saines habitudes de vie.* Ateliers de cuisine pour les jeunes du primaire.* Cafés-causeries et ateliers de cuisine pour les personnes aînées.* Cuisine collective.* Salle d'entraînement physique.* Travaux compensatoires et communautaires, justice alternative. | Clientèle: personnes et familles à faible revenu, jeunes à risque de commettre ou ayant commis des actes de délinquance | Territoire: Lacolle, Saint-Blaise-Sur-Richelieu, Saint-Valentin, Noyan, Saint-Bernard-De-Lacolle, Saint-Georges-De-Clarenceville, Saint-Paul-De-L'île-Aux-Noix, dépannage alimentaire d'urgence: Lacolle | Statut: organisme à but non lucratif",
+    "website": "grenierauxtrouvailles.org/accueil",
+    "address": "2, rue de l'Église Sud, Lacolle, Montérégie, QC, J0J 1J0",
+    "hours": "mardi au vendredi 10h00 à 17h00, samedi 10h00 à 15h30"
   },
   {
     "id": "grenier-d-apprentissage-jacques--out",
@@ -20874,6 +26168,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h00, frigo communautaire: 24 heures, 7 jours"
   },
   {
+    "id": "groupe-action-nouvelle-vie-mtg",
+    "name": "Groupe Action Nouvelle Vie",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-5815",
+    "description": "* Comptoir alimentaire hebdomadaire et dépannage alimentaire d'urgence.* Paniers de Noël.* Friperie.* Programme Bon départ: ressources matérielles et alimentaires nécessaires pour les mères et leur bébé.* Programme Retour à l'école: distribution de fournitures scolaires.* Programme le 2159: ateliers pour prévenir et outiller les jeunes à risque contre la délinquance, l'itinérance et l'exploitation sexuelle. | Clientèle: adultes et familles à faible revenu, personnes nouvellement arrivées | Territoire: Boucherville, Brossard, Chambly, Greenfield Park, La Prairie, Longueuil, Saint-Amable, Saint-Bruno-De-Montarville, Saint-Hubert, Saint-Lambert, Sainte-Julie, Varennes | Statut: organisme à but non lucratif",
+    "website": "actionnv.com",
+    "address": "740, rue Saint-Charles Est, Longueuil, Montérégie, QC, J4H 1C2",
+    "hours": "services: lundi au vendredi 9h00 à 16h00, comptoir alimentaire et dépannage d'urgence: mardi 12h30 à 17h30, jeudi 12h30 à 15h00"
+  },
+  {
     "id": "groupe-alpha-laval-le-lav",
     "name": "Groupe Alpha Laval (Le)",
     "category": "social",
@@ -20885,6 +26192,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.groupealphalaval.com",
     "address": "485, boulevard des Laurentides, bureaux 101 et 105, 1er et 3e étage, Pont-Viau, Laval, QC, H7G 2V2",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "groupe-amical-de-sainte-julie-le-mtg",
+    "name": "Groupe Amical De Sainte-Julie (Le)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Sainte-Julie",
+    "province": "QC",
+    "phone": "514 371-4912",
+    "description": "* Repas communautaires.* Repas de Noël.* Activités: bingo et jeux de cartes. | Clientèle: résident·e·s de Sainte-Julie | Territoire: Sainte-Julie | Statut: organisme à but non lucratif",
+    "address": "550, boulevard Saint-Joseph, Sainte-Julie, Montérégie, QC, J3E 1W8",
+    "hours": "Voir site web"
   },
   {
     "id": "groupe-communautaire-desch-nes-out",
@@ -21207,6 +26526,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi."
   },
   {
+    "id": "groupes-de-m-decine-de-famille-u-mtg",
+    "name": "Groupes De Médecine De Famille Universitaire Richelieu-Yamaska",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 771-3558",
+    "description": "Services médicaux avec et sans rendez-vous pour la clientèle inscrite.* Suivi de grossesse.* Suivi de maladies chroniques.* Urgences mineures.* Chirurgies mineures.* Clinique locomoteur.* Vaccination antigrippale.* Désensibilisation à un allergène.* Dépistage ITSS.* Pédiatrie 0 à 5 ans.* Prise en charge par un médecin de famille.* Visite à domicile par un médecin pour les patients ne pouvant pas se déplacer. | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/installations/groupe-de-medecine-de-famille-universitaire-richelieu- yamaska-gmf-u",
+    "address": "1021, rue Gauthier, Saint-Hyacinthe, Montérégie, QC, J2S 8T2",
+    "hours": "lundi au vendredi 8h00 à 17h00"
+  },
+  {
     "id": "gymno-lanaudiere-rep",
     "name": "Gymno Lanaudière",
     "category": "social",
@@ -21231,6 +26563,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.gymno.org/article/257-gymno-laval.html",
     "address": "2465, rue Honoré-Mercier, Sainte-Rose, Laval, QC, H7L 2S9",
     "hours": "bureau: lundi au vendredi 9h00 à 16h00, activités: vendredi soir, samedi et dimanche matin, camp de jour estival: 7h15 à 17h30"
+  },
+  {
+    "id": "gymno-mont-r-gie-mtg",
+    "name": "Gymno Montérégie",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Sainte-Julie",
+    "province": "QC",
+    "phone": "",
+    "description": "Activités pour enfants ayant des difficultés d'apprentissage.* Les Explorateurs: jeux permettant de stimuler le développement de l'enfant (gymnase, piscine). | Clientèle: enfants de 5 à 10 ans | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.gymno.org/article/271-gymno-monteregie.html",
+    "address": "2080, rue Bordas, Sainte-Julie, Montérégie, QC, J3E 2L5",
+    "hours": "automne, hiver et printemps, dimanche 10h00 à 12h00"
   },
   {
     "id": "generation-elles-drv",
@@ -21413,6 +26758,42 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "habitations-la-gaillarde-mtg",
+    "name": "Habitations La Gaillarde",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Philippe",
+    "province": "QC",
+    "phone": "450 907-0634",
+    "description": "Logements subventionnés et non-subventionnés.* Appartements 3½, 4½ et 5½.* Logements adaptés pour personnes à mobilité réduite.* Salle communautaire. | Clientèle: personnes autonomes de 65 ans et plus, personnes seules ou familles de 65 ans et moins Capacité: personnes aînées: 18 logements subventionnés, personnes 65 ans et moins: 6 logements subventionnés | Territoire: MRC Roussillon | Statut: organisme à but non lucratif",
+    "address": "90, rue Foucreault, bureau 100, Saint-Philippe, Montérégie, QC, J0L 2K0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "habitations-la-petite-prairie-le-mtg",
+    "name": "Habitations La Petite Prairie (Les)",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "",
+    "description": "* Logements subventionnés pour familles et personnes seules. | Clientèle: personnes ou familles à faible ou moyen revenu Capacité: 16 logements | Territoire: La Prairie | Statut: organisme à but non lucratif",
+    "address": "320, rue Conrad-Pelletier, bureau 100, La Prairie, Montérégie, QC, J5R 4B2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "habitations-logis-ciel-mtg",
+    "name": "Habitations Logis-Ciel",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "",
+    "description": "Logements subventionnés et non-subventionnés pour personnes aînées, jeunes familles et personnes seules.* Appartements 3½, 4½ et 5½.* Logements adaptés pour personnes à mobilité réduite. | Clientèle: personnes âgées de 65 ans et plus, autonomes ou en légère perte d'autonomie, jeunes familles et personnes seules, à faible ou modeste revenu Capacité: 26 logements, dont 13 sont subventionnés | Territoire: MRC Roussillon | Statut: None or unknown",
+    "address": "67, rue Pinsonneault, Saint-Constant, Montérégie, QC, J5A 2T4",
+    "hours": "Voir site web"
+  },
+  {
     "id": "habitations-nouveau-d-part-les-out",
     "name": "Habitations Nouveau Départ (Les)",
     "category": "social",
@@ -21437,6 +26818,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "habitationspartagees.ca",
     "address": "331, boulevard de la Cité-des-Jeunes, bureau 109, Gatineau, Outaouais, QC, J8Y 6T3",
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "habitations-paul-pratt-les-mtg",
+    "name": "Habitations Paul Pratt (Les)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 670-0006",
+    "description": "Habitations sociales et communautaires.* Logements subventionnés.* Salle à manger, 5 repas par semaine.* Soutien communautaire.* Salons communautaires sur chaque étage et centre communautaire.* Système d'urgence falcultatif.* Câble, téléphone et Internet. | Clientèle: personnes de 65 ans et plus, autonomes ou en légère perte d'autonomie Capacité: 174 appartements | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "habitations-paul-pratt.com",
+    "address": "300, rue Lamarre, Longueuil, Montérégie, QC, J4J 0A1",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "habitations-saint-christophe-les-lav",
@@ -21464,6 +26858,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 6h30 à 18h00, samedi 9h00 à 15h00"
   },
   {
+    "id": "halte-du-coin-la-mtg",
+    "name": "Halte Du Coin (La)",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "438 270-1633",
+    "description": "Itinérance* Hébergement d'urgence de nuit à haut seuil d'accessibilité pour les personnes en situation d'itinérance.* Accès à des douches.* Friperie.Centre de jour* Aide, soutien, écoute et référencement.* Prévention et sensibilisation.* Accompagnement dans les démarches. | Clientèle: personnes en situation d'itinérance Capacité: refuge: 40 places | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "lahalteducoin.org",
+    "address": "1, boulevard Curé-Poirier Est, Longueuil, Montérégie, QC, J4J 2C6",
+    "hours": "hébergement d'urgence de nuit: période d'inscription: 7 jours, 8h15 à 16h00, admission: à partir de 16h30, fermé les mercredis de 13h00 à 16h30, centre de jour: vendredi, samedi et dimanche 8h15 à 15h45"
+  },
+  {
     "id": "nb-shelter-moncton",
     "name": "Harvest House – Hébergement urgence",
     "category": "housing",
@@ -21488,6 +26895,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://harvesttable.ca",
     "address": "3303 Mainway, Burlington, ON L7M 1A6",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
+  },
+  {
+    "id": "havre-le-mtg",
+    "name": "Havre (Le)",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "450 671-9160",
+    "description": "Logement à long terme pour personnes atteintes d'une maladie mentale.* Visites amicales, contacts sociaux réguliers.* Assistance pour les procédures médicales, sociales et de services sociaux.* Références vers d'autres services.* Soutien à la vie quotidienne: établissement d'un budget, organisation des repas, définition d'objectifs.* Activités individuelles et de groupe. | Clientèle: personnes de 18 ans et plus vivant avec un diagnostic de santé mentale Capacité: 30 | Territoire: île de Montréal, Montérégie, Estrie | Statut: organisme à but non lucratif",
+    "website": "ourharbour.org",
+    "address": "440, avenue Notre-Dame, Saint-Lambert, Montérégie, QC, J4P 2K4",
+    "hours": "lundi au vendredi 9h00 à 16h30"
   },
   {
     "id": "ab-health-link",
@@ -21587,6 +27007,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "hemmingford-canton-mtg",
+    "name": "Hemmingford - Canton",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Hemmingford",
+    "province": "QC",
+    "phone": "450 247-2050",
+    "description": "Gestion des services municipaux.* Gestion et paiement des taxes municipales.* Calendrier de collecte des matières résiduelles: https://canton.hemmingford.ca/wp-content/uploads/2024/12/calendrier- 2025.pdf* Service de sécurité civile et d'incendies.* Service d'urbanisme: permis de construction.* Licence pour chien. | Territoire: Hemmingford | Statut: organisme municipal",
+    "website": "canton.hemmingford.ca",
+    "address": "505, rue Frontière, bureau 3, Hemmingford, Montérégie, QC, J0L 1H0",
+    "hours": "lundi et mercredi 9h00 à 12h00 et 13h00 à 16h00, vendredi sur rendez-vous"
+  },
+  {
+    "id": "heritage-treatment-foundation-mtg",
+    "name": "Heritage Treatment Foundation",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Huntingdon",
+    "province": "QC",
+    "phone": "450 264-3123",
+    "description": "Centre de réadaptation interne d'une durée de 30 à 90 jours.* Programme distinct pour les dépendances aux substances.* Thérapie pour la consommation d'alcool et de drogues.* Thérapie individuelle, familiale, de couple et de groupe.* Thérapie individuelle pour les proches (18 ans et plus).* Désintoxication médicale, aux opiacés et aux médicaments.* Accompagnement juridique.* Art-thérapie, ressourcement spirituel, méditation et activités physiques.* Suivi post-cure. | Clientèle: adultes ayant une problématique de dépendance (alcool et drogue), leurs proches, personnes sur un programme de substitution (Méthadone et Suboxone) Capacité: hommes: 6, femmes: 6 | Territoire: Canada | Statut: organisme à but non lucratif",
+    "website": "soberrecovery.ca",
+    "address": "2678, route 138, HUNTINGDON, Montérégie, QC, J0S 1H0",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "imm-himo-mtl",
     "name": "Hirondelle – Services d'accueil et d'intégration",
     "category": "immigration",
@@ -21614,6 +27060,58 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "hyper-lune-mtg",
+    "name": "Hyper-Lune",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 678-8434",
+    "description": "Entraide et soutien pour personnes vivants avec un trouble du déficit de l'attention avec ou sans hyperactivité (TDA/H) et leurs proches.* Discussion et relation d'aide.* Ligne téléphonique d'écoute et de références.* Accompagnement en milieu scolaire pour les parents.* Rencontres informatives.* Rencontres individuelles ou familiales.* Observation en centre de la petite enfance et en garderie.* Groupe de soutien pour enfants et adolescent·e·s.* Groupe de soutien pour les parents d'enfants vivant avec un TDAH.* Formation pour les familles et les professionnel·le·s du milieu.* Cafés-rencontres pour adultes.* Conférences. | Clientèle: personnes vivants avec un trouble du déficit de l'attention avec ou sans hyperactivité (TDA/H) parents d'enfants TDAH: enfants 6 à 15 ans, ayant un diagnostic ou en processus de l'obtenir, leur famille, les adultes, les professionnel·le·s du milieu | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.hyper-lune.org",
+    "address": "5660, chemin de Chambly, bureau 206-201, Longueuil, Montérégie, QC, J3Y 7E5",
+    "hours": "mardi au jeudi 9h00 à 16h00, lundi et vendredi en télétravail, variables le dimanche et certains soirs de semaine"
+  },
+  {
+    "id": "h-bergement-l-entre-deux-mtg",
+    "name": "Hébergement L'Entre-Deux",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 651-0715",
+    "description": "Démarche thérapeutique en hébergement.* Hébergement d'une durée de 15 semaines.* Intervention individuelle et de groupe.* Ateliers de régulation des émotions, conscience corporelle, yoga et zentangle.* Suivi posthébergement de 8 mois. | Clientèle: femmes de 18 ans et plus en dépression ou ayant un trouble de personnalité limite, sans problème de toxicomanie ou abstinente depuis au moins 4 à 6 mois Capacité: hébergement: 12 femmes | Territoire: Grand Montréal, priorité aux personnes habitant la Montérégie | Statut: organisme à but non lucratif",
+    "website": "entredeux.org",
+    "address": "1625, rue Bourassa, LONGUEUIL, Montérégie, QC, J4J 3A5",
+    "hours": "administration: lundi au vendredi 8h00 à 16h30, hébergement: 24 heures, 7 jours"
+  },
+  {
+    "id": "h-bergement-la-casa-bernard-hube-mtg",
+    "name": "Hébergement La Casa Bernard-Hubert",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 442-4777",
+    "description": "Hébergement à court terme (jusqu'à 6 mois) de type chambre et pension.* Évaluation, orientation et référence.* Plan de séjour individualisé.* Encadrement et suivi psychosocial adapté.* Ateliers et séances de groupe. | Clientèle: hommes ou personnes s'identifiant comme hommes de 18 ans et plus Capacité: 22 places en chambre double | Territoire: Rive-Sud de Montréal | Statut: organisme à but non lucratif",
+    "website": "www.lacasa.quebec",
+    "address": "1215, chemin du Coteau-Rouge, Longueuil, Montérégie, QC, J4K 1X4",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "h-bergement-la-casa-bernard-hube-mtg-2",
+    "name": "Hébergement La Casa Bernard-Hubert - Les Apparts",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 442-4777",
+    "description": "Appartements transitoires permettant d'expérimenter et de maintenir une vie autonome en logement.* Séjour d'une durée maximale de 30 mois.* Intervention. | Clientèle: hommes de 18 ans et plus, avec ou sans enfants Capacité: 41 places pour 22 logements (3 1/2, 4 1/2 et 5 1/2) | Territoire: Rive-Sud de Montréal | Statut: organisme à but non lucratif",
+    "website": "www.lacasa.quebec",
+    "address": "7160, chemin Chambly, Longueuil, Montérégie, QC, J3Y 3R5",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "msss-hopital-quebec-hopital-1re-avenue",
     "name": "Hôpital 1re Avenue",
     "category": "health",
@@ -21625,6 +27123,32 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "10, rue de l'Espinay, Québec, QC G1L 3L5",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "h-pital-anna-laberge-mtg",
+    "name": "Hôpital Anna-Laberge",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 699-2425",
+    "description": "Hôpital de soins généraux et spécialisés.* Urgence.* Centre de prélèvements.* Chirurgie mineure.* Avortement.* Planification familiale, contraception.* Radiologie.* Récupération des seringues et des aiguilles usagées.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues.* Désintoxication.* Médecine familiale.* Soins en fin de vie.* Salle d'allaitement.* Location de tire-lait.* Vaccination. Capacité: 225 lits | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/installations/hopital-anna-laberge",
+    "address": "200, boulevard Brisebois, Châteauguay, Montérégie, QC, J6K 4W8",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "h-pital-barrie-memorial-mtg",
+    "name": "Hôpital Barrie Memorial",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Ormstown",
+    "province": "QC",
+    "phone": "450 829-2321",
+    "description": "Hôpital de soins généraux et spécialisés.* Médecine générale.* Urgences et soins intensifs.* Chirurgie.* Cliniques ambulatoires: chirurgie, endoscopie, diabète, ophtalmologie, soins de plaie.* Clinique d'information sur le diabète.* Réadaptation physique.* Distribution et récupération de matériel d'injection.* Désintoxication.* Centre de prélèvements.* Laboratoire du sommeil. | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/installations/hopital-barrie-memorial-barrie-memorial-hospital",
+    "address": "28, rue Gale, Ormstown, Montérégie, QC, J0S 1K0",
+    "hours": "24 heures, 7 jours"
   },
   {
     "id": "msss-hopital-ormstown-hopital-barrie-memorial-barrie-memorial-hospital",
@@ -21677,6 +27201,32 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "3120, boulevard Taschereau, Longueuil, QC J4V 2H1",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "h-pital-charles-le-moyne-cliniqu-mtg",
+    "name": "Hôpital Charles-Le Moyne - Clinique Externe De Psychiatrie Pour Adultes",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 466-5620",
+    "description": "Soins et consultations psychiatriques pour adultes.* Sur référence uniquement. | Clientèle: adultes | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/clinique-externe-de-psychiatrie-pour-adultes",
+    "address": "2924, boulevard Taschereau, Longueuil, Montérégie, QC, J4V 2G8",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h30 à 16h00, sur rendez-vous"
+  },
+  {
+    "id": "h-pital-charles-le-moyne-cliniqu-mtg-2",
+    "name": "Hôpital Charles-Le Moyne - Clinique Pep",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 466-5000",
+    "description": "Clinique spécialisée pour les personnes de 18 à 35 ans vivant un premier épisode psychotique non traité.* Accueil et évaluation.* Traitement et réadaptation. | Clientèle: personnes de 12 à 35 ans ayant vécu un premier épisode psychotique, incluant tous types de psychoses confondues, à l'exception des psychoses secondaires dues à un trouble physique | Territoire: Montérégie-Centre: Réseau local de service Champlain, Réseau local de service du Haut- Richelieu-Rouville | Statut: organisme à but non lucratif",
+    "website": "www.santemonteregie.qc.ca/services/services-psychosociaux/programme-premier-episode-une- reponse-la-psychose",
+    "address": "1406, avenue Victoria, Longueuil, Montérégie, QC, J4V 1M1",
+    "hours": "Voir site web"
   },
   {
     "id": "msss-hopital-quebec-hopital-chemin-sainte-foy",
@@ -22446,18 +27996,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
-    "id": "msss-hopital-montreal-hopital-general-juif",
-    "name": "Hôpital Général Juif",
-    "category": "health",
-    "subcategory": "Hôpital",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "",
-    "address": "4335, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E4",
-    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
-  },
-  {
     "id": "msss-hopital-montreal-hopital-general-juif-2",
     "name": "Hôpital Général Juif",
     "category": "health",
@@ -22469,6 +28007,18 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "3755, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E2",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "msss-hopital-montreal-hopital-general-juif",
+    "name": "Hôpital Général Juif",
+    "category": "health",
+    "subcategory": "Hôpital",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "",
+    "address": "4335, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E4",
+    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
     "id": "msss-hopital-saint-hyacinthe-hopital-honore-mercier",
@@ -22623,6 +28173,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CISSS De La Montérégie-Est. Source: MSSS – Fichier M02 des installations.",
     "address": "1333, boulevard Jacques-Cartier Est, Longueuil, QC J4M 2A5",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
+  },
+  {
+    "id": "h-pital-pierre-boucher-clinique--mtg",
+    "name": "Hôpital Pierre-Boucher - Clinique Pep",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "514 617-5309",
+    "description": "Clinique spécialisée pour les personnes de 12 à 35 ans vivant un premier épisode psychotique non traité.* Accueil et évaluation.* Traitement et réadaptation.* Prévention des rechutes et la résistance au traitement.* Soutien et information aux familles.* Sensibilisation de la population. | Clientèle: personnes de 12 à 35 ans ayant vécu un premier épisode psychotique, incluant tous types de psychoses confondues, à l'exception des psychoses secondaires dues à un trouble physique | Territoire: RLS Pierre-Boucher: Boucherville, Contrecoeur, Longueuil, Varennes | Statut: organisme à but non lucratif",
+    "website": "aqppep.ca/programmes-pep/clinique-pep-hopital-pierre-boucher",
+    "address": "90, boulevard Sainte-Foy, local 90, Longueuil, Montérégie, QC, J4J 1W4",
+    "hours": "Voir site web"
   },
   {
     "id": "msss-hopital-terrebonne-hopital-pierre-le-gardeur",
@@ -22922,6 +28485,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi à jeudi 9h00 à 17h30"
   },
   {
+    "id": "info-justice-mont-r-gie-mtg",
+    "name": "Info Justice Montérégie",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "1 844 723-3700",
+    "description": "* Clinique d'information juridique: explication de la loi, information sur les types de recours, les actes de procédure et le déroulement des instances, orientation dans le système de la justice.* Référence vers des organismes, des professionnel·le·s ou vers un mode alternatif de résolution de conflits.* Services en personnes ou à distance.* Outils d'information juridique.* Séances d'information sur des sujets de nature juridique: droit de la famille, logement, petite créance, etc.* Ne représente pas les citoyen·ne·s devant les tribunaux.* Ne donne pas d'avis juridique. | Clientèle: grand public | Territoire: MRC Acton, MRC Beauharnois-Salaberry, MRC Brome-Missisquoi, MRC Marguerite- D'Youville, MRC La Haute-Yamaska, MRC La Vallée-du-Richelieu, MRC Pierre-De Saurel, MRC Roussillon, MRC Rouville, MRC Vaudreuil-Soulanges, MRC Les Jardins-de-Napierville, MRC Les Maskoutains, MRC Le Haut-Richelieu, MRC Le Haut-Saint-Laurent | Statut: organisme à but non lucratif",
+    "website": "https://info-justice.ca/centres/monteregie/",
+    "address": "6300, avenue Auteuil, bureau 503, Brossard, Montérégie, QC, J4Z 3P2",
+    "hours": "service en personne: lundi au jeudi 9h00 à 12h00 et 13h00 à 16h30, service par téléphone: lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00"
+  },
+  {
     "id": "urgent-info-crime",
     "name": "Info-Crime Québec",
     "category": "social",
@@ -22994,6 +28570,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "inform-elle-mtg",
+    "name": "Inform'Elle",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 877 443-8221",
+    "description": "* Ligne d'information juridique en droit familial, référence.* Médiation familiale pour couples mariés ou unis de fait en cas de rupture.* Base de données juridique en ligne sur le droit de la famille.* Cafés juridiques.* Conférences et formation. | Clientèle: parents, familles, organismes | Territoire: Grand Montréal | Statut: organisme à but non lucratif",
+    "website": "informelle.org",
+    "address": "2068, boulevard Édouard, Longueuil, Montérégie, QC, J4T 2A1",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "initiative-locale-st-fran-ois-en-lav",
     "name": "Initiative Locale St-François En Action",
     "category": "social",
@@ -23005,6 +28594,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.stfrancoisenaction.org",
     "address": "1000, rue Marie-Uguay, Saint-François, Laval, QC, H7A 0K3",
     "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "initium-au-del-de-la-schizophr-n-mtg",
+    "name": "Initium, Au-Delà De La Schizophrénie",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 928-9898",
+    "description": "Insertion socioprofessionnelle pour les personnes touchées par la schizophrénie. * Accueil, référence et soutien.* Milieu de vie: déjeuner, diner et collations, cuisine collective, comité social et journal communautaire.* Loisirs: jardinage, groupe de musique, jeux de société, hockey et tournoi de poker.* Groupe de femmes.* Préparation à l'emploi: activités de développement du savoir-faire et du savoir-être, activités de formation et bénévolat.* Emploi: services d'impression et d'infographie, aide à l'intégration sur le marché du travail et promotion de l'économie sociale. | Clientèle: personnes touchées par la schizophrénie ou par un trouble de santé mentale avec symptômes psychotiques | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "initium-org.com",
+    "address": "1301, rue Sainte-Hélène, Longueuil, Montérégie, QC, J4K 3S4",
+    "hours": "lundi au vendredi 8h00 à 17h00, imprimerie: lundi au jeudi 8h00 à 17h00"
   },
   {
     "id": "msss-hopital-montreal-institut-de-cardiologie-de-montreal",
@@ -23056,6 +28658,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à Institut National De Psychiatrie Légale Philippe-Pinel. Source: MSSS – Fichier M02 des installations.",
     "address": "10905, boulevard Henri-Bourassa Est, Montréal, QC H1C 1H1",
     "hours": "Service de crise disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "institut-nazareth-et-louis-brail-mtg",
+    "name": "Institut Nazareth Et Louis-Braille",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 800 361-7063",
+    "description": "Centre de réadaptation spécialisé en déficience visuelle.* Évaluation, information et sensibilisation.* Examen de la vue.* Enseignement du braille.* Activités sociales et loisirs.* Développement d'habiletés visant l'autonomie.* Services d'adaptation du milieu de vie, postes d'études et de travail.* Services d'adaptation de l'information en médias substituts.* Soutien psychosocial et intervention.* Orientation scolaire et professionnelle.* Prêt d'aides techniques (lunettes, loupe, agrandisseur d'écran, lecteur numérique, canne blanche) et de jeux et jouets adaptés.* Centre de documentation en déficience visuelle.* Réalisation et collaboration à la recherche et à la formation, développement et diffusion de l'expertise en déficience visuelle.* Adaptation du milieu de vie et réadaptation au travail.* Programme provincial de développement d'habiletés compensatoires pour la conduite automobile.* Boutique de produits adaptés. | Clientèle: personnes vivant avec une déficience visuelle | Territoire: île de Montréal, Montérégie, Laval | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/centre/organisation/institut-nazareth-et-louis-braille",
+    "address": "1111, rue Saint-Charles Ouest, bureau 200, Longueuil, Montérégie, QC, J4K 5G4",
+    "hours": "lundi au vendredi 8h00 à 17h00, boutique: lundi au jeudi 9h00 à 17h00"
   },
   {
     "id": "qc-sm-montreal-psy",
@@ -23121,6 +28736,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service de crise disponible 24h/24, 7j/7"
   },
   {
+    "id": "msss-chsld-quebec-institut-universitaire-en-sante-mentale-de-quebec",
+    "name": "Institut Universitaire En Santé Mentale De Québec",
+    "category": "health",
+    "subcategory": "CHSLD",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418-525-4444",
+    "description": "",
+    "address": "2601, chemin de la Canardière, Québec, QC G1J 2G3",
+    "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
     "id": "msss-centre-hospitalier-psychiatrique-quebec-institut-universitaire-en-sante-mentale-de-quebec",
     "name": "Institut Universitaire En Santé Mentale De Québec",
     "category": "mentalHealth",
@@ -23133,16 +28760,17 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service de crise disponible 24h/24, 7j/7"
   },
   {
-    "id": "msss-chsld-quebec-institut-universitaire-en-sante-mentale-de-quebec",
-    "name": "Institut Universitaire En Santé Mentale De Québec",
-    "category": "health",
-    "subcategory": "CHSLD",
-    "city": "Québec",
+    "id": "inter-section-mrc-d-acton-l-mtg",
+    "name": "Inter Section Mrc D'Acton (L')",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Acton Vale",
     "province": "QC",
-    "phone": "418-525-4444",
-    "description": "",
-    "address": "2601, chemin de la Canardière, Québec, QC G1J 2G3",
-    "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+    "phone": "450 366-0105",
+    "description": "* Soutien à l'entourage.* Prévention de la toxicomanie.* Sensibilisation et information sur la toxicomanie, l'estime de soi, les problématiques rencontrées à l'adolescence, etc.* Travail de rue.* Relation d'aide, écoute, soutien, information et références.* Distribution de naloxone.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV). | Clientèle: toute personne dans le besoin | Territoire: MRC d'Acton | Statut: organisme à but non lucratif",
+    "website": "linter-section.org",
+    "address": "1176, rue Bélair, Acton Vale, Montérégie, QC, J0H 1A0",
+    "hours": "travail de rue: 24 hours / 7 days"
   },
   {
     "id": "inter-femmes-rep",
@@ -23238,6 +28866,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Hébergement confidentiel 24h/24. Appeler d'abord."
   },
   {
+    "id": "int-gration-comp-tences-mtg",
+    "name": "Intégration Compétences",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 464-4481",
+    "description": "Emploi et revenu* Aide générale à la recherche d'emploi: aide à la rédaction de CV, simulation d'entrevue, réseautage, etc.* Service sans rendez-vous: soutien, information et accompagnement par un·e conseiller·ère.* Clarification du choix de carrière.* Formations gratuites de courte durée.* Vente-Conseil: programme d'intégration, de formation et de maintien en emploi dans le secteur du commerce en détail.* Services aux employeur·euse·s.Personnes immigrantes* L'Envol: aide à l'intégration et à la recherche d'emploi des personnes nouvellement arrivées.* Information, référence et soutien pour l'installation des personnes immigrantes.* Activités socioculturelles et ateliers thématiques.* Insertion professionnelle: préparation de CV et de lettre de présentation, aide à la recherche d'emploi, techniques et simulation d'entrevue.* Orientation et information scolaire et professionnelle: bilan des compétences, information sur les équivalences de diplômes, sur le système scolaire et les ordres professionnels.* Aide au démarrage d'entreprise.Jeunesse* Carrefour Jeunesse-Emploi: services gratuits de recherche à l'emploi pour les jeunes.* Créneau carrefour jeunesse: persévérance scolaire, autonomie personnelle et sociale, entrepreneuriat, bénévolat, volontariat.* L'École du Fort: milieu alternatif de scolarisation pour les jeunes décrocheur·euse·s.* Jeunes Volontaires: entrepreneuriat jeunesse.* L'Avenue de l'Emploi: soutien professionnel aux jeunes ayant des obstacles importants face à l'emploi.* Mes finances Mes choix: ateliers d'éducation financière.* Vocation en art: soutien aux jeunes artistes. | Clientèle: adultes, personnes immigrantes, jeunes de 16 à 35 ans | Territoire: MRC La Vallée-du-Richelieu | Statut: organisme à but non lucratif",
+    "website": "www.integrationcompetences.ca",
+    "address": "285, boulevard Cartier, Beloeil, Montérégie, QC, J3G 3R2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "int-gration-comp-tences-point-de-mtg",
+    "name": "Intégration Compétences - Point De Service Chambly",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Chambly",
+    "province": "QC",
+    "phone": "450 464-4481",
+    "description": "Emploi et revenu* Aide générale à la recherche d'emploi: aide à la rédaction de CV, simulation d'entrevue, réseautage, etc.* Service sans rendez-vous: soutien, information et accompagnement par un·e conseiller·ère.* Clarification du choix de carrière.* Formations gratuites de courte durée.* Vente-Conseil: programme d'intégration, de formation et de maintien en emploi dans le secteur du commerce en détail.* Services aux employeur·euse·s.Immigrant·e·s* L'Envol: aide à l'intégration et à la recherche d'emploi des personnes nouvellement arrivées.* Information, référence et soutien pour l'installation des personnes immigrantes.* Activités socioculturelles et ateliers thématiques.* Insertion professionnelle: préparation de CV et de lettre de présentation, aide à la recherche d'emploi, techniques et simulation d'entrevue.* Orientation et information scolaire et professionnelle: bilan des compétences, information sur les équivalences de diplômes, sur le système scolaire et les ordres professionnels.* Aide au démarrage d'entreprise.Jeunesse* Carrefour Jeunesse-Emploi: services gratuits de recherche à l'emploi pour les jeunes.* Créneau carrefour jeunesse: persévérance scolaire, autonomie personnelle et sociale, entrepreneuriat, bénévolat, volontariat.* L'École du Fort: milieu alternatif de scolarisation pour les jeunes décrocheu·euse·s.* Jeunes Volontaires: entrepreneuriat jeunesse.* L'Avenue de l'Emploi: soutien professionnel aux jeunes ayant des obstacles importants face à l'emploi.* Mes finances Mes choix: ateliers d'éducation financière.* Vocation en art: soutien aux jeunes artistes. | Clientèle: adultes, personnes immigrantes, jeunes de 16 à 35 ans | Territoire: MRC La Vallée-du-Richelieu | Statut: organisme à but non lucratif",
+    "website": "integrationcompetences.ca",
+    "address": "1282, avenue Bourgogne, Chambly, Montérégie, QC, J3L 1X9",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "int-gration-sociale-des-enfants--mtg",
+    "name": "Intégration Sociale Des Enfants En Milieu De Garde",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-2714",
+    "description": "Soutien à l'intégration en service de garde des enfants vivant avec une déficience, une situation de handicap ou des défis particuliers.* Service de soutien-conseil sur place ou en ligne pour les éducateur·rice·s et intervenant·e·s de services de garde scolaire.* Ateliers de formation.* Prêts de matériel et de livres. | Clientèle: services de garde, éducateur·rice·s, accompagnateur·rice·s, surveillant·e·s, parents, enfants vivant avec une déficience, un handicap ou un retard de développement | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "isemg.quebec",
+    "address": "386, rue de Gentilly Ouest, bureau 105, Longueuil, Montérégie, QC, J4H 2A2",
+    "hours": "lundi au vendredi 8h30 à 17h00"
+  },
+  {
     "id": "investissement-et-d-veloppement--out",
     "name": "Investissement Et Développement Gatineau",
     "category": "employment",
@@ -23303,6 +28970,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 to 16h00"
   },
   {
+    "id": "jardins-communautaires-de-ch-tea-mtg",
+    "name": "Jardins Communautaires De Châteauguay",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "",
+    "description": "Jardins communautaires et jardins de démonstration.* Jardinage écologique communautaire.* Gestion de parcelles de culture. | Clientèle: grand public Capacité: 102 lots | Territoire: Châteauguay | Statut: organisme à but non lucratif",
+    "address": "103, avenue de la Verdure, Châteauguay, Montérégie, QC, J6K 5G4",
+    "hours": "tout l'été: du lever au coucher du soleil"
+  },
+  {
+    "id": "jardins-communautaires-de-longue-mtg",
+    "name": "Jardins Communautaires De Longueuil (Les)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "",
+    "description": "* Promouvoir la vie en plein air tout en créant un lieu de rencontre et d'entraide.* Faciliter un conditionnement physique adapté à tout âge.* Permettre de savourer des légumes frais et de réaliser d'intéressantes économies.* Faire une demande de lot: jardinsdelongueuil.org/faire-une-demande-de-lot | Clientèle: citoyen·ne·s de Longueuil | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "jardinsdelongueuil.org",
+    "address": "1798, chemin du Lac, Poteau 3-25, Longueuil, Montérégie, QC, J4J 4V5",
+    "hours": "jardins: 7h00 à la noirceur, du 1er mai au 15 octobre"
+  },
+  {
     "id": "msss-chsld-saint-augustin-de-desmaures-jardins-du-haut-saint-laurent",
     "name": "Jardins Du Haut Saint-Laurent",
     "category": "health",
@@ -23328,20 +29020,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: lundi au vendredi 9h00 à 16h00, activités: lundi au jeudi 9h00 à 16h00, sur rendez- vous seulement"
   },
   {
-    "id": "mh-jeu-aide",
-    "name": "Jeu : aide et référence",
-    "category": "mentalHealth",
-    "subcategory": "Dépendance jeu",
-    "city": "Province",
-    "province": "QC",
-    "phone": "1-800-461-0140",
-    "description": "Ligne provinciale gratuite 24/7 pour problèmes de jeu. Source: aidejeu.ca.",
-    "website": "https://aidejeu.ca",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi.",
-    "isProvinceWide": true
-  },
-  {
     "id": "urgent-jeu-aide",
     "name": "Jeu : aide et référence",
     "category": "mentalHealth",
@@ -23356,6 +29034,20 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "mh-jeu-aide",
+    "name": "Jeu : aide et référence",
+    "category": "mentalHealth",
+    "subcategory": "Dépendance jeu",
+    "city": "Province",
+    "province": "QC",
+    "phone": "1-800-461-0140",
+    "description": "Ligne provinciale gratuite 24/7 pour problèmes de jeu. Source: aidejeu.ca.",
+    "website": "https://aidejeu.ca",
+    "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi.",
+    "isProvinceWide": true
+  },
+  {
     "id": "jeun-est-en-forme-lav",
     "name": "Jeun'Est En Forme",
     "category": "social",
@@ -23367,6 +29059,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "jeunestenforme.com",
     "address": "4901, rue Saint-Joseph, Saint-Vincent-de-Paul, Laval, QC, H7C 1H6",
     "hours": "lundi au jeudi 9h00 à 16h00"
+  },
+  {
+    "id": "jeunes-adultes-gai-e-s-point-de--mtg",
+    "name": "Jeunes Adultes Gai-E-S - Point De Service De Longueuil",
+    "category": "social",
+    "subcategory": "Sexe et genre",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 800 774-1349",
+    "description": "Organisme communautaire de sensibilisation, de soutien et de référencement pour toutes personnes touchées de près ou de loin par la diversité affective, sexuelle et de genre ou en questionnement. * Soutien individuel: au téléphone, en personne, en vidéoconférence (Messenger ou Teams).* Rencontres de groupe.* Activités sociales.* Ateliers et conférences en milieu scolaire et communautaire sur l'importance des alliés et sur les différentes orientations sexuelles et la diversité des genres.* Formation pour intervenant·e·s de la santé, du milieu scolaire et du milieu communautaire.* Représentation: kiosques et tables de concertation. | Clientèle: personnes touchées par la diversité affective, sexuelle et de genre, ou en questionnement | Territoire: Montérégie Centre | Statut: organisme à but non lucratif",
+    "website": "lejag.org",
+    "address": "150, rue Grant, bureau 229, Longueuil, Montérégie, QC, J4H 3H6",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "jeunes-adultes-gai-e-s-point-de--mtg-2",
+    "name": "Jeunes Adultes Gai-E-S - Point De Service De Salaberry-De-Valleyfield",
+    "category": "social",
+    "subcategory": "Sexe et genre",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "1 800 774-1349",
+    "description": "Organisme communautaire de sensibilisation, de soutien et de référencement pour toutes personnes touchées de près ou de loin par la diversité affective, sexuelle et de genre ou en questionnement. * Soutien individuel: au téléphone, en personne, en vidéoconférence (Messenger ou Teams).* Rencontres de groupe.* Activités sociales.* Ateliers et conférences en milieu scolaire et communautaire sur l'importance des alliés et sur les différentes orientations sexuelles et la diversité des genres.* Formation pour intervenant·e·s de la santé, du milieu scolaire et du milieu communautaire.* Représentation: kiosques et tables de concertation. | Clientèle: personnes touchées par la diversité affective, sexuelle et de genre, ou en questionnement | Territoire: Montérégie Ouest | Statut: organisme à but non lucratif",
+    "website": "lejag.org",
+    "address": "107, rue Jacques-Cartier, bureau 11, Salaberry-de-Valleyfield, Montérégie, QC, J6T 4R8",
+    "hours": "sur rendez-vous"
+  },
+  {
+    "id": "jeunesse-360-mtg",
+    "name": "Jeunesse 360",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Lazare",
+    "province": "QC",
+    "phone": "450 424-3043",
+    "description": "Services aux jeunes.* Projet X: animation et activités en soirée dans les parcs.* Patrouille à vélo et sensibilisation.* Ateliers de création artistique à l'aide de matières récupérées.* Ateliers de graffiti et soutien aux jeunes graffiteur·euse·s.* Aide aux devoirs pour les élèves au secondaire. | Clientèle: jeunes de 12 à 24 ans | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "jeunesse360.ca",
+    "address": "1425, chemin Sainte-Angéique, bureau 103, Saint-Lazare, Montérégie, QC, J7T 1Y9",
+    "hours": "lundi au vendredi 9h00 à 16h30"
   },
   {
     "id": "jeunesse-idem-out",
@@ -23436,6 +29167,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "septembre à mai, lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "jonathan-de-soulanges-les-mtg",
+    "name": "Jonathan De Soulanges (Les)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Polycarpe",
+    "province": "QC",
+    "phone": "450 265-3672",
+    "description": "Centre de jour pour personnes vivant avec une déficience physique ou intellectuelle.* Défense des droits.* Animation et encadrement.* Ateliers en alphabétisation.* Ateliers récréatifs: peintures à l'huile sur toile, céramique, artisanat.* Cafés-rencontres.* Aide technique et écoute active.* Téléphones sécurisants.* Sorties sociales et éducatives.* Repas communautaire hebdomadaire. | Clientèle: personnes 18 ans et plus vivant avec un handicap physique ou intellectuel | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "address": "1, rue Curé-Cholet, Saint-Polycarpe, Montérégie, QC, J0P 1X0",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
     "id": "drum-garde-josee-gauthier",
     "name": "Josée Gauthier",
     "category": "family",
@@ -23461,6 +29204,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi 9h00 à 17h00, mercredi 9h00 à 20h00, jeudi 9h00 à 17h00, vendredi et samedi 9h00 à 15h00"
   },
   {
+    "id": "joyeux-retrait-s-de-longueuil-mtg",
+    "name": "Joyeux Retraités De Longueuil",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 463-7100",
+    "description": "* Activités récréatives: aquaforme, badminton, balle-molle, baseball-poches, chorale, danse, golf, gymnastique, jeux de société, marche, pétanque, pickleball, qi-gong, quilles, soirées-souper, whist, zumba.* Appels d'amitié.* Soupers dansants, pique-niques.* Voyages, sorties. | Clientèle: personnes de 50 ans et plus | Territoire: Longueuil et les environs | Statut: organisme à but non lucratif",
+    "website": "www.lesjoyeuxretraites.com",
+    "address": "156, boulevard Churchill, Longueuil, Montérégie, QC, J4V 2M3",
+    "hours": "administration: mercredi 9h00 à 11h30"
+  },
+  {
     "id": "drum-garde-julie-cloutier",
     "name": "Julie Cloutier",
     "category": "family",
@@ -23484,6 +29240,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "justice-alternative-du-haut-rich-mtg",
+    "name": "Justice Alternative Du Haut-Richelieu",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-1799",
+    "description": "Application de certaines sanctions judiciaires et extrajudiciaires prévues par la Loi sur le système de justice pénale pour adolescent·e·s.* Travaux bénévoles, développement des habiletés sociales, démarches auprès de la victime.* Prévention en milieu scolaire.* Programme d'alternative à la suspension scolaire, pour la prévention du décrochage.* Programme de médiation scolaire.* Médiation citoyenne.* DÉGRAF: projet pour enlever les graffitis illégaux. | Clientèle: personnes de 12 à 17 ans | Territoire: MRC Le Haut-Richelieu, Napierville, Saint-Bernard-de-Lacolle, Saint-Cyprien-de- Napierville, Saint-Jacques-le-Mineur | Statut: organisme à but non lucratif",
+    "website": "www.jahr.ca",
+    "address": "870, rue du Curé-Saint-Georges, bureau 200, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 2Z8",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "justice-alternative-du-suro-t-mtg",
+    "name": "Justice Alternative Du Suroît",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "1 800 377-3576",
+    "description": "* Application de certaines sanctions judiciaires prévues par la Loi sur le système de justice pénale pour les adolescent·e·s: médiation pénale, travaux bénévoles, dédommagement, excuses.* Programmes Lois et conséquences et Lois et drogues: ateliers de développement des habiletés sociales.* Projets de gestion des conflits en milieu scolaire.* GRAFF et DÉGRAFF: projets pour enlever les graffitis illégaux et créer des fresques sur des sites autorisés.* Résoluthèque: centre de documentation sur la saine gestion des conflits. | Clientèle: jeunes de 12 à 17 ans | Territoire: MRC de Beauharnois-Salaberry, MRC du Haut-Saint-Laurent, MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "justicealternativedusuroit.com",
+    "address": "52, chemin Larocque, Salaberry-de-Valleyfield, Montérégie, QC, J6T 4A2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, animation de groupe: mardi soir"
   },
   {
     "id": "nu-crisis-nu",
@@ -23523,6 +29305,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "kateri-memorial-hospital-centre-mtg",
+    "name": "Kateri Memorial Hospital Centre",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Kahnawake",
+    "province": "QC",
+    "phone": "450 638-3930",
+    "description": "* Médecine familiale traditionnelle.* Santé communautaire: consultations, cours et visites prénatales et postnatales, clinique pour la bonne santé des bébés, santé scolaire, santé avant la grossesse, prévention de l'exposition prénatale à l'alcool.* Soins à domicile.* Soins hospitaliers à court et long terme.* Services sociaux.* Soutien sur le cancer.* Soins et éducation sur le diabète.* Services professionnels: dentaires, ophtalmologie et optométrie, pharmacie.* Ergothérapie.* Physiothérapie et soins des pieds.* Ortophonie.* Programme Iontstaronhtha de soutien à l'allaitement.* Éducation nutritionnelle.* Transport des patient·e·s.* Activités de loisirs pour les patient·e·s. | Clientèle: communauté de Kahnawake | Territoire: Kahnawake | Statut: organisme parapublic",
+    "website": "kmhc.ca",
+    "address": "10, chemin River, Kahnawake, Montérégie, QC, J0L 1B0",
+    "hours": "lundi au jeudi 8h30 à 16h30, analyses de sang: lundi au vendredi 7h00 à 9h00"
   },
   {
     "id": "yt-crisis-yt",
@@ -23757,6 +29552,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "l-le-perrot-ville-mtg",
+    "name": "L'Île-Perrot - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "L'Île-Perrot",
+    "province": "QC",
+    "phone": "514 453-1751",
+    "description": "Gestion des services municipaux.* Paiement des taxes municipales.* Service de sécurité incendie.* Permis de construction.* Calendrier des collectes des matières résiduelles: www.ile- perrot.qc.ca/services/environnement/collecte-des-matieres-residuelles* Système de notification d'urgence. | Territoire: L'Île-Perrot | Statut: organisme municipal",
+    "website": "www.ile-perrot.qc.ca",
+    "address": "110, boulevard Perrot, L'Île-Perrot, Montérégie, QC, J7V 3G1",
+    "hours": "lundi 8h30 à 12h00 et 13h00 à 16h30, mardi au vendredi 8h30 à 12h00 et 13h00 à 16h00, été: lundi au jeudi 8h00 à 12h00 et 13h00 à 16h15, vendredi 8h00 à 12h00"
+  },
+  {
     "id": "tr-garde-l-etoile-filante",
     "name": "L'étoile Filante",
     "category": "family",
@@ -23872,6 +29680,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.lapiaule.ca",
     "address": "490, boul. Cartier Ouest, Laval, QC H7N 5E1",
     "hours": "Hébergement d'urgence 24h/24. Présentation directe ou appel."
+  },
+  {
+    "id": "la-prairie-cour-municipale-mtg",
+    "name": "La Prairie - Cour Municipale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "450 444-6626",
+    "description": "Cour de justice de première instance où sont entendus les litiges en matière de règlements municipaux, d'infractions au Code de la sécurité routière ainsi que certaines infractions criminelles (conduite avec facultés affaiblies, vols de moins de 5000$ et méfaits).* Paiement ou contestation de contraventions.* Recouvrement de sommes dues.* Travaux compensatoires. | Territoire: La Prairie, Saint-Philippe, Saint-Mathieu | Statut: organisme municipal",
+    "website": "www.ville.laprairie.qc.ca",
+    "address": "170, boulevard Taschereau, bureau 400, La Prairie, Montérégie, QC, J5R 5H6",
+    "hours": "lundi au jeudi 8h15 à 12h00 et 13h00 à 16h30, vendredi 8h15 à 12h00"
+  },
+  {
+    "id": "la-prairie-ville-mtg",
+    "name": "La Prairie - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "450 444-6600",
+    "description": "Gestion des services municipaux.* Paiement des taxes municipales.* Collecte des matières résiduelles.* Permis de construction.* Service de sécurité incendie.* Licences pour chien.* Assermentation.* Système de notification d'urgence.* Ramassage d'animaux morts sur des lieux résidentiels. | Territoire: La Prairie | Statut: organisme municipal",
+    "website": "www.ville.laprairie.qc.ca",
+    "address": "170, boulevard Taschereau, bureau 400, La Prairie, Montérégie, QC, J5R 5H6",
+    "hours": "lundi au jeudi 8h15 à 12h00 et 13h00 à 16h30, vendredi 8h15 à 12h00"
   },
   {
     "id": "la-p-che-municipalit-out",
@@ -24003,6 +29837,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: lundi au vendredi 8h00 à 16h00, maison des jeunes: mercredi, jeudi et vendredi 18h00 à 21h00, samedi 13h00 à 17h00"
   },
   {
+    "id": "lacolle-municipalit-mtg",
+    "name": "Lacolle - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Lacolle",
+    "province": "QC",
+    "phone": "450 246-3201",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.lacolle.com/documentation/calendrier/collectes-haut-richelieu* Subvention pour les couches lavables.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Lacolle | Statut: organisme municipal",
+    "website": "www.lacolle.com",
+    "address": "1, rue de l'Église Sud, Lacolle, Montérégie, QC, J0J 1J0",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 17h00, vendredi 9h00 à 12h00"
+  },
+  {
     "id": "tr-garde-lamothe-garderie-en-milieu-familial",
     "name": "Lamothe garderie en milieu familial",
     "category": "family",
@@ -24014,6 +29861,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "lanterne-bleue-la-mtg",
+    "name": "Lanterne Bleue (La)",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 443-7335",
+    "description": "* Répit de fin de semaine: sorties le samedi et journées thématiques le dimanche adaptées selon les groupes d'âge.* Accompagnement spécialisé: ratio variable de 1 pour 1 à 1 pour 2. | Clientèle: enfants et jeunes autistes Capacité: 4 personnes par nuit, 5 à 7 personnes par jour | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.lalanternebleue.ca",
+    "address": "3020, avenue Barry, Brossard, Montérégie, QC, J4Z 1T6",
+    "hours": "centre de répit: vendredi 19h00 au dimanche 16h00, journées pédagogiques sur demande, bureau: lundi au vendredi 9h00 à 17h00"
   },
   {
     "id": "latekoe-out",
@@ -24143,6 +30003,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.laval.ca/Pages/Fr/Citoyens/ecocentre.aspx",
     "address": "1205, boulevard Dagenais Ouest, Sainte-Rose, Laval, QC, H7L 0A5",
     "hours": "lundi et mardi 8h30 à 17h30, mercredi, jeudi et vendredi 8h00 à 19h30, samedi et dimanche 8h00 à 17h30"
+  },
+  {
+    "id": "le-2159-volet-accueillir-mtg",
+    "name": "Le 2159 - Volet Accueillir",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 396-6426",
+    "description": "* Hébergement à moyen et long terme.* Accompagnement dans la démarche d'autonomie dans la transition vers la vie adulte incluant le retour aux études, la recherche d'emploi ou de stage, la recherche d'appartement et pour tous rendez-vous légaux, médicaux, etc. | Clientèle: jeunes de 15 à 25 ans à risque de délinquance, d'itinérance, d'exploitation sexuelle ou de problèmes de santé mentale, hébergement: youth 18 to 25 years old Capacité: 16 chambres | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.le2159.com",
+    "address": "2159, chemin de Chambly, Longueuil, Montérégie, QC, J4J 3Z1",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "le-2159-volet-reb-tir-mtg",
+    "name": "Le 2159 - Volet Rebâtir",
+    "category": "family",
+    "subcategory": "Violence et maltraitance",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 396-6426",
+    "description": "* Appartements d'urgence à court terme dédiés à la lutte contre l'exploitation sexuelle.* Suivis externes pour les jeunes filles vulnérables. | Clientèle: jeunes filles à risque ou victimes d'exploitation sexuelle Capacité: 2 chambres | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.le2159.com",
+    "address": "2159, chemin de Chambly, Longueuil, Montérégie, QC, J4J 3Z1",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "s-bunker-mtl",
@@ -24286,6 +30172,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 15h00, vendredi 8h00 à 12h00"
   },
   {
+    "id": "les-coteaux-biblioth-que-mtg",
+    "name": "Les Coteaux - Bibliothèque",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Les Coteaux",
+    "province": "QC",
+    "phone": "450 267-1414",
+    "description": "* Prêt et consultation de documents imprimés et audiovisuels.* Postes informatiques.* Expositions et conférences. | Territoire: Les Coteaux | Statut: organisme municipal",
+    "website": "les-coteaux.qc.ca/citoyens/loisirs-vie-communautaire/bibliotheque",
+    "address": "65, route 338, Les Coteaux, Montérégie, QC, J7X 1A2",
+    "hours": "mardi 13h30 à 19h30, mercredi 13h30 à 19h30, jeudi 13h30 à 19h30, vendredi et samedi 10h00 à 15h30"
+  },
+  {
+    "id": "les-coteaux-municipalit-mtg",
+    "name": "Les Coteaux - Municipalité",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Les Coteaux",
+    "province": "QC",
+    "phone": "450 267-3531",
+    "description": "Gestion des services municipaux. * Paiement des taxes municipales.* Permis de construction.* Collecte des matières résiduelles.* Licences pour animaux.* Alertes citoyennes, système d'alerte par courriel, texto ou téléphone pour les avis d'ébullition, travaux de voirie, bris ou autres mesures d'urgence: les- coteaux.omnivigil.com/5/3/?action_5=PersonCreateEdit* Subvention pour les couches lavables.* Subvention pour les barils récupérateurs d'eau de pluie.* Service d'incendie.* Frigo communautaire: fruits et légumes, produits laitiers et boulangerie acceptés, armoire pour le cannage et produits secs, viandes et les denrées entamées non autorisées. | Territoire: Les Coteaux | Statut: organisme municipal",
+    "website": "les-coteaux.qc.ca",
+    "address": "65, route 338, Les Coteaux, Montérégie, QC, J7X 1A2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, été: lundi au jeudi 8h00 à 12h00 et 12h45 à 16h30, vendredi 8h00 à 12h00, frigo communautaire: 24 heures, 7 jours"
+  },
+  {
     "id": "msss-chsld-montreal-les-cedres-centre-d-accueil-pour-personnes-agees",
     "name": "Les Cèdres - Centre D'Accueil Pour Personnes Âgées",
     "category": "health",
@@ -24407,6 +30319,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "libert-de-choisir-mtg",
+    "name": "Liberté De Choisir",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 370-3444",
+    "description": "Promotion des saines habitudes de vie et prévention de la dépendance aux drogues chez les jeunes.* Milieu scolaire: évaluation individuelle, intervention précoce, référence et accompagnement.* Animation d'ateliers éducatifs de prévention: 6e année primaire, secondaires et post-secondaires et formation du personnel.* Milieu communautaire: conférences et soutien aux organismes.* Pour les parents: conférences et ateliers de formation permettant de mieux comprendre la consommation de drogues chez les adolescent·es. | Clientèle: jeunes âgés de 12 à 24 ans, parents, intervenants, professeurs, organismes communautaires | Territoire: MRC Vaudreuil-Soulanges, MRC Roussillon, MRC Beauharnois-Salaberry, MRC Le Haut- Saint-Laurent | Statut: organisme à but non lucratif",
+    "website": "www.libertedechoisir.ca",
+    "address": "40, rue Sainte-Cécile, bureau 100, Salaberry-de-Valleyfield, Montérégie, QC, J6T 1L7",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
     "id": "urgent-aide-abus-aines",
     "name": "Ligne Aide Abus Aînés",
     "category": "family",
@@ -24504,18 +30429,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
-    "id": "v-ligne-parents",
-    "name": "LigneParents",
-    "category": "family",
-    "subcategory": "Soutien parental",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-361-5085",
-    "description": "Service d'écoute et d'intervention pour parents d'enfants 0-20 ans. Anonyme, confidentiel, gratuit. Téléphone, texto, clavardage. Disponible 24h/24.",
-    "hours": "Lun-ven 8h30-16h30. Sur RV.",
-    "isProvinceWide": true
-  },
-  {
     "id": "pw-ligneparents-famille",
     "name": "LigneParents",
     "category": "family",
@@ -24526,6 +30439,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "website": "https://www.ligneparents.com/",
     "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Sur RV.",
+    "isProvinceWide": true
+  },
+  {
+    "id": "v-ligne-parents",
+    "name": "LigneParents",
+    "category": "family",
+    "subcategory": "Soutien parental",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-361-5085",
+    "description": "Service d'écoute et d'intervention pour parents d'enfants 0-20 ans. Anonyme, confidentiel, gratuit. Téléphone, texto, clavardage. Disponible 24h/24.",
     "hours": "Lun-ven 8h30-16h30. Sur RV.",
     "isProvinceWide": true
   },
@@ -24687,6 +30612,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
+    "id": "loisirs-du-vieux-longueuil-les-mtg",
+    "name": "Loisirs Du Vieux-Longueuil (Les)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-6720",
+    "description": "* Activités culturelles: cours de guitare, cours de langues (anglais, espagnol, italien), ateliers de couture, arts plastiques, astronomie, etc.* Conditionnement physique: abdos-fessiers, cardio-boxe, djamboola, mise en forme pour les personnes aînées, stretching, méditation, pilates, Qi Gong, pound, taï chi, zumba, yoga, Essentrics, Stepfit, etc.* Cours de danse: danse en ligne, danse sociale, danse country, initiation à la danse pour enfants, latine adulte, hip-hop enfant, Zumbini 0-5 ans.* Sports récréatifs: personnes de 14 ans et plus: badminton, volleyball, basketball et pickleball. enfants: mise en forme famille, soccer, basketball, volleyball et yoga maman-bébé. | Clientèle: grand public | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "loisirsduvieuxlongueuil.com",
+    "address": "150, rue Grant, Longueuil, Montérégie, QC, J4H 3H6",
+    "hours": "lundi au jeudi 9h00 à 16h00, vendredi 9h00 à 12h30"
+  },
+  {
     "id": "loisirs-renaud-coursol-lav",
     "name": "Loisirs Renaud-Coursol",
     "category": "social",
@@ -24698,6 +30636,58 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "renaudcoursol.com",
     "address": "25, rue Saint-Louis, bureau 110, Pont-Viau, Laval, QC, H7G 4W3",
     "hours": "variables"
+  },
+  {
+    "id": "longueuil-bureau-du-protecteur-d-mtg",
+    "name": "Longueuil - Bureau Du Protecteur Du Citoyen",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 463-7147",
+    "description": "Examen des plaintes des personnes qui croient avoir été traitées de manière injuste ou incorrecte par un fonctionnaire ou un représentant de la Ville. * Défense des droits auprès de l'administration municipale et de ses gestionnaires.* Intervention pour que les services municipaux soient reçus et que la personne soit traitée de façon juste et équitable.* Formulaire de demande d'intervention: cms.longueuil.quebec/sites/default/files/medias/2020-11/Formulaire%20en%20ligne.pdf | Clientèle: citoyen·ne·s | Territoire: Longueuil | Statut: organisme municipal",
+    "website": "www.longueuil.quebec/fr/protecteur",
+    "address": "789, boulevard Roland-Therrien, Longueuil, Montérégie, QC, J4H 4A6",
+    "hours": "lundi au vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "longueuil-cour-municipale-mtg",
+    "name": "Longueuil - Cour Municipale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 463-7006",
+    "description": "Cour de justice de première instance où sont entendus les litiges en lien avec les règlements municipaux, les infractions au Code de la sécurité routière, la Loi de l'impôt sur le tabac et la Loi sur le transport par taxi.* Paiement ou contestation de contraventions.* Recouvrement de sommes dues.* Travaux compensatoires. | Territoire: agglomération de Longueuil | Statut: organisme municipal",
+    "website": "www.longueuil.quebec/fr/services/cour-municipale",
+    "address": "4025, boulevard Taschereau, Longueuil, Montérégie, QC, J4T 2G6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, été: lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "longueuil-cocentre-marie-victori-mtg",
+    "name": "Longueuil - Écocentre Marie-Victorin",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 463-7311",
+    "description": "Récupération des matières résiduelles.* Résidus domestiques dangereux.* Résidus informatiques et électroniques.* Métaux et ferraille.* Pneus.* Bois et débris de construction.* Matières granulaires: brique, béton, asphalte, etc.* Encombrants: fauteuils, matelas, etc.* Appareils avec halocarbures: réfrigérateur, congélateur, climatiseur, etc.* Matières recyclables.* Branches, tourbe, terre et résidus verts. | Clientèle: personnes résidant à Longueuil | Territoire: agglomération de Longueuil | Statut: organisme municipal",
+    "website": "www.longueuil.quebec/fr/ecocentres",
+    "address": "1140, boulevard Marie-Victorin, Longueuil, Montérégie, QC, J4G 2H9",
+    "hours": "1er novembre au 31 mars: mercredi au vendredi 10h00 à 18h00, samedi et dimanche 9h00 à 17h00, 1er avril au 31 octobre: lundi au vendredi 8h00 à 18h00, samedi et dimanche 8h00 à 17h00"
+  },
+  {
+    "id": "longueuil-cocentre-payer-mtg",
+    "name": "Longueuil - Écocentre Payer",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 463-7311",
+    "description": "Récupération des matières résiduelles.* Résidus domestiques dangereux.* Résidus informatiques et électroniques.* Métaux et ferraille.* Pneus.* Bois et débris de construction.* Matières granulaires: brique, béton, asphalte, etc.* Encombrants: fauteuils, matelas, etc.* Appareils avec halocarbures: réfrigérateur, congélateur, climatiseur, etc.* Matières recyclables.* Branches, tourbe, terre et résidus verts. | Clientèle: personnes résidant à Longueuil | Territoire: agglomération de Longueuil | Statut: organisme municipal",
+    "website": "www.longueuil.quebec/fr/ecocentres",
+    "address": "5050, rue Ramsay, Longueuil, Montérégie, QC, J3Y 2S3",
+    "hours": "1er avril au 31 octobre: lundi au vendredi 8h00 à 18h00, samedi et dimanche 8h00 à 17h00, 1er novembre au 31 mars: lundi au vendredi 9h00 à 18h00, samedi et dimanche 9h00 à 17h00"
   },
   {
     "id": "drum-garde-louise-beland",
@@ -24751,6 +30741,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00, horaire d'été: lundi au jeudi 9h00 à 17h00, vendredi 9h00 à 12h00"
   },
   {
+    "id": "lunch-club-de-boucherville-mtg",
+    "name": "Lunch Club De Boucherville",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 641-0485",
+    "description": "* Cuisine collective.* Repas communautaires. | Clientèle: personnes aînées de 65 ans et plus Capacité: 60 | Territoire: Boucherville | Statut: organisme à but non lucratif",
+    "address": "31, rue Pierre Boucher, Boucherville, Montérégie, QC, J4B 5A8",
+    "hours": "septembre à mai, mardi"
+  },
+  {
     "id": "ab-women-shelter-ab",
     "name": "Lurana Shelter – Femmes Edmonton",
     "category": "housing",
@@ -24762,6 +30764,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.luranashelter.com",
     "address": "Adresse confidentielle (refuge pour femmes)",
     "hours": "Service essentiel Alberta."
+  },
+  {
+    "id": "l-gion-royale-canadienne-filiale-mtg",
+    "name": "Légion Royale Canadienne - Filiale 94",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 466-0308",
+    "description": "* Legion mobile meals: livraison de repas à domicile.* Activités variées: café-rencontres, fléchettes, crible, jeux-questionnaires, etc.* Location de salles. | Clientèle: anciens combattants et personnes à leur charge, militaires en service, grand public, livraison de repas: personnes aînées, personnes à mobilité réduite | Territoire: Greenfield Park | Statut: organisme à but non lucratif",
+    "website": "www.legion94.ca",
+    "address": "205, rue Empire, Longueuil, Montérégie, QC, J4V 1T9",
+    "hours": "livraison de repas: mercredi, crible: mardi, mercredi, café-rencontres, jeux-questionnaires: jeudi, fléchettes: vendredi, dimanche"
+  },
+  {
+    "id": "l-ry-ville-mtg",
+    "name": "Léry - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Léry",
+    "province": "QC",
+    "phone": "450 692-6861",
+    "description": "Gestion des services municipaux.* Paiement des taxes municipales.* Collecte des matières résiduelles.* Permis de construction.* Service d'incendie.* Licences pour chien. | Territoire: Léry | Statut: organisme municipal",
+    "website": "www.lery.ca",
+    "address": "1, rue de l'Hôtel-de-Ville, Léry, Montérégie, QC, J6N 1E8",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
   },
   {
     "id": "m-ado-jeunes-out",
@@ -24894,6 +30922,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "bureaux administratifs: lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 12h00, information touristique: lundi au vendredi 10h00 à 18h00"
   },
   {
+    "id": "ma-deuxi-me-maison-moi-mtg",
+    "name": "Ma Deuxième Maison À Moi",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "450 671-5344",
+    "description": "* Répit et service de garde après l'école.* Activités de jour pour les enfants durant les fins de semaine et les congés scolaires.* Sorties et activités créatives, récréatives et sociales pour les adultes.* Camps d'été pour enfants et adultes. | Clientèle: personnes vivant avec une déficience intellectuelle, personnes autistes Capacité: 30 enfants par jour, 36 adultes par jour | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.madeuxiememaison.org",
+    "address": "78, avenue Betournay, Saint-Lambert, Montérégie, QC, J4R 2L8",
+    "hours": "volet adulte: lundi au vendredi 8h30 à 15h30, volet jeunesse: jours, soirs et fin de semaine à l'année"
+  },
+  {
     "id": "tr-garde-ma-petite-ecole-du-monde",
     "name": "Ma petite école du monde",
     "category": "family",
@@ -24907,6 +30948,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "macadam-sud-mtg",
+    "name": "Macadam Sud",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 677-9021",
+    "description": "Centre de soutien pour les jeunes.* Information et référence.* Squat: aide à la prise en charge de l'occupation du temps libre, activités récréatives, soutien aux familles.* Travail de rue et de milieu: prévention, distribution de matériel de consommation sécuritaire et de condoms, éducation parentale.* Capab: école de niveau secondaire adaptée, décrochage scolaire, difficultés et troubles d'apprentissage.* Le Troc: unité mobile d'intervention.* Espace-jeunes: centre de jour, aide à la recherche de logements, soutien à l'emploi des jeunes, éducation populaire pour adulte, écoute, référence et accompagnement.* Prévention de la violence, du crime et de la délinquance juvénile.* Soutien pour les auteurs de violence.* Aide aux victimes d'agression sexuelle, inceste et violence conjugale.* Prévention des dépendances.* TAPAJ : Travail alternatif payé à la journée.* Distribution de bandelettes de test du fentanyl.* Distribution de Naloxone.* Le LAB: service de vérification des substances contenues dans les drogues. | Clientèle: jeunes de 12 à 35 ans marginalisé·e·s ou à risque de marginalisation, Squat: jeunes de 12 à 17 ans, Espace-jeunes: jeunes de 15 à 35 ans, toute personne en détresse sans limite d'âge, travail de rue et le Troc: sans limite d'âge | Territoire: Longueuil, Brossard, et les environs | Statut: organisme à but non lucratif",
+    "website": "www.macadamsud.org",
+    "address": "895, rue Sainte-Hélène, Longueuil, Montérégie, QC, J4K 3R7",
+    "hours": "services: variables, administration: lundi au vendredi 9h00 à 17h00"
+  },
+  {
     "id": "magasin-partage-mtl",
     "name": "Magasin-Partage de Montréal",
     "category": "food",
@@ -24918,6 +30972,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://magasinpartage.com",
     "address": "1751, rue Richardson, Montréal, QC H3K 1G6",
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
+  },
+  {
+    "id": "magie-des-mots-la-mtg",
+    "name": "Magie Des Mots (La)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Coteau-du-Lac",
+    "province": "QC",
+    "phone": "450 763-1331",
+    "description": "* Cours de français en petits groupes de 2 à 6 personnes.* Soutien préparatoire pour divers tests: test de développement général (TDG), test d'équivalence de niveau de scolarité de 5e secondaire (TENS), épreuve uniforme de français (EUF).* Aide aux devoirs.* Cours de français langue seconde: débutant, intermédiaire ou avancé.* Littératie numérique, littératie alimentaire, littératie en santé, littératie financière, littératie culturelle et littératie compétences civiques. | Clientèle: personnes de 16 ans et plus | Territoire: Coteau-du-Lac, Les Cèdres, Les Coteaux, Pointe-des-Cascades, Pointe-Fortune, Rigaud, Rivière-Beaudette, Saint-Clet, Saint-Lazare, Saint-Polycarpe, Saint-Télesphore, Saint-Zotique, Sainte-Marthe, Sainte-Justine-de-Newton, Très-Saint-Rédempteur | Statut: organisme à but non lucratif",
+    "website": "www.lamagiedesmots.com",
+    "address": "E - 340, chemin du Fleuve, Coteau-du-Lac, Montérégie, QC, J0P 1B0",
+    "hours": "lundi au jeudi 8h30 à 16h30"
   },
   {
     "id": "maison-adhemar-dion-la-trb",
@@ -25010,6 +31077,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi au jeudi 9h00 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "maison-d-accueil-le-joins-toi-lo-mtg",
+    "name": "Maison D'Accueil Le Joins-Toi - Longueuil",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 445-8000",
+    "description": "Maison de transition.* Hébergement avec surveillance.* Réhabilitation: rencontre avec un·e conseiller·ère clinique et ateliers.* Réinsertion sociale: aide et références auprès d'organismes du milieu dans les domaines de l'employabilité, de l'éducation, de l'implication sociale, des loisirs, des finances, de la toxicomanie, de la gestion des émotions, etc.* Surveillance: minimisation du risque de récidive, protection de la communauté et encadrement.* Suivi communautaire. | Clientèle: personnes judiciarisées issus du système correctionnel provincial ou fédéral Capacité: 24 personnes | Territoire: Canada | Statut: organisme à but non lucratif",
+    "website": "www.maisonjoinstoi.org",
+    "address": "6505, boulevard Maricourt, Longueuil, Montérégie, QC, J3S 1S8",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "maison-d-accueil-le-joins-toi-sa-mtg",
+    "name": "Maison D'Accueil Le Joins-Toi - Saint-Hyacinthe",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 771-5026",
+    "description": "Bureau de suivi communautaire externe.* Consultation individuelle et de groupe.* Aide à la réhabilitation sociale, en matière judiciaire, à la recherche d'emploi et de formation.* Soutien socio-affectif.* Références. | Clientèle: hommes judiciarisés issus du système correctionnel provincial | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.maisonjoinstoi.org",
+    "address": "5085, boulevard Laurier Ouest, Saint-Hyacinthe, Montérégie, QC, J2S 3V4",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "maison-d-accueil-le-joins-toi-sa-mtg-2",
+    "name": "Maison D'Accueil Le Joins-Toi - Saint-Jean-Sur-Richelieu",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 358-6334",
+    "description": "Bureau de suivi communautaire externe.* Consultation individuelle et de groupe.* Aide à la réhabilitation sociale, en matière judiciaire, à la recherche d'emploi et de formation.* Soutien socio-affectif.* Références. | Clientèle: hommes judiciarisés issus du système correctionnel provincial | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.maisonjoinstoi.org",
+    "address": "232, rue Longueuil, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 6P4",
+    "hours": "lundi au vendredi 8h00 à 17h00"
+  },
+  {
     "id": "maison-d-accueil-mutchmore-out",
     "name": "Maison D'Accueil Mutchmore",
     "category": "social",
@@ -25021,6 +31127,95 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "accueilmutchmore.ca",
     "address": "142, rue Mutchmore, Gatineau, Outaouais, QC, J8Y 3T7",
     "hours": "lundi au vendredi 8h30 à 15h30, accueil: lundi au vendredi 9h00 à 15h00"
+  },
+  {
+    "id": "maison-d-entraide-saint-alphonse-mtg",
+    "name": "Maison D'Entraide Saint-Alphonse",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 676-3712",
+    "description": "* Dépannage alimentaire.* Friperie: vente d'articles usagés et dons au besoin.* Paniers de Noël. | Clientèle: personnes dans le besoin ou à faible revenu, personnes immigrantes Capacité: 95 familles par semaine | Territoire: Brossard | Statut: organisme à but non lucratif",
+    "address": "2190, rue André, Brossard, Montérégie, QC, J4Z 2Z8",
+    "hours": "aide alimentaire: lundi au jeudi 9h00 à 16h30, friperie: mercredi au vendredi 13h00 à 20h30"
+  },
+  {
+    "id": "maison-d-entraide-saint-alphonse-mtg-2",
+    "name": "Maison D'Entraide Saint-Alphonse - Récupération D'Articles Usagés",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 676-3712",
+    "description": "* Récupération de dons: vêtements, articles de maison, jouets et livres.* Collecte à domicile. | Clientèle: grand public | Territoire: Brossard | Statut: organisme à but non lucratif",
+    "address": "2190, rue André, Brossard, Montérégie, QC, J4Z 2Z8",
+    "hours": "friperie: mercredi au vendredi 13h00 à 20h30"
+  },
+  {
+    "id": "maison-d-h-bergement-d-pannage-d-mtg-3",
+    "name": "Maison D'Hébergement Dépannage De Valleyfield",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 371-9617",
+    "description": "Maison d'hébergement temporaire pour personnes en situation de vulnérabilité.* Hébergement à court terme: durée maximal de 3 mois.* Orientation et référence.* Repas et services de base.* Accompagnement et d'aide psychosociale. | Clientèle: personnes de 18 ans et plus volontaires à entreprendre des démarches à l'amélioration de leur situation Capacité: 10 chambres avec 2 lits chaque (non-mixtes) | Territoire: MRC Beauharnois-Salaberry, MRC Vaudreuil-Soulanges, MRC Le Haut-Saint-Laurent | Statut: organisme à but non lucratif",
+    "website": "mhdv.org/?brid=kvUhTp-pwp3xEby0QhN4_A",
+    "address": "79, rue du Zouave, Salaberry-de-Valleyfield, Montérégie, QC, J6T 2W4",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "maison-d-h-bergement-d-pannage-d-mtg",
+    "name": "Maison D'Hébergement Dépannage De Valleyfield - La Halte",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 802-8470",
+    "description": "Lieu de rencontre et de réconfort à haut seuil de tolérance pour personnes en situations de vulnérabilité.* Repas.* Intervention psychosocial.* Clinique médicale mensuelle. | Clientèle: personnes de 18 ans et plus | Territoire: MRC Beauharnois-Salaberry, MRC Vaudreuil-Soulanges, MRC Le Haut-Saint-Laurent, MRC Roussillon | Statut: organisme à but non lucratif",
+    "website": "mhdv.org/?brid=kvUhTp-pwp3xEby0QhN4_A",
+    "address": "22, rue Élyse, Salaberry-de-Valleyfield, Montérégie, QC, J6T 1C9",
+    "hours": "lundi au vendredi 8h15 à 12h00 et 12h30 à 16h00"
+  },
+  {
+    "id": "maison-d-h-bergement-d-pannage-d-mtg-2",
+    "name": "Maison D'Hébergement Dépannage De Valleyfield - Refuge D'Urgence",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450-747-8511",
+    "description": "Refuge d'urgence à haut seuil de tolérance avec ou sans hébergement avec intervenant-e sur place.* Repas.* Douches.* Lessive.* Intervention psychosociale.* Halte-chaleur. | Clientèle: personnes de 18 ans et plus sans enfants Capacité: 5 chambres avec 2 lits chaque | Territoire: MRC Beauharnois-Salaberry, MRC Vaudreuil-Soulanges, MRC Le Haut-Saint-Laurent | Statut: organisme à but non lucratif",
+    "website": "mhdv.org/?brid=kvUhTp-pwp3xEby0QhN4_A",
+    "address": "67, rue Wilfrid, Salaberry-de-Valleyfield, Montérégie, QC, J6T 2N6",
+    "hours": "17h00 à 8h00, 7 jours"
+  },
+  {
+    "id": "maison-d-intervention-vivre-mtg",
+    "name": "Maison D'Intervention Vivre",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 465-0264",
+    "description": "Démarche intensive de groupe.* Durée minimale de 3 mois.* Ateliers de conscience corporelle, d'art et de créativité.* Rencontres de groupe et individuelles.* Massothérapie.* Suivi post-programme. | Clientèle: personnes de 18 à 55 ans, principalement avec une dépression Capacité: 15 personnes | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.maisonvivre.org",
+    "address": "1807, rue Duke, Longueuil, Montérégie, QC, J4T 2A5",
+    "hours": "lundi au vendredi 9h30 à 17h00"
+  },
+  {
+    "id": "maison-de-jeunes-l-escalier-en-m-mtg",
+    "name": "Maison De Jeunes L'Escalier En Mon Temps",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 656-9690",
+    "description": "Lieu de rencontre animé.* Information et référence.* Activités de prévention et d'éducation.* Activités sociales, récréatives et sportives.* Aide aux devoirs.* Intégration des jeunes de 10 à 12 ans.* Frigo communautaire: partage de nourriture en libre-service. | Clientèle: jeunes de 10 à 17 ans | Territoire: Brossard | Statut: organisme à but non lucratif",
+    "website": "www.mdjbrossard.org",
+    "address": "5964, avenue Auteuil, Brossard, Montérégie, QC, J4Z 1N2",
+    "hours": "jeunes de 10 à 12 ans: mardi 16h00 à 20h00, jeunes de 11 à 17 ans: mercredi 16h00 à 21h00, jeunes de 12 à 17 ans: jeudi 16h00 à 21h00, vendredi 16h00 à 22h00, samedi 15h00 à 22h00, période estivale: jeunes de 10 à 12 ans: mardi 14h00 à 21h00, jeunes de 11 à 17 ans: mercredi 14h00 à 21h00, jeunes de 12 à 17 ans: lundi, jeudi et vendredi 14h00 à 21h00"
   },
   {
     "id": "maison-de-jeunes-val-jeunesse-out",
@@ -25035,6 +31230,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mercredi et jeudi 18h00 à 21h00, vendredi 19h00 à 23h00, samedi 18h00 à 21h00"
   },
   {
+    "id": "maison-de-jonathan-la-mtg",
+    "name": "Maison De Jonathan (La)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 670-4099",
+    "description": "Intervention auprès des jeunes afin de favoriser la persévérance scolaire.* Ateliers scolaires: français, anglais, mathématiques.* Activités sportives, artistiques et manuelles: pyrogravure, vitrail, dessin, peinture, menuiserie, modèles réduits, cuisine, piano, guitare, entraînement physique.* Atelier pour l'enrichissement des compétences parentales.* Services externes et prévention des dépendances: ateliers pour les jeunes du secondaire, pour les enseignant·e·s, intervenant·e·s scolaires et communautaires. | Clientèle: jeunes de 12 à 17 ans vivant des difficultés personnelles, sociales, familiales ou scolaires et leurs parents, enseignants, intervenants Capacité: 45 jeunes | Territoire: Centres de services scolaires Marie-Victorin, des Patriotes et Riverside. | Statut: organisme à but non lucratif",
+    "website": "lamaisondejonathan.ca",
+    "address": "81, rue Saint-Jean, Longueuil, Montérégie, QC, J4H 2W8",
+    "hours": "mardi au jeudi 8h00 à 16h30, vendredi 8h00 à 13h30"
+  },
+  {
     "id": "maison-de-l-amiti-de-hull-out",
     "name": "Maison De L'Amitié De Hull",
     "category": "social",
@@ -25045,6 +31253,58 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Maison de quartier Jean-Dallaire.* Intervention de quartier, accompagnement, implication citoyenne.* Intervention individuelle et collective, intervention auprès des jeunes.* Club de devoirs.* Soutien à la recherche d'emploi et rédaction de CV.* Jardin communautaire.* Cuisine collective.* Déjeuners communautaires.* Répit pour les familles avec l'organisme Équipe soutien-famille.* Programme Ados: camp de mars, camp d'été, ski cool.* Activités pédagogiques.* Ateliers tricot.* Sorties piscine et soccer communautaire.* Café lundi.* Magasin- partage de la rentrée scolaire.* Opération habit de neige: distribution de vêtements d'hiver à prix modique.* Fêtes de quartier: été, Halloween, Noël. | Clientèle: personnes et familles à faible revenu du quartier Jean-Dallaire Capacité: variable selon les activités | Territoire: quartier Jean-Dallaire | Statut: organisme à but non lucratif",
     "address": "58, rue Hanson, Gatineau, Outaouais, QC, J8Y 3M5",
     "hours": "accueil: lundi au vendredi 8h30 à 15h30, activités et intervention: soirées et fins de semaine"
+  },
+  {
+    "id": "maison-de-l-entraide-sainte-juli-mtg",
+    "name": "Maison De L'Entraide Sainte-Julie",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Sainte-Julie",
+    "province": "QC",
+    "phone": "450 649-4569",
+    "description": "Alimentation* Paniers alimentaires et distribution de bons d'achat alimentaires.* Aide alimentaire dans les écoles.* Épicerie solidaire.* Paniers de Noël.Aide matérielle* Comptoir et récupération sur place d'articles de maison, d'équipement de sport, de jouets pour enfants et de vêtements usagés.* Distribution de fournitures scolaires.* Dons aux personnes démunies de Sainte-Julie après évaluation de la situation de la personne.Soutien* Accompagnement et référence. | Clientèle: personnes en situation de précarité, comptoir et épicerie: grand public | Territoire: Sainte-Julie | Statut: organisme à but non lucratif",
+    "website": "www.maisondelentraide.com",
+    "address": "500, avenue Jules-Choquet, bureau 100, Sainte-Julie, Montérégie, QC, J3E 1W6",
+    "hours": "friperie: mardi et mercredi 12h00 à 16h00, jeudi et vendredi 12h00 à 19h00, samedi et dimanche 10h00 à 16h00, soutien: lundi au vendredi 8h00 à 16h00, épicerie: lundi au mercredi 9h00 à 17h00, jeudi et vendredi 9h00 à 19h00, samedi et dimanche de 10h00 à 17h00"
+  },
+  {
+    "id": "maison-de-la-famille-de-brossard-mtg-2",
+    "name": "Maison De La Famille De Brossard",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 678-5222",
+    "description": "Du répit, du soutien et du plaisir pour les familles.0 à 5 ans* Halte-garderie éducative (groupes réguliers et à besoins particuliers).* activités de stimulation en après-midi.5 à 12 ans.* Cours de la Croix-Rouge (prêts à rester seuls et gardiens avertis).* activités de découvertes et de soutien scolaire.En famille.* Causerie pour parents de 0 à 5 ans.* Heure du conte.* Ateliers culinaires.* Activités ludiques un vendredi soir par mois et lors des journées pédagogiques.Pour parents.* Moment d'échange et d'inspiration.* Conférences.* Activités variées.* Halte-garderie pour enfants de 2 à 12 ans le dernier vendredi du mois.* Clinique d'impôts sur rendez- vous. | Clientèle: familles Capacité: 50 | Territoire: Brossard | Statut: organisme à but non lucratif",
+    "website": "www.mfdebrossard.org/fr",
+    "address": "2210, rue André, Brossard, Montérégie, QC, J4Z 2Z8",
+    "hours": "lundi au jeudi 9h00 à 16h00, vendredi 9h00 à 13h00, activités: variables"
+  },
+  {
+    "id": "maison-de-la-famille-de-brossard-mtg",
+    "name": "Maison De La Famille De Brossard - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 678-5222",
+    "description": "* Clinique d'impôts sur rendez-vous.* Service offert à l'année. | Clientèle: personnes à faible revenu | Territoire: Brossard | Statut: organisme à but non lucratif",
+    "website": "www.mfdebrossard.org/fr",
+    "address": "2210, rue André, Brossard, Montérégie, QC, J4Z 2Z8",
+    "hours": "clinique d'impôts 2026: sur rendez-vous, lundi au jeudi 9h00 à 14h00, vendredi 9h00 à 12h30"
+  },
+  {
+    "id": "maison-de-la-famille-de-la-vall--mtg",
+    "name": "Maison De La Famille De La Vallée Du Richelieu (La)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 446-0852",
+    "description": "Services pour familles et pour personnes aînées.* Répit et accompagnement à domicile pour proches aidants s'occupant de personnes aînées en perte d'autonomie.* Pavillon des Aînés: centre de jour pour perosnnes aînées en perte d'autonomie.* Rencontres de soutien individuelles et familiales pour proches aidants.* Activités pour personnes aînées: yoga, danse sur chaisse, activités intergénérationnelles, etc.* Cuisines collectives.* Accompagnement parental, espace famille et ressources variées. | Clientèle: personnes aînées 50 ans et plus, proches aidants, familles | Territoire: Beloeil, McMasterville, Otterburn Park, Saint-Antoine-sur-Richelieu, Saint-Basile-le-Grand, Saint-Bruno-de-Montarville, Saint-Charles-sur-Richelieu, Saint-Denis-sur-Richelieu, Saint-Hilaire, Saint-Jean- Baptiste, Saint-Marc-sur-Richelieu, Saint-Mathieu-de-Beloeil | Statut: organisme à but non lucratif",
+    "website": "www.mfvr.ca",
+    "address": "91, boulevard Cartier, Beloeil, Montérégie, QC, J3G 6R4",
+    "hours": "administration: lundi au vendredi 8h30 à 16h00, halte-garderie: lundi au jeudi 8h00 à 16h00, pavillon des aînés: sur rendez-vous, lundi au vendredi 13h00 à 16h00, rencontres de soutien: aux deux semaines, lundi 13h30 à 15h30"
   },
   {
     "id": "maison-de-la-famille-de-laval-ou-lav",
@@ -25098,6 +31358,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 16h00"
   },
   {
+    "id": "maison-de-la-famille-joli-coeur--mtg",
+    "name": "Maison De La Famille Joli-Coeur (La)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Contrecoeur",
+    "province": "QC",
+    "phone": "450 587-2965",
+    "description": "* Ateliers parents-enfants.* Halte-garderie.* Prématernelle.* Ateliers d'éveil pour les 0 à 12 mois.* Ateliers sur le développement de l'enfant.* Ateliers de développement du langage.* Cours sur l'autonomie pour les 9 à 11 ans.* Cours de premiers soins urgence-bébé.* Intervenante de milieu: soutien personnalisé, écoute, accompagnement, référence et information sur les ressources disponibles.* Information et référence.* Marché aux puces saisonnier. | Clientèle: parents avec enfants de 0 à 12 ans | Territoire: CLSC des Seigneuries | Statut: organisme à but non lucratif",
+    "website": "www.maisondelafamillejolicoeur.ca",
+    "address": "4865, rue Legendre, Contrecoeur, Montérégie, QC, J0L 1C0",
+    "hours": "lundi au vendredi 8h30 à 16h00, halte-garderie: lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "maison-de-la-famille-kateri-et-c-mtg",
+    "name": "Maison De La Famille Kateri Et Centre De Ressources Périnatales",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "450 659-9188",
+    "description": "Accompagnement des parents dans leur rôle parental.* Activités interactives, éducatives et informatives.* Entrevues individuelles, écoute, soutien et entraide.* Services en périnatalité: rencontres prénatales, accompagnement à la naissance et aux relevailles, haltes allaitement, location de tire-lait, halte poupon, marche-poussette, ateliers thématiques prénatal et postnatal.* Bibliothèque pour les enfants et documentation pour les parents.* Halte-garderie.* Groupe de discussion et d'échanges pour les pères et activités pères-enfants.* Ateliers sur la discipline positive.* Stimulation au niveau de la motricité fine et globale, et du langage des enfants.* Ateliers divers. | Clientèle: futurs parents, personnes enceintes, enfants de 0 à 17 ans et leurs parents Capacité: 5 groupes de 8 dyades (parent-enfant) par catégorie, plus la fratrie | Territoire: La Prairie, Candiac, Delson, Sainte-Catherine, Saint-Constant, Saint-Mathieu, Saint- Philippe | Statut: organisme à but non lucratif",
+    "website": "maisonfamillekateri.com",
+    "address": "200, rue Balmoral, La Prairie, Montérégie, QC, J5R 4L5",
+    "hours": "lundi au vendredi 8h30 à 16h00, samedi 8h30 à 12h00"
+  },
+  {
     "id": "maison-de-la-famille-l-tincelle-out",
     "name": "Maison De La Famille L'Étincelle",
     "category": "social",
@@ -25108,6 +31394,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Information, référence, soutien et sensibilisation.* Cuisines collectives.* Popote roulante.* Service anti-gaspillage: denrées alimentaires sur place.* Ateliers parents-enfants.* Fêtes et activités familiales.* Cafés- rencontres. | Clientèle: familles | Territoire: La Pêche | Statut: organisme à but non lucratif",
     "address": "20, chemin Raphaël, La Pêche, Outaouais, QC, J0X 2W0",
     "hours": "lundi au jeudi 8h30 à 16h00, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "maison-de-la-famille-la-parentr--mtg",
+    "name": "Maison De La Famille La Parentr'Aide",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 923-9333",
+    "description": "Volet parents* Déjeuner-causerie.* Alors on jase: rencontres d'échange sur différents thèmes.* Expl'art: ateliers de création artistique.* Simple moment: pause bien-être proposant des techniques pour prendre soin de soi.* Soutien individuel: rencontres personnalisées pour les parents.* Halte-garderie: service de répit pour les parents (demi-journée ou journée complète).Volet 0-5 ans* Ateliers parents-enfants pour favoriser le développement global et le renforcement du lien d'attachement.* Tand'aime (3-12 mois): activités favorisant le lien parent-enfant par le jeu et la stimulation.* Mes 5 sens et moi (12-24 mois): découverte sensorielle.* Langagibou (2-5 ans): développement du langage.* Grouille et gribouille (2-5 ans): développement de la motricité fine et globale.* Motricité libre (6-18 mois): exploration libre de l'environnement.* Attachement (0-5 ans): atelier d'échange et d'information pour comprendre le développement et le comportement des enfants.* Atelier de préparation de purées pour bébé.Volet 5-12 ans* Atelier d'estime de soi parent-jeune (6-11 ans).* CAP sur la famille: ateliers sur les habiletés parentales pour les parents vivant avec un problème de dépendance.* Cuisine collective.Volet 12-17 ans* À travers mon ado: ateliers pour les parents souhaitant mieux comprendre leur adolescent·e.* La Quête: atelier pour préparer les adolescent·e·s à la transition au secondaire.* Papa et moi: activités entre pères et adolescent·e·s. | Clientèle: parents, enfants de 0 à 17 ans | Territoire: Greenfield Park, Longueuil, LeMoyne, Saint-Hubert | Statut: organisme à but non lucratif",
+    "website": "laparentraide.ca",
+    "address": "2060, rue Holmes, Longueuil, Montérégie, QC, J4T 1R8",
+    "hours": "lundi au vendredi 8h00 à 16h00, halte-garderie demi-journées: lundi au vendredi 9h00 à 12h00, lundi au jeudi 13h00 à 15h45, halte-garderie journée complètes: selon la disponibité à chaque session"
   },
   {
     "id": "maison-de-la-famille-vall-e-de-l-out",
@@ -25121,6 +31420,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "mdf-valleedelalievre.ca",
     "address": "321, avenue Buckingham, Gatineau, Outaouais, QC, J8L 2G4",
     "hours": "lundi au jeudi 9h00 à 16h00"
+  },
+  {
+    "id": "maison-de-la-famille-vaudreuil-s-mtg",
+    "name": "Maison De La Famille Vaudreuil-Soulanges - Maison De Saint-Zotique",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-Zotique",
+    "province": "QC",
+    "phone": "450 217-2177",
+    "description": "Services aux familles.* Aide aux devoirs.* Camp pédagogique.* Halte-garderie pour les enfants de 18 mois à 5 ans.* Je tisse des liens gagnants: services et activités adaptés pour développer des conduites responsables face aux besoins de son enfant.* Les Aventuriers: activités motrices structurées et lecture de conte pour les parents et enfants de 0 à 5 ans.* Stimulation du langage.* Stimulation précoce.* Pères présents, enfants gagnants: ateliers pour les pères d'enfants de tout âge.* Papa et moi: activités ludiques, sorties ou ateliers informatifs et échanges.* Tutorat et orthopédagogie.* Supervision des droits d'accès (SDA): échange de garde supervisé et visite supervisée.* Jardins communautaires pour la famille.* Volet périnatalité: soutien et accompagnement aux futurs et nouveaux parents à travers divers ateliers. | Clientèle: familles | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.maisondelafamillevs.ca",
+    "address": "1008, rue Principale, Saint-Zotique, Montérégie, QC, J0P 1Z0",
+    "hours": "services réguliers: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, supervisions des droits d'accès: mardi 13h30 à 19h00, vendredi 15h00 à 19h00, samedi 9h00 à 16h00"
+  },
+  {
+    "id": "maison-de-la-famille-vaudreuil-s-mtg-2",
+    "name": "Maison De La Famille Vaudreuil-Soulanges - Maison De Vaudreuil-Dorion",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 218-0561",
+    "description": "Services aux familles.* Aide aux devoirs.* Camp pédagogique.* Camp de jour pour la relâche.* Club de naissance: échange entre parents d'enfants 0 à 5 ans sur divers sujets pour briser l'isolement et créer un réseau.* Halte-garderie pour les enfants de 0 à 5 ans.* Je tisse des liens gagnants: services et activités adaptés pour développer des conduites responsables face aux besoins de son enfant.* Les Aventuriers: activités motrices structurées et lecture de conte pour les parents et enfants de 0 à 5 ans.* Stimulation du langage.* Stimulation précoce.* Pères présents, enfants gagnants: ateliers pour les pères d'enfants de tout âge.* Papa, pas à pas: activités ludiques, ateliers informatifs et échanges.* Tutorat et orthopédagogie.* Supervision des droits d'accès (SDA): échange de garde supervisé et visite supervisée.* Jardins communautaires pour la famille.* Volet périnatalité: soutien et accompagnement aux futurs et nouveaux parents à travers divers ateliers. | Clientèle: familles | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.maisondelafamillevs.ca",
+    "address": "15, rue Louise-Josephte, Vaudreuil-Dorion, Montérégie, QC, J7V 6Y9",
+    "hours": "services réguliers: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, supervisions des droits d'accès: lundi 13h30 à 16h00, vendredi 15h00 à 19h00, samedi 9h00 à 16h00 et dimanche 13h30 à 19h00"
+  },
+  {
+    "id": "maison-de-la-jeunesse-12-17-de-v-mtg",
+    "name": "Maison De La Jeunesse 12-17 De Valleyfield",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 373-6788",
+    "description": "Lieu de rencontre pour jeunes.* Dépannage alimentaire.* Aide aux devoirs.* Assistance en cas de fugues.* Aide à la recherche de gîte temporaire.* Intervention de rue.* Activités culturelles, créatives, préventives, communautaires et de loisirs.* Animation du quartier centre-ville.* Apprentissage à la vie démocratique et campagne de financement.* Sensibilisation et information sur les saines habitudes de vie.* Références vers des organismes du milieu. | Clientèle: jeunes de 12 à 24 ans Capacité: 100 | Territoire: Salaberry-de-Valleyfield | Statut: organisme à but non lucratif",
+    "website": "mdjvalleyfield.com",
+    "address": "42, rue Anderson, Salaberry-de-Valleyfield, Montérégie, QC, J6S 0L1",
+    "hours": "accueil et administration: lundi au vendredi 9h00 à 16h00, horaire régulier de l'intervention et animation: lundi au jeudi 16h30 à 21h00, vendredi 16h30 à 22h00, horaire estival de l'intervention et animation: lundi au jeudi 13h00 à 21h00, vendredi 13h00 à 22h00"
   },
   {
     "id": "maison-de-la-s-r-nit-lav",
@@ -25343,6 +31681,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "familles: lundi au vendredi 9h00 à 21h00, local ados: mercredi au vendredi 16h00 à 21h00"
   },
   {
+    "id": "maison-de-r-pit-l-interm-de-mtg",
+    "name": "Maison De Répit L'Intermède",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Basile-le-Grand",
+    "province": "QC",
+    "phone": "450 464-9261",
+    "description": "* Répit sur place ou à domicile.* Activités variées: sorties, activités extérieures, ateliers de cuisine et de musique, etc.* Répit de semaine et de fin de semaine.* Service de garde. | Clientèle: personnes vivant avec une déficience intellectuelle ou un trouble du spectre de l'autisme | Territoire: Montérégie-Est | Statut: organisme à but non lucratif",
+    "website": "www.repit-intermede.com",
+    "address": "217, rue Principale, Saint-Basile-le-Grand, Montérégie, QC, J3N 1L6",
+    "hours": "sur réservation, répit de semaine: lundi au jeudi 8h30 à 16h30, répit de fin de semaine: jeudi 16h00 au dimanche 19h00, jour et nuit, service de garde: lundi au vendredi 16h00 à 18h00"
+  },
+  {
+    "id": "maison-de-soins-palliatifs-libel-mtg",
+    "name": "Maison De Soins Palliatifs Libella",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Hudson",
+    "province": "QC",
+    "phone": "450 202-2202",
+    "description": "Maison de soins palliatifs.* Chambres privées.* Soins spécialisés et personnalisés.* Possibilité pour les proches de cohabiter avec la personne résidente.* Soutien psychologique pour patients et familles* Occasion de bénévolat. | Clientèle: personnes de tous âges vivant avec une maladie en phase terminale incurable et ayant un pronostic de moins de trois mois, leurs proches Capacité: 12 chambres | Territoire: MRC Vaudreuil-Soulanges, Beauharnois-Salaberry | Statut: organisme à but non lucratif",
+    "website": "www.maisonlibella.org",
+    "address": "90, rue Como Gardens, Hudson, Montérégie, QC, J0P 1H0",
+    "hours": "7 jours, 24 heures"
+  },
+  {
+    "id": "maison-de-soins-palliatifs-sourc-mtg",
+    "name": "Maison De Soins Palliatifs Source Bleue",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 641-3165",
+    "description": "Accueil et accompagnement de personnes adultes en fin de vie.* Soutien psychologique.* Service médical, soins infirmiers, service de pharmacie.* Massothérapie, musicothérapie, aromathérapie, coiffure.* Bénévolat.* Accompagnement spirituel. | Clientèle: personnes adultes en fin de vie souffrant d'un cancer ou d'une maladie chronique en phase terminale avec un pronostic de moins de 3 mois, leurs proches Capacité: 16 personnes | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.maisonsourcebleue.ca",
+    "address": "1130, rue de Montbrun, Boucherville, Montérégie, QC, J4B 8W6",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "msss-hopital-kuujjuaq-maison-de-transit-centre-de-sante-tulattavik-de-l-ungava",
     "name": "Maison De Transit (Centre De Santé Tulattavik De L'Ungava)",
     "category": "health",
@@ -25354,6 +31731,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "Kuujuuaq, Kuujjuaq, QC J0M 1C0",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "maison-des-arts-la-fondation-le--mtg",
+    "name": "Maison Des Arts (La) - Fondation Le Renfort",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "579 362-5262",
+    "description": "Centre d'activités à vocation artistique pour adultes vivant avec une déficience intellectuelle ou un trouble du spectre de l'autisme.* Musicothérapie.* Arts visuels. | Clientèle: personnes de 18 ans et plus vivant avec un diagnostic de déficience intellectuelle ou de trouble du spectre de l'autisme Capacité: 60 à 120 participants par semaine | Territoire: MRC Le Haut-Richelieu, MRC Les Jardins-de-Napierville, MRC Rouville, Chambly, Carignan | Statut: organisme à but non lucratif",
+    "website": "lerenfort.com/maisondesarts",
+    "address": "176, rue Longueuil, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 6P2",
+    "hours": "lundi au vendredi"
   },
   {
     "id": "msss-chsld-laval-maison-des-aines-de-chomedey",
@@ -25777,6 +32167,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "maison-des-enfants-de-la-mont-r--mtg",
+    "name": "Maison Des Enfants De La Montérégie (La)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Varennes",
+    "province": "QC",
+    "phone": "450 929-1488",
+    "description": "* Correspondance dans les écoles.* Ateliers sur les habiletés parentales.* Aide aux devoirs.* Distribution de matériel ludique et pédagogique dans les écoles. | Clientèle: familles, enfants | Territoire: Centre de services scolaires des Patriotes | Statut: organisme à but non lucratif",
+    "website": "www.mdevarennes.org",
+    "address": "2022, Place du 350e, bureau 303, Varennes, Montérégie, QC, J3X 0K9",
+    "hours": "lundi au jeudi 8h30 à 16h00"
+  },
+  {
     "id": "maison-des-enfants-le-dauphin-de-lav",
     "name": "Maison Des Enfants Le Dauphin De Laval",
     "category": "social",
@@ -25828,6 +32231,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi au jeudi 17h00 à 21h00, vendredi et samedi 17h00 à 22h00"
   },
   {
+    "id": "maison-des-jeunes-ch-telois-mtg",
+    "name": "Maison Des Jeunes Châtelois",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 698-3343",
+    "description": "Lieu de rencontre animé.* Aide et référence.* Activités sociales, récréatives et sportives.* Planchodrome.* Programme de personnes pairs-aidantes dans les écoles secondaires.* Travail de rue.* Ateliers de prévention.* Cuisine collective.* Distribution de Naloxone.* Distribution de matériel de consommation. | Clientèle: jeunes de 11 à 17 ans, travail de rue: personnes de tous âges | Territoire: Châteauguay | Statut: organisme à but non lucratif",
+    "website": "www.mdjchateauguay.com",
+    "address": "180, rue Mercier, Châteauguay, Montérégie, QC, J6J 5X2",
+    "hours": "période scolaire: mardi au jeudi 15h00 à 17h00 et 18h00 à 20h30, vendredi et samedi 15h00 à 17h00 et 18h00 à 22h30, été: lundi au jeudi 15h00 à 17h00 et 18h00 à 22h30, vendredi et samedi 15h00 à 17h00 et 18h00 à 23h00"
+  },
+  {
+    "id": "maison-des-jeunes-de-contrecoeur-mtg",
+    "name": "Maison Des Jeunes De Contrecoeur",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Contrecoeur",
+    "province": "QC",
+    "phone": "450 587-2830",
+    "description": "Lieu de rencontre pour les jeunes.* Activités sportives et culturelles.* Bénévolat. | Clientèle: jeunes de 12 à 17 ans | Territoire: Contrecoeur | Statut: organisme à but non lucratif",
+    "address": "1400, rue des Saules, Contrecoeur, Montérégie, QC, J0L 1C0",
+    "hours": "mardi au jeudi 18h00 à 21h00, vendredi 18h00 à 23h00, samedi 14h00 à 17h00 et 18h00 à 23h00"
+  },
+  {
     "id": "maison-des-jeunes-de-l-est-de-la-lav",
     "name": "Maison Des Jeunes De L'Est De Laval",
     "category": "family",
@@ -25839,6 +32267,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.mdjel.com",
     "address": "3602, boulevard de la Concorde Est, Duvernay, Laval, QC, H7E 2C9",
     "hours": "mardi au vendredi 14h00 à 20h00, été 12h00 à 19h00"
+  },
+  {
+    "id": "maison-des-jeunes-de-l-le-perrot-mtg",
+    "name": "Maison Des Jeunes De L'Île Perrot - Martin Bernier",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "L'Île-Perrot",
+    "province": "QC",
+    "phone": "514 425-6146",
+    "description": "Milieu de vie pour adolescent·e·s.* Écoute et référencement.* Aide aux devoirs.* Activités sportives, artistiques, culinaires, culturelles.* Ateliers de prévention et de sensibilisation.* Ateliers de nutrition.* Animation sociale et éducation populaire. | Clientèle: jeunes de 12 à 17 ans | Territoire: L'Île-Perrot, Notre-Dame-de-l'Île-Perrot, Sainte-Anne-de-Bellevue, Terrasse-Vaudreuil, Pincourt | Statut: organisme à but non lucratif",
+    "address": "210C, 6e Avenue, L'Île-Perrot, Montérégie, QC, J7V 4V4",
+    "hours": "mardi au jeudi 17h00 à 21h00, vendredi 17h00 à 22h00"
+  },
+  {
+    "id": "maison-des-jeunes-de-la-prairie-mtg",
+    "name": "Maison Des Jeunes De La Prairie",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "450 444-6717",
+    "description": "Lieu de rencontre, de services et de référence.* Activités culturelles: peinture, dessin, cuisine, musique, improvisation, etc.* Activités sportives: soccer, hockey, basketball, volleyball, etc.* Activités de loisirs: jeux de société, fêtes, nuit blanche, etc.* Bénévolat: plantation d'arbres, guignolée, collecte de vélos, etc.* Activités d'autofinancement et démocratiques.* Information et prévention en sexualité, criminalité, toxicomanie, santé mentale et autres.* Aide aux devoirs.* Sorties. | Clientèle: jeunes de 12 à 17 ans | Territoire: La Prairie | Statut: organisme à but non lucratif",
+    "website": "maisondesjeunes.ca",
+    "address": "565, rue Notre-Dame, La Prairie, Montérégie, QC, J5R 5E5",
+    "hours": "mardi, mercredi et jeudi 15h00 à 21h00, vendredi 15h00 à 22h00, samedi 14h00 à 22h00"
   },
   {
     "id": "maison-des-jeunes-de-laval-ouest-lav",
@@ -25853,6 +32306,56 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 16h00 à 21h00"
   },
   {
+    "id": "maison-des-jeunes-de-longueuil-l-mtg",
+    "name": "Maison Des Jeunes De Longueuil (La)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 468-5907",
+    "description": "* Activités artistiques, culturelles, récréatives et sportives.* Ateliers de sensibilisation: intimidation, estime de soi, drogues, etc.* Cuisine communautaire.* Aide aux devoirs.* Studio d'enregistrement.* Studio de podcast.* Conférences.* Internet. | Clientèle: jeunes de 12 à 17 ans Capacité: 329 personnes | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "address": "540, rue Antoinette-Robidoux, Longueuil, Montérégie, QC, J4J 2V7",
+    "hours": "lundi au vendredi 15h00 à 21h00"
+  },
+  {
+    "id": "maison-des-jeunes-de-rigaud-la-mtg",
+    "name": "Maison Des Jeunes De Rigaud (La)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Rigaud",
+    "province": "QC",
+    "phone": "450 451-0422",
+    "description": "Lieu de rencontre et de services.* Écoute, consultation et références.* Activités récréatives, sportives, de plein air et culturelles.* Occasion de bénévolat.* Ateliers de musique et d'art.* Ateliers de nutrition.* Activités de prévention.* Aide aux devoirs.* Tutorat en français et en mathématique.* Aide à la recherche d'emploi.* Éducation politique et à la citoyenneté.* Prêt d'équipements sportifs et de jeux de société* Prêt d'ouvrages de références pour parents d'adolescent·e·s.* Bibliothèque jeunesse.* Frigo communautaire.* Salle polyvalente, cuisine, espace café et salle de jeu. | Clientèle: personnes de 12 à 18 ans Capacité: 30 | Territoire: Rigaud | Statut: organisme à but non lucratif",
+    "address": "96, rue Saint-Jean-Baptiste Est, Rigaud, Montérégie, QC, J0P 1P0",
+    "hours": "mercredi au vendredi 17h00 à 20h00, journées pédagogiques: 13h00 à 17h00, accueil téléphonique: mardi au jeudi 13h00 à 16h00"
+  },
+  {
+    "id": "maison-des-jeunes-de-saint-bruno-mtg",
+    "name": "Maison Des Jeunes De Saint-Bruno",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-Bruno-de-Montarville",
+    "province": "QC",
+    "phone": "450 441-1989",
+    "description": "Lieu de rencontre animé.* Écoute et références.* Activités sportives et culturelles.* Sorties de groupe.* Salle de cinéma, salle de musique et salle de jeux vidéo.* Souper collectif gratuit.* Aide aux devoirs, primaire et secondaire.* Cours Gardiens avertis.* Cours Prêts à rester seuls. | Clientèle: personnes de 11 à 17 ans | Territoire: Saint-Bruno-de-Montarville | Statut: organisme à but non lucratif",
+    "website": "mdjstbruno.org",
+    "address": "1425, rue Goyer, Saint-Bruno-de-Montarville, Montérégie, QC, J3V 3Z4",
+    "hours": "période scolaire: lundi au jeudi 15h00 à 20h00, vendredi 15h00 à 21h00, été: lundi au vendredi 13h00 à 21h00, soupers collectifs: mercredi 17h00 à 19h00"
+  },
+  {
+    "id": "maison-des-jeunes-de-saint-phili-mtg",
+    "name": "Maison Des Jeunes De Saint-Philippe",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Philippe",
+    "province": "QC",
+    "phone": "450 659-0428",
+    "description": "Lieu de rencontre.* Écoute et consultation.* Activités sportives et culturelles.* Bénévolat.* Comité jeunesse. | Clientèle: jeunes de 12 à 17 ans Capacité: 200 | Territoire: Saint-Philippe | Statut: organisme à but non lucratif",
+    "website": "mdjaureperestp.wixsite.com/mdjstp",
+    "address": "2245, route Édouard VII, Saint-Philippe, Montérégie, QC, J0L 2K0",
+    "hours": "mardi au jeudi 18h00 à 21h00, vendredi 18h00 à 23h00, dimanche 12h00 à 19h00, été: mardi 18h00 à 22h00, mercredi et jeudi 14h00 à 17h00 et 18h00 à 22h00, vendredi 18h00 à 23h00, dimanche 12h00 à 19h00"
+  },
+  {
     "id": "maison-des-jeunes-de-sainte-doro-lav",
     "name": "Maison Des Jeunes De Sainte-Dorothée",
     "category": "social",
@@ -25864,6 +32367,71 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "mdjstedorothee.ca",
     "address": "625, rue Sylvie, Sainte-Dorothée, Laval, QC, H7X 2X2",
     "hours": "lundi au vendredi 15h30 à 21h00, septembre à juin: samedi 11h00 à 17h00"
+  },
+  {
+    "id": "maison-des-jeunes-de-sainte-juli-mtg",
+    "name": "Maison Des Jeunes De Sainte-Julie",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Sainte-Julie",
+    "province": "QC",
+    "phone": "450 649-3031",
+    "description": "Lieu de rencontre et de prévention.Soutien* Médiation parents-adolescents: accueil, écoute et référence.* Travail de milieu.Activités* Activités communautaires, sociales, culturelles et sportives.* Soirées 9 à 12 ans: activités spéciales les jeudis.* Calendrier mensuel en ligne: https://www.mdjsaintejulie.com/calendrierFormation* Cours de gardien avertis.* Prêts à rester seuls: https://www.croixrouge.ca/cours-et-certificats/description-de-cours/description-des-cours-de-secourisme-a-la- maison/prets-a-rester-seuls | Clientèle: jeunes de 9 à 17 ans, cours de gardiens avertis: 11 à 15 ans, formation prêt à rester seuls: 9 à 13 ans | Territoire: Sainte-Julie | Statut: organisme à but non lucratif",
+    "website": "www.mdjsaintejulie.com",
+    "address": "1581, chemin du Fer-à-Cheval, Sainte-Julie, Montérégie, QC, J3E 1G5",
+    "hours": "mardi, mercredi 16h00 à 21h00, jeudi 16h00 à 20h00, vendredi 16h00 à 22h00, samedi 14h00 à 22h00, l'horaire peut varier, voir leur page Facebook"
+  },
+  {
+    "id": "maison-des-jeunes-de-varennes-mtg",
+    "name": "Maison Des Jeunes De Varennes",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Varennes",
+    "province": "QC",
+    "phone": "450 652-6941",
+    "description": "Lieu de rencontre pour les jeunes.* Activités sociales, récréatives, culturelles et sportives.* Écoute, relation d'aide, accompagnement.* Travail de milieu.* Ateliers d'information, prévention et sensibilisation. | Clientèle: jeunes de 12 à 17 ans | Territoire: Varennes | Statut: organisme à but non lucratif",
+    "website": "www.mdjvarennes.org",
+    "address": "135, chemin du Petit Bois, Varennes, Montérégie, QC, J3X 1P7",
+    "hours": "lundi au vendredi 12h00 à 21h00, samedi 13h00 à 21h00"
+  },
+  {
+    "id": "maison-des-jeunes-de-verch-res-mtg",
+    "name": "Maison Des Jeunes De Verchères",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Verchères",
+    "province": "QC",
+    "phone": "450 583-5201",
+    "description": "Milieu de vie et de rencontre.* Activités culturelles, sportives et artistiques, événements, projets par et pour les jeunes.* Écoute active et référence.* Aide aux devoirs.* Médiation jeunesse.* Ateliers de prévention.* Participation citoyenne.* Travail de milieu.* Formation jeunesse: Gardiens Avertis et Prêts à rester seuls. | Clientèle: jeunes de 12 à 17 ans | Territoire: Calixa-Lavallée, Verchères | Statut: organisme à but non lucratif",
+    "website": "mdjvercheres.org",
+    "address": "41, rue Calixa-Lavallée, bureau A, Verchères, Montérégie, QC, J0L 2R0",
+    "hours": "période scolaire: lundi 10h00 à 17h00 (bureau seulement), mardi au jeudi 17h00 à 21h00, vendredi 17h00 à 22h00, samedi 14h00 à 22h00, été: mardi au samedi 14h00 à 22h00"
+  },
+  {
+    "id": "maison-des-jeunes-des-quatre-fen-mtg",
+    "name": "Maison Des Jeunes Des Quatre Fenêtres - Maison De Beloeil",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 536-9096",
+    "description": "Milieu de vie par et pour jeunes avec animation et intervention.* Soutien et accompagnement.* Activités sportives, culturelles: hockey, basket, soccer, etc.* Activités sociales et récréatives: jeux vidéos, jeux de société, table de pool, etc.* Comité jeunes: occasion d'implication afin de créer un espace qui ressemble au jeunes.* Aide aux devoirs.* Coopérative jeunes entrepreneurs au boulot: programme d'employabilité Canada.* Soirées dansantes pour élèves de 4e, 5e et 6e année du primaire.* Groupe de discussion en ligne sur Discord. | Clientèle: personnes de 12 à 17 ans | Territoire: Mont-Saint-Hilaire, Beloeil, McMasterville, Otterburn Park | Statut: organisme à but non lucratif",
+    "website": "mdj4f.ca",
+    "address": "1060, rue Saint-Joseph, Beloeil, Montérégie, QC, J3G 6C6",
+    "hours": "mercredi et jeudi 18h00 à 21h00, vendredi 15h00 à 21h00, samedi 11h00 à 17h00, discord: samedi 17h00 à 22h00"
+  },
+  {
+    "id": "maison-des-jeunes-des-quatre-fen-mtg-2",
+    "name": "Maison Des Jeunes Des Quatre Fenêtres - Maison De Mont-Saint-Hilaire",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Mont-Saint-Hilaire",
+    "province": "QC",
+    "phone": "450 464-8224",
+    "description": "Milieu de vie par et pour jeunes avec animation et intervention.* Soutien et accompagnement.* Activités sportives, culturelles: hockey, basket, soccer, etc.* Activités sociales et récréatives: jeux vidéos, jeux de société, table de pool, etc.* Comité jeunes: occasion d'implication afin de créer un espace qui ressemble au jeunes.* Aide aux devoirs.* Coopérative jeunes entrepreneurs au boulot: programme d'employabilité Canada.* Soirées dansantes pour élèves de 4e, 5e et 6e année du primaire.* Groupe de discussion en ligne sur Discord. | Clientèle: personnes de 12 à 17 ans | Territoire: Mont-Saint-Hilaire, Beloeil, McMasterville, Otterburn Park | Statut: organisme à but non lucratif",
+    "website": "mdj4f.ca",
+    "address": "100, rue Michel, Mont-Saint-Hilaire, Montérégie, QC, J3H 3R3",
+    "hours": "mercredi et jeudi 18h00 à 21h00, vendredi 15h00 à 21h00, samedi 11h00 à 17h00, discord: samedi 17h00 à 22h00"
   },
   {
     "id": "maison-des-jeunes-du-marigot-lav",
@@ -25891,6 +32459,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi, mercredi et jeudi 17h00 à 21h00, vendredi et samedi 17h00 à 22h00"
   },
   {
+    "id": "maison-des-jeunes-l-antidote-de--mtg",
+    "name": "Maison Des Jeunes L'Antidote De Candiac",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Candiac",
+    "province": "QC",
+    "phone": "450 638-1761",
+    "description": "Lieu de rencontre et d'échange favorisant l'expression créative individuelle et collective par la promotion de la santé, de saines habitudes de vie et de la vie démocratique participative.* Ateliers, sorties et sports.* Écoute, soutien et relation d'aide.* Gymnase, salle de musique, salle de jeux vidéos et cuisine.* Salle d'études.* Zone Wi-Fi. | Clientèle: personnes de 12 à 17 ans | Territoire: Candiac | Statut: organisme à but non lucratif",
+    "website": "www.mdj-antidote.qc.ca",
+    "address": "125, chemin Haendel, Candiac, Montérégie, QC, J5R 1R7",
+    "hours": "mercredi et jeudi 15h00 à 20h45, vendredi 15h00 à 21h45, samedi 13h00 à 21h45, horaire d'été: mercredi au samedi 13h00 à 21h45"
+  },
+  {
+    "id": "maison-des-jeunes-le-d-me-mtg",
+    "name": "Maison Des Jeunes Le Dôme",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-2147",
+    "description": "Lieu de rencontre avec animation.* Activités de prévention et d'éducation.* Défense des droits des jeunes.* Activités sportives, sociales et culturelles.* Distribution de Naloxone. | Clientèle: personnes de 12 à 17 ans | Territoire: Saint-Jean-sur-Richelieu | Statut: organisme à but non lucratif",
+    "website": "rmjq.org/maison/mdj-le-dome",
+    "address": "2, place du Marché, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2P4",
+    "hours": "lundi au vendredi 16h00 à 21h00, samedi: horaire variable selon les activités"
+  },
+  {
     "id": "maison-des-jeunes-le-mashado-out",
     "name": "Maison Des Jeunes Le Mashado",
     "category": "social",
@@ -25904,6 +32498,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "animation: lundi au jeudi 15h00 à 19h00, samedi 9h00 à 14h00, bureau: lundi à vendredi 8h00 à 15h00?"
   },
   {
+    "id": "maison-des-jeunes-les-c-dres-mtg",
+    "name": "Maison Des Jeunes Les Cèdres",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Les Cèdres",
+    "province": "QC",
+    "phone": "450 452-0215",
+    "description": "Lieu de rencontre et de référence.* Écoute et consultation.* Dépannage alimentaire.* Aide aux devoirs.* Aide à la recherche d'emploi.* Activités sportives et culturelles.* Ateliers: musique et d'art.* Ateliers de nutrition.* Ateliers de prévention, de sensibilisation et d'éducation.* Club de lecture.* Sorties.* Occasion de bénévolat. | Clientèle: personnes de 12 à 17 ans | Territoire: Les Cèdres | Statut: organisme à but non lucratif",
+    "address": "145, rue Valade, Les Cèdres, Montérégie, QC, J7T 1S9",
+    "hours": "mardi au vendredi 18h00 à 21h00"
+  },
+  {
     "id": "maison-des-jeunes-les-desch-n-s-out",
     "name": "Maison Des Jeunes Les Deschênés",
     "category": "social",
@@ -25915,6 +32521,83 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "avenuedesjeunes.com",
     "address": "26, rue Arthur-Whelan, Gatineau, Outaouais, QC, J9H 2A5",
     "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-sac-ado-mtg",
+    "name": "Maison Des Jeunes Sac-Ado",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 677-7254",
+    "description": "Animation communautaire pour personnes adolescentes.* Apprentissage de la vie adulte.* Intervention préventive et éducative.* Sports, activités artistiques et culturelles.* Centre d'accès Internet. | Clientèle: jeunes de 12 à 17 ans Capacité: 50 personnes | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "sacado.org",
+    "address": "3025, rue de Lyon, Longueuil, Montérégie, QC, J4L 3R6",
+    "hours": "lundi au vendredi 15h00 à 21h00"
+  },
+  {
+    "id": "maison-des-jeunes-sympholie-mtg",
+    "name": "Maison Des Jeunes Sympholie",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Delson",
+    "province": "QC",
+    "phone": "450 509-0909",
+    "description": "Milieu de vie animé pour les adolescent·e·s de 12 à 17 ans.* Activités sportives, artistiques, culturelles et loisirs. * Apprentissage à la démocratie et implication dans la communauté.* Prévention et sensibilisation.* Promotion et défense des droits des jeunes ainsi que prise en charge et autonomie. | Clientèle: personnes de 12 à 17 ans | Territoire: Delson | Statut: organisme à but non lucratif",
+    "website": "mdjsympholie.org",
+    "address": "11, montée des Bouleaux, Delson, Montérégie, QC, J5B 1L1",
+    "hours": "lundi 15h00 à 20h45, jeudi 15h00 à 20h45, vendredi 16h00 à 21h45, samedi 13h00 à 21h45, dimanche 13h00 à 17h45"
+  },
+  {
+    "id": "maison-des-jeunes-vaudreuil-dori-mtg",
+    "name": "Maison Des Jeunes Vaudreuil-Dorion",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-6937",
+    "description": "Lieu de rencontre et de référence.* Écoute.* Activités sportives et culturelles.* Bénévolat.* Ateliers de musique et d'art.* Ateliers de cuisine.* Ateliers de prévention et sensibilisation.* Sorties. | Clientèle: personnes de 12 à 17 ans | Territoire: Vaudreuil-Dorion | Statut: organisme à but non lucratif",
+    "address": "1255, rue Émile-Bouchard, Vaudreuil-Dorion, Montérégie, QC, J7V 0B7",
+    "hours": "mercredi et jeudi 16h30 à 21h00, vendredi 16h30 à 22h00"
+  },
+  {
+    "id": "maison-des-jeunes-quinox-mtg",
+    "name": "Maison Des Jeunes Équinox",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Sainte-Catherine",
+    "province": "QC",
+    "phone": "450 632-5122",
+    "description": "Lieu de rencontre.* Écoute et consultation.* Activités sportives et culturelles.* Aide aux devoirs.* Club de course.* Distribution de Naloxone.* Souper bi-hebdomadaire.* Bénévolat. | Clientèle: jeunes de 12 à 17 ans, certaines plages horaires pour jeunes de 10 à 11 ans | Territoire: Sainte-Catherine et environs | Statut: organisme à but non lucratif",
+    "website": "mdjequinox.ca",
+    "address": "5185, boulevard Saint-Laurent, Sainte-Catherine, Montérégie, QC, J5C 1A6",
+    "hours": "période scolaire: mardi au jeudi 16h00 à 21h00, vendredi 16h00 à 22h00, samedi 14h00 à 21h00, jeunes de 10 à 11 ans: lundi 15h00 à 17h30, été: mardi au vendredi 14h00 à 17h00 et 18h00 à 22h00, samedi 13h00 à 22h00, jeunes de 10 à 11 ans: lundi 15h00 à 17h30"
+  },
+  {
+    "id": "maison-des-petits-tournesols-la-mtg",
+    "name": "Maison Des Petits Tournesols (La)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 332-4862",
+    "description": "* Soutien et accompagnement pour les enfants et adolescent·e·s en deuil ainsi que leur famille.* Information, écoute et références.* Rencontres individuelles et de groupe.* Soutien téléphonique.* Activités familiales.* Cercles de partage mensuels.* Conférences et ateliers. | Clientèle: enfants et adolescent·e·s en deuil, leurs parents et grands-parents et les adultes responsables de ces jeunes | Territoire: Grand Montréal | Statut: organisme à but non lucratif",
+    "website": "www.lamaisondespetitstournesols.com",
+    "address": "150, rue Grant, bureau 330, Longueuil, Montérégie, QC, J4H 3H6",
+    "hours": "variable"
+  },
+  {
+    "id": "maison-du-go-land-la-mtg",
+    "name": "Maison Du Goéland (La)",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "450 845-1700",
+    "description": "* Résidence en santé mentale de réinsertion sociale et d'intégration dans la communauté.* Suivi communautaire d'intensité variable.* Évaluation des besoins, intégration sociale et soutien clinique.* Groupe de rétablissement et de croissance personnelle.* Reprise de pouvoir sur sa vie. | Clientèle: personnes vivant avec une problématique de santé mentale Capacité: 9 lits | Territoire: CSSS Jardins-Roussillon | Statut: organisme à but non lucratif",
+    "website": "lamaisongoeland.com",
+    "address": "66, rue Saint-Pierre, Saint-Constant, Montérégie, QC, J5A 1C1",
+    "hours": "lundi au vendredi 8h00 à 17h00"
   },
   {
     "id": "maison-du-marigot-la-lav",
@@ -25942,6 +32625,30 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "maison-du-p-re-de-l-espoir-la-mtg",
+    "name": "Maison Du Père De L'Espoir (La)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 396-9833",
+    "description": "* Paniers de nourriture comprenant viande et produits frais, selon la disponibilité.* Magasin d'aubaines: vente de vêtements, de jouets, de meubles, d'électroménagers et de toutes sortes d'articles à prix modique.* Possibilité de livraison des meubles et électroménagers achetés. | Clientèle: grand public, familles, personnes aînées, personnes nouvelles arrivantes, personnes seules ayant un faible revenu | Territoire: agglomération de Longueuil | Statut: organisme à but non lucratif",
+    "address": "470, Chemin du Coteau-Rouge, Longueuil, Montérégie, QC, J4J 1Y2",
+    "hours": "magasin d'aubaines: mercredi au samedi 9h00 à 15h00"
+  },
+  {
+    "id": "maison-du-p-re-de-l-espoir-la-r--mtg",
+    "name": "Maison Du Père De L'Espoir (La) - Récupération D'Articles Usagés",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 396-9833",
+    "description": "* Récupération de dons sur place: nourriture, vêtements, articles de cuisine, livres, équipement sportif, jouets, matelas, meubles, électroménagers.* Collecte à domicile pour les meubles, électroménagers et autres articles de grande dimension. | Territoire: Longueuil et environs | Statut: organisme à but non lucratif",
+    "address": "470, chemin du Coteau-Rouge, Longueuil, Montérégie, QC, J4J 1Y2",
+    "hours": "collecte sur place: mercredi au samedi 9h00 à 15h00, collecte à domicile: sur rendez-vous"
+  },
+  {
     "id": "maison-entre-familles-ibsg",
     "name": "Maison Entre Familles (LA)",
     "category": "food",
@@ -25955,6 +32662,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Banque alimentaire : jeudi 17h-21h, vendredi 13h-17h"
   },
   {
+    "id": "maison-internationale-de-la-rive-mtg-2",
+    "name": "Maison Internationale De La Rive-Sud - Café Des Aînés",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 445-8777",
+    "description": "Lieux de rassemblement pour personnes aînées immigrantes.* Dépannage alimentaire.* Ateliers de conversation française, anglaise et espagnole.* Ateliers d'initiation à l'informatique.* Ateliers de gymnastique cérébrale et d'art-thérapie.* Ateliers de cuisine.* Chorale, danse et yoga.* Repas communautaire. | Clientèle: personnes immigrantes de 50 ans et plus | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "mirs.qc.ca",
+    "address": "2500, boulevard Lapinière, Brossard, Montérégie, QC, J4Z 3V1",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
     "id": "imm-sii-rive-sud",
     "name": "Maison Internationale de la Rive-Sud (MIRS)",
     "category": "immigration",
@@ -25966,6 +32686,97 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://mirs.qc.ca/",
     "address": "2500 Boul. Lapinière, Brossard, QC J4Z 3V1",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "maison-jacques-ferron-mtg",
+    "name": "Maison Jacques-Ferron",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-5381",
+    "description": "Programme d'insertion dans un cadre d'hébergement.* Suivi psychosocial.* Suivi psychothérapeutique.* Milieu de thérapie.* Suivi posthébergement. | Clientèle: personnes vivant avec d'importantes difficultés de santé mentale Capacité: 9 personnes en hébergement, 6 personnes en externe | Territoire: agglomération de Longueuil | Statut: organisme à but non lucratif",
+    "website": "lamaisonjacquesferron.com",
+    "address": "2250, rue Cartier, Longueuil, Montérégie, QC, J4K 4E9",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "maison-kekpart-action-jeunesse-s-mtg",
+    "name": "Maison Kekpart - Action Jeunesse Saint-Pie-X De Longueuil",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 677-3821",
+    "description": "Lieu de rencontre animé.* Activités de groupe.* Écoute, aide, référence, accompagnement.* Ateliers d'arts de la scène.* Projet La Relève: formation et expérience de travail parascolaire en arts médiatiques.* Soutien et accompagnement des jeunes à risque d'exploitation sexuelle.* Fête de Noël. | Clientèle: jeunes de 6 à 18 ans et leur famille Capacité: 80 personnes | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.maisonkekpart.com",
+    "address": "1000, boulevard Roland-Therrien, Longueuil, Montérégie, QC, J4J 5H3",
+    "hours": "bureau: lundi au vendredi 8h30 à 16h30, ligne pour jeunes: lundi au vendredi 15h00 à 21h00, horaire d'été: 13h00 à 19h00"
+  },
+  {
+    "id": "maison-l-alc-ve-mtg",
+    "name": "Maison L'Alcôve",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 773-7333",
+    "description": "Centre de traitement en dépendance interne et externe à durée variable. * Programme distinct pour les dépendances aux substances.* Programme distinct pour la dépendance au jeu.* Programme mixé pour les dépendances.* Alcoolisme et toxicomanie: programme de 13 semaines dont 3 en interne et 10 en externe.* Alcoolisme et toxicomanie: arrêt d'agir de 7 jours de stabilisation à l'interne en cas de rechute récente.* Jeu pathologique: 13 semaines en externe (pour les problématiques de jeu en ligne seulement) avec phase de maintien (rencontre hebdomadaire pendant 10 semaines).* Jeu pathologique: arrêt d'agir de 7 à 10 jours (pour tous les types de jeu) en cas de rechute récente.* Cyberdépendance: suivi à l'externe.* Programme volontaire de cessation tabagique intégré à un programme pour les dépendances aux substances.* Suivi post-cure: rencontre de groupe hebdomadaire (en personne ou par zoom) pour 10 semaines consécutives.* Soutien à l'entourage. | Clientèle: adultes ayant une dépendance (alcool, drogue, jeu) avec ou sans troubles de santé mentale, femmes enceintes, cyberdépendance: 12 ans et plus Capacité: mixte: 25, jeu: 16 | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.maisonlalcove.com",
+    "address": "5000, boulevard Laurier Ouest, SAINT-HYACINTHE, Montérégie, QC, J2S 3V2",
+    "hours": "24 heures, 7 jours, admission: lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "maison-la-grande-ourse-mont-r-gi-mtg",
+    "name": "Maison La Grande Ourse Montérégie",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Ours",
+    "province": "QC",
+    "phone": "450 402-0503",
+    "description": "Maison de thérapie de 12 jours pour survivantes d'agressions et de violence à caractère sexuel. * Relation d'aide.* Plan de séjour et d'action.* Ateliers.* Rencontre individuelle.* Discussions de groupe.* Référence vers des services externes. | Clientèle: survivantes d'agressions et de violences à caractère sexuel | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.grandeoursemonteregie.org",
+    "address": "2584, rue Immaculée-Conception, Saint-Ours, Montérégie, QC, J0G 1P0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-la-margelle-mtg",
+    "name": "Maison La Margelle",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 746-2788",
+    "description": "Centre de réadaptation interne de 20 jours.* Programme distinct pour les dépendances aux substances.* Programme distinct pour le jeu excessif.* Programme mixé pour les dépendances.* Programme de ressourcement de 7 à 10 jours pour les anciens résidents avec une approche plus individualisée.* Suivi post-cure offert pendant 1 an, soit 9 rencontres 1 fois par semaine puis 1 fois par mois.* Réunion hebdomadaire avec les résidents, les anciens et leurs familles respectives.* Réinsertion sociale externe offerte pour une durée de 3 mois comportant 7 thèmes: hygiène de vie, budget, logement, emploi, réseau de soutien, estime de soi, résolution de problèmes.* Gestion des émotions et prévention du suicide.* Soutien à l'entourage. | Clientèle: hommes ou femmes adultes aux prises avec une dépendance à l'alcool, aux drogues ou au jeu pathologique Capacité: mixtes: 18 personnes, jeu: 2 personnes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.maisonlamargelle.com",
+    "address": "1905, route Marie-Victorin, Sorel-Tracy, Montérégie, QC, J3R 1M8",
+    "hours": "lundi au vendredi 8h30 à 17h00, service téléphonique: 24 heures, 7 jours"
+  },
+  {
+    "id": "maison-la-passerelle-saint-simon-mtg",
+    "name": "Maison La Passerelle - Saint-Simon",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Simon",
+    "province": "QC",
+    "phone": "450 798-2080",
+    "description": "Centre de réadaptation interne de 5 mois.* Programme distinct pour les dépendances aux substances.* Thérapie individuelle, de groupe.* Ateliers de connaissance de soi.* Prévention de la rechute.* Activités sportives, gymnase et piscine.* Aide à la recherche d'emploi.* Ateliers sur la sexualité.* Personnes judiciarisées: évaluation, rapports d'évolution et finaux, accompagnement et transport à la cour, etc.* Possibilité de travaux compensatoires ou communautaires.* Infimière SIDEP.* Aide aux retours aux études (programme SARCA).* Hébergement reconnu par les services correctionnels pour les personnes prévenues, en libération conditionnelle ou sous probation. | Clientèle: femmes adultes avec une dépendance à la drogue ou à l'alcool, femmes sur un programme de maintien à la méthadone stabilisé Capacité: 24 | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.maisonlapasserelle.ca",
+    "address": "6, rue Saint-Jean-Baptiste, Saint-Simon, Montérégie, QC, J0H 1Y0",
+    "hours": "admission: 7 jours, 8h30 à 14h00"
+  },
+  {
+    "id": "maison-la-virevolte-mtg",
+    "name": "Maison La Virevolte",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 651-1901",
+    "description": "Soutien aux familles afin de briser l'isolement, d'outiller les parents et de favoriser le développement des enfants.* Soutien à l'enfance: halte-garderie, activités parents-enfants, animation de parc, aide aux devoirs.* Soutien au rôle parental: soutien individuel, groupes de soutien, programme Y'a personne de parfait (YAPP).* Activités familiales ponctuelles: fêtes, camps familiaux d'hiver et d'été, cabane à sucre, etc.* Groupe d'éducation populaire.* Défense des droits des familles.* Membre du Regroupement des comités logement et associations de locataires du Québec. | Clientèle: familles | Territoire: Vieux-Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.maisonlavirevolte.com",
+    "address": "335, rue Le Moyne Ouest, Longueuil, Montérégie, QC, J4H 1W4",
+    "hours": "lundi au jeudi 9h00 à 17h00"
   },
   {
     "id": "maison-le-ricochet-out",
@@ -26043,6 +32854,71 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Soutien et réadaptation psychosociale en santé mentale.* Hébergement visant l'autonomie et la réinsertion sociale (trois à dix-huit mois). * Soutien dans la communauté : interventions et suivis individualisés dans le milieu de vie de la personne.* Activités éducatives et récréatives. | Clientèle: personnes de 18 ans et plus ayant un trouble de santé mentale | Territoire: Gatineau | Statut: organisme à but non lucratif",
     "website": "maisonrealite.org",
     "address": "10, rue Jeanne-d'Arc, Gatineau, Outaouais, QC, J8Y 2H2",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "maison-r-pit-vacances-mtg",
+    "name": "Maison Répit-Vacances",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 928-9105",
+    "description": "Services de répits pour parents ayant un enfant d'âge adulte vivant avec une déficience intellectuelle avec ou sans troubles du spectre de l'autisme, sans difficultés motrices graves.* Camps de fin de semaine.* Camps spéciaux.* Dépannage occasionnel.* Halte-répit. | Clientèle: adultes vivant avec une déficience intellectuelle avec ou sans troubles du spectre de l'autisme, sans difficultés motrices graves | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "maisonrepitvacances.ca",
+    "address": "259, rue Sénécal, Longueuil, Montérégie, QC, J4G 1M8",
+    "hours": "camps de fin de semaine: vendredi 18h30 au dimanche 16h00, halte répit: lundi au vendredi 8h00 à 16h00, dépannage occasionnel: sur réservation"
+  },
+  {
+    "id": "maison-sous-les-arbres-la-mtg",
+    "name": "Maison Sous Les Arbres (La)",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "1 866 277-3553",
+    "description": "Centre de crise et de prévention du suicide.* Ligne d'intervention téléphonique 24 heures, 7 jours.* Hébergement de crise à court terme.* Intervention de crise en personne.* Suivi de crise individuel.* Soutien dans la communauté.* Suivi intensif variable: réadaptation psychosociale.* Soutien et suivi pour les personnes endeuillées par le suicide.* Formation pour les personnes intervenantes.* Sensibilisation.* Référence. | Clientèle: personnes de 18 ans et plus vivant une situation de crise psychosociale, suicidaire ou psychiatrique, suivi intensif variable: personnes vivant avec une problématique de santé mentale Capacité: hébergement: 9 lits, suivi de crise: 23 places, soutien dans la communauté et suivi intensif: 63 places | Territoire: Châteauguay | Statut: organisme à but non lucratif",
+    "website": "www.la-msla.com",
+    "address": "2, boulevard D'Anjou, Châteauguay, Montérégie, QC, J6K 1B7",
+    "hours": "ligne téléphonique et centre de crise: 24 heures, 7 jours, suivi intensif: lundi au vendredi 8h30 à 17h00"
+  },
+  {
+    "id": "maison-tourbillon-et-diapason-mtg",
+    "name": "Maison Tourbillon Et Diapason",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "579 362-5262",
+    "description": "Hébergement temporaire pour jeunes vivant avec une déficience intellectuelle ou un trouble du spectre de l'autisme.* Unité brève: hébergement temporaire et immédiat offert aux jeunes se trouvant dans une situation de bris de fonctionnement.* Répit spécialisé jeunesse: activités éducatives, récréatives et sociales adaptées et soutien dans le processus de réadaptation et gestion des défis liés au diagnostics. * Urgence sociale: milieu de vie d'une durée maximale de 30 jours pour les usager·ère·s ayant perdu leur milieu de vie sans possibilité de retour ou autre alternative d'hébergement possible. | Clientèle: jeunes âgées de 6 à 17 ans vivant avec un diagnostic de déficience intellectuelle ou de trouble du spectre de l'autisme Capacité: unité brève: 5 places, répit spécialisé: 3 places, urgence sociale: 1 place | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "lerenfort.com/tourbillondiapason",
+    "address": "1125, chemin du Clocher, Saint-Jean-sur-Richelieu, Montérégie, QC, J2Y 1A4",
+    "hours": "7 jours, 24 heures"
+  },
+  {
+    "id": "maison-tournesols-mtg",
+    "name": "Maison Tournesols",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 445-9290",
+    "description": "Centre de jour dédié aux personnes aînées.* Programme Journée Entr'Aînés : rencontres hebdomadaires, repas communautaires, activités sociales et d'information, journées thématiques.* Programme Répit : journée de répit offerte du lundi au vendredi aux personnes proches aidantes de personnes atteintes de troubles neurocognitifs, dont la maladie d'Alzheimer.* Maison Tournesols Mobile: service d'accompagnement individualisé, ponctuel et adapté.* Programme Bénévolat: possibilités d'implication en cuisine, à la réception, à la livraison et au transport ou au soutien administratif.* Organisme porteur des projets de gériatrie sociale: https://geriatriesociale.org/projets/#projets | Clientèle: personnes retraitées et aînées Capacité: 135 | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "maisontournesols.org",
+    "address": "1720, rue De Gaulle, Longueuil, Montérégie, QC, J4T 1M9",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "maison-victor-gadbois-la-mtg",
+    "name": "Maison Victor-Gadbois (La)",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Saint-Mathieu-de-Beloeil",
+    "province": "QC",
+    "phone": "450 467-1710",
+    "description": "Soins palliatifs spécialisés pour patient·e·s atteint·e·s de cancer en phase terminale. | Clientèle: personnes de 18 ans et plus Capacité: 12 lits | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "maisonvictor-gadbois.com",
+    "address": "1000, rue Chabot, Saint-Mathieu-de-Beloeil, Montérégie, QC, J3G 0R8",
     "hours": "24 heures, 7 jours"
   },
   {
@@ -26300,6 +33176,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "maisons-de-la-paix-maison-foyer--mtg",
+    "name": "Maisons De La Paix - Maison Foyer De Groupe",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 674-0059",
+    "description": "Hébergement à court, moyen ou long terme.* Accompagnement, réadaptation, insertion sociale et préparation à la vie autonome.* Suivi psychosocial, relation d'aide et écoute active.* Soutien et référence.* Ateliers éducatifs sur les problématiques vécues par les adolescent·e·s.* Aide et éducation à la préparation des repas.* Préparation de CV.* Aide à la recherche d'emploi.* Préparation aux examens d'équivalence de secondaire 5.* Loisirs et activités de groupe. | Clientèle: jeunes de 14 à 17 ans Capacité: foyer de groupe: 11 chambres individuelles | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "maisonsdelapaix.org",
+    "address": "1617, rue Sainte-Hélène, Longueuil, Montérégie, QC, J4K 3S8",
+    "hours": "24 heures, 7 jours, information: lundi au vendredi 8h00 à 16h30"
+  },
+  {
     "id": "maisons-familiales-par-amour-les-ch-cht",
     "name": "Maisons Familiales par Amour (les) - Chertsey",
     "category": "food",
@@ -26311,6 +33200,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://lesmaisonsfamilialesparamour.com",
     "address": "13200, route 335, Chertsey, Lanaudière, QC, J0K 3K0",
     "hours": "mardi 9h00 à 11h00, vendredi 9h00 à 11h00 et 13h00 à 15h00"
+  },
+  {
+    "id": "mamans-et-bambins-de-brossard-mtg",
+    "name": "Mamans Et Bambins De Brossard",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "438 822-1152",
+    "description": "Lieu de rencontre pour parents avec jeunes enfants.* Chant, bricolage, heure du conte, jeux récréatifs.* Activités, sorties et fêtes à thème.* Discussion entre les parents. | Clientèle: parents avec enfants de moins de 5 ans, grands-parents avec petits-enfants de moins de 5 ans | Territoire: Grand Montréal | Statut: organisme à but non lucratif",
+    "address": "1255, rue Albert, Brossard, Montérégie, QC, J4T 1T5",
+    "hours": "mercredi et vendredi 10h00 à 12h00"
   },
   {
     "id": "mani-jeunes-out",
@@ -26364,6 +33265,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.ville.maniwaki.qc.ca",
     "address": "186, rue Principale Sud, Maniwaki, Outaouais, QC, J9E 1Z9",
     "hours": "lundi au vendredi de 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "manoir-a-pierre-lanct-t-mtg",
+    "name": "Manoir A. Pierre Lanctôt",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "",
+    "description": "OSBL d'habitation communautaire pour personnes aînées.* Repas communautaires.* Activités sociales. | Clientèle: personnes seules ou couples de 75 ans et plus autonome à faible ou moyen revenu, personne semi- autonome de 65 ans et plus à faible ou moyen revenu Capacité: 23 logements subventionnés, 23 non-subventionnés | Territoire: Châteauguay | Statut: organisme à but non lucratif",
+    "website": "frohme.org/services-gratuits/sinscrire-pour-obtenir-un-logement-social",
+    "address": "95, rue de Carillon, Châteauguay, Montérégie, QC, J6J 5Z7",
+    "hours": "Voir site web"
   },
   {
     "id": "manoir-cardinal-lav",
@@ -26530,6 +33444,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h15 à 12h00 et 13h15 à 16h30"
   },
   {
+    "id": "matin-es-parents-enfants-mtg",
+    "name": "Matinées Parents-Enfants",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Mont-Saint-Hilaire",
+    "province": "QC",
+    "phone": "579 423-5658",
+    "description": "Rencontres parents-enfants avec halte-garderie multiâge.* Activités parents-enfants.* Ateliers éducatifs variés.* Cours de mise en forme.* Yoga.* Sorties ludiques et culturelles.* Conférences.* Cafés- discussion. | Clientèle: parents et enfants de 0 à 5 ans | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.lesmatinees.com/fr",
+    "address": "418, boulevard Sir-Wilfrid-Laurier, Mont-Saint-Hilaire, Montérégie, QC, J3H 3N9",
+    "hours": "lundi au jeudi 8h30 à 16h00"
+  },
+  {
     "id": "mayo-municipalit-out",
     "name": "Mayo - Municipalité",
     "category": "housing",
@@ -26622,6 +33549,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Hébergement d'urgence: accueil 24h/24, 7j/7."
   },
   {
+    "id": "meubl-tout-mtg",
+    "name": "Meublétout",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Mcmasterville",
+    "province": "QC",
+    "phone": "450 464-7888",
+    "description": "Magasin d'articles usagés.* Vente d'articles usagés: meubles, articles de maison, électroménagers, petits appareils électroniques, jouets, articles informatiques, livres, articles de sports, etc.* La Boutique aux Fringues: friperie. | Territoire: Boucherville, Longueuil, MRC La Vallée-du-Richelieu, Saint-Bruno-de-Montarville, Saint- Hyacinthe, Sainte-Julie | Statut: organisme à but non lucratif",
+    "website": "meubletout.com",
+    "address": "185, boulevard Sir-Wilfrid-Laurier, Mcmasterville, Montérégie, QC, J3G 1P9",
+    "hours": "mardi au vendredi 9h00 à 16h30, samedi 9h00 à 12h00"
+  },
+  {
+    "id": "meubl-tout-r-cup-ration-d-articl-mtg",
+    "name": "Meublétout - Récupération D'Articles Usagés",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Mcmasterville",
+    "province": "QC",
+    "phone": "450 464-7888",
+    "description": "Récupération de dons: meubles, articles de maison, électroménagers, petits appareils électroniques, jouets, articles informatiques, livres, articles de sports, etc.* Collecte à domicile. | Territoire: MRC La Vallée-du-Richelieu, Saint-Bruno-de-Montarville | Statut: organisme à but non lucratif",
+    "website": "meubletout.com",
+    "address": "185, boulevard Sir-Wilfrid-Laurier, Mcmasterville, Montérégie, QC, J3G 1P9",
+    "hours": "mardi au vendredi 9h00 à 16h30, samedi 9h00 à 12h00"
+  },
+  {
     "id": "microentreprendre-laval-lav",
     "name": "Microentreprendre Laval",
     "category": "employment",
@@ -26670,6 +33623,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "mille-et-une-rues-mtg",
+    "name": "Mille Et Une Rues",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "514 349-4749",
+    "description": "Travail de milieu et de rue.* Accueil, écoute, soutien, accompagnement et référence.* Orientation et accompagnement vers des ressources: hébergement, CLSC, banque alimentaire, intervenants scolaires, etc.* Distribution de préservatifs.* Services préventifs en santé sexuelle, toxicomanie, itinérance et violence.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV). | Clientèle: personnes en situation de vulnérabilité | Territoire: MRC La Vallée-du-Richelieu et Saint-Bruno-De-Montarville | Statut: organisme à but non lucratif",
+    "website": "1001rues.org",
+    "address": "285, boulevard Cartier, Beloeil, Montérégie, QC, J3G 3R2",
+    "hours": "lundi au samedi, horaire variable selon les besoins"
   },
   {
     "id": "sk-cfs",
@@ -27548,6 +34514,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "mon-logement-mes-droits-mtg",
+    "name": "Mon Logement, Mes Droits",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "438 308-5973",
+    "description": "* Défense des droits des locataires.* Formation en vue d'une audience au TAL.* Atelier d'éducation populaire et documentation sur les enjeux en matière de logement.* Promotion du logement social. | Clientèle: personnes résidant dans la MRC Vaudreuil-Soulanges | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.monlogementmesdroits.com",
+    "address": "107, rue Jacques-Cartier, bureau 10, Salaberry-de-Valleyfield, Montérégie, QC, J6T 4R8",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30 par téléphone seulement"
+  },
+  {
     "id": "mont-d-or-le-out",
     "name": "Mont D'Or (Le)",
     "category": "social",
@@ -27558,6 +34537,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Maintien à domicile.* Gardiennage.* Entretien ménager.* Préparation de repas.* Aide aux courses.* Accompagnement aux sorties et aux rendez-vous.* Système d'alarme d'urgences médicales. | Clientèle: personnes aînées, personnes de 18 ans et plus en perte d'autonomie | Territoire: MRC Pontiac, municipalité de Pontiac | Statut: organisme à but non lucratif",
     "address": "533, rue Baume, Fort-Coulonge, Outaouais, QC, J0X 1V0",
     "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "mont-saint-gr-goire-municipalit-mtg",
+    "name": "Mont-Saint-Grégoire - Municipalité",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Mont-Saint-Grégoire",
+    "province": "QC",
+    "phone": "450 347-5376",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.mmsg.ca/citoyens/services/calendrier-des-collectes * Subvention pour produits hygiéniques réutilisables: couches lavables, produits d'hygiène féminine.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location d'équipements.* Location de salles. | Territoire: Mont-Saint-Grégoire | Statut: organisme municipal",
+    "website": "www.mmsg.ca",
+    "address": "1, boulevard du Frère-André, Mont-Saint-Grégoire, Montérégie, QC, J0J 1K0",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h45, vendredi 8h30 à 12h00"
   },
   {
     "id": "montcerf-lytton-municipalit-out",
@@ -27597,6 +34589,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.montpellier.ca",
     "address": "4, rue du Bosquet, Montpellier, Outaouais, QC, J0V 1M0",
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "mosa-que-la-centre-d-action-b-n--mtg-2",
+    "name": "Mosaïque (La), Centre D'Action Bénévole Et Communautaire - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 465-1803",
+    "description": "* Clinique d'impôts pour l'année en cours et pour les précédentes. | Clientèle: personnes à faible revenu | Territoire: Brossard, Greenfield Park, Saint-Lambert, Vieux-Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.lamosaique.org",
+    "address": "1650, avenue de l'Église, Longueuil, Montérégie, QC, J4P 2C8",
+    "hours": "clinique 2026: à partir du 3 mars, lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00, déclarations des années antécédentes (retards): à partir de début mai, mardi au jeudi"
   },
   {
     "id": "mouvement-d-education-populaire-aut-jol",
@@ -27648,6 +34653,162 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi.",
     "isProvinceWide": true
+  },
+  {
+    "id": "mouvement-sem-sensibilisation-po-mtg",
+    "name": "Mouvement Sem (Sensibilisation Pour Une Enfance Meilleure)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 348-0209",
+    "description": "* Connexion: intervention spécialisée à domicile pour l'amélioration de la qualité de vie des enfants.* Aide aux devoirs et stimulation pré-scolaire.* Pont de la réussite: service d'accompagnement pour les parents qui ont des enfants qui entrent à la maternelle.* Collaboration et recherche de solutions avec les écoles impliquées.* Aide au signalement.* Supervision des droits d'accès: visite supervisée et échange de garde. | Clientèle: enfants, adolescent·e·s, parents | Territoire: Haut Richelieu, une partie de la MRC de Rouville | Statut: organisme à but non lucratif",
+    "website": "mouvementsem.org",
+    "address": "368, rue Laurier, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 6L3",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, disponibilité en soirée sur rendez-vous, aide aux devoirs: 15h00 à 17h30, service des droits d'accès: samedi et dimanche 8h00 à 17h00 sur rendez-vous"
+  },
+  {
+    "id": "mrc-d-acton-terre-d-accueil-mtg",
+    "name": "Mrc D'Acton Terre D'Accueil",
+    "category": "immigration",
+    "subcategory": "Immigration et communautés culturelles",
+    "city": "Acton Vale",
+    "province": "QC",
+    "phone": "450 546-0311",
+    "description": "Projet visant à attirer des personnes issues de l'immigration à s'installer sur le territoire de la MRC d'Acton et à favoriser leur intégration harmonieuse.* Aide à la recherche de logement.* Aide dans l'établissement: soutien pour l'inscription à la garderie et à l'école, soutien pour l'obtention de documents administratifs et gouvernementaux.* Séjours exploratoires organisés pour découvrir la région.* Activités d'intégration: sports, jeux de société, repas communs, fêtes thématiques, etc. | Clientèle: personnes issues de l'immigration | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "immigrationacton.org",
+    "address": "975, rue Boulay, bureau 202, Acton Vale, Montérégie, QC, J0H 1A0",
+    "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "mrc-de-la-vall-e-du-richelieu-mtg",
+    "name": "Mrc De La Vallée-Du-Richelieu",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Mcmasterville",
+    "province": "QC",
+    "phone": "450 464-0339",
+    "description": "Administration des services régionaux à caractère supralocal. * Aménagement et développement du territoire.* Règlements d'urbanisme.* Gestion des services publics: cours d'eau, matières résiduelles, évaluation foncière, sécurité publique, civile et incendie.* Calendrier des collectes des matières résiduelles: www.mrcvr.ca/services/matieres-residuelles/info-collectes/calendriers-des-collectes* Participation au développement socio-économique et soutien aux entreprises.* Promotion du patrimoine, de la culture et du tourisme.* Gestion de l'Office régional d'habitation de La Vallée-du-Richelieu. | Clientèle: grand public | Territoire: MRC de La Vallée-du-Richelieu | Statut: organisme à but non lucratif",
+    "website": "www.mrcvr.ca",
+    "address": "255, boulevard Laurier, bureau 100, Mcmasterville, Montérégie, QC, J3G 0B7",
+    "hours": "lundi au jeudi 8h15 à 12h00 et 13h00 à 16h45, vendredi 8h15 à 12h00"
+  },
+  {
+    "id": "mrc-de-marguerite-d-youville-mtg",
+    "name": "Mrc De Marguerite-D'Youville",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Verchères",
+    "province": "QC",
+    "phone": "450 583-3301",
+    "description": "Administration de services régionaux à caractère supra-local. * Aménagement et développement du territoire.* Règlements d'urbanisme.* Gestion des services publics: cours d'eau, matières résiduelles, évaluation foncière, sécurité publique, civile et incendie.* Développement socio-économique et soutien aux entreprises: formations, aide au démarrage, subventions et réseautage.* Promotion du patrimoine, de la culture et du tourisme. | Territoire: MRC Marguerite-D'Youville | Statut: organisme à but non lucratif",
+    "website": "www.margueritedyouville.ca",
+    "address": "609, route Marie-Victorin, Verchères, Montérégie, QC, J0L 2R0",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "mrc-de-marguerite-d-youville-cou-mtg",
+    "name": "Mrc De Marguerite-D'Youville - Cour Municipale Régionale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Verchères",
+    "province": "QC",
+    "phone": "450 583-3435",
+    "description": "Cour de justice de première instance où sont entendus les litiges en matière de règlements municipaux, d'infractions au Code de la sécurité routière ainsi que certaines infractions criminelles (conduite avec facultés affaiblies, vols de moins de 5000$ et méfaits). * Paiement ou contestation de contraventions.* Recouvrement de sommes dues.* Travaux compensatoires. | Territoire: MRC Marguerite-D'Youville | Statut: organisme municipal",
+    "website": "margueritedyouville.ca/services/services-aux-citoyens/cour-municipale-regionale",
+    "address": "609, route Marie-Victorin, Verchères, Montérégie, QC, J0L 2R0",
+    "hours": "lundi, mercredi et jeudi 8h30 à 12h00 et 13h00 à 16h30, mardi 8h30 à 12h00 et 13h00 à 20h00, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "mrc-de-marguerite-d-youville-coc-mtg",
+    "name": "Mrc De Marguerite-D'Youville - Écocentre Secteur Nord",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Contrecoeur",
+    "province": "QC",
+    "phone": "450 583-3301",
+    "description": "Site de dépôt, de tri et de valorisation des matières résiduelles.* Appareils électroniques et informatiques.* Appareils à moteur ou réfrigérants.* Résidus domestiques dangereux (peinture, huile, piles, propane, etc.).* Polystyrene.* Pneus.* Articles de maison et objets volumineux.* Matelas.* Matériaux de construction (asphalte, brique, métal, béton, vitre, etc.).* Matières recyclables.* Résidus verts et bois.* Sièges d'auto expirés.* Bardeaux.* Plastiques agricoles (pellicules, bâches, sacs-silos, sacs de litière, ficelles, sacs de moulées, tubulures acéricoles souples et rigides).* Thermoplastiques d'hivernation de bateau.* Vente et dons de matériaux et d'articles de maison usagés à bas prix. | Clientèle: personnes citoyennes | Territoire: MRC Marguerite-d'Youville, Saint-Antoine-sur-Richelieu | Statut: organisme à but non lucratif",
+    "website": "margueritedyouville.ca/environnement/matieres-residuelles/tri-facile-pour-une-saine-gestion-de- vos-matieres-residuelles",
+    "address": "4111, route Marie-Victorin, Contrecoeur, Montérégie, QC, J0L 1C0",
+    "hours": "avril à octobre: mercredi au samedi 8h00 à 16h00"
+  },
+  {
+    "id": "mrc-de-marguerite-d-youville-coc-mtg-2",
+    "name": "Mrc De Marguerite-D'Youville - Écocentre Secteur Sud",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Varennes",
+    "province": "QC",
+    "phone": "450 583-3301",
+    "description": "Site de dépôt, de tri et de valorisation des matières résiduelles.* Appareils électroniques et informatiques.* Appareils à moteur ou réfrigérants.* Résidus domestiques dangereux (peinture, huile, piles, propane, etc.).* Polystyrène.* Pneus.* Articles de maison et objets volumineux.* Matelas.* Matériaux de construction (asphalte, brique, métal, béton, vitre, etc.).* Matières recyclables.* Résidus verts et bois.* Sièges d'auto expirés.* Bonbonnes de propane.* Bardeaux.* Plastiques agricoles (pellicules, bâches, sacs-silos, sacs de litière, ficelles, sacs de moulées, tubulures acéricoles souples et rigides).* Thermoplastiques d'hivernation de bateau.* Vente et dons de matériaux et d'articles de maison usagés à bas prix. | Clientèle: personnes citoyennes, industries, commerces et institutions | Territoire: MRC Marguerite-d'Youville, Saint-Antoine-sur-Richelieu | Statut: organisme à but non lucratif",
+    "website": "margueritedyouville.ca/environnement/matieres-residuelles/tri-facile-pour-une-saine-gestion-de- vos-matieres-residuelles",
+    "address": "1975, chemin de l'Énergie, Varennes, Montérégie, QC, J3X 1P7",
+    "hours": "9 avril au 17 novembre 2025 inclusivement: mardi, mercredi, samedi et dimanche 8h00 à 16h00, jeudi 9h00 à 18h00 et 8h00 à 16h00 à partir du 31 octobre 2025"
+  },
+  {
+    "id": "mrc-de-vaudreuil-soulanges-mtg",
+    "name": "Mrc De Vaudreuil-Soulanges",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-5753",
+    "description": "Administration de services régionaux à caractère supra-local.* Gestion de l'aménagement et du développement du territoire: zones agricoles, cours d'eau et protection de l'environnement.* Réseau des écocentres: www.mrcvs.ca/citoyens/environnement/reseau-des-ecocentres* Soutien au développement socioéconomique, social et culturel.* Sécurité incendie et civile.* Concertation et collaboration entre les municipalités.* Évaluation foncière.* Gestion des matières résiduelles. | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "mrcvs.ca",
+    "address": "280, boulevard Hardwood, 2e étage, Vaudreuil-Dorion, Montérégie, QC, J7V 1Y5",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "mrc-de-vaudreuil-soulanges-cour--mtg",
+    "name": "Mrc De Vaudreuil-Soulanges - Cour Municipale Régionale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-9480",
+    "description": "Cour de justice de première instance où sont entendus les litiges en matière de règlements municipaux, d'infractions au Code de la sécurité routière ainsi que certaines infractions criminelles (conduite avec facultés affaiblies, vols de moins de 5000$ et méfaits). * Paiement ou contestation de contraventions.* Recouvrement de sommes dues.* Travaux compensatoires. | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme municipal",
+    "website": "mrcvs.ca/citoyens/cour-municipale-regionale/#cour-municipale",
+    "address": "280, boulevard Hardwood, Vaudreuil-Dorion, Montérégie, QC, J7V 1Y5",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "mrc-jardins-de-napierville-mtg",
+    "name": "Mrc Jardins-De-Napierville",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Saint-Michel",
+    "province": "QC",
+    "phone": "450 454-0559",
+    "description": "Administration de services régionaux à caractère supra-local.* Gestion de l'aménagement du territoire et de l'environnement.* Soutien au développement socioéconomique, social et culturel.?* Concertation et collaboration entre les municipalités.* Évaluation foncière.* Sécurité publique et prévention des incendies. | Territoire: MRC Les Jardins-de-Napierville | Statut: organisme municipal",
+    "website": "mrcjardinsdenapierville.ca",
+    "address": "1767, rue Principale, Saint-Michel, Montérégie, QC, J0L 2J0",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "mrc-le-haut-richelieu-mtg",
+    "name": "Mrc Le Haut-Richelieu",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-3636",
+    "description": "* Gestion de l'aménagement du territoire et de l'environnement.* Gestion des cours d'eau.* Gestion intégrée des matières résiduelles.* Sécurité incendie.* Soutien au développement socioéconomique, social et culturel.?* Concertation et collaboration entre les municipalités.* Évaluation foncière. | Territoire: MRC Le Haut-Richelieu: Saint-Jean-sur-Richelieu, Mont-Saint-Grégoire, Lacolle, Saint- Alexandre, Saint-Paul-de-l'Île-aux-Noix, Saint-Blaise-sur-Richelieu, Sainte-Anne-de-Sabrevois, Henryville, Venise-en-Québec, Noyan, Sainte-Brigide-d'Iberville, Saint-Georges-de-Clarenceville, Saint-Sébastien et Saint- Valentin | Statut: organisme municipal",
+    "website": "www.mrchr.qc.ca",
+    "address": "380, 4e Avenue, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 1W9",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "mrc-roussillon-mtg",
+    "name": "Mrc Roussillon",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "450 638-1221",
+    "description": "Administration de services régionaux à caractère supra-local. * Aménagement et développement du territoire.* Règlements d'urbanisme.* Gestion des services publics: cours d'eau, matières résiduelles, évaluation foncière, sécurité publique, civile et incendie.* Participation au développement socio-économique.* Subventions pour les compostières et les couches lavables.* Promotion du patrimoine, de la culture et du tourisme. | Territoire: MRC Roussillon | Statut: organisme municipal",
+    "website": "roussillon.ca",
+    "address": "260, rue Saint-Pierre, bureau 200, Saint-Constant, Montérégie, QC, J5A 2A5",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h30"
   },
   {
     "id": "msss-clsc-mistissini-msdc-mistissini",
@@ -27786,6 +34947,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "mus-e-r-gional-de-vaudreuil-soul-mtg",
+    "name": "Musée Régional De Vaudreuil-Soulanges",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "1 877 455-2092",
+    "description": "* Expositions temporaires et permanentes: collections ethnologiques et artistiques.* Conférences variées sur l'art et le patrimoine.* Rencontres publics-artistes.* Les Seigneuriales: fête historique annuelle.* Activités familiales.* Services éducatifs: ateliers, camp de jour. | Clientèle: grand public Capacité: 2 classes d'élèves à la fois | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.mrvs.qc.ca",
+    "address": "431, avenue Saint-Charles, VAUDREUIL-DORION, Montérégie, QC, J7V 2N3",
+    "hours": "mardi au vendredi 9h00 à 12h00 et 13h00 à 16h30, samedi et dimanche 13h00 à 16h30, période estivale: mardi au vendredi 9h00 à 16h30, samedi et dimanche 13h00 à 16h30"
+  },
+  {
     "id": "drum-garde-mylene-duff",
     "name": "Mylene Duff",
     "category": "family",
@@ -27808,6 +34982,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "• Groupe de soutien sur le myélome multiple: 4 ou 5 rencontres par année. | Clientèle: personnes vivant avec des myélomes multiples, personnes proches aidantes, leurs proches | Territoire: Montréal et environs | Frais: aucuns | Statut: organisme à but non lucratif",
     "website": "https://www.myelome.ca",
     "address": "1255, route Transcanadienne, bureau 160, Dorval, Montréal, QC, H9P 2V4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "m-re-en-action-mtg",
+    "name": "Mère En Action",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 348-4330",
+    "description": "Centre de jour adapté aux besoins des mères à faible revenu.* Halte-garderie.* Dons de vêtements et produits sanitaires.* Ateliers.* Activités de groupe. | Clientèle: Mères d'enfants 0 à 17 ans à faible revenu Capacité: 24 logements | Territoire: MRC Le Haut-Richelieu | Statut: organisme à but non lucratif",
+    "website": "mereenaction.ca",
+    "address": "145, rue Laurier, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 6K4",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "m-re-boire-la-mtg",
+    "name": "Mère À Boire (La)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "514 418-2288",
+    "description": "Soutien à l'allaitement et à la périnatalité.* Promotion et protection de l'allaitement.* Soutien, conseils et référence.* Consultation en lactation (IBCLC).* Préparation à l'allaitement.* Marraines d'allaitement.* Préparation à la naissance.* Halte-allaitement et pèse-bébé.* Ateliers périnataux.* Groupes de parents et bébés.* Atelier de parentalité bienveillante (parentalité positive).* Activités diverses: portage, yoga, ateliers artistiques, activités pour développer la motricité, tricot entre parents, massage, etc.* Activités pour les pères: cuisines collectives, massage, parentalité en équipe, etc. | Clientèle: nouveaux parents, mères allaitantes, mères, pères, bébés, femmes enceintes | Territoire: Brossard, Greenfield Park, Lemoyne, Saint-Lambert | Statut: organisme à but non lucratif",
+    "website": "linktr.ee/lamereaboire_momsformilk",
+    "address": "415, avenue Mercille, Saint-Lambert, Montérégie, QC, J4P 1A4",
     "hours": "Voir site web"
   },
   {
@@ -27889,6 +35089,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "napierville-municipalit-mtg",
+    "name": "Napierville - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Napierville",
+    "province": "QC",
+    "phone": "",
+    "description": "Gestion des services municipaux.* Paiement des taxes municipales.* Système de notification d'urgence.* Licence pour chien et chat.* Information sur la collecte des matières résiduelles.* Service des incendies.* Service d'urbanisme: permis de construction.* Service des travaux publics: entretien des infrastructures. | Territoire: Napierville | Statut: organisme municipal",
+    "website": "www.napierville.ca",
+    "address": "260, rue de l'Église, Napierville, Montérégie, QC, J0J 1L0",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 17h00, vendredi 8h30 à 12h00"
+  },
+  {
     "id": "na-mauricie",
     "name": "Narcotiques Anonymes Mauricie",
     "category": "mentalHealth",
@@ -27939,6 +35152,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h00, vendredi: sur rendez-vous seulement"
   },
   {
+    "id": "notre-dame-de-l-le-perrot-ville-mtg",
+    "name": "Notre-Dame-De-L'Île-Perrot - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "514 453-4128",
+    "description": "Gestion des services municipaux.* Paiement des taxes municipales.* Service de sécurité incendie.* Collecte des matières résiduelles.* Service des travaux publics: entretien des infrastructures.* Service d'urbanisme: permis de construction. | Territoire: Notre-Dame-de-l'Île-Perrot | Statut: organisme municipal",
+    "website": "www.ndip.org",
+    "address": "21, rue de l'Église, Vaudreuil-Dorion, Montérégie, QC, J7V 8P4",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 12h45 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
     "id": "notre-dame-de-la-paix-municipali-out",
     "name": "Notre-Dame-De-La-Paix - Municipalité",
     "category": "food",
@@ -27976,6 +35202,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.nourrisourcelanaudiere.org",
     "address": "2500, boulevard Mascouche, bureau 212, Mascouche, Lanaudière, QC, J7K 0H5",
     "hours": "administration: lundi au vendredi 8h00 à 15h00, marraines disponibles 7 jours par semaine"
+  },
+  {
+    "id": "nourri-source-mont-r-gie-mtg",
+    "name": "Nourri-Source - Montérégie",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "1 877 425-0805",
+    "description": "* Marraines d'allaitement: jumelage téléphonique et par messagerie.* Halte-allaitement.* Conférences en ligne.* Prêt de tire-laits.* Ateliers prénataux.* Cliniques d'allaitement.* Défi allaitement. | Clientèle: femmes enceintes, femmes qui allaitent | Territoire: MRC Vaudreuil-Soulanges, MRC Le Haut-Saint-Laurent, MRC Beauharnois-Salaberry, MRC Roussillon, MRC Acton, MRC Maskoutain, MRC Brome-Missisquoi, MRC Haute-Yamaska | Statut: organisme à but non lucratif",
+    "website": "nourri-source.org",
+    "address": "1255, rue Émile-Bouchard, local 208, Vaudreuil-Dorion, Montérégie, QC, J7V 0B7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "nova-hudson-mtg",
+    "name": "Nova Hudson",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Hudson",
+    "province": "QC",
+    "phone": "450 458-5727",
+    "description": "Soins infirmiers en oncologie et soins palliatifs à domicile.* Soutien aux familles par des proches aidant·e·s.* Soins des pieds.* Centre de jour pour adultes: répit, activités sociales et motrices. | Clientèle: personnes ayant besoin de soins infirmiers à domicile | Territoire: Hudson, Saint-Lazare et certains secteurs de Vaudreuil, Dorion et Rigaud | Statut: None or unknown",
+    "website": "novahudson.com",
+    "address": "465, rue Main, bureau 202, Hudson, Montérégie, QC, J0P 1H0",
+    "hours": "soins infirmiers: 24 heures, 7 jours, bureau: lundi au vendredi 10h00 à 12h00"
   },
   {
     "id": "nova-ouest-de-l-ile-bcf",
@@ -28032,6 +35284,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h."
   },
   {
+    "id": "noyan-municipalit-mtg",
+    "name": "Noyan - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Noyan",
+    "province": "QC",
+    "phone": "450 291-4504",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.ville.noyan.qc.ca/compo-haut-richelieu* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système automatisé d'alerte d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Noyan | Statut: organisme municipal",
+    "website": "www.ville.noyan.qc.ca",
+    "address": "1312, chemin de la Petite-France, Noyan, Montérégie, QC, J0J 1B0",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 17h00"
+  },
+  {
     "id": "nu-housing-nu",
     "name": "Nunavut Housing Corporation",
     "category": "housing",
@@ -28056,6 +35321,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://le-neo.com",
     "address": "950, boulevard Moody, Terrebonne, Lanaudière, QC, J6W 3K8",
     "hours": "bureau: lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "o-hangar-magasin-communautaire-mtg",
+    "name": "O'Hangar, Magasin Communautaire",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 377-8597",
+    "description": "Friperie.* Récupération de biens matériels sur place et revente à bas prix: vêtements, meubles, articles de maison, etc. | Territoire: MRC Vaudreuil-Soulanges, MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent | Statut: organisme à but non lucratif",
+    "website": "ohangar.ca",
+    "address": "42, rue Edmond, Salaberry-de-Valleyfield, Montérégie, QC, J6S 1L8",
+    "hours": "mardi au samedi 9h00 à 17h00"
   },
   {
     "id": "qc-immo-oaciq",
@@ -28213,6 +35491,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 15h30, vendredi 9h00 à 12h00"
   },
   {
+    "id": "office-d-habitation-de-longueuil-mtg",
+    "name": "Office D'Habitation De Longueuil",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 670-2733",
+    "description": "Gérer et administrer les logements et les programmes d'habitation.* Habitations à loyer modique (HLM).* Programme de supplément au loyer (PSL).* Logement abordable Québec (LAQ).* Service d'aide à la recherche de logement (SARL).* Service de référence.* Programme Accès Logis Québec. | Clientèle: personnes et familles à faible revenu ou à revenu modéré Capacité: 4 190 logements | Territoire: agglomération de Longueuil | Statut: organisme municipal",
+    "website": "ohlongueuil.com",
+    "address": "1111, rue Saint-Charles Ouest, bureau 255, Longueuil, Montérégie, QC, J4K 5G4",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h00, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "office-d-habitation-du-bassin-de-mtg",
+    "name": "Office D'Habitation Du Bassin De Chambly & Roussillon",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Sainte-Catherine",
+    "province": "QC",
+    "phone": "450 658-0248",
+    "description": "* Gestion et administration des logements et des programmes d'habitation: Habitations à loyer modique (HLM) et le Programme de supplément au loyer (PSL).* Service d'aide à la recherche de logement (SARL): soutien, information, orientation et accompagnement dans la recherche de logement. | Clientèle: personnes et familles à faible revenu ou à revenu modéré ayant le statut de citoyen canadien ou de résident permanent et ayant résidé sur le territoire de la Communauté métropolitaine de Montréal pendant 12 mois au cours des 24 mois précédant leur demande | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.ohbcr.ca",
+    "address": "6270, route 132, bureau 201, SAINTE-CATHERINE, Montérégie, QC, J5C 1B6",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "office-d-habitation-du-pontiac-out",
     "name": "Office D'Habitation Du Pontiac",
     "category": "social",
@@ -28265,6 +35569,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "office-municipal-d-habitation-ha-mtg",
+    "name": "Office Municipal D'Habitation Haut-Richelieu",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 348-3831",
+    "description": "Gestion et administration des logements et des programmes d'habitation.* Service d'aide à la recherche de logements (SARL).* Habitations à loyer modique (HLM).* Programme de supplément au loyer (PSL).* Logement abordable Québec (LAQ).* Programme Accès Logis Québec.* Référence. | Clientèle: logements: personnes seules, personnes aînées et familles à faible revenu ou à revenu modéré ayant le statut de citoyen canadien ou de résident permanent et ayant résidé sur le territoire de Saint-Jean-sur- Richelieu pendant 12 mois au cours des 24 mois précédant leur demande Capacité: 726 logements | Territoire: Napierville, Hemmingford, Lacolle, Saint-Jean-sur-Richelieu, Mont-Saint-Grégoire, Saint- Alexandre | Statut: organisme à but non lucratif",
+    "website": "www.omhhr.com",
+    "address": "145, rue Latour, bureau 100, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 7T8",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "office-municipal-d-habitation-de-l-lep",
     "name": "Office Municipal D'Habitation de L'Épiphanie",
     "category": "social",
@@ -28288,6 +35605,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.omhrn.com",
     "address": "1309, boulevard des Seigneurs, suite 101, TERREBONNE, Lanaudière, QC, J6W5B1",
     "hours": "lundi et mercredi 9h00 à 12h00 et 13h30 à 14h00, mardi, jeudi et vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "office-r-gional-d-habitation-de--mtg",
+    "name": "Office Régional D'Habitation De Marguerite-D'Youville",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Verchères",
+    "province": "QC",
+    "phone": "1 855 583-3563",
+    "description": "Gérer et administrer les logements et les programmes d'habitation.* Habitations à loyer modique (HLM).* Programme de supplément au loyer (PSL).* Service d'aide à la recherche de logement. (SARL).* Activités communautaires. | Clientèle: personnes seules, personnes aînées et familles à faible revenu ou à revenu modéré | Territoire: MRC Marguerite-D'Youville | Statut: organisme à but non lucratif",
+    "website": "margueritedyouville.ca/services/services-aux-citoyens/office-regional-dhabitation-orh",
+    "address": "609, route Marie-Victorin, Verchères, Montérégie, QC, J0L 2R0",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "office-r-gional-d-habitation-vau-mtg",
+    "name": "Office Régional D'Habitation Vaudreuil-Soulanges",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 218-6994",
+    "description": "Gestion et administration de logements et des programmes en habitation. * Demande de logement subventionné en ligne: orhvs.ca/soumettre-une-demande-en-ligne* Références.* Administration de programmes: Habitations à loyer modique (HLM), Programme de supplément au loyer (PSL), Logement abordable Québec (LAQ).Service d'aide à la recherche de logement (SARL)* Soutien, information et orientation. * Intervention de crise.* Accompagnement dans la recherche de logement.* Création d'un plan personnalisé.?* Partage d'outils numériques dans la recherche de logement. | Clientèle: personnes à faible revenu, familles à faible revenu Capacité: 254 logements | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "orhvs.ca",
+    "address": "420, avenue Saint-Charles, VAUDREUIL-DORION, Montérégie, QC, J7V 2N1",
+    "hours": "lundi et jeudi 8h30 à 12h00 et 13h30 à 16h30, mardi et mercredi 8h30 à 12h00 et dans l'après-midi sur rendez-vous seulement, SARL période intensive: 15 mai au 15 juillet, 7 jours"
+  },
+  {
+    "id": "office-r-gional-d-habitation-de--mtg-2",
+    "name": "Office Régional D'Habitation?De La Vallée-Du-Richelieu",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Mont-Saint-Hilaire",
+    "province": "QC",
+    "phone": "450 464-3696",
+    "description": "Regroupement d'Offices municipaux d'habitation qui s'occupent de la gestion et de l'administration des logements et des programmes d'habitation.* Habitations à loyer modique (HLM).* Programme de supplément au loyer (PSL).* Logement abordable Québec (LAQ).* Programme Accès Logis Québec.* Référence. | Clientèle: personnes et familles à faible revenu ou à revenu modéré | Territoire: Beloeil, Otterburn Park, Mont-Saint-Hilaire, Saint-Basile-le-Grand, Saint-Jean-Baptiste, McMasterville | Statut: Government - Provincial",
+    "website": "www.mrcvr.ca/services/vie-communautaire/orhvr",
+    "address": "250, rue Radisson, Mont-Saint-Hilaire, Montérégie, QC, J3H 2Z4",
+    "hours": "lundi au jeudi 9h00 à 11h30 et 13h30 à 16h00"
   },
   {
     "id": "h-omh-drummondville",
@@ -28472,6 +35828,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Hébergement d'urgence 24h/24. Présentation directe ou appel."
   },
   {
+    "id": "opex-beloeil-chambly-mtg",
+    "name": "Opex Beloeil - Chambly",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "1 833 888-6739",
+    "description": "Service d'aide à l'emploi pour les personnes adultes judiciarisées.* Accompagnement pour la démarche de demande de pardon.* Bilan et transfert de compétences.* Préparation de CV, orientation et choix de carrière.* Intégration à l'emploi.* Placement et recherche d'emploi, techniques de recherche. | Clientèle: adultes judiciarisé·e·s | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "opexemploi.com",
+    "address": "515, boulevard Sir-Wilfrid-Laurier, bureau 201, Beloeil, Montérégie, QC, J3G 6R7",
+    "hours": "sur rendez-vous uniquement"
+  },
+  {
+    "id": "opex-vall-e-du-richelieu-saint-j-mtg",
+    "name": "Opex Vallée Du Richelieu - Saint-Jean-Sur-Richelieu",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "1 833 888-6739",
+    "description": "Service d'aide à l'emploi pour les personnes adultes judiciarisées.* Bilan et transfert de compétences.* Préparation de CV, orientation et choix de carrière.* Intégration à l'emploi.* Placement et recherche d'emploi, techniques de recherche.* Analyse du plumitif et accompagnement dans le processus de demande de pardon. | Clientèle: adultes judiciarisé·e·s | Territoire: MRC Le Haut-Richelieu, MRC Rouville | Statut: organisme à but non lucratif",
+    "website": "opexemploi.com",
+    "address": "106, rue Saint-Charles, bureau 8 et 10, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2C1",
+    "hours": "lundi au jeudi 8h30 à 16h00, vendredi 8h30 à 12h00"
+  },
+  {
     "id": "option-femmes-out",
     "name": "Option Femmes",
     "category": "social",
@@ -28485,6 +35867,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30, un mercredi sur deux 8h30 à 20h30"
   },
   {
+    "id": "options-habitation-qu-bec-mtg",
+    "name": "Options Habitation Québec",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "514 836-7668",
+    "description": "Experts-conseils en habitation.* Élaboration, soutien et mise en oeuvre de projets d'habitation.* Construction, restauration et administration d'immeubles. | Clientèle: organisations désireuses de développer un projet d'habitation pour personnes à faibles ou modestes revenus | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.options-habitation-quebec.org",
+    "address": "1281, rue Lasalle, Longueuil, Montérégie, QC, J4K 3H6",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "op-ration-bonne-mine-haut-richel-mtg",
+    "name": "Opération Bonne Mine - Haut-Richelieu",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "514 949-5070",
+    "description": "Programme en persévérance scolaire.* Aide financière pour la rentrée scolaire.* Activités socioculturelles et artistiques.* Bourses de persévérance scolaire. | Clientèle: jeunes de 5 à 18 ans scolarisés au primaire et au secondaire, issus de milieux économiquement défavorisés | Territoire: MRC le Haut-Richelieu | Statut: organisme à but non lucratif",
+    "website": "www.operationbonnemine.com",
+    "address": "174, boulevard Saint-Luc, bureau 110, Saint-Jean-sur-Richelieu, Montérégie, QC, J3A 0A7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "op-ration-sac-dos-longueuil-mtg",
+    "name": "Opération Sac À Dos - Longueuil",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 677-8918",
+    "description": "* Distribution de sacs à dos, fournitures scolaires et boîte à lunch isolantes aux enfants de familles dans le besoin. | Clientèle: familles dans le besoin Capacité: 500 | Territoire: Vieux Longueuil, codes postaux débutant par: codes postaux J4G, J4H, J4J, J4K, J4L,",
+    "website": "regroupementpartage.ca",
+    "address": "1230, rue Green, Longueuil, Montérégie, QC, J4K 4Z5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "ordre-des-denturologistes-du-qu--mtg",
+    "name": "Ordre Des Denturologistes Du Québec",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 800 567-2251",
+    "description": "Ordre professionnel.* Protection du public et surveillance de l'exercice de la profession.* Formation et information sur la profession.* Réception et traitement des plaintes.* Répertoire des denturologistes: odq.connexence.com/ext/odq/repertoire/index.html#/ | Clientèle: denturologistes, grand public | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.odq.com",
+    "address": "395, rue du Parc-Industriel, Longueuil, Montérégie, QC, J4H 3V7",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "ordre-des-m-decins-v-t-rinaires--mtg",
+    "name": "Ordre Des Médecins Vétérinaires Du Québec",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "1 800 267-1427",
+    "description": "Ordre professionnel.* Répertoire des professionnel·le·s en ligne: omvq.connexence.com/ext/omvq/tm/repertoire/trouverMembre.zul* Comment porter plainte: www.omvq.qc.ca/section-protection-du-public/237-13-demande-denquete.html* Conseils pour vous et pour vos animaux: www.omvq.qc.ca/conseils-pour-vos-animaux.html* Documentation et conseils pour le public.* Programme de maintien des compétences des médecins vétérinaires.* Protection du public et contrôle de la qualité des soins offerts. | Clientèle: grand public, vétérinaires | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.omvq.qc.ca",
+    "address": "800, avenue Sainte-Anne, bureau 200, Saint-Hyacinthe, Montérégie, QC, J2S 5G7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "organisation-de-la-communaute-anglo-rwd",
     "name": "Organisation de la Communauté Anglophone de Lanaudière",
     "category": "social",
@@ -28496,6 +35943,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.ecol-lanaudiere.org",
     "address": "3657, rue Queen, Rawdon, Lanaudière, QC, J0K 1S0",
     "hours": "lundi au vendredi 9h00 to 16h00"
+  },
+  {
+    "id": "organisme-d-autor-glementation-d-mtg",
+    "name": "Organisme D'Autoréglementation Du Courtage Immobilier Du Québec (L')",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "1 800 440-7170",
+    "description": "Autorité du courtage immobilier visant à protéger et assister le public en s'assurant des saines pratiques des courtier·ère·s.* Information sur les transactions immobilières, les devoirs et les obligations du·de la courtier·ère immobilier et hypothécaire.* Info OACIQ: centre de renseignement.* Vérification en ligne du dossier d'un·e courtier·ère.* Assistance au public: accompagnement dans la formulation d'une plainte, dans le dénonciation d'une faute déontologique et dans la résolution d'un différend survenu dans le cadre d'une transaction avec un·e courtier·ère.* Bureau du syndic: réception et traitement des dossiers transmis par le service d'assistance en cas de faute déontologique.* Fonds d'indemnisation et d'assurance responsabilité. | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.oaciq.com",
+    "address": "4905, boulevard Lapinière, bureau 2200, Brossard, Montérégie, QC, J4Z 0G2",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30, Info OACIQ: lundi, mardi, jeudi et vendredi 9h00 à 12h00 et 13h00 à 16h00, mercredi 10h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "organisme-vou-aux-personnes-atte-mtg",
+    "name": "Organisme Voué Aux Personnes Atteintes De Cancer Et De Maladies Grave",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 371-5400",
+    "description": "* Références.* Intervention psychosociale.* Transport médical vers Montréal. | Clientèle: personnes atteintes de cancer et maladies graves, leurs proches | Territoire: MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges, MRC Roussillon | Statut: organisme à but non lucratif",
+    "website": "ovpac.org",
+    "address": "320, chemin Larocque, Salaberry-de-Valleyfield, Montérégie, QC, J6T 4C2",
+    "hours": "lundi au jeudi 9h00 à 16h00, vendredi 9h00 à 12h00"
   },
   {
     "id": "organisme-insertion-socio",
@@ -28521,6 +35994,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cara.qc.ca",
     "address": "3001, 1re avenue, Rawdon, Lanaudière, QC, J0K1S0",
     "hours": "lundi au vendredi 9h00 à 16h00, activités: variable"
+  },
+  {
+    "id": "orienth-que-l-mtg",
+    "name": "Orienthèque (L')",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 730-0181",
+    "description": "* Rédaction de curriculum vitae et de lettre de présentation.* Soutien aux envois de candidatures.* Consultation relative à l'emploi et à l'orientation professionnelle.* Simulations d'entrevues.* Ateliers divers.* Visites d'entreprises.* Rencontres d'employeurs et activités de recrutement. | Clientèle: personnes de 18 ans et plus, personnes possédant un casier judiciaire, femmes exerçant un métier non traditionnel, personnes issues de l'immigration, travailleur·euse·s expérimenté·e·s de 50 ans et plus | Territoire: MRC Pierre-De Saurel, Contrecoeur, Calixa-Lavallée, Verchères | Statut: organisme à but non lucratif",
+    "website": "www.orientheque.ca",
+    "address": "343, boulevard Poliquin, SOREL-TRACY, Montérégie, QC, J3P 7W1",
+    "hours": "lundi, mardi et jeudi 8h30 à 12h00 et 13h00 à 16h30, mercredi 10h00 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h30"
   },
   {
     "id": "orignal-tatoue-cafe-de-rue-jol",
@@ -28613,6 +36099,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "otterburn-park-ville-mtg",
+    "name": "Otterburn Park - Ville",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Otterburn Park",
+    "province": "QC",
+    "phone": "450 536-0303",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.opark.ca/citoyens/collectes* Subvention pour produits hygiéniques réutilisables: couches lavables, produits d'hygiène féminine.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Rampe de mise à l'eau.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Otterburn Park | Statut: organisme municipal",
+    "website": "www.opark.ca",
+    "address": "601, chemin Ozias-Leduc, Otterburn Park, Montérégie, QC, J3H 2M6",
+    "hours": "lundi au jeudi 7h45 à 12h00 et 13h00 à 16h30, vendredi 7h45 à 11h45"
+  },
+  {
     "id": "msss-clsc-ouje-bougoumou-ouje-bougoumou-healing-centre",
     "name": "Ouje-Bougoumou Healing Centre",
     "category": "health",
@@ -28623,6 +36122,44 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à Ccsss De La Baie James. Source: MSSS – Fichier M02 des installations.",
     "address": "68, rue Opatica, C. P. 37, Oujé-Bougoumou, QC G0W 3C0",
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
+  },
+  {
+    "id": "ouvroir-saint-vincent-mtg",
+    "name": "Ouvroir Saint-Vincent",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Rigaud",
+    "province": "QC",
+    "phone": "450 451-5173",
+    "description": "* Vente d'articles usagés: vêtements, articles de cuisine, literie, articles de maison, etc.* Point de collecte de dons. | Clientèle: grand public | Territoire: Rigaud et les environs | Statut: organisme à but non lucratif",
+    "address": "4, rue Saint-Jean-Baptiste Est, Rigaud, Montérégie, QC, J0P 1P0",
+    "hours": "jeudi 9h30 à 17h00"
+  },
+  {
+    "id": "p-s-jeunesse-mtg",
+    "name": "P.S. Jeunesse",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 377-9155",
+    "description": "* Accueil et évaluation.* Service pré-emploi et dynamique personnelle: accompagnement, ateliers, relation d'aide, résolution de conflit, etc.* Orientation de carrière: rencontres individuelles, ateliers, séances d'information.* Aide à la recherche d'emploi: bilan, techniques de recherche, rédaction de CV, préparation à l'entrevue.* Maintien en emploi et prévention: soutien personnalisé, rencontres individuelles.* Option ressource travail: programme d'accès aux métiers non traditionnels pour femmes.* Focus sur l'emploi: programme de réinsertion professionnelle pour personnes éloignées du marché du travail.* Travail en liberté: programme d'employabilité pour personnes ayant un casier judiciaire.* Destination avenir: programme d'employabilité pour jeunes éloignées du marché du travail.* PPE Saint-Rémi et Vaudreuil-Dorion: programme de préparation à l'emploi.* Services aux employeurs. | Clientèle: grand public, Destination Avenir: personnes de 18 à 35 ans Capacité: illimité | Territoire: MRC Roussillon, MRC Les Jardins-de-Napierville, MRC Le Haut-Saint-Laurent, MRC Beauharnois-Salaberry, MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "psjeunesse.org",
+    "address": "99, rue Salaberry, Salaberry-de-Valleyfield, Montérégie, QC, J6T 2H5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "p-s-jeunesse-point-de-service-va-mtg",
+    "name": "P.S. Jeunesse - Point De Service Vaudreuil-Dorion",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 218-1088",
+    "description": "* Aide à la recherche d'emploi: bilan, techniques de recherche, rédaction de CV, préparation à l'entrevue.* Aide pour un retour aux études.* Orientation de carrière: rencontres individuelles, ateliers, séances d'information.* Aide pour les démarches de suspension du casier judiciaire (demande de pardon).* Option ressource travail: programme d'accès aux métiers non traditionnels pour femmes.* Focus sur l'emploi: programme de réinsertion professionnelle pour les personnes sans diplôme d'études secondaires.* Travail en liberté: programme d'employabilité pour personnes ayant un casier judiciaire. | Clientèle: personnes 18 ans et plus | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "psjeunesse.org",
+    "address": "640B, rue Chicoine, Vaudreuil-Dorion, Montérégie, QC, J7V 9J3",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "pe-foodbank-pe",
@@ -28691,6 +36228,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "pacte-de-rue-mtg",
+    "name": "Pacte De Rue",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 370-2420",
+    "description": "Travail de rue.* Accompagnement, écoute, information et référence.* Intervention en itinérance, prostitution, gangs de rue, fugue, santé mentale et relations familiales.* Distribution de condoms et échange de seringues.* Distribution de trousses de naloxone.* Dépannage d'urgence.* Intervention d'urgence et de crise.* Soutien pour l'obtention de la carte d'assurance-maladie pour les personnes en situation d'itinérance qui fréquentent l'organisme et dont l'organisme peut confirmer l'identité.* Sensibilisation et éducation. | Clientèle: jeunes, adultes | Territoire: MRC Beauharnois-Salaberry et MRC Haut-Saint-Laurent | Statut: organisme à but non lucratif",
+    "website": "www.pactederue.com",
+    "address": "9, rue Sainte-Hélène, Salaberry-de-Valleyfield, Montérégie, QC, J6T 1S5",
+    "hours": "mardi au vendredi 24 heures, fin de semaine sur rendez-vous"
+  },
+  {
     "id": "pain-quotidien-le-out",
     "name": "Pain Quotidien (Le)",
     "category": "food",
@@ -28740,6 +36290,71 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-laval",
     "address": "2800, boulevard Saint-Martin Ouest, Chomedey, Laval, QC, H7T 2S9",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "palais-de-justice-de-longueuil-mtg",
+    "name": "Palais De Justice De Longueuil",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-4010",
+    "description": "Administration des services judiciaires de Longueuil. * Soutien aux différentes cours de justice constituant l'appareil judiciaire du Québec ainsi qu'à certains tribunaux spécialisés.* Services judiciaires: curatelle, tutelle, testament, mariage ou union civile, archives des divorces, médiation familiale, pension alimentaire. | Territoire: Rive-Sud de Montréal: district judiciaire de Longueuil | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-longueuil",
+    "address": "1111, boulevard Jacques-Cartier Est, Longueuil, Montérégie, QC, J4M 2J6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "palais-de-justice-de-saint-hyaci-mtg",
+    "name": "Palais De Justice De Saint-Hyacinthe",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "1 866 455-1585",
+    "description": "Administration des services judiciaires de Saint-Hyacinthe.* Soutien aux différentes cours de justice constituant l'appareil judiciaire du Québec ainsi qu'à certains tribunaux spécialisés.* Services judiciaires: curatelle, tutelle ou testament, mariage ou union civile, archives des divorces, médiation familiale, pension alimentaire.* Horaire des audiences en ligne: www.roles.tribunaux.qc.ca* Information en ligne: mariage, union civile, médiation familiale, négocier une entrente équitable, pension alimentation, testament, etc. | Clientèle: grand public | Territoire: district judiciaire de Saint-Hyacinthe: Beloeil, Mcmasterville, Mont-Saint-Hilaire, Otterburn Park, Saint-Charles-Sur-Richelieu, Saint-Denis-Sur-Richelieu, Saint-Jean-Baptiste, Saint-Mathieu-De-Beloeil, Acton Vale, La Présentation, Marieville, Richelieu, Rougemont, Saint-Barnabé-Sud, Saint-Bernard-De- Michaudville, Saint-Césaire, Saint-Damase, Saint-Dominique, Saint-Hugues, Saint-Hyacinthe, Saint-Jude, Saint-Liboire, Saint-Mathias-Sur-Richelieu, Saint-Paul-D'abbotsford, Saint-Pie, Saint-Simon, Saint-Théodore- D'acton, Sainte-Angèle-De-Monnoir, Sainte-Christine, Sainte-Hélène-De-Bagot, Sainte-Madeleine, Sainte- Marie-Madeleine, Upton, Ange-Gardien | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-saint- hyacinthe",
+    "address": "3800, avenue Cusson, Saint-Hyacinthe, Montérégie, QC, J2S 8V6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "palais-de-justice-de-saint-jean--mtg",
+    "name": "Palais De Justice De Saint-Jean-Sur-Richelieu",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-3716",
+    "description": "Administration des services judiciaires de Saint-Jean-sur-Richelieu.* Soutien aux différentes cours de justice constituant l'appareil judiciaire du Québec ainsi qu'à certains tribunaux spécialisés.* Services judiciaires: curatelle, tutelle ou testament, mariage ou union civile, archives des divorces, médiation familiale, pension alimentaire. | Territoire: Montérégie: district judiciaire d'Iberville | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-saint-jean- sur-richelieu/",
+    "address": "109, rue Saint-Charles, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2C2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "palais-de-justice-de-salaberry-d-mtg",
+    "name": "Palais De Justice De Salaberry-De-Valleyfield",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "1 866 455-1585",
+    "description": "Administration des services judiciaires de Salaberry-de-Valleyfield.* Soutien aux différentes cours de justice constituant l'appareil judiciaire du Québec ainsi qu'à certains tribunaux spécialisés.* Services judiciaires: curatelle, tutelle ou testament, mariage ou union civile, archives des divorces, médiation familiale, pension alimentaire.* Horaire des audiences en ligne: www.roles.tribunaux.qc.ca* Information en ligne: mariage, union civile, médiation familiale, négocier une entrente équitable, pension alimentation, testament, etc. | Clientèle: grand public | Territoire: district judiciaire de Beauharnois: MRC Beauharnois-Salaberry, MRC Vaudreuil-Soulanges | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-salaberry- de-valleyfield/",
+    "address": "74, rue Académie, Salaberry-de-Valleyfield, Montérégie, QC, J6T 0B8",
+    "hours": "lundi au vendredi 8h30 à 12h45 et 13h45 à 16h30"
+  },
+  {
+    "id": "palais-de-justice-de-sorel-tracy-mtg",
+    "name": "Palais De Justice De Sorel-Tracy",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Administration des services judiciaires de Sorel-Tracy.* Soutien aux différentes cours de justice constituant l'appareil judiciaire du Québec ainsi qu'à certains tribunaux spécialisés.* Services judiciaires: curatelle, tutelle ou testament, mariage ou union civile, archives des divorces, médiation familiale, pension alimentaire.* Horaire des audiences en ligne: cliquer ici* Information en ligne: mariage, union civile, médiation familiale, négocier une entrente équitable, pension alimentation, testament, etc. | Clientèle: grand public | Territoire: district judiciaire de Richelieu: MRC Pierre-De Saurel, MRC Marguerite-D'Youville | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-sorel-tracy",
+    "address": "46, rue Charlotte, Sorel-Tracy, Montérégie, QC, J3P 6N5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "panda-de-la-mrc-l-assomption-rep",
@@ -28819,6 +36434,57 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h30"
   },
   {
+    "id": "paroisse-saint-michel-de-vaudreu-mtg",
+    "name": "Paroisse Saint-Michel De Vaudreuil",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-4282",
+    "description": "* Banque alimentaire.* Bons d'achat alimentaires.* Paniers de Noël. | Clientèle: personnes dans le besoin | Territoire: Vaudreuil-Dorion, Vaudreuil-sur-le-Lac, L'Île-Cadieux, Pointe-des-Cascades | Statut: organisme à but non lucratif",
+    "address": "414, avenue Saint-Charles, Vaudreuil-Dorion, Montérégie, QC, J7V 2M6",
+    "hours": "sur rendez-vous, mardi et mercredi, Banque alimentaire: sur rendez-vous, lundi"
+  },
+  {
+    "id": "parrainage-civique-champlain-mtg",
+    "name": "Parrainage Civique Champlain",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 678-7025",
+    "description": "* Jumelage pour personnes vivant avec une déficience.* Camp de jour pour jeunes de 5 à 21 ans. | Clientèle: personnes vivant avec une déficience intellectuelle, un trouble envahissant du développement (TED, autisme) ou une incapacité physique | Territoire: Boucherville, Brossard, Longueuil, Saint-Hubert, Saint-Bruno-de-Montarville, Saint- Lambert, Candiac | Statut: organisme à but non lucratif",
+    "website": "www.parrainagechamplain.org",
+    "address": "3222, rue Windsor, Longueuil, Montérégie, QC, J4T 2X2",
+    "hours": "lundi au vendredi 9h00 à 16h00, camp de jour: lundi au jeudi 8h00 à 16h00"
+  },
+  {
+    "id": "parrainage-civique-de-la-vall-e--mtg",
+    "name": "Parrainage Civique De La Vallée-Du-Richelieu",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "1 877 464-7287",
+    "description": "Jumelage.* Sélection des bénévoles, suivi et soutien des jumelages.* Activités favorisant l'intégration sociale.* Ateliers d'information et groupes de discussion sur demande.* Voyages d'intégration. | Clientèle: personnes de 12 et plus vivant avec une déficience intellectuelle ou un problème de santé mentale, personnes ayant une trisomie, personnes autistes | Territoire: MRC La Vallée-du-Richelieu, MRC Rouville, MRC Marguerite-D'Youville en partie, MRC Pierre-de-Saurel | Statut: organisme à but non lucratif",
+    "website": "www.pcvr.ca",
+    "address": "308, rue Montsabré, bureau D132, Beloeil, Montérégie, QC, J3G 2H5",
+    "hours": "lundi au jeudi de 8h30 à 16h30, vendredi de 8h30 à 12h00"
+  },
+  {
+    "id": "parrainage-civique-de-vaudreuil--mtg",
+    "name": "Parrainage Civique De Vaudreuil-Soulanges",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-8986",
+    "description": "Soutien des personnes vivant avec une déficience intellectuelle ou des personnes autistes.* Soutien civique: accompagnement dans les activités de la vie quotidienne pour le maintien à domicile (épicerie, courses, etc.).* Centre d'activités de jour et service de surveillance.* Halte-répit du samedi.* Jumelage.* Club adulte TSA: rencontres, sorties, jeux de société, etc.* Activités de loisirs, de socialisation et d'intégration.* Camp de jour estival.* Soirées d'information pour les parents. | Clientèle: personnes de 4 ans et plus autistes ou vivant avec une déficience intellectuelle, avec ou sans déficience physique, jumelage, loisirs, club, soutien civique: personnes de 18 ans et plus, centre de jour et surveillance: personnes de 21 ans et plus, halte-répit: parents de jeunes de 4 à 21 ans | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "parrainageciviquevs.ca",
+    "address": "36-A, avenue Saint-Charles, Vaudreuil-Dorion, Montérégie, QC, J7V 2K5",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "parrainage-civique-lanaudiere-point-jol",
     "name": "Parrainage Civique Lanaudière - Point de Service Nord de Lanaudière",
     "category": "social",
@@ -28871,6 +36537,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h30"
   },
   {
+    "id": "partage-point-de-service-saint-c-mtg",
+    "name": "Partage - Point De Service Saint-Constant",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "450 444-0803",
+    "description": "* Dépannage: vêtements, nourriture.* Paniers de Noël.* Soutien, aide et référence pour les familles.* Friperie. | Clientèle: personnes et familles à faible revenu, personnes itinérantes, personnes vivant avec des problèmes de santé majeurs, personnes réfugiées, personnes immigrantes | Territoire: Saint-Constant | Statut: organisme à but non lucratif",
+    "website": "lepartage.info",
+    "address": "125, rue Saint-Pierre, Saint-Constant, Montérégie, QC, J5A 2G9",
+    "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00, aide alimentaire: jeudi 13h30 à 15h15 et 17h00 à 18h15"
+  },
+  {
+    "id": "partage-point-de-service-saint-c-mtg-2",
+    "name": "Partage - Point De Service Saint-Constant - Récupération D'Articles Usagés",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "450 444-0803",
+    "description": "* Récupération de dons sur place: aliments périssables et non-périssables, vêtements, articles de maison, jouets et équipement de loisirs, livres et magazines. | Territoire: Saint-Constant | Statut: organisme à but non lucratif",
+    "website": "lepartage.info",
+    "address": "125, rue Saint-Pierre, Saint-Constant, Montérégie, QC, J5A 2G9",
+    "hours": "lundi et mardi 9h00 à 17h00, mercredi 9h30 à 17h00, jeudi et vendredi 9h00 à 20h00, samedi 9h00 à 16h00, dimanche 12h00 à 16h00"
+  },
+  {
+    "id": "partage-point-de-service-sainte--mtg",
+    "name": "Partage - Point De Service Sainte-Catherine",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Sainte-Catherine",
+    "province": "QC",
+    "phone": "450 444-0803",
+    "description": "* Dépannage alimentaire.* Paniers de Noël. | Clientèle: personnes et familles à faible revenu | Territoire: Sainte-Catherine | Statut: organisme à but non lucratif",
+    "website": "lepartage.info",
+    "address": "1080, rue Union, Sainte-Catherine, Montérégie, QC, J5C 1B3",
+    "hours": "aide alimentaire: jeudi 9h30 à 11h15"
+  },
+  {
+    "id": "partage-r-cup-ration-d-articles--mtg",
+    "name": "Partage - Récupération D'Articles Usagés",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "450 444-0803",
+    "description": "* Récupération de dons sur place: aliments périssables et non-périssables, vêtements, articles de maison, jouets et équipement de loisirs, livres et magazines. | Territoire: La Prairie | Statut: organisme à but non lucratif",
+    "website": "lepartage.info",
+    "address": "547, rue Saint-Henri, La Prairie, Montérégie, QC, J5R 2S9",
+    "hours": "lundi au mercredi 10h00 à 17h00, jeudi et vendredi 10h00 à 20h00, samedi 10h00 à 16h00, dimanche 12h00 à 16h00"
+  },
+  {
     "id": "partage-action-de-l-ouest-de-l-ile-bcf",
     "name": "Partage Action de L'Ouest-de-L'Île",
     "category": "social",
@@ -28898,6 +36616,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "partage-saint-fran-ois-de-sales-mtg",
+    "name": "Partage Saint-François-De-Sales",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 468-4545",
+    "description": "* Bons d'achat et dépannage alimentaire.* Paniers de Noël.* Magasin-partage.* Cuisines collectives et ateliers de cuisine transformée.* Atelier de couture.* Friperie.* Soutien à la lecture.* Point de service du Bonhomme à lunettes.* Récupération de dons sur place: nourriture non-périssable, vêtements, articles de maison, jouets, livres, etc.* Clinique d'impôts. | Clientèle: personnes et familles à faible revenu | Territoire: paroisse Saint-François-de-Sales | Statut: organisme à but non lucratif",
+    "website": "partagelongueuil.com",
+    "address": "1800, rue Vianney, Longueuil, Montérégie, QC, J4J 4T2",
+    "hours": "bureau: mardi au jeudi 9h00 à 12h00 et 13h00 à 15h00"
+  },
+  {
+    "id": "partage-saint-fran-ois-de-sales--mtg",
+    "name": "Partage Saint-François-De-Sales - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 468-4545",
+    "description": "* Clinique d'impôts sur rendez-vous. | Clientèle: personnes viant avec un faible revenu et avec des déclarations fiscale simple | Territoire: Paroisse Saint-François-de-Sales | Statut: organisme à but non lucratif",
+    "website": "partagelongueuil.com",
+    "address": "1800, rue Vianney, Longueuil, Montérégie, QC, J4J 4T2",
+    "hours": "clinique d'impôts 2026: sur rendez-vous"
+  },
+  {
     "id": "partage-saint-maxime-lav",
     "name": "Partage Saint-Maxime",
     "category": "social",
@@ -28922,6 +36666,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.partageonslespoir.com",
     "address": "135, boul. Samson, Laval, QC H7X 3K4",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Apporter pièce identité et preuve de résidence."
+  },
+  {
+    "id": "partajoie-sainte-julie-mtg",
+    "name": "Partajoie Sainte-Julie",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Sainte-Julie",
+    "province": "QC",
+    "phone": "514 240-4743",
+    "description": "* Comptoir alimentaire. | Clientèle: personnes à faible revenu | Territoire: Sainte-Julie | Statut: organisme à but non lucratif",
+    "address": "879, chemin du Fer-à-Cheval, Sainte-Julie, Montérégie, QC, J3E 1Y2",
+    "hours": "réservation: lundi au mercredi 18h00 à 20h00, distribution: jeudi 12h30 à 13h00"
   },
   {
     "id": "s-pas-rue-mtl",
@@ -29024,6 +36780,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS De L'Est-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
     "address": "7331, rue Hochelaga, Montréal, QC H1N 3V2",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
+  },
+  {
+    "id": "pavillon-l-essence-ciel-mtg",
+    "name": "Pavillon L'Essence Ciel",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 672-0926",
+    "description": "Centre de réadaptation interne d'une durée de 3 à 6 mois.* Programme distinct pour les dépendances aux substances.* Thérapie de groupe et individuelle.* Suivi postcure (en personne ou par zoom): une rencontre individuelle mensuelle pendant 9 mois.* Réinsertion sociale de 3 semaines après 6 mois de traitement.* Gym.* Toxicomanies traitées: alcool, drogues, médicaments, opiacés sous traitement de substitution.* Hébergement reconnu par les services correctionnels pour les personnes prévenues, en libération conditionnelle ou sous probation. | Clientèle: hommes de 18 ans ayant une problématique de dépendance (alcool, drogue, médicament, opiacés), hommes sur un programme de substitution (Méthadone et Suboxone), ayant ou non une problématique de santé mentale Capacité: 16 chambres individuelles | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "lessenceciel.org",
+    "address": "3823, Grand Boulevard, Longueuil, Montérégie, QC, J4T 2M3",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "pavillon-louis-cyr-sja",
@@ -29195,6 +36964,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "petit-pont-le-mtg",
+    "name": "Petit Pont (Le)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 773-2225",
+    "description": "* Visites, échanges de garde et appels téléphoniques supervisés.* Ateliers: communication entre ex- conjoints, impacts de la séparation, aliénation parentale.* Accompagnement familial.* Référence. | Clientèle: parents et enfants | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.petitpont.org/index.php",
+    "address": "2475, avenue Sainte-Anne, Saint-Hyacinthe, Montérégie, QC, J2S 5J1",
+    "hours": "sur rendez-vous"
+  },
+  {
+    "id": "petite-ferme-de-l-auberge-la-mtg",
+    "name": "Petite Ferme De L'Auberge (La)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Roxton",
+    "province": "QC",
+    "phone": "450 548-2736",
+    "description": "Hébergement et accompagnement pour hommes en situation précaire.* Réinsertion sociale avec hébergement de courte et moyenne durée.* Accompagnement individuel.* Animation de groupe.* Service d'encadrement pour préparer la sortie.* Référence.* Service de dépannage alimentaire pour les gens de Roxton Falls. | Clientèle: hommes de 18 ans et plus en difficulté ou en situation d'itinérance ayant une problématique de dépendance ou de santé mentale Capacité: hébergement: 9 places à la ferme, aide alimentaire: 30 individus ou familles par semaine | Territoire: Montérégie: hébergement, réinsertion sociale, Roxton Falls et les environs: aide alimentaire | Statut: organisme à but non lucratif",
+    "website": "lapetitefermedelauberge.org",
+    "address": "728, chemin Bachand, Roxton, Montérégie, QC, J0H 1E0",
+    "hours": "7 jours 7h00 à 21h00"
+  },
+  {
+    "id": "petits-bouts-les-mtg",
+    "name": "Petits Bouts (Les)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "",
+    "description": "Ateliers préscolaires.* Activités récréatives: chansons, jeux, bricolage, contes, etc.* Initiation à l'anglais.* Ateliers parents-enfants pour stimuler le développement du langage et de la motricité fine et globale chez les enfants de 2 à 3 ans.* Éveil au théâtre.* Fêtes.* Ateliers minibouts: enfants de 2 ans avec parents. | Clientèle: enfants de 2 à 5 ans Capacité: 12 enfants par groupe | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.petitsbouts.com",
+    "address": "525, rue Latour, Longueuil, Montérégie, QC, J3Y 6A9",
+    "hours": "lundi au vendredi 9h00 à 11h00"
+  },
+  {
+    "id": "petits-fr-res-les-agglom-ration--mtg",
+    "name": "Petits Frères (Les) - Agglomération De La Montérégie",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "579 721-5115",
+    "description": "Accueil et accompagnement des personnes aînées seules afin de contrer leur isolement.* Jumelage avec des bénévoles.* Visites à domicile et accompagnement lors de sorties spéciales et à l'occasion des célébrations de fêtes traditionnelles et d'anniversaires.* Pique-nique à La Maison Juliette-Huot d'Oka.* Cadeaux de Noël. | Clientèle: personnes de 75 ans et plus sans famille présente ou contact social significatif | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "petitsfreres.ca/trouver-une-region/monteregie",
+    "address": "150, rue Grant, local 305, Longueuil, Montérégie, QC, J4H 3H6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "petits-fr-res-les-gatineau-out",
     "name": "Petits Frères (Les) - Gatineau",
     "category": "health",
@@ -29270,6 +37091,97 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.petits-mousses.org",
     "address": "994, rue de Lanaudière, 2e étage, Joliette, Lanaudière, QC, J6E 3N6",
     "hours": "lundi au jeudi 8h30 à 16h30"
+  },
+  {
+    "id": "phare-saint-hyacinthe-et-r-gions-mtg",
+    "name": "Phare - Saint-Hyacinthe Et Régions (Le)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 773-7202",
+    "description": "Soutien de l'entourage des personnes vivant avec un trouble de santé mentale.* Interventions psychosociales.* Groupes de soutien.* Activités de formation, d'information et de sensibilisation.* Information sur la P-38.* Mesures de répit: zoothérapie, camps de jour, retraite, etc.* Accompagnement pour une demande de garde provisoire.* Fête de Noël pour les membres. | Clientèle: familles et proches de personnes vivant avec un trouble de santé mentale, intervenant·e·s, activités de formation et de sensibilisation: organismes, écoles, entreprises | Territoire: MRC Acton, MRC Les Maskoutains, MRC La Vallée-du-Richelieu (Carignan et Chambly exclues), Saint-Bruno-de-Montarville | Statut: organisme à but non lucratif",
+    "website": "lephare-apamm.ca",
+    "address": "620, avenue Robert, Saint-Hyacinthe, Montérégie, QC, J2S 4L8",
+    "hours": "bureau: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "piaule-la-maison-des-jeunes-de-b-mtg",
+    "name": "Piaule (La) - Maison Des Jeunes De Boucherville",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Boucherville",
+    "province": "QC",
+    "phone": "450 449-8346",
+    "description": "* Lieu de rencontre, de soutien et d'écoute.* Activités récréatives, sportives et formatrices.* Cuisine collective.* Camp DosAdos.* Pendagron: jeu de rôle médiéval grandeur nature offert plusieurs fois durant l'année. | Clientèle: jeunes de 12 à 17 ans | Territoire: Boucherville, Longueuil, Sainte-Julie, Saint-Amable, Varennes | Statut: organisme à but non lucratif",
+    "website": "www.mdjboucherville.ca",
+    "address": "540, chemin du Lac, Boucherville, Montérégie, QC, J4B 6X3",
+    "hours": "lundi, mardi et jeudi 17h00 à 21h00, mercredi et dimanche 15h00 à 21h00, vendredi et samedi 15h00 à 22h00, été: 7 jours, 16h00 à 22h00, cuisine collective: mercredi"
+  },
+  {
+    "id": "pincourt-ville-mtg",
+    "name": "Pincourt - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Pincourt",
+    "province": "QC",
+    "phone": "514 453-8981",
+    "description": "Gestion des services municipaux.* Paiement des taxes municipales.* Service de sécurité incendie.* Collecte des matières résiduelles.* Service d'urbanisme: permis de construction.* Service des travaux publics: entretien des infrastructures. | Territoire: Pincourt | Statut: organisme municipal",
+    "website": "villepincourt.qc.ca",
+    "address": "919, chemin Duhamel, Pincourt, Montérégie, QC, J7V 4G8",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h45, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "place-l-emploi-mtg",
+    "name": "Place À L'Emploi",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-1030",
+    "description": "Regroupement des services visant à développer l'employabilité en offrant du soutien individualisé.* Services d'accompagnement: information, exploration, choix de carrière, formation, recherche d'emploi et développement de projet. | Clientèle: personnes de 16 ans et plus | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "placealemploi.ca",
+    "address": "125, chemin du Coteau-Rouge, 3e étage, Longueuil, Montérégie, QC, J4J 1W7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "place-l-emploi-carrefour-jeuness-mtg",
+    "name": "Place À L'Emploi - Carrefour Jeunesse-Emploi Longueuil",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-1030",
+    "description": "* Aide à la recherche d'emploi.* Orientation professionnelle.* Exploration des possibilités.* Développement de projets.* Persévérance scolaire.* Services aux entreprises.* Information. | Clientèle: jeunes de 16 à 35 ans | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "placealemploi.ca",
+    "address": "125, chemin du Coteau-Rouge, 3e étage, Longueuil, Montérégie, QC, J4J 1W7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "place-l-emploi-centre-de-recherc-mtg",
+    "name": "Place À L'Emploi - Centre De Recherche D'Emploi De La Rive-Sud",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-1030",
+    "description": "Aide à la recherche d'emploi.* Ateliers.* Bilan professionnel.* Placement assisté.* Espace-emploi: espace de travail partagé et soutien à la recherche d'emploi. | Clientèle: personnes de 18 ans et plus désirant réintégrer le marché du travail | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "placealemploi.ca",
+    "address": "125, chemin du Coteau-Rouge, 3e étage, Longueuil, Montérégie, QC, J4J 1W7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "place-l-emploi-options-sans-limi-mtg",
+    "name": "Place À L'Emploi - Options Sans Limite",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-1030",
+    "description": "Démarche d'orientation et aide à la recherche d'emploi pour les femmes. | Clientèle: femmes de 18 ans et plus désirant explorer les possibilités d'emploi, en particulier les métiers majoritairement masculins | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "www.optionssanslimite.com",
+    "address": "125, chemin du Coteau-Rouge, 3e étage, Longueuil, Montérégie, QC, J4J 1W7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "placement-potentiel-pcl",
@@ -29350,6 +37262,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30, été: lundi au jeudi 8h00 à 16h30, vendredi 8h00 à 12h00"
   },
   {
+    "id": "pointe-des-cascades-municipalit-mtg",
+    "name": "Pointe-Des-Cascades - Municipalité",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Pointe-des-Cascades",
+    "province": "QC",
+    "phone": "450 455-3414",
+    "description": "Gestion des services municipaux.* Paiement des taxes municipales.* Service d'incendie.* Permis de construction.* Collecte des matières résiduelles.* Programme Com'Alerte: système d'alerte automatisé par courriel, téléphone ou SMS en cas d'avis d'ébullition, de fermetures de rues, situations d'urgence, bris d'aqueduc, inondation et autres mesures d'urgence.* Programme d'aide financière à l'achat de couches lavables.* Service de loisirs.* Bibliothèque municipale. | Territoire: Pointe-des-Cascades | Statut: organisme municipal",
+    "website": "pointe-des-cascades.com",
+    "address": "105, chemin du Fleuve, Pointe-des-Cascades, Montérégie, QC, J0P 1M0",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 12h45 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "pont-du-suro-t-mtg",
+    "name": "Pont Du Suroît",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 377-3126",
+    "description": "* Intervention psychosociale.* Information et centre de documentation.* Groupe d'entraide et de discussion mensuel.* Projet Aider sans filtre: accompagnement et soutien aux jeunes proches de personnes vivant avec un problème de santé mentale, sensibilisation.* Accompagnement pour la présentation de requêtes d'examen psychiatrique.* Activités de formation.* Activités de sensibilisation. | Clientèle: familles et proches de personnes vivant avec une maladie mentale, projet Aider sans filtre: jeunes de 12 à 29 ans | Territoire: MRC Vaudreuil-Soulanges, MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent | Statut: organisme à but non lucratif",
+    "website": "lepont.com",
+    "address": "88, rue Alexandre, Salaberry-de-Valleyfield, Montérégie, QC, J6S 3J9",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "pontiac-municipalit-out",
     "name": "Pontiac - Municipalité",
     "category": "social",
@@ -29361,6 +37299,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.municipalitepontiac.com",
     "address": "2024, route 148, Luskville, Outaouais, QC, J0X 2G0",
     "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "popote-constante-inc-mtg",
+    "name": "Popote Constante Inc.",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "450 632-2191",
+    "description": "* Popote roulante: repas chauds livrés à domicile 2 fois par semaine. | Clientèle: personnes aînées en perte d'autonomie, personnes avec un problème de santé temporaire occasionnant une perte d'autonomie Capacité: 48 repas par jour | Territoire: Saint-Constant, Sainte-Catherine, Delson | Statut: organisme à but non lucratif",
+    "address": "330, rue Wilfrid-Lamarche, Saint-Constant, Montérégie, QC, J5A 2S2",
+    "hours": "livraison: mardi et jeudi 11h00 à 12h30"
   },
   {
     "id": "popote-roulante-rive-nord-rep",
@@ -29477,6 +37427,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Hébergement d'urgence 24h/24. Présentation directe ou appel."
   },
   {
+    "id": "porte-du-passant-la-mtg",
+    "name": "Porte Du Passant (La)",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 743-4803",
+    "description": "Centre de jour et cafétéria communautaire.* Accueil, écoute, référence et accompagnement par un intervenant de milieu.* Hébergement d'urgence. * Ligne d'intervention.* Cafétéria communautaire: déjeuners, dîners et collations.* Dépannage vestimentaire et alimentaire d'urgence.* Soutien résidentiel avec accompagnement.* Petit comptoir des surplus alimentaires.* Halte repos: lieu de ravitaillement et de repos provisoire.* Douches.* Service de buanderie gratuit.* Services de téléphone pour les personnes n'ayant pas de téléphone personnel.* Ateliers d'information et éducation populaire.* Soupers communautaires mensuels.* Récupération d'articles usagés sur place.* Activités variées. | Clientèle: population générale, personnes en situation d'itinérance, personnes en situation de précarité financière ou de pauvreté, douches, soutien résidentiel avec accompagnement et halte repos: personnes itinérantes Capacité: 50 | Territoire: MRC Pierre-De Saurel | Statut: organisme à but non lucratif",
+    "website": "laportedupassant.org",
+    "address": "80, rue Phipps, Sorel-Tracy, Montérégie, QC, J3P 4B7",
+    "hours": "services: lundi au vendredi 8h15 à 15h00, administration: lundi au vendredi 8h00 à 16h00, hébergement d'urgence: 7 jours de 20h00 à 7h45"
+  },
+  {
+    "id": "porte-ouverte-la-mtg",
+    "name": "Porte Ouverte (La)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-3283",
+    "description": "Centre d'alphabétisation et de francisation.* Ateliers d'alphabétisation et de francisation, en virtuel et en présentiel.* Préparation au TENS et TDG.* Éducation populaire en dehors des cadres d'apprentissage traditionnels.* Groupe de conversation.* Service d'écrivain·e public·que.* Services aux entreprises en lien avec la francisation et alphabétisation.* Référence vers d'autres organismes.* Centre du Livre Usagé: vente de livres à prix modiques. | Clientèle: adultes faiblement alphabétisés, personnes immigrantes Capacité: 50 personnes | Territoire: Saint-Jean-sur-Richelieu et les environs | Statut: organisme à but non lucratif",
+    "website": "laporteouvertehautrichelieu.com",
+    "address": "81, rue Frontenac, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2Y4",
+    "hours": "lundi au vendredi 9h00 à 16h00, centre du Livre Usagé: mardi au samedi 12h00 à 17h00"
+  },
+  {
+    "id": "porte-ouverte-maison-des-jeunes--mtg",
+    "name": "Porte Ouverte, Maison Des Jeunes (La)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 656-8813",
+    "description": "Lieu de rassemblement, d'activités et de loisir avec divers thématiques.* Information et référence.* Écoute et accompagnement.* Prévention et sensibilisation.* Autre point de service: 3527, rue Mance. | Clientèle: personnes de 9 à 17 ans Capacité: 275 | Territoire: Saint-Hubert | Statut: organisme à but non lucratif",
+    "website": "www.mdjlaporteouverte.org",
+    "address": "3825, rue Adélaïde, Longueuil, Montérégie, QC, J3Y 4X1",
+    "hours": "rue Adélaide et rue Mance: lundi au vendredi 15h00 à 20h50"
+  },
+  {
+    "id": "posa-source-des-monts-mtg",
+    "name": "Posa - Source Des Monts",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Chambly",
+    "province": "QC",
+    "phone": "450 658-9898",
+    "description": "* Travail de rue: écoute, soutien, information et sensibilisation.* Clinique jeunesse en partenariat avec le CISSS.* Maison Stéphane Fallu: hébergement jeunesse, durée de 2 à 3 ans.* Distribution de trousses de naloxone.* Distribution de matériel d'injection.* J'ai faim à tous les jours: repas offerts aux enfants dans le besoin allant dans l'une des écoles primaires et secondaires de Chambly ou de Carignan.* POSART: ateliers créatifs d'art oral et visuel.* Porte ouverte sur l'emploi (POSE): insertion socioprofessionnelle pour jeunes adultes ni à l'emploi, ni aux études.* Halte-Chaleur avec repas. | Clientèle: personnes de 35 ans et moins en difficulté, clinique: personnes de 12 à 24 ans, J'ai faim à tous les jours: enfants dans le besoin allant dans l'une des écoles primaires et secondaires de Chambly ou de Carignan, Maison Stéphane Fallu: personnes de 17 à 19 ans sortant de la DPJ, Porte ouverte sur l'emploi: personnes de 16 à 35 ans qui sont ni à l'emploi ni aux études et qui sont admissibles auprès d'Emploi-Québec | Territoire: Chambly, Carignan, MRC Le Haut-Richelieu, MRC Rouville | Statut: Nonprofit - Incorporated",
+    "website": "www.posasdm.com",
+    "address": "620, rue Senécal, Chambly, Montérégie, QC, J3L 1N9",
+    "hours": "lundi au vendredi 9h00 à 16h00, clinique jeunesse: sur rendez-vous, lundi au mercredi 9h00 à 16h00"
+  },
+  {
     "id": "poste-de-transbordement-out",
     "name": "Poste De Transbordement",
     "category": "social",
@@ -29500,6 +37502,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Jardins communautaires. | Clientèle: résident·e·s Capacité: 143 terrains, 6 bacs de culture pour personnes à mobilité réduite | Territoire: Repentigny | Frais: 35$ par année | Statut: organisme à but non lucratif",
     "address": "175, rue Philippe Goulet, Repentigny, Lanaudière, QC, J5Y 3M9",
     "hours": "mi-avril jusqu'à mi-octobre, 7h00 à 22h00"
+  },
+  {
+    "id": "pouvoir-d-agir-mtg",
+    "name": "Pouvoir D'Agir",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 692-5757",
+    "description": "Prévention de la violence envers les enfants.* Ateliers et activités pour les droits des enfants.* Actions de sensibilisation.* Soutien à la communauté.* Implication citoyenne. | Clientèle: enfants de 4 à 12 ans, parents, enseignant·e·s, intervenant·e·s, écoles primaires, centres de la petite enfance, organismes communautaires | Territoire: MRC Roussillon, MRC Jardins-de-Napierville | Statut: organisme à but non lucratif",
+    "website": "pouvoirdagir.org",
+    "address": "161B, rue Principale, Châteauguay, Montérégie, QC, J6K 1G2",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "premiers-pas-champlain-mtg",
+    "name": "Premiers Pas Champlain",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 923-4138",
+    "description": "Organisme d'aide aux familles.* Accompagnement et soutien à domicile.* Ateliers de stimulation du langage.* Ateliers d'éveil à la lecture et à l'écriture parents-enfants pour les 12 mois à 5 ans.* Ateliers Parlons poupons pour les 0 à 24 mois, en français, anglais et espagnol.* Ateliers neuro-sensori-moteur.* Ateliers en français pour enfants allophones de 3 à 5 ans.* Programme d'habiletés sociales pour les 6 à 12 ans.* Programme d'éveil musical pour les 18 mois à 3 ans.* Programme d'art thérapie pour les 0 à 12 ans.* Friperie pour les 0 à 12 ans.* Location de sièges d'auto.* Activités ponctuelles. | Clientèle: familles ayant des enfants de moins de 12 ans | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "https://premierspaschamplain.org",
+    "address": "78, rue Saint-Louis, Longueuil, Montérégie, QC, J4R 2L4",
+    "hours": "lundi au jeudi 8h30 à 17h00, vendredi et samedi 9h00 à 12h00"
   },
   {
     "id": "drum-garde-princesses-et-dragons",
@@ -29553,6 +37581,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-17h. Programmes d'aide à l'achat, financement, services notariaux."
   },
   {
+    "id": "programme-d-accessibilit-au-loge-mtg",
+    "name": "Programme D'Accessibilité Au Logement Rive Sud-Ouest",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "La Prairie",
+    "province": "QC",
+    "phone": "",
+    "description": "Logements subventionnés adaptés aux personnes autonomes vivant avec un handicap physique.* Appartements 3 1/2, 4 1/2 et 5 1/2.* Logements accessibles aux personnes se déplaçant à l'aide de fauteuils roulants. | Clientèle: personnes autonomes vivant avec un handicap physique Capacité: 16 logements | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "frohme.org",
+    "address": "120, rue du Boulevard, La Prairie, Montérégie, QC, J5R 2J1",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-hopital-montreal-programme-de-recherche-clinique-chum-ircm",
     "name": "Programme De Recherche Clinique Chum-Ircm",
     "category": "health",
@@ -29577,6 +37618,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Service disponible 24h/24, 7j/7",
     "isProvinceWide": true
+  },
+  {
+    "id": "programme-transport-et-h-bergeme-mtg",
+    "name": "Programme Transport Et Hébergement De La Montérégie",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 866 445-6780",
+    "description": "* Aide financière pour les déplacements vers un établissement du réseau du ministère de la Santé et des Services sociaux: CLSC, centre hospitalier, centre de réadaptation, etc.* Formulaire d'inscription: www.santemonteregie.qc.ca/centre/documentation/programme-transport-et-hebergement-des-personnes- handicapees-monteregie | Clientèle: personnes qui résident au Québec et habitent la région de la Montérégie, qui ne résident pas dans un établissement du réseau de la santé et des services sociaux et qui répondent à la définition de personne handicapée du ministère | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/services/programme-transport-et-hebergement-des-personnes- handicapees-monteregie",
+    "address": "3120, boulevard Taschereau, Longueuil, Montérégie, QC, J4V 2H1",
+    "hours": "service d'information à la population: lundi au vendredi 8h30 à 16h30, sauf les jours fériés"
   },
   {
     "id": "programme-accompagnement-arrivants",
@@ -29695,6 +37749,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "jeudi 13h00 à 19h00, vendredi 13h00 à 16h00"
   },
   {
+    "id": "provisions-communautaires-mtg",
+    "name": "Provisions Communautaires",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 445-3511",
+    "description": "Comptoir alimentaire.* Magasin-partage alimentaire hebdomadaire.* Friperie: don et vente de vêtements à prix modique.* Paniers de Noël pour personnes fréquentant l'organisme durant l'année. | Clientèle: personnes dans le besoin | Territoire: Rive-Sud et les environs | Statut: organisme à but non lucratif",
+    "website": "provisions.org",
+    "address": "2550, rue Jensens, Longueuil, Montérégie, QC, J3Y 3W3",
+    "hours": "distribution alimentaire sur rendez-vous: mardi au vendredi 12h30 à 16h00, préparation des distributions: lundi au vendredi 8h00 à 16h30, friperie: lundi 8h00 à 12h00, mardi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "pr-ma-qu-bec-mtg",
+    "name": "Préma-Québec",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 888 651-4909",
+    "description": "Soutien pour parents d'enfants prématuré·e·s pendant l'hospitalisation et au retour à la maison.* Groupe de discussion dans les unités néonatales pour parents dont le bébé est hospitalisé.* Service d'hébergement temporaire dédié aux parents de bébés prématurés.* Ligne d'écoute et de référence.* Documentation.* Soutien financier.* Soutien à l'allaitement.* Soutien au deuil périnatal.* Massages aux parents dans les unités néonatales. | Clientèle: parents d'enfants prématuré·e·s, professionnel·le·s | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "premaquebec.ca",
+    "address": "677, rue Giffard, bureau 207, LONGUEUIL, Montérégie, QC, J4G 1Y3",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "pr-vention-des-d-pendances-l-arc-mtg",
+    "name": "Prévention Des Dépendances L'Arc-En-Ciel",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 446-1661",
+    "description": "* Information, éducation et sensibilisation à la population dans le but de prévenir les dépendances aux drogues, à l'alcool et aux écrans.* Conférences pour les parents sur les dépendances.* Programme de formation aux groupes de jeunes entraidants dans les écoles secondaires.* Formations, discussions thématiques et kiosques d'animation.* Ateliers de prévention dans les écoles. | Clientèle: jeunes, intervenant·es, parents, organismes communautaires, entreprises | Territoire: CLSC des Patriotes, Beloeil, Mont-Saint-Hilaire, Saint-Antoine-sur-Richelieu, Saint-Bruno- de-Montarville, Saint-Charles-sur-Richelieu, Saint-Marc-sur-Richelieu, McMasterville, Otterburn Park, Saint- Jean-Baptiste, Saint-Basile-le-Grand, Saint-Denis-sur-Richelieu, Saint-Mathieu-de-Beloeil | Statut: organisme à but non lucratif",
+    "website": "preventionarcenciel.org",
+    "address": "308, rue Montsabré, bureau 204, BELOEIL, Montérégie, QC, J3G 2H5",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "ps-jeunesse-option-ressource-tra-mtg",
+    "name": "Ps Jeunesse - Option Ressource Travail",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 377-4949",
+    "description": "Programme préparatoire à l'emploi de 6 semaines.* Consultation individuelle, suivi, orientation.* Ateliers de groupe: exploration des métiers, techniques de recherche d'emploi, etc.* Suivi post-programme: intégration et maintien en emploi.* Centre de documentation sur le marché du travail et le système scolaire.* Stages en entreprise.* Événements de réseautage. | Clientèle: femmes de 20 ans et plus, sans revenu ou en situation d'emploi précaire, désireuses d'explorer les métiers d'avenir | Territoire: MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges, MRC Roussillon, MRC Les Jardins-de-Napierville | Statut: organisme à but non lucratif",
+    "website": "psjeunesse.org/programmes/ort-acces-aux-metiers-non-traditionnels",
+    "address": "99, rue Salaberry, Salaberry-de-Valleyfield, Montérégie, QC, J6T 2H5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "psycoh-sion-mtg",
+    "name": "Psycohésion",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 377-2841",
+    "description": "* Groupe d'entraide.* Rencontres individuelles.* Volet jeunes adultes 18-35 en santé mentale.* Ateliers de créativité et de cheminement personnel.* Café-répit, déjeuners-causeries et repas communautaires.* Luminothérapie.* Centre de documentation.* Comité des usagers et club social.* Activités sportives et récréatives: jeux ludiques, de société et autres.* Activités estivales: sorties et voyages.* Programme Pass-action. | Clientèle: personnes de 18 ans et plus vivant ou ayant vécu une problématique en santé mentale, programme Pass-Action: personnes aptes à réintégrer le marché du travail Capacité: programme Pass-Action: 10 personnes | Territoire: MRC de Beauharnois-Salaberry | Statut: organisme à but non lucratif",
+    "website": "https://psycohesion.com/",
+    "address": "100, rue du Marché, Salaberry-de-Valleyfield, Montérégie, QC, J6T 1P7",
+    "hours": "lundi et mercredi 9h00 à 16h00, mardi 12h00 à 16h00, jeudi 9h00 à 21h00, vendredi 9h00 à 15h00, samedi et dimanche: périodique appeler avant"
+  },
+  {
     "id": "msss-hopital-longueuil-pole-de-l-hopital-pierre-boucher-bellagio",
     "name": "Pôle De L'Hôpital Pierre-Boucher - Bellagio",
     "category": "health",
@@ -29706,6 +37825,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "1205, chemin du Tremblay, Longueuil, QC J4N 1R4",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "quartier-des-femmes-le-mtg",
+    "name": "Quartier Des Femmes (Le)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 692-9805",
+    "description": "Centre d'entraide et d'éducation populaire visant l'amélioration des conditions de vie et du pouvoir d'agir des femmes dans toutes leurs diversités.* Programme mère-amie: soutien et accompagnement à domicile par une intervenante.* Intervention individuelle.* Accompagnement psychosociale à l'ambivalence de grossesse. * Répit pour mères.* Causerie parentalité.* Ateliers: sexualité, développement personnel, etc.* Groupes d'entraide.* Jardins collectifs.* Conférences et rencontres diverses sur des sujets touchant les femmes.* Frigo-partage.* Divers comités participatifs. | Clientèle: femmes | Territoire: CLSC Jardins-Roussillon | Statut: organisme à but non lucratif",
+    "website": "quartierdesfemmes.com",
+    "address": "70, boulevard Salaberry Sud, Châteauguay, Montérégie, QC, J6J 4J5",
+    "hours": "lundi au vendredi 8h30 à 16h30, activités: variable, parfois en soirée"
   },
   {
     "id": "hlth-pw1",
@@ -29959,6 +38091,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 10h00 à 18h00"
   },
   {
+    "id": "regroupement-des-centres-de-la-p-mtg",
+    "name": "Regroupement Des Centres De La Petite Enfance De La Montérégie",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 672-8826",
+    "description": "Amélioration des services de garde à la petite enfance.* Développement des centres de la petite enfance.* Formation continue et soutien au développement professionnel.* Assurance pour les responsables d'un service de garde éducatif en milieu familial (RGSE) accrédités par un Bureau Coordonnateur en Montérégie. | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "rcpem.com",
+    "address": "1854, boulevard Marie, Longueuil, Montérégie, QC, J4T 2A9",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "regroupement-lavallois-pour-la-r-lav",
     "name": "Regroupement Lavallois Pour La Réussite Éducative",
     "category": "social",
@@ -29970,6 +38115,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "rlpre.org",
     "address": "500, boulevard Saint-Martin Ouest, bureau 205, Chomedey, Laval, QC, H7M 3Y2",
     "hours": "Voir site web"
+  },
+  {
+    "id": "regroupement-tdl-qu-bec-mtg",
+    "name": "Regroupement Tdl Québec",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "1 800 495-4118",
+    "description": "* Promotion d'une meilleure connaissance du trouble développemental du langage (dysphasie) et des troubles langagiers au sein des organismes de soutien et du public.* Défense des droits des personnes dysphasiques ou vivant avec des troubles langagiers.* Mise en place des services d'aide et des outils promotionnels aux organismes membres. | Clientèle: personnes vivant avec un trouble développemental du langage (dysphasie ou trouble primaire du langage), leur entourage, spécialistes oeuvrant dans les domaines de l'éducation et de la santé, employeur·euse·s | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.regroupementtdl.ca",
+    "address": "55, rue Saint-Pierre, Saint-Constant, Montérégie, QC, J5A 1B9",
+    "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
     "id": "regroupement-des-aidants-naturels-d-rep",
@@ -30141,6 +38299,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "renaissance-qu-bec-boutique-carr-mtg",
+    "name": "Renaissance Québec - Boutique Carrefour Pelletier",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 500-7622",
+    "description": "Récupération et vente de jeux et de jouets revalorisés. | Territoire: Brossard | Statut: organisme à but non lucratif",
+    "website": "renaissancequebec.ca/fr",
+    "address": "8200, boulevard Taschereau, Brossard, Montérégie, QC, J4X 2S6",
+    "hours": "friperie: lundi au mercredi 10h00 à 18h00, jeudi et vendredi 10h00 à 19h00, samedi et dimanche 10h00 à 17h00, centre de dons: lundi au dimanche 8h00 à 18h00"
+  },
+  {
+    "id": "renaissance-qu-bec-boutique-sain-mtg",
+    "name": "Renaissance Québec - Boutique Saint-Lambert",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "450 465-4764",
+    "description": "Récupération et vente de vêtements, articles de maison, fournitures sportives et scolaires, petits électroménagers, matériel informatique, livres et vélos. | Territoire: Saint-Lambert | Statut: organisme à but non lucratif",
+    "website": "renaissancequebec.ca/fr",
+    "address": "423, avenue Victoria, Saint-Lambert, Montérégie, QC, J4P 2J1",
+    "hours": "friperie: lundi au mercredi 9h00 à 18h00, jeudi et vendredi 9h00 à 21h00, samedi et dimanche 9h00 à 17h00, centre de dons: lundi au mercredi 8h00 à 18h00, jeudi et vendredi 8h00 à 20h00, samedi et dimanche 8h00 à 17h00"
+  },
+  {
+    "id": "renaissance-qu-bec-boutique-vict-mtg",
+    "name": "Renaissance Québec - Boutique Victoria",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "450 904-4960",
+    "description": "Récupération et vente de vêtements, articles de maison, fournitures sportives et scolaires, petits électroménagers, matériel informatique, livres et vélos. | Territoire: Saint-Lambert | Statut: organisme à but non lucratif",
+    "website": "renaissancequebec.ca/fr",
+    "address": "1455, avenue Victoria, Saint-Lambert, Montérégie, QC, J4R 1R5",
+    "hours": "friperie: lundi au mercredi 9h00 à 18h00, jeudi et vendredi 9h00 à 21h00, samedi et dimanche 10h00 à 17h00, centre de dons: lundi au mercredi 8h00 à 18h00, jeudi et vendredi 8h00 à 21h00, samedi et dimanche 8h00 à 17h00"
+  },
+  {
     "id": "renaissance-quebec-comptoir-d-entra-trb",
     "name": "Renaissance Québec - Comptoir D'Entraide de Terrebonne",
     "category": "social",
@@ -30193,6 +38390,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "friperie et centre de dons: lundi au vendredi 9h00 à 21h00, samedi et dimanche 9h00 à 17h00"
   },
   {
+    "id": "renaissance-qu-bec-fripe-portobe-mtg",
+    "name": "Renaissance Québec - Fripe Portobello",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 550-7840",
+    "description": "Récupération et vente de vêtements, articles de maison, fournitures sportives et scolaires, petits électroménagers, matériel informatique, livres et vélos. | Territoire: Brossard | Statut: organisme à but non lucratif",
+    "website": "renaissancequebec.ca/fr",
+    "address": "7250, boulevard Taschereau, Brossard, Montérégie, QC, J4W 1M9",
+    "hours": "friperie: lundi au vendredi 9h00 à 21h00, samedi et dimanche 9h00 à 17h00, centre de dons: lundi au vendredi 8h00 à 21h00, samedi et dimanche 8h00 à 17h00"
+  },
+  {
+    "id": "renaissance-qu-bec-fripe-saint-b-mtg",
+    "name": "Renaissance Québec - Fripe Saint-Bruno",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Saint-Bruno-de-Montarville",
+    "province": "QC",
+    "phone": "579 809-2464",
+    "description": "Récupération et vente de vêtements, articles de maison, fournitures sportives et scolaires, petits électroménagers, matériel informatique, livres et vélos. | Territoire: Saint-Bruno-de-Montarville | Statut: organisme à but non lucratif",
+    "website": "renaissancequebec.ca/fr",
+    "address": "1201, boulevard Saint-Bruno, Saint-Bruno-de-Montarville, Montérégie, QC, J3V 5K3",
+    "hours": "friperie: lundi au vendredi 9h00 à 21h00, samedi et dimanche 9h00 à 17h00, centre de dons: lundi au vendredi 8h00 à 21h00, samedi et dimanche 8h00 à 17h00"
+  },
+  {
+    "id": "renaissance-qu-bec-librairie-le--mtg",
+    "name": "Renaissance Québec - Librairie Île-Perrot",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "L'Île-Perrot",
+    "province": "QC",
+    "phone": "514 901-0606",
+    "description": "Vente de livres, CD, vinyles, DVD et vidéocassettes.* Récupération de vêtements, articles de maison, fournitures sportives et scolaires, petits électroménagers, matériel informatique, livres, CD, vinyles, DVD, vidéocassettes et vélos. | Territoire: L'Île-Perrot | Statut: organisme à but non lucratif",
+    "website": "renaissancequebec.ca/fr",
+    "address": "106, boulevard Don-Quichotte bureau 6, L'Île-Perrot, Montérégie, QC, J7V 6L7",
+    "hours": "friperie et centre de dons: lundi au mercredi 8h00 à 18h00, jeudi et vendredi 8h00 à 21h00, samedi et dimanche 8h00 à 18h00"
+  },
+  {
+    "id": "renaissance-qu-bec-mini-librairi-mtg",
+    "name": "Renaissance Québec - Mini Librairie Chambly-Rémillard",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 396-4853",
+    "description": "Vente de livres, CD, vinyles, DVD et vidéocassettes.* Récupération de vêtements, articles de maison, fournitures sportives et scolaires, petits électroménagers, matériel informatique, livres, CD, vinyles, DVD, vidéocassettes et vélos. | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "website": "renaissancequebec.ca/fr",
+    "address": "2590, chemin de Chambly, Longueuil, Montérégie, QC, J4L 1M5",
+    "hours": "lundi au dimanche 8h00 à 18h00"
+  },
+  {
     "id": "renaissance-quebec-mini-librairie-p-pfd",
     "name": "Renaissance Québec - Mini Librairie Pierrefonds",
     "category": "social",
@@ -30217,6 +38466,82 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://renaissancequebec.ca/fr",
     "address": "1279, boulevard des Seigneurs, Terrebonne, Lanaudière, QC, J6W 4P7",
     "hours": "librairie et centre de dons: lundi au vendredi 9h00 à 17h00, samedi et dimanche 8h00 à 18h00"
+  },
+  {
+    "id": "repas-du-passant-le-mtg",
+    "name": "Repas Du Passant (Le)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-5114",
+    "description": "* Travaux compensatoires et travaux communautaires: plateaux de travail visant l'insertion sociale.* Écoute, référence, accueil.* Plats chauds à prix modique, 5 midis par semaine.* Soupes et sandwichs pour personnes en situation d'itinérance.* Aide alimentaire.* Paniers et magasin-partage de Noël.* Réception de Noël.* Jardin solidaire.* Stage pour étudiant·e·s en travail social et éducation spécialisée.* Service de traiteur.* Clinique d'impôts. | Clientèle: personnes à faible revenu, grand public | Territoire: banque alimentaire: secteurs Notre-Dame-de-Grâce, Saint-Pierre-Apôtre et Saint-Charles- Borromée, repas pour personnes en situation d'itinérance: Rive-Sud, autres services: Longueuil | Statut: organisme à but non lucratif",
+    "address": "690, chemin du Coteau Rouge, LONGUEUIL, Montérégie, QC, J4J 5E9",
+    "hours": "lundi au vendredi 9h30 à 14h30, repas: 11h30 à 13h00, période des fêtes: fermé de la fin décembre jusqu'au 5 janvier"
+  },
+  {
+    "id": "repas-du-passant-le-clinique-d-i-mtg",
+    "name": "Repas Du Passant (Le) - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-5114",
+    "description": "Clinique d'impôts sans rendez-vous et sur dépôt de documents. | Clientèle: personnes à faible revenu | Territoire: Longueuil | Statut: organisme à but non lucratif",
+    "address": "700, chemin du Coteau Rouge, LONGUEUIL, Montérégie, QC, J4J 5E9",
+    "hours": "clinique 2026: début de la clinique pour apporter les documents lundi le 16 mars à 13h30, l'horaire complet sera affiché par la suite sur Facebook"
+  },
+  {
+    "id": "repas-partag-s-les-c-dres-mtg",
+    "name": "Repas Partagés - Les Cèdres",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Les Cèdres",
+    "province": "QC",
+    "phone": "1 844 424-0111",
+    "description": "Repas communautaires.* Danse en ligne. | Clientèle: personnes de 50 ans et plus | Territoire: Les Cèdres | Statut: organisme à but non lucratif",
+    "website": "https://carrefourbienveillance.org/",
+    "address": "145, rue Valade, Les Cèdres, Montérégie, QC, J7T 1S9",
+    "hours": "1er mardi du mois"
+  },
+  {
+    "id": "repas-partag-s-saint-clet-mtg",
+    "name": "Repas Partagés - Saint-Clet",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Clet",
+    "province": "QC",
+    "phone": "450 456-3941",
+    "description": "* Repas communautaires. | Clientèle: personnes qui habitent Saint-Clet ou originaire de Saint-Clet, personnes aînées: 50 ans et plus Capacité: 70 à 80 | Territoire: Saint-Clet | Statut: organisme à but non lucratif",
+    "website": "centredesainesvs.com/activites/repas-partages",
+    "address": "4, rue du Moulin, Saint-Clet, Montérégie, QC, J0P 1S0",
+    "hours": "3e mercredi de chaque mois"
+  },
+  {
+    "id": "repas-partag-s-saint-lazare-mtg",
+    "name": "Repas Partagés - Saint-Lazare",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Lazare",
+    "province": "QC",
+    "phone": "1 844 424-0111",
+    "description": "* Repas communautaires.* Intervention et soutien pour les personnes aînées victimes d'abus.* Cartes, bingo. | Clientèle: personnes de 50 ans et plus | Territoire: Saint-Lazare | Statut: organisme à but non lucratif",
+    "website": "www.carrefourbienveillance.org",
+    "address": "1301, Rue du Bois, Saint-Lazare, Montérégie, QC, J7T 3E6",
+    "hours": "2e jeudi du mois 11h00 à 14h00"
+  },
+  {
+    "id": "repas-partag-s-le-perrot-mtg",
+    "name": "Repas Partagés - Île-Perrot",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "L'Île-Perrot",
+    "province": "QC",
+    "phone": "1 844 424-0111",
+    "description": "Repas communautaires.* Danse en ligne.* Bingo. | Clientèle: personnes de 50 ans et plus Capacité: 60 | Territoire: L'Île-Perrot | Statut: organisme à but non lucratif",
+    "website": "www.carrefourbienveillance.org",
+    "address": "150, boulevard Perrot, L'Île-Perrot, Montérégie, QC, J7V 3G1",
+    "hours": "4e mercredi du mois"
   },
   {
     "id": "repas-communautaires-mauricie",
@@ -30322,6 +38647,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 17h00"
   },
   {
+    "id": "ressource-de-transition-le-tourn-mtg",
+    "name": "Ressource De Transition Le Tournant",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "1 833 371-4090",
+    "description": "Centre de crise.* Ligne d'intervention de crise et de prévention du suicide 24 heures, 7 jours.* Hébergement provisoire, suivi étroit, réinsertion sociale, relance téléphonique et intervention de crise dans le milieu.* Soutien dans le deuil: mesures de postvention, groupe de soutien aux personnes endeuillées par suicide.* Soutien d'intensité variable (SIV): service de réadaptation psychosociale à moyen terme, visant à améliorer l'autonomie des personnes ayant un trouble mental grave.* Formations. | Clientèle: personnes dont la santé mentale est perturbée et qui souffrent de détresse émotionnelle, leurs proches, intervenant·e·s | Territoire: MRC Vaudreuil-Soulanges, MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent | Statut: organisme à but non lucratif",
+    "website": "www.letournant.org",
+    "address": "414, rue Salaberry Ouest, Salaberry-de-Valleyfield, Montérégie, QC, J6T 2K3",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "ressources-communautaires-omega-drv",
     "name": "Ressources Communautaires Omega",
     "category": "employment",
@@ -30361,6 +38699,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 10h00 à 16h30, service téléphonique: lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "revenu-qu-bec-longueuil-mtg",
+    "name": "Revenu Québec - Longueuil",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 800 267-6299",
+    "description": "* Administration du régime fiscal québécois par la perception des impôts et des taxes.* Administration de programmes et services relatifs au revenu: crédits d'impôt, allocation-logement, prime au travail, pensions alimentaires, administration provisoire des biens non réclamés, registraire des entreprises. | Territoire: le Québec | Statut: organisme du gouvernement provincial",
+    "website": "www.revenuquebec.ca/fr",
+    "address": "825, rue Saint-Laurent Ouest , Longueuil, Montérégie, QC, J4K 2V1",
+    "hours": "lundi au vendredi 10h00 à 16h30, service téléphonique: lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "revenu-qu-bec-programme-de-perce-lav",
     "name": "Revenu Québec - Programme De Perception Des Pensions Alimentaires",
     "category": "family",
@@ -30372,6 +38723,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.revenuquebec.ca/fr/pensions-alimentaires",
     "address": "5, Place-Laval, bureau 147, Chomedey, Laval, QC, H7N 5Y3",
     "hours": "lundi au vendredi 10h00 à 16h30, services téléphoniques: lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "revenu-qu-bec-saint-jean-sur-ric-mtg",
+    "name": "Revenu Québec - Saint-Jean-Sur-Richelieu",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "514 864-6299",
+    "description": "* Administration du régime fiscal québécois par la perception des impôts et des taxes.* Administration de programmes et services relatifs au revenu: crédits d'impôt, allocation-logement, prime au travail, pensions alimentaires, administration provisoire des biens non réclamés, Registraire des entreprises. | Territoire: le Québec | Statut: organisme du gouvernement provincial",
+    "website": "www.revenuquebec.ca",
+    "address": "855, boulevard Industriel , Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 7Y7",
+    "hours": "lundi au vendredi 10h00 à 16h30, service téléphonique: lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "soc-rev1",
@@ -30466,6 +38830,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "rigaud-ville-mtg",
+    "name": "Rigaud - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Rigaud",
+    "province": "QC",
+    "phone": "450 451-0869",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système automatisé de notifications d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Territoire: Rigaud | Statut: organisme municipal",
+    "website": "www.ville.rigaud.qc.ca",
+    "address": "106, rue Saint-Viateur, Rigaud, Montérégie, QC, J0P 1P0",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "ripon-municipalit-out",
     "name": "Ripon - Municipalité",
     "category": "social",
@@ -30479,6 +38856,43 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "rls-haut-richelieu-rouville-prog-mtg",
+    "name": "Rls Haut-Richelieu-Rouville - Programme Premier Épisode",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-2222",
+    "description": "Clinique spécialisée pour les personnes de 12 à 35 ans vivant un premier épisode psychotique non traité.* Accueil et évaluation.* Traitement et réadaptation.* Soutien dans la communauté.* Soutien et information.* Sensibilisation de la population. | Clientèle: personnes de 12 à 35 ans ayant vécu un premier épisode psychotique, incluant tous types de psychoses confondues, à l'exception des psychoses secondaires dues à un trouble physique | Territoire: RLS Haut-Richelieu-Rouville: MRC Le Haut-Richelieu, MRC Rouville | Statut: organisme parapublic",
+    "website": "www.santemonteregie.qc.ca/services/services-psychosociaux/programme-premier-episode-une- reponse-la-psychose",
+    "address": "383, boulevard du Séminaire Nord, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 8C5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "rls-pierre-de-sorel-clinique-pep-mtg",
+    "name": "Rls Pierre-De-Sorel - Clinique Pep",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "450 746-6000",
+    "description": "Clinique spécialisée pour les personnes de 18 à 35 ans vivant un premier épisode psychotique non traité.* Accueil et évaluation.* Traitement et réadaptation. | Clientèle: personnes de 18 à 35 ans ayant vécu un premier épisode psychotique, incluant tous types de psychoses confondues, à l'exception des psychoses secondaires dues à un trouble physique | Territoire: Montérégie-Est: CSSS Pierre-Boucher, CSSS Pierre-De-Saurel, CSSS Richelieu- Yamaska, Centre jeunesse de la Montérégie | Statut: organisme parapublic",
+    "address": "30, rue Ferland, 4e étage, Sorel-Tracy, Montérégie, QC, J3P 3C7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "rls-richelieu-yamaska-clinique-p-mtg",
+    "name": "Rls Richelieu-Yamaska - Clinique Pep",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 771-3333",
+    "description": "Clinique spécialisée pour les personnes de 18 à 35 ans vivant un premier épisode psychotique non traité.* Accueil et évaluation.* Traitement et réadaptation. | Clientèle: personnes de 18 à 35 ans ayant vécu un premier épisode psychotique, incluant tous types de psychoses confondues, à l'exception des psychoses secondaires dues à un trouble physique | Territoire: Montérégie-Est: CSSS Pierre-Boucher, CSSS Pierre-De-Saurel, CSSS Richelieu- Yamaska, Centre jeunesse de la Montérégie | Statut: organisme parapublic",
+    "address": "1225, rue des Cascades, Saint-Hyacinthe, Montérégie, QC, J2S 3H2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "rose-bleue-la-association-des-perso-msc",
     "name": "Rose Bleue (la) - Association des Personnes Handicapées les Moulins",
     "category": "social",
@@ -30490,6 +38904,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.associationlarosebleue.com",
     "address": "2904, rue Dupras, Mascouche, Lanaudière, QC, J7K 1T2",
     "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "r-gie-intermunicipale-de-police--mtg",
+    "name": "Régie Intermunicipale De Police Richelieu - Saint-Laurent",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Sainte-Julie",
+    "province": "QC",
+    "phone": "450 922-7001",
+    "description": "Maintien de la paix, de l'ordre et de la sécurité publique.* Prévention et répression des crimes et infractions.* Vérification des antécédents judiciaires.* Programme PAIR: appels informatisés de sécurité et de rappel pour la prise de médicaments.* Sensibilisation. | Territoire: MRC Marguerite-D'Youville, Saint-Mathieu-de-Beloeil, Beloeil, McMasterville, Saint-Basile- le-Grand, Carignan, Chambly, Otterburn Park, Saint-Jean-Baptiste, Mont-Saint-Hilaire, Richelieu, Saint- Mathias-sur-Richelieu | Statut: organisme municipal",
+    "website": "www.police-rsl.qc.ca",
+    "address": "1578, chemin du Fer-à-Cheval, Sainte-Julie, Montérégie, QC, J3E 0A2",
+    "hours": "24 heures, 7 jours, bureau: lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "r-gie-intermunicipale-de-police--mtg-2",
+    "name": "Régie Intermunicipale De Police Roussillon",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Candiac",
+    "province": "QC",
+    "phone": "450 638-0911",
+    "description": "Répond aux besoins des citoyen·ne·s en matière de sécurité.* Protection de la vie et des biens des personnes.* Maintien de la paix et de la sécurité publique.* Vérification d'antécédents judiciaires.* Prévention et lutte au crime.* Assure le respect des lois et règlements en vigueur. | Territoire: Candiac, Delson, La Prairie, Saint-Constant, Saint-Mathieu, Saint-Philippe, Sainte- Catherine | Statut: organisme municipal",
+    "website": "www.policeroussillon.ca",
+    "address": "90, chemin Saint-François-Xavier, Candiac, Montérégie, QC, J5R 6M6",
+    "hours": "24 heures, 7 jours, administration: lundi et mardi 8h00 à 12h00 et 13h00 à 16h30, mercredi et jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
   },
   {
     "id": "r-habex-out",
@@ -30531,6 +38971,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 14h00"
   },
   {
+    "id": "r-pit-a-n-s-mont-r-gie-mtg",
+    "name": "Répit Aînés Montérégie",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 486-4722",
+    "description": "Répit pour les proches aidant·e·s de personnes aînées vivant avec une condition neurocognitive.* Centre de jour : activités sociales, physiques et de stimulation cognitive en groupe.* Répit à domicile : activités sociales, physiques et de stimulation cognitive en groupe, aide à l'hygiène et aux tâches ménagères. | Clientèle: proches aidants de personnes aînées, centre de jour: personnes de 50 ans et plus, autonomes ou en perte d'autonomie cognitive ou physique liées à la maladie d'Alzheimer, à la maladie de Parkinson, à la démence ou à une déficience intellectuelle Capacité: centre de jour: 20 personnes | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.seniorsrespitemonteregie.ca",
+    "address": "83, boulevard Churchill, Longueuil, Montérégie, QC, J4V 3L8",
+    "hours": "bureau: lundi au vendredi 10h00 à 15h30, centre de jour: lundi au vendredi 10h00 à 15h30, répit à domicile: 7 jours"
+  },
+  {
+    "id": "r-pit-le-z-phyr-mtg",
+    "name": "Répit Le Zéphyr",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 370-8804",
+    "description": "Répit et gardiennage pour les familles vivant avec une personne à charge ayant une hypothèse ou un diagnostic de déficience intellectuelle ou de trouble du spectre de l'autisme.* Répit aux maisons de répit de l'organisme ou à domicile.* Accompagnement lors de sorties sociales.* Camp de jour estival et durant la semaine de relâche.* Intégration et/ou maintien en service de garde (MRC Beauharnois-Salaberry, MRC Vaudreuil-Soulanges).* Information et références. | Clientèle: enfants ou adultes vivant avec une hypothèse ou un diagnostic de déficience intellectuelle (DI) ou d'un trouble du spectre de l'autisme (TSA) | Territoire: MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "repitlezephyr.com",
+    "address": "C.P. 172, Salaberry-de-Valleyfield, Montérégie, QC, J6S 4V6",
+    "hours": "administration: lundi au vendredi 9h00 à 16h00, services: 24 heures, 7 jours"
+  },
+  {
     "id": "repits-de-gaby-les-crab",
     "name": "Répits de Gaby (les)",
     "category": "social",
@@ -30568,6 +39034,110 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.reseaubibliooutaouais.qc.ca/fr",
     "address": "2295, rue Saint-Louis, Gatineau, Outaouais, QC, J8T 5L8",
     "hours": "administration: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, horaire des bibliothèques: consulter le site Internet"
+  },
+  {
+    "id": "r-seau-communautaire-mont-r-gie--mtg",
+    "name": "Réseau Communautaire Montérégie Ouest - Châteauguay",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 691-1444",
+    "description": "Développement de la communauté anglophone.* Réseautage et partenariats.* Promotion de la santé.* Défense des droits.* Club de tricot.* Éducation financière.* Ateliers de conversation française et anglaise.* Bibliothèque: livres en anglais et livres audio.* Club de lecture.* Café-rencontre.* Activités et événements sociaux et éducatifs.* Activités pour les enfants.* Services d'emploi. | Clientèle: groupes communautaires, personnes anglophones de tous âges | Territoire: MRC Les Jardins-de-Napierville, MRC Roussillon, MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "mwcn.ca",
+    "address": "255, boulevard D'Anjou, bureau 203, Châteauguay, Montérégie, QC, J6J 2R4",
+    "hours": "lundi au jeudi 8h30 à 16h30"
+  },
+  {
+    "id": "r-seau-communautaire-mont-r-gie--mtg-2",
+    "name": "Réseau Communautaire Montérégie Ouest - Hemmingford",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Hemmingford",
+    "province": "QC",
+    "phone": "514 249-5539",
+    "description": "Développement de la communauté anglophone.* Réseautage et partenariats.* Promotion de la santé.* Défense des droits.* Club de tricot.* Éducation financière.* Ateliers de conversation française et anglaise.* Bibliothèque: livres en anglais et livres audio.* Club de lecture.* Café-rencontre.* Activités et événements sociaux et éducatifs. | Clientèle: groupes communautaires anglophones, personnes de tous âges | Territoire: MRC Les Jardins-de-Napierville, MRC Roussillon, MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.mwcn.ca/fr",
+    "address": "476, rue Frontière, Hemmingford, Montérégie, QC, J0L 1H0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-seau-communautaire-mont-r-gie--mtg-3",
+    "name": "Réseau Communautaire Montérégie Ouest - Huntingdon Wellness Centre",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Huntingdon",
+    "province": "QC",
+    "phone": "450 264-3596",
+    "description": "Développement de la communauté anglophone.* Réseautage et partenariats.* Promotion de la santé.* Défense des droits.* Club de tricot.* Éducation financière.* Ateliers de conversation française et anglaise.* Bibliothèque: livres en anglais et livres audio.* Club de lecture.* Café-rencontre.* Activités et événements sociaux et éducatifs.* Activités pour enfants. | Clientèle: groupes communautaires, personnes anglophones de tous âges | Territoire: MRC Les Jardins-de-Napierville, MRC Roussillon, MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.mwcn.ca/?lang=fr",
+    "address": "72, rue Dalhousie, Huntingdon, Montérégie, QC, J0S 1H0",
+    "hours": "lundi au jeudi 8h30 à 16h30"
+  },
+  {
+    "id": "r-seau-communautaire-mont-r-gie--mtg-4",
+    "name": "Réseau Communautaire Montérégie Ouest - Pincourt",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Pincourt",
+    "province": "QC",
+    "phone": "450 425-0399",
+    "description": "Développement de la communauté anglophone.* Mise en réseau et partenariats.* Promotion de la santé.* Défense des droits.* Bibliothèque de prêt: Livres en anglais et livres audio.* Café-rencontre.* Manifestations et activités sociales et éducatives.* Groupes d'exercices.* Cours d'art.* Événements spéciaux. | Clientèle: groupes communautaires, personnes anglophones de tous âges | Territoire: MRC Les Jardins-de-Napierville, MRC Roussillon, MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "mwcn.ca/?lang=fr",
+    "address": "95, 5e Avenue, Pincourt, Montérégie, QC, J7W 5K8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-seau-communautaire-mont-r-gie--mtg-5",
+    "name": "Réseau Communautaire Montérégie Ouest - Vaudreuil-Soulanges",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Pincourt",
+    "province": "QC",
+    "phone": "514 425-0399",
+    "description": "Développement de la communauté anglophone.* Réseautage et partenariats.* Promotion de la santé.* Défense des droits.* Bourses d'etudes.* Éducation financière.* Ateliers de conversation en français et en anglais.* Bibliothèque: livres en anglais et livres audio.* Club de lecture.* Café-rencontre.* Activités et événements sociaux et éducatifs. | Clientèle: groupes communautaires anglophones, personnes de tous âges, bourses d'études: étudiant·e·s à temps plein dans le domaine de la santé ou des services sociaux et qui prévoient travailler au moins deux ans au Québec après l'obtention de leur diplôme Capacité: N/A | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "mwcn.ca/fr",
+    "address": "95, 5e avenue, bureau 100, Pincourt, Montérégie, QC, J7W 7A8",
+    "hours": "lundi au jeudi 8h30 à 16h30"
+  },
+  {
+    "id": "r-seau-d-habitations-chez-soi-mtg",
+    "name": "Réseau D'Habitations Chez Soi",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 676-8940",
+    "description": "* Soutien à la recherche de logement et accompagnement en milieu de vie.* Promotion du logement social pour les personnes vivant une problématique de santé mentale ou d'instabilité résidentielle. | Clientèle: adultes ayant des problèmes de santé mentale, adultes en situation d'itinérance ou à risque d'itinérance | Territoire: Longueuil, MRC Marguerite-D'Youville, Boucherville, Brossard, La Prairie, Saint-Bruno-de- Montarville, Saint-Lambert, Saint-Philippe | Statut: organisme à but non lucratif",
+    "website": "www.reseaudhabitationschezsoi.org",
+    "address": "3115, Montée Saint-Hubert, Longueuil, Montérégie, QC, J3Y 4J2",
+    "hours": "lundi au vendredi 9h00 à 16h30"
+  },
+  {
+    "id": "r-seau-de-transport-de-longueuil-mtg",
+    "name": "Réseau De Transport De Longueuil",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 442-8600",
+    "description": "Société publique de transport couvrant le territoire de l'agglomération de Longueuil.* Répond aux besoins de déplacement des usager·ère·s du transport régulier et du transport adapté.* RTL mobile: application permettant d'obtenir les informations concernant un déplacement. | Clientèle: usager·ère·s du transport régulier et du transport adapté sur le territoire de l'agglomération de Longueuil | Territoire: agglomération de Longueuil | Statut: organisme parapublic",
+    "website": "www.rtl-longueuil.qc.ca",
+    "address": "1150, boulevard Marie-Victorin, Longueuil, Montérégie, QC, J4G 2M4",
+    "hours": "bureau: lundi au vendredi 8h30 à 16h30, service à la clientèle: lundi au vendredi 7h00 à 19h00, samedi, dimanche et jours fériés: 8h30 à 16h30"
+  },
+  {
+    "id": "r-seau-de-transport-de-longueuil-mtg-2",
+    "name": "Réseau De Transport De Longueuil - Transport Adapté",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 670-2992",
+    "description": "Service de transport régulier, occasionnel, métropolitain et secondaire par minibus adapté ou par taxi.* Possibilité de se déplacer avec son accompagnateur. | Clientèle: personnes ayant une limitation fonctionnelle significative et persistante, répondant aux critères énoncés à la politique d'admissibilité au transport adapté du ministère des Transports du Québec | Territoire: agglomération de Longueuil | Statut: organisme municipal",
+    "website": "www.rtl-longueuil.qc.ca/fr-CA/transport-adapte",
+    "address": "1150, boulevard Marie-Victorin, Longueuil, Montérégie, QC, J4G 2M4",
+    "hours": "heures de service: lundi au jeudi 6h30 à 24h00, vendredi et samedi: 6h30 à 1h00, dimanche 6h30 à 23h00, réservations: 7 jours, 9h00 à 19h00, administration: lundi au vendredi 8h30 à 16h30, service à la clientèle: lundi au vendredi 7h00 à 20h00, samedi, dimanche et jours fériés 8h30 à 16h30"
   },
   {
     "id": "r-seau-des-biblioth-ques-de-lava-lav-2",
@@ -30820,6 +39390,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "r-seaux-mtg",
+    "name": "Réseaux",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 424-5727",
+    "description": "* Aide à la recherche d'emploi: individuelle ou en groupe.* Placement en entreprise.* Mentorat d'affaires.* Aide à l'intégration sociale et professionnelle des personnes immigrantes: jumelage, recherche d'emploi, réseautage communautaire.* Conférences. | Clientèle: personnes en recherche d'emploi, personnes immigrantes, entreprises | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "reseauxvs.ca",
+    "address": "430, boulevard Harwood, bureau 130, Vaudreuil-Dorion, Montérégie, QC, J7V 7H4",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "r-seau-surdit-mont-r-gie-mtg",
+    "name": "Réseau|Surdité|Montérégie",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "438 884-8948",
+    "description": "Aide, soutien et assistance aux personnes vivant avec une surdité, à leur famille et à leurs proches.* Aide à la communication.* Information et référence.* Services et activités favorisant l'autonomie et le développement des personnes vivant avec une surdité: conférences, ateliers.* Promotion de l'accessibilité universelle. | Clientèle: personnes sourdes et malentendantes | Territoire: Montérégie-Est, Montérégie-Centre, Montérégie-Ouest | Statut: organisme à but non lucratif",
+    "website": "reseausurditemonteregie.org",
+    "address": "125, rue Jacques-Cartier Nord, bureau 11, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 8C9",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
     "id": "msss-chsld-montreal-residence-berthiaume-du-tremblay",
     "name": "Résidence Berthiaume-Du Tremblay",
     "category": "health",
@@ -30869,6 +39465,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "r-sidence-florentine-dansereau-mtg",
+    "name": "Résidence Florentine-Dansereau",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Verchères",
+    "province": "QC",
+    "phone": "450 583-0022",
+    "description": "Résidence à but non lucratif pour personnes aînées.* Unités sécurisées pour personnes en perte d'autonomie cognitive et personnes vivant avec l'Alzheimer.* Préposé 24 heures, visites de médecins et d'infirmières.* Supervision des médicaments, sonnettes d'appel, ascenseurs intérieurs.* Entretien ménager, entretien des vêtements et de la literie.* Salon de coiffure, salle communautaire, bibliothèque.* Repas servis aux tables.* Caméras, génératrice.* Messes.* Activités et loisirs. | Clientèle: personnes de 60 ans et plus autonomes, semi-autonomes ou avec une perte cognitive (Alzheimer ou autres troubles cognitifs) Capacité: 67 unités: 24 studio, 28 chambres, 15 chambres pour personnes avec un trouble cognitif | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "resflorentinedansereau.com",
+    "address": "21, rue Saint-Pascal, Verchères, Montérégie, QC, J0L 2R0",
+    "hours": "bureau: lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "r-sidence-fun-raire-cur-poirier-mtg",
+    "name": "Résidence Funéraire Curé-Poirier",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 877 677-2230",
+    "description": "Coopérative funéraire. | Territoire: le Québec | Statut: entreprise commerciale (coopérative)",
+    "website": "www.cfgrandmontreal.com",
+    "address": "635, boulevard Curé-Poirier Ouest, Longueuil, Montérégie, QC, J4J 2H8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "r-sidence-fun-raire-laval-lav",
     "name": "Résidence Funéraire Laval",
     "category": "health",
@@ -30879,6 +39501,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Coopérative funéraire. | Territoire: Laval | Statut: entreprise commerciale (coopérative)",
     "website": "www.cfgrandmontreal.com",
     "address": "2000, rue Cunard, Chomedey, Laval, QC, H7S 2G5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-sidence-fun-raire-saint-hubert-mtg",
+    "name": "Résidence Funéraire Saint-Hubert",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 766-0503",
+    "description": "Coopérative funéraire. | Territoire: Montérégie | Statut: entreprise commerciale (coopérative)",
+    "website": "www.cfgrandmontreal.com",
+    "address": "5000, boulevard Cousineau, Longueuil, Montérégie, QC, J3Y 7G5",
     "hours": "Voir site web"
   },
   {
@@ -30992,6 +39627,31 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "1684, rue Sainte-Catherine Ouest, Montréal, QC H3H 1L7",
     "hours": "Lun-ven 8h30-16h30.",
     "isUrgent": true
+  },
+  {
+    "id": "s-au-s-mtg",
+    "name": "S.Au.S.",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Candiac",
+    "province": "QC",
+    "phone": "514 944-4986",
+    "description": "Activités de loisirs pour jeunes avec un trouble du spectre de l'autisme* Camps Oasis: camps de jour adapté pendant la période estivale pour personnes de 13 à 21 ans.* Club Ado: club social pour personnes de 13 à 21 ans.* Répit pour personnes proches aidantes de personnes 21 ans et plus.* Programmation pour personnes 21 ans et plus en collaboration avec la commission scolaire de Riverside.* Musicothérapie pour personnes de 4 à 21 ans.* Soccer et danse pour personnes de 4 à 21 ans.* Atelier de cuisine pour personnes de 16 ans et plus.Activités familiales* Baignade et jeux adaptés.* Déjeuner de Noël.* Répit de jour pour personnes de 21 ans et plus. | Clientèle: personnes de 4 ans et plus vivant avec un trouble du spectre de l'autisme, leurs proches | Territoire: Montérégie Ouest | Statut: organisme à but non lucratif",
+    "website": "s-au-s.org/fr",
+    "address": "9, rue Montcalm Nord, bureau 505, CANDIAC, Montérégie, QC, J5R 3L5",
+    "hours": "bureau: lundi au vendredi 8h30 à 17h00, service de répit: mardi à vendredi 8h30 à 16h30, camps Oasis: juin et juillet"
+  },
+  {
+    "id": "s-o-s-pr-delt-mtg",
+    "name": "S.O.S. Prédelt",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 655-0528",
+    "description": "Prévention de la délinquance, de la toxicomanie et de la criminalité.* Information et sensibilisation.* Distribution d'un jeu de prévention dans les maisons des jeunes du Québec.* Travail de rue.* Hébergement ponctuel. | Clientèle: jeunes, en particulier les personnes en situation d'itinérance ou à risque de le devenir, maisons des jeunes | Territoire: Montérégie, jeu de prévention: le Québec | Statut: organisme à but non lucratif",
+    "address": "121, rue Brodeur, Saint-Jean-sur-Richelieu, Montérégie, QC, J2W 2C4",
+    "hours": "variables"
   },
   {
     "id": "saaq-gatineau",
@@ -31240,18 +39900,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
-    "id": "re-pw1",
-    "name": "SCHL – Société canadienne d'hypothèques",
-    "category": "realestate",
-    "subcategory": "Programme gouvernemental",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-668-2642",
-    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
-    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
-    "isProvinceWide": true
-  },
-  {
     "id": "on-cmhc-on",
     "name": "SCHL – Société canadienne d'hypothèques",
     "category": "realestate",
@@ -31262,6 +39910,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "website": "https://www.cmhc-schl.gc.ca",
     "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
+    "isProvinceWide": true
+  },
+  {
+    "id": "re-pw1",
+    "name": "SCHL – Société canadienne d'hypothèques",
+    "category": "realestate",
+    "subcategory": "Programme gouvernemental",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-668-2642",
+    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
     "isProvinceWide": true
   },
@@ -31544,6 +40204,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "saint-alexandre-municipalit-mtg",
+    "name": "Saint-Alexandre - Municipalité",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Alexandre",
+    "province": "QC",
+    "phone": "450 346-6641",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.saint- alexandre.ca/services-aux-citoyens/environnement/gestion-des-matieres-residuelles* Subvention pour produits hygiéniques réutilisables: couches lavables, produits d'hygiène féminine.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Saint-Alexandre | Statut: organisme municipal",
+    "website": "www.saint-alexandre.ca",
+    "address": "453, rue Saint-Denis, Saint-Alexandre, Montérégie, QC, J0J 1S0",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h30, vendredi 9h00 à 12h00"
+  },
+  {
     "id": "saint-andr-avellin-municipalit-out",
     "name": "Saint-André-Avellin - Municipalité",
     "category": "family",
@@ -31555,6 +40228,123 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.ville.st-andre-avellin.qc.ca",
     "address": "530, rue Charles-Auguste-Montreuil, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
     "hours": "lundi au jeudi 9h00 à 12h00 et 14h00 à 17h00, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "saint-bruno-de-montarville-cocen-mtg",
+    "name": "Saint-Bruno-De-Montarville - Écocentre Saint-Bruno",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Saint-Bruno-de-Montarville",
+    "province": "QC",
+    "phone": "450 645-2960",
+    "description": "Récupération des matières résiduelles.* Résidus domestiques dangereux: aérosols, peinture, huile, batteries, etc.* Résidus informatiques et électroniques.* Métaux et ferraille.* Appareils avec halocarbures: réfrigérateurs, climatiseurs, etc.* Pneus.* Bois et débris de construction.* Matières granulaires: brique, béton, asphalte, etc.* Encombrants: fauteuils, matelas, etc.* Matières recyclables. | Territoire: agglomération de Longueuil | Statut: organisme municipal",
+    "website": "stbruno.ca/citoyens/collectes/ecocentre",
+    "address": "600, rue Sagard, Saint-Bruno-de-Montarville, Montérégie, QC, J3V 6B9",
+    "hours": "lundi au vendredi 7h30 à 18h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "saint-constant-cour-municipale-mtg",
+    "name": "Saint-Constant - Cour Municipale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "450 638-2010",
+    "description": "Cour de justice de première instance où sont entendus les litiges en matière de règlements municipaux, d'infractions au Code de la sécurité routière ainsi que certaines infractions criminelles (conduite avec facultés affaiblies, vols de moins de 5000$ et méfaits).* Paiement ou contestation de contraventions.* Recouvrement de sommes dues.* Outils d'information et de préparation. | Territoire: Saint-Constant, Delson | Statut: organisme municipal",
+    "website": "saint-constant.ca/fr/affaires-juridiques-et-cour-municipale",
+    "address": "66, rue du Maçon, Saint-Constant, Montérégie, QC, J5A 1T1",
+    "hours": "lundi au jeudi 8h00 à 17h00, vendredi 8h00 à 13h00"
+  },
+  {
+    "id": "saint-constant-cocentre-mtg",
+    "name": "Saint-Constant - Écocentre",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "450 638-2010",
+    "description": "Récupération des matières résiduelles.* Débris de construction.* Terre non contaminée, branches.* Appareils informatiques et électroniques.* Appareils avec halocarbures: réfrigérateurs, climatiseurs, etc.* Métaux.* Pneus.* Résidus domestiques dangereux: aérosols, peinture, huile, batteries, etc. | Clientèle: personnes résidant à Saint-Constant, Sainte-Catherine, Saint-Mathieu | Territoire: Saint-Constant, Sainte-Catherine, Saint-Mathieu | Statut: organisme municipal",
+    "website": "saint-constant.ca/fr/fonctionnement-de-l-ecocentre",
+    "address": "25, montée Lasaline, Saint-Constant, Montérégie, QC, J5A 2A8",
+    "hours": "lundi au jeudi et samedi 8h00 à 11h45 et 13h00 à 16h45, vendredi 8h00 à 11h45"
+  },
+  {
+    "id": "saint-hubert-arrondissement-mtg",
+    "name": "Saint-Hubert - Arrondissement",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 463-7311",
+    "description": "Bureau de la présidence d'arrondissement.* Veille à la mise en place et au maintien d'un milieu de vie qui répond aux besoins des citoyen·ne·s.* Veille à la vitalité économique du territoire.* Service de l'urbanisme. | Territoire: Saint-Hubert | Statut: organisme municipal",
+    "website": "www.longueuil.quebec",
+    "address": "4250, chemin de la Savane, Longueuil, Montérégie, QC, J3Y 9G4",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, été: lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "saint-isidore-loisirs-et-vie-com-mtg",
+    "name": "Saint-Isidore - Loisirs Et Vie Communautaire",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Saint-Isidore",
+    "province": "QC",
+    "phone": "450 454-3919",
+    "description": "* Activités sportives et récréatives.* Centre communautaire, parcs, patinoire, terrains de sports.* Camp de jour estival.* Événements. | Territoire: Saint-Isidore | Statut: organisme municipal",
+    "website": "www.municipalite.saint-isidore.qc.ca",
+    "address": "671, rang Saint-Régis, Saint-Isidore, Montérégie, QC, J0L 2A0",
+    "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "saint-jean-sur-richelieu-cour-mu-mtg",
+    "name": "Saint-Jean-Sur-Richelieu - Cour Municipale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 357-2087",
+    "description": "Cour de justice de première instance où sont entendus les litiges en matière de règlements municipaux ou d'infractions au Code de la sécurité routière.* Paiement ou contestation de contraventions.* Recouvrement de sommes dues.* Travaux compensatoires. | Territoire: MRC du Haut-Richelieu | Statut: organisme municipal",
+    "website": "sjsr.ca/cour-municipale",
+    "address": "855, 1ère Rue, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 3C7",
+    "hours": "lundi, mardi, jeudi et vendredi 9h00 à 12h00 et 13h00 à 16h30, mercredi 10h30 à 12h00 et 13h00 à 16h30, horaire estival: lundi, mardi et jeudi 8h30 à 12h00 et 13h00 à 16h45, mercredi 10h30 à 12h00 et 13h00 à 16h45, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "saint-mathieu-municipalit-mtg",
+    "name": "Saint-Mathieu - Municipalité",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Saint-Mathieu",
+    "province": "QC",
+    "phone": "450 632-9528",
+    "description": "Gestion des services municipaux.* Paiement des taxes municipales.* Licences pour chiens et chats.* Permis de construction.* Information sur la collecte des matières résiduelles. | Territoire: Saint-Mathieu | Statut: organisme municipal",
+    "website": "https://saint-mathieu.com/",
+    "address": "299, chemin Saint-Édouard, Saint-Mathieu, Montérégie, QC, J0L 2H0",
+    "hours": "lundi et mardi 9h00 à 12h00 et 13h00 à 16h30, mercredi et jeudi 9h00 à 12h00 et 13h00 à 18h30, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "saint-patrice-de-sherrington-bib-mtg",
+    "name": "Saint-Patrice-De-Sherrington - Bibliothèque Municipale",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Patrice-de-Sherrington",
+    "province": "QC",
+    "phone": "450 454-4959",
+    "description": "* Prêt et consultation de livres et de documents audiovisuels.* Ordinateurs, accès à Internet, photocopieuse et imprimantes.* Prêt de jeux de société.* Heure du conte.* Expositions et ateliers. | Territoire: Saint-Patrice-de-Sherrington | Statut: organisme municipal",
+    "website": "st-patrice-sherrington.com/Loisirs/Bibliotheque",
+    "address": "234, rue des Loisirs, Saint-Patrice-de-Sherrington, Montérégie, QC, J0L 2N0",
+    "hours": "mardi et vendredi 14h30 à 17h30, jeudi 18h00 à 20h30, samedi 9h30 à 12h00"
+  },
+  {
+    "id": "saint-r-mi-cour-municipale-mtg",
+    "name": "Saint-Rémi - Cour Municipale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Rémi",
+    "province": "QC",
+    "phone": "450 454-3993",
+    "description": "Cour de justice de première instance où sont entendus les litiges en matière de règlements municipaux, d'infractions au Code de la sécurité routière ainsi que certaines infractions criminelles (conduite avec facultés affaiblies, vols de moins de 5000$ et méfaits). * Paiement ou contestation de contraventions.* Recouvrement de sommes dues.* Travaux compensatoires. | Territoire: MRC Les Jardins-de-Napierville | Statut: organisme municipal",
+    "website": "www.saint-remi.ca/services/services-au-citoyen/cour-municipale",
+    "address": "105, rue de la Mairie, Saint-Rémi, Montérégie, QC, J0L 2L0",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 13h00"
   },
   {
     "id": "saint-sixte-municipalit-out",
@@ -31607,6 +40397,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.ville.sainte-anne-de-bellevue.qc.ca",
     "address": "109, rue Sainte-Anne, Sainte-Anne-de-Bellevue, Montréal, QC, H9X 1M2",
     "hours": "lundi au jeudi 8h00 à 12h00 et 12h45 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "sainte-justine-de-newton-bibliot-mtg",
+    "name": "Sainte-Justine-De-Newton - Bibliothèque",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Sainte-Justine-de-Newton",
+    "province": "QC",
+    "phone": "450 764-3573",
+    "description": "Prêt de documents imprimés et audiovisuels. | Territoire: Sainte-Justine-de-Newton | Statut: organisme municipal",
+    "website": "www.sainte-justine-de-newton.ca",
+    "address": "2627, rue Principale, Sainte-Justine-de-Newton, Montérégie, QC, J0P 1T0",
+    "hours": "lundi 18h30 à 20h00, samedi 10h00 à 12h00"
   },
   {
     "id": "sainte-th-r-se-de-la-gatineau-mu-out",
@@ -31671,6 +40474,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "sant-mentale-qu-bec-haut-richeli-mtg-2",
+    "name": "Santé Mentale Québec - Haut-Richelieu",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-5736",
+    "description": "* Programme d'insertion sociale: repas communautaires, plateau de travail, groupe d'entraide.* Service de soutien léger.* Relief: programme d'autogestion.* Centre de jour L'Entre-Aide: activités de création, loisirs et croissance personnelle, ateliers psychoéducatif.* Groupe pour les personnes entendeuses de voix.* Promotion et sensibilisation aux problèmes de santé mentale.* Programmation milieu de travail pour entreprise.* Informations et référence.* Repas de Noël. | Clientèle: programme d'insertion sociale: adultes ayant un problème de santé mentale | Territoire: MRC Le Haut-Richelieu, MRC Rouville, MRC Rousillon | Statut: organisme à but non lucratif",
+    "website": "www.smqhr.ca",
+    "address": "211, rue Mayrand, bureau 1, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 3L1",
+    "hours": "lundi au jeudi 8h00 à 16h00"
+  },
+  {
+    "id": "sant-mentale-qu-bec-rive-sud-mtg",
+    "name": "Santé Mentale Québec - Rive-Sud",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 616-1569",
+    "description": "* Références.* Activités de promotion-prévention: ateliers de groupe (en personne et en ligne), conférences, information, sensibilisation, capsules vidéo et formation.* Activités de recherche et développement: production d'outils et mise sur pied de nouveaux programmes.* Participation à la campagne annuelle de promotion en santé mentale dans le cadre de la Semaine nationale de la santé mentale. | Clientèle: grand public | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "www.smqrivesud.ca",
+    "address": "150, rue Grant, bureau 227, Longueuil, Montérégie, QC, J4H 3H6",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 15h00"
+  },
+  {
     "id": "sk-sha",
     "name": "Saskatchewan Health Authority",
     "category": "health",
@@ -31712,6 +40541,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "satellite-organisme-en-pr-ventio-mtg",
+    "name": "Satellite, Organisme En Prévention Des Dépendances",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 888-2572",
+    "description": "* Prévention des dépendances dans les écoles primaires et secondaires.* Ateliers thématiques dans les organismes communautaires.* Information pour les parents.* Ateliers thématiques pour adultes et intervenants. | Clientèle: écoles, parents, organismes communautaires, entreprises | Territoire: MRC Les Maskoutains | Statut: organisme à but non lucratif",
+    "website": "preventiondesdependances.org",
+    "address": "1195, rue Saint-Antoine, bureau 204, Saint-Hyacinthe, Montérégie, QC, J2S 3K6",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
     "id": "scama-lav",
     "name": "Scama",
     "category": "social",
@@ -31736,6 +40578,84 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "centrescama.org",
     "address": "3168, boulevard Cartier Ouest, Chomedey, Laval, QC, H7V 1J7",
     "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 13h00"
+  },
+  {
+    "id": "scl-rodermie-qu-bec-mtg",
+    "name": "Sclérodermie Québec",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 844 990-6789",
+    "description": "* Écoute téléphonique, information et orientation* Soutien des personnes atteintes par des références médicales et de l'information éducative.* Comités d'entraide: aider les patient·e·s et leurs proches à composer avec la sclérodermie.* Développer des outils d'information pour les patient·e·s, la population et les intervenants du milieu de la santé.* Rencontres et conférences.* Promotion et financement de la recherche: amasser des fonds pour soutenir financièrement la recherche en sclérodermie. | Clientèle: personnes atteintes de sclérodermie, leurs proches, les professionnel·les de la santé Capacité: 10 groupes régionaux à travers le Québec | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "sclerodermie.ca",
+    "address": "550, chemin Chambly, bureau 040, Longueuil, Montérégie, QC, J4H 3L8",
+    "hours": "lundi au vendredi 9h00 à 16h00, écoute téléphonique: 10h00 à 16h00"
+  },
+  {
+    "id": "sdem-semo-mont-r-gie-mtg",
+    "name": "Sdem Semo Montérégie",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 800 646-6096",
+    "description": "Soutien à la formation, à l'intégration et au maintien en emploi.* Programme préparatoire en emploi.* Formation adaptée: agent de bureau, préposé au service à la clientèle en alimentation et entretien, conseiller au bien-être animal, préposé aux aînés en résidence privée.* Aide à la recherche d'emploi.* Orientation professionnelle pour les personnes déjà inscrites seulement. | Clientèle: personnes vivant avec une déficience sur le plan physique, sensoriel ou intellectuel ou ayant des problèmes de santé mentale, des troubles d'apprentissage, des troubles neurologiques ou un trouble du spectre de l'autisme (TSA) | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "sdem-semo.org",
+    "address": "365, rue Saint-Jean, bureau 125, Longueuil, Montérégie, QC, J4H 2X7",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00, sur rendez-vous"
+  },
+  {
+    "id": "sdem-semo-mont-r-gie-ch-teauguay-mtg",
+    "name": "Sdem Semo Montérégie - Châteauguay",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "1 800 646-6096",
+    "description": "Soutien à la formation, à l'intégration et au maintien en emploi.* Programme préparatoire en emploi.* Aide à la recherche d'emploi.* Orientation professionnelle pour les personnes déjà inscrites seulement. | Clientèle: personnes vivant avec une déficience sur le plan physique, sensoriel ou intellectuel ou ayant des problèmes de santé mentale, des troubles d'apprentissage, des troubles neurologiques, personnes autistes | Territoire: MRC Roussillon, MRC Les Jardins-de-Napierville | Statut: organisme à but non lucratif",
+    "website": "sdem-semo.org",
+    "address": "120, boulevard Saint-Jean-Baptiste, bureau 202, Châteauguay, Montérégie, QC, J6K 3A9",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00, sur rendez-vous seulement"
+  },
+  {
+    "id": "sdem-semo-mont-r-gie-mont-saint--mtg",
+    "name": "Sdem Semo Montérégie - Mont-Saint-Hilaire",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Mont-Saint-Hilaire",
+    "province": "QC",
+    "phone": "1 800 646-6096",
+    "description": "Soutien à la formation, à l'intégration et au maintien en emploi.* Programme préparatoire en emploi.* Aide à la recherche d'emploi. | Clientèle: personnes vivant avec une déficience sur le plan physique, sensoriel ou intellectuel ou ayant des problèmes de santé mentale, des troubles d'apprentissage, des troubles neurologiques, personnes autistes | Territoire: Vallée du Richelieu, Marieville | Statut: organisme à but non lucratif",
+    "website": "sdem-semo.org",
+    "address": "430, boulevard Sir-Wilfrid-Laurier, bureau 204, Mont-Saint-Hilaire, Montérégie, QC, J3H 6M5",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00, sur rendez-vous seulement"
+  },
+  {
+    "id": "sdem-semo-mont-r-gie-saint-jean--mtg",
+    "name": "Sdem Semo Montérégie - Saint-Jean-Sur-Richelieu",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Mont-Saint-Hilaire",
+    "province": "QC",
+    "phone": "450 646-1595",
+    "description": "Soutien à la formation, à l'intégration et au maintien en emploi.* Programme préparatoire en emploi.* Aide à la recherche d'emploi. | Clientèle: personnes vivant avec une déficience sur le plan physique, sensoriel ou intellectuel, personnes vivant avec des problèmes de santé mentale, des troubles d'apprentissage, des troubles neurologiques, personnes autistes | Territoire: Saint-Jean-Sur-Richelieu | Statut: organisme à but non lucratif",
+    "website": "sdem-semo.org",
+    "address": "315, rue MacDonald, bureau 115, Mont-Saint-Hilaire, Montérégie, QC, J3H 6M5",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00, sur rendez-vous seulement"
+  },
+  {
+    "id": "sdem-semo-mont-r-gie-vaudreuil-d-mtg",
+    "name": "Sdem Semo Montérégie - Vaudreuil-Dorion",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "1 800 646-6096",
+    "description": "Soutien à la formation, à l'intégration et au maintien en emploi.* Programme préparatoire en emploi.* Aide à la recherche d'emploi.* Orientation professionnelle pour les personnes déjà inscrites seulement. | Clientèle: personnes vivant avec une déficience sur le plan physique, sensoriel ou intellectuel ou ayant des problèmes de santé mentale, des troubles d'apprentissage, des troubles neurologiques, personnes autistes | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "sdem-semo.org",
+    "address": "418, avenue Saint-Charles, bureau 206, Vaudreuil-Dorion, Montérégie, QC, J7V 2N1",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00, sur rendez-vous seulement"
   },
   {
     "id": "senneville-village-sen",
@@ -31882,6 +40802,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "service-d-aide-domestique-jardin-mtg-2",
+    "name": "Service D'Aide Domestique Jardins-Roussillon",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "1 877 629-0817",
+    "description": "Aide domestique pour les personnes aînées, handicapées ou malades.* Entretien ménager et menus travaux.* Aide à la préparation des repas.* Répit pour les personnes proches aidantes.* Aide à la personne.* Aide pour faire les boîtes en vue d'un déménagement.* Accompagnement-transport pour les courses. | Clientèle: personnes aînées ou en perte d'autonomie, personnes vivant avec un handicap ou malades | Territoire: Candiac, Delson, La Prairie, Sainte-Catherine, Saint-Constant, Saint-Isidore, Saint- Mathieu, Saint-Philippe, MRC les Jardins-de-Napierville | Statut: organisme à but non lucratif",
+    "website": "www.sadjardins-roussillon.com",
+    "address": "23, montée des Bouleaux, bureau 100, Saint-Constant, Montérégie, QC, J5A 1B6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "service-d-aide-sedai-t-s-s-trb",
     "name": "Service D'Aide Sedai T.s.s.",
     "category": "food",
@@ -31907,6 +40840,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h30 et 13h30 à 16h30"
   },
   {
+    "id": "service-d-entraide-paroisse-sain-mtg",
+    "name": "Service D'Entraide - Paroisse Sainte-Marguerite-Bourgeoys",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 812-5354",
+    "description": "* Distribution de bons d'achat de nourriture et de denrées.* Information et référence.* Bons d'achat pour les fournitures scolaires.* Paniers de Noël.* Comptoir familiale: vente et collecte sur place de vêtements et d'articles de maison à prix modique. | Clientèle: personnes à faible revenu Capacité: 400 demandes | Territoire: Paroisse Sainte-Marguerite-Bourgeoys (quartier Laflèche, nouveau Greenfield Park) | Statut: organisme à but non lucratif",
+    "website": "paroissesmb.org",
+    "address": "3755 rue Mackay, Longueuil, Montérégie, QC, J4T 2P6",
+    "hours": "inscription aide alimentaire: sur rendez-vous, lundi au mercredi avant 12h00, aide alimentaire: jeudi 12h00 à 15h00, magasin-partage: mercredi au vendredi et le 3e samedi du mois 9h00 à 15h00"
+  },
+  {
+    "id": "service-d-entraide-de-saint-phil-mtg",
+    "name": "Service D'Entraide De Saint-Philippe",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-Philippe",
+    "province": "QC",
+    "phone": "450 907-0839",
+    "description": "* Aide alimentaire mensuelle.* Paniers de Noël. | Clientèle: personnes et familles à faible revenu | Territoire: Saint-Philippe | Statut: organisme à but non lucratif",
+    "address": "3015, route Édouard-VII, Saint-Philippe, Montérégie, QC, J0L 2K0",
+    "hours": "distribution: sur rendez-vous, mercredi 9h30 à 11h30, inscription: au plus tard mardi 15h00, horaire des fêtes: fermé du 18 décembre 2025 au 20 janvier 2026"
+  },
+  {
     "id": "service-d-entraide-de-sainte-b-a-lav",
     "name": "Service D'Entraide De Sainte-Béatrice",
     "category": "food",
@@ -31917,6 +40875,71 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Distribution de bons d'achat et de sacs de nourriture.* Paniers de Noël. | Clientèle: personnes à faible revenu | Territoire: paroisse Sainte-Béatrice, paniers de Noël: Auteuil | Statut: organisme à but non lucratif",
     "address": "475, avenue des Perron, Auteuil, Laval, QC, H7H 1E2",
     "hours": "sur rendez-vous"
+  },
+  {
+    "id": "service-d-intervention-en-sant-m-mtg",
+    "name": "Service D'Intervention En Santé Mentale Espoir",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 672-4597",
+    "description": "* Réadaptation psychosociale.* Centre de jour.* Intégration socioprofessionnelle.* Café Espoir au 1033, boulevard Taschereau: lieu de formation et de socialisation.* Suivi individuel.* Appartements supervisés transitoires.* Suivi communautaire à domicile. | Clientèle: adultes de 18 à 65 ans ayant des problèmes de santé mentale Capacité: Maison Cartier: 5 chambres | Territoire: Brossard, Greenfield Park, Lemoyne, Saint-Hubert, Longueuil, Boucherville, Varennes, Verchères, Contrecoeur, Sainte-Julie | Statut: organisme à but non lucratif",
+    "website": "www.serviceespoir.com",
+    "address": "1023, boulevard Taschereau, LONGUEUIL, Montérégie, QC, J4K 2X5",
+    "hours": "activités de jour: lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "service-d-int-gration-au-march-d-mtg",
+    "name": "Service D'Intégration Au Marché Du Travail De La Montérégie",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-7311",
+    "description": "* Information et référence.?* Rencontres individuelles.* Préparation, évaluation et formation à la recherche d'emploi.* Suivi et maintien en emploi. | Clientèle: personnes de 18 ans et plus éloignées du marché du travail, personnes judiciarisées | Territoire: Agglomération de Longueuil | Statut: organisme à but non lucratif",
+    "website": "imtm.ca",
+    "address": "2884, chemin Chambly, Longueuil, Montérégie, QC, J4L 1N1",
+    "hours": "lundi au vendredi 8h00 à 12h15 et 12h45 à 16h00"
+  },
+  {
+    "id": "service-de-police-de-ch-teauguay-mtg",
+    "name": "Service De Police De Châteauguay",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 698-1331",
+    "description": "Maintien de la paix, de l'ordre et de la sécurité publique.* Prévention et répression des crimes et infractions.* Vérification des antécédents judiciaires.* Sensibilisation. | Territoire: Châteauguay, Léry, Beauharnois, Saint-Isidore | Statut: organisme municipal",
+    "website": "ville.chateauguay.qc.ca/service-de-police/accueil",
+    "address": "55, boulevard Maple, Châteauguay, Montérégie, QC, J6J 3P9",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "service-de-police-de-l-agglom-ra-mtg",
+    "name": "Service De Police De L'Agglomération De Longueuil - Division Nord",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 463-7011",
+    "description": "Maintien de la paix, de l'ordre et de la sécurité publique.* Prévention et répression des crimes et infractions.* Vérification des antécédents judiciaires.* Volet sociocommunautaire, équipes spécialisées et sensibilisation.* Troque ton ticket: programme permettant aux cyclistes de faire annuler un constat d'infraction en échange de leur participation à une séance d'éducation et de prévention en matière de sécurité à vélo. | Territoire: Boucherville, Saint-Lambert, Vieux-Longueuil | Statut: organisme municipal",
+    "website": "www.longueuil.quebec/police",
+    "address": "699, boulevard Curé-Poirier Ouest, Longueuil, Montérégie, QC, J4J 2J1",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "service-de-police-de-l-agglom-ra-mtg-2",
+    "name": "Service De Police De L'Agglomération De Longueuil - Division Sud",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 463-7011",
+    "description": "Maintien de la paix, de l'ordre et de la sécurité publique.* Prévention et répression des crimes et infractions.* Vérification des antécédents judiciaires.* Volet sociocommunautaire, équipes spécialisées et sensibilisation.* Troque ton ticket: programme permettant aux cyclistes de faire annuler un constat d'infraction en échange de leur participation à une séance d'éducation et de prévention en matière de sécurité à vélo. | Territoire: Brossard, Greenfield Park, Saint-Bruno-de-Montarville, Saint-Hubert | Statut: organisme municipal",
+    "website": "www.longueuil.quebec/police",
+    "address": "7151, boulevard Cousineau, Longueuil, Montérégie, QC, J3Y 9K5",
+    "hours": "24 heures, 7 jours"
   },
   {
     "id": "service-de-police-de-la-ville-de-out",
@@ -32418,6 +41441,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "9h00 à 16h00"
   },
   {
+    "id": "services-brossard-mtg",
+    "name": "Services Brossard",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "450 923-6311",
+    "description": "Hébergement d'urgence pour les personnes se retrouvant sans logement à l'approche du 1er juillet.* Références possibles à partir du 25 juin. | Clientèle: ménages aillant un bail avec une adresse à Brossard et qui se retrouveront sans logement le 1er juillet | Territoire: Brossard | Statut: organisme municipal",
+    "website": "www.brossard.ca/services/services-brossard",
+    "address": "2001, boulevard de Rome, Brossard, Montérégie, QC, J4W 3K5",
+    "hours": "Voir site web"
+  },
+  {
     "id": "services-communautaires-on-rock-pfd",
     "name": "Services Communautaires On Rock",
     "category": "food",
@@ -32431,6 +41467,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi à jeudi 9h00 à 17h00, vendredi 9h00 à 14h00"
   },
   {
+    "id": "services-correctionnels-du-qu-be-mtg",
+    "name": "Services Correctionnels Du Québec - Services De Probation - Longueuil",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 468-2777",
+    "description": "Services de réinsertion sociale.* Évaluation des personnes contrevenantes et suivi.* Gestion des mesures sentencielles dans la communauté.* Administration des permissions de sorties et des libérations conditionnelles dans le cas des mesures correctionnelles. | Clientèle: personnes contrevenantes sous juridiction provinciale, en probation sous forme d'emprisonnement avec sursis, de libération conditionnelle, de permissions de sortie ou de service communautaire | Territoire: Montérégie | Statut: organisme du gouvernement provincial",
+    "website": "www.quebec.ca/securite-situations-urgence/services-correctionnels/suivi-personnes- contrevenantes-communaute",
+    "address": "1085, chemin du Coteau-Rouge, bureau 100, Longueuil, Montérégie, QC, J4K 1W7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "services-correctionnels-du-qu-be-out",
     "name": "Services Correctionnels Du Québec - Établissement De Détention De Hull",
     "category": "social",
@@ -32442,6 +41491,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.quebec.ca/securite-situations-urgence/services-correctionnels",
     "address": "75, rue Saint-François, Gatineau, Outaouais, QC, J9A 1B4",
     "hours": "Voir site web"
+  },
+  {
+    "id": "services-d-aide-domicile-vaudreu-mtg",
+    "name": "Services D'Aide À Domicile Vaudreuil-Soulanges",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 424-3919",
+    "description": "Soutien aux personnes aînées, soins palliatifs à domicile, soins à la personne.* Présence- surveillance.* Soins à domicile après hospitalisation, préparation de repas, épicerie et approvisionnement, lessive et repassage, entretien ménager léger. | Clientèle: personnes de 65 ans et plus, personnes présentant des limitations fonctionnelles (référées par le CSSS), leur famille, public général | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.aideadomicilevs.ca",
+    "address": "17, boulevard de la Cité-des-Jeunes Est, bureau 220, Vaudreuil-Dorion, Montérégie, QC, J7V 0N3",
+    "hours": "administration: lundi au jeudi 8h00 à 15h00, vendredi 8h00 à 12h00, sur rendez-vous"
+  },
+  {
+    "id": "services-d-intervention-pr-coce--mtg",
+    "name": "Services D'Intervention Précoce En Dépendance - Montérégie-Est",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 468-8111",
+    "description": "Services de première ligne en dépendance. * Information et éducation sur la dépendance. * Réflexion sur les habitudes de consommation et pistes de solution. * Soutien à l'entourage. * Mes choix Alcool. * Mes choix cannabis. * Mes choix toutes substances. | Clientèle: personnes se questionnant sur les habitudes de consommation d'alcool, de drogues, de jeux de hasard et d'argent ou d'utilisation d'Internet | Territoire: Montérégie-Est: RLS Pierre-de-Saurel, RLS Pierre-Boucher, RLS Richelieu-Yamaska | Statut: organisme du gouvernement provincial",
+    "website": "https://santemonteregie.qc.ca/est/sante-mentale-et-dependances",
+    "address": "201, boulevard Curé-Poirier Ouest, Longueuil, Montérégie, QC, J4J 2G4",
+    "hours": "lundi au jeudi 8h00 à 20h00, vendredi 8h00 à 16h00"
   },
   {
     "id": "services-du-chat-bott-les-lav",
@@ -32769,6 +41844,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service disponible 24h/24, 7j/7"
   },
   {
+    "id": "soci-t-alzheimer-des-maskoutains-mtg",
+    "name": "Société Alzheimer Des Maskoutains-Vallée Des Patriotes",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 768-6616",
+    "description": "* Soutien psychosocial.* Formation des aidants naturels.* Cafés-rencontres.* Suivi avec les personnes atteintes et leur famille.* Rencontres d'information.* Documentation et référence.* Répit à domicile.* Halte-répit. | Clientèle: personnes vivant avec la maladie d'Alzheimer, leur famille | Territoire: MRC La Vallée-du-Richelieu, La Présentation, Saint-Barnabé-Sud, Saint-Bernard-de- Michaudville, Saint-Damase, Saint-Dominique, Sainte-Hélène-de-Bagot, Sainte-Madeleine, Saint-Hugues, Saint-Hyacinthe, Saint-Jude, Saint-Liboire, Saint-Louis, Saint-Marcel-de-Richelieu, Saint-Pie, Saint-Simon, Saint-Valérien-de-Milton, Saint-Bruno-de-Montarville | Statut: organisme à but non lucratif",
+    "website": "www.alzheimermvp.com",
+    "address": "1195, rue St-Antoine, SAINT-HYACINTHE, Montérégie, QC, J2S 3K6",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "soci-t-alzheimer-du-haut-richeli-mtg",
+    "name": "Société Alzheimer Du Haut-Richelieu",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-5500",
+    "description": "* Aide, soutien et accompagnement.* Information, références et centre de documentation.* Formation dans les résidences.* Consultation individuelle ou téléphonique.* Groupe de soutien pour personnes proches aidantes.* Halte-répit.* Conférences et rencontres thématiques.* Café-rencontre mensuel.* Ateliers créatifs et groupes d'activités pour personnes atteintes en phase précoce. | Clientèle: personnes vivant avec la maladie d'Alzheimer ou des maladies apparentées, leur famille, personnes proches aidantes | Territoire: MRC Le Haut-Richelieu, CLSC de la Vallée des Forts, CLSC du Richelieu, CLSC Jardin- du-Québec | Statut: organisme à but non lucratif",
+    "website": "alzheimer.ca/hautrichelieu",
+    "address": "740, 2e Rue, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 3H5",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "soci-t-alzheimer-laval-lav",
     "name": "Société Alzheimer Laval",
     "category": "social",
@@ -32795,6 +41896,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "soci-t-alzheimer-rive-sud-mtg",
+    "name": "Société Alzheimer Rive-Sud",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 442-3333",
+    "description": "* Écoute téléphonique.* Consultation individuelle et familiale.* Ateliers de formation et de soutien pour les personnes aidantes.* Café-conjoint·e·s et café-proches aidant·e·s.* L'Embellie: atelier de parole et activités.* Répit à domicile.* Halte-répit et accueil de jour.* Formation professionnelle. | Clientèle: personnes atteintes de la maladie d'Alzheimer ou d'un autre trouble neurocognitif majeur, personnes proches aidantes | Territoire: Boucherville, Brossard, Calixa-Lavallée, Candiac, Contrecoeur, Delson, La Prairie, Longueuil, Saint-Amable, Saint-Constant, Saint-Lambert, Saint-Mathieu, Saint-Philippe, Sainte-Catherine, Sainte-Julie, Sorel-Tracy, Varennes, Verchères | Statut: organisme à but non lucratif",
+    "website": "alzheimer.ca/rivesud/fr",
+    "address": "1160, boulevard Nobert, Longueuil, Montérégie, QC, J4K 2P1",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "societe-alzheimer-de-lanaudiere-la-jol",
     "name": "Société Alzheimer de Lanaudière (la)",
     "category": "social",
@@ -32808,6 +41922,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi: 9h00 à 16h00, vendredi: 9h00 à 12h30"
   },
   {
+    "id": "soci-t-canadienne-de-la-scl-rose-mtg",
+    "name": "Société Canadienne De La Sclérose En Plaques - Section Montérégie",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "450 466-5209",
+    "description": "* Groupes d'entraide et de soutien individuel ou de couple.* Ateliers pour proches aidant·e·s.* Référence.* Séances d'information, conférences.* Exercices de groupe adaptés.* Yoga. | Clientèle: personnes atteintes de sclérose en plaques et leurs proches | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.scspmonteregie.com",
+    "address": "1705, avenue Victoria, bureau C-121, Saint-Lambert, Montérégie, QC, J4R 2T7",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "soci-t-canadienne-du-cancer-cent-mtg",
+    "name": "Société Canadienne Du Cancer - Centre De Services Saint-Jean-Sur-Richelieu",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 359-5000",
+    "description": "* Documentation et information.* Prêt de prothèses capillaires.* Prêt de prothèses mammaires. | Clientèle: personnes atteintes de cancer, grand public | Territoire: Saint-Jean-Sur-Richelieu | Statut: organisme à but non lucratif",
+    "website": "www.cancer.ca",
+    "address": "920, boulevard du Séminaire Nord, 3e étage, Saint-Jean-sur-Richelieu, Montérégie, QC, J3A 1B7",
+    "hours": "lundi au jeudi 8h00 à 16h00"
+  },
+  {
     "id": "societe-canadienne-de-la-sclerose-e-msc",
     "name": "Société Canadienne de la Sclérose en Plaques - Section Lanaudière",
     "category": "social",
@@ -32819,6 +41959,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://spcanada.ca/sp-canada-lanaudiere",
     "address": "2500, boulevard Mascouche, bureau 221, Mascouche, Lanaudière, QC, J7K 0H5",
     "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "soci-t-d-habitation-de-coteau-du-mtg",
+    "name": "Société D'Habitation De Coteau-Du-Lac",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Coteau-du-Lac",
+    "province": "QC",
+    "phone": "450 763-5557",
+    "description": "Administration de logements subventionnés pour personnes aînées.* Programme Accès Logis. | Clientèle: personnes de 60 ans et plus, autonomes ou en légère perte d'autonomie Capacité: 72 unités de logement | Territoire: Coteau-du-Lac | Statut: organisme à but non lucratif",
+    "address": "317, chemin du Fleuve, bureau 100, Coteau-du-Lac, Montérégie, QC, J0P 1B0",
+    "hours": "lundi au jeudi 8h30 à 16h30"
+  },
+  {
+    "id": "soci-t-de-gestion-des-huiles-usa-mtg",
+    "name": "Société De Gestion Des Huiles Usagées",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "1 877 987-6448",
+    "description": "Récupération et valorisation des produits d'entretien mécanique usagés (huiles, glycols, filtres, aérosols et contenants de plastiques d'huiles et de glycols).* Sensibilisation.* Points de dépôts: soghu.com/fr/points-de-depot#trouver-un-point-de-depot. | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "soghu.com",
+    "address": "8005, boulevard du Quartier, bureau 303, Brossard, Montérégie, QC, J4Y 0N5",
+    "hours": "lundi au vendredi 8h00 à 16h30"
   },
   {
     "id": "soci-t-de-l-autisme-et-des-ted-l-lav",
@@ -32845,6 +42010,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "ssvp-mtl.org/fr",
     "address": "400, rue Laurier, Laval-des-Rapides, Laval, QC, H7N 2P6",
     "hours": "sur rendez-vous, habituellement les jeudis et vendredis"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--mtg",
+    "name": "Société De Saint-Vincent De Paul - Châteauguay",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 691-1007",
+    "description": "* Magasin général: vêtements, meubles et articles usagés.* Aide alimentaire: distribution de paniers de nourriture et de bons d'achat.* Aide financière pour les frais scolaires lors de la rentrée.* Paniers de Noël. | Clientèle: personnes à faible revenu | Territoire: Châteauguay, Léry et Mercier | Statut: organisme à but non lucratif",
+    "website": "www.ssvpchateauguay.com",
+    "address": "42, rue Gilmour, Châteauguay, Montérégie, QC, J6J 1K6",
+    "hours": "magasin général: lundi, mardi, jeudi, vendredi 10h00 à 14h00, samedi 9h00 à 12h00, aide alimentaire: sur demande"
   },
   {
     "id": "soci-t-de-saint-vincent-de-paul--out-8",
@@ -32896,6 +42074,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous, ouvert mardi et vendredi les deux dernières semaines de chaque mois"
   },
   {
+    "id": "soci-t-de-saint-vincent-de-paul--mtg-2",
+    "name": "Société De Saint-Vincent De Paul - Conférence Saint-Jean-Vianney (Longueuil)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "438 865-9509",
+    "description": "* Dépannage alimentaire.* Paniers de Noël pour les membres.* Opération Bonne Mine: coupons pour les frais scolaires. | Clientèle: personnes à faible revenu Capacité: 50 people or families | Territoire: Saint-Jean-Vianney: entre le boulevard Taschereau et la rue Notre-Dame-de-Grâce et entre le boulevard Curé-Poirier et le boulevard Jacques-Cartier Ouest | Statut: organisme à but non lucratif",
+    "address": "2151, rue Saint-Georges, sous-sol, Longueuil, Montérégie, QC, J4K 2J1",
+    "hours": "sur rendez-vous seulement, dépannage alimentaire: chaque 15 jours"
+  },
+  {
     "id": "soci-t-de-saint-vincent-de-paul--out-2",
     "name": "Société De Saint-Vincent De Paul - Conférence Saint-Paul",
     "category": "food",
@@ -32934,6 +42124,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "soci-t-de-saint-vincent-de-paul--mtg-3",
+    "name": "Société De Saint-Vincent De Paul - Conseil Particulier De Saint-Jean",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 358-1222",
+    "description": "* Banque alimentaire.* Comptoir vestimentaire au 747, rue Saint-Jacques.* Distribution de fournitures scolaires.* Paniers de Noël pour les bénéficiaires de l'aide alimentaire. | Clientèle: personnes dans le besoin, distribution de fournitures scolaires: parents d'enfants allant de la maternelle à la 5e secondaire | Territoire: Saint-Jean-sur-Richelieu | Statut: organisme à but non lucratif",
+    "website": "ssvpstjean.org",
+    "address": "150, rue Laurier, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 6K3",
+    "hours": "banque alimentaire: mardi au jeudi 9h00 à 11h30 et 13h00 à 15h00, vendredi 9h00 à 11h30, comptoir vestimentaire: mardi, mercredi et vendredi 10h00 à 16h00, jeudi 10h00 à 20h00, samedi 10h00 à 13h00"
+  },
+  {
     "id": "soci-t-de-saint-vincent-de-paul--lav-3",
     "name": "Société De Saint-Vincent De Paul - François-De-Laval",
     "category": "food",
@@ -32957,6 +42160,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "ssvp.ca/fr/ssvp-locations/conference-jean-xxiii",
     "address": "1194, boulevard Saint-René Ouest, GATINEAU, Outaouais, QC, J8T 6H3",
     "hours": "lundi, mardi et jeudi sur rendez-vous seulement à partir de 17h00"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--mtg-4",
+    "name": "Société De Saint-Vincent De Paul - Mercier",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Mercier",
+    "province": "QC",
+    "phone": "438 345-9009",
+    "description": "* Banque alimentaire hebdomadaire: pain, fruits et légumes.* Banque alimentaire bimestriel: bons d'achats au IGA.* Paniers de Noël.* Guignolée de Mercier: collecte de denrées non périssables, produits d'hygiène, médicaments d'utilisation courante et articles d'entretiens ménagers. | Clientèle: personnes à faible revenu Capacité: banque alimentaire: 40 personnes | Territoire: Mercier | Statut: organisme à but non lucratif",
+    "website": "ssvp.qc.ca",
+    "address": "766, boulevard Saint-Jean-Baptiste, Mercier, Montérégie, QC, J6R 1G1",
+    "hours": "distribution et inscription banque alimentaire: mardi 10h00 à 11h00"
   },
   {
     "id": "soci-t-de-saint-vincent-de-paul--out-5",
@@ -33168,6 +42384,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "centre d'appels du transport adapté: lundi au jeudi 6h30 à 23h00, vendredi 6h30 à 24h00, samedi 8h00 à 24h00, dimanche 8h00 à 23h00, jours fériés 8h00 à 24h00, centre contact clients: lundi au vendredi 6h30 à 20h00, samedi et dimanche 8h00 à 17h00, centre de réservations: lundi au vendredi 6h30 à 17h00, samedi 8h00 à 17h00"
   },
   {
+    "id": "soci-t-de-transport-de-salaberry-mtg",
+    "name": "Société De Transport De Salaberry De Valleyfield - Transport Adapté",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 370-0155",
+    "description": "Service de transport adapté.* Formulaire de demande d'admission: www.stsv.ca/wp- content/uploads/2019/07/formulaire-transport-adapte-francais.pdf* Réservation en ligne: www.stsv.ca/transport- adapte-formulaire-de-reservation/ | Clientèle: personnes handicapées, personnes avec des limitations sur le plan de la mobilité incluant: une incapacité de marcher sur une distance de 400 mètres sur un terrain uni, de monter une marche de 35 centimètres de hauteur avec appui ou d'en descendre une sans appui, d'effectuer la totalité d'un déplacement en utilisant le transport en commun régulier, de s'orienter dans le temps ou dans l'espace, de maîtriser des situations ou des comportements pouvant être préjudiciables à sa propre sécurité ou à celle des autres ou de communiquer de façon verbale ou gestuelle, toutefois, cette incapacité ne peut à elle seule être retenue aux fins d'admission | Territoire: Coteau-du-Lac, Les Coteaux, Rivière-Beaudette, Saint-Louis-de-Gonzague, Saint- Polycarpe, Saint-Stanislas-de-Kosta, Saint-Zotique, Salaberry-de-Valleyfield | Statut: organisme parapublic",
+    "website": "stsv.ca",
+    "address": "57, rue Sainte-Cécile, Salaberry-de-Valleyfield, Montérégie, QC, J6T 1L6",
+    "hours": "réservation lundi au vendredi de 7h00 à 17h00, transport 7 jours"
+  },
+  {
+    "id": "soci-t-pour-l-panouissement-des--mtg",
+    "name": "Société Pour L'Épanouissement Des Jeunes De St-Amable (La)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Amable",
+    "province": "QC",
+    "phone": "450 922-3673",
+    "description": "Lieu de rencontre.* Référence.* Activités sportives et culturelles.* Bénévolat.* Activités de participation citoyenne.* Café étudiant. | Clientèle: jeunes de 12 à 17 ans Capacité: 99 | Territoire: Saint-Amable | Statut: organisme à but non lucratif",
+    "address": "915, rue Normandie, Saint-Amable, Montérégie, QC, J0L 1N0",
+    "hours": "période scolaire: mercredi au vendredi 15h00 à 21h00, samedi 13h00 à 21h00, café étudiant: lundi au vendredi 12h30 à 13h30, été: lundi au vendredi 13h00 à 21h00"
+  },
+  {
     "id": "qc-food-sherbrooke-sv",
     "name": "Société Saint-Vincent-de-Paul Sherbrooke",
     "category": "food",
@@ -33358,6 +42599,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h30 à 16h00, dîners: 11h30 à 12h45"
   },
   {
+    "id": "source-d-entraide-inc-la-mtg",
+    "name": "Source D'Entraide Inc. (La)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-Lazare",
+    "province": "QC",
+    "phone": "450 455-8000",
+    "description": "* Friperie: vêtements et articles de maison usagés.* Aide alimentaire.* Garde-manger communautaire.* Repas d'urgence dans les écoles et camps de jour.* Atelier de couture.* Panier de Noël. | Clientèle: boutique: population générale, services communautaires: personnes vulnérables | Territoire: Saint-Lazare | Statut: organisme à but non lucratif",
+    "website": "sourcedentraide.org",
+    "address": "2252, chemin Sainte-Angélique, Saint-Lazare, Montérégie, QC, J7T 2H5",
+    "hours": "mardi 9h00 à 15h00, jeudi 9h00 à 15h00 et 19h00 à 20h30, samedi 9h00 à 12h00, aide alimentaire: sur rendez-vous"
+  },
+  {
     "id": "source-des-jeunes-la-out",
     "name": "Source Des Jeunes (La)",
     "category": "social",
@@ -33371,6 +42625,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: lundi au vendredi 9h00 à 16h00, activités: mercredi 17h00 à 20h00, jeudi et vendredi 17h00 à 21h00"
   },
   {
+    "id": "sourire-sans-fin-mtg",
+    "name": "Sourire Sans Fin",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Rémi",
+    "province": "QC",
+    "phone": "450 454-5747",
+    "description": "* Cuisines collectives.* Ateliers culinaires éducatifs.* Popote roulante.* Partage de denrées fraîches.* Ateliers Petits cuistots: ateliers de cuisine pour enfant de 6 à 12 ans pendant l'été et la semaine de relâche.* Friperie pour toute la famille.* Halte-garderie.* Ateliers parentaux et de stimulation précoce.* Groupe de soutien aux parents.* Groupe d'entraide pour parents d'enfants autistes.* Services psychosociaux pour personnes en détresse.* Soutien aux personnes aînées: accompagnement par téléphone, écoute, visites suite aux signalements.* Soutien à l'itinérance et au maintien en logement.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV).* Information, écoute et référence.* Paniers de Noël. | Clientèle: personnes et familles vulnérables, projet ITMAV: personnes aînées de 55 ans et plus Capacité: 600 par année | Territoire: MRC Les Jardins-de-Napierville | Statut: organisme à but non lucratif",
+    "website": "www.souriresansfin.org",
+    "address": "2-A, rue Sainte-Famille, Saint-Rémi, Montérégie, QC, J0L 2L0",
+    "hours": "bureau et accueil: lundi au mercredi de 8h30 à 16h30, vendredi 8h30 à 15h30, partage alimentaire: jeudi 8h30 à 18h00, friperie: lundi au mercredi et vendredi 9h00 à 17h00, jeudi 9h00 à 20h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
     "id": "sourires-solidaires-lav",
     "name": "Sourires Solidaires",
     "category": "health",
@@ -33382,6 +42649,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "souriressolidaires.com",
     "address": "2550, boulevard Daniel-Johnson, bureau 130, Chomedey, Laval, QC, H7T 2L1",
     "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "soutien-lact-a-mtg",
+    "name": "Soutien Lactéa",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 895-3554",
+    "description": "Aide et soutien à l'allaitement maternel.* Ligne d'urgence allaitement 24/7.* Cours et activités d'éducation et de formation.* Marraines d'allaitement.* Café-rencontre.* Boutique: location et vente de tire-laits. | Clientèle: parents | Territoire: MRC le Haut-Richelieu | Statut: organisme à but non lucratif",
+    "website": "lactea.org",
+    "address": "640, rue Dorchester, bureau 404, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 5A4",
+    "hours": "lundi au mercredi 9h00 à 15h00, jeudi sur rendez-vous"
   },
   {
     "id": "sp-canada-banlieue-ouest-drv",
@@ -33568,6 +42848,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: lundi au vendredi 8h30 à 16h30, urgences: 24 heures, 7 jours"
   },
   {
+    "id": "s-ret-du-qu-bec-poste-mrc-de-la--mtg",
+    "name": "Sûreté Du Québec - Poste Mrc De La Vallée-Du-Richelieu",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 536-0032",
+    "description": "* Patrouille.* Réponse aux demandes d'aide des citoyen·ne·s.* Surveillance et contrôle de la circulation routière.* Application des lois et des règlements.* Prévention du crime.* Activités de relations communautaires. | Territoire: MRC La Vallée-du-Richelieu | Statut: organisme du gouvernement provincial",
+    "website": "www.sq.gouv.qc.ca",
+    "address": "4000, rue des Loisirs, Beloeil, Montérégie, QC, J3G 2C9",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30, urgences: 24 heures, 7 jours"
+  },
+  {
     "id": "s-ret-du-qu-bec-poste-mrc-de-pap-out",
     "name": "Sûreté Du Québec - Poste Mrc De Papineau",
     "category": "social",
@@ -33592,6 +42885,58 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.sq.gouv.qc.ca",
     "address": "1320, route 148, Campbell's Bay, Outaouais, QC, J0X 1K0",
     "hours": "administration: lundi au vendredi 8h30 à 16h30, urgences: 24 heures, 7 jours"
+  },
+  {
+    "id": "s-ret-du-qu-bec-poste-mrc-de-vau-mtg",
+    "name": "Sûreté Du Québec - Poste Mrc De Vaudreuil-Soulanges Est",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 424-1212",
+    "description": "* Patrouille.* Réponse aux demandes d'aide des citoyen·ne·s.* Surveillance et contrôle de la circulation routière.* Application des lois et des règlements.* Prévention du crime.* Activités de relations communautaires. | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme du gouvernement provincial",
+    "website": "www.sq.gouv.qc.ca",
+    "address": "599, boulevard Harwood, Vaudreuil-Dorion, Montérégie, QC, J7V 7W2",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30, urgences: 24 heures, 7 jours"
+  },
+  {
+    "id": "s-ret-du-qu-bec-poste-mrc-de-vau-mtg-2",
+    "name": "Sûreté Du Québec - Poste Mrc De Vaudreuil-Soulanges Ouest",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Saint-Clet",
+    "province": "QC",
+    "phone": "450 456-3883",
+    "description": "* Patrouille.* Réponse aux demandes d'aide des citoyen·ne·s.* Surveillance et contrôle de la circulation routière.* Application des lois et des règlements.* Prévention du crime.* Activités de relations communautaires. | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme du gouvernement provincial",
+    "website": "www.sq.gouv.qc.ca",
+    "address": "551, route 201, Saint-Clet, Montérégie, QC, J0P 1S0",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30, urgence: 24 heures, 7 jours"
+  },
+  {
+    "id": "s-ret-du-qu-bec-poste-mrc-du-hau-mtg",
+    "name": "Sûreté Du Québec - Poste Mrc Du Haut-Richelieu",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Lacolle",
+    "province": "QC",
+    "phone": "450 246-3856",
+    "description": "* Patrouille.* Réponse aux demandes d'aide des citoyen·ne·s.* Surveillance et contrôle de la circulation routière.* Application des lois et des règlements.* Prévention du crime.* Activités de relations communautaires. | Territoire: MRC du Haut-Richelieu | Statut: organisme du gouvernement provincial",
+    "website": "www.sq.gouv.qc.ca",
+    "address": "88, rue de l'Église Nord, Lacolle, Montérégie, QC, J0J 1J0",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30, urgence: 24 heures, 7 jours"
+  },
+  {
+    "id": "s-ret-du-qu-bec-poste-mrc-les-ja-mtg",
+    "name": "Sûreté Du Québec - Poste Mrc Les Jardins-De-Napierville",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Napierville",
+    "province": "QC",
+    "phone": "450 245-0666",
+    "description": "* Patrouille.* Réponse aux demandes d'aide des citoyen·ne·s.* Surveillance et contrôle de la circulation routière.* Application des lois et des règlements.* Prévention du crime.* Activités de relations communautaires. | Territoire: MRC Les Jardins-de-Napierville | Statut: organisme du gouvernement provincial",
+    "website": "www.sq.gouv.qc.ca",
+    "address": "522, rue Saint-Jacques, Napierville, Montérégie, QC, J0J 1L0",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30, urgence: 24 heures, 7 jours"
   },
   {
     "id": "police-sq",
@@ -33712,6 +43057,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "table-r-gionale-de-concertation--mtg",
+    "name": "Table Régionale De Concertation Des Aînés De La Montérégie",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Chambly",
+    "province": "QC",
+    "phone": "450 447-5885",
+    "description": "Concertation régionale sur les enjeux touchant les personnes aînées.* Information, consultation et représentation.* Promotion de la qualité de vie des personnes aînées.* Reconnaissance de l'apport des personnes aînées à la société. | Clientèle: organismes pour personnes aînées | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "trcam.ca",
+    "address": "2601, avenue Bourgogne, Chambly, Montérégie, QC, J3L 2A9",
+    "hours": "sur rendez-vous"
+  },
+  {
     "id": "table-r-gionale-de-concertation--lav",
     "name": "Table Régionale De Concertation Des Aînés De Laval",
     "category": "social",
@@ -33790,6 +43148,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 15h30"
   },
   {
+    "id": "tabl-e-des-chefs-la-mtg",
+    "name": "Tablée Des Chefs (La)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 877 821-1877",
+    "description": "* Redistribution de surplus alimentaire provenant du réseau Hôtel, restaurant et institution (HRI), afin de nourrir les personnes dans le besoin.* Service de courtage en alimentation durable.* Développement de l'éducation culinaire des adolescent·e·s à travers des programmes de formation culinaire dans les écoles secondaires (les Brigades Culinaires) et les centres jeunesse (Cuisine ton avenir).* Camp de jour culinaire pour enfants.* Atelier culinaire corporatif.* Corvée alimentaire dans les écoles de cuisine: préparation de repas qui sont ensuite distribués dans des organismes communautaires. | Clientèle: personnes souffrant d'insécurité alimentaire, programmes culinaires: personnes de 12 à 17 ans, camp culinaire: personnes de 11 à 15 ans Capacité: illimitée | Territoire: Canada | Statut: organisme à but non lucratif",
+    "website": "www.tableedeschefs.org/fr",
+    "address": "679, rue Adoncourt, Longueuil, Montérégie, QC, J4G 2M6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "tandem-emploi-mtg",
+    "name": "Tandem Emploi",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Beloeil",
+    "province": "QC",
+    "phone": "450 464-5323",
+    "description": "* Consultation individuelle et services de groupe.* Aide à la recherche d'emploi: CV, lettres, techniques d'entrevue, information sur le marché caché et réseaux sociaux.* Clarification d'objectifs d'emploi et transition de carrière avec l'expertise d'un·e conseiller·ère d'orientation, incluant un bilan de compétences et des tests psychométriques.* Exploration du marché du travail.* Gestion de temps en télétravail et utilisation des applications de vidéoconférence.* Coaching en emploi jusqu'à l'obtention de la permanence.* Salle de documentation avec accès à des ordinateurs, imprimantes et fax en libre-service. | Clientèle: personnes de 18 ans et plus en recherche d'emploi ou en réflexion sur leur carrière | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.tandem-emploi.org",
+    "address": "545, boulevard Sir-Wilfrid-Laurier, bureau 301, BELOEIL, Montérégie, QC, J3G 4H8",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h00 et vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "tandem-emploi-point-de-service-c-mtg",
+    "name": "Tandem Emploi - Point De Service Chambly",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Chambly",
+    "province": "QC",
+    "phone": "450 447-4037",
+    "description": "* Consultation individuelle et services de groupe.* Aide à la recherche d'emploi: CV, lettres, techniques d'entrevue, information sur le marché caché et réseaux sociaux.* Clarification d'objectifs d'emploi et transition de carrière avec l'expertise d'un conseiller d'orientation, incluant un bilan de compétences et des tests psychométriques.* Exploration du marché du travail.* Gestion de temps en télétravail et utilisation des applications de vidéoconférence.* Coaching en emploi jusqu'à l'obtention de la permanence.* Salle de documentation avec accès à des ordinateurs, imprimantes et fax en libre-service. | Clientèle: personnes de 18 ans et plus en recherche d'emploi ou en réflexion sur leur carrière | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.tandem-emploi.org",
+    "address": "240, boulevard Fréchette, bureau 210, CHAMBLY, Montérégie, QC, J3L 2Z5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "qc-sm-montreal-tandem",
     "name": "Tandem Mauricie – Dépendances Trois-Rivières",
     "category": "mentalHealth",
@@ -33814,6 +43211,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.TDL-lanaudiere.org",
     "address": "2500, boulevard Mascouche, bureau 215, Mascouche, Lanaudière, QC, J7K 0H5",
     "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "tdl-mont-r-gie-mtg",
+    "name": "Tdl Montérégie",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Constant",
+    "province": "QC",
+    "phone": "450 635-1961",
+    "description": "* Écoute, information et soutien pour les membres.* Activités, conférences.* Atelier LEGO de stimulation du langage.* Consultation avec un·e travailleur·euse social·e: suivi, plan d'intervention, etc.* Info TS: service d'information en ligne d'un·e travailleur·euse social·e via la page Facebook privée.* Les p'tits conseils de mon orthophoniste: différents thèmes abordés via la page Facebook privée (https://www.facebook.com/groups/lesptitsconseils).* Production d'outils d'information et de défense de droits.* Soutien aux recherches sur le trouble développemental du langage.* Soupers ludiques pour adultes. | Clientèle: personnes vivant avec un trouble développemental du langage (dysphasie), leurs parents et entourage Capacité: ateliers LEGO: 15 enfants | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.tdlmonteregie.org",
+    "address": "55, rue Saint-Pierre, bureau 203, Saint-Constant, Montérégie, QC, J5A 1B9",
+    "hours": "bureau: lundi au jeudi 8h30 à 16h00, vendredi 9h00 à 13h00, activités: soirs et fins de semaine"
   },
   {
     "id": "technoscience-outaouais-out",
@@ -33936,6 +43346,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h15 et 13h00 à 16h30, vendredi 8h00 à 12h00"
   },
   {
+    "id": "toits-d-mile-les-mtg",
+    "name": "Toits D'Émile (Les)",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 699-9292",
+    "description": "Logement à long terme afin de favoriser la réinsertion sociale.* Appui dans les tâches de la vie quotidienne.* Activités sociales et récréatives.* Visites à domicile et soutien téléphonique.* Références. | Clientèle: personnes vivant avec un problème de santé mentale Capacité: 11 | Territoire: Candiac, Châteauguay, Delson, Hemmingford, La Prairie, Léry, Mercier, Napierville, Saint- Bernard-de-Lacolle, Saint-Constant, Saint-Cyprien-de-Napierville, Sainte-Catherine, Sainte-Clotilde, Saint- Édouard, Sainte-Martine, Saint-Isidore, Saint-Jacques-le-Mineur, Saint-Mathieu, Saint-Michel, Saint-Patrice-de- Sherrington, Saint-Philippe, Saint-Rémi, Saint-Urbain-Premier | Statut: organisme à but non lucratif",
+    "website": "www.lestoitsdemile.org",
+    "address": "255, boulevard d'Anjou, bureau 201, Châteauguay, Montérégie, QC, J6J 2R4",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "on-toronto-public-health",
     "name": "Toronto Public Health",
     "category": "health",
@@ -33949,6 +43372,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Pour urgence: 811 (Info-Santé) ou urgence hospitalière."
   },
   {
+    "id": "tourisme-mont-r-gie-mtg",
+    "name": "Tourisme Montérégie",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Brossard",
+    "province": "QC",
+    "phone": "1 866 469-0069",
+    "description": "Association touristique régionale.* Développement, promotion, accueil et information touristique. | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.tourisme-monteregie.qc.ca",
+    "address": "2340, boulevard Lapinière, bureau 200, BROSSARD, Montérégie, QC, J4Z 2K7",
+    "hours": "bureaux administratifs: lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "tournesol-de-la-rive-nord-le-rep",
     "name": "Tournesol de la Rive-Nord (le)",
     "category": "mentalHealth",
@@ -33960,6 +43396,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.letournesoldelarivenord.com",
     "address": "294, boulevard Iberville, Repentigny, Lanaudière, QC, J6A 2A3",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "tra-mont-r-gie-mtg",
+    "name": "Tra Montérégie",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "514 604-6455",
+    "description": "Regroupement professionnel de thérapeutes accrédité·e·s en relation d'aide.* Thérapie individuelle ou relationnelle en personne ou par vidéoconférence.* Service spécialisé en deuil. | Clientèle: adultes, personnes aînées, personnes professionnelles, couples, enfants, adolescent·e·s | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.tramonteregie.com",
+    "address": "540, route 219, Saint-Jean-sur-Richelieu, Montérégie, QC, J2Y 1C3",
+    "hours": "lundi au vendredi 9h00 à 21h00, samedi et dimanche 9h00 à 18h00"
+  },
+  {
+    "id": "trait-d-union-mont-r-gien-mtg",
+    "name": "Trait D'Union Montérégien",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 223-1252",
+    "description": "Parrainage en santé mentale favorisant la réinsertion et l'intégration sociale.* Jumelage avec un bénévole afin de développer une relation d'amitié.* Rencontre et sortie une fois par semaine ou selon le besoin.* Écoute, entraide et soutien au développement des habiletés sociales et relationnelles.* Ateliers de formation pour les participants et les bénévoles.* Activités et conférences. | Clientèle: personnes âgées de 18 ans et plus vivant ou ayant vécu avec un problème de santé mentale ou de détresse émotionnelle, personnes âgées de 55 ans et plus vivant de la solitude ou à risque de vivre de la détresse émotionnelle | Territoire: MRC Acton, MRC Les Maskoutains | Statut: organisme à but non lucratif",
+    "website": "www.tumparraine.org",
+    "address": "1195 rue Saint-Antoine, bureau 201, Saint-Hyacinthe, Montérégie, QC, J2S 3K6",
+    "hours": "lundi au jeudi 9h00 à 16h00"
   },
   {
     "id": "trait-d-union-outaouais-out",
@@ -34068,6 +43530,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "travers-e-la-mtg",
+    "name": "Traversée (La)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "450 465-5263",
+    "description": "Centre de soutien et de psychothérapie pour les personnes victimes de violence sexuelle.* Information et référence.* Intervention psychosociale.* Psychothérapie.* Soutien psychosocial pour les proches.* Accompagnement socio-judiciaire.* Accompagnement juridique.* Accompagnement policier: dépôt de la plainte initiale, entrevues d'investigation possibles dans les locaux.* Accompagnement socio-professionnel.* Centre de services intégérés en violence sexuelle: accompagnement tout au long du processus psycho- sociojudiciaire des personnes victimes de violence sexuelle. | Clientèle: personnes de tous genres et tous âges vivant avec les conséquences d'une violence sexuelle et leurs proches | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.latraversee.qc.ca",
+    "address": "10, avenue Hickson, Saint-Lambert, Montérégie, QC, J4R 2N3",
+    "hours": "lundi au vendredi de 9h00 à 17h00"
+  },
+  {
+    "id": "travers-e-la-centre-de-crise-et--mtg",
+    "name": "Traversée (La) Centre De Crise Et De Prévention Du Suicide",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Sorel-Tracy",
+    "province": "QC",
+    "phone": "1 866 277-3553",
+    "description": "* Intervention téléphonique.* Groupe de soutien pour tout type de deuil.* Atelier de sensibilisation.* Hébergement de crise.* Hébergement transitoire adapté.* Suivi post-crise.* Formation Sentinelle.* Mandataire de la ligne numérique suicide.ca | Clientèle: personnes en détresse psychologique, personnes suicidaires, enfants et adultes endeuillés, intervenants Capacité: 3 | Territoire: MRC Pierre-De Saurel | Statut: organisme à but non lucratif",
+    "website": "www.cpslatraversee.ca",
+    "address": "120, chemin Sainte-Anne, Sorel-Tracy, Montérégie, QC, J3P 1J8",
+    "hours": "24 heures, 7 jours, admission hébergement de crise: 9h00 à 20h00"
+  },
+  {
     "id": "tremplin-des-lecteurs-le-out",
     "name": "Tremplin Des Lecteurs (Le)",
     "category": "social",
@@ -34107,6 +43595,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, sur rendez-vous seulement"
   },
   {
+    "id": "tribunal-administratif-du-logeme-mtg",
+    "name": "Tribunal Administratif Du Logement - Longueuil",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "514 873-2245",
+    "description": "Tribunal spécialisé en matière de bail résidentiel.* Information sur les droits et obligations découlant du bail.* Conciliation des relations entre propriétaires et locataires.* Protection des droits des locataires.* Aide pour remplir les formulaires de demande au tribunal.* Demande en ligne: www.tal.gouv.qc.ca/fr/services-en- ligne/votre-demande-en-ligne/soumettre-une-demande-en-ligne* Outil en ligne pour le calcul de la fixation de loyer: www.tal.gouv.qc.ca/fr/calcul-pour-la-fixation-de-loyer/outil-de-calcul* Outil en ligne d'accès à l'information juridique relative au bail de logement: justicebot.ca* Outil en ligne permettant d'ajouter la preuve de la notification de la demande ainsi qu'une liste des pièces: extranet.tal.gouv.qc.ca/internet/asp/transmissionDoc/transmetDoc.asp | Clientèle: locataires, propriétaires | Territoire: agglomération de Longueuil | Statut: organisme du gouvernement provincial",
+    "website": "www.tal.gouv.qc.ca",
+    "address": "201, place Charles-Le Moyne, rez-de-chaussée, Longueuil, Montérégie, QC, J4K 2T5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, sur rendez-vous seulement"
+  },
+  {
+    "id": "tribunal-administratif-du-logeme-mtg-2",
+    "name": "Tribunal Administratif Du Logement - Saint-Jean-Sur-Richelieu",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "1 800 683-2245",
+    "description": "Tribunal spécialisé en matière de bail résidentiel.* Information sur les droits et obligations découlant du bail.* Conciliation des relations entre propriétaires et locataires.* Protection des droits des locataires.* Aide pour remplir les formulaires de demande au tribunal.* Outil pour le calcul pour la fixation de loyer en ligne: www.tal.gouv.qc.ca/fr/calcul-pour-la-fixation-de-loyer/outil-de-calcul* Outil en ligne d'accès à l'information juridique relative au bail de logement: justicebot.ca* Outil en ligne permettant d'ajouter la preuve de la notification de la demande ainsi qu'une liste des pièces: extranet.tal.gouv.qc.ca/internet/asp/transmissionDoc/transmetDoc.asp | Clientèle: locataires, propriétaires | Territoire: Saint-Jean-sur-Richelieu | Statut: organisme du gouvernement provincial",
+    "website": "www.tal.gouv.qc.ca",
+    "address": "109, rue Saint-Charles, bureau RC-13, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2C2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "taq-qc",
     "name": "Tribunal administratif du Québec (TAQ)",
     "category": "social",
@@ -34117,6 +43631,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Recours contre les décisions de l'administration publique : aide sociale, SAAQ, CNESST, immigration, santé mentale, affaires sociales. Dépôt de recours en ligne, audiences gratuites, aucun avocat obligatoire. Délai habituel : 30 à 60 jours après la décision contestée.",
     "hours": "Lun-ven 8h30-16h30. Sur RV. Garde téléphonique 24h pour arrestation: 1-800-842-2213.",
     "isProvinceWide": true
+  },
+  {
+    "id": "troupe-de-th-tre-les-pas-pour-ri-mtg",
+    "name": "Troupe De Théâtre Les Pas Pour Rire",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "",
+    "description": "* Ateliers de théâtre adapté.* Création, préparation et animation d'une pièce de théâtre originale.* Spectacle-rassembleur pour les groupes adaptés et les plateaux de travail du réseau scolaire et social.* Participation à des évènements et à des animations: festivals, Journées de la culture, la Fête différente, défi FRAS, etc. | Clientèle: personne vivant avec une déficience intellectuelle et des difficultés d'adaptation | Territoire: MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges, MRC Les Jardins-de-Napierville, MRC Rousillon | Statut: organisme à but non lucratif",
+    "website": "lespaspourrire.com",
+    "address": "110, rue Mathias, bureau 102, Salaberry-de-Valleyfield, Montérégie, QC, J6T 3L6",
+    "hours": "lundi au jeudi de 8h00 à 16h00, mardi 18h00 à 20h00"
+  },
+  {
+    "id": "tr-s-saint-r-dempteur-municipali-mtg",
+    "name": "Très-Saint-Rédempteur - Municipalité",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Très-Saint-Rédempteur",
+    "province": "QC",
+    "phone": "450 451-5203",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, etc.* Calendrier des collectes des matières résiduelles: www.tressaintredempteur.ca/services-aux- citoyens/matieres-residuelles* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Installations extérieurs: patinoires, parcs, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Très-Saint-Rédempteur | Statut: organisme municipal",
+    "website": "tressaintredempteur.ca",
+    "address": "769, route Principale, Très-Saint-Rédempteur, Montérégie, QC, J0P 1P1",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "nb-health-line",
@@ -34147,6 +43687,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "t-l-vision-rive-sud-mtg",
+    "name": "Télévision Rive-Sud",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 655-9925",
+    "description": "Chaîne de télévision régionale.* Production d'événements spéciaux. | Territoire: Rive-Sud | Statut: organisme à but non lucratif",
+    "website": "www.tvrs.ca",
+    "address": "893, boulevard Guimond, Longueuil, Montérégie, QC, J4G 2M7",
+    "hours": "9h00 à 17h00"
+  },
+  {
     "id": "emp-semo-tetes",
     "name": "Têtes en l'air – SEMO santé mentale",
     "category": "employment",
@@ -34171,6 +43724,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "relais-communautaire.org/page/un-habit-pour-un-ami",
     "address": "111, boulevard des Laurentides, bureau 101, Pont-Viau, Laval, QC, H7G 2T2",
     "hours": "Voir site web"
+  },
+  {
+    "id": "union-des-producteurs-agricoles-mtg",
+    "name": "Union Des Producteurs Agricoles",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 679-0530",
+    "description": "Association professionnelle.* Répertoire d'emploi dans le domaine agricole: cliquer ici* L'U: revue de L'UPA.* Chroniques juridiques et dossiers thématiques.* Application Mangeons local: repérer facilement les fermes où l'on trouve des kiosques de vente.* Action collective et revendication.* Contrôle l'accès à la profession.* Promotion, défense et développement des intérêts professionnels, économiques, sociaux et moraux des membres. | Clientèle: producteur·rice·s agricoles et forestier·ère·s, grand public | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.upa.qc.ca",
+    "address": "555, boulevard Roland-Therrien, bureau 100, Longueuil, Montérégie, QC, J4H 3Y9",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "bc-shelter-vancouver",
@@ -34199,6 +43765,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "bureau: lundi au vendredi 9h00 à 17h00, rencontres en soirée sur rendez-vous"
   },
   {
+    "id": "unit-de-m-decine-familiale-charl-mtg",
+    "name": "Unité De Médecine Familiale Charles Lemoyne",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Lambert",
+    "province": "QC",
+    "phone": "450 466-5630",
+    "description": "Services médicaux avec et sans rendez-vous pour la clientèle inscrite.* Contraception et contraception orale d'urgence.* Récupération et distribution de matériel d'injection.* Suivi de grossesse et accouchement.* Visite à domicile pour personne en perte d'autonomie.* Traitement de dépendance aux opiacés.* Soins en fin de vie.* Salle d'allaitement. | Territoire: Montérégie | Statut: organisme parapublic",
+    "website": "santemonteregie.qc.ca/installations/gmf-u-charles-le-moyne",
+    "address": "299, boulevard Sir Wilfrid Laurier, bureau 201, Saint-Lambert, Montérégie, QC, J4R 2L1",
+    "hours": "sur rendez-vous: lundi au jeudi 8h00 à 20h00, vendredi 8h00 à 19h00, samedi, dimanche et jours fériés: 9h00 à 13h30"
+  },
+  {
     "id": "unite-point-de-depart-jol",
     "name": "Unité Point de Départ",
     "category": "social",
@@ -34209,6 +43788,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "• Centre de jour et centre de dépannage.• Groupe d'entraide pour le maintien de l'abstinence et de la sobriété.• Rencontres individuelles.• Soutien, accompagnement et références pour toutes dépendances.• Prévention de la rechute.• Refuge lors des Nuits très froides. | Clientèle: services et activités: personnes de 18 ans et plus ayant une problématique de dépendance (toutes les dépendances), leurs proches, centre de jour: grand public | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
     "address": "220, rue Lajoie Sud, Joliette, Lanaudière, QC, J6E 5L2",
     "hours": "lundi au vendredi 8h00 à 15h00, nuits très froides: 22h00 à 6h00"
+  },
+  {
+    "id": "universit-de-sherbrooke-clinique-mtg",
+    "name": "Université De Sherbrooke - Clinique De Médiation",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 463-1835",
+    "description": "Service de médiation offert par des étudiant·e·s au 2e cycle du programme de prévention et règlement des différends.* Processus volontaire et flexible dans un cadre privé et confidentiel.* Séances cadrées par des personnes médiatrices neutres et impartiales qui aident les personnes en conflit à dialoguer, à clarifier leurs points de vue.* Accompagnement dans l'expression des besoins et intérêts de chacun·e.* Exploration des solutions afin de parvenir à une entente mutuellement satisfaisante. | Clientèle: grand public, entreprises, organismes, excluant les situations nécessitant une intervention des services sociaux et de santé auprès d'un·e proche | Territoire: Grand Montréal | Statut: organisme à but non lucratif",
+    "website": "www.usherbrooke.ca/clinique-mediation",
+    "address": "150, place Charles-Le Moyne, Longueuil, Montérégie, QC, J4K 0A8",
+    "hours": "Voir site web"
   },
   {
     "id": "universit-du-qu-bec-en-outaouais-out",
@@ -34222,6 +43814,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://uqo.ca/cliniquejuridique",
     "address": "283, boulevard Alexandre-Taché, bureau F2025, Gatineau, Outaouais, QC, J9A 1L8",
     "hours": "lundi et mercredi 8h30 à 11h30 et 12h30 à 15h30"
+  },
+  {
+    "id": "universit-du-sherbrooke-campus-d-mtg",
+    "name": "Université Du Sherbrooke - Campus De Longueuil",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "1 888 463-1835",
+    "description": "Établissement public d'enseignement de niveau universitaire spécialisé dans la formation à temps partiel.* Programmes d'études de 1er, 2e et 3e cycle.* Séminaires de perfectionnement.* Services de psychologie et d'orientation.* Reconnaissance des acquis.* Recherche et développement.* Centre sportif.* Bibliothèque.* Université du Troisième Âge. | Clientèle: grand public | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "usherbrooke.ca/longueuil",
+    "address": "150, place Charles-Le Moyne, Longueuil, Montérégie, QC, J4K 0A8",
+    "hours": "lundi au vendredi 7h00 à 23h00, samedi et dimanche 7h00 à 18h00"
   },
   {
     "id": "vaisseau-d-or-des-moulins-le-trb",
@@ -34276,6 +43881,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "varennes-ville-mtg",
+    "name": "Varennes - Ville",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Varennes",
+    "province": "QC",
+    "phone": "450 652-9888",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier de collecte des matières résiduelles: www.ville.varennes.qc.ca/services/environnement/matieres-residuelles* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système automatisés de notification d'urgence.* Activités récréatives et sportives: baseball, hockey, accès direct au fleuve Saint-Laurent, le fleuve à vélo, camps de jour, etc.* Événements et festivités: concert de Noël, journées de la culture, les veillés du jeudi, cinéma en plein air, etc.* Vente-débarras printanière.* Parc canin Entre Quatre Pattes.* Bibliothèque, parcs et sites d'activités, centre sportif.* Complexe aquatique et programme de formation de sauveteur et de premiers soins.* Répertoire des organismes et portail bénévole en ligne. | Clientèle: grand public | Territoire: Varennes | Statut: organisme municipal",
+    "website": "ville.varennes.qc.ca",
+    "address": "175, rue Sainte-Anne, Varennes, Montérégie, QC, J3X 1T5",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h15 à 16h30"
+  },
+  {
+    "id": "vaudreuil-dorion-ville-mtg",
+    "name": "Vaudreuil-Dorion - Ville",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-3371",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, Hydro Westmount, changement d'adresse, etc.* Calendrier des collectes des matières résiduelles: www.ville.vaudreuil- dorion.qc.ca/fr/environnement/dechets-et-recuperation/collectes-et-horaires * Écocentre.* Subvention pour l'achat de produits réutilisables: couches lavables, produits hygiéniques durable.* Subvention pour actions environnementales: vélos et accessoires, toilettes à faible débit, composteurs, etc.* Commissaire à l'assermentation.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système de notification d'urgence.Loisirs* Centre multisports André-Chagnon.* Embarcation nautiques.* Installations extérieurs: piscine, patinoires, parcs, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Vaudreuil-Dorion | Statut: organisme municipal",
+    "website": "www.ville.vaudreuil-dorion.qc.ca/fr",
+    "address": "2000, rue Émile-Bouchard, Vaudreuil-Dorion, Montérégie, QC, J7V 1A5",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h45, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "vaudreuil-sur-le-lac-municipalit-mtg",
+    "name": "Vaudreuil-Sur-Le-Lac - Municipalité",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "L'île-Cadieux",
+    "province": "QC",
+    "phone": "450 455-1133",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, etc.* Collectes des matières résiduelles.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.?* Installations extérieurs: piscine, patinoires, parcs, etc.* Subvention pour l'abonnement à la bibliothèque de Vaudreuil-Dorion.* Location de salles. | Clientèle: grand public | Territoire: Vaudreuil-sur-le-Lac | Statut: organisme municipal",
+    "website": "www.vsll.ca",
+    "address": "44, rue de l'Église, L'île-Cadieux, Montérégie, QC, J7V 8P3",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "vent-dans-les-lettres-le-out",
     "name": "Vent Dans Les Lettres (Le)",
     "category": "social",
@@ -34287,6 +43931,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.ventdansleslettres.ca",
     "address": "797, rue Jacques-Cartier, Gatineau, Outaouais, QC, J8T 2W1",
     "hours": "lundi au jeudi 8h00 à 16h00"
+  },
+  {
+    "id": "vents-d-espoir-de-la-vall-e-du-s-mtg",
+    "name": "Vents D'Espoir De La Vallée Du Saint-Laurent",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Rémi",
+    "province": "QC",
+    "phone": "450 992-0512",
+    "description": "Centre d'activités pour personnes vivant avec un traumatisme crânien.* Intégration sociale.* Socialisation.* Activité physique. | Clientèle: personnes de 18 à 55 ans vivant avec un traumatisme crânien ou une déficience physique Capacité: 15 personnes par jour | Territoire: MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Les Jardins-de- Napierville, MRC Roussillon, MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "ventsdespoir.org",
+    "address": "105, rue Lachapelle Est, Saint-Rémi, Montérégie, QC, J0L 2L0",
+    "hours": "centre de jour: lundi, mardi et jeudi 8h30 à 16h00, bureau: lundi au jeudi 8h00 à 16h00"
+  },
+  {
+    "id": "verch-res-ville-mtg",
+    "name": "Verchères - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Verchères",
+    "province": "QC",
+    "phone": "450 583-3307",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Territoire: Verchères | Statut: organisme municipal",
+    "website": "www.ville.vercheres.qc.ca",
+    "address": "581, route Marie-Victorin, Verchères, Montérégie, QC, J0L 2R0",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "via-l-anse-mtg",
+    "name": "Via L'Anse",
+    "category": "family",
+    "subcategory": "Violence et maltraitance",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 370-3200",
+    "description": "Intervention auprès des personnes à risque de comportements violents en situation familiale.* Prévention de la violence conjugale et familiale.* Activités de sensibilisation, de recherche et de formation.* Activités d'intervention auprès des personnes ayant des comportements violents.* Suivi de groupe et individuel. | Clientèle: personnes ayant des comportements violents dans leurs relations conjugales et familiales; victimes masculines de violence | Territoire: Vaudreuil-Soulanges, MRC Le Haut-Saint-Laurent, Beauharnois-Salaberry | Statut: organisme à but non lucratif",
+    "website": "vialanse.com",
+    "address": "340, boulevard du Havre, bureau 203, Salaberry-de-Valleyfield, Montérégie, QC, J6S 1S6",
+    "hours": "administration: lundi au vendredi 9h00 à 16h00"
   },
   {
     "id": "tr-garde-vickie-dube",
@@ -34341,6 +44024,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service essentiel Ontario."
   },
   {
+    "id": "vieux-longueuil-arrondissement-mtg",
+    "name": "Vieux-Longueuil - Arrondissement",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 463-7311",
+    "description": "Bureau de la présidence d'arrondissement.* Veille à la mise en place et au maintien d'un milieu de vie qui répond aux besoins des citoyen·ne·s.* Veille à la vitalité économique du territoire.* Service de l'urbanisme. | Territoire: Vieux-Longueuil | Statut: organisme municipal",
+    "website": "www.longueuil.quebec",
+    "address": "300, rue Saint-Charles Ouest, Longueuil, Montérégie, QC, J4H 1E6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h15 à 16h30, été: lundi au jeudi 8h30 à 12h00 et 13h15 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
     "id": "vilavi-centre-de-traitement-des-dep-trb",
     "name": "Vilavi - Centre de Traitement des Dépendances",
     "category": "mentalHealth",
@@ -34390,6 +44086,58 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Logements subventionnés pour personnes aînées autonomes.* Activités sociales et récréatives organisées pour les résident·e·s: musique à l'occasion, bingo, sac de sable, cartes, darts, exercises (coquille pour exercices), fêtes des résidents ouvertes aux familles, etc. | Clientèle: personnes ainées autonomes de 65 ans et plus, logements subventionnés: personnes aînées avec un revenu inférieur à 39 000$ et moins de 100 000$ en actifs Capacité: 22 | Territoire: Outaouais | Statut: organisme à but non lucratif",
     "address": "74, chemin du Pont, Val-des-Monts, Outaouais, QC, J8N 0L1",
     "hours": "lundi au vendredi 9h00 à 16h00, samedi et dimanche sur appel"
+  },
+  {
+    "id": "vision-inter-cultures-mtg",
+    "name": "Vision Inter-Cultures",
+    "category": "immigration",
+    "subcategory": "Immigration et communautés culturelles",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-6725",
+    "description": "* Sensibilisation et information sur les relations interculturelles.* Soutien auprès des familles, des écoles et des personnes issues de l'immigration.* Formation pour les personnes intervenantes du milieu. | Clientèle: jeunes de 5 à 17 ans, leurs familles, familles et personnes immigrantes | Territoire: Longueuil, Brossard, Saint-Lambert, Greenfield Park, Saint-Hubert | Statut: organisme à but non lucratif",
+    "website": "visionintercultures.com",
+    "address": "2255, rue Cartier, bureau 60, Longueuil, Montérégie, QC, J4K 4G1",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "vision-travail-vaudreuil-mtg",
+    "name": "Vision Travail - Vaudreuil",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 455-5150",
+    "description": "* Aide à la recherche d'emploi: bilan des compétences, techniques de recherche, préparation à l'entrevue.* Ateliers de groupe et rencontres individuelles. | Clientèle: personnes de 40 ans et plus qui souhaitent réintégrer le marché du travail, employeur·se·s | Territoire: MRC Vaudreuil-Soulanges | Statut: organisme à but non lucratif",
+    "website": "www.visiontravail.ca",
+    "address": "418, avenue Saint-Charles, bureau 209, Vaudreuil-Dorion, Montérégie, QC, J7V 2N1",
+    "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "vision-travail-mtg",
+    "name": "Vision-Travail",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Salaberry-de-Valleyfield",
+    "province": "QC",
+    "phone": "450 371-9533",
+    "description": "Conseils professionnels.* Centre de documentation.* Postes Internet et téléphoniques.* Secrétariat.* Aide à la recherche d'emploi individuelle et en groupe.* Initiative ciblée pour les travailleur·se·s expérimenté·e·s de 55 à 64 ans: aide individuelle, formation d'appoint en informatique et anglais. | Clientèle: personnes de 40 ans et plus qui souhaitent réintégrer le marché du travail, employeur·se·s | Territoire: MRC Beauharnois-Salaberry, MRC Le Haut-Saint-Laurent, MRC Vaudreuil-Soulanges, agglomération de Longueuil | Statut: organisme à but non lucratif",
+    "website": "www.visiontravail.ca",
+    "address": "19, rue du Marché, Salaberry-de-Valleyfield, Montérégie, QC, J6T 1P1",
+    "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00 sur rendez-vous seulement"
+  },
+  {
+    "id": "vision-travail-longueuil-mtg",
+    "name": "Vision-Travail - Longueuil",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 651-8747",
+    "description": "Programmes spécialisés en transition de carrière et bilan professionnel.* Ateliers divers: transfert de compétences, processus de changement, prise de décision et mise en action vers un objectif réaliste.* Sujets abordés: perte d'emploi, épuisement professionnel, attitudes kamikazes, gestion du stress.* Formule tout inclus: tests et interprétation, CV sur mesure et lettre de présentation, simulation d'entrevues performantes, base de données d'entreprises, activités de réseautage, utilisation des médias sociaux, négociation de salaire, compréhension du marché du travail d'aujourd'hui. | Clientèle: personnes de 40 ans et plus cherchant un emploi, programme spécialisé pour cadres et professionnel·le·s | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "visiontravail.ca",
+    "address": "125, chemin du Coteau-Rouge, bureau 201, Longueuil, Montérégie, QC, J4J 1W7",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
   },
   {
     "id": "voix-et-solidarit-des-aidants-na-out",
@@ -34642,6 +44390,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "7 jours, 9h00 à 17h00"
   },
   {
+    "id": "z-bre-rouge-le-mtg",
+    "name": "Zèbre Rouge (Le)",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Vaudreuil-Dorion",
+    "province": "QC",
+    "phone": "450 424-2422",
+    "description": "Entreprise d'insertion socioprofessionnelle.* Vente et réparation de vélos.* Vélo/Cité: location journalière de vélos. | Clientèle: insertion socioprofessionnelle: jeunes adultes vivant avec des problèmes de santé mentale ou des limitations intellectuelles ou physiques | Territoire: MRC Vaudreuil-Soulanges et les environs | Statut: organisme à but non lucratif",
+    "website": "www.zebrerouge.org",
+    "address": "115, route De Lotbinière, Vaudreuil-Dorion, Montérégie, QC, J7V 2T7",
+    "hours": "hiver: mardi au vendredi 9h00 à 16h00, été: mardi au vendredi 9h00 à 16h00, samedi 10h00 à 14h00"
+  },
+  {
     "id": "z-panouis-les-lav",
     "name": "Zépanouis (Les)",
     "category": "family",
@@ -34870,6 +44631,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 7h00 à 16h00, samedi 10h00 à 16h00"
   },
   {
+    "id": "crit-t-t-de-saint-hubert-l-mtg",
+    "name": "Écrit Tôt De Saint-Hubert (L')",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 443-1411",
+    "description": "* Accompagnement des adultes et des familles dans les apprentissages de base en lecture, écriture et calcul.* Prévention de l'analphabétisme.* Lutte au décrochage scolaire.* Ateliers d'alphabétisation.* L'École des parents: formation de base, de socialisation et de recherche d'outils pour le soutien à la réussite scolaire des enfants.* Lecteurs à domicile: programme visant à donner le goût de la lecture chez les jeunes enfants éprouvant des difficultés scolaires.* Activités éducatives.* Sensibilisation de la population.* Friperie. | Clientèle: parents et enfants éprouvant des difficultés scolaires, personnes analphabètes | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "www.ecritot.ca",
+    "address": "4050, boulevard Grande Allée, Longueuil, Montérégie, QC, J4T 2W2",
+    "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h30"
+  },
+  {
+    "id": "duc-tout-mtg",
+    "name": "Éduc À Tout",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Marieville",
+    "province": "QC",
+    "phone": "450 460-5433",
+    "description": "* Alphabétisation.* Francisation.* Préparation aux tests d'équivalence de 3e et 5e secondaire.* Préparation au test de français pour personnes immigrantes.* Soutien à la persévérance scolaire. | Clientèle: personnes de 6 à 70 ans | Territoire: Carignan, Chambly, Marieville, Richelieu, Rougemont, Saint-Césaire, Saint-Hubert, Saint- Hyacinthe, Saint-Mathias-sur-Richelieu, Saint-Paul d'Abbotsford, Sainte-Angèle-de-Monnoir | Statut: organisme à but non lucratif",
+    "website": "educ-a-tout.ca",
+    "address": "146, chemin du Ruisseau-Barré, Marieville, Montérégie, QC, J3M 1P2",
+    "hours": "lundi au vendredi 9h00 à 16h00, sur rendez-vous en soirée"
+  },
+  {
+    "id": "duc-tout-chambly-mtg",
+    "name": "Éduc À Tout - Chambly",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Marieville",
+    "province": "QC",
+    "phone": "450 460-5433",
+    "description": "* Alphabétisation.* Francisation.* Préparation aux tests d'équivalence de 3e et 5e secondaire.* Préparation au test de français pour personnes immigrantes.* Initiation à la technologie.* Soutien à la persévérance scolaire. | Clientèle: personnes de 6 à 70 ans | Territoire: Carignan, Chambly, Marieville, Richelieu, Rougemont, Saint-Césaire, Saint-Hubert, Saint- Hyacinthe, Saint-Mathias-sur-Richelieu, Saint-Paul d'Abbotsford, Sainte-Angèle-de-Monnoir | Statut: organisme à but non lucratif",
+    "website": "educ-a-tout.ca",
+    "address": "2000, avenue Bourgogne, Marieville, Montérégie, QC, J3M 1P2",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "duc-tout-saint-c-saire-mtg",
+    "name": "Éduc À Tout - Saint-Césaire",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-Césaire",
+    "province": "QC",
+    "phone": "450 460-5433",
+    "description": "* Alphabétisation.* Francisation.* Préparation aux tests d'équivalence de 3e et 5e secondaire.* Préparation au test de français pour personnes immigrantes.* Initiation à la technologie.* Soutien à la persévérance scolaire. | Clientèle: personnes de 6 à 70 ans | Territoire: Carignan, Chambly, Marieville, Richelieu, Rougemont, Saint-Césaire, Saint-Hubert, Saint- Hyacinthe, Saint-Mathias-sur-Richelieu, Saint-Paul d'Abbotsford, Sainte-Angèle-de-Monnoir | Statut: organisme à but non lucratif",
+    "website": "www.educ-a-tout.ca",
+    "address": "2002, avenue de l'Union, Saint-Césaire, Montérégie, QC, J0L 1T0",
+    "hours": "lundi au vendredi 9h00 à 16h00, sur rendez-vous"
+  },
+  {
     "id": "eglise-presbyterienne-st-columba-by-pcl",
     "name": "Église Presbytérienne St. Columba-By-The-Lake (l) - Programme Alimentaire",
     "category": "food",
@@ -34896,6 +44709,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "variable"
   },
   {
+    "id": "lan-des-jeunes-l-mtg",
+    "name": "Élan Des Jeunes (L')",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Châteauguay",
+    "province": "QC",
+    "phone": "450 844-3835",
+    "description": "Hébergement pour jeunes qui vivent ou sont à risque de vivre une situation d'itinérance.* Présence de l'équipe 24/7.* Logement et nourriture.* Durée maximale de 3 mois.* Accompagnement dans diverses démarches: scolarisation, insertion professionelle, recherche de logement, stabilisation de la situation, etc.* Suivi post-hébergement pour les jeunes qui ont eu accès aux services d'hébergement. | Clientèle: personnes de 16 à 22 ans en situation d'itinérance ou à risque de le devenir à la suite d'une perte de logement ou de problèmes familiaux, faisant librement leur demande d'hébergement et ayant une volonté à travailler sur leurs objectifs Capacité: 6 lits | Territoire: CSSS Jardins-Roussillon: Candiac, Châteauguay, Delson, Hemmingford Canton et Village, La Prairie, Léry, Mercier, Napierville, Saint-Bernard-de-Lacolle, Saint-Constant, Saint-Cyprien-de- Napierville, Sainte-Catherine, Sainte-Clotilde, Saint-Édouard, Sainte-Martine, Saint-Isidore, Saint-Jacques-le- Mineur, Saint-Mathieu, Saint-Michel, Saint-Patrice-de-Sherrington, Saint-Philippe, Saint-Rémi, Saint-Urbain- Premier, Kahnawake | Statut: organisme à but non lucratif",
+    "website": "lelandesjeunes.org",
+    "address": "155, rue de Gaspé Est, Châteauguay, Montérégie, QC, J6J 2N9",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "lections-canada-out",
     "name": "Élections Canada",
     "category": "social",
@@ -34907,6 +44733,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.elections.ca",
     "address": "30, rue Victoria, Gatineau, Outaouais, QC, J8X 4H7",
     "hours": "lundi au vendredi 9h00 à 24h00"
+  },
+  {
+    "id": "missaire-mtg",
+    "name": "Émissaire",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 651-9229",
+    "description": "* Information et référence.* Promotion de la santé sexuelle.* Ateliers d'éducation sexuelle.* Soutien et entraide.* Intervention individuelle.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Distribution de Naloxone. | Clientèle: personnes vivant avec le VIH-sida et leurs proches, jeunes de 16 à 29 ans fréquentant les carrefours jeunesse-emploi (CJE) et l'éducation aux adultes, personnes fréquentant les maisons de thérapie en toxicomanie, femmes travailleuses du sexe, femmes victimes de violence sexuelle | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "emissaire.ca",
+    "address": "1005, boulevard Curé-Poirier Ouest, bureau 101, Longueuil, Montérégie, QC, J4K 2E2",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "picerie-sociale-pi-soc-mtg",
+    "name": "Épicerie Sociale Épi'Soc",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 347-1172",
+    "description": "Dépannage alimentaire sous forme d'épicerie sociale.* Aliments offerts à prix réduit sur une base régulière.* Pains, pâtisseries et sandwichs à aller chercher sur place une fois par semaine.* Écoute, soutien, analyse des besoins et du budget, référence et suivi pour l'amélioration de la qualité de vie. | Clientèle: personnes et familles à faible revenu | Territoire: Saint-Jean-sur-Richelieu: secteurs Iberville et Saint-Athanase, Mont Saint-Grégoire | Statut: organisme à but non lucratif",
+    "website": "cabiberville.org",
+    "address": "290, avenue des Conseillers, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 1Z8",
+    "hours": "mardi et mercredi 13h00 à 16h00, jeudi et vendredi 8h30 à 11h30"
   },
   {
     "id": "equijustice-lanaudiere-sud-rep",
@@ -34935,6 +44787,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "variable"
   },
   {
+    "id": "quijustice-richelieu-yamaska-mtg",
+    "name": "Équijustice Richelieu-Yamaska",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Hyacinthe",
+    "province": "QC",
+    "phone": "450 773-8940",
+    "description": "Justice réparatrice et médiation citoyenne.* Gestion et application des mesures prévues par la Loi sur le système de justice pénale pour adolescent·e·s (LSJPA).* Gestion et application du Programme de mesures de rechange général (PMRG).* Gestion et application des mesures de travaux compensatoires pour adolescent·e·s (14-17 ans) prévues par le Code de procédure pénale du Québec.* Médiation citoyenne: accompagnement dans le dénouement des conflits. | Clientèle: adolescent·e·s, organismes, médiation: citoyen·ne·s | Territoire: Acton Vale, Beloeil, Béthanie, La Présentation, McMasterville, Mont-Saint-Hilaire, Otterburn Park, Roxton, Roxton Falls, Saint-André-d'Acton, Saint-Antoine-sur-Richelieu, Saint-Barnabé-Sud, Saint-Basile-le-Grand, Saint-Bernard-de-Michaudville, Saint-Bruno-de-Montarville, Saint-Charles-sur-Richelieu, Saint-Damase, Saint-Denis-sur-Richelieu, Saint-Dominique, Upton, Saint-Hugues, Saint-Hyacinthe, Saint-Jude, Saint-Liboire, Saint-Louis, Saint-Marc-sur-Richelieu, Saint-Marcel, Saint-Mathieu-de-Beloeil, Saint-Nazaire- d'Acton, Saint-Pie, Saint-Simon, Saint-Théodore-d'Acton, Saint-Valérien, Sainte-Christine, Sainte-Hélène-de- Bagot, Sainte-Madeleine | Statut: organisme à but non lucratif",
+    "website": "equijustice.ca",
+    "address": "450, avenue Saint-Joseph, Saint-Hyacinthe, Montérégie, QC, J2S 8K5",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "quijustice-rive-sud-mtg",
+    "name": "Équijustice Rive-Sud",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 647-9024",
+    "description": "Accompagnement et soutien des personnes concernées par le processus de réparation à travers l'application de mesures prévues par la loi.* Médiation citoyenne qui offre la possibilité de participer activement dans le processus.* Formation et soutien en gestion de conflits en milieux scolaires et communautaires.* Projet parenthèse au palais de justice de Longueuil: accompagnement et soutien pour les personnes envisageant d'effectuer une requête d'hospitalisation involontaire. | Clientèle: jeunes de 12 à 18 ans ayant commis un délit, adultes judiciarisé·e·s, victimes de crimes, citoyen·ne·s, communautés | Territoire: Montérégie | Statut: organisme à but non lucratif",
+    "website": "equijustice.ca/fr/membres/rive-sud",
+    "address": "620, Chemin du Coteau-Rouge, Longueuil, Montérégie, QC, J4J 1Y9",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00"
+  },
+  {
     "id": "equipe-entreprise-l-drv",
     "name": "Équipe Entreprise (l')",
     "category": "food",
@@ -34946,6 +44824,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.equipeentreprise.org",
     "address": "1375, route Transcanadienne, bureau 100, Dorval, Montréal, QC, H9P 2W8",
     "hours": "lundi au jeudi 9h00 à 15h30"
+  },
+  {
+    "id": "quipe-service-quartier-saint-vin-mtg",
+    "name": "Équipe Service Quartier Saint-Vincent-De-Paul",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Longueuil",
+    "province": "QC",
+    "phone": "450 646-8817",
+    "description": "* Comptoir alimentaire.* Friperie.* Récupération d'articles de maison, articles de cuisine, vêtements et livres.* Distribution de fournitures scolaires pour les personnes bénéficiant déjà d'un autre service offert par l'organisme.* Paniers de Noël pour les bénéficiaires déjà inscrit·e·s. | Clientèle: personnes à faible revenu | Territoire: Longueuil: secteur Saint-Vincent-de-Paul | Statut: organisme à but non lucratif",
+    "website": "www.equipeservicesvp.com",
+    "address": "2027, rue Daniel, Longueuil, Montérégie, QC, J4J 5M1",
+    "hours": "friperie et dons d'articles: lundi à mercredi 9h00 à 11h30 et 13h00 à 15h30, jeudi 13h00 à 15h30, autres services: sur rendez-vous"
   },
   {
     "id": "quipe-soutien-famille-out",
@@ -34985,6 +44876,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "letape.org/laval",
     "address": "1435, boulevard Saint-Martin Ouest, bureau 400, Chomedey, Laval, QC, H7S 2C6",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "toile-l-p-diatrie-sociale-en-com-mtg",
+    "name": "Étoile (L') - Pédiatrie Sociale En Communauté Du Haut-Richelieu",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Jean-sur-Richelieu",
+    "province": "QC",
+    "phone": "450 346-7288",
+    "description": "Centre de pédiatrie sociale.* Suivis médicaux, psychosociaux et promotion de la protection des droits des enfants.* Thérapies pour les traumas multiples: zoothérapie, art-thérapie.* Jumelage Grands-Amis.* Promotion des saines habitudes de vie.* Ateliers de groupe pour les enfants. | Clientèle: enfants vivant des conditions de vie difficiles de 0 à 18 ans et n'ayant pas de médecin de famille | Territoire: Lacolle, Clarenceville, Noyan, Saint-Jean-sur-Richelieu: une partie du secteur Saint-Jean entre la rue Macdonald et le boulevard Gouin et entre la rivière Richelieu et le chemin du Grand Bernier Nord, une partie du secteur Iberville, Henryville | Statut: organisme à but non lucratif",
+    "website": "letoilehr.org",
+    "address": "212, rue Saint-Jacques, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2K7",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "tre-et-devenir-out",
