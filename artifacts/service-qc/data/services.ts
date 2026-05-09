@@ -111,9 +111,10 @@ export const CATEGORY_LABELS: Record<Category, string> = {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // AUTO-GENERATED from services-data.json (source of truth = API DB seed).
-// Do NOT hand-edit this list. Regenerate with scripts/src/regen-bundle.ts when
-// services-data.json changes. Keeping IDs in sync with the API DB is critical:
-// otherwise mobile clients render stale services that 404 on /rate, /track, etc.
+// Do NOT hand-edit this list. Regenerate with:
+//   pnpm --filter @workspace/scripts run regen-mobile-bundle
+// Keeping IDs in sync with the API DB is critical: otherwise mobile clients
+// render stale services that 404 on /rate, /track, /wait, etc.
 // ─────────────────────────────────────────────────────────────────────────────
 const __SERVICES_FROM_API: Service[] = [
   {
@@ -518,15 +519,16 @@ const __SERVICES_FROM_API: Service[] = [
   },
   {
     "id": "accueil-bonneau-tr",
-    "name": "Accueil Bonneau — Distribution alimentaire",
+    "name": "Accueil Bonneau",
     "category": "food",
     "subcategory": "Banque alimentaire",
-    "city": "Trois-Rivières",
+    "city": "Montréal",
     "province": "QC",
-    "phone": "819-374-5000",
-    "description": "Distribution alimentaire gratuite et repas communautaires pour les personnes sans-abri et en situation précaire à Trois-Rivières. Accueil inconditionnel.",
-    "address": "1, rue Fusey, bureau 101, Trois-Rivières, QC G8T 2T2",
-    "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution.",
+    "phone": "514-845-3906",
+    "description": "Distribution alimentaire gratuite et repas communautaires pour les personnes sans-abri et en situation précaire à Montréal. Accueil inconditionnel.",
+    "website": "https://www.accueilbonneau.com/",
+    "address": "427 rue de la Commune Est, Montréal, QC H2Y 1J4",
+    "hours": "Lun-ven 9h-11h dépannage alimentaire (sans rendez-vous)",
     "coordinates": {
       "lat": 46.3482,
       "lng": -72.5552
@@ -562,186 +564,6 @@ const __SERVICES_FROM_API: Service[] = [
     "coordinates": {
       "lat": 46.3508,
       "lng": -72.5498
-    }
-  },
-  {
-    "id": "assurance-aviva",
-    "name": "Aviva Canada",
-    "category": "social",
-    "subcategory": "Assurance automobile",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-866-692-8482",
-    "description": "Assureur de dommages présent au Québec via un réseau de courtiers. Produits auto, habitation et assurance spécialisée. Déclaration de sinistre en ligne ou par téléphone 24h/24.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. En ligne 24h/24 pour certains services.",
-    "isUrgent": true,
-    "isProvinceWide": true,
-    "coordinates": {
-      "lat": 45.5048,
-      "lng": -73.5772
-    }
-  },
-  {
-    "id": "assurance-belairdirect",
-    "name": "belairdirect",
-    "category": "social",
-    "subcategory": "Assurance automobile",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-888-270-3595",
-    "description": "Assureur en ligne leader au Québec. Soumission et gestion de police 100% numérique. Assurance auto avec assistance routière incluse, déclaration de sinistre 24h/24 et tarifs compétitifs.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. En ligne 24h/24 pour certains services.",
-    "isUrgent": true,
-    "isProvinceWide": true,
-    "coordinates": {
-      "lat": 45.5048,
-      "lng": -73.5772
-    }
-  },
-  {
-    "id": "assurance-beneva",
-    "name": "Beneva Assurance",
-    "category": "social",
-    "subcategory": "Assurance automobile",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-877-236-3827",
-    "description": "Beneva (fusion de La Capitale et SSQ) est le plus grand assureur québécois. Assurance auto, habitation et vie. Service en ligne 24h/24, gestion des réclamations rapide et application mobile.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. En ligne 24h/24 pour certains services.",
-    "isUrgent": true,
-    "isProvinceWide": true,
-    "coordinates": {
-      "lat": 46.8139,
-      "lng": -71.2082
-    }
-  },
-  {
-    "id": "assurance-cooperators",
-    "name": "Co-operators",
-    "category": "social",
-    "subcategory": "Assurance automobile",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-888-265-6444",
-    "description": "Coopérative d'assurance canadienne. Couvertures auto, habitation et vie au Québec. Conseillers locaux dans plusieurs villes, programme de fidélité et accompagnement personnalisé en cas de sinistre.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. En ligne 24h/24 pour certains services.",
-    "isUrgent": true,
-    "isProvinceWide": true,
-    "coordinates": {
-      "lat": 45.5048,
-      "lng": -73.5772
-    }
-  },
-  {
-    "id": "assurance-desjardins",
-    "name": "Desjardins Assurances",
-    "category": "social",
-    "subcategory": "Assurance automobile",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-463-7843",
-    "description": "Assurance auto et habitation du Mouvement Desjardins. Accès par les caisses populaires, en ligne ou par téléphone. Programme Ajusto récompense la conduite prudente avec des rabais.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. En ligne 24h/24 pour certains services.",
-    "isUrgent": true,
-    "isProvinceWide": true,
-    "coordinates": {
-      "lat": 45.423,
-      "lng": -73.561
-    }
-  },
-  {
-    "id": "assurance-industrielle-alliance",
-    "name": "iA Assurance",
-    "category": "social",
-    "subcategory": "Assurance automobile",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-463-6236",
-    "description": "Industrielle Alliance (iA Groupe financier) offre assurance auto, habitation et vie au Québec. Siège social à Québec, réseau de conseillers partout dans la province et plateforme numérique complète.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. En ligne 24h/24 pour certains services.",
-    "isUrgent": true,
-    "isProvinceWide": true,
-    "coordinates": {
-      "lat": 46.8139,
-      "lng": -71.2082
-    }
-  },
-  {
-    "id": "assurance-intact",
-    "name": "Intact Assurance",
-    "category": "social",
-    "subcategory": "Assurance automobile",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-866-464-2003",
-    "description": "Plus grand assureur de dommages au Canada. Assurance auto et habitation au Québec avec service de réclamation 24h/24, réseau de réparateurs certifiés et application Intact MaVoiture.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. En ligne 24h/24 pour certains services.",
-    "isUrgent": true,
-    "isProvinceWide": true,
-    "coordinates": {
-      "lat": 45.5048,
-      "lng": -73.5772
-    }
-  },
-  {
-    "id": "assurance-promutuel",
-    "name": "Promutuel Assurance",
-    "category": "social",
-    "subcategory": "Assurance automobile",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-888-466-6883",
-    "description": "Assureur mutuel québécois offrant la couverture auto, habitation et entreprise. Réseau de 17 caisses régionales partout au Québec. Déclaration de sinistre disponible 24h/24.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. En ligne 24h/24 pour certains services.",
-    "isUrgent": true,
-    "isProvinceWide": true,
-    "coordinates": {
-      "lat": 46.8139,
-      "lng": -71.2082
-    }
-  },
-  {
-    "id": "assurance-td",
-    "name": "TD Assurance",
-    "category": "social",
-    "subcategory": "Assurance automobile",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-888-788-0839",
-    "description": "Assurance auto et habitation offerte aux membres de groupes affiliés et clients TD. Service de réclamation 24h/24, voiture de remplacement et protection contre les accidents sans faute.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. En ligne 24h/24 pour certains services.",
-    "isUrgent": true,
-    "isProvinceWide": true,
-    "coordinates": {
-      "lat": 45.5048,
-      "lng": -73.5772
-    }
-  },
-  {
-    "id": "assurance-wawanesa",
-    "name": "Wawanesa Assurance",
-    "category": "social",
-    "subcategory": "Assurance automobile",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-844-929-2637",
-    "description": "Assureur mutuel reconnu pour ses prix compétitifs en assurance auto et habitation. Vendu via courtiers agréés au Québec. Service en français, assistance routière et gestion des réclamations réactive.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. En ligne 24h/24 pour certains services.",
-    "isUrgent": true,
-    "isProvinceWide": true,
-    "coordinates": {
-      "lat": 45.5048,
-      "lng": -73.5772
     }
   },
   {
