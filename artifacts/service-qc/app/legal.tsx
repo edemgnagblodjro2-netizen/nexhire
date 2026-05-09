@@ -227,6 +227,9 @@ export default function LegalScreen() {
             AttenteZéro — Application de services communautaires du Québec
           </Text>
           <Text style={[styles.footerNoteText, { color: colors.mutedForeground }]}>
+            Un produit de CivicAI — Numéro d'entreprise du Québec (NEQ) : 2280791601
+          </Text>
+          <Text style={[styles.footerNoteText, { color: colors.mutedForeground }]}>
             Ces documents sont régis par les lois du Québec et du Canada.
           </Text>
         </View>

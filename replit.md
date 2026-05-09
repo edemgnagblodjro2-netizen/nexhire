@@ -3,6 +3,7 @@ A mobile application connecting vulnerable individuals with community and social
 
 ## Société
 - **CivicAI** — Entreprise de services informatiques spécialisée en intelligence artificielle appliquée aux services publics et privés.
+- **NEQ (Numéro d'entreprise du Québec)** : 2280791601 — à afficher dans les mentions légales mobile + footer admin (déjà fait).
 - **AttenteZéro** est un produit de CivicAI (produit citoyen gratuit, modèle B2G).
 - Domaine produit : `attentezero.ca` (DNS Cloudflare, alias email actifs, pas encore de site web).
 - À prévoir post-launch : site vitrine `attentezero.ca` (one-pager produit) + éventuellement site corporate `civicai.ca`/`.com` pour démarchage B2G.

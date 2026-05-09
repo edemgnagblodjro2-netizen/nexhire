@@ -81,6 +81,8 @@ export default function Layout({
             © {new Date().getFullYear()} CivicAI
             <br />
             <span className="text-gray-300">AttenteZéro est un produit CivicAI</span>
+            <br />
+            <span className="text-gray-300">NEQ : 2280791601</span>
           </p>
         </div>
       </aside>
