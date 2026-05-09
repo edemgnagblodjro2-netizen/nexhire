@@ -629,6 +629,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, été: vendredi 8h30 à 13h00, horaires spécifiques pour certaines activités"
   },
   {
+    "id": "accorderie-de-la-manicouagan-l-cn",
+    "name": "Accorderie de la Manicouagan (L')",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "501-581-3263",
+    "description": "Réseau d'échange de services pour les personnes désirant l'amélioration de leurs conditions de vie au plan socioéconomique, utilisant le temps plutôt que l'argent comme monnaie d'échange * échange de ... [Plus] | Clientèle : Le grand public * adolescents et jeunes (14 ans et moins) avec autorisation signée des parents",
+    "website": "http://www.accorderie.ca/manicouagan-accueil",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "accorderie-les-moulins-l-msc",
     "name": "Accorderie les Moulins (l')",
     "category": "social",
@@ -899,6 +912,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Accueil téléphonique : Généralement du lundi au vendredi, entre 9h et 17h.Rencontre en personne sur rendez-vous seulement."
   },
   {
+    "id": "action-autisme-haute-c-te-nord-m-cn",
+    "name": "Action autisme Haute-Côte-Nord Manicouagan",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-2857",
+    "description": "Aider, soutenir et conseiller les personnes autistes et leurs proches. * répit pour les familles * aide aux devoirs * camp de jour estival : activités adaptées et encadrées * activités de loisirs : at ... [Plus] | Clientèle : Les personnes autistes et leurs proches.",
+    "website": "http://www.actionautisme.ca",
+    "address": "313-B Bd la Salle, Baie-Comeau, QC G4Z 2W4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "action-ch-mage-c-te-nord-cn",
+    "name": "Action-Chômage Côte-Nord",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Portneuf-sur-Mer",
+    "province": "QC",
+    "phone": "581-323-1100",
+    "description": "Défense et respect des droits des travailleurs et des travailleuses sans emploi de la Côte-Nord * information et soutien concernant les droits et les revendications * défense concernant les politiques ... [Plus] | Clientèle : Chômeurs",
+    "website": "http://www.actionchomagecotenord.com/",
+    "address": "456b Rue Principale, Portneuf-sur-Mer, QC G0T 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "action-logement-lanaudiere-jol",
     "name": "Action-Logement Lanaudière",
     "category": "social",
@@ -1026,6 +1065,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "adomissile.com",
     "address": "100, rue de la Gare, Saint-Rémi, Montérégie, QC, J0L 2L0",
     "hours": "lundi 16h00 à 21h00, mardi et mercredi 12h00 à 13h00 et 16h00 à 21h00, jeudi 16h00 à 21h00, vendredi 16h00 à 22h30"
+  },
+  {
+    "id": "aguanish-h-tel-de-ville-cn",
+    "name": "Aguanish. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Aguanish",
+    "province": "QC",
+    "phone": "418-533-2323",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque municipale Victor Lachance 418-533-2323",
+    "website": "http://www.aguanish.org",
+    "address": "Aguanish, QC G0G 2Y0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "nu-foodbank-nu",
@@ -1811,6 +1863,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
   },
   {
+    "id": "alliance-des-femmes-l-cn",
+    "name": "Alliance des femmes (L')",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sacré-Coeur",
+    "province": "QC",
+    "phone": "418-236-9132",
+    "description": "Action pour l'amélioration des conditions de vie des femmes * sensibilisation, prévention et information * écoute, aide téléphonique, accompagnement, référence, soutien individuel * promotion de l'int ... [Plus] | Clientèle : Femmes | Âges : 18 an(s) et plus",
+    "address": "108 Rue Principale N, Sacré-Coeur, QC G0T 1Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "alpha-iota-mtg",
     "name": "Alpha Iota",
     "category": "social",
@@ -2014,6 +2078,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "amelys.ca",
     "address": "3323, Grande Allée, Longueuil, Montérégie, QC, J4T 2S9",
     "hours": "8h00 à 16h00"
+  },
+  {
+    "id": "ancrage-baie-comeau-l-cn",
+    "name": "Ancrage Baie-Comeau (L')",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-295-2090",
+    "description": "Soutien et information à la famille et aux proches d'adultes ayant une problématique de santé mentale diagnostiquée ou non * soutien, information et références * écoute téléphonique * interventions ps ... [Plus] | Clientèle : Familles et proches d'une personne adulte vivant ou ayant vécu une problématique de santé mentale diagnostiquée ou non | Âges : 5 an(s) et plus",
+    "website": "http://www.ancragebc.ca",
+    "address": "625 Bd Laflèche #1.801, Baie-Comeau, QC G5C 3R3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "ancre-l-immigration-en-r-gion-mtg",
@@ -2233,6 +2310,30 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "arcencielvs.org",
     "address": "60, rue de l'Église, Vaudreuil-Dorion, Montérégie, QC, J7V 1W4",
     "hours": "bureau: lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "arc-en-son-sept-les-cn",
+    "name": "Arc-En-Son Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Orchestre symphonique de formation, composé de musiciens bénévoles * concerts",
+    "address": "Sept-Îles, Sept-Rivières, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "arc-en-ciel-l-cn",
+    "name": "Arc-en-ciel (L')",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-295-2090 poste 5",
+    "description": "Soutien et entraide aux personnes vivant un deuil suite au décès d'un proche * rencontres de groupe (11 rencontres par session) * cafés-rencontres et autres activités de groupe * rencontres en individ ... [Plus]",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "arche-lanaudiere-l-jol",
@@ -3281,6 +3382,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service essentiel Ontario."
   },
   {
+    "id": "association-communautaire-de-la--cn",
+    "name": "Association communautaire de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-1545",
+    "description": "Représentation de la population anglophone de la région de la Côte-Nord * contribution à la diversité et au dynamisme de la société en participant à la vie active de la communauté francophone * promot ... [Plus] | Clientèle : Anglophones * allophones",
+    "website": "http://quebecnorthshore.org",
+    "address": "1151 Bd Blanche, Baie-Comeau, QC G5C 2C6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-communautaire-de-la--cn-2",
+    "name": "Association communautaire de la Côte-Nord, Succursale de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-3148",
+    "description": "Représentation de la population anglophone de la région de la Côte-Nord * contribution à la diversité et au dynamisme de la société en participant à la vie active de la communauté francophone * promot ... [Plus] | Clientèle : Anglophones * allophones",
+    "website": "http://quebecnorthshore.org",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-de-l-ouest-de-l-ile-pou-pcl",
     "name": "Association de L'Ouest de L'Île pour les Handicapés Intellectuels",
     "category": "social",
@@ -3356,6 +3483,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://fibromyalgielanaudiere.com",
     "address": "41, rue Beaupied, Notre-Dame-des-Prairies, Lanaudière, QC, J6E 1A5",
     "hours": "Lundi au jeudi 9h00 à 16h00, sur rendez-vous"
+  },
+  {
+    "id": "association-de-la-fibromyalgie-e-cn",
+    "name": "Association de la fibromyalgie et de la fatigue chronique Manicouagan | Haute-Côte-Nord",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-2229",
+    "description": "Promotion des intérêts des personnes atteintes de fibromyalgie et de fatigue chronique * aide aux plans physiologique, psychologique et social * éducation du public * soutien et information * activité ... [Plus] | Clientèle : Personnes atteintes de fibromyalgie et de fatigue chronique et ainsi que leurs proches | Âges : 18 an(s) et plus",
+    "website": "https://www.fibromyalgie-manic.com/",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-de-la-protection-de--cn",
+    "name": "Association de la protection de la Rivière Saint-Jean",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Rivière-Saint-Jean",
+    "province": "QC",
+    "phone": "418-949-2457",
+    "description": "Protection et conservation de la Rivière-Saint-Jean * organisation d'activités * pêche au saumon * Pourvoirie de la Haute Saint-Jean : hébergement des pêcheurs * sensibilisation de la population | Clientèle : En fin de semaine 418-949-2255",
+    "website": "http://www.hautesaintjean.com",
+    "address": "Rivière-Saint-Jean, QC G0G 2N0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "association-des-commissions-scolair-drv",
@@ -3436,6 +3589,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 16h00"
   },
   {
+    "id": "association-des-aidants-naturels-cn",
+    "name": "Association des aidants naturels de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-293-1727",
+    "description": "Aide, outils et développement de services améliorant la qualité de vie des aidants naturels de la Côte-Nord * écoute, conseils et soutien téléphonique * rencontres individuelles et de groupe * répit a ... [Plus] | Clientèle : Port-Cartier, Sept-Îles et les Haute cote nord Basse cote nord | Âges : 18 an(s) et plus",
+    "website": "http://www.prochesaidantscote-nord.com",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-artisans-de-ferm-cn",
+    "name": "Association des artisans de Fermont",
+    "category": "social",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "581-231-0131",
+    "description": "Regroupement des artistes et artisans favorisant les moyens de production et de diffusion de leur art à l’échelle locale et régionale * visibilité des œuvres par le biais de deux expositions annuelles ... [Plus] | Clientèle : Le grand public | Âges : 12 an(s) et plus",
+    "address": "Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ab-crea-ab",
     "name": "Association des courtiers immobiliers AB",
     "category": "realestate",
@@ -3448,6 +3626,146 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
     "isProvinceWide": true
+  },
+  {
+    "id": "association-des-c-tiers-de-la-ba-cn",
+    "name": "Association des côtiers de la Basse Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Bonne-Espérance",
+    "province": "QC",
+    "phone": "418-379-2006",
+    "description": "Protection et promotion des intérêts de la population * contribution au développement et à la vitalité de la région | Clientèle : Adultes",
+    "website": "http://coastersassociation.com",
+    "address": "Bonne-Espérance, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-handicap-s-adult-cn",
+    "name": "Association des handicapés adultes de la Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-2393",
+    "description": "Promotion et défense des droits et intérêts des personnes handicapées et leurs parents * activités d'information, d'intégration et de participation dans la communauté * sensibilisation de la populatio ... [Plus] | Clientèle : Personnes handicapées : personnes ayant une déficience intellectuelle (DI), physique (DP) ou un trouble du spectre de l'autisme (TSA)",
+    "website": "http://www.ahacn.org",
+    "address": "625 Bd Laflèche Local 307, Baie-Comeau, QC G5C 1C5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-locataires-de-la-cn",
+    "name": "Association des locataires de la résidence Père Méthot",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-5209",
+    "description": "Implication communautaire des résidents de l'immeuble s'appuyant sur leur potentiel à améliorer leur qualité de vie et à dynamiser leur milieu * accompagnement et suivi communautaire, référence, proje ... [Plus] | Clientèle : Résidents de l'immeuble",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-parents-et-amis--cn",
+    "name": "Association des parents et amis du malade émotionnel de l'est de la Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-0448",
+    "description": "Soutien aux familles affectées par la maladie mentale de leurs proches, ou qui ont un enfant ayant un déficit de l'attention avec (TDAH) ou sans hyperactivité (TDA), ou le syndrome de Gilles de la Tou ... [Plus] | Âges : 5 an(s) et plus",
+    "website": "http://www.apame.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-personnes-avec-d-cn",
+    "name": "Association des personnes avec difficultés visuelles de Manicouagan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-8888",
+    "description": "Services, promotion des intérêts, défense des droits et intégration aux personnes ayant un handicap visuel dans tous les domaines de l'activité humaine * représentation des intérêts collectifs et indi ... [Plus] | Clientèle : Adultes ayant un handicap visuel et leurs proches",
+    "website": "http://apdvm.ca",
+    "address": "625 Bd Laflèche Local 315, Baie-Comeau, QC G5C 1K7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-pompiers-volonta-cn",
+    "name": "Association des pompiers volontaires des Escoumins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "418-514-8735",
+    "description": "Aide financière aux victimes d'incendie et autres sinistres",
+    "address": "Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-troubles-anxieux-cn",
+    "name": "Association des troubles anxieux de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-295-1888",
+    "description": "Soutien aux personnes souffrant de troubles anxieux tels le trouble de panique avec ou sans agoraphobie, la phobie spécifique, la phobie sociale, le trouble obsessionnel compulsif (TOC), le stress pos ... [Plus] | Clientèle : Personnes souffrant de troubles anxieux, panique avec ou sans agoraphobie, des phobies sociales ou spécifiques et des stress post-traumatiques",
+    "website": "http://www.associationtroublesanxieuxcotenord.com",
+    "address": "1191 Bd Laflèche, Baie-Comeau, QC G5C 1E1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-du-baseball-mineur-s-cn",
+    "name": "Association du Baseball mineur Sept-Îles",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Encouragement, promotion et développement du baseball mineur * recrutement et formation des instructeurs, entraîneurs, arbitres et dirigeants * inscription des joueurs * soutien aux jeunes dans leur d ... [Plus]",
+    "website": "https://www.baseballseptiles.com/fr/index.html",
+    "address": "Sept-Îles, Sept-Rivières, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-du-cancer-de-l-est-d-cn",
+    "name": "Association du cancer de l'est du Québec, Perce-Neige Sept-Îles",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-0600",
+    "description": "Service d’entraide et d’accompagnement pour les personnes atteintes de cancer et leurs proches dans toutes les étapes de la maladie et ce, dès la période d’attente d’un diagnostic * groupe de rencontr ... [Plus] | Clientèle : Gens touchés par le cancer",
+    "website": "https://aceq.org/perce-neige-sept-iles",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-du-hockey-mineur-de--cn",
+    "name": "Association du hockey mineur de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Organisation du hockey mineur * encadrement des intervenants, formation et perfectionnement à tous les niveaux * tournois | Âges : 8 an(s) - 21 an(s)",
+    "website": "https://www.ahmsi.org/fr/index.html",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-fibromyalgie-de-dupl-cn",
+    "name": "Association fibromyalgie de Duplessis",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-1999",
+    "description": "Promotion des intérêts des personnes atteintes de fibromyalgie et des personnes souffrant de douleurs chroniques * aide aux plans physiologique, psychologique et social * éducation du public * organis ... [Plus] | Clientèle : Personnes atteintes de fibromyalgie * personnes souffrant de douleurs chroniques * leurs proches",
+    "address": "690 Bd Laure, Sept-Îles, QC G4R 1Y1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "nl-acsi",
@@ -3476,6 +3794,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h."
   },
   {
+    "id": "association-pour-la-protection-d-cn",
+    "name": "Association pour la protection des intérêts des consommateurs de la Côte-Nord (L')",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-7324",
+    "description": "Protection et défense des droits et intérêts des consommateurs * aide à la préparation de la déclaration des revenus (rapport d'impôt) de mars à mai Intervention en éducation financière (IEF) : * cons ... [Plus] | Clientèle : Le grand public * personnes souhaitant faire leur budget, ayant des difficultés financières * personnes désirant des informations sur la protection à la consommation et la protection du consommateur.",
+    "website": "http://www.apiccotenord.org",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-qu-b-coise-de-d-fens-cn",
+    "name": "Association québécoise de défense des droits des personnes retraitées et préretraitées section Haute-Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-2041",
+    "description": "Défense des droits économiques, politiques, sociaux et culturels des personnes retraitées ou préretraitées * soutien téléphonique * information et référence * sensibilisation et prévention * ateliers, ... [Plus] | Clientèle : Personnes préretraitées ou retraitées * aînés * leurs proches | Âges : 50 an(s) et plus",
+    "website": "http://www.aqdr.org/section/haute-cote-nord",
+    "address": "Forestville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "mh-aqps",
     "name": "Association québécoise de prévention du suicide (AQPS)",
     "category": "mentalHealth",
@@ -3488,6 +3832,69 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "8000, boul. Langelier, bureau 802, Montréal, QC H1P 3K2",
     "hours": "Service disponible 24h/24, 7j/7",
     "isProvinceWide": true
+  },
+  {
+    "id": "association-r-gionale-de-loisirs-cn",
+    "name": "Association régionale de loisirs pour personnes handicapées de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-5220",
+    "description": "Promotion et accessibilité aux loisirs pour personnes handicapées * soutien au développement * information, orientation et référence * programme d'aide financière au loisir des personnes handicapées ( ... [Plus] | Clientèle : Personnes handicapées",
+    "website": "http://www.arlphcotenord.com",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-r-gionale-de-loisirs-cn-2",
+    "name": "Association régionale de loisirs pour personnes handicapées de la Côte-Nord, Carte accompagnement loisir",
+    "category": "health",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-5220",
+    "description": "Organisme régional accréditeur du programme Carte accompagnement loisir (CAL) * gratuité d'entrée à l'accompagnateur d'une personne âgée d'au moins 12 ans, ayant un handicap ou un problème de santé me ... [Plus] | Clientèle : Personnes ayant un handicap et leurs accompagnateurs",
+    "website": "http://www.arlphcotenord.com",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-septilienne-des-arts-cn",
+    "name": "Association septilienne des arts et de la culture",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-965-1384",
+    "description": "Promotion des arts et des artistes de la région * expositions et spectacles",
+    "website": "https://www.asacsi.ca/fr/",
+    "address": "1196 Bd Laure, Sept-Îles, QC G4S 1C4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-septilienne-des-lois-cn",
+    "name": "Association septilienne des loisirs, des sports et de la culture pour personnes vivant avec un handicap",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-927-2802 (résidence)",
+    "description": "Promotion et développement d'activités de loisir, de sport et de culture accessibles pour les personnes vivant avec un handicap physique ou intellectuel * lieu de rencontre pour les activités dans les ... [Plus] | Clientèle : Personnes vivant avec un handicap physique ou intellectuel, trouble du spectre de l'autisme | Âges : 18 an(s) et plus",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-pilepsie-c-te-nord-l-cn",
+    "name": "Association Épilepsie Côte-Nord (L')",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-2507",
+    "description": "Soutien au mieux-être, défense des droits et intégration sociale des personnes épileptiques * démystification de l'épilepsie, lutte aux préjugés * développement de l'entraide entre membres * soutien a ... [Plus] | Clientèle : Personnes épileptiques, leur famille et entourage",
+    "address": "652 Av. de Quen, Sept-Îles, QC G4R 2R5, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "on-ohip",
@@ -3737,6 +4144,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "auberge-internationale-le-tangon-cn",
+    "name": "Auberge Internationale Le Tangon",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418 962-8180",
+    "description": "Hébergement dans Sept-Îles facilitant la découverte de la région",
+    "website": "https://www.aubergeletangon.com/",
+    "address": "555 Av. Cartier, Sept-Îles, QC G4R 2T8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "auberge-du-coeur-roland-gauvreau-jol",
     "name": "Auberge du Coeur Roland-Gauvreau",
     "category": "family",
@@ -3761,6 +4181,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "aumond.ca",
     "address": "664, rue Principale, Aumond, Outaouais, QC, J0W 1W0",
     "hours": "lundi au jeudi 8h30 à 12h00 et 12h30 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "autisme-c-te-nord-cn",
+    "name": "Autisme Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-2272",
+    "description": "Soutien et conseils aux familles dont un des membres est atteint d'un trouble du spectre de l'autisme (TSA) afin d'améliorer leur qualité de vie * écoute, soutien et accompagnement des familles * réfé ... [Plus] | Clientèle : Familles dont un des membres a un trouble du spectre de l'autisme (TSA) * professionnels travaillant auprès de cette clientèle",
+    "address": "22 C Rue Lemaire, Sept-Îles, QC G4S 1S3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "autisme-mont-r-gie-mtg",
@@ -3799,6 +4231,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre de ressources pour hommes.* Hébergement de courte durée.* Accueil et référence.* Accompagnement dans les démarches.* Activités de mobilisation et de socialisation.* Sensibilisation aux réalités masculines.* Concertation pour la prévention du suicide. | Clientèle: hommes en difficulté Capacité: 11 | Territoire: MRC Pontiac, municipalité de Pontiac | Statut: organisme à but non lucratif",
     "website": "autonhommepontiac.ca",
     "address": "2, rue Elsie, 2e étage, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "autour-d-elles-maison-d-aide-et--cn",
+    "name": "Autour d'Elles, maison d'aide et d'hébergement",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-8141",
+    "description": "Maison d'aide et d'hébergement pour femmes victimes de violence conjugale et leurs enfants * soutien gratuit et sécuritaire * intervention 24 heures * accompagnement à travers les activités de groupe ... [Plus] | Clientèle : Femmes victimes de violence conjugale et leurs enfants",
+    "website": "http://www.maisonfemmessi.com",
+    "address": "Sept-Iles, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -4025,6 +4470,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service essentiel Colombie-Britannique."
   },
   {
+    "id": "baie-comeau-h-tel-de-ville-cn",
+    "name": "Baie-Comeau. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-4931",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://ville.baie-comeau.qc.ca",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "baie-comeau-h-tel-de-ville-baie--cn",
+    "name": "Baie-Comeau. Hôtel de ville, Baie-Comeau. Transport urbain",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-4931",
+    "description": "Service de transport en commun par autobus desservant la municipalité de Baie-Comeau * transport collectif",
+    "website": "https://www.ville.baie-comeau.qc.ca/services/services-essentiels/transport/",
+    "address": "34 Bd Comeau, Baie-Comeau, QC G4Z 3A8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "baie-comeau-h-tel-de-ville-baie--cn-2",
+    "name": "Baie-Comeau. Hôtel de ville, Baie-Comeau. Transport urbain, Transport adapté",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-1516",
+    "description": "Service de transport adapté par autobus desservant la municipalité de Baie-Comeau et les environs * transport adapté | Clientèle : Personnes à mobilité réduite * personnes ayant une déficience physique",
+    "website": "https://www.ville.baie-comeau.qc.ca/services/services-essentiels/transport/",
+    "address": "34 Bd Comeau, Baie-Comeau, QC G4Z 3A8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "baie-d-urfe-vie-communautaire-bdu",
     "name": "Baie-D'Urfé - Vie Communautaire",
     "category": "social",
@@ -4049,6 +4533,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.baie-durfe.qc.ca",
     "address": "20410, chemin Lakeshore, Baie-d'Urfé, Montréal, QC, H9X 1P7",
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 13h00"
+  },
+  {
+    "id": "baie-trinit-h-tel-de-ville-cn",
+    "name": "Baie-Trinité. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Trinité",
+    "province": "QC",
+    "phone": "418-939-2231",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://baie-trinite.quebec",
+    "address": "Baie-Trinité, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "banque-alimentaire-paroisse-sain-mtg",
@@ -4190,6 +4687,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Association professionnelle.* Information et sensibilisation aux droits.* Référence vers des avocat·e·s. | Clientèle: avocat·e·s membres du district, grand public | Territoire: Acton Vale, Beloeil, Châteauguay, Mont-Saint-Hilaire, Saint-Hyacinthe, Saint-Jean-sur- Richelieu, Salaberry-de-Valleyfield, Sorel-Tracy, Varennes, Vaudreuil-Dorion, Verchères | Statut: organisme à but non lucratif",
     "website": "barreaurichelieu.ca",
     "address": "109, rue St-Charles, casier 2, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2C2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "base-plein-air-les-go-lands-cn",
+    "name": "Base plein air Les Goélands",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-8706",
+    "description": "Développement et promotion des activités de plein air et fauniques en harmonie avec la préservation de la nature * activités sportives, de plein air et fauniques * location de salles et accueil d'évén ... [Plus]",
+    "website": "https://villeport-cartier.com/tourisme/attraits-et-activites/port-cartier/base-de-plein-air-les-goelands/",
+    "address": "Base De Plein Air Les Goelands, 816 Rte 138 CP 33, Port-Cartier, QC G5B 2G7, Canada",
     "hours": "Voir site web"
   },
   {
@@ -4713,6 +5223,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun - Ven 9h-16h"
   },
   {
+    "id": "blanc-sablon-h-tel-de-ville-cn",
+    "name": "Blanc-Sablon. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Blanc-Sablon",
+    "province": "QC",
+    "phone": "418-461-2707",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.municipalitedeblancsablon.ca",
+    "address": "Blanc-Sablon, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "blue-sea-municipalit-out",
     "name": "Blue Sea - Municipalité",
     "category": "social",
@@ -4789,6 +5312,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.la-bonne-etoile.org",
     "address": "517, rue Archambault, Joliette, Lanaudière, QC, J6E 2W6",
     "hours": "lundi au vendredi 10h00 à 16h00"
+  },
+  {
+    "id": "bonne-esp-rance-h-tel-de-ville-cn",
+    "name": "Bonne-Espérance. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Bonne-Espérance",
+    "province": "QC",
+    "phone": "418-379-2911",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-379-2911",
+    "website": "http://www.mamh.gouv.qc.ca/repertoire-des-municipalites/fiche/municipalite/98010/",
+    "address": "Bonne-Espérance, QC G0G 2P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "bor-al-de-fermont-le-cn",
+    "name": "Boréal de Fermont (Le)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "418-287-5471",
+    "description": "Club de natation compétitive situé à Fermont | Clientèle : Enfants * adolescents | Âges : 5 an(s) - 17 an(s)",
+    "website": "http://www.fnq.qc.ca/marqueurs/le-boreal-de-fermont",
+    "address": "Rue Boréale, Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "boucherville-loisir-culture-et-v-mtg",
@@ -10869,6 +11418,30 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "cr-am-le-cn",
+    "name": "CRÉAM (Le)",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-295-3499",
+    "description": "Lieu de rencontre, de soutien, d'entraide et de réadaptation visant à briser l'isolement et améliorer la qualité de vie des adultes ayant un problème de santé mentale ou vivant des difficultés émotion ... [Plus] | Clientèle : Adultes ayant une problématique de santé mentale ou vivant des difficultés émotionnelles | Âges : 18 an(s) et plus",
+    "address": "842 Rue de Puyjalon, Baie-Comeau, QC G5C 1L5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cadets-canada-corps-de-cadets-de-cn",
+    "name": "Cadets Canada, Corps de Cadets de la marine - succursale 117 Jacques-Cartier",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Programme jeunesse encourageant les adolescents à devenir des citoyens responsables et engagés au sein de leur collectivité * promotion de la bonne condition physique et acquisition de compétence en n ... [Plus] | Âges : 12 an(s) - 18 an(s)",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "cadets-de-l-air-saint-jean-iberv-mtg",
     "name": "Cadets De L'Air Saint-Jean-Iberville",
     "category": "family",
@@ -10959,6 +11532,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi 15h00 à 19h00, mercredi 13h00 à 19h00, jeudi 13h00 à 19h00, vendredi 13h00 à 16h30, dépannage alimentaire: sur inscription, lundi 17h00 à 19h00"
   },
   {
+    "id": "caf-th-tre-graffiti-cn",
+    "name": "Café-théâtre Graffiti",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-0101",
+    "description": "Salle de théâtre * Ciné-Graff * expositions en art visuel d’artistes de la région * restaurant bistro * bar * 175 places",
+    "website": "https://www.legraffiti.ca/",
+    "address": "50 Chem. des Îles, Port-Cartier, QC G5B 2W8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ab-calgary-food",
     "name": "Calgary Food Bank",
     "category": "food",
@@ -11037,6 +11623,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "camp de jour: juillet et août, lundi au vendredi 8h30 à 15h30, avec possibilité de service de garde de 7h00 à 8h30 et de 15h30 à 18h00"
   },
   {
+    "id": "camp-scout-andr-beaupr-cn",
+    "name": "Camp scout André Beaupré",
+    "category": "food",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-409-3643",
+    "description": "Site de plein air et d’hébergement dédié principalement aux activités scoutes et communautaires de la région de Sept-Îles et de Port-Cartier * hébergement avec cuisine, 5 chambres, 30 personnes * sall ... [Plus]",
+    "address": "1350 Rte Jacques Cartier, Moisie, QC G0G 2B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "campbell-s-bay-municipalit-out",
     "name": "Campbell'S Bay - Municipalité",
     "category": "social",
@@ -11113,6 +11711,84 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://campusemploi.org",
     "address": "467, rue Notre-Dame, bureau 206 A, Repentigny, Lanaudière, QC, J6A 2T3",
     "hours": "lundi au jeudi 8h30 à 16h00, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "canada-service-canada-centre-ser-cn",
+    "name": "Canada. Service Canada, Centre Service Canada Baie-Comeau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "",
+    "description": "Guichet gouvernemental unique pour un accès à une variété de programmes et de services * aide à la localisation et au dépôt de demandes pour les programmes gouvernementaux Services Canadiens * cherche ... [Plus]",
+    "website": "http://www.servicecanada.gc.ca",
+    "address": "300 Bd la Salle, Baie-Comeau, QC G4Z 2K2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "canada-service-canada-centre-ser-cn-2",
+    "name": "Canada. Service Canada, Centre Service Canada Forestville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "",
+    "description": "Guichet gouvernemental unique pour un accès à une variété de programmes et de services * aide à la localisation et au dépôt de demandes pour les programmes gouvernementaux Services Canadiens * cherche ... [Plus]",
+    "website": "http://www.servicecanada.gc.ca",
+    "address": "25 Rte 138 bureau 800, Forestville, QC G0T 0A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "canada-service-canada-centre-ser-cn-3",
+    "name": "Canada. Service Canada, Centre Service Canada Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Guichet gouvernemental unique pour un accès à une variété de programmes et de services * aide à la localisation et au dépôt de demandes pour les programmes gouvernementaux Services Canadiens * cherche ... [Plus]",
+    "website": "http://www.servicecanada.gc.ca",
+    "address": "701 Bd Laure 3e étage, Sept-Îles, QC G4R 1X8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "canada-service-canada-site-mobil-cn",
+    "name": "Canada. Service Canada, Site mobile Service Canada Port-Cartier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "",
+    "description": "Guichet gouvernemental unique pour un accès à une variété de programmes et de services * aide à la localisation et au dépôt de demande pour les programmes gouvernementaux * information et soutien avec ... [Plus]",
+    "website": "http://www.servicecanada.gc.ca",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "canada-service-canada-site-mobil-cn-2",
+    "name": "Canada. Service Canada, Site mobile Service Canada Sacré-Coeur",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sacré-Coeur",
+    "province": "QC",
+    "phone": "",
+    "description": "Guichet gouvernemental unique pour un accès à une variété de programmes et de services * aide à la localisation et au dépôt de demande pour les programmes gouvernementaux * information et soutien avec ... [Plus]",
+    "website": "http://www.servicecanada.gc.ca",
+    "address": "Sacré-Coeur, QC G0T 1Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cancer-fermont-cn",
+    "name": "Cancer Fermont",
+    "category": "health",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "709-280-7557",
+    "description": "Réponse aux besoins de soutien moral et financier aux personnes atteintes du cancer | Clientèle : Personnes atteintes du cancer et leurs proches",
+    "website": "https://www.cancerfermont.com/",
+    "address": "6003 Place Daviault, Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "cancer-aide-lanaudiere-jol",
@@ -11694,6 +12370,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "carrefour-solidaire-haute-c-te-n-cn",
+    "name": "Carrefour Solidaire Haute Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "418-233-3910",
+    "description": "Aide aux personnes et aux familles en difficulté * friperie * dépannage alimentaire * paniers de Noël * insertion sociale et communautaire * travail de rue * distribution de matériel en prévention des ... [Plus]",
+    "website": "https://www.carrefoursolidaire.ca/",
+    "address": "4 Rue Pelchat, Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-refuge-longueuil-carrefour",
     "name": "Carrefour d'entraide Longueuil",
     "category": "housing",
@@ -11744,6 +12433,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://sites.google.com/site/ainesfrancais",
     "address": "14068, boulevard Gouin Ouest, Pierrefonds-Roxboro, Montréal, QC, H8Z 1Y1",
     "hours": "lundi au vendredi 8h30 à 16h00, bureau: lundi, mardi et jeudi 9h00 à 12h00 et 13h00 à 15h00, mercredi et vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "carrefour-familial-de-chute-aux--cn",
+    "name": "Carrefour familial de Chute-aux-Outardes",
+    "category": "food",
+    "subcategory": "",
+    "city": "Chute-aux-Outardes",
+    "province": "QC",
+    "phone": "418-567-8920",
+    "description": "* accueil et entraide pour les familles vivant des situations problématiques * organisation de formations avec une halte-garderie * cuisine collective et collations santé * comptoir alimentaire * sout ... [Plus] | Clientèle : Personnes avec une problématique de santé mentale * personnes à faible revenu",
+    "website": "https://fqocf.org/organismes/carrefour-familial-de-chute-aux-outardes/",
+    "address": "37 Rue de l'Église, Chute-aux-Outardes, QC G0H 1C0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-famille-minganie-cn",
+    "name": "Carrefour famille Minganie",
+    "category": "food",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "581-292-5776",
+    "description": "Centre pour les familles * ateliers poupons * atelier pour les 2-4 ans * matinées familiales * activités thématiques mensuelles * ateliers de cuisine parent-enfant * Mini-gigote : activités physiques ... [Plus] | Clientèle : Familles",
+    "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "emp-cje-cdv",
@@ -11889,6 +12603,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Services gratuits aide CV, RV, orientation professionnelle."
   },
   {
+    "id": "carrefour-jeunesse-emploi-de-dup-cn",
+    "name": "Carrefour jeunesse-emploi de Duplessis",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-961-2533",
+    "description": "Soutien aux jeunes dans leur insertion socioprofessionnelle tout en favorisant leur autonomie personnelle, sociale et économique * accueil, information et accompagnement personnalisé dans les différen ... [Plus] | Clientèle : Jeunes * personnes à faible revenu ayant besoin d'un soutien en réinsertion sociale | Âges : 35 an(s) et moins",
+    "website": "http://www.cjed.qc.ca",
+    "address": "263 Rue Papineau, Sept-Îles, QC G4R 4J2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-dup-cn-2",
+    "name": "Carrefour jeunesse-emploi de Duplessis, Point de service de Havre-Saint-Pierre",
+    "category": "family",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-2533",
+    "description": "Soutien aux jeunes dans leur insertion socioprofessionnelle tout en favorisant leur autonomie personnelle, sociale et économique * accueil, information et accompagnement personnalisé dans les différen ... [Plus] | Clientèle : Jeunes * personnes à faible revenu ayant besoin d'un soutien en réinsertion sociale | Âges : 13 an(s) - 35 an(s)",
+    "website": "http://www.cjed.qc.ca",
+    "address": "Local 206, 1280 Rue de la Digue, Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-dup-cn-3",
+    "name": "Carrefour jeunesse-emploi de Duplessis, Point de service de Port-Cartier",
+    "category": "family",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-4099",
+    "description": "Soutien aux jeunes dans leur insertion socioprofessionnelle tout en favorisant leur autonomie personnelle, sociale et économique * accueil, information et accompagnement personnalisé dans les différen ... [Plus] | Clientèle : Jeunes * personnes à faible revenu ayant besoin d'un soutien en réinsertion sociale | Âges : 35 an(s) et moins",
+    "website": "http://www.cjed.qc.ca",
+    "address": "2 Rue Elie Rochefort, Port-Cartier, QC G5B 2N2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "emp-cje-laval",
     "name": "Carrefour jeunesse-emploi de Laval",
     "category": "employment",
@@ -11900,6 +12653,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cje-laval.qc.ca",
     "address": "440, boul. Saint-Martin Ouest, bureau 100, Laval, QC H7M 3L1",
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service."
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-man-cn",
+    "name": "Carrefour jeunesse-emploi de Manicouagan",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-8589",
+    "description": "Aide à l'emploi destiné aux jeunes * services gratuits d'aide à l'emploi et d'aide au développement de l'autonomie * soutien à la persévérance scolaire et au démarrage de projets dans les écoles secon ... [Plus] | Âges : 15 an(s) - 35 an(s)",
+    "website": "http://www.cjemanic.com",
+    "address": "872 Rue de Puyjalon, Baie-Comeau, QC G5C 1N2, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "emp-cje-st-laurent",
@@ -11941,6 +12707,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service."
   },
   {
+    "id": "carrefour-jeunesse-emploi-de-la--cn",
+    "name": "Carrefour jeunesse-emploi de la Haute-Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Les Bergeronnes",
+    "province": "QC",
+    "phone": "581-324-1110",
+    "description": "Aide à l'intégration professionnelle et sociale des jeunes adultes * services avec ou sans rendez-vous * emploi : curriculum vitæ, lettre de présentation, entrevue, marché caché de l'emploi * orientat ... [Plus] | Clientèle : Jeunes adultes | Âges : 16 an(s) - 35 an(s)",
+    "website": "http://www.cjehcn.qc.ca",
+    "address": "427 Rue de la Mer 2e étage, Grandes-Bergeronnes, QC G0T 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-la--cn-2",
+    "name": "Carrefour jeunesse-emploi de la Haute-Côte-Nord, Point de service Forestville",
+    "category": "family",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "581-324-1110",
+    "description": "Le Carrefour jeunesse-emploi de La Haute-Côte-Nord est un organisme communautaire ayant pour mandat d’accompagner et guider les jeunes adultes de 15 à 35 ans dans leurs démarches d’autonomie personnel ... [Plus] | Clientèle : Jeunes adultes | Âges : 16 an(s) - 35 an(s)",
+    "website": "http://www.cjehcn.qc.ca",
+    "address": "31 Rte 138 local 102, Forestville, QC G0T 0A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "on-catholic-cross",
     "name": "Catholic Cross-Cultural Services",
     "category": "immigration",
@@ -11964,6 +12756,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.cayamant.ca/fr/services-aux-citoyens/gestion-des-matieres-residuelles* Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Location de salles. | Clientèle: grand public | Territoire: Cayamant | Statut: organisme municipal",
     "website": "www.cayamant.ca",
     "address": "6, chemin Lachapelle, Cayamant, Outaouais, QC, J0X 1Y0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centraide-duplessis-cn",
+    "name": "Centraide Duplessis",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-2011",
+    "description": "Organisation philanthropique soutenant un vaste réseau d'organismes et de projets communautaires de son territoire qui aident les personnes et familles en situation de pauvreté ou d’exclusion à repren ... [Plus] | Clientèle : Organismes communautaires * organisations à mission non lucrative et sociale",
+    "website": "http://www.centraideduplessis.org",
+    "address": "8 B Rue Napoléon, Sept-Îles, QC G4R 3K4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centraide-haute-c-te-nord-manico-cn",
+    "name": "Centraide Haute-Côte-Nord - Manicouagan",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-5567",
+    "description": "Organisation philanthropique soutenant un vaste réseau d'organismes et de projets communautaires de son territoire qui aident les personnes et familles en situation de pauvreté ou d’exclusion à repren ... [Plus] | Clientèle : Organismes communautaires * organisations à mission non lucrative et sociale * personnes bénévoles ou désireuses de le devenir",
+    "website": "http://centraidehcnmanicouagan.ca",
+    "address": "858 Rue de Puyjalon, Baie-Comeau, QC G5C 1N2, Canada",
     "hours": "Voir site web"
   },
   {
@@ -12029,6 +12847,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://centraide-mtl.org",
     "address": "493, rue Sherbrooke Ouest, Montréal, QC H3A 1B6",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "centrap-succursale-de-baie-comea-cn",
+    "name": "Centrap, Succursale de Baie-Comeau",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-294-2161",
+    "description": "Création d'emploi pour des personnes vivant avec un handicap * entretien sanitaire * travaux saisonniers * usine de transformation du bois | Clientèle : Personnes vivant avec un handicap",
+    "website": "http://www.centrap.ca",
+    "address": "169 Bd la Salle, Baie-Comeau, QC G4Z 1S2, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "centre911-gatineau",
@@ -12331,6 +13162,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Maison de jeunes.?* Activités en soirées: ateliers éducatifs, préventifs, sportifs et récréatifs.* Service de dîner.* Danses thématiques mensuelles.* Activités pour la semaine de relâche et la période estivale.* Écoute et intervention.* Aide aux devoirs.* Cours de gardiens avertis. | Clientèle: jeunes de 12 à 17 ans, danses thématiques mensuelles: jeunes de 10 à 13 ans | Territoire: Chambly | Statut: organisme à but non lucratif",
     "address": "505, boulevard Brassard, Chambly, Montérégie, QC, J3L 4N5",
     "hours": "mardi 10h50 à 11h50 et 14h40 à 18h00, mercredi et jeudi 10h50 à 11h50 et 14h40 à 19h00, vendredi 10h50 à 11h50 et 14h40 à 20h00"
+  },
+  {
+    "id": "centre-ashpukun-mitshuap-cn",
+    "name": "Centre Ashpukun Mitshuap",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Schefferville",
+    "province": "QC",
+    "phone": "418-585-3419",
+    "description": "Hébergement pour femmes victimes de violence * 2 chambres familiales * 1 chambre pour femme seule | Âges : 18 an(s) et plus",
+    "address": "Schefferville, QC G0G 2T0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "centre-bienvenue-pfd",
@@ -17319,6 +18162,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 11h00 à 16h00"
   },
   {
+    "id": "centre-femmes-aux-4-vents-centre-cn",
+    "name": "Centre Femmes aux 4 Vents, Centre femmes aux quatre vents",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-2925",
+    "description": "Un espace pour te déposer, être toi-même et prendre ton élan. Le Centre Femmes aux 4 Vents, situé à Sept-Îles sur la Côte-Nord, est un carrefour solidaire dédié à toutes les femmes et à leurs parcours ... [Plus] | Clientèle : Femmes, sans égard à leur statut social et économique, désirant briser l'isolement, se confier ou s'impliquer socialement | Âges : 14 an(s) et plus",
+    "website": "http://femmes4vents.com",
+    "address": "831 Bd Laure, Sept-Îles, QC G4R 1Y6, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-hopital-montreal-centre-hospitalier-de-l-universite-de-montreal",
     "name": "Centre Hospitalier De L'Université De Montréal",
     "category": "health",
@@ -17587,6 +18443,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "address": "2187 Rue Bonneau, Jonquière, QC G7S 4B3",
     "hours": "Hébergement d'urgence 24h/24. Présentation directe ou appel."
+  },
+  {
+    "id": "centre-le-volet-des-femmes-cn",
+    "name": "Centre Le volet des femmes",
+    "category": "social",
+    "subcategory": "",
+    "city": "Aguanish",
+    "province": "QC",
+    "phone": "418-533-2212",
+    "description": "Milieu de vie améliorant la qualité de vie des femmes * centre de jour * accueil, écoute, accompagnement, information, référence * soutien individuel par téléphone, vidéoconférence ou en personne * ac ... [Plus] | Clientèle : Femmes | Âges : 18 an(s) et plus",
+    "address": "Aguanish, QC G0G 1A0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "centre-lgbtq2-ouest-de-l-ile-bcf",
@@ -18331,18 +19199,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
-    "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-multiservices-de-sante-et-de-services-sociaux-riviere",
-    "name": "Centre Multiservices De Santé Et De Services Sociaux Rivière-Des-Prairies",
-    "category": "mentalHealth",
-    "subcategory": "Centre hospitalier psychiatrique",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
-    "address": "7070, boulevard Perras, Montréal, QC H1E 1A4",
-    "hours": "Service de crise disponible 24h/24, 7j/7"
-  },
-  {
     "id": "msss-hopital-montreal-centre-multiservices-de-sante-et-de-services-sociaux-riviere",
     "name": "Centre Multiservices De Santé Et De Services Sociaux Rivière-Des-Prairies",
     "category": "health",
@@ -18353,6 +19209,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "address": "7070, boulevard Perras, Montréal, QC H1E 1A4",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
+  },
+  {
+    "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-multiservices-de-sante-et-de-services-sociaux-riviere",
+    "name": "Centre Multiservices De Santé Et De Services Sociaux Rivière-Des-Prairies",
+    "category": "mentalHealth",
+    "subcategory": "Centre hospitalier psychiatrique",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
+    "address": "7070, boulevard Perras, Montréal, QC H1E 1A4",
+    "hours": "Service de crise disponible 24h/24, 7j/7"
   },
   {
     "id": "msss-clsc-quebec-centre-multiservices-de-sante-et-de-services-sociaux-sacre-c",
@@ -18414,6 +19282,18 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "999, rue de Salaberry, Montréal, QC H3L 1L2",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "centre-napeu-ekuanitshit-cn",
+    "name": "Centre Napeu Ekuanitshit",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Mingan",
+    "province": "QC",
+    "phone": "418-949-2234",
+    "description": "Lieu de rassemblement et de discussion pour hommes * ressource adaptée aux besoins des hommes leur donnant accès à une superinfirmière, un psychologue ainsi qu'à un médecin pour des suivis de santé * ... [Plus] | Clientèle : Hommes innu de Ekuanitshit * hébergement d'urgence d'hiver pour hommes",
+    "address": "Mingan, QC G0G 1V0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "centre-notre-dame-de-fatima-mtg",
@@ -18687,6 +19567,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "centre-alpha-lira-cn",
+    "name": "Centre alpha Lira",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-9843",
+    "description": "Développement et amélioration des compétences littéraires des personnes adultes en vue d'une meilleure intégration à la société québécoise afin de briser l’isolement, développer l’autonomie et la conf ... [Plus] | Clientèle : Adultes * personnes immigrantes et nouveaux arrivants",
+    "website": "http://www.centrealphalira.org",
+    "address": "425 Av. Arnaud, Sept-Îles, QC G4R 3B3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-communautaire-pour-les-a--cn",
+    "name": "Centre communautaire pour les aînés de Ragueneau",
+    "category": "health",
+    "subcategory": "",
+    "city": "Ragueneau",
+    "province": "QC",
+    "phone": "581-643-1300",
+    "description": "Amélioration de la qualité de vie, bris de l'isolement et maintien de l'autonomie des aînés * information et prévention * promotion de la santé * activités éducatives et culturelles * activités avec l ... [Plus] | Âges : 55 an(s) et plus",
+    "website": "https://www.lappui.org/fr/organisation/centre-communautaire-pour-les-aines-de-ragueneau-inc/",
+    "address": "Ragueneau, QC G0H 0A4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-la-m-cn",
+    "name": "Centre d'Action Bénévole de la Minganie",
+    "category": "food",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-1332",
+    "description": "Promotion et développement de l’action bénévole et communautaire * soutien aux bénévoles * popote roulante * accompagnement-transport vers services essentiels * centre d'informations aux aînés * aide ... [Plus] | Clientèle : Personnes âgées * personnes vulnérables",
+    "website": "http://cabminganie.org",
+    "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "cimoi-alexander-pierrefonds",
     "name": "Centre d'Intégration Multi-Services de l'Ouest de l'Île (CIMOI) — Alexander",
     "category": "immigration",
@@ -18713,6 +19632,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30."
   },
   {
+    "id": "centre-d-action-b-n-vole-de-port-cn",
+    "name": "Centre d'action bénévole de Port-Cartier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-3202",
+    "description": "Promotion et développement de l'action bénévole et communautaire sur le territoire de Port-Cartier * aide à la préparation des déclarations de revenu (rapports d'impôt) * aide pour remplir les formula ... [Plus] | Clientèle : Ressourcerie 418-766-6270",
+    "website": "https://www.cabportcartier.com/",
+    "address": "10 Av. Boisvert, Port-Cartier, QC G5B 2G7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-port-cn-2",
+    "name": "Centre d'action bénévole de Port-Cartier, Transport adapté",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "Transport adapté 418-766-0060",
+    "description": "Transport en autobus adapté pour personnes à mobilité réduite Capacité selon les besoins * 8 places ambulantes * 2 places en fauteuil roulant Secteurs desservis à Port-Cartier et dans deux secteurs de ... [Plus] | Clientèle : Personnes à mobilité réduite selon les critères du Ministère des Transports du Québec",
+    "website": "http://cabportcartier.com/services-aux-individus",
+    "address": "10 Av. Boisvert, Port-Cartier, QC G5B 2G7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "s-cab-quebec",
     "name": "Centre d'action bénévole de Québec",
     "category": "social",
@@ -18724,6 +19669,71 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cabquebec.org",
     "address": "1453, rue de Bellechasse, Québec, QC G1L 1B7",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-la-m-cn-2",
+    "name": "Centre d'action bénévole de la MRC Manicouagan",
+    "category": "food",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-294-1445",
+    "description": "Promotion de l'action bénévole dans la MRC de Manicouagan * popote roulante (livraison de repas à domicile) * accompagnement-transport vers services médicaux * visite d'amitié * appel de courtoisie * ... [Plus]",
+    "website": "http://www.cabmrcmanic.com",
+    "address": "20 Bd Comeau, Baie-Comeau, QC G4Z 3A8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-le-nord-cn",
+    "name": "Centre d'action bénévole le Nordest",
+    "category": "social",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-4226",
+    "description": "1-Promouvoir l'action bénévole dans différents secteurs de l'activité humaine. 2-Répondre à des besoins du milieu. Centre d'action bénévole Le Nordest * services de secrétariat * impôts (personne faib ... [Plus]",
+    "website": "http://www.lenordest.org",
+    "address": "9 11e Rue, Forestville, QC G0T 0A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-le-nord-cn-2",
+    "name": "Centre d'action bénévole le Nordest, Services de maintien à domicile",
+    "category": "food",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-4226",
+    "description": "Amélioration des conditions de vie des aînés, des personnes en perte d'autonomie, en difficulté ou souffrant de solitude * visites d'amitié * popote roulante * accompagnement-transport médical * trans ... [Plus]",
+    "website": "http://www.lenordest.org/index_fichiers/Page1082.htm",
+    "address": "9 11e Rue, Forestville, QC G0T 0A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-le-vira-cn",
+    "name": "Centre d'action bénévole le Virage",
+    "category": "food",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-444-2228",
+    "description": "Promotion de l'action bénévole en réponse aux besoins du milieu * popote roulante : repas chauds et équilibrés livrés le midi à domicile * livraison de denrées du Comptoir alimentaire de Sept-Îles (se ... [Plus] | Clientèle : Aînés * personnes à faible revenu ou ayant un handicap ou vivant avec une perte d'autonomie temporaire ou permanente * bénévoles * personnes vulnérables",
+    "website": "http://www.cablevirage.ca",
+    "address": "391 Av. du Québec, Sept-Îles, QC G4R 1K3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-activit-s-d-panouisseme-cn",
+    "name": "Centre d'activités d'épanouissement à la vie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Les Bergeronnes",
+    "province": "QC",
+    "phone": "418-232-1167 poste 7120",
+    "description": "Soutien au mieux-être, à l'intégration sociale et à l'autonomie des personnes ayant un handicap ou un trouble connexe * soutien individuel et groupe d'entraide * activités éducatives et récréatives fa ... [Plus] | Clientèle : Personnes ayant une déficience physique (DP), intellectuelle (DI) ou un trouble du spectre de l'autisme (TSA) pouvant être associés à un trouble léger de santé mentale",
+    "website": "https://cadhc.ca/",
+    "address": "Grandes-Bergeronnes, QC G0T 1G0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "emp-aide-cv-entrevue",
@@ -18766,6 +19776,96 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "centre-d-aide-aux-victimes-d-act-cn",
+    "name": "Centre d'aide aux victimes d'actes criminels de la Côte-Nord",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-2822",
+    "description": "Aide aux victimes et aux témoins d'acte criminel, ainsi qu'à leurs proches * consultation téléphonique * intervention post-traumatique et psychosociojudiciaire * information sur les droits et recours ... [Plus] | Clientèle : Prendre rendez-vous avec un intervenant de Baie-Comeau",
+    "website": "http://cavac.qc.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-aide-et-de-lutte-contre-cn-2",
+    "name": "Centre d'aide et de lutte contre les agressions à caractère sexuel Lumière Boréale de Baie-Comeau",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Manicouagan",
+    "province": "QC",
+    "phone": "418-589-1714",
+    "description": "Aide aux femmes et adolescentes ayant vécu ou vivant une agression à caractère sexuel * lutte pour l'obtention de changements sociaux, légaux et politiques Services directs * accueil, information, sou ... [Plus] | Clientèle : Femmes et adolescentes ayant vécu ou vivant de la violence sexuelle peu importe la forme | Âges : 14 an(s) et plus",
+    "website": "http://www.lumiereboreale.qc.ca",
+    "address": "768 Rue Bossé, Baie-Comeau, QC G5C 1L6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-aide-et-de-lutte-contre-cn",
+    "name": "Centre d'aide et de lutte contre les agressions à caractère sexuel de Sept-Îles - La Pointe du jour",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "Sept-Îles 418-968-2116",
+    "description": "Soutien aux femmes et adolescentes ayant vécu ou vivant une agression à caractère sexuel (inceste, harcèlement, viol) * sensibilisation de la population à la problématique des agressions à caractère s ... [Plus] | Clientèle : Port-Cartier 418-444-2116 | Âges : 14 an(s) et plus",
+    "website": "http://www.lapointedujour.org",
+    "address": "Cp. 340, Sept-Îles, QC G4R 0K6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-amiti-autochtone-de-man-cn",
+    "name": "Centre d'amitié autochtone de Manicouagan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-294-9088",
+    "description": "Centre multiservice autochtone * boutique d'artisanat * centre d'amitié, de ressources et de services de référence * promotion de la culture et des traditions autochtones * activités culturelles et co ... [Plus]",
+    "address": "905 Rue Bossé, Baie-Comeau, QC G5C 1L8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-amiti-autochtone-de-sep-cn",
+    "name": "Centre d'amitié autochtone de Sept-îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-9229",
+    "description": "Centre multiservice apportant une meilleure qualité de vie grâce à des services répondant aux besoins culturels, matériels et sociaux des autochtones en milieu urbain. Le centre est ouvert à toutes la ... [Plus]",
+    "website": "https://www.rcaaq.ca/centre-amitie/centre-damitie-autochtone-de-sept-iles/",
+    "address": "37 Rue Père Divet, Sept-Îles, QC G4R 3N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-assistance-et-d-accompa-cn",
+    "name": "Centre d'assistance et d'accompagnement aux plaintes Côte-Nord",
+    "category": "health",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-295-2779",
+    "description": "Assistance et accompagnement aux usagers du réseau de la santé et des services sociaux qui désirent déposer plainte en regard des services reçus ou qu'ils auraient dû recevoir * assistance et accompag ... [Plus] | Clientèle : Utilisateurs des services de santé et services sociaux * locataires des résidences privées pour aînés (RPA)",
+    "website": "http://caap-cn.org",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-assistance-et-d-accompa-cn-2",
+    "name": "Centre d'assistance et d'accompagnement aux plaintes Côte-Nord, Point de service Sept-Îles",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-2779",
+    "description": "Assistance et accompagnement aux usagers du réseau de la santé et des services sociaux qui désirent déposer plainte en regard des services reçus ou qu'ils auraient dû recevoir * assistance et accompag ... [Plus] | Clientèle : Utilisateurs des services de santé et services sociaux * locataires des résidences privées pour aînés (RPA)",
+    "website": "http://caap-cn.org",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-entraide-alimentaire",
     "name": "Centre d'entraide alimentaire",
     "category": "food",
@@ -18776,6 +19876,44 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Aide alimentaire d'urgence et banque de denrées pour familles, aînés et individus en situation précaire. Accueil chaleureux et discret à Trois-Rivières.",
     "address": "3275, rue Girard, Trois-Rivières, QC G8Z 2M5",
     "hours": "Dépannage lun-ven 8h30-16h30, sam 9h-12h. Appeler avant de se présenter."
+  },
+  {
+    "id": "centre-d-h-bergement-tipinuaikan-cn",
+    "name": "Centre d'hébergement Tipinuaikan",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Uashat",
+    "province": "QC",
+    "phone": "418-962-3397",
+    "description": "Ressource d’hébergement accueillant les femmes autochtones victimes de violence conjugale ou familiale et leurs enfants * hébergement à court et moyen terme pour femmes et enfants de toutes communauté ... [Plus] | Clientèle : Hébergement pour femmes de toutes communautés autochtones victimes de violence conjugale ou familiale * leurs enfants | Âges : 18 an(s) et plus",
+    "website": "http://centretipinuaikan.ca",
+    "address": "Uashat Indian Reserve No. 27, Sept-Rivières, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-interpr-tation-de-clark-cn",
+    "name": "Centre d'interprétation de Clarke City",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-583-2223",
+    "description": "Centre d’interprétation et nombreux panneaux d’interprétation sur la première ville industrielle de la Côte-Nord",
+    "address": "160 Rue du Moulin, Clarke City, QC G0G 1H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-intervention-le-rond-po-cn",
+    "name": "Centre d'intervention le Rond-point",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-7333",
+    "description": "Accueil et soutien des jeunes et adultes marginalisés de la région * travail de rue, de milieu de vie et en dépendance * information, activités diverses, cafés-rencontres, ateliers et formation * soup ... [Plus] | Clientèle : Travail de rue 418-965-1483 * 418-409-6758",
+    "website": "http://www.lerondpoint.ca",
+    "address": "101 Rue Tortellier, Sept-Îles, QC G4R 3Z7, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "centre-de-bien-etre-de-l-ouest-de-l-krk",
@@ -19001,6 +20139,42 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-de-dynamophilie-portcarto-cn",
+    "name": "Centre de dynamophilie Portcartois",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-4010",
+    "description": "Centre de musculation et de mise en forme",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-d-pannage-du-secteur-f-cn",
+    "name": "Centre de dépannage du secteur Ferland",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-0037",
+    "description": "Aide aux personnes et familles à faible revenu ou en difficulté financière * vente de vêtements et articles à petits prix : ménagers, livres, jouets et autres * collecte et distribution de dons | Clientèle : Personnes et familles à faible revenu ou en difficulté financière",
+    "address": "140 Rue des Épinettes, Sept-Îles, QC G4S 1L5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-femmes-l-tincelle-cn",
+    "name": "Centre de femmes l'Étincelle",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "Ligne d'écoute 418-589-9366",
+    "description": "Lieu d'entraide favorisant l'amélioration de la qualité de vie des femmes sans égard au statut social et économique * centre de jour * accueil, écoute, soutien et référence * prévention, information, ... [Plus] | Clientèle : Toutes les femmes sans égard à leur situation ou difficulté : santé mentale * santé physique * pauvreté * violence conjugale * agressions sexuelles * autres | Âges : 7 an(s) et plus",
+    "address": "772 Bd Blanche, Baie-Comeau, QC G5C 2B5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "emp-cfp-mauricie",
     "name": "Centre de formation professionnelle Mauricie",
     "category": "employment",
@@ -19014,6 +20188,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30."
   },
   {
+    "id": "centre-de-jour-vers-l-ge-s-nior-cn",
+    "name": "Centre de jour Vers l'âge sénior",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-7423",
+    "description": "Aide au maintien à domicile des aînés * répit et prévention de l’épuisement aux proches aidants de personnes atteintes de la maladie d’Alzheimer ou d’autres maladies apparentées * centre de jour * mis ... [Plus] | Âges : 60 an(s) et plus",
+    "website": "https://www.cdjverslagesenior.com/",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-sm-montreal-journee",
     "name": "Centre de jour en santé mentale Montréal",
     "category": "mentalHealth",
@@ -19025,6 +20212,116 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cjsmtl.org",
     "address": "2055, rue Peel, Montréal, QC H3A 1V4",
     "hours": "Lun-ven 8h30-16h30. Sur RV ou référence médicale."
+  },
+  {
+    "id": "centre-de-la-petite-enfance-la-g-cn",
+    "name": "Centre de la petite enfance La Giroflée",
+    "category": "family",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-6111",
+    "description": "Services de garde pour enfants * intégration des enfants ayant des besoins particuliers * services de garde en installation ou milieu familial (capacité d'accueil 247 places) * halte-garderie * répit ... [Plus] | Clientèle : Enfants * enfants ayant des besoins particuliers (déficience physique, sensorielle, intellectuelle légère et moyenne, trouble envahissant du développement (TED), autisme ou autres) | Âges : 5 an(s) et moins",
+    "address": "11 10e Rue, Forestville, QC G0T 0A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-la-g-cn-2",
+    "name": "Centre de la petite enfance La Giroflée, Bergeronnes",
+    "category": "family",
+    "subcategory": "",
+    "city": "Les Bergeronnes",
+    "province": "QC",
+    "phone": "418-232-6244 poste 6",
+    "description": "Services de garde pour enfants * intégration des enfants ayant des besoins particuliers * 21 places (5 poupons) * halte-garderie * répit - gardiennage | Clientèle : Enfants * enfants ayant des besoins particuliers (déficience physique, sensorielle, intellectuelle légère et moyenne, trouble envahissant du développement (TED), autisme ou autres) | Âges : 5 an(s) et moins",
+    "address": "Les Bergeronnes, QC G0T 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-la-g-cn-4",
+    "name": "Centre de la petite enfance La Giroflée, Escoumins",
+    "category": "family",
+    "subcategory": "",
+    "city": "Essipit",
+    "province": "QC",
+    "phone": "418-233-4545",
+    "description": "Services de garde pour enfants * intégration des enfants ayant des besoins particuliers * 26 places * halte-garderie * répit - gardiennage | Clientèle : Enfants * enfants ayant des besoins particuliers (déficience physique, sensorielle, intellectuelle légère et moyenne, trouble envahissant du développement (TED), autisme ou autres) | Âges : 5 an(s) et moins",
+    "address": "Innue Essipit, La Haute-Côte-Nord Regional County Municipality, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-la-g-cn-3",
+    "name": "Centre de la petite enfance La Giroflée, Forestville",
+    "category": "family",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-233-4545",
+    "description": "Services de garde pour enfants * intégration des enfants ayant des besoins particuliers * 16 places * halte-garderie * répit - gardiennage * jardins communautaires | Clientèle : Enfants * enfants ayant des besoins particuliers (déficience physique, sensorielle, intellectuelle légère et moyenne, trouble envahissant du développement (TED), autisme ou autres) | Âges : 5 an(s) et moins",
+    "address": "11 10e Rue, Forestville, QC G0T 0A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-la-g-cn-5",
+    "name": "Centre de la petite enfance La Giroflée, Tadoussac",
+    "category": "family",
+    "subcategory": "",
+    "city": "Tadoussac",
+    "province": "QC",
+    "phone": "418-232-6244",
+    "description": "Services de garde pour enfants * intégration des enfants ayant des besoins particuliers * 21 places (5 poupons) * halte-garderie * répit - gardiennage | Clientèle : Enfants * enfants ayant des besoins particuliers (déficience physique, sensorielle, intellectuelle légère et moyenne, trouble envahissant du développement (TED), autisme ou autres) | Âges : 5 an(s) et moins",
+    "address": "Tadoussac, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-magi-cn",
+    "name": "Centre de la petite enfance Magimuse",
+    "category": "family",
+    "subcategory": "",
+    "city": "Ragueneau",
+    "province": "QC",
+    "phone": "418-295-7145",
+    "description": "Centre de la petite enfance * service de garde incluant 4 installations et un bureau de coordonnateur de la garde en milieu familial CPE * Les Gamins d'ici, 22, ave Plessis, Baie-Comeau * 1000 Petits ... [Plus] | Âges : 5 an(s) et moins",
+    "website": "http://www.cpemagimuse.ca",
+    "address": "37 Rte 138, Ragueneau, QC G0H 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-nid--cn",
+    "name": "Centre de la petite enfance Nid d’hirondelle",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-1144",
+    "description": "Services de garde pour enfants * services de garde (55 places) | Âges : 5 an(s) et moins",
+    "address": "392 Rue Comeau, Sept-Îles, QC G4R 5K8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-rito-cn",
+    "name": "Centre de la petite enfance Ritourn’ailes",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-961-2933",
+    "description": "Services de garde pour enfants * services de garde (154 places sur 3 installations) | Âges : 5 an(s) et moins",
+    "address": "912 Av. de Quen, Sept-Îles, QC G4R 2S5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-sous-cn",
+    "name": "Centre de la petite enfance Sous le bon toît",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-2844",
+    "description": "Services de garde pour enfants * services de garde en installation ou milieu familial Succursales * Milles Merveilles, 123, rue de la Vérendrye (57 places) * Jardin des rêves, 51 rue Josephat-Méthot ( ... [Plus] | Âges : 5 an(s) et moins",
+    "website": "https://www.cpebontoit.com/",
+    "address": "123 Rue de la Vérendrye, Sept-Îles, QC G4R 5V3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "mh-crise-mauricie",
@@ -19041,6 +20338,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-de-pr-vention-du-suicide--cn",
+    "name": "Centre de prévention du suicide Côte-Nord",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "Administration 418-295-2101 poste 0",
+    "description": "Prévention du suicide * intervention auprès des personnes aux prises avec des idées suicidaires, des proches et des personnes endeuillées par le suicide ainsi qu'auprès des intervenants * intervention ... [Plus] | Clientèle : Personnes ayant des idées suicidaires et leurs proches * personnes endeuillées par le suicide * personnes avec une problématique de santé mentale * intervenants | Âges : 14 an(s) et plus",
+    "website": "http://www.preventionsuicidecotenord.ca",
+    "address": "750 Rue de Puyjalon, Baie-Comeau, QC G5C 1M8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "mh-cps-cdq",
     "name": "Centre de prévention du suicide les Deux-Rives",
     "category": "mentalHealth",
@@ -19055,6 +20365,45 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-de-recherche-et-d-informa-cn",
+    "name": "Centre de recherche et d’information en consommation de Port-Cartier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-3203",
+    "description": "Promotion, défense collective et individuelle des droits des consommateurs * consultation budgétaire * référencement pour l'aide alimentaire et autres ressources * ateliers de formation sur le budget, ... [Plus] | Clientèle : Le grand public * personnes souhaitant faire leur budget, ayant des difficultés financières * personnes désirant des informations sur la protection à la consommation",
+    "website": "https://criccn.ca/",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-recherche-et-d-informa-cn-2",
+    "name": "Centre de recherche et d’information en consommation de Port-Cartier, Point de service Havre-Saint-Pierre",
+    "category": "social",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-766-3203",
+    "description": "Promotion, défense collective et individuelle des droits des consommateurs * consultation budgétaire * référencement pour l'aide alimentaire et autres ressources * ateliers de formation sur le budget, ... [Plus] | Clientèle : Le grand public * personnes souhaitant faire leur budget, ayant des difficultés financières * personnes désirant des informations sur la protection à la consommation",
+    "website": "https://criccn.ca/",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-recherche-et-d-informa-cn-3",
+    "name": "Centre de recherche et d’information en consommation de Port-Cartier, Point de service Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-6199",
+    "description": "Promotion, défense collective et individuelle des droits des consommateurs * consultation budgétaire * référencement pour l'aide alimentaire et autres ressources * ateliers de formation sur le budget, ... [Plus] | Clientèle : Le grand public * personnes souhaitant faire leur budget, ayant des difficultés financières * personnes désirant des informations sur la protection à la consommation",
+    "website": "https://criccn.ca/",
+    "address": "Hôtel Le Q'artier, 30 Rue Elie Rochefort, Port-Cartier, QC G5B 1N4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "readaptation-dependance-mcq",
     "name": "Centre de réadaptation en dépendance Mauricie",
     "category": "mentalHealth",
@@ -19065,6 +20414,469 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Services spécialisés en réadaptation pour l'alcoolisme, la toxicomanie et autres dépendances. Suivi individuel, thérapie de groupe et réinsertion sociale.",
     "address": "3440, rue Sainte-Marguerite, Trois-Rivières, QC G8Z 1X3",
     "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence."
+  },
+  {
+    "id": "centre-de-sant-de-essipit-cn",
+    "name": "Centre de santé de Essipit",
+    "category": "health",
+    "subcategory": "",
+    "city": "Essipit",
+    "province": "QC",
+    "phone": "418-233-4304",
+    "description": "Établissement indépendant offrant des soins de santé adaptés à la communauté innue de Essipit * services de première ligne, soins à domicile et de santé communautaire * médecine familiale * omnipratiq ... [Plus]",
+    "address": "Réserve indienne de Essipit, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-sant-de-pakuashipi-cn",
+    "name": "Centre de santé de Pakuashipi",
+    "category": "health",
+    "subcategory": "",
+    "city": "Pakuashipi",
+    "province": "QC",
+    "phone": "418-947-2757",
+    "description": "Établissement indépendant offrant des soins de santé adaptés à la communauté innue de Pakuashipi * services complets de première ligne, services cliniques d'urgence, soins à domicile et de santé commu ... [Plus]",
+    "website": "http://www.gopakua.com",
+    "address": "16 Rue E, Pakuashipi, QC G0G 2R0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-cn-4",
+    "name": "Centre de services scolaire de l'Estuaire",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-0806",
+    "description": "Services éducatifs répondant aux besoins de formation des jeunes, adultes, entreprises et organismes de son territoire * organisation de l'enseignement préscolaire, primaire, secondaire, de la formati ... [Plus] | Âges : 4 an(s) et plus",
+    "website": "http://cssestuaire.gouv.qc.ca",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-cn-6",
+    "name": "Centre de services scolaire de l'Estuaire, Centre d'éducation des adultes de l'Estuaire",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-0867 poste 3074",
+    "description": "Établissement d'enseignement offrant : * formation générale de base en français, mathématiques et anglais (alphabétisation, présecondaire et secondaire) * formation en intégration sociale (IS), handic ... [Plus] | Clientèle : Adultes âgés de 16 ans au 30 juin de l'année scolaire précédente | Âges : 16 an(s) et plus",
+    "website": "http://ceaestuaire.com",
+    "address": "620 Rue Jalbert, Baie-Comeau, QC G5C 2A1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-cn-5",
+    "name": "Centre de services scolaire de l'Estuaire, Centre de formation professionnelle",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-0867 poste 2600",
+    "description": "Établissement d'enseignement offrant de la formation conduisant à l'obtention d'un diplôme d'études professionnelles (DEP), d'une attestation de spécialisation professionnelle (ASP) ou d'une attestati ... [Plus] | Clientèle : * Être titulaire du diplôme d'études secondaires (DES) et respecter les conditions d'admission du programme | Âges : 16 an(s) et plus",
+    "website": "https://www.cfpestuaire.ca/",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-cn-10",
+    "name": "Centre de services scolaire de l'Estuaire, Point de service Les Bergeronnes, Centre d'éducation des adultes de l'Estuaire",
+    "category": "social",
+    "subcategory": "",
+    "city": "Les Bergeronnes",
+    "province": "QC",
+    "phone": "418-232-1167",
+    "description": "Établissement d'enseignement offrant : * formation générale de base en français, mathématiques et anglais (alphabétisation, présecondaire et secondaire) * formation en intégration sociale (IS), handic ... [Plus] | Clientèle : Adultes âgés de 16 ans au 30 juin de l'année scolaire précédente | Âges : 16 an(s) et plus",
+    "website": "http://ceaestuaire.com",
+    "address": "Les Bergeronnes, QC G0T 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-cn-7",
+    "name": "Centre de services scolaire de l'Estuaire, Point de service de Baie-Comeau, Centre d'éducation des adultes de l'Estuaire",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-0867",
+    "description": "Établissement d'enseignement offrant : * formation générale de base en français, mathématiques et anglais (alphabétisation, présecondaire et secondaire) * formation en intégration sociale (IS), handic ... [Plus] | Clientèle : Adultes âgés de 16 ans au 30 juin de l'année scolaire précédente | Âges : 16 an(s) et plus",
+    "website": "http://ceaestuaire.com",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-cn-8",
+    "name": "Centre de services scolaire de l'Estuaire, Point de service de Baie-Comeau, Services d'accueil, de référence, de conseil et d'accompagnement (SARCA)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-0867 poste 3036",
+    "description": "Accueil, référence, conseil et accompagnement, démarche d'orientation et suivi en formation pour les adultes sans diplôme afin de les aider à déterminer leur projet de vie * accompagnement à travers l ... [Plus] | Âges : 16 an(s) et plus",
+    "website": "http://cfpestuaire.ca/servicesauxeleves/sarca",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-cn-9",
+    "name": "Centre de services scolaire de l'Estuaire, Point de service de Forestville, Centre d'éducation des adultes de l'Estuaire",
+    "category": "social",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-4735 poste 6300",
+    "description": "Établissement d'enseignement offrant : * formation générale de base en français, mathématiques et anglais (alphabétisation, présecondaire et secondaire) * formation en intégration sociale (IS), handic ... [Plus] | Clientèle : Adultes âgés de 16 ans au 30 juin de l'année scolaire précédente | Âges : 16 an(s) et plus",
+    "website": "http://ceaestuaire.com",
+    "address": "Forestville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-cn-12",
+    "name": "Centre de services scolaire de l'Estuaire, Secteur Manicouagan, Centre de formation professionnelle",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-0867 poste 2600",
+    "description": "Établissement d'enseignement offrant de la formation conduisant à l'obtention d'un diplôme d'études professionnelles (DEP), d'une attestation de spécialisation professionnelle (ASP) ou d'une attestati ... [Plus] | Clientèle : * Être titulaire du diplôme d'études secondaires (DES) et respecter les conditions d'admission du programme | Âges : 16 an(s) et plus",
+    "website": "http://cfpestuaire.ca",
+    "address": "620 Rue Jalbert, Baie-Comeau, QC G5C 2A1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-cn-11",
+    "name": "Centre de services scolaire de l'Estuaire, Secteur de la Haute-Côte-Nord, Centre de formation professionnelle",
+    "category": "social",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-4735 poste 6306",
+    "description": "Établissement d'enseignement offrant de la formation conduisant à l'obtention d'un diplôme d'études professionnelles (DEP), d'une attestation de spécialisation professionnelle (ASP) ou d'une attestati ... [Plus] | Clientèle : * Être titulaire du diplôme d'études secondaires (DES) et respecter les conditions d'admission du programme | Âges : 16 an(s) et plus",
+    "website": "http://cfpestuaire.ca",
+    "address": "Forestville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-cn",
+    "name": "Centre de services scolaire de la Moyenne-Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-3044 poste 3011",
+    "description": "Services éducatifs répondant aux besoins de formation des jeunes, adultes, entreprises et organismes de son territoire * organisation de l'enseignement préscolaire, primaire, secondaire, de la formati ... [Plus] | Âges : 4 an(s) et plus",
+    "website": "http://www.csmcn.qc.ca",
+    "address": "1235 Rue de la Digue, Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-cn-2",
+    "name": "Centre de services scolaire de la Moyenne-Côte-Nord, Centre d'éducation des adultes de la Minganie",
+    "category": "immigration",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-2644",
+    "description": "Établissement d'enseignement offrant : * formation générale de base en français, mathématiques et anglais (alphabétisation, présecondaire et secondaire) * francisation * services dans les communautés ... [Plus] | Clientèle : Adultes âgés de 16 ans au 30 juin de l'année scolaire précédente | Âges : 16 an(s) et plus",
+    "website": "http://www.csmcn.qc.ca/fr/education-aux-adultes.htm",
+    "address": "1235 Rue de la Digue, Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-cn-3",
+    "name": "Centre de services scolaire de la Moyenne-Côte-Nord, Centre d'éducation des adultes de la Minganie, Services d'accueil, de référence, de conseil et d'accompagnement (SARCA)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-3044 poste 3314",
+    "description": "Accueil, référence, conseil et accompagnement, démarche d'orientation et suivi en formation pour les adultes sans diplôme afin de les aider à déterminer leur projet de vie * accompagnement à travers l ... [Plus] | Âges : 16 an(s) et plus",
+    "website": "http://www.csmcn.qc.ca/fr/services-complementaires.htm",
+    "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-f-cn",
+    "name": "Centre de services scolaire du Fer",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-9901",
+    "description": "Services éducatifs répondant aux besoins de formation des jeunes, adultes, entreprises et organismes de son territoire * organisation de l'enseignement préscolaire, primaire, secondaire, de la formati ... [Plus] | Âges : 4 an(s) et plus",
+    "website": "https://www.cssdufer.gouv.qc.ca/",
+    "address": "30 Rue Comeau, Sept-Îles, QC G4R 4N2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-f-cn-7",
+    "name": "Centre de services scolaire du Fer, Centre d'éducation des adultes Le Relais du Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-7070",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Adultes âgés de 16 ans au 30 juin de l'année scolaire précédente | Âges : 16 an(s) et plus",
+    "address": "18 Bd des Îles, Port-Cartier, QC G5B 2N4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-f-cn-4",
+    "name": "Centre de services scolaire du Fer, Centre d'éducation des adultes de Fermont",
+    "category": "social",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "418-287-5491",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Adultes âgés de 16 ans au 30 juin de l'année scolaire précédente | Âges : 16 an(s) et plus",
+    "address": "130 Rue le Carr, Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-f-cn-6",
+    "name": "Centre de services scolaire du Fer, Centre d'éducation des adultes de Port-Cartier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-5335",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Adultes âgés de 16 ans au 30 juin de l'année scolaire précédente | Âges : 16 an(s) et plus",
+    "address": "18 Bd des Îles, Port-Cartier, QC G5B 1V7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-f-cn-5",
+    "name": "Centre de services scolaire du Fer, Centre d'éducation des adultes de la Taïga",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-964-2875",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Adultes âgés de 16 ans au 30 juin de l'année scolaire précédente | Âges : 16 an(s) et plus",
+    "address": "30 Rue Comeau, Sept-Îles, QC G4R 4N2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-f-cn-2",
+    "name": "Centre de services scolaire du Fer, Centre de formation professionnelle et générale de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-964-2875",
+    "description": "Établissement d'enseignement offrant formation générale aux adultes * formation conduisant à l'obtention d'un diplôme d'études professionnelles (DEP), d'une attestation de spécialisation professionnel ... [Plus] | Clientèle : Adultes âgés de 16 ans au 30 juin de l'année scolaire précédente | Âges : 16 an(s) et plus",
+    "website": "http://cfpsi.ca",
+    "address": "30 Rue Comeau, Sept-Îles, QC G4R 4N2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-f-cn-3",
+    "name": "Centre de services scolaire du Fer, Centre de formation professionnelle et générale de Sept-Îles, Services d'accueil, de référence, de conseil et d'accompagnement (SARCA)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-964-2875",
+    "description": "Accueil, référence, conseil et accompagnement, démarche d'orientation et suivi en formation pour les adultes sans diplôme afin de les aider à déterminer leur projet de vie * accompagnement à travers l ... [Plus] | Âges : 16 an(s) et plus",
+    "website": "http://www.cfpsi.ca/etudiants/services-aux-etudiants/sarca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn",
+    "name": "Centre de services scolaire du Littoral",
+    "category": "family",
+    "subcategory": "",
+    "city": "Blanc-Sablon",
+    "province": "QC",
+    "phone": "418-461-2810",
+    "description": "Services éducatifs francophones et anglophones répondant aux besoins de formation des jeunes, adultes, entreprises et organismes de son territoire * organisation de l'enseignement préscolaire, primair ... [Plus] | Âges : 4 an(s) et plus",
+    "website": "http://www.cssdulittoral.gouv.qc.ca",
+    "address": "Blanc-Sablon, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-2",
+    "name": "Centre de services scolaire du Littoral, Centre Gabriel-Dionne",
+    "category": "social",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-461-3568",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Formation générale aux adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cssdulittoral.gouv.qc.ca",
+    "address": "Basse-Côte-Nord, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-3",
+    "name": "Centre de services scolaire du Littoral, Centre Harrington",
+    "category": "social",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-461-3568",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Formation générale aux adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cssdulittoral.gouv.qc.ca",
+    "address": "Harrington, QC J8G 2S6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-4",
+    "name": "Centre de services scolaire du Littoral, Centre Kegaska",
+    "category": "social",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-461-3568",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Formation générale aux adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cssdulittoral.gouv.qc.ca",
+    "address": "Kegashka, QC G0G 0B4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-5",
+    "name": "Centre de services scolaire du Littoral, Centre Marie-Sarah",
+    "category": "social",
+    "subcategory": "",
+    "city": "La Romaine",
+    "province": "QC",
+    "phone": "418-229-2333",
+    "description": "Établissement d'enseignement offrant : * formation générale de base en français, mathématiques et anglais (alphabétisation, présecondaire et secondaire) * formation en intégration sociale (IS), handic ... [Plus] | Clientèle : Adultes âgés de 16 ans au 30 juin de l'année scolaire précédente | Âges : 16 an(s) et plus",
+    "website": "http://cssdulittoral.gouv.qc.ca/ecole/centre-deducation-des-adultes/",
+    "address": "La Romaine, Le Golfe-du-Saint-Laurent, QC G0G 0C7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-6",
+    "name": "Centre de services scolaire du Littoral, Centre Mecatina",
+    "category": "social",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-461-3568",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Formation générale aux adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cssdulittoral.gouv.qc.ca",
+    "address": "Gros-Mécatina, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-7",
+    "name": "Centre de services scolaire du Littoral, Centre Monseigneur-Scheffer",
+    "category": "social",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-461-3568",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Formation générale aux adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.csdulittoral.qc.ca",
+    "address": "Côte-Nord-du-Golfe-du-Saint-Laurent, QC G0G 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-8",
+    "name": "Centre de services scolaire du Littoral, Centre Mountain Ridge",
+    "category": "social",
+    "subcategory": "",
+    "city": "Bonne-Espérance",
+    "province": "QC",
+    "phone": "418-461-3568",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Formation générale aux adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cssdulittoral.gouv.qc.ca",
+    "address": "Bonne-Espérance, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-9",
+    "name": "Centre de services scolaire du Littoral, Centre Netagamiou",
+    "category": "social",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-461-3568",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Formation générale aux adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cssdulittoral.gouv.qc.ca",
+    "address": "Rivière Nétagamiou, Le Golfe-du-Saint-Laurent, QC G0G 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-10",
+    "name": "Centre de services scolaire du Littoral, Centre Saint-Augustin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-461-3568",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Formation générale aux adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cssdulittoral.gouv.qc.ca",
+    "address": "Saint-Augustin, QC G0G, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-11",
+    "name": "Centre de services scolaire du Littoral, Centre Saint-Bernard",
+    "category": "social",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-461-3568",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Formation générale aux adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cssdulittoral.gouv.qc.ca",
+    "address": "Côte-Nord-du-Golfe-du-Saint-Laurent, QC G0G 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-12",
+    "name": "Centre de services scolaire du Littoral, Centre Saint-Joseph",
+    "category": "social",
+    "subcategory": "",
+    "city": "L'Île-d'Anticosti",
+    "province": "QC",
+    "phone": "418-461-3568",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Formation générale aux adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cssdulittoral.gouv.qc.ca",
+    "address": "Anticosti Island, Minganie Regional County Municipality, QC G0G 2Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-13",
+    "name": "Centre de services scolaire du Littoral, Centre Saint-Lawrence",
+    "category": "social",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-461-3568 / 418-773-2228",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Formation générale aux adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cssdulittoral.gouv.qc.ca",
+    "address": "Côte-Nord-du-Golfe-du-Saint-Laurent, QC G0G 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-14",
+    "name": "Centre de services scolaire du Littoral, Centre Saint-Paul",
+    "category": "social",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-461-3568",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Clientèle : Formation générale aux adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cssdulittoral.gouv.qc.ca",
+    "address": "Côte-Nord-du-Golfe-du-Saint-Laurent, QC G0G 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-du-l-cn-15",
+    "name": "Centre de services scolaire du Littoral, Services d'accueil, de référence, de conseil et d'accompagnement",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-461-3568",
+    "description": "Accueil, référence, conseil et accompagnement, démarche d'orientation et suivi en formation pour les adultes sans diplôme afin de les aider à déterminer leur projet de vie * accompagnement à travers l ... [Plus] | Âges : 16 an(s) et plus",
+    "website": "http://cssdulittoral.gouv.qc.ca/jamais-trop-tard-pour-retourner-aux-etudes/",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "centre-des-femmes-west-island-pcl",
@@ -19078,6 +20890,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://wiwc.ca",
     "address": "11 Rodney Avenue, Pointe-Claire, Montréal, QC, H9R 4L8",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 15h00, programme après l'école: mardi et jeudi, groupes de soutien: surtout le soir, fermé en juillet et août"
+  },
+  {
+    "id": "centre-des-arts-de-baie-comeau-cn",
+    "name": "Centre des arts de Baie-Comeau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-295-2500",
+    "description": "Diffuseur de spectacles pluridisciplinaires accomplissant le mandat de la gestion du Centre des arts de Baie-Comeau * activités culturelles et éducatives * salle à l’italienne de 840 places * salle à ... [Plus] | Clientèle : Billetterie 418-295-2000",
+    "website": "http://centredesartsbc.com",
+    "address": "1660 Rue de Bretagne, Baie-Comeau, QC G5C 3S3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-des-femmes-de-forestville-cn",
+    "name": "Centre des femmes de Forestville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-4204",
+    "description": "Offrir un milieu de vie pour toutes les femmes; Offrir des moyens, des outils afin que les femmes développent et retrouve leur autonomie; Sensibiliser les partenaires et la population à la condition f ... [Plus] | Clientèle : Intervenante 581-623-1506 | Âges : 14 an(s) et plus",
+    "website": "http://rcentres.qc.ca/2018/07/30/centre-des-femmes-de-forestville",
+    "address": "Forestville, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "on-camh",
@@ -19104,6 +20942,552 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cicscanada.com",
     "address": "1280 Finch Ave W, Toronto, ON M3J 3K6",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord",
+    "category": "health",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-9845",
+    "description": "Planifier, coordonner, organiser et rendre accessible à la population un continuum de services sociaux et de santé en réponse aux besoins des milieux du territoire tout en suivant les orientations et ... [Plus]",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "835 Bd Joliet, Baie-Comeau, QC G5C 1P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-2",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, Aire ouverte de Baie-Comeau",
+    "category": "health",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-3155",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants aux jeunes de 12-25 ans et, à cette clientèle qu'il dessert, des services de santé et des services sociaux de nature prév ... [Plus] | Âges : 12 an(s) - 25 an(s)",
+    "website": "https://www.cisss-cotenord.gouv.qc.ca/soins-et-services/aire-ouverte/",
+    "address": "835 Bd Joliet, Baie-Comeau, QC G5C 1P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-3",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, Aire ouverte de Sept-Îles",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-4791",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants aux jeunes de 12-25 ans et, à cette clientèle qu'il dessert, des services de santé et des services sociaux de nature prév ... [Plus] | Clientèle : Adolescents * jeunes adultes | Âges : 12 an(s) - 25 an(s)",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca/soins-et-services/aire-ouverte",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-8",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC Corinne-Vallée-Therrien",
+    "category": "health",
+    "subcategory": "",
+    "city": "Baie-Trinité",
+    "province": "QC",
+    "phone": "418-939-2226",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-589-3701 poste 4 option 8",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Baie-Trinité, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-27",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC Dentisterie de Blanc-Sablon",
+    "category": "health",
+    "subcategory": "",
+    "city": "Blanc-Sablon",
+    "province": "QC",
+    "phone": "418 461-2144 poste 611295",
+    "description": "Clinique dentaire * diagnostic, prévention et traitement médical et chirurgical des maladies buccales, blessures, malformations et autres * restauration des dents endommagées ou leur remplacement * hy ... [Plus]",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Blanc-Sablon, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-28",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC Donald-G.-Hodd",
+    "category": "health",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-795-3325",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Consultation d'une infirmière 418-795-3325",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Côte-Nord-du-Golfe-du-Saint-Laurent, QC G0G 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-29",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC Lionel-Charest et GMF-U de Manicouagan",
+    "category": "health",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "CLSC 418-296-2572 poste 0",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Soutien à domicile (guichet d'accès) 418-296-2572",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "835 Bd Joliet, Baie-Comeau, QC G5C 1P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-30",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC Marie-Leblanc-Côté",
+    "category": "health",
+    "subcategory": "",
+    "city": "Chute-aux-Outardes",
+    "province": "QC",
+    "phone": "418-567-2274",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Rendez-vous de soins courants, laboratoire et médecins sur place 418-567-2274",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "2 Rue de l'Ecole, Chute-aux-Outardes, QC G0H 1C0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-31",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC Naskapi",
+    "category": "health",
+    "subcategory": "",
+    "city": "Kawawachikamach",
+    "province": "QC",
+    "phone": "418-585-2110",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Consultation d'une infirmière ou d'un médecin 418-585-2110",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca/votre-cisss/installations/clsc-naskapi/",
+    "address": "Kawawachikamach, QC G0G 2Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-32",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC Victor-Lachance",
+    "category": "health",
+    "subcategory": "",
+    "city": "Aguanish",
+    "province": "QC",
+    "phone": "418-533-2301",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-538-2212 poste 542437",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Aguanish, QC G0G 1A0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-9",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Baie-Johan-Beetz",
+    "category": "health",
+    "subcategory": "",
+    "city": "Baie-Johan-Beetz",
+    "province": "QC",
+    "phone": "418-539-0169",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-538-2212",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Baie-Johan-Beetz, QC G0G 1B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-10",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Chevery",
+    "category": "health",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-787-2277",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Consultation d'une infirmière 418-787-2277",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Chevery, QC G0G 0B5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-11",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Franquelin",
+    "category": "health",
+    "subcategory": "",
+    "city": "Franquelin",
+    "province": "QC",
+    "phone": "418-296-1616",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-589-3701 poste 4 option 8",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Franquelin, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-12",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Godbout",
+    "category": "health",
+    "subcategory": "",
+    "city": "Godbout",
+    "province": "QC",
+    "phone": "418-568-7740",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-589-3701 poste 4 option 8",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Godbout, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-13",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Kegaska",
+    "category": "health",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-726-3382",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Consultation d'une infirmière 418-726-3382",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Kegashka, QC G0G 0B4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-14",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de La Tabatière",
+    "category": "health",
+    "subcategory": "",
+    "city": "Gros-Mécatina",
+    "province": "QC",
+    "phone": "418-773-2232",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Consultation d'une infirmière 418-773-2232",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Gros-Mécatina, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-15",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Longue-Pointe-de-Mingan",
+    "category": "health",
+    "subcategory": "",
+    "city": "Longue-Pointe-de-Mingan",
+    "province": "QC",
+    "phone": "418-949-2402",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-538-2212 poste 542437",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Longue-Pointe-de-Mingan, QC G0G 1V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-16",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Mutton Bay",
+    "category": "health",
+    "subcategory": "",
+    "city": "Gros-Mécatina",
+    "province": "QC",
+    "phone": "418-773-2212",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Consultation d'une infirmière 418-773-2212",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Mutton Bay, QC G0G 0A2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-17",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Natashquan",
+    "category": "health",
+    "subcategory": "",
+    "city": "Natashquan (Ville)",
+    "province": "QC",
+    "phone": "418-726-3387",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-538-2212 poste 542437",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Natashquan, QC G0G 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-18",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Port-Menier",
+    "category": "health",
+    "subcategory": "",
+    "city": "L'Île-d'Anticosti",
+    "province": "QC",
+    "phone": "418-535-0176",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-538-2212 poste 542437",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Port-Menier, QC G0G 2Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-20",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Rivière-Saint-Jean",
+    "category": "health",
+    "subcategory": "",
+    "city": "Rivière-Saint-Jean",
+    "province": "QC",
+    "phone": "418-949-2020",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-538-2212 poste 542437",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Rivière-Saint-Jean, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-21",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Rivière-Saint-Paul",
+    "category": "health",
+    "subcategory": "",
+    "city": "Bonne-Espérance",
+    "province": "QC",
+    "phone": "418-379-2244",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Consultation d'une infirmière 418-379-2244",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Rivière-Saint-Paul, QC G0G 0A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-19",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Rivière-au-Tonnerre",
+    "category": "health",
+    "subcategory": "",
+    "city": "Rivière-au-Tonnerre",
+    "province": "QC",
+    "phone": "418-465-2146",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-538-2212 poste 542437",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Rivière-au-Tonnerre, QC G0G 2L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-22",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Saint-Augustin",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Augustin (région 09)",
+    "province": "QC",
+    "phone": "418-947-2321",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Consultation d'une infirmière 418-947-2321",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Côte-Nord, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-23",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Schefferville",
+    "category": "health",
+    "subcategory": "",
+    "city": "Schefferville",
+    "province": "QC",
+    "phone": "418-585-2645",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Centrale des rendez-vous pour les médecins 418-287-5461 poste 712167",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Schefferville, QC G0G 2T0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-24",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Sept-Îles",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-2572",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Clinique pédiatrique 418-962-9761 poste 451216",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-25",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Tadoussac",
+    "category": "health",
+    "subcategory": "",
+    "city": "Tadoussac",
+    "province": "QC",
+    "phone": "418-233-2931 poste 382000",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-233-2931 option 2",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Tadoussac, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-26",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CLSC de Tête-à-la-Baleine",
+    "category": "health",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-242-2112",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Consultation d'une infirmière 418-242-2112",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Tête-à-la-Baleine, QC G0G 0A3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-33",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CMSSS de Fermont",
+    "category": "health",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "418-287-5461",
+    "description": "Centre hospitalier offrant des services diagnostiques, de soins médicaux généraux et spécialisés, et en première ligne, des services de santé et des services sociaux courants, de nature préventive et ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-287-5461",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-34",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CMSSS de Forestville",
+    "category": "health",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-2212",
+    "description": "Centre hospitalier offrant des services diagnostiques, de soins médicaux généraux et spécialisés, et en première ligne, des services de santé et des services sociaux courants, de nature préventive et ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-587-2212 option 2",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Forestville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-37",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CMSSS de Port-Cartier",
+    "category": "health",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-2572",
+    "description": "Centre hospitalier offrant des services diagnostiques, de soins médicaux généraux et spécialisés, et en première ligne, des services de santé et des services sociaux courants, de nature préventive et ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-766-7000 * 418-766-2572 poste 443279",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-38",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CMSSS de Sept-Îles",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-9761",
+    "description": "Centre hospitalier offrant des services diagnostiques, de soins médicaux généraux et spécialisés, et en première ligne, des services de santé et des services sociaux courants, de nature préventive et ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-962-9856",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-35",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CMSSS de la Basse-Côte-Nord",
+    "category": "health",
+    "subcategory": "",
+    "city": "Blanc-Sablon",
+    "province": "QC",
+    "phone": "418-461-2144",
+    "description": "Centre hospitalier offrant des services diagnostiques, de soins médicaux généraux et spécialisés, et en première ligne, des services de santé et des services sociaux courants, de nature préventive et ... [Plus] | Clientèle : Consultation d'une infirmière 418-461-2144",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Blanc-Sablon, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-36",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CMSSS de la Minganie",
+    "category": "health",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-2212",
+    "description": "Centre hospitalier offrant des services diagnostiques, de soins médicaux généraux et spécialisés, et en première ligne, des services de santé et des services sociaux courants, de nature préventive et ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-538-2212 poste 542437",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-39",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, CMSSS des Escoumins",
+    "category": "health",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "418-233-2931",
+    "description": "Centre hospitalier offrant des services diagnostiques, de soins médicaux généraux et spécialisés, et en première ligne, des services de santé et des services sociaux courants, de nature préventive et ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-233-2931 option 2",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-5",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, Centres d'hébergement - Côte-Nord",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "",
+    "description": "Centres d’hébergement dans la région de la Côte-Nord Contacter le CLSC ou le CMSSS de son secteur pour obtenir une place Secteur Haute-Côte-Nord, MRC (CLSC de Sacré-Cœur, Tadoussac et CMSSS) * De Fore ... [Plus]",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca/votre-cisss/installations",
+    "address": "835 Bd Joliet, Baie-Comeau, QC G5C 1P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-4",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, Centres de réadaptation en déficience intellectuelle et en troubles du spectre de l’autisme et Centres de réadaptation en déficience physique",
+    "category": "health",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-2038",
+    "description": "Centres de réadaptation en déficience intellectuelle et en troubles du spectre de l'autisme (CRDI) et déficience physique (CRDP) de la Côte-Nord Contacter le CLSC ou le CMSSS de son secteur à la suite ... [Plus]",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca/soins-et-services/deficience-intellectuelle-troubles-du-spectre-de-lautisme-et-deficience-physique",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-6",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, Direction de la protection de la jeunesse",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "",
+    "description": "Services psychosociaux, d'adaptation, de réadaptation et d'intégration sociale pour jeunes de 0-18 ans, leur famille et les mères en difficulté * principalement ceux et celles qui ont vécu ou vivent d ... [Plus] | Clientèle : Points de services de première ligne",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca/soins-et-services/direction-de-la-protection-de-la-jeunesse",
+    "address": "835 Bd Joliet, Baie-Comeau, QC G5C 1P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-42",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, Hôpital Le Royer",
+    "category": "health",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-3701",
+    "description": "Centre hospitalier offrant des services diagnostiques, de soins médicaux généraux et spécialisés, et en première ligne, des services de santé et des services sociaux courants, de nature préventive et ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-589-3701 poste 4 option 8",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "835 Bd Joliet, Baie-Comeau, QC G5C 1P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-41",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, Hôpital de Sept-Îles",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-9761",
+    "description": "Centre hospitalier offrant des services diagnostiques, de soins médicaux généraux et spécialisés, et en première ligne, des services de santé et des services sociaux courants, de nature préventive et ... [Plus] | Clientèle : Centrale générale des rendez-vous 418-962-9856",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-40",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, Hôpital de Sept-Îles, Centres de réadaptation en dépendance",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-589-5704",
+    "description": "Services de réadaptation externe en dépendance, dépistage, évaluation spécialisée, désintoxication et réinsertion sociale pour adolescents et adultes * réadaptation avec hébergement pour adultes * int ... [Plus] | Clientèle : Points de services",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca/soins-et-services/dependance",
+    "address": "45 Rue Père Divet, Sept-Îles, QC G4R 3N7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-cn-7",
+    "name": "Centre intégré de santé et de services sociaux de la Côte-Nord, Table nord-côtière de concertation sur les réalités masculines",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Regroupement de partenaires visant l'amélioration de la santé et du bien-être des hommes * intégration de problématiques sociales, de santé et de services pour hommes par une approche mixte et globale ... [Plus] | Clientèle : Organismes communautaires * organisations à mission publique ou non lucrative",
+    "website": "http://www.tncrm.org",
+    "address": "22 C Rue Lemaire, Sept-Îles, QC G4S 1S3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "centre-jeunesse-mauricie",
@@ -19222,6 +21606,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service."
   },
   {
+    "id": "centre-r-sidentiel-communautaire-cn",
+    "name": "Centre résidentiel communautaire Kapatakan Gilles-Jourdain",
+    "category": "social",
+    "subcategory": "",
+    "city": "Maliotenam",
+    "province": "QC",
+    "phone": "418-927-2984",
+    "description": "Maison de transition pour les adultes innus et les autres membres des Premières nations judiciarisés, ou l'ayant déjà été * programmes de réhabilitation, de responsabilisation et d'autonomie favorisan ... [Plus] | Clientèle : Hommes adultes innus et autres membres des Premières nations | Âges : 18 an(s) et plus",
+    "website": "http://www.kapatakan.ca",
+    "address": "60 Rue Innut, Maliotenam, QC G4R 4K2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "imm-collectif-iberoam",
     "name": "Centre social d'aide aux immigrants (CSAI)",
     "category": "immigration",
@@ -19247,6 +21644,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV."
   },
   {
+    "id": "cercle-des-mycologues-de-sept-le-cn",
+    "name": "Cercle des mycologues de Sept-îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-2306",
+    "description": "Regroupement de personnes intéressées par l'étude et la connaissance de la mycologie * vulgarisation et partage de connaissances à propos des champignons sauvages du Québec * initiation à la démarche ... [Plus]",
+    "website": "https://cerclemycologues7i.wixsite.com/accueil",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "cercles-de-fermi-res-du-qu-bec-l-mtg",
     "name": "Cercles De Fermières Du Québec (Les)",
     "category": "social",
@@ -19258,6 +21668,82 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "cfq.qc.ca",
     "address": "1193, rue Maisonneuve, Longueuil, Montérégie, QC, J4K 2S7",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-cn",
+    "name": "Cercles de Fermières du Québec, Cercle des fermières de Chûte-aux-Outardes, Fédération 03 Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Chute-aux-Outardes",
+    "province": "QC",
+    "phone": "418-567-2144 poste 301",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal    * partage des connaissances et du savoir-faire * diffusion d'information et organi ... [Plus] | Clientèle : Femmes * adolescentes",
+    "address": "Chute-aux-Outardes, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-cn-2",
+    "name": "Cercles de Fermières du Québec, Cercle des fermières de Colombier, Fédération 03 Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Colombier",
+    "province": "QC",
+    "phone": "418-565-3769",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal    * partage des connaissances et du savoir-faire * magazine « l'Actuelle »  * engage ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://cfq.qc.ca",
+    "address": "Colombier, QC G0H 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-cn-3",
+    "name": "Cercles de Fermières du Québec, Cercle des fermières de Fermont, Fédération 03 Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "450-442-3983",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal      * partage des connaissances et du savoir-faire * diffusion d'information et orga ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-cn-4",
+    "name": "Cercles de Fermières du Québec, Cercle des fermières de Port-Cartier, Fédération 03 Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal    * partage des connaissances et du savoir-faire * magazine « l'Actuelle »  * engage ... [Plus] | Âges : 14 an(s) et plus",
+    "website": "http://cfq.qc.ca",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-cn-5",
+    "name": "Cercles de Fermières du Québec, Cercle des fermières de Sept-Îles, Fédération 03 Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-2534",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * magazine « l'Actuelle » * engagement ... [Plus]",
+    "address": "556 Av. de Quen, Sept-Îles, QC G4R 2R3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-f-cn",
+    "name": "Cercles de Fermières du Québec, Fédération 03 Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * information et conférences * magazin ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://cfq.qc.ca",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "chambly-ville-mtg",
@@ -19284,6 +21770,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://ccimoulins.com",
     "address": "3115, boulevard de la Pinière, bureau 300, Terrebonne, Lanaudière, QC, J6X 4P7",
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, en télétravail le vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "chambre-de-commerce-de-sept-les-cn",
+    "name": "Chambre de commerce de Sept-îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-3488",
+    "description": "Regroupement de gens d'affaires intéressés à mettre en commun leur vision du développement régional, leurs expériences et expertise afin de promouvoir et défendre les intérêts économiques, sociaux, ci ... [Plus] | Clientèle : Gens d'affaires * entreprises",
+    "website": "https://www.ccsium.net/",
+    "address": "6 Rue Napoléon, Sept-Îles, QC G4R 3K4, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "re-assist2",
@@ -19388,6 +21887,66 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.cdecbeloeil.com",
     "address": "287, boulevard Cartier, Beloeil, Montérégie, QC, J3G 3R2",
     "hours": "clinique d'impôt 2026: sur rendez-vous seulement, 2 mars au 30 avril, lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00, mardi et mercredi 16h30 à 18h30"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-m-cn",
+    "name": "Chevaliers de Colomb du Québec, MRC de La Haute-Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC La Haute-Côte-Nord",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC de La Haute-Côte-Nord * Fo ... [Plus]",
+    "address": "26 Rue De La Rivère #101, Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-m-cn-2",
+    "name": "Chevaliers de Colomb du Québec, MRC de Manicouagan",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Manicouagan",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC de Manicouagan * Baie-Come ... [Plus] | Âges : 18 an(s) et plus",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-m-cn-3",
+    "name": "Chevaliers de Colomb du Québec, MRC de Minganie",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Minganie",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC de Minganie * Havre-Saint- ... [Plus]",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-m-cn-4",
+    "name": "Chevaliers de Colomb du Québec, MRC de Sept-Rivières",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Sept-Rivières",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC de Sept-Rivières * Port-Ca ... [Plus]",
+    "address": "Sept-Rivières, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-p-cn",
+    "name": "Chevaliers de Colomb du Québec, Pessamit",
+    "category": "social",
+    "subcategory": "",
+    "city": "Pessamit",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans Pessamit * Pessamit Conseil 17411 ... [Plus]",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "tr-garde-chez-annie",
@@ -19804,6 +22363,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "chute-aux-outardes-h-tel-de-vill-cn",
+    "name": "Chute-aux-Outardes. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Chute-aux-Outardes",
+    "province": "QC",
+    "phone": "418-567-2144",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.municipalitecao.ca",
+    "address": "Chute aux Outardes, Chute-aux-Outardes, QC G0H, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ch-teauguay-cour-municipale-mtg",
     "name": "Châteauguay - Cour Municipale",
     "category": "social",
@@ -19893,6 +22465,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cite55.org",
     "address": "702, montée Masson Sud, Terrebonne, Lanaudière, QC, J6W 0E7",
     "hours": "administration: lundi au vendredi 8h30 à 16h30, activités: lundi au vendredi 8h30 à 22h00, samedi 8h30 à 16h30"
+  },
+  {
+    "id": "cit-des-b-tisseurs-cn",
+    "name": "Cité des Bâtisseurs",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-6877",
+    "description": "Entreprise d’économie sociale vouée au développement de l’habitation communautaire * amélioration des conditions d’habitation des ménages à faible et modeste revenu * lutte contre la pauvreté et l’exc ... [Plus] | Clientèle : Familles * personnes à faible revenu * organismes communautaires",
+    "website": "http://www.citedesbatisseurs.ca",
+    "address": "896 Rue Leventoux, Baie-Comeau, QC G5C 1K1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-sm-laval-cite-sante",
@@ -21369,6 +23954,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "comit-gendron-cn",
+    "name": "Comité Gendron",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-4697",
+    "description": "Soutien aux personnes et familles demeurant dans les logements de l'Office municipal d'habitation de Manicouagan (OMH) * services aux résidents d'habitations à loyer modique (HLM) améliorant la qualit ... [Plus] | Clientèle : Clientèle de l'Office d'habitation de Manicouagan",
+    "address": "804 Rue Delanoé, Baie-Comeau, QC G5C 2T5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-log-quebec-clq",
     "name": "Comité Logement Rive-Nord Québec",
     "category": "housing",
@@ -21459,6 +24056,67 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 16h30"
   },
   {
+    "id": "comit-de-b-n-voles-de-sacr-coeur-cn",
+    "name": "Comité de bénévoles de Sacré-Coeur",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sacré-Coeur",
+    "province": "QC",
+    "phone": "418 236-4692",
+    "description": "Promotion de l'action bénévole favorisant le maintien à domicile et la qualité de vie des aînés * appels et visites d'amitié * transport-accompagnement bénévole : services médicaux, courses et sorties ... [Plus]",
+    "address": "Sacré-Coeur, QC G0T 1Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-de-b-n-voles-de-tadoussac-cn",
+    "name": "Comité de bénévoles de Tadoussac",
+    "category": "food",
+    "subcategory": "",
+    "city": "Tadoussac",
+    "province": "QC",
+    "phone": "418-235-1415",
+    "description": "Aide bénévole aux aînés * repas communautaires * maintien à domicile * accompagnement transports médicaux et autres * déneigement des entrées principales * ménage des pelouses au printemps | Clientèle : Aînés (50 ans et plus) * personnes à faible revenu",
+    "address": "Tadoussac, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-de-b-n-voles-des-bergeronn-cn",
+    "name": "Comité de bénévoles des Bergeronnes",
+    "category": "social",
+    "subcategory": "",
+    "city": "Les Bergeronnes",
+    "province": "QC",
+    "phone": "418-232-6248",
+    "description": "Promotion de l'action bénévole améliorant la qualité de vie des aînés * appels et visites d'amitié * transport-accompagnement bénévole : services médicaux, courses et sorties * sorties de groupe Activ ... [Plus]",
+    "address": "Grandes-Bergeronnes, QC G0T 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-de-b-n-voles-des-escoumins-cn",
+    "name": "Comité de bénévoles des Escoumins - Maintien à domicile",
+    "category": "food",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "Travailleuse sociale 418-233-2931 poste 232273",
+    "description": "Promotion de l'action bénévole améliorant la qualité de vie des aînés * appels et visites d'amitié * transport-accompagnement aux activités et repas organisés par le comité * recrutement et orientatio ... [Plus] | Clientèle : Aînés * aînés ayant besoin de briser l'isolement",
+    "address": "Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-de-d-veloppement-conomique-cn",
+    "name": "Comité de développement économique et touristique de Colombier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Colombier",
+    "province": "QC",
+    "phone": "418-565-3343",
+    "description": "Association d'affaires au service des loisirs et terrains de jeux",
+    "website": "https://municipalites-du-quebec.ca/colombier/",
+    "address": "524 Rue Principale, Colombier, QC G0H 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "comite-des-usagers-de-l-hopital-sai-sab",
     "name": "Comité des Usagers de L'Hôpital Sainte-Anne",
     "category": "social",
@@ -21509,6 +24167,135 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cdulanaudieresud.ca",
     "address": "135, boulevard Claude-David, bureau 1403, Repentigny, Lanaudière, QC, J6A 1N6",
     "hours": "sur rendez-vous"
+  },
+  {
+    "id": "comit-des-loisirs-et-de-d-velopp-cn",
+    "name": "Comité des loisirs et de développement social de Franquelin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Franquelin",
+    "province": "QC",
+    "phone": "418-296-1522",
+    "description": "Organisation d'activités sportives et culturelles pour tous citoyens de la municipalité de Franquelin | Clientèle : Le grand public",
+    "website": "http://www.municipalitefranquelin.ca",
+    "address": "Franquelin, QC G0H 1E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-nouveaux-arrivants-de--cn",
+    "name": "Comité des nouveaux arrivants de Port-Cartier",
+    "category": "immigration",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-350-3466",
+    "description": "Favoriser l'installation, l'accueil et la rétention des nouveaux arrivants en contribuant à leur intégration sociale | Clientèle : Nous accompagnons les familles et nous proposons des activités familiales | Âges : 18 an(s) et plus",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-de-basse-c-te--cn",
+    "name": "Comité des usagers de Basse-Côte-Nord",
+    "category": "health",
+    "subcategory": "",
+    "city": "Blanc-Sablon",
+    "province": "QC",
+    "phone": "418-461-2144 poste 611401",
+    "description": "Promotion et défense des droits et intérêts des usagers du réseau de la santé et des services sociaux afin de contribuer à l'amélioration de la qualité des services obtenus et des conditions de vie de ... [Plus]",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca/votre-cisss/comites-des-usagers",
+    "address": "Blanc-Sablon, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-de-fermont-cn",
+    "name": "Comité des usagers de Fermont",
+    "category": "health",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "418-287-3280 poste 712309",
+    "description": "Promotion et défense des droits et intérêts des usagers du réseau de la santé et des services sociaux afin de contribuer à l'amélioration de la qualité des services obtenus et des conditions de vie de ... [Plus]",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca/votre-cisss/comites-des-usagers",
+    "address": "Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-de-haute-c-te--cn",
+    "name": "Comité des usagers de Haute-Côte-Nord - Manicouagan",
+    "category": "health",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-5863",
+    "description": "Promotion et défense des droits et intérêts des usagers du réseau de la santé et des services sociaux afin de contribuer à l'amélioration de la qualité des services obtenus et des conditions de vie de ... [Plus]",
+    "website": "https://www.cisss-cotenord.gouv.qc.ca/usagers-et-visiteurs/comites-des-usagers/",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-de-minganie-cn",
+    "name": "Comité des usagers de Minganie",
+    "category": "health",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-2212 poste 542225",
+    "description": "Promotion et défense des droits et intérêts des usagers du réseau de la santé et des services sociaux afin de contribuer à l'amélioration de la qualité des services obtenus et des conditions de vie de ... [Plus]",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca/votre-cisss/comites-des-usagers",
+    "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-de-sept-les-cn",
+    "name": "Comité des usagers de Sept-Îles",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-9761 poste 452441",
+    "description": "Promotion et défense des droits et intérêts des usagers du réseau de la santé et des services sociaux afin de contribuer à l'amélioration de la qualité des services obtenus et des conditions de vie de ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca/votre-cisss/comites-des-usagers",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-du-centre-int--cn",
+    "name": "Comité des usagers du Centre intégré de santé et de services sociaux de la Côte-Nord",
+    "category": "health",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-2038 poste 342763",
+    "description": "Promotion et défense des droits et intérêts des usagers du réseau de la santé et des services sociaux afin de contribuer à l'amélioration de la qualité des services obtenus et des conditions de vie de ... [Plus]",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca/votre-cisss/comites-des-usagers",
+    "address": "835 Bd Joliet, Baie-Comeau, QC G5C 1P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-et-des-r-siden-cn",
+    "name": "Comité des usagers et des résidents de Port-Cartier",
+    "category": "health",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-2572 poste 443209",
+    "description": "Promotion et défense des droits et intérêts des usagers du réseau de la santé et des services sociaux afin de contribuer à l'amélioration de la qualité des services obtenus et des conditions de vie de ... [Plus]",
+    "website": "http://www.cisss-cotenord.gouv.qc.ca/votre-cisss/comites-des-usagers",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-multiprogramme-cn",
+    "name": "Comité des usagers multiprogramme de la Côte-Nord, Comité des usagers du Centre de protection et de réadaptation de la Côte-Nord",
+    "category": "health",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-2038 poste 342795",
+    "description": "Promotion et défense des droits et intérêts des usagers du réseau de la santé et des services sociaux afin de contribuer à l'amélioration de la qualité des services obtenus et des conditions de vie de ... [Plus]",
+    "website": "https://www.cisss-cotenord.gouv.qc.ca/usagers-et-visiteurs/comites-des-usagers/comite-dusagers-multiprogramme/",
+    "address": "625 Rue des Épilobes, Baie-Comeau, QC G5C 1Y9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-log-gatineau-clg",
@@ -21707,6 +24494,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "commission-scolaire-eastern-shor-cn",
+    "name": "Commission scolaire Eastern Shores, Centre Northern Lights",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-8412 poste 415",
+    "description": "Établissement d'enseignement permettant à une clientèle adulte de poursuivre ou de compléter une formation scolaire de niveau secondaire en conformité avec les programmes d'études du ministère de l'Éd ... [Plus] | Âges : 16 an(s) et plus",
+    "website": "http://www.essb.qc.ca/school_center_websites_adult-ed.html",
+    "address": "530 Av. Brochu, Sept-Îles, QC G4R 2X3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "communaut-m-tis-autochtone-de-ma-out",
     "name": "Communauté Métis Autochtone De Maniwaki",
     "category": "food",
@@ -21867,6 +24667,31 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Dépannage alimentaire d'urgence et épicerie à prix modique. La Société Saint-Vincent-de-Paul offre aide immédiate aux familles en difficulté.",
     "address": "2580, rue Royale, Trois-Rivières, QC G9A 4L5",
     "hours": "Dépannage lun-ven 8h30-16h30, sam 9h-12h. Appeler avant de se présenter."
+  },
+  {
+    "id": "comptoir-alimentaire-de-sept-les-cn",
+    "name": "Comptoir alimentaire de Sept-Îles",
+    "category": "food",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-2274",
+    "description": "Aide alimentaire d'urgence aux personnes et aux familles à faible revenu * paniers de Noël et distribution de cadeaux pour enfants | Clientèle : Aînés * familles | Âges : 18 an(s) et plus",
+    "website": "http://comptoiralimentaireseptiles.com",
+    "address": "Rue Boudreau, Sept-Îles, QC G4R 5P4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comptoir-alimentaire-l-escale-cn",
+    "name": "Comptoir alimentaire l'Escale",
+    "category": "food",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-6869",
+    "description": "Aide alimentaire aux personnes et familles en difficulté * lutte contre la pauvreté * accueil et référence * dépannage alimentaire * service de récupération d'aliments et de produits de première néces ... [Plus] | Clientèle : Personnes et familles à faible revenu ou en difficulté",
+    "address": "295 Rue de Puyjalon, Baie-Comeau, QC G5C 1N3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "comquat-mtg",
@@ -22205,6 +25030,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: lundi au jeudi 9h00 à 16h00, vendredi 9h00 à 12h00, location: en tout temps"
   },
   {
+    "id": "coop-rative-de-la-t-l-vision-com-cn",
+    "name": "Coopérative de la télévision communautaire de Fermont",
+    "category": "social",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "",
+    "description": "Coopérative d'économie locale offrant des services de télévision et d'Internet à la population",
+    "website": "http://diffusionfermont.ca",
+    "address": "Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "emp-cremauricie-louiseville",
     "name": "Coopérative de remplacement de la Mauricie – MRC de Maskinongé",
     "category": "employment",
@@ -22268,6 +25106,69 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cremauricie.com",
     "address": "3910, boulevard des Forges, bureau 203, Trois-Rivières, QC G8Y 1V7",
     "hours": "Lun-ven 8h-17h. Certaines agences ouvertes sam matin."
+  },
+  {
+    "id": "coop-rative-de-solidarit-aspire--cn",
+    "name": "Coopérative de solidarité Aspire-tout",
+    "category": "food",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-2753",
+    "description": "Soutien au maintien à domicile des personnes aînées, en perte d'autonomie ou en difficulté * services aux individus * préparation de repas selon les besoins : au quotidien, préparation de portions sur ... [Plus] | Clientèle : Aînés * adultes en perte d'autonomie temporaire (convalescence) ou permanente (handicap) * proches aidants * personnes et familles en difficulté",
+    "address": "896 Rue de Puyjalon bur 205, Baie-Comeau, QC G5C 1N1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coop-rative-de-solidarit-d-aide--cn-3",
+    "name": "Coopérative de solidarité d'aide à domicile de la Basse-Côte-Nord",
+    "category": "food",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-242-2002",
+    "description": "Soutien au maintien à domicile des personnes aînées, en perte d'autonomie ou en difficulté * services aux individus * préparation de repas * entretien ménager : léger, lourd, lessive et autres tâches ... [Plus] | Clientèle : Aînés * personnes en perte d'autonomie * personnes et familles en difficulté * proches aidants",
+    "address": "152 Rue de la Salle bureau 12, Tête-à-la-Baleine, QC G0G 2W0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coop-rative-de-solidarit-d-aide--cn-4",
+    "name": "Coopérative de solidarité d'aide à domicile des Sept-Rivières",
+    "category": "food",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-960-0620",
+    "description": "Soutien au maintien à domicile des personnes aînées, en perte d'autonomie ou en difficulté * services aux individus * préparation de repas : dîner, souper ou préparation à l'avance * soins d'hygiène p ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://aidedomicileseptrivieres.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coop-rative-de-solidarit-d-aide--cn",
+    "name": "Coopérative de solidarité d’aide à domicile de la Haute-Côte-Nord",
+    "category": "food",
+    "subcategory": "",
+    "city": "Longue-Rive",
+    "province": "QC",
+    "phone": "418-587-6877",
+    "description": "Soutien au maintien à domicile des personnes aînées, en perte d'autonomie ou en difficulté * préparation de repas * entretien ménager : petit et grand ménage, lessive, repassage et autres * aide pour ... [Plus] | Clientèle : Aînés (65 ans et plus) * adultes travailleurs * adultes en perte d'autonomie temporaire (convalescence) ou permanente (handicap) référées par le CISSS | Âges : 18 an(s) et plus",
+    "website": "http://csadhcn.ca",
+    "address": "Longue-Rive, QC G0T 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coop-rative-de-solidarit-d-aide--cn-2",
+    "name": "Coopérative de solidarité d’aide à domicile de la Minganie",
+    "category": "food",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-5128",
+    "description": "Soutien au maintien à domicile des personnes aînées, en perte d'autonomie ou en difficulté * services aux individus * préparation de repas (sans diète restrictive) * soins d'hygiène partiels ou comple ... [Plus] | Clientèle : Personnes en perte d'autonomie * aînés * personnes et familles en difficulté * personnes référées par le CISSS * proches aidants",
+    "website": "http://www.cadm.coop",
+    "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "corbeille-de-pain-pcl",
@@ -22425,6 +25326,96 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "corporation-de-d-veloppement-tou-cn",
+    "name": "Corporation de développement touristique et culturel du Canton de Brest",
+    "category": "social",
+    "subcategory": "",
+    "city": "Blanc-Sablon",
+    "province": "QC",
+    "phone": "418-461-3961",
+    "description": "Promotion et développement de l'industrie touristique, promotion du patrimoine local et régional * centre d'accueil d'expositions culturelles, situé à la sortie du traversier, mettant en valeur près d ... [Plus]",
+    "website": "http://www.bonjourquebec.com/fr-ca/fiche/information-touristique/organismes-locaux-de-promotion-touristique/corporation-de-developpement-touristique-et-culturel-du-canton-de-b",
+    "address": "Blanc-Sablon, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-d-veloppement-con-cn",
+    "name": "Corporation de développement économique Ekuanitshinnuat",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Mingan",
+    "province": "QC",
+    "phone": "418-949-2132",
+    "description": "Stimulation de l'entrepreneuriat et soutien aux initiatives d'entreprise et à la création d'emplois * services aux individus, aux groupes et aux organismes * aide : démarrage, gestion, expansion et fi ... [Plus] | Clientèle : Communauté des Ekuanitshinnuat * organismes ou entreprises * entrepreneurs * personnes désirant mettre sur pied ou développer une entreprise * chercheurs d'emploi * artisans et artistes",
+    "website": "http://www.ekuanitshit.com/corporation-de-developpement-economique-ekuanitshunnuat",
+    "address": "Mingan, QC G0G 1V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-d-veloppement-con-cn-2",
+    "name": "Corporation de développement économique Ekuanitshinnuat, Maison Kuessipan",
+    "category": "food",
+    "subcategory": "",
+    "city": "Mingan",
+    "province": "QC",
+    "phone": "418-949-2395",
+    "description": "Projet communautaire visant à lutter contre la pauvreté, l’exclusion sociale et l’insécurité alimentaire * popote roulante : repas chauds livrés à domicile * comptoir alimentaire : dépannage sur deman ... [Plus] | Clientèle : Popote roulante : aînés * bénéficiaires de soins à domicile du Centre de santé Mashtishanitshuap",
+    "website": "http://www.ekuanitshit.com/maison-kueshipen",
+    "address": "Mingan, QC G0G 1V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-protection-de-l-e-cn",
+    "name": "Corporation de protection de l'environnement de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-1316",
+    "description": "Sensibilisation à la protection de l’environnement, la préservation des ressources et l’importance du développement durable * soutien et accompagnement * service-conseil : grand public, scolaire ou en ... [Plus] | Clientèle : Grand public * organismes, institutions et entreprises",
+    "website": "http://cpesi.ca",
+    "address": "818 Bd Laure, Sept-Îles, QC G4R 1Y7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-transport-adapt-d-cn",
+    "name": "Corporation de transport adapté de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "Transport adapté 418-962-7111",
+    "description": "Organisation du transport en commun et adapté à Sept-Îles * transport adapté : de porte à porte, accessible aux personnes vivant avec des limitations ayant un impact sur leur mobilité * Taxibus Sept-Î ... [Plus] | Clientèle : Taxibus Sept-Îles et Interbus 418-968-2877 | Âges : 5 an(s) et plus",
+    "website": "http://ville.sept-iles.qc.ca/fr/transport_75",
+    "address": "652 Av. de Quen, Sept-Îles, QC G4R 2R5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-des-a-n-s-de-la-ming-cn",
+    "name": "Corporation des aînés de la Minganie",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-3065",
+    "description": "Logement en chambre pour aînés autonomes et semi-autonomes * présence d'un ascenseur * accès à la salle à manger Capacité d'hébergement * 12 chambres simples * 6 chambres doubles | Clientèle : Aînés autonomes et semi-autonomes | Âges : 75 an(s) et plus",
+    "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-du-d-veloppement-pat-cn",
+    "name": "Corporation du développement patrimonial, culturel et touristique de Natashquan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Natashquan (Ville)",
+    "province": "QC",
+    "phone": "418-726-3054",
+    "description": "Développement et promotion du tourisme dans la région de Natashquan * accueil et information * promotion touristique * sensibilisation * concertation * développement * répertoire des attraits touristi ... [Plus] | Clientèle : Le grand public",
+    "website": "http://www.copactenatashquan.net",
+    "address": "Natashquan, QC G0G 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "corporation-les-enfants-de-ma-rue-jol",
     "name": "Corporation les Enfants de Ma Rue",
     "category": "social",
@@ -22436,6 +25427,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://enfantsdemarue.org",
     "address": "638, boulevard Base-de-Roc, porte 4, Joliette, Lanaudière, QC, J6E 5P7",
     "hours": "lundi au jeudi 8h00 à 16h30"
+  },
+  {
+    "id": "corporation-glise-sainte-am-lie-cn",
+    "name": "Corporation église Sainte-Amélie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-5528",
+    "description": "Institution muséale agréée * bâtiment historique et patrimonial de style Dom Bellot * grandes fresques et nombreux vitraux, œuvres de l'artiste de renom Guido Nincheri, d'origine italienne, dit le « M ... [Plus]",
+    "website": "https://eglisesteamelie.com",
+    "address": "36 Av. Marquette, Baie-Comeau, QC G4Z 1K7, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "coteau-du-lac-ville-mtg",
@@ -23024,6 +26028,30 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service de repas midi lun-ven 11h30-13h30. Vérifier horaires spéciaux."
   },
   {
+    "id": "cuisine-collective-de-godbout-cn",
+    "name": "Cuisine collective de Godbout",
+    "category": "food",
+    "subcategory": "",
+    "city": "Godbout",
+    "province": "QC",
+    "phone": "418-568-7414",
+    "description": "Cuisines collectives * préparation de repas à moindre coût et promotion de saines habitudes de vie * projet en cours : frigo communautaire | Clientèle : Grand public",
+    "address": "Plage de Godbout, 144 Rue Pascal-Comeau, Godbout, QC G0H 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cuisine-collective-des-cureuils--cn",
+    "name": "Cuisine collective des écureuils de Baie-Comeau",
+    "category": "food",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-6095",
+    "description": "Cuisine collective des écureuils de Baie-Comeau",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "cuisines-collectives-la-joyeuse-mar-rep",
     "name": "Cuisines Collectives la Joyeuse Marmite",
     "category": "food",
@@ -23035,6 +26063,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.lajoyeusemarmite.com",
     "address": "50, rue Thouin, pavillon Richelieu, local 114, Repentigny, Lanaudière, QC, J6A 4J4",
     "hours": "lundi au jeudi 8h30 à 16h00, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "culture-c-te-nord-cn",
+    "name": "Culture Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-1450",
+    "description": "Promotion et développement de l’unicité culturelle nord-côtière * contribution au rayonnement des arts et de la culture par la transmission d’informations sur les activités et services de l'organisme ... [Plus]",
+    "website": "http://culturecotenord.com",
+    "address": "22 Pl. la Salle, Baie-Comeau, QC G4Z 1K3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "culture-outaouais-out",
@@ -23167,6 +26208,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "CPE: lundi au jeudi 7h15 à 18h15, vendredi et pendant période estival: 7h00 à 18h00"
   },
   {
+    "id": "c-gep-de-baie-comeau-cn",
+    "name": "Cégep de Baie-Comeau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-5707",
+    "description": "Établissement d'enseignement collégial offrant des programmes préuniversitaires et techniques * formation continue * diplôme d'études collégiales (DEC) * attestations d’études collégiales (AEC) Chemin ... [Plus] | Clientèle : Variable selon les programmes et les domaines d'étude",
+    "website": "http://cegepbc.ca",
+    "address": "537 Bd Blanche, Baie-Comeau, QC G5C 2B2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "c-gep-de-baie-comeau-club-de-nat-cn",
+    "name": "Cégep de Baie-Comeau, Club de natation les Trappeurs",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-5707",
+    "description": "Club de natation du Cégep de Baie-Comeau * cours de natation * volet compétitif | Clientèle : Étudiants du Cégep de Baie-Comeau",
+    "website": "http://cegepbc.ca/etudiants/vie-etudiante/vie-sportive/#:~:text=Les%20Trappeurs%20du%20C%Cégep%20de,Natation%20(mixte)",
+    "address": "537 Bd Blanche, Baie-Comeau, QC G5C 2B2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "c-gep-de-chicoutimi-centre-d-tud-cn",
+    "name": "Cégep de Chicoutimi, Centre d’études collégiales de Forestville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-6308",
+    "description": "Établissement d'enseignement collégial offrant des programmes préuniversitaires et techniques à ses campus de Forestville et de Saguenay * location de locaux * formation en classe * formations en lign ... [Plus] | Clientèle : Variable selon les programmes et les domaines d'étude | Âges : 17 an(s) et plus",
+    "website": "https://cchic.ca/forestville",
+    "address": "Forestville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "c-gep-de-sept-les-cn",
+    "name": "Cégep de Sept-îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-9848",
+    "description": "Établissement d'enseignement collégial offrant des programmes préuniversitaires et techniques * formation continue * diplôme d'études collégiales (DEC) Cheminement d'intégration * Tremplin DEC Enseign ... [Plus] | Clientèle : Variable selon les programmes et les domaines d'étude",
+    "website": "https://cegepsi.ca",
+    "address": "175 Rue de la Vérendrye, Sept-Îles, QC G4R 5G7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "c-gep-douard-montpetit-clinique--mtg-2",
     "name": "Cégep Édouard-Montpetit - Clinique D'Hygiène Dentaire",
     "category": "health",
@@ -23217,6 +26310,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.cegepmontpetit.ca/cegep/communaute/cliniques/lunetterie-clinique-de-lentilles",
     "address": "945, chemin de Chambly, local A-225-6, Longueuil, Montérégie, QC, J4H 3M6",
     "hours": "durant l'année scolaire, sur rendez-vous"
+  },
+  {
+    "id": "c-te-nord-du-golfe-du-saint-laur-cn",
+    "name": "Côte-Nord-du-Golfe-du-Saint-Laurent. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-787-2244",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-787-2244",
+    "website": "http://www.mcngsl.ca",
+    "address": "Côte-Nord-du-Golfe-du-Saint-Laurent, QC G0G 1G0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "pw4",
@@ -23413,6 +26519,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 15h30"
   },
   {
+    "id": "diab-tiques-de-baie-comeau-les-cn",
+    "name": "Diabétiques de Baie-Comeau (Les)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-297-4366",
+    "description": "Regroupement de personnes concernées par le diabète, personnes atteintes par le diabète du type un ou du type deux, de grossesse ou autre, conjoint/e d'une personne atteinte de diabète, parents d'enfa ... [Plus] | Clientèle : Personnes diabétiques",
+    "website": "http://www.diabete.qc.ca",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "diabetiques-de-lanaudiere-scb",
     "name": "Diabétiques de Lanaudière",
     "category": "social",
@@ -23424,6 +26543,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.diabetiquesdelanaudiere.org",
     "address": "950, boulevard Sainte-Anne, bureau 112, Saint-Charles-Borromée, Lanaudière, QC, J6E 5B5",
     "hours": "sur rendez-vous, mardi au jeudi 9h00 à 17h00"
+  },
+  {
+    "id": "diab-tiques-de-sept-les-les-cn",
+    "name": "Diabétiques de Sept-îles (Les)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-965-0364",
+    "description": "Aide et soutien aux personnes diabétiques * objectif de regroupement des personnes atteintes par le diabète du type un ou du type deux * information et conférences * prêt de cassettes * chaîne télépho ... [Plus] | Clientèle : Personnes diabétiques",
+    "website": "https://repertoire.lappui.org/fr/organisation/les-diabetiques-de-sept-iles",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "nb-family-nb",
@@ -23489,6 +26621,84 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.diocesevalleyfield.org",
     "address": "11, rue de l'Église, Salaberry-de-Valleyfield, Montérégie, QC, J6T 1J5",
     "hours": "lundi au jeudi 9h00 à 12h00 et 13h30 à 16h30"
+  },
+  {
+    "id": "dioc-se-de-baie-comeau-cn",
+    "name": "Diocèse de Baie-Comeau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-5744",
+    "description": "Services diocésains aux paroisses et institutions regroupées sur le territoire Voir dossiers individuels : * Zone pastorale 1 * Zone pastorale 2 * Zone pastorale 3 * Zone pastorale 4 * Zone pastorale ... [Plus]",
+    "website": "http://diocese-bc.net",
+    "address": "639 Rue de Bretagne, Baie-Comeau, QC G5C 1X2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "dioc-se-de-baie-comeau-zone-past-cn",
+    "name": "Diocèse de Baie-Comeau, Zone pastorale 1",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "Services pastoraux et célébrations eucharistiques régulières Paroisses de la Zone pastorale 1",
+    "description": "Diocèse de Baie-Comeau, Zone pastorale 1",
+    "website": "http://diocese-bc.net",
+    "address": "639 Rue de Bretagne, Baie-Comeau, QC G5C 1X2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "dioc-se-de-baie-comeau-zone-past-cn-2",
+    "name": "Diocèse de Baie-Comeau, Zone pastorale 2",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "Services pastoraux et célébrations eucharistiques régulières Paroisses de la Zone pastorale 2",
+    "description": "Diocèse de Baie-Comeau, Zone pastorale 2",
+    "website": "http://diocese-bc.net",
+    "address": "639 Rue de Bretagne, Baie-Comeau, QC G5C 1X2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "dioc-se-de-baie-comeau-zone-past-cn-3",
+    "name": "Diocèse de Baie-Comeau, Zone pastorale 3",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "Services pastoraux et célébrations eucharistiques régulières Paroisses de la Zone pastorale 3",
+    "description": "Diocèse de Baie-Comeau, Zone pastorale 3",
+    "website": "http://diocese-bc.net",
+    "address": "639 Rue de Bretagne, Baie-Comeau, QC G5C 1X2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "dioc-se-de-baie-comeau-zone-past-cn-4",
+    "name": "Diocèse de Baie-Comeau, Zone pastorale 4",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "Services pastoraux et célébrations eucharistiques régulières Paroisses de la Zone pastorale 4",
+    "description": "Diocèse de Baie-Comeau, Zone pastorale 4",
+    "website": "http://diocese-bc.net",
+    "address": "639 Rue de Bretagne, Baie-Comeau, QC G5C 1X2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "dioc-se-de-baie-comeau-zone-past-cn-5",
+    "name": "Diocèse de Baie-Comeau, Zone pastorale 5",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "Services pastoraux et célébrations eucharistiques régulières Paroisses de la Zone pastorale 5",
+    "description": "Diocèse de Baie-Comeau, Zone pastorale 5",
+    "website": "http://diocese-bc.net",
+    "address": "639 Rue de Bretagne, Baie-Comeau, QC G5C 1X2, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "diocese-de-joliette-jol",
@@ -23882,20 +27092,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30"
   },
   {
-    "id": "urgent-drogue-aide",
-    "name": "Drogue : aide et référence",
-    "category": "mentalHealth",
-    "subcategory": "Dépendance et addiction",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-265-2626",
-    "description": "Ligne provinciale gratuite d'aide et de référence pour les problèmes de dépendance à la drogue, à l'alcool et aux médicaments. Disponible 24h/24, 7j/7. Intervenants spécialisés, orientent vers les centres de réadaptation, groupes de soutien et ressources locales.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
-    "isUrgent": true,
-    "isProvinceWide": true
-  },
-  {
     "id": "mh-drogue-aide",
     "name": "Drogue : aide et référence",
     "category": "mentalHealth",
@@ -23907,6 +27103,20 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://aidedrogue.ca",
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi.",
+    "isProvinceWide": true
+  },
+  {
+    "id": "urgent-drogue-aide",
+    "name": "Drogue : aide et référence",
+    "category": "mentalHealth",
+    "subcategory": "Dépendance et addiction",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-265-2626",
+    "description": "Ligne provinciale gratuite d'aide et de référence pour les problèmes de dépendance à la drogue, à l'alcool et aux médicaments. Disponible 24h/24, 7j/7. Intervenants spécialisés, orientent vers les centres de réadaptation, groupes de soutien et ressources locales.",
+    "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
+    "isUrgent": true,
     "isProvinceWide": true
   },
   {
@@ -23934,6 +27144,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.coffre.ca",
     "address": "49, rue Saint-Jacques, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2J8",
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "droits-et-recours-en-sant-mental-cn",
+    "name": "Droits et recours en santé mentale de la Côte-Nord",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-298-2834",
+    "description": "Nous offrons gratuitement une vaste gamme de services personnalisés. Analyse : notre personnel s'entretient avec vous afin de cibler vos besoins pour vous apporter un soutien pertinent et offrir l'aid ... [Plus] | Clientèle : Personnes vivant ou ayant vécu une problématique de santé mentale",
+    "website": "http://www.drsmcn.org",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "droits-et-recours-en-sant-mental-cn-2",
+    "name": "Droits et recours en santé mentale de la Côte-Nord, Point de service Sept-Îles",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-2778",
+    "description": "Soutien à la personne vivant ou ayant vécu un problème en santé mentale * accueil personnalisé * information, aide et accompagnement gratuits et confidentiels * accroissement des compétences dans l’ex ... [Plus] | Clientèle : Personnes vivant ou ayant vécu une problématique de santé mentale",
+    "website": "http://www.drsmcn.org",
+    "address": "Sept-Îles, Sept-Rivières, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "droits-acc-s-de-l-outaouais-out",
@@ -24013,6 +27249,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h00 et 12h30 à 16h00, vendredi 8h00 à 12h00"
   },
   {
+    "id": "d-pannage-de-l-anse-cn",
+    "name": "Dépannage de l'Anse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-7881",
+    "description": "Recyclage, récupération et réutilisation de vêtements et d'articles divers | Âges : 65 an(s) et moins",
+    "address": "850 Rue de Puyjalon, Baie-Comeau, QC G5C 1L5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "d-panneur-alimentaire-la-source-out",
     "name": "Dépanneur Alimentaire La Source",
     "category": "food",
@@ -24077,6 +27325,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "d-veloppement-conomique-port-car-cn",
+    "name": "Développement économique Port-Cartier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-8383",
+    "description": "Contribution au développement économique, social et culturel durable sur le territoire * service-conseil dans l'implantation de projets * prospection * évaluation de projets (viabilité et faisabilité) ... [Plus]",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "d-veloppement-conomique-sept-les-cn",
+    "name": "Développement économique Sept-îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-7677",
+    "description": "Contribution au développement économique, social et culturel durable sur le territoire * service-conseil dans l'implantation de projets * promotion des avantages concurrentiels de Sept-Îles * prospect ... [Plus]",
+    "website": "https://www.deseptiles.com/fr",
+    "address": "700 Bd Laure, Sept-Îles, QC G4R 1Y1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ab-ecca",
     "name": "ECCA – Immigrant Services Calgary",
     "category": "immigration",
@@ -24090,19 +27363,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
-    "id": "ab-foodbank-edmonton",
-    "name": "Edmonton Food Bank",
-    "category": "food",
-    "subcategory": "Banque alimentaire",
-    "city": "Edmonton",
-    "province": "AB",
-    "phone": "780-425-4190",
-    "description": "",
-    "website": "https://www.edmontonsfoodbank.com",
-    "address": "11508, 120 Street NW, Edmonton AB T5G 2Y2",
-    "hours": "Service essentiel Alberta."
-  },
-  {
     "id": "ab-edmonton-food",
     "name": "Edmonton Food Bank",
     "category": "food",
@@ -24114,6 +27374,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.edmontonsfoodbank.com",
     "address": "11508, 120 Street NW, Edmonton AB T5G 2Y2",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
+  },
+  {
+    "id": "ab-foodbank-edmonton",
+    "name": "Edmonton Food Bank",
+    "category": "food",
+    "subcategory": "Banque alimentaire",
+    "city": "Edmonton",
+    "province": "AB",
+    "phone": "780-425-4190",
+    "description": "",
+    "website": "https://www.edmontonsfoodbank.com",
+    "address": "11508, 120 Street NW, Edmonton AB T5G 2Y2",
+    "hours": "Service essentiel Alberta."
   },
   {
     "id": "egan-sud-municipalit-out",
@@ -24287,6 +27560,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.enfantsdelespoirhull.org",
     "address": "107, rue Dollard-Des Ormeaux, Gatineau, Outaouais, QC, J8X 3M2",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "ensemble-folklorique-tam-ti-dela-cn",
+    "name": "Ensemble folklorique Tam ti delam",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Troupe de danse et musique folklorique * production de spectacle * cours | Âges : 4 an(s) et plus",
+    "website": "https://www.tamtidelam.ca/",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "entourage-sant-mentale-mtg",
@@ -24482,6 +27768,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "environnement-c-te-nord-cn",
+    "name": "Environnement Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-6362",
+    "description": "Implantation d'une vision régionale du développement durable et de l'environnement avec les acteurs socioéconomiques de la Côte-Nord * ressource, concertation et mise en contact des intervenants œuvra ... [Plus] | Clientèle : Le grand public * organismes et entreprises",
+    "website": "http://www.crecn.org",
+    "address": "818 Bd Laure local 104, Sept-Îles, QC G4R 1Y7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "environnement-et-changement-clim-out",
     "name": "Environnement Et Changement Climatique Canada",
     "category": "social",
@@ -24572,6 +27871,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "vie active: mardi et jeudi 9h15 10h15, dîners communautaires: septembre à avril, dernier mardi du mois"
   },
   {
+    "id": "espace-c-te-nord-cn",
+    "name": "Espace Côte-Nord",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-2403",
+    "description": "Prévention de la violence faite aux enfants (physique, verbale, psychologique, sexuelle) * collaboration avec les organismes communautaires, associations et intervenants pour la sensibilisation de la ... [Plus] | Clientèle : Enfants et leurs proches | Âges : 3 an(s) - 12 an(s)",
+    "website": "https://espacecote-nord.org/",
+    "address": "337 Bd la Salle #001, Baie-Comeau, QC G4Z 2Z1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "espace-dep-sylvestre-out",
     "name": "Espace Dep Sylvestre",
     "category": "social",
@@ -24583,6 +27895,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "depanneursylvestre.org",
     "address": "230, rue Montcalm, Gatineau, Outaouais, QC, J8Y 3C1",
     "hours": "variable, lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "espace-k-th-tre-cn",
+    "name": "Espace K Théâtre",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-8314",
+    "description": "Création, production et diffusion d'événements de théâtre professionnel destinés au grand public de la région * troupe de théâtre * aide à la rédaction de textes * formation et développement de la dra ... [Plus] | Clientèle : Artistes * auteurs * interprètes indépendants",
+    "website": "http://www.espacektheatre.com",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "espace-mam-mtg",
@@ -24663,6 +27988,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au mercredi 8h30 à 15h30, jeudi 8h30 à 15h30 et 17h00 à 20h00"
   },
   {
+    "id": "espoir-de-shelna-l-cn",
+    "name": "Espoir de Shelna (L')",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "Direction 418-538-3672 poste 3",
+    "description": "Centre d'hébergement temporaire et permanent visant le mieux-être des adultes ayant un handicap, une déficience physique, intellectuelle, un trouble du spectre de l'autisme ou de santé mentale * resso ... [Plus] | Clientèle : Assistance immédiate 418-538-3672 poste 5 | Âges : 18 an(s) et plus",
+    "website": "http://www.espoirdeshelna.ca",
+    "address": "1075 Prom. Des Anciens, Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "essipit-conseil-de-la-nation-inn-cn",
+    "name": "Essipit. Conseil de la Nation innue",
+    "category": "social",
+    "subcategory": "",
+    "city": "Essipit",
+    "province": "QC",
+    "phone": "418-233-2509",
+    "description": "Assume des responsabilités en administration, finances, développement économique, communautaire et culturel, loisirs, sécurité, formation et main-d'œuvre, revendications territoriales et négociations ... [Plus] | Clientèle : Service de police, bureau 418-233-2050 * patrouille 418-233-2037",
+    "website": "http://www.innu-essipit.com",
+    "address": "Réserve indienne de Essipit, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "estrade-l-mtg",
     "name": "Estrade (L')",
     "category": "housing",
@@ -24714,6 +28065,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Défense des droits et services spécialisés."
   },
   {
+    "id": "fadoq-r-gion-c-te-nord-cn",
+    "name": "FADOQ - Région Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-7870",
+    "description": "Soutien à l'organisation et au fonctionnement des clubs affiliés et aide technique à leurs dirigeants * promotion de leurs intérêts communs * éveil de la société aux besoins des aînés et croissance de ... [Plus] | Clientèle : Aînés membres d'un club local FADOQ | Âges : 50 an(s) et plus",
+    "website": "http://www.fadoq.ca/cote-nord/",
+    "address": "bureau 302, 625 Bd Laflèche, Baie-Comeau, QC G5C 1C5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-soc-fadoq",
     "name": "FADOQ – Réseau aînés Québec",
     "category": "social",
@@ -24725,6 +28089,67 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.fadoq.ca",
     "address": "7665, boul. Lacordaire, Montréal QC H1S 2A7",
     "hours": "Lun-ven 8h30-16h30. Défense des droits et services spécialisés."
+  },
+  {
+    "id": "fadoq-club-les-pionniers-cn",
+    "name": "FADOQ. Club Les Pionniers",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-9493",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "https://sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=182000",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-les-vive-la-joie-cn",
+    "name": "FADOQ. Club Les Vive la Joie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-9493",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-anneaux-d-or-de-galli-cn",
+    "name": "FADOQ. Club anneaux d’or de Gallix (les)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-766-4039",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "address": "Gallix, Sept-Îles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-de-l-ge-d-or-de-chute-cn",
+    "name": "FADOQ. Club de l'âge d'or de Chute-aux-Outardes",
+    "category": "social",
+    "subcategory": "",
+    "city": "Chute-aux-Outardes",
+    "province": "QC",
+    "phone": "418-567-8241",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ)    * réunions d'information  * représentation, défense des droits et référence aux organismes partenaires  * ra ... [Plus] | Âges : 50 an(s) et plus",
+    "address": "1 Rue de l'Ecole, Chute-aux-Outardes, QC G0H 1C0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-de-l-ge-d-or-de-haute-cn",
+    "name": "FADOQ. Club de l'âge d'or de Hauterive",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-1566",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "address": "102 Rue Alexandre, Godbout, QC G0H 1G0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "s-fcabq",
@@ -25140,6 +28565,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au dimanche 9h30 à 17h00"
   },
   {
+    "id": "fermont-h-tel-de-ville-cn",
+    "name": "Fermont. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "418-287-5411",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-287-3227",
+    "website": "http://www.villedefermont.qc.ca",
+    "address": "100 Place Daviault, Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fesp-fermont-spectacles-cn",
+    "name": "Fesp - Fermont spectacles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "418-287-5471",
+    "description": "Diffuseur de spectacles et cinéma dans la communauté de Fermont * spectacles : humour, chanson, musique, théâtre, danse, autres arts de la scène * cinéma hebdomadaire pour le grand public Points de se ... [Plus] | Clientèle : Artistes * chercheurs de salle ou diffuseur * grand public",
+    "website": "http://www.fesp.ca",
+    "address": "Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "festival-blizz-art-cn",
+    "name": "Festival Blizz'Art",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "",
+    "description": "Événement extérieur d'exposition de sculpture sur neige * concours de sculpture sur neige * spectacles musicaux * activités",
+    "website": "https://www.festivalblizzart.com/",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "festival-du-film-de-sept-les-cn",
+    "name": "Festival du film de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Festival de film représentant plus d'une vingtaine de films québécois, mais aussi sur des productions internationales présentées en exclusivité dans la région. * projections au Ciné-Centre de Sept-Île ... [Plus]",
+    "website": "https://www.cine7.ca/",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fibromyalgie-laval-lav",
     "name": "Fibromyalgie Laval",
     "category": "social",
@@ -25361,6 +28838,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "banque alimentaire: mardi au jeudi 9h30 à 11h30 et 13h00 à 16h00, vendredi 13h00 à 16h00"
   },
   {
+    "id": "fonds-yves-boulianne-cn",
+    "name": "Fonds Yves Boulianne",
+    "category": "food",
+    "subcategory": "",
+    "city": "Sacré-Coeur",
+    "province": "QC",
+    "phone": "418-514-3024",
+    "description": "Soutien aux personnes malades ou ayant besoin de soins de santé de courte ou longue durée * aide financière pour les soins et frais afférents (déplacements, hébergement et repas lors des déplacements, ... [Plus] | Clientèle : Aide aux enfants malades : enfants et jeunes malades ou ayant un cancer et leurs parents",
+    "address": "Rue Boulianne, La Haute-Côte-Nord Regional County Municipality, QC G0T 1Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-food-montreal-food",
     "name": "Food banks – Réseau entraide alimentaire Mtl",
     "category": "food",
@@ -25372,6 +28861,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.foodbanksquebec.com",
     "address": "6775, av. de Darlington, Montréal, QC H3S 1V5",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Apporter pièce identité et preuve de résidence."
+  },
+  {
+    "id": "forestville-h-tel-de-ville-cn",
+    "name": "Forestville. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "Hôtel de ville 418-587-2285 poste 1101",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque Camille-Bouchard 418-587-4482 poste 3103",
+    "website": "https://www.facebook.com/villedeforestville/",
+    "address": "Forestville, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "formatio-mtg",
@@ -25423,6 +28925,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à Foyer Saints-Anges De Ham-Nord Inc.. Source: MSSS – Fichier M02 des installations.",
     "address": "493, rue Principale, Ham-Nord, QC G0P 1A0",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "foyer-tshennuat-cn",
+    "name": "Foyer Tshennuat",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Maliotenam",
+    "province": "QC",
+    "phone": "418-927-3304",
+    "description": "Résidence pour aînés autochtones autonomes permettant le maintien et la stimulation de leurs facultés et capacités, tout en procurant assistance et services essentiels au bien-être physique, psycholog ... [Plus]",
+    "address": "Maliotenam, QC G4R 4K2, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "imm-soc-asile-mtl",
@@ -25501,6 +29015,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 16h00"
   },
   {
+    "id": "frigo-communautaire-longue-point-cn",
+    "name": "Frigo communautaire - Longue-Pointe-de_Mingan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Longue-Pointe-de-Mingan",
+    "province": "QC",
+    "phone": "",
+    "description": "Frigo ouvert à tous. Toute la communauté peut déposer des denrées alimentaires afin d'en faire profiter aux personnes ne pouvant répondre à leurs besoins alimentaires. Sauve ta bouffe - Répertoire des ... [Plus]",
+    "address": "Longue-Pointe-de-Mingan, QC G0G 1V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "friperie-bienheureuse-marie-anne-bl-trb",
     "name": "Friperie Bienheureuse Marie-Anne Blondin",
     "category": "food",
@@ -25535,6 +29061,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Vente de vêtements et d'articles à prix modique.* Récupération d'articles usagés sur place: vêtements, petits articles de maison, jouets et équipement de loisirs. | Clientèle: familles Capacité: 15 | Territoire: Sainte-Catherine | Statut: organisme à but non lucratif",
     "address": "5367, boulevard Marie-Victorin, Sainte-Catherine, Montérégie, QC, J5C 1L9",
     "hours": "mercredi 13h00 à 18h00"
+  },
+  {
+    "id": "friperie-recyk-et-frip-cn",
+    "name": "Friperie Recyk et Frip",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-960-5553",
+    "description": "Promouvoir la protection de l’environnement en encourageant le recyclage, la réduction des déchets et l’entraide communautaire, tout en soutenant les personnes vulnérables et valorisant l’engagement b ... [Plus] | Clientèle : Personnes à faible revenu, dans une situation précaire, sinistrées et référées par un intervenant.",
+    "address": "301 Av. Brochu, Sept-Îles, QC G4R 4S7, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "friperie-le-papillon-repentigny-rep",
@@ -26000,6 +29538,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "girouettes-les-cn",
+    "name": "Girouettes (Les)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Chute-aux-Outardes",
+    "province": "QC",
+    "phone": "418-567-8920 poste 3",
+    "description": "Offre du soutien, du répit, des activités inclusives et des services favorisant la participation sociale des personnes vivant avec une déficience intellectuelle, physique ou un trouble du spectre de l ... [Plus] | Clientèle : Personnes vivant avec un handicap, une déficience physique (DP) ou intellectuelle (DI) * leurs proches",
+    "website": "http://www.lesgirouettes.ca",
+    "address": "37 Rue de l'Église, Chute-aux-Outardes, QC G0H 1C0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "gite-ami-le-h-bergement-de-trans-out",
     "name": "Gite Ami (Le) - Hébergement De Transition - Le Transit Notre Dame",
     "category": "housing",
@@ -26036,6 +29587,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Refuge de stabilisation afin d'accélérer le cheminement vers un hébergement de transition et un retour au logement.* Jusqu'à 2 mois. | Clientèle: personnes qui connaissent leur premier épisode d'itinérance, personnes en situation d'itinérance qui sortent de thérapie ou de détention Capacité: 38 places | Territoire: Outaouais | Statut: organisme à but non lucratif",
     "website": "legiteami.org",
     "address": "175, boulevard Greber, Gatineau, Outaouais, QC, J8T 3M8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "godbout-h-tel-de-ville-cn",
+    "name": "Godbout. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Godbout",
+    "province": "QC",
+    "phone": "418-568-7581",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-568-7670 poste 1102",
+    "website": "http://municipalitegodbout.ca",
+    "address": "Godbout, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -26076,6 +29640,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "graindesel.ca",
     "address": "544, boulevard Laurier, Beloeil, Montérégie, QC, J3G 4H9",
     "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "grains-de-soleil-c-te-nord-cn",
+    "name": "Grains de soleil Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Chute-aux-Outardes",
+    "province": "QC",
+    "phone": "418-567-8920 poste 4",
+    "description": "Soutien aux parents et proches pour le développement global des enfants et leur réussite scolaire * halte-garderie : éducative, multi-âge, motrice ou plein-air * joujouthèque tous âges : prêt de jeux, ... [Plus] | Clientèle : Parents et leurs enfants * grands-parents et proches impliqués dans le développement des enfants * aînés",
+    "website": "http://www.grainsdesoleil.org",
+    "address": "Chute-aux-Outardes, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "grand-rappel-le-cn",
+    "name": "Grand rappel (Le)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-8302",
+    "description": "Promotion du patrimoine artistique régional matériel ou immatériel touchant principalement les domaines de la musique, incluant la chanson, les arts visuels, le cinéma et la photo",
+    "website": "http://www.legrandrappel.org",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "grand-remous-municipalit-out",
@@ -26166,6 +29756,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.legrenierdescollines.com",
     "address": "34, chemin de l'Église, bureau 2, Val-Des-Monts, Outaouais, QC, J8N 2A1",
     "hours": "lundi au vendredi 8h30 à 16h00, frigo communautaire: 24 heures, 7 jours"
+  },
+  {
+    "id": "gros-m-catina-h-tel-de-ville-cn",
+    "name": "Gros-Mécatina. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Gros-Mécatina",
+    "province": "QC",
+    "phone": "418-773-2263",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "https://www.grosmecatina.ca/",
+    "address": "Gros-Mécatina, QC G0G 2C0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-accessibilit-saint-august-cn",
+    "name": "Groupe Accessibilité Saint-Augustin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Augustin (région 09)",
+    "province": "QC",
+    "phone": "418-720-6597",
+    "description": "Dessert la population générale de tous âges, présentant diverses formes de handicap et/ou une perte d’autonomie * Organiser des activités et des événements * Prêter des fauteuils roulants (y compris d ... [Plus]",
+    "website": "http://www.groupeaccessibilite.com/",
+    "address": "Ariège, France",
+    "hours": "Voir site web"
   },
   {
     "id": "groupe-action-nouvelle-vie-mtg",
@@ -26476,6 +30092,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "septembre à juin, lundi au vendredi 9h00 à 16h00, activités: variable avec possible soirs et fin de semaine"
   },
   {
+    "id": "groupe-entre-amis-de-baie-comeau-cn",
+    "name": "Groupe Entre-amis de Baie-Comeau",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-293-2444",
+    "description": "Centre d'activités pour personnes handicapées et résidence d'hébergement pour personnes handicapées | Clientèle : Personnes vivant avec une déficience physique (DP), intellectuelle (DI) ou un trouble du spectre de l’autisme (TSA) | Âges : 15 an(s) et plus",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "groupe-priorit-travail-lav",
     "name": "Groupe Priorité Travail",
     "category": "social",
@@ -26524,6 +30152,57 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Groupe d'entraide communautaire pour personnes vivant avec des troubles de santé mentale. Réunions hebdomadaires, activités de groupe et soutien par les pairs.",
     "address": "819, rue Ste-Cécile, Trois-Rivières, QC G9A 1L2",
     "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi."
+  },
+  {
+    "id": "groupe-de-la-c-te-cn",
+    "name": "Groupe de la Côte",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-8300",
+    "description": "Création d'emploi pour des personnes vivant avec un handicap * couture industrielle * Transport adapté * service de buanderie | Clientèle : Alumineries et sous-traitance, commerces, personnes vivants avec un handicap",
+    "website": "http://www.groupedelacote.org",
+    "address": "332 Rue de Puyjalon, Baie-Comeau, QC G5C 1M5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-de-recherche-et-d-ducatio-cn",
+    "name": "Groupe de recherche et d'éducation sur les mammifères marins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Tadoussac",
+    "province": "QC",
+    "phone": "418-235-4701",
+    "description": "Travaux de recherche scientifique sur les baleines du Saint-Laurent * éducation pour la conservation du milieu marin * musée et exposition Centre d’interprétation des mammifères marins (CIMM) * exposi ... [Plus] | Clientèle : Le grand public",
+    "website": "http://gremm.org",
+    "address": "108 Rue de la Cale Sèche, Tadoussac, QC G0T 2A0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-scout-de-port-cartier-cn",
+    "name": "Groupe scout de Port-Cartier",
+    "category": "family",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-8896",
+    "description": "Contribution à l'éducation des jeunes et à leur épanouissement afin de les préparer à jouer un rôle constructif dans la société * apprentissage au sein d'une équipe par le jeu, les techniques, le spor ... [Plus] | Âges : 7 an(s) - 11 an(s)",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-scout-de-sept-les-cn",
+    "name": "Groupe scout de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Contribution à l'éducation des jeunes et à leur épanouissement afin de les préparer à jouer un rôle constructif dans la société * apprentissage au sein d'une équipe par le jeu, les techniques, le spor ... [Plus]",
+    "province": "QC",
+    "phone": "418-962-9109",
+    "description": "Âges : 7 an(s) - 17 an(s)",
+    "website": "https://scoutsducanada.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "groupes-de-m-decine-de-famille-u-mtg",
@@ -26833,6 +30512,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "habitations-pr-vost-derosby-cn",
+    "name": "Habitations Prévost Derosby",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-6877",
+    "description": "Hébergement communautaire favorisant le maintien de l'autonomie de personnes à faible revenu aux prises avec une problématique de santé mentale ou troubles émotionnels * logements supervisés * soutien ... [Plus] | Clientèle : Personnes autonomes présentant une problématique de santé mentale pouvant demeurer seules en logement et ne nécessitant pas de surveillance ou de soins d’assistance | Âges : 18 an(s) et plus",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "habitations-saint-christophe-les-lav",
     "name": "Habitations Saint-Christophe (Les)",
     "category": "social",
@@ -26908,6 +30599,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "ourharbour.org",
     "address": "440, avenue Notre-Dame, Saint-Lambert, Montérégie, QC, J4P 2K4",
     "hours": "lundi au vendredi 9h00 à 16h30"
+  },
+  {
+    "id": "havre-saint-pierre-h-tel-de-vill-cn",
+    "name": "Havre-Saint-Pierre. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-2717",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-538-3301",
+    "website": "http://www.havresaintpierre.com",
+    "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "ab-health-link",
@@ -27044,6 +30748,58 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://hirondelle.qc.ca",
     "address": "4652, rue Jeanne-Mance, Montréal, QC H2V 4J4",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "hom-asculin-port-cartier-cn",
+    "name": "Hom'asculin Port-Cartier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-6060",
+    "description": "Soutien et entraide pour les hommes * accueil, information, accompagnement et référence * intervention individuelle, mobile et téléphonique * groupes d'entraide * suivi post-crise * soutien aux proche ... [Plus] | Clientèle : Hommes | Âges : 18 an(s) et plus",
+    "website": "http://www.homasculin.com",
+    "address": "52 Av. Parent, Port-Cartier, QC G5G 2G5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "homme-aide-manicouagan-cn",
+    "name": "Homme aide Manicouagan",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-4277",
+    "description": "Aide pour hommes en difficulté et leurs proches * soutien aux professionnels de la santé travaillant auprès d’une clientèle masculine * soutien et référence aux hommes en situation de détresse Interve ... [Plus] | Clientèle : Hommes",
+    "website": "http://hommeaidemanicouagan.org",
+    "address": "767 Rue Jalbert, Baie-Comeau, QC G5C 2T9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "homme-aide-manicouagan-maison-ox-cn",
+    "name": "Homme aide Manicouagan, Maison Oxygène Gens du Nord",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-4277",
+    "description": "Hébergement et soutien communautaire pour les pères et leurs enfants vivant une difficulté personnelle, conjugale ou familiale * rupture de l’isolement * renforcement des liens père-enfant * préventio ... [Plus] | Clientèle : Hommes avec enfant",
+    "website": "http://hommeaidemanicouagan.org",
+    "address": "767 Rue Jalbert, Baie-Comeau, QC G5C 2T9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "hommes-sept-les-cn",
+    "name": "Hommes Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-961-1530",
+    "description": "Soutien aux hommes dans la prévention et la résolution de leurs problèmes personnels * écoute téléphonique * rencontres de groupes * accueil, accompagnement et référence * occasion de bénévolat * form ... [Plus] | Clientèle : Hommes * pères | Âges : 14 an(s) et plus",
+    "website": "http://www.hommesseptils.com",
+    "address": "893 Av. Brochu, Sept-Îles, QC G4R 2Y7, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "nb-hnb",
@@ -28485,6 +32241,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi à jeudi 9h00 à 17h30"
   },
   {
+    "id": "info-justice-c-te-nord-cn",
+    "name": "Info Justice Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "581-826-0088",
+    "description": "Accès à la justice favorisant la participation des citoyens, par des services d'information, soutien et orientation offerts en complémentarité avec les ressources existantes * accueil, évaluation des ... [Plus]",
+    "website": "http://www.info-justice.ca/centres/cote-nord/",
+    "address": "106 Rue Napoléon, Sept-Îles, QC G4R 3L7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "info-justice-mont-r-gie-mtg",
     "name": "Info Justice Montérégie",
     "category": "social",
@@ -28609,6 +32378,82 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 17h00, imprimerie: lundi au jeudi 8h00 à 17h00"
   },
   {
+    "id": "innu-takuaikan-uashat-mak-mani-u-cn",
+    "name": "Innu Takuaikan Uashat mak Mani-utenam",
+    "category": "health",
+    "subcategory": "",
+    "city": "Uashat",
+    "province": "QC",
+    "phone": "Sécurité publique secteur Uashat 418-968-4010",
+    "description": "Assume des responsabilités en administration, finances, développement économique, communautaire et culturel, loisirs, sécurité, santé et services sociaux, formation et main-d'œuvre, revendications ter ... [Plus] | Clientèle : Sécurité publique secteur Maliotenam 418-927-2708",
+    "website": "http://www.itum.qc.ca",
+    "address": "265 Bd des Montagnais, Sept-Îles, QC G4R 4L9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "innu-takuaikan-uashat-mak-mani-u-cn-2",
+    "name": "Innu Takuaikan Uashat mak Mani-utenam, Centre de santé Uauitshitun",
+    "category": "health",
+    "subcategory": "",
+    "city": "Uashat",
+    "province": "QC",
+    "phone": "418-962-0222",
+    "description": "Offre, en première ligne, à la population de Uashat et de Mani-utenam, des services de santé courants * consultation d’une infirmière, d’un omnipraticien * information et prévention, évaluation, trait ... [Plus] | Clientèle : Centre de santé Mani-Utenam 418-927-2660",
+    "website": "http://www.itum.qc.ca/sante-et-services-sociaux/sante",
+    "address": "265 Bd des Montagnais, Sept-Îles, QC G4R 4L9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "innu-takuaikan-uashat-mak-mani-u-cn-3",
+    "name": "Innu Takuaikan Uashat mak Mani-utenam, Centre de santé Uauitshitun, Services sociaux Uauitshitun",
+    "category": "health",
+    "subcategory": "",
+    "city": "Uashat",
+    "province": "QC",
+    "phone": "418-962-0222",
+    "description": "Offre, en première ligne, à la population de Uashat et de Mani-utenam, des services sociaux courants Santé scolaire * vaccination * sensibilisation et prévention des facteurs de risque au niveau psych ... [Plus] | Clientèle : Centre de santé Mani-Utenam 418-927-2660",
+    "website": "http://www.itum.qc.ca/sante-et-services-sociaux/sante",
+    "address": "265 Bd des Montagnais, Sept-Îles, QC G4R 4L9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "innu-takuaikan-uashat-mak-mani-u-cn-4",
+    "name": "Innu Takuaikan Uashat mak Mani-utenam, Maison des jeunes Maliotenam",
+    "category": "family",
+    "subcategory": "",
+    "city": "Maliotenam",
+    "province": "QC",
+    "phone": "418-927-3135",
+    "description": "Lieu de rencontre animé dans la communauté où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * écoute * prévention, information et sens ... [Plus] | Âges : 11 an(s) - 17 an(s)",
+    "address": "Rue Montagnais, Sept-Rivières, QC G4R 4K2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "innu-takuaikan-uashat-mak-mani-u-cn-5",
+    "name": "Innu Takuaikan Uashat mak Mani-utenam, Maison des jeunes Uashat",
+    "category": "family",
+    "subcategory": "",
+    "city": "Uashat",
+    "province": "QC",
+    "phone": "418-962-0391",
+    "description": "Lieu de rencontre animé dans la communauté où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * écoute * prévention, information et sens ... [Plus] | Âges : 11 an(s) - 17 an(s)",
+    "address": "265 Bd des Montagnais, Sept-Îles, QC G4R 4L9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "innu-takuaikan-uashat-mak-mani-u-cn-6",
+    "name": "Innu Takuaikan Uashat mak Mani-utenam, Services communautaires de première ligne",
+    "category": "family",
+    "subcategory": "",
+    "city": "Uashat",
+    "province": "QC",
+    "phone": "418-962-0222",
+    "description": "Soutien dans le processus d’éducation et de transmission de la culture, des savoirs et des valeurs dans une vision centrée sur l'enfant * valorisation des facteurs de protection individuelle et commun ... [Plus] | Clientèle : Selon le programme",
+    "website": "http://www.itum.qc.ca/sante-et-services-sociaux/services-de-premiere-ligne",
+    "address": "265 Bd des Montagnais, Sept-Îles, QC G4R 4L9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-hopital-montreal-institut-de-cardiologie-de-montreal",
     "name": "Institut De Cardiologie De Montréal",
     "category": "health",
@@ -28712,18 +32557,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
-    "id": "msss-chsld-montreal-institut-universitaire-en-sante-mentale-de-montreal",
-    "name": "Institut Universitaire En Santé Mentale De Montréal",
-    "category": "health",
-    "subcategory": "CHSLD",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "",
-    "address": "7401, rue Hochelaga, Montréal, QC H1N 3M5",
-    "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
-  },
-  {
     "id": "msss-centre-hospitalier-psychiatrique-montreal-institut-universitaire-en-sante-mentale-de-montreal",
     "name": "Institut Universitaire En Santé Mentale De Montréal",
     "category": "mentalHealth",
@@ -28734,6 +32567,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS De L'Est-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
     "address": "7401, rue Hochelaga, Montréal, QC H1N 3M5",
     "hours": "Service de crise disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "msss-chsld-montreal-institut-universitaire-en-sante-mentale-de-montreal",
+    "name": "Institut Universitaire En Santé Mentale De Montréal",
+    "category": "health",
+    "subcategory": "CHSLD",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "",
+    "address": "7401, rue Hochelaga, Montréal, QC H1N 3M5",
+    "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
     "id": "msss-chsld-quebec-institut-universitaire-en-sante-mentale-de-quebec",
@@ -28758,6 +32603,31 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS De La Capitale-Nationale. Source: MSSS – Fichier M02 des installations.",
     "address": "2601, chemin de la Canardière, Québec, QC G1J 2G3",
     "hours": "Service de crise disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "institut-d-enseignement-de-sept--cn",
+    "name": "Institut d'Enseignement de Sept-Iles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-698-9104",
+    "description": "École secondaire privée qui offre sept concentrations différentes Profil art * arts plastiques * arts dramatiques * multimédia Profil sport * badminton * hockey * judo * plein air * volleyball Service ... [Plus] | Âges : 11 an(s) - 18 an(s)",
+    "website": "https://www.iesi.in",
+    "address": "737 Av. Gamache, Sept-Îles, QC G4R 2J8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "institut-de-karat-shotokan-de-se-cn",
+    "name": "Institut de karaté Shotokan de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-8138",
+    "description": "Institut de karaté Shotokan de Sept-Îles",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "inter-section-mrc-d-acton-l-mtg",
@@ -28957,6 +32827,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous, lundi au jeudi (consulter le calendrier des activités via le site internet ou la page Facebook)"
   },
   {
+    "id": "jardin-du-ruisseau-bois-joli-cn",
+    "name": "Jardin du ruisseau Bois-Joli",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-960-5551",
+    "description": "Jardin suivant les principes d'une agriculture durable et responsable, visant l'embellissement du milieu * services à la population * accès au jardin * entretien du jardin * organisation d'animations ... [Plus] | Clientèle : Le grand public",
+    "website": "http://ville.sept-iles.qc.ca/fr/jardin-communautaire-ruisseau-boisjoli_484",
+    "address": "97 Rue des Chanterelles, Sept-Îles, QC G4S 2B9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "jardin-ducatif-du-pontiac-out",
     "name": "Jardin Éducatif Du Pontiac",
     "category": "food",
@@ -29020,20 +32903,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: lundi au vendredi 9h00 à 16h00, activités: lundi au jeudi 9h00 à 16h00, sur rendez- vous seulement"
   },
   {
-    "id": "urgent-jeu-aide",
-    "name": "Jeu : aide et référence",
-    "category": "mentalHealth",
-    "subcategory": "Dépendance et addiction",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-461-0140",
-    "description": "Ligne provinciale gratuite pour les personnes aux prises avec un problème de jeu compulsif. Disponible 24h/24, 7j/7. Écoute, soutien, référence vers les centres de traitement et groupes d'entraide. Les proches peuvent aussi appeler.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
-    "isUrgent": true,
-    "isProvinceWide": true
-  },
-  {
     "id": "mh-jeu-aide",
     "name": "Jeu : aide et référence",
     "category": "mentalHealth",
@@ -29045,6 +32914,20 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://aidejeu.ca",
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi.",
+    "isProvinceWide": true
+  },
+  {
+    "id": "urgent-jeu-aide",
+    "name": "Jeu : aide et référence",
+    "category": "mentalHealth",
+    "subcategory": "Dépendance et addiction",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-461-0140",
+    "description": "Ligne provinciale gratuite pour les personnes aux prises avec un problème de jeu compulsif. Disponible 24h/24, 7j/7. Écoute, soutien, référence vers les centres de traitement et groupes d'entraide. Les proches peuvent aussi appeler.",
+    "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
+    "isUrgent": true,
     "isProvinceWide": true
   },
   {
@@ -29126,6 +33009,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 15h30 à 21h00"
   },
   {
+    "id": "jeunesse-en-sant-cn",
+    "name": "Jeunesse en santé",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "Administration 418-589-1301 poste 2143",
+    "description": "Accueil et soutien des jeunes et adultes marginalisés * travail de rue, intervention en milieu de vie et en dépendance * accueil, écoute et soutien dans les difficultés * information et prévention : d ... [Plus] | Clientèle : Travailleurs de rue par téléphone ou par texto | Âges : 12 an(s) - 25 an(s)",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "urgent-kids-help",
     "name": "Jeunesse, j'écoute / Kids Help Phone",
     "category": "mentalHealth",
@@ -29202,6 +33097,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.joujouthequefarfouille.org",
     "address": "845, rue Saint-Louis, Joliette, Lanaudière, QC, J6E 3A3",
     "hours": "mardi 9h00 à 17h00, mercredi 9h00 à 20h00, jeudi 9h00 à 17h00, vendredi et samedi 9h00 à 15h00"
+  },
+  {
+    "id": "journal-communautaire-le-portage-cn",
+    "name": "Journal communautaire le Portageur",
+    "category": "family",
+    "subcategory": "",
+    "city": "Natashquan (Ville)",
+    "province": "QC",
+    "phone": "418-726-3736",
+    "description": "Journal hebdomadaire communautaire favorisant l'actualité de l'est de la Minganie, Baie-Johan-Beetz, Aguanish, Île-Michon, Natashquan, Pointe-Parent et Nutashkuan * 50 parutions par an * actualité loc ... [Plus]",
+    "website": "http://www.leportageur.info",
+    "address": "50 Chem. d'en Haut, Natashquan, QC G0G 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "journal-des-villes-nordiques-le--cn",
+    "name": "Journal des villes nordiques Le Trait d'union du Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "866-669-3655",
+    "description": "Journal d'information communautaire pour la population des secteurs desservis * actualités, publicités, petites annonces, chroniques, numéros thématiques et fêtes, dossiers sur la Côte-Nord dans son e ... [Plus] | Clientèle : Grand public",
+    "website": "http://www.journaltdn.ca",
+    "address": "Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "joyeux-retrait-s-de-longueuil-mtg",
@@ -29331,6 +33252,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://kausheesplace.ca",
     "address": "405 Alexander St, Whitehorse, YT Y1A 2L7",
     "hours": "Service disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "kawawachikamach-conseil-de-la-na-cn",
+    "name": "Kawawachikamach. Conseil de la Nation naskapi",
+    "category": "health",
+    "subcategory": "",
+    "city": "Kawawachikamach",
+    "province": "QC",
+    "phone": "418-585-2686",
+    "description": "Assume des responsabilités en administration, finances, développement économique, communautaire et culturel, loisirs, sécurité, santé et services sociaux, formation et main-d'œuvre, revendications ter ... [Plus] | Clientèle : Service de police 418-585-2293",
+    "website": "http://www.naskapi.ca",
+    "address": "Kawawachikamach, QC G0G 2Z0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "kazabazua-municipalit-out",
@@ -29565,6 +33499,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi 8h30 à 12h00 et 13h00 à 16h30, mardi au vendredi 8h30 à 12h00 et 13h00 à 16h00, été: lundi au jeudi 8h00 à 12h00 et 13h00 à 16h15, vendredi 8h00 à 12h00"
   },
   {
+    "id": "l-le-d-anticosti-h-tel-de-ville-cn",
+    "name": "L'Île-d'Anticosti. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "L'Île-d'Anticosti",
+    "province": "QC",
+    "phone": "418-535-0311",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-535-0048",
+    "website": "http://municipalite-anticosti.org",
+    "address": "Anticosti Island, Minganie Regional County Municipality, QC G0G 2Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "tr-garde-l-etoile-filante",
     "name": "L'étoile Filante",
     "category": "family",
@@ -29615,6 +33562,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://lacorbeille.org",
     "address": "12013, rue Lachapelle, Montréal, QC H4J 2R7",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
+  },
+  {
+    "id": "la-course-du-50e-parall-le-cn",
+    "name": "La Course du 50e parallèle",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-768-5987",
+    "description": "Événement de course offrant un parcours qui met en valeur le patrimoine historique et culturel de la ville * 5 parcours (1.5 km, 4.4 km, 8 km, 15 km, 21.1 km)",
+    "website": "https://www.lacoursedu50eparallele.com/",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "la-c-ti-re-cn",
+    "name": "La Côtière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "",
+    "description": "Regroupement d’artistes oeuvrant à promouvoir l’art visuel * ateliers de création * expositions",
+    "website": "https://www.lacotiere.ca/",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "msss-hopital-quebec-la-maison-michel-sarrazin",
@@ -29719,6 +33692,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.villelapeche.qc.ca",
     "address": "1, route Principale Ouest, La Pêche, Outaouais, QC, J0X 2W0",
     "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "la-romaine-conseil-de-la-nation--cn",
+    "name": "La Romaine. Conseil de la Nation innue",
+    "category": "health",
+    "subcategory": "",
+    "city": "La Romaine",
+    "province": "QC",
+    "phone": "418-229-2917",
+    "description": "Assume des responsabilités en administration, finances, développement économique, communautaire et culturel, loisirs, santé et services sociaux, revendications territoriales et négociations gouverneme ... [Plus] | Clientèle : Aéroport 418-229-2984",
+    "website": "http://www.unamenshipu.com",
+    "address": "La Romaine, QC G0G 0C7, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-vc-laval-rose-des-vents",
@@ -30083,6 +34069,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "le-rep-re-manicouagan-cn",
+    "name": "Le Repère Manicouagan",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-6418",
+    "description": "Services de centre de jour et de halte-garderie destinés majoritairement aux familles à faibles revenus ou vulnérables * soutien, aide et références * ateliers et formations visant a favoriser l'appre ... [Plus] | Clientèle : pour le service de halte-garderie 8 mois à 5 ans préscolaire",
+    "website": "https://www.accueilmariedelincarnation.com/",
+    "address": "51 Pl. la Salle, Baie-Comeau, QC G4Z 1J8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-sm-treml-traversier",
     "name": "Le Traversier – Santé mentale Trois-Rivières",
     "category": "mentalHealth",
@@ -30172,6 +34171,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 15h00, vendredi 8h00 à 12h00"
   },
   {
+    "id": "les-bergeronnes-h-tel-de-ville-cn",
+    "name": "Les Bergeronnes. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Les Bergeronnes",
+    "province": "QC",
+    "phone": "418-232-6244",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, assainissement des eaux usées et autres La nature, l'étendue et l'exercice ... [Plus] | Clientèle : Bibliothèque 418-232-1165",
+    "website": "http://bergeronnes.com",
+    "address": "Grandes-Bergeronnes, QC G0T 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "les-coteaux-biblioth-que-mtg",
     "name": "Les Coteaux - Bibliothèque",
     "category": "social",
@@ -30208,6 +34220,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à Les Cèdres - Centre D'Accueil Pour Personnes Âgées. Source: MSSS – Fichier M02 des installations.",
     "address": "1275, boulevard de la Côte-Vertu, Montréal, QC H4L 4V2",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "les-escoumins-h-tel-de-ville-cn",
+    "name": "Les Escoumins. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "418-233-2766",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque Blanche-Lamontagne 581-322-1080",
+    "website": "http://www.escoumins.ca",
+    "address": "Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "drum-garde-les-petits-renards-futes",
@@ -30429,6 +34454,18 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "v-ligne-parents",
+    "name": "LigneParents",
+    "category": "family",
+    "subcategory": "Soutien parental",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-361-5085",
+    "description": "Service d'écoute et d'intervention pour parents d'enfants 0-20 ans. Anonyme, confidentiel, gratuit. Téléphone, texto, clavardage. Disponible 24h/24.",
+    "hours": "Lun-ven 8h30-16h30. Sur RV.",
+    "isProvinceWide": true
+  },
+  {
     "id": "pw-ligneparents-famille",
     "name": "LigneParents",
     "category": "family",
@@ -30439,18 +34476,6 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "website": "https://www.ligneparents.com/",
     "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Sur RV.",
-    "isProvinceWide": true
-  },
-  {
-    "id": "v-ligne-parents",
-    "name": "LigneParents",
-    "category": "family",
-    "subcategory": "Soutien parental",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-361-5085",
-    "description": "Service d'écoute et d'intervention pour parents d'enfants 0-20 ans. Anonyme, confidentiel, gratuit. Téléphone, texto, clavardage. Disponible 24h/24.",
     "hours": "Lun-ven 8h30-16h30. Sur RV.",
     "isProvinceWide": true
   },
@@ -30467,6 +34492,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Service disponible 24h/24, 7j/7",
     "isProvinceWide": true
+  },
+  {
+    "id": "ligue-de-beach-vollet-ball-amiti-cn",
+    "name": "Ligue de beach vollet-ball amitié d’été",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Développement et promotion de la pratique sportive du volleyball de plage * entraînements de groupe * tournois * promotion de la santé physique et mentale * encadrement de qualité pour les sportifs de ... [Plus]",
+    "website": "https://www.beachvolleysi.ca/fr/accueil/",
+    "address": "Av. Arnaud, Sept-Îles, QC G4R 3A8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "tr-garde-linda-daneau",
@@ -30506,6 +34544,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.litchfield-qc.ca",
     "address": "1362, route 148, Campbell's Bay, Outaouais, QC, J0X 1K0",
     "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "local-des-jeunes-de-franquelin-j-cn",
+    "name": "Local des jeunes de Franquelin Jonathan Soucy",
+    "category": "family",
+    "subcategory": "",
+    "city": "Franquelin",
+    "province": "QC",
+    "phone": "418-296-1406",
+    "description": "Lieu de rencontre animé dans leur communauté où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * activités et divertissement : ordinate ... [Plus] | Clientèle : Adolescents | Âges : 8 an(s) - 17 an(s)",
+    "website": "http://www.municipalitefranquelin.ca/loisirs-culture/local-jeunes",
+    "address": "Franquelin, QC G0H 1E0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "on-rentals-on",
@@ -30612,6 +34663,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
+    "id": "loisir-et-sport-c-te-nord-cn",
+    "name": "Loisir et sport Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-5774",
+    "description": "Contribution, en concertation avec l'ensemble de ses partenaires et membres, à l'amélioration de la qualité de vie dans la région de la Côte-Nord, par une accessibilité universelle à la pratique sécur ... [Plus] | Clientèle : Organismes de la Côte-Nord et leurs membres",
+    "website": "http://www.urlscn.com",
+    "address": "337 Bd la Salle, Baie-Comeau, QC G4Z 2Z1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "loisirs-du-vieux-longueuil-les-mtg",
     "name": "Loisirs Du Vieux-Longueuil (Les)",
     "category": "social",
@@ -30636,6 +34700,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "renaudcoursol.com",
     "address": "25, rue Saint-Louis, bureau 110, Pont-Viau, Laval, QC, H7G 4W3",
     "hours": "variables"
+  },
+  {
+    "id": "longue-pointe-de-mingan-h-tel-de-cn",
+    "name": "Longue-Pointe-de-Mingan. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Longue-Pointe-de-Mingan",
+    "province": "QC",
+    "phone": "418-949-2053",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-949-2053 poste 8",
+    "website": "http://www.longuepointedemingan.ca",
+    "address": "Longue-Pointe-de-Mingan, QC G0G 1V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "longue-rive-h-tel-de-ville-cn",
+    "name": "Longue-Rive. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Longue-Rive",
+    "province": "QC",
+    "phone": "418-231-2344",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Réception 418-231-2344 poste 221",
+    "website": "http://www.longuerive.ca",
+    "address": "Longue-Rive, QC G0T 1Z0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "longueuil-bureau-du-protecteur-d-mtg",
@@ -31026,6 +35116,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
+    "id": "maison-alpha-abc-c-te-nord-cn",
+    "name": "Maison Alpha Abc Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-294-2400",
+    "description": "Amélioration des connaissances en français favorisant le développement intégral de la personne vers la poursuite de son cheminement scolaire, l'augmentation de ses connaissances personnelles ou son in ... [Plus] | Clientèle : - Personnes immigrantes | Âges : 16 an(s) et plus",
+    "website": "https://www.abccotenord.com/",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-chsld-montreal-maison-alternative-de-riviere-des-prairies",
     "name": "Maison Alternative De Rivière-Des-Prairies",
     "category": "health",
@@ -31049,6 +35152,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "maisonamitie.ca",
     "address": "108, rue Christ-Roi, Maniwaki, Outaouais, QC, J9E 1C3",
     "hours": "centre de jour: lundi au vendredi de 9h00 à 16h00"
+  },
+  {
+    "id": "maison-anita-lebel-cn",
+    "name": "Maison Anita Lebel",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-4100",
+    "description": "Maison d'hébergement de 2e étape pour les femmes ayant vécu de la violence conjugale accompagnées ou non de leurs enfants * 8 espaces locatifs transitoires et sécuritaires (séjour de 12 mois maximum 3 ... [Plus] | Clientèle : Femmes ayant vécu de la violence conjugale accompagnées ou non de leurs enfants",
+    "website": "http://maisonanitalebel.org",
+    "address": "Rue Lebel, Baie-Comeau, QC G5C, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "maison-carignan",
@@ -32844,6 +36960,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "maison-rayon-de-soleil-cn",
+    "name": "Maison Rayon de soleil",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-8536",
+    "description": "Centre de réadaptation pour les personnes vivant avec une déficience intellectuelle * hébergement et aide au développement personnel | Clientèle : Personnes vivant avec une déficience intellectuelle",
+    "address": "989 Av. Cartier, Sept-Îles, QC G4R 2M4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-r-alit-out",
     "name": "Maison Réalité",
     "category": "mentalHealth",
@@ -32922,6 +37050,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "maison-d-aide-et-d-h-bergement-d-cn",
+    "name": "Maison d'aide et d'hébergement de Fermont",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "",
+    "description": "Lieu de rassemblement visant le mieux-être personnel et collectif de la population fermontoise * ressource d'hébergement * suivi psychosocial individuel * ligne d'écoute lun-dim 24 heures * dépannage ... [Plus] | Clientèle : Toute personne dans le besoin",
+    "website": "http://www.mahf.ca",
+    "address": "4 Rue Holway, Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-refuge-gatineau-maison-verte",
     "name": "Maison d'hébergement d'urgence Gatineau",
     "category": "housing",
@@ -32945,6 +37086,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.ciusss-ouestmtl.gouv.qc.ca/installations/maison-de-naissance-du-lac-saint-louis",
     "address": "180, avenue Cartier, Pointe-Claire, Montréal, QC, H9S 4S1",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "maison-de-la-culture-innue-cn",
+    "name": "Maison de la culture Innue",
+    "category": "social",
+    "subcategory": "",
+    "city": "Mingan",
+    "province": "QC",
+    "phone": "418-949-2067",
+    "description": "Lieu de rassemblement et de partage de la culture et du mode de vie du peuple innu * échanges interculturels et intergénérationnels * transmission de savoirs artisanaux, médicinaux et linguistiques * ... [Plus] | Clientèle : Le grand public",
+    "website": "http://maisoncultureinnue.com",
+    "address": "34 Rue Nashipetimit, Longue-Pointe-de-Mingan, QC G0G 1V0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-mf-gatineau-mfg",
@@ -32973,6 +37127,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Ateliers, soutien parental, activités familiales."
   },
   {
+    "id": "maison-de-la-famille-de-longue-r-cn",
+    "name": "Maison de la famille de Longue-Rive",
+    "category": "family",
+    "subcategory": "",
+    "city": "Longue-Rive",
+    "province": "QC",
+    "phone": "418-231-2037",
+    "description": "Lieu de vie, d'entraide et de soutien pour les familles de la Haute-Côte-Nord * services en personne et en ligne * soutien à l'allaitement * écoute, conseils, ateliers parents-enfants, activités éduca ... [Plus] | Clientèle : Parents et leurs enfants de 0-17 ans selon les activités * familles * aînés",
+    "address": "350 Rue Principale, Longue-Rive, QC G0T 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-mf-longueuil-mfon",
     "name": "Maison de la famille de Longueuil",
     "category": "family",
@@ -32998,6 +37164,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Ateliers, soutien parental, activités familiales."
   },
   {
+    "id": "maison-de-la-famille-de-port-car-cn",
+    "name": "Maison de la famille de Port-Cartier (La)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-8666",
+    "description": "Lieu de rencontre et de vie communautaire où l’on favorise l’épanouissement de la famille * soutien et prévention * sensibilisation, information et référence Activités de groupe et parents-enfants (0- ... [Plus] | Clientèle : Grand public",
+    "website": "http://maisondelafamille-pc.com",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-mf-saguenay-mfsag",
     "name": "Maison de la famille de Saguenay",
     "category": "family",
@@ -33008,6 +37187,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "address": "290, rue Lafontaine, Saguenay, QC G7H 4K1",
     "hours": "Lun-ven 8h30-16h30. Ateliers, soutien parental, activités familiales."
+  },
+  {
+    "id": "maison-de-la-famille-de-sept-les-cn",
+    "name": "Maison de la famille de Sept-Îles - L'Envol",
+    "category": "food",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-1525",
+    "description": "Amélioration du mieux-être des familles par la création d'un réseau d’entraide, de soutien et de solidarité * activités familiales, animation, loisirs * cuisine collective * aide aux devoirs * halte-g ... [Plus]",
+    "website": "https://www.emdlf.org/",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-mf-sherbrooke-mfs",
@@ -33099,6 +37291,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi et mardi 17h00 à 20h00, mercredi et jeudi 17h00 à 21h00, vendredi 17h00 à 22h00"
   },
   {
+    "id": "maison-des-familles-de-baie-come-cn",
+    "name": "Maison des familles de Baie-Comeau",
+    "category": "food",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-2117",
+    "description": "Prévention, promotion, aide et soutien aux familles de la Manicouagan * activités pour parents : couture, cuisine collective, ateliers intergénérationnels * halte-garderie * Relais : service de répit ... [Plus] | Clientèle : Familles",
+    "website": "http://mdfbc.org",
+    "address": "985 Bd Joliet, Baie-Comeau, QC G5C 1P7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-familles-de-baie-come-cn-2",
+    "name": "Maison des familles de Baie-Comeau, Centre de ressources périnatales de la Manic",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-2117",
+    "description": "Service de soutien aux familles pendant la grossesse et à la naissance * cours prénataux, sur l'allaitement, portage * relevailles * accompagnement à une interruption de grossesse et dépression postpa ... [Plus]",
+    "website": "http://www.mdfbc.org",
+    "address": "985 Bd Joliet, Baie-Comeau, QC G5C 1P7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-femmes-de-baie-comeau-cn",
+    "name": "Maison des femmes de Baie-Comeau",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-4733 lun-dim 24 heures",
+    "description": "Maison d'hébergement pour les femmes victimes de violence avec ou sans enfants * hébergement sécuritaire (8 chambres * 18 lits) * accueil, information et références * écoute téléphonique en tout temps ... [Plus] | Clientèle : Femmes victimes de violence conjugale avec ou sans enfants",
+    "website": "http://maisondesfemmesbc.qc.ca",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "s-mj-hochelaga",
     "name": "Maison des jeunes Hochelaga-Maisonneuve",
     "category": "social",
@@ -33112,6 +37343,164 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30."
   },
   {
+    "id": "maison-des-jeunes-l-authentique--cn",
+    "name": "Maison des jeunes L'Authentique de Baie-Trinité",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Trinité",
+    "province": "QC",
+    "phone": "418-939-2442",
+    "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et références * ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "address": "Baie-Trinité, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-d-ekuanitshit-cn",
+    "name": "Maison des jeunes d'Ekuanitshit",
+    "category": "family",
+    "subcategory": "",
+    "city": "Mingan",
+    "province": "QC",
+    "phone": "418-949-2072",
+    "description": "Lieu de rencontre animé où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * accueil, partage, écoute et référence * activités et sortie ... [Plus] | Clientèle : Adolescents | Âges : 6 an(s) - 17 an(s)",
+    "website": "http://www.ekuanitshit.com/maison-des-jeunes",
+    "address": "Mingan, QC G0G 1V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-baie-comeau-cn",
+    "name": "Maison des jeunes de Baie-Comeau La Relève",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-1217",
+    "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et référence * ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "website": "https://www.mdjlareleve.com/",
+    "address": "836 Bd Joliet, Baie-Comeau, QC G5C 1P4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-bergeronnes-cn",
+    "name": "Maison des jeunes de Bergeronnes La Ramasse",
+    "category": "family",
+    "subcategory": "",
+    "city": "Les Bergeronnes",
+    "province": "QC",
+    "phone": "418-232-1228",
+    "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et référence * ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "address": "Grandes-Bergeronnes, QC G0T 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-blanc-sablo-cn",
+    "name": "Maison des jeunes de Blanc-Sablon Ado-Cité",
+    "category": "family",
+    "subcategory": "",
+    "city": "Blanc-Sablon",
+    "province": "QC",
+    "phone": "418-461-2530",
+    "description": "Centre permanent d'animation et d'éducation pour les jeunes offrant un lieu de rencontre où socialiser, s'exprimer, s'impliquer, se sensibiliser, créer, partager, se responsabiliser, s'initier, appren ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "address": "Blanc-Sablon, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-chute-aux-o-cn",
+    "name": "Maison des jeunes de Chute-aux-Outardes Le Spoth",
+    "category": "family",
+    "subcategory": "",
+    "city": "Chute-aux-Outardes",
+    "province": "QC",
+    "phone": "418-567-8920 poste 151",
+    "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et références * ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "address": "Chute aux Outardes, Chute-aux-Outardes, QC G0H, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-colombier-cn",
+    "name": "Maison des jeunes de Colombier",
+    "category": "family",
+    "subcategory": "",
+    "city": "Colombier",
+    "province": "QC",
+    "phone": "581-644-1014",
+    "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et références * ... [Plus] | Clientèle : Adolescents | Âges : 8 an(s) - 25 an(s)",
+    "address": "550 Rue Principale, Colombier, QC G0H 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-fermont-alp-cn",
+    "name": "Maison des jeunes de Fermont Alpha",
+    "category": "family",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "418-287-5473",
+    "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et référence * ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "address": "Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-forestville-cn",
+    "name": "Maison des jeunes de Forestville l’Entretemps",
+    "category": "family",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-4211",
+    "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et référence * ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "address": "16 Rte 138 O, Forestville, QC G0T 0A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-havre-saint-cn",
+    "name": "Maison des jeunes de Havre-Saint-Pierre La Source Minganie",
+    "category": "family",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-3368",
+    "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et référence * ... [Plus] | Clientèle : Travailleur de rue 418-896-1099 | Âges : 12 an(s) - 17 an(s)",
+    "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-longue-rive-cn",
+    "name": "Maison des jeunes de Longue-Rive le Phare",
+    "category": "family",
+    "subcategory": "",
+    "city": "Longue-Rive",
+    "province": "QC",
+    "phone": "418-587-3935",
+    "description": "Lieu de rencontre animé où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * aide et écoute * défense et promotion des intérêts des jeun ... [Plus] | Clientèle : Adolescents | Âges : 8 an(s) - 17 an(s)",
+    "address": "333 Rte 138, Longue-Rive, QC G0T 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-natashquan--cn",
+    "name": "Maison des jeunes de Natashquan L'Entre-deux-Tournants",
+    "category": "health",
+    "subcategory": "",
+    "city": "Natashquan (Ville)",
+    "province": "QC",
+    "phone": "418-726-3740",
+    "description": "Lieu d'accueil, prévention, promotion de la santé et animation pour les adolescents et leurs parents * information, aide, écoute et référence * animation et sensibilisation * activités socioculturelle ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "address": "59 Rue du Pré, Natashquan, QC G0G 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-pointe-aux--cn",
+    "name": "Maison des jeunes de Pointe-aux-Outardes le Squat",
+    "category": "family",
+    "subcategory": "",
+    "city": "Pointe-aux-Outardes",
+    "province": "QC",
+    "phone": "",
+    "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et références * ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "address": "Pointe-aux-Outardes, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "s-mj-pat",
     "name": "Maison des jeunes de Pointe-aux-Trembles",
     "category": "social",
@@ -33123,6 +37512,91 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://mdjpat.com",
     "address": "13 100, rue Notre-Dame Est, Montréal, QC H1A 3T6",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "maison-des-jeunes-de-port-cartie-cn",
+    "name": "Maison des jeunes de Port-Cartier",
+    "category": "family",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-3040",
+    "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et référence * ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "website": "http://www.ccportcartier.ca/port-cartier-dabord/organismes-communautaires",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-portneuf-su-cn",
+    "name": "Maison des jeunes de Portneuf-sur-mer La passerelle",
+    "category": "family",
+    "subcategory": "",
+    "city": "Portneuf-sur-Mer",
+    "province": "QC",
+    "phone": "418-238-2158",
+    "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et références * ... [Plus] | Clientèle : Adolescents * enfants | Âges : 8 an(s) - 17 an(s)",
+    "address": "Portneuf-sur-Mer, QC G0T 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-ragueneau-l-cn",
+    "name": "Maison des jeunes de Ragueneau La Boîte",
+    "category": "family",
+    "subcategory": "",
+    "city": "Ragueneau",
+    "province": "QC",
+    "phone": "418-567-2370",
+    "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et références * ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "address": "519 Rte 138, Ragueneau, QC G0H 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-sacr-c-ur-cn",
+    "name": "Maison des jeunes de Sacré-Cœur",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sacré-Coeur",
+    "province": "QC",
+    "phone": "418-236-4801",
+    "description": "Notre principale mission est d’offrir aux jeunes de 11 à 17 ans un lieu de rencontres animées, où, au contact d’adultes significatifs peuvent pratiquer diverses activités éducatives et de loisirs. Nou ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "address": "Sacré-Coeur, QC G0T 1Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-tadoussac-cn",
+    "name": "Maison des jeunes de Tadoussac",
+    "category": "family",
+    "subcategory": "",
+    "city": "Tadoussac",
+    "province": "QC",
+    "phone": "581-327-1077",
+    "description": "L'organisme a pour but d'offrir un espace aux adolescent.e.s et de proposer des programmes de prévention et de sensibilisation, le matériel nécessaire à leur réussite scolaire et des activités pédagog ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "address": "Tadoussac, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-des-escoumins--cn",
+    "name": "Maison des jeunes des Escoumins L'Entrados",
+    "category": "family",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "418-233-3519",
+    "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et référence * ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "address": "Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-organismes-communauta-cn",
+    "name": "Maison des organismes communautaires de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-2288",
+    "description": "Soutenir les organismes communautaires dans le respect de leur autonomie * faciliter la concertation et l'échange * offrir des locaux, des services/ressources et de l'équipement à prix modique | Clientèle : Organismes communautaires",
+    "address": "652 Av. de Quen, Sept-Îles, QC G4R 2R5, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "maisondupere-mtl",
@@ -33139,6 +37613,30 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "maison-du-tonnerre-cn",
+    "name": "Maison du tonnerre",
+    "category": "food",
+    "subcategory": "",
+    "city": "Rivière-au-Tonnerre",
+    "province": "QC",
+    "phone": "418-465-2922",
+    "description": "* activités et loisirs communautaires * salle d’exercices * popote roulante * repas à faible coût | Clientèle : Popote roulante pour les aînés (65 ans et plus) en perte d’autonomie ou à faible revenu",
+    "address": "Rivière-au-Tonnerre, QC G0G 2L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-d-accueil-richelieu-avit--cn",
+    "name": "Maison d’accueil Richelieu Avit Ouellet",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-2720",
+    "description": "Ressource d'hébergement aux personnes non hospitalisées ayant à recevoir des soins au Centre hospitalier régional de Sept-Îles, ainsi que leurs parents et leurs accompagnateurs * dix chambres avec sal ... [Plus] | Clientèle : Usagers non hospitalisés ainsi que leurs parents et accompagnateurs de la Basse Côte-Nord",
+    "address": "465 Av. Franquelin, Sept-Îles, QC G4R 2L9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "drum-garde-maison-d-amour",
     "name": "Maison d’amour",
     "category": "family",
@@ -33149,6 +37647,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "maison-l-amie-d-elle-cn",
+    "name": "Maison l'amie d'elle",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-2533",
+    "description": "Centre d'hébergement pour femmes victimes de violence conjugale et leurs enfants * soutien gratuit, anonyme et confidentiel * rencontre externe individuelle * soutien et intervention avec les proches ... [Plus] | Clientèle : Femmes et leurs enfants",
+    "website": "http://www.maisonlamiedelle.com",
+    "address": "Forestville, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "maison-la-trace-lasm",
@@ -33431,6 +37942,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "mar-e-motrice-cn",
+    "name": "Marée motrice",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Création d'expériences culturelles rassembleuses * Musée de Noël * Musée de l'horreur",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "mascouche-services-des-activites-sp-msc",
     "name": "Mascouche - Services des Activités Sportives et des Parcs",
     "category": "social",
@@ -33442,6 +37965,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://mascouche.ca/services-aux-citoyens/mloisirs",
     "address": "2936, rue Dupras, Mascouche, Lanaudière, QC, J7K 1T2",
     "hours": "lundi au vendredi 8h15 à 12h00 et 13h15 à 16h30"
+  },
+  {
+    "id": "matimekush-lac-john-conseil-de-l-cn",
+    "name": "Matimekush - Lac-John. Conseil de la Nation innue",
+    "category": "health",
+    "subcategory": "",
+    "city": "Matimekosh",
+    "province": "QC",
+    "phone": "418-585-2601",
+    "description": "Assume des responsabilités en administration, finances, développement économique, communautaire et culturel, loisirs, sécurité, santé et services sociaux, formation et main-d'œuvre, revendications ter ... [Plus] | Clientèle : Centre de santé 418-585-2667",
+    "website": "https://data.nativemi.org/tribal-directory/Details/conseil-de-la-nation-innu-matimekush-lac-john-1879430",
+    "address": "Lac-John, Schefferville, QC G0G 2T0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "matimekush-lac-john-conseil-de-l-cn-2",
+    "name": "Matimekush - Lac-John. Conseil de la Nation innue, Dispensaire Matimekush",
+    "category": "health",
+    "subcategory": "",
+    "city": "Schefferville",
+    "province": "QC",
+    "phone": "418-585-2667",
+    "description": "Établissement indépendant offrant des soins de santé adaptés à la communauté innue de Matimekush",
+    "address": "Lac-John, Schefferville, QC G0G 2T0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "matin-es-parents-enfants-mtg",
@@ -33636,6 +38184,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "1001rues.org",
     "address": "285, boulevard Cartier, Beloeil, Montérégie, QC, J3G 3R2",
     "hours": "lundi au samedi, horaire variable selon les besoins"
+  },
+  {
+    "id": "mingan-conseil-de-la-nation-innu-cn",
+    "name": "Mingan. Conseil de la Nation innue",
+    "category": "health",
+    "subcategory": "",
+    "city": "Mingan",
+    "province": "QC",
+    "phone": "418-949-2234",
+    "description": "Assume des responsabilités en administration, finances, développement économique, communautaire et culturel, loisirs, sécurité, santé et services sociaux, formation et main-d'œuvre, revendications ter ... [Plus] | Clientèle : Centre de santé Mashtishanitshuap 418-949-2300",
+    "website": "http://www.ekuanitshit.com",
+    "address": "Mingan, QC G0G 1V0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "sk-cfs",
@@ -34123,6 +38684,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.mobilecrisis.ca",
     "address": "1717 Halifax St, Regina, SK S4P 1T7",
     "hours": "Service disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "module-d-panouissement-la-vie-de-cn",
+    "name": "Module d'épanouissement à la vie de Havre-Saint-Pierre",
+    "category": "social",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-1912",
+    "description": "Défense des droits et promotion des intérêts des personnes vivant avec une déficience physique ou intellectuelle * organisation d'activités sportives et culturelles * soutien à l'intégration dans la c ... [Plus] | Clientèle : Personnes vivant avec un handicap, une déficience physique (DP) ou intellectuelle (DI)",
+    "address": "1075 Prom. Des Anciens, Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "module-d-panouissement-la-vie-de-cn-2",
+    "name": "Module d'épanouissement à la vie de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-3022",
+    "description": "Promotion et défense des droits et intérêts des personnes vivant avec toute déficience entraînant une incapacité significative, persistante, ou nuisant à l'accomplissement des activités courantes * ac ... [Plus]",
+    "website": "https://www.mev-si.com/",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "baq-moisson-abitibi",
@@ -34947,6 +39533,149 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "municipalit-de-baie-johan-beetz--cn",
+    "name": "Municipalité de Baie-Johan-Beetz, Baie-Johan-Beetz. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Johan-Beetz",
+    "province": "QC",
+    "phone": "418-539-0125",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.baiejohanbeetz.qc.ca",
+    "address": "Baie-Johan-Beetz, QC G0G 1B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-de-colombier-cn",
+    "name": "Municipalité de Colombier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Colombier",
+    "province": "QC",
+    "phone": "418-565-3343",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-565-3343 poste 107",
+    "website": "https://municipalites-du-quebec.ca/colombier/index.php",
+    "address": "Colombier, QC G0H 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-de-franquelin-cn",
+    "name": "Municipalité de Franquelin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Franquelin",
+    "province": "QC",
+    "phone": "418-296-1406",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-294-6170",
+    "website": "http://municipalites-du-quebec.ca/franquelin",
+    "address": "Franquelin, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-de-ragueneau-cn",
+    "name": "Municipalité de Ragueneau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Ragueneau",
+    "province": "QC",
+    "phone": "418-567-2345",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-567-2291 poste 5302",
+    "website": "http://municipalite.ragueneau.qc.ca",
+    "address": "Ragueneau, QC G0H 0A4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-mr-cn",
+    "name": "Municipalité régionale de comté (MRC) de Caniapiscau, Municipalité régionale de comté de Caniapiscau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "418-287-5339",
+    "description": "Mise en commun des services pour le regroupement des 2 municipalités locales Municipalités de la MRC (voir dossiers individuels) * Fermont * Schefferville Territoires non organisés (TNO) * Caniapiscau ... [Plus] | Clientèle : Nous offrons des services à toute la population.",
+    "website": "http://caniapiscau.ca",
+    "address": "Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-cn",
+    "name": "Municipalité régionale de comté de La Haute-Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "418-233-2102",
+    "description": "Mise en commun des services pour le regroupement des 8 municipalités locales Municipalités de la MRC (voir dossiers individuels) * Colombier * Forestville * Les Bergeronnes * Les Escoumins * Longue-Ri ... [Plus]",
+    "website": "http://www.mrchcn.qc.ca",
+    "address": "Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-cn-2",
+    "name": "Municipalité régionale de comté de La Haute-Côte-Nord, Transport adapté et collectif",
+    "category": "social",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "418-233-2102 poste 225",
+    "description": "Transport adapté et collectif sur demande selon la disponibilité des places * déplacements à l'intérieur des municipalités, intermunicipaux et à l'extérieur de la MRC Porte-à-porte * transport adapté ... [Plus] | Clientèle : Transport adapté : personnes à mobilité réduite",
+    "website": "http://www.mrchcn.qc.ca/fr/services-aux-citoyens/transport",
+    "address": "Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-cn-3",
+    "name": "Municipalité régionale de comté de Manicouagan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-9594",
+    "description": "Mise en commun des services pour le regroupement des 8 municipalités locales Municipalités de la MRC (voir dossiers individuels) * Baie-Comeau * Baie-Trinité * Chute-aux-Outardes * Franquelin * Godbou ... [Plus] | Clientèle : Aéroport de Baie-Comeau 418-589-8285",
+    "website": "http://www.mrcmanicouagan.qc.ca",
+    "address": "768 Rue Bossé, Baie-Comeau, QC G5C 1L6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-cn-4",
+    "name": "Municipalité régionale de comté de Minganie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-2732",
+    "description": "Planification de l'aménagement du territoire, aide au développement d'entreprise et d'organisation et certains services municipaux mis en commun Municipalités de la MRC (voir dossiers individuels) * A ... [Plus] | Clientèle : Complexe aquatique 581-292-2732 poste 2200",
+    "website": "http://mrc.minganie.org",
+    "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-cn-5",
+    "name": "Municipalité régionale de comté de Sept-Rivières",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-1900",
+    "description": "Organisation supramunicipale regroupant l'ensemble des municipalités locales de son territoire Municipalités de la MRC * Port-Cartier * Sept-Îles Territoires non organisés (TNO) * Lac-Walker * Rivière ... [Plus]",
+    "website": "http://www.septrivieres.qc.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-du-cn",
+    "name": "Municipalité régionale de comté du Golfe-du-Saint-Laurent",
+    "category": "social",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-787-2020",
+    "description": "Mise en commun des services pour le regroupement des 5 municipalités locales Municipalités de la MRC (voir dossiers individuels) * Blanc-Sablon * Bonne-Espérance * Côte-Nord-du-Golfe-du-Saint-Laurent ... [Plus] | Clientèle : Gros-Mécatina 418-773-2614",
+    "website": "http://mrcgsl.ca",
+    "address": "Côte-Nord-du-Golfe-du-Saint-Laurent, QC G0G 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "mus-e-r-gional-de-vaudreuil-soul-mtg",
     "name": "Musée Régional De Vaudreuil-Soulanges",
     "category": "family",
@@ -34958,6 +39687,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.mrvs.qc.ca",
     "address": "431, avenue Saint-Charles, VAUDREUIL-DORION, Montérégie, QC, J7V 2N3",
     "hours": "mardi au vendredi 9h00 à 12h00 et 13h00 à 16h30, samedi et dimanche 13h00 à 16h30, période estivale: mardi au vendredi 9h00 à 16h30, samedi et dimanche 13h00 à 16h30"
+  },
+  {
+    "id": "mus-e-r-gional-de-la-c-te-nord-cn",
+    "name": "Musée régional de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-2070",
+    "description": "Protége, conserve, étudie, diffuse et met en valeur le patrimoine nord-côtier dans les domaines de l’ethnohistoire, de l’archéologie et des sciences naturelles * activité * visite guidée",
+    "website": "https://museedelacotenord.ca/",
+    "address": "500 Bd Laure, Sept-Îles, QC G4R 1X7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "mus-e-r-gional-de-la-c-te-nord-v-cn",
+    "name": "Musée régional de la Côte-Nord, Vieux-Poste",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-6237",
+    "description": "Reconstitution historique d’un ancien poste de traite des fourrures * visite interactive * expositions thématiques * activité",
+    "website": "https://vieuxposte.com/",
+    "address": "500 Bd Laure, Sept-Îles, QC G4R 1X7, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "drum-garde-mylene-duff",
@@ -35112,6 +39867,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Programme de rétablissement communautaire pour les personnes dépendantes aux drogues. Réunions hebdomadaires en Mauricie, anonymat complet garanti.",
     "address": "Réunions dans divers lieux de Trois-Rivières – voir horaire sur na.org",
     "hours": "Réunions le soir (horaires variables selon groupe). Voir site ou appeler."
+  },
+  {
+    "id": "natashquan-conseil-de-la-nation--cn",
+    "name": "Natashquan. Conseil de la Nation innue",
+    "category": "health",
+    "subcategory": "",
+    "city": "Natashquan (Réserve)",
+    "province": "QC",
+    "phone": "418-726-3529",
+    "description": "Assume des responsabilités en administration, finances, développement économique, communautaire et culturel, loisirs, sécurité, santé et services sociaux, formation et main-d'œuvre, revendications ter ... [Plus]",
+    "website": "http://www.mamit-innuat.com/membres/nutashkuan.aspx",
+    "address": "Natashquan, QC G0G 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "natashquan-h-tel-de-ville-cn",
+    "name": "Natashquan. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Natashquan (Ville)",
+    "province": "QC",
+    "phone": "418-726-3362",
+    "description": "Assume des responsabilités en aménagement et urbanisme, voirie, développement communautaire et culturel, loisirs et autres La nature, l'étendue et l'exercice de ces responsabilités varient selon les v ... [Plus] | Clientèle : Bibliothèque 418-726-3362 poste 227",
+    "website": "http://www.natashquan.org",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "drum-garde-nathalie-beaudoin",
@@ -35297,6 +40078,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 17h00"
   },
   {
+    "id": "noyau-communautaire-obnl-tadouss-cn",
+    "name": "Noyau communautaire OBNL Tadoussac",
+    "category": "social",
+    "subcategory": "",
+    "city": "Tadoussac",
+    "province": "QC",
+    "phone": "",
+    "description": "Soutien au bien-être, à l'autonomie et au développement durable au sein de la communauté du village de Tadoussac Frigo collectif de Tadoussac (frigo-partage), 286 rue de la Falaise au sous-sol du Cent ... [Plus]",
+    "address": "Tadoussac, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "nu-housing-nu",
     "name": "Nunavut Housing Corporation",
     "category": "housing",
@@ -35411,6 +40204,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.orea.com",
     "address": "99 Duncan Mill Rd, Toronto, ON M3B 1Z2",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h."
+  },
+  {
+    "id": "oasis-du-bel-ge-cn",
+    "name": "Oasis du bel âge",
+    "category": "social",
+    "subcategory": "",
+    "city": "Aguanish",
+    "province": "QC",
+    "phone": "418-533-2056",
+    "description": "Résidence pour aînés autonomes ou semi-autonomes * chambres avec salle de bain privée * séjours pour répit ou convalescence * salon communautaire, buanderie, stationnement * terrasse avec coin jardina ... [Plus] | Âges : 65 an(s) et plus",
+    "address": "Aguanish, QC G0G 1A0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "oasis-unit-mobile-d-intervention-lav",
@@ -35646,6 +40451,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 11h30 et 13h30 à 16h00"
   },
   {
+    "id": "office-d-habitation-de-manicouag-cn",
+    "name": "Office d'habitation de Manicouagan",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-9906",
+    "description": "Offrir aux personnes seules et aux familles à faible revenu ou à revenu modique, des logements subventionnés, dans un milieu de vie de qualité et sécuritaire, sur tout le territoire de la MRC Manicoua ... [Plus] | Clientèle : Personnes autonomes | Âges : 18 an(s) et plus",
+    "website": "https://www.ohmanicouagan.com/",
+    "address": "1780 Bd Joliet, Baie-Comeau, QC G5C 1R4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "h-omh-drummondville",
     "name": "Office municipal d'habitation Drummond",
     "category": "housing",
@@ -35657,6 +40475,42 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://omhd.ca",
     "address": "750, rue des Forges, Drummondville, QC J2B 6K6",
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
+  },
+  {
+    "id": "office-municipal-d-habitation-de-cn",
+    "name": "Office municipal d'habitation de Aguanish",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Aguanish",
+    "province": "QC",
+    "phone": "418-965-0350",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Programmes * adaptation de domicile pour personnes handicapées et aînés autonomes * allocation - logement * Habitation ... [Plus]",
+    "address": "Aguanish, QC G0G 1A0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "office-municipal-d-habitation-de-cn-2",
+    "name": "Office municipal d'habitation de Colombier",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Colombier",
+    "province": "QC",
+    "phone": "418-587-0401",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Programmes * adaptation de domicile pour personnes handicapées et aînés autonomes * allocation - logement * Habitation ... [Plus]",
+    "address": "Colombier, QC G0H 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "office-municipal-d-habitation-de-cn-3",
+    "name": "Office municipal d'habitation de Forestville",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-0401",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Programmes * adaptation de domicile pour personnes handicapées et aînés autonomes * allocation - logement * Habitation ... [Plus]",
+    "address": "2 10e Rue, Forestville, QC G0T 0A9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "h-omh-gatineau",
@@ -35672,6 +40526,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
   },
   {
+    "id": "office-municipal-d-habitation-de-cn-4",
+    "name": "Office municipal d'habitation de Havre-Saint-Pierre",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-3464",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Programmes * adaptation de domicile pour personnes handicapées et aînés autonomes * allocation - logement * Habitation ... [Plus]",
+    "address": "1171 Rue du Gabarit, Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "h-omh-laval",
     "name": "Office municipal d'habitation de Laval",
     "category": "housing",
@@ -35683,6 +40549,43 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://omhlaval.ca",
     "address": "1015, place Théodore-Robitaille, Laval, QC H7V 4R6",
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
+  },
+  {
+    "id": "office-municipal-d-habitation-de-cn-5",
+    "name": "Office municipal d'habitation de Les Bergeronnes",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Les Bergeronnes",
+    "province": "QC",
+    "phone": "581-988-9670",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Programmes * adaptation de domicile pour personnes handicapées et aînés autonomes * allocation - logement * Habitation ... [Plus]",
+    "address": "Grandes-Bergeronnes, QC G0T 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "office-municipal-d-habitation-de-cn-6",
+    "name": "Office municipal d'habitation de Les Escoumins",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "418-233-2766",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Programmes * adaptation de domicile pour personnes handicapées et aînés autonomes * allocation - logement * Habitation ... [Plus]",
+    "address": "Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "office-municipal-d-habitation-de-cn-7",
+    "name": "Office municipal d'habitation de Longue-Pointe-de-Mingan",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Longue-Pointe-de-Mingan",
+    "province": "QC",
+    "phone": "418-949-2260",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Programmes * adaptation de domicile pour personnes handicapées et aînés autonomes * allocation - logement * Habitation ... [Plus]",
+    "website": "http://www.longuepointedemingan.ca/bienvenue-chez-vous/habitation/office-municipal-dhabitation",
+    "address": "Longue-Pointe-de-Mingan, QC G0G 1V0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "h-omh-longueuil",
@@ -35711,6 +40614,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
   },
   {
+    "id": "office-municipal-d-habitation-de-cn-8",
+    "name": "Office municipal d'habitation de Manicouagan",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-9906",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Programmes * adaptation de domicile pour personnes handicapées et aînés autonomes * allocation - logement * Habitation ... [Plus]",
+    "website": "https://ohmanicouagan.com/",
+    "address": "1780 Bd Joliet, Baie-Comeau, QC G5C 1R4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "h-omh-mtl",
     "name": "Office municipal d'habitation de Montréal (OMHM)",
     "category": "housing",
@@ -35722,6 +40638,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://omhm.qc.ca",
     "address": "415, rue Saint-Antoine Ouest, Montréal, QC H2Z 1H8",
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
+  },
+  {
+    "id": "office-municipal-d-habitation-de-cn-9",
+    "name": "Office municipal d'habitation de Port-Cartier",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-2911",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Programmes * AccèsLogis Québec (réalisation de projets d'habitation en partenariat avec des sociétés à but non lucrati ... [Plus]",
+    "website": "https://www.omhpc.com/",
+    "address": "11 Rue Plante, Port-Cartier, QC G5B 2C9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "office-municipal-d-habitation-de-cn-10",
+    "name": "Office municipal d'habitation de Portneuf-sur-Mer",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Portneuf-sur-Mer",
+    "province": "QC",
+    "phone": "418-587-0401",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Programmes * adaptation de domicile pour personnes handicapées et aînés autonomes * allocation - logement * Habitation ... [Plus]",
+    "address": "Portneuf-sur-Mer, QC G0T 1P0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "h-omh-quebec",
@@ -35750,6 +40691,30 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
   },
   {
+    "id": "office-municipal-d-habitation-de-cn-11",
+    "name": "Office municipal d'habitation de Rivière-au-Tonnerre",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Rivière-au-Tonnerre",
+    "province": "QC",
+    "phone": "418-965-1574",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Programmes * adaptation de domicile pour personnes handicapées et aînés autonomes * allocation - logement * Habitation ... [Plus]",
+    "address": "Rivière-au-Tonnerre, QC G0G 2L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "office-municipal-d-habitation-de-cn-12",
+    "name": "Office municipal d'habitation de Sacré-Coeur",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sacré-Coeur",
+    "province": "QC",
+    "phone": "418-580-9117",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Programmes * adaptation de domicile pour personnes handicapées et aînés autonomes * allocation - logement * Habitation ... [Plus]",
+    "address": "Sacré-Coeur, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "h-omh-saguenay",
     "name": "Office municipal d'habitation de Saguenay",
     "category": "housing",
@@ -35776,6 +40741,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
   },
   {
+    "id": "office-municipal-d-habitation-de-cn-13",
+    "name": "Office municipal d'habitation de Sept-Îles",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-7565",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu * habitations à loyer modique (HLM) * adaptation de domicile pour personnes handicapées et aînés autonomes Priorités a ... [Plus] | Clientèle : Citoyen canadien ou résident permanent et avoir un faible revenu | Âges : 18 an(s) et plus",
+    "website": "https://omhsi.ca/",
+    "address": "74 Pl. Mingan, Sept-Îles, QC G4R 5B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "h-omh-sherbrooke",
     "name": "Office municipal d'habitation de Sherbrooke",
     "category": "housing",
@@ -35787,6 +40765,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://omhs.qc.ca",
     "address": "65, rue Wellington Sud, Sherbrooke, QC J1H 5C5",
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
+  },
+  {
+    "id": "office-municipal-d-habitation-de-cn-14",
+    "name": "Office municipal d'habitation de Tadoussac",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Tadoussac",
+    "province": "QC",
+    "phone": "581-234-9382",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Programmes * adaptation de domicile pour personnes handicapées et aînés autonomes * allocation - logement * Habitation ... [Plus]",
+    "address": "Tadoussac, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "h-omh-trois-rivieres",
@@ -35813,6 +40803,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://omhhr.ca",
     "address": "395, rue Saint-Charles, Saint-Jean-sur-Richelieu, QC J3B 2C5",
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
+  },
+  {
+    "id": "offices-municipaux-d-habitation--cn",
+    "name": "Offices municipaux d'habitation de la région de la Côte-Nord, Informations générales",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Côte-Nord",
+    "province": "QC",
+    "phone": "",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Répertoire des offices municipaux d'habitation (OMH), des coopératives d'habitation ou d'OBNL en particulier http://ww ... [Plus] | Clientèle : Personnes et familles à faible revenu",
+    "website": "http://www.habitation.gouv.qc.ca/repertoire.html",
+    "address": "Côte-Nord, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-refuge-montreal-bonsecours",
@@ -35893,6 +40896,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "op-ration-nez-rouge-op-ration-ne-cn",
+    "name": "Opération Nez rouge, Opération Nez Rouge Baie-Comeau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "",
+    "description": "Valorisation, par une approche non moralisatrice, de l'adoption d'un comportement responsable face à la conduite avec les facultés affaiblies en rendant possible l'existence d'un service de raccompagn ... [Plus] | Clientèle : Personnes qui possèdent ou ont la responsabilité d'un véhicule au moment de l'appel",
+    "website": "http://www.operationnezrouge.com",
+    "address": "Ville de Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "op-ration-nez-rouge-op-ration-ne-cn-2",
+    "name": "Opération Nez rouge, Opération Nez Rouge Forestville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "Raccompagnement 418-587-4166",
+    "description": "Valorisation, par une approche non moralisatrice, de l'adoption d'un comportement responsable face à la conduite avec les facultés affaiblies en rendant possible l'existence d'un service de raccompagn ... [Plus] | Clientèle : Information aux bénévoles 418-587-8328",
+    "website": "http://www.operationnezrouge.com",
+    "address": "Forestville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "op-ration-nez-rouge-op-ration-ne-cn-3",
+    "name": "Opération Nez rouge, Opération Nez Rouge Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "Raccompagnement 418-968-5511",
+    "description": "Valorisation, par une approche non moralisatrice, de l'adoption d'un comportement responsable face à la conduite avec les facultés affaiblies en rendant possible l'existence d'un service de raccompagn ... [Plus] | Clientèle : Personnes qui possèdent ou ont la responsabilité d'un véhicule au moment de l'appel",
+    "website": "http://www.operationnezrouge.com",
+    "address": "Sept-Îles, Sept-Rivières, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "op-ration-sac-dos-longueuil-mtg",
     "name": "Opération Sac À Dos - Longueuil",
     "category": "social",
@@ -35903,6 +40945,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Distribution de sacs à dos, fournitures scolaires et boîte à lunch isolantes aux enfants de familles dans le besoin. | Clientèle: familles dans le besoin Capacité: 500 | Territoire: Vieux Longueuil, codes postaux débutant par: codes postaux J4G, J4H, J4J, J4K, J4L,",
     "website": "regroupementpartage.ca",
     "address": "1230, rue Green, Longueuil, Montérégie, QC, J4K 4Z5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "orchestre-symphonique-de-la-c-te-cn",
+    "name": "Orchestre symphonique de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-6428",
+    "description": "Orchestre symphonique professionnel * promotion de la musique classique au Québec, plus particulièrement sur la Côte-Nord   * répétitions devant public, ateliers de direction et autres  * projets en o ... [Plus]",
+    "website": "http://www.oscn.ca",
+    "address": "1660, de, Rue de Bretagne, Baie-Comeau, QC G5C 3S3, Canada",
     "hours": "Voir site web"
   },
   {
@@ -35930,6 +40985,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.omvq.qc.ca",
     "address": "800, avenue Sainte-Anne, bureau 200, Saint-Hyacinthe, Montérégie, QC, J2S 5G7",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "ordre-loyal-des-moose-de-sept-le-cn",
+    "name": "Ordre loyal des Moose de Sept-Îles, loge 405",
+    "category": "food",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-0405",
+    "description": "Club de bienfaisance engagé dans sa communauté * repas communautaires et activités récréatives | Clientèle : Personnes à faible revenu * jeunes * aînés ayant un handicap * organismes communautaires * organisations à mission non lucrative",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "organisation-de-la-communaute-anglo-rwd",
@@ -35994,6 +41061,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cara.qc.ca",
     "address": "3001, 1re avenue, Rawdon, Lanaudière, QC, J0K1S0",
     "hours": "lundi au vendredi 9h00 à 16h00, activités: variable"
+  },
+  {
+    "id": "organisme-de-bassins-versants-du-cn",
+    "name": "Organisme de bassins versants Duplessis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-960-1246",
+    "description": "Concertation des acteurs de l'eau, protection, amélioration et mise en valeur de la ressource eau dans sa zone d'intervention, ainsi que des ressources et habitats qui y sont associés * restauration d ... [Plus] | Clientèle : Le grand public",
+    "website": "http://obvd.qc.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "organisme-de-bassins-versants-ma-cn",
+    "name": "Organisme de bassins versants Manicouagan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-3880",
+    "description": "Concertation des acteurs de l'eau, protection, amélioration et mise en valeur de la ressource eau dans sa zone d'intervention, ainsi que des ressources et habitats qui y sont associés * restauration d ... [Plus] | Clientèle : Le grand public",
+    "website": "http://obvm.org",
+    "address": "905 Rue de Puyjalon, Baie-Comeau, QC G5C 1N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "organisme-des-bassins-versants-d-cn",
+    "name": "Organisme des bassins versants de la Haute-Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "418-233-2323",
+    "description": "Par la concertation avec le milieu, la mise à profit de son expertise et la sensibilisation du public, l’Organisme des Bassins versants de la Haute-Côte-Nord (OBVHCN) favorise la bonne gestion, la mis ... [Plus] | Clientèle : Le grand public",
+    "website": "http://obvhautecotenord.org",
+    "address": "24 Rue de la Rivière, Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "orienth-que-l-mtg",
@@ -36124,6 +41230,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
+    "id": "ouvre-bo-te-culturel-l-cn",
+    "name": "Ouvre-boîte culturel (L')",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-1450",
+    "description": "Salle de spectacle et espace culturel alternatif de diffusion des arts et de la culture dans la région de la Côte-Nord * travail en partenariat avec les organismes et entreprises œuvrant déjà à l’épan ... [Plus]",
+    "website": "http://www.louvreboiteculturel.com",
+    "address": "27 Pl. la Salle, Baie-Comeau, QC G4Z 1J8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ouvroir-saint-vincent-mtg",
     "name": "Ouvroir Saint-Vincent",
     "category": "social",
@@ -36200,6 +41319,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://pmemtl.com/west",
     "address": "1675, autoroute Transcanadienne, bureau 301, Dorval, Montréal, QC, H9P 1J1",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "popco-cn",
+    "name": "POPCO",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-8047",
+    "description": "Contribuer au développement des ressources humaines du milieu et aider à la création, à l’organisation et au soutien de projets communautaires * alphabétisation et éducation populaire, nous aidons les ... [Plus] | Clientèle : ***Adultes faiblement alphabétisés, faibles lecteurs, personnes immigrantes",
+    "website": "http://www.popco.qc.ca",
+    "address": "4c Bd des Îles, Port-Cartier, QC G5B 1V6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-emp-montreal-promis",
@@ -36357,6 +41489,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "panache-art-actuel-cn",
+    "name": "Panache art actuel",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-218-1685",
+    "description": "Soutient l’expérimentation et offre aux artistes professionnels et émergents un programme structuré de résidences et d’expositions * rencontre avec des publics diversifiés * travail en partenariat ave ... [Plus]",
+    "website": "https://www.panacheartactuel.com/",
+    "address": "500 Bd Laure, Sept-Îles, QC G4R 1X7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "panda-de-la-mrc-l-assomption-rep",
     "name": "Panda de la MRC L'Assomption",
     "category": "social",
@@ -36419,6 +41564,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "laparenteledelaval.com",
     "address": "196, 7e Avenue, Laval-des-Rapides, Laval, QC, H7N 4J6",
     "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "parkinson-c-te-nord-cn",
+    "name": "Parkinson Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-960-2290",
+    "description": "Soutien au bien-être des personnes touchées par la maladie de Parkinson et aux proches aidants * sensibilisation de la population à cette maladie et appui à la recherche * ligne d'information et référ ... [Plus] | Clientèle : Personnes atteintes de la maladie de Parkinson et leurs proches",
+    "website": "http://parkinsonquebec.ca/regions/cote-nord",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "parkinson-outaouais-out",
@@ -36745,6 +41903,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Apporter pièce identité et preuve de résidence."
   },
   {
+    "id": "patrouille-canadienne-de-ski-div-cn",
+    "name": "Patrouille canadienne de ski - Division Québec, Patrouille canadienne de ski - Zone Sept-Iles",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Sept-Rivières",
+    "province": "QC",
+    "phone": "",
+    "description": "Assure la sécurité et les premiers secours aux victimes d'accidents dans un centre de ski * formation de premiers soins",
+    "website": "https://www.skipatrol.ca/quebec/informations-des-zones/",
+    "address": "1166 Bd Laure, Sept-Îles, QC G4S 1C4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-chsld-levis-pavillon-bellevue",
     "name": "Pavillon Bellevue",
     "category": "health",
@@ -36964,6 +42135,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "pessamit-conseil-de-la-nation-in-cn",
+    "name": "Pessamit. Conseil de la Nation innue",
+    "category": "health",
+    "subcategory": "",
+    "city": "Pessamit",
+    "province": "QC",
+    "phone": "418-567-2265",
+    "description": "Assume des responsabilités en administration, finances, développement économique, communautaire et culturel, loisirs, sécurité, santé et services sociaux, formation et main-d'œuvre, revendications ter ... [Plus] | Clientèle : Service de police et pompier 418-567-2211",
+    "website": "http://www.pessamit.org",
+    "address": "Pessamit, QC G0H 1B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "petit-pont-le-mtg",
     "name": "Petit Pont (Le)",
     "category": "family",
@@ -37132,6 +42316,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h45, vendredi 8h00 à 12h00"
   },
   {
+    "id": "pivot-des-les-le-cn",
+    "name": "Pivot des Îles (Le)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-8314",
+    "description": "Centre d'activités pour les personnes adultes vivant avec une déficience physique, mentale ou cognitive * objectif de développement et d'amélioration de certaines habiletés manuelles, cognitives et so ... [Plus] | Clientèle : Personnes adultes vivant avec un handicap | Âges : 18 an(s) et plus",
+    "address": "466 Av. Perreault, Sept-Îles, QC G4R 1K5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "place-l-emploi-mtg",
     "name": "Place À L'Emploi",
     "category": "social",
@@ -37210,6 +42406,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi à jeudi 8h30 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "plaisir-de-lire-cn",
+    "name": "Plaisir de lire",
+    "category": "social",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-6447",
+    "description": "Augmentation des habiletés en lecture, écriture, calcul et informatique afin d'améliorer les conditions de vie et l'autonomie des personnes  * formation de base en français et en mathématiques * suivi ... [Plus]",
+    "website": "http://www.plaisirdelire.ca",
+    "address": "9 11e Rue, Forestville, QC G0T 0A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "pleins-droits-de-lanaudiere-jol",
     "name": "Pleins Droits de Lanaudière",
     "category": "social",
@@ -37234,6 +42443,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://pleinsdroits.org",
     "address": "10A, boulevard Brien, bureau 80, Repentigny, Lanaudière, QC, J6A 4R7",
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, sur rendez-vous seulement"
+  },
+  {
+    "id": "point-de-rencontre-cn",
+    "name": "Point de rencontre",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-7551",
+    "description": "Centre aidant les personnes ayant une problématique de dépendance Thérapie interne pour hommes avec hébergement * écoute et soutien, suivi individuel, en groupe, post-thérapie * capacité : 9 places Vo ... [Plus] | Clientèle : Thérapie pour hommes ayant une problématique de dépendance (alcool, drogues, médicaments) | Âges : 18 an(s) et plus",
+    "website": "http://www.pointderencontre.ca",
+    "address": "619 Rue des Hospitalières, Baie-Comeau, QC G5C 3H3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "point-de-rencontre-centre-r-side-cn",
+    "name": "Point de rencontre, Centre résidentiel communautaire",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-7551",
+    "description": "Maison de transition offrant des programmes de réhabilitation et de réinsertion sociale pour les hommes judiciarisés * établissement d'hébergement communautaire * thérapie interne (deux mois) * progra ... [Plus] | Clientèle : Hommes judiciarisés | Âges : 18 an(s) et plus",
+    "website": "http://www.pointderencontre.ca",
+    "address": "619 Rue des Hospitalières, Baie-Comeau, QC G5C 3H3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "point-de-rencontre-h-bergement-d-cn",
+    "name": "Point de rencontre, Hébergement de crise",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-7551",
+    "description": "Hébergement de crise pour hommes et femmes * référence obligatoire directement par un intervenant (communautaire, santé et services sociaux) | Clientèle : Hébergement : hommes et femmes vivant une détresse psychologique ou sociale (directement référés par un intervenant des services de crise) | Âges : 18 an(s) et plus",
+    "website": "http://www.pointderencontre.ca",
+    "address": "619 Rue des Hospitalières, Baie-Comeau, QC G5C 3H3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "pointe-claire-culture-sports-loisir-pcl",
@@ -37273,6 +42521,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "pointe-des-cascades.com",
     "address": "105, chemin du Fleuve, Pointe-des-Cascades, Montérégie, QC, J0P 1M0",
     "hours": "lundi au jeudi 8h00 à 12h00 et 12h45 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "pointe-lebel-h-tel-de-ville-cn",
+    "name": "Pointe-Lebel. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Pointe-Lebel",
+    "province": "QC",
+    "phone": "418-589-8073",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-589-2325 poste 3",
+    "website": "http://www.pointe-lebel.com",
+    "address": "Pointe-Lebel, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "pointe-aux-outardes-h-tel-de-vil-cn",
+    "name": "Pointe-aux-Outardes. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Pointe-aux-Outardes",
+    "province": "QC",
+    "phone": "418-567-2203",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-567-2281 poste 5109",
+    "website": "http://www.pointe-aux-outardes.ca",
+    "address": "Pointe aux Outardes, Pointe-aux-Outardes, QC G4Z 0A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "pointe-aux-outardes-h-tel-de-vil-cn-2",
+    "name": "Pointe-aux-Outardes. Hôtel de ville, Frigo communautaire Pointe-aux-Outarde",
+    "category": "social",
+    "subcategory": "",
+    "city": "Pointe-aux-Outardes",
+    "province": "QC",
+    "phone": "418-567-2177 poste 1",
+    "description": "Réfrigérateur en libre-service servant au partage de la nourriture * don de denrées par le public, restaurateurs et épiceries * aliments disponibles pour tous, selon le besoin à combler",
+    "website": "http://www.pointe-aux-outardes.ca",
+    "address": "Pointe-aux-Outardes, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "pont-du-suro-t-mtg",
@@ -37363,6 +42650,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mercredi et vendredi 11h00 à 12h00"
   },
   {
+    "id": "popote-roulante-les-d-lices-mais-cn",
+    "name": "Popote roulante - Les délices maison",
+    "category": "food",
+    "subcategory": "",
+    "city": "Les Bergeronnes",
+    "province": "QC",
+    "phone": "418-233-4210",
+    "description": "Aînés * personne ayant une problématique de santé physique * proches aidants",
+    "website": "http://www.popotes.org/sab/popote-roulante-les-delices-maison",
+    "address": "Les Bergeronnes, QC G0T 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "popote-roulante-tr",
     "name": "Popote roulante Trois-Rivières",
     "category": "food",
@@ -37386,6 +42686,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://popotes.org",
     "address": "150, René-Lévesque Est, Québec, QC G1R 2B2",
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
+  },
+  {
+    "id": "port-cartier-h-tel-de-ville-cn",
+    "name": "Port-Cartier. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-2343",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque Le Manuscrit 418-766-3366",
+    "website": "http://www.villeport-cartier.com",
+    "address": "40 Av. Parent, Port-Cartier, QC G5B 2G5, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "v-portage",
@@ -37464,6 +42777,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.mdjlaporteouverte.org",
     "address": "3825, rue Adélaïde, Longueuil, Montérégie, QC, J3Y 4X1",
     "hours": "rue Adélaide et rue Mance: lundi au vendredi 15h00 à 20h50"
+  },
+  {
+    "id": "portneuf-sur-mer-h-tel-de-ville-cn",
+    "name": "Portneuf-sur-Mer. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Portneuf-sur-Mer",
+    "province": "QC",
+    "phone": "418-238-2642",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque Jean-Marie-Delaunay 418-238-5303 ou 418-238-2642",
+    "website": "http://www.portneuf-sur-mer.ca",
+    "address": "Portneuf-sur-Mer, QC G0T 1P0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "posa-source-des-monts-mtg",
@@ -37840,6 +43166,331 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30, activités: variable, parfois en soirée"
   },
   {
+    "id": "qu-bec-province-d-put-s-provinci-cn",
+    "name": "Québec (Province). Députés provinciaux de la région de la Côte-Nord, Informations générales",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Côte-Nord",
+    "province": "QC",
+    "phone": "418-643-7239",
+    "description": "Duplessis Kateri Champagne Jourdain (CAQ) Ministre de l’Emploi Ministre responsable de la région de la Côte-Nord Bureau de circonscription * 421, avenue Arnaud, bureau 202, Sept-Îles, G4R 3B3 * 418-9 ... [Plus]",
+    "website": "http://www.assnat.qc.ca",
+    "address": "Côte-Nord, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-centre-communautaire-juri-cn",
+    "name": "Québec. Centre communautaire juridique de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-964-8110",
+    "description": "Services d'aide juridique aux personnes à faible revenu * service d'aide à l'homologation d'une entente (SAH) à l'ensemble de la population Bureaux d'aide juridique (BAJ - voir dossiers individuels) * ... [Plus] | Clientèle : Communiquer avec les bureaux locaux pour connaître les critères d'admissibilité",
+    "website": "http://aidejuridiquecotenord.ca",
+    "address": "690 Bd Laure, Sept-Îles, QC G4R 1Y1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-centre-communautaire-juri-cn-2",
+    "name": "Québec. Centre communautaire juridique de la Côte-Nord, Bureau d'aide juridique de Baie-Comeau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418 294-8793",
+    "description": "Services d'aide juridique aux personnes à faible revenu * service d'aide à l'homologation d'une entente (SAH) à l'ensemble de la population Les services d'aide juridique couverts par le régime sont re ... [Plus]",
+    "website": "http://aidejuridiquecotenord.ca",
+    "address": "279 Bd la Salle, Baie-Comeau, QC G4Z 1T2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-centre-communautaire-juri-cn-3",
+    "name": "Québec. Centre communautaire juridique de la Côte-Nord, Bureau d'aide juridique de Forestville et Les Escoumins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-4474",
+    "description": "Services d'aide juridique aux personnes à faible revenu * service d'aide à l'homologation d'une entente (SAH) à l'ensemble de la population Les services d'aide juridique couverts par le régime sont re ... [Plus] | Clientèle : Communiquer avec le bureau local pour connaître les critères d'admissibilité",
+    "website": "http://aidejuridiquecotenord.ca",
+    "address": "Forestville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-centre-communautaire-juri-cn-4",
+    "name": "Québec. Centre communautaire juridique de la Côte-Nord, Bureau d'aide juridique de Sacré-Coeur",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sacré-Coeur",
+    "province": "QC",
+    "phone": "418-587-4474",
+    "description": "Services d'aide juridique aux personnes à faible revenu * service d'aide à l'homologation d'une entente (SAH) à l'ensemble de la population Les services d'aide juridique couverts par le régime sont re ... [Plus] | Clientèle : Communiquer avec le bureau local pour connaître les critères d'admissibilité",
+    "website": "http://aidejuridiquecotenord.ca",
+    "address": "Sacré-Coeur, QC G0T 1Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-centre-communautaire-juri-cn-5",
+    "name": "Québec. Centre communautaire juridique de la Côte-Nord, Bureau mobile Pessamit, Bureau d'aide juridique de Baie-Comeau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Pessamit",
+    "province": "QC",
+    "phone": "418-587-4474",
+    "description": "Services d'aide juridique aux personnes à faible revenu * service d'aide à l'homologation d'une entente (SAH) à l'ensemble de la population Les services d'aide juridique couverts par le régime sont re ... [Plus] | Clientèle : Communiquer avec le bureau local pour connaître les critères d'admissibilité",
+    "website": "http://aidejuridiquecotenord.ca",
+    "address": "Pessamit, QC G0H 1B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-commission-des-droits-de--cn",
+    "name": "Québec. Commission des droits de la personne et des droits de la jeunesse, Bureau régional de Sept-Îles",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-4405",
+    "description": "Promotion et respect des principes énoncés dans la Charte des droits et libertés de la personne * protection des intérêts et respect des droits reconnus aux enfants en vertu de la Loi sur la protectio ... [Plus]",
+    "website": "http://www.cdpdj.qc.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-commission-des-normes-de--cn",
+    "name": "Québec. Commission des normes, de l'équité, de la santé et de la sécurité du travail, Direction régionale de la Côte-Nord, Santé et sécurité du travail",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-964-3991",
+    "description": "Direction régionale de la santé et sécurité au travail Prévention et inspection * soutien aux travailleurs et aux employeurs dans leurs démarches pour éliminer à la source les dangers présents dans le ... [Plus] | Clientèle : Baie-Comeau 418-294-7329",
+    "website": "http://www.cnesst.gouv.qc.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-l-emploi-et--cn-6",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional Les Escoumins",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "418-233-2501",
+    "description": "Guichet multiservice du gouvernement provincial offert aux individus et aux entreprises permettant un accès simplifié aux services publics * renseignements généraux sur les programmes et services gouv ... [Plus]",
+    "website": "http://www.quebec.ca/services-quebec",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-l-emploi-et--cn",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Baie-Comeau",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-3719",
+    "description": "Guichet multiservice du gouvernement provincial offert aux individus et aux entreprises permettant un accès simplifié aux services publics * renseignements généraux sur les programmes et services gouv ... [Plus]",
+    "website": "http://www.quebec.ca/services-quebec",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-l-emploi-et--cn-2",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Forestville",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-6611",
+    "description": "Guichet multiservice du gouvernement provincial offert aux individus et aux entreprises permettant un accès simplifié aux services publics * renseignements généraux sur les programmes et services gouv ... [Plus]",
+    "website": "http://www.quebec.ca/services-quebec",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-l-emploi-et--cn-3",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Havre-Saint-Pierre",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-2288",
+    "description": "Guichet multiservice du gouvernement provincial offert aux individus et aux entreprises permettant un accès simplifié aux services publics * renseignements généraux sur les programmes et services gouv ... [Plus]",
+    "website": "http://www.quebec.ca/services-quebec",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-l-emploi-et--cn-4",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Port-Cartier",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-6932",
+    "description": "Guichet multiservice du gouvernement provincial offert aux individus et aux entreprises permettant un accès simplifié aux services publics * renseignements généraux sur les programmes et services gouv ... [Plus]",
+    "website": "http://www.quebec.ca/services-quebec",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-l-emploi-et--cn-5",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Sept-Îles",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-6545",
+    "description": "Guichet multiservice du gouvernement provincial offert aux individus et aux entreprises permettant un accès simplifié aux services publics * renseignements généraux sur les programmes et services gouv ... [Plus]",
+    "website": "http://www.quebec.ca/services-quebec",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-la-s-curit-p-cn",
+    "name": "Québec. Ministère de la Sécurité publique, Direction régionale de la sécurité civile et de la sécurité incendie - Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-295-4903",
+    "description": "Promotion des dispositions de la Loi sur la sécurité civile et de la Loi sur la sécurité incendie auprès des municipalités et des partenaires * soutien aux municipalités pour l'élaboration ou la bonif ... [Plus]",
+    "website": "http://www.securitepublique.gouv.qc.ca/securite-civile.html",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-des-transports--cn",
+    "name": "Québec. Ministère des Transports et de la Mobilité durable, Direction générale de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-295-4788",
+    "description": "Réponse aux demandes de service et de renseignements, ainsi qu'aux plaintes touchant tous les volets du transport, et plus particulièrement l'entretien et l'exploitation du réseau routier de la région ... [Plus]",
+    "website": "http://www.transports.gouv.qc.ca",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-cn-7",
+    "name": "Québec. Société de l'assurance automobile du Québec, Centre de services Les Escoumins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "",
+    "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "11 Rue Sirois, Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-cn",
+    "name": "Québec. Société de l'assurance automobile du Québec, Centre de services de Baie-Comeau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "",
+    "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "625 Bd Laflèche local 206, Baie-Comeau, QC G5C 1C5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-cn-2",
+    "name": "Québec. Société de l'assurance automobile du Québec, Centre de services de Fermont",
+    "category": "social",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "418-431-3488",
+    "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "97 Rue Bertrand, Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-cn-3",
+    "name": "Québec. Société de l'assurance automobile du Québec, Centre de services de Forestville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-6161",
+    "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "39 route 138 Est, Forestville, QC G0T 0A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-cn-4",
+    "name": "Québec. Société de l'assurance automobile du Québec, Centre de services de Port-Cartier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-6932",
+    "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-cn-5",
+    "name": "Québec. Société de l'assurance automobile du Québec, Centre de services de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "280 Av. Arnaud, Sept-Îles, QC G4R 3A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-cn-6",
+    "name": "Québec. Société de l'assurance automobile du Québec, Centre de services du Havre-Saint-Pierre",
+    "category": "social",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-2045",
+    "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "843 Bd de l'Escale, Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-tribunal-administratif-du-cn",
+    "name": "Québec. Tribunal administratif du logement, Bureau de Baie-Comeau",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "",
+    "description": "Tribunal spécialisé exerçant sa compétence en matière de bail résidentiel : décisions relatives aux litiges dont il est saisi dans le cadre d'une procédure simple et respectueuse des règles de justice ... [Plus] | Clientèle : Le grand public * locataires et propriétaires",
+    "website": "http://www.tal.gouv.qc.ca",
+    "address": "625 Bd Laflèche, Baie-Comeau, QC G5C 1C5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-tribunal-administratif-du-cn-2",
+    "name": "Québec. Tribunal administratif du logement, Bureau de Sept-Îles",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Tribunal spécialisé exerçant sa compétence en matière de bail résidentiel : décisions relatives aux litiges dont il est saisi dans le cadre d'une procédure simple et respectueuse des règles de justice ... [Plus]",
+    "website": "http://www.tal.gouv.qc.ca",
+    "address": "456 Av. Arnaud, Sept-Îles, QC G4R 3B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "hlth-pw1",
     "name": "RAMQ – Régie de l'assurance maladie",
     "category": "health",
@@ -37988,6 +43639,84 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "radio-anticosti-inc-radio-commun-cn",
+    "name": "Radio Anticosti Inc., Radio communautaire Anticosti - 90,5 FM",
+    "category": "social",
+    "subcategory": "",
+    "city": "L'Île-d'Anticosti",
+    "province": "QC",
+    "phone": "418-535-0292",
+    "description": "Radio Anticosti offre une programmation musicale chaleureuse et rassembleuse, alliant pop francophone, new country et traditions locales, avec une touche de jazz, de blues et de rock en soirée. * prog ... [Plus]",
+    "website": "https://radioanticosti.com/",
+    "address": "Ile Anticosti, 4-A Rue du Savoy, Port-Menier, QC G0G 2Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "radio-communautaire-ckna-fm-104--cn",
+    "name": "Radio communautaire CKNA-FM 104,1",
+    "category": "social",
+    "subcategory": "",
+    "city": "Natashquan (Ville)",
+    "province": "QC",
+    "phone": "418-728-3284",
+    "description": "Radio communautaire favorisant l'expression musicale québécoise et étrangère * information critique et participation du milieu * programmation variée en musique et information * Radio bingo Accrédité ... [Plus]",
+    "website": "http://www.ckna.ca",
+    "address": "29 Chem. d'en Haut, Natashquan, QC G0G 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "radio-communautaire-t-te-la-bale-cn",
+    "name": "Radio communautaire Tête-à-la-Baleine CJTB-FM 93,1",
+    "category": "social",
+    "subcategory": "",
+    "city": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+    "province": "QC",
+    "phone": "418-242-2974",
+    "description": "Radio communautaire favorisant l'expression musicale québécoise et étrangère * information critique et participation du milieu * programmation variée en musique et information Accrédité par le Conseil ... [Plus]",
+    "website": "http://cjtbradio.ca",
+    "address": "Côte-Nord-du-Golfe-du-Saint-Laurent, QC G0G 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "radio-communautaire-de-blanc-sab-cn",
+    "name": "Radio communautaire de Blanc-Sablon - CFBS-FM 89.9, 93.1 et 105.3, Radio communautaire de Blanc-Sablon - CFBS-FM 89,9 et 93,1",
+    "category": "social",
+    "subcategory": "",
+    "city": "Blanc-Sablon",
+    "province": "QC",
+    "phone": "Bureau 418-461-2445",
+    "description": "Radio communautaire bilingue favorisant l'expression musicale locale et étrangère * information critique et participation du milieu * programmation variée en musique et information Accrédité par le Co ... [Plus] | Clientèle : Studio 418-461-2729",
+    "website": "http://www.cfbsradio.ca",
+    "address": "Blanc-Sablon, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "radio-communautaire-de-fermont-c-cn",
+    "name": "Radio communautaire de Fermont CFMF-FM 103,1",
+    "category": "social",
+    "subcategory": "",
+    "city": "Fermont",
+    "province": "QC",
+    "phone": "844-521-5147",
+    "description": "Radio communautaire favorisant l'expression musicale québécoise et étrangère * information critique et participation du milieu * programmation variée en musique et information Accrédité par le Conseil ... [Plus]",
+    "website": "http://cfmf.rocks",
+    "address": "Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "radio-et-t-l-vision-communautair-cn",
+    "name": "Radio et télévision communautaire de Havre-Saint-Pierre - CILE-FM 95,1",
+    "category": "social",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-2451",
+    "description": "Entreprise de télécommunications, de radiodiffusion, de production et conception publicitaire * favorisant l'expression musicale locale et étrangère * information critique et participation du milieu C ... [Plus]",
+    "website": "http://www.cilemf.com",
+    "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "rapides-des-joachims-municipalit-out",
     "name": "Rapides-Des-Joachims - Municipalité",
     "category": "housing",
@@ -38036,6 +43765,30 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Lieu d'accueil.* Aide dans les démarches.* Références.* Accès à des ordinateurs et des téléphones.* Prêt d'adresse.* Répit.* Collations. | Clientèle: personnes en situation d'itinérance ou à risque de le devenir, personnes vivant l'exclusion sociale, la marginalité et qui sont peu rejoints par les services sociaux réguliers | Territoire: Laval | Statut: organisme à but non lucratif",
     "address": "3550, boulevard Lévesque Ouest, Chomedey, Laval, QC, H7V 1E8",
     "hours": "7 jours, 7h30 à 16h30"
+  },
+  {
+    "id": "refuge-animal-le-chapitou-cn",
+    "name": "Refuge animal le Chapitou",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-1597",
+    "description": "Amélioration de la qualité de vie des animaux domestiques en contribuant à leur santé, bien-être et sécurité * promotion du respect de la vie animale * réception, cueillette, hébergement et soins des ... [Plus] | Clientèle : Animaux * le grand public",
+    "address": "860 Rue Léonard-E.-Schlemm, Baie-Comeau, QC G4Z 3B7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "refuge-des-animaux-de-port-carti-cn",
+    "name": "Refuge des animaux de Port-Cartier",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-8008",
+    "description": "Refuge pour animaux opéré par Ressource le Phare, centre de travail adapté * pension ou gardiennage d'animaux, foyer temporaire aux chiens et aux chats, abandonnés et errants, retrouvés dans la munici ... [Plus] | Clientèle : Propriétaires d'animaux * personnes sensibilisées à la protection des animaux",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "s-stmichaels-shelter",
@@ -38117,6 +43870,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "regroupement-mamit-innuat-cn",
+    "name": "Regroupement Mamit Innuat",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "Sept-Îles 418-962-6596",
+    "description": "Organisation participant à l’épanouissement social, culturel et économique des communautés membres tout en respectant les besoins communs et les particularités de chacun * gestion des services corresp ... [Plus] | Clientèle : Points de service :",
+    "website": "http://www.mamit-innuat.com",
+    "address": "391 Av. Brochu, Sept-Îles, QC G4R 4S7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "regroupement-tdl-qu-bec-mtg",
     "name": "Regroupement Tdl Québec",
     "category": "social",
@@ -38167,6 +43933,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://rccq.org",
     "address": "1605, rue de Champlain, Montréal, QC H2L 2S5",
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
+  },
+  {
+    "id": "regroupement-des-femmes-de-la-c--cn",
+    "name": "Regroupement des femmes de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-6171",
+    "description": "Défense et promotion des droits et libertés * amélioration des conditions de vie des femmes de la Côte-Nord * défense de leurs intérêts auprès des instances décisionnelles (gouvernements, conseils mun ... [Plus] | Clientèle : Femmes",
+    "address": "767 Rue de Puyjalon, Baie-Comeau, QC G5C 1M9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "regroupement-des-organismes-comm-cn",
+    "name": "Regroupement des organismes communautaires et alternatifs en santé mentale Côte-Nord",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-282-3953",
+    "description": "Regroupement de ressources communautaires œuvrant en santé mentale en vue de favoriser la concertation, le développement, la solidarité des organismes communautaires et des ressources alternatives en ... [Plus] | Clientèle : Ressources communautaires membres du regroupement",
+    "website": "http://rocasmcn.com",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-soc-maisons-jeunes",
@@ -38660,6 +44451,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "ressource-parenfants-cn",
+    "name": "Ressource Parenfants",
+    "category": "family",
+    "subcategory": "",
+    "city": "Les Bergeronnes",
+    "province": "QC",
+    "phone": "418-233-3320",
+    "description": "Promotion du bien-être des familles * promotion du lien parent-enfant * augmentation du réseau social * prêt de tire-lait * outils et informations * conférences, webinaires * ateliers * activités de g ... [Plus] | Clientèle : Familles",
+    "website": "https://ressourceparenfants.com/",
+    "address": "514 Rue du Boisé, Grandes-Bergeronnes, QC G0T 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "ressource-de-r-insertion-le-phar-cn",
+    "name": "Ressource de Réinsertion le Phare",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-964-9981",
+    "description": "Entreprise d'économie circulaire adaptée * réinsertion et réadaptation de personnes aux prises avec une problématique de santé mentale ou de déficience physique ou intellectuelle * création d'emplois ... [Plus] | Clientèle : Autres services : grand public | Âges : 14 an(s) et plus",
+    "website": "http://ressourcelephare.ca",
+    "address": "99 Bd du Portage des Mousses, Port-Cartier, QC G5B 1C9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ressources-communautaires-omega-drv",
     "name": "Ressources Communautaires Omega",
     "category": "employment",
@@ -38856,6 +44673,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "rivi-re-saint-jean-h-tel-de-vill-cn",
+    "name": "Rivière-Saint-Jean. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Rivière-Saint-Jean",
+    "province": "QC",
+    "phone": "418-949-2464",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://municipalites-du-quebec.ca/riviere-st-jean",
+    "address": "Rivière-Saint-Jean, QC G0G 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "rivi-re-au-tonnerre-h-tel-de-vil-cn",
+    "name": "Rivière-au-Tonnerre. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Rivière-au-Tonnerre",
+    "province": "QC",
+    "phone": "418-465-2255",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-465-2055",
+    "website": "http://riviere-au-tonnerre.ca",
+    "address": "Rivière-au-Tonnerre, QC G0G 2L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "rls-haut-richelieu-rouville-prog-mtg",
     "name": "Rls Haut-Richelieu-Rouville - Programme Premier Épisode",
     "category": "mentalHealth",
@@ -38984,6 +44827,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "bureau: lundi au vendredi 10h00 à 15h30, centre de jour: lundi au vendredi 10h00 à 15h30, répit à domicile: 7 jours"
   },
   {
+    "id": "r-pit-daniel-potvin-cn",
+    "name": "Répit Daniel Potvin",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-2343",
+    "description": "* ressource communautaire d'hébergement * services de répit, dépannage et gardiennage * soutien aux familles * aide aux personnes vivant avec un handicap physique ou mental | Clientèle : Personnes avec un handicap physique ou intellectuel * familles",
+    "address": "898 Bd Blanche, Baie-Comeau, QC G5C 2B9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "r-pit-le-z-phyr-mtg",
     "name": "Répit Le Zéphyr",
     "category": "social",
@@ -38995,6 +44850,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "repitlezephyr.com",
     "address": "C.P. 172, Salaberry-de-Valleyfield, Montérégie, QC, J6S 4V6",
     "hours": "administration: lundi au vendredi 9h00 à 16h00, services: 24 heures, 7 jours"
+  },
+  {
+    "id": "r-pit-richelieu-cn",
+    "name": "Répit Richelieu",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-3777",
+    "description": "Centre d'hébergement pour personnes ayant un handicap avec ou sans problématique connexe * répit aux proches aidants * hébergement pour personnes vivant un handicap physique * répit et gardiennage * d ... [Plus]",
+    "address": "665 Av. Evangeline, Sept-Îles, QC G4R 2N9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "repits-de-gaby-les-crab",
@@ -39376,6 +45243,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "r-seau-du-sport-tudiant-du-qu-be-cn",
+    "name": "Réseau du sport étudiant du Québec Côte-Nord",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-964-2883",
+    "description": "Contribuer à la persévérance scolaire et à la réussite scolaire, ainsi qu’au développement de la personne en milieu étudiant * promotion de la santé * pratique de sport (athlétisme, badminton, basketb ... [Plus]",
+    "website": "https://rseqcn.ca/",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "on-shelter-housing",
     "name": "Réseau ontarien de refuges (shelter)",
     "category": "housing",
@@ -39564,6 +45444,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à Résidence Riviera Inc.. Source: MSSS – Fichier M02 des installations.",
     "address": "2999, boulevard Notre-Dame, Laval, QC H7V 4C4",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "r-sidence-saint-joseph-baie-come-cn",
+    "name": "Résidence Saint-Joseph - Baie-Comeau (La)",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Pointe-aux-Outardes",
+    "province": "QC",
+    "phone": "418-567-2293 poste 1002",
+    "description": "Accueil et hébergement temporaire des adultes en difficulté ou présentant un besoin particulier * information * soutien individuel * hébergement temporaire, de courte ou moyenne durée * aide au logeme ... [Plus] | Âges : 16 an(s) et plus",
+    "address": "239 Chem. Principal #1, Pointe-aux-Outardes, QC G0H 1M0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "msss-chsld-sorel-tracy-residence-sorel-tracy",
@@ -39900,6 +45792,18 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "re-pw1",
+    "name": "SCHL – Société canadienne d'hypothèques",
+    "category": "realestate",
+    "subcategory": "Programme gouvernemental",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-668-2642",
+    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
+    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
+    "isProvinceWide": true
+  },
+  {
     "id": "on-cmhc-on",
     "name": "SCHL – Société canadienne d'hypothèques",
     "category": "realestate",
@@ -39910,18 +45814,6 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "website": "https://www.cmhc-schl.gc.ca",
     "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
-    "isProvinceWide": true
-  },
-  {
-    "id": "re-pw1",
-    "name": "SCHL – Société canadienne d'hypothèques",
-    "category": "realestate",
-    "subcategory": "Programme gouvernemental",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-668-2642",
-    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
     "isProvinceWide": true
   },
@@ -39993,6 +45885,71 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "semo-c-te-nord-cn",
+    "name": "SEMO Côte-Nord",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-9034",
+    "description": "Aide et soutien à l'insertion socioprofessionnelle des personnes ayant un handicap physique, intellectuel, sensoriel ou psychologique et des adultes judiciarisés * services aux individus et aux entrep ... [Plus] | Âges : 14 an(s) et plus",
+    "website": "http://www.semocn.qc.ca",
+    "address": "1191 Bd Laflèche, Baie-Comeau, QC G5C 1E1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "semo-c-te-nord-point-de-service--cn",
+    "name": "SEMO Côte-Nord, Point de service de Havre-Saint-Pierre",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Havre-Saint-Pierre",
+    "province": "QC",
+    "phone": "418-538-1981",
+    "description": "Aide et soutien à l'insertion socioprofessionnelle des personnes ayant un handicap physique, intellectuel, sensoriel ou psychologique et des adultes judiciarisés * services aux individus et aux entrep ... [Plus] | Âges : 14 an(s) et plus",
+    "website": "http://www.semocn.qc.ca",
+    "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "semo-c-te-nord-point-de-service--cn-2",
+    "name": "SEMO Côte-Nord, Point de service de Port-Cartier",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-962-0481",
+    "description": "Aide et soutien à l'insertion socioprofessionnelle des personnes ayant un handicap physique, intellectuel, sensoriel ou psychologique et des adultes judiciarisés * services aux individus et aux entrep ... [Plus] | Âges : 14 an(s) et plus",
+    "website": "http://www.semocn.qc.ca",
+    "address": "Hôtel Le Q'artier, 30 Rue Elie Rochefort, Port-Cartier, QC G5B 1N4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "semo-c-te-nord-point-de-service--cn-3",
+    "name": "SEMO Côte-Nord, Point de service de Sept-Îles",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-0481",
+    "description": "Aide et soutien à l'insertion socioprofessionnelle des personnes ayant un handicap physique, intellectuel, sensoriel ou psychologique et des adultes judiciarisés * services aux individus et aux entrep ... [Plus] | Âges : 14 an(s) et plus",
+    "website": "http://www.semocn.qc.ca",
+    "address": "350 Rue Smith bureau 264, Sept-Îles, QC G4R 3G5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "semo-c-te-nord-point-de-service--cn-4",
+    "name": "SEMO Côte-Nord, Point de service des Escoumins et Forestville",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-2240",
+    "description": "Aide et soutien à l'insertion socioprofessionnelle des personnes ayant un handicap physique, intellectuel, sensoriel ou psychologique et des adultes judiciarisés * services aux individus et aux entrep ... [Plus] | Âges : 14 an(s) et plus",
+    "website": "http://www.semocn.qc.ca",
+    "address": "Forestville, QC G0T 0A9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "emp-semo-mtl",
@@ -40180,6 +46137,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "sp-canada-section-c-te-nord-cn",
+    "name": "SP Canada, Section Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Amélioration de la qualité de vie des personnes atteintes de sclérose en plaques * soutien à la recherche Aide aux personnes atteintes, avec diagnostique possible ou maladie connexe et leur famille * ... [Plus] | Clientèle : 418-968‑6688",
+    "website": "http://scleroseenplaques.ca/chapter/cote-nord",
+    "address": "350 Rue Smith bureau 264, Sept-Îles, QC G4R 3G5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sacr-coeur-h-tel-de-ville-cn",
+    "name": "Sacré-Coeur. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sacré-Coeur",
+    "province": "QC",
+    "phone": "418-236-4621",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-236-4460 poste 3",
+    "website": "http://www.sacre-coeur.ca",
+    "address": "Sacré-Coeur, QC G0T 1Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "saga-maison-des-jeunes-la-beaudr-out",
     "name": "Saga Maison Des Jeunes (La) - Beaudry",
     "category": "social",
@@ -40228,6 +46211,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.ville.st-andre-avellin.qc.ca",
     "address": "530, rue Charles-Auguste-Montreuil, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
     "hours": "lundi au jeudi 9h00 à 12h00 et 14h00 à 17h00, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "saint-augustin-r-gion-09-h-tel-d-cn",
+    "name": "Saint-Augustin (région 09). Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Augustin (région 09)",
+    "province": "QC",
+    "phone": "581-620-0053",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.mamh.gouv.qc.ca/repertoire-des-municipalites/fiche/municipalite/98012/",
+    "address": "Saint-Augustin-de-Desmaures, QC G3A 2E3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "saint-bruno-de-montarville-cocen-mtg",
@@ -40438,6 +46434,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "année scolaire: lundi au samedi 16h00 à 21h00, été: lundi au vendredi 10h00 à 17h00"
   },
   {
+    "id": "salon-du-livre-de-la-c-te-nord-cn",
+    "name": "Salon du livre de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418 968-4634",
+    "description": "Promotion de la lecture par le rayonnement du livre et de ses créateurs sur l’ensemble de son territoire * visite scolaire * tournée littéraire * concours d'écriture",
+    "website": "https://salondulivrecotenord.com/",
+    "address": "406 Av. Brochu Bureau 104, Sept-Îles, QC G4R 2W8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "shawi-garde-sandrine-oka",
     "name": "Sandrine Oka",
     "category": "family",
@@ -40500,6 +46509,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 15h00"
   },
   {
+    "id": "sant-mentale-qu-bec-c-te-nord-cn",
+    "name": "Santé mentale Québec - Côte-Nord",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-4476",
+    "description": "Promotion et prévention en santé mentale. Encourage l’acquisition de saines attitudes pour maintenir une bonne santé mentale et se ressourcer. * coffre à outils (7 astuces pour se recharger) * découve ... [Plus]",
+    "website": "http://smqcn.ca",
+    "address": "P. 323, C, Port-Cartier, QC G5B 0A2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "sk-sha",
     "name": "Saskatchewan Health Authority",
     "category": "health",
@@ -40554,6 +46576,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
+    "id": "sauvetage-et-recherche-a-riens-d-cn",
+    "name": "Sauvetage et recherche aériens du Québec, Sept-Îles - Région 09",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Sept-Rivières",
+    "province": "QC",
+    "phone": "",
+    "description": "Regroupement de volontaires voués à la promotion de la sécurité aérienne * soutien aérien au programme national de recherche et sauvetage du Canada * participation aux programmes d'entraînement de la ... [Plus]",
+    "website": "https://serabec.ca/09-sept-iles",
+    "address": "1166 Bd Laure, Sept-Îles, QC G4S 1C4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "scama-lav",
     "name": "Scama",
     "category": "social",
@@ -40578,6 +46613,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "centrescama.org",
     "address": "3168, boulevard Cartier Ouest, Chomedey, Laval, QC, H7V 1J7",
     "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 13h00"
+  },
+  {
+    "id": "schefferville-h-tel-de-ville-cn",
+    "name": "Schefferville. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Schefferville",
+    "province": "QC",
+    "phone": "418-585-2471",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.ville-schefferville.ca",
+    "address": "505 Rue Fleming, Schefferville, QC G0G 2T0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "scl-rodermie-qu-bec-mtg",
@@ -40682,6 +46730,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://lesentier-thetrail.ca",
     "address": "945 Chemin Bord-du-Lac-Lakeshore, Dorval, Montréal, QC, H9S 2C7",
     "hours": "variable"
+  },
+  {
+    "id": "sept-les-h-tel-de-ville-cn",
+    "name": "Sept-Îles. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-964-3201",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, sports, transports en commun en milieu urbain, assainissement des eaux usé ... [Plus] | Clientèle : Bibliothèque municipale Louis-Ange-Santerre : 418-964-3355",
+    "website": "http://www.septiles.ca",
+    "address": "451 Av. Arnaud, Sept-Îles, QC G4R 3B3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sept-les-h-tel-de-ville-maison-d-cn",
+    "name": "Sept-Îles. Hôtel de ville, Maison des jeunes de Sept-Îles l'Éclipse",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-2525 poste 2979",
+    "description": "Lieu de rencontre animé permettant le développement de l'autonomie et l'implication des jeunes dans différents projets   * accès sans fil à Internet (Wi-Fi)  * jeux de société * activités de préventio ... [Plus] | Clientèle : Jour 418-964-3379 | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://ville.sept-iles.qc.ca/fr/maison-des-jeunes_244/",
+    "address": "451 Av. Arnaud, Sept-Îles, QC G4R 3B3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "serlan-repentigny-rep",
@@ -41365,6 +47439,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "service-de-supervision-des-droit-cn",
+    "name": "Service de supervision des droits d'accès",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-2119",
+    "description": "Maintien et développement des liens entre le parent et l’enfant dans un cadre adapté, sain et sécuritaire * accueil, écoute et référence * échange de garde * visite supervisée * conversation supervisé ... [Plus] | Clientèle : Parents vivant une situation conflictuelle lors de la transition de l’enfant ou les parents ayant un interdit de contact entre eux",
+    "website": "http://ssdabc.ca",
+    "address": "bureau 201, 896 Rue de Puyjalon, Baie-Comeau, QC G5C 1N1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "incendie-trois-rivieres",
     "name": "Service de sécurité incendie de Trois-Rivières",
     "category": "social",
@@ -41842,6 +47929,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.siloam.ca",
     "address": "300 Princess St, Winnipeg, MB R3B 1L8",
     "hours": "Service disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "soci-t-alzheimer-c-te-nord-cn",
+    "name": "Société Alzheimer Côte-Nord",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-964-6572",
+    "description": "Soutien à la personne atteinte de la maladie d'Alzheimer ou d'autres troubles neurocognitifs, ainsi qu'à la famille et aux proches, favorisant la qualité de vie, retardant l'hébergement et amenuisant ... [Plus] | Clientèle : Personnes vivant avec la maladie d'Alzheimer ou autres troubles neurocognitifs, leur famille et proches * intervenants de la santé et des services sociaux * grand public",
+    "address": "24 Bd des Îles, Port-Cartier, QC G5B 2M9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "soci-t-alzheimer-des-maskoutains-mtg",
@@ -42422,6 +48521,83 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Apporter pièce identité et preuve de résidence."
   },
   {
+    "id": "soci-t-canadienne-de-la-scl-rose-cn",
+    "name": "Société canadienne de la sclérose en plaques - Section Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux personnes atteintes de la sclérose en plaques * écoute téléphonique sans frais * information aux nouveaux diagnostiqués * groupes d'entraide et soutien, cafés-rencontres, activités de collect ... [Plus] | Clientèle : 418-968‑6688",
+    "website": "http://spcanada.ca/sp-canada-côte-nord",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-aide-au-d-veloppement-d-cn-2",
+    "name": "Société d'aide au développement de la collectivité de Manicouagan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-295-7232 418-295- SADC",
+    "description": "Développement économique et mise en œuvre d'initiatives locales en dynamisant le milieu et en investissant dans les entreprises Développement local * femmes entrepreneures Fonds d'investissement * prê ... [Plus] | Clientèle : Personnes ayant un projet entrepreneurial * petites entreprises (moins de 200 employés) | Âges : 18 an(s) et plus",
+    "website": "http://sadcmanic.ca",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-aide-au-d-veloppement-d-cn",
+    "name": "Société d'aide au développement de la collectivité de la Haute-Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "418-233-3495",
+    "description": "Orientation et soutien au développement et à la réussite de projets entrepreneuriaux et collectifs sur son territoire, un conseil à la fois * aide technique et services-conseils, l'élaboration de plan ... [Plus] | Clientèle : Personnes ayant un projet entrepreneurial * petites entreprises (moins de 200 employés) | Âges : 18 an(s) et plus",
+    "website": "http://www.sadchcn.com",
+    "address": "Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-aide-au-d-veloppement-d-cn-3",
+    "name": "Société d'aide au développement des collectivités de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-7233",
+    "description": "Orientation et soutien au développement et à la réussite de projets entrepreneuriaux et collectifs sur son territoire, un conseil à la fois * aide technique et services-conseils, l'élaboration de plan ... [Plus] | Clientèle : Personnes ayant un projet entrepreneurial * petites entreprises (moins de 200 employés) | Âges : 18 an(s) et plus",
+    "website": "http://www.sadccote-nord.org",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-habitation-de-ragueneau-cn",
+    "name": "Société d'habitation de Ragueneau",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Ragueneau",
+    "province": "QC",
+    "phone": "418-589-9906",
+    "description": "* logements à prix modique * immeuble de 6 unités | Clientèle : Personnes à faible revenu * familles * aînés | Âges : 18 an(s) - 65 an(s)",
+    "address": "Ragueneau, QC G0H 0A4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-horticulture-de-port-ca-cn",
+    "name": "Société d'horticulture de Port-Cartier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-3394",
+    "description": "Regroupement de personnes intéressées par l'horticulture et la préservation de l'environnement * ateliers et conférences",
+    "website": "https://fsheq.com/societe-1559",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "societe-de-l-autisme-region-lanaudi-ndp",
     "name": "Société de L'Autisme Région Lanaudière",
     "category": "family",
@@ -42520,6 +48696,94 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Dépannage alimentaire, vêtements, mobilier et aide matérielle aux personnes dans le besoin à Trois-Rivières. Friperie à bas prix, épicerie communautaire, accompagnement. Aucun jugement, accueil chaleureux.",
     "address": "2580, rue Royale, Trois-Rivières, QC G9A 4L5",
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
+  },
+  {
+    "id": "soci-t-de-d-veloppement-conomiqu-cn",
+    "name": "Société de développement économique de Uashat - Maliotenam",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Uashat",
+    "province": "QC",
+    "phone": "418-962-5433",
+    "description": "Soutien au développement socioéconomique de la communauté * création d'emplois, entreprises, partenariats et occasions d'affaire * consultation, orientation et référence * diffusion d'offres d'emploi ... [Plus] | Clientèle : Chercheurs d'emploi * personnes désirant débuter ou développer des projets économiques (entreprises, partenariats, occasions d'affaire) * entreprises",
+    "website": "http://www.sdeum.ca",
+    "address": "Réserve indienne de Uashat, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-g-n-alogie-de-la-c-te--cn",
+    "name": "Société de généalogie de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Regroupement de personnes intéressées à la généalogie * services de recherche * soutien à la construction d'un arbre généalogique * consultation de recueils de généalogie, registres de baptêmes, maria ... [Plus]",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-horticulture-de-sept-le-cn",
+    "name": "Société d’horticulture de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Regroupement de personnes intéressées par l'horticulture et la préservation de l'environnement * ateliers et conférences",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-historique-de-la-c-te-nor-cn",
+    "name": "Société historique de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-8228",
+    "description": "Promotion, diffusion, conservation et mise en valeur de l’histoire et du patrimoine nord-côtier   * centre agréé d’archives privées * bibliothèque généalogique * conférences et expositions  * publicat ... [Plus]",
+    "website": "http://www.shcote-nord.org",
+    "address": "2 Pl. la Salle, Baie-Comeau, QC G4Z 1K3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-historique-du-golfe-cn",
+    "name": "Société historique du Golfe",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-964-8434",
+    "description": "Promotion, diffusion, conservation et mise en valeur de l’histoire et du patrimoine du territoire    * centre de documentation  * conférences et expositions  * publications * édition de la Revue d’his ... [Plus]",
+    "website": "http://www.shcn.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-historique-et-patrimonial-cn",
+    "name": "Société historique et patrimoniale de Port-Cartier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-0077",
+    "description": "Sensibilisation de la population au caractère historique de Port-Cartier, acquisition de biens historiques et diffusion de publications * conférences, expositions et excursions culturelles * recherche ... [Plus]",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-pour-la-pr-vention-de-la--cn",
+    "name": "Société pour la prévention de la cruauté envers les animaux de la Côte-Nord",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-964-3272",
+    "description": "Amélioration de la qualité de vie des animaux domestiques en contribuant à leur santé, bien-être et sécurité * éducation et sensibilisation de la population à l'importance de la vie animale * refuge p ... [Plus]",
+    "website": "http://spcacotenord.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "solidarit-gatineau-ouest-out",
@@ -42703,6 +48967,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
+    "id": "station-gallix-cn",
+    "name": "Station Gallix",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Sept-Rivières",
+    "province": "QC",
+    "phone": "418 766-7547 (418 766-SKIS)",
+    "description": "Activités de ski alpin, planche à neige, glissades, ski de fond et sentiers de raquettes * école de ski * location d'équipement * activités libres * organisation d'événements et de courses",
+    "website": "https://www.skigallix.com/fr/",
+    "address": "600, route du, Chem. de Club de Ski Gallix, Sept-Îles, QC G0G 1L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "station-de-radio-cjas-fm-93-5-cn",
+    "name": "Station de radio CJAS-FM 93,5",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Augustin (région 09)",
+    "province": "QC",
+    "phone": "418-947-2239",
+    "description": "Radio communautaire anglaise * information critique et participation du milieu * programmation variée en musique et information Accrédité par le Conseil de la radiodiffusion et des télécommunications ... [Plus] | Clientèle : Le grand public",
+    "website": "http://www.cjasradio.ca",
+    "address": "Ariège, France",
+    "hours": "Voir site web"
+  },
+  {
     "id": "drum-garde-stephanie",
     "name": "Stephanie",
     "category": "family",
@@ -42819,6 +49109,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "synapse-360-cn",
+    "name": "Synapse 360",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-294-4410",
+    "description": "Aide et soutien aux intervenants, enseignants et parents d’enfants touchés par le trouble déficitaire de l’attention avec ou sans hyperactivité (TDA-H) ou du syndrome Gilles de la Tourette (SGT) * lig ... [Plus] | Clientèle : Intervenants, enseignants et parents d’enfants touchés par le trouble déficitaire de l’attention avec ou sans hyperactivité (TDA-H) ou du syndrome Gilles de la Tourette (SGT)",
+    "website": "https://synapse-360.com/",
+    "address": "356C Rue de Puyjalon, Baie-Comeau, QC G5C 1M5, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "urgent-securite-civile",
@@ -43148,6 +49451,82 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 15h30"
   },
   {
+    "id": "table-de-concertation-des-associ-cn",
+    "name": "Table de concertation des associations de personnes handicapées de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-3634",
+    "description": "Regroupement d'organismes de services et de défense des droits des personnes handicapées sur le territoire nord-côtier * défense collective des droits et promotion des intérêts des personnes handicapé ... [Plus] | Clientèle : Organismes s'affairant à la promotion ou défense des droits et intérêts des personnes handicapées",
+    "website": "https://www.caphcn.ca/",
+    "address": "625 Bd Laflèche room 312, Baie-Comeau, QC G5C 3R3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "table-de-concertation-des-person-cn-2",
+    "name": "Table de concertation des personnes aînées Manicouagan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-7423",
+    "description": "Lieu régional d'échange et de concertation permettant aux aînés d'unir leur voix pour mieux connaître et faire connaître leurs besoins et intérêts * défense des intérêts auprès des instances décisionn ... [Plus] | Clientèle : Organismes préoccupés par l'amélioration des conditions de vie des aînés | Âges : 50 an(s) et plus",
+    "website": "http://www.tabledesainescn.com/manicouagan",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "table-de-concertation-des-person-cn",
+    "name": "Table de concertation des personnes aînées de la MRC des Sept-Rivières",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "Lieu régional d'échange et de concertation permettant aux aînés d'unir leur voix pour mieux connaître et faire connaître leurs besoins et intérêts * défense des intérêts en commissions parlementaires ... [Plus] | Clientèle : Organismes préoccupés par l'amélioration des conditions de vie des aînés | Âges : 50 an(s) et plus",
+    "website": "http://www.tcasr.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "table-de-concertation-jeunesse-d-cn",
+    "name": "Table de concertation jeunesse de Chute-aux-Outardes",
+    "category": "family",
+    "subcategory": "",
+    "city": "Chute-aux-Outardes",
+    "province": "QC",
+    "phone": "418-567-2525 poste 5205",
+    "description": "Regroupement de parents, élèves, travailleurs communautaires, enseignants, intervenants scolaires, CLSC soutenant les enfants, les jeunes et les jeunes adultes dans leurs actions * soutien à la représ ... [Plus]",
+    "address": "Chute-aux-Outardes, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "table-des-groupes-populaires-cn",
+    "name": "Table des groupes populaires",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-2809",
+    "description": "Regroupement régional d'organismes en éducation populaire autonome et défense collective des droits | Clientèle : Groupes populaires et communautaires",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "table-r-gionale-des-organismes-c-cn",
+    "name": "Table régionale des organismes communautaires et Corporation de développement communautaire de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-295-2429",
+    "description": "Regroupement régional d'organismes d'action communautaire autonome * interlocuteur officiel pour les dossiers d'intérêt commun * tables d'organismes communautaires (TOC) dans chaque MRC * soutien et f ... [Plus] | Clientèle : Organismes d'action communautaire autonome",
+    "website": "https://troc09.org/",
+    "address": "767 Rue de Puyjalon, Baie-Comeau, QC G5C 1M9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "tabl-e-des-chefs-la-mtg",
     "name": "Tablée Des Chefs (La)",
     "category": "food",
@@ -43159,6 +49538,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.tableedeschefs.org/fr",
     "address": "679, rue Adoncourt, Longueuil, Montérégie, QC, J4G 2M6",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "tadoussac-h-tel-de-ville-cn",
+    "name": "Tadoussac. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Tadoussac",
+    "province": "QC",
+    "phone": "418-235-4446",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-235-4446 poste 1106",
+    "website": "http://municipalite.tadoussac.com",
+    "address": "165 Rue du Bord de l'Eau, Tadoussac, QC G0T 2A0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "tadoussac-h-tel-de-ville-centre--cn",
+    "name": "Tadoussac. Hôtel de ville, Centre des loisirs",
+    "category": "social",
+    "subcategory": "",
+    "city": "Tadoussac",
+    "province": "QC",
+    "phone": "418-235-4446 poste 1009",
+    "description": "Offre d'activités récréatives à la population que la municipalité dessert et promotion des initiatives citoyennes * loisirs municipaux * salle d'entraînement * location de la salle communautaire : dis ... [Plus] | Clientèle : Grand public",
+    "website": "http://www.municipalite.tadoussac.com",
+    "address": "165 Rue du Bord de l'Eau, Tadoussac, QC G0T 2A0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "tandem-emploi-mtg",
@@ -43224,6 +49629,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.tdlmonteregie.org",
     "address": "55, rue Saint-Pierre, bureau 203, Saint-Constant, Montérégie, QC, J5A 1B9",
     "hours": "bureau: lundi au jeudi 8h30 à 16h00, vendredi 9h00 à 13h00, activités: soirs et fins de semaine"
+  },
+  {
+    "id": "technoscience-c-te-nord-cn",
+    "name": "Technoscience Côte-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-0959",
+    "description": "Promotion de l'intérêt pour la culture et le loisir scientifique principalement chez les jeunes de 4-20 ans * animations et activités dans les écoles * Samedis débrouillards : activités spéciales les ... [Plus] | Clientèle : Le grand public * jeunes",
+    "website": "http://technosciencecn.com",
+    "address": "390 Av. Brochu bureau 215, Sept-Iles, QC G4R 2W6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "technoscience-outaouais-out",
@@ -43346,6 +49764,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h15 et 13h00 à 16h30, vendredi 8h00 à 12h00"
   },
   {
+    "id": "th-tre-musical-troupe-du-masque--cn",
+    "name": "Théâtre musical - Troupe du Masque d'or (La)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-964-3371",
+    "description": "Production et diffusion locale de comédies musicales et spectacles de variétés à grand déploiement * approche favorisant le perfectionnement des membres bénévoles dédiés aux arts de la scène (chant, t ... [Plus] | Clientèle : Il y a deux groupes 7 à 17 ans et 18 ans et plus",
+    "website": "http://www.troupe.masquedor.ca",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "th-tre-musical-troupe-du-masque--cn-2",
+    "name": "Théâtre musical - Troupe du Masque d'or (La), École",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-964-3371",
+    "description": "Enseignement des arts de la scène aux jeunes par le théâtre musical * ateliers de groupe (7-11 ans, 12-17 ans) * théorie musicale, jeu théâtral, chorégraphie, écriture, diction et voix, costume, maqui ... [Plus] | Clientèle : Enfants * adolescents | Âges : 7 an(s) - 17 an(s)",
+    "website": "http://ecole.masquedor.ca",
+    "address": "9 Rue de la Vérendrye, Sept-Îles, QC G4R 5E3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "toits-d-mile-les-mtg",
     "name": "Toits D'Émile (Les)",
     "category": "mentalHealth",
@@ -43359,6 +49803,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "tol-rance-z-ro-baie-comeau-servi-cn",
+    "name": "Tolérance zéro Baie-Comeau - Service de raccompagnement",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "Service de raccompagnement 418-297-2611",
+    "description": "Sensibilisation de la population aux dangers de la conduite avec facultés affaiblies * service de raccompagnement * recrutement de bénévoles : conducteurs de véhicule et raccompagnateurs * formules d' ... [Plus] | Clientèle : Informations et administration 418-298-1995",
+    "website": "http://www.tzbaiecomeau.com",
+    "address": "Ville de Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "on-toronto-public-health",
     "name": "Toronto Public Health",
     "category": "health",
@@ -43370,6 +49827,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.toronto.ca/community-people/health-wellness-care/",
     "address": "100 Queen St W, Toronto, ON M5H 2N2",
     "hours": "Lun-ven 8h30-16h30. Pour urgence: 811 (Info-Santé) ou urgence hospitalière."
+  },
+  {
+    "id": "tourisme-c-te-nord-cn",
+    "name": "Tourisme Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-962-0808",
+    "description": "Développement et promotion du tourisme dans la région de la Côte-Nord * accueil et information * promotion touristique * sensibilisation * concertation * développement * répertoire des attraits touris ... [Plus] | Clientèle : Le grand public",
+    "website": "http://www.tourismecote-nord.com",
+    "address": "734 Rue de Puyjalon, Baie-Comeau, QC G5C 1M8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "tourisme-c-te-nord-bureau-de-sep-cn",
+    "name": "Tourisme Côte-Nord, Bureau de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-0808",
+    "description": "Développement et promotion du tourisme dans la région de la Côte-Nord * accueil et information * promotion touristique * sensibilisation * concertation * développement * répertoire des attraits touris ... [Plus] | Clientèle : Le grand public",
+    "website": "http://www.tourismecote-nord.com",
+    "address": "312 Av. Brochu, Sept-Îles, QC G4R 2W6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "tourisme-mont-r-gie-mtg",
@@ -43435,6 +49918,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.traitdunionoutaouais.com/fr/accueil",
     "address": "109, rue Wright, bureau 109, Gatineau, Outaouais, QC, J8X 2G7",
     "hours": "lundi au vendredi 8h00 à 15h00"
+  },
+  {
+    "id": "transit-sept-les-cn",
+    "name": "Transit Sept-Îles",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "Ligne d'intervention 418-968-9190, lun-dim 24 heures",
+    "description": "Hébergement temporaire (6 chambres, 12 personnes) * accueil, soutien, référence, accompagnement et prévention * Maison Rotary, hébergement d'urgence * programme Urgence-médicament (références par un i ... [Plus] | Clientèle : Toute personne en situation d'urgence sociale | Âges : 18 an(s) et plus",
+    "website": "http://transitseptiles.com",
+    "address": "409 Av. Gamache, Sept-Îles, QC G4R 2H8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "transiti-n-qu-bec-out",
@@ -43530,6 +50026,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "traverse-accompagnement-et-h-ber-cn",
+    "name": "Traverse, accompagnement et hébergement en santé mentale, inc. (La), Maison de transition le Gîte de Baie-Comeau",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-2211",
+    "description": "Maison d'hébergement temporaire offrant aide, soutien et accompagnement aux personnes vivant avec une ou des condition(s) liée(s) à leur santé mentale afin de favoriser la reprise de pouvoir sur leur ... [Plus] | Clientèle : Personnes aux prises avec une condition de santé mentale diagnostiquée | Âges : 18 an(s) - 60 an(s)",
+    "website": "http://www.latraversebc.ca",
+    "address": "1006 Rue Nouvel, Baie-Comeau, QC G5C 2C7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "travers-e-la-mtg",
     "name": "Traversée (La)",
     "category": "family",
@@ -43567,6 +50076,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.tremplindeslecteurs.org",
     "address": "160, boulevard Maloney Est, unité 12, Gatineau, Outaouais, QC, J8P 1C1",
     "hours": "administration: lundi au jeudi 9h00 à 16h00"
+  },
+  {
+    "id": "triathlon-de-port-cartier-cn",
+    "name": "Triathlon de Port-Cartier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "",
+    "description": "Événement sportif * Triathlon * Duathlon * course à pied",
+    "website": "https://www.triathlondeportcartier.com/",
+    "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "tribunal-administratif-du-logeme-out",
@@ -43633,6 +50155,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "troupe-art-sc-ne-la-cn",
+    "name": "Troupe Art scène (La)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Pointe-aux-Outardes",
+    "province": "QC",
+    "phone": "418-293-7566",
+    "description": "Troupe de spectacle intergénérationnelle amateure * musique et chant | Âges : 7 an(s) et plus",
+    "website": "http://www.pointe-aux-outardes.ca/loisirs-et-culture/artscene/",
+    "address": "Pointe-aux-Outardes, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "troupe-de-th-tre-les-pas-pour-ri-mtg",
     "name": "Troupe De Théâtre Les Pas Pour Rire",
     "category": "social",
@@ -43644,6 +50179,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "lespaspourrire.com",
     "address": "110, rue Mathias, bureau 102, Salaberry-de-Valleyfield, Montérégie, QC, J6T 3L6",
     "hours": "lundi au jeudi de 8h00 à 16h00, mardi 18h00 à 20h00"
+  },
+  {
+    "id": "troupe-chaud-bizzz-la-cn",
+    "name": "Troupe chaud bizzz (La)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-293-5900",
+    "description": "Arts de la scène * production, diffusion de spectacles de variété et de comédies musicales | Âges : 10 an(s) et plus",
+    "website": "http://chaudbiz.ca",
+    "address": "300 Bd la Salle, Baie-Comeau, QC G4Z 0A6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "troupe-le-th-tre-la-patente-cn",
+    "name": "Troupe le théâtre La Patente",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-961-5115",
+    "description": "Troupe de théâtre amateur * production de pièces de théâtre * production de la ligue d'improvisation de Sept-Îles",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "tr-s-saint-r-dempteur-municipali-mtg",
@@ -43698,6 +50258,44 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.tvrs.ca",
     "address": "893, boulevard Guimond, Longueuil, Montérégie, QC, J4G 2M7",
     "hours": "9h00 à 17h00"
+  },
+  {
+    "id": "t-l-vision-communautaire-du-litt-cn",
+    "name": "Télévision communautaire du Littoral",
+    "category": "social",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-4422",
+    "description": "Télévision communautaire assurant la promotion des intérêts sociaux, économiques et culturels de la région * implication et participation populaire * production d'émissions d'information et entrevues ... [Plus] | Clientèle : Le grand public",
+    "address": "Forestville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "t-l-vision-r-gionale-de-la-haute-cn",
+    "name": "Télévision régionale de la Haute-Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Les Escoumins",
+    "province": "QC",
+    "phone": "418-233-2156",
+    "description": "Télévision communautaire assurant la promotion des intérêts sociaux, économiques et culturels de la région * implication et participation populaire * production d'émissions d'information et entrevues ... [Plus] | Clientèle : Le grand public",
+    "website": "http://tvr7.net",
+    "address": "328 Rte 138 Gd, Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "t-l-vision-r-gionale-de-la-p-nin-cn",
+    "name": "Télévision régionale de la Péninsule",
+    "category": "social",
+    "subcategory": "",
+    "city": "Chute-aux-Outardes",
+    "province": "QC",
+    "phone": "418-567-2650",
+    "description": "Télévision communautaire assurant la promotion des intérêts sociaux, économiques et culturels de la région * implication et participation populaire * production d'émissions d'information et entrevues ... [Plus] | Clientèle : Le grand public",
+    "website": "http://tvrp.ca",
+    "address": "113 Rue Vallilee, Chute-aux-Outardes, QC G0H 1C0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "emp-semo-tetes",
@@ -43778,6 +50376,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous: lundi au jeudi 8h00 à 20h00, vendredi 8h00 à 19h00, samedi, dimanche et jours fériés: 9h00 à 13h30"
   },
   {
+    "id": "unit-domr-my-de-baie-comeau-cn",
+    "name": "Unité Domrémy de Baie-Comeau",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-3486 poste 101",
+    "description": "Assistance aux personnes vivant de l'isolement, aux prises avec des difficultés d'adaptation sociale, une problématique de dépendance, de judiciarisation ou vivant une situation de précarité. * accuei ... [Plus] | Clientèle : Personnes vivant de l'isolement, aux prises avec des difficultés d'adaptation sociale, une problématique de dépendance, de judiciarisation ou vivant une situation de précarité",
+    "address": "170 Bd la Salle, Baie-Comeau, QC G4Z 1S4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "unite-point-de-depart-jol",
     "name": "Unité Point de Départ",
     "category": "social",
@@ -43829,6 +50439,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 7h00 à 23h00, samedi et dimanche 7h00 à 18h00"
   },
   {
+    "id": "universit-du-qu-bec-chicoutimi-p-cn",
+    "name": "Université du Québec à Chicoutimi, Pavillon Alouette, Centre d'études universitaire de l'est de la Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-4801 poste 5704",
+    "description": "Établissement d'enseignement offrant des programmes universitaires, des cours à la carte, de la formation continue et du perfectionnement Domaines d'études * arts, lettres et du langage * informatique ... [Plus]",
+    "website": "http://www.uqac.ca/sept-iles",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "universit-du-qu-bec-rimouski-ant-cn",
+    "name": "Université du Québec à Rimouski, Antenne de Baie-Comeau",
+    "category": "health",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-723-1986 poste 1086",
+    "description": "Institution de formation, recherche et services à la collectivité de niveau universitaire Baccalauréat * administration * sciences infirmières (chem. DEC-BAC) * travail social Campus de Lévis (voir do ... [Plus] | Clientèle : Variable selon le programme",
+    "website": "http://www.uqar.ca",
+    "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "vaisseau-d-or-des-moulins-le-trb",
     "name": "Vaisseau D'Or (des Moulins) (le)",
     "category": "food",
@@ -43878,6 +50514,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Organisme de prévention du décrochage scolaire et social.* Projet Écho: services spécialisés intensifs en intervention familiale pour les familles vivant plusieurs situations problématiques.* Projet Catamaran: service alternatif de camp en soirée avec une programmation d'activités ludiques et de socialisation pour les jeunes vivant avec plusieurs problématiques.* Camp Exploration: service alternatif de camp de jour offert à des jeunes qui ne peuvent recevoir des services dans un camp régulier en raison de leurs problématiques multiples et importantes.* Belvédère: hébergement transitoire pour jeunes ayant été ou étant en situation d'itinérance.* Projet 14-17 ans: cadre scolaire alternatif où les jeunes qui ne fréquentent plus le milieu scolaire pour des problématiques de consommation ou de comportement peuvent participer à des ateliers de réinsertion à l'emploi et de développement personnel.* Projet 16-24 ans: cadre scolaire alternatif pour les jeunes adultes qui ont pour intérêt de poursuivre leur cheminement scolaire, mais qui éprouvent plusieurs difficultés à réintégrer le milieu scolaire. | Clientèle: projet Écho: jeunes de 7 à 17 ans vivant au minimum une double problématique, projet Catamaran : jeunes volontaires de 7 à 17 ans suivi·e·s par un·e travailleur·euse social·e et vivant au minimum une double problématique, Camp Exploration: jeunes de 7 à 17 ans présentant une multiproblématique, Belvédère: jeunes de 16 à 21 ans ayant été ou étant en situation d'itinérance, Coup de Pouce Jeunesse: jeunes de 13 à 16 ans à risque de décrochage scolaire et leurs familles, projets 14-17 et 16-24 ans: élèves du Centre des services scolaire des Portages de l'Outaouais (CSSPO) | Territoire: Gatineau, MRC les Collines-de-l'Outaouais | Statut: organisme à but non lucratif",
     "website": "valleejeunesse.ca",
     "address": "9, rue Dumas, Gatineau, Outaouais, QC, J8Y 2M4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "vall-e-des-roseaux-la-cn",
+    "name": "Vallée des roseaux (La)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-7705",
+    "description": "Accompagnement de la personne gravement atteinte (soins palliatifs) ou au dernier stade de sa vie et soutien à sa famille * répit aux proches aidants à domicile * soutien de groupe ou individuel pour ... [Plus] | Clientèle : Ligne d'écoute Fil d'espoir 418-589-7741",
+    "website": "http://lavalleedesroseaux.org",
+    "address": "2370 Bd Laflèche, Baie-Comeau, QC G5C 1E4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -44037,6 +50686,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h15 à 16h30, été: lundi au jeudi 8h30 à 12h00 et 13h15 à 16h30, vendredi 8h30 à 12h00"
   },
   {
+    "id": "vieux-quai-en-f-te-cn",
+    "name": "Vieux-Quai en fête",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-444-3294",
+    "description": "Offrir une expérience immersive pour réunir les familles et leur fait découvrir nos richesses artistiques et culturelles * amuseurs publics * spectacles de rue * artistes professionnels et de la relèv ... [Plus]",
+    "website": "https://vieuxquaienfete.com/",
+    "address": "P. 1612, Parc du Vieux-Quai, C, Sept-Îles, QC G4R 4X9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "vilavi-centre-de-traitement-des-dep-trb",
     "name": "Vilavi - Centre de Traitement des Dépendances",
     "category": "mentalHealth",
@@ -44063,6 +50725,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "villa-forestville-cn",
+    "name": "Villa Forestville",
+    "category": "food",
+    "subcategory": "",
+    "city": "Forestville",
+    "province": "QC",
+    "phone": "418-587-0401",
+    "description": "Logements adaptés pour aînés autonomes et semi-autonomes, à faible et moyen revenus, incluant repas et surveillance * résidence de 27 unités hébergeant 28 résidants | Clientèle : Aînés à faible et moyen revenus | Âges : 65 an(s) et plus",
+    "address": "4 10e Rue, Forestville, QC G0T 0A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-hopital-montreal-villa-medica",
     "name": "Villa Medica",
     "category": "health",
@@ -44074,6 +50748,18 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "225, rue Sherbrooke Est, Montréal, QC H2X 1C9",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "villa-port-cartier-cn",
+    "name": "Villa Port-Cartier",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-2033",
+    "description": "Centre d'hébergement pour aînés",
+    "address": "2 Rue le Moyne, Port-Cartier, QC G5B 1C6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "villa-st-louis-de-france-out",
@@ -44580,6 +51266,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "la-source-sept-les-cn",
+    "name": "À la source Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-2436",
+    "description": "Services et soutien aux femmes en période périnatale et tout au long des différentes périodes du cycle hormonal féminin * accompagnement à la naissance * entraide et soutien à l'allaitement maternel * ... [Plus] | Âges : 54 an(s) et moins",
+    "website": "http://www.soutienalasource.com",
+    "address": "469 Av. de Quen, Sept-Îles, QC G4R 2R1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ge-d-or-de-st-ferdinand-lav",
     "name": "Âge D'Or De St-Ferdinand",
     "category": "social",
@@ -44590,6 +51289,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Club social pour personnes aînées.* Activités sociales et récréatives: bingo, cartes, cours de danse, pétanque, etc.* Repas communautaire.* Sorties occasionnelles. | Clientèle: personnes 50 ans et plus | Territoire: Laval | Statut: organisme à but non lucratif",
     "address": "725, montée Montrougeau, Fabreville, Laval, QC, H7P 3M1",
     "hours": "septembre à mai, mercredi 9h30 à 16h00, vendredi 17h15 à 22h00, été: lundi et mercredi 7h00 to 9h00"
+  },
+  {
+    "id": "tre-de-sept-les-cn",
+    "name": "Âtre de Sept-Îles",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "Âtre de Sept-Îles: 418-962-6006",
+    "description": "L'Âtre de Sept-îles est un organisme communautaire alternatif accompagnant des personnes vivant avec une problématique de santé mentale au quotidien. Notre ressource d'hébergement nous permet de trava ... [Plus] | Clientèle : Âtre-Ville: 418-962-0983 | Âges : 18 an(s) et plus",
+    "address": "409 Av. de Quen, Sept-Îles, QC G4R 2R1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "co-nature-lav",
@@ -44629,6 +51340,57 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.mrcvg.qc.ca/index.php/ecocentre",
     "address": "11, chemin Brundtland, Kazabazua, Outaouais, QC, J0X 1X0",
     "hours": "lundi au vendredi 7h00 à 16h00, samedi 10h00 à 16h00"
+  },
+  {
+    "id": "cole-de-danse-de-sept-les-cn",
+    "name": "École de danse de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "",
+    "description": "École de danse enseignant le ballet classique, jazz, la danse moderne, créative, l'éveil à la danse, le hip hop, les pilates, les pointes | Âges : 3 an(s) et plus",
+    "website": "http://www.amilia.com/store/fr/ebsi/shop/programs/63224",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cole-de-musique-c-te-nord-cn",
+    "name": "École de musique Côte-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-6428",
+    "description": "Académie musicale et organisation à but non lucratif offrant des cours d'instrument musical et de chant, individuels et en groupes * formation préparatoire musicale complète académique et de loisirs ( ... [Plus] | Âges : 3 an(s) et plus",
+    "website": "http://www.emcn.org",
+    "address": "1660 Rue de Bretagne, Baie-Comeau, QC G5C 3S3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cole-de-musique-de-port-cartier-cn",
+    "name": "École de musique de Port-Cartier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Port-Cartier",
+    "province": "QC",
+    "phone": "418-766-6656",
+    "description": "Développer et promouvoir la musique au sein de la municipalité * cours",
+    "address": "49 Bd du Portage des Mousses, Port-Cartier, QC G5B 1C4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cole-de-musique-de-sept-les-cn",
+    "name": "École de musique de Sept-Îles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-5208",
+    "description": "École d'enseignement de la musique * cours individuels ou de groupe * concert",
+    "website": "https://ecoledemusique7iles.proinscription.com/inscription",
+    "address": "500 Av. Jolliet, Sept-Îles, QC G4R 2A1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "crit-t-t-de-saint-hubert-l-mtg",
@@ -44709,6 +51471,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "variable"
   },
   {
+    "id": "ki-lib-sant-c-te-nord-cn",
+    "name": "Éki-lib Santé Côte-Nord",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-968-3960",
+    "description": "Éki-Lib Santé Côte-Nord a pour mission d'aider les personnes touchées de près ou de loin par les troubles alimentaires dans la région de la Côte-Nord. Il n’est pas nécessaire d’avoir un diagnostic pou ... [Plus] | Clientèle : Personnes touchées par un trouble des conduites alimentaires (anorexie, boulimie, hyperphagie boulimique, orthorexie et autres) et leurs proches",
+    "website": "http://www.eki-lib.com",
+    "address": "652 Av. de Quen, Sept-Îles, QC G4R 2R5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "lan-des-jeunes-l-mtg",
     "name": "Élan Des Jeunes (L')",
     "category": "family",
@@ -44735,6 +51510,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 24h00"
   },
   {
+    "id": "lyme-des-sables-l-cn",
+    "name": "Élyme des sables (L')",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-4404",
+    "description": "Établissement de soins palliatifs spécialisés et d'accompagnement professionnel, psychologique et spirituel pour les personnes en fin de vie et leurs proches * hébergement gratuit des personnes en fin ... [Plus] | Clientèle : Personne en fin de vie et leurs proches | Âges : 18 an(s) et plus",
+    "website": "http://www.elymedessables.com",
+    "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "mersion-service-conseil-en-emplo-cn",
+    "name": "Émersion - Service-conseil en emploi",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-296-6388",
+    "description": "Valorisation du potentiel des personnes en recherche d’emploi ou en développement de carrière dans l’atteinte de leurs objectifs personnels et professionnels * services avec ou sans rendez-vous * empl ... [Plus]",
+    "website": "http://emersion.qc.ca",
+    "address": "22 Pl. la Salle, Baie-Comeau, QC G4Z 1K3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "missaire-mtg",
     "name": "Émissaire",
     "category": "social",
@@ -44759,6 +51560,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "cabiberville.org",
     "address": "290, avenue des Conseillers, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 1Z8",
     "hours": "mardi et mercredi 13h00 à 16h00, jeudi et vendredi 8h30 à 11h30"
+  },
+  {
+    "id": "quijustice-c-te-nord-est-cn",
+    "name": "Équijustice Côte-Nord Est",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sept-Îles",
+    "province": "QC",
+    "phone": "418-962-0173",
+    "description": "Développer et promouvoir une justice équitable et accessible. Accompagner les personnes dans le respect de leurs droits et de leur dignité, dans la gestion des situations qu’elles rencontrent. Nos ser ... [Plus]",
+    "website": "http://equijustice.ca/fr/membres/cote-nord-est",
+    "address": "637 Av. de Quen, Sept-Îles, QC G4R 2R6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "quijustice-haute-c-te-nord-manic-cn",
+    "name": "Équijustice Haute-Côte-Nord / Manicouagan, Équijustice Haute-Côte-Nord - Manicouagan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Baie-Comeau",
+    "province": "QC",
+    "phone": "418-589-6566",
+    "description": "JUSTICE RÉPARATRICE ET MÉDIATION: Nous accompagnons toutes les personnes concernées par le crime -contrevenant, proches, personnes victimes, de même que la collectivité- dans le processus de réparatio ... [Plus]",
+    "website": "http://equijustice.ca/fr/membres/haute-cote-nord-manicouagan",
+    "address": "851 Rue de Puyjalon, Baie-Comeau, QC G5C 1N3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "equijustice-lanaudiere-sud-rep",

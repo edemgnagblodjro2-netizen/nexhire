@@ -13,8 +13,8 @@ import { apiCategoryToCode } from "@/lib/categoryMapping";
 // v7 : ajout de serviceType + geocodePrecisionM (Phase 1 fiabilité géoloc).
 // v8 : pivot Québec — bump pour invalider les caches qui contiennent des services hors-QC.
 // v9 : on ré-inclut les services province-wide (Centris, Kijiji, Realtor, etc.) qui avaient été virés par erreur en v8.
-// v24 : import massif Montérégie — +1007 fiches (Longueuil, Saint-Jean, Châteauguay, etc.). PROD ~3757.
-const CACHE_KEY = "attentezero_services_cache_v24";
+// v25 : import Côte-Nord — +535 fiches (Sept-Îles, Baie-Comeau, Port-Cartier, Fermont, etc.). PROD ~4052.
+const CACHE_KEY = "attentezero_services_cache_v25";
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 type ServicesContextValue = {
