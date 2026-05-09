@@ -338,6 +338,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "a-b-c-des-manoirs-trb",
+    "name": "A.b.c. des Manoirs",
+    "category": "social",
+    "subcategory": "Alphabétisation",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 471-6928",
+    "description": "Centre de formation pour personnes de 16 ans et plus.• Ateliers de francisation, d'alphabétisation et de calcul de base.• Initiation à l'informatique: ordinateur, Word, Excel, tablette et cellulaire.• Aide aux tests d'équivalence de niveau secondaire (TENS).• Aide aux tests de développement général (TDG). | Clientèle: personnes de 16 ans et plus analphabètes ou peu alphabétisées | Territoire: MRC Les Moulins | Frais: inscription annuel: 20$, informatique: 15$ par atelier de 1h30 | Statut: organisme à but non lucratif",
+    "website": "https://www.abcdesmanoirs.com",
+    "address": "568, rue Léon-Martel, Terrebonne, Lanaudière, QC, J6W 2J8",
+    "hours": "septembre à fin juin, lundi au vendredi 9h00 à 17h00, période des fêtes: fermé pendant 2 semaines"
+  },
+  {
     "id": "mh-acsm-quebec",
     "name": "ACSM – Filiale Québec",
     "category": "mentalHealth",
@@ -499,6 +512,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "accorderie-les-moulins-l-msc",
+    "name": "Accorderie les Moulins (l')",
+    "category": "social",
+    "subcategory": "Échanges de services",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 325-2500",
+    "description": "• Réseau d'offres et d'échanges de services: échange individuel, associatif et activités collectives d'échange. | Clientèle: personnes ayant une aptitude à rendre service, prêtes à s'engager à respecter les règles d'un code de courtoisie et à offrir au moins un service | Territoire: Terrebonne, Mascouche | Frais: adhésion annuelle: 10$ | Statut: organisme à but non lucratif",
+    "website": "https://www.accorderie.ca/les-moulins-accueil/",
+    "address": "2500, boulevard de Mascouche, MASCOUCHE, Lanaudière, QC, J7K 0H5",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "accueil-bonneau-tr",
     "name": "Accueil Bonneau",
     "category": "food",
@@ -510,6 +536,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.accueilbonneau.com/",
     "address": "427 rue de la Commune Est, Montréal, QC H2Y 1J4",
     "hours": "Lun-ven 9h-11h dépannage alimentaire (sans rendez-vous)"
+  },
+  {
+    "id": "accueil-jeunesse-jol",
+    "name": "Accueil Jeunesse",
+    "category": "family",
+    "subcategory": "Hébergement et soutien pour jeunes",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 759-4610",
+    "description": "Maison d'hébergement pour jeunes.• Soutien, information et référence. | Clientèle: jeunes de 12 à 17 ans en difficulté Capacité: 9 lits | Territoire: Lanaudière | Frais: 7$ par jour | Statut: organisme à but non lucratif",
+    "address": "1094, boulevard Manseau, Joliette, Lanaudière, QC, J6E 3G8",
+    "hours": "24 heures, 7 jours"
   },
   {
     "id": "imm-acet",
@@ -563,6 +601,43 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-17h. Programmes d'aide à l'achat, financement, services notariaux."
   },
   {
+    "id": "action-dignite-lanaudiere-jol",
+    "name": "Action Dignité Lanaudière",
+    "category": "social",
+    "subcategory": "Organismes de concertation et d'action citoyenne",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 756-1155",
+    "description": "• Ateliers d'alphabétisation.• Prévention du décrochage scolaire et persévérance scolaire.• Accueil et écoute active.• Mobilisation et concertation.• Défense des droits au niveau de l'aide sociale et du chômage: information, références, recherche et accompagnement.• Café-rencontre mensuel: prise de parole, éducation et réflexion de groupe. | Clientèle: personnes peu scolarisées et personnes à faible revenu | Territoire: Lanaudière | Frais: adhésion annuelle: 5$ | Statut: organisme à but non lucratif",
+    "address": "144, rue Saint-Joseph, Joliette, Lanaudière, QC, J6E 5C4",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "action-familles-de-la-plaine-trb",
+    "name": "Action Familles de la Plaine",
+    "category": "food",
+    "subcategory": "Cuisines collectives et ateliers de cuisine",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "438 499-4339",
+    "description": "• Cuisine collective. | Clientèle: familles Capacité: 32 | Territoire: Terrebonne | Frais: inscription: 10$, portion cuisinée: 3$, boîte de denrées: 10$ | Statut: organisme à but non lucratif",
+    "address": "5900, rue Rodrigue, Terrebonne, Lanaudière, QC, J7M 2C1",
+    "hours": "cuisine collective: vendredi"
+  },
+  {
+    "id": "action-hypoglycemie-quebec-trb",
+    "name": "Action Hypoglycémie Québec",
+    "category": "social",
+    "subcategory": "Associations et groupes de soutien",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 325-1163",
+    "description": "• Écoute téléphonique.• Cours dans le but de venir en aide aux personnes aux prises avec les problèmes que pose l'hypoglycémie.• Consultation, information, référence, éducation, dépistage et soutien diététique.• Prévention du diabète.• Sensibilisation de la population et des médecins: publications, ateliers, conférences et médias. | Clientèle: adultes, adolescent·e·s et enfants touchés par l'hypoglycémie, professionnel·le·s de la santé | Territoire: le Québec | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://hypoglycemie.qc.ca",
+    "address": "491, boulevard Des Seigneurs, Terrebonne, Lanaudière, QC, J6W 1T5",
+    "hours": "5 jours par semaine, répondeur: 24 heures, 7 jours"
+  },
+  {
     "id": "action-jeunesse-de-l-ouest-de-l-ile-ibsg",
     "name": "Action Jeunesse de L'Ouest-de-L'Île",
     "category": "social",
@@ -574,6 +649,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.ajoi.info",
     "address": "15632, boulevard Gouin Ouest, L'Île-Bizard—Sainte-Geneviève, Montréal, QC, H9H 1C4",
     "hours": "mardi au samedi 12h00 à 24h00"
+  },
+  {
+    "id": "action-rh-lanaudiere-bureau-joliett-jol",
+    "name": "Action Rh Lanaudière - Bureau Joliette",
+    "category": "social",
+    "subcategory": "Orientation scolaire et professionnelle",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 492-4104",
+    "description": "Programmes de recherche d'emploi.• Offres d'emploi.• Service d'orientation, aide à la rédaction de CV, ateliers de recherche d'emploi et suivi personnalisé.• Service spécialisé pour les 35 ans et plus.• Service spécialisé pour les 50 ans et plus. | Clientèle: prestataires de l'assurance-emploi et de la Sécurité du Revenu, personnes sans emploi de 35 ans et plus | Territoire: Lanaudière | Frais: aucuns pour les personnes sans emploi | Statut: organisme à but non lucratif",
+    "website": "https://www.cceml.ca",
+    "address": "371, rue Notre-Dame, 2e étage, Joliette, Lanaudière, QC, J6E 3H5",
+    "hours": "lundi au jeudi 8h30 à 16h30"
   },
   {
     "id": "imm-asfc-mtl",
@@ -588,6 +676,32 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "1439, av. Union, bureau 401, Montréal, QC H3A 2B5",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées.",
     "isUrgent": true
+  },
+  {
+    "id": "action-zero-pauvrete-msc",
+    "name": "Action Zéro Pauvreté",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 477-8985",
+    "description": "Défense individuelle et collective des droits des personnes en situation de pauvreté, principalement des personnes prestataires de l'aide financière de dernier recours.• Aide individuelle pour les citoyen·ne·s dans la compréhension de leurs droits et recours et les démarches à faire pour assurer la défense de leurs droits.• Conférences, ateliers d'information et groupes de discussion sur les droits économiques et sociaux et les enjeux reliés à la pauvreté et l'exclusion sociale.• Représentations auprès des administrations publiques et des instances politiques concernées par les situations dans lesquelles les droits des citoyen·ne·s en situation de pauvreté sont brimés ou menacés.• Ateliers et rencontres régulières pour les membres.• Horaire des activités: actionpopulaire.org/nos-activites | Clientèle: personnes à faible revenu ou en situation de pauvreté et d'exclusion sociale dont les personnes prestataires de l'aide ou de la solidarité sociale, personnes sympathisantes intéressées par la transfor | Territoire: Sud de Lanaudière: MRC Les Moulins, MRC L'Assomption | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://actionpopulaire.org",
+    "address": "400, Montée Masson, bureau 3, Mascouche, Lanaudière, QC, J7K 2L5",
+    "hours": "Accueil téléphonique : Généralement du lundi au vendredi, entre 9h et 17h.Rencontre en personne sur rendez-vous seulement."
+  },
+  {
+    "id": "action-logement-lanaudiere-jol",
+    "name": "Action-Logement Lanaudière",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 855 394-1778",
+    "description": "Défense collective et individuelle des droits des locataires.• Information sur les droits, démarches et ressources.• Formations et activités d'éducation populaire.• Représentation auprès des décideur·euse·s. | Clientèle: locataires | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.logementlanaudiere.org",
+    "address": "144, rue Saint-Joseph, bureau 213, Joliette, Lanaudière, QC, J6E 5C4",
+    "hours": "sur rendez-vous"
   },
   {
     "id": "imm-actions-interculturelles-estrie",
@@ -1138,6 +1252,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "un mardi sur deux 9h00 à 16h00, accueil téléphonique: lundi, mardi, vendredi et samedi 9h00 à 17h00, mercredi et jeudi 11h00 à 19h00"
   },
   {
+    "id": "albatros-lanaudiere-msc",
+    "name": "Albatros Lanaudière",
+    "category": "social",
+    "subcategory": "Proches aidants",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 966-9508",
+    "description": "• Accompagnement de personnes en fin de vie et en soins palliatifs.• Formations pour l'accompagnement en fin de vie et en soins palliatifs.• Groupes de support aux personnes endeuillées.• Support téléphonique aux personnes endeuillées. | Clientèle: personnes de 18 ans et plus en fin de vie, en deuil, leurs familles et proches aidant·e·s | Territoire: Lanaudière | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://albatroslanaudiere.com",
+    "address": "2500, boulevard Mascouche, bureau 139, Mascouche, Lanaudière, QC, J7K 0H5",
+    "hours": "sur rendez-vous"
+  },
+  {
     "id": "ab-ahs",
     "name": "Alberta Health Services",
     "category": "health",
@@ -1190,6 +1317,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://literacyunlimited.ca",
     "address": "90 Av. de Jubilee Square, Pointe-Claire, QC H9R 1M3",
     "hours": "Lun-jeu 9h-16h. Fermé mi-juin à septembre."
+  },
+  {
+    "id": "amis-de-lamater-les-trb",
+    "name": "Amis de Lamater (les)",
+    "category": "social",
+    "subcategory": "Centres communautaires et loisirs",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 492-0030",
+    "description": "Centre de répit.• Soutien aux personnes proches aidant·e·s.• Déjeuners et dîners communautaires.• Activités physiques légères, jeux d'adresse, exercices de mémoire, Wii (console de jeux vidéo).• Activités thérapeutiques: musicothérapie, art-thérapie.• Journées pour personnes aînées vivant avec un problème cognitif ou des conditions reliées au vieillissement.• Possibilité de stage en travail social, loisirs ou récréologie.• Semaine d'activités de Noël pour les membres: repas traditionnel, visite du Père Noël et distribution de cadeaux. | Clientèle: personnes de 50 ans et plus, autonomes, semi-autonomes ou en perte d'autonomie Capacité: 30 personnes par jour | Territoire: MRC Les Moulins | Frais: inscription annuelle: 80$, coûts additionnels facturés par session | Statut: organisme à but non lucratif",
+    "website": "https://lesamisdelamater.org",
+    "address": "695, rue Ouimet, Terrebonne, Lanaudière, QC, J6W 3B1",
+    "hours": "lundi au vendredi 8h30 à 14h30, activités: variable"
+  },
+  {
+    "id": "amis-de-simon-les-msc",
+    "name": "Amis de Simon (les)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "514 632-8485",
+    "description": "Groupe de soutien pour parents vivant le deuil d'un enfant.• Rencontre mensuelle. | Clientèle: parents d'un enfant décédé Capacité: 25 personnes | Territoire: Grand Montréal, Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.lesamisdesimon.com",
+    "address": "3000, chemin Sainte-Marie, Mascouche, Lanaudière, QC, J7K 1P1",
+    "hours": "groupe de soutien: chaque deuxième mardi soir de chaque mois, 19h00, de septembre à juin"
+  },
+  {
+    "id": "amis-de-la-deficience-intellectuell-rep",
+    "name": "Amis de la Déficience Intellectuelle, MRC L'Assomption (les)",
+    "category": "family",
+    "subcategory": "Éducation parentale",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 585-3632",
+    "description": "Sensibilisation de la population aux réalités des personnes vivant avec une déficience intellectuelle.• Défense des droits.• Concertation et représentation.• Soutien aux parents.• Activités de loisirs.• Camps d'été.• Activités de formation.• Centre de documentation et de référence. | Clientèle: personnes vivant avec une déficience intellectuelle, leurs proches | Territoire: MRC L'Assomption | Frais: adhésion annuelle 2025-2026: 25$ | Statut: organisme à but non lucratif",
+    "website": "https://lesamisdeladi.wixsite.com/lesamisdeladi",
+    "address": "45, boulevard Industriel, bureau 120, Repentigny, Lanaudière, QC, J6A 5R5",
+    "hours": "bureau: lundi au jeudi 9h00 à 16h00, vendredi 9h00 à 11h30, activités: 7 jours, variables"
   },
   {
     "id": "amis-de-la-sante-mentale-banlieue-o-bcf",
@@ -1255,6 +1421,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "arche-lanaudiere-l-jol",
+    "name": "Arche Lanaudière (l')",
+    "category": "social",
+    "subcategory": "Loisirs et camps",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 559-3124",
+    "description": "Hébergement et vie communautaire pour personnes vivant avec une déficience intellectuelle.Hébergement• Deux foyers d'hébergement à long terme: Foyer La Source et Foyer La Barque.• Milieux de vie adaptés et personnalisés avec intervenant·e·s sur place.• Accompagnement dans la vie quotidienne.• Ateliers de travail adapté.Répit• Chambres temporaires pour un répit à court terme d'une durée flexible pouvant aller de moins d'une journée jusqu'à un mois.Vie communautaire• Évènements et activités collectives 10 à 12 fois par année. | Clientèle: hébergement et répit: adultes vivant avec une déficience intellectuelle, vie communautaire: adultes vivant avec une déficience intellectuelle Capacité: 5 adultes par foyer, 2 chambres pour répit | Territoire: Lanaudière | Frais: hébergement: variables, carte de membre annuelle: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.larchelanaudiere.ca/fr",
+    "address": "160, rue Saint-Charles-Borromée Sud, Joliette, Lanaudière, QC, J6E 4T3",
+    "hours": "administration: lundi au vendredi 9h00 à 16h00"
+  },
+  {
     "id": "qc-refuge-montreal-armeedusalut",
     "name": "Armée du Salut – Refuge Montréal",
     "category": "housing",
@@ -1282,6 +1461,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "association-carrefour-famille-montc-sll",
+    "name": "Association Carrefour Famille Montcalm - Supervision des Droits D'Accès",
+    "category": "family",
+    "subcategory": "Protection de l'enfance",
+    "city": "Saint-Lin–Laurentides",
+    "province": "QC",
+    "phone": "1 844 439-2454",
+    "description": "• Visites supervisées et échanges de garde pour les parents et leurs enfants. | Clientèle: familles recevant des services des Centres jeunesse de Lanaudière, familles vivant une séparation difficile | Territoire: Lanaudière | Frais: ouverture de dossier: 15$ | Statut: organisme à but non lucratif",
+    "website": "https://www.acfmqc.org/sda",
+    "address": "20, chemin Payette, Saint-Lin–Laurentides, Lanaudière, QC, J5M 0L4",
+    "hours": "variable"
+  },
+  {
+    "id": "association-cooperative-d-economie-jol",
+    "name": "Association Coopérative D'Économie Familiale de Lanaudière",
+    "category": "employment",
+    "subcategory": "Gestion budgétaire et consommation",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 756-1333",
+    "description": "• Consultation budgétaire.• Atelier sur le budget.• Information téléphonique sur le budget, le crédit et la consommation.• Prêt de solidarité du Fonds d'entraide Desjardins.• Ateliers et conférences: mes finances personnelles, ma consommation.• Aide aux ententes de paiement d'Hydro-Québec. | Clientèle: personnes 18 ans et plus, prêt de solidarité: personnes éprouvant des difficultés financières | Territoire: Lanaudière | Frais: ateliers: variables | Statut: Cooperative",
+    "website": "https://aceflanaudiere.ca",
+    "address": "200, rue de Salaberry, bureau 124, Joliette, Lanaudière, QC, J6E 4G1",
+    "hours": "lundi au vendredi 9h00 à 16h30"
+  },
+  {
     "id": "association-d-entraide-d-arthrite-d-drv",
     "name": "Association D'Entraide D'Arthrite de L'Ouest de L'Île de Montréal",
     "category": "social",
@@ -1295,6 +1500,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 15h00"
   },
   {
+    "id": "association-handami-pour-personnes-sll",
+    "name": "Association Handami pour Personnes Handicapées et Leur Famille",
+    "category": "social",
+    "subcategory": "Ateliers d'informatique",
+    "city": "Saint-Lin–Laurentides",
+    "province": "QC",
+    "phone": "1 877 439-2077",
+    "description": "Centre d'activités.• Information et accompagnement.• Activités sociales et récréatives: chorale, cours de langage des signes, gym adapté, cours d'informatique, art-thérapie, zoothérapie, bingo, etc.• Maintien à domicile.• Sorties et camp de vacances.• Réveillon de Noël.• Promotion de l'accessibilité. | Clientèle: personnes vivant avec une déficience physique ou intellectuel, leur famille Capacité: 40 | Territoire: Mascouche, Saint-Calixte, Saint-Esprit, Saint-Lin-Laurentides, Saint-Roch-de-l'Achigan, Sainte-Anne-des-Plaines, Sainte-Julienne | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://handami.com",
+    "address": "460, rue du Parc, Saint-Lin–Laurentides, Lanaudière, QC, J5M 3A2",
+    "hours": "mardi au vendredi 8h30 à 15h30."
+  },
+  {
+    "id": "association-panda-mrc-les-moulins-trb",
+    "name": "Association Panda-MRC les Moulins",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "1 833 740-8324",
+    "description": "Outils et information sur le déficit d'attention avec ou sans hyperactivité (TDA/TDAH).• Ateliers de développement des habiletés sociales pour les 6 à 11 ans.• Ateliers pour adolescents en milieu scolaire.• Ateliers pour les parents et pour les adultes.• Camp de jour spécialisé.• Formation pour les intervenant·e·s.• Écoute active et références. | Clientèle: enfants, adolescent·e·s, adultes présentant les signes du diagnostic de déficit d'attention avec ou sans hyperactivité, leurs parents Capacité: variable | Territoire: MRC Les Moulins, île de Montréal, Laval, MRC Montcalm, MRC Matawinie | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://www.associationpandalanaudiere.org",
+    "address": "737, rue de la Soeur-Marie-Rose, Terrebonne, Lanaudière, QC, J6V 1P1",
+    "hours": "bureau: variable"
+  },
+  {
     "id": "association-quebecoise-de-voile-ada-pcl",
     "name": "Association Québécoise de Voile Adaptée",
     "category": "social",
@@ -1306,6 +1537,44 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.aqva.org/fr",
     "address": "1, avenue Cartier, Pointe-Claire, Montréal, QC, H9S 4R3",
     "hours": "lundi au vendredi 10h00 à 21h00, samedi 9h00 à 17h00, dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "association-regionale-de-loisirs-po-jol",
+    "name": "Association Régionale de Loisirs pour Personnes Handicapées de Lanaudière",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 888 522-2586",
+    "description": "Favorise l'accessibilité à une expérience inclusive de loisir pour personnes vivant avec un handicap par la concertation, la formation et le soutien.• Programme d'aide financière au loisir des personnes handicapées (PAFLPH).• Prêt d'équipements adaptés: fauteuil roulant de course, luge adaptée avec patins, rampe d'accès nautique, etc.• Formations.• Soutien à l'intégration en camp de jour.• Accessibilité universelle en loisir.• Carte accompagnement loisir (CAL).• Services-conseils. | Clientèle: personnes vivant avec un handicap, peu importe l'âge et la déficience | Territoire: Lanaudière | Statut: organisme à but non lucratif",
+    "website": "https://arlphlanaudiere.org",
+    "address": "200, rue de Salaberry, bureau 305, Joliette, Lanaudière, QC, J6E 4G1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-sclerose-en-plaques-de-jol",
+    "name": "Association Sclérose en Plaques de Lanaudière",
+    "category": "social",
+    "subcategory": "Visites amicales et appels de sécurité",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 753-5545",
+    "description": "Soutien aux personnes vivant avec la sclérose en plaques ainsi qu'à leurs proches.• Information sur la maladie.• Soutien individuel, défense collective des droits.• Soutien financier.• Visites à domicile ou dans les centres de soins.• Activités pour membres.• Repas et activités des fêtes pour membres. | Clientèle: personnes vivant avec la sclérose en plaques, leurs proches, intervenant·e·s | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.asepl.org",
+    "address": "200, rue Salaberry, bureau 307, Joliette, Lanaudière, QC, J6E 4G1",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "association-un-coeur-pour-tous-lana-jol",
+    "name": "Association Un Coeur pour Tous, Lanaudière (l')",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 855 844-3039",
+    "description": "• Informations sur la maladie cardiaque et ses conséquences physiques et morales.• Activités sociales et déjeuners-conférences.• Activités physiques adaptées: acquaforme, yoga sur chaise, conditionnement physique Coeur en forme. | Clientèle: personnes atteintes d'une maladie cardiaque ou de haute pression, leur famille Capacité: piscine: 24 personnes | Territoire: Lanaudière | Frais: carte de membre: 15$ par année, activités: 5$ par visite (50$ pour 10 | Statut: organisme à but non lucratif",
+    "address": "144, rue Saint-Joseph, bureau 113, Joliette, Lanaudière, QC, J6E 5C2",
+    "hours": "lundi au vendredi 9h00 à 16h00, déjeuners-conférences: septembre à mai"
   },
   {
     "id": "ab-cmha-ab",
@@ -1359,6 +1628,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, groupes d'entraide: jour ou soir"
   },
   {
+    "id": "association-de-l-age-d-or-bois-des-trb",
+    "name": "Association de L'Âge D'Or Bois-des-Filion",
+    "category": "social",
+    "subcategory": "Centres communautaires et loisirs",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "514 947-8672",
+    "description": "Activités récréatives et sociales pour personnes aînées.• Bingo, jeux de cartes et quilles.• Cours de danse.• Sorties: casino, cabane à sucre, théâtre et cueillette de pommes.• Dîners communautaires.• Ciné- club.• Spectacles. | Clientèle: personnes de 50 ans et plus | Territoire: Bois-des-Filion et rayon de 25 kilomètres autour de Bois-des-Filion | Frais: carte de membre: 10$ pour résident·e·s de Bois-des-Filion, 15$ pour les non-résident·e·s | Statut: organisme à but non lucratif",
+    "website": "https://www.agedorbdf.com",
+    "address": "30, rue Montée Gagnon, Terrebonne, Lanaudière, QC, J6Y 0H4",
+    "hours": "mardi et jeudi 9h00 à 16h00"
+  },
+  {
+    "id": "association-de-parents-d-enfants-pr-msc",
+    "name": "Association de Parents D'Enfants Présentant Trisomie-21 Lanaudière (l')",
+    "category": "social",
+    "subcategory": "Ateliers d'informatique",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 477-4116",
+    "description": "Promotion des intérêts des personnes présentant une trisomie-21 en offrant de l'information et du soutien.• Défense de droits.• Centre de documentation.• Publication de guides.• Formations.• Répit.• Physiothérapie pédiatrique.• Ateliers socioprofessionnels, de stimulation du langage, de stimulation en ergothérapie, de cuisine, d'apprentissage informatique.• Activités socioculturelles.• Activités sportives adaptées.• Accompagnement en loisirs.• Joujouthèque.• Salle multisensorielle. | Clientèle: personnes vivant avec le syndrome de Down et leur famille | Territoire: Lanaudière | Frais: adhésion annuelle: 30$ | Statut: organisme à but non lucratif",
+    "website": "https://www.apetl.org",
+    "address": "245, chemin des Anglais, Mascouche, Lanaudière, QC, J7L 3P3",
+    "hours": "lundi au jeudi 8h30 à 16h00"
+  },
+  {
+    "id": "association-de-repentigny-pour-l-av-rep",
+    "name": "Association de Repentigny pour L'Avancement de la Musique",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 582-6714",
+    "description": "Valorisation de la musique de concert et des personnes musiciennes de la relève québécoise et canadienne.• Concerts: série annuelle pour enfants, série annuelle pour le grand public, grand concert estival, messes musicales estivales.• Concours pour jeunes musiciens classiques.• Série Apéro-Jazz.• Musique Intimiste.• Musique du monde.• Co-diffusion et collaboration avec d'autres organismes. | Clientèle: enfants, adultes Capacité: 375 | Territoire: MRC L'Assomption | Frais: concerts: variables, abonnement disponible | Statut: organisme à but non lucratif",
+    "website": "https://www.aramusique.org",
+    "address": "543, rue Notre-Dame, bureau 101, Repentigny, Lanaudière, QC, J6A 2T6",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
     "id": "association-de-la-communaute-noire-pfd",
     "name": "Association de la Communauté Noire de L'Ouest de L'Île (l')",
     "category": "social",
@@ -1372,6 +1680,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 10h00 à 16h00, tutorat: samedi 10h00 à 12h00"
   },
   {
+    "id": "association-de-la-fibromyalgie-et-d-ndp",
+    "name": "Association de la Fibromyalgie et de Douleurs Chroniques de Lanaudière",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Notre-Dame-des-Prairies",
+    "province": "QC",
+    "phone": "1 888 223-0227",
+    "description": "• Activité de réadaptation: aquaforme.• Activités sociales.• Réseau social, échange de témoignages.• Information, prêt et consultation de documents, conférences.• Ateliers d'art.• Atelier de tricot.• Atelier en santé mentale. | Clientèle: personnes atteintes de fibromyalgie, de douleurs chroniques, leurs proches | Territoire: Lanaudière | Frais: cotisation annuelle: 20$ | Statut: organisme à but non lucratif",
+    "website": "https://fibromyalgielanaudiere.com",
+    "address": "41, rue Beaupied, Notre-Dame-des-Prairies, Lanaudière, QC, J6E 1A5",
+    "hours": "Lundi au jeudi 9h00 à 16h00, sur rendez-vous"
+  },
+  {
     "id": "association-des-commissions-scolair-drv",
     "name": "Association des Commissions Scolaires Anglophones du Québec",
     "category": "social",
@@ -1383,6 +1704,71 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://qesba.qc.ca",
     "address": "185, avenue Dorval, bureau 502, Dorval, Montréal, QC, H9S 5J9",
     "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-personnes-handicape-rep",
+    "name": "Association des Personnes Handicapées Physiques Rive-Nord",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 654-8279",
+    "description": "Promotion et défense des droits des personnes vivant avec un handicap physique.• Accueil et référence.• Soutien dans l'obtention de services.• Activités récréatives, de loisirs, de formations et d'information.• Ateliers de socialisation.• Accompagnement médical (selon certains critères). | Clientèle: personnes vivant avec un ou plusieurs handicaps physiques (déficience motrice, visuelle, auditive ou handicap invisible), leur famille, bénévoles | Territoire: MRC L'Assomption, MRC Les Moulins | Frais: adhésion annuelle, frais pour certaines activités | Statut: organisme à but non lucratif",
+    "website": "https://www.aphprn.com",
+    "address": "50, rue Thouin, bureau 104, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "association-des-personnes-handicape-rep-2",
+    "name": "Association des Personnes Handicapées Visuelles de Lanaudière",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "1 888 477-8174",
+    "description": "• Aide et soutien dans les démarches visant l'obtention de services.• Information.• Journal pour les membres.• Cafés-rencontres mensuels.• Activités et sorties. | Clientèle: personnes vivant avec un handicap visuel, leurs proches, les bénévoles | Territoire: Lanaudière | Frais: cotisation annuelle: 15$ | Statut: organisme à but non lucratif",
+    "website": "https://www.aphvl.com",
+    "address": "50 rue Thouin, bureau 222, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "lundi au jeudi 9h00 à 16h00, sur rendez-vous"
+  },
+  {
+    "id": "association-des-pompiers-auxiliaire-lasm",
+    "name": "Association des Pompiers Auxiliaires de Lanaudière-Laurentides",
+    "category": "housing",
+    "subcategory": "Aide en cas de sinistre",
+    "city": "L'Assomption",
+    "province": "QC",
+    "phone": "450 600-6911",
+    "description": "Soutien après sinistre. | Territoire: Lanaudière, Basses-Laurentides | Statut: organisme à but non lucratif",
+    "website": "https://www.apall.org",
+    "address": "47, rue Forest, caserne A, L'Assomption, Lanaudière, QC, J5W 3J4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-sourds-de-lanaudier-jol",
+    "name": "Association des Sourds de Lanaudière",
+    "category": "social",
+    "subcategory": "Cours de langues",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 752-1426",
+    "description": "• Information et références.• Publication d'un journal trimestriel.• Activités de loisirs.• Participation à des programmes de sensibilisation.• Cours pour apprendre la langue des signes québécoise (LSQ).• Conférences, formations et animation.• Défense des droits.• Aide à la communication et à la compréhension de documents. | Clientèle: personnes sourdes et malentendantes | Territoire: Lanaudière | Frais: adhésion annuelle: 20$ par individu, 30$ par couple, 17$ par individu âgé de 55 ans et plus, 25$ par | Statut: organisme à but non lucratif",
+    "website": "https://www.asljoliette.org",
+    "address": "200, rue De Salaberry, local 312, Joliette, Lanaudière, QC, J6E 4G1",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "association-des-travailleurs-travai-rwd",
+    "name": "Association des Travailleurs, Travailleuses Accidentés de Joli-Mont",
+    "category": "employment",
+    "subcategory": "Défense des droits des travailleurs et des sans-emploi",
+    "city": "Rawdon",
+    "province": "QC",
+    "phone": "450 834-1220",
+    "description": "• Service d'information téléphonique sur les droits et recours.• Rencontres d'information sur la réparation des accidents et des maladies du travail.• Soutien et suivi de dossiers.• Activités d'éducation populaire.• Actions de défense collective des droits. | Clientèle: travailleuses et travailleurs victimes d'accidents du travail ou de maladie professionnelle | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://attaj.ca",
+    "address": "4046, rue Queen, bureau 207, Rawdon, Lanaudière, QC, J0K 1S0",
+    "hours": "lundi au jeudi 8h00 à 16h00"
   },
   {
     "id": "ab-crea-ab",
@@ -1477,6 +1863,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "auberge-du-coeur-roland-gauvreau-jol",
+    "name": "Auberge du Coeur Roland-Gauvreau",
+    "category": "family",
+    "subcategory": "Hébergement et soutien pour jeunes",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 759-2114",
+    "description": "• Maison d'hébergement pour jeunes dans un objectif de réinsertion sociale. | Clientèle: jeunes de 18 à 30 ans Capacité: 12 chambres | Territoire: Lanaudière | Frais: selon le revenu: minimum 4,85$ et maximum 10$ par jour | Statut: organisme à but non lucratif",
+    "website": "https://www.rolandgauvreau.ca",
+    "address": "638, Boulevard de la Base-de-Roc, Joliette, Lanaudière, QC, J6E 5P7",
+    "hours": "24 heures, 7 jours"
   },
   {
     "id": "bc-crisis-line",
@@ -1653,6 +2052,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun - Ven 9h-16h"
   },
   {
+    "id": "bonne-etoile-joliette-la-jol",
+    "name": "Bonne Étoile Joliette (la)",
+    "category": "social",
+    "subcategory": "Magasins d'articles usagés",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 759-8853",
+    "description": "Groupe d'entraide alternatif en santé mentale.• Centre de jour.• Intervention téléphonique.• Ateliers thématiques.• Défense des droits.• Aide à la réinsertion sociale.• Comptoir vestimentaire. | Clientèle: personnes de 16 ans et plus vivant ou ayant vécu des enjeux qui influencent ou qui ont influencé leur santé mentale | Territoire: MRC Joliette | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.la-bonne-etoile.org",
+    "address": "517, rue Archambault, Joliette, Lanaudière, QC, J6E 2W6",
+    "hours": "lundi au vendredi 10h00 à 16h00"
+  },
+  {
     "id": "drum-garde-bousquet-lyn",
     "name": "Bousquet Lyn",
     "category": "family",
@@ -1728,6 +2140,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.bryonyhouse.ca",
     "address": "Halifax, NS (adresse confidentielle)",
     "hours": "Service essentiel provincial."
+  },
+  {
+    "id": "buffet-acces-emploi-sll",
+    "name": "Buffet Accès Emploi",
+    "category": "social",
+    "subcategory": "Maintien à domicile",
+    "city": "Saint-Lin–Laurentides",
+    "province": "QC",
+    "phone": "1 877 439-3465",
+    "description": "Entreprise d'insertion spécialisée dans le service traiteur pour évènements.• Formation en emploi de 22 à 26 semaines.• Suivi post-parcours.• Boutique repas congelés, avec possibilité de livraison.• Traiteur évènementiel, corporatif, CPE et garderies. | Clientèle: formation en emploi: personnes de 18 ans et plus prestataires de l'aide sociale ou de l'assurance- chômage, repas surgelés et livraison: grand public | Territoire: formation en emploi: Lanaudière, livraison: Lanaudière, Montréal | Frais: Formation en emploi: aucuns, repas surgelés et livraison: variables | Statut: organisme à but non lucratif",
+    "website": "https://www.bae.qc.ca",
+    "address": "355, route 335, Saint-Lin–Laurentides, Lanaudière, QC, J5M 2C1",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30, livraison: lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "bureau-d-aide-juridique-repentigny-rep",
+    "name": "Bureau D'Aide Juridique - Repentigny",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 581-8691",
+    "description": "Services juridiques et légaux gratuits ou à bas prix aux personnesadmissibles financièrement.• Réception et traitement des demandes d'aide juridique. | Clientèle: personnes ou organisations sans but lucratif résidant au Québec ou contraintes de rester au Québec, financièrement admissibles et dont le service juridique demandé est couvert par la Loi | Territoire: Repentigny | Frais: les personnes peuvent être admises à l'aide juridique gratuite ou moyennant le paiement d'une contri | Statut: organisme à but non lucratif",
+    "website": "https://www.ccjll.qc.ca",
+    "address": "10-A, boulevard Brien, bureau 100, Repentigny, Lanaudière, QC, J6A 4R7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, sur rendez-vous seulement, sauf urgence"
+  },
+  {
+    "id": "bureau-d-aide-juridique-terrebonne-trb",
+    "name": "Bureau D'Aide Juridique - Terrebonne",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 492-1535",
+    "description": "Services juridiques et légaux gratuits ou à bas prix aux personnesadmissibles financièrement.• Réception et traitement des demandes d'aide juridique. | Clientèle: personnes ou organisations sans but lucratif résidant au Québec ou contraintes de rester au Québec, financièrement admissibles et dont le service juridique demandé est couvert par la Loi | Territoire: Terrebonne | Frais: les personnes peuvent être admises à l'aide juridique gratuitement ou moyennant le paiement d'une co | Statut: organisme du gouvernement provincial",
+    "website": "https://www.ccjll.qc.ca",
+    "address": "891, rue Saint-François-Xavier, bureau 210, Terrebonne, Lanaudière, QC, J6W 1H1",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, sur rendez-vous seulement, sauf urgence"
   },
   {
     "id": "qc-aj-gatineau",
@@ -1883,6 +2334,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://lebail.qc.ca",
     "address": "780, rue Saint-Vallier Est, Québec, QC G1K 3P9",
     "hours": "Lun-ven 9h-17h. Consultations sur RV."
+  },
+  {
+    "id": "bureau-des-infractions-et-amendes-j-jol",
+    "name": "Bureau des Infractions et Amendes - Joliette",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 866 536-5140",
+    "description": "Traitement des constats d'infraction liés à la majorité des lois pénales du Québec et à certaines lois fédérales concernant la sécurité routière, les relations de travail dans le domaine de la construction, les produits alimentaires et autres. • Recouvrement des amendes et des frais judiciaires non acquittés.• Services de paiement en ligne des dossiers de cour et des constats d'infraction. | Territoire: districts judicaires de Joliette, La Tuque et Shawinigan | Statut: organisme du gouvernement provincial",
+    "website": "https://www.amendes.qc.ca",
+    "address": "200, rue Saint-Marc, bureau RC-36, Joliette, Lanaudière, QC, J6E 8C2",
+    "hours": "lundi, mardi, jeudi et vendredi 8h30 à 12h00 et 13h00 à 16h30, mercredi 10h00 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "c-l-e-f-centre-lanaudiere-d-emploi-jol",
+    "name": "C.l.e.f., Centre Lanaudière D'Emploi pour Femmes (la)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 855 755-3244",
+    "description": "Intégration du marché du travail pour femmes.• Information et orientation professionnelle.• Aide à la recherche d'emploi.• Formation de groupe.• Stages en milieu de travail. | Clientèle: femmes sans emploi | Territoire: Lanaudière | Statut: organisme à but non lucratif",
+    "website": "https://laclef-perspectives.com",
+    "address": "245, rue Papineau, Joliette, Lanaudière, QC, J6E 2K8",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "nb-cafi",
@@ -6702,6 +7179,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
+    "id": "clsc-de-berthierville-btv",
+    "name": "CLSC de Berthierville",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Berthierville",
+    "province": "QC",
+    "phone": "450 836-7011",
+    "description": "Services de première ligne en matière de santé et de services sociaux.• Cessation tabagisme.• Dépistage.• Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).• Récupération des seringues et des aiguilles usagées.• SIDEP - Service intégré de dépistage et de prévention des ITSS.• Services complets listés ici: Répertoire des ressources en santé et services sociaux | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "https://sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=707",
+    "address": "761, rue Notre-Dame, Berthierville, Lanaudière, QC, J0K 1A0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "clsc-de-chertsey-cht",
+    "name": "CLSC de Chertsey",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Chertsey",
+    "province": "QC",
+    "phone": "450 882-2488",
+    "description": "Services de première ligne en matière de santé et de services sociaux.• Cessation tabagisme.• Récupération des seringues et des aiguilles usagées.• Services complets listés ici: Répertoire des ressources en santé et services sociaux | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "https://sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=708",
+    "address": "485, rue Dupuis, Chertsey, Lanaudière, QC, J0K 3K0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-clsc-montreal-clsc-de-pierrefonds",
     "name": "CLSC de Pierrefonds",
     "category": "health",
@@ -7239,6 +7742,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "cafe-de-rue-de-terrebonne-trb",
+    "name": "Café de Rue de Terrebonne",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 806-9545",
+    "description": "• Prévention de l'itinérance chez les jeunes.• Dépannage alimentaire.• Collations et repas gratuits.• Dépannage matériel: vêtements, articles d'hygiène.• Douche, laveuse, sécheuse.• Infirmière présente une fois par mois.• Test de dépistage des ITSS.• Test de grossesse.• Distribution de matériel stérile d'injection et pipes à crack.• Distribution de contraceptifs et lubrifiants.• Activités sociales et culturelles.• Écoute et référence. | Clientèle: personnes de 18 à 35 ans en situation de crise, de rupture ou en marge de la société, itinérants ou non | Territoire: Terrebonne | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://cafederuesolidaire.org",
+    "address": "654, rue Saint-Pierre, Terrebonne, Lanaudière, QC, J6W 1C8",
+    "hours": "mardi 15h00 à 19h00, mercredi 13h00 à 19h00, jeudi 13h00 à 19h00, vendredi 13h00 à 16h30, dépannage alimentaire: sur inscription, lundi 17h00 à 19h00"
+  },
+  {
     "id": "ab-calgary-food",
     "name": "Calgary Food Bank",
     "category": "food",
@@ -7263,6 +7779,71 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://calgaryhousing.com",
     "address": "205-1000 7 Ave SW, Calgary, AB T2P 5L5",
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
+  },
+  {
+    "id": "camp-familial-saint-urbain-cht",
+    "name": "Camp Familial Saint-Urbain",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Chertsey",
+    "province": "QC",
+    "phone": "1 888 882-4719",
+    "description": "• Séjours de vacances de 2 à 13 nuitées.• Carte accompagnement loisir (CAL). | Clientèle: priorité aux familles à faible revenu, personnes immigrantes, personnes vivant avec un handicap, personnes aînées Capacité: 173 personnes | Territoire: le Québec | Frais: séjours estivaux: selon le revenu | Statut: organisme à but non lucratif",
+    "website": "https://www.campfamilial.org",
+    "address": "1651, chemin de Chertsey, Chertsey, Lanaudière, QC, J0K 3K0",
+    "hours": "7 jours, 9h00 à 16h30"
+  },
+  {
+    "id": "camp-de-jour-richelieu-repentigny-rep",
+    "name": "Camp de Jour Richelieu-Repentigny",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "514 865-2267",
+    "description": "• Camp de jour pour jeunes avec des besoins spécifiques: durée de 8 semaines. | Clientèle: jeunes autonomes de 6 et plus vivant avec une déficience intellectuelle légère à modérée, un trouble du langage, un trouble du comportement, un trouble de l'attention (TDA/H), un trouble du spectre de | Territoire: Repentigny, L'Assomption, Charlemagne, L'Épiphanie, Lachenaie | Frais: jeunes de 6 à 18 ans: 550$, jeunes de 19 à 25 ans: 950$, sorties: coût du billet associé à l'activit | Statut: organisme à but non lucratif",
+    "website": "https://www.richelieurepentigny.org/camp_repentigny.php",
+    "address": "830, boulevard Basile-Routhier, Repentigny, Lanaudière, QC, J6A 7W9",
+    "hours": "camp de jour: juillet et août, lundi au vendredi 8h30 à 15h30, avec possibilité de service de garde de 7h00 à 8h30 et de 15h30 à 18h00"
+  },
+  {
+    "id": "campus-emploi-le-point-de-service-r-rep",
+    "name": "Campus Emploi (le) - Point de Service Repentigny",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "1 855 398-0687",
+    "description": "Centre-conseil en emploi.• Programmes Le Virage et Le Virage Express: accompagnement dans les démarches de réinsertion professionnelle, mise en ouvre d'un plan d'action individuel, travail sur l'estime de soi, approche de groupe avec support individuel, durée de 8 ou 12 semaines.• Programme Profil Action: intervention globale, accompagnement dans les démarches de réinsertion professionnelle, mise en ouvre d'un plan d'action individuel, travail sur l'estime de soi, approche individuelle avec ateliers de groupe, durée de 25 semaines.• Répertoire d'offres d'emploi et de candidatures en ligne. | Clientèle: hommes de 35 ans et plus | Territoire: Repentigny | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://campusemploi.org",
+    "address": "467, rue Notre-Dame, bureau 206 A, Repentigny, Lanaudière, QC, J6A 2T3",
+    "hours": "lundi au jeudi 8h30 à 16h00, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "cancer-aide-lanaudiere-jol",
+    "name": "Cancer-Aide Lanaudière",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 756-0869",
+    "description": "• Écoute et jumelage téléphonique.• Informations, références: guide de ressources, documentation, prêt de livres et de cassettes audio/vidéo.• Groupe de soutien.• Aide financière: rencontres individuelles avec thérapeute, massothérapie.• Rencontres mensuelles. | Clientèle: personnes atteintes d'un cancer, leurs proches | Territoire: Lanaudière | Frais: adhésion annuelle: 10$, activités: coûts variables | Statut: organisme à but non lucratif",
+    "website": "https://www.canceraidelanaudiere.com",
+    "address": "330, rue Papineau, Joliette, Lanaudière, QC, J6E 2K7",
+    "hours": "rencontres: 2e mercredi du mois 13h30 à 15h30"
+  },
+  {
+    "id": "cancer-aide-lanaudiere-point-de-ser-rep",
+    "name": "Cancer-Aide Lanaudière - Point de Service Sud",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 654-8437",
+    "description": "• Écoute et jumelage téléphonique.• Information et références: guide de ressources, documentation, prêt de livres et de cassettes audio-vidéo, journal Le Quatre Saisons.• Rencontres mensuelles et rencontres individuelles.• Groupe de soutien.• Conférences.• Activités avec aide financière: ateliers artistiques, sorties, sessions d'étirements, relation d'aide avec thérapeute et sessions de massothérapie. | Clientèle: personnes vivant avec le cancer, leurs proches | Territoire: MRC L'Assomption, MRC Les Moulins | Frais: adhésion annuelle: 10$, activités: variables | Statut: organisme à but non lucratif",
+    "website": "https://canceraidelanaudiere.com",
+    "address": "50, rue Thouin, local 237, pavillon Richelieu, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "rencontres: 3e mercredi du mois 13h30 à 15h30"
   },
   {
     "id": "drum-garde-carmen-cinthya-romero-espinoza",
@@ -7315,6 +7896,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Services gratuits aide CV, RV, orientation professionnelle."
   },
   {
+    "id": "carrefour-familial-des-moulins-trb",
+    "name": "Carrefour Familial des Moulins",
+    "category": "employment",
+    "subcategory": "Soutien à l'emploi des jeunes",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 492-1257",
+    "description": "Maison de la famille et centre de ressources périnatales.• Relevailles.• Halte-garderie.• Rencontres prénatales: informations sur la grossesse, la nutrition et les soins de bébé, etc.• Yoga prénatal et postnatal, pilates prénatal, remise en forme et cardio maman.• Cours de massage et de langage des signes pour bébés.• Ateliers de socialisation et de stimulation.• Atelier de cuisine pour parents et leur enfant de 2 à 5 ans.• Atelier de développement des habiletés parentales.• Accueil et référence.• Joujouthèque pour enfants de 0 à 5 ans.• Formations pour adolescent·e·s: Prêts à rester seuls! et Gardiens Avertis.• Groupe de soutien pour le deuil périnatal.• Café-causerie. | Clientèle: familles, futurs parents | Territoire: MRC Les Moulins | Frais: adhésion annuelle: 10$ | Statut: organisme à but non lucratif",
+    "website": "https://www.carrefourfamilialdesmoulins.com",
+    "address": "342, rue Léveillé, Terrebonne, Lanaudière, QC, J6W 1Z5",
+    "hours": "lundi au jeudi 8h30 à 12h15 et 13h00 à 16h00"
+  },
+  {
     "id": "emp-cje-drummondville",
     "name": "Carrefour Jeunesse-Emploi Drummond",
     "category": "employment",
@@ -7326,6 +7920,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cjedrummond.qc.ca",
     "address": "150, rue Marchand, bureau 260, Drummondville, QC J2C 4N1",
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service."
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-l-assompt-rep",
+    "name": "Carrefour Jeunesse-Emploi L'Assomption",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 581-3785",
+    "description": "Soutien et accompagnement des jeunes dans leurs démarches d'emploi et de retour aux études.• Accueil, information et référence.• Aide à la recherche d'emploi.• Orientation professionnelle et scolaire.• Centre de documentation.• Entrepreneuriat jeunesse: conférences en milieu scolaire, appui aux projets coopératifs.• Persévérance scolaire.Soutien psychosocial.• Écoute et évaluation des besoins.• Accompagnement et outillage.Service aux entreprises et aux organisations.• Subventions salariales.• Promotion d'activités de recrutement et des offres d'emploi.• Suivi présélection, intégration et maintien en emploi. | Clientèle: jeunes de 14 à 35 ans | Territoire: MRC L'Assomption | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://cjela.qc.ca",
+    "address": "10, rue Notre-Dame, 3e étage, Repentigny, Lanaudière, QC, J6A 2N9",
+    "hours": "lundi, mercredi et jeudi 8h30 à 16h30, mardi 10h00 à 16h30, vendredi 8h30 à 15h30, dernier jeudi du mois 8h30 à 20h00"
   },
   {
     "id": "tr-emp1",
@@ -7639,6 +8246,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "centraide-lanaudiere-jol",
+    "name": "Centraide Lanaudière",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 752-1999",
+    "description": "Soutien aux organismes communautaires locaux grâce à une campagne de financement et aux dons recueillis. | Clientèle: organismes communautaires | Territoire: MRC D'Autray, MRC L'Assomption, MRC Matawinie, MRC Montcalm, MRC Joliette, Mascouche | Statut: organisme à but non lucratif",
+    "website": "https://centraide-rcoq.ca/lanaudiere",
+    "address": "582, rue Saint-Viateur, Joliette, Lanaudière, QC, J6E 3B6",
+    "hours": "Voir site web"
+  },
+  {
     "id": "tr-social1",
     "name": "Centraide Mauricie",
     "category": "social",
@@ -7915,6 +8535,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au mercredi et vendredi 9h00 à 15h00, jeudi 12h30 à 19h00"
   },
   {
+    "id": "centre-communautaire-essalam-msc",
+    "name": "Centre Communautaire Essalam",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "438 396-6648",
+    "description": "Lieu d'échange, de rencontres et de socialisation.• Activités culturelles, sociales, sportives et éducatives.• Récupération sur place de denrées non-périssables et de vêtements et redistribution des dons reçus à des organismes communautaires partenaires. | Clientèle: personnes membres de la communauté musulmane Capacité: 100 | Territoire: MRC Les Moulins | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.essalam.ca",
+    "address": "2685, chemin Sainte-Marie, bureau L, Mascouche, Lanaudière, QC, J7K 1M8",
+    "hours": "variables"
+  },
+  {
+    "id": "centre-communautaire-laurent-venne-rep",
+    "name": "Centre Communautaire Laurent Venne",
+    "category": "social",
+    "subcategory": "Centres communautaires",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 657-4877",
+    "description": "• Activités culturelles, expositions, ateliers et conférences.• Mise en forme.• Activités sociales et sportives: clubs darts, jeux vidéos, etc.• Cours de langues: espagnol.• Cours d'arts: peinture, chant, guitare, etc.• Frigidaire vert communautaire.• Maison des Jeunes de Repentigny - secteur Le Gardeur.• Événements spéciaux. | Clientèle: grand public Capacité: 444 | Territoire: MRC L'Assomption, principalement Repentigny | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://centrecommunautairerepentigny.ca",
+    "address": "225, boulevard J.-A.-Paré, Repentigny, Lanaudière, QC, J5Z 4M6",
+    "hours": "administration: lundi au vendredi 9h00 à 22h00, samedi et dimanche 9h00 à 16h00"
+  },
+  {
     "id": "msss-chsld-levis-centre-d-accueil-saint-joseph-de-levis",
     "name": "Centre D'Accueil Saint-Joseph De Lévis",
     "category": "health",
@@ -7925,6 +8571,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à Centre D'Accueil Saint-Joseph De Lévis Inc.. Source: MSSS – Fichier M02 des installations.",
     "address": "5445, rue Saint-Louis, Lévis, QC G6V 4G9",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "centre-d-action-benevole-mrc-l-asso-rep",
+    "name": "Centre D'Action Bénévole MRC L'Assomption",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 581-5033",
+    "description": "Centre de jour avec activités sociales et éducatives.Soutien aux personnes aînées• Écoute et référence pour personnes aînées victimes d'abus, de négligence ou de violence.• Appels et visites d'amitié.• Ateliers de prévention: maintenir la mémoire par la gymastique, gérer le stress, apprendre à naviguer sur Internet, etc.• Centre communautaire pour personnes aînées: repas communautaires, activités (bingo, cartes, etc.), célébrations.Communautaire• Accompagnement et transport médical.• Soutien aux organismes: support technique et organisationnel, réseautage et formation de bénévoles, etc.• Bénévolat: recrutement, formation et activités.• Plateforme Bénévolons: www.benevolonslassomption.ca• Clinique d'impôts.Loisirs• Ateliers créatifs: peinture, écriture d'un journal, tricot, etc.• Chorale.Jeunesse• Distribution de fournitures scolaires. | Clientèle: personnes aînées, bénévolat: grand public, fournitures scolaires: parents d'enfants d'âge préscolaire ou primaire avec un faible revenu | Territoire: MRC L'Assomption | Frais: adhésion annuelle: 10$ | Statut: organisme à but non lucratif",
+    "website": "https://www.servicebenevole.com",
+    "address": "50, rue Thouin, bureau 201, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 13h00"
   },
   {
     "id": "centre-d-action-benevole-ouest-de-l-sab",
@@ -7940,6 +8599,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 13h00"
   },
   {
+    "id": "centre-d-action-benevole-des-moulin-trb",
+    "name": "Centre D'Action Bénévole des Moulins",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 964-9898",
+    "description": "• Accueil, information et références.• Appels d'amitié.• Visites d'amitié.• Aide à l'épicerie.• Programme PIED: prévention des chutes et des fractures, 2 rencontres par semaines pendant 12 semaines.• Programme Oui j'arrête: cessation du tabagisme. | Clientèle: personnes aînée en perte d'autonomie, personnes handicapées, personnes convalescentes, personnes avec une maladie chronique, personnes proches aidantes | Territoire: MRC Les Moulins | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://www.cabdesmoulins.org",
+    "address": "298, rue Joseph-Guay, Terrebonne, Lanaudière, QC, J6W 4S3",
+    "hours": "lundi au jeudi 8h30 à 17h00, vendredi 8h30 à 12h00"
+  },
+  {
     "id": "msss-chsld-saint-marc-des-carrieres-centre-d-activites-de-jour-en-deficience-intellectuelle-et-e",
     "name": "Centre D'Activités De Jour En Déficience Intellectuelle Et En Troubles Du Spectre De L'Autisme Et Centre D'Hébergement De Saint-Marc-Des-Carrières",
     "category": "health",
@@ -7950,6 +8622,58 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à CIUSSS De La Capitale-Nationale. Source: MSSS – Fichier M02 des installations.",
     "address": "444, rue Beauchamp, Saint-Marc-des-Carrières, QC G0A 4B0",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "centre-d-amitie-autochtone-de-lanau-jol",
+    "name": "Centre D'Amitié Autochtone de Lanaudière",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 277-9911",
+    "description": "Services et programmes pour l'amélioration de la condition de vie des Autochtones.• Information et référence.• Ligne d'écoute 24 heures, 7 jours: 450 277-9911.• Services d'accompagnement et de soutien dans différentes démarches par un·e travailleur·se de proximité.• Services juridiques: avocat·e présent·e sur place une fois par mois.• Services de massothérapie et chiropratique.• Infirmière et médecin sur place.• Programme d'aide préscolaire autochtone pour les communautés urbaines et nordique (PAPACUN): activités liées à la culture, à la santé, à la nutrition et à l'éducation pour les enfants de 0 à 5 ans et leurs familles.• Services éducatifs: aide aux devoirs pour les élèves du primaire et du secondaire, espace de travail, liaison entre les familles et les milieux scolaires, magasin scolaire à bas coût et accompagnement individuel des élèves et des familles.• Programme de pré-employabilité et d'employabilité.• Activités culturelles et pédagogiques.• Activités jeunesses pour les 12 à  | Clientèle: personnes autochtones de tous âges | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.caalanaudiere.ca",
+    "address": "523, boulevard Sainte-Anne, Joliette, Lanaudière, QC, J6E 5A3",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "centre-d-assistance-et-d-accompagne-jol",
+    "name": "Centre D'Assistance et D'Accompagnement aux Plaintes - Lanaudière",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 800 882-5622",
+    "description": "Aide et accompagnement pour personnes désirant porter plainte concernant les services qu'iels ont reçus ou auraient dû recevoir dans le réseau de la santé et des services sociaux.?• Établissements publics: CLSC, hôpitaux, centres d'hébergement, centres jeunesse, centres de réadaptation.• Ressources intermédiaires: établissements privés conventionnés ou autofinancés, ressources de type familial.• Organismes communautaires dans le domaine de la santé et des services sociaux ou exerçant une fonction ou une activité de l'ASSS: services préhospitaliers, services ambulanciers.• Information et aide aux locataires des résidences privées pour aînées (RPA) pour formuler une plainte et accompagnement dans les démarches de plainte. | Clientèle: personnes usagères du réseau de la santé et des services sociaux, locataires de résidence pour personnes aînées | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://caaplanaudiere.com",
+    "address": "490, rue Saint-Charles-Borromée Nord, Joliette, Lanaudière, QC, J6E 4R7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-d-entraide-de-mascouche-msc",
+    "name": "Centre D'Entraide de Mascouche",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 474-6588",
+    "description": "• Vente d'articles à faible coût: linge, meubles, électroménagers, vaisselle, décorations, appareil informatique, appareils électriques, etc.• Possibilité de livraison de meubles avec des frais additionnels.• Fournitures scolaires à bas prix.• Dépannage alimentaire par bons alimentaires.• Distribution de meubles. | Clientèle: grand public, bons alimentaire: personnes temporairement dans le besoin | Territoire: Rive-Nord, dépannage alimentaire: Mascouche | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://www.centredentraidedemascouche.org",
+    "address": "3320, chemin Sainte-Marie, Mascouche, Lanaudière, QC, J7K 1P5",
+    "hours": "centre: mardi 9h00 à 11h00 et 13h00 à 15h00, mercredi 9h00 à 11h00, jeudi 9h00 à 11h00, 13h00 à 15h00 et 18h00 à 20h00, samedi 9h00 à 12h00, bons alimentaires: sur rendez-vous, distribution mercredi et vendredi 9h00 à 11h00"
+  },
+  {
+    "id": "centre-d-entraide-de-mascouche-recu-msc",
+    "name": "Centre D'Entraide de Mascouche - Récupération D'Articles Usagés",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 474-7331",
+    "description": "• Collecte de dons d'électroménagers ou de meubles à domicile.• Récupération d'articles sur place: linge, vaisselle, décorations, appareil informatique, appareils électriques, etc. | Clientèle: grand public | Territoire: Mascouche, Terrebonne, Bois-Des-Filion, Saint-Lin-Laurentides, Saint Roch-de-l'Achigan, L'Épiphanie, L'Assomption, Le Gardeur | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.centredentraidedemascouche.org",
+    "address": "3320, chemin Sainte-Marie, Mascouche, Lanaudière, QC, J7K 1P5",
+    "hours": "collecte à domicile: mardi au samedi, sur rendez-vous, centre: mardi 9h00 à 11h00 et 13h00 à 15h00, mercredi 9h00 à 11h00, jeudi 9h00 à 11h00, 13h00 à 15h00 et 18h00 à 20h00, samedi 9h00 à 12h00"
   },
   {
     "id": "msss-chsld-montreal-centre-d-hebergement-alfred-desrochers",
@@ -9227,6 +9951,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "centre-d-hebergement-heather-rwd",
+    "name": "Centre D'Hébergement Heather",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Rawdon",
+    "province": "QC",
+    "phone": "450 834-3070",
+    "description": "Centre d'hébergement public pour aînés et personnes en perte d'autonomie.• Hébergement et soins de longue durée. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Lanaudière | Statut: organisme parapublic",
+    "website": "https://chheather.com",
+    "address": "3931, Lakeshore Drive, Rawdon, Lanaudière, QC, J0K 1S0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-chsld-montreal-centre-d-hebergement-henri-bradet",
     "name": "Centre D'Hébergement Henri-Bradet",
     "category": "health",
@@ -9469,6 +10206,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "centre-d-hebergement-parphilia-ferl-scb",
+    "name": "Centre D'Hébergement Parphilia-Ferland",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-Charles-Borromée",
+    "province": "QC",
+    "phone": "450 759-1764",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.• Hébergement et soins de longue durée. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Lanaudière | Statut: organisme parapublic",
+    "website": "https://www.cisss-lanaudiere.gouv.qc.ca",
+    "address": "1000, boulevard Sainte-Anne, Saint-Charles-Borromée, Lanaudière, QC, J6E 6J2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-chsld-montreal-centre-d-hebergement-paul-bruchesi",
     "name": "Centre D'Hébergement Paul-Bruchési",
     "category": "health",
@@ -9709,6 +10459,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "centre-d-hebergement-sylvie-lespera-jol",
+    "name": "Centre D'Hébergement Sylvie-Lespérance",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 756-2300",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.• Hébergement et soins de longue durée. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Lanaudière | Statut: organisme parapublic",
+    "website": "https://www.cisss-lanaudiere.gouv.qc.ca/liste-de-soins-et-services/liste-par-clientele/personnes- agees/hebergement",
+    "address": "200, rue Marie-Curie, Joliette, Lanaudière, QC, J6E 7M7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-clsc-saint-alexandre-de-kamouraska-centre-d-hebergement-villa-maria",
     "name": "Centre D'Hébergement Villa Maria",
     "category": "health",
@@ -9806,6 +10569,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cimoi.com",
     "address": "15650, boulevard de Pierrefonds, Pierrefonds-Roxboro, Montréal, QC, H9H 4K3",
     "hours": "lundi au vendredi 8h30 à 16h30, cours de français: lundi au mercredi 18h00 à 21h00 (seulement lors des sessions de francisation)"
+  },
+  {
+    "id": "centre-d-integration-professionnell-rep",
+    "name": "Centre D'Intégration Professionnelle de Lanaudière",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 582-6561",
+    "description": "Services aux femmes en recherche d'emploi et en retour sur le marché du travail.• Aide et accompagnement: bilan personnel et professionnel, rédaction de CV et lettre de présentation, préparation aux entrevues, méthodes de recherches et conseils.• Programme préparatoire à l'emploi: projet de groupe de 15 semaines.• Cartes de l'emploi: programme accessible en continu, rencontres individuelles et ateliers de groupe, durée variable.• Accompagnement des femmes à la recherche d'un emploi dans un domaine traditionnellement masculin.• Programme de pré-employabilité: accompagnement des femmes pour s'intégrer à une mesure d'employabilité, une formation ou un emploi.• Ateliers thématiques mensuels: l'estime de soi, la gestion du stress, communication et l'affirmation de soi, gestion du temps, etc.• Cours d'informatique.• Références vers d'autres organismes communautaires. | Clientèle: femmes | Territoire: Lanaudière | Frais: services d'aide à l'emploi: gratuit si la personne répond aux critères d'adminissibilités, variables | Statut: organisme à but non lucratif",
+    "website": "https://cipl.ca",
+    "address": "547, rue Leclerc, bureau 200, Repentigny, Lanaudière, QC, J6A 8B4",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 12h45 à 16h00, vendredi 8h30 à 12h00"
   },
   {
     "id": "msss-chsld-montreal-centre-de-crise-emile-nelligan",
@@ -10467,18 +11243,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
-    "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-de-services-ambulatoires-en-sante-mentale-papineau",
-    "name": "Centre De Services Ambulatoires En Santé Mentale Papineau",
-    "category": "mentalHealth",
-    "subcategory": "Centre hospitalier psychiatrique",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
-    "address": "10345, avenue Papineau, 3e étage, Montréal, QC H2B 2A3",
-    "hours": "Service de crise disponible 24h/24, 7j/7"
-  },
-  {
     "id": "msss-hopital-montreal-centre-de-services-ambulatoires-en-sante-mentale-papineau",
     "name": "Centre De Services Ambulatoires En Santé Mentale Papineau",
     "category": "health",
@@ -10489,6 +11253,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "address": "10345, avenue Papineau, 3e étage, Montréal, QC H2B 2A3",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
+  },
+  {
+    "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-de-services-ambulatoires-en-sante-mentale-papineau",
+    "name": "Centre De Services Ambulatoires En Santé Mentale Papineau",
+    "category": "mentalHealth",
+    "subcategory": "Centre hospitalier psychiatrique",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
+    "address": "10345, avenue Papineau, 3e étage, Montréal, QC H2B 2A3",
+    "hours": "Service de crise disponible 24h/24, 7j/7"
   },
   {
     "id": "msss-hopital-laval-centre-de-services-ambulatoires-en-sante-mentale-rene-laenne",
@@ -10944,6 +11720,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-integre-de-sante-et-de-servi-jol",
+    "name": "Centre Intégré de Santé et de Services Sociaux de Lanaudière",
+    "category": "employment",
+    "subcategory": "Développement des entreprises",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 800 668-9229",
+    "description": "Planification, coordination et organisation de l'offre de services sociaux et de santé.• Prise en charge de l'ensemble de la population du territoire, notamment des clientèles plus vulnérables.• Gestion de l'accès simplifié aux services.• Administration de partenariats avec les ressources intermédiaires en hébergement.• Traitement des plaintes en matière d'insatisfaction et de violation des droits des personnes usagères. | Territoire: Lanaudière | Statut: organisme parapublic",
+    "website": "https://www.cisss-lanaudiere.gouv.qc.ca",
+    "address": "260, rue Lavaltrie Sud, Joliette, Lanaudière, QC, J6E 5X7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30 (sauf jours fériés)"
+  },
+  {
+    "id": "centre-l-avenir-trb",
+    "name": "Centre L'Avenir",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 492-3737",
+    "description": "Centre de formation générale des adultes.• Formation pré-secondaire et secondaire.• Formation à distance.• Francisation avec possibilité d'aide financière pour les personnes nouvellement arrivées.• Alphabétisation.• Programme de participation sociale (PPS).• Services d'accueil, de référence, de conseil et d'accompagnement (SARCA).• Formation à l'intégration externe (FISEX).• Service d'intégration socioprofessionnelle (ISP): orientation professionnelle.• Formation à l'intégration sociale (FIS).• Service d'accueil en formaion (SAF).• Attestation d'équivalence de niveau de scolarité (AENS).• Test de développement général (TDG).• Attestation des préalables scolaires (CCQ). | Clientèle: francisation: personnes immigrantes allophones, autres services: personnes âgées de 16 ans et plus | Territoire: MRC L'Assomption, Terrebonne | Frais: variables | Statut: organisme parapublic",
+    "website": "https://www.centrelavenir.ca",
+    "address": "508, rue Masson, Terrebonne, Lanaudière, QC, J6W 2Z3",
+    "hours": "lundi au jeudi 8h00 à 16h00 et 18h00 à 20h30, vendredi 8h00 à 15h00"
+  },
+  {
     "id": "msss-chsld-montreal-centre-le-cardinal",
     "name": "Centre Le Cardinal",
     "category": "health",
@@ -11030,18 +11832,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
-    "id": "msss-clsc-nicolet-centre-multiservices-de-sante-et-de-services-sociaux-christ-",
-    "name": "Centre Multiservices De Santé Et De Services Sociaux Christ-Roi",
-    "category": "health",
-    "subcategory": "CLSC",
-    "city": "Nicolet",
-    "province": "QC",
-    "phone": "819-293-2071",
-    "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CIUSSS De La Mauricie-Et-Du-Centre-Du-Québec. Source: MSSS – Fichier M02 des installations.",
-    "address": "675, rue Saint-Jean-Baptiste, Nicolet, QC J3T 1S4",
-    "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
-  },
-  {
     "id": "msss-clsc-quebec-centre-multiservices-de-sante-et-de-services-sociaux-christ-",
     "name": "Centre Multiservices De Santé Et De Services Sociaux Christ-Roi",
     "category": "health",
@@ -11051,6 +11841,18 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-525-4444",
     "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CIUSSS De La Capitale-Nationale. Source: MSSS – Fichier M02 des installations.",
     "address": "900, boulevard Wilfrid-Hamel, Québec, QC G1M 2R9",
+    "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
+  },
+  {
+    "id": "msss-clsc-nicolet-centre-multiservices-de-sante-et-de-services-sociaux-christ-",
+    "name": "Centre Multiservices De Santé Et De Services Sociaux Christ-Roi",
+    "category": "health",
+    "subcategory": "CLSC",
+    "city": "Nicolet",
+    "province": "QC",
+    "phone": "819-293-2071",
+    "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CIUSSS De La Mauricie-Et-Du-Centre-Du-Québec. Source: MSSS – Fichier M02 des installations.",
+    "address": "675, rue Saint-Jean-Baptiste, Nicolet, QC J3T 1S4",
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
@@ -11658,18 +12460,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
-    "id": "msss-hopital-montreal-centre-multiservices-de-sante-et-de-services-sociaux-riviere",
-    "name": "Centre Multiservices De Santé Et De Services Sociaux Rivière-Des-Prairies",
-    "category": "health",
-    "subcategory": "Hôpital",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "",
-    "address": "7070, boulevard Perras, Montréal, QC H1E 1A4",
-    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
-  },
-  {
     "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-multiservices-de-sante-et-de-services-sociaux-riviere",
     "name": "Centre Multiservices De Santé Et De Services Sociaux Rivière-Des-Prairies",
     "category": "mentalHealth",
@@ -11680,6 +12470,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
     "address": "7070, boulevard Perras, Montréal, QC H1E 1A4",
     "hours": "Service de crise disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "msss-hopital-montreal-centre-multiservices-de-sante-et-de-services-sociaux-riviere",
+    "name": "Centre Multiservices De Santé Et De Services Sociaux Rivière-Des-Prairies",
+    "category": "health",
+    "subcategory": "Hôpital",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "",
+    "address": "7070, boulevard Perras, Montréal, QC H1E 1A4",
+    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
     "id": "msss-clsc-quebec-centre-multiservices-de-sante-et-de-services-sociaux-sacre-c",
@@ -11754,6 +12556,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.ciusss-capitalenationale.gouv.qc.ca",
     "address": "2601, de la Canardière, Québec, QC G1J 2G3",
     "hours": "Lun-ven 8h30-16h30. Sur RV ou référence médicale."
+  },
+  {
+    "id": "centre-regional-de-formation-de-lan-jol",
+    "name": "Centre Régional de Formation de Lanaudière",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 755-2700",
+    "description": "Formations pour les personnes employées et bénévoles des organismes communautaires.• Formations en gestion, animation, intervention.• Formations en présentiel et à distance.• Formations à la carte. | Clientèle: personnes employées et bénévoles du milieu communautaire | Territoire: Lanaudière | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://crfl.ca",
+    "address": "144, rue Saint-Joseph, Joliette, Lanaudière, QC, J6E 5C4",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "centre-residentiel-communautaire-jo-jol",
+    "name": "Centre Résidentiel Communautaire Joliette-Lanaudière",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 877 752-0556",
+    "description": "Centre résidentiel communautaire.• Hébergement.• Accompagnement et références.• Consultation individuelle et de groupe.• Programmes spécialisés divers.• Aide aux travaux communautaires et compensatoires.• Prévention et sensibilisation. | Clientèle: hommes judiciarisés de 18 ans et plus sur une mesure correctionnelle avec suivi Capacité: hébergement: 21 | Territoire: Lanaudière | Frais: selon le revenu | Statut: organisme à but non lucratif",
+    "website": "https://www.crcjoliette.ca",
+    "address": "785, boulevard Manseau, Joliette, Lanaudière, QC, J6E 3G1",
+    "hours": "24 heures, 7 jours"
   },
   {
     "id": "service-canada-pointe-claire",
@@ -11898,6 +12726,71 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-de-f-a-m-des-moulins-trb",
+    "name": "Centre de F.a.m. des Moulins",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 964-5827",
+    "description": "Accueil, écoute, support, information, références et accompagnement.• Groupes de discussion.• Activités éducatives: ateliers, conférences, cours.• Repas entre femmes.• Activités spéciales: sorties, dîners.• Actions collectives.• Soutien individuel au besoin. | Clientèle: femmes de 18 ans et plus | Territoire: MRC Les Moulins et les environs | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://www.centrefamdesmoulins.com",
+    "address": "502, rue Langlois, Terrebonne, Lanaudière, QC, J6W 4C3",
+    "hours": "lundi, mercredi et jeudi: 9h00 à 16h00, mardi: 13h00 à 16h00"
+  },
+  {
+    "id": "centre-de-femmes-marie-dupuis-ndp",
+    "name": "Centre de Femmes Marie-Dupuis",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Notre-Dame-des-Prairies",
+    "province": "QC",
+    "phone": "450 752-5005",
+    "description": "Centre de femmes.• Écoute et accompagnement. • Consultation juridique.• Centre de documentation et référencement.• Bibliothèque.• Ordinateur et photocopies.• Bonne boîte bonne bouffe: boîte de fruits et légumes • Activités éducatives et récréatives.• Cafés-rencontres. • Cours et ateliers.• Dîner communautaire. | Clientèle: femmes | Territoire: Lanaudière | Frais: adhésion annuelle: 15$, Bonne boîte bonne bouffe: 8$ pour la petite boîte, 12$ pour la boîte moyenne | Statut: organisme à but non lucratif",
+    "website": "https://www.cdfmariedupuis.com",
+    "address": "241, boulevard Antonio-Barrette, Notre-Dame-des-Prairies, Lanaudière, QC, J6E 1E9",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "centre-de-formation-professionnelle-rep",
+    "name": "Centre de Formation Professionnelle des Riverains - Salon de Coiffure",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 492-3538",
+    "description": "Salon-école de coiffure à prix modique. | Territoire: Repentigny | Frais: variables | Statut: organisme du gouvernement provincial",
+    "website": "https://www.cfpriverains.qc.ca/implication",
+    "address": "120, rue Valmont, Repentigny, Lanaudière, QC, J5Y 1N9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-protection-de-l-enfance-e-jol",
+    "name": "Centre de Protection de L'Enfance et de la Jeunesse de Lanaudière",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 800 229-1152",
+    "description": "Administration des centres jeunesse et direction de la protection de la jeunesse.• Réception et évaluation des signalements d'actes de négligence, de violence, d'abus à l'égard d'un jeune ou de ses troubles de comportement, en vertu de la Loi sur la protection de la jeunesse.• Services psychosociaux pour jeunes contrevenants lorsque nécessaire (en vertu de la Loi sur le système de justice pénale pour les adolescents).• Réseau de milieu de vie substitut: familles d'accueil, foyers de groupe, centres de réadaptation et ressources intermédiaires.• Adoption, recherche des antécédents, retrouvailles, expertise à la Cour supérieure, tutelle subventionnée.• Services psychosociaux, de réadaptation, d'intégration sociale, d'accompagnement, de support et d'urgence sociale. | Clientèle: enfants et adolescent·e·s en difficulté, jeunes contrevenant·e·s, parents, tuteur·trice·s, personnes intervenantes | Territoire: Lanaudière | Statut: organisme parapublic",
+    "website": "https://www.cisss-lanaudiere.gouv.qc.ca/votre-cisss/coordonnees-et-horaires/centres-de-protection-de- lenfance-et-de-la-jeunessecentres-de-readaptation-pour-les-jeunes-en-difficulte-dadaptation",
+    "address": "260, rue Lavaltrie Sud, Joliette, Lanaudière, QC, J6E 5X7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, urgence sociale et signalement: 24 heures, 7 jours"
+  },
+  {
+    "id": "centre-de-protection-de-l-enfance-e-msc",
+    "name": "Centre de Protection de L'Enfance et de la Jeunesse de Mascouche",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 474-0027",
+    "description": "Services psychosociaux et de réadaptation externe. | Clientèle: enfants et jeunes en difficulté, jeunes contrevenant·e·s, parents, tuteur·trice·s, intervenant·e·s | Territoire: Mascouche | Statut: organisme parapublic",
+    "website": "https://www.cisss-lanaudiere.gouv.qc.ca/votre-cisss/coordonnees-et-horaires/centres-de-protection-de- lenfance-et-de-la-jeunessecentres-de-readaptation-pour-les-jeunes-en-difficulte-dadaptation",
+    "address": "3083, boulevard Mascouche, 2e étage, Mascouche, Lanaudière, QC, J7K 3B7",
+    "hours": "lundi à vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "centre-de-recherche-d-emploi-de-poi-pcl",
     "name": "Centre de Recherche D'Emploi de Pointe-Claire",
     "category": "social",
@@ -11924,6 +12817,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h"
   },
   {
+    "id": "centre-de-ressources-pour-hommes-du-msc",
+    "name": "Centre de Ressources pour Hommes du Sud de Lanaudière",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 961-1241",
+    "description": "Services d'accueil, d'écoute et d'accompagnement pour les hommes vivant des difficultés personnelles, familiales ou sociales.• Accueil et orientation.• Accompagnement individuel.• Ateliers et activités de groupe (gestion des émotions, transitions de vie, relations, estime de soi, etc.);• Soutien aux pères.• Activités de socialisation et de mobilisation.• Références vers les ressources appropriées. | Clientèle: hommes de 18 ans et plus | Territoire: MRC L'Assomption, MRC Les Moulins | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://aidehomme.com",
+    "address": "2500, boulevard Mascouche, Mascouche, Lanaudière, QC, J7K 0H5",
+    "hours": "lundi au vendredi 8h30 à 17h00"
+  },
+  {
+    "id": "centre-de-readaptation-en-deficienc-rep",
+    "name": "Centre de Réadaptation en Déficience Physique de Repentigny",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "1 888 880-8240",
+    "description": "Services pluridisciplinaires de réadaptation. | Clientèle: personnes vivant avec une déficience physique | Territoire: Lanaudière | Statut: organisme parapublic",
+    "website": "https://www.cisss-lanaudiere.gouv.qc.ca/votre-cisss/coordonnees-et-horaires/crdp",
+    "address": "135, boulevard Claude-David, bureau 0032, Repentigny, Lanaudière, QC, J6A 1N6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-de-readaptation-en-deficienc-trb",
+    "name": "Centre de Réadaptation en Déficience Physique de Terrebonne",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "1 866 365-4403",
+    "description": "Services pluridisciplinaires de réadaptation. | Clientèle: personnes vivant avec une déficience physique | Territoire: Lanaudière | Statut: organisme parapublic",
+    "website": "https://www.cisss-lanaudiere.gouv.qc.ca/votre-cisss/coordonnees-et-horaires/crdp",
+    "address": "819, montée Masson, Terrebonne, Lanaudière, QC, J6W 2C7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "centre-de-readaptation-en-dependanc-pcl",
     "name": "Centre de Réadaptation en Dépendance de Montréal (foster) - Pointe-Claire",
     "category": "mentalHealth",
@@ -11934,6 +12866,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Services de deuxième ligne en dépendance.• Services externes à durée variable.• Services internes pour adultes et adolescents en collaboration avec des ressources d'hébergement en dépendance.• Désintoxication interne niveau 3.7 (point de service St-Philippe) jusqu'en avril 2026.• Soutien face à l'utilisation problématique d'Internet.• Soutien aux membres de l'entourage: rencontres individuelles ou de groupe (selon le point de service).• Références si besoin en réinsertion sociale. | Clientèle: personnes de 12 ans et plus présentant un trouble de l'usage aux substances, d'utilisation problématique d'Internet ou d'utilisation des jeux de hasard et d'argent, leurs proches, personnes sur le pro | Territoire: Montréal - anglophone seulement | Frais: gratuit | Statut: organisme parapublic",
     "address": "CLSC Lac St-Louis 180, avenue Cartier, Pointe-Claire, Montréal, QC, H9S 4S1",
     "hours": "lundi et mardi 8h30 à 12h00 et 13h00 à 20h00, mercredi à vendredi 8h30 à 12h00 et 13h00 à 16h30, accueil centralisé: lundi au mercredi 8h30 à 12h00, 13h00 à 17h00 et 18h00 à 20h30, jeudi et vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-de-services-scolaires-des-af-rep",
+    "name": "Centre de Services Scolaires des Affluents",
+    "category": "social",
+    "subcategory": "Centres de services scolaire",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 492-9400",
+    "description": "Centre de services scolaire francophone regroupant écoles primaires, secondaires et spécialisées.• Formation professionnelle et aux adultes.• Services d'accueil, de référence, de conseil et d'accompagnement (SARCA).• Centres de formation générale et professionnelle.• Test d'équivalence de niveau secondaire (TENS): évaluation des connaissances des adultes n'ayant pas terminé leurs études secondaires en vue d'obtenir une attestation d'équivalence de niveau de scolarité (AENS) facilitant l'accession à certains emplois et formations professionnelles.• Reconnaissance des acquis et des compétences (RAC).• Services aux entreprises.• Services de francisation pour nouveaux arrivants.• Coordination du transport scolaire. | Territoire: MRC L'Assomption, MRC Les Moulins | Frais: variables | Statut: organisme parapublic",
+    "website": "https://cssda.gouv.qc.ca",
+    "address": "80, rue Jean-Baptiste-Meilleur, Repentigny, Lanaudière, QC, J6A 6C5",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "mh-crise-iris-mtl",
@@ -12160,6 +13105,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h30. Information et orientation juridique sans RV."
   },
   {
+    "id": "centre-la-croisee-rep",
+    "name": "Centre la Croisée",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 492-3799",
+    "description": "Centre de formation générale des adultes.• Francisation.• Services d'accueil, de référence, de conseil et d'accompagnement (SARCA).• Formation à distance.• Service d'intégration sociale.• Formation de base commune en français, mathématiques et anglais.• Formation de base diversifiée en français, mathématiques, anglais et sciences.• Cours optionnels: informatique et stratégies de carrières.• Formation de métier semi-spécialisé en conciergerie.• Cours d'insertion socioprofessionnelle. | Clientèle: francisation: personnes immigrantes allophones, autres services: personnes de 16 ans et plus | Territoire: MRC L'Assomption | Statut: organisme à but non lucratif",
+    "website": "https://www.centrelacroisee.com",
+    "address": "777, boulevard Iberville, aile C, Repentigny, Lanaudière, QC, J5Y 1A2",
+    "hours": "lundi au jeudi 7h30 à 16h30 et 17h30 à 20h30, vendredi 7h30 à 15h30"
+  },
+  {
+    "id": "centre-le-diapason-msc",
+    "name": "Centre le Diapason",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 477-6201",
+    "description": "• Hébergement temporaire (gîte et couvert) jusqu'à 60 jours.• Soutien téléphonique.• Médiation familiale.• Rencontres d'information.• Accompagnement dans les démarches de recherche d'emploi.• Ateliers sur diverses problématiques jeunesse.• Références.• Soutien post hébergement: appels et rencontres.• Appartements supervisés. | Clientèle: hébergement temporaire: jeunes en difficulté de 14 à 18 ans volontaires à recevoir de l'aide Capacité: 9 places | Territoire: Lanaudière | Frais: contribution volontaire de la part des parents | Statut: organisme à but non lucratif",
+    "website": "https://www.centrelediapason.com",
+    "address": "1731, rue Maple, Mascouche, Lanaudière, QC, J7L 2K9",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "emp-cle-trois-rivieres",
     "name": "Centre local d'emploi (CLE) Trois-Rivières",
     "category": "employment",
@@ -12198,17 +13169,17 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV."
   },
   {
-    "id": "qc-immo-cnq",
-    "name": "Chambre des notaires du Québec",
-    "category": "realestate",
-    "subcategory": "Programme accession propriété",
-    "city": "Province de Québec",
+    "id": "chambre-de-commerce-et-d-industrie-trb",
+    "name": "Chambre de Commerce et D'Industrie les Moulins",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Terrebonne",
     "province": "QC",
-    "phone": "514-879-1793",
-    "description": "",
-    "website": "https://www.cnq.org",
-    "address": "1801, avenue McGill College, bureau 600, Montréal, QC H3A 0A7",
-    "hours": "Lun-ven 9h-17h. Programmes d'aide à l'achat, financement, services notariaux."
+    "phone": "450 966-1536",
+    "description": "Développement socioéconomique.• Activités de réseautage.• Formation et conférences.• Ailes: Aile jeunesse, Affaires au Féminin et Cellule Industrielle, Achète chez nous.• Services de mentorat.• Cercles d'affaires. | Clientèle: entrepreneur·e·s | Territoire: MRC Les Moulins | Frais: cotisation annuelle: 159$ solopreneur et OBNL, 259$ régulier, 399$ premium, 599$ corporatif, taxes e | Statut: organisme à but non lucratif",
+    "website": "https://ccimoulins.com",
+    "address": "3115, boulevard de la Pinière, bureau 300, Terrebonne, Lanaudière, QC, J6X 4P7",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, en télétravail le vendredi 9h00 à 12h00"
   },
   {
     "id": "re-assist2",
@@ -12223,6 +13194,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "qc-immo-cnq",
+    "name": "Chambre des notaires du Québec",
+    "category": "realestate",
+    "subcategory": "Programme accession propriété",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "514-879-1793",
+    "description": "",
+    "website": "https://www.cnq.org",
+    "address": "1801, avenue McGill College, bureau 600, Montréal, QC H3A 0A7",
+    "hours": "Lun-ven 9h-17h. Programmes d'aide à l'achat, financement, services notariaux."
+  },
+  {
     "id": "tr-garde-chantal-bellerive",
     "name": "Chantal Bellerive",
     "category": "family",
@@ -12234,6 +13218,33 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "charlemagne-loisirs-et-culture-chl",
+    "name": "Charlemagne - Loisirs et Culture",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Charlemagne",
+    "province": "QC",
+    "phone": "450 581-2541",
+    "description": "• Activités récréatives et sportives.• Piscines, parcs, terrains de sport, patinoires, centre communautaire.• Camp de jour estival, camp de la relâche.• Location de salle.• Événements festifs. | Territoire: Charlemagne | Frais: variables | Statut: organisme municipal",
+    "website": "https://www.charlemagne.ca/evenements",
+    "address": "84, rue du Sacré-Coeur, Charlemagne, Lanaudière, QC, J5Z 1W8",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "chaumiere-jeunesse-de-rawdon-la-rwd",
+    "name": "Chaumière Jeunesse de Rawdon (la)",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Rawdon",
+    "province": "QC",
+    "phone": "450 834-2517",
+    "description": "Hébergement de transition.• Durée maximale d'un an.• Écoute, soutien et accompagnement.• Réinsertion sociale.• Défense des droits.• Suivi post-hébergement. | Clientèle: personnes de 18 à 30 ans, vivant des difficultés et à risque d'être en situation d'itinérance Capacité: 9 places mixtes | Territoire: Lanaudière | Frais: 300$ par mois | Statut: organisme à but non lucratif",
+    "website": "https://www.chaumierejeunesse.com",
+    "address": "3299, 14e Avenue, Rawdon, Lanaudière, QC, J0K 1S0",
+    "hours": "admission: 7 jours, 8h00 à 20h00, hébergement: 24 heures, 7 jours",
+    "isUrgent": true
   },
   {
     "id": "tr-garde-chez-annie",
@@ -12431,6 +13442,45 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "cienov-rep",
+    "name": "Cienov",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 654-6488",
+    "description": "Assurer le développement économique local.• Soutien à l'entrepreneuriat.• Concertation de l'ensemble des partenaires du milieu. | Clientèle: grand public, entreprises situées sur le territoire ou qui souhaitent s'y établir | Territoire: MRC L'Assomption | Statut: organisme à but non lucratif",
+    "website": "https://cienov.ca",
+    "address": "435, rue Notre-Dame, Repentigny, Lanaudière, QC, J6A 2T3",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 12h30"
+  },
+  {
+    "id": "cietech-rep",
+    "name": "Cietech",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "514 882-8539",
+    "description": "Service-conseil aux entreprises.• Accompagnement en transformation numérique pour les PME québécoises.• Domiciliation: lettres, colis, poste et adresse professionnelle.• Espace de cotravail. | Clientèle: professionnel·le·s, entreprises | Territoire: Repentigny | Frais: cotravail: poste solo: 2 heures: minimum de 10$, 30$ pour la journée complète, salle de conférence:  | Statut: organisme à but non lucratif",
+    "website": "https://cietech.ca",
+    "address": "440, rue Notre-Dame, bureau 303, Repentigny, Lanaudière, QC, J6A 2T4",
+    "hours": "lundi au jeudi 8h30 à 17h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "cite-generaction-55-trb",
+    "name": "Cité Généraction 55+",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 824-9111",
+    "description": "• Activités sportives, culturelles et éducatives.• Conférences, causeries et ateliers.• Sorties et voyages. | Clientèle: personnes de 55 ans et plus | Territoire: Terrebonne | Frais: adhésion annuelle: résident: 60$, non-résident: 120$ | Statut: organisme à but non lucratif",
+    "website": "https://www.cite55.org",
+    "address": "702, montée Masson Sud, Terrebonne, Lanaudière, QC, J6W 0E7",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30, activités: lundi au vendredi 8h30 à 22h00, samedi 8h30 à 16h30"
+  },
+  {
     "id": "qc-sm-laval-cite-sante",
     "name": "Cité-de-la-Santé – Unité psychiatrie Laval",
     "category": "mentalHealth",
@@ -12555,6 +13605,55 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "variables, accueil: lundi 13h30 à 15h00"
   },
   {
+    "id": "club-richelieu-repentigny-rep",
+    "name": "Club Richelieu Repentigny",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "514 941-4208",
+    "description": "• Activités de financement et distribution des fonds amassés aux organismes oeuvrant auprès des enfants avec des besoins spécifiques. | Clientèle: organismes oeuvrant auprès d'enfants ayant des besoins spécifiques | Territoire: Lanaudière | Statut: organisme à but non lucratif",
+    "website": "https://www.richelieurepentigny.org",
+    "address": "50, rue Thouin, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "club-de-l-age-d-or-de-repentigny-rep",
+    "name": "Club de L'Âge D'Or de Repentigny",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 657-8791",
+    "description": "• Activités sociales et récréatives: quilles, bingo, poches, etc.• Soupers dansants.• Pique-nique annuel des personnes aînées.• Voyages organisés. | Clientèle: personnes de 50 ans et plus | Territoire: Repentigny | Frais: adhésion annuelle: 15$ | Statut: organisme à but non lucratif",
+    "address": "50, rue Thouin, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "variable"
+  },
+  {
+    "id": "club-de-l-age-d-or-de-la-plaine-trb",
+    "name": "Club de L'Âge D'Or de la Plaine",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "514-402-6868",
+    "description": "• Jeux de cartes.• Bingo.• Danse en ligne.• Jeu de poches.• Baseball. | Clientèle: personnes de 50 ans et plus | Territoire: La Plaine | Frais: carte de membre: 10$, activités: variables | Statut: organisme à but non lucratif",
+    "address": "6900, rue Guérin, Terrebonne, Lanaudière, QC, J7M 1L9",
+    "hours": "variable"
+  },
+  {
+    "id": "club-de-l-age-d-or-les-bons-vivants-rep",
+    "name": "Club de L'Âge D'Or les Bons Vivants de le Gardeur",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "514 442-8270",
+    "description": "• Activités sociales et récréatives: danse en ligne, bingo, crible, pétanque et tricot.• Soupers et soirées occasionnels.• Sorties: cabane à sucre. | Clientèle: personnes de 50 ans et plus | Territoire: Repentigny | Frais: inscription: 10$ | Statut: organisme à but non lucratif",
+    "address": "225, boulevard J.A. Paré, Repentigny, Lanaudière, QC, J5Z 4M6",
+    "hours": "activités: lundi, mercredi, jeudi et vendredi 9h00 à 16h00"
+  },
+  {
     "id": "club-des-aines-de-dollard-des-ormea-ddo",
     "name": "Club des Aînés de Dollard-des-Ormeaux",
     "category": "social",
@@ -12566,6 +13665,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://ddoclub55.com",
     "address": "12001, boulevard de Salaberry, Dollard-Des Ormeaux, Montréal, QC, H9B 2A7",
     "hours": "bureau d'inscription: lundi au jeudi 10h00 à 12h00 et 13h00 à 15h00"
+  },
+  {
+    "id": "club-les-choyes-de-l-age-d-or-de-te-trb",
+    "name": "Club les Choyés de L'Âge D'Or de Terrebonne",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "514 703-9675",
+    "description": "• Activités sociales et récréatives: bingo, casino.• Repas thématiques occasionels (Noël, Pâques, etc.). | Clientèle: personnes de 50 ans et plus Capacité: 130 | Territoire: Terrebonne | Frais: adhésion annuelle: 15$ | Statut: organisme à but non lucratif",
+    "address": "505, rue Théberge, Terrebonne, Lanaudière, QC, J6W 2R5",
+    "hours": "septembre à mai, mardi et jeudi 13h00 à 16h00"
   },
   {
     "id": "msss-clsc-mistissini-cmc-mistissini",
@@ -12666,6 +13777,30 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "ligne téléphonique: lundi au vendredi 9h00 à 17h00, bureau: ouvert uniquement sur rendez-vous"
   },
   {
+    "id": "comite-d-aide-lachenois-trb",
+    "name": "Comité D'Aide Lachenois",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 964-0360",
+    "description": "• Accueil, accompagnement et orientation.• Dépannage alimentaire.• Distribution de surplus alimentaire, de produits d'hygiène et de vêtements. • Comptoir vestimentaire.• Paniers de Noël.• Points de collecte de dons: vêtement, articles de cuisines, etc. | Clientèle: personnes dans le besoin, distribution de surplus alimentaire, de produits d'hygiène et de vêtements: résident·e·s de Lachenais | Territoire: Lachenaie | Frais: aucuns | Statut: organisme à but non lucratif",
+    "address": "1345, rue Grande-Allée, bureau 104, Terrebonne, Lanaudière, QC, J6W 4K6",
+    "hours": "lundi au jeudi 9h00 à 15h00, dépannage alimentaire et distribution de surplus: sur rendez-vous"
+  },
+  {
+    "id": "comite-d-aide-aux-plainois-trb",
+    "name": "Comité D'Aide aux Plainois",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 477-8761",
+    "description": "• Aide alimentaire.• Paniers de Noël.• Aide vestimentaire.• Vente de vêtements, jouets et accessoires à faible coût.• Écoute et référence. | Clientèle: personnes et familles à faible revenu | Territoire: La Plaine | Frais: aucuns | Statut: organisme à but non lucratif",
+    "address": "5611, boulevard Laurier, Terrebonne, Lanaudière, QC, J7M 1T7",
+    "hours": "mardi au vendredi 13h00 à 16h30"
+  },
+  {
     "id": "qc-log-quebec-clq",
     "name": "Comité Logement Rive-Nord Québec",
     "category": "housing",
@@ -12677,6 +13812,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.clrnquebec.org",
     "address": "455, rue de la Couronne, Québec, QC G1K 6E6",
     "hours": "Lun-ven 9h-17h. Consultation et défense des droits des locataires."
+  },
+  {
+    "id": "comite-regional-pour-la-valorisatio-jol",
+    "name": "Comité Régional pour la Valorisation de L'Éducation",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 404-4864",
+    "description": "Concertation de la communauté Lanaudoise pour accroître la réussite éducative de tous et toutes.• Développement d'outils pour soutenir les actions des organisations en matière de réussite éducative.• Certification Oser-Jeunes pour employeur·euse·s souhaitant s'engager à l'égard de la valorisation de l'éducation notamment par la mise en place de pratiques favorisant la conciliation études-travail.• Mobilisation et sensibilisation.• Diffusion, transfert de connaissances et évaluation.• Accompagnement. | Clientèle: organismes, professionnel·les, écoles, entreprises | Territoire: Lanaudière | Statut: organisme à but non lucratif",
+    "website": "https://www.crevale.org",
+    "address": "165, rue Lajoie Sud, Joliette, Lanaudière, QC, J6E 5K9",
+    "hours": "lundi au jeudi 8h30 à 16h30"
   },
   {
     "id": "comite-des-usagers-de-l-hopital-sai-sab",
@@ -12716,6 +13864,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://ciusss-ouestmtl.gouv.qc.ca/infos-pour-les-usagers/droits-des-usagers/usagers",
     "address": "231, rue Elm, Beaconsfield, Montréal, QC, H9W 2E2",
     "hours": "Voir site web"
+  },
+  {
+    "id": "comite-des-usagers-du-sud-de-lanaud-rep",
+    "name": "Comité des Usagers du Sud de Lanaudière",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 654-7229",
+    "description": "Soutien aux usager·ère·s du CISSS de Lanaudière.• Informations sur les droits et les obligations des usager·ère·s.• Défense des droits et des intérêts des usager·ère·s• Assistance dans les démarches au moment de porter plainte.• Promotion de l'amélioration de la qualité de vie et évaluation de la satisfaction. | Clientèle: usager·ère·s des services de santé et services sociaux offerts par le CISSS Lanaudière | Territoire: MRC L'Assomption, MRC Les Moulins | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://cdulanaudieresud.ca",
+    "address": "135, boulevard Claude-David, bureau 1403, Repentigny, Lanaudière, QC, J6A 1N6",
+    "hours": "sur rendez-vous"
   },
   {
     "id": "qc-log-gatineau-clg",
@@ -12875,6 +14036,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "communicateurs-eloquents-de-lanaudi-rep",
+    "name": "Communicateurs Éloquents de Lanaudière (les)",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "514 660-3644",
+    "description": "Apprentissage de la prise de parole en public.• Rencontre hebdomadaire avec ateliers d'improvisation et de discours.• Concours d'improvisation, de discours et de discours humoristique.• Conférences. | Clientèle: personnes de 18 ans et plus | Territoire: Lanaudière | Frais: 176$ par année | Statut: organisme à but non lucratif",
+    "website": "https://www.parlerenpublic.ca",
+    "address": "225, boulevard J.-A.-Paré, Repentigny, Lanaudière, QC, J5Y 3B3",
+    "hours": "rencontre: mercredi 19h00 à 21h00"
+  },
+  {
     "id": "nl-foodbank-nl",
     "name": "Community Food Sharing Association NL",
     "category": "food",
@@ -12900,6 +14074,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "calendrier affiché au local: habituellement le 3e samedi du mois"
   },
   {
+    "id": "comptoir-familial-de-terrebonne-trb",
+    "name": "Comptoir Familial de Terrebonne",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 471-0017",
+    "description": "• Vente d'articles à prix modiques.• Récupération de dons sur place et à domicile: vêtements, vaisselle, meubles, électroménagers, matériel électronique et informatique, matelas, vélos et livres.• Aide avec ou sans référence. | Clientèle: grand public | Territoire: Charlemagne, L'assomption, Mascouche, Repentigny, Saint-Sulpice, Terrebonne, Blainville, Bois-Des-Filion, Boisbriand, Lorraine, Mirabel, Rosemère, Saint-Eustache, Saint-Joseph-Du-Lac, Sainte-Anne-Des- | Statut: organisme à but non lucratif",
+    "website": "https://cfterrebonne.ca",
+    "address": "529, rue Saint-Louis, Terrebonne, Lanaudière, QC, J6W 1J1",
+    "hours": "lundi au mercredi 9h00 à 18h00, jeudi et vendredi 9h00 à 21h00, samedi 9h00 à 17h00, dimanche 12h00 à 17h00"
+  },
+  {
     "id": "comptoir-st-vincent-de-paul",
     "name": "Comptoir alimentaire St-Vincent-de-Paul",
     "category": "food",
@@ -12910,6 +14097,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Dépannage alimentaire d'urgence et épicerie à prix modique. La Société Saint-Vincent-de-Paul offre aide immédiate aux familles en difficulté.",
     "address": "2580, rue Royale, Trois-Rivières, QC G9A 4L5",
     "hours": "Dépannage lun-ven 8h30-16h30, sam 9h-12h. Appeler avant de se présenter."
+  },
+  {
+    "id": "conseil-regional-de-l-environnement-ndp",
+    "name": "Conseil Régional de L'Environnement de Lanaudière",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Notre-Dame-des-Prairies",
+    "province": "QC",
+    "phone": "450 756-0186",
+    "description": "• Concertation et consultation environnementale: changements climatiques, aménagement et protection des milieux naturels, gestion des matières résiduelles, agriculture de proximité, gestion de l'eau et du développement durable.• Capsules informatives et conférences virtuelles: www.youtube.com/channel/UCXcnLYsQdwMfNw4eBrMPUhg/featured | Clientèle: grand public, organismes, industries, instances gouvernementales | Territoire: Lanaudière | Frais: adhésion annuelle: 15$ pour personne seule, 20$ pour famille, 45$ pour OBNL, entre 100$ et 200$ pour | Statut: organisme à but non lucratif",
+    "website": "https://crelanaudiere.ca",
+    "address": "481, route 131, Notre-Dame-des-Prairies, Lanaudière, QC, J6E 0M1",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "cooperative-d-habitation-terrasse-s-pfd",
@@ -12923,6 +14123,71 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://terrasse-soleil.ca",
     "address": "11550, boulevard de Pierrefonds, appartement 102, Pierrefonds-Roxboro, Montréal, QC, H8Y 2Y9",
     "hours": "sur rendez-vous seulement"
+  },
+  {
+    "id": "cooperative-d-initiation-a-l-entrep-lasm",
+    "name": "Coopérative D'Initiation À L'Entrepreneuriat Collectif - L'Assomption",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "L'Assomption",
+    "province": "QC",
+    "phone": "450 705-4811",
+    "description": "Projets d'entrepreneuriat offert par des jeunes du secondaire.• Services divers pour tous et toutes: entretien paysager, gardiennage d'enfants, entretien ménager, jardinage, animation de fêtes d'enfants, gardiennage d'animaux, menus travaux, etc.• Services aux entreprises. | Clientèle: services: grand public, projets d'entrepreneuriat: étudiant·e·s du secondaire | Territoire: L'Assomption | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://www.cqcm.coop/microsites/coop-dinitiation-a-lentrepreneuriat-collectif",
+    "address": "379, rue Dorval, L'Assomption, Lanaudière, QC, J5W 1A1",
+    "hours": "juin à septembre"
+  },
+  {
+    "id": "cooperative-d-initiation-a-l-entrep-trb",
+    "name": "Coopérative D'Initiation À L'Entrepreneuriat Collectif - Terrebonne",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 492-0088",
+    "description": "Projets d'entrepreneuriat jeunesse.• Services variables selon les coopératives: entretien ménager, gardiennage, tonte de pelouse, aide au déménagement, etc. | Clientèle: grand public | Territoire: Terrebonne, La Plaine, Lachenaie, Mascouche, Bois-des-Filion | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://www.cqcm.coop/microsites/coop-dinitiation-a-lentrepreneuriat-collectif",
+    "address": "640, rue Langlois, bureau 3, TERREBONNE, Lanaudière, QC, J6W 4P3",
+    "hours": "juin à septembre"
+  },
+  {
+    "id": "cooperative-de-solidarite-havre-du-rep",
+    "name": "Coopérative de Solidarité Havre du Petit Village",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 721-2667",
+    "description": "Coopérative d'habitation pour personnes aînées en légère perte d'autonomie ou couple.• Appartements 3 ½ et 4 ½.• Salle à manger communautaire, espaces communs et jardins.• Ascenseur et barres d'appui dans les salles de bain.• Système d'appel à l'aide.• Repas.• Activités et loisirs. | Clientèle: personnes de 65 ans et plus, seule ou en couple dont l'un des membres est de 65 ans et plus, priorité aux personnes habitant à Repentigny ou ayant de la famille dans cette ville Capacité: 100 appartem | Territoire: Repentigny | Frais: loyer 3½: 1405$ à 1644$ par mois, loyer 4½:1767$ par mois | Statut: entreprise commerciale (coopérative)",
+    "website": "https://www.havredupetitvillage.com",
+    "address": "177, boulevard Lacombe, Repentigny, Lanaudière, QC, J5Z 0E9",
+    "hours": "lundi au vendredi 8h30 à 16h00, visites guidées: sans rendez-vous, le premier et troisième mercredi du mois 13h30 à 15h30"
+  },
+  {
+    "id": "cooperative-de-solidarite-en-aide-a-msc",
+    "name": "Coopérative de Solidarité en Aide À Domicile Dimavie",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 966-4446",
+    "description": "• Aide domestique: entretien ménager, lessive.• Aide aux courses.• Préparation de repas.• Aide personnelle: présence et surveillance, aide à l'alimentation et à l'hygiène, assistance aux transferts.• Répit pour proches aidants, répit Alzheimer, activités de stimulation.• Point de service Joliette: 414, rue Beaudry Nord, Joliette, J6E 6A8. | Clientèle: personnes seules, couples, familles, nouveaux parents, adultes en perte d'autonomie temporaire ou permanente, personnes aînées, personnes vivant avec un handicap, personnes accidentées ou en période d | Territoire: Crabtree, Joliette, Mascouche, Notre-Dame-de-Lourdes, Notre-Dame-des-Prairies, Saint- Ambroise-de-Kildare, Saint-Charles-Borromée, Saint-Paul, Saint-Pierre, Saint-Thomas, Sainte-Mélanie, Terrebonne | Frais: variables selon le type de service, l'âge, la condition de santé et le revenu familial, programme d' | Statut: entreprise commerciale (coopérative)",
+    "website": "https://www.dimavie.ca",
+    "address": "2500, boulevard Mascouche, bureau 125, Mascouche, Lanaudière, QC, J7K 0H5",
+    "hours": "bureau: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, aide domestique: lundi au vendredi 8h00 à 17h00, assistance et répit: tous les jours 8h00 à 22h00"
+  },
+  {
+    "id": "cooperative-de-solidarite-le-chez-n-msc",
+    "name": "Coopérative de Solidarité le Chez-Nous du Communautaire des Moulins",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 966-9513",
+    "description": "Lieu de rassemblement pour organismes communautaires, organismes à but non lucratif et entreprises d'économie sociale.• Frigos sympathiques: réfrigérateur en libre-service.• Développement de la communauté.• Lieu d'animation, de formation et d'information.• Lieu d'incubation pour projets répondant à des besoins en concertation avec les organismes.• Location de bureaux et de salles.• Courrier, télécopies, photocopies et location d'équipement. | Clientèle: organismes communautaires, organismes à but non lucratif, entreprises d'économie sociale Capacité: 72 personnes | Territoire: MRC Les Moulins | Frais: variables | Statut: Cooperative",
+    "website": "https://www.le-chez-nous.org",
+    "address": "2500, boulevard Mascouche, Mascouche, Lanaudière, QC, J7K 0H5",
+    "hours": "administration: lundi au jeudi 9h00 à 16h00, vendredi 9h00 à 12h00, location: en tout temps"
   },
   {
     "id": "emp-cremauricie-louiseville",
@@ -13003,6 +14268,123 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-jeu sur rendez-vous"
   },
   {
+    "id": "corporation-pax-habitat-jol",
+    "name": "Corporation Pax-Habitat",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 394-2067",
+    "description": "Résidences pour personnes aînées à coût abordable.• Studios, 3 1/2, 4 1/2 et chambres.• Milieu de vie communautaire avec services.• Activités sociales et intergénérationnelles. | Clientèle: studios, 3 1/2 et 4 1/2: personnes de 65 ans et plus autonomes, chambres: personnes de 65 ans et plus semi-autonomes ou non autonomes Capacité: studios, 3 1/2 et 4 1/2: 70, chambres: 32 | Territoire: Lanaudière | Frais: variables, programme de supplément au loyer disponible pour certains logements | Statut: organisme à but non lucratif",
+    "website": "https://paxhabitat.ca",
+    "address": "500, rue Saint-Charles-Borromée Nord, Joliette, Lanaudière, QC, J6E 8K6",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "corporation-repit-depannage-de-lana-jol",
+    "name": "Corporation Répit-Dépannage de Lanaudière",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 755-2591",
+    "description": "Soutien aux personnes vivant avec un handicap.• Maison de répit avec possibilité de rester la nuit la fin de semaine.• Services récréatifs.• Gardiennage. | Clientèle: personnes de 5 à 65 ans vivant avec une déficience intellectuelle ou hadicap physique, personnes autistes de 5 à 65 ans Capacité: 10 personnes par jour | Territoire: Lanaudière | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://www.maisonclementine.ca",
+    "address": "159, rue Lajoie Nord, Joliette, Lanaudière, QC, J6E 5K6",
+    "hours": "bureau: lundi au jeudi 8h00 à 16h00, répit: 24 heures, 7 jours"
+  },
+  {
+    "id": "corporation-de-developpement-commun-rep",
+    "name": "Corporation de Développement Communautaire MRC de L'Assomption",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 313-0228",
+    "description": "Assurer la participation active de la communauté au développement et à la prospérité de la région.• Concertation, représentation.• Soutien.• Réseautage. | Clientèle: grand public, organismes communautaires | Territoire: MRC L'Assomption | Statut: organisme à but non lucratif",
+    "website": "https://www.cdclassomption.org",
+    "address": "50, rue Thouin, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "corporation-les-enfants-de-ma-rue-jol",
+    "name": "Corporation les Enfants de Ma Rue",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 888-752-2608",
+    "description": "Programme de sensibilisation pour les enfants du primaire illustrant le quotidien d'une personne vivant avec une différence.• Atelier éducatif par le biais d'une saynète réalisée avec des marionnettes. Échange, information et mise en situation.• Soutien à l'Intégration des Maternelles et Premières Années (SIMPA): programme pour aider les enseignant·e·s dans l'inclusion d'enfants en difficultés d'intégration dans les classes de maternelle et de première année.• Programme de sensibilisation destiné aux enfants des camps de jours municipaux. | Clientèle: jeunes de 5 à 11 ans, écoles primaires, jeunes de 7 à 11 ans des camps de jours municipaux | Territoire: MRC D'Autray, MRC Joliette, MRC L'Assomption, MRC Les Moulins, MRC Matawinie, MRC Montcalm | Frais: 15$/classe | Statut: organisme à but non lucratif",
+    "website": "https://enfantsdemarue.org",
+    "address": "638, boulevard Base-de-Roc, porte 4, Joliette, Lanaudière, QC, J6E 5P7",
+    "hours": "lundi au jeudi 8h00 à 16h30"
+  },
+  {
+    "id": "couleurs-de-la-vie-lanaudiere-aux-jol",
+    "name": "Couleurs de la Vie Lanaudière (aux)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 752-4436",
+    "description": "Aide et accompagnement dans les pertes et les deuils de la vie.• Aide et accompagnement, individuel et en groupe.• Accompagnement dans les demandes d'aide médicale à mourir.• Formations et ressourcement.• Conférences et ateliers. | Clientèle: personnes vivant des pertes ou des deuils, personnes proches aidantes, personnes intervenantes, professionnel·le·s de la santé, personnes proches aidantes dont la personne aidée est décédée, personne  | Territoire: Lanaudière | Frais: adhésion annuelle: 10$ | Statut: organisme à but non lucratif",
+    "website": "https://auxcouleursdelavie.org",
+    "address": "190, rue Montcalm, JOLIETTE, Lanaudière, QC, J6E 5G4",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-du-quebec-chambre-civile-jolie-jol",
+    "name": "Cour du Québec - Chambre Civile - Joliette",
+    "category": "social",
+    "subcategory": "Palais de justice et tribunaux",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 753-4807",
+    "description": "Cour de justice de l'appareil judiciaire du Québec. • Audition de causes où la somme en litige est inférieure à 100 000$.• Audition de certaines demandes portant sur les affaires municipales et scolaires.• Audition des demandes d'évaluation psychiatrique: administration des jugements en matière de garde provisoire et autorisée en vue d'une évaluation psychiatrique ou à la suite de celle-ci.• Compétence exclusive pour entendre les appels portant sur des décisions rendues par certains tribunaux administratifs, comme le Tribunal administratif du logement.• Demande de dépôt volontaire. | Territoire: Lanaudière: district judiciaire de Joliette | Statut: organisme du gouvernement provincial",
+    "website": "https://www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-joliette",
+    "address": "200, rue Saint-Marc, Joliette, Lanaudière, QC, J6E 8C2",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-du-quebec-chambre-criminelle-e-jol",
+    "name": "Cour du Québec - Chambre Criminelle et Pénale - Joliette",
+    "category": "social",
+    "subcategory": "Palais de justice et tribunaux",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 753-4803",
+    "description": "Cour de justice de l'appareil judiciaire du Québec. • Auditions des poursuites entreprises en vertu du Code criminel, du Code de procédure pénale ou de toute autre loi pénale. | Territoire: Lanaudière: district judiciaire de Joliette | Statut: organisme du gouvernement provincial",
+    "website": "https://www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-joliette",
+    "address": "200, rue Saint-Marc, Joliette, Lanaudière, QC, J6E 8C2",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-du-quebec-division-des-petites-jol",
+    "name": "Cour du Québec - Division des Petites Créances - Joliette",
+    "category": "social",
+    "subcategory": "Palais de justice et tribunaux",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 753-4806",
+    "description": "Tribunal qui entend les causes dont la somme d'argent en litige est inférieure à 15 000$ et où les gens se représentent eux-mêmes, sans avocat. • Service de médiation gratuit aux parties souhaitant régler leur litige par une entente avant l'audition de leur cause par le ou la juge. | Clientèle: personne physique ou morale et société ayant employé au plus 10 personnes au cours des 12 mois précédant la date de la réclamation | Territoire: Lanaudière: district judiciaire de Joliette | Statut: organisme du gouvernement provincial",
+    "website": "https://www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-joliette",
+    "address": "200, rue Saint-Marc, Joliette, Lanaudière, QC, J6E 8C2",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "court-du-quebec-chambre-de-la-jeune-jol",
+    "name": "Court du Québec - Chambre de la Jeunesse - Joliette",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 753-4800",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.• Audition de toutes les causes impliquant une personne mineure.• Audition des causes d'adoption. | Territoire: Lanaudière: district judiciaire de Joliette | Statut: organisme du gouvernement provincial",
+    "website": "https://www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-joliette",
+    "address": "200, rue Saint-Marc, Joliette, Lanaudière, QC, J6E 8C2",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "ab-crisis-line-ab",
     "name": "Crisis Line Alberta",
     "category": "mentalHealth",
@@ -13069,6 +14451,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service de repas midi lun-ven 11h30-13h30. Vérifier horaires spéciaux."
   },
   {
+    "id": "cuisines-collectives-la-joyeuse-mar-rep",
+    "name": "Cuisines Collectives la Joyeuse Marmite",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 581-0468",
+    "description": "• Cuisines collectives: familles, aînés, purée de bébé.• Halte-garderie pendant les cuisines collectives.• Halte-répit pour les enfants de 0 à 5 ans.• Autre point de services: Épiphanie (120, place Melançon, L'Épiphanie, J5X 1A1). | Clientèle: personnes et familles à faible revenu, priorité aux familles référées par le CISSS de Lanaudière ou par d'autres organismes communautaires ou partenaires | Territoire: MRC L'Assomption | Frais: 5$ par personne à la maison de 1 an et plus (inclus 1 soupe, 4 repas principaux et 1 dessert), perso | Statut: organisme à but non lucratif",
+    "website": "https://www.lajoyeusemarmite.com",
+    "address": "50, rue Thouin, pavillon Richelieu, local 114, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "lundi au jeudi 8h30 à 16h00, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "cyber-cible-rwd",
+    "name": "Cyber-Cible",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Rawdon",
+    "province": "QC",
+    "phone": "450 834-4440",
+    "description": "Organisme d'insertion socioprofessionnelle avec un volet d'économie sociale.• Programme Activités de Travail Valorisantes (ATV).• Plateau de travail en entreprise et dans l'organisme.• Services de copies et de bureautique. | Clientèle: programme ATV: adultes vivant avec une déficience intellectuelle, prestataires de la solidarité sociale et avec des contraintes sévères à l'emploi, plateau de travail: adultes vivant avec une déficien | Territoire: Lanaudière | Statut: organisme à but non lucratif",
+    "website": "https://cyber-cible.org",
+    "address": "3131, 5e Avenue, Rawdon, Lanaudière, QC, J0K 1S0",
+    "hours": "bureau: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00, centre de copies: mardi au jeudi 9h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "cegep-gerald-godin-ibsg",
     "name": "Cégep Gérald-Godin",
     "category": "social",
@@ -13080,6 +14488,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cgodin.qc.ca",
     "address": "15615, boulevard Gouin Ouest, L'Île-Bizard—Sainte-Geneviève, Montréal, QC, H9H 5K8",
     "hours": "lundi au vendredi 6h30 à 23h00"
+  },
+  {
+    "id": "cegep-regional-de-lanaudiere-colleg-jol",
+    "name": "Cégep Régional de Lanaudière - Collège Constituant de Joliette",
+    "category": "social",
+    "subcategory": "Développement communautaire",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 759-1661",
+    "description": "Établissement public d'enseignement de niveau collégial.• 31 programmes préuniversitaires et techniques (DEC).• Location de locaux et de plateaux sportifs.• Bio.Enviro.In: centre d'innovation et de recherche visant des systèmes de productions bioalimentaires et horticoles durables.• Ferme-école.• CPE La Cabotine. | Clientèle: CPE: 18 mois à 5 ans Capacité: CPE: 40 places | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "https://www.cegep-lanaudiere.qc.ca/joliette",
+    "address": "20, rue Saint-Charles-Borromée Sud, Joliette, Lanaudière, QC, J6E 4T1",
+    "hours": "CPE: lundi au jeudi 7h15 à 18h15, vendredi et pendant période estival: 7h00 à 18h00"
   },
   {
     "id": "pw4",
@@ -13199,6 +14620,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "diabetiques-de-lanaudiere-scb",
+    "name": "Diabétiques de Lanaudière",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Charles-Borromée",
+    "province": "QC",
+    "phone": "450 752-5233",
+    "description": "• Information et sensibilisation sur le diabète.• Déjeuners causeries et conférences.• Clinique annuelle de dépistage.• Ateliers de nutrition.• Soins de pieds: soins infirmiers avec un rabais de 40$.• Activités physiques: cours de mise en forme, aquaforme, groupes de marches, etc. | Clientèle: personnes diabétiques ou prédiabétiques, professionnel·le·s de la santé, grand public | Territoire: Lanaudière | Frais: adhésion annuelle: 25$, soins de pieds et aquaforme: variable | Statut: organisme à but non lucratif",
+    "website": "https://www.diabetiquesdelanaudiere.org",
+    "address": "950, boulevard Sainte-Anne, bureau 112, Saint-Charles-Borromée, Lanaudière, QC, J6E 5B5",
+    "hours": "sur rendez-vous, mardi au jeudi 9h00 à 17h00"
+  },
+  {
     "id": "nb-family-nb",
     "name": "Dialogue NB – Services familiaux",
     "category": "family",
@@ -13212,6 +14646,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV."
   },
   {
+    "id": "diocese-de-joliette-jol",
+    "name": "Diocèse de Joliette",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 753-7596",
+    "description": "• Répertoire en ligne des paroisses: www.diocesedejoliette.org/les-paroisses | Clientèle: grand public | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.diocesedejoliette.org",
+    "address": "2, rue Saint-Charles-Borromée Nord, Joliette, Lanaudière, QC, J6E 6H6",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "etat-civil-qc",
     "name": "Directeur de l'état civil du Québec",
     "category": "social",
@@ -13222,6 +14669,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Demande de certificats et copies d'actes : naissance, mariage, union civile, décès, changement de nom ou de sexe. Demande en ligne, par la poste ou en personne. Essentiel pour obtenir passeport, NAS, permis et autres documents officiels.",
     "hours": "Lun-ven 8h30-16h30. En ligne 24h/24 pour certains services.",
     "isProvinceWide": true
+  },
+  {
+    "id": "direction-de-la-sante-publique-de-l-jol",
+    "name": "Direction de la Santé Publique de Lanaudière",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 855 759-6660",
+    "description": "Surveillance continue de la santé publique.• Informer la population de l'état de santé général de la population, des problèmes de santé prioritaires, des groupes vulnérables, des principaux facteurs de risque et des interventions efficaces.• Identification des situations susceptibles de porter atteinte à la santé.• Prévention et promotion de la santé. | Territoire: Lanaudière | Statut: organisme parapublic",
+    "website": "https://www.cisss-lanaudiere.gouv.qc.ca/sante-publique/presentation/",
+    "address": "245, rue du Curé Majeau, Joliette, Lanaudière, QC, J6E 8S8",
+    "hours": "lundi au vendredi 8h00 à 12h00 à 13h00 à 16h00"
   },
   {
     "id": "msss-clsc-inukjuak-dispensaire-d-inukjuak",
@@ -13434,20 +14894,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30"
   },
   {
-    "id": "mh-drogue-aide",
-    "name": "Drogue : aide et référence",
-    "category": "mentalHealth",
-    "subcategory": "Dépendance substances",
-    "city": "Province",
-    "province": "QC",
-    "phone": "1-800-265-2626",
-    "description": "Ligne provinciale gratuite 24/7 pour problèmes de consommation. Source: aidedrogue.ca.",
-    "website": "https://aidedrogue.ca",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi.",
-    "isProvinceWide": true
-  },
-  {
     "id": "urgent-drogue-aide",
     "name": "Drogue : aide et référence",
     "category": "mentalHealth",
@@ -13459,6 +14905,20 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
     "isUrgent": true,
+    "isProvinceWide": true
+  },
+  {
+    "id": "mh-drogue-aide",
+    "name": "Drogue : aide et référence",
+    "category": "mentalHealth",
+    "subcategory": "Dépendance substances",
+    "city": "Province",
+    "province": "QC",
+    "phone": "1-800-265-2626",
+    "description": "Ligne provinciale gratuite 24/7 pour problèmes de consommation. Source: aidedrogue.ca.",
+    "website": "https://aidedrogue.ca",
+    "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi.",
     "isProvinceWide": true
   },
   {
@@ -13487,6 +14947,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "defi-integration-developpement-acco-rep",
+    "name": "Défi-Intégration-Développement-Accompagnement (dida) - Repentigny",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 704-2777",
+    "description": "Programmes de développement d'habiletés et compétences sociales et professionnelles pour adultes vivant avec une déficience intellectuelle.• Formations.• Services d'assemblage, d'étiquetage, d'estampillage, d'envois postaux, de déchiquetage, d'emballage, etc. | Clientèle: adultes de 21 ans et plus vivant avec une déficience intellectuelle | Territoire: MRC L'Assomption, MRC Les Moulins | Frais: adhésion annuelle: 20$ | Statut: organisme à but non lucratif",
+    "website": "https://dida-integration.org",
+    "address": "10, rue Notre-Dame, local 111, REPENTIGNY, Lanaudière, QC, J6A 2N9",
+    "hours": "lundi au vendredi 8h00 à 15h30"
+  },
+  {
+    "id": "developpement-social-lanaudiere-jol",
+    "name": "Développement Social Lanaudière",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 759-9944",
+    "description": "Concertation régionale intersectorielle en développement social, pour contribuent à l'amélioration de la qualité de vie, à la réduction des inégalités sociales et à la participation citoyenne, dans une perspective de développement durable.• Accompagnement, promotion, veille et expertise en développement social.• Nourrir Lanaudière: concertation en sécurité alimentaire.• Bénévoles Conseil Lanaudière`: accompagnement gratuit en gestion et gouvernance pour les organismes, grâce à l'expertise de bénévoles engagé·e·s). | Clientèle: organismes communautaires, comités locaux de développement social, municipalités, MRCs | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://dslanaudiere.org",
+    "address": "200, rue De Salaberry, JOLIETTE, Lanaudière, QC, J6E 4G1",
+    "hours": "lundi au vendredi 8h30 à 17h00"
+  },
+  {
     "id": "ab-ecca",
     "name": "ECCA – Immigrant Services Calgary",
     "category": "immigration",
@@ -13500,19 +14986,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
-    "id": "ab-edmonton-food",
-    "name": "Edmonton Food Bank",
-    "category": "food",
-    "subcategory": "Banque alimentaire",
-    "city": "Edmonton",
-    "province": "AB",
-    "phone": "780-425-4190",
-    "description": "",
-    "website": "https://www.edmontonsfoodbank.com",
-    "address": "11508, 120 Street NW, Edmonton AB T5G 2Y2",
-    "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
-  },
-  {
     "id": "ab-foodbank-edmonton",
     "name": "Edmonton Food Bank",
     "category": "food",
@@ -13524,6 +14997,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.edmontonsfoodbank.com",
     "address": "11508, 120 Street NW, Edmonton AB T5G 2Y2",
     "hours": "Service essentiel Alberta."
+  },
+  {
+    "id": "ab-edmonton-food",
+    "name": "Edmonton Food Bank",
+    "category": "food",
+    "subcategory": "Banque alimentaire",
+    "city": "Edmonton",
+    "province": "AB",
+    "phone": "780-425-4190",
+    "description": "",
+    "website": "https://www.edmontonsfoodbank.com",
+    "address": "11508, 120 Street NW, Edmonton AB T5G 2Y2",
+    "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
     "id": "nb-emploi-nb",
@@ -13582,19 +15068,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
-    "id": "pw7",
-    "name": "Emploi-Québec",
-    "category": "employment",
-    "subcategory": "Services d'emploi",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-888-643-4721",
-    "description": "Services publics d'emploi. Aide à la recherche d'emploi, formations professionnelles et prestations.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service.",
-    "isProvinceWide": true
-  },
-  {
     "id": "emp-emploi-quebec",
     "name": "Emploi-Québec",
     "category": "employment",
@@ -13606,6 +15079,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.emploiquebec.gouv.qc.ca",
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30.",
+    "isProvinceWide": true
+  },
+  {
+    "id": "pw7",
+    "name": "Emploi-Québec",
+    "category": "employment",
+    "subcategory": "Services d'emploi",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-888-643-4721",
+    "description": "Services publics d'emploi. Aide à la recherche d'emploi, formations professionnelles et prestations.",
+    "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service.",
     "isProvinceWide": true
   },
   {
@@ -13632,6 +15118,45 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Bureau local d'Emploi-Québec à Trois-Rivières. Aide au placement, assurance-emploi, formations subventionnées, aide aux chercheurs d'emploi et aux travailleurs sans emploi. Soutien financier d'urgence possible.",
     "address": "165, boulevard Sainte-Madeleine, Trois-Rivières, QC G8T 3L3",
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service."
+  },
+  {
+    "id": "enfance-libre-lanaudiere-jol",
+    "name": "Enfance Libre Lanaudière",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 760-4848",
+    "description": "Prévention de l'agression sexuelle et de la violence envers les enfants.• Ateliers, outils de prévention et de sensibilisation. | Clientèle: enfants, parents, adultes, écoles, organismes | Territoire: Lanaudière | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://enfancelibrelanaudiere.ca",
+    "address": "1208, rue de Lanaudière, Joliette, Lanaudière, QC, J6E 3P1",
+    "hours": "lundi au jeudi 8h30 à 16h30"
+  },
+  {
+    "id": "envol-l-btv",
+    "name": "Envol (l')",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Berthierville",
+    "province": "QC",
+    "phone": "450 836-4999",
+    "description": "Groupe d'entraide en santé mentale.• Écoute et référence.• Rencontres individuelles et interventions téléphoniques.• Activités sociales et récréatives.• Café-causeries.• Sorties éducatives.• Conférences, formations, ateliers éducatifs et récréatifs. | Clientèle: personnes de 18 ans et plus vivant ou ayant vécu une problématique en santé mentale | Territoire: Berthierville, La Visitation-de-l'Île-Dupas, Lanoraie, Lavaltrie, Saint-Barthélemy, Saint- Cuthbert, Saint-Norbert, Sainte-Élisabeth, Sainte-Geneviève-de-Berthier | Frais: adhésion annuelle: 5$ membre régulier, 10$ membre sympathisant | Statut: organisme à but non lucratif",
+    "website": "https://envol-entraide.ca",
+    "address": "588, rue Montcalm, local 305, Berthierville, Lanaudière, QC, J0K 1A0",
+    "hours": "lundi au jeudi 8h00 à 16h00"
+  },
+  {
+    "id": "evol-lanaudiere-sja",
+    "name": "Evol - Lanaudière",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-Jacques",
+    "province": "QC",
+    "phone": "1 844 523-7767",
+    "description": "Soutien aux entreprises à propriété diversifiée et inclusive qui souhaitent avoir un impact positif sur la société.• Financement.• Accompagnement.• Formation.• Activités de réseautage. | Clientèle: entreprises détenues à au moins 25% par des personnes issues de la diversité | Territoire: Lanaudière | Statut: organisme à but non lucratif",
+    "website": "https://www.evol.ca",
+    "address": "104, rue Saint-Jacques, Saint-Jacques, Lanaudière, QC, J0K 2R0",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-soc-exæquo",
@@ -13712,6 +15237,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "1431, rue Fullum, bureau 102, Montréal, QC H2K 0B5",
     "hours": "Lun-ven 9h-17h. Consultations sur RV.",
     "isProvinceWide": true
+  },
+  {
+    "id": "fadoq-region-lanaudiere-jol",
+    "name": "Fadoq - Région Lanaudière",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 759-7422",
+    "description": "Regroupement des personnes de 50 ans et plus et représentation dans toutes les instances nécessitant la reconnaissance de leurs droits et de leurs besoins.• Organisation d'activités récréatives et sportives.• Programme privilèges donnant accès à des rabais sur divers produits et services. | Clientèle: personnes de 50 ans et plus | Territoire: Lanaudière | Frais: adhésion: 30$ par année, 55$ pour 2 ans | Statut: organisme à but non lucratif",
+    "website": "https://www.fadoq.ca/lanaudiere",
+    "address": "5, rue Saint-Barthélemy Nord, Joliette, Lanaudière, QC, J6E 5M8",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 13h00"
   },
   {
     "id": "ab-child-family-ab",
@@ -13834,6 +15372,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "fermette-enchantee-la-msc",
+    "name": "Fermette Enchantée (la)",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "438 837-9060",
+    "description": "Fermette pédagogique et milieu thérapeutique.• Vie à la ferme et culture maraîchère: sensibilisation des jeunes adultes et réalisation de leur plein potentiel.• Se Ressourcer à la Fermette: côtoyer les animaux dans un cadre thérapeutique.• Frigos sympathiques: réfrigérateur en libre-service.• Occasion de bénévolat dans un milieu thérapeutique.• Réinsertion sociale.• Vente de légumes. | Clientèle: grand public | Territoire: MRC Les Moulins | Frais: dons volontaire, activités: variables | Statut: organisme à but non lucratif",
+    "website": "https://la-fermette-enchantee.business.site",
+    "address": "1283, chemin de la Cabane-Ronde, Mascouche, Lanaudière, QC, J7K 0P2",
+    "hours": "lundi au dimanche 9h30 à 17h00"
+  },
+  {
+    "id": "fin-a-la-faim-rep",
+    "name": "Fin À la Faim...",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 654-3871",
+    "description": "• Dépannage alimentaire hebdomadaire sur rendez-vous au 165 Ste-Marie à Charlemagne.• Projets en milieu scolaire: bénévolat ou travaux communautaires.• Travaux compensatoires et amendes.• Prévention des abus faits des personnes aînées.• Aide aux nouvelles mamans qui fréquentent l'organisme.• Paniers de Noël pour membres. | Clientèle: personnes et familles à faibles revenus Capacité: 210 familles / semaine | Territoire: Lanaudière | Frais: dépannage alimentaire: 3$ par famille par semaine | Statut: organisme à but non lucratif",
+    "website": "https://www.finalafaim.org",
+    "address": "50, rue Thouin, bureau 223, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "bureau: lundi au vendredi de 8h30 à 16h30, distribution de nourriture: sur rendez-vous, jeudi 12h00 à 16h00, horaire du temps des fêtes: fermé du 19 décembre 2025 au 5 janvier 2026"
+  },
+  {
     "id": "foie-canada-sab",
     "name": "Foie Canada",
     "category": "social",
@@ -13858,6 +15422,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.westislandphysicallydisabled.ca/index.php",
     "address": "19, rue Sunshine, Dollard-Des Ormeaux, Montréal, QC, H9B 1G1",
     "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "fondation-papillon-camp-papillon-sain",
+    "name": "Fondation Papillon - Camp Papillon",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Saint-Alphonse-Rodriguez",
+    "province": "QC",
+    "phone": "1 877 937-6172",
+    "description": "• Camp adapté, avec personnel médical.• Répits adapté, avec personnel médical.• Classes nature.• Accueil de groupe.• Chalets adaptés à louer. | Clientèle: personnes vivant avec un handicap physique ou intellectuel ou un trouble du spectre de l'autisme de différents groupes d'âge: adultes de 18 ans et plus, adolescent·e·s de 13 à 17 ans, enfants de 18 mo | Territoire: le Québec | Frais: selon le revenu | Statut: organisme à but non lucratif",
+    "website": "https://fondationpapillon.ca",
+    "address": "210, avenue Papillon, Saint-Alphonse-Rodriguez, Lanaudière, QC, J0K 1W0",
+    "hours": "Voir site web"
   },
   {
     "id": "fondation-voboc-la-pcl",
@@ -13998,6 +15575,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "friperie-bienheureuse-marie-anne-bl-trb",
+    "name": "Friperie Bienheureuse Marie-Anne Blondin",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 471-9412",
+    "description": "• Vente de vêtements et autres articles usagés à prix modique.• Récupération d'articles usagés sur place. | Clientèle: grand public | Territoire: Terrebonne | Statut: organisme à but non lucratif",
+    "address": "2065, rue Jacques-Cartier, Terrebonne, Lanaudière, QC, J6X 2T2",
+    "hours": "mercredi 9h00 à 15h00, jeudi 9h00 à 12h00, samedi 9h00 à 13h00"
+  },
+  {
+    "id": "friperie-le-papillon-repentigny-rep",
+    "name": "Friperie le Papillon - Repentigny",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "579 635-1226",
+    "description": "• Récupération et ventes d'articles usagés au profit de la Maison Adhémar-Dion.• Dons acceptés: vêtements, souliers, accessoires et bijoux. | Clientèle: grand public | Territoire: Repentigny | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://lamaisonadhemardion.ca/friperies",
+    "address": "555, boulevard Lacombe, Repentigny, Lanaudière, QC, J5Z 1T5",
+    "hours": "mardi au vendredi 10h00 à 18h00, samedi 10h00 à 16h00"
   },
   {
     "id": "tr-garde-frederique-bergeron",
@@ -14422,6 +16024,18 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "groupe-ressources-des-moulins-msc",
+    "name": "Groupe Ressources des Moulins",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 477-8522",
+    "description": "• Comptoir familial de vêtements, articles de maison, matériel informatique, livres, jouets et vélos. | Clientèle: grand public | Territoire: Lanaudière | Frais: variables | Statut: organisme à but non lucratif",
+    "address": "208, chemin des Anglais, Mascouche, Lanaudière, QC, J7L 3N8",
+    "hours": "mercredi au vendredi 10h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "groupe-entraide-sante-mentale",
     "name": "Groupe d'entraide en santé mentale",
     "category": "mentalHealth",
@@ -14432,6 +16046,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Groupe d'entraide communautaire pour personnes vivant avec des troubles de santé mentale. Réunions hebdomadaires, activités de groupe et soutien par les pairs.",
     "address": "819, rue Ste-Cécile, Trois-Rivières, QC G9A 1L2",
     "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi."
+  },
+  {
+    "id": "gymno-lanaudiere-rep",
+    "name": "Gymno Lanaudière",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 582-7930",
+    "description": "Activités pour jeunes vivant avec des difficultés d'apprentissage.• Activités offertes pendant l'année scolaire?.?• Activités estivales.• Activités à télécharger via le site Internet.• Bibliothèque mobile pour membres. | Clientèle: jeunes vivant avec une difficulté ou un trouble d'apprentissage (anciennement les troubles DYS sans déficience intellectuelle) | Territoire: Lanaudière, principalement Repentigny | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://www.gymnolanaudiere.org",
+    "address": "130, rue Valmont, Repentigny, Lanaudière, QC, J5Y 1N9",
+    "hours": "Voir site web"
   },
   {
     "id": "generation-elles-drv",
@@ -14445,6 +16072,33 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://generationelles.ca",
     "address": "620, Chemin du Bord-du-Lac-Lakeshore, bureau 202, Dorval, Montréal, QC, H9S 2B6",
     "hours": "lundi au samedi 9h00 à 17h00"
+  },
+  {
+    "id": "habeo-grt-coop-de-solidarite-jol",
+    "name": "Habeo - Grt Coop de Solidarité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 759-8488",
+    "description": "Groupe de ressources techniques reconnu par la Société d'habitation du Québec.• Accompagnement des groupes dans la réalisation de leur projet d'habitation sociale et communautaire.• Formation de coopératives ou OBNL d'habitation. | Clientèle: groupes souhaitant réaliser des projets d'habitation sociale et communautaire | Territoire: Lanaudière | Statut: Cooperative",
+    "website": "https://habeo.ca",
+    "address": "457, rue Laval, Joliette, Lanaudière, QC, J6E 5G9",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "habitat-lanaudiere-msc",
+    "name": "Habitat Lanaudière",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 474-4938",
+    "description": "• Hébergement temporaire pour adultes.• Accompagnement à domicile.• Aide à la recherche de logements.• Formations et ateliers: agir sur la détresse psychologique, pensée intrusive, etc. | Clientèle: personnes de 10 à 70 ans vivant avec un problème de santé mentale, hébergement: personnes de 18 ans et plus vivant avec un problème de santé mentale Capacité: hébergement: 9 lits mixtes (chambres indi | Territoire: MRC des moulins, MRC de l'Assomption | Frais: hébergement: 300$ par mois | Statut: organisme à but non lucratif",
+    "website": "https://habitatlanaudiere.com",
+    "address": "2973, chemin Sainte-Marie, Mascouche, Lanaudière, QC, J7K 1N8",
+    "hours": "24 heures, 7 jours",
+    "isUrgent": true
   },
   {
     "id": "ab-habitat-ab",
@@ -14510,6 +16164,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://habitatgta.ca",
     "address": "155 Bermondsey Rd, Toronto, ON M4A 1X9",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "habitations-cine-des-coeurs-chl",
+    "name": "Habitations Ciné des Coeurs",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Charlemagne",
+    "province": "QC",
+    "phone": "450 932-3030",
+    "description": "Logements subventionnés et non-subventionnés pour personnes aînées ou jeunes parents.• Appartements 3½, 4½ et 5½. | Clientèle: personnes ainées autonomes de 60 ans et plus, jeunes parents (en couplpe ou monoparentales) de 35 ans et moins avec enfants de 5 ans et moins ayant un plan de vie ou étant aux études Capacité: 18 loge | Territoire: MRC L'Assomption, MRC Les Moulins | Frais: logements subventionnés: 25% du revenu | Statut: organisme à but non lucratif",
+    "address": "87, rue du Sacré-Coeur, Charlemagne, Lanaudière, QC, J5Z 1W9",
+    "hours": "lundi au jeudi, sur rendez-vous"
   },
   {
     "id": "nb-shelter-moncton",
@@ -15468,6 +17134,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
+    "id": "msss-hopital-montreal-hopital-general-juif",
+    "name": "Hôpital Général Juif",
+    "category": "health",
+    "subcategory": "Hôpital",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "",
+    "address": "4335, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E4",
+    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
+  },
+  {
     "id": "msss-hopital-montreal-hopital-general-juif-2",
     "name": "Hôpital Général Juif",
     "category": "health",
@@ -15479,18 +17157,6 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "3755, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E2",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
-  },
-  {
-    "id": "msss-hopital-montreal-hopital-general-juif",
-    "name": "Hôpital Général Juif",
-    "category": "health",
-    "subcategory": "Hôpital",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "",
-    "address": "4335, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E4",
-    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
     "id": "msss-hopital-saint-hyacinthe-hopital-honore-mercier",
@@ -16055,6 +17721,18 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "msss-chsld-montreal-institut-universitaire-en-sante-mentale-de-montreal",
+    "name": "Institut Universitaire En Santé Mentale De Montréal",
+    "category": "health",
+    "subcategory": "CHSLD",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "",
+    "address": "7401, rue Hochelaga, Montréal, QC H1N 3M5",
+    "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
     "id": "msss-centre-hospitalier-psychiatrique-montreal-institut-universitaire-en-sante-mentale-de-montreal",
     "name": "Institut Universitaire En Santé Mentale De Montréal",
     "category": "mentalHealth",
@@ -16067,16 +17745,16 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service de crise disponible 24h/24, 7j/7"
   },
   {
-    "id": "msss-chsld-montreal-institut-universitaire-en-sante-mentale-de-montreal",
-    "name": "Institut Universitaire En Santé Mentale De Montréal",
-    "category": "health",
-    "subcategory": "CHSLD",
-    "city": "Montréal",
+    "id": "msss-centre-hospitalier-psychiatrique-quebec-institut-universitaire-en-sante-mentale-de-quebec",
+    "name": "Institut Universitaire En Santé Mentale De Québec",
+    "category": "mentalHealth",
+    "subcategory": "Centre hospitalier psychiatrique",
+    "city": "Québec",
     "province": "QC",
-    "phone": "514-934-0354",
-    "description": "",
-    "address": "7401, rue Hochelaga, Montréal, QC H1N 3M5",
-    "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+    "phone": "418-525-4444",
+    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS De La Capitale-Nationale. Source: MSSS – Fichier M02 des installations.",
+    "address": "2601, chemin de la Canardière, Québec, QC G1J 2G3",
+    "hours": "Service de crise disponible 24h/24, 7j/7"
   },
   {
     "id": "msss-chsld-quebec-institut-universitaire-en-sante-mentale-de-quebec",
@@ -16091,16 +17769,17 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
-    "id": "msss-centre-hospitalier-psychiatrique-quebec-institut-universitaire-en-sante-mentale-de-quebec",
-    "name": "Institut Universitaire En Santé Mentale De Québec",
-    "category": "mentalHealth",
-    "subcategory": "Centre hospitalier psychiatrique",
-    "city": "Québec",
+    "id": "inter-femmes-rep",
+    "name": "Inter-Femmes",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Repentigny",
     "province": "QC",
-    "phone": "418-525-4444",
-    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS De La Capitale-Nationale. Source: MSSS – Fichier M02 des installations.",
-    "address": "2601, chemin de la Canardière, Québec, QC G1J 2G3",
-    "hours": "Service de crise disponible 24h/24, 7j/7"
+    "phone": "450 654-9621",
+    "description": "• Accueil, écoute et référence.• Interventions et relation d'aide.• Milieu de vie, action citoyenne et défense des droits.• Ateliers d'éducation populaire autonome féministe. | Clientèle: femmes de 18 ans et plus | Territoire: MRC L'Assomption | Frais: carte de membre: 10$ | Statut: organisme à but non lucratif",
+    "website": "https://www.interfemmes.ca",
+    "address": "21, rue Alain, Repentigny, Lanaudière, QC, J6A 5C9",
+    "hours": "lundi au mercredi 8h30 à 16h00, jeudi 8h30 à 20h00"
   },
   {
     "id": "v-interligne",
@@ -16196,6 +17875,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "jardin-humani-terre-sll",
+    "name": "Jardin Humani-Terre",
+    "category": "food",
+    "subcategory": "Jardins et marchés communautaires",
+    "city": "Saint-Lin–Laurentides",
+    "province": "QC",
+    "phone": "450 439-3654",
+    "description": "Favoriser la socialisation, l'intégration, la réinsertion sociale et professionnelle par des activités offertes dans un environnement écoresponsable.• Réinsertion sociale et professionnelle: service d'accompagnement, de formation, de supervision et de mentorat à travers l'exécution des activités entourant le jardin.• Programme d'appui aux collectivités (PAC): activités de sensibilisation pour favoriser le mieux vivre- ensemble à travers le jardinage collectif et la cuisine collective interculturelle.• Programme d'accompagnement et de soutien à l'intégration pour les personnes immigrantes (PASI): services individualisés visant à faciliter l'intégration dans la MRC de Montcalm (Lanaudière).• Agrotourisme: production, transformation, mise en marché, visites des jardins, journées thématiques.• Jardins collectifs éducatifs écologiques: conception, aménagement, animation.• Vente de produits artisanaux fabriqués par les participant·e·s et bénévoles avec les récoltes de la terre. | Clientèle: grand public | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://jardinhumani-terre.ca",
+    "address": "1172, rang Double, Saint-Lin–Laurentides, Lanaudière, QC, J5M 1X8",
+    "hours": "sur rendez-vous, lundi au jeudi (consulter le calendrier des activités via le site internet ou la page Facebook)"
+  },
+  {
     "id": "msss-chsld-saint-augustin-de-desmaures-jardins-du-haut-saint-laurent",
     "name": "Jardins Du Haut Saint-Laurent",
     "category": "health",
@@ -16208,18 +17900,17 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
-    "id": "urgent-jeu-aide",
-    "name": "Jeu : aide et référence",
-    "category": "mentalHealth",
-    "subcategory": "Dépendance et addiction",
-    "city": "Province de Québec",
+    "id": "jardins-du-meandre-lasm",
+    "name": "Jardins du Méandre",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "L'Assomption",
     "province": "QC",
-    "phone": "1-800-461-0140",
-    "description": "Ligne provinciale gratuite pour les personnes aux prises avec un problème de jeu compulsif. Disponible 24h/24, 7j/7. Écoute, soutien, référence vers les centres de traitement et groupes d'entraide. Les proches peuvent aussi appeler.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
-    "isUrgent": true,
-    "isProvinceWide": true
+    "phone": "450 938-1546",
+    "description": "Fermette récréative et éducative offrant des activités adaptées favorisant l'insertion sociale et professionnelle.• Activités de types agricoles, horticoles et artisanales: démarrage de semis, récolte des cultures, entretien des jardins, etc.• Visites animées de la fermette.• Ateliers éducatifs de cuisine.• Vente de produits sur place: légumes, confitures, tisanes, etc.• Activités de Noël: marché de Noël de la ville de l'Assomption.• Session estivale: 8 semaines. | Clientèle: personnes de 14 ans autistes ou vivant avec une déficience intellectuelle | Territoire: Lanaudière | Frais: adhésion annuelle: 5$, demi-journée: 16$, journée complète: 30$ | Statut: organisme à but non lucratif",
+    "website": "https://jardinsdumeandre.org",
+    "address": "3021, boulevard de l'Ange-Gardien Nord, L'Assomption, Lanaudière, QC, J5W 4S1",
+    "hours": "administration: lundi au vendredi 9h00 à 16h00, activités: lundi au jeudi 9h00 à 16h00, sur rendez- vous seulement"
   },
   {
     "id": "mh-jeu-aide",
@@ -16233,6 +17924,20 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://aidejeu.ca",
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi.",
+    "isProvinceWide": true
+  },
+  {
+    "id": "urgent-jeu-aide",
+    "name": "Jeu : aide et référence",
+    "category": "mentalHealth",
+    "subcategory": "Dépendance et addiction",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-461-0140",
+    "description": "Ligne provinciale gratuite pour les personnes aux prises avec un problème de jeu compulsif. Disponible 24h/24, 7j/7. Écoute, soutien, référence vers les centres de traitement et groupes d'entraide. Les proches peuvent aussi appeler.",
+    "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
+    "isUrgent": true,
     "isProvinceWide": true
   },
   {
@@ -16287,6 +17992,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "joujoutheque-farfouille-la-jol",
+    "name": "Joujouthèque Farfouille (la)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 752-2587",
+    "description": "• Prêts de jouets.• Activités parents/enfants.• Magasin d'aubaines: jouets usagés.• Salle multisensorielle. | Clientèle: familles, parents et grands-parents d'enfants ayant des besoins particuliers, organismes, CPE, garderies | Territoire: Lanaudière | Frais: familles: 25$ par année pour accéder à 3 jeux par enfant par mois, 35$ par année pour accéder à 6 je | Statut: organisme à but non lucratif",
+    "website": "https://www.joujouthequefarfouille.org",
+    "address": "845, rue Saint-Louis, Joliette, Lanaudière, QC, J6E 3A3",
+    "hours": "mardi 9h00 à 17h00, mercredi 9h00 à 20h00, jeudi 9h00 à 17h00, vendredi et samedi 9h00 à 15h00"
   },
   {
     "id": "drum-garde-julie-cloutier",
@@ -16495,6 +18213,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "l-epiphanie-loisirs-et-culture-lep",
+    "name": "L'Épiphanie - Loisirs et Culture",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "L'Épiphanie",
+    "province": "QC",
+    "phone": "450 588-6828",
+    "description": "• Activités communautaires, socioculturelles et sportives.• Centre communautaire, patinoires, parcs, terrains de jeux.• Camp de jour estival et camp de la relâche.• Location de salle.• Coordination avec les organismes communautaires du milieu.• Événements. | Territoire: L'Épiphanie | Frais: variables | Statut: organisme municipal",
+    "website": "https://www.lepiphanie.ca/programmation",
+    "address": "68, rue Amireault, L'Épiphanie, Lanaudière, QC, J5X 1A1",
+    "hours": "centre communautaire: lundi au jeudi 8h00 à 12h00 et 13h00 à 17h00, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "l-epiphanie-ville-lep",
+    "name": "L'Épiphanie - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "L'Épiphanie",
+    "province": "QC",
+    "phone": "450 588-5515",
+    "description": "Gestion des services municipaux.• Paiement des taxes municipales.• Collecte des matières résiduelles.• Licence pour chien.• Permis de construction.• Service de police.• Service d'incendie. | Territoire: L'Épiphanie | Statut: organisme municipal",
+    "website": "https://www.lepiphanie.ca",
+    "address": "66, rue Notre-Dame, L'Épiphanie, Lanaudière, QC, J5X 1A1",
+    "hours": "lundi, mardi et jeudi 8h30 à 12h00 et 13h00 à 16h00, mercredi 8h30 à 12h00 et 13h00 à 18h30, vendredi 8h30 à 12h00"
+  },
+  {
     "id": "tr-garde-l-etoile-filante",
     "name": "L'étoile Filante",
     "category": "family",
@@ -16674,6 +18418,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service.",
     "isProvinceWide": true
+  },
+  {
+    "id": "lachenaie-action-jeunesse-trb",
+    "name": "Lachenaie Action Jeunesse",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 964-1211",
+    "description": "Lieu de rencontre animé pour jeunes.• Salle d'ordinateurs.• Ateliers: culturels, de cuisine, de prévention.• Gymnase, activités sportives. | Clientèle: maison des jeunes: 12 à 17 ans, jeunesse en action: 10 à 12 ans | Territoire: Terrebonne | Frais: carte de membre: 10$ par année | Statut: organisme à but non lucratif",
+    "website": "https://www.mdjactionjeunesse.org",
+    "address": "1735, rue Rochon, Terrebonne, Lanaudière, QC, J6W 5N9",
+    "hours": "administration: lundi au vendredi 8h00 à 16h00, maison des jeunes: mercredi, jeudi et vendredi 18h00 à 21h00, samedi 13h00 à 17h00"
   },
   {
     "id": "tr-garde-lamothe-garderie-en-milieu-familial",
@@ -17047,6 +18804,18 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "v-ligne-parents",
+    "name": "LigneParents",
+    "category": "family",
+    "subcategory": "Soutien parental",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-361-5085",
+    "description": "Service d'écoute et d'intervention pour parents d'enfants 0-20 ans. Anonyme, confidentiel, gratuit. Téléphone, texto, clavardage. Disponible 24h/24.",
+    "hours": "Lun-ven 8h30-16h30. Sur RV.",
+    "isProvinceWide": true
+  },
+  {
     "id": "pw-ligneparents-famille",
     "name": "LigneParents",
     "category": "family",
@@ -17057,18 +18826,6 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "website": "https://www.ligneparents.com/",
     "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Sur RV.",
-    "isProvinceWide": true
-  },
-  {
-    "id": "v-ligne-parents",
-    "name": "LigneParents",
-    "category": "family",
-    "subcategory": "Soutien parental",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-361-5085",
-    "description": "Service d'écoute et d'intervention pour parents d'enfants 0-20 ans. Anonyme, confidentiel, gratuit. Téléphone, texto, clavardage. Disponible 24h/24.",
     "hours": "Lun-ven 8h30-16h30. Sur RV.",
     "isProvinceWide": true
   },
@@ -17137,6 +18894,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "lueur-du-phare-de-lanaudiere-la-poi-jol",
+    "name": "Lueur du Phare de Lanaudière (la) - Point de Service Joliette",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 800 465-4544",
+    "description": "• Soutien et information.• Information sur la P-38 (Loi sur la protection des personnes dont l'état mental présente un danger pour elles-mêmes ou pour autrui).• Rencontres individuelles ou en groupe.• Écoute téléphonique.• Activités répits (avec allocation possible).• Café-échange en personne.• Soutien et accompagnement pour jeunes adultes de 12 à 29 ans.• Soutien et accompagnement pour enfants de 7 à 11 ans.• Conférences sur divers sujets rattachés aux problèmes de santé mentale.• Documentation, prêt de documents.• Ateliers de formation. | Clientèle: membres de l'entourage de personnes de 16 ans et plus vivant ou ayant vécu avec un problème de trouble de la personnalité, trouble bipolaire, dépression, trouble obsessionnel-compulsif, schizophrénie  | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.lueurduphare.org",
+    "address": "676, boulevard Manseau, Joliette, Lanaudière, QC, J6E 3E6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, activités: variables"
   },
   {
     "id": "ab-women-shelter-ab",
@@ -17230,6 +19000,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "mrc-l-assomption-lasm",
+    "name": "MRC L'Assomption",
+    "category": "immigration",
+    "subcategory": "Municipalité régionale de comté (MRC)",
+    "city": "L'Assomption",
+    "province": "QC",
+    "phone": "450 589-2288",
+    "description": "Administration de services régionaux à caractère supra-local.• Aménagement et développement du territoire.• Règlements d'urbanisme.• Gestion des services publics: cours d'eau, matières résiduelles, évaluation foncière, sécurité publique, civile et incendie.• Participation au développement socio-économique.• Promotion du patrimoine, de la culture et du tourisme. | Territoire: MRC L'Assomption | Statut: organisme municipal",
+    "website": "https://mrclassomption.qc.ca",
+    "address": "300-A, rue Dorval, L'Assomption, Lanaudière, QC, J5W 3A1",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "mrc-l-assomption-ecoparc-lasm",
+    "name": "MRC L'Assomption - Écoparc",
+    "category": "immigration",
+    "subcategory": "Services gouvernementaux",
+    "city": "L'Assomption",
+    "province": "QC",
+    "phone": "450 589-9999",
+    "description": "Récupération de matières résiduelles.• Encombrants: meubles, électroménagers.• Produits électroniques.• Textiles.• Matériaux secs.• Résidus de construction.• Pneus.• Résidus verts.• Matières recyclables.• Résidus domestiques dangereux: peinture, huile, batteries, etc.• Branches et arbustes.• Métal. | Clientèle: citoyen·ne·s | Territoire: MRC L'Assomption | Frais: aucuns | Statut: organisme municipal",
+    "website": "https://www.mrclassomption.qc.ca/services/amenagement-du-territoire/environnement/gestion-des- matieres-residuelles/ecoparcs",
+    "address": "134, chemin des Commissaires, L'Assomption, Lanaudière, QC, J5W 2T7",
+    "hours": "1 novembre au 31 mars: jeudi au dimanche 10h00 à 17h00, 1 avril au 31 août: 7 jours, 8h00 à 17h00, 1 septembre au 31 octobre: lundi au jeudi 11h00 à 17h00, vendredi 10h00 à 17h00, samedi et dimanche 9h00 à 17h00"
+  },
+  {
+    "id": "mrc-les-moulins-trb",
+    "name": "MRC les Moulins",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 471-9576",
+    "description": "Administration de services régionaux à caractère supra-local. • Aménagement et développement du territoire.• Règlements d'urbanisme.• Gestion des services publics: cours d'eau, matières résiduelles, évaluation foncière, sécurité publique, civile et incendie.• Développement socio-économique et touristique.• Promotion du patrimoine, de la culture et du tourisme. | Territoire: MRC Les Moulins | Statut: organisme municipal",
+    "website": "https://www.mrclesmoulins.ca",
+    "address": "710, boulevard des Seigneurs, 2e étage, Terrebonne, Lanaudière, QC, J6W 1T6",
+    "hours": "bureaux administratifs: lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 12h00, information touristique: lundi au vendredi 10h00 à 18h00"
+  },
+  {
     "id": "tr-garde-ma-petite-ecole-du-monde",
     "name": "Ma petite école du monde",
     "category": "family",
@@ -17254,6 +19063,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://magasinpartage.com",
     "address": "1751, rue Richardson, Montréal, QC H3K 1G6",
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
+  },
+  {
+    "id": "maison-adhemar-dion-la-trb",
+    "name": "Maison Adhémar-Dion (la)",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 932-0870",
+    "description": "Centre de soins palliatifs.• Services gratuits pour personnes hébergées: alimentation, soins médicaux et hygiène, services infirmiers, soutien psychosocial, soins esthétiques (coiffure, manucure-pédicure), ostéopathie, massothérapie et accompagnement spirituel et à la famille.• Possibilité pour les proches de cohabiter avec la personne résidente.• Ateliers thématiques entourant le deuil.• Groupe de soutien sur le deuil.• Café-rencontre hebdomadaire sur le deuil.• Intervention individuelle sur le deuil. | Clientèle: personnes de 18 ans et plus avec un pronostic de trois mois ou moins à vivre, habitant ou ayant un·e proche aidant·e habitant sur le territoire de Lanaudière Capacité: 12 lits | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://lamaisonadhemardion.ca",
+    "address": "4500, chemin Saint-Charles, Terrebonne, Lanaudière, QC, J6V 1A3",
+    "hours": "24 heures, 7 jours"
   },
   {
     "id": "msss-chsld-montreal-maison-alternative-de-riviere-des-prairies",
@@ -17898,6 +19720,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service essentiel provincial."
   },
   {
+    "id": "maison-oxygene-l-assomption-lasm",
+    "name": "Maison Oxygène L'Assomption",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "L'Assomption",
+    "province": "QC",
+    "phone": "450 591-2617",
+    "description": "Hébergement pour pères et enfants.• Maison d'hébergement temporaire.• Accueil, information et accompagnement.• Activités pères-enfants.• Suivi psychosocial externe. | Clientèle: pères et leurs enfants vivant avec une ou des problématiques familiales | Territoire: Lanaudière | Frais: hébergement: selon le revenu, suivi psychosocial: gratuit | Statut: organisme à but non lucratif",
+    "website": "https://www.maisonoxygenejoliettelanaudiere.org",
+    "address": "980, boulevard L'Ange-Gardien Nord, L'Assomption, Lanaudière, QC, J5W 1P1",
+    "hours": "variable"
+  },
+  {
+    "id": "maison-pauline-bonin-jol",
+    "name": "Maison Pauline Bonin",
+    "category": "employment",
+    "subcategory": "Soutien à l'emploi des femmes",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 752-6730",
+    "description": "Logements temporaires subventionnés avec services.• Hébergement jusqu'à 3 ans.• Accompagnement individuel dans les démarches, avec ou sans hébergement.• Accompagnement de groupe, avec ou sans hébergement.• Ateliers d'information, avec ou sans hébergement. | Clientèle: femmes monoparentales qui souhaitent faire un retour au travail ou aux études Capacité: 12 logements | Territoire: Lanaudière | Frais: 25% du revenu selon l'avis de cotisation provincial | Statut: organisme à but non lucratif",
+    "website": "https://maisonpaulinebonin.org",
+    "address": "360, rue Saint-Louis, bureau 1, Joliette, Lanaudière, QC, J6E 2Y6",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "qc-refuge-gatineau-maison-verte",
     "name": "Maison d'hébergement d'urgence Gatineau",
     "category": "housing",
@@ -18012,6 +19860,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 13h00 à 20h00, vendredi et samedi 13h00 à 21h00, dimanche 14h00 à 18h00"
   },
   {
+    "id": "maison-des-jeunes-de-l-epiphanie-lep",
+    "name": "Maison des Jeunes de L'Épiphanie",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "L'Épiphanie",
+    "province": "QC",
+    "phone": "450 588-6333",
+    "description": "Lieu de rencontre animé.• Activités récréatives, sociales et citoyennes. | Clientèle: personnes de 12 à 17 ans Capacité: 65 | Territoire: L'Épiphanie | Frais: aucuns | Statut: organisme à but non lucratif",
+    "address": "66, rue Notre-Dame, bureau 101, L'Épiphanie, Lanaudière, QC, J5X 1A1",
+    "hours": "bureau: lundi au vendredi 9h00 à 17h00, activités: mardi au vendredi 18h00 à 21h00, samedi 12h00 à 17h00"
+  },
+  {
     "id": "maison-des-jeunes-de-pierrefonds-la-pfd",
     "name": "Maison des Jeunes de Pierrefonds (la)",
     "category": "family",
@@ -18023,6 +19883,44 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://fr.mdjp.ca",
     "address": "4855, boulevard des Sources, Pierrefonds-Roxboro, Montréal, QC, H8Y 3C8",
     "hours": "période scolaire: lundi au vendredi 15h00 à 21h00, été: lundi au vendredi 11h00 à 21h00"
+  },
+  {
+    "id": "maison-des-jeunes-de-repentigny-rep",
+    "name": "Maison des Jeunes de Repentigny",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 581-8159",
+    "description": "Lieu de rencontre et d'échange favorisant l'expression individuelle et collective par le biais d'activités diverses, sous la supervision d'adultes significatifs.• Relation d'aide et écoute active.• Ateliers divers.• Aide aux études et aux devoirs.• Centre de référence.• Soirées discussions et animations.• Milieu récréatif: salon, espace jeux vidéo, espace amusement (billard, babyfoot, arcades et autres), local de musique, mini- bibliothèque, salle d'arts et de broderie. | Clientèle: adolescent·e·s de 12 à 17 ans Capacité: 50 | Territoire: Repentigny | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://mdjrepentigny.ca",
+    "address": "539, rue Notre-Dame, Repentigny, Lanaudière, QC, J6A 2T6",
+    "hours": "mercredi au vendredi 16h00 à 21h00, samedi 10h00 à 15h00"
+  },
+  {
+    "id": "maison-des-jeunes-de-st-sulpice-la-ssu",
+    "name": "Maison des Jeunes de St-Sulpice (la)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-Sulpice",
+    "province": "QC",
+    "phone": "450 589-1264",
+    "description": "Lieu de rencontre pour jeunes.• Activités sociales, culturelles, sportives.• Sorties récréatives.• Ateliers de sensibilisation.• Ateliers de cuisine. | Clientèle: personnes de 12 à 17 ans | Territoire: Saint-Sulpice | Statut: organisme à but non lucratif",
+    "address": "1101, rue Notre-Dame, Saint-Sulpice, Lanaudière, QC, J5W 3W2",
+    "hours": "lundi au vendredi 18h00 à 21h00"
+  },
+  {
+    "id": "maison-des-jeunes-la-barak-de-masco-msc",
+    "name": "Maison des Jeunes la Barak de Mascouche",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 966-9290",
+    "description": "Lieu de rencontre, d'échange et de partage.• Activités ludiques, artistiques, sportives, sociales.• Promotion des saines habitudes de vie.• Prévention des comportements à risque.• Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit). | Clientèle: jeunes de 12 à 17 ans | Territoire: Mascouche | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://mdjlabarak.wixsite.com/labarak",
+    "address": "2522, chemin Sainte-Marie, MASCOUCHE, Lanaudière, QC, J7K 1M5",
+    "hours": "lundi et mardi 17h00 à 20h00, mercredi et jeudi 17h00 à 21h00, vendredi 17h00 à 22h00"
   },
   {
     "id": "s-mj-hochelaga",
@@ -18075,6 +19973,44 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "maison-la-trace-lasm",
+    "name": "Maison la Trace",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "L'Assomption",
+    "province": "QC",
+    "phone": "450 589-6050",
+    "description": "Lieu de socialisation visant à briser l'isolement.• Écoute.• Dépannage alimentaire d'urgence, incluant les week-ends.• Activités récréatives: tricot, yoga, etc.• Ateliers: santé et bien-être, cuisine-santé, arts, etc.• Souper mensuel.• Fête et souper de Noël.• Visites dans les résidences pour personnes aînées.• Sorties culturelles.• Vente de garage biannuelle.• Collecte de dons: vêtements, meubles, livres, etc. | Clientèle: aide alimentaire: grand public, activités: résident·e·s de L'Assomption | Territoire: L'Assomption | Frais: aucuns | Statut: organisme à but non lucratif",
+    "address": "245, rue Sainte-Ursule, L'Assomption, Lanaudière, QC, J5W 1M6",
+    "hours": "accueil: lundi au jeudi 13h00 à 16h00, aide alimentaire: mercredi 8h30 à 12h00, vendredi 8h30 à 12h00 et 13h00 à 16h00, aide alimentaire d'urgence: sur rendez-vous, vente de garage: mai et automne"
+  },
+  {
+    "id": "maisons-d-a-cote-de-lanaudiere-les-jol",
+    "name": "Maisons D'À Côté de Lanaudière (les)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 833 863-9323",
+    "description": "Logements adaptés pour personnes vivant avec une déficience physique• Préposé·e·s aux bénéficiaires sur place 24 heures, 7 jours.• Présence d'infirmièr·e·s auxiliaires.• Intervention communautaire.• Supplément au loyer.Services pour personnes hors des logements des Maisons d'à côté• Soutien à domicile: soins à la personne et aide domestique.• Aide à la recherche d'un logement accessible et adapté.• Adaptations de logement. | Clientèle: personnes vivant avec un handicap physique de 18 ans et plus Capacité: 9 par résidence | Territoire: Lanaudière | Frais: loyer à prix modique | Statut: organisme à but non lucratif",
+    "website": "https://www.lesmaisonsdacotelanaudiere.com",
+    "address": "639, rue Henri-Châlin, Joliette, Lanaudière, QC, J6E 0A4",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "maisons-familiales-par-amour-les-ch-cht",
+    "name": "Maisons Familiales par Amour (les) - Chertsey",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Chertsey",
+    "province": "QC",
+    "phone": "450 882-3535",
+    "description": "• Dépannage alimentaire.• Paniers de Noël. | Clientèle: personnes à faible revenu, personnes en situation de vulnérabilité | Territoire: Lanaudière | Frais: panier d'aide alimentaire: 10$ | Statut: organisme à but non lucratif",
+    "website": "https://lesmaisonsfamilialesparamour.com",
+    "address": "13200, route 335, Chertsey, Lanaudière, QC, J0K 3K0",
+    "hours": "mardi 9h00 à 11h00, vendredi 9h00 à 11h00 et 13h00 à 15h00"
   },
   {
     "id": "mb-employment-mb",
@@ -18191,6 +20127,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "marraines-coup-de-pouce-rep",
+    "name": "Marraines Coup de Pouce",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 582-2677",
+    "description": "Aide postnatale aux parents pour une durée de 10 semaines à raison de 3 heures par semaine.• Soins au bébé.• Aide domestique.• Accompagnement aux rendez-vous.• Suivi postnatal et soutien psychosocial.• Prévention de la dépression postnatale.• Aide matérielle pour familles à faible revenu.• Récupération sur place et vente de vêtements, nourriture, livres et jouets.• Références. | Clientèle: parents d'un enfant de moins d'un an | Territoire: MRC L'Assomption | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://maisonlaparenthese.org/marraines-coup-de-pouce",
+    "address": "222, boulevard Notre-Dame-des-Champs, Repentigny, Lanaudière, QC, J6A 3B5",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "mascouche-services-des-activites-sp-msc",
+    "name": "Mascouche - Services des Activités Sportives et des Parcs",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 474-4133",
+    "description": "• Activités communautaires, socioculturelles et sportives.• Piscine, patinoires, aréna, parcs et terrains de jeux.• Coordination avec les organismes communautaires du milieu.• Soutien aux artistes.• Camp de jour estival.• Location de salle. | Territoire: Mascouche | Frais: variables | Statut: organisme municipal",
+    "website": "https://mascouche.ca/services-aux-citoyens/mloisirs",
+    "address": "2936, rue Dupras, Mascouche, Lanaudière, QC, J7K 1T2",
+    "hours": "lundi au vendredi 8h15 à 12h00 et 13h15 à 16h30"
   },
   {
     "id": "tr-garde-melina-veillette",
@@ -19018,6 +20980,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "mon-afrique-a-lanaudiere-jol",
+    "name": "Mon Afrique À Lanaudière",
+    "category": "immigration",
+    "subcategory": "Immigration et communautés culturelles",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "579 960-3291",
+    "description": "Promouvoir la diversité culturelle, l'égalité et l'inclusion à travers la culture africaine à Lanaudière, principalement dans le Grand Joliette et ses environs.• Conférences et animation.• Activités: djembé, balafon, danse africaine, jeux africains, découverte, peinture et chants.• Ateliers pour personne aînées.• Ateliers: sensibilisation sur le racisme, diversité culturelle, les préjugés et l'exclusion sociale.• Visite dans les écoles.• Activités avec les personnes à besoins particuliers et personnes en situation d'itinérance.• Service d'accompagnement social. • Médiation interculturelle.• Services pour personnes nouvellement arrivées. • Événements culturels.• Exposition.• Location de salle.• Point de collecte et dons de vêtements neufs ou usagers et de dons matériels. | Clientèle: grand public | Territoire: Lanaudière | Frais: carte de membre: 20$, carte de membre sympathisant: à partir de 50$ | Statut: organisme à but non lucratif",
+    "website": "https://m-afrique-a-lanaudiere.org",
+    "address": "78, place Bourget Nord, Joliette, Lanaudière, QC, J6E 5E4",
+    "hours": "lundi au vendredi 10h00 à 15h00"
+  },
+  {
     "id": "drum-garde-mon-beau-petit-cocon",
     "name": "Mon Beau Petit Cocon",
     "category": "family",
@@ -19041,6 +21016,31 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Inscription via portail 24h/24. Bureau: lun-ven 7h30-17h",
     "isProvinceWide": true
+  },
+  {
+    "id": "mouvement-d-education-populaire-aut-jol",
+    "name": "Mouvement D'Éducation Populaire Autonome de Lanaudière",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 752-4700",
+    "description": "Regroupement d'organismes en éducation populaire.• Ateliers d'éducation populaire: guide des élections à tous les niveaux governementaux, justice sociale et climatique, médias et la désinformation, etc.• Défense collective des droits.• Concertation et représentation.• Outils d'information. | Clientèle: organismes d'éducation populaire, organismes communautaires autonomes | Territoire: Lanaudière | Frais: adhésion annuelle: 40$ | Statut: organisme à but non lucratif",
+    "website": "https://www.mepal.net",
+    "address": "144, rue Saint-Joseph, bureau 105, Joliette, Lanaudière, QC, J6E 5C4",
+    "hours": "sur rendez-vous, fermé durant l'été"
+  },
+  {
+    "id": "mouvement-organise-des-meres-solida-trb",
+    "name": "Mouvement Organisé des Mères Solidaires",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 961-9107",
+    "description": "• Accueil et référence.• Suivi téléphonique.• Accompagnement dans les démarches.• Consultation individuelle.• Soutien à la scolarité en collaboration avec le centre de formation aux adultes.• Halte-répit avec des grands-mères bénévoles.• Ateliers divers: bricolage et connaissance de soi, budget, habiletés parentales, etc.• Cuisine collective.• Activités de stimulation mère-enfant.• Soutien pendant et après la grossesse. | Clientèle: jeunes mères monoparentales de 14 à 25 ans en contexte de vulnérabilité, leurs enfants Capacité: 10 mères par groupe | Territoire: MRC Les Moulins | Frais: aucuns | Statut: organisme à but non lucratif",
+    "address": "640, rue Langlois, bureau 1, Terrebonne, Lanaudière, QC, J6W 4P3",
+    "hours": "lundi au jeudi 8h00 à 16h00, fermé l'été"
   },
   {
     "id": "pw-msmq-santement",
@@ -19281,6 +21281,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Pour urgence: 811 (Info-Santé) ou urgence hospitalière."
   },
   {
+    "id": "nourri-source-lanaudiere-msc",
+    "name": "Nourri-Source - Lanaudière",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "1 888 524-9696",
+    "description": "Mères bénévoles offrant du soutien aux mères désirant allaiter.• Marraines d'allaitement: jumelage téléphonique.• Halte-allaitement.• Conférences.• Prêt et vente de tire-lait.• Ateliers prénataux.• Cliniques de positionnement et d'allaitement.• Défi allaitement.• La Route du Lait de Launaudière: regroupement d'établissements publics, organismes communautaires et commerces qui permettent aux mères d'entrer dans leurs établissements pour allaiter leur enfant.• Allaitement au fil du temps: programme d'information pour les parents. | Clientèle: familles souhaitant pratiquer l'allaitement maternel | Territoire: territoire couvert par les CLSC d'Autray-Berthierville, d'Autray-Lavaltrie, MRC de Joliette, Lamater, Meilleur, MRC Montcalm, MRC Matawinie-Ouest | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.nourrisourcelanaudiere.org",
+    "address": "2500, boulevard Mascouche, bureau 212, Mascouche, Lanaudière, QC, J7K 0H5",
+    "hours": "administration: lundi au vendredi 8h00 à 15h00, marraines disponibles 7 jours par semaine"
+  },
+  {
     "id": "nova-ouest-de-l-ile-bcf",
     "name": "Nova Ouest-de-L'Île",
     "category": "social",
@@ -19346,6 +21359,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.nunavuthousing.ca",
     "address": "PO Box 600, Arviat, NU X0C 0E0",
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
+  },
+  {
+    "id": "neo-le-trb",
+    "name": "Néo (le)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "1 800 964-1860",
+    "description": "Éducation, information, sensibilisation et soutien sur la santé sexuelle, l'identité de genre, l'orientation sexuelle et les ITSS.• Rencontres de soutien avec des sexologues et des intervenant·e·s.• Réseau des alliés.• L'apparte: milieu de vie et activités sociales pour jeunes LGBTQ+ de 12 à 17 ans.• Groupe de soutien pour et par les personnes trans et non-binaires de 18 ans et plus.• Groupe de soutien pour les parents d'enfants trans et non-binaires.• Suivi pour personnes vivant avec le VIH/sida ou l'hépatite.• Formations.• Ateliers et activités de sensibilisation. | Clientèle: personnes LGBTQ+ et allié·e·s, personnes vivant avec le VIH/sida ou l'hépatite, personnes de 12 ans et plus | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://le-neo.com",
+    "address": "950, boulevard Moody, Terrebonne, Lanaudière, QC, J6W 3K8",
+    "hours": "bureau: lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "qc-immo-oaciq",
@@ -19423,6 +21449,44 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.orea.com",
     "address": "99 Duncan Mill Rd, Toronto, ON M3B 1Z2",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h."
+  },
+  {
+    "id": "oeuvres-de-galilee-les-trb",
+    "name": "Oeuvres de Galilée (les)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 492-9442",
+    "description": "• Dépannage alimentaire complet aux deux semaines.• Dépannage alimentaire d'urgence pouvant être utilisé une fois par année.• Cuisine collective.• Frigo communautaire.• Référence.• Paniers de Noël.• Ateliers de discussions. | Clientèle: personnes à faible revenu | Territoire: Terrebonne Centre | Frais: carte de membre: 10$, dépannage aux deux semaines: 10$ par mois, dépannage d'urgence: gratuit | Statut: organisme à but non lucratif",
+    "website": "https://www.galileeterrebonne.com",
+    "address": "766, rue Léopold-Lachapelle, Terrebonne, Lanaudière, QC, J6W 2T9",
+    "hours": "dépannage alimentaire: lundi, mercredi et jeudi 13h00 à 16h00, groupe de discussion ou cuisine collective: lundi"
+  },
+  {
+    "id": "office-municipal-d-habitation-de-l-lep",
+    "name": "Office Municipal D'Habitation de L'Épiphanie",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "L'Épiphanie",
+    "province": "QC",
+    "phone": "450 580-3137",
+    "description": "Administration des logements et des programmes d'habitation.• Habitations à loyer modique (HLM). | Clientèle: personnes aînées et familles à faible revenu ou à revenu modéré | Territoire: L'Épiphanie | Statut: organisme à but non lucratif",
+    "address": "101, rue Vanier, L'Épiphanie, Lanaudière, QC, J5X 3A6",
+    "hours": "lundi 13h00 à 16h00, mardi au jeudi 9h00 à 12h00 et 13h00 à 16h00, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "office-municipal-d-habitation-de-la-trb",
+    "name": "Office Municipal D'Habitation de la Rive Nord",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 471-9424",
+    "description": "Gestion et administration des logements et des programmes d'habitation.• Habitations à loyer modique (HLM).• Programme de supplément au loyer (PSL).• Programme Accès Logis Québec.• Référence. | Clientèle: personnes seules à revenu faible ou modéré, familles à revenu faible ou modéré, personnes aînées Capacité: 1200 logements | Territoire: Blainville, Bois-des-Filion, Boisbriand, Charlemagne, L'Assomption, Mascouche, Mirabel, Repentigny, Rosemère, Sainte-Anne-des-Plaines, Sainte-Thérèse, Terrebonne | Statut: organisme à but non lucratif",
+    "website": "https://www.omhrn.com",
+    "address": "1309, boulevard des Seigneurs, suite 101, TERREBONNE, Lanaudière, QC, J6W5B1",
+    "hours": "lundi et mercredi 9h00 à 12h00 et 13h30 à 14h00, mardi, jeudi et vendredi 9h00 à 12h00"
   },
   {
     "id": "h-omh-drummondville",
@@ -19607,6 +21671,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Hébergement d'urgence 24h/24. Présentation directe ou appel."
   },
   {
+    "id": "organisation-de-la-communaute-anglo-rwd",
+    "name": "Organisation de la Communauté Anglophone de Lanaudière",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Rawdon",
+    "province": "QC",
+    "phone": "450 834-2268",
+    "description": "Soutien et promotion du bien-être de la communauté anglophone.• Information et références.• Banque alimentaire : repas préparés à bas prix.• Collecte de dons d'articles anglais usagés: fournitures scolaires, livres, etc.• Services de proximité et soutien aux personnes aînées: informations sur la santé et le droit, visites et appels amicaux, etc.• Groupes de soutien général pour adultes et personnes aînées.• Groupes de soutien pour personnes vivant avec le cancer.• Groupe de gestion de la colère.• Activités communautaires liées à la santé, aux services sociaux, à la culture, à l'emploi, etc.• Soutien à l'emploi: information, traduction et interprétation, rédaction de CV et simulation d'entrevue, etc.• Centre de bien-être de jour pour personnes aînées.• Repas de Noël.• Programme de bourses pour étudiant·e·s en santé ou en services sociaux.• Autre point de service : 2180, chemin Sainte-Marie, Mascouche.• Autre point de service : 50, rue Thouin, bureau 217, Repentigny. | Clientèle: grand public, professionnels de la santé, étudiants, soutien à l'emploi : personnes à la recherche d'un emploi, agences pour l'emploi | Territoire: Lanaudière | Frais: adhésion annuelle: 5$, banque alimentaire: 5$ par repas | Statut: organisme à but non lucratif",
+    "website": "https://www.ecol-lanaudiere.org",
+    "address": "3657, rue Queen, Rawdon, Lanaudière, QC, J0K 1S0",
+    "hours": "lundi au vendredi 9h00 to 16h00"
+  },
+  {
     "id": "organisme-insertion-socio",
     "name": "Organisme d'insertion socioprofessionnelle",
     "category": "employment",
@@ -19617,6 +21694,31 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Accompagnement des personnes vivant des obstacles à l'emploi : santé mentale, dépendances, absence de formation. Parcours individualisés vers l'emploi adapté.",
     "address": "7175, rue Marion, bureau 310, Trois-Rivières, QC G9A 5Z9",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "organisme-de-bassins-versants-l-ass-rwd",
+    "name": "Organisme de Bassins Versants L'Assomption",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Rawdon",
+    "province": "QC",
+    "phone": "450 755-1651",
+    "description": "Protection, conservation et mise en valeur des lacs et cours d'eau.• Élaboration, promotion et mise en oeuvre du plan directeur de l'eau (PDE) et du plan d'actions Zone de gestion intégrée de l'eau par bassin versant (Zone GIEBV).• Conférences et colloques.• Ateliers éducatifs sur l'environnement des lacs et cours d'eau.• Maison de l'eau: lieu d'information, de rencontre et de regroupement favorisant le respect de l'environnement et l'utilisation durable de nos ressources en eau.• Protection et mise en valeur de la rivière L'Assomption.• Activités récréotouristiques en harmonie avec la protection des lacs et cours d'eau. | Clientèle: grand public | Territoire: MRC Matawinie, MRC Montcalm, MRC Joliette, MRC L'Assomption, MRC La Rivière-du- Nord, MRC D'Autray | Statut: organisme à but non lucratif",
+    "website": "https://www.cara.qc.ca",
+    "address": "3001, 1re avenue, Rawdon, Lanaudière, QC, J0K1S0",
+    "hours": "lundi au vendredi 9h00 à 16h00, activités: variable"
+  },
+  {
+    "id": "orignal-tatoue-cafe-de-rue-jol",
+    "name": "Orignal Tatoué, Café de Rue",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 394-4384",
+    "description": "Lieu d'écoute et de soutien.• Aide, écoute et référence.• Dépannages d'urgence: dépannage alimentaire, produits d'hygiène personnelle, produits menstruels, vêtements chauds et condoms.• Repas sur place.• Récupération de seringues usagées.• Cuisines collectives.• Douche, buanderie et casiers.• Ordinateur et téléphone disponible.• Visite mensuelle d'une infirmière: prélèvements, dépistage, vaccination et réponse aux questions de santé.• Activités de prévention et d'éducation. | Clientèle: jeunes de 16 à 30 ans en situation de rupture sociale ou familiale ou vivant des difficultés en lien avec la toxicomanie, l'itinérance et des problèmes de santé mentale Capacité: 25 personnes | Territoire: Joliette | Frais: aucuns | Statut: organisme à but non lucratif",
+    "address": "144, rue Saint-Joseph, Joliette, Lanaudière, QC, J6E 5C4",
+    "hours": "lundi 10h00 à 17h00, mardi 9h00 à 12h00 (espace non mixte, pour les femmes), mardi 12h00 à 21h00, mercredi 12h00 à 17h00, jeudi de 12h00 à 19h00, vendredi 12h00 à 21h00, samedi 10h00 à 17h00"
   },
   {
     "id": "mb-shelter-women",
@@ -19762,6 +21864,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "panda-de-la-mrc-l-assomption-rep",
+    "name": "Panda de la MRC L'Assomption",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 582-0003",
+    "description": "Aide aux personnes ayant un trouble du déficit de l'attention (TDAH).• Coaching parental: groupe de soutien de 10 semaines pour les parents.• Ateliers: gestion de la colère, socialisation, TDAH et anxiété, adolescent·e·s et TDAH.• Activités thématiques variées pour les enfants.• Groupes pour les adultes vivant avec un TDAH: 6 rencontres toutes les 2 semaines.• Rencontres sur rendez-vous.• Information et documentation.• Conférences. | Clientèle: enfants et adultes ayant reçu ou en attente d'un diagnostic de trouble de déficit de l'attention, avec ou sans hyperactivité, leurs parents Capacité: groupes de soutien parental: 10 personnes, groupes | Territoire: MRC L'Assomption | Frais: cotisation annuelle: 10$ par famille, coaching parental: 100$ pour 10 rencontres, groupes pour enfan | Statut: organisme à but non lucratif",
+    "website": "https://www.tdahpanda.ca",
+    "address": "50, rue Thouin, bureau 242, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "groupes pour parents ou adultes: soirs de semaine, groupes pour enfants: samedi matin"
+  },
+  {
     "id": "drum-garde-paola-stela-kamga-kaptche-epse-fokou",
     "name": "Paola stela Kamga kaptche Epse Fokou",
     "category": "family",
@@ -19772,6 +21887,58 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "parenfants-de-mascouche-maison-de-l-msc",
+    "name": "Parenfants de Mascouche - Maison de la Famille",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 474-6431",
+    "description": "Lieu d'échange, de rencontres et d'amitié.• Milieu de vie.• Activités sociales, économiques et éducatives.• Formation, coaching et conférences.• Halte-garderie.• Cuisine collective.• Activités pour nouveaux parents.• Bénévolat. | Clientèle: familles | Territoire: MRC Les Moulins | Frais: membre: 20$ par année | Statut: organisme à but non lucratif",
+    "website": "https://www.parenfants.org",
+    "address": "2492, chemin Sainte-Marie, Mascouche, Lanaudière, QC, J7K 1M5",
+    "hours": "lundi au vendredi 9h00 à 16h00, samedi selon les activités"
+  },
+  {
+    "id": "parrainage-civique-lanaudiere-point-jol",
+    "name": "Parrainage Civique Lanaudière - Point de Service Nord de Lanaudière",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 834-1728",
+    "description": "Parrainage: soutien à long terme par un bénévole jumelé à une personne marginalisée.• Accompagnements utilitaires, activités de loisirs. | Clientèle: personnes vivant avec une incapacité motrice ou sensorielle, un problème de santé mentale ou des incapacités intellectuelles, en perte d'autonomie ou ayant des difficultés socio-affectives | Territoire: MRC D'Autray, MRC Joliette, MRC Matawinie, MRC Montcalm | Frais: carte de membre: 5$ par année | Statut: organisme à but non lucratif",
+    "website": "https://parrainageciviquelanaudiere.ca",
+    "address": "144, rue St-Joseph, local R-10, Joliette, Lanaudière, QC, J6E 5C4",
+    "hours": "sur rendez-vous"
+  },
+  {
+    "id": "parrainage-civique-lanaudiere-point-msc",
+    "name": "Parrainage Civique Lanaudière - Point de Service Sud de Lanaudière",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 417-0922",
+    "description": "Parrainage: soutien à long terme par un bénévole jumelé à une personne ayant une limitation permanente.• Accompagnements utilitaires, activités de loisirs. | Clientèle: personnes vivant avec une incapacité motrice ou sensorielle, un problème de santé mentale ou des incapacités intellectuelles, en perte d'autonomie ou autres limitations permanentes | Territoire: Lanaudière | Statut: organisme à but non lucratif",
+    "website": "https://parrainageciviquelanaudiere.ca",
+    "address": "2500, boulevard Mascouche, bureau 224, Mascouche, Lanaudière, QC, J7K 0H5",
+    "hours": "lundi au jeudi de 8h00 à 16h00"
+  },
+  {
+    "id": "parrainage-civique-lanaudiere-siege-jol",
+    "name": "Parrainage Civique Lanaudière - Siège Social",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 398-0696",
+    "description": "Parrainage: soutien à long terme par un bénévole jumelé à une personne marginalisée à des fins d'intégration sociale.• Accompagnements utilitaires, activités de loisirs. | Clientèle: personnes vivant avec une incapacité motrice ou sensorielle, un trouble de santé mentale, une déficience intellectuelle, en perte d'autonomie ou ayant des difficultés socio-affectives | Territoire: Lanaudière | Statut: organisme à but non lucratif",
+    "website": "https://parrainageciviquelanaudiere.ca",
+    "address": "144, rue Saint-Joseph, local R-11, Joliette, Lanaudière, QC, J6E 5C4",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "parrainage-civique-banlieue-ouest",
@@ -19903,6 +22070,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
+    "id": "pavillon-louis-cyr-sja",
+    "name": "Pavillon Louis-Cyr",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Saint-Jacques",
+    "province": "QC",
+    "phone": "450 839-2555",
+    "description": "Centre de réadaptation interne de douze semaines.• Programme distinct pour les dépendances aux substances.• Programme de 28 jours en collaboration avec un PAE.• Thérapie individuelle et de groupe.• Accompagnement aux rendez-vous.• Programme Santé mentale et toxicomanie.• Suivi post-cure.• Hébergement reconnu par les services correctionnels pour les personnes prévenues, en libération conditionnelle ou sous probation. | Clientèle: hommes de 18 ans et plus ayant une problématique de dépendance (alcool et drogues) Capacité: 33 | Territoire: le Québec | Frais: thérapie de 3 mois: 3000$ par mois, thérapie de 28 jours: 4200$, 3 mois couvert par bénéficiaire sur | Statut: organisme à but non lucratif",
+    "website": "https://pavillonlouiscyr.com",
+    "address": "122, rue Saint-Jacques, Saint-Jacques, Lanaudière, QC, J0K 2R0",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "msss-hopital-montreal-pavillon-rachel-tourigny",
     "name": "Pavillon Rachel-Tourigny",
     "category": "health",
@@ -19955,6 +22135,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "pavillons-du-nouveau-point-de-vue-lano",
+    "name": "Pavillons du Nouveau Point de Vue",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Lanoraie",
+    "province": "QC",
+    "phone": "450 887-2392",
+    "description": "Centre de réadaptation interne à durée variable.• Programme distinct pour les dépendances aux substances de 21 ou 28 jours pour les adultes et 42 jours pour les adolescents.• Programme distinct pour le jeu excessif de 28 jours.• Programme mixé pour les dépendances.• Thérapie individuelle et de groupe.• Suivi post- cure: suivi de groupe en visioconférence aux 2 semaines, possibilité d'avoir 2 rencontres individuelles par visioconférence. | Clientèle: adolescents de 13 à 17 ans aux prises avec un problème de toxicomanie, adultes aux prises avec un problème de toxicomanie ou de jeu Capacité: adultes: 50, adolescents: 15 | Territoire: le Québec | Frais: thérapie interne adultes et adolescents SPA et JHA: gratuit sur référence du CRD de Lanaudière, thér | Statut: organisme à but non lucratif",
+    "website": "https://www.nouveaupointdevue.com",
+    "address": "356, rue Notre-Dame, Lanoraie, Lanaudière, QC, J0K 1E0",
+    "hours": "centre: 24 heures, 7 jours,"
+  },
+  {
     "id": "perspective-communautaire-en-sante-pfd",
     "name": "Perspective Communautaire en Santé Mentale",
     "category": "housing",
@@ -19966,6 +22159,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://pcsm-cpmh.org",
     "address": "9665, boulevard Gouin Ouest, Pierrefonds-Roxboro, Montréal, QC, H8Y 1R4",
     "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "perspectives-nouvelles-repentigny-rep",
+    "name": "Perspectives Nouvelles - Repentigny",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 755-3244",
+    "description": "• GLOBE: programme de recherche d'emploi pour personnes immigrantes avec ateliers de groupe et accompagnement individuel.• Services personnalisés selon les besoins. | Clientèle: personnes immigrantes à la recherche d'un emploi ayant un statut de résident permanent, de réfugié ou de citoyen canadien ou ayant un permis de travail selon les recommandations d'un agent d'Emploi Qu | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://laclef-perspectives.com",
+    "address": "50, rue Thouin, bureau 229, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "lundi au vendredi 9h30 à 17h30"
+  },
+  {
+    "id": "perspectives-nouvelles-sainte-julie-sain",
+    "name": "Perspectives Nouvelles - Sainte-Julienne",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Sainte-Julienne",
+    "province": "QC",
+    "phone": "450 399-0898",
+    "description": "• Perspectives Nouvelles: aide à la recherche d'emploi pour personnes de plus de 35 ans.• GLOBE: programme de recherche d'emploi pour personnes immigrantes.• Services personnalisés selon les besoins. | Clientèle: Perspectives Nouvelles: personnes de 35 ans et plus, Globe: personnes immigrantes à la recherche d'emploi ayant un statut de résidence permanente, de réfugié ou de citoyenneté canadienne | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.laclef-perspectives.com",
+    "address": "2484, rue Cartier, Sainte-Julienne, Lanaudière, QC, J0K 2T0",
+    "hours": "lundi au vendredi 8h30 à 16h30, sur rendez-vous"
+  },
+  {
+    "id": "perspectives-nouvelles-terrebonne-trb",
+    "name": "Perspectives Nouvelles - Terrebonne",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 312-0300",
+    "description": "• GLOBE: programme de recherche d'emploi pour personnes immigrantes avec ateliers de groupe et accompagnement individuel.• Services personnalisés selon les besoins. | Clientèle: personnes immigrantes à la recherche d'un emploi ayant un statut de résident permanent, de réfugié ou de citoyen canadien, ou ayant un permis de travail selon les recommandations d'un agent d'Emploi Q | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://laclef-perspectives.com",
+    "address": "500, boulevard des Seigneurs, bureau 2, Terrebonne, Lanaudière, QC, J6W 1T3",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "petits-freres-les-ouest-de-l-ile-pcl",
@@ -19981,6 +22213,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "petits-freres-les-sud-de-lanaudiere-msc",
+    "name": "Petits Frères (les) - Sud de Lanaudière",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "514 248-3384",
+    "description": "Organisme visant à contrer l'isolement des personnes aînées jusqu'à la fin de leur vie.• Accompagnement et jumelage avec des bénévoles.• Visites dans le milieu de vie de la personne: à domicile, à l'hôpital, au CHSLD, à leur résidence, etc.• Au bout du fil: service de jumelage téléphonique.• Activités et sorties spécialisées afin de souligner les anniversaires de naissance et les fêtes traditionnelles.• Séjours de vacances au Domaine Juliette-Huot d'Oka.• Réception de Noël.• Accompagnement en fin de vie. | Clientèle: personnes de 75 ans et plus sans famille présente ou contact social significatif | Territoire: MRC Montcalm, MRC Joliette, MRC Matawinie, MRC Des Moulins, MRC de L'Assomption | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://petitsfreres.ca/trouver-une-region/sud-de-lanaudiere",
+    "address": "2500, boulevard Mascouche, bureau 119, Mascouche, Lanaudière, QC, J7K 0H5",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
     "id": "drum-garde-petits-genies",
     "name": "Petits Génies",
     "category": "family",
@@ -19991,6 +22236,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "petits-mousses-centre-de-soutien-a-jol",
+    "name": "Petits Mousses - Centre de Soutien À L'Enfance de Lanaudière (les)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 866 759-3327",
+    "description": "Organisme d'aide aux enfants présentant un retard de développement.• Ateliers de stimulation précoce.• Rencontres individuelles.• Références.• Centre de documentation. | Clientèle: enfants de 3 à 5 ans qui présentent un retard dans leur développement global ou spécifique (social, moteur, intellectuel, affectif ou langagier) Capacité: 20 à 40 enfants | Territoire: Lanaudière | Frais: frais mensuels | Statut: organisme à but non lucratif",
+    "website": "https://www.petits-mousses.org",
+    "address": "994, rue de Lanaudière, 2e étage, Joliette, Lanaudière, QC, J6E 3N6",
+    "hours": "lundi au jeudi 8h30 à 16h30"
   },
   {
     "id": "placement-potentiel-pcl",
@@ -20004,6 +22262,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.placementpotentiel.com/index-fr.html",
     "address": "111, avenue Donegani, Pointe-Claire, Montréal, QC, H9R 2W3",
     "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "pleins-droits-de-lanaudiere-jol",
+    "name": "Pleins Droits de Lanaudière",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 394-0779",
+    "description": "Promotion et défense des droits en santé mentale.• Aide et accompagnement en défense des droits.• Éducation populaire, promotion et sensibilisation des droits fondamentaux en santé mentale.• Formation, comité d'information et ateliers.• Revendications politiques. | Clientèle: personnes vivant ou ayant vécu avec un problème de santé mentale | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://pleinsdroits.org",
+    "address": "144, rue Saint-Joseph, 3e étage, Joliette, Lanaudière, QC, J6E 5C4",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, sur rendez-vous seulement"
+  },
+  {
+    "id": "pleins-droits-de-lanaudiere-point-d-rep",
+    "name": "Pleins Droits de Lanaudière - Point de Service de Repentigny",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "1 855 394-0779",
+    "description": "Promotion et défense des droits en santé mentale.• Aide et accompagnement en défense des droits.• Éducation populaire, promotion et sensibilisation des droits fondamentaux en santé mentale.• Formation, comité d'information et ateliers.• Revendications politiques. | Clientèle: personnes vivant ou ayant vécu avec un problème de santé mentale | Territoire: MRC L'Assomption, MRC Les Moulins | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://pleinsdroits.org",
+    "address": "10A, boulevard Brien, bureau 80, Repentigny, Lanaudière, QC, J6A 4R7",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, sur rendez-vous seulement"
   },
   {
     "id": "pointe-claire-culture-sports-loisir-pcl",
@@ -20030,6 +22314,44 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.pointe-claire.ca/",
     "address": "451, boulevard Saint-Jean, Pointe-Claire, Montréal, QC, H9R 3J3",
     "hours": "lundi au vendredi 8h30 à 16h30, été: lundi au jeudi 8h00 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "popote-roulante-rive-nord-rep",
+    "name": "Popote Roulante Rive-Nord",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "438 886-4734",
+    "description": "• Livraison de repas complets, chauds ou congelés. | Clientèle: personnes de 75 ans et plus, personnes en perte d'autonomie, en convalescence, ayant un handicap (physique, sensoriel, mental ou intellectuel) | Territoire: Repentigny, Charlemagne | Frais: repas complet: 7$, plat principal seulement: 6$ | Statut: organisme à but non lucratif",
+    "website": "https://www.popoteroulanterivenord.com",
+    "address": "50, rue Thouin, bureau 108, porte A, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "lundi, mercredi et jeudi 7h00 et 13h00, livraison: lundi, mercredi et jeudi 10h00 et 12h00"
+  },
+  {
+    "id": "popote-roulante-les-moulins-trb",
+    "name": "Popote Roulante les Moulins",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 824-1240",
+    "description": "• Livraison de repas complets congelés. | Clientèle: personnes de 70 ans et plus, personnes de 69 ans et moins vivant avec un problème de santé permanent ou temporaire | Territoire: Mascouche, Terrebonne | Frais: repas: 8$, livraison: 4$ (minimum de 10 repas) | Statut: organisme à but non lucratif",
+    "website": "https://popoteroulantelesmoulins.com",
+    "address": "4400, rue Angora, bureau 500, Terrebonne, Lanaudière, QC, J6X 0A4",
+    "hours": "bureau: lundi au jeudi 8h00 à 15h00, livraison: jeudi, cueillette: vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "popote-du-portage-lasm",
+    "name": "Popote du Portage",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "L'Assomption",
+    "province": "QC",
+    "phone": "450 589-7517",
+    "description": "• Livraison à domicile de repas complets chauds ou congelés. | Clientèle: personnes de 65 ans et plus, personnes ayant des besoins particuliers: convalescence, maladie, handicaps, etc. Capacité: 60 clients | Territoire: L'Assomption, L'Épiphanie, Saint-Sulpice | Frais: repas chauds: 5$, repas congelés: 4$ | Statut: organisme à but non lucratif",
+    "address": "379, rue Dorval, L'Assomption, Lanaudière, QC, J5W 3A2",
+    "hours": "mercredi et vendredi 11h00 à 12h00"
   },
   {
     "id": "popote-roulante-tr",
@@ -20081,6 +22403,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://portaildequebec.org",
     "address": "1625, rue Charest Ouest, Québec, QC G1N 2G1",
     "hours": "Hébergement d'urgence 24h/24. Présentation directe ou appel."
+  },
+  {
+    "id": "potagers-communautaires-de-repentig-rep",
+    "name": "Potagers Communautaires de Repentigny (les)",
+    "category": "food",
+    "subcategory": "Jardins et marchés communautaires",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "438 978-4592",
+    "description": "Jardins communautaires. | Clientèle: résident·e·s Capacité: 143 terrains, 6 bacs de culture pour personnes à mobilité réduite | Territoire: Repentigny | Frais: 35$ par année | Statut: organisme à but non lucratif",
+    "address": "175, rue Philippe Goulet, Repentigny, Lanaudière, QC, J5Y 3M9",
+    "hours": "mi-avril jusqu'à mi-octobre, 7h00 à 22h00"
   },
   {
     "id": "drum-garde-princesses-et-dragons",
@@ -20213,6 +22547,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30."
   },
   {
+    "id": "propulsion-lanaudiere-jol",
+    "name": "Propulsion Lanaudière",
+    "category": "mentalHealth",
+    "subcategory": "Hébergement communautaire en santé mentale",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 877 752-6570",
+    "description": "Soutien socio-résidentielle en santé mentale.• Logements supervisés.• Réinsertion en communauté et stabilité résidentielle.• Soutien en logement: visites à domiciles et appels téléphoniques.• Distribution de Naloxone. | Clientèle: personnes de 18 ans et plus vivant avec un problème de santé mentale | Territoire: Lanaudière | Statut: organisme à but non lucratif",
+    "website": "https://propulsion-lanaudiere.com",
+    "address": "387, rue Baby, Joliette, Lanaudière, QC, J6E 2V9",
+    "hours": "accueil téléphonique et rendez-vous: lundi au vendredi 8h30 à 16h30, appartements supervisés: 24 heures, 7 jours"
+  },
+  {
     "id": "soc-drt2",
     "name": "Protecteur du citoyen",
     "category": "social",
@@ -20224,6 +22571,18 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30.",
     "isProvinceWide": true
+  },
+  {
+    "id": "provision-compassion-rwd",
+    "name": "Provision Compassion",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Rawdon",
+    "province": "QC",
+    "phone": "450 834-4958",
+    "description": "• Comptoir alimentaire: paniers à faible coût incluant des denrées périssables et non-périssables.• Dépannage d'urgence.• Programmes d'insertion sociale. | Territoire: Lanaudière | Frais: variables | Statut: organisme à but non lucratif",
+    "address": "3719, rue des Commissaires, Rawdon, Lanaudière, QC, J0K 1S0",
+    "hours": "jeudi 13h00 à 19h00, vendredi 13h00 à 16h00"
   },
   {
     "id": "msss-hopital-longueuil-pole-de-l-hopital-pierre-boucher-bellagio",
@@ -20427,6 +22786,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "regroupement-des-aidants-naturels-d-rep",
+    "name": "Regroupement des Aidants Naturels du Comté de L'Assomption",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 657-0514",
+    "description": "Groupes de soutien.• Rencontres d'entraide et d'information mensuelles.• Écoute active.• Documentation et échange d'information.• Souper communautaire mensuel.• Journal L'Aidant.• Café rencontre.• Clinique individuelle sur rendez-vous.• Conférences.• Sorties et événements. | Clientèle: personnes proches aidantes | Territoire: MRC de L'Assomption | Frais: adhésion annuelle: 20$ ou 30$ pour deux membres d'un même foyer | Statut: organisme à but non lucratif",
+    "website": "https://www.aidantslassomption.org",
+    "address": "50, rue Thouin, bureau 225, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "regroupement-des-usagers-de-transpo-jol",
+    "name": "Regroupement des Usagers de Transport Adapté de Lanaudière",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "1 866 910-2221",
+    "description": "Représente les personnes usagères du transport adapté du territoire lanaudois.• Défense des droits.• Promotion du développement des services de transport adapté.• Sensibilisation de l'ensemble des partenaires et du grand public.• Accessibilité aux divers modes de transport. | Clientèle: personnes vivant avec un handicap | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://rutalanaudiere.com",
+    "address": "200, rue De Salaberry, bureau 204, Joliette, Lanaudière, QC, J6E 4G1",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
     "id": "rccq-qc",
     "name": "Regroupement des cuisines collectives du Québec (RCCQ)",
     "category": "food",
@@ -20451,6 +22836,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.rmjq.org",
     "address": "600, rue Fullum, bureau 6.130, Montréal, QC H2K 4L1",
     "hours": "Lun-ven 8h30-16h30. Défense des droits et services spécialisés."
+  },
+  {
+    "id": "relais-de-mascouche-le-msc",
+    "name": "Relais de Mascouche (le)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 918-9186",
+    "description": "• Dépannage alimentaire hebdomadaire.• Comité des bénéficiaires: activités par et pour les membres.• Jardins collectifs. | Clientèle: familles vivant une situation de vulnérabilité | Territoire: Mascouche | Frais: variables selon le nombre de personnes dans la famille | Statut: organisme à but non lucratif",
+    "website": "https://www.relaismascouche.org",
+    "address": "815 rue Bombardier, unité 5, Mascouche, Lanaudière, QC, J7K 3E6",
+    "hours": "dépannage alimentaire: lundi au jeudi"
+  },
+  {
+    "id": "renaissance-quebec-comptoir-d-entra-trb",
+    "name": "Renaissance Québec - Comptoir D'Entraide de Terrebonne",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 471-1067",
+    "description": "Vente de vêtements et d'articles usagés.• Réception de dons sur place: vêtements, livres. | Territoire: Laval, MRC Les Moulins | Statut: organisme à but non lucratif",
+    "website": "https://www.atelierspecialiselesmoulins.org",
+    "address": "421, rue Léveillé, Terrebonne, Lanaudière, QC, J6W 1Z7",
+    "hours": "lundi à mercredi: 9h00 à 18h00, jeudi et vendredi: 9h00 à 19h00, samedi et dimanche: 9h à 17h, centre de dons: lundi à mercredi: 8h00 à 18h00, jeudi et vendredi: 8h00 à 19h00, samedi et dimanche: 8h00 à 17h00"
   },
   {
     "id": "renaissance-quebec-fripe-galeries-d-ddo",
@@ -20479,6 +22890,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "friperie et centre de dons: lundi au dimanche 8h00 à 18h00"
   },
   {
+    "id": "renaissance-quebec-mini-librairie-d-trb",
+    "name": "Renaissance Québec - Mini Librairie des Seigneurs",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 914-4130",
+    "description": "Vente de livres, CD, vinyles, DVD et vidéocassettes.• Récupération de vêtements, articles de maison, fournitures sportives et scolaires, petits électroménagers, matériel informatique, livres, CD, vinyles, DVD, vidéocassettes et vélos. | Territoire: Terrebonne | Statut: organisme à but non lucratif",
+    "website": "https://renaissancequebec.ca/fr",
+    "address": "1279, boulevard des Seigneurs, Terrebonne, Lanaudière, QC, J6W 4P7",
+    "hours": "librairie et centre de dons: lundi au vendredi 9h00 à 17h00, samedi et dimanche 8h00 à 18h00"
+  },
+  {
     "id": "repas-communautaires-mauricie",
     "name": "Repas communautaires Mauricie",
     "category": "food",
@@ -20489,6 +22913,84 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Repas communautaires gratuits et à prix modique servis plusieurs fois par semaine en Mauricie. Moments de partage et d'inclusion pour personnes isolées.",
     "address": "1, rue Fusey, bureau 101, Trois-Rivières, QC G8T 2T2",
     "hours": "Service de repas midi lun-ven 11h30-13h30. Vérifier horaires spéciaux."
+  },
+  {
+    "id": "repentigny-cour-municipale-rep",
+    "name": "Repentigny - Cour Municipale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 470-3500",
+    "description": "Cour de justice de première instance où sont entendus les litiges en matière de règlements municipaux, d'infractions au Code de la sécurité routière ainsi que certaines infractions criminelles (conduite avec facultés affaiblies, vols de moins de 5000$ et méfaits).• Paiement ou contestation de contraventions.• Recouvrement de sommes dues.• Travaux compensatoires. | Territoire: Repentigny | Statut: organisme municipal",
+    "website": "https://repentigny.ca/services/citoyens/cour-municipale",
+    "address": "1, montée des Arsenaux, Repentigny, Lanaudière, QC, J5Z 2C1",
+    "hours": "lundi au jeudi 8h15 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "repentigny-loisirs-sports-et-vie-co-rep",
+    "name": "Repentigny - Loisirs, Sports et Vie Communautaire",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 470-3400",
+    "description": "• Activités communautaires, socioculturelles et sportives.• Arénas et patinoires, piscines, centres sportifs et communautaires, parcs et terrains de jeux.• Créalab: outils de création numérique.• Camp de jour estival.• Coordination avec les organismes communautaires du milieu.• Location de salle.• Événements. | Territoire: Repentigny | Frais: variables | Statut: organisme municipal",
+    "website": "https://repentigny.ca/culture-loisirs/sports/centres-sportifs-communautaires",
+    "address": "225, boulevard J.-A.-Paré, Repentigny, Lanaudière, QC, J5Z 4L3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "repentigny-ville-rep",
+    "name": "Repentigny - Ville",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 470-3000",
+    "description": "Gestion des services municipaux.• Paiement des taxes municipales.• Évaluation foncière.• Permis de construction.• Collecte des matières résiduelles.• Licences pour chiens.• Service de sécurité incendie.• Système de notification d'urgence.• Subvention pour les couches lavables.• Bibliothèques.• Écocentre.• Sécurité publique: service de police et sécurité incendie. | Territoire: Repentigny | Statut: organisme municipal",
+    "website": "https://repentigny.ca",
+    "address": "435, boulevard Iberville, Repentigny, Lanaudière, QC, J6A 2B6",
+    "hours": "lundi au jeudi 8h15 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "repentigny-ecocentre-rep",
+    "name": "Repentigny - Écocentre",
+    "category": "immigration",
+    "subcategory": "Services gouvernementaux",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 470-3830",
+    "description": "Récupération de matières résiduelles.• Résidus domestiques dangereux (RDD).• Produits électroniques (PE).• Produits de construction, de rénovation et de démolition (CRD).• Surplus de matières recyclables.• Résidus verts. | Clientèle: personnes citoyennes | Territoire: Repentigny | Frais: aucuns | Statut: organisme municipal",
+    "website": "https://repentigny.ca",
+    "address": "336, rue Charles-Marchand, Repentigny, Lanaudière, QC, J5Z 4P1",
+    "hours": "variables, consulter le site web"
+  },
+  {
+    "id": "rescousse-amicale-la-rwd",
+    "name": "Rescousse Amicale (la)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Rawdon",
+    "province": "QC",
+    "phone": "450 834-3151",
+    "description": "Groupe d'entraide alternatif en santé mentale.• Accueil, information et référence.• Rencontres individuelles.• Groupe d'entraide.• Ateliers thématiques, formations et conférences.• Café-rencontre et dîners communautaires.• Activités sportives et culturelles.• Transport et accompagnement pour les activités de l'organisme.• Bibliothèque. | Clientèle: personnes de 18 ans et plus vivant avec ou ayant vécu avec un problème en santé mentale ou une détresse émotionnelle | Territoire: MRC Matawinie | Frais: services gratuits, carte de membre: gratuit | Statut: organisme à but non lucratif",
+    "website": "https://rescousseamicale.ca",
+    "address": "3689, rue Albert, Rawdon, Lanaudière, QC, J0K 1S0",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "rescousse-montcalm-la-sain",
+    "name": "Rescousse Montcalm (la)",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Saint-Esprit",
+    "province": "QC",
+    "phone": "450 839-7050",
+    "description": "• Relation d'aide.• Écoute téléphonique.• Rencontre individuelle.• Groupe Les entendeurs de voix.• Ateliers variés.• Salle multisensorielle.• Conférences, formations et témoignages.• Friperie offerte aux membres seulement.• Transport bénévole sous certaines conditions.• Présence d'un hamster et de deux chiens en alternance. | Clientèle: personnes ayant ou ayant eu une problématique en santé mentale et/ou vivant une détresse psychologique | Territoire: MRC Montcalm | Frais: carte de membre: 15$ par année | Statut: organisme à but non lucratif",
+    "website": "https://rescoussemontcalm.com",
+    "address": "114, rue Montcalm, Saint-Esprit, Lanaudière, QC, J0K 2L0",
+    "hours": "lundi au jeudi 9h00 à 17h00"
   },
   {
     "id": "ressources-communautaires-omega-drv",
@@ -20596,6 +23098,45 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "rose-bleue-la-association-des-perso-msc",
+    "name": "Rose Bleue (la) - Association des Personnes Handicapées les Moulins",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 474-7007",
+    "description": "• Musicothérapie.• Gymnastique douce.• Zoothérapie.• Arts plastiques.• Activités socioculturelles et récréatives, sorties.• Activités estivales.• Promotion et défense des droits. | Clientèle: personnes vivant avec une déficience intellectuelle Capacité: 3 groupes de 10 personnes | Territoire: MRC Les Moulins | Frais: adhésion: 10$ par année, activités: 15$ par jour, activités estivales: 18$ par jour | Statut: organisme à but non lucratif",
+    "website": "https://www.associationlarosebleue.com",
+    "address": "2904, rue Dupras, Mascouche, Lanaudière, QC, J7K 1T2",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "repits-de-gaby-les-crab",
+    "name": "Répits de Gaby (les)",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Crabtree",
+    "province": "QC",
+    "phone": "1 866 753-3914",
+    "description": "• Répit estival, répit de jour et répit de fin de semaine.• Maison de jeunes La Barack: conférences, sorties. | Clientèle: personnes autistes (TSA), répit estival et de fin de semaine: enfants de 5 ans et plus, adolescents, adultes | Territoire: Lanaudière | Frais: membre: 20$ par année, répit estival, répit de jour, la Barack: 30$ par jour, répit fin de semaine:  | Statut: organisme à but non lucratif",
+    "website": "https://www.repitsdegaby.com",
+    "address": "51, 19e Rue, Crabtree, Lanaudière, QC, J0K 1B0",
+    "hours": "bureau: lundi au vendredi 8h30 à 16h00, répit estival: lundi au vendredi 8h30 à 16h30, répit de jour: un samedi ou dimanche aux deux semaines 9h30 à 16h30, répit de fin de semaine: vendredi 19h00 à dimanche 19h00, la Barack: 2 samedis par mois 14h00 à 21h00"
+  },
+  {
+    "id": "reseau-le-jol",
+    "name": "Réseau (le)",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 759-4545",
+    "description": "• Prévention dans les écoles.• Aide en réinsertion sociale pour les personnes ayant terminé une thérapie.• Groupe de soutien pour la prévention de la rechute.• Évaluation, intervention précoce et détection.• Suivis individuels.• Prévention, information et sensibilisation.• Animation et formation.• Références. | Clientèle: réinsertion sociale: personnes de 18 ans et plus vivant une période d'abstinence, prévention: écoles, maisons de jeunes, parents | Territoire: MRC Joliette, MRC D'Autray, MRC Matawinie, MRC Montcalm | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.reseautoxicomanie.com",
+    "address": "200, rue de Salaberry, local 308, Joliette, Lanaudière, QC, J6E 4G1",
+    "hours": "sur rendez-vous seulement, lundi au vendredi 9h00 à 17h00, certaines disponibilités le soir"
+  },
+  {
     "id": "hlth-aine1",
     "name": "Réseau FADOQ – Services aux aînés",
     "category": "health",
@@ -20620,6 +23161,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.rsiq.org",
     "address": "2000, boul. Saint-Joseph Est, Montréal, QC H2H 1E4",
     "hours": "Lun-ven 8h30-16h30. Défense des droits et services spécialisés."
+  },
+  {
+    "id": "reseau-des-proches-aidants-les-moul-msc",
+    "name": "Réseau des Proches Aidants les Moulins",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 326-7372",
+    "description": "• Soutien individuel: rencontres à domicile, au téléphone, en présentiel ou en virtuel.• Groupes d'entraide sur diverses thématiques du rôle de proche aidant·e.• Ateliers, rencontres de groupes et événements. | Clientèle: personnes proches aidantes | Territoire: MRC Les Moulins, Terrebonne, Mascouche | Frais: activités régulières: aucuns, sorties et événements: variables | Statut: organisme à but non lucratif",
+    "website": "https://www.rdpalesmoulins.ca",
+    "address": "2500, boulevard de Mascouche, bureau 109, Mascouche, Lanaudière, QC, J7K 0H5",
+    "hours": "lundi au jeudi 8h30 à 16h30, mercredi soir sur rendez-vous seulement"
   },
   {
     "id": "emp-rseo",
@@ -20701,6 +23255,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "residence-claire-marchand-la-rep",
+    "name": "Résidence Claire Marchand (la)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "514 718-7121",
+    "description": "Logements subventionnés pour personnes aînées.• Appartements 3½ et 4½. | Clientèle: personnes de 55 ans et plus, autonomes et à faible revenu Capacité: logements: 13 3½, 9 4½ | Territoire: Repentigny | Frais: 25% du revenu (plus électricité) | Statut: organisme à but non lucratif",
+    "address": "896, boulevard Iberville, Repentigny, Lanaudière, QC, J5Y 1Z7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-chsld-wendake-residence-marcel-sioui",
     "name": "Résidence Marcel Sioui",
     "category": "health",
@@ -20760,6 +23326,30 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://residencesoinspalliatifs.ca",
     "address": "265, rue André-Brunet, Kirkland, Montréal, QC, H9H 3R4",
     "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "residences-du-meandre-lasm",
+    "name": "Résidences du Méandre",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "L'Assomption",
+    "province": "QC",
+    "phone": "450 589-2750",
+    "description": "Logements subventionnés et non-subventionnés pour personnes aînées.• Appartements 3½ et 4½.• Logements adaptés pour personnes à mobilité réduite. | Clientèle: personnes de 60 ans et plus, autonomes ou en légère perte d'autonomie Capacité: logements: 20 subventionnés, 20 non subventionnés | Territoire: MRC L'Assomption | Frais: logements subventionnés: 25% du revenu, autres logements: 593$ par mois pour un 3½, 659$ par mois po | Statut: organisme à but non lucratif",
+    "address": "300, place de Courville, L'Assomption, Lanaudière, QC, J5W 6E6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "residences-du-meandre-habitations-d-lasm",
+    "name": "Résidences du Méandre - Habitations du Champboisé",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "L'Assomption",
+    "province": "QC",
+    "phone": "450 589-0075",
+    "description": "Logements subventionnés et non-subventionnés.• Appartements 3½, 4½, 5½ et 6½.• Logements adaptés pour personnes à mobilité réduite. | Clientèle: familles et personnes seules Capacité: logements: 37 subventionnés, 13 non subventionnés | Territoire: MRC L'Assomption | Frais: logements subventionnés: 25% du revenu | Statut: organisme à but non lucratif",
+    "address": "885, boulevard Pierre-LeSueur, L'Assomption, Lanaudière, QC, J5W 2N5",
+    "hours": "Voir site web"
   },
   {
     "id": "s-resilience-mtl",
@@ -21022,6 +23612,18 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "re-pw1",
+    "name": "SCHL – Société canadienne d'hypothèques",
+    "category": "realestate",
+    "subcategory": "Programme gouvernemental",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-668-2642",
+    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
+    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
+    "isProvinceWide": true
+  },
+  {
     "id": "on-cmhc-on",
     "name": "SCHL – Société canadienne d'hypothèques",
     "category": "realestate",
@@ -21032,18 +23634,6 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "website": "https://www.cmhc-schl.gc.ca",
     "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
-    "isProvinceWide": true
-  },
-  {
-    "id": "re-pw1",
-    "name": "SCHL – Société canadienne d'hypothèques",
-    "category": "realestate",
-    "subcategory": "Programme gouvernemental",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-668-2642",
-    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
     "isProvinceWide": true
   },
@@ -21314,6 +23904,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "saint-sulpice-municipalite-ssu",
+    "name": "Saint-Sulpice - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Saint-Sulpice",
+    "province": "QC",
+    "phone": "450 589-4450",
+    "description": "Gestion des services municipaux.• Informations pratiques: animaux domestiques, Hydro Westmount, changement d'adresse, etc.• Calendrier des collectes des matières résiduelles: www.municipalitesaintsulpice.com/services-municipaux/collectes-entretien-et-deneigement • Subvention pour l'achat de couches lavables.• Subvention pour actions environnementales.• Paiement des taxes municipales.• Permis de construction, plaintes et requêtes.• Service de sécurité incendie.• Activités et installations: camps de jour, piscine, patinoires, parcs, etc.• Bibliothèque municipale.• Location de salles. | Clientèle: grand public | Territoire: Saint-Sulpice | Statut: organisme municipal",
+    "website": "https://www.municipalitesaintsulpice.com",
+    "address": "1089, rue Notre-Dame, Saint-Sulpice, Lanaudière, QC, J5W 1G1",
+    "hours": "lundi au jeudi 8h15 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 12h00"
+  },
+  {
     "id": "sainte-anne-de-bellevue-ville-sab",
     "name": "Sainte-Anne-de-Bellevue - Ville",
     "category": "social",
@@ -21430,6 +24033,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "variable"
   },
   {
+    "id": "serlan-repentigny-rep",
+    "name": "Serlan - Repentigny",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 654-9574",
+    "description": "Centre de travail adapté pour personnes vivant avec un handicap physique ou intellectuel, ou avec un problème de santé mentale.• Assemblage, montage, emballage sous pellicule rétractable ou moulante, mise en sac, étiquetage, découpage emporte-pièce, manutentions diverses, reliure spirale et Wire-O. | Clientèle: personnes vivant avec un handicap physique ou intellectuel, ou un problème de santé mentale | Territoire: Repentigny, île de Montréal | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://serlan.com",
+    "address": "505, rue Lanaudière, REPENTIGNY, Lanaudière, QC, J6A 7N1",
+    "hours": "lundi au jeudi 7h00 à 16h00"
+  },
+  {
     "id": "emp-pw2",
     "name": "Service Canada – Assurance-emploi (AE)",
     "category": "employment",
@@ -21470,6 +24086,44 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "service-correctionnel-canada-etabli-jol",
+    "name": "Service Correctionnel Canada - Établissement Joliette",
+    "category": "social",
+    "subcategory": "Services correctionnels",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 752-5257",
+    "description": "Établissement à niveaux de sécurité multiples pour femmes contrevenantes. • Évaluations et suivi des personnes contrevenantes.• Élaboration de plans correctionnels.• Gestion des programmes de garde, d'hébergement, d'encadrement et d'accompagnement.• Transport, escortes et encadrement pour les comparutions à la cour et transferts vers d'autres établissements carcéraux et hospitaliers. | Clientèle: femmes contrevenantes condamnées à des peines supérieures à 2 ans Capacité: 132 détenues | Territoire: le Québec | Statut: organisme du gouvernement fédéral",
+    "website": "https://www.csc-scc.gc.ca",
+    "address": "400, rue Marsolais, Joliette, Lanaudière, QC, J6E 8V4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-d-aide-sedai-t-s-s-trb",
+    "name": "Service D'Aide Sedai T.s.s.",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 433-0888",
+    "description": "• Récupération et vente de vêtements et objects usagés.• Distribution alimentaire hebdomadaire.• Paniers de Noël pour les personnes membres.• Soutien financier aux familles démunies. | Clientèle: personnes dans le besoin | Territoire: Terrebonne Ouest: paroisse Très-Saint-Sacrement | Frais: aide alimentaire: 2$ par semaine | Statut: organisme à but non lucratif",
+    "address": "3677, montée Gagnon, Terrebonne, Lanaudière, QC, J6Y 1K8",
+    "hours": "lundi au mercredi 8h30 à 15h30, dépannage alimentaire: jeudi en avant-midi"
+  },
+  {
+    "id": "service-d-aide-a-la-famille-immigra-rep",
+    "name": "Service D'Aide À la Famille Immigrante de la MRC de L'Assomption",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "1 844 507-2683",
+    "description": "Accueil et accompagnement des familles immigrantes nouvellement arrivées.• Information, formation et référence.• Soutien dans les démarches.• Accompagnement et démarches pour briser l'isolement.• Intervention adaptée et personnalisée.• Francisation et activités de socialisation.• Accompagnement des familles vulnérables pour mieux comprendre le systeme scolaire et de petite enfance.• Accompagner les femmes victimes de violences. | Clientèle: familles immigrantes | Territoire: MRC de L'Assomption | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://safima.ca",
+    "address": "50, rue Thouin, bureau 202, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "lundi au vendredi 8h30 à 12h30 et 13h30 à 16h30"
+  },
+  {
     "id": "info-social-811",
     "name": "Service Info-Social 811",
     "category": "mentalHealth",
@@ -21495,6 +24149,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://sito-outaouais.com",
     "address": "75, rue d'Edmonton, Gatineau, QC J8Y 6X3",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "service-specialise-de-main-d-oeuvre-rep",
+    "name": "Service Spécialisé de Main-D'Oeuvre Essor Ii",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "1 855 755-3855",
+    "description": "Aide à l'emploi pour personnes ayant des limitations fonctionnelles.• Évaluation et consultation.• Référence aux organismes de formation.• Aide à la recherche d'emploi.• Contact avec des employeurs.• Suivi et accompagnement en cours d'emploi.• Stage en entreprise.• Services pour employeurs: présélection des candidats, aide à la recherche de solution, formation du personnel, possibilité d'aide financière pour différents mesures, etc.• Suivi et accompagnement en emploi.• Point de service de Mascouche: 2500, boulevard Mascouche, bureaux 226-227.• Point de service de Joliette: 463, rue de Lanaudière. | Clientèle: personnes vivant avec des limitations d'ordre physique, intellectuel ou psychologique et qui ont besoin d'aide pour intégrer ou maintenir leur emploi | Territoire: Lanaudière | Statut: organisme à but non lucratif",
+    "website": "https://essor2.org",
+    "address": "10, rue Notre-Dame, bureau 203, Repentigny, Lanaudière, QC, J6A 2N9",
+    "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00"
   },
   {
     "id": "service-accueil-nouveaux-arrivants",
@@ -21546,6 +24213,84 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://soit.ca",
     "address": "1010, rue Borne, Québec, QC G1N 1L9",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "service-de-police-de-l-assomption-s-lasm",
+    "name": "Service de Police de L'Assomption - Saint-Sulpice",
+    "category": "immigration",
+    "subcategory": "Services gouvernementaux",
+    "city": "L'Assomption",
+    "province": "QC",
+    "phone": "450 589-4777",
+    "description": "Maintien de la paix, de l'ordre et de la sécurité publique.• Prévention et répression des crimes et infractions.• Vérification des antécédents judiciaires.• Sensibilisation.• Ateliers d'autodéfense pour femmes. | Clientèle: ateliers d'autodéfense: femmes de 14 ans et plus | Territoire: L'Assomption, Saint-Sulpice | Frais: ateliers d'autodéfense: gratuit | Statut: organisme municipal",
+    "website": "https://www.ville.lassomption.qc.ca/service-police",
+    "address": "399, rue Dorval, L'Assomption, Lanaudière, QC, J5W 1A1",
+    "hours": "administration: lundi au vendredi 8h00 à 16h30"
+  },
+  {
+    "id": "service-de-police-de-mascouche-msc",
+    "name": "Service de Police de Mascouche",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 474-6114",
+    "description": "Maintien de la paix, de l'ordre et de la sécurité publique.• Prévention et répression des crimes et infractions.• Vérification des antécédents judiciaires.• Sensibilisation.• Espace d'échange de biens pour les personnes avec qui une transaction sur des sites de ventes en ligne a été effectuée.• Espace sous surveillance pour l'échange de garde d'enfants.• Programme Sécur+Or: visite à domicile par un·e policier·ère, un·e pompier·ère ou un·e intervenant·e pour le maintien à domicile (sécurité des lieux, références). | Clientèle: programme Sécur+Or: personnes aînées de 65 ans et plus | Territoire: Mascouche | Statut: organisme municipal",
+    "website": "https://mascouche.ca/services/securite-et-sante-publique/service-de-police",
+    "address": "822, rue Brien, Mascouche, Lanaudière, QC, J7K 2X3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-de-police-de-repentigny-rep",
+    "name": "Service de Police de Repentigny",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 470-3600",
+    "description": "Maintien de la paix, de l'ordre et de la sécurité publique.• Prévention et répression des crimes et infractions.• Vérification des antécédents judiciaires.• Soutien à la communauté: éducation, prévention et rapprochement avec la population.• Sensibilisation. | Territoire: Repentigny, Charlemagne | Statut: organisme municipal",
+    "website": "https://repentigny.ca/services/citoyens/sante-securite-publiques/police-prevention-criminalite",
+    "address": "1, montée des Arsenaux, Repentigny, Lanaudière, QC, J5Z 2C1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-de-police-de-terrebonne-trb",
+    "name": "Service de Police de Terrebonne",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 471-4121",
+    "description": "Maintien de la paix, de l'ordre et de la sécurité publique.• Prévention et répression des crimes et infractions.• Vérification des antécédents judiciaires.• Programme PAIR: appels informatisés de sécurité et de rappel pour la prise de médicaments.• Sensibilisation. | Territoire: Terrebonne, Sainte-Anne-des-Plaines, Bois-des-Filion | Statut: organisme municipal",
+    "website": "https://terrebonne.ca/service-de-police",
+    "address": "1004, avenue Gabrielle-Roy, Terrebonne, Lanaudière, QC, J6Y 0P2",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "service-de-sages-femmes-et-maison-d-rep",
+    "name": "Service de Sages-Femmes et Maison de Naissance de Lanaudière",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 582-5111",
+    "description": "• Services de première ligne en périnatalité.• Suivi de grossesse.• Suivi postnatal.• Accouchement.• Services de sages-femmes. | Clientèle: femmes enceintes | Territoire: Lanaudière | Statut: organisme parapublic",
+    "website": "https://www.cisss-lanaudiere.gouv.qc.ca/votre-cisss/coordonnees-et-horaires/service-de-sages-femmes",
+    "address": "145, rue Jacques-Plante, Repentigny, Lanaudière, QC, J5Y 4G4",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "service-de-sante-masko-siwin-mnw",
+    "name": "Service de Santé Masko-Siwin",
+    "category": "social",
+    "subcategory": "Santé et services sociaux",
+    "city": "Manawan",
+    "province": "QC",
+    "phone": "819 971-8846",
+    "description": "Centre de santé de première ligne et siège social des Services de Santé de Masko-Siwin (SSMS).• Soins curatifs et préventifs généraux.• Médecine familiale.• Services d'urgence.• Service intégré de dépistage et de prévention des ITSS.• Désintoxication.• Vaccination.• Garde médicale 7 jours, 24 heures.• Consultation avec une infirmière sur rendez-vous.• Consultation médicale téléphonique 7 jours, 24 heures.• Dentisterie.• Pédiatrie.• Télésanté: ORL, suivi de grossesse. | Clientèle: Atikamekw de Manawan | Territoire: Manawan | Statut: organisme parapublic",
+    "website": "https://www.sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=91258",
+    "address": "280, rue Wapistan, Manawan, Lanaudière, QC, J0K 1M0",
+    "hours": "24 heures, 7 jours"
   },
   {
     "id": "tr-garde-service-de-garde-julie-beaulieu",
@@ -21682,6 +24427,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "address": "100, boul. Curé-Poirier Ouest, Longueuil, QC J4J 2G8",
     "hours": "Lun-ven 8h30-16h30. Services d'accueil, intégration, références."
+  },
+  {
+    "id": "services-amities-l-assomption-lasm",
+    "name": "Services Amitiés L'Assomption",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "L'Assomption",
+    "province": "QC",
+    "phone": "514 793-0840",
+    "description": "• Information et référence téléphonique.• Dîners communautaires.• Visites d'amitié à domicile.• Appels d'amitié.• Ateliers de yoga sur chaise et mise en forme.• Ateliers de peinture.• Jeux de mémoire.• Sorties. | Clientèle: personnes aînées, personnes isolées | Territoire: L'Assomption, L'Épiphanie, Saint-Sulpice | Frais: adhésion annuelle: 20$ | Statut: organisme à but non lucratif",
+    "website": "https://www.servicesamities.org",
+    "address": "255, rue Saint-Etienne, L'Assomption, Lanaudière, QC, J5W 1W7",
+    "hours": "sur rendez-vous"
   },
   {
     "id": "services-communautaires-on-rock-pfd",
@@ -21970,6 +24728,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service disponible 24h/24, 7j/7"
   },
   {
+    "id": "societe-alzheimer-de-lanaudiere-la-jol",
+    "name": "Société Alzheimer de Lanaudière (la)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 759-3057",
+    "description": "• Information et référence.• Assistance téléphonique.• Rencontres individuelles et familiales.• Programme Répit-Accompagnement-Stimulation (RAS).• Groupe pour personnes en début de maladie.• Groupe d'échange pour aidant·e·s.• Formation pour proches aidant·e·s, intervenant·e·s et professionnel·le·s.• Conférences, formation, rencontres-ateliers.• Prêt de livres et de vidéos. | Clientèle: personnes atteintes de la maladie d'Alzheimer ou une maladie apparentée, leurs proches, proches aidant·e·s, réseau de la santé et résidences privées | Territoire: Lanaudière | Frais: membre: 25$ par année, programme Répit-Accompagnement-Stimulation: 21$ par bloc de 3 heures | Statut: organisme à but non lucratif",
+    "website": "https://www.sadl.org",
+    "address": "434, rue St-Charles-Borromée Nord, Joliette, Lanaudière, QC, J6E 4R7",
+    "hours": "lundi au jeudi: 9h00 à 16h00, vendredi: 9h00 à 12h30"
+  },
+  {
+    "id": "societe-canadienne-de-la-sclerose-e-msc",
+    "name": "Société Canadienne de la Sclérose en Plaques - Section Lanaudière",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 417-3562",
+    "description": "• Information sur la recherche et sur différents aspects de la maladie: documentation, séances d'information, conférences, congrès annuel Espoir Famille.• Soutien: groupes d'entraide, écoute téléphonique et accompagnement.• Défense de droit.• Activités physiques adaptées.• Action sociale.• Levée de fonds. | Clientèle: personnes atteintes de sclérose en plaques et leurs proches | Territoire: Lanaudière | Frais: variables selon les activités | Statut: organisme à but non lucratif",
+    "website": "https://spcanada.ca/sp-canada-lanaudiere",
+    "address": "2500, boulevard Mascouche, bureau 221, Mascouche, Lanaudière, QC, J7K 0H5",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
     "id": "qc-food-sherbrooke-sv",
     "name": "Société Saint-Vincent-de-Paul Sherbrooke",
     "category": "food",
@@ -21981,6 +24765,94 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.ssvp-sherbrooke.org",
     "address": "240, rue Marquette, Sherbrooke, QC J1H 1M5",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Apporter pièce identité et preuve de résidence."
+  },
+  {
+    "id": "societe-de-l-autisme-region-lanaudi-ndp",
+    "name": "Société de L'Autisme Région Lanaudière",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Notre-Dame-des-Prairies",
+    "province": "QC",
+    "phone": "1 888 759-9788",
+    "description": "• Information, écoute et référence.• Conférences et formations.• Matériathèque et centre de documentation sur rendez-vous.• Sensibilisation.• Cafés-rencontres pour parents.• Défense des droits, accompagnement.• Aide à l'obtention de subventions.• Ateliers Azimut pour adolescents.• Activités pour adultes.• Centre de jour: zoothérapie, musicothérapie, activités physiques, artistiques, culinaires, sensorielles. | Clientèle: personnes vivant avec un trouble du spectre de l'autisme (TSA), leur famille, grand public | Territoire: Lanaudière | Frais: cotisation annuelle: 25$ pour famille:, 35$ pour individu, 50% pour professionnel·le, 100$ pour memb | Statut: organisme à but non lucratif",
+    "website": "https://autisme-lanaudiere.org",
+    "address": "233, boulevard Antonio-Barrette, Notre-Dame-des-Prairies, Lanaudière, QC, J6E 1E7",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "societe-de-saint-vincent-de-paul-co-lasm",
+    "name": "Société de Saint-Vincent de Paul - Conférence L'Assomption",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "L'Assomption",
+    "province": "QC",
+    "phone": "450 589-6655",
+    "description": "• Banque alimentaire.• Comptoir: vente de vêtements et de meubles à prix modique.• Paniers de Noël.• Distribution de fournitures scolaires. | Clientèle: personnes dans le besoin | Territoire: L'Assomption | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.ssvp-lassomption.org",
+    "address": "168, rue Saint-Joseph, L'Assomption, Lanaudière, QC, J5W 3B8",
+    "hours": "mardi et mercredi 13h00 à 16h00, jeudi 17h00 à 20h00, samedi 9h00 à 12h00"
+  },
+  {
+    "id": "societe-de-saint-vincent-de-paul-co-rep",
+    "name": "Société de Saint-Vincent de Paul - Conférence Repentigny - L'Essentiel",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 582-3388",
+    "description": "• Comptoir alimentaire.• Fournitures scolaires.• Paniers de Noël. | Clientèle: personnes à faible revenu | Territoire: Repentigny et Le Gardeur, comprenant les paroisses Purification, Notre-Dame-des- Champs, Précieux-Sang et Saint-Paul-l'Ermite | Frais: aucuns | Statut: organisme à but non lucratif",
+    "address": "565, rue Leclerc, Repentigny, Lanaudière, QC, J6A 8C1",
+    "hours": "comptoir alimentaire: lundi et mercredi 13h00 à 16h00, jeudi et vendredi 9h30 à 14h00"
+  },
+  {
+    "id": "societe-de-saint-vincent-de-paul-co-rep-2",
+    "name": "Société de Saint-Vincent de Paul - Conférence Saint-Paul-L'Ermite",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 585-0319",
+    "description": "Magasin d'aubaines.• Réception et vente de vêtements, literie, jouets, petits meubles, articles de maison, vaisselle, ustensiles, livres, petits appareils électriques. | Clientèle: personnes dans le besoin | Territoire: Le Gardeur | Frais: variables | Statut: organisme à but non lucratif",
+    "website": "https://ssvp-mtl.org",
+    "address": "380, boulevard Lacombe, Repentigny, Lanaudière, QC, J5Z 1N6",
+    "hours": "lundi, mercredi et jeudi 12h30 à 16h00"
+  },
+  {
+    "id": "societe-de-saint-vincent-de-paul-sa-lasm",
+    "name": "Société de Saint-Vincent de Paul - Saint-Gérard-Majella",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "L'Assomption",
+    "province": "QC",
+    "phone": "450 588-7934",
+    "description": "• Comptoir vestimentaire.• Distribution de denrées non périssables et de bons d'achat.• Paniers de Noël.• Aide à l'achat de fournitures scolaires. | Clientèle: personnes à faible revenu | Territoire: Saint-Gérard-Majella | Statut: organisme à but non lucratif",
+    "address": "2740, boulevard L'Ange-Gardien Nord, L'Assomption, Lanaudière, QC, J5W 4R8",
+    "hours": "jeudi 9h00 à 12h00, samedi 9h00 à 12h00"
+  },
+  {
+    "id": "societe-de-saint-vincent-de-paul-co-lep",
+    "name": "Société de Saint-Vincent-de-Paul - Conférence L'Épiphanie",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "L'Épiphanie",
+    "province": "QC",
+    "phone": "450 588-3701",
+    "description": "• Comptoir vestimentaire. | Clientèle: personnes à faible revenu | Territoire: L'Épiphanie | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://ssvp-mtl.org",
+    "address": "85, rue Sainte-Anne, L'Épiphanie, Lanaudière, QC, J5X 3Z9",
+    "hours": "mardi et jeudi 13h00 à 16h00, samedi 9h00 à 12h00"
+  },
+  {
+    "id": "societe-de-saint-vincent-de-paul-co-rep-3",
+    "name": "Société de Saint-Vincent-de-Paul - Conférence Saint-Jean-Paul Ii",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 654-9703",
+    "description": "• Friperie et magasin d'aubaines.• Récupération sur place de vêtements, petits meubles, articles de maison, livres et articles de sport. | Clientèle: personnes à faible revenu | Territoire: MRC L'Assomption | Statut: organisme à but non lucratif",
+    "address": "575, rue Leclerc, Repentigny, Lanaudière, QC, J6A 8C1",
+    "hours": "magasin: mercredi 9h00 à 13h00, jeudi 12h00 à 19h00, samedi 9h00 à 16h00, récupération de dons: lundi au vendredi 8h00 à 15h00, samedi 8h00 à 14h00"
   },
   {
     "id": "tr-f2",
@@ -22156,6 +25028,58 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "table-regionale-de-concertation-des-jol",
+    "name": "Table Régionale de Concertation des Aînés de Lanaudière",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "514 928-0147",
+    "description": "Regroupement régional d'échanges et de concertation pour personnes aînées.• Soutien et promotion des organismes oeuvrant auprès des personnes aînées.• Contribution au développement économique, social et culturel de la région.• Facilitation de la concertation entre les associations de personnes aînées et les organismes partenaires.• Présentation d'avis auprès des organismes gouvernementaux.• Conférences et évènements régionaux.• Prix Hommage Aînés et Journée Internationale des Aînés. | Clientèle: personnes aînées, organismes oeuvrant auprès des personnes aînées | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://talanaudiere.org",
+    "address": "488, rue Saint-Charles-Borromée, Joliette, Lanaudière, QC, J6E 4R7",
+    "hours": "lundi au jeudi 9h00 à 16h30"
+  },
+  {
+    "id": "table-regionale-des-organismes-comm-trb",
+    "name": "Table Régionale des Organismes Communautaires Autonomes de Lanaudière",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 839-6085",
+    "description": "Concertation et mobilisation.• Représentation, promotion et défense des intérêts et besoins collectifs.• Soutien au développement et à la préservation de l'autonomie.• Échange, information, éducation et formation sur les enjeux politiques et sociaux. | Clientèle: organismes communautaires autonomes Capacité: 200 organismes | Territoire: Lanaudière | Frais: cotisation annuelle: 50$ à 180$ par organisme | Statut: organisme à but non lucratif",
+    "website": "https://trocl.org",
+    "address": "950, boulevard Moody, bureau 400, Terrebonne, Lanaudière, QC, J6W 3K8",
+    "hours": "lundi au jeudi: 9h00 à 17h00"
+  },
+  {
+    "id": "table-regionale-des-organismes-comm-rep",
+    "name": "Table Régionale des Organismes Communautaires Famille de Lanaudière",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "438 366-3054",
+    "description": "Représentation des organismes communautaires famille de Lanaudière auprès de diverses instances.• Regroupement et soutien.• Échange, communication et partage d'expertise.• Formation, soutien à la planification, conceptualisation, structuration des services, recherche de financement.• Réseautage.• Promotion des besoins des familles. | Clientèle: organismes communautaires dans le domaine de la famille Capacité: 18 organismes | Territoire: Lanaudière | Frais: membre: 100$ par année | Statut: organisme à but non lucratif",
+    "website": "https://trocfl.org",
+    "address": "222, boulevard Notre-Dame-des-Champs, Repentigny, Lanaudière, QC, J6A 3B5",
+    "hours": "lundi au vendredi: 8h30 à 16h30"
+  },
+  {
+    "id": "table-de-concertation-des-groupes-d-jol",
+    "name": "Table de Concertation des Groupes de Femmes de Lanaudière",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 752-0049",
+    "description": "Regroupement régional de défense collective des droits des femmes pour améliorer les conditions de vie et de santé des Lanaudoises.• Concertation.• Mobilisation.• Éducation populaire et sensibilisation.• Activités politiques avec les groupes de femmes sur différents enjeux. | Clientèle: organisations oeuvrant auprès des femmes ou ayant un volet femmes | Territoire: Lanaudière | Frais: aucun | Statut: organisme à but non lucratif",
+    "website": "https://femmeslanaudiere.org",
+    "address": "144, rue Saint-Joseph, bureau 200, Joliette, Lanaudière, QC, J6E 5C4",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
     "id": "table-de-quartier-sud-de-l-ouest-de-pcl",
     "name": "Table de Quartier Sud de L'Ouest-de-L'Île",
     "category": "social",
@@ -22180,6 +25104,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://tandem-mauricie.org",
     "address": "1579, rue Laviolette, Trois-Rivières, QC G9A 1W5",
     "hours": "Lun-ven 8h30-16h30. Sur RV ou référence médicale."
+  },
+  {
+    "id": "tdl-lanaudiere-msc",
+    "name": "Tdl - Lanaudière",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 474-8870",
+    "description": "• Écoute téléphonique et référence.• Documents pour achat, prêt ou consultation.• Conférences et formation.• Activités de loisirs en famille.• Répit.• Équithérapie.• Activités pour adolescent·e·s de 12 à 15 ans.• Socialisation et intégration sociale pour adultes.• Accompagnement pour l'insertion en emploi, soutien socioprofessionnel.• Activités de loisirs hebdomadaires pour adultes.• Groupe de développement lexical.• Point de service à Joliette: 200, rue de Salaberry, bureau 04.• Dîner de Noël. | Clientèle: personnes avec un trouble développemental du langage (dysphasie), parents d'enfants dysphasiques, professionnel·le·s | Territoire: Lanaudière | Frais: familles: 45$, adultes TDL: 25$, adultes TDL en couple et parents d'adultes TDL: 35$, professionnel· | Statut: organisme à but non lucratif",
+    "website": "https://www.TDL-lanaudiere.org",
+    "address": "2500, boulevard Mascouche, bureau 215, Mascouche, Lanaudière, QC, J7K 0H5",
+    "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00"
   },
   {
     "id": "urgent-tel-jeunes",
@@ -22224,6 +25161,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-17h. Consultations sur RV."
   },
   {
+    "id": "terrebonne-cour-municipale-trb",
+    "name": "Terrebonne - Cour Municipale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 961-8378",
+    "description": "Cour de justice de première instance où sont entendus les litiges en matière de règlements municipaux ou d'infractions au Code de la sécurité routière.• Paiement ou contestation de contraventions.• Recouvrement de sommes dues.• Travaux compensatoires. | Territoire: Terrebonne | Statut: organisme municipal",
+    "website": "https://www.ville.terrebonne.qc.ca",
+    "address": "3630, rue Émile-Roy, Terrebonne, Lanaudière, QC, J7M 1A1",
+    "hours": "lundi au jeudi 8h15 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
     "id": "on-toronto-public-health",
     "name": "Toronto Public Health",
     "category": "health",
@@ -22235,6 +25185,73 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.toronto.ca/community-people/health-wellness-care/",
     "address": "100 Queen St W, Toronto, ON M5H 2N2",
     "hours": "Lun-ven 8h30-16h30. Pour urgence: 811 (Info-Santé) ou urgence hospitalière."
+  },
+  {
+    "id": "tournesol-de-la-rive-nord-le-rep",
+    "name": "Tournesol de la Rive-Nord (le)",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 657-1608",
+    "description": "Ressource alternative en santé mentale.• Groupe d'entraide entre pairs, lieu d'échange et de partage.• Accueil, soutien et support individuel.• Rencontres individuelles et collectives.• Informations et références.• Écoute téléphonique.• Soutien dans les moments difficiles et les épreuves de la vie.• Activités de formation, d'information et d'organisation favorisant l'autonomie des personnes.• Activités diverses favorisant l'autonomie des personnes. | Clientèle: personnes de 18 ans et plus vivant ou ayant vécu des problèmes de santé mentale | Territoire: MRC L'Assomption | Frais: carte de membre: 10$ par année | Statut: organisme à but non lucratif",
+    "website": "https://www.letournesoldelarivenord.com",
+    "address": "294, boulevard Iberville, Repentigny, Lanaudière, QC, J6A 2A3",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "travail-de-rue-lavaltrie-lava",
+    "name": "Travail de Rue Lavaltrie",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Lavaltrie",
+    "province": "QC",
+    "phone": "450 586-0080",
+    "description": "• Travail de rue.• Distribution de trousses de naloxone.• Distribution de matériel contraceptif.• Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit). | Clientèle: jeunes et adultes peu ou pas rejoint·e·s par les services traditionnels, jeunes décrocheur·euse·s scolaires | Territoire: Berthierville, Lavaltrie, Lanoraie | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.travailderuelavaltrie.org",
+    "address": "1341, rue Notre-Dame, Lavaltrie, Lanaudière, QC, J5T 0C7",
+    "hours": "bureau 8h30 à 16h30, travail de rue: variable",
+    "isUrgent": true
+  },
+  {
+    "id": "travail-de-rue-secteur-brandon-sain",
+    "name": "Travail de Rue Secteur Brandon",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Saint-Gabriel",
+    "province": "QC",
+    "phone": "450 803-3793",
+    "description": "Services d'intervention dans la rue.• Écoute et référence par téléphone et en personne.• Soutien et accompagnement.• Distribution de trousses de naloxone.• Distribution de bandelettes de test du fentanyl. | Clientèle: adolescent·e·s de 12 ans et plus, adultes, aîné·e·s | Territoire: MRC D'Autray, MRC Matawinie | Frais: aucuns | Statut: organisme à but non lucratif",
+    "address": "85, rue Saint-Gabriel, Saint-Gabriel, Lanaudière, QC, J0K 2N0",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30, service téléphonique: 24 heures, 7 jours",
+    "isUrgent": true
+  },
+  {
+    "id": "travail-de-rue-de-repentigny-rep",
+    "name": "Travail de Rue de Repentigny",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "514 793-5565",
+    "description": "Équipe mobile d'écoute, d'information et de référence.• Gestion des comportements à risque en matière de sexualité, de toxicomanie, d'itinérance et de délinquance à partir d'une approche de réduction des méfaits.• Distribution de condoms, de seringues et d'autre matériel préventif.• Distribution de trousses de naloxone.• Distribution de bandelettes de test du fentanyl et benzodiazépines.• Dépannage alimentaire d'urgence.• Orientation au tribunal et accompagnement à la cour.• Accompagnement durant les démarches légales, médicales et de réinsertion sociale.• Intervention en situation de crise et médiation dans les familles et entre les pairs. | Clientèle: personnes en situation de vulnérabilité, personnes à faible revenu, personnes avec une problématique de dépendance | Territoire: Repentigny | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://www.TRRepentigny.com",
+    "address": "294, boulevard Iberville, Repentigny, Lanaudière, QC, J6A 2A3",
+    "hours": "lundi au vendredi"
+  },
+  {
+    "id": "travail-de-rue-le-trajet-trb",
+    "name": "Travail de Rue le Trajet",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "438 406-0360",
+    "description": "Services d'intervention dans la rue.• Écoute et références.• Soutien et accompagnement.• Prévention des ITSS et hépatites: échange de seringues et distribution de condoms.• Distribution de trousses de naloxone.• Distribution et livraison de bandelettes de test du fentanyl. | Clientèle: personnes de tous âges en situation de rupture sociale | Territoire: Terrebonne, Mascouche | Frais: Aucun | Statut: organisme à but non lucratif",
+    "website": "https://letrajet.ca",
+    "address": "2026, chemin Gascon, Terrebonne, Lanaudière, QC, J6X 2E5",
+    "hours": "variables",
+    "isUrgent": true
   },
   {
     "id": "taq-qc",
@@ -22303,6 +25320,44 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Hébergement d'urgence: accueil 24h/24, 7j/7."
   },
   {
+    "id": "unite-d-information-et-d-action-en-msc",
+    "name": "Unité D'Information et D'Action en Toxicomanie",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "450 968-0363",
+    "description": "Prévention des dépendances et de la rechute par l'entremise de repérage, détection, d'intervention précoce et de réinsertion sociale.• Accueil, référence et accompagnement.• Suivi individuel.• Formations en dépendance et ateliers de sensibilisation et d'information.• Groupes d'échange avec animation et groupes d'entraide autonomes.• Quatre groupes de prévention de la rechute.• Jardins communautaires.• Concertation et collaboration communautaire. | Clientèle: adultes toxicomanes ou alcooliques et leur famille, toute personne ou groupe désireux de mieux comprendre la toxicomanie Capacité: prévention de la rechute: minimum 10 participants, parents d'adolesce | Territoire: MRC Les Moulins, MRC L'Assomption | Frais: carte de membre annuelle: 20$ | Statut: organisme à but non lucratif",
+    "website": "https://uniatox.org",
+    "address": "185, chemin des Anglais, Mascouche, Lanaudière, QC, J7L 3N8",
+    "hours": "bureau: lundi au vendredi 9h00 à 17h00, rencontres en soirée sur rendez-vous"
+  },
+  {
+    "id": "unite-point-de-depart-jol",
+    "name": "Unité Point de Départ",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Joliette",
+    "province": "QC",
+    "phone": "450 759-6848",
+    "description": "• Centre de jour et centre de dépannage.• Groupe d'entraide pour le maintien de l'abstinence et de la sobriété.• Rencontres individuelles.• Soutien, accompagnement et références pour toutes dépendances.• Prévention de la rechute.• Refuge lors des Nuits très froides. | Clientèle: services et activités: personnes de 18 ans et plus ayant une problématique de dépendance (toutes les dépendances), leurs proches, centre de jour: grand public | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
+    "address": "220, rue Lajoie Sud, Joliette, Lanaudière, QC, J6E 5L2",
+    "hours": "lundi au vendredi 8h00 à 15h00, nuits très froides: 22h00 à 6h00"
+  },
+  {
+    "id": "vaisseau-d-or-des-moulins-le-trb",
+    "name": "Vaisseau D'Or (des Moulins) (le)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 964-2418",
+    "description": "Soutien pour personnes vivant ou ayant vécu avec des problèmes de santé mentale.• Groupe d'entraide.• Hébergement temporaire.• Accueil, référence, information, accompagnement et écoute.• Formation.• Sorties organisées et activités de loisir.• Repas communautaires.• Ateliers de peinture et de créativité. | Clientèle: adultes vivant, ayant vécu ou susceptibles de vivre des problèmes de santé mentale | Territoire: MRC Les Moulins | Frais: membre: 15$ par année, hébergement: variables | Statut: organisme à but non lucratif",
+    "website": "https://vaisseaudor.com",
+    "address": "486, rue Gagnon, Terrebonne, Lanaudière, QC, J6W 2N7",
+    "hours": "lundi au vendredi 10h00 à 17h00"
+  },
+  {
     "id": "tr-garde-vickie-dube",
     "name": "Vickie Dube",
     "category": "family",
@@ -22353,6 +25408,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.victimservicestoronto.com",
     "address": "40, College St, Toronto, ON M5G 2J3",
     "hours": "Service essentiel Ontario."
+  },
+  {
+    "id": "vilavi-centre-de-traitement-des-dep-trb",
+    "name": "Vilavi - Centre de Traitement des Dépendances",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 964-6566",
+    "description": "Centre de réadaptation interne de 4 à 6 mois.• Programme distinct pour les dépendances aux substances.• Aide à la réinsertion sociale.• Cheminement individualisé.• Activités sportives.• Hébergement reconnu par les services correctionnels pour les personnes prévenues, en libération conditionnelle ou sous probation. | Clientèle: hommes et femmes adultes aux prises avec des problèmes de consommation de drogues, d'alcool ou de médicaments Capacité: 42 chambres individuelles | Territoire: le Québec | Frais: personnes prestataires de l'aide financière de dernier recours: gratuit, personnes non-prestataires  | Statut: organisme à but non lucratif",
+    "website": "https://vilavi.ca/fr",
+    "address": "1600, côte de Terrebonne, Terrebonne, Lanaudière, QC, J6Y 1G8",
+    "hours": "lundi au vendredi 9h30 à 16h30"
   },
   {
     "id": "villa-beaurepaire-bcf",
@@ -22566,6 +25634,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
   },
   {
+    "id": "zone-ados-secteur-cote-boisee-trb",
+    "name": "Zone Ados Secteur Côte Boisée",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "438 370-4382",
+    "description": "• Activités éducatives, culturelles et sociales visant la prévention, la sensibilisation et l'acquisition d'autonomie.• Frigos sympathiques: réfrigérateur en libre-service. | Clientèle: jeunes de 12 à 17 ans | Territoire: Terrebonne | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://zoneados.ca",
+    "address": "1154, Côte Boisée, Terrebonne, Lanaudière, QC, J6X 4R8",
+    "hours": "période scolaire: mardi au vendredi 15h30 à 21h00, été: mardi au vendredi 11h30 à 17h00"
+  },
+  {
+    "id": "zone-ados-secteur-la-plaine-trb",
+    "name": "Zone Ados Secteur la Plaine",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Terrebonne",
+    "province": "QC",
+    "phone": "450 964-5598",
+    "description": "• Activités éducatives, culturelles et sociales visant la prévention, la sensibilisation et l'acquisition d'autonomie. | Clientèle: jeunes de 12 à 17 ans | Territoire: La Plaine | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://zoneados.ca",
+    "address": "5900, rue Rodrigue, Terrebonne, Lanaudière, QC, J7M 2C1",
+    "hours": "période scolaire: mardi au vendredi 15h30 à 21h00, été: mardi au vendredi 11h30 à 17h00"
+  },
+  {
     "id": "zoo-ecomuseum-sab",
     "name": "Zoo Ecomuseum",
     "category": "social",
@@ -22728,6 +25822,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://stcolumba.ca",
     "address": "11, avenue Rodney, Pointe-Claire, Montréal, QC, H9R 4L8",
     "hours": "Voir site web"
+  },
+  {
+    "id": "eglise-la-cite-msc",
+    "name": "Église la Cité",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Mascouche",
+    "province": "QC",
+    "phone": "514 834-5052",
+    "description": "• Cuisin'aide: dépannage alimentaire, formulaire en ligne cliquer ici• Opération sac à dos: dons de matériels scolaires.• Paniers de Noël.• Regroupement d'activités et de services religieux. | Clientèle: personnes de la région des Moulins, Cuisin'aide: personnes qui traversent une situation difficile, opération sac à dos: enseignant·e·s ou enfants au primaire ou au secondaire | Territoire: Mascouche | Frais: aucuns | Statut: organisme à but non lucratif",
+    "website": "https://egliselacite.ca/",
+    "address": "693, chemin des Anglais, MASCOUCHE, Lanaudière, QC, J7L 3R5",
+    "hours": "variable"
+  },
+  {
+    "id": "equijustice-lanaudiere-sud-rep",
+    "name": "Équijustice Lanaudière Sud",
+    "category": "family",
+    "subcategory": "Délinquance juvénile",
+    "city": "Repentigny",
+    "province": "QC",
+    "phone": "450 581-1459",
+    "description": "• Informations et référence.• Supervision des mesures extrajudiciaires et des peines spécifiques dans le cadre de la Loi sur le système de justice pénale pour les adolescents (LSJPA).• Interventions et activités préventives ponctuelles en milieux scolaire et communautaire sur la LSJPA, la gestion de la colère et des conflits, l'intimidation et la cyberintimidation.• Ateliers, conférences et formations sur la gestion de la colère et des conflits pour parents et adolescent·e·s.• Médiation scolaire.• Médiation citoyenne et ateliers sur la communication et la gestion des conflits.• Programme de mesures de rechange général (PMRG): programme de déjudiciarisation pour adultes, axé sur la réparation des torts causés aux victimes d'actes criminels et à la collectivité. | Clientèle: jeunes de 9 à 17 ans, leurs parents, adultes contrevenant·e·s et victimes, personnel et clientèle des milieux scolaire et communautaire, médiation citoyenne: grand public | Territoire: MRC Les Moulins, MRC L'Assomption, Laval | Statut: organisme à but non lucratif",
+    "website": "https://equijustice.ca/fr",
+    "address": "50, rue Thouin, bureau 200, Repentigny, Lanaudière, QC, J6A 4J4",
+    "hours": "lundi au vendredi 8h30 à 20h00, sur rendez-vous"
   },
   {
     "id": "equijustice-montreal-mediation-cito-pcl",
