@@ -96,6 +96,18 @@ A mobile application connecting vulnerable individuals with community and social
 - Submit TestFlight #1 : `3d968bce-6392-4348-8933-b7b63ba9dad7` ⏳ en cours.
 - **Gotcha credentials** : tout premier `eas build --platform ios` exige mode interactif (Apple ID + 2FA), même avec ASC API key. Ensuite stockés sur EAS, builds suivants tournent en `--non-interactive`.
 
+## v1.1.13 vc77 (en attente OK build) — Splash design B (Moderne illustration)
+- Splash mobile redesign : `components/AppSplashScreen.tsx` réécrit selon design B approuvé.
+  - Fond `#0d9488` plein, 5 cercles concentriques décoratifs `border rgba(255,255,255,~0.1-0.18)`, 5 sparkles dispersés.
+  - Logo card 112x112 sur outer-glow 128x128 (blanc 6% opacité, shadow forte).
+  - Wordmark `AttenteZéro` Inter_700Bold 34pt, tagline `Services communautaires du Québec` Inter_500Medium 13pt.
+  - Badge pill `7 957 services actifs` (dot vert + nombre + label) — `bg rgba(255,255,255,0.14)`, border `rgba(255,255,255,0.22)`.
+  - Footer `PROPULSÉ PAR / CivicAI`.
+  - Animation : rings+logo (350ms parallèle) → text (220ms) → badge+footer (220ms) → total ~1.1s ; hold splash bumpé `800ms → 1400ms` après ready dans `app/_layout.tsx` pour laisser l'anim finir avant fade-out.
+- Compte hardcodé `7 957` dans `SERVICES_COUNT_LABEL` — à mettre à jour manuellement quand ce nombre évolue (impossible de le rendre dynamique car splash s'affiche AVANT chargement services).
+- iOS buildNumber 80→81, Android versionCode 72→73.
+- ⚠️ Web preview fige sur 1ère frame de l'anim (useNativeDriver pas dispo en web RN) — normal, native iOS/Android tourne smooth.
+
 ## v1.1.13 vc76 (en attente OK build) — +Montérégie 1007 + Côte-Nord 535 + Chaudière-Appalaches 995 + Capitale-Nationale 1791 + Haute-Yamaska 261 + FQOCF 205 + Emploi-QC 273 + CIUSSS-EMTL 46 + Logement-Rive-Sud 4
 - **+4 services logement Rive-Sud** (Comité logement Rive-Sud, Office d'habitation de Longueuil OHL, Tribunal administratif du logement TAL province-wide, AILIA logements accessibles) ajoutés one-by-one depuis paste user. Réseau d'habitations Chez Soi déjà présent (Montérégie). Géocodage : 2 ROOFTOP (Comité logement, OHL), 2 APPROXIMATE (TAL et AILIA — pas d'adresse fournie). Push : **1 requête bulk, ~1 sec, 4/4 OK**.
 - **+46 installations CIUSSS-EMTL** (Est-Île-Montréal — CLSC, GMF, cliniques médicales, CHSLD, centres de jour, Institut universitaire en santé mentale) parsées depuis paste copié de `https://ciusss-estmtl.gouv.qc.ca/adresses-et-coordonnees` (684 lignes, 68 fiches sources). Site Drupal JS-rendered → AJAX scraping bloqué (`/ajax/search` ne renvoie que 10 par requête, pas d'API REST exposée), fallback texte copié-collé. Parser `/tmp/ciusss-parse.py` détecte chaque bloc via regex `City QC POSTAL` puis remonte 2 lignes (adresse, nom). 68 → 46 dédup vs prod (22 doublons). Géocodage adresse complète : **44 ROOFTOP (96%)**, 1 RANGE, 1 GC, 0 échec. Tous catégorisés `health`. Push : **1 requête bulk, ~1 sec, 46/46 OK**. Coût Google : ~0,25$ USD.

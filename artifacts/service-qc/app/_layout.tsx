@@ -101,7 +101,7 @@ function AppContent({ fontsReady }: { fontsReady: boolean }) {
 
   useEffect(() => {
     if (isReady) {
-      const timer = setTimeout(() => setSplashVisible(false), 800);
+      const timer = setTimeout(() => setSplashVisible(false), 1400);
       return () => clearTimeout(timer);
     }
   }, [isReady]);
