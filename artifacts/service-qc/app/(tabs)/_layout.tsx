@@ -8,6 +8,33 @@ import FloatingAIChat from "@/components/FloatingAIChat";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useColors } from "@/hooks/useColors";
 
+const TAB_BG = "#0d9488";
+const TAB_BG_TOP_BORDER = "rgba(255,255,255,0.08)";
+const TAB_ACTIVE = "#FFFFFF";
+const TAB_INACTIVE = "rgba(255,255,255,0.62)";
+const TAB_ACTIVE_PILL_BG = "rgba(255,255,255,0.18)";
+
+function TabIcon({
+  name,
+  color,
+  focused,
+}: {
+  name: React.ComponentProps<typeof Feather>["name"];
+  color: string;
+  focused: boolean;
+}) {
+  return (
+    <View
+      style={[
+        styles.iconPill,
+        focused && styles.iconPillActive,
+      ]}
+    >
+      <Feather name={name} size={20} color={color} />
+    </View>
+  );
+}
+
 function ClassicTabLayout() {
   const colors = useColors();
   const colorScheme = useColorScheme();
@@ -15,11 +42,6 @@ function ClassicTabLayout() {
   const isDark = colorScheme === "dark";
   const isIOS = Platform.OS === "ios";
   const isWeb = Platform.OS === "web";
-
-  const TAB_BG = "#0E7E6E";
-  const TAB_BG_TOP_BORDER = "#0A6055";
-  const TAB_ACTIVE = "#FFFFFF";
-  const TAB_INACTIVE = "rgba(255,255,255,0.65)";
 
   return (
     <Tabs
@@ -32,18 +54,26 @@ function ClassicTabLayout() {
           backgroundColor: TAB_BG,
           borderTopWidth: 1,
           borderTopColor: TAB_BG_TOP_BORDER,
-          elevation: 8,
+          borderTopLeftRadius: 24,
+          borderTopRightRadius: 24,
+          elevation: 16,
           shadowColor: "#000",
-          shadowOffset: { width: 0, height: -2 },
-          shadowOpacity: 0.12,
-          shadowRadius: 8,
+          shadowOffset: { width: 0, height: -4 },
+          shadowOpacity: 0.18,
+          shadowRadius: 14,
+          overflow: "hidden",
           ...(isWeb ? { height: 84 } : {}),
         },
         tabBarBackground: () => (
           <View
             style={[
               StyleSheet.absoluteFill,
-              { backgroundColor: TAB_BG },
+              {
+                backgroundColor: TAB_BG,
+                borderTopLeftRadius: 24,
+                borderTopRightRadius: 24,
+                overflow: "hidden",
+              },
             ]}
           />
         ),
@@ -52,11 +82,11 @@ function ClassicTabLayout() {
           fontWeight: "700",
           marginBottom: isWeb ? 4 : 0,
           includeFontPadding: false,
-          letterSpacing: 0.2,
+          letterSpacing: 0.3,
         },
         tabBarItemStyle: {
           paddingHorizontal: 0,
-          paddingTop: 4,
+          paddingTop: 6,
         },
         tabBarAllowFontScaling: false,
       }}
@@ -65,8 +95,8 @@ function ClassicTabLayout() {
         name="index"
         options={{
           title: t.tabHome,
-          tabBarIcon: ({ color }) => (
-            <Feather name="home" size={21} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon name="home" color={color} focused={focused} />
           ),
         }}
       />
@@ -75,21 +105,7 @@ function ClassicTabLayout() {
         options={{
           title: t.tabChat,
           tabBarIcon: ({ color, focused }) => (
-            <View
-              style={
-                focused
-                  ? {
-                      backgroundColor: "#FFFFFF",
-                      borderRadius: 14,
-                      paddingHorizontal: 8,
-                      paddingVertical: 3,
-                      marginBottom: 2,
-                    }
-                  : undefined
-              }
-            >
-              <Feather name="cpu" size={21} color={focused ? "#0E7E6E" : color} />
-            </View>
+            <TabIcon name="cpu" color={color} focused={focused} />
           ),
         }}
       />
@@ -97,8 +113,8 @@ function ClassicTabLayout() {
         name="services"
         options={{
           title: t.tabServices,
-          tabBarIcon: ({ color }) => (
-            <Feather name="list" size={21} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon name="list" color={color} focused={focused} />
           ),
         }}
       />
@@ -106,8 +122,8 @@ function ClassicTabLayout() {
         name="map"
         options={{
           title: "Carte",
-          tabBarIcon: ({ color }) => (
-            <Feather name="map-pin" size={21} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon name="map-pin" color={color} focused={focused} />
           ),
         }}
       />
@@ -122,8 +138,8 @@ function ClassicTabLayout() {
         name="more"
         options={{
           title: "Plus",
-          tabBarIcon: ({ color }) => (
-            <Feather name="more-horizontal" size={21} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon name="more-horizontal" color={color} focused={focused} />
           ),
         }}
       />
@@ -137,6 +153,22 @@ function ClassicTabLayout() {
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  iconPill: {
+    minWidth: 44,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 14,
+    paddingHorizontal: 10,
+    backgroundColor: "transparent",
+    marginBottom: 2,
+  },
+  iconPillActive: {
+    backgroundColor: TAB_ACTIVE_PILL_BG,
+  },
+});
 
 export default function TabLayout() {
   return (

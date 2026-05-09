@@ -96,6 +96,16 @@ A mobile application connecting vulnerable individuals with community and social
 - Submit TestFlight #1 : `3d968bce-6392-4348-8933-b7b63ba9dad7` ⏳ en cours.
 - **Gotcha credentials** : tout premier `eas build --platform ios` exige mode interactif (Apple ID + 2FA), même avec ASC API key. Ensuite stockés sur EAS, builds suivants tournent en `--non-interactive`.
 
+## v1.1.13 vc78 (en attente OK build) — Tab bar redesign
+- `app/(tabs)/_layout.tsx` retravaillé pour un look plus designer :
+  - Fond `#0d9488` (teal moderne, cohérent avec splash B au lieu du vieux `#0E7E6E`).
+  - Coins haut bien arrondis (`borderTopLeftRadius/RightRadius: 24`, `overflow: hidden` sur la bar + le `tabBarBackground`).
+  - Ombre relevée (`offset -4`, `opacity 0.18`, `radius 14`, `elevation 16`) → la bar « flotte » visuellement.
+  - Pill actif unifié sur **toutes** les tabs (helper `<TabIcon>`) : `bg rgba(255,255,255,0.18)`, `radius 14`, `minWidth 44`. Plus de cas spécial chat-only.
+  - Inactive tint un poil plus visible (`0.62` au lieu de `0.65` — on garde le contraste blanc/teal).
+  - Icônes 21→20px (un poil moins lourd dans le pill), letterSpacing label 0.2→0.3.
+- iOS buildNumber 81→82, Android versionCode 73→74.
+
 ## v1.1.13 vc77 (en attente OK build) — Splash design B (Moderne illustration)
 - Splash mobile redesign : `components/AppSplashScreen.tsx` réécrit selon design B approuvé.
   - Fond `#0d9488` plein, 5 cercles concentriques décoratifs `border rgba(255,255,255,~0.1-0.18)`, 5 sparkles dispersés.
