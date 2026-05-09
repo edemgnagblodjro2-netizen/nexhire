@@ -297,6 +297,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "3r-qu-bec-out",
+    "name": "3R Québec",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 635-8899",
+    "description": "Gestion des matières résiduelles et lutte contre le gaspillage.* Distribution de surplus alimentaire pour les membres, au 309 rue Notre-Dame.* Friperie.* Collecte à domicile d'encombrants et de recyclage: papiers, cartons, plastiques mixtes, encombrants métalliques et électroniques, cartouches d'encres, vêtements en bon état, autres matières sur demande.* Récupération des surplus et des invendus. | Clientèle: population générale | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "https://3rqc.com/accueil",
+    "address": "297, rue Notre-Dame, Gatineau, Outaouais, QC, J8P 1K9",
+    "hours": "friperie: lundi au mercredi 10h00 à 17h00, jeudi 10h00 à 19h00, vendredi 10h00 à 21h00, samedi 9h00 à 17h00, dimanche 10h00 à 17h00, distribution alimentaire: lundi au vendredi 13h30 à 18h30, samedi et dimanche 13h30 à 18h30"
+  },
+  {
     "id": "yt-811",
     "name": "811 – Info-Santé",
     "category": "health",
@@ -525,6 +538,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "acad-mie-des-retrait-s-de-l-outa-out",
+    "name": "Académie Des Retraités De L'Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-5052",
+    "description": "Centre d'éducation pour personnes retraitées.* Conférences variées: culture générale, santé, développement personnel, politique, éducation sexuelle, histoire, économie.* Cours de langue: espagnol niveau débutant, intermédiaire et avancé, italien.* Cours d'informatique: introduction aux ordinateurs Apple, tablettes, téléphones.* Cours d'exercices physiques: Yoga, musculation, Qi gong, cardio, autodéfense.* Cours d'arts et d'artisanat.* Troupe de théâtre AROBAS.* Chorale Choeur TourneSol.* Groupe de musique ARO'Band.* Clubs sociaux: club de marche, club de billard, club de vélo Velosanté, club de photographie le Pixelliste, club de lecture, club des voyageurs passionnés, club amical de golf, club ARO'mitié pour personnes seules.* Occasions de bénévolat. | Clientèle: personnes retraitées | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "https://academiedesretraites.ca/",
+    "address": "331, boulevard de la Cité-des-Jeunes, Gatineau, Outaouais, QC, J8Y 6T3",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "accompagnement-des-femmes-immigr-out",
+    "name": "Accompagnement Des Femmes Immigrantes De L'Outaouais",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-6764",
+    "description": "Accompagnement des femmes immigrantes dans un processus d'intégration culturelle, économique et sociale en Outaouais.* Séances d'information sur les premières démarches d'installation: documents importants à obtenir, ouverture d'un compte bancaire, recherche d'un logement, services de gardes et inscription des enfants à l'école, système scolaire québécois, aide financière et déclaration de revenus, services offerts par les organismes communautaires, équivalences de diplôme, services en employabilité.* Cours de français aux femmes et à leur famille.* Assermentation de documents.* Soutien psychosocial individuel pour les femmes immigrantes ou victimes de violence.* Accompagnement dans les démarches administratives.* Valorisation des femmes immigrantes entrepreneures et promotion de leurs produits.* Babel: groupe pour personnes visant à briser l'isolement par l'entremise d'activités de groupe, activités physiques, cours d'anglais de base, etc.* Espace parent: ateliers de discussion en groupe pour parents sur le système d'éducation au Québec, la DPJ, l'intégration des enfants, etc.* Ateliers sur les valeurs démocratiques et québécoises.* Service de garde subventionné à Hull et Cantley.* Habits de neige neufs à prix modique.* Prêt pour la rentrée: distribution de fournitures scolaires à prix modique.* Café-rencontres. | Clientèle: femmes immigrantes et leur famille, personnes immigrantes, cours de français: femmes et hommes immigrants de plus de 17 ans nés en dehors du Canada, Babel: femmes de plus de 55 ans, habits de neige: familles immigrantes à faible revenu | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "afio.ca",
+    "address": "109, rue Wright, unité 9, Gatineau, Outaouais, QC, J8X 2G7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, été: vendredi 8h30 à 13h00, horaires spécifiques pour certaines activités"
+  },
+  {
     "id": "accorderie-les-moulins-l-msc",
     "name": "Accorderie les Moulins (l')",
     "category": "social",
@@ -599,6 +638,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Point d'accueil et de référence pour orienter les personnes vulnérables de Trois-Rivières vers les bons organismes : hébergement d'urgence, dépannage alimentaire, santé mentale, immigration, aide juridique. Accompagnement par des travailleurs de milieu.",
     "address": "1060, rue St-François-Xavier, local 310, Trois-Rivières, QC G9A 1R8",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "accueil-parrainage-outaouais-out",
+    "name": "Accueil-Parrainage Outaouais",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 777-2960",
+    "description": "Accueil des personnes immigrantes nouvellement arrivées en Outaouais et soutien à l'intégration.* Accueil, références et accompagnement.* Contacts avec les institutions, les ressources et les autres services gouvernementaux.* Aide à la recherche d'un logement et à la signature du bail pour réfugié·e·s.* Inscription à l'école et aux cours de francisation.* Assistance pour compléter les formulaires.* Accompagnement dans le réseau de la santé.* Orientation pour les premières démarches d'établissement: explications pour la première épicerie, ouverture d'un compte en banque, assistance pour acheter un téléphone, explication du transport en commun, aide pour trouver des services de garde, conseils et appui personnels, service de photocopies et de télécopies.* Aide à l'intégration: jumelage, banque d'interprètes et de traducteurs, intégration dans le milieu scolaire, médiation, parrainage, orientation vers des ressources d'emploi, assermentation de documents.* Sessions d'information sur la vie dans une nouvelle communauté d'accueil, les droits, les responsabilités, la notion de citoyenneté, etc. | Clientèle: personnes nouvellement arrivées, personnes immigrantes, aide à la recherche d'un logement: réfugiés | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "apo-qc.org",
+    "address": "124, rue Jeanne-d'Arc, Gatineau, Outaouais, QC, J8Y 2H7",
+    "hours": "lundi au vendredi de 8h30 à 16h30"
   },
   {
     "id": "qc-immo-acceslogis",
@@ -730,6 +782,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous"
   },
   {
+    "id": "action-quartiers-out",
+    "name": "Action-Quartiers",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 777-7815",
+    "description": "Maison de quartier.* Accueil.* Ateliers thématiques pour enfants: dessin, cuisine, bricolage.* Distribution d'habits de neige pour enfant.* Activités pour personnes adolescentes: groupe de discussion animé, soirées sociales.* Cours de yoga.* Café social.* Fêtes de quartier.* Activités familiales: sorties au parc, soccer, kick ball, etc.* Distribution de fournitures scolaires.* Paniers de Noël. | Clientèle: enfants, adolescent·e·s, adultes | Territoire: quartiers Saint-Jean-Bosco et Wrightville de Gatineau | Statut: organisme à but non lucratif",
+    "address": "2, rue Fortier, Gatineau, Outaouais, QC, J8Y 4P5",
+    "hours": "lundi, mercredi, jeudi et vendredi 9h00 à 16h00, mardi 13h00 à 16h00"
+  },
+  {
     "id": "imm-actions-interculturelles-estrie",
     "name": "Actions Interculturelles",
     "category": "immigration",
@@ -741,6 +805,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://aide.org",
     "address": "342, rue Bowen Sud, Sherbrooke, QC J1G 2E2",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "adojeune-out",
+    "name": "Adojeune",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 568-4499",
+    "description": "* Prévention dans les écoles auprès des jeunes.* Soutien pour les parents.* Activités thématiques.* Maisons des jeunes et hébergement d'urgence. | Clientèle: écoles, parents | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "adojeune.org",
+    "address": "22, rue d'Auvergne, Gatineau, Outaouais, QC, J8T 6J8",
+    "hours": "lundi au vendredi 8h30 à 15h30"
+  },
+  {
+    "id": "adojeune-maison-des-jeunes-centr-out",
+    "name": "Adojeune - Maison Des Jeunes Centre Communautaire Gérard-Pezzani",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 568-4499",
+    "description": "Lieu de rencontre animé pour les jeunes.* Billard, air-hockey, ping-pong, Baby-foot, consoles diverses, ordinateurs, cantine, etc.* Activités plein air et sportives. * Aide aux devoirs. | Clientèle: jeunes de 12 à 17 ans | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "adojeune.org",
+    "address": "22, rue d'Auvergne, Gatineau, Outaouais, QC, J8T 6J8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "adojeune-maison-des-jeunes-sansc-out",
+    "name": "Adojeune - Maison Des Jeunes Sanscartier",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 643-1735",
+    "description": "Lieu de rencontre animé pour les jeunes.* Billard, air-hockey, ping-pong, Baby-foot, consoles diverses, ordinateurs, cantine, etc.* Activités plein air et sportives. * Aide aux devoirs. | Clientèle: jeunes de 12 à 17 ans | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "adojeune.org",
+    "address": "42, rue Sanscartier, Gatineau, Outaouais, QC, J8P 4N5",
+    "hours": "Voir site web"
   },
   {
     "id": "nu-foodbank-nu",
@@ -1036,6 +1139,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
+    "id": "aire-ouverte-de-l-outaouais-out",
+    "name": "Aire Ouverte De L'Outaouais",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 966-6220",
+    "description": "Services confidentiels variés, avec ou sans rendez-vous, pour les jeunes de 12 à 25 ans.* Rencontre avec des personnes intervenantes en santé mentale, santé physique et santé sexuelle.* Intervenant·e·s et infirmier·ère·s sur place. | Clientèle: jeunes de 12 à 25 ans et leur entourage | Territoire: Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "cisss-outaouais.gouv.qc.ca/aire-ouverte",
+    "address": "92, boulevard St-Raymond, local 403, Gatineau, Outaouais, QC, J8Y 1S7",
+    "hours": "lundi et vendredi: sur rendez-vous seulement, mardi et jeudi 11h00 à 19h00, mercredi 9h00 à 12h00 et 13h00 à 17h00, dimanche 11h00 à 16h00 et 17h00 à 19h00"
+  },
+  {
     "id": "msss-clsc-val-d-or-aire-ouverte-de-la-vallee-de-l-or",
     "name": "Aire Ouverte De La Vallée-De-L'Or",
     "category": "health",
@@ -1304,6 +1420,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "un mardi sur deux 9h00 à 16h00, accueil téléphonique: lundi, mardi, vendredi et samedi 9h00 à 17h00, mercredi et jeudi 11h00 à 19h00"
   },
   {
+    "id": "albatros-gatineau-la-li-vre-out",
+    "name": "Albatros Gatineau - La Lièvre",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "873 455-9632",
+    "description": "Accompagnement bénévole des personnes en soins palliatifs ou en fin de vie.* Accompagnement et soutien à domicile, en RPA, en CHSLD, à l'hôpital et en maisons de soins palliatifs.* Formation de bénévoles, des proches aidants, de la population en générale en accompagnement de soins palliatifs et fin de vie. https://forms.gle/xu4Lcqojn6FRdwPx9* Soutien et répit aux personnes proches aidantes. https://forms.gle/nr5C2EhTyvHdYbTt6* Écoute active empathique et bienveillante, sans jugement dans le respect de la personne. | Clientèle: personnes atteintes de maladies graves en soins palliatifs ou en fin de vie, personnes aînées, leurs proches, formation: personnes proches aidantes, population générale | Territoire: Gatineau, MRC Les Collines-de-l'Outaouais, MRC Vallée-de-la-Gatineau, MRC Papineau | Statut: organisme à but non lucratif",
+    "address": "115, boulevard Sacré-Coeur, local 103, Gatineau, Outaouais, QC, J8X 1C5",
+    "hours": "lundi au dimanche de 9h00 à 21h00, sur rendez-vous"
+  },
+  {
     "id": "albatros-lanaudiere-msc",
     "name": "Albatros Lanaudière",
     "category": "social",
@@ -1315,6 +1443,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://albatroslanaudiere.com",
     "address": "2500, boulevard Mascouche, bureau 139, Mascouche, Lanaudière, QC, J7K 0H5",
     "hours": "sur rendez-vous"
+  },
+  {
+    "id": "albatros-vall-e-de-la-gatineau-m-out",
+    "name": "Albatros Vallée-De-La-Gatineau (Maniwaki)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Montcerf-Lytton",
+    "province": "QC",
+    "phone": "819 449-4540",
+    "description": "Accompagnement bénévole des personnes atteintes de maladie grave ou terminale.* Accompagnement, écoute téléphonique et soutien.* Formations pour les accompagnateurs: deuil, dynamiques familiales et phase terminale. | Clientèle: personnes atteintes de maladie grave ou terminale, leurs proches | Territoire: MRC La Vallée-de-la-Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.albatrosvgml.ca",
+    "address": "15, rue Principale Nord, Montcerf-Lytton, Outaouais, QC, J0W 1N0",
+    "hours": "9h00 à 21h00, 7 jours"
   },
   {
     "id": "ab-ahs",
@@ -1358,6 +1499,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "alleyn-et-cawood-municipalit-out",
+    "name": "Alleyn-Et-Cawood - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Alleyn-et-Cawood",
+    "province": "QC",
+    "phone": "819 467-2941",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: alleyn- cawood.ca/fr/services-citoyens/dechets-recyclage-compost* Station de nettoyage de bateaux: alleyn- cawood.ca/fr/services-citoyens/station-nettoyage-bateaux* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système d'appels automatisés d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Alleyn-et-Cawood | Statut: organisme municipal",
+    "website": "alleyn-cawood.ca",
+    "address": "10, chemin Jondee, Alleyn-et-Cawood, Outaouais, QC, J0X 1P0",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "alliance-alimentaire-papineau-out",
+    "name": "Alliance Alimentaire Papineau",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 983-1714",
+    "description": "Organisme pour le développement de l'autonomie alimentaire.* Frigo Quiroule: services de traiteur social et popote roulante.* Cuisines collectives et partagent.* Programme Aux arbres citoyens et pépinière nourricière: implantation de plantes, arbres et arbustes produisant des fruits comestibles.* Ateliers culinaire et horticole.* Grainothèque: bibliothèque de semences. | Clientèle: grand public | Territoire: MRC Papineau | Statut: organisme à but non lucratif",
+    "website": "www.alliancealimentairepapineau.com",
+    "address": "179, rue Principale, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "lundi au jeudi 8h00 à 16h00"
+  },
+  {
+    "id": "alliance-autochtone-du-qu-bec-out",
+    "name": "Alliance Autochtone Du Québec",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-7763",
+    "description": "Promotion et représentation des intérêts des personnes autochtones, Métis Ou Inuit statuées et non- statuées, vivant en dehors des réserves dans la province de Québec.* Service d'intervention sociale et communautaire: référencement vers les ressources appropriées à la situation.* Service d'analyse généalogique.* Information et administration des programmes et services gouvernementaux destinés aux Autochtones vivant hors des réserves.* Programme de bourses pour étudiant·e·s autochtones.* Services parajudiciaires autochtones: information juridique, accompagnement, etc.* Partenariat avec Habitation Métis du Nord et Corporation Waskahegen: aide pour trouver logement subventionné.* Partenariat avec Société de crédit commercials autochone (SOCCA): accompagnement et aide financière pour projets économiques.* Sensibilisation de la population québécoise et canadienne: les réalités des Autochtones vivant hors des réserves, leur histoire, leurs réalisations et leurs apports à la société canadienne.* Activités culturelles: powwow, événement journée autochtones 21 juin, etc.* Négociation d'ententes auprès des différents paliers gouvernementaux ainsi que de toute autorité municipale ou locale visant l'amélioration des conditions politiques, économiques, sociales et culturelles des Autochtones vivant hors des réserves.* Collaboration auprès d'organisations autochtones nationales et régionales afin de faciliter l'exercice des droits des Autochtones vivant hors des réserves. | Clientèle: personne autochtone avec ou sans statut reconnu vivant en dehors du contexte des réserves et dans la province de Québec, activités culturelles: grand public | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "aaqnaq.com",
+    "address": "21, rue Brodeur, Gatineau, Outaouais, QC, J8Y 2P6",
+    "hours": "saison estivale: lundi au jeudi 8h30 à 12h00 et 13h00 à 17h00, saison hivernale: 8h30 à 12h00 et 12h45 à 16h30"
+  },
+  {
     "id": "alphabetisation-sans-limites-pcl",
     "name": "Alphabétisation Sans Limites (Literacy Unlimited)",
     "category": "social",
@@ -1371,6 +1551,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-jeu 9h-16h. Fermé mi-juin à septembre."
   },
   {
+    "id": "alternative-outaouais-l-out",
+    "name": "Alternative Outaouais (L')",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-1106",
+    "description": "Services en justice alternative et réparatrice.* Application de mesures et sanctions extrajudiciaires: accompagnement dans les travaux compensatoires et communautaires, groupe de sensibilisation Jeunes citoyens, dédommagement, lettre d'excuses, dons, lettre de réflexion, groupe de victimisation, groupe d'influence entre pairs.* Consultation des victimes d'un délit commis par une personne âgée entre 12 et 17 ans.* Médiation entre victimes et contrevenant·e·s adolescent·e·s.* Médiation de quartier.* Sensibilisation. | Clientèle: adultes, familles, adolescent·e·s, victimes, contrevenant·e·s adolescent·e·s | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.laltou.com",
+    "address": "885, boulevard de la Carrière, bureau 201, Gatineau, Outaouais, QC, J8Y 6S6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "amicale-de-saint-vincent-de-paul-lav",
     "name": "Amicale De Saint-Vincent-De-Paul (L')",
     "category": "social",
@@ -1381,6 +1574,31 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Activités récréatives: bingo, danse, cartes.* Soupers thématiques.* Sorties. | Clientèle: personnes de 50 ans et plus, seules ou en couple | Territoire: quartier Saint-Vincent-de-Paul | Statut: organisme à but non lucratif",
     "address": "1111, place J.-Eudes-Blanchard, Saint-Vincent-de-Paul, Laval, QC, H7C 1T1",
     "hours": "jeudi 19h00 à 22h00"
+  },
+  {
+    "id": "amicale-de-thurso-l-out",
+    "name": "Amicale De Thurso (L')",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Thurso",
+    "province": "QC",
+    "phone": "819 210-5141",
+    "description": "Club social pour personnes aînées.* Souper mensuel.* Activités culturelles, sportives et récréatives.* Jeux de carte hebdomadaire.* Danse. | Clientèle: personnes 50 et plus Capacité: souper: 150 | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "address": "125, rue Bourget, Thurso, Outaouais, QC, J0X 3B0",
+    "hours": "septembre à avril, soupers: variable, jeux de carte: jeudi après-midi"
+  },
+  {
+    "id": "amicale-des-personnes-handicap-e-out",
+    "name": "Amicale Des Personnes Handicapées Physiques De L'Outaouais (L')",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 663-2999",
+    "description": "* Dîners gratuits pour les membres.* Activités sociales et récréatives: cours de peinture, cours de poterie, projections de films, bingo, etc.* Location, vente et échange de matériel adapté usagé: fauteuils, sièges de bain, béquilles, etc.* Jardin communautaire adapté. | Clientèle: personnes vivant avec un handicap physique | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "amicale.ca",
+    "address": "405, rue Notre-Dame, Gatineau, Outaouais, QC, J8P 1L7",
+    "hours": "lundi au vendredi 9h00 à 15h00, dîners pour les membres: lundi, mercredi et vendredi"
   },
   {
     "id": "amis-de-lamater-les-trb",
@@ -1485,6 +1703,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "antre-hulloises-l-out",
+    "name": "Antre-Hulloises (L')",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 778-0997",
+    "description": "Centre de femmes.* Accueil, information et référence.* Relation d'aide.* Groupe d'entraide.* Écoute téléphonique.* Centre de documentation.* Accompagnement en dépendance et toxicomanie, en partenariat avec l'Association de la prévention de la toxicomanie et de l'alcoolisme chez les femmes en Outaouais.* Ateliers de sensibilisation et de formation.* Programme Prévenir, c'est agir: sensibilisation et prévention de la violence conjugale.* Les Cybercitoyennes: ateliers pour le développement de comportements prosociaux, autocritiques et sécuritaires dans l'utilisation des technologies.* Activités et journées thématiques.* Implication citoyenne et comités d'action. | Clientèle: femmes, Cybercitoyennes: adolescentes de 12 à 17 ans | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.antrehulloise.org",
+    "address": "16, rue Bériault, Gatineau, Outaouais, QC, J8X 1A3",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "appart-adojeune-l-out",
+    "name": "Appart Adojeune (L')",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 439-1010",
+    "description": "* Hébergement d'urgence de 15 à 30 jours.* Groupe de soutien pour les parents des enfants hébergés.* Ateliers et activités communautaires. | Clientèle: personnes de 12 à 17 ans, leurs parents Capacité: 9 lits, 1 lit de débordement | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "adojeune.org",
+    "address": "1133, rue Maloney Est, Gatineau, Outaouais, QC, J8P 1H8",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "appartement-aylmer-arms-out",
+    "name": "Appartement Aylmer Arms",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 684-5121",
+    "description": "Logements pour personnes aînées.* Buanderie.* Salle de jeu et d'artisanat.* Salles de rencontre.* Espace de cuisine. | Clientèle: personnes de 55 ans et plus autonomes à faible et modeste revenu Capacité: 101 logements, majoritairement 2 ½ et quelques 3 ½ | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "aylmerarms.com",
+    "address": "166, rue Principale, Gatineau, Outaouais, QC, J9H 6E1",
+    "hours": "7 jours, 9h00 à 15h00"
+  },
+  {
     "id": "arche-lanaudiere-l-jol",
     "name": "Arche Lanaudière (l')",
     "category": "social",
@@ -1496,6 +1753,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.larchelanaudiere.ca/fr",
     "address": "160, rue Saint-Charles-Borromée Sud, Joliette, Lanaudière, QC, J6E 4T3",
     "hours": "administration: lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "arche-outaouais-out",
+    "name": "Arche Outaouais",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-2000",
+    "description": "Centre d'hébergement, réparti en 4 foyers, pour personnes vivant avec une déficience intellectuelle.* Promotion et défense des droits.* Prévention et protection envers les abus.* Soirées communautaires pour les personnes hébergées. | Clientèle: personnes vivant avec une déficience intellectuelle | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.larche.ca/fr/communautes/outaouais",
+    "address": "19, rue Hanson, Gatineau, Outaouais, QC, J8Y 3M4",
+    "hours": "administration: lundi au vendredi 9h00 à 16h30"
+  },
+  {
+    "id": "arche-outaouais-soutien-bien-tre-out",
+    "name": "Arche Outaouais - Soutien Bien-Être Parents Et Entourage",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-2000",
+    "description": "Accompagnement des familles, des ami·e·s et personnes proches aidantes de personnes vivant avec une déficience intellectuelle et/ou de personnes autistes de l'Outaouais. * Soutien individuel. * Groupe de soutien virtuels et en présentiel. * Ateliers virtuels. * Cafés rencontre. | Clientèle: familles, ami·e·s et personnes proches aidantes de personnes vivant avec une déficience intellectuelle ou de personnes autistes | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "larche-outaouais.ca/psychosocial",
+    "address": "19, rue Hanson, Gatineau, Outaouais, QC, J8Y 3M4",
+    "hours": "soutien individuel: sur rendez-vous, groupes de soutien virtuel: mardi 12h30 à 13h30, groupes de soutien en présentiel: mercredi 18h30 à 20h00, ateliers virtuels: mercredi 12h00 à 13h00"
+  },
+  {
+    "id": "arm-e-du-salut-centre-communauta-out",
+    "name": "Armée Du Salut - Centre Communautaire De L'Outaouais",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 525-3060",
+    "description": "* Atelier de spiritualité.* Dépannage alimentaire d'urgence.* Distribution de fournitures scolaires.* Paniers de Noël. | Clientèle: personnes dans le besoin | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "salvationarmy.ca/quebec/home/emplacements/centre-outaouais/?lang=fr",
+    "address": "815, boulevard Saint-René Ouest, bureau D1, Gatineau, Outaouais, QC, J8T 8M3",
+    "hours": "sur rendez-vous"
   },
   {
     "id": "qc-refuge-montreal-armeedusalut",
@@ -1538,6 +1834,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "assembl-e-des-groupes-de-femmes--out",
+    "name": "Assemblée Des Groupes De Femmes D'Interventions Régionales En Outaouais",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-0351",
+    "description": "Organisme de concertation et de défense des droits des femmes.* Concertation, formation et mobilisation.* Recherches, analyses et sensibilisation. | Clientèle: femmes | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.agir-outaouais.ca",
+    "address": "109, rue Wright, bureau 201, Gatineau, Outaouais, QC, J8X 2G7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-amicale-des-jeunes-e-lav",
     "name": "Association Amicale Des Jeunes Et Parents Agape",
     "category": "social",
@@ -1577,6 +1886,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 16h30"
   },
   {
+    "id": "association-coop-rative-d-conomi-out",
+    "name": "Association Coopérative D'Économie Familiale De L'Outaouais",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-4911",
+    "description": "* Consultation budgétaire.* Information sur la consolidation de dettes et négociation avec les personnes créancières.* Cours sur le budget.* Conférences et ateliers sur divers thèmes liés à la consommation.* Défense des droits et intérêts des consommateur·rice·s.* Fonds d'entraide Desjardins.* Aide aux ententes de paiement d'Hydro-Québec.* Prêts sans intérêts: prêt du groupe d'entraide de Hull pour l'achat de biens durables de premiere nécessité. | Clientèle: grand public, prêts sans intérêts: personnes à faible revenu et n'ayant pas accès au crédit conventionnel | Territoire: Outaouais | Statut: entreprise commerciale (coopérative)",
+    "website": "acefo.org",
+    "address": "109, rue Wright, bureau 102, Gatineau, Outaouais, QC, J8X 2G7",
+    "hours": "lundi au jeudi 9h00 à 17h30"
+  },
+  {
     "id": "association-cooperative-d-economie-jol",
     "name": "Association Coopérative D'Économie Familiale de Lanaudière",
     "category": "employment",
@@ -1613,6 +1935,58 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Baseball et balle molle. | Clientèle: personnes 18 et plus vivant avec un handicap physique ou intellectuel | Territoire: Laval | Statut: organisme à but non lucratif",
     "address": "2020, avenue Laplante, Chomedey, Laval, QC, H7S 1E7",
     "hours": "administration : variables, activités: mi-mai à fin août, vendredi 18h30 à 20h00 au Centre de la nature"
+  },
+  {
+    "id": "association-de-l-ou-e-de-l-outao-out",
+    "name": "Association De L'Ouïe De L'Outaouais",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 777-6767",
+    "description": "Défense des intérêts des personnes vivant avec une surdité.* Référence vers les services de santé et d'aide au travail.* Ateliers d'alphabétisation.* Cours de Langue des signes québécoise.* Activités récréatives et sociales: art, cuisine, café-rencontres, sorties culturelles.* Café-Internet.* Défense des droit des personnes vivant avec une surdité.* Sensiblisation auprès des organismes publiques et parapubliques, formations diverses. | Clientèle: personnes vivant avec une surdité, telles que les personnes devenues sourdes, les parents d'enfants ayant une déficience auditive et les personnes malentendantes ou ayant des acouphènes | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.adoo.ca",
+    "address": "15, rue du Sommet, Gatineau, Outaouais, QC, J8Z 3M2",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "association-des-familles-monopar-out",
+    "name": "Association Des Familles Monoparentales Et Recomposées De L'Outaouais",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-3269",
+    "description": "Services en matière de rupture et de réorganisation familiale.* Supervision des droits d'accès, visites supervisées et échanges de garde.* Consultation et relation d'aide.* Information et référence.* Programme de pré-employabilité.* Centre de documentation.* Ateliers de coparentalité.* Activités éducatives et partage de vécu. | Clientèle: familles monoparentales et recomposées, relation d'aide: familles ayant un revenu inférieur à 50 000$ par année, programme de pré-employabilité: femmes monoparentales ou vivant en famille recomposée à faible revenu | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.afmro.ca",
+    "address": "85, boulevard Saint-Joseph, Gatineau, Outaouais, QC, J8Y 3W6",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "association-des-femmes-autochton-out",
+    "name": "Association Des Femmes Autochtones Du Canada",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "613 707-7716",
+    "description": "* NWAC National Apprenticeship Program: mise en relation d'entreprises avec des femmes autochtones, des personnes bispirituelles et de la diversité de genre à la recherche d'un apprentissage dans un métier spécialisé.* Indigenous Skills and Employment Traning (ISET): programme offrant des cours, des services de garde, des premiers emplois et d'autres ressources.* #BeTheDrum: programme de promotion de l'entrepreneuriat visant à renforcer les compétences dans la sphère des affaires, de la gestion et de l'entrepreneuriat.* Culturally Safe and Trauma-Informed Knowledge Hub: informations et ressources sur la santé sexuelle et reproductive.* Éducation au cannabis: site web proposant des ressources et des outils interactifs culturellement sûrs, fondés sur le genre et tenant compte des traumatismes, afin d'aider les femmes autochtones et les personnes issues de la diversité des genres à prendre des décisions éclairées sur la consommation de cannabis: nwaccannabised.ca* Truth About Genocide, site web fournissant des informations sur le génocide commis contre les peuples autochtones au Canada: teachthegenocide.ca* Ressources en ligne.* Prix et bourses.* Défense des droits des femmes et filles autochtones. | Clientèle: femmes, filles, personnes bispirituelles et personnes autochtones issues de la diversité de genres | Territoire: Canada | Statut: organisme à but non lucratif",
+    "website": "www.nwac.ca",
+    "address": "120, promenade du Portage, Gatineau, Outaouais, QC, J8X 2K1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-neurotraumatis-s-out",
+    "name": "Association Des Neurotraumatisés - Région De L'Outaouais",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-8804",
+    "description": "Assiste les personnes ayant subi un traumatisme cranio-cérébral (TCC) ou un accident vasculaire cérébral (AVC) et leur famille.* Programme d'intégration sociale.* Programme de soutien.* Programme d'intégration résidentielle.* Programme d'intégration socioprofessionnelle. | Clientèle: personnes de 18 ans et plus ayant subi un traumatisme cranio-cérébral (TCC) ou un accident vasculaire cérébral (AVC), leur famille | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.ano.ca",
+    "address": "115, boulevard Sacré-Coeur, bureau 1, Gatineau, Outaouais, QC, J8X 1C5",
+    "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
     "id": "association-des-personnes-vivant-lav",
@@ -1664,6 +2038,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "diabetelaval.qc.ca",
     "address": "3030, boulevard Le Carrefour, bureau 203, Chomedey, Laval, QC, H7T 2P5",
     "hours": "lundi au vendredi 10h00 à 16h00"
+  },
+  {
+    "id": "association-du-patrimoine-d-aylm-out",
+    "name": "Association Du Patrimoine D'Aylmer",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 684-6809",
+    "description": "Promotion, préservation et protection du patrimoine d'Aylmer et de l'Outaouais.* Accès aux archives.* Visites guidées sur places et virtuelles.* Aide et conseils à l'achat de maisons patrimoniales.* Location de costumes.* Vente de livres. | Clientèle: grand public | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "associationpatrimoineaylmer.com",
+    "address": "495, chemin d'Aylmer, Gatineau, Outaouais, QC, J9H 1A9",
+    "hours": "mardi au jeudi 10h00 à 15h00"
+  },
+  {
+    "id": "association-du-quartier-de-toura-out",
+    "name": "Association Du Quartier De Touraine",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 576-6273",
+    "description": "* Activités récréatives et sociales.* Activités physiques pour promouvoir la santé physique.* Club de lecture.* Soupers communautaires. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "assqtouraine.ca",
+    "address": "12, rue de Picardie, Gatineau, Outaouais, QC, J8T 1N9",
+    "hours": "variable"
   },
   {
     "id": "association-dysphasie-lav",
@@ -1822,6 +2222,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-pour-l-int-gration-c-out",
+    "name": "Association Pour L'Intégration Communautaire De L'Outaouais",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 669-6219",
+    "description": "Soutien, information, entraide et activités récréatives offerts aux personnes vivant avec une déficience intellectuelle et leur famille, afin de favoriser et faciliter leur inclusion sociale et communautaire.* Soutien civique.* Groupe de parents.* Intégration sociale.* Sensibilisation.* Activités de jour. | Clientèle: personnes ayant une déficience intellectuelle, leur famille | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "apico.ca",
+    "address": "405, boulevard Maloney Est, Gatineau, Outaouais, QC, J8P 6Z8",
+    "hours": "7 jours, horaire variable"
+  },
+  {
+    "id": "association-pour-la-d-fense-des--out",
+    "name": "Association Pour La Défense Des Droits Sociaux De Gatineau",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 660-1639",
+    "description": "Regroupement d'éducation et de défense des droits sociaux.* Accueil.* Information téléphonique.* Formations et ateliers d'informations: droits sociaux, aide sociale, lutte à la pauvreté, mobilisation. | Clientèle: prestataires de l'aide sociale, prestataires de l'assurance-emploi, personnes à faible revenu | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "addsgatineau.wordpress.com/about",
+    "address": "18, rue Charlevoix, Gatineau, Outaouais, QC, J8X 1P1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-pour-personne-handic-out",
+    "name": "Association Pour Personne Handicapée De Papineau",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 983-2648",
+    "description": "Promotion des droits et service pour personnes handicapées et leurs proches.* Activités éducatives, sensorielles, culturelles, sportives et d'intégration social.* Répit sur place et à domicile.* Représentations auprès des organismes gouvernementaux.* Défense des droits et intérêts dans les domaines du transport adapté et collectif, éducation, santé et services sociaux. | Clientèle: personnes vivant avec un ou plusieurs handicaps, leurs proches, répit sur place: personnes de 18 ans et plus vivant avec de multiples handicaps, jeunes autistes de 5 à 17 ans, répit à domicile: personnes de 18 ans et plus vivant avec de multiples handicaps | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "laphp.ca",
+    "address": "1165, route 321 Nord, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "lundi au vendredi 8h00 à 16h00, soir et fin de semaine selon activités"
+  },
+  {
     "id": "association-qu-bec-france-laval-lav",
     "name": "Association Québec-France - Laval",
     "category": "immigration",
@@ -1861,6 +2300,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 10h00 à 21h00, samedi 9h00 à 17h00, dimanche 10h00 à 17h00"
   },
   {
+    "id": "association-r-cr-ative-de-temple-out",
+    "name": "Association Récréative De Templeton",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 663-8901",
+    "description": "Centre récréatif.* Club social pour personnes aînées.* Cours de danse pour enfants.* Jeux de dards.* Ligue de fers.* Ligue de pétanque.* Baseball-poche pour personnes aînées.* Location salle de réception. | Clientèle: grand public, club social pour personnes aînées: personnes de 50 ans et plus Capacité: salle du bas: 80, salle du haut: 250 | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "address": "13, rue du Curé-Labelle, Gatineau, Outaouais, QC, J8P 1X7",
+    "hours": "lundi au dimanche 11h00 à 23h00"
+  },
+  {
     "id": "association-r-gionale-de-loisirs-lav",
     "name": "Association Régionale De Loisirs Pour Personnes Handicapées De Laval",
     "category": "social",
@@ -1885,6 +2336,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://arlphlanaudiere.org",
     "address": "200, rue de Salaberry, bureau 305, Joliette, Lanaudière, QC, J6E 4G1",
     "hours": "Voir site web"
+  },
+  {
+    "id": "association-r-pit-communautaire-out",
+    "name": "Association Répit Communautaire",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-6116",
+    "description": "Maison de répit pour les enfants vivant avec une déficience intellectuelle (DI) avec ou sans trouble du spectre de l'autisme (DI-TSA) ou polyhandicapées.* Services de répit, avec ou sans coucher.* Rencontres cliniques et évaluation.* Activités récréatives et sociales. | Clientèle: personnes vivant avec une déficience intellectuelle (DI) ou une déficience intellectuelle avec un trouble du spectre de l'autisme (DI-TSA) ou polyhandicapées de 4 à 24 ans | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.asso-arc.org",
+    "address": "592-A, boulevard de l'Hôpital, Gatineau, Outaouais, QC, J8V 2S9",
+    "hours": "service de répit avec couchers: vendredi 18h00 à dimanche 16h00, service de répit de jour: samedi et dimanche 9h00 à 16h00"
   },
   {
     "id": "association-sclerose-en-plaques-de-jol",
@@ -2174,6 +2638,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "atelier-d-ducation-populaire-out",
+    "name": "Atelier D'Éducation Populaire",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 516-1616",
+    "description": "Organisme qui vise la sensibilisation et la prévention de l'analphabétisme.* Mise à niveau en français, mathématique, connaissance générale.* Cours de francisation en petits groupes.* Ateliers et dépannage informatique: ordinateur, portable, tablette et cellulaire.* Ateliers de couture.* Bouquinerie: livres usagés à vendre à petit prix.* Point de service Bonhomme à lunettes: lunettes à prix modique.* Service de soutien aux leçons.* Biblio-Jeux.* Emprunt de jeux gratuit. | Clientèle: personnes de 16 ans et plus | Territoire: MRC Papineau | Statut: organisme à but non lucratif",
+    "website": "www.atelierlaplume.org",
+    "address": "149, rue Principale, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "lundi au jeudi 9h00 à 16h00, de septembre à juin"
+  },
+  {
+    "id": "atelier-de-formation-socioprofes-out",
+    "name": "Atelier De Formation Socioprofessionnelle De La Petite Nation",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 983-6373",
+    "description": "Promotion de l'intégration sociale des personnes vivant avec une déficience intellectuelle ou un handicap physique en leur offrant des services de formation.* Centre de formation: ateliers d'apprentissage et stages et formations socioprofessionnelles.* Service d'aide à la recherche l'emploi. | Clientèle: personnes vivant avec une déficience intellectuelle ou un handicap physique | Territoire: MRC Papineau | Statut: organisme à but non lucratif",
+    "website": "www.atelierfspn.org",
+    "address": "358, rue Rossy, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "lundi au jeudi 8h00 à 16h00"
+  },
+  {
     "id": "atelier-de-tri-des-mati-res-plas-lav",
     "name": "Atelier De Tri Des Matières Plastiques Recyclables Du Québec",
     "category": "employment",
@@ -2185,6 +2675,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "atmprq.com",
     "address": "3405, boulevard Industriel, Sainte-Rose, Laval, QC, H7L 4S3",
     "hours": "Voir site web"
+  },
+  {
+    "id": "atelier-les-jouets-d-arc-en-ciel-out",
+    "name": "Atelier Les Jouets D'Arc-En-Ciel (L')",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 772-1311",
+    "description": "Atelier de travail.* Emploi pour les personnes vivant avec une déficience intellectuelle.* Lavage de jouets des services de garde en milieu scolaire et du matériel d'autres organismes. | Clientèle: personnes vivant avec une déficience intellectuelle | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "larche.ca/fr",
+    "address": "455, boulevard Riel, Unité 12, Gatineau, Outaouais, QC, J8Z 2J8",
+    "hours": "7 jours, 8h30 à 15h00"
   },
   {
     "id": "atelier-pour-hommes-de-l-ouest-de-l-pcl",
@@ -2239,6 +2742,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi et mardi 10h00 à 17h00, mercredi, jeudi et vendredi 10h00 à 19h00, samedi 10h00 à 17h00"
   },
   {
+    "id": "auberge-du-coeur-h-berge-ados-out",
+    "name": "Auberge Du Coeur Héberge-Ados",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-1750",
+    "description": "* Hébergement à court terme de 0 à 60 jours.* Relation d'aide.* Soutien.* Médiation familiale.* Développement de l'autonomie.* Suivi post-hébergement.* Ateliers sur les habiletés parentales: post- hébergement ou pour tout parent.* Intervention mobile. | Clientèle: jeunes âgé·e·s de 13 à 17 ans ayant des problématiques diverses, parents Capacité: 8 | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.avenuedesjeunes.com",
+    "address": "39, rue Richard, Gatineau, Outaouais, QC, J8Y 4Y6",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "auberge-du-coeur-l-envol-e-h-ber-lav",
     "name": "Auberge Du Coeur L'Envolée - Hébergements De Transition",
     "category": "food",
@@ -2278,6 +2794,44 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "aumond-municipalit-out",
+    "name": "Aumond - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Aumond",
+    "province": "QC",
+    "phone": "819 449-4006",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles:www.aumond.ca/index.php/citoyens/dechets-et-recyclage * Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système d'appels automatisés d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Aumond | Statut: organisme municipal",
+    "website": "aumond.ca",
+    "address": "664, rue Principale, Aumond, Outaouais, QC, J0W 1W0",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 12h30 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "autonhomme-pontiac-out",
+    "name": "Autonhomme Pontiac",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "",
+    "description": "Centre de ressources pour hommes.* Hébergement de courte durée.* Accueil et référence.* Accompagnement dans les démarches.* Activités de mobilisation et de socialisation.* Sensibilisation aux réalités masculines.* Concertation pour la prévention du suicide. | Clientèle: hommes en difficulté Capacité: 11 | Territoire: MRC Pontiac, municipalité de Pontiac | Statut: organisme à but non lucratif",
+    "website": "autonhommepontiac.ca",
+    "address": "2, rue Elsie, 2e étage, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "aux-go-ts-du-jour-les-oeuvres-de-out",
+    "name": "Aux Goûts Du Jour (Les Oeuvres De Charité)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gracefield",
+    "province": "QC",
+    "phone": "819 463-1469",
+    "description": "* Dépannage alimentaire. | Clientèle: personnes démunies | Territoire: secteur Sud de la MRC Vallée-de-la-Gatineau: Blue Sea, Bouchette, Gracefield, Denholm, Kazabazua, Lac-Sainte-Marie, Low | Statut: organisme à but non lucratif",
+    "address": "56, rue Saint Joseph, Gracefield, Outaouais, QC, J0X 1W0",
+    "hours": "dépannage alimentaire: sur rendez-vous uniquement, téléphoner avant mercredi 12h00, distribution le vendredi matin, friperie: mardi au vendredi 10h00 à 15h00"
+  },
+  {
     "id": "avc-aphasie-laval-lav",
     "name": "Avc-Aphasie Laval",
     "category": "social",
@@ -2289,6 +2843,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.avcaphasielaval.ca",
     "address": "3350, boulevard Dagenais Ouest, Fabreville, Laval, QC, H7P 1V6",
     "hours": "lundi au vendredi 8h30 à 15h30"
+  },
+  {
+    "id": "avenue-des-jeunes-out",
+    "name": "Avenue Des Jeunes",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 778-0634",
+    "description": "Accompagner les jeunes dans leur cheminement afin d'améliorer leur qualité de vie.* Soutien individuel et familial.* Atelier en sensibilisation, en prévention et en adaptation sociale.* Programmes d'emploi et de formation pour les jeunes.* Activités collaboratives créant un milieu de vie stimulant.* Lieu de rencontres et d'activités: Maison des jeunes Antrados, Maison du parc de l'Île, Maison les Deschênés.* Hébergement: Auberge du cour Héberge-Ados.* Suivi post-hébergement. | Clientèle: jeunes de 13 à 17 ans, jeunes vivant des problèmes personnels ou familiaux et qui a besoin d'un hébergement | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "avenuedesjeunes.com",
+    "address": "10, rue Bériault, Gatineau, Outaouais, QC, J8X 1A3",
+    "hours": "Voir site web"
   },
   {
     "id": "aviron-l-h-bergement-communautai-lav",
@@ -2424,6 +2991,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "dépannage alimentaire: mardi 13h00 à 14h45"
   },
   {
+    "id": "banque-alimentaire-de-la-li-vre-out",
+    "name": "Banque Alimentaire De La Lièvre",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 281-3231",
+    "description": "* Dépannage alimentaire mensuelle, avec possibilité de livraison pour personnes à mobilité réduite.* Jardin communautaire.* Cuisine collective.* Frigo anti-gaspillage.* Glanage.* Cuisine de transformation.* Soupe populaire.* Service de livraison. | Clientèle: personnes vulnérables, familles vulnérables | Territoire: L'Ange-Gardien, Mayo, Mulgrave-et-Derry, Lochaber-Partie-Ouest, Gatineau: secteur Buckingham, Masson-Angers, Notre-Dame de la Falet, livraison: L'Ange-Gardien, secteur Buckingham, Masson-Angers | Statut: organisme à but non lucratif",
+    "website": "balievre.ca",
+    "address": "129, rue Joseph, Gatineau, Outaouais, QC, J8L 1G1",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 12h00, aide alimentaire mensuelle: mardi 13h00 à 15h30 (pour famille), mercredi sur rendez-vous, jeudi 13h30 et 15h30 (pour personnes seules sans enfants)"
+  },
+  {
+    "id": "banque-alimentaire-de-la-petite--out",
+    "name": "Banque Alimentaire De La Petite-Nation",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Ripon",
+    "province": "QC",
+    "phone": "819 983-3191",
+    "description": "* Banque alimentaire.* Paniers de Noël.* Collecte alimentaire. | Clientèle: personnes et familles à faible revenu | Territoire: Boileau, Chénéville, Duhamel, Fassett, Lac-des-Plages, Lac-Simon, Lochaber, Lochaber- Partie-Ouest, Montebello, Montpellier, Mulgrave-et-Derry, Namur, Notre-Dame-de-Bonsecours, Notre-Dame- de-La-Paix, Papineauville, Plaisance, Ripon, Saint-André-Avellin, Saint-Émile-de-Suffolk, Saint-Sixte, Thurso | Statut: organisme à but non lucratif",
+    "website": "www.bapn.ca",
+    "address": "1264, route 317, Ripon, Outaouais, QC, J0V 1V0",
+    "hours": "lundi au jeudi 7h30 à 12h00 et 13h00 à 15h30"
+  },
+  {
+    "id": "banque-alimentaire-services-entr-out",
+    "name": "Banque Alimentaire Services Entraide",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-5261",
+    "description": "* Banques alimentaires utilisant le modèle de l'épicerie.* Service de livraison et d'intervention à domicile pour personnes à mobilité réduite.* Paniers de Noël.* Référence vers d'autres organismes et services communautaires. | Clientèle: personnes à faible revenu, familles à faible revenu habitant dans le secteur de Hull | Territoire: Gatineau, secteur de Hull | Statut: organisme à but non lucratif",
+    "website": "www.basegatineau.ca",
+    "address": "66, rue Eddy, Gatineau, Outaouais, QC, J8X 2W2",
+    "hours": "rue Eddy: lundi et vendredi 10h00 à 15h00, mercredi 16h00 à 19h30. Autres points de service mobiles une fois par mois (le mardi ou le jeudi), consultez la page web pour les horaires."
+  },
+  {
     "id": "ba-drummondville",
     "name": "Banque alimentaire Drummond",
     "category": "food",
@@ -2448,6 +3054,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.monctonareafoodbank.ca",
     "address": "55 Highfield St, Moncton, NB E1C 5N1",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
+  },
+  {
+    "id": "barreau-de-l-outaouais-le-out",
+    "name": "Barreau De L'Outaouais (Le)",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 777-5225",
+    "description": "Association professionnelle.* Information et sensibilisation aux droits.* Référence vers des avocats, un arbitre ou un médiateur.* JuriGo.ca: référencement juridique sous forme de plateforme web. | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.barreauoutaouais.qc.ca",
+    "address": "17, rue Laurier, bureau 2.160, Gatineau, Outaouais, QC, J8X 4C1",
+    "hours": "Voir site web"
   },
   {
     "id": "barreau-de-laval-lav",
@@ -2489,6 +3108,123 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h45, vendredi 8h00 à 12h00"
   },
   {
+    "id": "biblioth-que-aur-lien-doucet-out",
+    "name": "Bibliothèque Aurélien-Doucet",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-7460",
+    "description": "Services généraux* Prêts de livres, vidéocassettes, disques compacts et céderoms.* Activités pour enfants: préparé à la lecture (0-5 ans), heures du conte, sac-ado (élèves du secondaire), tournoi de jeux vidéo, etc.* Activités pour adultes.* Conférences, expositions d'ouvres d'art, etc.Commodités et service de bureautique* Accès Internet sans fil et ordinateurs.* Prêt d'ordinateurs portables et tablettes pour utilisation sur place.* Photocopie, impression, télécopie et numérisation.* Salles de travail, salles de réunion (2 à 4 personnes) et salles poluvalentes (jusqu'à 40 personnes).* Boîtes de retour.* Dépôt de petits électroniques. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.gatineau.ca/page.asp?p=quoi_faire/bibliotheque",
+    "address": "207, boulevard du Mont-Bleu, Gatineau, Outaouais, QC, J8Z 2M3",
+    "hours": "lundi au jeudi 12h00 à 20h00, vendredi 12h00 à 18h00, samedi 11h00 à 17h00, jours fériés: variable"
+  },
+  {
+    "id": "biblioth-que-bernard-lonergan-out",
+    "name": "Bibliothèque Bernard-Lonergan",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-7460",
+    "description": "Services généraux* Prêts de livres, vidéocassettes, disques compacts et céderoms.* Activités pour enfants: préparé à la lecture (0-5 ans), heures du conte, sac-ado (élèves du secondaire),tournoi de jeux vidéo, etc.* Activités pour adultes.* Conférences, expositions d'ouvres d'art, etc.Commodités et service de bureautique* Accès Internet sans fil et ordinateurs.* Prêt d'ordinateurs portables et tablettes pour utilisation sur place.* Photocopie, impression, télécopie et numérisation.* Salles de travail, salles de réunion (2 à 4 personnes) et salles poluvalentes (jusqu'à 40 personnes).* Boîtes de retour.* Dépôt de petits électroniques. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.gatineau.ca/page.asp?p=quoi_faire/bibliotheque",
+    "address": "181, rue Joseph, Gatineau, Outaouais, QC, J8L 1G6",
+    "hours": "lundi 10h00 à 20h00, mardi au vendredi 13h00 à 20h00, samedi et dimanche 10h00 à 16h00"
+  },
+  {
+    "id": "biblioth-que-de-la-maison-du-cit-out",
+    "name": "Bibliothèque De La Maison-Du-Citoyen",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-7460",
+    "description": "Services généraux* Prêts de livres, vidéocassettes, disques compacts et céderoms.* Activités pour enfants: préparé à la lecture (0-5 ans), heures du conte, sac-ado (élèves du secondaire), tournoi de jeux vidéo, etc.* Activités pour adultes.* Conférences, expositions d'ouvres d'art, etc.* Lieux de dépôt des batteries.Commodités et service de bureautique* Accès Internet sans fil et ordinateurs.* Prêt d'ordinateurs portables et tablettes pour utilisation sur place.* Photocopie, impression, télécopie et numérisation.* Salles de travail, salles de réunino (2 à 4 personnes) et salles poluvalentes (jusqu'à 40 personnes).* Boîtes de retour.* Dépôt de petits électroniques. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.ville.gatineau.qc.ca/page.asp?p=quoi_faire/bibliotheque",
+    "address": "25, rue Laurier, Gatineau, Outaouais, QC, J8X 4C8",
+    "hours": "lundi au jeudi 10h00 à 20h00, vendredi 10h00 à 18h00, samedi 11h00 à 17h00"
+  },
+  {
+    "id": "biblioth-que-de-riviera-out",
+    "name": "Bibliothèque De Riviera",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-7460",
+    "description": "Services généraux* Prêts de livres, vidéocassettes, disques compacts et céderoms.* Activités pour enfants: préparé à la lecture (0-5 ans), heures du conte, sac-ado (élèves du secondaire), tournoi de jeux vidéo, etc.* Activités pour adultes.* Conférences, expositions d'ouvres d'art, etc.Commodités et service de bureautique* Accès Internet sans fil et ordinateurs.* Photocopie, impression, télécopie et numérisation.* Salles de travail et salles de réunion (2 à 4 personnes).* Boîtes de retour. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.ville.gatineau.qc.ca/page.asp?p=quoi_faire/bibliotheque",
+    "address": "12, rue de Picardie, Gatineau, Outaouais, QC, J8T 1N9",
+    "hours": "lundi au jeudi 16h00 à 20h00, samedi 12h00 à 16h00"
+  },
+  {
+    "id": "biblioth-que-docteur-jean-lorrai-out",
+    "name": "Bibliothèque Docteur-Jean-Lorrain",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-7460",
+    "description": "Services généraux* Prêts de livres, vidéocassettes, disques compacts et céderoms.* Activités pour enfants: préparé à la lecture (0-5 ans), heures du conte, sac-ado (élèves du secondaire), tournoi de jeux vidéo, etc.* Activités pour adultes.* Conférences, expositions d'ouvres d'art, etc.Commodités et service de bureautique* Accès Internet sans fil et ordinateurs.* Photocopie, impression et numérisation.* Salles de travail et salles de réunion (2 à 4 personnes).* Boîtes de retour.* Dépôt de petits électroniques. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.ville.gatineau.qc.ca/page.asp?p=quoi_faire/bibliotheque",
+    "address": "20, boulevard Lorrain, Gatineau, Outaouais, QC, J8P 2C8",
+    "hours": "lundi au jeudi 16h00 à 20h00, samedi 12h00 à 16h00"
+  },
+  {
+    "id": "biblioth-que-jean-marie-caron-out",
+    "name": "Bibliothèque Jean-Marie-Caron",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-7460",
+    "description": "Services généraux* Prêts de livres, vidéocassettes, disques compacts et céderoms.* Activités pour enfants: préparé à la lecture (0-5 ans), heures du conte, sac-ado (élèves du secondaire),tournoi de jeux vidéo, etc.* Activités pour adultes.* Conférences, expositions d'ouvres d'art, etc.Commodités et service de bureautique* Accès Internet sans fil et ordinateurs.* Photocopie, impression, télécopie et numérisation.* Salles de travail et salles de réunion (2 à 4 personnes).* Boîtes de retour. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.gatineau.ca/page.asp?p=quoi_faire/bibliotheque",
+    "address": "430, rue du Progrès, Gatineau, Outaouais, QC, J8M 1T3",
+    "hours": "lundi 17h00 à 20h00, mardi 16h00 à 20h00, mercredi 14h30 à 20h00, jeudi 16h00 à 20h00, vendredi 10h00 à 16h00, samedi 12h00 à 16h00"
+  },
+  {
+    "id": "biblioth-que-lucien-lalonde-out",
+    "name": "Bibliothèque Lucien-Lalonde",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-7460",
+    "description": "Services généraux* Prêts de livres, vidéocassettes, disques compacts et céderoms.* Activités pour enfants: préparé à la lecture (0-5 ans), heures du conte, sac-ado (élèves du secondaire), tournoi de jeux vidéo, etc.* Activités pour adultes.* Conférences, expositions d'ouvres d'art, etc.Commodités et service de bureautique* Accès Internet sans fil etordinateurs.* Prêt d'ordinateurs portables et tablettes pour utilisation sur place.* Photocopie, impression, télécopie et numérisation.* Salles de travail, salles de réunion (2 à 4 personnes) et salles poluvalentes (jusqu'à 40 personnes).* Boîtes de retour.* Dépôt de petits électroniques. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.ville.gatineau.qc.ca/page.asp?p=quoi_faire/bibliotheque",
+    "address": "225, rue Berri, Gatineau, Outaouais, QC, J8Y 4K1",
+    "hours": "lundi au jeudi 10h00 à 20h00, vendredi 10h00 à 18h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "biblioth-que-lucy-faris-out",
+    "name": "Bibliothèque Lucy-Faris",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-7460",
+    "description": "Services généraux* Prêts de livres, vidéocassettes, disques compacts et céderoms.* Activités pour enfants: préparé à la lecture (0-5 ans), heures du conte,sac-ado (élèves du secondaire), tournoi de jeux vidéo, etc.* Activités pour adultes.* Conférences, expositions d'ouvres d'art, etc.Commodités et service de bureautique* Accès Internet sans fil et ordinateurs.* Prêt d'ordinateurs portables et tablettes pour utilisation sur place.* Photocopie, impression, télécopie et numérisation.* Salles de travail, salles de réunion (2 à 4 personnes) et salles poluvalentes (jusqu'à 40 personnes).* Boîtes de retour.* Dépôt de petits électroniques. | Clientèle: grand public | Territoire: QC - Outaouais County - Gatineau; | Statut: organisme municipal",
+    "website": "www.ville.gatineau.qc.ca/page.asp?p=quoi_faire/bibliotheque",
+    "address": "181, rue Principale, Gatineau, Outaouais, QC, J9H 3M2",
+    "hours": "lundi au jeudi 12h00 à 20h00, vendredi 12h00 à 18h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "biblioth-que-manise-morin-out",
+    "name": "Bibliothèque Manise-Morin",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-7460",
+    "description": "Services généraux* Prêts de livres, vidéocassettes, disques compacts et céderoms.* Activités pour enfants: préparé à la lecture (0-5 ans), heures du conte, sac-ado (élèves du secondaire), tournoi de jeux vidéo, etc.* Activités pour adultes.* Conférences, expositions d'ouvres d'art, etc.Commodités et service de bureautique* Accès Internet sans fil et ordinateurs.* Photocopie, impression, télécopie et numérisation.* Salles de travail et salles de réunion (2 à 4 personnes).* Boîtes de retour. | Clientèle: grand public | Territoire: QC - Outaouais County - Gatineau; | Statut: organisme municipal",
+    "website": "www.ville.gatineau.qc.ca/page.asp?p=quoi_faire/bibliotheque",
+    "address": "36, chemin de Montréal, Gatineau, Outaouais, QC, J8M 1E9",
+    "hours": "lundi et mardi 17h00 à 20h00, mercredi 8h30 à 11h30 et 17h00 à 20h00, samedi 12h00 à 16h00"
+  },
+  {
     "id": "nb-wellness-nb",
     "name": "Bien-être NB",
     "category": "mentalHealth",
@@ -2514,6 +3250,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.bissellcentre.org",
     "address": "10527, 96 St NW, Edmonton, AB T5H 2H6",
     "hours": "Lun - Ven 9h-16h"
+  },
+  {
+    "id": "blue-sea-municipalit-out",
+    "name": "Blue Sea - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Blue Sea",
+    "province": "QC",
+    "phone": "819 463-2261",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles:www.bluesea.ca/index.php/services/dechets-et-recyclage * Lavage des embarcations.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Blue Sea | Statut: organisme municipal",
+    "website": "www.bluesea.ca",
+    "address": "10, rue Principale, Blue Sea, Outaouais, QC, J0X 1C0",
+    "hours": "lundi au jeudi 7h30 à 16h00, vendredi 7h30 à 12h30, vendredi après midi sur rendez-vous"
+  },
+  {
+    "id": "boileau-municipalit-out",
+    "name": "Boileau - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Boileau",
+    "province": "QC",
+    "phone": "819 687-3436",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.boileau.ca/services/cueillette-de-matieres-residuelles * Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Cuisine collective.* Location de salles. | Clientèle: grand public | Territoire: Boileau | Statut: organisme municipal",
+    "website": "www.boileau.ca",
+    "address": "702, chemin de Boileau, Boileau, Outaouais, QC, J0V 1N0",
+    "hours": "lundi au jeudi 7h30 à 16h00"
+  },
+  {
+    "id": "bois-franc-municipalit-out",
+    "name": "Bois-Franc - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Bois-Franc",
+    "province": "QC",
+    "phone": "819 449-2252",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.bois- franc.ca/index.php/page-4/dechets-et-recyclage * Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Bois-Franc | Statut: organisme municipal",
+    "website": "www.bois-franc.ca",
+    "address": "466, route 105, Bois-Franc, Outaouais, QC, J9E 3A9",
+    "hours": "lundi au mercredi 8h00 à 12h00 et 12h30 à 16h30, jeudi 8h à 12h00 et 12h30 à 16h, vendredi 8h à 12h00 et 12h30 à 15h30"
   },
   {
     "id": "bonjour-aujourd-hui-et-apr-s-lav",
@@ -2553,6 +3328,57 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.la-bonne-etoile.org",
     "address": "517, rue Archambault, Joliette, Lanaudière, QC, J6E 2W6",
     "hours": "lundi au vendredi 10h00 à 16h00"
+  },
+  {
+    "id": "bouchette-municipalit-out",
+    "name": "Bouchette - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Bouchette",
+    "province": "QC",
+    "phone": "819 465-2555",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.bouchette.ca/fr/services-aux-citoyens/dechets-et-recyclage* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Bouchette | Statut: organisme municipal",
+    "website": "www.bouchette.ca",
+    "address": "36, rue Principale, Bouchette, Outaouais, QC, J0X 1E0",
+    "hours": "lundi au vendredi 10h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "bouffe-pontiac-out",
+    "name": "Bouffe Pontiac",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "819 648-2550",
+    "description": "* Dépannage alimentaire.* Magasin-partage.* Friperie et récupération sur place: vêtements et meubles usagés.* Cuisines collectives.* Jardin collectif.* Paniers de Noël. | Clientèle: personnes à faible revenu | Territoire: MRC Pontiac | Statut: organisme à but non lucratif",
+    "address": "2, rue Elsie, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "lundi, mercredi, jeudi et vendredi 9h00 à 15h30"
+  },
+  {
+    "id": "boulev-art-de-la-vall-e-le-out",
+    "name": "Boulev'Art De La Vallée (Le)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 281-0680",
+    "description": "* Hébergement: appartements supervisés.* Plateau de travail : expérience de pré-employabilité dans un milieu de travail adapté.* Groupe d'entraide.* Soutien.* Activités récréatives et sociales.* Cuisine collective.* Cours de Tai chi.* Ordinateurs publics.* Cafés sociaux.* Activités récréatives et sociales.* Dîners communautaires.* Jardin collectif. | Clientèle: personnes vivant avec des problèmes de santé mentale | Territoire: MRC La Vallée-de-la-Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.boulev-art.ca",
+    "address": "132, rue MacLaren, Gatineau, Outaouais, QC, J8L 1K1",
+    "hours": "lundi, mardi, jeudi et vendredi 8h30 à 15h30, mercredi 10h30 à 15h30"
+  },
+  {
+    "id": "boulev-art-de-la-vall-e-le-point-out",
+    "name": "Boulev'Art De La Vallée (Le) - Point De Service Saint-André-Avellin",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 516-0681",
+    "description": "* Groupe d'entraide.* Soutien.* Activités récréatives et sociales.* Cuisine collective.* Cours de Tai chi.* Ordinateurs publics.* Cafés sociaux.* Activités récréatives et sociales.* Dîners communautaires.* Jardin collectif. | Clientèle: personnes vivant avec des problèmes de santé mentale | Territoire: MRC Papineau | Statut: organisme à but non lucratif",
+    "website": "www.boulev-art.ca",
+    "address": "68, rue Principale, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "lundi, mardi, jeudi et vendredi 8h30 à 15h00, mardi 10h30 à 15h00"
   },
   {
     "id": "drum-garde-bousquet-lyn",
@@ -2619,6 +3445,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi au dimanche 10h00 à 16h00"
   },
   {
+    "id": "bowman-municipalit-out",
+    "name": "Bowman - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Bowman",
+    "province": "QC",
+    "phone": "819 454-2421",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.bowman.ca/services-aux-citoyens/gestion-des-dechets-et-recyclage * Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Bowman | Statut: organisme municipal",
+    "website": "www.bowman.ca",
+    "address": "214, route 307, Bowman, Outaouais, QC, J0X 3C0",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "bristol-municipalit-out",
+    "name": "Bristol - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Bristol",
+    "province": "QC",
+    "phone": "819 647-5555",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.bristolmunicipality.qc.ca/fr/station-de-transfert-et-recyclage* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Bristol | Statut: organisme municipal",
+    "website": "www.bristolmunicipality.qc.ca",
+    "address": "32, chemin d'Aylmer, Bristol, Outaouais, QC, J0X 1G0",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
     "id": "ns-shelter-women",
     "name": "Bryony House – Femmes Halifax",
     "category": "housing",
@@ -2630,6 +3482,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.bryonyhouse.ca",
     "address": "Halifax, NS (adresse confidentielle)",
     "hours": "Service essentiel provincial."
+  },
+  {
+    "id": "bryson-municipalit-out",
+    "name": "Bryson - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Bryson",
+    "province": "QC",
+    "phone": "819 648-5940",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Gestions des matières résiduelles: www.bryson.ca/residents/recyclage- et-dechets* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système automatisé d'alerte en cas d'urgence.* Loisirs et culture.* Location de salles. | Clientèle: grand public | Territoire: Bryson | Statut: organisme municipal",
+    "website": "munbryson.ca",
+    "address": "833, rue Principale, Bryson, Outaouais, QC, J0X 1H0",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 15h00"
   },
   {
     "id": "buffet-acces-emploi-sll",
@@ -2684,6 +3549,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, service de garde téléphonique: 24 heures, 7 jours"
   },
   {
+    "id": "bureau-d-aide-juridique-gatineau-out-4",
+    "name": "Bureau D'Aide Juridique - Gatineau - Droit Criminel",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 772-3084",
+    "description": "Bureau d'aide juridique en droit criminel et pénal. | Clientèle: personnes et organisations sans but lucratif résidant au Québec ou contraintes de rester au Québec, financièrement admissibles et dont le service juridique demandé est couvert par la Loi | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "aidejuridiqueoutaouais.ca/aidejuridique/",
+    "address": "136, rue Wright, Gatineau, Outaouais, QC, J8X 2G9",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "bureau-d-aide-juridique-gatineau-out",
+    "name": "Bureau D'Aide Juridique - Gatineau - Secteur Aylmer",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 684-0333",
+    "description": "Bureau d'aide juridique en droit civil et familial. | Clientèle: personnes ou organisations sans but lucratif résidant au Québec ou contraintes de rester au Québec, financièrement admissibles et dont le service juridique demandé est couvert par la Loi | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "www.aidejuridiqueoutaouais.ca",
+    "address": "204, chemin d'Aylmer, bureau B-403, Gatineau, Outaouais, QC, J9H 1A1",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "bureau-d-aide-juridique-gatineau-out-2",
+    "name": "Bureau D'Aide Juridique - Gatineau - Secteur Gatineau",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 568-0990",
+    "description": "Bureau d'aide juridique en droit civil et familial. | Clientèle: personnes et organisations sans but lucratif résidant au Québec ou contraintes de rester au Québec, financièrement admissibles et dont le service juridique demandé est couvert par la Loi | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "aidejuridiqueoutaouais.ca",
+    "address": "365, boulevard Greber, bureau 202, Gatineau, Outaouais, QC, J8T 5R3",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "bureau-d-aide-juridique-gatineau-out-3",
+    "name": "Bureau D'Aide Juridique - Gatineau - Secteur Hull",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 772-3011",
+    "description": "Bureau d'aide juridique en droit civil, droit familial et droit de la jeunesse. | Clientèle: personnes et organisations sans but lucratif résidant au Québec ou contraintes de rester au Québec, financièrement admissibles et dont le service juridique demandé est couvert par la Loi | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "www.aidejuridiqueoutaouais.ca",
+    "address": "768, boulevard St-Joseph, bureau 210, Gatineau, Outaouais, QC, J8Y 4B8",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "bureau-d-aide-juridique-repentigny-rep",
     "name": "Bureau D'Aide Juridique - Repentigny",
     "category": "social",
@@ -2708,6 +3625,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.ccjll.qc.ca",
     "address": "891, rue Saint-François-Xavier, bureau 210, Terrebonne, Lanaudière, QC, J6W 1H1",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, sur rendez-vous seulement, sauf urgence"
+  },
+  {
+    "id": "bureau-de-passeport-canada-gatin-out",
+    "name": "Bureau De Passeport Canada Gatineau",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 567-6868",
+    "description": "Délivrance de passeports canadiens et autres documents de voyage.* Trouver un point de service: www.ircc.canada.ca/francais/passeport/map/carte.asp * Renouveler un passeport.* Présenter une nouvelle demande de passeport pour adulte ou enfant.* Passeport perdus, volés, inaccessibles, endommagés ou trouvés.* Retrait urgent: obtenir un passeport avant la fin du prochain jour ouvrable. | Clientèle: grand public | Territoire: Canada | Statut: organisme du gouvernement fédéral",
+    "website": "www.canada.ca/fr/immigration-refugies-citoyennete/services/passeports-canadiens.html",
+    "address": "210, rue Champlain, Gatineau, Outaouais, QC, J8X 3R5",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "bureau-r-gional-d-action-sida-de-out",
+    "name": "Bureau Régional D'Action Sida De L'Outaouais",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "GATINEAU",
+    "province": "QC",
+    "phone": "819 776-2727",
+    "description": "* Travail de rue.* Défense et promotion des droits pour les personnes ayant une infection véhiculée par le sang.* Prévention et sensibilisation: infections transmissibles par le sang et Hépatite C.* VIH, Sida, ITS: prévention et programme sociaux et récréatifs.* Soutien affectif et social aux personnes de la rue et celles confinées à la maison.* Nourriture, logement et aide financière.* Distribution de trousses de naloxone.* Interventions en milieu festif.* Distribution et livraison de bandelettes test de fentanyl.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Outils d'analyse de substances.* Service de consommation supervisée (SCS) fixe au 194, rue Eddy, Gatineau, J8X 2X3. | Clientèle: personnes vivant avec le VIH (PVVIH) et leur entourage, personnes vivant avec le virus de l'hépatite C (PVVHC) et leur entourage, personnes SPA, personnes utilisatrices de drogues par injection ou inhalation, personnes en SI et à risques, travailleur·se·s du sexe, jeunes et jeunes en difficulté (ex.: les jeunes de la rue), HARSAH/FARSAF, personnes trans, milieux festifs, personnes incarcérées ou l'ayant été, personnes des Premières Nations, personnes originaires d'une région où l'infection par le VIH est endémique | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "lebras.qc.ca",
+    "address": "109, rue Wright, bureau 003, GATINEAU, Outaouais, QC, J8X 2G7",
+    "hours": "lundi au vendredi 9h00 à 17h00, service de consommation supervisée: dimanche au mardi 11h00 à 18h00, mercredi au samedi 14h00 à 21h00"
   },
   {
     "id": "qc-aj-gatineau",
@@ -8284,6 +9227,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: mardi au vendredi 9h00 à 17h00, centre de jour: mardi à vendredi 13h00 à 16h00"
   },
   {
+    "id": "caf-le-rendez-vous-out",
+    "name": "Café Le Rendez-Vous",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-7272",
+    "description": "Centre de jour en santé mentale.* Activités de loisir, sportives et culturelles.* Ateliers d'arts.* Ateliers de développement personnel.* Sorties de groupe et visites des organismes du milieu. | Clientèle: personnes de 18 ans et plus ayant un trouble de santé mentale | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "maisonrealite.org",
+    "address": "116, boulevard Saint-Joseph, Gatineau, Outaouais, QC, J8Y 3W8",
+    "hours": "lundi au vendredi 10h00 à 15h00"
+  },
+  {
     "id": "cafe-de-rue-de-terrebonne-trb",
     "name": "Café de Rue de Terrebonne",
     "category": "food",
@@ -8349,6 +9305,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "camp de jour: juillet et août, lundi au vendredi 8h30 à 15h30, avec possibilité de service de garde de 7h00 à 8h30 et de 15h30 à 18h00"
   },
   {
+    "id": "campbell-s-bay-municipalit-out",
+    "name": "Campbell'S Bay - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "819 648-5811",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Centre de transfert: www.campbellsbay.ca/fr/administration/centre-de- transfert* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système d'appels automatisés d'urgence: www.campbellsbay.ca/fr/inscrivez-vous-au-systeme- dalerte-des-maintenant* Loisirs et culture.* Location de salles. | Clientèle: grand public | Territoire: Campbell's Bay | Statut: organisme municipal",
+    "website": "campbellsbay.ca/fr",
+    "address": "59, rue Leslie, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "campus-3-out",
+    "name": "Campus 3",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 663-3305",
+    "description": "Centre pour personnes aînées.Maintien à domicile* Mets à emporter.* Ateliers de jour pour le maintien de l'autonomie et le répit des proches.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV).* Programme PADI: centre de jour pour personnes aînées vivant avec une déficience intellectuelle.Hébergement* Logements Faubourg Jean-Marie-Vianney.* Centre HébergeVac: répit- dépannage.Loisir et action communautaire* Programme de lecture intergénérationnel.* Atelier de menuiserie, vente d'ouvres artisanales.* Université du troisième âge.* Cours et activités sportives et créatives.* Location de salles.* Service de traiteur.* Occasions de bénévolat. | Clientèle: personnes de 50 ans et plus, logements: personnes de 55 ans et plus à faible revenu, PADI: personnes aînées vivant avec une déficience intellectuelle Capacité: 130 logements | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "campus3.ca",
+    "address": "196, rue Notre-Dame, Gatineau, Outaouais, QC, J8P 0E6",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "campus-3-h-bergevac-out",
+    "name": "Campus 3 - Hébergevac",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Val-Des-Monts",
+    "province": "QC",
+    "phone": "819 663-3305",
+    "description": "Centre de répit et de plein air.* Répit en hébergement temporaire.* Ateliers variés: cuisine, bricolage, jeux intellectuels.* Activités récréatives et sociales: bingo, jeux de sacs de sable, mini-golf, piques-niques, feux de camps, randonnées, observation de la nature, pêche, ponton, spectacles.* Sentiers adaptés.* Balançoire accessible. | Clientèle: personnes de 50 ans et plus en perte d'autonomie et maintenues à domicile, leurs proches aidant·e·s Capacité: 40 personnes | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "campus3.ca/services-offerts/programmes-sociaux",
+    "address": "140, chemin de la Montagne, Val-Des-Monts, Outaouais, QC, J8N 1B4",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "campus-emploi-le-point-de-service-r-rep",
     "name": "Campus Emploi (le) - Point de Service Repentigny",
     "category": "employment",
@@ -8388,6 +9383,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "rencontres: 3e mercredi du mois 13h30 à 15h30"
   },
   {
+    "id": "cantley-municipalit-out",
+    "name": "Cantley - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Cantley",
+    "province": "QC",
+    "phone": "819 503-8227",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.cantley.ca/calendrier-municipal* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Cantley | Statut: organisme municipal",
+    "website": "www.cantley.ca",
+    "address": "8, chemin River, Cantley, Outaouais, QC, J8V 2Z9",
+    "hours": "Lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "cap-sant-outaouais-out",
+    "name": "Cap Santé Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-2277",
+    "description": "Promotion de la santé mentale et du mieux-être des personnes et des collectivités.* Outils et ateliers pour une bonne santé mentale.* Formations qui favorisent le mieux-être tant dans les habiletés personnelles que relationnelles.* Service d'information et de référence vers les groupes d'entraide et de soutien de l'Outaouais: www.capsante-outaouais.org/groupes* Accompagnement à la création de nouveaux groupes d'entraide et soutien aux groupes existants: formations, visibilité, prêts de locaux gratuits, etc.* Projet Pacifique: soutien des écoles dans la formation, la mise en oeuvre et le maintien d'un programme de promotion des conduites pacifiques et prévention de la violence.* Projet de quartier pacifique et sécuritaire: mobilisation citoyenne dans les quartiers afin de favoriser les saines relations. | Clientèle: population générale, entraidant·e·s, professionnel·le·s, écoles | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "capsante-outaouais.org",
+    "address": "92, boulevard Saint-Raymond, bureau 304, Gatineau, Outaouais, QC, J8Y 1S7",
+    "hours": "sur rendez-vous uniquement"
+  },
+  {
     "id": "drum-garde-carmen-cinthya-romero-espinoza",
     "name": "Carmen Cinthya Romero Espinoza",
     "category": "family",
@@ -8423,6 +9444,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Shawinigan. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "821, 5e Avenue, Shawinigan QC G9T 2M9",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "carrefour-culturel-estacade-out",
+    "name": "Carrefour Culturel Estacade",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 800-0700",
+    "description": "Développement de la culture et du loisir culturel.* Spectales familliaux.* Spectacles grand public.* Sorties scolaires en milieu culturel.* Évenements communautaires et culturels. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.carrefourculturelestacade.ca",
+    "address": "580, rue Maclaren Est, Gatineau, Outaouais, QC, J8L 2W1",
+    "hours": "administration: lundi au jeudi 10h00 à 15h00, activités: variable"
   },
   {
     "id": "carrefour-d-hommes-en-changement-lav",
@@ -8502,6 +9536,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 16h00 à 21h00"
   },
   {
+    "id": "carrefour-jeunesse-emploi-de-l-o-out",
+    "name": "Carrefour Jeunesse Emploi De L'Outaouais",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-7712",
+    "description": "Accompagnement des jeunes adultes dans leur cheminement vers l'emploi, vers un retour aux études ou pour démarrer une entreprise.* Recherche d'emploi.* Développement de l'employabilité.* Orientation scolaire et professionnelle.* Persévérance scolaire.* Entrepreneuriat.* Services aux personnes immigrantes.* Éducation financière.* Projets artistiques et culturels.* Services aux employeurs. | Clientèle: personnes majoritairement âgées de 16 à 35 ans | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "cjeo.qc.ca",
+    "address": "350, boulevard de la Gappe, Gatineau, Outaouais, QC, J8T 7T9",
+    "hours": "lundi, mercredi et jeudi 8h30 à 17h00, mardi 8h30 à 20h00, vendredi de 8h30 à12h00"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-la--out",
+    "name": "Carrefour Jeunesse-Emploi De La Vallée-De-La-Gatineau",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 441-1165",
+    "description": "Accompagnement des jeunes adultes dans leur cheminement vers l'emploi, vers un retour aux études ou pour démarrer une entreprise.* Recherche d'emploi.* Développement de l'employabilité.* Orientation scolaire et professionnelle.* Entrepreneuriat.* Services aux personnes immigrantes.* Éducation financière.* Services aux employeur·euse·s. | Clientèle: jeunes de 16 à 35 ans en recherche d'emploi | Territoire: MRC La Vallée-de-la-Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.cjevg.qc.ca",
+    "address": "217, rue Principale, Maniwaki, Outaouais, QC, J9E 2A3",
+    "hours": "lundi, mardi, jeudi et vendredi 8h00 à 16h00, mercredi 8h00 à 19h00"
+  },
+  {
     "id": "emp-cje-drummondville",
     "name": "Carrefour Jeunesse-Emploi Drummond",
     "category": "employment",
@@ -8513,6 +9573,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cjedrummond.qc.ca",
     "address": "150, rue Marchand, bureau 260, Drummondville, QC J2C 4N1",
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service."
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-du-pon-out-2",
+    "name": "Carrefour Jeunesse-Emploi Du Pontiac",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "819 648-5065",
+    "description": "Accompagnement des adultes dans leur cheminement vers l'emploi, vers un retour aux études ou pour démarrer une entreprise.* Aide à la rédaction de CV et de lettre d'accompagnement, soutien à l'intégration en emploi, information sur le marché du travail, préparation et pratique d'entrevue, suivi personnalisé pendant et après la démarche.* La Défriche: programme visant à outiller les jeunes sur plusieurs aspects de la citoyenneté, de l'éducation et de la santé.* Programme d'éducation financière.* Accès à de l'équipement informatique: ordinateurs, imprimante, télécopieurs.* Documentation: babillards d'offres d'emploi et de formations, information sur le marché du travail, information sur les programmes et établissements scolaires, consultation des journaux, consultation d'ouvrages de référence. | Clientèle: personnes de 15 à 65 ans | Territoire: MRC Pontiac | Statut: organisme à but non lucratif",
+    "website": "www.cjepontiac.ca",
+    "address": "80, rue Leslie, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "lundi au jeudi 8h00 à 17h00, vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-du-pon-out",
+    "name": "Carrefour Jeunesse-Emploi Du Pontiac - Sortir Du Bois",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "819 648-2008",
+    "description": "Entreprise d'insertion à l'emploi dans le domaine des services forestiers.* Expérience de travail de 20 à 24 semaines.* Services variés aux agriculteur·rice·s, entreprises et industries.* Services aux particuliers: entretien et nettoyage de terrain, débroussaillage, enlèvement de troncs d'arbre, déchiquetage, abattage, plantation et élagage d'arbres. | Clientèle: personnes de 18 à 45 ans | Territoire: MRC Pontiac | Statut: organisme à but non lucratif",
+    "website": "www.sortirdubois.ca",
+    "address": "1405, route 148, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "Voir site web"
   },
   {
     "id": "carrefour-jeunesse-emploi-l-assompt-rep",
@@ -8538,6 +9624,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Service d'aide à l'emploi et à l'entrepreneuriat pour les 16-35 ans de la Mauricie. Rédaction de CV, préparation aux entrevues, exploration de carrière, formation. Gratuit et confidentiel.",
     "address": "580, rue Barkoff, bureau 300, Trois-Rivières, QC G8T 9T7",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-papine-out",
+    "name": "Carrefour Jeunesse-Emploi Papineau Et Action Emploi Papineau",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 986-5248",
+    "description": "Service personnalisé d'intégration au marché du travail afin d'augmenter l'autonomie et le sentiment d'appartenance à la communauté. Emploi * Salle multiservice: ordinateurs, télécopieur, documentation. * Accompagnement personnalisé. * Aide individualisée à la recherche d'emploi axée sur les besoins de la clientèle et basée sur les méthodes dynamiques de recherche d'emploi: aide à la rédaction de CV, de lettre de présentation et de préparation à l'entrevue d'embauche. * Service individuel d'orientation scolaire et professionnelle incluant la validation d'un choix professionnel en vue du retour aux études ou de l'intégration au marché du travail. * Autonomie personnelle et sociale: aide à la recherche de logements et pour remplir des formulaires, pour faire face à des difficultés financières, des conflits familiaux ou interpersonnels pour des jeunes de 16 à 35 ans qui vivent des difficultés dans une ou plusieurs sphères de leur vie. * Soutien à la persévérance scolaire des jeunes de 14 à 19 ans ayant décroché ou à risque de décrocher. * Place aux jeunes Papineau: programme pour les 18 à 35 ans qui vise à favoriser la migration, l'établissement et l'encadrement des jeunes diplômés dans la MRC de Papineau. Entrepreneuriat * Accompagnement personnalisé dans les premières étapes du démarrage de son entreprise. * Bénévolat et entrepreneuriat pour les jeunes. | Clientèle: personnes de 14 ans et plus | Territoire: MRC Papineau, Val-Des-Monts, Notre-Dame-De-La-Salette, L'Ange-Gardien, Lac-Simon, Gatineau: secteur Templeton, Rivière-Blanche, Buckingham, Masson-Angers | Statut: organisme à but non lucratif",
+    "website": "cjepapineau.qc.ca",
+    "address": "112, rue Maclaren Est, Gatineau, Outaouais, QC, J8L 1K1",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "emp-cje-trois-rivieres",
@@ -8852,6 +9951,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "cayamant-municipalit-out",
+    "name": "Cayamant - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Cayamant",
+    "province": "QC",
+    "phone": "819 463-3587",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.cayamant.ca/fr/services-aux-citoyens/gestion-des-matieres-residuelles* Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Location de salles. | Clientèle: grand public | Territoire: Cayamant | Statut: organisme municipal",
+    "website": "www.cayamant.ca",
+    "address": "6, chemin Lachapelle, Cayamant, Outaouais, QC, J0X 1Y0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centraide-lanaudiere-jol",
     "name": "Centraide Lanaudière",
     "category": "social",
@@ -8875,6 +9987,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Organisme communautaire finançant 60+ organismes en Mauricie. Référencement vers les ressources locales pour logement, alimentation, santé mentale, famille, emploi. Appel gratuit pour être orienté vers les bons services.",
     "address": "240, rue des Forges, bureau 203, Trois-Rivières, QC G9A 2G8",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "centraide-outaouais-out",
+    "name": "Centraide Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 325-7751",
+    "description": "Soutien aux organismes communautaires locaux grâce à une campagne de financement et aux dons recueillis. | Clientèle: organismes communautaires | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "centraideoutaouais.com",
+    "address": "74, boulevard Montclair, Gatineau, Outaouais, QC, J8Y 2E7",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "s-centraide-quebec",
@@ -9128,6 +10253,58 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-action-g-n-rations-des-a--out",
+    "name": "Centre Action Générations Des Aînés De La Vallée-De-La-Lièvre",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 281-4343",
+    "description": "Centre de services aux personnes ainées.* Bouf'mobile: service de popote roulante, repas frais et congelés.* Centre d'informations.* Visites amicales.* Téléphones amicaux.* Soutien aux aînés victimes d'abus (SAVA): soutien et accompagnement des personnes aînées victimes d'abus, prévention de l'abus et de la maltraitance, concertation.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV).* Soutien individuel pour proches aidants, sur place ou par téléphone.* Groupe de soutien pour proches aidants.* Cafés-rencontre.* Cuisines collectives: groupes pour hommes, pour femmes, groupe mixte pour les découvertes culinaires et groupe mixte anglophone.* Aide pour remplir les formulaires gouvernementaux et les déclarations de revenus.* Conférences et ateliers d'information.* Cours d'informatique.* Clubs d'activités récréatives: marche, scrabble, bridge et dards.* Accompagnement-transport pour rendez-vous médicaux et paramédicaux.* Clinique d'impôts. | Clientèle: personnes âgées de 50 ans et plus, personnes proches aidants | Territoire: Bowman, secteurs Masson-Angers et Buckingham de Gatineau, L'Ange-Gardien, Lochaber-Partie-Ouest, Mayo, Mulgrave-Et-Derry, Notre-Dame-De-La-Salette, Papineauville, Thurso, Val-Des- Bois, secteur Poltimore de Val-Des-Monts, Bouf'mobile: repas chauds pour le secteur Buckingham et dans un rayon de 10 km, repas congelés pour le reste du territoire desservi, ITMAV: MRC Papineau, secteurs Masson- Angers et Buckingham de Gatineau, L'Ange-Gardien, Notre-Dame-de-la-Salette | Statut: organisme à but non lucratif",
+    "website": "cagavl.ca",
+    "address": "390, avenue de Buckingham, Gatineau, Outaouais, QC, J8L 2G7",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "centre-actu-elle-out",
+    "name": "Centre Actu-Elle",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 986-9713",
+    "description": "* Service d'écoute et de soutien individuel.* Activités sociales et éducatives: ateliers divers.* Conférences.* Cuisine collective.* Halte-garderie.* Service de formation académique de niveau secondaire. | Clientèle: femmes | Territoire: Ville de Gatineau: secteur Buckingham, secteur Masson-Anger et MRC Papineau | Statut: organisme à but non lucratif",
+    "website": "www.centreactuelle.ca",
+    "address": "501, rue des Pins, Gatineau, Outaouais, QC, J8L 2L2",
+    "hours": "lundi au jeudi 8h30 à 16h00, halte-garderie du secteur Buckingham: lundi au jeudi 9h00 à 15h00, halte-garderie du secteur de la MRC Papineau: lundi au jeudi 9h00 à 15h00"
+  },
+  {
+    "id": "centre-alimentaire-aylmer-out",
+    "name": "Centre Alimentaire Aylmer",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 684-0163",
+    "description": "Aide et entraide alimentaire aux personnes et familles défavorisées.* Dépannage alimentaire.* Réintégration sociale et professionnelle.* Relation d'aide.* Prévention de l'itinérance: accompagnement dans la recherche et le maintien de logement, références.* Cuisines collectives.* Atelier de cuisine.* Programme Bien au chaud: collecte et distribution de vêtements d'hiver pour enfants.* Opération habit de neige: distribution de vêtements d'hiver.* Vidéothèque en ligne: vidéos informatives thématiques.* Magasin-partage scolaire: distribution de fournitures scolaires.* Magasin partage de Noël pour les membres. | Clientèle: personnes et familles à faible revenu | Territoire: secteur Aylmer de Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.centrealimentaireaylmer.org",
+    "address": "67, rue du Couvent, Gatineau, Outaouais, QC, J9H 6A2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "centre-alpha-papineau-out",
+    "name": "Centre Alpha Papineau",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 986-7506",
+    "description": "Alphabétisation et d'éducation populaire.Alphabétisation pour les personnes 16 ans et plus* Formation de base en français et en maths.* Éducation du niveau primaire.Volet Jeunes 12 ans et plus* Rattrapage scolaire.* Soutien et aide aux devoirs.* Samedi en folie de cuisine et artsAutres services* SOS Paperasse: service d'écrivain public.* Point de service de Bonhomme à lunettes. | Clientèle: familles, adultes, jeunes, population générale | Territoire: Vallée-de-la-Lièvre | Statut: organisme à but non lucratif",
+    "website": "centrealphapapineau.org",
+    "address": "390, avenue Buckingham, Gatineau, Outaouais, QC, J8L 2G7",
+    "hours": "lundi au jeudi 8h00 à 16h00"
+  },
+  {
     "id": "centre-bienvenue-pfd",
     "name": "Centre Bienvenue",
     "category": "employment",
@@ -9153,6 +10330,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 10h00 à 16h00"
   },
   {
+    "id": "centre-communautaire-entre-nous-out",
+    "name": "Centre Communautaire Entre-Nous",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 684-2236",
+    "description": "Maison de quartier.Alimentation* Cuisine collective.* Forêt nourricière: plantation d'arbres fruitiers.Enfance et jeunesse* Halte-garderie pour les 0 à 5 ans.* Aide au devoir.* Halte allaitement.* Joujouthèque: prêt de jeux et jouets.* Groupe de jeu Pandas (0 à 5 ans): ateliers parents-enfants.* Petits cuisiniers: cours de cuisine pour les 6 à 12 ans.* Activités pour les 12 à 17 ans, en partenariat avec Avenue des jeunes.* Entre nous filles: groupe de discussion pour les filles de 5e et 6e année.* Camp de jour et camp de la relâche.Aide matérielle* Opération habit de neige: distribution de vêtements d'hiver.* Magasin-partage de fournitures scolaires.* Récupération de vêtements usagés.Éducation* Cours de francisation.* Cours d'espagnol.Activités sociales* Café populaire, espace pour socialiser.* Fêtes communautaires.* Activités sociales et récréatives: cours de couture et de tricot, cours de karaté, danse en ligne, groupe de jeux de société, cours de cardio danse, activités physiques pour les personnes aînées. | Clientèle: personnes en situation de vulnérabilité, enfants, adolescent·e·s, familles, personnes âgées | Territoire: Gatineau: quartier MacLeod et environs (principalement des quartiers suivants: MaCleod, Vieux-Aylmer, Des Cedres, La Seigneurie) | Statut: organisme à but non lucratif",
+    "website": "centrecommunautaireentrenous.org/fr",
+    "address": "175, rue Front, Gatineau, Outaouais, QC, J9H 5S9",
+    "hours": "lundi au vendredi de 9h00 à 12h00 et 13h00 à 17h00"
+  },
+  {
     "id": "centre-communautaire-essalam-msc",
     "name": "Centre Communautaire Essalam",
     "category": "food",
@@ -9164,6 +10354,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.essalam.ca",
     "address": "2685, chemin Sainte-Marie, bureau L, Mascouche, Lanaudière, QC, J7K 1M8",
     "hours": "variables"
+  },
+  {
+    "id": "centre-communautaire-juridique-d-out",
+    "name": "Centre Communautaire Juridique De L'Outaouais - Bureau Administratif",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 669-2382",
+    "description": "Services d'aide juridique par des avocat·e·s en droit familial, droit criminel et pénal, droit de la jeunesse, immigration, droit civil, administratif (aide sociale, SAAQ, CSST), pension alimentaire, droit de la santé, droit du logement, faillite et carcéral.* Représentation par un·e avocat·e devant un tribunal en première instance ou en appel, en demande ou en défense.* Assistance d'un·e avocat·e dans certains cas expressément prévus par la loi.* Consultation juridique avec un·e avocat·e.* Service de garde téléphonique: consultation téléphonique avec un·e avocat·e, accessible 24 heures, 7 jours, lors d'une arrestation ou en cas de détention.* Information juridique sur les droits et obligations des bénéficiaires en ligne.* Certains services peuvent être rendus par un notaire.* Réception des plaintes. | Clientèle: personne ou organisation sans but lucratif résidant au Québec ou contrainte de rester au Québec, financièrement admissible et dont le service juridique demandé est couvert par la Loi | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "www.aidejuridiqueoutaouais.ca",
+    "address": "510, boulevard Maloney Est, bureau 201, Gatineau, Outaouais, QC, J8P 1E7",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "centre-communautaire-laurent-venne-rep",
@@ -9283,6 +10486,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 16h30 et vendredi 8h30 à 12h00"
   },
   {
+    "id": "centre-d-abandon-du-tabagisme-de-out",
+    "name": "Centre D'Abandon Du Tabagisme De L'Outaouais",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 966-6696",
+    "description": "Services d'accompagnement et de soutien pour les personnes souhaitant changer leurs habitudes tabagiques ou de vapotage.* Rencontres individuelles sur place ou ou par téléphone, sur rendez-vous.* Évaluation du niveau de dépendance.* Informations sur les produits et médicaments disponibles pour arrêter de fumer ou de vapoter.* Conseils.* Plan d'action personnalisé selon les objectifs (réduire ou arrêter de fumer ou de vapoter).* Accompagnement continu. | Clientèle: personnes de 14 ans et plus | Territoire: Outaouais | Statut: organisme parapublic",
+    "address": "85, rue St-Rédempteur, Gatineau, Outaouais, QC, J8X 4E6",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-chsld-levis-centre-d-accueil-saint-joseph-de-levis",
     "name": "Centre D'Accueil Saint-Joseph De Lévis",
     "category": "health",
@@ -9293,6 +10508,123 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à Centre D'Accueil Saint-Joseph De Lévis Inc.. Source: MSSS – Fichier M02 des installations.",
     "address": "5445, rue Saint-Louis, Lévis, QC G6V 4G9",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-acc-s-out",
+    "name": "Centre D'Action Bénévole Accès",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 684-2242",
+    "description": "* Activités de jour pour les personnes aînées: activités préventives, formatives, récréatives et de socialisation.* Visites et appels pour les personnes aînées.* Sécuricab: appels de sécurisation à domicile pour les personnes aînées vivant seules.* Initiative de travail de milieu pour aîné·e·s vulnérables (ITMAV): personne intervenante pour accompagner et référer les personnes aînées vulnérables.* Accompagnement-transport pour les rendez-vous médicaux.* Accompagnement à l'épicerie.* Clinique d'impôts. | Clientèle: personnes aînées, personnes en perte d'autonomie, personnes à faible revenu, personnes proches aidants | Territoire: secteur Aylmer de Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.cabacces.ca",
+    "address": "67, rue Principale, Gatineau, Outaouais, QC, J9H 3L4",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-acc-s-a-out",
+    "name": "Centre D'Action Bénévole Accès - Accompagnement-Transport",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 684-2242",
+    "description": "* Transport et accompagnement aux rendez-vous médicaux et à l'épicerie par des personnes bénévoles. | Clientèle: personnes aînées, personnes vulnérables n'ayant aucun autre moyen de transport | Territoire: Gatineau, Ottawa | Statut: organisme à but non lucratif",
+    "website": "www.cabacces.ca",
+    "address": "67, rue Principale, Gatineau, Outaouais, QC, J9H 3L4",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-acc-s-c-out",
+    "name": "Centre D'Action Bénévole Accès - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 684-2242",
+    "description": "* Clinique d'impôts à l'année. | Clientèle: personnes seules ayant un revenu maximal de 35 000$, couples ayant un revenu maximal de 45 000$ vivant à Aylmer | Territoire: secteur Aylmer de Gatineau | Statut: organisme à but non lucratif",
+    "website": "cabacces.ca",
+    "address": "67, rue Principale, Gatineau, Outaouais, QC, J9H 3L4",
+    "hours": "clinique 2023: à l'année, lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-gati-out",
+    "name": "Centre D'Action Bénévole De Gatineau (Le)",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 568-0747",
+    "description": "Centre d'action bénévole.Personnes aînées* Popote roulante.* Carrefour d'information pour Aînés: information et accompagnement dans les démarches administratives, offert sur place, par téléphone ou à domicile.* SécuriCAB: appels personnalisés et automatisés, rappel pour la prise de médicaments.* Service d'aide aux formulaires.* Télé bonjour: rassurance au téléphone.* Rencontres d'amitié.* ITMAV: initiative de travail de milieu auprès des aînés vulnérables.* Accompagnement et transport.* Clinique d'impôts.Bénévolat et soutien communautaire* Recrutement des bénévoles, formation, orientation et soutien.* Promotion de l'action bénévole.* Concertation et collaboration avec les acteur·rice·s du milieu. | Clientèle: grand public, personnes aînées, bénévoles | Territoire: secteur Gatineau de Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.cabgatineau.com",
+    "address": "500, boulevard Gréber, local 109, Gatineau, Outaouais, QC, J8T 7W3",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-gati-out-2",
+    "name": "Centre D'Action Bénévole De Gatineau (Le) - Accompagnement-Transport",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 568-0747",
+    "description": "* Transport et accompagnement pour les courses et les rendez-vous médicaux par des bénévoles. | Clientèle: personnes dans le besoin | Territoire: secteur Gatineau de Gatineau, accompagnement et transport: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.cabgatineau.com",
+    "address": "500, boulevard Gréber, local 109, Gatineau, Outaouais, QC, J8T 7W3",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-gati-out-3",
+    "name": "Centre D'Action Bénévole De Gatineau (Le) - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 568-0747",
+    "description": "* Clinique d'impôts sur rendez-vous. | Clientèle: personnes seules ayant un revenu brut de moins de 35 000$, personnes seules avec enfants à charge ayant un revenu brut de 40 000$, couples ayant un revenu brut de moins de 45 000$, 2 500$ supplémentaire par enfant à charge | Territoire: secteur Gatineau de Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.cabgatineau.com",
+    "address": "42, avenue Gatineau, Gatineau, Outaouais, QC, J8T 4J3",
+    "hours": "clinique 2024: 20 février au 30 avril, sur rendez-vous"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-hull-out",
+    "name": "Centre D'Action Bénévole De Hull",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819-778-2900",
+    "description": "* Popote roulante.* Accompagnement-transport pour rendez-vous médicaux et pour autres services essentiels.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV): information, références vers les services adéquats et accompagnement.* Service d'aide aux formulaires.* Clinique d'impôts.* Recrutement de bénévoles. | Clientèle: personnes et familles à faible revenu, personnes aînées, personnes en perte d'autonomie, personnes souhaitant être bénévoles, organismes communautaires | Territoire: Secteur Hull de Gatineau | Statut: organisme à but non lucratif",
+    "website": "cabhull.org",
+    "address": "12, rue Brodeur, Gatineau, Outaouais, QC, J8Y 2P4",
+    "hours": "lundi au vendredi 8h30 à 15h30"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-hull-out-2",
+    "name": "Centre D'Action Bénévole De Hull - Accompagnement-Transport",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 778-2900",
+    "description": "* Accompagnement-transport par des bénévoles pour rendez-vous médicaux.* Accompagnement- transport par des bénévoles vers des services essentiels (institutions financières, épiceries, pharmacies, ressources communautaires, sociales et juridiques). | Clientèle: personnes qui ont besoin de support physique, de réconfort ou de surveillance | Territoire: secteur Hull de Gatineau | Statut: organisme à but non lucratif",
+    "website": "cabhull.org/services/accompagnement-transport",
+    "address": "12, rue Brodeur, Gatineau, Outaouais, QC, J8Y 2P4",
+    "hours": "lundi au vendredi 8h30 à 15h30"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-de-hull-out-3",
+    "name": "Centre D'Action Bénévole De Hull - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 778-2900",
+    "description": "Clinique d'impôts à l'année.* Service intensif en mars et en avril. | Clientèle: personnes avec une situation financière simple, célibataires avec un revenu brut maximal de 35 000$, en couple avec un revenu brut maximal de 45 000$, 2000$ supplémentaires par personne à charge | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "cabhull.org/services/service-daide-aux-impots",
+    "address": "12, rue Brodeur, Gatineau, Outaouais, QC, J8Y 2P4",
+    "hours": "lundi au vendredi 8h30 à 15h30"
   },
   {
     "id": "centre-d-action-benevole-mrc-l-asso-rep",
@@ -9346,6 +10678,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "centre-d-activit-s-pr-scolaires--out",
+    "name": "Centre D'Activités Préscolaires Et Familiales",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-0114",
+    "description": "Services éducatifs favorisant le développement global des enfants d'âge préscolaire.* Halte- garderie.* Programmes éducatifs: développement de l'estime de soi et de la sociabilité, danses et activités de psychomotricité, éveil à la lecture et à l'écriture, initiation à l'anglais, préparation à la maternelle.* Cours: arts plastiques, art dramatique, éveil musical, initiation au yoga et aux techniques de relaxation, activités physiques, zumba.* Camp de jour d'été. | Clientèle: halte-garderie: enfants de 6 mois à 5 ans, programmes: enfants de 2 à 5 ans selon le programme, cours: enfants de 3 à 5 ans selon le cours, camp de jour d'été: enfants de 4 à 6 ans Capacité: 16 enfants par groupe | Territoire: Grande région de l'Outaouais | Statut: organisme à but non lucratif",
+    "website": "centreprescolaire.ca",
+    "address": "122, rue Berri, Gatineau, Outaouais, QC, J8Y 4H8",
+    "hours": "lundi au vendredi 7h30 à 17h30"
+  },
+  {
+    "id": "centre-d-aide-24-7-out",
+    "name": "Centre D'Aide 24/7",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 866 277-3553",
+    "description": "Prévention du suicide.* Hébergement de crise (1 mois et moins).* Intervention et suivi de crise en personne.* Documentation et référence.* Sensibilisation, formations et prévention. | Clientèle: personnes adultes vivant avec un trouble de santé mentale, personnes adultes en crise, personnes adultes suicidaires Capacité: 8 | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "centredaide247.com",
+    "address": "19, rue Caron, Gatineau, Outaouais, QC, J8Y 1Y6",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "centre-d-aide-aux-victimes-d-act-out",
+    "name": "Centre D'Aide Aux Victimes D'Actes Criminels De L'Outaouais",
+    "category": "family",
+    "subcategory": "Violence et maltraitance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 331-2311",
+    "description": "Services confidentiels de première ligne adaptés à chacune des étapes du processus judiciaire.* Évaluation des besoins.* Soutien et accompagnement dans les démarches.* Information sur le processus judiciaire, les droits et les recours des victimes.* Référence vers des services spécialisés, tels que les ressources juridiques, médicales, sociales et communautaires.* Assistance et aide technique pour remplir les formulaires. | Clientèle: personnes victimes d'actes criminels, leurs proches | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.cavac.qc.ca/contact/joindre-un-cavac/#outaouais",
+    "address": "729, boulevard Saint-Joseph, bureau 104, Gatineau, Outaouais, QC, J8Y 4B6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "centre-d-aide-portail-lav",
     "name": "Centre D'Aide Portail",
     "category": "food",
@@ -9357,6 +10728,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.centreaideportail.com",
     "address": "560, rue Justin, Fabreville, Laval, QC, H7P 5R2",
     "hours": "lundi au jeudi 9h00 à 16h00, distribution des paniers: jeudi 14h00 à 17h15"
+  },
+  {
+    "id": "centre-d-amiti-autochtone-de-man-out",
+    "name": "Centre D'Amitié Autochtone De Maniwaki",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 892-0892",
+    "description": "* Lieu de rencontre.* Information et référence.* Intervention psychosociale.* Consultation avec des personnes professionnelles de la santé.* Aide aux devoirs.* Soutien en éducation.* Transport local pour les jeunes.* Activités éducatives et culturelles.* Pow-wow.* Activités d'artisanat traditionnel.* Défense des droits et représentation des intérêts. | Clientèle: Autochtones | Territoire: Maniwaki | Statut: organisme à but non lucratif",
+    "website": "maniwakinfc.ca",
+    "address": "153, rue Laurier, Maniwaki, Outaouais, QC, J9E 2K6",
+    "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
     "id": "centre-d-amitie-autochtone-de-lanau-jol",
@@ -9372,6 +10756,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "centre-d-animation-familiale-de--out",
+    "name": "Centre D'Animation Familiale De L'Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-5196",
+    "description": "Maison de quartier.Alimentation* Cuisines collectives.* Jardin communautaire.* Soutien alimentaire pour les personnes participant aux activités.Aide matérielle* Dépannage vestimentaire.* Opération habit de neige: distribution de vêtements d'hiver.* Programme Retour en classe: fournitures scolaires à prix réduits.* Bonhomme à Lunettes: lunettes à prix abordables.Soutien* Aide aux devoirs.* Halte-répit.* Accueil, accompagnement et référence.* Rencontre individuelle, écoute et intervention.Activités* Activités de stimulation du développement pour enfants.* Atelier Au Petit Jardin: préparation à la maternelle.* Activités pour enfants d'âge primaire.* Activités jeunes adultes.* Activités parents-enfants.* Halte-garderie offertes aux participants lors des activités.* Jeux d'été: camp de jour estival.* Activités durant les vendredis pédagogiques.* Café- rencontre.* Café art inter-G.* Club de crochet et de tricot.* Évènements divers. | Clientèle: familles, grand public, adultes, enfants, activités de stimulation du développement: enfants de 0 à 5 ans, activités jeunes adultes: 18 à 25 ans | Territoire: district Pointe-Gatineau de Gatineau (quartiers du Ruisseau, Saint-Rosaire, Jacques- Cartier et Laflèche de Gatineau) | Statut: organisme à but non lucratif",
+    "website": "cafoutaouais.ca",
+    "address": "1312, rue Saint-Louis, Gatineau, Outaouais, QC, J8T 2M7",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "centre-d-animation-familiale-de--out-2",
+    "name": "Centre D'Animation Familiale De L'Outaouais - Point De Service Le Baron",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-5196",
+    "description": "Maison de quartier.Alimentation* Cuisines collectives.* Jardin communautaire.* Soutien alimentaire pour les personnes participant aux activités.Aide matérielle* Dépannage vestimentaire.* Opération habit de neige: distribution de vêtements d'hiver.* Programme Retour en classe: fournitures scolaires à prix réduits.* Bonhomme à Lunettes: lunettes à prix abordables.Soutien* Aide aux devoirs.* Halte-répit.* Accueil, accompagnement et référence.* Rencontre individuelle, écoute et intervention.Activités* Activités de stimulation du développement pour enfants.* Atelier Au Petit Jardin: préparation à la maternelle.* Activités pour enfants d'âge primaire.* Activités jeunes adultes.* Activités parents-enfants.* Halte-garderie offertes aux participants lors des activités.* Jeux d'été: camp de jour estival.* Activités durant les vendredis pédagogiques.* Café- rencontre.* Café art inter-G.* Club de crochet et de tricot.* Évènements divers. | Clientèle: familles, grand public, adultes, enfants, activités de stimulation du développement: enfants de 0 à 5 ans, activités jeunes adultes: 18 à 25 ans | Territoire: quartier le Baron | Statut: organisme à but non lucratif",
+    "website": "cafoutaouais.ca",
+    "address": "104, rue du Barry, Gatineau, Outaouais, QC, J8T 5E2",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "centre-d-assistance-et-d-accompa-lav",
     "name": "Centre D'Assistance Et D'Accompagnement Aux Plaintes - Laval",
     "category": "social",
@@ -9385,6 +10795,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "centre-d-assistance-et-d-accompa-out",
+    "name": "Centre D'Assistance Et D'Accompagnement Aux Plaintes - Outaouais",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 877 767-2227",
+    "description": "Aide et accompagnement pour personnes désirant porter plainte concernant les services qu'ils ont reçus ou auraient dû recevoir dans le réseau de la santé et des services sociaux.* CAAP sur le bail: accompagnement dans les démarches visant à régler à l'amiable un différend avec l'exploitant de la RPA ou un litige suite d'une demande au Tribunal administratif du logement.* Information et aide aux locataires des résidences privées pour aînées (RPA) pour formuler une plainte et accompagnement dans les démarches de plainte.* Aide pour la préparation d'une audience au Tribunal administratif du logement.* Établissements publics: CLSC, hôpitaux, centres d'hébergement, centres jeunesse, centres de réadaptation.* Ressources intermédiaires: établissements privés conventionnés ou autofinancés, ressources de type familial.* Organismes communautaires dans le domaine de la santé et des services sociaux ou exerçant une fonction ou une activités de l'ASSS: services préhospitaliers, services ambulanciers. | Clientèle: personnes usagères du réseau de la santé et des services sociaux, personnes résidant dans une RPA | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "caap-outaouais.ca/accueil",
+    "address": "92, boulevard St-Raymond, bureau 203, Gatineau, Outaouais, QC, J8Y 1S7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "centre-d-assistance-et-d-accompagne-jol",
     "name": "Centre D'Assistance et D'Accompagnement aux Plaintes - Lanaudière",
     "category": "social",
@@ -9395,6 +10818,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Aide et accompagnement pour personnes désirant porter plainte concernant les services qu'iels ont reçus ou auraient dû recevoir dans le réseau de la santé et des services sociaux.?• Établissements publics: CLSC, hôpitaux, centres d'hébergement, centres jeunesse, centres de réadaptation.• Ressources intermédiaires: établissements privés conventionnés ou autofinancés, ressources de type familial.• Organismes communautaires dans le domaine de la santé et des services sociaux ou exerçant une fonction ou une activité de l'ASSS: services préhospitaliers, services ambulanciers.• Information et aide aux locataires des résidences privées pour aînées (RPA) pour formuler une plainte et accompagnement dans les démarches de plainte. | Clientèle: personnes usagères du réseau de la santé et des services sociaux, locataires de résidence pour personnes aînées | Territoire: Lanaudière | Frais: aucuns | Statut: organisme à but non lucratif",
     "website": "https://caaplanaudiere.com",
     "address": "490, rue Saint-Charles-Borromée Nord, Joliette, Lanaudière, QC, J6E 4R7",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-d-entraide-aux-a-n-s-out",
+    "name": "Centre D'Entraide Aux Aînés",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-6609",
+    "description": "* Programme de jumelage: visites et appels d'amitié.* Journées d'activités et dîner communautaire.* Programme de soutien aux personnes proches aidantes: formation, sessions d'information, groupes de soutien et soutien individuel.* Accompagnement-transport pour les rendez-vous médicaux et besoin spéciaux par des bénévoles.* Journée d'épicerie: accompagnement-transport pour les courses par des bénévoles. | Clientèle: personnes de 65 ans et plus en légère perte d'autonomie, personnes proches aidantes de personnes aînées | Territoire: Gatineau: secteur Hull | Statut: organisme à but non lucratif",
+    "website": "www.entraideauxaines.ca",
+    "address": "331, boulevard de la Cité-des-Jeunes, bureau 101, Gatineau, Outaouais, QC, J8Y 6T3",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, journées d'activités: mardi et jeudi 9h30 à 14h00"
+  },
+  {
+    "id": "centre-d-entraide-aux-a-n-s-acco-out",
+    "name": "Centre D'Entraide Aux Aînés - Accompagnement-Transport",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-6609",
+    "description": "* Accompagnement-transport pour les rendez-vous médicaux et besoins spéciaux par des bénévoles.* Journée d'épicerie: accompagnement-transport pour les courses par des bénévoles. | Clientèle: personnes de 65 ans et plus en légère perte d'autonomie | Territoire: accompagnement-transport: Gatineau, Ottawa, journée d'épicerie: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.entraideauxaines.ca",
+    "address": "331, boulevard de la Cité-des-Jeunes, bureau 101, Gatineau, Outaouais, QC, J8Y 6T3",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
@@ -9422,6 +10871,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "cemarigot.com",
     "address": "131, boulevard de la Concorde Est, Pont-Viau, Laval, QC, H7G 2C3",
     "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "centre-d-entraide-la-destin-e-le-out",
+    "name": "Centre D'Entraide La Destinée (Le)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-7474",
+    "description": "Centre pour les femmes.* Artisanat.* Ateliers de groupe.* Café-rencontre.* Café-ressources.* Loisirs et sorties: cinéma, jeux de société, etc.* Sensibilisation.* Dîner de Noël pour les membres. | Clientèle: femmes | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "ladestinee.org",
+    "address": "177, chemin de la Savane, Gatineau, Outaouais, QC, J8T 1R2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 17h30"
   },
   {
     "id": "centre-d-entraide-de-mascouche-msc",
@@ -11332,6 +12794,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "centre-d-intervention-en-abus-se-out",
+    "name": "Centre D'Intervention En Abus Sexuels Pour La Famille",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-1905",
+    "description": "Intervention psychosociale et psychothérapeutique de groupe auprès des familles et des personnes confrontés à l'abus sexuel d'enfants.* Groupes de prévention et d'intervention pour enfants victimes de 3 à 5 ans provenant de milieux à risque.* Groupes de prévention pour enfants victimes de 6 à 8 ans et 9 à 12 ans.* Groupes thérapeutiques pour adolescent·e·s de 12 à 17 ans victimes d'un abus sexuel.* Groupes de prévention spécialisée pour les adolescent·e·s de 12 à 17 ans aux prises avec des facteurs de risque reliés au phénomène de l'exploitation sexuelle.* Groupes d'intervention pour les parents dont l'enfant a été abusé sexuellement.* Groupes thérapeutiques pour les hommes abusés sexuellement dans leur enfance.* Groupes de traitement pour les adolescent·e·s et adultes ayant abusé sexuellement d'un enfant. | Clientèle: enfants, adolescent·e·s, parents, familles, adultes, organismes, institutions, partenaires oeuvrant auprès des victimes mineurs et leurs proches, les auteurs·trices d'abus sexuels et leurs proches | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.ciasf.org",
+    "address": "92, boulevard Saint-Raymond, bureau 400-A, Gatineau, Outaouais, QC, J8Y 1S7",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "centre-d-integration-multi-services-drv",
     "name": "Centre D'Intégration Multi-Services de L'Ouest de L'Île - Dorval",
     "category": "food",
@@ -11369,6 +12844,175 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cipl.ca",
     "address": "547, rue Leclerc, bureau 200, Repentigny, Lanaudière, QC, J6A 8B4",
     "hours": "lundi au jeudi 8h30 à 12h00 et 12h45 à 16h00, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "centre-d-ducation-aux-adultes-l--out",
+    "name": "Centre D'Éducation Aux Adultes L'Escale",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 243-2151",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes.* Obtention d'un diplôme d'étude secondaire (DES), de préalable pour le cégep ou de préalables pour la formation professionnelle.* Test d'équivalence.* Services d'orientation, d'orthopédagogie, de conseil pédagogique, de psychoéducation et d'éducation spécialisée.* Programmes: apprendre le français, alphabétisation, formation rapide axée sur l'emploi, etc. | Clientèle: personnes de 16 ans et plus | Territoire: MRC les Collines-de-l'Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "cead.cssd.gouv.qc.ca",
+    "address": "85, rue de Barry, Gatineau, Outaouais, QC, J8T 3N5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-ducation-aux-adultes-la-out",
+    "name": "Centre D'Éducation Aux Adultes La Cité",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 958-9966",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes.* Obtention d'un diplôme d'étude secondaire (DES), de préalable pour le cégep ou de préalables pour la formation professionnelle.* Test de reconnaissance des acquis.* Services d'orientation, d'orthopédagogie, d'animateur à la vie étudiante, de psychoéducation et d'éducation spécialisée. | Clientèle: personnes de 16 ans et plus | Territoire: Gatineau | Statut: organisme du gouvernement provincial",
+    "website": "la-cite.csscv.gouv.qc.ca",
+    "address": "50, rue des Servantes, Gatineau, Outaouais, QC, J8M 1C2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-ducation-aux-adultes-le-out",
+    "name": "Centre D'Éducation Aux Adultes Le Vallon",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Papineauville",
+    "province": "QC",
+    "phone": "1 800 958-9966",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes.* Obtention d'un diplôme d'étude secondaire (DES), de préalable pour le cégep ou de préalables pour la formation professionnelle.* Test de reconnaissance des acquis.* Services d'orientation, d'orthopédagogie, d'animation, de psychoéducation et d'éducation spécialisée. | Clientèle: personnes de 16 ans et plus | Territoire: Papineauville | Statut: organisme du gouvernement provincial",
+    "website": "le-vallon.csscv.gouv.qc.ca",
+    "address": "104, allée des Montfortains Nord, Papineauville, Outaouais, QC, J0V 1R0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-ducation-de-base-dans-l-out",
+    "name": "Centre D'Éducation De Base Dans L'Outaouais",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "",
+    "description": "Centre d'alphabétisation et d'éducation de base.* Tutorat individuel et personnalisé en alphabétisation et éducation de base.* Accès à des conseillères pédagogiques et à une orthopédagogue.* Activités culturelles ou récréatives pour les apprenant·e·s: cabane à sucre, théâtre de l'île, etc.* Cours aussi offerts à la Maison de l'Amitié de Hull. | Clientèle: adultes | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.cebo.ca",
+    "address": "255, rue Saint-Rédempteur, Gatineau, Outaouais, QC, J8X 2T4",
+    "hours": "septembre à avril, lundi à mercredi 18h00 à 21h00"
+  },
+  {
+    "id": "centre-d-ducation-des-adultes-l--out",
+    "name": "Centre D'Éducation Des Adultes L'Arrimage",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-2503",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes.* Obtention d'un diplôme d'étude secondaire (DES), de préalable pour le cégep ou de préalables pour la formation professionnelle. | Clientèle: personnes de 16 ans et plus | Territoire: Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "ceapo.csspo.gouv.qc.ca",
+    "address": "450, rue Leguerrier, Gatineau, Outaouais, QC, J9H 7J1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-ducation-des-adultes-la-out",
+    "name": "Centre D'Éducation Des Adultes La Génération",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-2503",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes.* Obtention d'un diplôme d'étude secondaire (DES), de préalable pour le cégep ou de préalables pour la formation professionnelle. | Clientèle: personnes de 16 ans et plus | Territoire: Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "ceapo.csspo.gouv.qc.ca",
+    "address": "35, rue Davies, Gatineau, Outaouais, QC, J8Y 4S8",
+    "hours": "lundi au vendredi: 8h00 à 11h30 et 12h30 à 15h30"
+  },
+  {
+    "id": "centre-d-ducation-des-adultes-la-out-2",
+    "name": "Centre D'Éducation Des Adultes La Pêche",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "La Pêche",
+    "province": "QC",
+    "phone": "819 771-2503",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes.* Obtention d'un diplôme d'étude secondaire (DES), de préalable pour le cégep ou de préalables pour la formation professionnelle. | Clientèle: personnes de 16 ans et plus | Territoire: Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "ceapo.csspo.gouv.qc.ca",
+    "address": "5A, rue Principale Ouest, La Pêche, Outaouais, QC, J0X 2W0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-ducation-des-adultes-lu-out",
+    "name": "Centre D'Éducation Des Adultes Lucien-Brault",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-2503",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes. * Obtention d'un diplôme d'étude secondaire (DES), de préalable pour le cégep ou de préalables pour la formation professionnelle. | Clientèle: personnes de 16 ans et plus avant le 1er juillet de l'année courante | Territoire: Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "ceapo.csspo.gouv.qc.ca",
+    "address": "101, rue Saint-Jean-Bosco, Gatineau, Outaouais, QC, J8Y 3G5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-ducation-des-adultes-no-out-2",
+    "name": "Centre D'Éducation Des Adultes Notre-Dame-Du-Désert",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 449-6644",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes.* Obtention d'un diplôme d'étude secondaire (DES), de préalable pour le cégep ou de préalables pour la formation professionnelle. | Clientèle: personnes de 16 ans et plus | Territoire: MRC la Vallée-de-la-Gatineau | Statut: organisme du gouvernement provincial",
+    "website": "www.csshbo.gouv.qc.ca/fr/parents-eleves-et-communaute/parents/trouvez-votre-ecole/centres- de-formation/maniwaki-centre-notre-dame-du-desert",
+    "address": "335, rue du Couvent, Maniwaki, Outaouais, QC, J9E 1H5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-ducation-des-adultes-no-out",
+    "name": "Centre D'Éducation Des Adultes Nouvel-Horizon",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-9395",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes.* Obtention d'un diplôme d'étude secondaire (DES), de préalable pour le cégep ou de préalables pour la formation professionnelle.* Test d'équivalence.* Services d'orientation, d'orthopédagogie, de conseil pédagogique, de psychoéducation et d'éducation spécialisée.* Programmes: apprendre le français, alphabétisation, formation rapide axée sur l'emploi, etc. | Clientèle: personnes de 16 ans et plus | Territoire: MRC les Collines-de-l'Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "cead.cssd.gouv.qc.ca",
+    "address": "100, rue de la Baie, Gatineau, Outaouais, QC, J8T 3H7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-ducation-des-adultes-po-out",
+    "name": "Centre D'Éducation Des Adultes Pontiac",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Fort-Coulonge",
+    "province": "QC",
+    "phone": "819 449-6644",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes.* Obtention d'un diplôme d'étude secondaire (DES), de préalable pour le cégep ou de préalables pour la formation professionnelle. | Clientèle: personnes de 16 ans et plus | Territoire: MRC Pontiac | Statut: organisme du gouvernement provincial",
+    "website": "www.csshbo.gouv.qc.ca/fr/parents-eleves-et-communaute/parents/trouvez-votre-ecole/centres- de-formation/fort-coulonge-centre-pontiac",
+    "address": "183, rue Principale, Fort-Coulonge, Outaouais, QC, J0X 1V0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-ducation-des-adultes-sa-out",
+    "name": "Centre D'Éducation Des Adultes Saint-Eugène",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Déléage",
+    "province": "QC",
+    "phone": "819 449-7789",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes.* Obtention d'un diplôme d'étude secondaire (DES), de préalable pour le cégep ou de préalables pour la formation professionnelle. | Clientèle: personnes de 16 ans et plus | Territoire: MRC la Vallée-de-la-Gatineau | Statut: organisme du gouvernement provincial",
+    "website": "www.csshbo.gouv.qc.ca/fr/parents-eleves-et-communaute/parents/trouvez-votre-ecole/centres- de-formation/deleage-centre-st-eugene",
+    "address": "67, chemin Rivière-Gatineau, Déléage, Outaouais, QC, J9E 3A5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-ducation-des-adultes-sa-out-2",
+    "name": "Centre D'Éducation Des Adultes Saint-Joseph",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gracefield",
+    "province": "QC",
+    "phone": "819 463-3644",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes.* Obtention d'un diplôme d'étude secondaire (DES), de préalable pour le cégep ou de préalables pour la formation professionnelle. | Clientèle: personnes de 16 ans et plus | Territoire: MRC la Vallée-de-la-Gatineau | Statut: organisme du gouvernement provincial",
+    "website": "www.csshbo.gouv.qc.ca/fr/parents-eleves-et-communaute/parents/trouvez-votre-ecole/centres- de-formation/gracefield-centre-st-joseph",
+    "address": "67, rue Saint-Joseph, Gracefield, Outaouais, QC, J0X 1W0",
+    "hours": "Voir site web"
   },
   {
     "id": "centre-de-b-n-volat-et-moisson-l-lav",
@@ -11448,6 +13092,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-de-justice-de-proximit-de-out",
+    "name": "Centre De Justice De Proximité De L'Outaouais",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 600-4600",
+    "description": "* Clinique d'information juridique: explication de la loi, information sur les types de recours, les actes de procédure et le déroulement des instances, orientation dans le système de la justice.* Référence vers des organismes, des professionnel·le·s ou vers un mode alternatif de résolution de conflits.* Outils et séances d'information juridique. | Clientèle: personnes à la recherche d'informations juridiques | Territoire: Gatineau, MRC La Vallée-de-la-Gatineau, MRC Les Collines-de-l'Outaouais, MRC Papineau, MRC Pontiac | Statut: organisme à but non lucratif",
+    "website": "justicedeproximite.qc.ca/centres/outaouais",
+    "address": "768, boulevard Saint-Joseph, bureau 200, Gatineau, Outaouais, QC, J8Y 4B8",
+    "hours": "sur rendez-vous: lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "centre-de-la-nature-de-laval-lav",
     "name": "Centre De La Nature De Laval",
     "category": "family",
@@ -11524,6 +13181,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
+    "id": "centre-de-p-diatrie-sociale-de-g-out",
+    "name": "Centre De Pédiatrie Sociale De Gatineau",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 643-3000",
+    "description": "* Médecine sociale.* Évaluation globale de la santé.* Suivis psychosociaux et accompagnement.* Suivis de grossesse.* Activités de groupe.* Activités thérapeutiques. | Clientèle: enfants de 0 à 17 ans | Territoire: Vieux Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.pediatriesocialegatineau.com",
+    "address": "321, rue Notre-Dame, Gatineau, Outaouais, QC, J8P 1L2",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "centre-de-p-diatrie-sociale-de-g-out-2",
+    "name": "Centre De Pédiatrie Sociale De Gatineau - Secteur Hull",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 600-1661",
+    "description": "* Accueil.* Évaluation et orientation.* Suivis individuels.* Thérapies.* Suivi de grossesse.* Activités de groupe. | Clientèle: familles, enfants de 0 à 17 ans, femmes enceintes | Territoire: secteur Hull de Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.pediatriesocialegatineau.com/fr",
+    "address": "39, rue Frontenac, Gatineau, Outaouais, QC, J8X 1Y9",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
     "id": "msss-hopital-montreal-centre-de-recherche-du-centre-hospitalier-de-l-universite-de",
     "name": "Centre De Recherche Du Centre Hospitalier De L'Université De Montréal",
     "category": "health",
@@ -11535,6 +13218,32 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "900, rue Saint-Denis, Montréal, QC H2X 0A9",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "centre-de-ressourcement-pour-la--out",
+    "name": "Centre De Ressourcement Pour La Famille De L'Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Val-Des-Monts",
+    "province": "QC",
+    "phone": "819 457-4066",
+    "description": "Centre de répit pour familles à la campagne.* Répit familial pour les parents et leurs enfants.* Camp de fin de semaine pour les enfants.* Activités familiales: barbecue avec conte et chanson autour d'un feu, fête de la raquette, etc.* Ateliers thématiques pour parents: groupes de soutien entre les pairs, soupers discussions liés à la parentalité, soirées créatives, etc.* Location de salles et du centre pour les organismes communautaires, les entreprises et les familles. | Clientèle: parents, enfants, familles, location de salles et du centre: organismes communautaires, entreprises et familles | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.crfo.ca",
+    "address": "750, chemin du Fort, Val-Des-Monts, Outaouais, QC, J8N 1A2",
+    "hours": "activités: septembre à juin les fins de semaines, juillet et août 7 jours"
+  },
+  {
+    "id": "centre-de-ressources-connexions-out",
+    "name": "Centre De Ressources Connexions",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 557-0615",
+    "description": "Centre de ressources pour la population anglophone. * Information et orientation vers les services sociaux et de santé, les organisations communautaires, l'information juridique, l'employabilité, etc. * Programmes, activités, conférences et ateliers pour tous les groupes d'âge. * Initiative de travail de proximité pour les personnes aînées en situation de vulnérabilité (ITMAV). * Groupe de jeu pour familles et leurs enfants au Cégep Heritage College.* Répertoires de ressources en ligne : personnes aînées et proches aidantes, jeunes, femmes, hommes, familles, personnes en situation de vulnérabilité et familles dont un membre vit avec un handicap. * Groupes de discussion et de soutien : parents, jeunes, personnes proches aidantes, hommes. * Documentation en ligne : articles et vidéos. * Groupe de soutien en ligne sur la gestion de la colère pour les hommes. | Clientèle: personnes anglophones, personnes aînées, proches aidant·e·s, familles, jeunes | Territoire: Outaouais. travail de milieu ITMAV: secteur Aylmer de la ville de Gatineau | Statut: organisme à but non lucratif",
+    "website": "centreconnexions.org",
+    "address": "67, rue du Couvent, Gatineau, Outaouais, QC, J9H 6A2",
+    "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
     "id": "msss-hopital-riviere-ouelle-centre-de-readaptation-en-deficience-intellectuelle-troubles",
@@ -12173,18 +13882,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
-    "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-de-services-ambulatoires-en-sante-mentale-papineau",
-    "name": "Centre De Services Ambulatoires En Santé Mentale Papineau",
-    "category": "mentalHealth",
-    "subcategory": "Centre hospitalier psychiatrique",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
-    "address": "10345, avenue Papineau, 3e étage, Montréal, QC H2B 2A3",
-    "hours": "Service de crise disponible 24h/24, 7j/7"
-  },
-  {
     "id": "msss-hopital-montreal-centre-de-services-ambulatoires-en-sante-mentale-papineau",
     "name": "Centre De Services Ambulatoires En Santé Mentale Papineau",
     "category": "health",
@@ -12195,6 +13892,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "address": "10345, avenue Papineau, 3e étage, Montréal, QC H2B 2A3",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
+  },
+  {
+    "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-de-services-ambulatoires-en-sante-mentale-papineau",
+    "name": "Centre De Services Ambulatoires En Santé Mentale Papineau",
+    "category": "mentalHealth",
+    "subcategory": "Centre hospitalier psychiatrique",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
+    "address": "10345, avenue Papineau, 3e étage, Montréal, QC H2B 2A3",
+    "hours": "Service de crise disponible 24h/24, 7j/7"
   },
   {
     "id": "msss-hopital-laval-centre-de-services-ambulatoires-en-sante-mentale-rene-laenne",
@@ -12510,6 +14219,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-de-services-scolaire-au-c-out",
+    "name": "Centre De Services Scolaire Au Coeur-Des-Vallées",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 958-9966",
+    "description": "Services éducatifs répondant aux besoins de formation des jeunes, adultes, entreprises et organismes de son territoire.* Trouver une école ou un centre: www.csscv.gouv.qc.ca/ecoles-centres * Calendrier scolaire: www.csscv.gouv.qc.ca/calendrier-scolaire * SARCA: soutien dans la démarche de réalisation d'un projet professionnel ou de formation.* Organisation de l'enseignement préscolaire, primaire, secondaire, de la formation professionnelle et générale.* Transport scolaire.* Boîte d'outils pour parents.* Programme Passe-Partout: faciliter la transition de la maison à la garderie.* Gestion des plaintes. | Clientèle: SARCA: personnes 16 ans et plus | Territoire: MRC Papineau | Statut: organisme du gouvernement provincial",
+    "website": "www.csscv.gouv.qc.ca",
+    "address": "582, rue Maclaren Est, Gatineau, Outaouais, QC, J8L 2W2",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00, sur rendez-vous seulement"
+  },
+  {
     "id": "centre-de-services-scolaire-de-l-lav",
     "name": "Centre De Services Scolaire De Laval",
     "category": "social",
@@ -12523,6 +14245,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 7h30 à 17h00"
   },
   {
+    "id": "centre-de-services-scolaire-des--out",
+    "name": "Centre De Services Scolaire Des Draveurs",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 663-9221",
+    "description": "Services éducatifs répondant aux besoins de formation des jeunes, adultes ainsi que des entreprises et des organismes de son territoire.* Trouver une école ou un centre: www.applications.cssd.gouv.qc.ca/GEOBUS/Pages/Anonyme/parents/page.fr.aspx * Calendrier scolaire: www.cssd.gouv.qc.ca/parents-eleves/calendriers-scolaires * SARCA: soutien dans la démarche de réalisation d'un projet professionnel ou de formation.* Organisation de l'enseignement préscolaire, primaire, secondaire, de la formation professionnelle et générale.* Transport scolaire.* Boîte d'outils pour parents.* Alertes texto: système de notification par texto d'informations importantes.* Gestion des plaintes. | Clientèle: SARCA: personnes 16 ans et plus | Territoire: Bowman, Cantley, Chelsea, Denholm, Gatineau, L'Ange-Gardien, La Pêche, Val-Des- Monts | Statut: organisme du gouvernement provincial",
+    "website": "www.cssd.gouv.qc.ca",
+    "address": "200, boulevard Maloney Est, Gatineau, Outaouais, QC, J8P 1K3",
+    "hours": "administration: lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--out-2",
+    "name": "Centre De Services Scolaire Des Hauts-Bois-De-L'Outaouais",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "1 888 831-9606",
+    "description": "Services éducatifs répondant aux besoins de formation des jeunes, adultes ainsi que des entreprises et des organismes de son territoire.* Trouver une école ou un centre: www.webhbo.appgrics.ca/Geobus/Pages/Anonyme/Parents/Page.fr.aspx * Calendrier scolaire: www.csshbo.gouv.qc.ca/fr/parents-eleves-et-communaute/parents/outils-parents/calendriers-scolaires * SARCA: soutien dans la démarche de réalisation d'un projet professionnel ou de formation.* Organisation de l'enseignement préscolaire, primaire, secondaire, de la formation professionnelle et générale.* Transport scolaire.* Boîte d'outils pour parents.* Alertes texto: système de notification par texto d'informations importantes.* Gestion des plaintes. | Clientèle: SARCA: personnes 16 ans et plus | Territoire: MRC de Pontiac, MRC la-Vallée-de-la-Gatineau | Statut: organisme du gouvernement provincial",
+    "website": "www.csshbo.gouv.qc.ca",
+    "address": "331, rue du Couvent, Maniwaki, Outaouais, QC, J9E 1H5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--out-3",
+    "name": "Centre De Services Scolaire Des Portages-De-L'Outaouais",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-4548",
+    "description": "Services éducatifs répondant aux besoins de formation des jeunes, adultes ainsi que des entreprises et des organismes de son territoire.* Trouver une école ou un centre: www.csspo.gouv.qc.ca/etablissements* Calendrier scolaire: www.csspo.gouv.qc.ca/services-aux-eleves/calendriers-scolaires* SARCA: soutien dans la démarche de réalisation d'un projet professionnel ou de formation.* Organisation de l'enseignement préscolaire, primaire, secondaire, de la formation professionnelle et générale.* Transport scolaire.* Boîte d'outils pour parents.* mParent: système de notification d'informations importantes.* Gestion des plaintes. | Clientèle: SARCA: personnes 16 ans et plus | Territoire: MRC les Collines-de-l'Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "www.csspo.gouv.qc.ca",
+    "address": "225, rue Saint-Rédempteur, Gatineau, Outaouais, QC, J8X 2T3",
+    "hours": "lundi à vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "msss-chsld-montreal-centre-de-soins-prolonges-grace-dart",
     "name": "Centre De Soins Prolongés Grace Dart",
     "category": "health",
@@ -12533,6 +14294,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à Centre De Soins Prolongés Grace Dart. Source: MSSS – Fichier M02 des installations.",
     "address": "5155, rue Sainte-Catherine Est, Montréal, QC H1V 2A5",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "centre-de-travail-laro-out",
+    "name": "Centre De Travail Laro",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-6434",
+    "description": "Centre de travail adapté.* Opportunités d'emploi adapté.* Services de main d'oeuvre: préparation postale, emballage, reliure, menuiserie, livraison et réception.* Location de main d'oeuvre.* Vente de billets de loterie. | Clientèle: personnes vivant avec un handicap physique ou intellectuel Capacité: 100 employé·e·s | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "centredetravaillaro.com",
+    "address": "179, rue Deveault, Gatineau, Outaouais, QC, J8Z 1S7",
+    "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
     "id": "centre-des-femmes-de-laval-lav",
@@ -12621,6 +14395,45 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à CIUSSS De La Capitale-Nationale. Source: MSSS – Fichier M02 des installations.",
     "address": "1045, boulevard René-Lévesque Ouest, Québec, QC G1S 1V3",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "centre-elizabeth-fry-de-l-outaou-out",
+    "name": "Centre Elizabeth Fry De L'Outaouais",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 777-3669",
+    "description": "Soutien aux femmes qui ont des démêlés avec la justice.* Projet ARPE (Aide régionale au pardon pour elles): accompagnement dans le processus de demande de pardon ou de suspension de casier.* Programme de mesures de rechange général: programme ayant pour but la réparation des torts causés aux victimes ou à la collectivité, tout en sensibilisant les personnes accusées.* Programme de surveillance communautaire.* Programme EVE: intervention pour les femmes accusées d'infractions à caractère économique.* Programme gestion des émotions. | Clientèle: femmes et personnes de diverses identités de genre ayant eu ou ayant des démêlés avec la justice ou qui sont à risque d'en avoir | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.elizabethfry.qc.ca",
+    "address": "92, boulevard Saint-Raymond, bureau 200-A, Gatineau, Outaouais, QC, J8Y 1S7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-en-s-curit-alimentaire-de-out",
+    "name": "Centre En Sécurité Alimentaire De Gatineau",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "873 376-2724",
+    "description": "* Dépannage alimentaire.* intervention et accompagnement psychosocial.* Ateliers divers.* Cuisine collective.* Service de livraison de nourriture.* Paniers de Noël.* Stage.* Référence vers d'autres organismes et services communautaires. | Clientèle: personnes et familles à faible revenu | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.csagatineau.org",
+    "address": "305, rue Notre-Dame, Gatineau, Outaouais, QC, J8P 1K9",
+    "hours": "lundi 13h00 à 16h00, mercredi 13h00 à 18h00, vendredi 13h00 à 16h00"
+  },
+  {
+    "id": "centre-espoir-de-gatineau-out",
+    "name": "Centre Espoir De Gatineau",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 663-3238",
+    "description": "* Banque alimentaire.* Dépannage alimentaire d'urgence. | Clientèle: familles à faible revenu | Territoire: quartier Notre-Dame de Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.centreespoir.ca",
+    "address": "791, boulevard Maloney Est, Gatineau, Outaouais, QC, J8P 1G5",
+    "hours": "mardi au jeudi 9h30 à 12h00"
   },
   {
     "id": "centre-famille-snap-pfd",
@@ -12727,6 +14540,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-inter-section-out",
+    "name": "Centre Inter-Section",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 568-4555",
+    "description": "Centre de rétablissement et de soutien en santé mentale visant la réadaptation et la réinsertion sociale.* Soutien et accompagnement psychosocial.* Deuil après suicide: groupe de soutien et suivi individuel.* Activités de rétablissement et groupe de soutien.* Programme de développement de l'employabilité.* Accompagnement socioprofessionnel.* Logement communautaire.* Activités de loisir et de formation.* Conférences. | Clientèle: personnes vivant avec un problème de santé mentale, personnes endeuillées par le suicide Capacité: variable | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.inter-section.ca",
+    "address": "1232, boulevard Saint-René Ouest, Gatineau, Outaouais, QC, J8T 6H3",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
     "id": "centre-int-gr-de-sant-et-de-serv-lav",
     "name": "Centre Intégré De Santé Et De Services Sociaux De Laval - Pipep",
     "category": "mentalHealth",
@@ -12740,6 +14566,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-int-gr-de-sant-et-des-ser-out",
+    "name": "Centre Intégré De Santé Et Des Services Sociaux De L'Outaouais",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 966-6000",
+    "description": "Planification, coordination et organisation de l'offre de services sociaux et de santé. * Prise en charge de l'ensemble de la population du territoire, notamment des clientèles plus vulnérables.* Gestion de l'accès simplifié aux services.* Administration de partenariats avec les ressources intermédiaires en hébergement.* Traitement des plaintes en matière d'insatisfaction et de violation des droits des usager·ère·s. | Territoire: Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "cisss-outaouais.gouv.qc.ca",
+    "address": "80, avenue Gatineau, Gatineau, Outaouais, QC, J8T 4J3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-des-ser-out-2",
+    "name": "Centre Intégré De Santé Et Des Services Sociaux De L'Outaouais - Clinique Pep",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 966-6640",
+    "description": "Clinique spécialisée pour les personnes vivant un premier épisode psychotique non traité.* Accueil et évaluation.* Traitement et réadaptation. | Clientèle: personnes présentant des symptômes d'un trouble psychotique et qui n'ont jamais été traitées pour une psychose ou qui ont été traitées pour une ou des périodes totalisant moins de 12 mois de suivi | Territoire: Outaouais | Statut: organisme parapublic",
+    "address": "207, boulevard Mont-Bleu, bureau 202, Gatineau, Outaouais, QC, J8Z 2M3",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "centre-integre-de-sante-et-de-servi-jol",
     "name": "Centre Intégré de Santé et de Services Sociaux de Lanaudière",
     "category": "employment",
@@ -12751,6 +14602,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cisss-lanaudiere.gouv.qc.ca",
     "address": "260, rue Lavaltrie Sud, Joliette, Lanaudière, QC, J6E 5X7",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30 (sauf jours fériés)"
+  },
+  {
+    "id": "centre-jean-bosco-de-maniwaki-out",
+    "name": "Centre Jean Bosco De Maniwaki",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 449-4057",
+    "description": "Centre de travail adapté.* Plateaux de travail: Friperie le Carro, service de déchiquetage de documents et récupération de matières résiduelles non dangereuses.* Friperie Le Carro.* Intégration et réinsertion sociale et professionnelle.* Centre de jour.* Répit. | Clientèle: personnes autistes, personnes vivant avec une déficience intellectuelle, personnes vivant avec un handicap physique | Territoire: MRC La Vallée-de-la-Gatineau | Statut: organisme à but non lucratif",
+    "website": "centrejeanbosco.ca",
+    "address": "204, rue Laurier, Maniwaki, Outaouais, QC, J9E 2K9",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "centre-kogaluk-out",
+    "name": "Centre Kogaluk",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Luskville",
+    "province": "QC",
+    "phone": "819 684-7144",
+    "description": "Logement sociaux avec soutien communautaire individualisé pour hommes et familles en situation d'itinérance.* Distribution des médicaments prescrits.* Fiducie volontaire.* Accompagnement médical, au tribunal et social.* Transport hebdomadaire pour emplettes personnelles.* Soutien à la désintoxication.* Plan d'intervention individualisé.* Soutien retour aux études et au travail.* Dépannage alimentaire, hygiénique et vestimentaire.* Activités récréatives, éducatives et de développement personnel.* Sorties récréatives. | Clientèle: hommes seuls et familles en situation d'itinérance ou à risque de le devenir, à faible revenu et pouvant avoir des problèmes de santé mentale, d'alcoolisme et de toxicomanie Capacité: 25 personnes | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "centrekogaluk.ca",
+    "address": "27, chemin Elm, bureau 3, Luskville, Outaouais, QC, J0X 2G0",
+    "hours": "administration: lundi au vendredi 9h30 à 16h00"
   },
   {
     "id": "centre-l-avenir-trb",
@@ -13506,18 +15383,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
-    "id": "msss-hopital-montreal-centre-multiservices-de-sante-et-de-services-sociaux-riviere",
-    "name": "Centre Multiservices De Santé Et De Services Sociaux Rivière-Des-Prairies",
-    "category": "health",
-    "subcategory": "Hôpital",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "",
-    "address": "7070, boulevard Perras, Montréal, QC H1E 1A4",
-    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
-  },
-  {
     "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-multiservices-de-sante-et-de-services-sociaux-riviere",
     "name": "Centre Multiservices De Santé Et De Services Sociaux Rivière-Des-Prairies",
     "category": "mentalHealth",
@@ -13528,6 +15393,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
     "address": "7070, boulevard Perras, Montréal, QC H1E 1A4",
     "hours": "Service de crise disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "msss-hopital-montreal-centre-multiservices-de-sante-et-de-services-sociaux-riviere",
+    "name": "Centre Multiservices De Santé Et De Services Sociaux Rivière-Des-Prairies",
+    "category": "health",
+    "subcategory": "Hôpital",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "",
+    "address": "7070, boulevard Perras, Montréal, QC H1E 1A4",
+    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
     "id": "msss-clsc-quebec-centre-multiservices-de-sante-et-de-services-sociaux-sacre-c",
@@ -13604,6 +15481,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV ou référence médicale."
   },
   {
+    "id": "centre-r-gional-d-archives-de-l--out",
+    "name": "Centre Régional D'Archives De L'Outaouais",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 243-2345",
+    "description": "Centre de documentation régional.* Salle de consultation pour les chercheurs avec outils de consultation et de recherche.* Possibilité de reproduction de documents iconographiques, textuels ou cartographiques.* Expositions au Centre d'interprétation du patrimoine régional.* Service d'aide-conseil aux entreprises en gestion documentaire et entreposage des documents essentiels, semi-actifs et définitifs.* Hier encore: revue d'histoire, de patrimoine et d'archives.* Les belles soirées du CRAO: conférence avec divers thèmes abordant l'histoire.* Collecte des dons d'archives: écrit, photographie, enregistrement audio et vidéo. | Clientèle: grand public | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "craoutaouais.ca",
+    "address": "855, boulevard de la Gappe, bureau 210B, Gatineau, Outaouais, QC, J8T 8H9",
+    "hours": "lundi au vendredi 8h30 à 12h000 et 13h00 à 16h30"
+  },
+  {
     "id": "centre-regional-de-formation-de-lan-jol",
     "name": "Centre Régional de Formation de Lanaudière",
     "category": "social",
@@ -13628,6 +15518,70 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.crcjoliette.ca",
     "address": "785, boulevard Manseau, Joliette, Lanaudière, QC, J6E 3G1",
     "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "centre-serge-b-lair-out",
+    "name": "Centre Serge Bélair",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Davidson",
+    "province": "QC",
+    "phone": "819 683-5669",
+    "description": "* Service de répit. | Clientèle: familles ayant à leur charge une personne vivant avec un handicap physique ou intellectuel Capacité: 17 | Territoire: MRC Pontiac | Statut: organisme à but non lucratif",
+    "address": "233, rue Principale, Davidson, Outaouais, QC, J0X 1R0",
+    "hours": "lundi au vendredi 8h00 à 15h00"
+  },
+  {
+    "id": "centre-service-canada-campbell-s-out",
+    "name": "Centre Service Canada - Campbell'S Bay",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "1 800 622-6232",
+    "description": "Porte d'entrée des services gouvernementaux au niveau fédéral.Tous les canadiens* Trouver un bureau de Service Canada: www.servicecanada.gc.ca/tbsc-fsco/sc-hme.jsp?lang=fra* Chercheur de prestations: www.canada.ca/fr/services/prestations/chercheur.html* Babillard d'offres d'emplois: www.guichetemplois.gc.ca/jobsearch/rechercheemplois* Demande de numéro d'assurance emploi (NAS).* Demande de passeport.* Bureau des plaintes.* Prévention et signalement de la fraude.Travailleur·euse·s et entreprises* Assurance-emploi et prestations régulières.* Prestations spéciales d'assurance-emploi pour parents d'enfants gravement malades.* Emplois d'été Canada (EÉC) pour jeunes et étudiant·e·s.* Aide à l'emploi: information sur le marché du travail, formation, planification de carrière, etc.* Relevé d'emploi.* Programme de protection des salariés.* Rentes sur l'État et régimes d'épargne.* Information en ligne pour entreprises: démarrage d'entreprise, normes en milieu de travail, etc.Anciens combattants Canada* Soutien et services liés à la santé mentale et physique.* Études et emploi: trouver un emploi, retour aux études, etc.* Programmes et services financiers: soutien au revenu, aide financière d'urgence, etc.* Soutien en logement et vie de famille.Immigration et citoyenneté* Information en ligne: recours aux services d'un·e représentant·e, parrainage d'un membre de la famille, immigrer à titre de refugiés, reconnaissance des compétences, etc.* Évaluation des titres de compétences.* Trouvez des services gratuits pour personnes nouvellement arrivées près de chez vous: ircc.canada.ca/francais/nouveaux/servicesPersonnes aînées* Pension de retraite du Régime de pensions du Canada.* Prestions internationales.* Programme d'Allocation et programme d'Allocation au surivant.* Supplément de revenu garanti.* Sécurité de la vieillesse. | Clientèle: grand public | Territoire: Campbell's Bay | Statut: organisme du gouvernement fédéral",
+    "website": "bureaux.service.canada.ca/fr/Bureau/2449",
+    "address": "2, rue John, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 12h30 à 16h00"
+  },
+  {
+    "id": "centre-service-canada-gatineau-e-out",
+    "name": "Centre Service Canada - Gatineau-Est",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 622-6232",
+    "description": "Porte d'entrée des services gouvernementaux au niveau fédéral.Tous les canadiens* Trouver un bureau de Service Canada: www.servicecanada.gc.ca/tbsc-fsco/sc-hme.jsp?lang=fra* Chercheur de prestations: www.canada.ca/fr/services/prestations/chercheur.html* Babillard d'offres d'emplois: www.guichetemplois.gc.ca/jobsearch/rechercheemplois* Demande de numéro d'assurance emploi (NAS).* Demande de passeport.* Bureau des plaintes.* Prévention et signalement de la fraude.Travailleur·euse·s et entreprises* Assurance-emploi et prestations régulières.* Prestations spéciales d'assurance-emploi pour parents d'enfants gravement malades.* Emplois d'été Canada (EÉC) pour jeunes et étudiant·e·s.* Aide à l'emploi: information sur le marché du travail, formation, etc.* Relevé d'emploi.* Programme de protection des salariés.* Rentes sur l'État et régimes d'épargne.* Information en ligne pour entreprises: démarrage d'entreprise, normes en milieu de travail, etc.Anciens combattants Canada* Soutien et services liés à la santé mentale et physique.* Études et emploi: trouver un emploi, retour aux études, etc.* Programmes et services financiers: soutien au revenu, aide financière d'urgence, etc.* Soutien en logement et vie de famille.Immigration et citoyenneté* Information en ligne: recours aux services d'un·e représentant·e, parrainage d'un membre de la famille, immigrer à titre de refugiés, reconnaissance des compétences, etc.* Évaluation des titres de compétences.* Biométrie.* Trouvez des services gratuits pour personnes nouvellement arrivées près de chez vous: ircc.canada.ca/francais/nouveaux/servicesPersonnes aînées* Pension de retraite du Régime de pensions du Canada.* Prestions internationales.* Programme d'Allocation et programme d'Allocation au surivant.* Supplément de revenu garanti.* Sécurité de la vieillesse. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme du gouvernement fédéral",
+    "website": "offices.service.canada.ca/fr/Bureau/2430",
+    "address": "455, boulevard de l'Hôpital, Gatineau, Outaouais, QC, J8T 7X7",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "centre-service-canada-gatineau-h-out",
+    "name": "Centre Service Canada - Gatineau-Hull",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 622-6232",
+    "description": "Porte d'entrée des services gouvernementaux au niveau fédéral.Tous les canadiens* Trouver un bureau de Service Canada: www.servicecanada.gc.ca/tbsc-fsco/sc-hme.jsp?lang=fra* Chercheur de prestations: www.canada.ca/fr/services/prestations/chercheur.html* Babillard d'offres d'emplois: www.guichetemplois.gc.ca/jobsearch/rechercheemplois* Demande de numéro d'assurance emploi (NAS).* Demande de passeport.* Bureau des plaintes.* Prévention et signalement de la fraude.Travailleur·euse·s et entreprises* Assurance-emploi et prestations régulières.* Prestations spéciales d'assurance-emploi pour parents d'enfants gravement malades.* Emplois d'été Canada (EÉC) pour jeunes et étudiant·e·s.* Aide à l'emploi: information sur le marché du travail, formation, etc.* Programme de protection des salariés.* Rentes sur l'État et régimes d'épargne.* Information en ligne pour entreprises: démarrage d'entreprise, normes en milieu de travail, etc.Anciens combattants Canada* Soutien et services liés à la santé mentale et physique.* Études et emploi: trouver un emploi, retour aux études, etc.* Programmes et services financiers: soutien au revenu, aide financière d'urgence, etc.* Soutien en logement et vie de famille.Immigration et citoyenneté* Information en ligne: recours aux services d'un·e représentant·e, parrainage d'un membre de la famille, immigrer à titre de refugiés, reconnaissance des compétences, etc.* Évaluation des titres de compétences.* Trouvez des services gratuits pour personnes nouvellement arrivées près de chez vous: ircc.canada.ca/francais/nouveaux/servicesPersonnes aînées* Pension de retraite du Régime de pensions du Canada.* Prestions internationales.* Programme d'Allocation et programme d'Allocation au surivant.* Supplément de revenu garanti.* Sécurité de la vieillesse. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme du gouvernement fédéral",
+    "website": "bureaux.service.canada.ca/fr/Bureau/2005",
+    "address": "210, rue Champlain, Gatineau, Outaouais, QC, J8X 3R5",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "centre-service-canada-maniwaki-out",
+    "name": "Centre Service Canada - Maniwaki",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "1 800 622-6232",
+    "description": "Porte d'entrée des services gouvernementaux au niveau fédéral.Canadien·n·e·s* Trouver un bureau de Service Canada: www.servicecanada.gc.ca/tbsc-fsco/sc-hme.jsp?lang=fra* Prestations: www.canada.ca/fr/services/prestations/chercheur.html * Babillard d'offres d'emplois: www.guichetemplois.gc.ca/jobsearch/rechercheemplois* Demande de numéro d'assurance emploi (NAS).* Demande de passeport.* Bureau des plaintes.* Prévention et signalement de la fraude.Travailleur·euse·s et entreprises* Assurance-emploi et prestations régulières.* Prestations spéciales d'assurance-emploi pour parents d'enfants gravement malades.* Emplois d'été Canada (EÉC) pour jeunes et étudiant·e·s.* Aide à l'emploi: information sur le marché du travail, formation, etc.* Relevé d'emploi.* Programme de protection des salariés.* Rentes sur l'État et régimes d'épargne.* Information en ligne pour entreprises: démarrage d'entreprise, normes en milieu de travail, etc.Anciens combattants Canada* Soutien et services liés à la santé mentale et physique.* Études et emploi: trouver un emploi, retour aux études, etc.* Programmes et services financiers: soutien au revenu, aide financière d'urgence, etc.* Soutien en logement et vie de famille.Immigration et citoyenneté* Information en ligne: recours aux services d'un·e représentant·e, parrainage d'un membre de la famille, immigrer à titre de refugiés, reconnaissance des compétences, etc.* Évaluation des titres de compétences.* Trouvez des services gratuits pour personnes nouvellement arrivées près de chez vous: ircc.canada.ca/francais/nouveaux/servicesPersonnes aînées* Pension de retraite du Régime de pensions du Canada.* Prestions internationales.* Programme d'Allocation et programme d'Allocation au surivant.* Supplément de revenu garanti.* Sécurité de la vieillesse. | Clientèle: grand public | Territoire: Maniwaki | Statut: organisme du gouvernement fédéral",
+    "website": "www.canada.ca",
+    "address": "100, rue Principale Sud, bureau 220, Maniwaki, Outaouais, QC, J9E 3L4",
+    "hours": "lundi au vendredi 8h30 à 16h00"
   },
   {
     "id": "service-canada-pointe-claire",
@@ -14293,6 +16247,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "chelsea-municipalit-out",
+    "name": "Chelsea - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Chelsea",
+    "province": "QC",
+    "phone": "819 827-1124",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.chelsea.ca/fr/residents/service-municipaux/environnement/matieres-residuelles * Subvention des produits d'hygiène durables: coucles lavables, coupes menstruelles, etc.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Chelsea | Statut: organisme municipal",
+    "website": "www.chelsea.ca",
+    "address": "100, chemin Old Chelsea, Chelsea, Outaouais, QC, J9B 1C1",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, période estivale: lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 13h00"
+  },
+  {
+    "id": "chemin-gatineau-est-le-out",
+    "name": "Chemin Gatineau-Est (Le)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-0101",
+    "description": "* Aide alimentaire.* Livraison sur demande.* Paniers de Noël. | Clientèle: personnes et familles à faible revenu | Territoire: Gatineau-Est | Statut: organisme à but non lucratif",
+    "website": "www.lechemin-ge.ca/centrealimentaire",
+    "address": "1736, boulevard Maloney Est, porte 11, Gatineau, Outaouais, QC, J8R 1B4",
+    "hours": "distribution: jeudi 14h00 à 17h30, sur rendez-vous seulement"
+  },
+  {
     "id": "tr-garde-chez-annie",
     "name": "Chez Annie",
     "category": "family",
@@ -14342,6 +16322,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "chichester-municipalit-out",
+    "name": "Chichester - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Chapeau",
+    "province": "QC",
+    "phone": "819 689-2266",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Site de transbordement: www.pontiacouest.ca/chichester/station-de- transbordement* Système d'alerte pour les situations urgentes: www.pontiacouest.ca/residents/alerte-citoyens* Permis de construction, plaintes et requêtes.* Développement culturel et communautaire.* Bibliothèque. | Clientèle: grand public | Territoire: Chichester | Statut: organisme municipal",
+    "website": "pontiacouest.ca/chichester",
+    "address": "75, rue Notre-Dame, Chapeau, Outaouais, QC, J0X 1M0",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "chiffonniers-batisseurs-d-emmaus-out",
+    "name": "Chiffonniers-Batisseurs D'Emmaus De Hull (Les)",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-5309",
+    "description": "* Vente d'articles usagés à bas prix: vêtements, électroménagers, meubles, etc.* Livraison à domicile.* Collecte à domicile de meubles, de vêtements et autres articles. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "address": "175, rue Eddy, Gatineau, Outaouais, QC, J8X 2X1",
+    "hours": "lundi au vendredi 9h00 à 16h00, samedi 9h00 à 13h00"
   },
   {
     "id": "mb-cfs",
@@ -14436,6 +16441,44 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "choeur-classique-de-l-outaouais--out",
+    "name": "Choeur Classique De L'Outaouais (Le)",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 920-0350",
+    "description": "Regroupement de personnes passionnées par le chant choral.* Spectacles de fin de session: 2 sessions par an.* Répétition et pratique.* Camp choral à l'automne.* Programme d'aide financière aux choristes. | Clientèle: grand public, programme d'aide financière aux choristes: personnes de 18 ans et plus | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.choeurclassiqueoutaouais.ca",
+    "address": "799, rue Jacques-Cartier, Gatineau, Outaouais, QC, J8T 2W1",
+    "hours": "répétition: mardi 19h00 à 22h00, pratique du dimanche: 2 pratiques par session, camp choral: vendredi soir au dimanche après-midi suivant l'Action-de-Grâce"
+  },
+  {
+    "id": "choeur-de-pom-de-la-petite-natio-out",
+    "name": "Choeur De Pom' De La Petite-Nation",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 983-2022",
+    "description": "Regroupement des personnes passionnées par le chant choral.* Concerts annuels: concert de Noël et concert printanier.* Chant dans toutes les langues et de toutes les époques.* Répétition au sacristie de Saint- André-Avellin. | Clientèle: grand public | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "address": "8, rue Saint-André, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "variable"
+  },
+  {
+    "id": "choeur-qui-bat-le-out",
+    "name": "Choeur Qui Bat (Le)",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "",
+    "description": "Regroupement de personnes avec une passion pour le chant choral.* Spectacle annuel du Gîte Ami: production d'un spectacle bénéfice pour un centre d'hébergement pour personnes itinérantes.* Organisation de représentations dans les résidences de personnes âgées, concerts bénéfices ou soirées de reconnaissance.* Répétition hebdomadaire et Samedis chantants.* Appui aux événements des groupes communautaires.* Ensemble vocal d'une cinquantaine de voix (SATB) avec un répertoire composé essentiellement de chansons francophones d'ici et du monde. | Clientèle: personnes 18 et plus | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.choeurquibat.ca",
+    "address": "479, boulevard des Hautes-Plaines, Gatineau, Outaouais, QC, J8Z 2H8",
+    "hours": "répétition: septembre à juin, mardi 19h00 à 21?h?30, samedis chantants: un samedi par mois, 9?h?30 à 15?h?30"
+  },
+  {
     "id": "nl-family-nl",
     "name": "Choices for Youth NL",
     "category": "family",
@@ -14447,6 +16490,58 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://choicesforyouth.ca",
     "address": "62 Freshwater Rd, St. John's, NL A1B 1B3",
     "hours": "Lun-ven 8h30-16h30. Sur RV."
+  },
+  {
+    "id": "chsld-de-la-petite-nation-out",
+    "name": "Chsld De La Petite-Nation",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 983-7341",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée. | Clientèle: seniors, people with a loss of autonomy, people with intellectual or physical disabilities | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "cisss-outaouais.gouv.qc.ca/chsld/petite-nation",
+    "address": "14, rue Saint-André, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chsld-de-mansfield-et-pontefract-out",
+    "name": "Chsld De Mansfield-Et-Pontefract",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Davidson",
+    "province": "QC",
+    "phone": "819 683-2224",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée. | Clientèle: personnes aînées, personnes en perte d'autonomie, personnes vivant avec une déficience intellectuelle ou physique | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "www.sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=168574",
+    "address": "230, chemin de la Chute, Davidson, Outaouais, QC, J0X 1R0",
+    "hours": "heures de visite: 7 jours, 8h00 à 21h00"
+  },
+  {
+    "id": "chsld-de-papineau-out",
+    "name": "Chsld De Papineau",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 986-3341",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée. | Clientèle: personnes aînées, personnes en perte d'autonomie, personnes vivant avec une déficience intellectuelle ou physique | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "cisss-outaouais.gouv.qc.ca/hopitaux/papineau",
+    "address": "155, rue Maclaren Est, Gatineau, Outaouais, QC, J8L 2M4",
+    "hours": "heures de visite régulières: lundi au dimanche 8h00 à 20h00"
+  },
+  {
+    "id": "chsld-de-wakefield-out",
+    "name": "Chsld De Wakefield",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Wakefield",
+    "province": "QC",
+    "phone": "819 459-1112",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée. | Clientèle: personnes aînées, personnes en perte d'autonomie, personnes vivant avec une déficience intellectuelle ou physique Capacité: 10 | Territoire: MRC Les Collines-de-l'Outaouais | Statut: organisme parapublic",
+    "website": "cisss-outaouais.gouv.qc.ca/chsld/wakefield",
+    "address": "101, chemin Burnside, Wakefield, Outaouais, QC, J0X 3G0",
+    "hours": "heures de visite régulières: lundi au dimanche 8h00 à 20h00"
   },
   {
     "id": "chsld-fernand-larocque-lav",
@@ -14553,6 +16648,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "ch-n-ville-municipalit-out",
+    "name": "Chénéville - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Chénéville",
+    "province": "QC",
+    "phone": "819 428-3583",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.ville- cheneville.com/hygiene-du-milieu * Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Chénéville | Statut: organisme municipal",
+    "website": "www.ville-cheneville.com",
+    "address": "63, rue de l'Hôtel-de-Ville, Chénéville, Outaouais, QC, J0V 1E0",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 12h00"
+  },
+  {
     "id": "cienov-rep",
     "name": "Cienov",
     "category": "employment",
@@ -14577,6 +16685,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cietech.ca",
     "address": "440, rue Notre-Dame, bureau 303, Repentigny, Lanaudière, QC, J6A 2T4",
     "hours": "lundi au jeudi 8h30 à 17h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "cipto-organisme-en-r-duction-des-out",
+    "name": "Cipto: Organisme En Réduction Des Méfaits",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-7249",
+    "description": "* Intervention auprès des proches des personnes vivant des problèmes de consommation.* Service d'écoute et de soutien pour parents, conjoints, amis, etc.* Intervention individuelle et familiale.* Programme Boussole: soutien, accompagnement et réinsertion auprès de personnes toxicomanes en partenariat avec le Centre de Réadaptation en Dépendance de l'Outaouais (CRDO).* Programme PATH-C: Programme d'Accompagnement au Traitement à l'Hépatite C en partenariat avec le Centre de Réadaptation en Dépendance de l'Outaouais (CRDO).* Évaluation de la consommation.* Aide au maintien des acquis.* Prévention jeunesse: transition du primaire au secondaire.* Référence.* Ateliers de sensibilisation offerts aux écoles secondaires, à l'éducation aux adultes, à la formation professionnelle et aux organismes communautaires.* Formations offertes.* Travail de milieu et Outreach.* Équipe Mobile en Itinérance (ÉMI).* Distribution de trousses de naloxone.* Interventions en milieu festif.* Distribution et livraison de bandelettes test de fentanyl.* Outils d'analyse de substances.* Service de consommation supervisée mobile (SCS).* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit). | Clientèle: personnes ayant une problématique de consommation, leurs proches, jeunes, écoles, organismes commununautaires, intervenants | Territoire: secteurs Hull et Aylmer de Gatineau, quartier Mont-Bleu de Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.cipto.qc.ca",
+    "address": "145, rue Eddy, Gatineau, Outaouais, QC, J8X 2W7",
+    "hours": "lundi au vendredi 8h30 à 16h30, été: lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00, service de consommation supervisée mobile: 7 jours, 17h00 à 00h00"
   },
   {
     "id": "cite-generaction-55-trb",
@@ -14618,6 +16739,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service essentiel Ontario."
   },
   {
+    "id": "cje-carrefour-emploi-des-colline-out",
+    "name": "Cje - Carrefour Emploi Des Collines",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Cantley",
+    "province": "QC",
+    "phone": "819 457-4480",
+    "description": "Services d'aide, de préparation et d'intégration à l'emploi.* Aide à la recherche d'emploi.* Carrefour jeunesse des Collines: services individuels ou en groupe, en autonomie personnelle, entrepreneuriat, bénévolat, volontariat, persévérance scolaire, rassemblement et réussite éducative pour personnes de 15 à 35 ans.* Place aux jeunes en région.* Soutien individuel en emploi: planification de carrière, aide à la rédaction de curriculum vitae et lettre de présentation, simulation d'entrevues.* Soutien pour le retour aux études dans une formation qualifiante: information sur les programmes d'études et le financement.* Information sur les programmes en employabilité.* Banques de candidatures.* Services techniques pour les employeur·euse·s: aide à la rédaction d'offre d'emploi, aide et accompagnement à la préparation et au déroulement des entrevues.* Accompagnement et soutien à l'intégration des personnes immigrantes.* Employeur·euse·s engagé·e·s.* Friperies Recyk-T-Fringues et Recyk-T-Bouquins: possibilité d'apporter, de prendre ou d'échanger gratuitement des vêtements et livres. | Clientèle: personnes de 14 à 99 ans, en recherche d'emploi ou en changement de carrière, entreprises, organismes | Territoire: MRC des Collines-de-l'Outaouais | Statut: organisme à but non lucratif",
+    "website": "toncec.ca",
+    "address": "1694, montée de la Source, Cantley, Outaouais, QC, J8V 3H6",
+    "hours": "lundi, mardi, jeudi et vendredi 8h30 à 16h00, mercredi 8h30 à 20h00, friperies: mercredi 13h00 à 19h00"
+  },
+  {
+    "id": "clarendon-municipalit-out",
+    "name": "Clarendon - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Clarendon",
+    "province": "QC",
+    "phone": "819 647-3862",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Station de transfert: www.clarendonqc.ca/fr/dechets-et-recyclage* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Clarendon | Statut: organisme municipal",
+    "website": "clarendonqc.ca/fr",
+    "address": "C427, route 148, Clarendon, Outaouais, QC, J0X 2Y0",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
     "id": "drum-garde-claudie-trottier",
     "name": "Claudie Trottier",
     "category": "family",
@@ -14652,6 +16799,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à Clinique Communautaire De Pointe St-Charles. Source: MSSS – Fichier M02 des installations.",
     "address": "1955, rue Centre, Montréal, QC H3K 1J1",
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
+  },
+  {
+    "id": "clinique-de-droit-notarial-de-l--out",
+    "name": "Clinique De Droit Notarial De L'Outaouais",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 600-9393",
+    "description": "Clinique de droit notarial.* Séances d'informations juridiques individualisées et de groupe offertes par les étudiant·e·s de la faculté de droit de l'Université d'Ottawa sous la supervision de notaires.* Accompagnement en droit notarial (ADN). | Clientèle: service d'informations juridiques: grand public, service d'accompagnement en droit notarial: personnes à faible revenu n'ayant pas accès à un·e notaire | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "cliniquedroitnotarial.ca",
+    "address": "112, promenade du Portage, bureau 200, Gatineau, Outaouais, QC, J8X 2K1",
+    "hours": "lundi au jeudi 9h00 à 16h00"
+  },
+  {
+    "id": "clinique-des-femmes-de-l-outaoua-out",
+    "name": "Clinique Des Femmes De L'Outaouais (La)",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 778-2055",
+    "description": "Information et services en santé reproductive.* Interruption de grossesse.* Information sur la contraception.* Service de contraception aux personnes n'ayant pas de médecin de famille.* Interventions médicosociales en agression sexuelle.* Consultation en ménopause et péri-ménopause.* Pap tests pour les personnes sans médecin de famille.* Pose de stérilet.* Pose d'implants contraceptifs Nexplanon.* Service de contraception d'urgence. | Clientèle: femmes, personnes trans, personnes non-binaires | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.cliniquedesfemmes.com",
+    "address": "920, boulevard Saint-Joseph, bureau 105 B, Gatineau, Outaouais, QC, J8Z 1S9",
+    "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 15h00"
   },
   {
     "id": "clinique-des-r-fugi-s-lav",
@@ -14717,6 +16890,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 17h00, bonhomme à lunette: sans rendez-vous, jeudi 9h30 à 11h30"
   },
   {
+    "id": "clsc-de-cantley-out",
+    "name": "Clsc De Cantley",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Cantley",
+    "province": "QC",
+    "phone": "1 844 966-6631",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Aide aux personnes aînées victimes d'abus* Authentification de la carte d'assurance maladie.* Location de cannes.* Changement et suivi de pansement.* Contraception.* Contraception orale d'urgence.* Cours prénataux en ligne.* Dépistage.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Traitement lié à la toxicomanie.* Location de fauteuils roulants.* Interprète.* Pose et retrait de stérilets.* Prélèvements sur rendez-vous.* Récupération des seringues et des aiguilles usagées.* Location de tire-lait.* Réinsertion sociale.* Soutien à domicile.* Urgence sociale. | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=876",
+    "address": "850, montée de la Source, Cantley, Outaouais, QC, J8V 3H4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "clsc-de-chelsea-out",
+    "name": "Clsc De Chelsea",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Chelsea",
+    "province": "QC",
+    "phone": "1 877 459-1112",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Aide aux personnes aînées victimes d'abus.* Authentification de la carte d'assurance maladie.* Consultation d'une infirmière.* Lavage d'oreilles.* Requête nécessaire pour certains services.* Prélèvements.* Réinsertion sociale.* Services cliniques ITSS.* Soins à domicile.* Soutien à domicile.* Vaccination. | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=54515",
+    "address": "490, Route 105, bureau 201, Chelsea, Outaouais, QC, J9B 1L2",
+    "hours": "lundi au vendredi 8h30 à 12h00, 13h00 à 16h30"
+  },
+  {
+    "id": "clsc-de-la-petite-nation-out",
+    "name": "Clsc De La Petite-Nation",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 983-7341",
+    "description": "Services de première ligne en matière de santé et de services sociaux, avec un accès amélioré aux services en santé mentale.* Aide aux personnes aînées victimes d'abus.* Authentification de la carte d'assurance maladie.* Consultation d'une infirmière.* Consultations médicales le jour même ou le lendemain (pour tous).* Prêt et location de matériel et équipement.* Contraception.* Contraception orale d'urgence.* Dépistage.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Récupération des seringues et des aiguilles usagées.* Salle d'allaitement.* Réinsertion sociale.* Soins et soutien à domicile. | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=31580",
+    "address": "14, rue Saint-André, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "clsc-de-mansfield-et-pontefract-out",
+    "name": "Clsc De Mansfield-Et-Pontefract",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Davidson",
+    "province": "QC",
+    "phone": "819 683-3000",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Aide aux personnes aînées victimes d'abus.* Authentification de la carte d'assurance maladie.* Consultations médicales le jour même ou le lendemain.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues.* Retrait de points de suture. * Récupération des seringues et des aiguilles usagées.* Soins et soutien à domicile. | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=536856",
+    "address": "160, chemin de la Chute, Davidson, Outaouais, QC, J0X 1R0",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "clsc-de-masham-out",
+    "name": "Clsc De Masham",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "La Pêche",
+    "province": "QC",
+    "phone": "819 459-1112",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Aide aux personnes aînées victimes d'abus.* Authentification de la carte d'assurance maladie.* Changement et suivi de pansement.* Contraception et contraception orale d'urgence.* Dépistage.* Location de fauteuils roulants, marchettes et déambulateurs.* Interprète.* Prélèvements.* Réinsertion sociale.* Location de tire-lait.* Vaccination. | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=1911",
+    "address": "9, chemin Passe-Partout, La Pêche, Outaouais, QC, J0X 2W0",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "clsc-de-sainte-rose-lav",
     "name": "Clsc De Sainte-Rose",
     "category": "health",
@@ -14779,6 +17017,31 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "• Activités récréatives sociales: bridge, jeux de cartes, bingo.• Danse en ligne.• Soupers dansants. | Clientèle: personnes de 55 ans et plus Capacité: 210 membres | Territoire: Kirkland | Frais: membre: 25$ par année | Statut: organisme à but non lucratif",
     "address": "16950, boulevard Hymus, bureau A, Kirkland, Montréal, QC, H9H 3W7",
     "hours": "variables, accueil: lundi 13h30 à 15h00"
+  },
+  {
+    "id": "club-amiti-gatineau-out",
+    "name": "Club Amitié Gatineau",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 568-0727",
+    "description": "* Soupers.* Rencontres sociales.* Soirées dansantes.* Petits déjeuners ou brunch.* Sorties cinéma.* Activités sportives. | Clientèle: personnes de 50 ans et plus vivant seules | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "clubamitiegatineau.jimdo.com",
+    "address": "388 St-Joseph, bureau 1205, Gatineau, Outaouais, QC, J8Y 0A8",
+    "hours": "souper: 17h00 à 19h00"
+  },
+  {
+    "id": "club-d-ge-d-or-de-sainte-th-r-se-out",
+    "name": "Club D'Âge D'Or De Sainte-Thérèse-De-Gatineau",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Sainte-Thérèse-De-La-Gatineau",
+    "province": "QC",
+    "phone": "819 441-4783",
+    "description": "Club social pour personnes aînées.* Activités culturelles et récréatives: artisanat, bingo, jeux de cartes, etc.* Activités physiques: pétanque, jeux de poche, etc.* Café-rencontre hebdomadaire.* Sorties de groupe: cueillettes de fruits sauvages, théâtre, cirque du soleil, etc. | Clientèle: personnes 50 ans et plus, café-recontre: grand public | Territoire: MRC de la vallée-de-la-gatineau | Statut: organisme à but non lucratif",
+    "address": "6, chemin du Barrage, Sainte-Thérèse-De-La-Gatineau, Outaouais, QC, J0X 2X0",
+    "hours": "septembre à mai, variable"
   },
   {
     "id": "club-de-gymnastique-laval-excell-lav",
@@ -14900,6 +17163,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Dîner communautaire hebdomadaire.* Activités sociales et récréatives: bingo, cartes, etc.* Soupers des fêtes.* Sorties mensuelles: casino, souper-spectacle, etc. | Clientèle: personnes de 50 ans et plus | Territoire: Laval et les alentours | Statut: organisme à but non lucratif",
     "address": "6600, 29e Avenue, Laval-Ouest, Laval, QC, H7R 3N3",
     "hours": "septembre à juin, mardi 8h00 à 15h30"
+  },
+  {
+    "id": "club-la-paix-d-or-out",
+    "name": "Club La Paix D'Or",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Notre-Dame-De-La-Paix",
+    "province": "QC",
+    "phone": "819 522-6695",
+    "description": "* Activités récréatives: jeux de cartes, pétanques, quilles, etc.* Repas communtaires.* Souper dansant. | Clientèle: grand public | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "address": "267, rue Notre-Dame, Notre-Dame-De-La-Paix, Outaouais, QC, J0V 1P0",
+    "hours": "Voir site web"
   },
   {
     "id": "club-richelieu-repentigny-rep",
@@ -15061,6 +17336,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
+    "id": "collectif-r-gional-de-lutte-l-it-out",
+    "name": "Collectif Régional De Lutte À L'Itinérance En Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 712-2746",
+    "description": "Regroupement régional d'organisations engagées dans la lutte à l'itinérance.* Défense collective des droits.* Noir sur Blanc: bulletin de lutte à l'itinérance publié annuellement.* Coordination de la nuit des sans- abri: évènement de sensibilisation à l'itinérance. | Clientèle: organismes de la région impliqués dans la lutte à l'itinérance | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "lecrio.org",
+    "address": "149, boulevard Maloney Ouest, Gatineau, Outaouais, QC, J8P 3V6",
+    "hours": "variables"
+  },
+  {
     "id": "imm-collectif-mtl",
     "name": "Collectif des femmes immigrantes du Québec (CFIQ)",
     "category": "immigration",
@@ -15215,6 +17503,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "comit-de-vie-de-quartier-du-vieu-out",
+    "name": "Comité De Vie De Quartier Du Vieux-Gatineau",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 893-4300",
+    "description": "Table de concertation pour l'amélioration de la vie de quartier, des conditions de vie et de la vie communautaire.* Mobilisation de la populaire et partenariat avec des organismes du quartier: centre communautaire, foire communautaire.* Comités: Vie communautaire et participation citoyenne, Concertation en itinérance du Vieux-Gatineau, Sécurité alimentaire, Exploration en logement et Axe population.* Frigo anti- gaspillage situé à l'extérieur du bâtiment.* Cuisines collectives.* Location gratuite de vélos.* Bougeons ensemble: cours gratuits faisant la promotion de saines habitudes de vie (zumba, yoga, ateliers de nutrition, méditation, gestion de l'anxiété, etc.).* Activités dans les parcs: cinéma, ateliers d'art, jeux divers, etc.* Fête de quartier sur la rue Notre-Dame.* Place Noël: fête de quartier hivernale.* Fête de quartier sur la rue Gouin, rue Sabourin et Saint-René.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit). | Clientèle: organismes communautaires, familles, grand public | Territoire: Vieux-Gatineau, délimité au sud par la rivière des Outaouais, au nord par le boulevard Saint-René Ouest, à l'ouest par la montée Paiement et à l'est par le lac Beauchamp | Statut: organisme à but non lucratif",
+    "website": "cvqvg.ca",
+    "address": "89, rue Jean-René-Monette, Gatineau, Outaouais, QC, J8P 5B8",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00, frigo anti-gaspillage: 24 heures, 7 jours"
+  },
+  {
     "id": "comit-des-citoyens-de-laval-oues-lav",
     "name": "Comité Des Citoyens De Laval-Ouest",
     "category": "social",
@@ -15265,6 +17566,44 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.clrnquebec.org",
     "address": "455, rue de la Couronne, Québec, QC G1K 6E6",
     "hours": "Lun-ven 9h-17h. Consultation et défense des droits des locataires."
+  },
+  {
+    "id": "comit-partage-saint-pierre-chane-out",
+    "name": "Comité Partage Saint-Pierre-Chanel",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-3030",
+    "description": "* Livraison mensuelle d'aide alimentaire.* Livraison de paniers de Noël.* Récupération et dons d'articles ménagers et de vêtements: ustensiles de cuisine, petits appareils ménagers, articles de maison, literie, vêtements d'hiver, vêtements pour enfants, vêtements pour adultes, etc.* Trousse de départ pour les nourrissons. | Clientèle: personnes et familles à faible revenu | Territoire: Paroisse Saint-Pierre-Chanel | Statut: organisme à but non lucratif",
+    "address": "17, rue Des Groseilliers, Gatineau, Outaouais, QC, J8Z 1M4",
+    "hours": "lundi au vendredi 9h00 à 17h00, sur rendez-vous"
+  },
+  {
+    "id": "comit-r-gional-troisi-me-ge-papi-out",
+    "name": "Comité Régional Troisième Âge Papineau",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 983-1565",
+    "description": "Carrefour d'information, de soutien et d'accompagnement pour personnes aînées et proches aidantes.* Groupe de soutien et formation pour personnes proches aidantes.* Prêt d'appareil de sécurité portable.* Rappel de prise de médicaments.* Appels de courtoisie.* Visites d'amitié.* Soutien pour documents administratifs.* Rencontres d'amitié.* Carrefour d'information.* Ateliers d'information et conférences en ligne, avec possibilité de prêt de tablette.* Ateliers informatiques.* Clinique d'impôts. | Clientèle: personnes aînées, personnes proches aidantes, rappel de prise de médicaments: personnes à risque | Territoire: MRC Papineau | Statut: organisme à but non lucratif",
+    "website": "cr3a.ca",
+    "address": "134, rue Principale, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "bureau: lundi au jeudi 8h00 à 16h00, rappel de prise de médicaments: lundi au dimanche 8h00 à 21h30"
+  },
+  {
+    "id": "comit-r-gional-troisi-me-ge-papi-out-2",
+    "name": "Comité Régional Troisième Âge Papineau - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 983-1565",
+    "description": "* Clinique d'impôts à l'année. | Clientèle: personnes seules avec un revenu brut de 35 000$ et moins, couples avec un revenu brut de 45 000$ et moins, personne seule avec un enfant avec un revenu brut de 45 000$ et moins (2500$ additionnels par personne à charge supplémentaire), inadmissibles: travailleur·euse·s autonomes, faillites, personnes ayant vendu un terrain ou une résidence, personnes avec un revenu de location, personnes qui gagnent plus de 1 000 $ grâce à leurs intérêts | Territoire: MRC Papineau | Statut: organisme à but non lucratif",
+    "website": "www.cr3a.ca/cliniques-impots.php",
+    "address": "134, rue Principale, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "sur rendez-vous seulement"
   },
   {
     "id": "comite-regional-pour-la-valorisatio-jol",
@@ -15489,6 +17828,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "communaut-m-tis-autochtone-de-ma-out",
+    "name": "Communauté Métis Autochtone De Maniwaki",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 441-2444",
+    "description": "Représentation, défense des intérêts et soutien communautaire aux Métis de Maniwaki.* Programmes Camp Métis Abitibi et Coureur des bois: chalets, activités, formation en orientation, affutages, construction d'abris, préparation de la bannic, excursions en forêt.* Rencontres autour de repas.* Combat légal pour la reconnaissance des droits ancestraux de la communauté par la Cour supérieure du Québec. | Clientèle: Métis, Camp Métis Abitbi: Métis identifié·e·s ou en cours d'identification | Territoire: Maniwaki | Statut: organisme à but non lucratif",
+    "website": "autochtonesmaniwaki.com",
+    "address": "273, rue Notre-Dame, Maniwaki, Outaouais, QC, J9E 2J9",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
     "id": "communicateurs-eloquents-de-lanaudi-rep",
     "name": "Communicateurs Éloquents de Lanaudière (les)",
     "category": "social",
@@ -15539,6 +17891,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "calendrier affiché au local: habituellement le 3e samedi du mois"
   },
   {
+    "id": "comptoir-emmaus-buckingham-out",
+    "name": "Comptoir Emmaus - Buckingham",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 986-7432",
+    "description": "* Vente d'articles usagés à bas prix: vêtements, électroménagers, meubles, etc.* Livraison à domicile.* Collecte à domicile de meubles, de vêtements et autres articles. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "address": "346, rue Charles, Gatineau, Outaouais, QC, J8L 2J9",
+    "hours": "lundi au samedi 9h30 à 16h00"
+  },
+  {
     "id": "comptoir-familial-de-terrebonne-trb",
     "name": "Comptoir Familial de Terrebonne",
     "category": "social",
@@ -15552,6 +17916,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au mercredi 9h00 à 18h00, jeudi et vendredi 9h00 à 21h00, samedi 9h00 à 17h00, dimanche 12h00 à 17h00"
   },
   {
+    "id": "comptoir-saint-pierre-de-fort-co-out",
+    "name": "Comptoir Saint-Pierre De Fort-Coulonge",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Fort-Coulonge",
+    "province": "QC",
+    "phone": "819 683-2345",
+    "description": "* Dépannage vestimentaire.* Comptoir vestimentaire: vêtements, meubles et d'appareils électroménagers usagés.* Récupération sur place et collecte à domicile de meubles et d'appareils électroménagers usagés.* Réparation de vêtements et service de couture.* Café rencontre.* Visites d'amitié.* Ateliers socioculturels pour les jeunes.* Milieu de stage pour personnes vivant avec un handicap, en partenariat avec le Pavillon du Parc.* Insertion socioprofessionnelle pour personnes ayant une déficience intellectuelle. | Clientèle: personnes et familles à faible revenu, personnes ayant un handicap physique ou intellectuel | Territoire: MRC Pontiac | Statut: organisme à but non lucratif",
+    "address": "175-C, chemin de la Chute, Fort-Coulonge, Outaouais, QC, J0X 1V0",
+    "hours": "lundi au jeudi 9h00 à 16h00"
+  },
+  {
     "id": "comptoir-st-vincent-de-paul",
     "name": "Comptoir alimentaire St-Vincent-de-Paul",
     "category": "food",
@@ -15562,6 +17938,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Dépannage alimentaire d'urgence et épicerie à prix modique. La Société Saint-Vincent-de-Paul offre aide immédiate aux familles en difficulté.",
     "address": "2580, rue Royale, Trois-Rivières, QC G9A 4L5",
     "hours": "Dépannage lun-ven 8h30-16h30, sam 9h-12h. Appeler avant de se présenter."
+  },
+  {
+    "id": "conseil-de-la-radiodiffusion-et--out",
+    "name": "Conseil De La Radiodiffusion Et Des Télécommunications Canadiennes",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 877 249-2782",
+    "description": "Tribunal administratif qui réglemente et surveille la radiodiffusion et les télécommunications selon la Loi sur la radiodiffusion, la Loi sur les télécommunications et la Loi canadienne anti-pourriel.*Information concernant les règles sur les télécommunications non sollicitées, liste nationale des numéros de télécommunication exclus.* Traitement des plaintes.* Approbation de tarifs dans l'industrie des télécommunications.* Réponse aux demandes de renseignements concernant la radiodiffusion et les télécommunications.* Attribution, renouvellement et modification de licences de radiodiffusion. | Clientèle: consommateur·ice·s, télévendeur·euse·s, entreprises de radiodiffusion et de télécommunication | Territoire: Canada | Statut: organisme du gouvernement fédéral",
+    "website": "crtc.gc.ca/fra/accueil-home.htm",
+    "address": "1, Promenade du Portage, Gatineau, Outaouais, QC, J8X 4B1",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "conseil-r-gional-de-l-environnem-lav",
@@ -15588,6 +17977,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://crelanaudiere.ca",
     "address": "481, route 131, Notre-Dame-des-Prairies, Lanaudière, QC, J6E 0M1",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "coop-des-1001-corv-es-la-out",
+    "name": "Coop Des 1001 Corvées (La)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Papineauville",
+    "province": "QC",
+    "phone": "819 427-5252",
+    "description": "Maintien à domicile des personnes aînées et personnes en perte d'autonomie.* Aide à la vie domestique: entretien ménager des aires de vie quotidienne, préparation de repas, entretien de la literie et des vêtements, courses et approvisionnement.* Soins et aide à l'hygiène: assistance à l'habillement, activités de stimulation, aide à l'hygiène quotidienne, aide au bain, soins corporels, soins d'incontinence, rappel de prise de médicaments.* Répit pour proches aidant·e·s.* Supervision en milieu de vie. | Clientèle: personnes aînées, personnes en perte d'autonomie, proches aidant·e·s, population en général | Territoire: L'Ange-Gardien, Boileau, Chénéville, Fassett, Lac-des-Plages, Mayo, Montebello, Montpellier, Namur, Notre-Dame-de-la-Paix, Notre-Dame-de-la-Salette, Papineauville, Plaisance, Ripon, Saint- André-Avelin, Saint-Émile-de-Suffolk, Saint-Sixte, Thurso, Val-des-Bois, Gatineau: secteurs Buckingham, Masson, Angers | Statut: entreprise commerciale (coopérative)",
+    "website": "www.coopdes1001corvees.ca",
+    "address": "119, rue Papineau, Papineauville, Outaouais, QC, J0V 1R0",
+    "hours": "bureau: lundi au jeudi 8h00 à 16h00, services: lundi au vendredi"
+  },
+  {
+    "id": "coop-rative-d-habitation-reboul-out",
+    "name": "Coopérative D'Habitation Reboul",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-4914",
+    "description": "Coopérative d'habitation.* Maisons privées, maisons en rangée, immeubles à logement. | Clientèle: adultes, familles, personnes à faible et moyen revenu Capacité: 146 logements divisé en 5 projets | Territoire: Île de Hull (quartiers Sacré-Coeur, Vieux-Hull Est et Vieux-Hull Ouest de Gatineau), quartiers Wrightville et Mont-Bleu de Gatineau | Statut: entreprise commerciale (coopérative)",
+    "address": "60-A, rue Saint-Étienne, Gatineau, Outaouais, QC, J8X 1J1",
+    "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
     "id": "cooperative-d-habitation-terrasse-s-pfd",
@@ -15640,6 +18054,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cqcm.coop/microsites/coop-dinitiation-a-lentrepreneuriat-collectif",
     "address": "640, rue Langlois, bureau 3, TERREBONNE, Lanaudière, QC, J6W 4P3",
     "hours": "juin à septembre"
+  },
+  {
+    "id": "coop-rative-de-solidarit-d-aide--out",
+    "name": "Coopérative De Solidarité D'Aide Domestique De La Vallée-De-La-Gatineau",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 441-0227",
+    "description": "Maintien à domicile des personnes aînées et personnes en pertes d'autonomie.* Aide à la vie domestique: courses et approvisionnement, préparation des repas sans diète, entretien ménager des aires de vie quotidienne, entretien de la literie et vêtements, ratissage de feuilles.* Répit pour proches aidant·e·s.* Aide aux transferts et aux déplacements.* Soins et aide à l'hygiène: soins d'incontinence, aide à l'habillement et à l'alimentation, rappel de prise de médicaments.* Supervision en milieu de vie. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: MRC La Vallée-de-la-Gatineau | Statut: organisme à but non lucratif",
+    "website": "csadvg.ca",
+    "address": "131, rue King, Maniwaki, Outaouais, QC, J9E 2L2",
+    "hours": "bureau: lundi au vendredi 8h00 à 16h00, agent·e à la clientèle: jeudi 8h00 à 16h00 au CLSC de Gracefield"
+  },
+  {
+    "id": "coop-rative-de-solidarit-de-l-un-out",
+    "name": "Coopérative De Solidarité De L'Unicité",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 986-3018",
+    "description": "Coopérative de production de légumes biologiques visant l'intégration au travail des personnes vivant avec une déficience intellectuelle.* Magasin de légumes de serres biologiques.* Programme d'embauche de personnes vivant avec une déficience intellectuelle. | Clientèle: personnes vivant avec une déficience intellectuelle, grand public | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.serresbiodeloutaouais.com",
+    "address": "895, rue Dollard, Gatineau, Outaouais, QC, J8L 3T4",
+    "hours": "lundi au vendredi 8h00 à 15h00"
   },
   {
     "id": "coop-rative-de-soutien-domicile--lav",
@@ -15785,6 +18225,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 16h00"
   },
   {
+    "id": "corporation-de-d-veloppement-com-out",
+    "name": "Corporation De Développement Communautaire Du Pontiac",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "819 648-5959",
+    "description": "Regroupement, développement et soutien d'organismes communautaires dans le but d'assurer leur participation au développement socio-économique de la région.* Démarrage d'organismes sans but lucratif: accompagnement dans les démarches d'incorporation.* Soutien organisationnel: gestion administrative, gouvernance, etc.* Appui et accompagnement des projets d'économie sociale.* Soutien à la recherche de financement.* Formations et informations.* Représentation aux diverses instances de concertation locales et régionales. | Clientèle: personnes qui souhaitent démarrer un organisme, organismes communautaires | Territoire: MRC de Pontiac | Statut: organisme à but non lucratif",
+    "website": "cdcpontiac.org/en",
+    "address": "2, rue ELsie, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "corporation-de-d-veloppement-com-out-2",
+    "name": "Corporation De Développement Communautaire Rond Point",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 281-2060",
+    "description": "Regroupement, développement et soutien d'organismes communautaires dans le but d'assurer leur participation au développement socio-économique de la région.* Soutien-intervention: soutien administratif et de gestion, aide dans les demandes de subventions, soutien dans les communications, références, informations.* Concertation entre les organismes communautaires.* Diffusion des projets communautaires.* Ateliers de formation sur des sujets variés.* Représentation des intérêts des organismes membres. | Clientèle: organismes communautaires | Territoire: MRC Papineau, L'Ange-Gardien, secteurs Est de Gatineau: Masson-Angers, Buckingham | Statut: organisme à but non lucratif",
+    "website": "cdcrondpoint.ca",
+    "address": "57, chemin de Montréal Est, Gatineau, Outaouais, QC, J8M 1K3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-des-a-n-s-de-la-caba-out",
+    "name": "Corporation Des Aînés De La Cabane En Bois Rond",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-6015",
+    "description": "Activités pour les personnes de 50 ans et plus | Clientèle: personnes aînées 50 ans et plus | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.corpocabane.net",
+    "address": "331, boulevard de la Cité-des-Jeunes, bureau 113, Gatineau, Outaouais, QC, J8Y 6T3",
+    "hours": "lundi au jeudi de 9h00 à 11h30 et 13h00 à 15h30"
+  },
+  {
+    "id": "corporation-des-transports-adapt-out",
+    "name": "Corporation Des Transports Adapté Et Collectif De Papineau Inc.",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Papineauville",
+    "province": "QC",
+    "phone": "819 308-0788",
+    "description": "* Transport adapté aux personnes handicapées ou en perte d'autonomie.* Transport collectif en milieu rural, par des bénévoles. | Clientèle: tous les citoyens de la MRC de Papineau, personnes aînées, personnes handicapées ou en perte d'autonomie, personnes à faible revenu, groupes et plus | Territoire: MRC Papineau | Statut: organisme à but non lucratif",
+    "website": "www.ctacpapineau.com",
+    "address": "266, rue Viger, Papineauville, Outaouais, QC, J0V 1R0",
+    "hours": "bureau: lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00, vendredi 8h00 à 12h00"
+  },
+  {
     "id": "corporation-int-gration-la-vie-a-lav",
     "name": "Corporation Intégration À La Vie Active Des Personnes Handicapées De Laval",
     "category": "food",
@@ -15915,6 +18407,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "cour-municipale-out",
+    "name": "Cour Municipale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Chelsea",
+    "province": "QC",
+    "phone": "1 833-477-2687",
+    "description": "Cour de première instance en matière pénale et en matière civile.* Administration des constats d'infraction émis par la Sûreté du Québec.* Payer un constat: www.e- services.acceo.com/gsel_bean/controller/ConstatPub/U3131/find?fourn_const_seq=332 | Clientèle: grand public | Territoire: MRC les Collines-de-l'Outaouais, MRC Papineau, MRC la Vallée-de-la-Gatineau | Statut: organisme du gouvernement provincial",
+    "website": "mrcdescollinesdeloutaouais.qc.ca/nos-services/cour-municipale",
+    "address": "216, chemin Old Chelsea, Chelsea, Outaouais, QC, J9B 1J4",
+    "hours": "lundi au vendredi: 8h30 à 16h30, horaire d'été du 13 juin au 29 août 2025: lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 13h00"
+  },
+  {
     "id": "cour-sup-rieure-laval-lav",
     "name": "Cour Supérieure - Laval",
     "category": "social",
@@ -16021,6 +18526,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "cuisine-collective-de-notre-dame-out",
+    "name": "Cuisine Collective De Notre-Dame-De-La-Paix",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Notre-Dame-De-La-Paix",
+    "province": "QC",
+    "phone": "819 351-0628",
+    "description": "Activités de cuisine collective.* Préparation et cuisson des repas. | Clientèle: grand public | Territoire: Notre-Dame-de-la-Paix | Statut: organisme à but non lucratif",
+    "website": "www.alliancealimentairepapineau.com",
+    "address": "267, rue Notre-Dame, Notre-Dame-De-La-Paix, Outaouais, QC, J0V 1P0",
+    "hours": "planification: une fois par mois à 14h30, cuisson: le lundi suivant à 9h00, municipalité: lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "cchm-mtl",
     "name": "Cuisine Collective Hochelaga-Maisonneuve (CCHM)",
     "category": "food",
@@ -16059,6 +18577,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 16h00, vendredi 8h30 à 12h00"
   },
   {
+    "id": "culture-outaouais-out",
+    "name": "Culture Outaouais",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 855 595-2601",
+    "description": "Accompagnement et soutien des artistes, des écrivain·e·s, des travailleur·se·s culturel·le·s et des organismes culturels de l'Outaouais.* Formations: formations continues et programme de perfectionnement.* Plateforme Toutculture des événements culturels en Outaouais: www.toutculture.ca | Clientèle: membres actif·ve·s: artistes, écrivain·e·s, travailleur·euse·s culturel·le·s et organismes culturels, membres associé·e·s: entreprises, institutions d'enseignement, municipalité, MRC | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "cultureoutaouais.org",
+    "address": "327 boulevard Saint-Joseph, Gatineau, Outaouais, QC, J8Y 3Z1",
+    "hours": "sur rendez-vous"
+  },
+  {
+    "id": "curateur-public-bureau-de-gatine-out",
+    "name": "Curateur Public - Bureau De Gatineau",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 877 221-7043",
+    "description": "Veille à la protection des personnes inaptes, à la sauvegarde de leur autonomie et au respect de leurs droits tout en soutenant leurs familles et leurs proches dans leurs fonctions.* Service de garde téléphonique pour intervention urgente.* Infolettre Bien protéger ensemble: recevoir de l'information sur la protection des personnes en situation de vulnérabilité.* Reconnaît les assistants aux majeurs, notamment en analysant les demandes à cet effet et en tenant un registre public des assistants reconnus.* Surveil la gestion des patrimoines faite par les tuteurs.* Informe les personnes représentées et les personnes assistées des règles qui les concernent.* Informe les assistants, les tuteurs, les représentants temporaires et les mandataires de leurs obligations.* Sensibilise la population aux enjeux liés à l'inaptitude et l'informer des moyens permettant de protéger les personnes inaptes.* Accompagne les personnes vivant une difficulté.* Agit comme tuteur, conseil de tutelle, ou représentant temporaire sur décision du tribunal si la personne est isolée, qu'elle n'a pas de famille ou que ses proches ne peuvent pas assumer ce rôle.* Récception des plaintes et signalements. | Clientèle: personnes inaptes, notamment, en raison d'une maladie mentale ou d'une maladie dégénérative, d'un accident vasculaire cérébral, d'un handicap intellectuel, d'un traumatisme crânien ou d'un affaiblissement en raison de l'âge, qui altère les facultés mentales ou l'aptitude physique à exprimer sa volonté, représentées par le Curateur public, sous administration provisoire, sous tutelle ou sous curatelle privée, tuteurs et curateurs privés | Territoire: Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "www.quebec.ca/gouvernement/ministeres-et-organismes/curateur-public",
+    "address": "16, impasse de la Gare-Talon, bureau 3.200, Gatineau, Outaouais, QC, J8T 7S8",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "cyber-cible-rwd",
     "name": "Cyber-Cible",
     "category": "employment",
@@ -16070,6 +18614,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cyber-cible.org",
     "address": "3131, 5e Avenue, Rawdon, Lanaudière, QC, J0K 1S0",
     "hours": "bureau: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00, centre de copies: mardi au jeudi 9h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "c-gep-de-l-outaouais-out",
+    "name": "Cégep De L'Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 866 770-4012",
+    "description": "Établissement public d'enseignement de niveau collégial.* Programmes préuniversitaires et techniques (DEC), attestation d'études collégiales (AEC).* Formation continue.* Informations d'aide au logement pour personnes étudiantes.* Journées portes ouvertes.* Locaux à louer.* Clinique-école en hygiène dentaire. | Clientèle: grand public | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "cegepoutaouais.qc.ca",
+    "address": "333, boulevard de la Cité-des-Jeunes, Gatineau, Outaouais, QC, J8Y 6M4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "c-gep-de-l-outaouais-clinique-d--out",
+    "name": "Cégep De L'Outaouais - Clinique D'Hygiène Dentaire",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-4012",
+    "description": "Soins offerts par les étudiantes en hygiène dentaire et supervisées par des enseignantes hygiénistes dentaires.* Soins d'hygiène dentaire: dépistage bucco-dentaire, radiographies dentaires, plan de soins et instructions d'hygiène personnalisés, détartrage et soins des gencives (débridement parodontal), polissage des dents, applications topiques de fluorure, scellements de puits et fissures, etc. | Clientèle: personnes 5 ans et plus | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "cegepoutaouais.qc.ca/grand-public/clinique-hygiene-dentaire-dentisterie-generale",
+    "address": "333, boulevard de la Cité-des-Jeunes, Gatineau, Outaouais, QC, J8Y 6M4",
+    "hours": "septembre à décembre: lundi, mardi, jeudi et vendredi 8h00 à 16h00, février à mai: mardi et vendredi 8h00 à 16h30"
   },
   {
     "id": "cegep-gerald-godin-ibsg",
@@ -16215,6 +18785,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "denholm-municipalit-out",
+    "name": "Denholm - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Denholm",
+    "province": "QC",
+    "phone": "1 855-457-2992",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.denholm.ca/fr/services-aux-citoyens/collectes-des-matieres-residuelles* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Denholm | Statut: organisme municipal",
+    "website": "denholm.ca",
+    "address": "419, chemin du Poisson Blanc, Denholm, Outaouais, QC, J8N 9C8",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "diab-te-outaouais-out",
+    "name": "Diabète Outaouais",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-0442",
+    "description": "Information, sensibilisation et prévention du diabète.* Ateliers culinaires.* Café-rencontre et conférences.* Salon du diabète. | Clientèle: personnes diabétiques, population en général | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "diabeteoutaouais.com",
+    "address": "10, rue Noël, bureau 109, Gatineau, Outaouais, QC, J8Z 3G5",
+    "hours": "lundi au jeudi 8h30 à 15h30"
+  },
+  {
     "id": "diabetiques-de-lanaudiere-scb",
     "name": "Diabétiques de Lanaudière",
     "category": "social",
@@ -16303,6 +18899,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Demande de certificats et copies d'actes : naissance, mariage, union civile, décès, changement de nom ou de sexe. Demande en ligne, par la poste ou en personne. Essentiel pour obtenir passeport, NAS, permis et autres documents officiels.",
     "hours": "Lun-ven 8h30-16h30. En ligne 24h/24 pour certains services.",
     "isProvinceWide": true
+  },
+  {
+    "id": "direction-de-la-protection-de-la-out",
+    "name": "Direction De La Protection De La Jeunesse - Outaouais",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-6631",
+    "description": "Administration des centres jeunesse.* Réception et évaluation des signalements d'actes de négligence, de violence ou d'abus en vertu de la Loi sur la protection de la jeunesse.* Adaptation, réadaptation et intégration sociale en internat ou en foyer de groupe.* Intervention de milieu, soutien éducatif aux familles et intervention de crise.* Services psychosociaux pour jeunes contrevenant·e·s lorsque nécessaire (en vertu de la Loi sur le système de justice pénale pour les adolescents).* Adoption, recherche d'antécédents biologiques et expertise pour la garde d'enfants* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit). | Clientèle: jeunes en difficulté de 0 à 18 ans, jeunes contrevenant·e·s, parents, tuteur·rice·s, intervenant·e·s | Territoire: Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "cisss-outaouais.gouv.qc.ca/obtenir-un-service/obtenir-des-services-pour-les-jeunes-et-leur- famille/faire-un-signalement-a-la-direction-de-la-protection-de-la-jeunesse-dpj/",
+    "address": "105, boulevard Sacré-Cour, Gatineau, Outaouais, QC, J8X 1C5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "direction-de-la-sant-publique-de-out",
+    "name": "Direction De La Santé Publique De L'Outaouais",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-4179",
+    "description": "Surveillance continue de la santé publique.* Information sur les problèmes de santé prioritaires, les groupes vulnérables et les facteurs de risque.* Identification des situations susceptibles de porter atteinte à la santé et des interventions nécessaires.* Prévention et promotion de la santé: prévention du suicide, cessation du tabagisme, etc.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Service intégré de dépistage et de prévention des ITSS (SIDEP). * Suivi CNESST. | Territoire: Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "www.sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=36274",
+    "address": "85, rue Bellehumeur, Gatineau, Outaouais, QC, J8T 8B7",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "direction-de-la-sant-publique-de-lav",
@@ -16528,6 +19150,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00, comptoir-caisse: lundi au vendredi 8h00 à 16h00"
   },
   {
+    "id": "domaine-perce-neige-gatineau-out",
+    "name": "Domaine Perce-Neige - Gatineau",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "GATINEAU",
+    "province": "QC",
+    "phone": "819 346-7878",
+    "description": "Centre de réadaptation interne de 20 semaines.* Programme distinct pour les dépendances aux substances.* Programme d'aide et soutien à la désintoxication en hébergement (maximum 14 jours).* Programme de réinsertion sociale post-thérapie avec hébergement.* Suivi post-cure (en personne, par téléphone ou zoom) à durée variable selon les besoins de la personne.* Soutien ponctuel pour les proches des personnes hébergées.* Travaux compensatoires.* Hébergement reconnu par les services correctionnels du Québec pour les personnes prévenues, en libération conditionnelle ou sous probation. | Clientèle: personnes de 18 ans et plus ayant une problématique de dépendance aux substances psychoactives (alcool, drogue, médicaments), personnes sous TAO (méthadone ou suboxone) Capacité: 78 | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "domaineperceneige.com",
+    "address": "156, boulevard Lorrain, GATINEAU, Outaouais, QC, J8P 2G2",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "donne-toi-une-chance-out",
+    "name": "Donne-Toi Une Chance",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 205-1451",
+    "description": "Soutien aux hommes et aux pères vivant des problèmes reliés aux relations interpersonnelles, à une période de transition, ou à une dynamique de violence conjugale.* Les rencontres exploratoires: accueil, exploration des besoins et des difficultés, plan d'action et référencement et établissement d'une trajectoire.* Je me reconstruis: programme de prévention des violences conjugales et familiales, ateliers de maîtrise de la colère et du stress.* Je me donne la chance: programme d'aide et de prévention pour hommes vivant des problèmes majeurs.* Pour moi: programme de construction et maintien de l'estime de soi.* Hébergement temporaire pour pères vulnérables et leurs enfants en Maison Oxygène Outaouais.* Pour moi et mes enfants : programme d'approfondissement des habiletés parentales et amélioration de la relation père-enfant.* Groupe d'entraide et d'accompagnement pour hommes survivants d'abus sexuels dans l'enfance.* Groupe pour hommes en situation de rupture.* Soutien téléphonique et rencontres ponctuelles pour besoins variés.* Dépannage alimentaire.* Information, référence et accompagnement dans les démarches.* Activités pères- enfants. | Clientèle: hommes et pères en situation de vulnérabilité ou de détresse, hommes ayant des comportements violents | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.dtuc.org",
+    "address": "1939, rue Saint-Louis, local 4, Gatineau, Outaouais, QC, J8T 4H5",
+    "hours": "bureau: lundi au jeudi 8h00 à 20h00, vendredi 8h00 à 16h00"
+  },
+  {
     "id": "dorval-loisirs-et-de-la-culture-drv",
     "name": "Dorval - Loisirs et de la Culture",
     "category": "social",
@@ -16608,6 +19256,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "droits-acc-s-de-l-outaouais-out",
+    "name": "Droits-Accès De L'Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 777-4746",
+    "description": "* Défense des droits des personnes vivant ou ayant vécu des problèmes de santé mentale.* Formation, mobilisation, éducation populaire. | Clientèle: personnes vivant ou ayant vécu des problèmes de santé mentale | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.droitsacces.com",
+    "address": "17, rue Jeanne-D'Arc, Gatineau, Outaouais, QC, J8Y 2H3",
+    "hours": "heures régulières: lundi au jeudi 9h00 à 16h00"
+  },
+  {
     "id": "re-pw5",
     "name": "DuProprio – Vente sans courtier",
     "category": "realestate",
@@ -16618,6 +19279,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Propriétés vendues directement par les propriétaires, sans commission de courtier. Souvent moins cher. Bonne option pour acheteurs à budget limité.",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
     "isProvinceWide": true
+  },
+  {
+    "id": "duhamel-municipalit-out",
+    "name": "Duhamel - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Duhamel",
+    "province": "QC",
+    "phone": "819 428-7100",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.municipalite.duhamel.qc.ca/fr/citoyens/matieres-residuelles/collecte-des-matieres-residuelles * Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système automatisé d'alerte d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Duhamel | Statut: organisme municipal",
+    "website": "www.municipalite.duhamel.qc.ca",
+    "address": "1890, rue Principale, Duhamel, Outaouais, QC, J0V 1G0",
+    "hours": "Voir site web"
   },
   {
     "id": "d-clic-action-pavillon-la-maison-lav",
@@ -16644,6 +19318,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://dida-integration.org",
     "address": "10, rue Notre-Dame, local 111, REPENTIGNY, Lanaudière, QC, J6A 2N9",
     "hours": "lundi au vendredi 8h00 à 15h30"
+  },
+  {
+    "id": "d-l-age-municipalit-out",
+    "name": "Déléage - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 449-1979",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.deleage.ca/index.php/citoyens/cueillette-des-ordures-et-du-recyclage * Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Déléage | Statut: organisme municipal",
+    "website": "www.deleage.ca",
+    "address": "175, route 107, Maniwaki, Outaouais, QC, J9E 3A8",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 12h30 à 16h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "d-panneur-alimentaire-la-source-out",
+    "name": "Dépanneur Alimentaire La Source",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 246-8058",
+    "description": "* Dépannage alimentaire.* Service de livraison pour personnes à mobilité réduite.* Paniers de Noël.* Bons pour vêtements et meubles.* Référence vers d'autres organismes et ressources communautaires. | Clientèle: personnes et familles à faibles revenus | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "address": "799, rue Jacques-Cartier, Gatineau, Outaouais, QC, J8T 2W1",
+    "hours": "sur rendez-vous: mardi et jeudi 10h00 et 12h30, mercredi 16h30 à 18h30"
   },
   {
     "id": "developpement-social-lanaudiere-jol",
@@ -16685,6 +19384,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "ab-edmonton-food",
+    "name": "Edmonton Food Bank",
+    "category": "food",
+    "subcategory": "Banque alimentaire",
+    "city": "Edmonton",
+    "province": "AB",
+    "phone": "780-425-4190",
+    "description": "",
+    "website": "https://www.edmontonsfoodbank.com",
+    "address": "11508, 120 Street NW, Edmonton AB T5G 2Y2",
+    "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
+  },
+  {
     "id": "ab-foodbank-edmonton",
     "name": "Edmonton Food Bank",
     "category": "food",
@@ -16698,17 +19410,17 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service essentiel Alberta."
   },
   {
-    "id": "ab-edmonton-food",
-    "name": "Edmonton Food Bank",
-    "category": "food",
-    "subcategory": "Banque alimentaire",
-    "city": "Edmonton",
-    "province": "AB",
-    "phone": "780-425-4190",
-    "description": "",
-    "website": "https://www.edmontonsfoodbank.com",
-    "address": "11508, 120 Street NW, Edmonton AB T5G 2Y2",
-    "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
+    "id": "egan-sud-municipalit-out",
+    "name": "Egan-Sud - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Bois-Franc",
+    "province": "QC",
+    "phone": "819 449-1702",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.egan- sud.ca/index.php/services/dechets-compostage-et-recyclage * Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Accueil des personnes immigrantes.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Egan-Sud | Statut: organisme municipal",
+    "website": "www.egan-sud.ca",
+    "address": "95, route 105, Bois-Franc, Outaouais, QC, J9E 3A9",
+    "hours": "Voir site web"
   },
   {
     "id": "nb-emploi-nb",
@@ -16858,6 +19570,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00, dépannage alimentaire d'urgence: mardi, jeudi et vendredi 9h30 à 15h00"
   },
   {
+    "id": "enfants-de-l-espoir-de-hull-les-out",
+    "name": "Enfants De L'Espoir De Hull (Les)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "343 204-3774",
+    "description": "Centre d'aide adaptée aux familles.* Touts-petits: préparation à l'entrée au milieu de garde et à l'école, programme estival d'activités sportives, artistiques et de cuisine.* Enfants 6 à 12 ans: activités parascolaires socio-pédagogiques, soutien scolaire, activités de fin de semaine de piscine et de ski de fonds, cours de théâtre et spectacles gratuits, camp de mars, camp d'été.* Adultes: cuisines collectives, ateliers parents-enfants 0-5 ans, cours d'art et de couture, ateliers créatifs, cours sur l'estime de soi, cours d'habiletés parentales, dépannage alimentaire, café-rencontres.* Familles: soupers et sorties familiales, fêtes familiales et communautaires, magasin-partage, activités sportives et culturelles.* Opération habits de neige: habits de neige neufs pour enfants de 0 à 12 ans, au coût de 20$.* Paniers de Noël. | Clientèle: enfants de 0 à 12 ans et leurs parents, familles dans le besoin | Territoire: Île de Hull (quartiers Sacré-Coeur, Vieux-Hull Est et Vieux-Hull Ouest de Gatineau) | Statut: organisme à but non lucratif",
+    "website": "www.enfantsdelespoirhull.org",
+    "address": "107, rue Dollard-Des Ormeaux, Gatineau, Outaouais, QC, J8X 3M2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "entraide-pont-viau-et-laval-des--lav",
     "name": "Entraide (Pont-Viau Et Laval Des Rapides) Inc. (L')",
     "category": "social",
@@ -16869,6 +19594,96 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.entraidelaval.org",
     "address": "664, rue Saint-André, Pont-Viau, Laval, QC, H7G 3A5",
     "hours": "variables"
+  },
+  {
+    "id": "entraide-de-la-vall-e-l-out",
+    "name": "Entraide De La Vallée (L')",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 441-3596",
+    "description": "* Centres de dépannage alimentaire.* Popote roulante.* Sensibilisation à la bonne alimentation, à l'entraide et à l'autonomie alimentaire.* Récupération des surplus des épiceries et transformation pour redistribution. | Clientèle: personnes démunies | Territoire: Blue Sea, Gracefield, Maniwaki | Statut: organisme à but non lucratif",
+    "address": "446, rue de la Montagne, Maniwaki, Outaouais, QC, J9E 1K6",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "entraide-familiale-de-l-outaouai-out",
+    "name": "Entraide Familiale De L'Outaouais",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 525-6886",
+    "description": "Services d'entraide pour personnes et familles à faible revenu de l'Outaouais.* Don de mobilier et d'appareils ménagers, possibilité de livraison.* Cueillette à domicile de meubles et appareils ménagers en bon état.* Service de déménagement pour petits déménagements résidentiels et commerciaux.* Service d'entretien ménager. | Clientèle: personnes et familles à faible revenu | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.entraidefamiliale.com",
+    "address": "258, boulevard Saint-Joseph, Gatineau, Outaouais, QC, J8Y 3X8",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "entraide-familiale-de-l-outaouai-out-2",
+    "name": "Entraide Familiale De L'Outaouais - Récupération D'Articles Usagés",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 525-6886",
+    "description": "* Collecte à domicile de dons de meubles, petits et gros appareils ménagers, lits, matelas, mobiliers pour bébés. | Clientèle: grand public | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.entraidefamiliale.com",
+    "address": "276-A, boulevard Saint-Joseph, Gatineau, Outaouais, QC, J8Y 3Y3",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h00, vendredi 8h30 à 11h30, cueillette de dons: sur rendez- vous"
+  },
+  {
+    "id": "entraide-deuil-de-l-outaouais-out",
+    "name": "Entraide-Deuil De L'Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-4814",
+    "description": "Organisme qui vise le mieux-être et l'autonomie des personnes endeuillées par l'accompagnement et l'information.* Groupes d'entraide pour adultes: programme de rencontres hebdomadaires ou condensées en deux jours pour la perte d'un enfant, la perte d'un·e conjoint·e ou la perte d'un proche.* Partager pour mieux grandir: programme de groupes d'entraide pour adolescent·e·s.* J'écoute ma toute petite voix: programme de groupes d'entraide pour les enfants.* Programme régulier et condensé pour le deuil animalier.* Un à un: soutien individuel de dépannage temporaire par un bénévole.* Mon premier Noël sans toi: activité pour outiller les personnes endeuillées à vivre les rassemblements du temps des fêtes.* Soirées d'entraide et de partage: soirées thématiques ponctuelles.* Centre de documentation sur place et références disponibles sur le site Internet.* Service de présentations à la communauté sur demande.* Formation de leurs bénévoles pour l'animation des groupes de soutien. | Clientèle: adultes, adolescent·e·s de 13 à 18 ans, enfants de 6 à 12 ans, personnes vivant un deuil animalier Capacité: 10 personnes par rencontre, groupe d'entraide pour enfants: 8 | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "entraide-deuil.qc.ca",
+    "address": "115, boulevard Sacré-Coeur, bureau 204, Gatineau, Outaouais, QC, J8X 1C5",
+    "hours": "lundi au vendredi 8h30 à 16h30, Mon premier Noël sans toi: le premier samedi de décembre"
+  },
+  {
+    "id": "entre-deux-roues-out",
+    "name": "Entre Deux Roues",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-2233",
+    "description": "Organisme qui ouvre à l'intégration sociale des personnes à mobilité réduite sévère et à limitations physiques multiples, à l'amélioration de leur qualité de vie et de leur autonomie et au soutien à leur famille.* Vivre chez soi: compétences pour la vie à domicile.* Programme d'autonomisation, d'auto-assistance et de responsabilisation.* Bain thérapeutique, relaxation et activités sportives adaptées aux différents syndromes: yoga, aquaforme, boccia, etc.* Alphabétisation et communication.* Café Internet: formations en électronique et sur les réseaux sociaux.* Programme de vidéoconférences et de suivi individuel.* Activités de groupe: jardin communautaire, jeux de société, artisanat, sorties occasionnelles.* Repas collectifs et communautaires. | Clientèle: personnes de plus de 16 ans qui vivent avec une déficience physique qui n'est pas liée au vieillissement, à une déficience intellectuelle, à un problème de comportement ou à une autre problématique notable et qui ont besoin de soins physiques dans leur quotidien | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.entredeuxroues.org",
+    "address": "124, rue Sainte-Marie, Gatineau, Outaouais, QC, J8Y 2B1",
+    "hours": "lundi, mardi, jeudi 8h30 à 17h00, mercredi et vendredi 8h30 à 20h00"
+  },
+  {
+    "id": "enviro-duc-action-out",
+    "name": "Enviro Éduc-Action",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 205-1082",
+    "description": "Favorisation de la santé de l'environnement et de celle des citoyens.* Gestion des écosystèmes urbains.* Éducation relative à l'environnement* Services-conseil en développement durable. | Clientèle: écoles, municipalités, camps de jour, événements, festivals et grand public | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "enviroeducaction.org",
+    "address": "200-A, boulevard Saint-Joseph, Gatineau, Outaouais, QC, J8Y 3W9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "environnement-et-changement-clim-out",
+    "name": "Environnement Et Changement Climatique Canada",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 668-6767",
+    "description": "Exerce des responsabilités gouvernementales en matière de protection de l'environnement et du patrimoine, d'application des lois et règlements applicables et de prévisions météorologiques.* Cote air santé, tableau indiquant la qualité de l'air et le niveau de risque: meteo.gc.ca/airquality/pages/provincial_summary/qc_f.html | Territoire: Canada | Statut: organisme du gouvernement fédéral",
+    "website": "www.canada.ca/fr/environnement-changement-climatique.html",
+    "address": "200, boulevard Sacré-Coeur, 12e étage, Gatineau, Outaouais, ON, K1A 0H3",
+    "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
     "id": "envol-l-btv",
@@ -16884,6 +19699,70 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 16h00"
   },
   {
+    "id": "envol-service-de-retour-au-trava-out",
+    "name": "Envol, Service De Retour Au Travail (L')",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-1622",
+    "description": "Organisme visant à favoriser l'accès, l'intégration et le maintien au travail des adultes vivant avec une problématique de santé mentale.* Accueil et évaluation: évaluations des besoins, orientation professionnelle.* Recherche, intégration et maintien au travail: accompagnement dans les démarches, les recherches et l'intégration, curriculum vitae, préparation aux entrevues, sensibilisation auprès des employeur·se·s.* Intégration et maintien aux études: recherche de mesures d'aide financière, accompagnement à l'inscription et l'admission, plan d'aide et soutien à l'organisation des études.* Services de groupe. | Clientèle: adultes vivant avec une problématique de santé mentale | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.envolsrt.org",
+    "address": "92, boulevard Saint-Raymond, bureau 302, Gatineau, Outaouais, QC, J8Y 1S7",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "escale-saint-rosaire-l-out",
+    "name": "Escale Saint-Rosaire (L')",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-7754",
+    "description": "Club social pour personnes aînées.* Activités récréatives: jeux de cartes, baseball-poche, cours de danse, etc.* Activités estivales: mini-putt, marche, pétanque.* Vie active: groupe d'exercices bi-hebdomadaire.* Dîners communautaires mensuels. | Clientèle: personnes 50 ans et plus | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "address": "5, rue Saint-Arthur, Gatineau, Outaouais, QC, J8T 3C2",
+    "hours": "vie active: mardi et jeudi 9h15 10h15, dîners communautaires: septembre à avril, dernier mardi du mois"
+  },
+  {
+    "id": "espace-dep-sylvestre-out",
+    "name": "Espace Dep Sylvestre",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-3723",
+    "description": "* Lieu de rencontre ouvert à toustes.* Café et nourriture, souper.* Cuisine collective.* Animation et intervention préventive.* Accès à Internet.* Activités et évènements sociaux, culturels, récréatifs et intergénérationnels.* Soutien communautaire en santé mentale.* Bénévolat et centre d'action bénévole.* Développement communautaire.* Travail adapté, réinsertion et réadaptation professionnelle, soutien à l'employabilité et aux formations.* Soutien et intégration. | Clientèle: personnes à faible revenu, personnes en isolement social | Territoire: Outaouais | Statut: entreprise commerciale (coopérative)",
+    "website": "depanneursylvestre.org",
+    "address": "230, rue Montcalm, Gatineau, Outaouais, QC, J8Y 3C1",
+    "hours": "variable, lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "espace-outaouais-out",
+    "name": "Espace Outaouais",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-1546",
+    "description": "Prévention de toutes les formes de violence faite aux enfants.* Programme ESPACE: ateliers pour enfants et adultes pour aborder toutes les formes de violence, reconnaître les techniques de manipulation, développer des stratégies de protection, augmenter la confiance en soi des enfants.* Ateliers adaptés pour enfants ayant des besoins particuliers.* Écoute téléphonique et références.* Concertation avec d'autres acteur·rice·s sur la prévention de la violence à l'égard des enfants. | Clientèle: enfants, adultes, milieu scolaire, programme ESPACE: enfants de 3 à 12 ans et les adultes de leur entourage, ateliers adaptés: enfants ayant des besoins particuliers Capacité: illimité | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "espacesansviolence.org/outaouais",
+    "address": "420, Boulvard Maloney Est, local 203, Gatineau, Outaouais, QC, J8P 7N8",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "espoir-rosalie-de-gatineau-out",
+    "name": "Espoir Rosalie De Gatineau",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 243-7663",
+    "description": "Services aux mères vivant une situation de vulnérabilité et leurs enfants.Services aux mères* Suivi individuel: écoute, accompagnement, soutien dans les démarches, visites à domicile, etc.* Ateliers d'habiletés parentales.* Ateliers de soutien à la coparentalité.* Sorties ludiques.* Ateliers psychoéducatifs aux sujets variés.* Cuisine collective.* Mini friperie gratuite.* Parrainages de Noël.* Programme Habit de neige, en collaboration avec Centraide.Services aux enfants* Halte-garderie et halte-répit, repas et collations fournis.* Suivi individuel.* Programme de stimulation 0 à 5 ans.* Ateliers psychoéducatifs pour les enfants de 8 à 12 ans.* Camp d'été pour les enfants de 5 à 12 ans.Services aux familles* Ateliers et activités mère-enfants. | Clientèle: mères vivant une situation de vulnérabilité et leurs enfants | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.espoirrosalie.org",
+    "address": "763, rue Saint-Louis, Gatineau, Outaouais, QC, J8T 2S9",
+    "hours": "lundi au mercredi 8h30 à 15h30, jeudi 8h30 à 15h30 et 17h00 à 20h00"
+  },
+  {
     "id": "evol-lanaudiere-sja",
     "name": "Evol - Lanaudière",
     "category": "employment",
@@ -16895,6 +19774,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.evol.ca",
     "address": "104, rue Saint-Jacques, Saint-Jacques, Lanaudière, QC, J0K 2R0",
     "hours": "Voir site web"
+  },
+  {
+    "id": "excellence-sportive-outaouais-out",
+    "name": "Excellence Sportive Outaouais",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 243-2345",
+    "description": "Offre aux athlètes, aux entraîneur·se·s et aux intervenant·e·s du milieu sportif des services de première ligne permettant d'établir des conditions propices au développement d'habiletés, de compétences et de valeurs liées à la pratique sportive, en vue de favoriser l'atteinte de performances optimales sur la scène provinciale, nationale et internationale.* Équipements, salle d'entraînement et accessoires sportifs.* Nutrition.* Psychologie sportive.* Préparation physique, services médico-sportifs, kinésiologie et massothérapie. | Clientèle: athlètes, entraîneur·se·s et intervenant·e·s en milieu sportif | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "sportoutaouais.ca",
+    "address": "850, rue de la Gappe, Gatineau, Outaouais, QC, J8T 0B4",
+    "hours": "lundi au vendredi de 9h00 à 17h00"
   },
   {
     "id": "qc-soc-exæquo",
@@ -17003,6 +19895,44 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 13h00"
   },
   {
+    "id": "fadoq-r-gion-outaouais-out",
+    "name": "Fadoq - Région Outaouais",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 777-5774",
+    "description": "Défense des personnes aînées de 50 ans et plus auprès des instances politiques.* Activités récréatives et sportives.* Conférences.* Voyages. | Clientèle: personnes de 50 ans et plus | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.fadoq.ca/outaouais",
+    "address": "811, boulevard Saint-René Ouest, bureau D, Gatineau, Outaouais, QC, J8T 8M3",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "famille-secours-ste-rose-de-lima-out",
+    "name": "Famille Secours - Ste-Rose De Lima",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 663-5787",
+    "description": "* Dépannage alimentaire.* Paniers alimentaires mensuels.* Paniers de Noël. | Clientèle: personnes seules à faible revenu, familles à faible revenu | Territoire: Sainte-Rose-de-Lima | Statut: organisme à but non lucratif",
+    "address": "861, boulevard Saint-René Est, bureau E5, Gatineau, Outaouais, QC, J8P 1V1",
+    "hours": "service alimentaire: mardi 13h00 à 15h00, temps des fêtes: fermé du 17 décembre 2025 au 5 janvier"
+  },
+  {
+    "id": "familles-d-abord-out",
+    "name": "Familles D'Abord",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gracefield",
+    "province": "QC",
+    "phone": "819 463-4500",
+    "description": "* Friperie le Comptoir familial de Gracefield.* Ateliers de jeux parent-enfant de 0 à 5 ans.* Groupes de soutien.* Répit.* Soutien aux femmes monoparentales.* Sensibilisation. | Clientèle: familles Capacité: 30 places | Territoire: La Vallée-de-la-Gatineau, Collines-de-l'Outaouais | Statut: organisme à but non lucratif",
+    "website": "famillesdabord.com",
+    "address": "38, rue Principale, Gracefield, Outaouais, QC, J0X 1W0",
+    "hours": "lundi au jeudi 8h00 à 16h00"
+  },
+  {
     "id": "ab-child-family-ab",
     "name": "Family Resource Network AB",
     "category": "family",
@@ -17095,6 +20025,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Ligne d'urgence 24h/24. Hébergement sur appel. Confidentiel.",
     "isProvinceWide": true
+  },
+  {
+    "id": "fassett-municipalit-out",
+    "name": "Fassett - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Fassett",
+    "province": "QC",
+    "phone": "819 423-6943",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.village- fassett.com/services-municipaux/cueillette-des-ordures-et-du-recyclage* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Fassett | Statut: organisme municipal",
+    "website": "www.village-fassett.com",
+    "address": "19, rue Gendron, Fassett, Outaouais, QC, J0V 1H0",
+    "hours": "lundi au jeudi 10h00 à 12h00 et 13h30 à 15h30"
   },
   {
     "id": "ns-foodbank-ns",
@@ -17240,6 +20183,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "fondation-pour-les-a-n-s-de-l-ou-out",
+    "name": "Fondation Pour Les Aînés De L'Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 777-3595",
+    "description": "Lieu de rassemblement pour les personnes aînées.* Location de salles pour les organismes voués au bien-être des personnes aînées. | Clientèle: personnes aînées | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "cabaneenboisrond.com",
+    "address": "331, boulevard de la Cité-des-Jeunes, Gatineau, Outaouais, QC, J8Y 6T3",
+    "hours": "lundi au vendredi 8h00 à 16h30"
+  },
+  {
     "id": "fondation-voboc-la-pcl",
     "name": "Fondation Voboc (la)",
     "category": "social",
@@ -17290,6 +20246,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.foodbanksquebec.com",
     "address": "6775, av. de Darlington, Montréal, QC H3S 1V5",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Apporter pièce identité et preuve de résidence."
+  },
+  {
+    "id": "fort-coulonge-municipalit-out",
+    "name": "Fort-Coulonge - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Fort-Coulonge",
+    "province": "QC",
+    "phone": "819 683-2259",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.fortcoulonge.qc.ca/residents/recyclage-et-ordure* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système d'appels automatisés d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Location de salles. | Clientèle: grand public | Territoire: Fort-Coulonge | Statut: organisme municipal",
+    "website": "www.fortcoulonge.qc.ca",
+    "address": "134, rue Principale, Fort-Coulonge, Outaouais, QC, J0X 1V0",
+    "hours": "lundi au merceredi 8h00 à 16h00, jeudi 8h00 à 16h30, vendredi 8h00 à 12h30"
   },
   {
     "id": "qc-soc-autochtones-montreal",
@@ -17380,6 +20349,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "frigo-quiroule-out",
+    "name": "Frigo Quiroule",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 983-8178",
+    "description": "Services de traiteur social et popote roulante.* Livraison de repas surgelés à domicile.* Repas surgelés à emporter. | Clientèle: grand public | Territoire: MRC Papineau | Statut: organisme à but non lucratif",
+    "website": "www.frigoquiroule.com",
+    "address": "179, rue Principale, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "lundi au jeudi 8h00 à 16h00"
+  },
+  {
     "id": "friperie-bienheureuse-marie-anne-bl-trb",
     "name": "Friperie Bienheureuse Marie-Anne Blondin",
     "category": "food",
@@ -17390,6 +20372,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "• Vente de vêtements et autres articles usagés à prix modique.• Récupération d'articles usagés sur place. | Clientèle: grand public | Territoire: Terrebonne | Statut: organisme à but non lucratif",
     "address": "2065, rue Jacques-Cartier, Terrebonne, Lanaudière, QC, J6X 2T2",
     "hours": "mercredi 9h00 à 15h00, jeudi 9h00 à 12h00, samedi 9h00 à 13h00"
+  },
+  {
+    "id": "friperie-c-te-du-village-out",
+    "name": "Friperie Côte Du Village",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Val-Des-Monts",
+    "province": "QC",
+    "phone": "819 671-8224",
+    "description": "Assistance matérielle* Friperie à faible coût.* Sacs de vêtements: morceaux vendus au poids, 6,5 livres pour 5$.Aide alimentaire* Coupons d'achat pour l'épicerie.* Paniers de Noël. | Clientèle: personnes et familles à faible revenu | Territoire: Val-des-Monts | Statut: organisme à but non lucratif",
+    "address": "1, chemin Saint-Joseph, bureau 2, Val-Des-Monts, Outaouais, QC, J8N 7E8",
+    "hours": "friperie: lundi, mercredi, vendredi et samedi: 10h00 à 15h00, aide alimentaire: sur rendez-vous seulement"
   },
   {
     "id": "friperie-le-papillon-repentigny-rep",
@@ -17429,6 +20423,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.federationcja.org/fr",
     "address": "96, rue Roger-Pilon, Dollard-Des Ormeaux, Montréal, QC, H9B 2E1",
     "hours": "lundi au jeudi 9h00 à 17h00, vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "f-d-ration-des-osbl-d-habitation-out",
+    "name": "Fédération Des Osbl D'Habitation De L'Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 205-3485",
+    "description": "Regroupement des organismes à but non lucratif ouvrant dans le domaine du logement social et de la pauvreté.* Services pour les organisations: gestion financière, gestion organisationnelle et formation, service en communication, gestion immobilière.* Développement de partenariats avec les organismes communautaires du milieu.* Coordination de projets de recherche et de développement portant sur le logement et le soutien communautaire. | Clientèle: organismes à but non lucratif ouvrant dans le domaine du logement social et de la pauvreté | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.la-foho.ca",
+    "address": "28, rue Caron, Gatineau, Outaouais, QC, J8Y 1Y7",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "f-d-ration-intercoop-rative-en-h-out",
+    "name": "Fédération Intercoopérative En Habitation De L'Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 243-3717",
+    "description": "Regroupement de coopératives d'habitation.* Liste des coopératives d'habitation.* Soutien à la bonne gestion associative, immobilière et financière.* Partage des expériences et des pratiques de gestion.* Groupes de discussion: sélection de nouveaux membres, l'entretien, la participation, la gouvernance, etc.* Atelier de formation divers.* Représentant porte-parole des coopératives d'habitation auprès des instances politiques.* Événements mobilisateurs et promotion du modèle coopératif. | Clientèle: coopératives d'habitation, leurs membres | Territoire: Outaouais | Statut: entreprise commerciale (coopérative)",
+    "website": "www.cooperativehabitation.coop/outaouais",
+    "address": "106, boulevard Sacré-Coeur, local 100, Gatineau, Outaouais, QC, J8X 1E1",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "pw-fc-francophone",
@@ -17634,6 +20654,149 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "gatineau-centre-de-services-d-ay-out",
+    "name": "Gatineau - Centre De Services D'Aylmer",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-2002",
+    "description": "Liaison entre les services municipaux, la population, les partenaires, les organismes et les élus.* Paiement de taxes municipales.* Paiement de constats d'infraction.* Paiement de factures de la Ville.* Inscription aux activités de culture et de loisirs.* Réservation d'installations publiques: gymnase, piscines, salles de réunion, etc.* Permis et informations sur la réglementation en vigueur en matière d'urbanisme.* Commissaire à l'assermentation. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.gatineau.ca",
+    "address": "181, rue Principale, Gatineau, Outaouais, QC, J9H 6A6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "gatineau-centre-de-services-de-b-out",
+    "name": "Gatineau - Centre De Services De Buckingham",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-2002",
+    "description": "Liaison entre les services municipaux, la population, les partenaires, les organismes et les élus.* Paiement de taxes municipales.* Paiement de constats d'infraction.* Paiement de factures de la Ville.* Inscription aux activités de culture et de loisirs.* Réservation d'installations publiques: gymnase, piscines, salles de réunion, etc.* Permis et informations sur la réglementation en vigueur en matière d'urbanisme.* Commissaire à l'assermentation. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.gatineau.ca",
+    "address": "515, rue Charles, Gatineau, Outaouais, QC, J8L 2K4",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "gatineau-centre-de-services-de-g-out",
+    "name": "Gatineau - Centre De Services De Gatineau",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-2002",
+    "description": "Liaison entre les services municipaux, la population, les partenaires, les organismes et les élus.* Paiement de taxes municipales.* Paiement de constats d'infraction.* Paiement de factures de la Ville.* Inscription aux activités de culture et de loisirs.* Réservation d'installations publiques: gymnase, piscines, salles de réunion, etc.* Permis et informations sur la réglementation en vigueur en matière d'urbanisme.* Commissaire à l'assermentation. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.gatineau.ca",
+    "address": "144, boulevard de l'Hôpital, Gatineau, Outaouais, QC, J8T 7S9",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "gatineau-centre-de-services-de-h-out",
+    "name": "Gatineau - Centre De Services De Hull",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-2002",
+    "description": "Liaison entre les services municipaux, la population, les partenaires, les organismes et les élus.* Paiement de taxes municipales.* Paiement de constats d'infraction.* Paiement de factures de la Ville.* Inscription aux activités de culture et de loisirs.* Réservation d'installations publiques: gymnase, piscines, salles de réunion, etc.* Permis et informations sur la réglementation en vigueur en matière d'urbanisme.* Permis de stationnement pour résidents et exploitants. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.gatineau.ca",
+    "address": "775, boulevard de la Carrière, Gatineau, Outaouais, QC, J8Y 6V1",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "gatineau-centre-de-services-de-m-out",
+    "name": "Gatineau - Centre De Services De Masson-Angers",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-2002",
+    "description": "Liaison entre les services municipaux, la population, les partenaires, les organismes et les élus.* Paiement de taxes municipales.* Paiement de constats d'infraction.* Paiement de factures de la Ville.* Inscription aux activités de culture et de loisirs.* Réservation d'installations publiques: gymnase, piscines, salles de réunion, etc.* Permis et informations sur la réglementation en vigueur en matière d'urbanisme.* Commissaire à l'assermentation. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.gatineau.ca",
+    "address": "57, chemin de Montréal Est, Gatineau, Outaouais, QC, J8M 1K3",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "gatineau-ville-out",
+    "name": "Gatineau - Ville",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 866 299-2002",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, etc.* Carte interactive:www.gatineau.ca/portail/default.aspx?p=trouver_un_lieu&ampref=haut-de- page* Calendrier des collectes des matières résiduelles: www.gatineau.ca/portail/default.aspx?p=guichet_municipal/ordures_recyclage_compostage_encombrants&amp ref=pastilles* Écocentres permanents, écocentres mobiles et centre de transbordement.* Centres de services: paiement des taxes municipales, permis, etc.* Service de sécurité incendie.* Programme d'adaptation de domicile (PAD).* Système automatisé de notifications d'urgence.* Assermentation.* Lieux publics où se rafraîchir en cas de chaleur extrême: www.gatineau.ca/portail/default.aspx?p=avis_importants_alertes_urgences/risques/caniculeLoisirs* Calendrier des événements artistiques, activités sportives, etc.: www.calendrier.gatineau.cloud/calendrier/parcourir.aspx?langue=fr-ca&ampcategories=2 * Horaire des piscines et bains libres: www.gatineau.ca/portail/default.aspx?p=activites_evenements_idees_sorties/activites_sport_loisir/activites_inte rieures/baignade * Loisirs et culture: activités, camp de jour, etc.* Programme de natation, d'aquaforme, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.gatineau.ca",
+    "address": "25, rue Laurier, Gatineau, Outaouais, QC, J8X 4C8",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "gatineau-loppet-out",
+    "name": "Gatineau Loppet",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 918-8468",
+    "description": "Organisation d'évènement sportifs, dont une course internationale de ski de fond et un évènement de course à pied. Capacité: 5000 | Territoire: Canada | Statut: organisme à but non lucratif",
+    "website": "www.gatineauloppet.com",
+    "address": "397, boulevard de la Cité-des-jeunes, Gatineau, Outaouais, QC, J8Z 3P9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "gatineau-ottawa-hockey-subaquati-out",
+    "name": "Gatineau-Ottawa Hockey Subaquatique",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "",
+    "description": "Promouvoir et enseigner le hockey subaquatique.* Programmes réguliers: némo pour les 6 à 11 ans, junior pour les 12 à 17 ans et programme pour adultes de 18 ans et plus.* Programmes d'initiation pour enfants et adultes.* Programme de conditionnement pour enfants et adultes. | Clientèle: personnes de 6 ans et plus qui savent nager et qui sont membres de l'association canadienne des jeux subaquatiques (ACJS) | Territoire: Gatineau et Ottawa | Statut: organisme à but non lucratif",
+    "website": "www.go-hsa.ca/fr",
+    "address": "860, boulevard De la Gappe, bureau 121, Gatineau, Outaouais, QC, J8T 0B4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "gite-ami-le-h-bergement-de-trans-out",
+    "name": "Gite Ami (Le) - Hébergement De Transition - Le Transit Notre Dame",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-0134",
+    "description": "Hébergement de transition visant la réinsertion sociale, sur référence.* Accompagnement, plan d'intervention individuel et suivi avec une personne intervenante.* Ateliers et cafés rencontres. | Clientèle: personnes de 18 ans et plus sans abri ou en difficulté qui ont démontré une volonté de développer leur autonomie en logement Capacité: 14 lits | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.legiteami.org",
+    "address": "621, rue Notre Dame, Gatineau, Outaouais, QC, J8P 1N1",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "gite-ami-le-h-bergement-de-trans-out-2",
+    "name": "Gite Ami (Le) - Hébergement De Transition - Mon Calme",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-0134",
+    "description": "Hébergement de transition d'une durée approximative de 3 mois.* Chambres individuelles ou à deux personnes.* Repas et collations.* Buanderie.* Accompagnement individuel.* Ateliers et groupes pour aider au cheminement.* Salle communautaire. | Clientèle: personnes en situation d'itinérance et ayant la volonté d'acquérir une stabilité résidentielle Capacité: 30 places | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.legiteami.org",
+    "address": "175, boulevard Gréber, Gatineau, Outaouais, QC, J8T 3R1",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "gite-ami-le-refuge-de-stabilisat-out",
+    "name": "Gite Ami (Le) - Refuge De Stabilisation - L'Ami-Chemin",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-0134",
+    "description": "Refuge de stabilisation afin d'accélérer le cheminement vers un hébergement de transition et un retour au logement.* Jusqu'à 2 mois. | Clientèle: personnes qui connaissent leur premier épisode d'itinérance, personnes en situation d'itinérance qui sortent de thérapie ou de détention Capacité: 38 places | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "legiteami.org",
+    "address": "175, boulevard Greber, Gatineau, Outaouais, QC, J8T 3M8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "nu-health-nu",
     "name": "Gouvernement du Nunavut – Santé",
     "category": "health",
@@ -17645,6 +20808,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.gov.nu.ca/health",
     "address": "PO Box 1000, Iqaluit, NU X0A 0H0",
     "hours": "Lun-ven 8h30-16h30. Pour urgence: 811 (Info-Santé) ou urgence hospitalière."
+  },
+  {
+    "id": "gracefield-municipalit-out",
+    "name": "Gracefield - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gracefield",
+    "province": "QC",
+    "phone": "819 463-3458",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.gracefield.ca/index.php/citoyens/ordures-et-recyclage * Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Gracefield | Statut: organisme municipal",
+    "website": "www.gracefield.ca",
+    "address": "351, route 105, Gracefield, Outaouais, QC, J0X 1W0",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "grand-remous-municipalit-out",
+    "name": "Grand-Remous - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Grand-Remous",
+    "province": "QC",
+    "phone": "819 438-2877",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.grandremous.ca/citoyens/calendrier-des-collectes* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Services d'accueil et d'intégration pour personnes nouvellement arrivées.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Grand-Remous | Statut: organisme municipal",
+    "website": "www.grandremous.ca",
+    "address": "1508, route Transcanadienne, Grand-Remous, Outaouais, QC, J0W 1E0",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "bc-greater-vancouver-food",
@@ -17660,6 +20849,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "grenier-d-apprentissage-jacques--out",
+    "name": "Grenier D'Apprentissage Jacques L. Charbonneau",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 281-6470",
+    "description": "Centre de jour.* Ateliers de développement socioaffectif, langagier, cognitif, moteur et de l'autonomie.* Alphabétisation, mathématiques.* Sorties culturelles.* Activités familiales.* Ateliers éducatifs et récréatifs: cuisine multiculturelle, anatomie, histoire, géographie. | Clientèle: personnes de 18 ans et plus ayant une déficience intellectuelle Capacité: 16 personnes | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "address": "477, rue Bélanger, Gatineau, Outaouais, QC, J8L 2M3",
+    "hours": "lundi au vendredi 8h00 à 15h00"
+  },
+  {
+    "id": "grenier-des-collines-le-out",
+    "name": "Grenier Des Collines (Le)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Val-Des-Monts",
+    "province": "QC",
+    "phone": "819 457-1010",
+    "description": "Récupération et distribution de denrées alimentaires.* Formule épicerie.* Banque alimentaire.* Jardin collectif.* Paniers de Noël.* Frigo anti-gaspi: frigo communautaire à l'extérieur du bâtiment, contenant des produits invendus ou des surplus agricoles comme des légumes, des fruits, du pain et des denrées non périssables. | Clientèle: population vulnérable | Territoire: MRC Les Collines-de-l'Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.legrenierdescollines.com",
+    "address": "34, chemin de l'Église, bureau 2, Val-Des-Monts, Outaouais, QC, J8N 2A1",
+    "hours": "lundi au vendredi 8h30 à 16h00, frigo communautaire: 24 heures, 7 jours"
+  },
+  {
     "id": "groupe-alpha-laval-le-lav",
     "name": "Groupe Alpha Laval (Le)",
     "category": "social",
@@ -17671,6 +20885,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.groupealphalaval.com",
     "address": "485, boulevard des Laurentides, bureaux 101 et 105, 1er et 3e étage, Pont-Viau, Laval, QC, H7G 2V2",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "groupe-communautaire-desch-nes-out",
+    "name": "Groupe Communautaire Deschênes",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 684-7999",
+    "description": "Lieu de rencontre et de soutien aux familles.* Petits-Mousses: activité de socialisation pour enfants et parents.* Halte-garderie pour jeunes enfants.* Club de devoirs.* Petits Cooks.* Cuisine collective.* Camp de jour: été et semaine de relâche.* Fêtes de quartier.* Activités physiques: zumba et tai chi.* Magasin partage: fournitures scolaires à bas prix.* Récupération de petits articles usagés: jouets, livres, vêtements, articles de cuisines, etc.* Paniers de Noël.* Habit de neige.* Point de service Bonhomme à lunette: lunettes à prix modique. | Clientèle: familles, adultes, personnes nouvellement arrivées, petits-mousses et halte-garderie: enfants de 0 à 5 ans, club de devoirs, petits Cooks et camp de jour d'été: enfant 6 à 12 ans | Territoire: Gatineau: secteur Aylmer | Statut: organisme à but non lucratif",
+    "website": "groupedeschenes.myfreesites.net",
+    "address": "55, chemin Vanier, Gatineau, Outaouais, QC, J9H 1X5",
+    "hours": "lundi au vendredi 9h00 à 17h00, bonhomme à lunette: sans rendez-vous, mercredi 11h30 à 14h00"
   },
   {
     "id": "groupe-d-entraide-d-clic-lav",
@@ -17904,6 +21131,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "groupe-de-soutien-de-gatineau-out",
+    "name": "Groupe De Soutien De Gatineau",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-2277",
+    "description": "Groupe de discussions, d'échanges et de témoignages pour les proches des personnes vivant avec le syndrome de la Tourette. | Clientèle: proches aidant·e·s, familles des personnes vivant avec le syndrome de la Tourette | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "aqst.com/groupes-de-soutien/outaouais",
+    "address": "92, boulevard St-Raymond, bureau 304, Gatineau, Outaouais, QC, J8Y 1S7",
+    "hours": "de septembre à juin, 3e mercredi du mois"
+  },
+  {
+    "id": "groupe-entre-femmes-de-l-outaoua-out",
+    "name": "Groupe Entre-Femmes De L'Outaouais",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-3694",
+    "description": "Organise des activités pour sortir les femmes de l'isolement.* Accueil, information et références.* Cours, ateliers et formations: connaissance de soi, artisanat, autonomie, etc.* Café-rencontre et discussions.* Cuisine collective.* Repas de Noël.* Zoothérapie.* Sorties: musée, cueillette de fraises, déjeuners, etc.* Conférences. | Clientèle: femmes de 14 ans et plus | Territoire: Gatineau et les alentours | Statut: organisme à but non lucratif",
+    "website": "www.gefo.ca",
+    "address": "115, boulevard Sacré-Coeur, bureau 208, Gatineau, Outaouais, QC, J8X 1C5",
+    "hours": "septembre à juin, lundi au vendredi 9h00 à 16h00, activités: variable avec possible soirs et fin de semaine"
+  },
+  {
     "id": "groupe-priorit-travail-lav",
     "name": "Groupe Priorité Travail",
     "category": "social",
@@ -17991,6 +21244,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://generationelles.ca",
     "address": "620, Chemin du Bord-du-Lac-Lakeshore, bureau 202, Dorval, Montréal, QC, H9S 2B6",
     "hours": "lundi au samedi 9h00 à 17h00"
+  },
+  {
+    "id": "g-te-ami-le-out",
+    "name": "Gîte Ami (Le)",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-0134",
+    "description": "* Hébergement d'urgence pour personnes en difficultés incluant repas, comptoir vestimentaire, buanderie, douches et soutien psychologique.* Hébergements de transition visant la stabilité résidentielle et l'insertion sociale.* Relation d'aide, support, accompagnement et référence.* Distribution de trousse de Naloxone, de matériel de consommation, de produits d'hygiène et de vêtements. | Clientèle: personnes de 18 ans et plus sans abri ou en difficulté Capacité: hébergement d'urgence: 60 lits | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "legiteami.org",
+    "address": "85, rue Morin, Gatineau, Outaouais, QC, J8X 0A1",
+    "hours": "24 heures, 7 jours"
   },
   {
     "id": "habeo-grt-coop-de-solidarite-jol",
@@ -18109,6 +21375,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi, sur rendez-vous"
   },
   {
+    "id": "habitations-des-rivi-res-de-l-ou-out",
+    "name": "Habitations Des Rivières De L'Outaouais",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 303-4025",
+    "description": "Logements subventionnés et non-subventionnés pour familles et personnes seules. | Clientèle: personnes et familles à faible et modeste revenu Capacité: 789 unités | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "habitationsrivieresoutaouais.com",
+    "address": "782, boulevard Saint-René Ouest. Bureau 100, Gatineau, Outaouais, QC, J8T 0H1",
+    "hours": "lundi au vendredi 8h30 à 16h30, sur place: mardi 10h30 à 14h30"
+  },
+  {
     "id": "habitations-du-rendez-vous-les-lav",
     "name": "Habitations Du Rendez-Vous (Les)",
     "category": "social",
@@ -18132,6 +21411,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "leshabitationslenvolee.ca",
     "address": "181, rue L'Allier, Sainte-Rose, Laval, QC, H7L 2K9",
     "hours": "Voir site web"
+  },
+  {
+    "id": "habitations-nouveau-d-part-les-out",
+    "name": "Habitations Nouveau Départ (Les)",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 893-1223",
+    "description": "Logements pour les personnes vivant avec un trouble de santé mentale sévère et persistant, une déficience intellectuelle ou un trouble envahissant du développement.* Services de soutien au logement d'intensité variable selon les besoins de la personne.* Hébergement social ou accès à un logement convenable à prix abordable. | Clientèle: personnes vivant avec un trouble de santé mentale grave, une déficience intellectuelle ou un trouble du spectre de l'autisme Capacité: 39 personnes | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.hndgatineau.org/fr",
+    "address": "165, boulevard Maloney Ouest, Gatineau, Outaouais, QC, J8P 3V6",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "habitations-partag-es-de-l-outao-out",
+    "name": "Habitations Partagées De L'Outaouais (Les)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 771-6576",
+    "description": "Maintien à domicile des personnes âgées et amélioration de leur qualité de vie.* Jumelage en cohabitation.* Aide à la recherche de résidences privées et aide pour remplir les formulaires.* Distribution de cartons de déménagement et aide à l'emballage et au déballage des cartons. | Clientèle: personnes 18 ans et plus | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "habitationspartagees.ca",
+    "address": "331, boulevard de la Cité-des-Jeunes, bureau 109, Gatineau, Outaouais, QC, J8Y 6T3",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "habitations-saint-christophe-les-lav",
@@ -18631,6 +21936,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
+    "id": "h-pital-de-papineau-out",
+    "name": "Hôpital De Papineau",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 986-3341",
+    "description": "Centre hospitalier de soins généraux et spécialisés.* Urgences.* Soins en santé physique et mentale.* Chirurgie.* Cliniques ambulatoires et cliniques spécialisées.* Centre d'oncologie.* Imagerie médicale et prélèvements.* Désintoxication. | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "cisss-outaouais.gouv.qc.ca/hopitaux/papineau",
+    "address": "155, rue Maclaren Est, Gatineau, Outaouais, QC, J8L 2M4",
+    "hours": "24 heures, 7 jours, heures de visite: lundi au dimanche 8h00 à 20h00"
+  },
+  {
     "id": "msss-clsc-rouyn-noranda-hopital-de-rouyn-noranda",
     "name": "Hôpital De Rouyn-Noranda",
     "category": "health",
@@ -18781,6 +22099,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "1055, boulevard du Séminaire nord, suite, Saint-Jean-sur-Richelieu, QC J3A 1R7",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "h-pital-du-pontiac-out",
+    "name": "Hôpital Du Pontiac",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Clarendon",
+    "province": "QC",
+    "phone": "819 647-2211",
+    "description": "Centre hospitalier de soins généraux et spécialisés.* Urgences.* Soins en santé physique et mentale.* Chirurgie.* Cliniques ambulatoires et cliniques spécialisées.* Centre d'oncologie.* Imagerie médicale et prélèvements.* Désintoxication. | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "cisss-outaouais.gouv.qc.ca/hopitaux/pontiac",
+    "address": "200, rue Argue, Clarendon, Outaouais, QC, J0X 2Y0",
+    "hours": "24 heures, 7 jours, heures de visite: lundi au dimanche 8h00 à 20h00"
   },
   {
     "id": "msss-hopital-montreal-hopital-du-sacre-coeur-de-montreal",
@@ -19115,6 +22446,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
+    "id": "msss-hopital-montreal-hopital-general-juif",
+    "name": "Hôpital Général Juif",
+    "category": "health",
+    "subcategory": "Hôpital",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "",
+    "address": "4335, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E4",
+    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
+  },
+  {
     "id": "msss-hopital-montreal-hopital-general-juif-2",
     "name": "Hôpital Général Juif",
     "category": "health",
@@ -19126,18 +22469,6 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "3755, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E2",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
-  },
-  {
-    "id": "msss-hopital-montreal-hopital-general-juif",
-    "name": "Hôpital Général Juif",
-    "category": "health",
-    "subcategory": "Hôpital",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "",
-    "address": "4335, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E4",
-    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
     "id": "msss-hopital-saint-hyacinthe-hopital-honore-mercier",
@@ -19229,6 +22560,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "3530, boulevard Gouin Est, Montréal, QC H1H 1B7",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "h-pital-m-morial-de-wakefield-out",
+    "name": "Hôpital Mémorial De Wakefield",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Wakefield",
+    "province": "QC",
+    "phone": "819 459-1112",
+    "description": "Centre hospitalier de soins généraux et spécialisés.* Urgences.* Soins généraux et spécialisés en santé physique et mentale.* Analyse biomédicale.* Soins et services ambulatoires.* Radiographie.* Désintoxication. | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "cisss-outaouais.gouv.qc.ca/hopitaux/wakefield",
+    "address": "101, chemin Burnside, Wakefield, Outaouais, QC, J0X 3G0",
+    "hours": "24 heures, 7 jours, heures de visite: lundi au dimanche 8h00 à 20h00"
   },
   {
     "id": "msss-hopital-montreal-hopital-neurologique-de-montreal",
@@ -19566,6 +22910,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "impact-rivi-re-gatineau-out",
+    "name": "Impact Rivière Gatineau",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "1 877 449-3077",
+    "description": "Centre de service en violence familiale.* Soutien aux personnes mises en cause lors de violence familiale.* Thérapie de groupe pour enfants, adolescent·e·s, hommes, parents, familles.* Intervention individuelle, de couple ou familiale.* Gestion de conflits.* Gestion des émotions.* Consultation individuelle pour des personnes ayant des besoins spécifiques: déficience intellectuelle et problème de santé mentale.* Concertation et sensibilisation auprès de la communauté sur la thématique de la violence familiale. | Clientèle: personnes étant mises en cause lors de violence familiale, victimes de violence familiale, personnes vivant avec une déficience intellectuelle, personnes vivant avec un problème de santé mentale | Territoire: MRC Vallée-de-la-Gatineau, MRC des Collines-de-l'Outaouais | Statut: organisme à but non lucratif",
+    "address": "270, rue Notre-Dame, Maniwaki, Outaouais, QC, J9E 2J8",
+    "hours": "lundi à jeudi 9h00 à 17h30"
+  },
+  {
     "id": "urgent-info-crime",
     "name": "Info-Crime Québec",
     "category": "social",
@@ -19882,6 +23238,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Hébergement confidentiel 24h/24. Appeler d'abord."
   },
   {
+    "id": "investissement-et-d-veloppement--out",
+    "name": "Investissement Et Développement Gatineau",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 595-8002",
+    "description": "Appui et accompagnement des entreprises pour favoriser le développement et la diversification économique dans la ville de Gatineau.* Accompagnement: référence, conseil, orientation et aide à trouver du financement. | Clientèle: personnes souhaitant lancer une entreprise, personnes possédant une entreprise ou souhaitant s'implanter à Gatineau | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.idgatineau.ca",
+    "address": "25, rue Laurier, 7e étage, Gatineau, Outaouais, QC, J8X 4C8",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "nl-shelter-women",
     "name": "Iris Kirby House – Femmes NL",
     "category": "housing",
@@ -19921,6 +23290,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous, lundi au jeudi (consulter le calendrier des activités via le site internet ou la page Facebook)"
   },
   {
+    "id": "jardin-ducatif-du-pontiac-out",
+    "name": "Jardin Éducatif Du Pontiac",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "819 648-5402",
+    "description": "Services de rééducation, réinsertion et réorientation auprès des jeunes présentant des difficultés d'intégration et d'adaptation scolaires, sociales et familiales.* Programme d'enrichissement éducatif du Pontiac (PEEP): milieu de vie où les jeunes qui éprouvent des difficultés à l'école peuvent prendre un répit et développer des outils permettant de réintégrer leur classe avec succès.* Programme du jardin d'horticulture: camp de jour estival pour jeunes, culture et vente de légumes.* Prévention des dépendances universelles.* Suivi psychosocial individualisé.* Alternative à la suspension. * Ateliers éducatifs.* Activités d'intégration communautaire.* Ateliers de sensibilisation. | Clientèle: jeunes de 6 à 17 ans présentant des difficultés d'intégration et d'adaptation scolaires, sociales et familiales | Territoire: MRC Pontiac | Statut: organisme à but non lucratif",
+    "website": "jepontiac.org",
+    "address": "3, rue McCuaig, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "lundi au vendredi 8h00 to 16h00"
+  },
+  {
     "id": "msss-chsld-saint-augustin-de-desmaures-jardins-du-haut-saint-laurent",
     "name": "Jardins Du Haut Saint-Laurent",
     "category": "health",
@@ -19946,20 +23328,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: lundi au vendredi 9h00 à 16h00, activités: lundi au jeudi 9h00 à 16h00, sur rendez- vous seulement"
   },
   {
-    "id": "urgent-jeu-aide",
-    "name": "Jeu : aide et référence",
-    "category": "mentalHealth",
-    "subcategory": "Dépendance et addiction",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-461-0140",
-    "description": "Ligne provinciale gratuite pour les personnes aux prises avec un problème de jeu compulsif. Disponible 24h/24, 7j/7. Écoute, soutien, référence vers les centres de traitement et groupes d'entraide. Les proches peuvent aussi appeler.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
-    "isUrgent": true,
-    "isProvinceWide": true
-  },
-  {
     "id": "mh-jeu-aide",
     "name": "Jeu : aide et référence",
     "category": "mentalHealth",
@@ -19974,6 +23342,20 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "urgent-jeu-aide",
+    "name": "Jeu : aide et référence",
+    "category": "mentalHealth",
+    "subcategory": "Dépendance et addiction",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-461-0140",
+    "description": "Ligne provinciale gratuite pour les personnes aux prises avec un problème de jeu compulsif. Disponible 24h/24, 7j/7. Écoute, soutien, référence vers les centres de traitement et groupes d'entraide. Les proches peuvent aussi appeler.",
+    "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
+    "isUrgent": true,
+    "isProvinceWide": true
+  },
+  {
     "id": "jeun-est-en-forme-lav",
     "name": "Jeun'Est En Forme",
     "category": "social",
@@ -19985,6 +23367,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "jeunestenforme.com",
     "address": "4901, rue Saint-Joseph, Saint-Vincent-de-Paul, Laval, QC, H7C 1H6",
     "hours": "lundi au jeudi 9h00 à 16h00"
+  },
+  {
+    "id": "jeunesse-idem-out",
+    "name": "Jeunesse Idem",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-1445",
+    "description": "* Contact individuel et intervention.* Groupes de discussion ponctuels pour les 7 à 12 ans et pour les personnes Trans selon les groupes d'âge, hebdomadaires pour les 12 à 17 ans et pour les 18 à 35 ans, les derniers jeudis de chaque mois pour les parents d'enfant Trans.* Activités sociales.* Ateliers de démystification de l'orientation sexuelle, identité de genres, lutte contre l'homophobie et la transphobie.* Formations pour les professionnel·le·s en milieux jeunesse.* Kiosques d'information.* Soutien pour les parents et proches. | Clientèle: jeunes de 7 à 35 ans gais, lesbiennes, bisexuels-les, transgenres, transsexuels-les, en questionnement | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.jeunesseidem.org",
+    "address": "109, rue Wright, bureau 007, Gatineau, Outaouais, QC, J8X 2G7",
+    "hours": "lundi au vendredi 9h00 à 17h00, groupe de discussion: soirée"
+  },
+  {
+    "id": "jeunesse-sans-fronti-res-vall-e--out",
+    "name": "Jeunesse Sans Frontières Vallée-De-La-Gatineau",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gracefield",
+    "province": "QC",
+    "phone": "819 463-4030",
+    "description": "Lieu sécuritaire qui accueille les jeunes de 12 à 17 ans et leur permet de créer des projets.* Accueil et soutien individuel.* Ateliers créatifs d'apprentissage.* Sensibilisation.* Référence à d'autres organismes du milieu.* Excursions. | Clientèle: jeunes de 12 à 17 ans Capacité: 40 | Territoire: MRC de la Vallée-de-la-Gatineau | Statut: organisme à but non lucratif",
+    "website": "jsfvg.com",
+    "address": "119, rue Saint-Joseph, Gracefield, Outaouais, QC, J0X 1W0",
+    "hours": "lundi au jeudi 15h30 à 21h00"
   },
   {
     "id": "urgent-kids-help",
@@ -20130,6 +23538,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service disponible 24h/24, 7j/7"
   },
   {
+    "id": "kazabazua-municipalit-out",
+    "name": "Kazabazua - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Kazabazua",
+    "province": "QC",
+    "phone": "819 467-2852",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.kazabazua.ca/index.php/fr/servicesauxcitoyens/dechets-recyclage-et-compostage* Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système d'appels automatisés d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Kazabazua | Statut: organisme municipal",
+    "website": "www.kazabazua.ca",
+    "address": "30, rue Begley, Kazabazua, Outaouais, QC, J0X 1X0",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "on-kids-help",
     "name": "Kids Help Phone",
     "category": "mentalHealth",
@@ -20183,6 +23604,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi."
   },
   {
+    "id": "l-ange-gardien-municipalit-out",
+    "name": "L'Ange-Gardien - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "L'ange-Gardien",
+    "province": "QC",
+    "phone": "819 986-7470",
+    "description": "Gestion des services municipaux. * Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.municipalitedelangegardien.com/collectes* Écocentre.* Subvention pour produits réutilisables: couches, serviettes sanitaires, coupes menstruelles, culottes menstruelles, sous-vêtements de protection pour l'incontinence, protèges dessous, inserts, applicateur de tampon réutilisable.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Location de salles. | Clientèle: grand public | Territoire: L'Ange-Gardien | Statut: organisme municipal",
+    "website": "municipalitedelangegardien.com",
+    "address": "1177, route 315, L'ange-Gardien, Outaouais, QC, J8L 0L4",
+    "hours": "lundi au mercredi 8h00 à 12h00 et 12h30 à 16h30, jeudi 10h30 à 12h00 et 12h30 à 16h30, vendredi 8h00 à 12h00 et 12h30 à 16h30"
+  },
+  {
     "id": "mh-crise-ouest-mtl",
     "name": "L'Autre Maison – Centre de crise",
     "category": "mentalHealth",
@@ -20195,6 +23629,18 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "1190, rue de Bullion, Montréal, QC H2X 2Z6",
     "hours": "Service disponible 24h/24, 7j/7",
     "isUrgent": true
+  },
+  {
+    "id": "l-essentiel-comptoir-alimentaire-out",
+    "name": "L'Essentiel - Comptoir Alimentaire",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Blue Sea",
+    "province": "QC",
+    "phone": "819 463-3653",
+    "description": "* Banque alimentaire.* Dépannage alimentaire.* Livraison d'aide alimentaire.* Livraison des paniers de Noël. | Clientèle: personnes et familles à faible revenu | Territoire: Blue Sea | Statut: organisme à but non lucratif",
+    "address": "1, rue Principale, Blue Sea, Outaouais, QC, J0X 1C0",
+    "hours": "dépannage alimentaire: 3e jeudis de chaque mois 9h00 à 12h00"
   },
   {
     "id": "msss-chsld-montreal-l-hopital-chinois-de-montreal-1963",
@@ -20220,6 +23666,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "11, Côte du Palais, Québec, QC G1R 2J6",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "l-isle-aux-allumettes-municipali-out",
+    "name": "L'Isle-Aux-Allumettes - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Chapeau",
+    "province": "QC",
+    "phone": "819 689-2266",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Site de transbordement: www.pontiacouest.ca/allumettes/station-de- transbordement* Système d'alerte pour les situations urgentes: www.pontiacouest.ca/residents/alerte-citoyens* Permis de construction, plaintes et requêtes.* Développement culturel et communautaire.* Bibliothèque. | Clientèle: grand public | Territoire: L'Isle-aux-Allumettes | Statut: organisme municipal",
+    "website": "pontiacouest.ca/allumettes",
+    "address": "75, rue Notre-Dame, Chapeau, Outaouais, QC, J0X 1M0",
+    "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 12h00"
   },
   {
     "id": "drum-garde-l-envol-des-nuances",
@@ -20283,6 +23742,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.lepiphanie.ca",
     "address": "66, rue Notre-Dame, L'Épiphanie, Lanaudière, QC, J5X 1A1",
     "hours": "lundi, mardi et jeudi 8h30 à 12h00 et 13h00 à 16h00, mercredi 8h30 à 12h00 et 13h00 à 18h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "l-le-du-grand-calumet-municipali-out",
+    "name": "L'Île-Du-Grand-Calumet - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "L'Île-du-Grand-Calumet",
+    "province": "QC",
+    "phone": "819 648-5965",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Centre de transfert: www.île-du-grand-calumet-41b.ca/services* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système d'appels automatisés d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: L'île-Du-Grand-Calumet | Statut: organisme municipal",
+    "website": "www.ile-du-grand-calumet.ca",
+    "address": "140, chemin des Outaouais, L'Île-du-Grand-Calumet, Outaouais, QC, J0X 1J0",
+    "hours": "Voir site web"
   },
   {
     "id": "tr-garde-l-etoile-filante",
@@ -20402,6 +23874,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Hébergement d'urgence 24h/24. Présentation directe ou appel."
   },
   {
+    "id": "la-p-che-municipalit-out",
+    "name": "La Pêche - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "La Pêche",
+    "province": "QC",
+    "phone": "819 456-2161",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles:www.villelapeche.qc.ca/citoyens/informations-pratiques/collectes* Distribution gratuite de compost.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Programmes de suvention: couches lavables, véhicules électriques, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: La Pêche | Statut: organisme municipal",
+    "website": "www.villelapeche.qc.ca",
+    "address": "1, route Principale Ouest, La Pêche, Outaouais, QC, J0X 2W0",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
     "id": "qc-vc-laval-rose-des-vents",
     "name": "La Rose des Vents – Laval",
     "category": "housing",
@@ -20452,6 +23937,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
   },
   {
+    "id": "lab-le-out",
+    "name": "Lab (Le)",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 777-1806",
+    "description": "Lieu d'expression et de création artistique.* Atelier libre.* Accessibilité aux médiums artistiques et aux instruments de musique (peinture, fusain, argile, matériaux recyclés, percussions, guitares, etc.).* Intervention par les arts.* Référence et accompagnement au besoin.* Distribution de trousses de naloxone.* Distribution et livraison de bandelettes test de fentanyl.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Outils d'analyse de substances. | Clientèle: personnes de 16 ans et plus à risque de vivre ou vivant des problématiques de toxicomanie, d'itinérance ou d'exclusion sociale | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.cipto.qc.ca/le-lab",
+    "address": "48, rue Frontenac, Gatineau, Outaouais, QC, J8X 3A7",
+    "hours": "mardi à jeudi 13h00 à 20h00, vendredi 13h00 à 17h00"
+  },
+  {
     "id": "sk-lmi",
     "name": "Labour Market Information Saskatchewan",
     "category": "employment",
@@ -20464,6 +23962,32 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service.",
     "isProvinceWide": true
+  },
+  {
+    "id": "lac-des-plages-municipalit-out",
+    "name": "Lac-Des-Plages - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Saint-Émile-De-Suffolk",
+    "province": "QC",
+    "phone": "819 426-2391",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles:www.lacdesplages.com/publication/matieres-residuelles * Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Commissaire à l'assermentation.* Loisirs et culture: activités, camp de jour, etc.* Journal Le Plageois.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Lac-Des-Plages | Statut: organisme municipal",
+    "website": "www.lacdesplages.com",
+    "address": "2053, chemin Tour-du-Lac, Saint-Émile-De-Suffolk, Outaouais, QC, J0T 1K0",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "lac-sainte-marie-municipalit-out",
+    "name": "Lac-Sainte-Marie - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Lac-Sainte-Marie",
+    "province": "QC",
+    "phone": "819 467-5437",
+    "description": "Gestion des services municipaux.* Informations pratiques: analyse de l'eau, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.lac-sainte- marie.com/services-aux-citoyens/dechets-recuperation-encombrants-et-compostage * Écocentres.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Lac-Sainte-Marie | Statut: organisme municipal",
+    "website": "www.lac-sainte-marie.com",
+    "address": "106, chemin Lac-Sainte-Marie, Lac-Sainte-Marie, Outaouais, QC, J0X 1Z0",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "lachenaie-action-jeunesse-trb",
@@ -20490,6 +24014,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "latekoe-out",
+    "name": "Latekoe",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 685-2424",
+    "description": "Promotion de l'innovation sociale et technologique auprès et avec les Autochtones.* Ateliers de sensibilisation sur des thèmes variés: protocoles et gouvernance autochtones, les Autochtones en milieu urbain, intimidation et Autochtones, éducation Autochtone, etc.* FabLab ONAKI: espace collaboratif de conception digitale, avec accès à des machines.* Cercles ONAKI: activités autochtones dans les écoles primaires et secondaires. | Clientèle: grand public | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "cipp-fpic.com",
+    "address": "85B, promenade du Portage, Gatineau, Outaouais, QC, J8X 2K2",
+    "hours": "lundi au vendredi 8h30 à 16h30, en été 8h00 à 16h00"
   },
   {
     "id": "shawi-garde-laurie-st-arneault",
@@ -20734,6 +24271,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://windsorlegalhelpcentre.ca",
     "address": "400-618 Ouellette Ave, Windsor, ON N9A 1B4",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "les-apprentis-centre-d-apprentis-out",
+    "name": "Les Apprentis - Centre D'Apprentissage Pour La Déficience Intellectuelle",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 663-0062",
+    "description": "Développement d'aptitudes professionnelles pour les personnes vivant avec une déficience intellectuelle.* Ateliers sur l'artisanat.* Services d'insertion, de classement ou d'emballage offerts aux organisations. | Clientèle: adultes vivant avec une déficience intellectuelle, organisations Capacité: 70 | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "lesapprentis.ca",
+    "address": "410, boulevard Maloney Ouest, Gatineau, Outaouais, QC, J8P 6W2",
+    "hours": "lundi au jeudi 8h00 à 15h00, vendredi 8h00 à 12h00"
   },
   {
     "id": "msss-chsld-montreal-les-cedres-centre-d-accueil-pour-personnes-agees",
@@ -21020,6 +24570,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "litchfield-municipalit-out",
+    "name": "Litchfield - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "819 648-5511",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système d'appels automatisés d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Litchfield | Statut: organisme municipal",
+    "website": "www.litchfield-qc.ca",
+    "address": "1362, route 148, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "on-rentals-on",
     "name": "Location — Tribunal du logement",
     "category": "housing",
@@ -21034,6 +24597,70 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "lochaber-municipalit-out",
+    "name": "Lochaber - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Lochaber",
+    "province": "QC",
+    "phone": "819 985-3291",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.cantonlochaber.ca/services-municipaux/hygiene-du-milieu* Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Location de salles. | Clientèle: grand public | Territoire: Lochaber | Statut: organisme municipal",
+    "website": "www.cantonlochaber.ca",
+    "address": "259 Montée du Gore, Lochaber, Outaouais, QC, J0X 3B0",
+    "hours": "lundi à jeudi 8h00 à 15h30"
+  },
+  {
+    "id": "lochaber-partie-ouest-municipali-out",
+    "name": "Lochaber-Partie-Ouest - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Lochaber",
+    "province": "QC",
+    "phone": "819 281-1551",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles:www.lochaber- ouest.ca/services/?id=49#contn * Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Programmes de subvention: dépenses en loisirs, couches lavables, bornes électriques, etc.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Lochaber-Partie-Ouest | Statut: organisme municipal",
+    "website": "www.lochaber-ouest.ca",
+    "address": "1370, montée du Quatre, Lochaber, Outaouais, QC, J0X 3B0",
+    "hours": "lundi à jeudi 8h00 à 16h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "loge-action-outaouais-out",
+    "name": "Loge-Action Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 243-3717",
+    "description": "Développement et réalisation de projets d'habitations communautaires.* Aide technique.* Information sur les programmes gouvernementaux.* Formation.* Gestion du projet pendant la construction ou la rénovation. | Clientèle: groupes communautaires, coopératives | Territoire: Outaouais | Statut: Cooperative",
+    "address": "440, boulevard Saint-Joseph, bureau 200, Gatineau, Outaouais, QC, J8Y 3Y7",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "logemen-occupe-out",
+    "name": "Logemen'Occupe",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 246-6644",
+    "description": "Services d'aide aux locataires.* Consultation juridique en droit du logement.* Défense des droits des locataires. | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "logemenoccupe.com",
+    "address": "10, rue Curé André-Préseault, Gatineau, Outaouais, QC, J8T 6N8",
+    "hours": "lundi au jeudi 8h00 à 15h30"
+  },
+  {
+    "id": "logements-de-l-outaouais-out",
+    "name": "Logements De L'Outaouais",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-2160",
+    "description": "Logements sociaux.* Studios 1½ ou chambres à louer.* Deux blocs appartement: une sur la rue Mutchmore, l'autre sur la rue Lesage.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV).* Activités sociales et recréatives: conférences, zoothérapie, repas communautaires, etc. | Clientèle: bloc rue Mutchmore: personnes de 55 ans et plus, bloc rue Lesage: personnes de 75 ans et plus Capacité: bloc rue Mutchmore: 100, bloc rue Lesage: 49 | Territoire: Outaouais, ITMAV: secteur Hull de la Ville de Gatineau | Statut: organisme à but non lucratif",
+    "website": "logementsdeloutaouais.com",
+    "address": "49, rue Mutchmore, Gatineau, Outaouais, QC, J8Y 3T5",
+    "hours": "bureau: lundi au vendredi 8h00 à 16h00"
+  },
+  {
     "id": "loisibourg-lav",
     "name": "Loisibourg",
     "category": "family",
@@ -21045,6 +24672,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.loisibourg.org",
     "address": "1350, rue du Relais, Sainte-Dorothée, Laval, QC, H7Y 1W2",
     "hours": "Voir site web"
+  },
+  {
+    "id": "loisir-sport-outaouais-out",
+    "name": "Loisir Sport Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 663-2575",
+    "description": "Stimule le développement régional en loisir, en sport et en plein air.* Formations: accueil et loisirs des personnes handicapées, planification et développement d'une programmation d'activités, recherche de partenaires, compréhension des demandes de subventions, etc.* Secondaire en spectacle: développement des jeunes à travers la pratique d'activités de loisir culturel en milieu scolaire.* Jeux du Québec: développement du sport compétitif.* Mes Premiers Jeux: initier les jeunes aux plaisirs de la compétition sportive et les mettre en contact avec les clubs sportifs de leur région.* Expertise: plein air, loisirs pour personnes handicapées, loisirs municipal, scolaire et communautaire, camps de jours, bénévolat, etc.* Programmes d'aide financière: projets favorisant la pratique d'activités physiques, projets pour personnes handicapées, projets en lien avec le bénévolat dans les loisirs, le sport et le plein air, etc. | Clientèle: grand public | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "urlso.qc.ca",
+    "address": "390, avenue de Buckingham, Gatineau, Outaouais, QC, J8L 2G7",
+    "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
     "id": "loisirs-renaud-coursol-lav",
@@ -21070,6 +24710,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "low-municipalit-out",
+    "name": "Low - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Low",
+    "province": "QC",
+    "phone": "819 422-3528",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles:www.lowquebec.ca/fr/services/services-aux-citoyens/collectes-des-matieres-residuelles* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système d'appels automatisés d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Low | Statut: organisme municipal",
+    "website": "www.lowquebec.ca",
+    "address": "4A, chemin d'Amour, Low, Outaouais, QC, J0X 2C0",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "lueur-du-phare-de-lanaudiere-la-poi-jol",
@@ -21109,6 +24762,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.luranashelter.com",
     "address": "Adresse confidentielle (refuge pour femmes)",
     "hours": "Service essentiel Alberta."
+  },
+  {
+    "id": "m-ado-jeunes-out",
+    "name": "M-Ado Jeunes",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 281-2570",
+    "description": "Lieu d'activités et de rencontres pour jeunes.* Écoute, accompagnement et référence.* Activités sociales et récréatives.* Soutien scolaire.* Interventions individuelles.* Soutien à la famille.* Horaire des activités: www.madojeunes.ca/activites* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Distribution de naloxone. | Clientèle: personnes de 10 à 17 ans | Territoire: Buckingham, Masson-Angers | Statut: organisme à but non lucratif",
+    "website": "www.madojeunes.ca",
+    "address": "948, rue Georges, Gatineau, Outaouais, QC, J8L 2E5",
+    "hours": "Voir site web"
   },
   {
     "id": "tr-garde-maryse-gauthier",
@@ -21267,6 +24933,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "maison-alcide-cl-ment-out",
+    "name": "Maison Alcide-Clément",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-1306",
+    "description": "Milieu de vie communautaire et familial.* Activités de stimulation pour enfants de 0 à 5 ans.* Camp de jour.* Magasin-partage de la rentrée scolaire.* Cuisines collectives.* Relevailles: soutien postnatal à domicile pour bébés de 0 à 12 mois.* Cafés-rencontres. | Clientèle: personnes de 0 à 17 ans, parents, familles | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.maisonalcideclement.com",
+    "address": "132, rue Saint-Jacques, Gatineau, Outaouais, QC, J8X 2Z4",
+    "hours": "lundi 8h00 à 12h00 et 13h00 à 16h00, mercredi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "maison-alonzo-wright-out",
+    "name": "Maison Alonzo Wright",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 246-7277",
+    "description": "Services de soutien professionnel accessibles pour les individus, les couples et les familles, sur présentation d'un justificatif de revenus pour déterminer la tarification:* Relation d'aide psychologique.* Intervention psychosociale.* Soutien au développement personnel ou professionnel. | Clientèle: personnes, familles ou couples aux prises avec des difficultés transitoires ou récurrentes ou un problème de santé mentale | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "maisonalonzowright.ca",
+    "address": "2425 A, rue Saint-Louis, Gatineau, Outaouais, QC, J8V 1E7",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
     "id": "msss-chsld-montreal-maison-alternative-de-riviere-des-prairies",
     "name": "Maison Alternative De Rivière-Des-Prairies",
     "category": "health",
@@ -21277,6 +24969,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
     "address": "7099, boulevard Maurice-Duplessis, Montréal, QC H1G 0A6",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "maison-amiti-de-la-haute-gatinea-out",
+    "name": "Maison Amitié De La Haute-Gatineau",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 449-6777",
+    "description": "Soutien et hébergement aux personnes ayant des enjeux (sévères et persistants) de santé mentale.* Accompagnement et collaboration pour la communauté.* Hébergement temporaire, de réadaptation et de réinsertion.* Accompagnements pour les suivis : médicaux, juridiques, financiers, alimentaire, logement, communautaires, soutien aux proches et références externes.* Centre de jour.* Groupe de soutien, d'entraide et ateliers: cuisines collectives, cafés rencontre, activités créatives. | Clientèle: adultes vivant avec des problèmes temporaires ou persistants de santé mentale | Territoire: MRC La Vallée-de-la-Gatineau | Statut: organisme à but non lucratif",
+    "website": "maisonamitie.ca",
+    "address": "108, rue Christ-Roi, Maniwaki, Outaouais, QC, J9E 1C3",
+    "hours": "centre de jour: lundi au vendredi de 9h00 à 16h00"
   },
   {
     "id": "maison-carignan",
@@ -21293,6 +24998,55 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "maison-communautaire-daniel-john-out",
+    "name": "Maison Communautaire Daniel-Johnson",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 772-6625",
+    "description": "Maison de quartier.* Accès à un ordinateur, Internet, télécopie.* Activités sociales et récréatives: adolescents, familles, parents-enfants.* Café social.* Club de devoirs.* Cuisine collective.* Déjeuner communautaire.* Cercle de tricot et de crochet.* Initiation au ski de fond pour les jeunes de 9 à 12 ans.* Opération Habitneige Outaouais: vêtements d'hiver pour enfants.* Ateliers de cuisine Minis-chefs (8 à 12 ans).* Programme Retour en classe: magasin-partage de fournitures scolaires.* Cercle des femmes.* Fêtes d'Halloween et de Noël.* Fête de quartier. | Clientèle: citoyennes et citoyens du quartier Daniel-Johnson, secteur de Hull à Gatineau | Territoire: quartier Daniel-Johnson, secteur Hull, Gatineau | Statut: organisme à but non lucratif",
+    "address": "22, rue Arthur-Buies, Gatineau, Outaouais, QC, J8Z 1P5",
+    "hours": "mardi au jeudi 9h00 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "maison-d-accueil-mutchmore-out",
+    "name": "Maison D'Accueil Mutchmore",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-0788",
+    "description": "Maison de quartier.* Cuisine collective.* Touchatou: atelier de stimulation de la motricité fine.* Atelier de francisation.* Projet Multigénérationnel: activités intergénérationnelles variées.* Âllo-ADOS: activités sportives et sociales pour les adolescents.* Activités sportives: cours de karaté, mise en forme, cours de yoga, de zumba, ski, sorties à la piscine.* Opération habit de neige: distribution de vêtements d'hiver.* Fournitures scolaires.* Clinique d'impôts. | Clientèle: personnes et familles à faible revenu, nouveaux arrivants, personnes aînées, résidents du quartier, Opération habit de neige: familles ayant un faible revenu avec enfants de 2 à 13 ans | Territoire: Quartiers Mutchmore et Jean Proulx de Gatineau | Statut: organisme à but non lucratif",
+    "website": "accueilmutchmore.ca",
+    "address": "142, rue Mutchmore, Gatineau, Outaouais, QC, J8Y 3T7",
+    "hours": "lundi au vendredi 8h30 à 15h30, accueil: lundi au vendredi 9h00 à 15h00"
+  },
+  {
+    "id": "maison-de-jeunes-val-jeunesse-out",
+    "name": "Maison De Jeunes Val-Jeunesse",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Val-Des-Monts",
+    "province": "QC",
+    "phone": "819 457-4693",
+    "description": "* Activités sociales, culturelles et sportives.* Aide aux devoirs.* Animation et intervention préventive. | Clientèle: jeunes de 8 à 17 ans | Territoire: Val-des-Monts | Statut: organisme à but non lucratif",
+    "address": "1, chemin Saint-Joseph, bureau 1, Val-Des-Monts, Outaouais, QC, J8N 7E8",
+    "hours": "mercredi et jeudi 18h00 à 21h00, vendredi 19h00 à 23h00, samedi 18h00 à 21h00"
+  },
+  {
+    "id": "maison-de-l-amiti-de-hull-out",
+    "name": "Maison De L'Amitié De Hull",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 772-6622",
+    "description": "Maison de quartier Jean-Dallaire.* Intervention de quartier, accompagnement, implication citoyenne.* Intervention individuelle et collective, intervention auprès des jeunes.* Club de devoirs.* Soutien à la recherche d'emploi et rédaction de CV.* Jardin communautaire.* Cuisine collective.* Déjeuners communautaires.* Répit pour les familles avec l'organisme Équipe soutien-famille.* Programme Ados: camp de mars, camp d'été, ski cool.* Activités pédagogiques.* Ateliers tricot.* Sorties piscine et soccer communautaire.* Café lundi.* Magasin- partage de la rentrée scolaire.* Opération habit de neige: distribution de vêtements d'hiver à prix modique.* Fêtes de quartier: été, Halloween, Noël. | Clientèle: personnes et familles à faible revenu du quartier Jean-Dallaire Capacité: variable selon les activités | Territoire: quartier Jean-Dallaire | Statut: organisme à but non lucratif",
+    "address": "58, rue Hanson, Gatineau, Outaouais, QC, J8Y 3M5",
+    "hours": "accueil: lundi au vendredi 8h30 à 15h30, activités et intervention: soirées et fins de semaine"
+  },
+  {
     "id": "maison-de-la-famille-de-laval-ou-lav",
     "name": "Maison De La Famille De Laval-Ouest",
     "category": "food",
@@ -21306,6 +25060,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h00, été: fermé de la mi-juin à la mi-août, à l'exception du club de marche et du jardin communautaire"
   },
   {
+    "id": "maison-de-la-famille-de-quyon-out",
+    "name": "Maison De La Famille De Quyon",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Quyon",
+    "province": "QC",
+    "phone": "819 458-2808",
+    "description": "Centre de services aux familles.* Halte-garderie.* Comptoir vestimentaire.* Frigo communautaire.* Activités physiques: karate, pickleball, etc.* Ateliers de stimulation parents-enfants.* Programme Y'a personne de parfait (Y'APP): groupes de soutien animés pour parents.* Café rencontre pour personnes aînées et leurs proches.* Internet, photocopie, télécopie.* Programme Retour en classe: distribution de fournitures scolaires.* Fonds d'Habits de neige: vêtements d'hiver pour enfants à prix modique.* Clinique d'impôts.* Défense et promotion des droits et intérêts des familles. | Clientèle: familles, café rencontre: personnes de 55 ans et plus, leurs proches | Territoire: MRC Les Collines-de-l'Outaouais | Statut: organisme à but non lucratif",
+    "address": "1074, rue Clarendon, Quyon, Outaouais, QC, J0X 2V0",
+    "hours": "lundi au jeudi 9h00 à 16h00"
+  },
+  {
     "id": "maison-de-la-famille-de-st-fran--lav",
     "name": "Maison De La Famille De St-François",
     "category": "food",
@@ -21317,6 +25083,44 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "maisonfamillestfrancois.com",
     "address": "8190, boulevard Lévesque Est, Saint-François, Laval, QC, H7A 1V4",
     "hours": "administration: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, activités: horaires variables"
+  },
+  {
+    "id": "maison-de-la-famille-du-pontiac-out",
+    "name": "Maison De La Famille Du Pontiac",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Fort-Coulonge",
+    "province": "QC",
+    "phone": "819 683-1337",
+    "description": "Services aux familles et personnes aînées.* Repas gratuits.* Popotte roulante.* Halte-garderie.* Comptoir vestimentaire gratuit.* Fonds Habineige: habits d'hiver pour enfants à prix modique.* Lieu d'allaitement.* Activités intergénérationnelles.* Activités parents-enfants: ateliers de bricolage, cuisine, arts, sports.* Programme de développement pour les enfants de 0 à 5 ans.* Jumelage entre familles.* Activités en ligne.* Repas communautaire.* Ordinateurs en libre accès, photocopies, télécopies.* Activités de compétences parentales.* Défense des droits et intérêts des familles.* Activités de prévention et sensibilisation. | Clientèle: familles et personnes aînées à faible revenu Capacité: 75 personnes | Territoire: MRC Pontiac | Statut: organisme à but non lucratif",
+    "website": "mdfpontiac.ca",
+    "address": "161, rue Principale, Fort-Coulonge, Outaouais, QC, J0X 1V0",
+    "hours": "lundi au jeudi 9h00 à 16h00"
+  },
+  {
+    "id": "maison-de-la-famille-l-tincelle-out",
+    "name": "Maison De La Famille L'Étincelle",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "La Pêche",
+    "province": "QC",
+    "phone": "819 456-4696",
+    "description": "* Information, référence, soutien et sensibilisation.* Cuisines collectives.* Popote roulante.* Service anti-gaspillage: denrées alimentaires sur place.* Ateliers parents-enfants.* Fêtes et activités familiales.* Cafés- rencontres. | Clientèle: familles | Territoire: La Pêche | Statut: organisme à but non lucratif",
+    "address": "20, chemin Raphaël, La Pêche, Outaouais, QC, J0X 2W0",
+    "hours": "lundi au jeudi 8h30 à 16h00, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "maison-de-la-famille-vall-e-de-l-out",
+    "name": "Maison De La Famille Vallée-De-La-Lièvre",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 281-4359",
+    "description": "Services aux familles.* Halte-garderie pour enfant de 5 ans et moins.* Activités de stimulation pour enfant de 0 à 5 ans.* Jeux pour enfant de 6 à 12 ans le samedi.* Répit.* Programmes Y'a personne de parfait et Parents en couleur: ateliers de compétences parentales.* Dépannage vestimentaire.* Jumelage dons.* Tournoi de golf annuel.* Programme Enfants au chaud: habit de neige à prix modique.* Salle sensorielle.* Retour en Classe: magasin partage de fournitures scolaires.* Paniers de Noël. | Clientèle: familles | Territoire: village urbain Vallée-de-la-Lièvre de Gatineau | Statut: organisme à but non lucratif",
+    "website": "mdf-valleedelalievre.ca",
+    "address": "321, avenue Buckingham, Gatineau, Outaouais, QC, J8L 2G4",
+    "hours": "lundi au jeudi 9h00 à 16h00"
   },
   {
     "id": "maison-de-la-s-r-nit-lav",
@@ -21512,6 +25316,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.mqfabreville.org/ados",
     "address": "727, montée Montrougeau, Fabreville, Laval, QC, H7P 3M1",
     "hours": "mardi et mercredi 15h30 à 20h00, jeudi et vendredi 15h30 à 21h00"
+  },
+  {
+    "id": "maison-de-quartier-notre-dame-out",
+    "name": "Maison De Quartier Notre-Dame",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 893-6763",
+    "description": "* Participation à l'Opération habit de neige: distribution d'habits de neige pour les enfants.* Magasin- partage de fournitures scolaires.* Club de lecture.* Activités sociales. | Territoire: quartier Notre-Dame de Gatineau | Statut: organisme à but non lucratif",
+    "address": "280, boulevard Maloney Est, Gatineau, Outaouais, QC, J8P 1C6",
+    "hours": "lundi au jeudi 9h00 à 16h00, vendredi 9h00 à 12h00"
   },
   {
     "id": "maison-de-quartier-vimont-lav",
@@ -21948,6 +25764,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "maison-des-collines-la-out",
+    "name": "Maison Des Collines (La)",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Wakefield",
+    "province": "QC",
+    "phone": "819 459-1233",
+    "description": "Maison de soins palliatifs.* Soutien psychosocial.* Service médical.* Accompagnement spirituel.* Soutien à la famille et aux proches. | Clientèle: patient·e·s en fin de vie et leurs proches Capacité: 6 lits | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.lamaisondescollines.org",
+    "address": "99, chemin Burnside, Wakefield, Outaouais, QC, J0X 3G0",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "maison-des-enfants-le-dauphin-de-lav",
     "name": "Maison Des Enfants Le Dauphin De Laval",
     "category": "social",
@@ -21984,6 +25813,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Jumelage intergénérationnel et correspondance avec des enfants en collaboration avec la Maison des enfants Le Dauphin.* Participation à des événements culturels et des activités dans les écoles primaires et secondaires.* Salon de tricot.* Un coup d'coeur pour toi: confection de baluchons et de doudous pour le Centre jeunesse de Laval.* Jumelage d'aînés avec des étudiants du Collège Montmorency et du Centre culturel québéco-syrien visant à briser l'isolement des aînés et à approfondir l'apprentissage du français des participants. | Clientèle: personnes âgées, enfants et adolescents | Territoire: Laval | Statut: organisme à but non lucratif",
     "address": "111-25, rue Saint-Louis, Pont-Viau, Laval, QC, H7G 4W3",
     "hours": "lundi au jeudi 9h00 à 15h00"
+  },
+  {
+    "id": "maison-des-jeunes-antrados-out",
+    "name": "Maison Des Jeunes Antrados",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 778-0634",
+    "description": "Lieu de rencontre animé pour les jeunes.* Soutien individuel et familial.* Atelier discussions: intimidation, sécurité sexuelle, etc.* Aide aux devoirs.* Activités divers: peinture, cuisine, jeux éducatifs, initiation à la musique, sports, etc.* Sorties: cinéma, voyages et visites de musées.* participation et implication lors d'événements dans le milieu. | Clientèle: jeunes de 12 à 17 ans | Territoire: Hull, Aylmer | Statut: organisme à but non lucratif",
+    "website": "avenuedesjeunes.com",
+    "address": "10, rue Bériault, Gatineau, Outaouais, QC, J8X 1A3",
+    "hours": "mardi au jeudi 17h00 à 21h00, vendredi et samedi 17h00 à 22h00"
   },
   {
     "id": "maison-des-jeunes-de-l-est-de-la-lav",
@@ -22034,6 +25876,45 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Lieu de rencontre animé.* Écoute, soutien et accompagnement.* Activités sportives: salle de conditionnement, sport et cours de danse.* Activités récréatives: expression artistique, conférences thématiques, journal ados Marigot, cinéma maison et billard.* Internet et bibliothèque.* Cours de cuisine. | Clientèle: jeunes de 12 à 17 ans Capacité: 30 jeunes | Territoire: Laval-des-Rapides, Pont-Viau | Statut: organisme à but non lucratif",
     "address": "599, rue Saint-André, Pont-Viau, Laval, QC, H7G 3A4",
     "hours": "lundi au vendredi 16h00 à 21h00"
+  },
+  {
+    "id": "maison-des-jeunes-du-parc-de-l-l-out",
+    "name": "Maison Des Jeunes Du Parc De L'Île",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 778-0634",
+    "description": "Lieu de rencontre animé pour les jeunes.* Soutien individuel et familial.* Atelier discussions: intimidation, sécurité sexuelle, etc.* Aide aux devoirs.* Activités divers: peinture, cuisine, jeux éducatifs, initiation à la musique, sports, etc.* Sorties: cinéma, voyages et visites de musées.* participation et implication lors d'événements dans le milieu. | Clientèle: jeunes de 13 à 17 ans, jeunes vivant des problèmes personnels ou familiaux | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "avenuedesjeunes.com",
+    "address": "94, rue Mance, Gatineau, Outaouais, QC, J8X 4A3",
+    "hours": "mardi, mercredi et jeudi 17h00 à 21h00, vendredi et samedi 17h00 à 22h00"
+  },
+  {
+    "id": "maison-des-jeunes-le-mashado-out",
+    "name": "Maison Des Jeunes Le Mashado",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "La Pêche",
+    "province": "QC",
+    "phone": "819 456-1100",
+    "description": "Lieu de rencontre, d'échanges et d'activités pour les jeunes.* Activités sociales, culturelles et récréatives.* Animation en milieu scolaire.* Initiation à l'entrepreneuriat.* Activités intergénérationnelles.* Groupes de discussion au sujet du cannabis.* Distribution de fournitures scolaires.* Aide aux devoirs.* Ateliers de cuisine. | Clientèle: jeunes de 6 à 17 ans | Territoire: La Pêche | Statut: organisme à but non lucratif",
+    "website": "mashado.ca",
+    "address": "8, chemin des Optimistes, La Pêche, Outaouais, QC, J0X 2W0",
+    "hours": "animation: lundi au jeudi 15h00 à 19h00, samedi 9h00 à 14h00, bureau: lundi à vendredi 8h00 à 15h00?"
+  },
+  {
+    "id": "maison-des-jeunes-les-desch-n-s-out",
+    "name": "Maison Des Jeunes Les Deschênés",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 778-0634",
+    "description": "Lieu de rencontre animé pour les jeunes.* Soutien individuel et familial.* Atelier discussions: intimidation, sécurité sexuelle, etc.* Aide aux devoirs.* Activités divers: peinture, cuisine, jeux éducatifs, initiation à la musique, sports, etc.* Sorties: cinéma, voyages et visites de musées.* participation et implication lors d'événements dans le milieu. | Clientèle: jeunes de 13 à 17 ans, jeunes vivant des problèmes personnels ou familiaux | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "avenuedesjeunes.com",
+    "address": "26, rue Arthur-Whelan, Gatineau, Outaouais, QC, J9H 2A5",
+    "hours": "Voir site web"
   },
   {
     "id": "maison-du-marigot-la-lav",
@@ -22087,6 +25968,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "maison-le-ricochet-out",
+    "name": "Maison Le Ricochet",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "La Pêche",
+    "province": "QC",
+    "phone": "819 456-4230",
+    "description": "Réadaptation et réinsertion socioprofessionnelle en santé mentale.* Centre de jour offrant des activités mensuelles: activités de loisir, ateliers de créativité et groupes de réflexion.* Trouvailles de la colline: friperie.* Hébergement avec soutien et supervision.* Intégration socioprofessionnelle.* Suivi à intensité variable.* Soutien psychologique.* Ateliers de menuiserie. | Clientèle: personnes vivant avec un trouble de santé mentale avec ou sans dépendances, personnes en détresse psychologique Capacité: 21 | Territoire: Cantley, Chelsea, La Pêche, Val-des-Monts | Statut: organisme à but non lucratif",
+    "website": "maisonlericochet.com",
+    "address": "9, chemin de la Beurrerie, La Pêche, Outaouais, QC, J0X 2W0",
+    "hours": "centre de jour: lundi au vendredi 9h00 à 15h00, hébergement: 24 heures, 7 jours"
+  },
+  {
+    "id": "maison-mathieu-froment-savoie-out",
+    "name": "Maison Mathieu Froment-Savoie",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-3900",
+    "description": "Centre de soins palliatifs.* Hébergement de fin de vie.* Soins médicaux.* Accompagnement psychosocial et spirituel sur place et à domicile.* Le Havre: centre de ressourcement. | Clientèle: personnes ayant reçu un pronostic de fin de vie de moins de 3 mois, les proches aidants et familles Capacité: hébergement: 16 chambres | Territoire: Gatineau-Outaouais | Statut: organisme à but non lucratif",
+    "website": "mmfs.org",
+    "address": "170, rue Sherbrooke, Gatineau, Outaouais, QC, J8Y 2L6",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "nb-shelter-women",
     "name": "Maison Mathieu-Froment-Savoie – Femmes NB",
     "category": "housing",
@@ -22123,6 +26030,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Logements temporaires subventionnés avec services.• Hébergement jusqu'à 3 ans.• Accompagnement individuel dans les démarches, avec ou sans hébergement.• Accompagnement de groupe, avec ou sans hébergement.• Ateliers d'information, avec ou sans hébergement. | Clientèle: femmes monoparentales qui souhaitent faire un retour au travail ou aux études Capacité: 12 logements | Territoire: Lanaudière | Frais: 25% du revenu selon l'avis de cotisation provincial | Statut: organisme à but non lucratif",
     "website": "https://maisonpaulinebonin.org",
     "address": "360, rue Saint-Louis, bureau 1, Joliette, Lanaudière, QC, J6E 2Y6",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "maison-r-alit-out",
+    "name": "Maison Réalité",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-1214",
+    "description": "Soutien et réadaptation psychosociale en santé mentale.* Hébergement visant l'autonomie et la réinsertion sociale (trois à dix-huit mois). * Soutien dans la communauté : interventions et suivis individualisés dans le milieu de vie de la personne.* Activités éducatives et récréatives. | Clientèle: personnes de 18 ans et plus ayant un trouble de santé mentale | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "maisonrealite.org",
+    "address": "10, rue Jeanne-d'Arc, Gatineau, Outaouais, QC, J8Y 2H2",
     "hours": "24 heures, 7 jours"
   },
   {
@@ -22393,6 +26313,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi 9h00 à 11h00, vendredi 9h00 à 11h00 et 13h00 à 15h00"
   },
   {
+    "id": "mani-jeunes-out",
+    "name": "Mani-Jeunes",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 449-6609",
+    "description": "Lieu de rencontre, d'échanges et d'activités pour jeunes.* Activités sportives, culturelles et sociales.* Prévention et promotion de la santé.* Ateliers de cuisine santé.* Sorties spéciales.* Exploration des passions. | Clientèle: personnes de 12 à 17 ans, 1 soir par semaine: jeunes de 8 à 12 ans | Territoire: Maniwaki | Statut: organisme à but non lucratif",
+    "address": "274, rue des Oblats, Maniwaki, Outaouais, QC, J9E 1G7",
+    "hours": "lundi 15h30 à 19h00, mardi au vendredi 15h30 à 19h30, été: heures variables"
+  },
+  {
     "id": "mb-employment-mb",
     "name": "Manitoba Employment Standards",
     "category": "employment",
@@ -22419,6 +26351,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise.",
     "isProvinceWide": true
+  },
+  {
+    "id": "maniwaki-municipalit-out",
+    "name": "Maniwaki - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 449-2800",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.ville.maniwaki.qc.ca/citoyens/matieres-residuelles/calendrier-des-collectes * Écocentre.* Jardin communautaire.* Services d'accueil et d'intégration pour personnes nouvellement arrivées.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Maniwaki | Statut: organisme municipal",
+    "website": "www.ville.maniwaki.qc.ca",
+    "address": "186, rue Principale Sud, Maniwaki, Outaouais, QC, J9E 1Z9",
+    "hours": "lundi au vendredi de 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "manoir-cardinal-lav",
@@ -22482,6 +26427,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "mansfield-et-pontefract-municipa-out",
+    "name": "Mansfield-Et-Pontefract - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Davidson",
+    "province": "QC",
+    "phone": "819 683-2944",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.mansfield- pontefract.com/residents/recyclage-et-ordure* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système automatisé de notifications d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Mansfield-et-Pontefract | Statut: organisme municipal",
+    "website": "www.mansfield-pontefract.com",
+    "address": "314, rue Principale, Davidson, Outaouais, QC, J0X 1R0",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "mardis-de-l-amiti-sainte-b-atric-lav",
@@ -22572,6 +26530,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h15 à 12h00 et 13h15 à 16h30"
   },
   {
+    "id": "mayo-municipalit-out",
+    "name": "Mayo - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Mayo",
+    "province": "QC",
+    "phone": "819 986-3199",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles:www.mayo.ca/services-aux-citoyens/gestion-des-dechets-recyclage* Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture. | Clientèle: grand public | Territoire: Mayo | Statut: organisme municipal",
+    "website": "www.mayo.ca",
+    "address": "20, chemin McAlendin, Mayo, Outaouais, QC, J8L 4J6",
+    "hours": "mardi au jeudi 8h00 à 16h00, vendredi 8h00 à 12h00"
+  },
+  {
     "id": "tr-garde-melina-veillette",
     "name": "Melina Veillette",
     "category": "family",
@@ -22612,6 +26583,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "messines-municipalit-out",
+    "name": "Messines - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Messines",
+    "province": "QC",
+    "phone": "819 465-2323",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.messines.ca/fr/services/hygiene-du-milieu/gestion-des-matieres-residuelles * Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Messines | Statut: organisme municipal",
+    "website": "www.messines.ca",
+    "address": "70, rue Principale, Messines, Outaouais, QC, J0X 2J0",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
     "id": "mesures-alternatives-jeunesse-de-lav",
     "name": "Mesures Alternatives Jeunesse De Laval",
     "category": "family",
@@ -22649,6 +26633,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.socle.org",
     "address": "512, boulevard des Laurentides, bureau 202, Laval-des-Rapides, Laval, QC, H7G 2V4",
     "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "mie-du-partage-la-out",
+    "name": "Mie Du Partage (La)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Bowman",
+    "province": "QC",
+    "phone": "819 593-0252",
+    "description": "* Aide alimentaire.* Cuisines collectives.* Distribution de repas congelés.* Magasin scolaire pour la rentrée.* Magasin-partage de Noël. | Clientèle: résident·e·s, distribution de repas congelés: personnes aînées et personnes malades ou en perte d'autonomie | Territoire: Val-des-Bois, Bowman | Statut: organisme à but non lucratif",
+    "address": "558, route 309, Bowman, Outaouais, QC, J0X 3C0",
+    "hours": "Voir site web"
   },
   {
     "id": "mieux-na-tre-laval-lav",
@@ -22714,6 +26710,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été.",
     "isProvinceWide": true
+  },
+  {
+    "id": "mirage-groupe-vocal-out",
+    "name": "Mirage, Groupe Vocal",
+    "category": "social",
+    "subcategory": "Sports, loisirs et culture",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "",
+    "description": "* Chorale avec répertoires divers: chanson québécoise, française, de langue anglaise ou étrangère, populaire, traditionnelle, contemporaine et folklorique.* Concerts de Noël et de fin d'année. | Clientèle: personnes de 18 ans et plus Capacité: 35 personnes | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "miragegv.ca",
+    "address": "1, rue Lévesque, Gatineau, Outaouais, QC, J8Y 4V7",
+    "hours": "pratiques: vendredi 19h00 à 21h00"
   },
   {
     "id": "missionbonaccueil-mtl",
@@ -23461,6 +27470,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "mon-chez-nous-habitations-beno-t-out",
+    "name": "Mon Chez Nous - Habitations Benoît-Fortin (Les)",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "343 202-5580",
+    "description": "Logements de transition pour les personnes à risque d'itinérance ou en situation d'itinérance.* Hébergement d'une durée maximale de 5 ans.* Soutien communautaire par un·e intervenant·e.* Services alimentaires obligatoires: cafétéria où 3 repas et 3 collations sont servis chaque jour. | Clientèle: personnes à risque d'itinérance ou en situation d'itinérance Capacité: 26 chambres | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "moncheznousinc.ca/solutions-personne-seule",
+    "address": "18, rue Hamel, Gatineau, Outaouais, QC, J8P 1V9",
+    "hours": "bureau: lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "mon-chez-nous-manoir-du-moulin-out",
+    "name": "Mon Chez Nous - Manoir Du Moulin",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "343 202-5580",
+    "description": "Logements de transition pour les personnes à risque d'itinérance ou en situation d'itinérance.* Hébergement d'une durée maximale de 5 ans.* Soutien communautaire par un intervenant. | Clientèle: personnes à risque d'itinérance ou en situation d'itinérance Capacité: 29 chambres | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "moncheznousinc.ca/solutions-personne-seule",
+    "address": "167, rue de la Canipco, Gatineau, Outaouais, QC, J8P 4A9",
+    "hours": "bureau: lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "mon-chez-nous-projet-saines-habi-out",
+    "name": "Mon Chez Nous - Projet Saines Habitudes De Vie (Le)",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "343 202-5580",
+    "description": "Logements de transition pour personnes à risque d'itinérance ou en situation d'itinérance.* Hébergement d'une durée maximale de 5 ans.* Soutien communautaire par un·e intervenant·e. | Clientèle: personnes à risque d'itinérance ou en situation d'itinérance Capacité: 30 appartements | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "moncheznousinc.ca/solutions-personne-seule",
+    "address": "808, boulevard Maloney Est, Gatineau, Outaouais, QC, J8P 0J8",
+    "hours": "bureau: lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "mon-chez-nous-projet-saint-antoi-out",
+    "name": "Mon Chez Nous - Projet Saint-Antoine",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "343 202-6471",
+    "description": "Logements de transition pour les personnes à risque d'itinérance ou en situation d'itinérance.* Hébergement d'une durée de 3 mois.* Soutien communautaire par un·e intervenant·e.* Services alimentaires: 8 repas congelés par semaine sont offerts. | Clientèle: personnes à risque d'itinérance ou en situation d'itinérance Capacité: 14 chambres | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "moncheznousinc.ca/solutions-personne-seule",
+    "address": "793, boulevard Maloney Est, Gatineau, Outaouais, QC, J8P 1G5",
+    "hours": "bureau: dimanche au samedi 8h00 à 20h00"
+  },
+  {
+    "id": "mon-chez-nous-inc-out",
+    "name": "Mon Chez Nous Inc.",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 669-6032",
+    "description": "Logements sociaux à prix modiques et abordables pour personnes seules, étudiant·e·s et familles.* Logements permanents ou transitoires.* Soutien communautaire en habitation: accueil, référence, accompagnement, défense des droits, gestion des conflits, etc. | Clientèle: personnes seules et familles ayant un faible revenu, personnes vivant en situation d'itinérance ou à risque de le devenir, étudiant·e·s âgé·e·s entre 18 et 30 ans | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "moncheznousinc.ca",
+    "address": "808, boulevard Maloney Est, Gatineau, Outaouais, QC, J8P 0J8",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "cpe-pw1",
     "name": "Mon Enfant – Liste d'attente CPE",
     "category": "family",
@@ -23472,6 +27546,57 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Inscription via portail 24h/24. Bureau: lun-ven 7h30-17h",
     "isProvinceWide": true
+  },
+  {
+    "id": "mont-d-or-le-out",
+    "name": "Mont D'Or (Le)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Fort-Coulonge",
+    "province": "QC",
+    "phone": "819 683-5552",
+    "description": "Maintien à domicile.* Gardiennage.* Entretien ménager.* Préparation de repas.* Aide aux courses.* Accompagnement aux sorties et aux rendez-vous.* Système d'alarme d'urgences médicales. | Clientèle: personnes aînées, personnes de 18 ans et plus en perte d'autonomie | Territoire: MRC Pontiac, municipalité de Pontiac | Statut: organisme à but non lucratif",
+    "address": "533, rue Baume, Fort-Coulonge, Outaouais, QC, J0X 1V0",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "montcerf-lytton-municipalit-out",
+    "name": "Montcerf-Lytton - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Montcerf-Lytton",
+    "province": "QC",
+    "phone": "819 449-4578",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles:www.montcerf- lytton.com/fr/calendrier/calendrier-des-collectes* Écocentre.* Frigo anti-gaspi.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Montcerf-Lytton | Statut: organisme municipal",
+    "website": "www.montcerf-lytton.com",
+    "address": "18, rue Principale Nord, Montcerf-Lytton, Outaouais, QC, J0W 1N0",
+    "hours": "lundi et mardi 8h00 à 12h00 et 13h00 à 16h00, mercredi 8h00 à 12h00 et 13h00 à 18h00, jeudi 8h00 à 12h00 et 13h00 à 16h00, vendredi 8h00 à 13h00"
+  },
+  {
+    "id": "montebello-municipalit-out",
+    "name": "Montebello - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Montebello",
+    "province": "QC",
+    "phone": "819 423-5123",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles:www.montebello.ca/fr/calendrier-des-collectes* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système d'appels automatisés d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Montebello | Statut: organisme municipal",
+    "website": "www.montebello.ca",
+    "address": "550, rue Notre-Dame, Montebello, Outaouais, QC, J0V 1L0",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "montpellier-municipalit-out",
+    "name": "Montpellier - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Montpellier",
+    "province": "QC",
+    "phone": "819 428-3663",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.montpellier.ca/publication/calendrier-des-collectes* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Montpellier | Statut: organisme municipal",
+    "website": "www.montpellier.ca",
+    "address": "4, rue du Bosquet, Montpellier, Outaouais, QC, J0V 1M0",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "mouvement-d-education-populaire-aut-jol",
@@ -23609,6 +27734,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
+    "id": "mulgrave-et-derry-municipalit-out",
+    "name": "Mulgrave-Et-Derry - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 986-9519",
+    "description": "Gestion des services municpaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.mulgrave- derry.ca/services/?id=6#contn * Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système d'appels automatisés d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèque municipale.* Location de salles. | Clientèle: grand public | Territoire: Mulgrave-Et-Derry | Statut: organisme municipal",
+    "website": "www.mulgrave-derry.ca",
+    "address": "560, avenue de Buckingham, Gatineau, Outaouais, QC, J8L 2H1",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00, biblothèque: mercredi 14h00 à 17h00, samedi 9h00 à 12h00"
+  },
+  {
     "id": "nt-mcss",
     "name": "Multi-Cultural Centre NWT",
     "category": "immigration",
@@ -23633,6 +27771,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.multicaf.org",
     "address": "6540, boul. Décarie, Montréal, QC H3X 2S1",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Apporter pièce identité et preuve de résidence."
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-po-out",
+    "name": "Municipalité Régionale De Comté Pontiac",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "819 648-5689",
+    "description": "Mise en vigueur d'un schéma d'aménagement applicable à l'ensemble de son territoire.* Paiement d'un constat d'infraction: www.mrcpontiac.qc.ca/residents/payer-une-amende* Vente de propriétés suite à un défaut de paiment des taxes. | Clientèle: grand public | Territoire: MRC Pontiac | Statut: organisme municipal",
+    "website": "mrcpontiac.qc.ca",
+    "address": "602, route 301 Nord, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "drum-garde-mylene-duff",
@@ -23684,6 +27835,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.nwthc.gov.nt.ca",
     "address": "5102 50 Ave, Yellowknife, NT X1A 3S8",
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
+  },
+  {
+    "id": "naissance-renaissance-outaouais-out",
+    "name": "Naissance-Renaissance Outaouais",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-4499",
+    "description": "Soutien aux parents durant la période entourant la naissance.* Information, référence et sensibilisation.* Cours prénataux.* Accompagnement à la naissance: suivi durant la grossesse et suivi postnatal.* Soutien individualisé par une marraine d'allaitement.* Location et vente de tire-lait.* Relevailles: soutien d'une assistante postnatale.* Groupes de soutien pour les femmes vivant une dépression post-partum.* Halte alliance.* Centre de documentation et prêt de livres.* Rencontre avec une consultante en lactation. | Clientèle: parents qui attendent un enfant, parents et leur nouveau-né, parents en deuil périnatal | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.nroutaouais.ca",
+    "address": "101, avenue Gatineau, porte B, Gatineau, Outaouais, QC, J8T 4J4",
+    "hours": "lundi au jeudi 9h00 à 15h30, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "namur-municipalit-out",
+    "name": "Namur - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Boileau",
+    "province": "QC",
+    "phone": "819 426-2457",
+    "description": "Gestion des services municpaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.namur.ca/nouvelles/calendrier-2024-ordures-et-recyclages * Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Namur | Statut: organisme municipal",
+    "website": "www.namur.ca",
+    "address": "996, rue du Centenaire, Boileau, Outaouais, QC, J0V 1N0",
+    "hours": "lundi au jeudi 9h00 à 16h00, bibliothèque: mardi 18h00 à 20h00, jeudi 18h30 à 20h00"
   },
   {
     "id": "tr-garde-nancy",
@@ -23747,6 +27924,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://nlhealthservices.ca",
     "address": "300 Prince Philip Dr, St. John's, NL A1B 3V6",
     "hours": "Lun-ven 8h30-16h30. Pour urgence: 811 (Info-Santé) ou urgence hospitalière."
+  },
+  {
+    "id": "notre-dame-de-bonsecours-municip-out",
+    "name": "Notre-Dame-De-Bonsecours - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Montebello",
+    "province": "QC",
+    "phone": "819 423-5575",
+    "description": "Gestion des services municpaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.ndbonsecours.com/services-aux-citoyens/collecte-des-dechets-and-recyclage * Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système d'alerte d'urgence.* Loisirs et culture: activités, camp de jour, etc.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Notre-Dame-de-Bonsecours | Statut: organisme municipal",
+    "website": "www.ndbonsecours.com",
+    "address": "1, chemin de l'Hôtel-de-ville, Montebello, Outaouais, QC, J0V 1L0",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h00, vendredi: sur rendez-vous seulement"
+  },
+  {
+    "id": "notre-dame-de-la-paix-municipali-out",
+    "name": "Notre-Dame-De-La-Paix - Municipalité",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Notre-Dame-De-La-Paix",
+    "province": "QC",
+    "phone": "819 522-6610",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.notredamedelapaix.qc.ca/environnement* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Telmatik: service d'alerte à la population.* Service de sécurité incendie.* Loisirs et culture: activités, camp de jour.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Notre-Dame-De-La-Paix | Statut: organisme municipal",
+    "website": "www.notredamedelapaix.qc.ca",
+    "address": "267, rue Notre-Dame, Notre-Dame-De-La-Paix, Outaouais, QC, J0V 1P0",
+    "hours": "lundi à jeudi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "notre-dame-de-la-salette-municip-out",
+    "name": "Notre-Dame-De-La-Salette - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Notre-Dame-De-La-Salette",
+    "province": "QC",
+    "phone": "819 766-2533",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles:www.muni- ndsalette.qc.ca/services/?id=19#contn * Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Système d'alerte telmatik.* Loisirs et culture: centre sportif, activités, camp de jour.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Notre-Dame-De-La-Salette | Statut: organisme municipal",
+    "website": "www.muni-ndsalette.qc.ca",
+    "address": "45, rue des Saules, Notre-Dame-De-La-Salette, Outaouais, QC, J0X 2L0",
+    "hours": "lundi à jeudi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "nourri-source-lanaudiere-msc",
@@ -23932,6 +28148,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "site fixe: mercredi et jeudi 14h00 à 20h00, rendez-vous: mardi au jeudi sur appel, livraison de matériel de consommation: jeudi 13h00 à 18h00, unité mobile: mardi au jeudi"
   },
   {
+    "id": "oeuvres-isidore-ostiguy-les-out",
+    "name": "Oeuvres Isidore Ostiguy (Les)",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 778-1325",
+    "description": "Aide et soutien au logement pour les familles.* Logements d'urgence d'une durée d'occupation de quelques semaines à plusieurs mois.* Appartements de transition.* Accompagnement et soutien.* Évaluation psychosociale.* Aide personnalisée à la recherche d'un logement. * Suivi post-placement. | Clientèle: familles à faible revenu avec enfants et en difficulté au niveau du logement ou à la rue Capacité: 30 lits | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "loio.ca",
+    "address": "95, rue Lois, Gatineau, Outaouais, QC, J8Y 3R5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "oeuvres-isidore-ostiguy-les-le-t-out",
+    "name": "Oeuvres Isidore Ostiguy (Les) - Le Tremplin",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 778-1325",
+    "description": "Appartements de transition pour familles monoparentales.* Durée d'occupation allant jusqu'à 5 ans.* Soutien communautaire. | Clientèle: personnes avec au moins un enfant ayant un objectif de retour sur le marché du travail ou de retour aux études | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "loio.ca",
+    "address": "149, rue Fernand-Arvisais, Gatineau, Outaouais, QC, J8P 4Y8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "oeuvres-isidore-ostiguy-les-loge-out",
+    "name": "Oeuvres Isidore Ostiguy (Les) - Logemen'Occupe",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 246-6644",
+    "description": "Logement de transition subventionné pour familles en situation d'itinérance.* Durée d'hébergement de 0 à 6 mois.* Logement meublé.* Soutien communautaire pour le relogement. | Clientèle: personnes en situation d'itinérance avec un enfant de 17 ans et moins | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "loio.ca",
+    "address": "10, rue Curé-André-Préseault, Gatineau, Outaouais, QC, J8T 6N8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "oeuvres-de-galilee-les-trb",
     "name": "Oeuvres de Galilée (les)",
     "category": "food",
@@ -23943,6 +28198,71 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.galileeterrebonne.com",
     "address": "766, rue Léopold-Lachapelle, Terrebonne, Lanaudière, QC, J6W 2T9",
     "hours": "dépannage alimentaire: lundi, mercredi et jeudi 13h00 à 16h00, groupe de discussion ou cuisine collective: lundi"
+  },
+  {
+    "id": "office-d-habitation-de-l-outaoua-out",
+    "name": "Office D'Habitation De L'Outaouais",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 568-0033",
+    "description": "Gestion et administration des logements et des programmes d'habitation de l'Outaouais.* Habitations à loyer modique (HLM).* Programme de supplément au loyer (PSL).* Logement abordable Québec (LAQ).* Service de référence.* Programme Accès Logis Québec. | Clientèle: personnes seules, personnes aînées et familles avec un faible revenu ou un revenu modéré Capacité: 4328 logements | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.ohoutaouais.ca",
+    "address": "649, boulevard de la Gappe, Gatineau, Outaouais, QC, J8T 8G1",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 15h30, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "office-d-habitation-du-pontiac-out",
+    "name": "Office D'Habitation Du Pontiac",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "873 863-8666",
+    "description": "Gérer et administrer les logements et les programmes d'habitation.* Habitations à loyer modique (HLM).* Programme de supplément au loyer (PSL). | Clientèle: personnes aînées à faible revenu Capacité: 121 logements | Territoire: MRC Pontiac | Statut: organisme à but non lucratif",
+    "website": "www.habitation.gouv.qc.ca",
+    "address": "1226B, route 148, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "lundi et mardi 8h00 à 16h00, jeudi 8h00 à 16h00"
+  },
+  {
+    "id": "office-de-la-propri-t-intellectu-out",
+    "name": "Office De La Propriété Intellectuelle Du Canada",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 866 997-1936",
+    "description": "Organisme de service spécial au sein du ministère de l'Innovation, des Sciences et du Développement économique.* Administration et traitement des demandes de propriété intellectuelle: marques de commerce, brevets, droit d'auteur, dessins industriels et topographies de circuits intégrés. | Territoire: Canada | Statut: organisme du gouvernement fédéral",
+    "website": "www.ic.gc.ca/eic/site/cipointernet-internetopic.nsf/fra/accueil",
+    "address": "50, rue Victoria, bureau C-229, Gatineau, Outaouais, QC, K1A 0C9",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "office-municipal-d-habitation-de-out",
+    "name": "Office Municipal D'Habitation De Maniwaki-Gracefield",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 449-4556",
+    "description": "Gérer et administrer les logements et les programmes d'habitation.* Habitations à loyer modique (HLM).* Programme de supplément au loyer (PSL).* Logement abordable Québec (LAQ).* Service de référence.* Programme Accès Logis Québec. | Clientèle: personnes âgées et familles avec un faible revenu Capacité: 138 logements | Territoire: Vallée de la Gatineau | Statut: None or unknown",
+    "website": "www.habitation.gouv.qc.ca",
+    "address": "180, boulevard Desjardins, Maniwaki, Outaouais, QC, J9E 2E2",
+    "hours": "lundi au vendredi 13h00 à 16h00"
+  },
+  {
+    "id": "office-municipal-d-habitation-de-out-2",
+    "name": "Office Municipal D'Habitation De Montebello",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Montebello",
+    "province": "QC",
+    "phone": "819 664-5510",
+    "description": "Gérer et administrer les logements et les programmes d'habitation.* Habitations à loyer modique (HLM).* Programme de supplément au loyer (PSL).* Logement abordable Québec (LAQ).* Service de référence.* Programme Accès Logis Québec. | Clientèle: personnes âgées à faible revenu Capacité: 15 logements | Territoire: Montebello | Statut: organisme parapublic",
+    "website": "www.habitation.gouv.qc.ca",
+    "address": "230, rue Saint-Henri, Montebello, Outaouais, QC, J0V 1L0",
+    "hours": "Voir site web"
   },
   {
     "id": "office-municipal-d-habitation-de-l-lep",
@@ -24152,6 +28472,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Hébergement d'urgence 24h/24. Présentation directe ou appel."
   },
   {
+    "id": "option-femmes-out",
+    "name": "Option Femmes",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 246-1725",
+    "description": "Aide à l'emploi personnalisé pour femmes.* Soutien et accompagnement.* Bilan de compétences: durée de 4 semaines, aide à la recherche d'emploi, retour aux études, etc.* Programme préparatoire à l'emploi: durée de 11 semaines, aide à la recherche d'emploi, retour aux études, exploration des métiers traditionnellement masculins.* Salles d'ordinateurs avec internet. | Clientèle: femmes de 18 ans et plus avec un statut de résidente permanent ou citoyennes canadiennes | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.optionfemmes.ca",
+    "address": "365, boulevard Gréber, bureau 203, Gatineau, Outaouais, QC, J8T 5R3",
+    "hours": "lundi au vendredi 8h30 à 16h30, un mercredi sur deux 8h30 à 20h30"
+  },
+  {
     "id": "organisation-de-la-communaute-anglo-rwd",
     "name": "Organisation de la Communauté Anglophone de Lanaudière",
     "category": "social",
@@ -24267,6 +28600,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Pour urgence: 811 (Info-Santé) ou urgence hospitalière."
   },
   {
+    "id": "otter-lake-municipalit-out",
+    "name": "Otter Lake - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Otter Lake",
+    "province": "QC",
+    "phone": "819 453-7049",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Gestion des matières résiduelles.* Station de recyclage et de compostage: www.otterlakequebec.ca/fr/transfer-station * Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: centre sportif, activités, camp de jour.* Bibliothèque municipale.?* Location de salles. | Clientèle: grand public | Territoire: Otter Lake | Statut: organisme municipal",
+    "website": "www.otterlakequebec.ca/fr",
+    "address": "15, avenue Palmer, Otter Lake, Outaouais, QC, J0X 2P0",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-clsc-ouje-bougoumou-ouje-bougoumou-healing-centre",
     "name": "Ouje-Bougoumou Healing Centre",
     "category": "health",
@@ -24345,6 +28691,44 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "pain-quotidien-le-out",
+    "name": "Pain Quotidien (Le)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 306-0562",
+    "description": "* Distribution de paniers d'épicerie.* Paniers de Noël pour les membres. | Clientèle: personnes à faible revenu Capacité: 25 personnes par jour | Territoire: Maniwaki | Statut: organisme à but non lucratif",
+    "address": "128, rue du Christ-Roi, Maniwaki, Outaouais, QC, J9E 2C9",
+    "hours": "3 mardis et 3 mercredis durant le mois de 9h30 à 10h45."
+  },
+  {
+    "id": "palais-de-justice-de-campbell-s--out",
+    "name": "Palais De Justice De Campbell'S Bay",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "1 877 648-5222",
+    "description": "Administration des services judiciaires de Campbell's Bay.Couple et famille* Adoption.* Curatelle et tutelle.* Évaluation psychiatrique et garde en établissement.* Mariage et union civile.* Médiation familiale.* Pension alimentaire.* Séparation et divorce.Tribunaux* Chambre civile.* Chambre criminelle et pénale.* Directeur des poursuites criminelles et pénales.* Poursuite criminelle.* Poursuite pénale.Jeunes* Chambre de la jeunesse.* Dossier jeunesse.* Poursuite d'un jeune.Argent et biens* Amende.* Dépôt volontaire.* Faillite.* Saisie.* Testament.Différends* Poursuite aux petites créances (demande de moins de 15 000 $).* Poursuite civile (demande de 15 000 $ ou plus).* Étapes à suivre pour déposer une demande aux petites créances: www.quebec.ca/justice-et-etat-civil/petites-creances/poursuivre/etapes-demande * Médiation aux petites créances (obligatoire pour les dossiers de 5000$ et moins).* Arbitrage.Services* Cour du Québec.* Cour supérieure.* Jurés.* Publicité des droits.* Service à la clientèle.* Services financiers. | Clientèle: grand public | Territoire: district judiciaire de Pontiac | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-campbells- bay",
+    "address": "30, rue John, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "palais-de-justice-de-gatineau-out",
+    "name": "Palais De Justice De Gatineau",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-8110",
+    "description": "Administration des services judiciaires de Gatineau.Couple et famille* Curatelle et tutelle.* Mariage et union civile.* Médiation familiale.* Séparation et divorce.Tribunaux* Chambre civile.* Chambre criminelle et pénale.* Directeur des poursuites criminelles et pénales.* Probation.Jeunesse* Chambre de la jeunesse.Argent et biens* Amende.* Dépôt volontaire.* Faillite.* Testament.Différends* Petites créances (demande de moins de 15 000$).* Étapes à suivre pour déposer une demande aux petites créances: www.quebec.ca/justice-et-etat- civil/petites-creances/poursuivre/etapes-demande * Médiation aux petites créances (obligatoire pour les dossiers de 5000$ et moins).* Arbitrage.Services* Cour du Québec.* Cour supérieure.* Jurés.* Publicité des droits.* Services financiers.* Vente immeubles. | Clientèle: grand public | Territoire: district judiciaire de Gatineau | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-gatineau",
+    "address": "17, rue Laurier, Gatineau, Outaouais, QC, J8X 4C1",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "palais-de-justice-de-laval-lav",
     "name": "Palais De Justice De Laval",
     "category": "social",
@@ -24383,6 +28767,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "papineauville-municipalit-out",
+    "name": "Papineauville - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Papineauville",
+    "province": "QC",
+    "phone": "819 427-5511",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles:www.papineauville.ca/fr/services-aux-citoyens/service-de-lenvironnement/gestion-des-matieres- residuelles* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Service d'alerte Telmatik pour les avis d'ébullition, bris d'aqueduc, travaux urgents et mesures d'urgence: www.papineauville.ca/fr/services-aux-citoyens/systeme-dalerte-citoyen-telmatik* Loisirs et culture: centre sportif, activités, camp de jour.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Papineauville | Statut: organisme municipal",
+    "website": "www.papineauville.ca",
+    "address": "188, rue Jeanne-d'Arc, bureau 100, Papineauville, Outaouais, QC, J0V 1R0",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h00, sur rendez-vous: vendredi"
+  },
+  {
     "id": "parenfants-de-mascouche-maison-de-l-msc",
     "name": "Parenfants de Mascouche - Maison de la Famille",
     "category": "social",
@@ -24407,6 +28804,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "laparenteledelaval.com",
     "address": "196, 7e Avenue, Laval-des-Rapides, Laval, QC, H7N 4J6",
     "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "parkinson-outaouais-out",
+    "name": "Parkinson Outaouais",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "873 660-1221",
+    "description": "Ligne téléphonique d'information, soutien et référence pour personnes atteintes de la maladie de Parkinson et leurs personnes proches aidantes.* Soutien individuel. * Groupes d'entraide et de soutien mensuels, fermés, animés par une intervenante, 6 à 8 personnes.* Activités physiques et artistiques: aquaforme, boxe, exercices en virtuel, danse, Qi Gong, renforcement musculaire, club de marche, pickleball, peinture. * Activités sociales: café-rencontre mensuel, pique-nique, cabane à sucre, club de lecture, souper de Noël, dîners. * Conférences et ateliers: déplacements sécuritaires, nutrition, gestion du stress, dernières recherches sur la maladie, automassage et aide médicale à mourir. | Clientèle: personnes atteintes de la maladie de Parkinson et leurs proches aidant·e·s | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "parkinsonoutaouais.com",
+    "address": "160, boulevard de l'Hôpital, bureau 50, Gatineau, Outaouais, QC, J8T 8J1",
+    "hours": "lundi au vendredi 9h00 à 16h30"
   },
   {
     "id": "parrainage-civique-lanaudiere-point-jol",
@@ -24540,6 +28950,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "patrimoine-canadien-out",
+    "name": "Patrimoine Canadien",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 866 811-0055",
+    "description": "Exerce des responsabilités gouvernementales en matière de préservation du patrimoine et de promotion de la vie culturelle.* Assistance technique et financière au secteur culturel (arts de la scène, festivals, musées) et aux groupes minoritaires (anglophones, ethnoculturels et femmes autochtones). | Territoire: Canada | Statut: organisme du gouvernement fédéral",
+    "website": "www.canada.ca/fr/patrimoine-canadien.html",
+    "address": "15, rue Eddy, Gatineau, Outaouais, QC, K1A 0M5",
+    "hours": "lundi au vendredi 7h30 à 18h30"
+  },
+  {
+    "id": "patro-fort-coulonge-mansfield-out",
+    "name": "Patro Fort-Coulonge / Mansfield",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Davidson",
+    "province": "QC",
+    "phone": "819 683-3347",
+    "description": "Centre communautaire et de plein air.* Activités sportives, culturelles, parascolaires, sociales et artisanales.* Location d'équipement sportif: vélos, skis de fond, kayaks, etc.* Locations de chalets.* Camp de jour. | Clientèle: grand public, camp de jour: jeunes de 4 à 10 ans Capacité: 100 | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "lepatro.org",
+    "address": "209, chemin de la Passe, Davidson, Outaouais, QC, J0X 1R0",
+    "hours": "lundi au vendredi 8h00 à 16h00, animation estivale: samedi 10h00 à 14h00"
+  },
+  {
     "id": "qc-food-quebec-pep",
     "name": "Patro Roc-Amadour – Aide alimentaire Québec",
     "category": "food",
@@ -24668,6 +29104,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "centre: 24 heures, 7 jours,"
   },
   {
+    "id": "pepper-pod-le-out",
+    "name": "Pepper Pod (Le)",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Chelsea",
+    "province": "QC",
+    "phone": "819 319-8000",
+    "description": "Centre de ressources pour les vétéranes. * Programme Lifeshops: retraite d'une fin de semaine offrant du soutien et des ressources pour les femmes effectuant la transition entre la vie militaire et la vie civile ou qui s'apprêtent à le faire.* Au-delà du traumatisme: retraite d'une journée pour les femmes ayant vécu un traumatisme sexuel.* Fins de semaine sans horaire: programme libre.* Mercredi Femmes Fortes: causeries avec différentes invitées sur plusieurs sujets touchant les vétéranes. | Clientèle: femmes vétéranes, femmes membres des Forces armées canadiennes, femmes de la Gendarmerie royale du Canada | Territoire: Canada | Statut: organisme à but non lucratif",
+    "website": "pepperpod.ca/fr/",
+    "address": "35, chemin Nordik, Chelsea, Outaouais, QC, J9B 2P7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "perspective-carri-re-lav",
     "name": "Perspective Carrière",
     "category": "social",
@@ -24744,6 +29193,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://laclef-perspectives.com",
     "address": "500, boulevard des Seigneurs, bureau 2, Terrebonne, Lanaudière, QC, J6W 1T3",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "petits-fr-res-les-gatineau-out",
+    "name": "Petits Frères (Les) - Gatineau",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 307-1557",
+    "description": "Organisme visant à contrer l'isolement des personnes aînées jusqu'à la fin de leur vie.* Accompagnement et jumelage avec des bénévoles. | Clientèle: personnes aînées de 75 ans et plus sans famille présente ou contact social significatif | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "petitsfreres.ca/trouver-une-region/gatineau",
+    "address": "180, boulevard Mont-Bleu, local 215, Gatineau, Outaouais, QC, J8Z 3J5",
+    "hours": "Voir site web"
   },
   {
     "id": "petits-fr-res-les-laval-lav",
@@ -24823,6 +29285,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
+    "id": "plaisance-municipalit-out",
+    "name": "Plaisance - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Plaisance",
+    "province": "QC",
+    "phone": "819 427-5363",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles:www.ville.plaisance.qc.ca/services-municipaux/matieres-residuelles* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: centre sportif, activités, camp de jour.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Plaisance | Statut: organisme municipal",
+    "website": "www.ville.plaisance.qc.ca",
+    "address": "275, rue Principale, Plaisance, Outaouais, QC, J0V 1S0",
+    "hours": "lundi à jeudi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "pleins-droits-de-lanaudiere-jol",
     "name": "Pleins Droits de Lanaudière",
     "category": "social",
@@ -24873,6 +29348,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.pointe-claire.ca/",
     "address": "451, boulevard Saint-Jean, Pointe-Claire, Montréal, QC, H9R 3J3",
     "hours": "lundi au vendredi 8h30 à 16h30, été: lundi au jeudi 8h00 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "pontiac-municipalit-out",
+    "name": "Pontiac - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Luskville",
+    "province": "QC",
+    "phone": "1 888 455-2401",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières: www.municipalitepontiac.com/collecte-des-matieres-residuelles* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: centre sportif, activités, camp de jour.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Pontiac | Statut: organisme municipal",
+    "website": "www.municipalitepontiac.com",
+    "address": "2024, route 148, Luskville, Outaouais, QC, J0X 2G0",
+    "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
     "id": "popote-roulante-rive-nord-rep",
@@ -24963,6 +29451,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "portage-du-fort-municipalit-out",
+    "name": "Portage-Du-Fort - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Portage-Du-Fort",
+    "province": "QC",
+    "phone": "819 647-2767",
+    "description": "Gestion des services municipaux.* Services d'urbanisme et émission de permis.* Gestion des matières résiduelles.* Développement culturel et communautaire.* Service d'incendie. | Clientèle: grand public | Territoire: Portage-Du-Fort | Statut: organisme municipal",
+    "website": "www.portage-du-fort.com",
+    "address": "24, rue de l'Église, Portage-Du-Fort, Outaouais, QC, J0X 2T0",
+    "hours": "mercredi et jeudi 8h30 à 16h00, jeudi 8h00 à 13h00"
+  },
+  {
     "id": "qc-refuge-qc-portail",
     "name": "Portail de Québec – Hébergement urgence",
     "category": "housing",
@@ -24974,6 +29475,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://portaildequebec.org",
     "address": "1625, rue Charest Ouest, Québec, QC G1N 2G1",
     "hours": "Hébergement d'urgence 24h/24. Présentation directe ou appel."
+  },
+  {
+    "id": "poste-de-transbordement-out",
+    "name": "Poste De Transbordement",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Val-Des-Monts",
+    "province": "QC",
+    "phone": "",
+    "description": "Site de réemploi et récupération des matières résiduelles.* Grilletarifaire: www.mrcdescollinesdeloutaouais.qc.ca/nos-services/environnement/#poste-transbordement | Clientèle: grand public | Territoire: MRC les Collines-de-l'Outaouais | Statut: organisme municipal",
+    "website": "mrcdescollinesdeloutaouais.qc.ca/nos-services/environnement/#poste-transbordement",
+    "address": "28, chemin La pêche, Val-Des-Monts, Outaouais, QC, J8N 4A6",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "potagers-communautaires-de-repentig-rep",
@@ -25342,6 +29856,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "rapides-des-joachims-municipalit-out",
+    "name": "Rapides-Des-Joachims - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Rapides-Des-Joachims",
+    "province": "QC",
+    "phone": "613 586-2532",
+    "description": "Gestion des services municpaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture.* Location de salles. | Clientèle: grand public | Territoire: Rapides-Des-Joachims | Statut: organisme municipal",
+    "website": "municipalites-du-quebec.ca/rapides-des-joachims",
+    "address": "48, rue de l'Église, Rapides-Des-Joachims, Outaouais, QC, J0X 3M0",
+    "hours": "lundi 13h00 à 16h00, mardi et mercredi 9h00 à 12h00 et 13h00 à 16h00, jeudi 11h00 à 17h00"
+  },
+  {
+    "id": "re-source-int-gration-out",
+    "name": "Re-Source Intégration",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 663-9908",
+    "description": "Centres de travail adapté pour personnes ayant un handicap.* Emplois et services dans les domaines de l'assemblage, de l'emballage, de l'équiquetage et du recyclage.* La Source des Aubaines: emplois au Centre de liquidation de la région.* Sensibilisation de la population et des organisations à l'intégration des personnes ayant un handicap au milieu du travail. | Clientèle: personnes vivant avec une déficience intellectuelle, une limitation physique ou un trouble de santé mentale, organismes, entreprises | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.resourceintegration.ca",
+    "address": "312, rue Saint-Louis, Gatineau, Outaouais, QC, J8P 8B3",
+    "hours": "lundi au vendredi 8h00 à 16h30"
+  },
+  {
     "id": "refuge-de-laval-le-lav",
     "name": "Refuge De Laval (Le)",
     "category": "housing",
@@ -25404,6 +29944,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.reginafoodbank.ca",
     "address": "1440 Scarth St, Regina, SK S4R 2E9",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
+  },
+  {
+    "id": "regroupement-des-associations-de-out",
+    "name": "Regroupement Des Associations De Personnes Handicapées De L'Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-0535",
+    "description": "Défense des droits et promotion des intérêts des personnes vivant avec un handicap physique, intellectuel ou avec l'autisme et les personnes proches aidantes.* Accueil et références.* Évènements de sensibilisation.* Tables de concertation entre organismes.* Sensibilisation de la réalité des personnes handicapées auprès des instances gouvernentales.* Répertoire en ligne des ressources. | Clientèle: personnes vivant avec un handicap (physique, intellectuel, autisme), personnes proches aidantes, organismes oeuvrant auprès des personnes vivant avec un handicap | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.rapho.org",
+    "address": "115, boulevard Sacré-Coeur, bureau 210, Gatineau, Outaouais, QC, J8X 1C5",
+    "hours": "lundi au vendredi 10h00 à 18h00"
   },
   {
     "id": "regroupement-lavallois-pour-la-r-lav",
@@ -25471,6 +30024,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Défense des droits et services spécialisés."
   },
   {
+    "id": "rehabex-campbell-s-bay-out",
+    "name": "Rehabex - Campbell'S Bay",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "1 844 664-8757",
+    "description": "Services personnalisés aux personnes judiciarisées dans leurs démarches de réinsertion sociale, pour trouver un emploi, retourner aux études et faire une demande de pardon.* Orientation professionnelle ou scolaire.* Aide pour le retour aux études.* Aide à la recherche d'emploi: initiation aux méthodes et techniques de recherche d'emploi, initiation à l'utilisation d'internet, rédaction de curriculum vitae et de lettre de présentation, simulation d'entrevues, accès à une banque d'employeurs.* Référence à différents programmes, organismes et employeurs.* Suivi en emploi et médiation entre employeur et employé lors d'un conflit.* Information sur les impacts du dossier judiciaire.* Accompagnement pour les demandes de suspension de casier judiciaire (pardon).* Programme de recrutement gratuit pour les employeurs.* Aide alimentaire pour les usagers dans le besoin, en partenariat avec une banque alimentaire. | Clientèle: personnes judiciarisées, avec ou sans casier judiciaire, de plus de 18 ans sauf exception | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "rehabex.ca/fr",
+    "address": "1290, route 148, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 14h00"
+  },
+  {
+    "id": "rehabex-maniwaki-out",
+    "name": "Rehabex - Maniwaki",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "1 844 284-0066",
+    "description": "Services personnalisés aux personnes judiciarisées dans leurs démarches de réinsertion sociale, pour trouver un emploi, retourner aux études et faire une demande de pardon.* Orientation professionnelle ou scolaire.* Aide pour le retour aux études.* Aide à la recherche d'emploi: initiation aux méthodes et techniques de recherche d'emploi, initiation à l'utilisation d'internet, rédaction de curriculum vitae et de lettre de présentation, simulation d'entrevues, accès à une banque d'employeurs.* Référence à différents programmes, organismes et employeurs.* Suivi en emploi et médiation entre employeur et employé lors d'un conflit.* Information sur les impacts du dossier judiciaire.* Accompagnement pour les demandes de suspension de casier judiciaire (pardon).* Programme de recrutement gratuit pour les employeurs.* Aide alimentaire pour les usagers dans le besoin, en partenariat avec une banque alimentaire. | Clientèle: personnes judiciarisées, avec ou sans casier judiciaire, de plus de 18 ans sauf exception | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "rehabex.ca/fr",
+    "address": "270, rue Notre-Dame, Maniwaki, Outaouais, QC, J9E 2J8",
+    "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 14h00"
+  },
+  {
     "id": "relais-communautaire-de-laval-lav",
     "name": "Relais Communautaire De Laval",
     "category": "social",
@@ -25521,6 +30100,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.relaismascouche.org",
     "address": "815 rue Bombardier, unité 5, Mascouche, Lanaudière, QC, J7K 3E6",
     "hours": "dépannage alimentaire: lundi au jeudi"
+  },
+  {
+    "id": "relance-la-out",
+    "name": "Relance (La)",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-6444",
+    "description": "Centre d'aide à l'emploi.Club de recherche d'emploi 35 ans et plus* Formation de groupe de 4 à 6 semaines et un accompagnement individuel jusqu'à 12 semaines.* Rédaction d'un CV.* Simulation d'entrevues.* Stratégie de recherche d'emploi et de communication.* Recherche d'emploi accompagnée.Stratégie de recherche d'emploi* Rencontres individuelles ou de groupe d'une durée de 4 jours.* Mise à jour des stratégies et des outils de recherche d'emploi.* Simulations d'entrevues, rédaction de CV et lettre de présentation.* Accompagnement par une personnes conseillière pour une durée de 4 semaines à la fin du programme.Service spécialisé et soutien structuré pour personnes handicapées* Consultations individuelles.* Aide à la recherche d'emploi.* Intégration professionnelle et suivi.* Maintien en emploi.Service évolution pour les hommes de 35 ans et plus* Interventions individuelles d'une durée de 3 à 6 mois.* Accompagnement personnalisé dans la recherche et l'intégration en emploi.* Développement des compétences, activités de connaissance de soi.* Maintien en emploi.Services aux travailleurs expérimentés de 60 ans et plus* Évaluation des besoins et bilan de compétences.* Mise à jour du CV.* Développement de compétences transférables.* Recherche d'emploi accompagnée.* Échange d'expérience et d'expertise.Service aux entreprises* Soutien dans le recrutement de personnel.* Accompagnement personnalisé.* Conseils et formations.Programme Entreprises d'insertion* Stage rémunéré de 700 heures dans l'une des entreprises de La Relance: Hebdo Ménage, Service technologique La Relance, Transport La Relance ou dans les boutiques de notre partenaire Renaissance.* Programme pour les personnes éloignées du marché du travail qui ont de la difficulté à obtenir ou maintenir un emploi.* Développement de compétences techniques menant à une certification en métier semi-spécialisé et accompagnement individuel pour le développement de compétences socioprofessionnelles.Programme Ordinateur pour les écoles* Stage rémunéré d'environ 8 mois au Service technologique La Relance pour jeunes diplômés de 30 ans ou moins ayant des compétences et connaissance en informatique. | Clientèle: personnes de 16 ans et plus à la recherche d'un emploi | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "larelance.ca",
+    "address": "270, boulevard des Allumettières, Gatineau, Outaouais, QC, J8X 1N3",
+    "hours": "Centre-conseil: lundi au vendredi 8h30 à 16h30, STLR: lundi au vendredi 7h30 à 15h30"
+  },
+  {
+    "id": "relations-couronne-autochtones-e-out",
+    "name": "Relations Couronne-Autochtones Et Affaires Du Nord Canada",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 567-9604",
+    "description": "Exercice des responsabilités gouvernementales en matière de gestion des relations avec les Premières Nations, Inuits et Métis et de développement des communautés nordiques.* Modernisation des structures du gouvernement canadien en vue de permettre aux Autochtones de renforcer leur capacité et d'appuyer leur vision en matière d'autonomie gouvernementale.* Dirige les travaux du gouvernement du Canada dans le Nord. | Clientèle: Premières Nations, Inuits, Métis, habitant·e·s du Nord | Territoire: Canada | Statut: organisme du gouvernement fédéral",
+    "website": "canada.ca/fr/relations-couronne-autochtones-affaires-nord.html",
+    "address": "10, rue Wellington, Gatineau, Outaouais, QC, K1A 0H4",
+    "hours": "lundi au vendredi 9h00 à 19h00"
+  },
+  {
+    "id": "remue-m-nage-de-l-outaouais-out",
+    "name": "Remue-Ménage De L'Outaouais",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 778-2461",
+    "description": "Services de maintien à domicile.* Entretien ménager léger.* Préparation de repas sans diète.* Assistance personnelle. | Clientèle: gens en difficulté, personnes âgées, personnes vivant un handicap ou des personnes atteintes d'une maladie | Territoire: secteurs Hull, Aylmer et Gatineau de Gatineau, Cantley, Chelsea, Alcove, Duclos, East Aldfield, Edelweiss, Farm Point, Farrelton, Hollow Glen, Lac des Loups, Lascelle, La Pêche, Masham, Rupert, Saint-Pierre-de-Wakefield, Val-des-Monts, Wakefield | Statut: organisme à but non lucratif",
+    "website": "www.rmo.ca",
+    "address": "10, rue Noël, bureau 110, Gatineau, Outaouais, QC, J8Z 3G5",
+    "hours": "Voir site web"
   },
   {
     "id": "renaissance-quebec-comptoir-d-entra-trb",
@@ -25665,6 +30283,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "variables, consulter le site web"
   },
   {
+    "id": "rep-re-familial-out",
+    "name": "Repère Familial",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 441-0282",
+    "description": "Services aux familles.* Halte-garderie.* Services en allaitement: marrainage, groupe d'allaitement.* Ateliers parents-enfants: lecture et écriture, cuisine, bricolage, yoga, atelier de portage, exercices, etc.* Ateliers thématiques relié a la vie de famille: discipline, estime de soi, relation frère et sour, etc.* Groupe de préparation de purées pour bébé, cuisine collective.* Atelier de couture et artisanat.* Cours de réanimation cardiorespiratoire pour bébés et enfants.* Cafés sociaux, repas communautaire.* Pédiatrie sociale.* Terrain de jeux.* Magasin-partage de la rentrée scolaire. | Clientèle: familles avec un enfant de 0 à 17 ans | Territoire: MRC La Vallée-de-la-Gatineau | Statut: organisme à but non lucratif",
+    "website": "reperefamilial.com",
+    "address": "251, rue Cartier, Maniwaki, Outaouais, QC, J9E 1R4",
+    "hours": "lundi au jeudi 9h00 à 16h00"
+  },
+  {
     "id": "rescousse-amicale-la-rwd",
     "name": "Rescousse Amicale (la)",
     "category": "food",
@@ -25715,6 +30346,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://restoplateau.com",
     "address": "4450, rue Saint-Hubert, Montréal, QC H2J 2X1",
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
+  },
+  {
+    "id": "revenu-qu-bec-gatineau-out",
+    "name": "Revenu Québec - Gatineau",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 267-6299",
+    "description": "* Administration du régime fiscal québécois par la perception des impôts et des taxes.* Administration de programmes et services relatifs au revenu: crédits d'impôt, allocation-logement, prime au travail, pensions alimentaires, administration provisoire des biens non réclamés, Registraire des entreprises. | Territoire: le Québec | Statut: organisme du gouvernement provincial",
+    "website": "www.revenuquebec.ca",
+    "address": "170, rue de l'Hôtel-de-Ville, 6e étage, Gatineau, Outaouais, QC, J8X 4C2",
+    "hours": "lundi au vendredi 10h00 à 16h30, service téléphonique: lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "revenu-qu-bec-programme-de-perce-lav",
@@ -25795,6 +30439,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "richelieu-international-out",
+    "name": "Richelieu International",
+    "category": "immigration",
+    "subcategory": "Immigration et communautés culturelles",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 267-6525",
+    "description": "Regroupement international divisé en associations locales, vouées à des activités de financement et de sensibilisation à la jeunesse et à la francophonie. | Clientèle: clubs Richelieu locaux | Territoire: Canada | Statut: organisme à but non lucratif",
+    "website": "richelieu.org",
+    "address": "180, boulevard du Mont-Bleu, bureau 208, Gatineau, Outaouais, QC, J8Z 3J5",
+    "hours": "lundi au jeudi 8h00 à 16h00"
+  },
+  {
     "id": "ricochet-pierrefonds",
     "name": "Ricochet — Hébergement d'urgence",
     "category": "housing",
@@ -25809,6 +30466,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "ripon-municipalit-out",
+    "name": "Ripon - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Ripon",
+    "province": "QC",
+    "phone": "819 983-2000",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.ripon.ca/ordures-et-recyclage* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: centre sportif, activités, camp de jour.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Ripon | Statut: organisme municipal",
+    "website": "ripon.ca",
+    "address": "31, rue Coursol, bureau 101, Ripon, Outaouais, QC, J0V 1V0",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "rose-bleue-la-association-des-perso-msc",
     "name": "Rose Bleue (la) - Association des Personnes Handicapées les Moulins",
     "category": "social",
@@ -25820,6 +30490,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.associationlarosebleue.com",
     "address": "2904, rue Dupras, Mascouche, Lanaudière, QC, J7K 1T2",
     "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "r-habex-out",
+    "name": "Réhabex",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-2777",
+    "description": "Services personnalisés aux personnes judiciarisées dans leurs démarches de réinsertion sociale, pour trouver un emploi, retourner aux études et faire une demande de pardon.* Orientation professionnelle ou scolaire.* Aide pour le retour aux études.* Aide à la recherche d'emploi: initiation aux méthodes et techniques de recherche d'emploi, initiation à l'utilisation d'internet, rédaction de curriculum vitae et de lettre de présentation, simulation d'entrevues, accès à une banque d'employeurs.* Référence à différents programmes, organismes et employeurs.* Suivi en emploi et médiation entre employeur et employé lors d'un conflit.* Information sur les impacts du dossier judiciaire.* Accompagnement pour les demandes de suspension de casier judiciaire (pardon).* Programme de recrutement gratuit pour les employeurs.* Aide alimentaire pour les usagers dans le besoin, en partenariat avec une banque alimentaire. | Clientèle: personnes judiciarisées, avec ou sans casier judiciaire, de plus de 18 ans sauf exception | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "rehabex.ca/fr",
+    "address": "59, rue Marengère, Gatineau, Outaouais, QC, J8T 3T7",
+    "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 14h00"
+  },
+  {
+    "id": "r-habex-halte-chaleur-du-parc-sa-out",
+    "name": "Réhabex - Halte-Chaleur Du Parc Sanscartier",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 664-4974",
+    "description": "Halte-chaleur.* Accueil psychosocial.* Repas selon les dons reçus. | Clientèle: personnes en situation d'itinérance Capacité: nombre de lits: 12, nombre de chaises: 8, tables de pique-nique: 1 | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "rehabex.ca/fr",
+    "address": "45, rue Sanscartier, Gatineau, Outaouais, QC, J8P 4N6",
+    "hours": "lundi au vendredi 19h00 à 9h00, samedi et dimanche 16h00 à 9h00, ouverte jusqu'au 15 avril 2026"
+  },
+  {
+    "id": "r-habex-papineauville-out",
+    "name": "Réhabex - Papineauville",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Papineauville",
+    "province": "QC",
+    "phone": "1 866 666-6488",
+    "description": "Services personnalisés aux personnes judiciarisées dans leurs démarches de réinsertion sociale, pour trouver un emploi, retourner aux études et faire une demande de pardon.* Orientation professionnelle ou scolaire.* Aide pour le retour aux études.* Aide à la recherche d'emploi: initiation aux méthodes et techniques de recherche d'emploi, initiation à l'utilisation d'internet, rédaction de curriculum vitae et de lettre de présentation, simulation d'entrevues, accès à une banque d'employeurs.* Référence à différents programmes, organismes et employeurs.* Suivi en emploi et médiation entre employeur et employé lors d'un conflit.* Information sur les impacts du dossier judiciaire.* Accompagnement pour les demandes de suspension de casier judiciaire (pardon).* Programme de recrutement gratuit pour les employeurs.* Aide alimentaire pour les usagers dans le besoin, en partenariat avec une banque alimentaire. | Clientèle: personnes judiciarisées, avec ou sans casier judiciaire, de plus de 18 ans sauf exception | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "rehabex.ca/fr",
+    "address": "365, rue Papineau, Papineauville, Outaouais, QC, J0V 1R0",
+    "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 14h00"
   },
   {
     "id": "repits-de-gaby-les-crab",
@@ -25846,6 +30555,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.reseautoxicomanie.com",
     "address": "200, rue de Salaberry, local 308, Joliette, Lanaudière, QC, J6E 4G1",
     "hours": "sur rendez-vous seulement, lundi au vendredi 9h00 à 17h00, certaines disponibilités le soir"
+  },
+  {
+    "id": "r-seau-biblio-de-l-outaouais-out",
+    "name": "Réseau Biblio De L'Outaouais",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-6008",
+    "description": "Réseau régional de bibliothèques municipales publiques.* Prêts de documents physiques et numériques.* Ressources éducatives, culturelles et ludiques en ligne.* Activités, trousses d'apprentissage et d'initiation à la lecture.* Clubs de lecture pour adultes et enfants.* Heure du conte. | Clientèle: grand public | Territoire: Outaouais, excluant Gatineau | Statut: organisme municipal",
+    "website": "www.reseaubibliooutaouais.qc.ca/fr",
+    "address": "2295, rue Saint-Louis, Gatineau, Outaouais, QC, J8T 5L8",
+    "hours": "administration: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, horaire des bibliothèques: consulter le site Internet"
   },
   {
     "id": "r-seau-des-biblioth-ques-de-lava-lav-2",
@@ -25965,6 +30687,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous"
   },
   {
+    "id": "r-seau-du-patrimoine-de-gatineau-out",
+    "name": "Réseau Du Patrimoine De Gatineau Et De L'Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 205-5586",
+    "description": "Promotion, préservation et protection du patrimoine de Gatineau et de l'Outaouais.* Soutien des organismes membres dans la réalisation de leurs projets.* Représentation des intérêts des organismes membres et du secteur patrimonial.* Concertation des organismes membres pour le maintien du patrimoine Outaoauis.* Répertoire des organismes membres en ligne: https://www.reseaupatrimoine.ca/membres/* Formations.* Offres de bénévolat. | Clientèle: grand public | Territoire: Outaouais, Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.reseaupatrimoine.ca",
+    "address": "39, rue Leduc, Gatineau, Outaouais, QC, J8X 3A3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "hlth-aine1",
     "name": "Réseau FADOQ – Services aux aînés",
     "category": "health",
@@ -25976,6 +30711,45 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Pour urgence: 811 (Info-Santé) ou urgence hospitalière.",
     "isProvinceWide": true
+  },
+  {
+    "id": "r-seau-outaouais-isp-out",
+    "name": "Réseau Outaouais Isp",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-7129",
+    "description": "Aide à l'intégration sociale et professionnelle.* Aide à l'emploi: évaluation psychosociale et accompagnement socioprofessionnel incluant évaluation des besoins et référence.* Programme d'aide et d'accompagnement social ACTION: activités d'intégration de groupe en développement personnel et en recherche d'emploi.* Activités communautaires: stage d'insertion dans un organisme communautaire, entre 15 à 20 heures par semaine. | Clientèle: personnes sans emploi vivant avec un problème de santé physique ou mentale, de sous- qualification, de sous-emploi ou d'insertion socioéconomique | Territoire: Gatineau, secteur Hull | Statut: organisme à but non lucratif",
+    "website": "www.reseauoutaouais.qc.ca",
+    "address": "109, rue Wright, bureau 200, Gatineau, Outaouais, QC, J8X 2G7",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "r-seau-outaouais-isp-point-de-se-out",
+    "name": "Réseau Outaouais Isp - Point De Service Secteur Buckingham",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-7129",
+    "description": "Aide à l'intégration sociale et professionnelle.* Aide à l'emploi: évaluation psychosociale et accompagnement socioprofessionnel incluant évaluation des besoins et référence.* Programme d'aide et d'accompagnement social ACTION: activités d'intégration de groupe en développement personnel et en recherche d'emploi.* Activités communautaires: stage d'insertion dans un organisme communautaire, entre 15 à 20 heures par semaine.* Centre de recherche d'emploi: accès communautaire à internet et à des ordinateurs et centre de documentation. | Clientèle: personnes sans emploi vivant avec un problème de santé physique ou mentale, de sous- qualification, de sous-emploi ou d'insertion socioéconomique | Territoire: Gatineau, secteur Buckingham | Statut: organisme à but non lucratif",
+    "website": "www.reseauoutaouais.qc.ca",
+    "address": "132, rue Maclaren Est, Gatineau, Outaouais, QC, J8L 1K1",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "r-seau-outaouais-isp-point-de-se-out-2",
+    "name": "Réseau Outaouais Isp - Point De Service Secteur Gatineau",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-7129",
+    "description": "Aide à l'intégration sociale et professionnelle.* Aide à l'emploi: évaluation psychosociale et accompagnement socioprofessionnel incluant évaluation des besoins et référence.* Programme d'aide et d'accompagnement social ACTION: activités d'intégration de groupe en développement personnel et en recherche d'emploi.* Activités communautaires: stage d'insertion dans un organisme communautaire, entre 15 à 20 heures par semaine.* Centre de recherche d'emploi: accès communautaire à Internet, à des ordinateurs et au centre de documentation. | Clientèle: personnes sans emploi vivant avec un problème de santé physique ou mentale, de sous- qualification, de sous-emploi ou d'insertion socioéconomique | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.reseauoutaouais.qc.ca",
+    "address": "109, rue Wright, bureau 200, Gatineau, Outaouais, QC, J8X 2G7",
+    "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
     "id": "qc-soc-itinerance-qc",
@@ -26106,6 +30880,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.cfgrandmontreal.com",
     "address": "2000, rue Cunard, Chomedey, Laval, QC, H7S 2G5",
     "hours": "Voir site web"
+  },
+  {
+    "id": "r-sidence-le-monarque-out",
+    "name": "Résidence Le Monarque",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Plaisance",
+    "province": "QC",
+    "phone": "819 308-0899",
+    "description": "Soins palliatifs.* Accompagnement professionnel, psychologique et spirituel.* Aires de recueillement.* Suivi de deuil individuel.* Conseils et assistance aux professionnel·le·s. | Clientèle: personnes en fin de vie, leurs proches | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.residencelemonarque.com",
+    "address": "41, chemin des Presqu'îles, Plaisance, Outaouais, QC, J0V 1S0",
+    "hours": "24 heures, 7 jours"
   },
   {
     "id": "msss-chsld-wendake-residence-marcel-sioui",
@@ -26453,6 +31240,18 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "re-pw1",
+    "name": "SCHL – Société canadienne d'hypothèques",
+    "category": "realestate",
+    "subcategory": "Programme gouvernemental",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-668-2642",
+    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
+    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
+    "isProvinceWide": true
+  },
+  {
     "id": "on-cmhc-on",
     "name": "SCHL – Société canadienne d'hypothèques",
     "category": "realestate",
@@ -26463,18 +31262,6 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "website": "https://www.cmhc-schl.gc.ca",
     "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
-    "isProvinceWide": true
-  },
-  {
-    "id": "re-pw1",
-    "name": "SCHL – Société canadienne d'hypothèques",
-    "category": "realestate",
-    "subcategory": "Programme gouvernemental",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-668-2642",
-    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
     "isProvinceWide": true
   },
@@ -26733,6 +31520,18 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "saga-maison-des-jeunes-la-beaudr-out",
+    "name": "Saga Maison Des Jeunes (La) - Beaudry",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-1211",
+    "description": "Maison de jeunes.* Loisirs et activités éducatives. | Clientèle: jeunes de 11 à 17 ans | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "address": "288, chemin Lebaudy, Gatineau, Outaouais, QC, J8V 3W4",
+    "hours": "mardi au jeudi 12h00 à 13h00 et 16h à 20h, vendredi 12h00 à 13h00 et 16h00 à 21h00, samedi 14h00 à 21h00"
+  },
+  {
     "id": "msss-chsld-quebec-saint-brigid-s-home",
     "name": "Saint Brigid'S Home",
     "category": "health",
@@ -26743,6 +31542,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à Hôpital Jeffery Hale - Saint Brigid'S. Source: MSSS – Fichier M02 des installations.",
     "address": "1645, chemin Saint-Louis, Québec, QC G1S 4M3",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "saint-andr-avellin-municipalit-out",
+    "name": "Saint-André-Avellin - Municipalité",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 983-2318",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Subvention des produits d'hygiène durables: produits menstruels, couches lavables.* Calendrier des collectes des matières résiduelles: www.ville.st-andre- avellin.qc.ca/citoyens/matieres-residuelles * Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: centre sportif, activités, camp de jour.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Saint-André-Avellin | Statut: organisme municipal",
+    "website": "www.ville.st-andre-avellin.qc.ca",
+    "address": "530, rue Charles-Auguste-Montreuil, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 14h00 à 17h00, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "saint-sixte-municipalit-out",
+    "name": "Saint-Sixte - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Lochaber",
+    "province": "QC",
+    "phone": "819 983-3155",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.saintsixte.ca/services-municipaux/ordures-et-recyclage* Service d'alerte citoyenne Telmatik: www.saintsixte.ca/services-municipaux/securite-publique* Écocentre.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: centre sportif, activités, camp de jour.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Saint-Sixte | Statut: organisme municipal",
+    "website": "www.saint-sixte.ca",
+    "address": "28, rue Principale, Lochaber, Outaouais, QC, J0X 3B0",
+    "hours": "lundi à vendredi 8h00 à 12h00 et 13h00 à 16h00, écocentre: avril à novembre, 2e et 4e samedi du mois 10h00 à 16h00"
   },
   {
     "id": "saint-sulpice-municipalite-ssu",
@@ -26758,6 +31583,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h15 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 12h00"
   },
   {
+    "id": "saint-mile-de-suffolk-municipali-out",
+    "name": "Saint-Émile-De-Suffolk - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Saint-Émile-De-Suffolk",
+    "province": "QC",
+    "phone": "819 426-2947",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.st-emile-de- suffolk.com/hygiene-du-milieu* Service d'alerte citoyenne Telmatik: www.bixocontact.com/apps/Anonym/InterfaceAquisitionPublique/default.aspx?TooteloGuid=d58ee148-2eff- 4e37-8d75-2e89afb1dc29&ampBureauId=4395&ampLang=EN * Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: centre sportif, activités, camp de jour.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Saint-Émile-de-Suffolk | Statut: organisme municipal",
+    "website": "www.st-emile-de-suffolk.com",
+    "address": "299, route des Cantons, Saint-Émile-De-Suffolk, Outaouais, QC, J0V 1Y0",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "sainte-anne-de-bellevue-ville-sab",
     "name": "Sainte-Anne-de-Bellevue - Ville",
     "category": "social",
@@ -26769,6 +31607,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.ville.sainte-anne-de-bellevue.qc.ca",
     "address": "109, rue Sainte-Anne, Sainte-Anne-de-Bellevue, Montréal, QC, H9X 1M2",
     "hours": "lundi au jeudi 8h00 à 12h00 et 12h45 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "sainte-th-r-se-de-la-gatineau-mu-out",
+    "name": "Sainte-Thérèse-De-La-Gatineau - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Sainte-Thérèse-De-La-Gatineau",
+    "province": "QC",
+    "phone": "819 449-4134",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles:www.sainte-therese- de-la-gatineau.ca/fr/services-aux-citoyens/matieres-residuelles* Écocentre de Maniwaki.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: centre sportif, activités, camp de jour.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Sainte-Thérèse-De-La-Gatineau | Statut: organisme municipal",
+    "website": "www.sainte-therese-de-la-gatineau.ca",
+    "address": "27, chemin Principal, Sainte-Thérèse-De-La-Gatineau, Outaouais, QC, J0X 2X0",
+    "hours": "lundi à jeudi 9h00 à 12h00 et 13h00 à 16h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "salon-des-jeunes-de-thurso-out",
+    "name": "Salon Des Jeunes De Thurso",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Lochaber",
+    "province": "QC",
+    "phone": "819 985-0111",
+    "description": "Maison des jeunes.* Activités sociales et recréatives.* Aide aux devoirs.* Ateliers de prévention. | Clientèle: jeunes de 8 à 17 ans | Territoire: Thurso | Statut: organisme à but non lucratif",
+    "website": "salondesjeunes.yolasite.com",
+    "address": "134, rue Alexandre, Lochaber, Outaouais, QC, J0X 3B0",
+    "hours": "année scolaire: lundi au samedi 16h00 à 21h00, été: lundi au vendredi 10h00 à 17h00"
   },
   {
     "id": "shawi-garde-sandrine-oka",
@@ -26913,6 +31777,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 7h00 à 16h00"
   },
   {
+    "id": "service-animation-jeunesse-de-l--out",
+    "name": "Service Animation Jeunesse De L'Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Lochaber",
+    "province": "QC",
+    "phone": "819 985-2711",
+    "description": "Centre communautaire de loisirs.* Animation, activités de loisirs et de sports.* Jeux de société, projections de documentaires et spectacles.* Camp de jour pendant la période estivale.* Bouffée d'oxygène: programme pour adolescent·e·s dans les écoles et municipalités. | Clientèle: grand public | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.sajo.qc.ca",
+    "address": "67, montée Saint-André, Lochaber, Outaouais, QC, J0X 3B0",
+    "hours": "lundi au jeudi 9h00 à 17h00"
+  },
+  {
     "id": "service-b-n-vole-d-entraide-de-v-lav-2",
     "name": "Service Bénévole D'Entraide De Vimont-Auteuil",
     "category": "social",
@@ -27042,6 +31919,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous"
   },
   {
+    "id": "service-de-police-de-la-ville-de-out",
+    "name": "Service De Police De La Ville De Gatineau - Quartier Général",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 246-0222",
+    "description": "Application du respect des lois et règlements en vigueur.* Répondre aux besoins des citoyen·ne·s en matière de sécurité.* Protection de la vie et des biens des citoyen·ne·s.* Maintien de la paix et de la sécurité publique.* Prévention et lutte contre le crime.* Équipes et unités spécialisées: Unité d'intervention de crise (UNIC), Citoyens en patrouille, etc.* Garage 529: inscription des renseignements d'identification permettant la récupération de vélos perdus ou volés.* Vérification d'antécédents judiciaires à des fins d'emploi ou de bénévolat. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.gatineau.ca/portail/default.aspx?p=guichet_municipal/police",
+    "address": "590, boulevard Gréber, Gatineau, Outaouais, QC, J8T 8B8",
+    "hours": "24 heures, 7 jours, rencontrer un policier: lundi au vendredi 7h00 à 22h00"
+  },
+  {
+    "id": "service-de-police-de-la-ville-de-out-2",
+    "name": "Service De Police De La Ville De Gatineau - Secteur Buckingham",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 246-0222",
+    "description": "Application du respect des lois et règlements en vigueur.* Répondre aux besoins des citoyen·ne·s en matière de sécurité.* Protection de la vie et des biens des citoyen·ne·s.* Maintien de la paix et de la sécurité publique.* Prévention et lutte contre le crime.* Équipes et unités spécialisées: Unité d'intervention de crise (UNIC), Citoyens en patrouille, etc.* Garage 529: inscription des renseignements d'identification permettant la récupération de vélos perdus ou volés.* Vérification d'antécédents judiciaires à des fins d'emploi ou de bénévolat. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.gatineau.ca/portail/default.aspx?p=trouver_un_lieu/details&id=1991584847&ref=police",
+    "address": "830, rue Georges, Gatineau, Outaouais, QC, J8L 2E5",
+    "hours": "24 heures, 7 jours, rencontrer un policier: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "service-de-police-de-la-ville-de-out-3",
+    "name": "Service De Police De La Ville De Gatineau - Secteur D'Aylmer",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 246-0222",
+    "description": "Application du respect des lois et règlements en vigueur.* Répondre aux besoins des citoyen·ne·s en matière de sécurité.* Protection de la vie et des biens des citoyen·ne·s.* Maintien de la paix et de la sécurité publique.* Prévention et lutte contre le crime.* Équipes et unités spécialisées: Unité d'intervention de crise (UNIC), Citoyens en patrouille, etc.* Garage 529: inscription des renseignements d'identification permettant la récupération de vélos perdus ou volés.* Vérification d'antécédents judiciaires à des fins d'emploi ou de bénévolat. | Clientèle: grand public | Territoire: Gatineau | Statut: organisme municipal",
+    "website": "www.gatineau.ca/portail/default.aspx?p=trouver_un_lieu/details&id=1267772486&ref=police",
+    "address": "625, chemin d'Aylmer, Gatineau, Outaouais, QC, J9H 1A9",
+    "hours": "24 heures, 7 jours, rencontrer un policier: lundi au vendredi 8h30 à 12h00 et 13h30 à 16h30"
+  },
+  {
+    "id": "service-de-police-de-la-ville-de-out-4",
+    "name": "Service De Police De La Ville De Gatineau - Secteur De Hull",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 246-0222",
+    "description": "Application du respect des lois et règlements en vigueur.* Répondre aux besoins des citoyen·ne·s en matière de sécurité.* Protection de la vie et des biens des citoyen·ne·s.* Maintien de la paix et de la sécurité publique.* Prévention et lutte contre le crime.* Équipes et unités spécialisées: Unité d'intervention de crise (UNIC), Citoyens en patrouille, etc.* Garage 529: inscription des renseignements d'identification permettant la récupération de vélos perdus ou volés.* Vérification d'antécédents judiciaires à des fins d'emploi ou de bénévolat. | Clientèle: grand public | Territoire: Gatineau | Statut: entreprise commerciale",
+    "website": "www.gatineau.ca/portail/default.aspx?p=trouver_un_lieu/details&id=387515769&ref=police",
+    "address": "777, boulevard de la Carrière, Gatineau, Outaouais, QC, J8Y 6V1",
+    "hours": "24 heures, 7 jours, rencontrer un policier: lundi au vendredi 7h00 à 22h00"
+  },
+  {
     "id": "service-de-police-de-laval-genda-lav",
     "name": "Service De Police De Laval - Gendarmerie De L'Est",
     "category": "social",
@@ -27081,6 +32010,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "service-de-relais-t-l-phonique-out",
+    "name": "Service De Relais Téléphonique",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 855-0511",
+    "description": "Service de relais téléphonique textuel permettant la communication entre des personnes vivant avec une déficience auditive ou un trouble de la parole et un·e interprète.* De téléscripteur à voix ou de voix à téléscripteur.* Service de relais téléphonique par téléscripteur: le·a téléphoniste communique avec la personne ayant besoin du service par téléscripteur, et parle directement à l'interlocuteur·rice de cette personne.* Service de relais IP (protocole par Internet): la personne ayant besoin du service utilise un appareil relié à Internet pour communiquer avec le·a téléphoniste en ouvrant une session dans le portail Web du fournisseur du service de relais IP. | Clientèle: personnes vivant avec une déficience auditive ou un trouble de la parole, personnes souhaitant communiquer avec elles | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "crtc.gc.ca/fra/phone/acces/mrsrt.htm",
+    "address": "1, Promenade du Portage, Gatineau, Outaouais, QC, J8X 4B1",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "service-de-v-tements-petite-nati-out",
+    "name": "Service De Vêtements Petite-Nation",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Saint-André-Avellin",
+    "province": "QC",
+    "phone": "819 500-4553",
+    "description": "* Récupération et vente de vêtements, chaussures, vaisselles, livres et jouets. | Territoire: Saint-André-Avelin | Statut: organisme à but non lucratif",
+    "address": "360, rang Sainte-Julie est, Saint-André-Avellin, Outaouais, QC, J0V 1W0",
+    "hours": "mercredi, jeudi et vendredi 13h00 à 16h00, premier samedi du mois 13h00 à 16h00"
+  },
+  {
     "id": "service-des-loisirs-du-bon-paste-lav",
     "name": "Service Des Loisirs Du Bon-Pasteur",
     "category": "social",
@@ -27106,6 +32060,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service disponible 24h/24, 7j/7",
     "isUrgent": true,
     "isProvinceWide": true
+  },
+  {
+    "id": "service-int-gration-travail-outa-out",
+    "name": "Service Intégration Travail Outaouais",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-2260",
+    "description": "Aide à l'emploi aux personnes immigrantes.* Aide personnalisée à la recherche d'emploi.* Programme rapide d'insertion en emploi incluant 4 semaines de formation et 5 semaines de stage.* Programme de formation préparatoire à l'emploi incluant 6 semaines de formation et 5 semaines de stage.* SITO-Jeunes : programme de formation préparatoire à l'emploi destiné aux jeunes, incluant 8 semaines de formation et 4 semaines de stage rémunéré.* Régionalisation de l'immigration en Outaouais: programme favorisant le déplacement de chercheurs d'emploi de Montréal vers l'Outaouais. | Clientèle: personnes immigrantes, sito-jeunes: personnes immigrantes entre 18 et 30 ans, régionalisation de l'immigration en Outaouais: personnes immigrantes de Montréal souhaitant travailler et s'installer en Outaouais | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "sito.qc.ca",
+    "address": "920, boulevard Saint-Joseph, bureau 107, Gatineau, Outaouais, QC, J8Z 1S9",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "imm-cana-gatineau",
@@ -27425,6 +32392,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous"
   },
   {
+    "id": "services-aux-autochtones-canada-out",
+    "name": "Services Aux Autochtones Canada",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 567-9604",
+    "description": "Exercice des responsabilités gouvernementales visant à améliorer l'accès à des services de haute qualité pour les Premières Nations, Inuits et Métis.* Soutien au développement et à la prospérité des communautés.* Soutien aux services offerts dans les réserves.* Administration de la Loi sur les Indiens. | Clientèle: Premières Nations, Inuits, Métis, habitant·e·s du Nord | Territoire: Canada | Statut: organisme du gouvernement fédéral",
+    "website": "www.canada.ca/fr/services-autochtones-canada.html",
+    "address": "10, rue Wellington, Gatineau, Outaouais, QC, K1A 0H4",
+    "hours": "lundi au vendredi 9h00 à 18h00"
+  },
+  {
+    "id": "services-aux-a-n-s-des-collines-out",
+    "name": "Services Aux Aînés Des Collines",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "La Pêche",
+    "province": "QC",
+    "phone": "1 855 662-4637",
+    "description": "Promotion du bien-être, l'autonomie etl'épanouissement des personnes aînées de la MRC des Collines-de-l'Outaouais.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV): travailleuse du milieu qui se déplace pour dépister les personnes aînées à risque de vulnérabilité, les rencontrer à domicile et les référer vers les services appropriés.* SOS proches aidants: groupes d'entraide, répit à domicile, formations, écoute et informations.* Aide-moi!: Service de soutien à l'entretien extérieur de la maison. | Clientèle: personnes aînées, personnes proches aidantes, Mon Ange Gardien: personnes aînées à faible revenu | Territoire: MRC des Collines-de-l'Outaouais | Statut: organisme à but non lucratif",
+    "website": "servicesauxaines.org",
+    "address": "5, route Principale Ouest, La Pêche, Outaouais, QC, J0X 2W0",
+    "hours": "9h00 à 16h00"
+  },
+  {
     "id": "services-communautaires-on-rock-pfd",
     "name": "Services Communautaires On Rock",
     "category": "food",
@@ -27436,6 +32429,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://onrock.org/fr",
     "address": "9554, boulevard Gouin Ouest, Pierrefonds-Roxboro, Montréal, QC, H8Y 1R3",
     "hours": "lundi à jeudi 9h00 à 17h00, vendredi 9h00 à 14h00"
+  },
+  {
+    "id": "services-correctionnels-du-qu-be-out",
+    "name": "Services Correctionnels Du Québec - Établissement De Détention De Hull",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 866 466-7603",
+    "description": "Instance responsable des activités relatives à l'évaluation et au suivi des personnes contrevenantes.* Trouver un organisme oeuvrant auprès des personnes contrevenantes: www.quebec.ca/securite-situations- urgence/services-correctionnels/suivi-personnes-contrevenantes-communaute/trouver-organisme-suivi- communaute* Information en ligne pour les proches des personnes incarcérées.* Évaluation des personnes contrevenantes.* Élaboration des plans d'intervention correctionnels.* Administration des sentences dans la communauté. | Clientèle: personnes contrevenantes condamnées à des peines inférieures à deux ans, personnes prévenues | Territoire: Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "www.quebec.ca/securite-situations-urgence/services-correctionnels",
+    "address": "75, rue Saint-François, Gatineau, Outaouais, QC, J9A 1B4",
+    "hours": "Voir site web"
   },
   {
     "id": "services-du-chat-bott-les-lav",
@@ -27724,6 +32730,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "shawville-municipalit-out",
+    "name": "Shawville - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Clarendon",
+    "province": "QC",
+    "phone": "819 647-2979",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes de matières résiduelles: www.shawville.ca/fr/residents/ordures-menageres-et-recyclage* Système d'alerte publique: www.shawville.ca/fr/residents/systeme-dalerte-publique* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: centre sportif, activités, camp de jour.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Shawville | Statut: organisme municipal",
+    "website": "shawville.ca/fr",
+    "address": "350, rue Main, Clarendon, Outaouais, QC, J0X 2Y0",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "sheenboro-municipalit-out",
+    "name": "Sheenboro - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Sheenboro",
+    "province": "QC",
+    "phone": "819 689-5022",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Site de transbordement: www.pontiacouest.ca/sheenboro/station-de- transbordement* Système d'alerte pour les situations urgentes: www.pontiacouest.ca/residents/alerte-citoyens* Permis de construction, plaintes et requêtes.* Développement culturel et communautaire.* Bibliothèque. | Clientèle: grand public | Territoire: Sheeboro | Statut: organisme municipal",
+    "website": "pontiacouest.ca/sheenboro",
+    "address": "59, chemin Sheenboro, Sheenboro, Outaouais, QC, J0X 2Z0",
+    "hours": "lundi au mercredi 9h00 à 16h00"
+  },
+  {
     "id": "mb-siloam",
     "name": "Siloam Mission – Hébergement urgence",
     "category": "housing",
@@ -27748,6 +32780,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.alzheimerlaval.org",
     "address": "2525, boulevard René-Laennec, Vimont, Laval, QC, H7K 0B2",
     "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00, centre d'animation et de répit: lundi au vendredi 9h00 à 16h00, halte-répit: lundi au vendredi 11h00 à 20h00, samedi et dimanche 8h00 à 22h00, groupes de soutien de jour pour personnes atteintes et de soir pour personnes proches aidantes, ateliers de formation en soirée, hébergement-répit: à l'année, 24 heures"
+  },
+  {
+    "id": "soci-t-alzheimer-outaouais-out",
+    "name": "Société Alzheimer Outaouais",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 777-4232",
+    "description": "Accompagnement des personnes touchées par la maladie d'Alzheimer.* Soutien, information, référence et conseils.* Consultation téléphonique.* Consultation individuelle et familiale en personne.* Centres de jour et de répit: activités sociales et de stimulation.* Accompagnement et répit à domicile.* Ateliers de formation.* Groupes de soutien.* Ateliers de stimulation du cerveau.* Ateliers d'information et de sensibilisation.* Conférences.* Programme de formation professionnelle.* Plateforme de référence pour les intervenant·e·s de la santé: www.referenceaidancequebec.ca* Autre point de service au 181, rue Principale, Gatineau (J9H 6A6). | Clientèle: personnes vivant avec la maladie d'Alzheimer ou tout autre trouble neurocognitif, leur famille, personnes proches aidantes, professionnel·le·s de la santé ou tout autre professionnel·le·s liés aux personnes vivant avec la maladie | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "alzheimeroutaouais.com",
+    "address": "440, boulevard Maloney Ouest, Gatineau, Outaouais, QC, J8P 6W2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "societe-alzheimer-de-lanaudiere-la-jol",
@@ -27802,6 +32847,43 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous, habituellement les jeudis et vendredis"
   },
   {
+    "id": "soci-t-de-saint-vincent-de-paul--out-8",
+    "name": "Société De Saint-Vincent De Paul - Comptoir Notre-Dame D'Aylmer",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 684-0754",
+    "description": "* Magasin d'articles usagés.* Récupération sur place d'articles usagés: vêtements, vaisselle, livres, jouets, équipement de sports, petits électroménagers et appareils électroniques. | Clientèle: personnes à faible revenu | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "address": "56, rue Principale, Gatineau, Outaouais, QC, J9H 3L3",
+    "hours": "lundi au samedi 9h00 à 17h00, dimanche 12h00 à 17h00"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--out-9",
+    "name": "Société De Saint-Vincent De Paul - Comptoir Riviera",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-1622",
+    "description": "* Magasin d'articles usagés: vêtements, articles de maison, meubles, électroménagers, jouets et livres.* Dépannage vestimentaire d'urgence. | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "address": "165, avenue de Gatineau, Gatineau, Outaouais, QC, J8T 4J7",
+    "hours": "lundi au vendredi 9h00 à 17h00, samedi 9h00 à 16h00"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--out-10",
+    "name": "Société De Saint-Vincent De Paul - Comptoir Saint-Vincent De Paul De Hull",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 776-1068",
+    "description": "* Magasin d'articles usagés, avec possibilité de livraison pour les objets lourds: vêtements, meubles, électroménagers, matelas, appareils électriques, jouets et livres.* Collecte à domicile et récupération sur place d'articles usagés. | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.comptoirstvincentdepaulhull.org",
+    "address": "102, rue Eddy, Gatineau, Outaouais, QC, J8X 2W4",
+    "hours": "lundi au vendredi 9h30 à 16h30, samedi 9h30 à 16h30, dimanche 10h30 à 16h30"
+  },
+  {
     "id": "soci-t-de-saint-vincent-de-paul--lav-2",
     "name": "Société De Saint-Vincent De Paul - Conférence Saint-Claude",
     "category": "food",
@@ -27814,6 +32896,44 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous, ouvert mardi et vendredi les deux dernières semaines de chaque mois"
   },
   {
+    "id": "soci-t-de-saint-vincent-de-paul--out-2",
+    "name": "Société De Saint-Vincent De Paul - Conférence Saint-Paul",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 685-1343",
+    "description": "* Dons de nourriture, bons d'achats pour les épiceries locales, vêtements, électroménagers, literie et meubles, livrés à domicile par un·e volontaire.* Paniers de Noël. | Clientèle: personnes à faible revenu | Territoire: Aylmer | Statut: organisme à but non lucratif",
+    "website": "ssvp.ca/fr",
+    "address": "117, rue Front, Gatineau, Outaouais, QC, J9H 5S9",
+    "hours": "répondeur: 24 heures, 7 jours"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--out-3",
+    "name": "Société De Saint-Vincent De Paul - Conférence Saint-Pierre De Wakefield",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Val-Des-Monts",
+    "province": "QC",
+    "phone": "819 457-4444",
+    "description": "* Dépannage alimentaire d'urgence.* Dépannage vestimentaire d'urgence.* Magasin d'articles usagés.* Récupération sur place d'articles usagés: vêtements, vaisselle, livres, jouets, équipement de sports, petits électroménagers et appareils électroniques.* Paniers de Noël. | Clientèle: personnes à faible revenu | Territoire: Denholm, Notre-Dame-de-la-Salette, Val-des-Monts | Statut: organisme à but non lucratif",
+    "address": "34, chemin de l'Église, Val-Des-Monts, Outaouais, QC, J8N 2A1",
+    "hours": "lundi au vendredi 12h00 à 15h00, samedi 9h00 à 15h00"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--out",
+    "name": "Société De Saint-Vincent De Paul - Conseil Central De Gatineau",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-2364",
+    "description": "Coordination et concertation des points de service de la Société de Saint-Vincent-de-Paul de l'Outaouais. | Clientèle: individus et familles à faible revenu, personnes en insécurité alimentaire et économique | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "ssvp.ca/fr/ssvp-locations/conseil-central-de-gatineau",
+    "address": "165, avenue Gatineau, Gatineau, Outaouais, QC, J8T 4J7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "soci-t-de-saint-vincent-de-paul--lav-3",
     "name": "Société De Saint-Vincent De Paul - François-De-Laval",
     "category": "food",
@@ -27824,6 +32944,44 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Distribution de bons d'achat et de sacs de nourriture.* Distribution de coupons pour les fournitures scolaires.* Paniers de Noël. | Clientèle: adultes à faible revenu | Territoire: paroisse Bienheureux-François-de-Montmorency-Laval, paroisses fusionnées Saint- Christophe, Saint-Gilles, Saint-Julien-Eymard, Saint-Louis-de-Montfort et Saint-Maurice-de-Duvernay | Statut: organisme à but non lucratif",
     "address": "9, rue Saint-Louis, Pont-Viau, Laval, QC, H7G 2J1",
     "hours": "lundi et jeudi 10h00 à 12h00, été: jeudi 10h00 à 12h00"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--out-4",
+    "name": "Société De Saint-Vincent De Paul - Jean Xxiii",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "GATINEAU",
+    "province": "QC",
+    "phone": "819 412-5201",
+    "description": "* Dépannage alimentaire. | Clientèle: personnes à faible revenu Capacité: 1 personne à la fois | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "ssvp.ca/fr/ssvp-locations/conference-jean-xxiii",
+    "address": "1194, boulevard Saint-René Ouest, GATINEAU, Outaouais, QC, J8T 6H3",
+    "hours": "lundi, mardi et jeudi sur rendez-vous seulement à partir de 17h00"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--out-5",
+    "name": "Société De Saint-Vincent De Paul - Notre-Dame Du Rosaire",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 639-8764",
+    "description": "* Dépannage alimentaire.* Soutien matérielle. | Clientèle: personnes à faible revenu | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "address": "5, rue Saint-Arthur, Gatineau, Outaouais, QC, J8T 3C2",
+    "hours": "mardi 16h00 à 20h00"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--out-6",
+    "name": "Société De Saint-Vincent De Paul - Saint Mark The Evangelist Conference",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "",
+    "description": "* Dons de nourriture, bons d'achats pour des épiceries locales, vêtements, déjeuners et fournitures scolaires, électroménagers, literie et meubles.* Les dons sont livrés à domicile par un volontaire.* Paniers de Noël. | Clientèle: communauté anglaise de Aylmer | Territoire: secteur Aylmer de Gatineau | Statut: organisme à but non lucratif",
+    "website": "ssvp.ca/fr",
+    "address": "160, rue Principale, Gatineau, Outaouais, QC, J9H 3M8",
+    "hours": "ligne d'assistance: 24 heures, 7 jours, retour d'appel le jour suivant"
   },
   {
     "id": "soci-t-de-saint-vincent-de-paul--lav-4",
@@ -27910,6 +33068,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "magasin: mercredi 13h00 à 15h00, aide alimentaire: sur rendez-vous, fermé: janvier et juillet"
   },
   {
+    "id": "soci-t-de-saint-vincent-de-paul--out-7",
+    "name": "Société De Saint-Vincent De Paul - Sainte-Élizabeth",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Cantley",
+    "province": "QC",
+    "phone": "819 665-3819",
+    "description": "* Dépannage alimentaire. | Clientèle: personnes à faible revenu | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "address": "47, chemin Sainte-Élisabeth, Cantley, Outaouais, QC, J8V 3E8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "soci-t-de-saint-vincent-de-paul--lav-11",
     "name": "Société De Saint-Vincent-De-Paul - Conférence Saint-Vincent-De-Paul (Laval)",
     "category": "food",
@@ -27944,6 +33114,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Distribution de bons d'achat et de sacs de nourriture.* Aide alimentaire d'urgence.* Soupière Sainte-Rose: repas communautaires.* Paniers de Noël.* Fournitures scolaires. | Clientèle: personnes à faible revenu | Territoire: paroisse Sainte-Rose-de-Lima | Statut: organisme à but non lucratif",
     "address": "219, boulevard Sainte-Rose, Sainte-Rose, Laval, QC, H7L 1L7",
     "hours": "mercredi 8h30 à 10h00"
+  },
+  {
+    "id": "soci-t-de-transport-de-l-outaoua-out",
+    "name": "Société De Transport De L'Outaouais",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-3242",
+    "description": "Service de transport collectif.* Planifier un déplacement, horaires et carte interactive.* Recharger votre carte en ligne.* Localisateur de point de vente le plus près de chez vous.* Système de notification de l'état du réseau.* Application Transit: application cellulaire permettant de suivre un autobus en temps réel.* Récupération d'un object perdu. | Clientèle: grand public | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "www.sto.ca",
+    "address": "111, rue Jean-Proulx, Gatineau, Outaouais, QC, J8Z 1T4",
+    "hours": "bureau: lundi au vendredi 8h30 à 17h30, samedi 10h30 à 17h00, téléphone: lundi au vendredi 7h00 à 20h30, samedi 8h00 à 20h00, dimanche 9h30 à 20h00, objets perdus: lundi au vendredi 8h30 à 20h00, samedi 10h30 à 19h30, dimanche 9h30 à 19h30"
+  },
+  {
+    "id": "soci-t-de-transport-de-l-outaoua-out-2",
+    "name": "Société De Transport De L'Outaouais - Service Du Transport Adapté",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 773-2222",
+    "description": "* Transport adapté sous réservation.* Réserver ou modifier un déplacement.* Révision du dossier d'admission: www.quebec.ca/transports/transport-adapte/admissibilite-transport-adapte | Clientèle: personnes vivant avec une déficience (physique ou mentale) significative et persistante (incapacité de marcher sur une distance de 400 mètres sur un terrain uni, incapacité de monter une marche de 35 centimètres de hauteur avec appui ou d'en descendre une sans appui, incapacité d'effectuer la totalité d'un déplacement en utilisant le transport en commun régulier, incapacité de s'orienter dans le temps ou dans l'espace, incapacité de maîtriser des situations ou des comportements pouvant être préjudiciables à sa propre sécurité ou à celle des autres) | Territoire: Gatineau, motifs de déplacements en territoire desservi par la STO: tous motifs (sauf le transport scolaire et interinstitutionnel), motifs de déplacements en territoire ontarien: travail, études postsecondaires, soins de santé (ergothérapie, physiothérapie et rendez-vous médicaux) (hôpital d'Ottawa, hôpital pour enfants de l'est de l'Ontario, Centre de réhabilitation Royal Ottawa, hôpital Montfort), activités culturelles et récréatives (délimité par les rues King Edward à l'est, Queensway au sud, Booth à l'ouest et Rivière Outaouais au nord) | Statut: organisme parapublic",
+    "website": "www.sto.ca/index.php?id=transportadapte",
+    "address": "111, rue Jean-Proulx, Gatineau, Outaouais, QC, J8Z 1T4",
+    "hours": "service à la clientèle: lundi au vendredi 6h00 à 21h00, samedi et dimanche 7h30 à 21h00, déplacements: lundi au dimanche 6h15 à 00h30, en personne: lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "soci-t-de-transport-de-laval-lav",
@@ -28085,6 +33281,96 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
   },
   {
+    "id": "solidarit-gatineau-ouest-out",
+    "name": "Solidarité Gatineau-Ouest",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 246-2029",
+    "description": "Centre d'activités et de soutien pour personnes seules et familles.Services de soutien pour tous et toutes* Accueil, accompagnement et relation d'aide.* Cuisines collectives.* Friperie.* Ateliers divers: groupe de parole, cours de français, développement personnel, cours de couture, etc.* Aide pour remplir des formulaires.* Opération habit de neige: vente à prix modique d'habits de neige pour enfants.* Clinique d'impôt du Centre d'action bénévole: aide à l'inscription.* Jardins communautaires.* Accès à internet.* Fêtes et repas familiaux.* Occasion de bénévolat.Jeunesse et famille* Halte-garderie.* Camp de jour.* Jeux d'enfants: activités de développement de l'enfant avec les parents.* Ateliers sur les habiletés parentales: Y'app, Gestion des émotions et du stress, Communication non violence parent-enfant.* Aide aux devoirs et accompagnement.* Fournitures scolaires à faible coût. | Clientèle: personnes et familles à faible revenu ou en situation de vulnérabilité | Territoire: Outaouais, Opération habit de neige: secteur Gatineau | Statut: organisme à but non lucratif",
+    "website": "solidaritegatineauouest.ca",
+    "address": "1096, rue Saint-Louis, Gatineau, Outaouais, QC, J8T 2R7",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "sos-contact-al-to-out",
+    "name": "Sos Contact Al-To",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 281-2570",
+    "description": "Prévention et éducation en matière de drogues et d'alcool.* Information, éducation et prévention.* Soutien, écoute, accompagnement et référence.* Intervention de milieu et de rue.* Conférences et sensibilisation.* Distribution de naloxone. | Clientèle: adultes, jeunes et leur famille | Territoire: Gatineau, village Vallée-de-la-Lièvre | Statut: organisme à but non lucratif",
+    "website": "www.madojeunes.ca/s-o-s-contact-al-to",
+    "address": "948, rue Georges, Gatineau, Outaouais, QC, J8L 2E5",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "soupe-populaire-de-hull-la-centr-out",
+    "name": "Soupe Populaire De Hull (La) - Centre Frederic-Ozanam",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-3789",
+    "description": "Soutien et outils pour les personnes en situation de précarité.* Accueil, écoute, accompagnement et relation d'aide.* Repas du midi.* Service de fiducie volontaire pour les personnes âgés et pour toutes personnes à risque de situation financière précaire.* Aide juridique.* Activités sociales et d'intégration à la communauté: sorties de groupe, cafés rencontres, activités de loisir, etc.* Bénévolat et stage.* Distribution de trousse de naloxone. | Clientèle: personnes en situation de précarité financière, sociale ou personnelle | Territoire: Gatineau, secteur Hull | Statut: organisme à but non lucratif",
+    "website": "www.soupepopulairedehull.org",
+    "address": "751, boulevard Saint-Joseph, Gatineau, Outaouais, QC, J8Y 4B7",
+    "hours": "lundi au vendredi 9h30 à 15h30"
+  },
+  {
+    "id": "soupe-populaire-de-hull-la-centr-out-2",
+    "name": "Soupe Populaire De Hull (La) - Centre Yolande-Duval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 778-0173",
+    "description": "Soutien et outils pour les personnes en situation de précarité.* Accueil, écoute, accompagnement et relation d'aide.* Repas du midi.* Service de fiducie volontaire pour les personnes âgés et pour toutes personnes à risque de situation financière précaire.* Aide juridique.* Activités sociales et d'intégration à la communauté: sorties de groupe, cafés rencontres, activités de loisir, etc.* Bénévolat et stage.* Distribution de trousse de naloxone. | Clientèle: personnes en situation de précarité financière, sociale ou personnelle | Territoire: Gatineau, secteur Hull | Statut: organisme à but non lucratif",
+    "website": "www.soupepopulairedehull.org",
+    "address": "297, boulevard des Allumettières, Gatineau, Outaouais, QC, J8X 2S7",
+    "hours": "lundi au dimanche 10h30 à 16h30, repas du midi: lundi au vendredi 11h30 à 13h30, souper: lundi au vendredi 15h30 à 16h15, aide juridique: 1 fois par semaine, sans rendez-vous, clinique dentaire: 1 fois semaine"
+  },
+  {
+    "id": "soupe-populaire-saint-fran-ois-d-out",
+    "name": "Soupe Populaire Saint-François-De-Sales",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-1607",
+    "description": "* Repas sur place.* Repas à emporter. | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "address": "799, rue Jacques-Cartier, Gatineau, Outaouais, QC, J8T 2W1",
+    "hours": "mardi et jeudi 10h30 à 12h30"
+  },
+  {
+    "id": "soupi-re-de-l-amiti-de-gatineau--out",
+    "name": "Soupière De L'Amitié De Gatineau (La)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 663-6777",
+    "description": "* Accueil, soutien, écoute et accompagnement.* Repas chauds.* Dépannage alimentaire.* Réinsertion à l'emploi sur place.* Distribution de trousses de naloxone.* Distribution et livraison de bandelettes de test du fentanyl.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit). | Clientèle: personnes et familles à faible revenu, personnes isolées socialement | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "lasoupieredelamitie.com",
+    "address": "149, boulevard Maloney Ouest, Gatineau, Outaouais, QC, J8P 3V6",
+    "hours": "lundi au vendredi 9h30 à 16h00, dîners: 11h30 à 12h45"
+  },
+  {
+    "id": "source-des-jeunes-la-out",
+    "name": "Source Des Jeunes (La)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Cantley",
+    "province": "QC",
+    "phone": "819 607-0871",
+    "description": "* Activités sociales, culturelles et sportives.* Aide aux devoirs.* Camp d'été.* Animation et intervention préventive.* Ateliers de cuisine. | Clientèle: jeunes de 8 à 17 ans | Territoire: Cantley | Statut: organisme à but non lucratif",
+    "website": "www.lasourcedesjeunes.net",
+    "address": "100, rue du Commandeur, Cantley, Outaouais, QC, J8V 3T5",
+    "hours": "administration: lundi au vendredi 9h00 à 16h00, activités: mercredi 17h00 à 20h00, jeudi et vendredi 17h00 à 21h00"
+  },
+  {
     "id": "sourires-solidaires-lav",
     "name": "Sourires Solidaires",
     "category": "health",
@@ -28189,6 +33475,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "suicide-d-tour-out",
+    "name": "Suicide Détour",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "1 866 277-3553",
+    "description": "Prévention du suicide.* Hébergement à court terme pour personne à risque suicidaire.* Groupes de soutien.* Suivi individuel.* Accompagnement.* Ateliers.* Formations. | Clientèle: personnes en détresse psychologique, personnes suicidaires, personnes endeuillées à la suite d'un suicide, leurs proches | Territoire: MRC La Vallée-de-la-Gatineau | Statut: organisme à but non lucratif",
+    "website": "suicidedetour.org",
+    "address": "99, rue Henri-Bourassa, Maniwaki, Outaouais, QC, J9E 3P4",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "suicide-d-tour-halte-chaleur-out",
+    "name": "Suicide Détour - Halte-Chaleur",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 441-1010",
+    "description": "Halte-chaleur.* Nourriture, accès à des douches.* Accès gratuit à une buanderie. | Clientèle: personnes en situation d'itinérance ou à risque de le devenir | Territoire: MRC La Vallée-de-la-Gatineau | Statut: organisme à but non lucratif",
+    "website": "suicidedetour.org",
+    "address": "99, rue Henri-Bourassa, Maniwaki, Outaouais, QC, J9E 3P4",
+    "hours": "lundi au dimanche 21h30 à 8h00, ligne d'information: lundi au vendredi 8h30 à 16h30, ligne d'administration: 24 heures, 7 jours"
+  },
+  {
     "id": "sunyouth-mtl",
     "name": "Sun Youth / Jeunesse au Soleil",
     "category": "food",
@@ -28241,6 +33553,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30.",
     "isUrgent": true,
     "isProvinceWide": true
+  },
+  {
+    "id": "s-ret-du-qu-bec-poste-mrc-de-la--out",
+    "name": "Sûreté Du Québec - Poste Mrc De La Vallée-De-La-Gatineau",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 449-4333",
+    "description": "* Patrouille.* Réponse aux demandes d'aide des citoyens.* Surveillance et contrôle de la circulation routière.* Application des lois et des règlements.* Prévention du crime.* Activités de relations communautaires. | Territoire: MRC La Vallée-de-la-Gatineau | Statut: organisme du gouvernement provincial",
+    "website": "www.sq.gouv.qc.ca",
+    "address": "161, boulevard Desjardins, Maniwaki, Outaouais, QC, J9E 2C9",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30, urgences: 24 heures, 7 jours"
+  },
+  {
+    "id": "s-ret-du-qu-bec-poste-mrc-de-pap-out",
+    "name": "Sûreté Du Québec - Poste Mrc De Papineau",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Papineauville",
+    "province": "QC",
+    "phone": "819 427-6269",
+    "description": "* Patrouille.* Réponse aux demandes d'aide des citoyens.* Surveillance et contrôle de la circulation routière.* Application des lois et des règlements.* Prévention du crime.* Activités de relations communautaires. | Territoire: MRC Papineau | Statut: organisme du gouvernement provincial",
+    "website": "www.sq.gouv.qc.ca",
+    "address": "380, rue Papineau, Papineauville, Outaouais, QC, J0V 1R0",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30, urgences: 24 heures, 7 jours"
+  },
+  {
+    "id": "s-ret-du-qu-bec-poste-mrc-de-pon-out",
+    "name": "Sûreté Du Québec - Poste Mrc De Pontiac",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "819 648-2141",
+    "description": "* Patrouille.* Réponse aux demandes d'aide des citoyens.* Surveillance et contrôle de la circulation routière.* Application des lois et des règlements.* Prévention du crime.* Activités de relations communautaires. | Territoire: MRC Pontiac | Statut: organisme du gouvernement provincial",
+    "website": "www.sq.gouv.qc.ca",
+    "address": "1320, route 148, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "administration: lundi au vendredi 8h30 à 16h30, urgences: 24 heures, 7 jours"
   },
   {
     "id": "police-sq",
@@ -28321,6 +33672,44 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.tclcf.qc.ca",
     "address": "1450, boulevard Pie-X, bureau 203, Chomedey, Laval, QC, H7V 3C1",
     "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "table-de-d-veloppement-social-du-out",
+    "name": "Table De Développement Social Du Pontiac",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "",
+    "description": "Regroupement des acteurs de la communauté, tous secteurs confondus, dans un objectif de développement social.* Favoriser et soutenir la mise en ouvre d'initiatives par la concertation.* Favoriser la convergence des actions et la participation citoyenne.* Susciter la mobilisation des acteurs locaux.* Influencer les décisions et les orientations politiques dans une perspective de développement social.* Animation de divers comités: petite enfance, sécurité alimentaire et saines habitudes de vie. | Clientèle: grand public, organismes | Territoire: MRC Pontiac | Statut: organisme à but non lucratif",
+    "website": "tdspontiac.org",
+    "address": "2, rue ELsie, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "table-de-d-veloppement-social-va-out",
+    "name": "Table De Développement Social Vallée-La-Gatineau",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gracefield",
+    "province": "QC",
+    "phone": "819 463-3838",
+    "description": "Concertation multisectorielle pour le développement et l'amélioration de la qualité de vie de la Vallée- de-la-Gatineau.* Comités: milieu de vie, concertation et mobilisation et mieux-être pour tous. | Clientèle: citoyen·ne·s, organismes communautaires, organismes publics et parapublics, entreprises d'économie sociale, élu·e·s | Territoire: MRC La Vallée-de-la-Gatineau | Statut: organisme à but non lucratif",
+    "address": "30, rue Principale, Gracefield, Outaouais, QC, J0X 1W0",
+    "hours": "lundi au vendredi, avec rendez-vous"
+  },
+  {
+    "id": "table-des-a-n-s-de-gatineau-out",
+    "name": "Table Des Aînés De Gatineau",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 918-1771",
+    "description": "Regroupement d'associations et d'organismes oeuvrant auprès des personnes aînées pour leur qualité de vie.* Échange et concertation avec les organismes pour aînés.* Grand Rendez-vous: évènement annuel de rassemblement offrant des ateliers et conférences. * Conférences.* Groupes de discussions.* Coordination de projets. | Clientèle: personnes de 55 ans et plus, organismes communautaires et tables de concertation oeuvrant auprès des personnes aînées | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.tagatineau.org",
+    "address": "C.P. 82057, Gatineau, Outaouais, QC, J8T 8B6",
+    "hours": "Voir site web"
   },
   {
     "id": "table-r-gionale-de-concertation--lav",
@@ -28427,6 +33816,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00"
   },
   {
+    "id": "technoscience-outaouais-out",
+    "name": "Technoscience Outaouais",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 770-5252",
+    "description": "Promotion de la science et la technologie, en particulier chez les jeunes.* Animations scientifiques en classe et en ligne.* Évènements.* Camp de la relâche et camp d'été.* Trousses.* Ateliers-conférences.* Ateliers parascolaires.* Concours. | Clientèle: jeunes, parents, familles, écoles, organismes communautaires, petites entreprises, population générale | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "technoscienceoutaouais.ca",
+    "address": "37, boulevard Saint-Joseph, bureau 202, Gatineau, Outaouais, QC, J8Y 3V8",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "tel-aide-outaouais-out",
+    "name": "Tel-Aide Outaouais",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 567-9699",
+    "description": "Ligne d'écoute pour toutes problématiques.* Écoute active, anonyme, confidentielle et non- discriminatoire.* Soutien et référence.* Service d'écoute pour les personnes entendeuses de voix.* Prévention et sensibilisation en santé mentale.* Formation, soutien et accompagnement des bénévoles. | Clientèle: personnes de 18 ans et plus vivant des difficultés de toutes sortes (deuil, solitude, souffrance, dépression, etc.) | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "telaideoutaouais.ca",
+    "address": "92 boulevard Saint-Raymond, Gatineau, Outaouais, QC, J8Y 1S7",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "urgent-tel-jeunes",
     "name": "Tel-Jeunes (12–25 ans)",
     "category": "mentalHealth",
@@ -28495,6 +33910,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 7h50 à 16h00, vendredi 8h00 à 12h10"
   },
   {
+    "id": "thorne-municipalit-out",
+    "name": "Thorne - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Ladysmith",
+    "province": "QC",
+    "phone": "819 647-3206",
+    "description": "Gestion des services municipaux.* Services d'urbanisme et émission de permis.* Gestion matières résiduelles et centre de transfer: www.thorneque.ca/copy-of-fire-1?lang=fr* Développement culturel et communautaire.* Sécurité publique: service de sécurité incendie, surveillance de quartier.* Location de salle communautaire.* Partenariat avec le Centre régional des services aux bibliothèques de l'Outaouais (CRSBPO). | Clientèle: grand public | Territoire: Thorne | Statut: organisme municipal",
+    "website": "www.thorneque.ca",
+    "address": "775, route 366, Ladysmith, Outaouais, QC, J0X 2A0",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "thurso-ville-out",
+    "name": "Thurso - Ville",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Lochaber",
+    "province": "QC",
+    "phone": "819 985-2000",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes de matières recyclables et ordures et information sur la gestion des matières résiduelles: www.ville.thurso.qc.ca/dechets-recyclage- compostage/cueillettes-regulieres * Service d'alertes automatisées pour les avis d'ébullition, bris d'aqueduc, travaux urgents et mesures d'urgence: www.ville.thurso.qc.ca/__trashed/securite-publique/systeme-dalerte-aux- citoyens* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: centre sportif, activités, camp de jour.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Thurso | Statut: organisme municipal",
+    "website": "www.ville.thurso.qc.ca",
+    "address": "161, rue Galipeau, Lochaber, Outaouais, QC, J0X 3B0",
+    "hours": "lundi au jeudi 8h00 à 12h15 et 13h00 à 16h30, vendredi 8h00 à 12h00"
+  },
+  {
     "id": "on-toronto-public-health",
     "name": "Toronto Public Health",
     "category": "health",
@@ -28519,6 +33960,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.letournesoldelarivenord.com",
     "address": "294, boulevard Iberville, Repentigny, Lanaudière, QC, J6A 2A3",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "trait-d-union-outaouais-out",
+    "name": "Trait D'Union Outaouais",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-1290",
+    "description": "Intégration sociale des personnes autistes.Services aux familles* Répit de jour, de soirée et de fin de semaine.* Groupe de soutien pour parents.* Activités thématiques sur l'autisme.* Activités sociales familiales.* Soutien aux familles et à l'entourage.* Salle de production de matériel: photocopieur couleur, machine à plastifier, logiciels de pictogrammes, feuilles et cartons.Services pour les enfants autistes* Activités éducatives et de loisir.* Camps de jour en été.Services pour les adultes autistes* Activités de loisir.* Groupe de soutien.* Sorties sociales.* Ateliers thématiques divers.Services pour toustes* Ligne Info-conseil.* Médiathèque et centre de documentation: prêt de livres et de DVD.* Programme « ami des autistes »: programme de sensibilisation et de formation à l'autisme pour divers milieux. | Clientèle: personnes autistes diagnostiqués, leurs proches, formation: milieux de loisirs, sensibilisation: écoles, population générale | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.traitdunionoutaouais.com/fr/accueil",
+    "address": "109, rue Wright, bureau 109, Gatineau, Outaouais, QC, J8X 2G7",
+    "hours": "lundi au vendredi 8h00 à 15h00"
+  },
+  {
+    "id": "transiti-n-qu-bec-out",
+    "name": "Transitiôn Québec",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 873-660-2382",
+    "description": "Accompagne activement les personnes en situation d'itinérance, ayant des besoins en hébergement par l'entremise d'un soutien psychosocial.* Accompagnement personnalisé.* Soutien psychosocial.* Hébergement transitoire dans des conteneurs maritimes transformés.* Studio de 150 pieds carrés: lit double, cuisine complète, salle de bain complète, chauffage, climatisation, électricité, internet. * Chambre privée de 100 pieds carrés: lit simple, évier et toilette, comptoir, mini-frigo, four grille-pain, espace de rangement, chauffage, climatisation, électricité, internet.* Espaces communs, cuisine collective, installations sanitaires, espaces de rangement.* Jardin communautaire et serre annuelle.* Parc à chien.* Atelier de réparation de vélos. | Clientèle: personnes de 18 ans et plus, résidant au Québec ou affiliée au secteur de Gatineau, vivant une situation d'itinérance Capacité: 100 | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "transitionquebec.org",
+    "address": "360, boulevard des Allumettières, Gatineau, Outaouais, QC, J8X 1N5",
+    "hours": "24 hours / 7 days"
+  },
+  {
+    "id": "transporaction-pontiac-out",
+    "name": "Transporaction Pontiac",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Campbell's Bay",
+    "province": "QC",
+    "phone": "819 648-2223",
+    "description": "Service de transport collectif et adapté. | Clientèle: transport adapté: personnes vivant avec un handicap physique, intellectuel ou psychologique, personnes en perte d'autonomie, transport collectif: personnes de 65 ans et plus, personnes ne possédant pas une voiture | Territoire: MCR Pontiac | Statut: organisme à but non lucratif",
+    "website": "transporaction.com",
+    "address": "1226 A, route 148, Campbell's Bay, Outaouais, QC, J0X 1K0",
+    "hours": "administration: lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "travail-de-rue-le-de-laval-lav",
@@ -28586,6 +34066,32 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "2026, chemin Gascon, Terrebonne, Lanaudière, QC, J6X 2E5",
     "hours": "variables",
     "isUrgent": true
+  },
+  {
+    "id": "tremplin-des-lecteurs-le-out",
+    "name": "Tremplin Des Lecteurs (Le)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 643-0745",
+    "description": "Formation de base en français, mathématiques et informatique aux adultes de 16 ans et plus, afin de favoriser leur retour aux études ou sur le marché du travail.* Cours offerts: français, mathématiques, informatique, alphabétisation. | Clientèle: adultes de 16 ans et plus, immigrant·e·s | Territoire: Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.tremplindeslecteurs.org",
+    "address": "160, boulevard Maloney Est, unité 12, Gatineau, Outaouais, QC, J8P 1C1",
+    "hours": "administration: lundi au jeudi 9h00 à 16h00"
+  },
+  {
+    "id": "tribunal-administratif-du-logeme-out",
+    "name": "Tribunal Administratif Du Logement - Gatineau",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 683-2245",
+    "description": "Tribunal spécialisé en matière de bail résidentiel.* Information sur les droits et obligations découlant du bail.* Conciliation des relations entre propriétaires et locataires.* Protection des droits des locataires.* Aide pour remplir les formulaires de demande au tribunal.* Outil en ligne pour le calcul de la fixation de loyer: www.tal.gouv.qc.ca/fr/calcul-pour-la-fixation-de-loyer/outil-de-calcul* Outil en ligne d'accès à l'information juridique relative au bail de logement: justicebot.ca* Outil en ligne permettant d'ajouter la preuve de la notification de la demande ainsi qu'une liste des pièces: extranet.tal.gouv.qc.ca/internet/asp/transmissionDoc/transmetDoc.asp | Clientèle: locataires, propriétaires | Territoire: Outaouais | Statut: organisme du gouvernement provincial",
+    "website": "www.tal.gouv.qc.ca",
+    "address": "170, rue de l'Hôtel-de-Ville, bureau 4.100, Gatineau, Outaouais, QC, J8X 4C2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "tribunal-administratif-du-logeme-lav",
@@ -28705,6 +34211,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 15h00, nuits très froides: 22h00 à 6h00"
   },
   {
+    "id": "universit-du-qu-bec-en-outaouais-out",
+    "name": "Université Du Québec En Outaouais - La Fabrique Juridique",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 595-2250",
+    "description": "Clinique juridique universitaire.* Services offerts par les personnes étudiantes en droit.* Service- conseil en droit du logement: conseils juridiques et stratégiques, accompagnement dans les démarches, soutien psychosocial.* Assermentation. | Clientèle: population générale | Territoire: Outaouais | Statut: organisme parapublic",
+    "website": "https://uqo.ca/cliniquejuridique",
+    "address": "283, boulevard Alexandre-Taché, bureau F2025, Gatineau, Outaouais, QC, J9A 1L8",
+    "hours": "lundi et mercredi 8h30 à 11h30 et 12h30 à 15h30"
+  },
+  {
     "id": "vaisseau-d-or-des-moulins-le-trb",
     "name": "Vaisseau D'Or (des Moulins) (le)",
     "category": "food",
@@ -28716,6 +34235,58 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://vaisseaudor.com",
     "address": "486, rue Gagnon, Terrebonne, Lanaudière, QC, J6W 2N7",
     "hours": "lundi au vendredi 10h00 à 17h00"
+  },
+  {
+    "id": "val-des-bois-municipalit-out",
+    "name": "Val-Des-Bois - Municipalité",
+    "category": "housing",
+    "subcategory": "Logement",
+    "city": "Bowman",
+    "province": "QC",
+    "phone": "819 454-2280",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.val-des- bois.ca/services-aux-citoyens/travaux-publics/calendrier-des-matieres-residuelles* Écocentre.* Système d'alertes et d'informations (SAI) Telmatik.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: centre sportif, activités, camp de jour.* Bibliothèque municipale et musées.* Location de salles. | Clientèle: grand public | Territoire: Val-Des-Bois | Statut: organisme municipal",
+    "website": "www.val-des-bois.ca",
+    "address": "595, route 309, Bowman, Outaouais, QC, J0X 3C0",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "val-des-monts-municipalit-out",
+    "name": "Val-Des-Monts - Municipalité",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Val-Des-Monts",
+    "province": "QC",
+    "phone": "819 457-9400",
+    "description": "Gestion des services municipaux.* Informations pratiques: animaux domestiques, changement d'adresse, installations septiques, etc.* Calendrier des collectes des matières résiduelles: www.val-des- monts.net/citoyens/collectes-val-des-monts* Subvention des produits d'hygiène durables: coucles lavables, compresses d'allaitement, coupes menstruelles, etc.* Programmes d'aide financière: biodigesteurs, plantation de végétaux sur la rive.* Paiement des taxes municipales.* Permis de construction, plaintes et requêtes.* Service de sécurité incendie.* Loisirs et culture: centre sportif, activités, camp de jour.* Rampes de mise à l'eau et station de lavage.* Répertoires des organismes communautaires.* Bibliothèques municipales.* Location de salles. | Clientèle: grand public | Territoire: Val-des-Monts | Statut: organisme municipal",
+    "website": "www.val-des-monts.net",
+    "address": "1, route du Carrefour, Val-Des-Monts, Outaouais, QC, J8N 4E9",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 12h30 à 16h30"
+  },
+  {
+    "id": "vall-e-jeunesse-outaouais-out",
+    "name": "Vallée Jeunesse Outaouais",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 778-8550",
+    "description": "Organisme de prévention du décrochage scolaire et social.* Projet Écho: services spécialisés intensifs en intervention familiale pour les familles vivant plusieurs situations problématiques.* Projet Catamaran: service alternatif de camp en soirée avec une programmation d'activités ludiques et de socialisation pour les jeunes vivant avec plusieurs problématiques.* Camp Exploration: service alternatif de camp de jour offert à des jeunes qui ne peuvent recevoir des services dans un camp régulier en raison de leurs problématiques multiples et importantes.* Belvédère: hébergement transitoire pour jeunes ayant été ou étant en situation d'itinérance.* Projet 14-17 ans: cadre scolaire alternatif où les jeunes qui ne fréquentent plus le milieu scolaire pour des problématiques de consommation ou de comportement peuvent participer à des ateliers de réinsertion à l'emploi et de développement personnel.* Projet 16-24 ans: cadre scolaire alternatif pour les jeunes adultes qui ont pour intérêt de poursuivre leur cheminement scolaire, mais qui éprouvent plusieurs difficultés à réintégrer le milieu scolaire. | Clientèle: projet Écho: jeunes de 7 à 17 ans vivant au minimum une double problématique, projet Catamaran : jeunes volontaires de 7 à 17 ans suivi·e·s par un·e travailleur·euse social·e et vivant au minimum une double problématique, Camp Exploration: jeunes de 7 à 17 ans présentant une multiproblématique, Belvédère: jeunes de 16 à 21 ans ayant été ou étant en situation d'itinérance, Coup de Pouce Jeunesse: jeunes de 13 à 16 ans à risque de décrochage scolaire et leurs familles, projets 14-17 et 16-24 ans: élèves du Centre des services scolaire des Portages de l'Outaouais (CSSPO) | Territoire: Gatineau, MRC les Collines-de-l'Outaouais | Statut: organisme à but non lucratif",
+    "website": "valleejeunesse.ca",
+    "address": "9, rue Dumas, Gatineau, Outaouais, QC, J8Y 2M4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "vent-dans-les-lettres-le-out",
+    "name": "Vent Dans Les Lettres (Le)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 561-5473",
+    "description": "Organisme en alphabétisation populaire offrant des ateliers en lecture, écriture et calcul.* Ateliers de calcul de base.* Ateliers de français de base.* Ateliers d'alpha cuisine.* Café-rencontres: droit au logement et à la santé, information sur la santé et la nutrition.* Sorties culturelles et recréatives. | Clientèle: adultes | Territoire: Gatineau | Statut: None or unknown",
+    "website": "www.ventdansleslettres.ca",
+    "address": "797, rue Jacques-Cartier, Gatineau, Outaouais, QC, J8T 2W1",
+    "hours": "lundi au jeudi 8h00 à 16h00"
   },
   {
     "id": "tr-garde-vickie-dube",
@@ -28807,6 +34378,44 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "225, rue Sherbrooke Est, Montréal, QC H2X 1C9",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "villa-st-louis-de-france-out",
+    "name": "Villa St-Louis-De-France",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Val-des-Monts",
+    "province": "QC",
+    "phone": "819 457-2121",
+    "description": "Logements subventionnés pour personnes aînées autonomes.* Activités sociales et récréatives organisées pour les résident·e·s: musique à l'occasion, bingo, sac de sable, cartes, darts, exercises (coquille pour exercices), fêtes des résidents ouvertes aux familles, etc. | Clientèle: personnes ainées autonomes de 65 ans et plus, logements subventionnés: personnes aînées avec un revenu inférieur à 39 000$ et moins de 100 000$ en actifs Capacité: 22 | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "address": "74, chemin du Pont, Val-des-Monts, Outaouais, QC, J8N 0L1",
+    "hours": "lundi au vendredi 9h00 à 16h00, samedi et dimanche sur appel"
+  },
+  {
+    "id": "voix-et-solidarit-des-aidants-na-out",
+    "name": "Voix Et Solidarité Des Aidants Naturels De La Vallée De La Gatineau",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 441-1001",
+    "description": "Soutien aux proches aidant·e·s.* Écoute, information et soutien psychosocial par téléphone et en personne.* Groupe de soutien.* Répit à domicile et hors domicile.* Atelier d'information.* Formations.* Conférences.* Défense des droits et intérêts. | Clientèle: proches aidant·e·s, grand public, répit à domicile: proches aidant·e·s d'aîné·e·s, proches aidant·e·s de personnes âgées de 18 ans et plus vivant avec une déficience intellectuelle ou physique, proches aidant·e·s de personnes autistes âgées de 18 ans et plus, répit au domicile: personnes âgées de 18 ans et plus tous diagnostics confondus, à l'exception des cas violents ou qui nécessitent certains soins invasifs | Territoire: MRC La Vallée-de-la-Gatineau | Statut: organisme à but non lucratif",
+    "website": "www.voixetsolidarite.com",
+    "address": "248, rue Cartier, Maniwaki, Outaouais, QC, J9E 3P5",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "waltham-municipalit-out",
+    "name": "Waltham - Municipalité",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Waltham",
+    "province": "QC",
+    "phone": "819 689-2057",
+    "description": "Gestion des services municipaux.* Services d'urbanisme et émission de permis.* Gestion des matières résiduelles.* Développement culturel et communautaire. | Clientèle: grand public | Territoire: Waltham | Statut: organisme municipal",
+    "website": "www.municipalitedewaltham.ca",
+    "address": "69, rue de l'Hôtel-de-Ville, Waltham, Outaouais, QC, J0X 3H0",
+    "hours": "lundi à jeudi 08h30 à 16h00"
   },
   {
     "id": "imm-wmc-mtl",
@@ -29235,6 +34844,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au dimanche 10h00 à 17h00"
   },
   {
+    "id": "cocentre-nord-l-out",
+    "name": "Écocentre Nord (L')",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Maniwaki",
+    "province": "QC",
+    "phone": "819 463-3241",
+    "description": "* Site de réemploi et récupération des matières résiduelles. | Clientèle: grand public | Territoire: MRC de La Vallée-de-la-Gatineau | Statut: organisme municipal",
+    "website": "www.mrcvg.qc.ca/index.php/ecocentre",
+    "address": "161, rue du Parc Industriel, Maniwaki, Outaouais, QC, J9E 3P3",
+    "hours": "lundi au vendredi 7h00 à 16h00, samedi 10h00 à 16h00"
+  },
+  {
+    "id": "cocentre-sud-l-out",
+    "name": "Écocentre Sud (L')",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Kazabazua",
+    "province": "QC",
+    "phone": "819 463-3241",
+    "description": "Site de réemploi et récupération des matières résiduelles.* Grilletarifaire:www.mrcvg.qc.ca/index.php/ecocentre | Clientèle: grand public | Territoire: MRC de La Vallée-de-la-Gatineau | Statut: organisme municipal",
+    "website": "www.mrcvg.qc.ca/index.php/ecocentre",
+    "address": "11, chemin Brundtland, Kazabazua, Outaouais, QC, J0X 1X0",
+    "hours": "lundi au vendredi 7h00 à 16h00, samedi 10h00 à 16h00"
+  },
+  {
     "id": "eglise-presbyterienne-st-columba-by-pcl",
     "name": "Église Presbytérienne St. Columba-By-The-Lake (l) - Programme Alimentaire",
     "category": "food",
@@ -29259,6 +34894,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://egliselacite.ca/",
     "address": "693, chemin des Anglais, MASCOUCHE, Lanaudière, QC, J7L 3R5",
     "hours": "variable"
+  },
+  {
+    "id": "lections-canada-out",
+    "name": "Élections Canada",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "1 800 463-6868",
+    "description": "Organise les élections, veille à leur validité et s'assure du respect des lois et règlements applicables. | Territoire: Canada | Statut: organisme du gouvernement fédéral",
+    "website": "www.elections.ca",
+    "address": "30, rue Victoria, Gatineau, Outaouais, QC, J8X 4H7",
+    "hours": "lundi au vendredi 9h00 à 24h00"
   },
   {
     "id": "equijustice-lanaudiere-sud-rep",
@@ -29300,6 +34948,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 15h30"
   },
   {
+    "id": "quipe-soutien-famille-out",
+    "name": "Équipe Soutien-Famille",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Gatineau",
+    "province": "QC",
+    "phone": "819 682-2037",
+    "description": "Soutien parental et répit aux familles en difficulté, afin de prévenir l'abus et la négligence chez les enfants.* Répit pour enfant.* Accompagnement et visites de soutien.* Soutien aux familles en difficulté. | Clientèle: service de répit: familles avec enfants âgé·e·s de 18 mois à 5 ans | Territoire: secteurs Aylmer et Hull de Gatineau | Statut: organisme à but non lucratif",
+    "website": "equipesoutienfamille.com",
+    "address": "343, rue Notre-Dame, Gatineau, Outaouais, QC, J8P 1L3",
+    "hours": "lundi au vendredi 8h30 à 16h30, répit: lundi au mercredi 8h30 à 14h30"
+  },
+  {
     "id": "quipe-sp-cialis-e-en-pr-vention--lav",
     "name": "Équipe Spécialisée En Prévention Du Suicide",
     "category": "mentalHealth",
@@ -29324,6 +34985,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "letape.org/laval",
     "address": "1435, boulevard Saint-Martin Ouest, bureau 400, Chomedey, Laval, QC, H7S 2C6",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "tre-et-devenir-out",
+    "name": "Être Et Devenir",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Venosta",
+    "province": "QC",
+    "phone": "819 412-1171",
+    "description": "Soutien des activités communautaires favorisant l'engagement et le leadership des personnes de 9 à 34 ans. * Activités sociales et sportives: marches, club de lecture, soirées pour enfants, etc. * Ateliers. * Dîner Soupe et Sandwich. | Clientèle: personnes de 9 à 34 ans | Territoire: Outaouais | Statut: organisme à but non lucratif",
+    "website": "www.venostastation.com",
+    "address": "8, chemin de la Station, Venosta, Outaouais, QC, J0X 3E0",
+    "hours": "Voir site web"
   }
 ];
 

@@ -337,6 +337,71 @@ servicesRouter.post("/admin/services", requireAdminKey, async (req, res) => {
   }
 });
 
+// ── POST /api/admin/services/bulk  (batch create — bypass rate-limit pour imports massifs) ──
+servicesRouter.post("/admin/services/bulk", requireAdminKey, async (req, res) => {
+  try {
+    const items = Array.isArray(req.body) ? req.body : req.body?.items;
+    if (!Array.isArray(items)) {
+      return res.status(400).json({ error: "Body must be an array of services or { items: [...] }" });
+    }
+    if (items.length === 0) return res.status(400).json({ error: "Empty array" });
+    if (items.length > 1000) return res.status(400).json({ error: "Max 1000 items per batch" });
+
+    const results: { id: string; status: "created" | "skipped" | "error"; error?: string }[] = [];
+
+    for (const body of items) {
+      try {
+        if (!body?.id || !body?.name || !body?.category) {
+          results.push({ id: body?.id ?? "?", status: "error", error: "id, name, category required" });
+          continue;
+        }
+        if (!VALID_CATEGORIES.includes(body.category)) {
+          results.push({ id: body.id, status: "error", error: "invalid category" });
+          continue;
+        }
+        if (body.province !== undefined && !VALID_PROVINCES.includes(body.province)) {
+          results.push({ id: body.id, status: "error", error: "invalid province" });
+          continue;
+        }
+        await db.insert(servicesTable).values({
+          id: body.id,
+          name: body.name,
+          category: body.category,
+          subcategory: body.subcategory ?? "",
+          city: body.city ?? "",
+          province: body.province ?? "QC",
+          phone: body.phone ?? "",
+          website: body.website ?? "",
+          description: body.description ?? "",
+          address: body.address ?? null,
+          hours: body.hours ?? null,
+          isUrgent: body.isUrgent ?? false,
+          isProvinceWide: body.isProvinceWide ?? false,
+          lat: body.lat != null ? Number(body.lat) : null,
+          lng: body.lng != null ? Number(body.lng) : null,
+          active: body.active ?? true,
+        });
+        results.push({ id: body.id, status: "created" });
+      } catch (err: any) {
+        const pgCode = err?.code ?? err?.cause?.code;
+        if (pgCode === "23505") {
+          results.push({ id: body.id, status: "skipped", error: "duplicate id" });
+        } else {
+          results.push({ id: body?.id ?? "?", status: "error", error: err?.message?.slice(0, 200) ?? "unknown" });
+        }
+      }
+    }
+
+    const created = results.filter((r) => r.status === "created").length;
+    const skipped = results.filter((r) => r.status === "skipped").length;
+    const errors = results.filter((r) => r.status === "error").length;
+    return res.status(201).json({ total: items.length, created, skipped, errors, results });
+  } catch (err) {
+    logger.error({ err }, "POST /api/admin/services/bulk error");
+    return res.status(500).json({ error: "Internal error" });
+  }
+});
+
 // ── PUT /api/admin/services/:id  (update) ──────────────────────────────────
 servicesRouter.put("/admin/services/:id", requireAdminKey, async (req, res) => {
   try {
