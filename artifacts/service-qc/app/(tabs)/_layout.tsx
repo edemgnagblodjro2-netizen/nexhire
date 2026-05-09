@@ -16,40 +16,43 @@ function ClassicTabLayout() {
   const isIOS = Platform.OS === "ios";
   const isWeb = Platform.OS === "web";
 
+  const TAB_BG = "#0E7E6E";
+  const TAB_BG_TOP_BORDER = "#0A6055";
+  const TAB_ACTIVE = "#FFFFFF";
+  const TAB_INACTIVE = "rgba(255,255,255,0.65)";
+
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.mutedForeground,
+        tabBarActiveTintColor: TAB_ACTIVE,
+        tabBarInactiveTintColor: TAB_INACTIVE,
         headerShown: false,
         tabBarStyle: {
           position: "absolute",
-          backgroundColor: isIOS ? "transparent" : colors.background,
-          borderTopWidth: isWeb ? 1 : 0,
-          borderTopColor: colors.border,
-          elevation: 0,
+          backgroundColor: TAB_BG,
+          borderTopWidth: 1,
+          borderTopColor: TAB_BG_TOP_BORDER,
+          elevation: 8,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.12,
+          shadowRadius: 8,
           ...(isWeb ? { height: 84 } : {}),
         },
-        tabBarBackground: () =>
-          isIOS ? (
-            <BlurView
-              intensity={100}
-              tint={isDark ? "dark" : "light"}
-              style={StyleSheet.absoluteFill}
-            />
-          ) : isWeb ? (
-            <View
-              style={[
-                StyleSheet.absoluteFill,
-                { backgroundColor: colors.background },
-              ]}
-            />
-          ) : null,
+        tabBarBackground: () => (
+          <View
+            style={[
+              StyleSheet.absoluteFill,
+              { backgroundColor: TAB_BG },
+            ]}
+          />
+        ),
         tabBarLabelStyle: {
           fontSize: 10,
-          fontWeight: "600",
+          fontWeight: "700",
           marginBottom: isWeb ? 4 : 0,
           includeFontPadding: false,
+          letterSpacing: 0.2,
         },
         tabBarItemStyle: {
           paddingHorizontal: 0,
@@ -76,7 +79,7 @@ function ClassicTabLayout() {
               style={
                 focused
                   ? {
-                      backgroundColor: colors.primary,
+                      backgroundColor: "#FFFFFF",
                       borderRadius: 14,
                       paddingHorizontal: 8,
                       paddingVertical: 3,
@@ -85,7 +88,7 @@ function ClassicTabLayout() {
                   : undefined
               }
             >
-              <Feather name="cpu" size={21} color={focused ? "#fff" : color} />
+              <Feather name="cpu" size={21} color={focused ? "#0E7E6E" : color} />
             </View>
           ),
         }}
