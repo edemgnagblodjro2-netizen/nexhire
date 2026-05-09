@@ -118,6 +118,19 @@ export const CATEGORY_LABELS: Record<Category, string> = {
 // ─────────────────────────────────────────────────────────────────────────────
 const __SERVICES_FROM_API: Service[] = [
   {
+    "id": "1313-chomedey-le-lav",
+    "name": "1313 Chomedey (Le)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 687-0313",
+    "description": "Logements abordables avec services pour personnes aînées.* Studio, 3½ et 4½.* Chauffage, électricité et câble.* Service de veille aux locataires 24 heures, 7 jours.* Service de 5 repas par semaine.* Salon de coiffure.* Activités récréatives pour les locataires: tricot, bingo, chant, danse, etc.* Sorties. | Clientèle: personnes autonomes de 65 ans et plus Capacité: 159 logements | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "le1313chomedey.com",
+    "address": "1313, boulevard Chomedey, Chomedey, Laval, QC, H7V 0A2",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "ab-211",
     "name": "211 Alberta",
     "category": "social",
@@ -599,6 +612,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.shq.gouv.qc.ca",
     "address": "Service en ligne / téléphonique — SHQ, 1054 boul. René-Lévesque Est, Québec QC G1R 4Y8",
     "hours": "Lun-ven 9h-17h. Programmes d'aide à l'achat, financement, services notariaux."
+  },
+  {
+    "id": "action-autisme-lav",
+    "name": "Action Autisme",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 627-2250",
+    "description": "* Soutien aux parents: accompagnement, remboursement de formations et accès à une matériathèque offrant des équipments spécialisés (jeux, livres, modules, etc.).* Soutien aux personnes autistes adultes: accompagnement à court ou à long terme adapté aux besoins.* Prêt ou achat de matériel spécialisé pour les personnes professionnelles. | Clientèle: familles de personnes autistes, adultes autistes, professionnel·le·s travaillant avec les personnes neurodivergentes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "actionautisme.org",
+    "address": "1705, boulevard des Laurentides, bureau 250, Vimont, Laval, QC, H7M 2P5",
+    "hours": "sur demande"
   },
   {
     "id": "action-dignite-lanaudiere-jol",
@@ -1214,6 +1240,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
+    "id": "aire-ouverte-quartier-laval-des--lav",
+    "name": "Aire Ouverte Quartier, Laval-Des-Rapides",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-8333",
+    "description": "Services confidentiels variés, avec ou sans rendez-vous, pour les jeunes de 12 à 25 ans.* Suivi psychosocial individuel.* Clinique de santé sexuelle: contraception, tests de grossesse, dépistage des ITSS, questions sur le genre et l'orientation sexuelle.* Renseignements sur l'aide financière et renseignements juridiques.* Conseils pour les études, le travail et le logement. | Clientèle: jeunes de 12 à 25 ans | Territoire: Laval | Statut: organisme du gouvernement provincial",
+    "website": "lavalensante.com/aireouverte",
+    "address": "308, boulevard Cartier Ouest, porte 4, Laval-des-Rapides, Laval, QC, H7N 2J2",
+    "hours": "sans rendez-vous: mercredi à jeudi 12h00 à 20h00"
+  },
+  {
+    "id": "aire-ouverte-roi-du-nord-sainte--lav",
+    "name": "Aire Ouverte Roi-Du-Nord, Sainte-Rose",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-8333",
+    "description": "Services confidentiels variés, avec ou sans rendez-vous, pour les jeunes de 12 à 25 ans.* Suivi psychosocial individuel.* Clinique de santé sexuelle: contraception, tests de grossesse, dépistage des ITSS, questions sur le genre et l'orientation sexuelle.* Renseignements sur l'aide financière et renseignements juridiques.* Conseils pour les études, le travail et le logement. | Clientèle: jeunes de 12 à 25 ans | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "lavalensante.com/aireouverte",
+    "address": "238, boulevard Roi-du-Nord, Sainte-Rose, Laval, QC, H7L 4R5",
+    "hours": "lundi 12h00 à 20h00, samedi 12h00 à 17h00"
+  },
+  {
     "id": "msss-clsc-montreal-aire-ouverte-sauriol",
     "name": "Aire Ouverte Sauriol",
     "category": "health",
@@ -1317,6 +1369,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://literacyunlimited.ca",
     "address": "90 Av. de Jubilee Square, Pointe-Claire, QC H9R 1M3",
     "hours": "Lun-jeu 9h-16h. Fermé mi-juin à septembre."
+  },
+  {
+    "id": "amicale-de-saint-vincent-de-paul-lav",
+    "name": "Amicale De Saint-Vincent-De-Paul (L')",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "438 498-3516",
+    "description": "* Activités récréatives: bingo, danse, cartes.* Soupers thématiques.* Sorties. | Clientèle: personnes de 50 ans et plus, seules ou en couple | Territoire: quartier Saint-Vincent-de-Paul | Statut: organisme à but non lucratif",
+    "address": "1111, place J.-Eudes-Blanchard, Saint-Vincent-de-Paul, Laval, QC, H7C 1T1",
+    "hours": "jeudi 19h00 à 22h00"
   },
   {
     "id": "amis-de-lamater-les-trb",
@@ -1461,6 +1525,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "arrimage-l-bureau-de-laval-lav",
+    "name": "Arrimage (L') - Bureau De Laval",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 967-9611",
+    "description": "Intégration et réintégration professionnelle.* Accueil, évaluation et information.* Rédaction de CV et de lettres de présentation.* Soutien à la recherche d'emploi et à la préparation aux entrevues.* Visites d'entreprises.* Suivi et maintien en emploi. | Clientèle: personnes vivant avec un diagnostic de trouble de santé mentale | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.larrimage.ca",
+    "address": "500, boulevard Saint-Martin Ouest, bureau 370, Chomedey, Laval, QC, H7M 3Y2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "association-amicale-des-jeunes-e-lav",
+    "name": "Association Amicale Des Jeunes Et Parents Agape",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 686-4333",
+    "description": "Soutien aux communautés anglophones et multiculturelles de Laval.Alimentation* Distribution de nourriture après évaluation des besoins.* Comptoir de pain: distribution de pain, viennoiseries, pizzas et autres pâtisseries.* Paniers de Noël et de Hanouka pour les bénéficiaires de l'aide alimentaire.Famille et communautaire* Gestion budgétaire pour les familles à faible revenu.* Clear head, clear soul: rencontres pour les personnes aux prises avec différentes dépendances.* Travail social.Personnes âgées* Senior Wellness Centre: activités sociales, apprentissage et présentations sur la santé, cours d'iPad, etc.Immigrants* Maison de transition pour les nouveaux arrivants et les réfugiés à la recherche d'un logement permanent.Assistance matérielle* Récupération sur place de dons de jouets, de vêtements et d'articles de maison (vaisselle, draps, etc.). | Clientèle: personnes anglophones à faible revenu, Lavalloise, communautés multiculturelles, maison de transition: familles nouvelles arrivantes ou réfugié·e·s | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "agapeassociationinc.com",
+    "address": "3950, boulevard Notre-Dame, Chomedey, Laval, QC, H7W 1S7",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "association-carrefour-famille-montc-sll",
     "name": "Association Carrefour Famille Montcalm - Supervision des Droits D'Accès",
     "category": "family",
@@ -1472,6 +1562,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.acfmqc.org/sda",
     "address": "20, chemin Payette, Saint-Lin–Laurentides, Lanaudière, QC, J5M 0L4",
     "hours": "variable"
+  },
+  {
+    "id": "association-coop-rative-d-conomi-lav",
+    "name": "Association Coopérative D'Économie Familiale - Île Jésus",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-9428",
+    "description": "* Consultation budgétaire individuelle.* Cours et ateliers sur le budget et la consommation.* Information sur les droits et obligations des locataires.* Prêt du Fonds d'entraide Desjardins.* Défense des droits des personnes consommatrices.* Aide aux ententes de paiement d'Hydro-Québec. | Clientèle: prêt du Fonds d'entraide Desjardins: personnes éprouvant des difficultés financières, personnes faisant face à des dépenses ponctuelles d'urgence | Territoire: Laval, prêt du Fonds d'entraide Desjardins: Laval, MRC Thérèse-De Blainville | Statut: Cooperative",
+    "website": "www.aceflaval.com",
+    "address": "1686, boulevard des Laurentides, bureau 103, Vimont, Laval, QC, H7M 2P4",
+    "hours": "lundi au jeudi 8h30 à 16h30"
   },
   {
     "id": "association-cooperative-d-economie-jol",
@@ -1500,6 +1603,82 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 15h00"
   },
   {
+    "id": "association-de-balle-des-jeunes--lav",
+    "name": "Association De Balle Des Jeunes Handicapées De Laval",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-2592",
+    "description": "* Baseball et balle molle. | Clientèle: personnes 18 et plus vivant avec un handicap physique ou intellectuel | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "2020, avenue Laplante, Chomedey, Laval, QC, H7S 1E7",
+    "hours": "administration : variables, activités: mi-mai à fin août, vendredi 18h30 à 20h00 au Centre de la nature"
+  },
+  {
+    "id": "association-des-personnes-vivant-lav",
+    "name": "Association Des Personnes Vivant Avec Une Surdité De Laval",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "819-485-0175",
+    "description": "* Sensibilisation aux conséquences de la surdité.* Communication: explication de textes en LSQ, rédaction de documents officiels, réalisation de vidéos en LSQ.* Intervention communautaire: soutien et référence vers les ressources appropriées.* Activités: conférences, sorties, visites culturelles et récréatives. | Clientèle: personnes vivant avec une surdité | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "387, boulevard des Prairies, bureau 211, Laval-des-Rapides, Laval, QC, H7N 2W4",
+    "hours": "lundi au vendredi 9h00 à 16h30"
+  },
+  {
+    "id": "association-des-popotes-roulante-lav",
+    "name": "Association Des Popotes Roulantes De Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "579 934-3980",
+    "description": "* Liaison, représentation et communication entre les services de livraison de repas à domicile pour personnes âgées, en perte d'autonomie, ainsi que les proches aidant·e·s.* Guichet de liaison pour la réception des nouvelles demandes de services de popotes.* Service d'information auprès de la population sur les services de popotes roulantes. | Clientèle: personnes aînées, personnes en pertes d'autonomie permanente ou temporaire, popotes roulantes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "popoteroulantelaval.org",
+    "address": "1870, rue Michelin, Sainte-Rose, Laval, QC, H7L 4R3",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "association-des-r-sidents-de-cha-lav",
+    "name": "Association Des Résidents De Champfleury",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 963-0676",
+    "description": "* Activités récréatives et sportives pour enfants et adultes.* Événements et activités ponctuelles: Halloween, Noël, vente de garage, etc.* Location de salles.* Camp de jour. | Clientèle: grand public Capacité: jusqu'à 115 personnes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "ochampfleury.org",
+    "address": "2585, boulevard des Oiseaux, Sainte-Rose, Laval, QC, H7L 4M4",
+    "hours": "centre communautaire Champfleury: lundi au vendredi 9h00 à 23h00, samedi et dimanche 8h30 à 18h00, service à la clientèle: lundi au jeudi 9h00 à 20h30, vendredi 9h00 à 16h00, samedi 9h00 à 13h00"
+  },
+  {
+    "id": "association-du-diab-te-laval-lav",
+    "name": "Association Du Diabète Laval",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 686-0330",
+    "description": "* Prévention, sensibilisation et information sur le diabète et ses effets.* Soutien aux personnes diabétiques et à leur famille.* Maintien des services adaptés.* Rencontres avec des diététistes.* Atelier de cuisine avec nutritionniste.* Atelier sur les saines habitudes de vie.* Formation de mise en forme douce et de yoga.* Conférences. | Clientèle: personnes pré-diabétiques et diabétiques, grand public | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "diabetelaval.qc.ca",
+    "address": "3030, boulevard Le Carrefour, bureau 203, Chomedey, Laval, QC, H7T 2P5",
+    "hours": "lundi au vendredi 10h00 à 16h00"
+  },
+  {
+    "id": "association-dysphasie-lav",
+    "name": "Association Dysphasie +",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "1 855 937-3670",
+    "description": "* Conférences pour parents.* Groupes d'entraide et d'échange entre parents, ateliers thématiques.* Formation pour parents et intervenant·e·s.* Accompagnement et soutien.* Ateliers de stimulation pour enfants de 3 à 12 ans.* Activités de socialisation et développement de l'autonomie pour adolescent·e·s de 13 à 16 ans.* Groupes de loisirs pour personnes de 17 ans et plus. | Clientèle: personnes vivant avec un TDL (dysphasie), leurs proches Capacité: 30 | Territoire: Laval, île de Montréal | Statut: organisme à but non lucratif",
+    "website": "dysphasieplus.com",
+    "address": "3235, boulevard Saint-Martin Est, bureau 216, Duvernay, Laval, QC, H7E 5G8",
+    "hours": "variable"
+  },
+  {
     "id": "association-handami-pour-personnes-sll",
     "name": "Association Handami pour Personnes Handicapées et Leur Famille",
     "category": "social",
@@ -1511,6 +1690,84 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://handami.com",
     "address": "460, rue du Parc, Saint-Lin–Laurentides, Lanaudière, QC, J5M 3A2",
     "hours": "mardi au vendredi 8h30 à 15h30."
+  },
+  {
+    "id": "association-hispanophone-de-lava-lav",
+    "name": "Association Hispanophone De Laval",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 447-9984",
+    "description": "Intégration des personnes hispanophones.* Promotion de la langue et de la culture hispaniques.* Cours d'espagnol et échanges lingustiques.* Atelier de français pour hispanophones.* Club de lecture.* Cours de danse et soirées dansantes.* Conférences.* Activités de plein air. | Clientèle: personnes hispanophones ou ayant un intérêt pour cette culture | Territoire: Rive-Nord, Laval, Laurentides | Statut: organisme à but non lucratif",
+    "website": "hispanolaval.com/fr",
+    "address": "1450, boulevard Pie-X, Chomedey, Laval, QC, H7V 3C1",
+    "hours": "samedi 10h00 à 12h00"
+  },
+  {
+    "id": "association-iris-programme-de-so-lav",
+    "name": "Association Iris - Programme De Soutien À La Vie En Logement - Laval",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 936-9963",
+    "description": "Programme de soutien à la vie en logement (PSVL).* Centre de jour et local communautaire.* Activités favorisant l'autonomie.* Écoute et encadrement.* Suivi individuel.* Visites à domicile.* Sorties en groupe.* Séances d'information.* Activités thématiques en groupe restreint.* Activités d'apprentissage, d'information, de création, de socialisation, de rétablissement, etc. | Clientèle: adultes vivant avec des problèmes de santé mentale sévères ou persistants, avec ou sans recommandation médicale | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "assoiris.ca",
+    "address": "3542, boulevard de la Concorde Est, Duvernay, Laval, QC, H7E 3A4",
+    "hours": "lundi au samedi 10h00 à 17h00"
+  },
+  {
+    "id": "association-lavalloise-de-parent-lav",
+    "name": "Association Lavalloise De Parents Et Amis Pour Le Bien-Être Mental",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "1 888 688-0541",
+    "description": "Soutien aux familles et ami·e·s des personnes vivant avec une maladie mentale.* Accueil téléphonique.* Information, référence et accompagnement.* Information sur la P-38.* Consultation individuelle.* Groupe de soutien.* Ateliers psychoéducatifs et formations.* Conférences en webdiffusion.* Services jeunesse: rencontres individuelles et ateliers de groupe pour les 6 ans et plus.* Représentation sociale et contribution à la recherche sur la maladie mentale.* Sensibilisation dans les écoles. | Clientèle: parents, conjoint·e·s, ami·e·s, enfants de 6 à 17 ans faisant partie de l'entourage de personnes vivant avec une maladie mentale Capacité: formations et groupes de soutien: 12 personnes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.alpabem.qc.ca",
+    "address": "645, boulevard des Laurentides, Pont-Viau, Laval, QC, H7G 2V8",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00, ateliers et groupes de soutien: en soirée"
+  },
+  {
+    "id": "association-lavalloise-des-perso-lav",
+    "name": "Association Lavalloise Des Personnes Aidantes",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 686-2572",
+    "description": "* Accueil et référence.* Information, conférences, formation et ateliers.* Centres de jour et répit externe.* Répit à domicile: soins d'hygiène, médication, préparation de repas, aide au ménage, courses, etc.* Groupe de soutien.* Intervention psychosociale individuelle.* Activités sociales et café-rencontre.* Activités de stimulation pour personnes aînées.* Gestion du chèque emploi-service.* Réception de Noël pour les membres. | Clientèle: personnes proches aidantes d'une personne en perte d'autonomie ou ayant une déficience physique, intellectuelle ou un trouble du spectre de l'autisme, centres de jour: personnes aînées, personnes de 21 ans et plus vivant avec une déficience physique, intellectuelle ou un trouble du spectre de l'autisme Capacité: variable | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.aldpa.org",
+    "address": "1850, boulevard Le Corbusier, bureau 100, Chomedey, Laval, QC, H7S 2K1",
+    "hours": "bureau: lundi au vendredi 8h00 à 16h30, répit à domicile: 24 heures, 7 jours (sauf lors de congés fériés), centre de jour: lundi au vendredi 9h30 à 15h30"
+  },
+  {
+    "id": "association-lavalloise-pour-le-t-lav",
+    "name": "Association Lavalloise Pour Le Transport Adapté",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 933-6101",
+    "description": "* Information sur les services de transport adaptés ou accessibles.* Représentation et défense des droits.* Aide avec les plaintes.* Aide avec les démarches pour l'admission au transport adapté.* Conférences d'information dans les résidences pour personnes aînées et les organismes communautaires.* Activités pour les membres. | Clientèle: personnes avec une limitation physique, intellectuelle, psychique ou visuelle, personnes à mobilité réduite | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "altalaval.ca",
+    "address": "155, boulevard Je-Me-Souviens, Sainte-Rose, Laval, QC, H7L 1V6",
+    "hours": "lundi au vendredi 9h00 à 16h30"
+  },
+  {
+    "id": "association-midi-quarante-lav",
+    "name": "Association Midi-Quarante",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 664-0711",
+    "description": "Service spécialisé et personnalisé de consultation et d'accompagnement en recherche d'emploi.* Bilan de compétences, orientation, rédaction de CV, préparation d'entrevue, accès aux ordinateurs, coaching, ateliers informatiques, coaching LinkedIn, webinaires.* Service en personne ou par vidéoconférence, selon la préférence du·de la client·e. | Clientèle: personnes de 40 ans et plus | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "midi40.com",
+    "address": "3100, boulevard de la Concorde Est, bureau 204, Duvernay, Laval, QC, H7E 2B8",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 9h00 à 12h00"
   },
   {
     "id": "association-panda-mrc-les-moulins-trb",
@@ -1526,6 +1783,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "bureau: variable"
   },
   {
+    "id": "association-pour-ain-s-r-sidant--lav",
+    "name": "Association Pour Ainés Résidant À Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 661-5252",
+    "description": "Services aux personnes aînées.* Écoute et référence.* Ateliers récréatifs, sportifs et artistiques.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV).* Cours d'informatique.* Dîners mensuels, dîners interculturels et cuisines collectives.* Formation aux bénévoles.* Conférences gratuites.* Activités intergénérationnelles et café-rencontre Entre-Nous.* Point de service Bonhomme à lunettes.* Accompagnement-transport à l'épicerie. | Clientèle: personnes de 50 ans et plus | Territoire: Est de Laval, ITMAV: Saint-Vincent-de-Paul, Duvernay, Saint-François | Statut: organisme à but non lucratif",
+    "website": "www.aparl.org",
+    "address": "4901, rue Saint-Joseph, Saint-Vincent-de-Paul, Laval, QC, H7C 1H6",
+    "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 16h00, été: lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h30"
+  },
+  {
+    "id": "association-pour-ain-s-r-sidant--lav-2",
+    "name": "Association Pour Ainés Résidant À Laval - Accompagnement-Transport",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 661-5252",
+    "description": "* Accompagnement et transport à l'épicerie en groupe, par des bénévoles. | Clientèle: personnes de 50 ans et plus sans véhicules, autonomes ou en légère perte d'autonomie | Territoire: Duvernay, Saint-François, Saint-Vincent-De-Paul | Statut: organisme à but non lucratif",
+    "website": "www.aparl.org",
+    "address": "4901, rue Saint-Joseph, Saint-Vincent-de-Paul, Laval, QC, H7C 1H6",
+    "hours": "lundi au mercredi, au deux semaines"
+  },
+  {
+    "id": "association-pour-a-n-s-r-sidant--lav",
+    "name": "Association Pour Aînés Résidant À Laval - Saint-François",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 661-5252",
+    "description": "Services aux personnes aînées.* Écoute et référence.* Ateliers récréatifs, sportifs et artistiques.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV).* Cours d'informatique.* Dîners mensuels, dîners interculturels et cuisines collectives.* Formation aux bénévoles.* Conférences gratuites.* Activités intergénérationnelles et café-rencontre Entre-Nous.* Point de service Bonhomme à lunettes.* Accompagnement-transport à l'épicerie. | Clientèle: personnes de 50 ans et plus | Territoire: Saint-François | Statut: organisme à but non lucratif",
+    "website": "www.aparl.org",
+    "address": "1000, rue Marie-Uguay, Laval, QC, H7A 0K3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-qu-bec-france-laval-lav",
+    "name": "Association Québec-France - Laval",
+    "category": "immigration",
+    "subcategory": "Immigration et communautés culturelles",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 963-0747",
+    "description": "Développement d'une relation franco-québécoise directe et privilégiée.*Soupers conférences.* Activités culturelles: mise en valeur de la culture québécoise et française.* Spectacles. | Clientèle: personnes francophiles et défenseur·euse·s de la langue française | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.quebec-france-laval.org",
+    "address": "3235, boulevard Saint-Martin Est, Duvernay, Laval, QC, H7E 5G8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-qu-b-coise-des-traum-lav",
+    "name": "Association Québécoise Des Traumatisés Crâniens - Région De Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 274-7447",
+    "description": "* Intégration sociale.* Activités de loisirs.* Intervention psychosociale: rencontres individuelles ou familiales, ateliers.* Groupes de soutien.* Soutien aux proches: répit, rencontres, ateliers.* Sensibilisation.* Information, conférences. | Clientèle: personnes ayant un traumatisme craniocérébral (TCC), familles, public, professionnel·le·s Capacité: groupes de soutien: 7 à 8 personnes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.aqtc.ca",
+    "address": "220, avenue du Parc, Laval-des-Rapides, Laval, QC, H7N 3X4",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
     "id": "association-quebecoise-de-voile-ada-pcl",
     "name": "Association Québécoise de Voile Adaptée",
     "category": "social",
@@ -1537,6 +1859,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.aqva.org/fr",
     "address": "1, avenue Cartier, Pointe-Claire, Montréal, QC, H9S 4R3",
     "hours": "lundi au vendredi 10h00 à 21h00, samedi 9h00 à 17h00, dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "association-r-gionale-de-loisirs-lav",
+    "name": "Association Régionale De Loisirs Pour Personnes Handicapées De Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-2354",
+    "description": "* Information, référence.* Consultation.* Promotion de l'importance d'être actif·ve physiquement et de pratiquer des activités de loisir stimulantes afin d'améliorer le bien-être et les saines habitudes de vie des personnes handicapées.* Carte accompagnement loisir (CAL). | Clientèle: toute personne vivant avec un handicap, peu importe l'âge et le handicap | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "arlphl.qc.ca",
+    "address": "387, boulevard des Prairies, bureau 215-A, Laval-des-Rapides, Laval, QC, H7N 2W4",
+    "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
     "id": "association-regionale-de-loisirs-po-jol",
@@ -1839,6 +2174,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "atelier-de-tri-des-mati-res-plas-lav",
+    "name": "Atelier De Tri Des Matières Plastiques Recyclables Du Québec",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 667-5347",
+    "description": "Entreprise d'insertion spécialisée dans le recyclage de matières plastiques provenant de résidus commerciaux et industriels.* Parcours d'insertion structuré et personnalisé.* Formation-expérience de travail de 6 mois en milieu industriel.* Possibilité de certification en conduite sécuritaire de chariot élévateur et santé et sécurité au travail.* Démontage, déchiquetage, granulation et récupération des inventaires périmés. | Clientèle: personnes de 18 ans et plus, sans emploi et éprouvant de la difficulté à trouver ou maintenir un emploi | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "atmprq.com",
+    "address": "3405, boulevard Industriel, Sainte-Rose, Laval, QC, H7L 4S3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "atelier-pour-hommes-de-l-ouest-de-l-pcl",
     "name": "Atelier pour Hommes de L'Ouest de L'Ile",
     "category": "social",
@@ -1850,6 +2198,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.westislandmensshed.com",
     "address": "114, avenue Donegani, Pointe-Claire, Montréal, QC, H9R 2V4",
     "hours": "Lundi: 18h00, variables selon les activtés"
+  },
+  {
+    "id": "au-jardin-de-la-famille-de-fabre-lav",
+    "name": "Au Jardin De La Famille De Fabreville Inc.",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 622-9456",
+    "description": "* Alphabétisation: lecture, écriture, calcul, communication.* Francisation.* Friperie.* Aide aux devoirs.* Entrepôt: atelier de traitement et de récupération de papiers, cartons, vitres et métaux.* Intégration socioprofessionnelle sous forme de plateaux de travail, formation, accompagnement et encadrement.* Service de distribution de biens de première nécessitée. | Clientèle: personnes vivant avec une limitation intellectuelle, physique ou psychologique, familles à faible revenu, personnes immigrantes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "jardindelafamille.org",
+    "address": "3867, boulevard Sainte-Rose, Fabreville, Laval, QC, H7P 1C8",
+    "hours": "administration: lundi au vendredi 9h00 à 16h00, friperie (heures régulières): lundi au samedi 9h00 à 17h00, friperie (heures d'été): lundi au vendredi 9h00 à 18h00, samedi 9h00 à 17h00"
   },
   {
     "id": "tr-garde-au-jardin-fleurice",
@@ -1865,6 +2226,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "au-panier-lav",
+    "name": "Au Panier",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "438 497-6140",
+    "description": "* Cafés-rencontres et activités.* Information, mise en réseau informelle, etc.* Formation: ateliers et bénévolat.* Épicerie solidaire.* Collations et plats prêt-à-manger. | Clientèle: résident·es de vivant sous le seuil du faible revenu | Territoire: Chomedey (codes postaux H7W, H7V, H7T, H7S) | Statut: organisme à but non lucratif",
+    "website": "www.aupanier.org",
+    "address": "3700, boulevard Notre-Dame, Chomedey, Laval, QC, H7V 1R4",
+    "hours": "lundi et mardi 10h00 à 17h00, mercredi, jeudi et vendredi 10h00 à 19h00, samedi 10h00 à 17h00"
+  },
+  {
+    "id": "auberge-du-coeur-l-envol-e-h-ber-lav",
+    "name": "Auberge Du Coeur L'Envolée - Hébergements De Transition",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 628-0907",
+    "description": "Espace d'affiliation sociale mixte pour jeunes éprouvant des difficultés d'adaptation et qui se retrouvent temporairement sans domicile fixe.?* Hébergement de court et long terme.* Studios pour jeunes mères. | Clientèle: jeunes de 16 à 22 ans, en difficulté et temporairement sans domicile fixe Capacité: 16 chambres individuelles | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.auberge-envolee.org",
+    "address": "1620, rue des Patriotes, Sainte-Rose, Laval, QC, H7L 2N6",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "auberge-du-coeur-l-envol-e-refug-lav",
+    "name": "Auberge Du Coeur L'Envolée - Refuge",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 628-0907",
+    "description": "Refuge pour jeunes de 16 à 22 ans en difficulté et temporairement sans domicile fixe. | Clientèle: jeunes de 16 à 22 ans, en difficulté et temporairement sans domicile fixe Capacité: 1 chambre | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.auberge-envolee.org",
+    "address": "1620, rue des Patriotes, Sainte-Rose, Laval, QC, H7L 2N6",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "auberge-du-coeur-roland-gauvreau-jol",
     "name": "Auberge du Coeur Roland-Gauvreau",
     "category": "family",
@@ -1876,6 +2276,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.rolandgauvreau.ca",
     "address": "638, Boulevard de la Base-de-Roc, Joliette, Lanaudière, QC, J6E 5P7",
     "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "avc-aphasie-laval-lav",
+    "name": "Avc-Aphasie Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 937-3666",
+    "description": "* Ateliers: stimulation du langage, menuiserie, créativité, informatique, GYM-AVC, théâtre, stimulation cognitive.* Groupes d'entraide: groupe mensuel ouvert pour proches aidants, groupe pour personnes ayant vécu un AVC et leurs proches.* Soutien psychosocial pour personnes aphasiques et proches aidants.* Sorties de groupe.* Point de service Bonhomme à lunettes. | Clientèle: personnes ayant vécu un AVC, toutes séquelles confondues, personnes aphasiques, leurs proches, le grand public | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.avcaphasielaval.ca",
+    "address": "3350, boulevard Dagenais Ouest, Fabreville, Laval, QC, H7P 1V6",
+    "hours": "lundi au vendredi 8h30 à 15h30"
+  },
+  {
+    "id": "aviron-l-h-bergement-communautai-lav",
+    "name": "Aviron (L') - Hébergement Communautaire",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 933-6610",
+    "description": "Service d'hébergement d'urgence temporaire.* Urgence: 24 heures ou 0 à 30 jours.* Transition: 0 à 6 mois.* Studio: 0 à 12 mois.* Brazeau: logements 3½ supervisés avec accompagnement, 0 à 12 mois. | Clientèle: personnes de 18 ans et plus en situation d'itinérance ou sans domicile fixe Capacité: 6 unités d'urgence | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.laviron.org",
+    "address": "1015, boulevard des Laurentides, Pont-Viau, Laval, QC, H7G 2V8",
+    "hours": "24 heures, 7 jours, séjours 24 heures: 17h00 à 9h00"
+  },
+  {
+    "id": "axion-50-plus-lav",
+    "name": "Axion 50 Plus",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-5555",
+    "description": "Centre socioculturel et sportif.* Salle d'entraînement, activités physiques, sports d'équipe.* Arts.* Cours d'anglais et d'espagnol.* Jeux de société.* Événements spéciaux, sorties, activités de plein air.* Conférences.* Bénévolat.* Location de salle. | Clientèle: personnes retraitées et pré-retraitées de 50 ans et plus | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "axion50plus.org",
+    "address": "435, boulevard Curé-Labelle, Chomedey, Laval, QC, H7V 2S8",
+    "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
     "id": "bc-crisis-line",
@@ -1973,6 +2412,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 13h00"
   },
   {
+    "id": "banque-alimentaire-glise-assembl-lav",
+    "name": "Banque Alimentaire - Église Assemblée Chrétienne De Vimont-Auteuil",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 736-1661",
+    "description": "* Banque alimentaire accréditée par Moisson Laval, distribution aux 2 semaines.* Paniers de Noël. * Aide alimentaire d'urgence. | Clientèle: personnes résidentes du quartier Vimont Auteuil | Territoire: quartier Vimont Auteuil | Statut: organisme à but non lucratif",
+    "address": "1645, boulevard des Laurentides, Vimont, Laval, QC, H7M 2P2",
+    "hours": "dépannage alimentaire: mardi 13h00 à 14h45"
+  },
+  {
     "id": "ba-drummondville",
     "name": "Banque alimentaire Drummond",
     "category": "food",
@@ -1997,6 +2448,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.monctonareafoodbank.ca",
     "address": "55 Highfield St, Moncton, NB E1C 5N1",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
+  },
+  {
+    "id": "barreau-de-laval-lav",
+    "name": "Barreau De Laval",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 686-2958",
+    "description": "Association professionnelle.* Information et sensibilisation aux droits.* Référence vers des avocat·e·s. | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "barreaudelaval.qc.ca",
+    "address": "2800, boulevard Saint-Martin Ouest, bureau RC 08, Chomedey, Laval, QC, H7T 2S9",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h30 à 16h30"
   },
   {
     "id": "beaconsfield-service-des-loisirs-bcf",
@@ -2050,6 +2514,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.bissellcentre.org",
     "address": "10527, 96 St NW, Edmonton, AB T5H 2H6",
     "hours": "Lun - Ven 9h-16h"
+  },
+  {
+    "id": "bonjour-aujourd-hui-et-apr-s-lav",
+    "name": "Bonjour Aujourd'Hui Et Après",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 661-6716",
+    "description": "Maintien à domicile appuyé par un réseau de bénévoles.* Popote roulante, vente de repas congelés, halte-repas, dîner-conférences, traiteur.* Appels et visites d'amitié.* Location de salle.* Accompagnement- transport pour raisons médicales. | Clientèle: personnes âgées et de tous âges, en perte d'autonomie permanente ou temporaire | Territoire: CLSC des Mille-Îles: Duvernay, Duvernay-Est, Saint-François et Saint-Vincent-de-Paul à Laval (codes postaux commençant par H7A, H7B, H7C, H7E et H7J) | Statut: organisme à but non lucratif",
+    "website": "bonjouraujourdhui.ca",
+    "address": "800, rue Montrose, Duvernay, Laval, QC, H7E 3M5",
+    "hours": "lundi au vendredi 8h00 à 16h00, dîner tous les jours 11h30 à 13h00"
+  },
+  {
+    "id": "bonjour-aujourd-hui-et-apr-s-acc-lav",
+    "name": "Bonjour Aujourd'Hui Et Après - Accompagnement-Transport",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 661-6716",
+    "description": "* Transport et accompagnement pour des rendez-vous médicaux par des bénévoles. | Clientèle: personnes aînées en perte d'autonomie permanente ou temporaire | Territoire: Duvernay, Saint-François, Saint-Vincent-de-Paul (codes postaux commençant par H7A, H7B, H7C, H7E et H7J), rendez-vous: Laval, île de Montréal | Statut: organisme à but non lucratif",
+    "website": "bonjouraujourdhui.ca",
+    "address": "800, rue Montrose, Duvernay, Laval, QC, H7E 3M5",
+    "hours": "jour, soir et fin de semaine selon les disponibilités"
   },
   {
     "id": "bonne-etoile-joliette-la-jol",
@@ -2153,6 +2643,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.bae.qc.ca",
     "address": "355, route 335, Saint-Lin–Laurentides, Lanaudière, QC, J5M 2C1",
     "hours": "administration: lundi au vendredi 8h30 à 16h30, livraison: lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "bureau-d-aide-et-d-assistance-fa-lav",
+    "name": "Bureau D'Aide Et D'Assistance Familiale Place Saint-Martin",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 681-9979",
+    "description": "Soutien aux familles.* Halte-répit.* Programme d'apprentissage du français pour enfants de 3 à 5 ans et contes animés.* Programme Avenir de Femmes: immeuble coopératif de 23 logements pour mères monoparentales.* Projet 10-19: organisation d'activités et d'ateliers destinés aux jeunes.* Secondaire à ma manière: ateliers et activités variées pour les élèves de 6e année.* Improvisation.* Ateliers et activités.* Ateliers de francisation.* Groupe d'entraide.* Cuisines collectives.* Café-rencontre.* Le Vestibule: friperie gratuite.* Joujouthèque.* Comptoir d'impôts gratuit. | Clientèle: familles avec enfants de 0 à 5 ans, personnes à faible revenu | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "baaf.ca",
+    "address": "1800 avenue Dumouchel, Chomedey, Laval, QC, H7S 1J7",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "bureau-d-aide-et-d-assistance-fa-lav-2",
+    "name": "Bureau D'Aide Et D'Assistance Familiale Place Saint-Martin - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 681-9979",
+    "description": "* Comptoir d'impôts sur rendez-vous. | Clientèle: personnes à faible revenu | Territoire: Pont-Viau, Renaud-Coursol, Laval-des-Rapides | Statut: organisme à but non lucratif",
+    "website": "baaf.ca",
+    "address": "1800, avenue Dumouchel, Chomedey, Laval, QC, H7S 1J8",
+    "hours": "fin février à fin avril, lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "bureau-d-aide-juridique-bureau-m-lav",
+    "name": "Bureau D'Aide Juridique - Bureau Multisectoriel - Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 864-2111",
+    "description": "Bureau d'aide juridique en droit familial, droit criminel et pénal, droit de la jeunesse, droit civil, administratif (aide sociale, SAAQ, CSST), droit du logement, faillite, carcéral.* Consultation téléphonique avec un·e avocat·e, accessible 24 heures, 7 jours, lors d'une arrestation ou en cas de détention. | Clientèle: personne ou organisation sans but lucratif résidant au Québec ou contrainte de rester au Québec, financièrement admissible et dont le service juridique demandé est couvert par la Loi | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.aidejuridiquedemontreal.ca/points_services/bureau-daide-juridique-laval",
+    "address": "1717, boulevard Saint-Martin Ouest, bureau 200, Chomedey, Laval, QC, H7S 1N2",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, service de garde téléphonique: 24 heures, 7 jours"
   },
   {
     "id": "bureau-d-aide-juridique-repentigny-rep",
@@ -7742,6 +8271,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "cafgraf-groupe-d-entraide-en-san-lav",
+    "name": "Cafgraf (Groupe D'Entraide En Santé Mentale De Laval)",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 490-4224",
+    "description": "* Soutien et entraide visant à briser l'isolement.* Soutien psychosocial et référence.* Accompagnements familiaux: rencontres de suivi avec la personne concernée et ses proches.* Activités récréatives, sociales, culturelles et sportives.* Ateliers thématiques et d'art.* Accès gratuit à des ordinateurs et Wi-Fi. | Clientèle: personnes de 16 ans et plus ayant vécu ou vivant des problèmes de santé mentale Capacité: 40 personnes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.lecafgraf.org",
+    "address": "645, boulevard des Laurentides, Laval-des-Rapides, Laval, QC, H7G 2V9",
+    "hours": "administration: mardi au vendredi 9h00 à 17h00, centre de jour: mardi à vendredi 13h00 à 16h00"
+  },
+  {
     "id": "cafe-de-rue-de-terrebonne-trb",
     "name": "Café de Rue de Terrebonne",
     "category": "food",
@@ -7883,6 +8425,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "carrefour-d-hommes-en-changement-lav",
+    "name": "Carrefour D'Hommes En Changement",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-2462",
+    "description": "Aide aux hommes en prévention de la violence conjugale et du suicide.* Prévention de la violence conjugale.* Intervention téléphonique et en personne, individuelle et de groupe.* Atelier de sensibilisation sur la détresse et la demande d'aide.* Service de relance autorisée: contact d'hommes pour lesquels des proches ou intervenant·e·s s'inquiètent.* Programme d'accueil et de sensibilisation s'adressant aux hommes issus des communautés culturelles en prévention de la violence conjugale. | Clientèle: hommes auteurs de violence conjugale ou à risque de le devenir, hommes vulnérables au suicide, leurs proches Capacité: groupe en violence conjugale: 7 à 10 hommes, groupe sur le suicide: 6 à 8 hommes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.organismechoc.com",
+    "address": "25, boulevard Lévesque Est, Pont-Viau, Laval, QC, H7G 1B3",
+    "hours": "lundi au jeudi 12h00 à 20h00, vendredi 12h00 à 16h00, groupes en soirée"
+  },
+  {
+    "id": "carrefour-d-intercultures-de-lav-lav",
+    "name": "Carrefour D'Intercultures De Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 686-0554",
+    "description": "Accueil des personnes nouvelleement arrivées.* Information et orientation.* Accompagnement, soutien, aide à l'installation et à l'intégration.* Aide avec les formulaires.* Soutien psychosocial individuel et de groupe.* Cours de français à temps partiel.* Formation pour accéder au marché du travail.* Assermentation.* Activités familiales.* Espace parents: ateliers de compétences parentales dans le cadre de l'immigration.* Jumelage interculturel.* Clinique d'impôts. | Clientèle: personnes immigrantes, personnes nouvelleement arrivées | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.carrefourintercultures.com",
+    "address": "800, boulevard Chomedey, Tour C, Suite 510, Chomedey, Laval, QC, H7V 3Y4",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00"
+  },
+  {
     "id": "qc-emp-quebec-mcle",
     "name": "Carrefour Emploi Québec",
     "category": "employment",
@@ -7896,6 +8464,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Services gratuits aide CV, RV, orientation professionnelle."
   },
   {
+    "id": "carrefour-espoir-et-sobri-t-lav",
+    "name": "Carrefour Espoir Et Sobriété",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 681-2399",
+    "description": "* Services internes et externes aux personnes et familles vivant avec un problème de dépendance ou de codépendance: alcoolisme, toxicomanie, jeu compulsif, compulsion alimentaire, problèmes sexuels, dépendance affective, etc.* Éducation, information, relation d'aide et accompagnement psychospirituel dans le cadre des 12 étapes.* Groupes internes de fin de semaine pour les 4e et 5e étapes. | Clientèle: personnes de 14 ans et plus, familles vivant avec un problème de dépendance ou de codépendance | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.carrefourespoir.org",
+    "address": "415, 66e Avenue, Chomedey, Laval, QC, H7V 2L2",
+    "hours": "lundi au jeudi 8h00 à 18h00"
+  },
+  {
     "id": "carrefour-familial-des-moulins-trb",
     "name": "Carrefour Familial des Moulins",
     "category": "employment",
@@ -7907,6 +8488,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.carrefourfamilialdesmoulins.com",
     "address": "342, rue Léveillé, Terrebonne, Lanaudière, QC, J6W 1Z5",
     "hours": "lundi au jeudi 8h30 à 12h15 et 13h00 à 16h00"
+  },
+  {
+    "id": "carrefour-jeunesse-de-sainte-ros-lav",
+    "name": "Carrefour Jeunesse De Sainte-Rose",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 622-0879",
+    "description": "Lieu de rencontre pour adolescent·e·s de 12 à 17 ans.* Information, écoute, accompagnement et références.* Activités sociales et récréatives.* Studio d'enregistrement.* Aide psychosociale.* Aide aux devoirs.* Ateliers divers et sensibilisation: consommation de drogue, sexualité, relation familiale, études, etc.* Distribution de condoms.* Distribution de produits menstruels. | Clientèle: adolescent·e·s de 12 à 17 ans Capacité: 40 | Territoire: Laval, Montréal | Statut: organisme à but non lucratif",
+    "address": "155, boulevard Je-Me-Souviens, local 110, Sainte-Rose, Laval, QC, H7L 1V6",
+    "hours": "lundi au vendredi 16h00 à 21h00"
   },
   {
     "id": "emp-cje-drummondville",
@@ -7984,6 +8577,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cjeshawinigan.org",
     "address": "432, avenue Willow, C.P. 132, Shawinigan, QC G9N 1X2",
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service."
+  },
+  {
+    "id": "carrefour-pour-a-n-s-semi-autono-lav",
+    "name": "Carrefour Pour Aînés Semi-Autonomes",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 937-2335",
+    "description": "Service pour les personnes aînées d'accompagnement dans les recherches d'hébergement.* Évaluation des besoins.* Accompagnement dans les démarches.* Répit journalier.* Activités de loisir à domicile ou dans les organismes.* Produits pour l'incontinence livrés à domicile. | Clientèle: personnes aînées semi-autonomes, leur famille, personnes proches aidantes, personnes professionnelles | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.residencescasa.ca",
+    "address": "475, avenue des Perron, bureau A, Auteuil, Laval, QC, H7H 1E2",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "qc-refuge-longueuil-carrefour",
@@ -8535,6 +9141,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au mercredi et vendredi 9h00 à 15h00, jeudi 12h30 à 19h00"
   },
   {
+    "id": "centre-communautaire-eben-ezer-lav",
+    "name": "Centre Communautaire Eben-Ezer",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 665-1798",
+    "description": "* Repas communautaires occasionnels.* Accompagnement dans les démarches pour les personnes nouvellement arrivées.* Alphabétisation pour les personnes âgées.* Camp annuel pour les femmes monoparentales.* Camp d'été.* Suivi avec des infirmières bénévoles pour les personnes en perte d'autonomie. | Clientèle: personnes à faible revenu, personnes aînées, personnes en perte d'autonomie, personnes nouvellement arrivées | Territoire: Saint-François | Statut: organisme à but non lucratif",
+    "address": "8488, boulevard Lévesque Est, Saint-François, Laval, QC, H7A 1W5",
+    "hours": "lundi au vendredi 10h00 à 16h00"
+  },
+  {
     "id": "centre-communautaire-essalam-msc",
     "name": "Centre Communautaire Essalam",
     "category": "food",
@@ -8559,6 +9177,110 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://centrecommunautairerepentigny.ca",
     "address": "225, boulevard J.-A.-Paré, Repentigny, Lanaudière, QC, J5Z 4M6",
     "hours": "administration: lundi au vendredi 9h00 à 22h00, samedi et dimanche 9h00 à 16h00"
+  },
+  {
+    "id": "centre-communautaire-le-coumbite-lav",
+    "name": "Centre Communautaire Le Coumbite De Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-9771",
+    "description": "Services aux familles et aux membres de la communauté haïtienne.* Promotion de la culture haïtiano-québécoise.* Accueil et intégration des personnes nouvellement arrivées.* Cours de francisation pour créolophones.* Alphabétisation.* Lutte au décrochage scolaire: information scolaire, soutien psychosocial, présentations.* Activités et visites à domicile pour personnes aînées.* Cours d'informatique.* Cuisines collectives.* Sorties intergénérationnelles.* Clinique d'impôts. | Clientèle: personnes des communautés culturelles, particulièrement les familles de la communauté haïtienne | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "coumbitelaval.net",
+    "address": "111, boulevard des Laurentides, bureau 220, Pont-Viau, Laval, QC, H7G 2T2",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "centre-communautaire-le-rendez-v-lav",
+    "name": "Centre Communautaire Le Rendez-Vous Des Aînés",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 667-8836",
+    "description": "Assistance alimentaire* Dépannage alimentaire, une fois par semaine.* Vente de mets congelés.* Repas communautaires.* Point de chute Boit'Appétit.* Repas de Noël.Assistance matérielle* Friperie: récupération et vente de vêtements et d'articles de maison usagés.Action communautaire* Appels d'amitié.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV).* Repérage pour briser l'isolement.* Sentinelles: prévention du suicide.* Visites à domicile de familiarisation aux activités du centre.* Loisirs adaptés pour personnes de 35 ans et plus ayant une déficience motrice, visuelle ou auditive.* Répit pour proches aidant·e·s.* Cours et ateliers de formation: informatique, danse en ligne, gymnastique douceur, yoga, zumba gold, etc.* Transport à faible coût pour les activités.* Sorties, visites, randonnées, fêtes et événements spéciaux.* Location de salle.* Conférences.* Bénévolat.* Clinique d'impôts. | Clientèle: personnes de 50 ans et plus, loisirs adaptés: personnes de 35 ans et plus | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "ccrva.org",
+    "address": "10, rue Proulx Ouest, Laval-des-Rapides, Laval, QC, H7N 1N3",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00, friperie: lundi et jeudi 9h00 à 16h00"
+  },
+  {
+    "id": "centre-communautaire-petit-espoi-lav",
+    "name": "Centre Communautaire Petit Espoir",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 936-1922",
+    "description": "* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV).* Aide pour la réinsertion sociale et professionnelle.* Séances d'activités physiques.* Ateliers artistiques et créatifs.* Paniers de Noël.* Groupes de discussion et café-rencontres.* Ateliers de recherche d'emploi. | Clientèle: personnes nouvellement arrivées, personnes aînées, femmes à faible revenu | Territoire: Laval: quartiers Saint-François, Saint-Vincent-de-Paul, Vimont, Duvernay | Statut: organisme à but non lucratif",
+    "website": "www.petitespoir.org",
+    "address": "1235, montée du Moulin, local 06, Saint-François, Laval, QC, H7A 3V6",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "centre-communautaire-saint-josep-lav",
+    "name": "Centre Communautaire Saint-Joseph",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-8963",
+    "description": "Établissement accueillant divers événements communautaires. | Territoire: Chomedey | Statut: organisme municipal",
+    "website": "www.laval.ca/carte-interactive/centre-communautaire-saint-joseph",
+    "address": "1450, boulevard Pie-X, Chomedey, Laval, QC, H7V 3C1",
+    "hours": "automne et hiver: lundi au vendredi 8h30 à 22h00, samedi 9h00 à 16h00, printemps et été: lundi au vendredi 8h30 à 22h00"
+  },
+  {
+    "id": "centre-communautaire-val-martin-lav",
+    "name": "Centre Communautaire Val-Martin",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 973-8787",
+    "description": "Services divers et activités communautaires favorisant la reconnaissance et le développement de compétences, l'empowerment, l'autonomie et l'entraide.* Milieu de vie.* Maison de la famille.* Maison des jeunes.* Ça CLIQ: soutien et service d'insertion pour décrocheurs scolaires ou jeunes à risque.* Journal communautaire en ligne et sur Facebook.* Fête de quartier.* Sorties récréatives.* Centre accès internet, télécopieur et téléphones. | Clientèle: familles, parents, enfants, jeunes de 11 à 17 ans | Territoire: Chomedey | Statut: organisme à but non lucratif",
+    "website": "ccvm.org",
+    "address": "3700, boulevard Notre-Dame, Chomedey, Laval, QC, H7V 1R4",
+    "hours": "Maison de la famille: lundi au vendredi 8h30 à 16h00, Maison des jeunes: dimanche au jeudi 16h00 à 21h00"
+  },
+  {
+    "id": "centre-communautaire-val-martin--lav",
+    "name": "Centre Communautaire Val-Martin - Maison De La Famille",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 973-8787",
+    "description": "Milieu de vie inclusif pour les parents et les enfants favorisant l'entraide et le sentiment d'appartenance, contribuant ainsi à leur bien-être émotionnel et social.* Comité de parents.* Intervention, écoute, accueil et accompagnements personnalisés.* Cuisines collectives: atelier Petits bedons pour les parents et les poupons, ateliers boîtes à lunch pour les parents.* Y'APP: ateliers sur la connaissance et les compétences parentales.* Éveil des sens: ateliers pour parents et bébés sur le développement du lien d'attachement.* Césame: atelier parents-enfants sur le développement du lien d'attachement.* Placote: atelier de développement du langage pour les 1 à 2 ans.* Parents de tout-petits, quel défi!: atelier sur les habiletés parentales.* Il était une fois nos histoires: ateliers parents et enfants pour l'éveil à la lecture.* Activités papa et moi: ateliers pour les papas et leurs enfants de 6 ans et plus, pour le développement du lien d'attachement et les compétences parentales.* Activité café-rencontre: ateliers pour briser l'isolement et créer des liens d'amitié entre parents.* Activités et sorties familiales.* Halte-répit pour enfants de 10 mois à 5 ans.* Petite école: préparation à la maternelle pour les 4 à 5 ans.* Jardin d'enfants: activités de stimulation pour favoriser le développement global et les habiletés sociales pour les 3 à 4 ans.* Comptoir d'entraide. | Clientèle: parents et enfants | Territoire: Chomedey-Est | Statut: organisme à but non lucratif",
+    "website": "www.ccvm.org",
+    "address": "3700, boulevard Notre-Dame, Chomedey, Laval, QC, H7V 1R4",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "centre-communautaire-val-martin--lav-3",
+    "name": "Centre Communautaire Val-Martin - Maison Des Jeunes",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 973-8787",
+    "description": "Milieu de vie pour les jeunes de 11 à 17 ans.* Activités de prévention de la toxicomanie, de mauvais comportements sexuels, de la délinquance et du décrochage scolaire.* Activités de loisirs et de sports.* Orientation et références. | Clientèle: jeunes de 11 à 17 ans | Territoire: Chomedey-Est | Statut: organisme à but non lucratif",
+    "website": "www.ccvm.org",
+    "address": "3700, boulevard Notre-Dame, Chomedey, Laval, QC, H7V 1R4",
+    "hours": "dimanche au jeudi 16h00 à 21h00"
+  },
+  {
+    "id": "centre-communautaire-val-martin--lav-2",
+    "name": "Centre Communautaire Val-Martin - Ça Cliq",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 973-8787",
+    "description": "Projet visant le développement personnel et social des jeunes de 15 à 18 ans.* Favoriser le développement de collaboration.* Projet d'intégration socioprofessionnelle pour les personnes de 18 à 35 ans. | Clientèle: jeunes de 15 à 18 ans en situation ou à risque de décrochage scolaire ou avec des problèmes tels que l'absentéisme, le manque d'assiduité et de motivation, des troubles émotifs et affectifs, des problèmes de comportement ou un déficit identitaire, personnes de 18 à 35 ans | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.ccvm.org",
+    "address": "3700, boulevard Notre-Dame, Chomedey, Laval, QC, H7V 1R4",
+    "hours": "lundi au jeudi 8h30 à 16h30 et vendredi 8h30 à 12h00"
   },
   {
     "id": "msss-chsld-levis-centre-d-accueil-saint-joseph-de-levis",
@@ -8624,6 +9346,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "centre-d-aide-portail-lav",
+    "name": "Centre D'Aide Portail",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 622-7315",
+    "description": "Banque alimentaire.* Paniers alimentaires hebdomadaires.* Paniers de Noël.* Distribution de fournitures scolaires. | Clientèle: personnes dans le besoin Capacité: paniers alimentaires: 190 par semaine | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.centreaideportail.com",
+    "address": "560, rue Justin, Fabreville, Laval, QC, H7P 5R2",
+    "hours": "lundi au jeudi 9h00 à 16h00, distribution des paniers: jeudi 14h00 à 17h15"
+  },
+  {
     "id": "centre-d-amitie-autochtone-de-lanau-jol",
     "name": "Centre D'Amitié Autochtone de Lanaudière",
     "category": "social",
@@ -8637,6 +9372,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "centre-d-assistance-et-d-accompa-lav",
+    "name": "Centre D'Assistance Et D'Accompagnement Aux Plaintes - Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "1 877 767-2227",
+    "description": "* Aide et accompagnement confidentiels des usager·ère·s des services de santé et des services sociaux qui désirent porter plainte auprès d'un établissement ou du Protecteur du citoyen.* Information et aide aux locataires des résidences privées pour aînées (RPA) pour formuler une plainte et accompagnement dans les démarches de plainte. | Clientèle: résident·e·s et personnes ayant reçu des services dans un établissement du réseau de la santé et des services sociaux de Laval | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.caaplaval.com",
+    "address": "672, boulevard des Laurentides, bureau 217, Laval-des-Rapides, Laval, QC, H7G 4S6",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "centre-d-assistance-et-d-accompagne-jol",
     "name": "Centre D'Assistance et D'Accompagnement aux Plaintes - Lanaudière",
     "category": "social",
@@ -8648,6 +9396,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://caaplanaudiere.com",
     "address": "490, rue Saint-Charles-Borromée Nord, Joliette, Lanaudière, QC, J6E 4R7",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-d-entraide-du-marigot-lav",
+    "name": "Centre D'Entraide Du Marigot",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-5375",
+    "description": "* Popote roulante.* Appels de sécurité quotidiens.* Visites à domicile.* Café de la Concorde: repas chauds ou froids à déguster sur place ou à emporter, mets congelés.* Service de traiteur.* Accompagnement et transport médical par des bénévoles. | Clientèle: maintien à domicile: personnes âgées, personnes en perte d'autonomie ou vulnérables, repas scolaires: enfant, Café de la Concorde et repas congelés: pour tous | Territoire: maintien à domicile: CLSC du Marigot (Pont-Viau, Laval-des-Rapides, Vimont-Sud), Café de la Concorde: Laval | Statut: organisme à but non lucratif",
+    "website": "cemarigot.com",
+    "address": "131, boulevard de la Concorde Est, Pont-Viau, Laval, QC, H7G 2C3",
+    "hours": "lundi au vendredi 8h00 à 16h00, Café de la Concorde: mardi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "centre-d-entraide-du-marigot-acc-lav",
+    "name": "Centre D'Entraide Du Marigot - Accompagnement-Transport",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-5375",
+    "description": "* Accompagnement et transport pour rendez-vous médicaux par des bénévoles. | Clientèle: personnes aînées ou personnes en perte d'autonomie | Territoire: CLSC du Marigot: codes postaux commençant par H7M, H7N et H7G, transport dans Laval et Montréal | Statut: organisme à but non lucratif",
+    "website": "cemarigot.com",
+    "address": "131, boulevard de la Concorde Est, Pont-Viau, Laval, QC, H7G 2C3",
+    "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
     "id": "centre-d-entraide-de-mascouche-msc",
@@ -10545,6 +11319,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "centre-d-implication-libre-de-la-lav",
+    "name": "Centre D'Implication Libre De Laval En Réadaptation Sociale",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-1771",
+    "description": "* Centres de jour.* Pré-employabilité et unités de travail: cuisine, bureau, entretien ménager.* Formations: français-alphabétisation, conversation de langue anglaise, informatique, comité d'organisation à la vie communautaire, musicothérapie, arts et artisanat.* Activités sociales et sportives.* Mesure d'insertion sociale.* Suivi dans la communauté: aide au logement, intégration sociale, accompagnement, écoute et soutien moral.* Intégration en milieu de travail: stage et accompagnement. | Clientèle: adultes de 18 ans et plus vivant ou ayant vécu avec des problèmes de santé mentale | Territoire: Laval, Nord de Montréal | Statut: organisme à but non lucratif",
+    "website": "cill.qc.ca",
+    "address": "156, boulevard des Laurentides, Laval-des-Rapides, Laval, QC, H7G 2T5",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
     "id": "centre-d-integration-multi-services-drv",
     "name": "Centre D'Intégration Multi-Services de L'Ouest de L'Île - Dorval",
     "category": "food",
@@ -10584,6 +11371,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 12h00 et 12h45 à 16h00, vendredi 8h30 à 12h00"
   },
   {
+    "id": "centre-de-b-n-volat-et-moisson-l-lav",
+    "name": "Centre De Bénévolat Et Moisson Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 681-6164",
+    "description": "* Recrutement, formation et orientation des bénévoles vers les organismes lavallois: jebenevole.ca* Maintien à domicile: SécuriCAB (service d'appels automatisés visant la sécurité des personnes aînées), transports médicaux, soutien scolaire, visites amicales, assistance pour des tâches légères et travaux légers, appels de convivialité, etc.* Moisson Laval: banque alimentaire régionale approvisionnant les organismes de Laval.* Comptoir alimentaire alternatif: aide alimentaire d'urgence.* Programme Déjeuners et collations scolaires.* Paniers de Noël.* Collecte sur place de denrées.* Collecte alimentaire pour les entreprises.* Collecte et distribution de fournitures scolaires.* Clinique d'impôts, à l'année. | Clientèle: personnes citoyennes, familles et personnes à faible revenu, organismes d'aide pour personnes à faible revenu, personnes nouvelles arrivantes, personnes réfugiées, collecte alimentaire: entreprises | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "benevolatlaval.qc.ca",
+    "address": "1870, rue Michelin, Sainte-Rose, Laval, QC, H7L 4R3",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00 et 13h00 à 15h00"
+  },
+  {
+    "id": "centre-de-b-n-volat-et-moisson-l-lav-2",
+    "name": "Centre De Bénévolat Et Moisson Laval - Accompagnement-Transport",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 681-6164",
+    "description": "* Transport et accompagnement aux rendez-vous médicaux par des bénévoles. | Clientèle: personnes à faible revenu, sans transport et sans soutien, ayant des traitements intensifs et suivis à moyen ou long terme | Territoire: Laval, accompagnement et transport: Grand Montréal et les environs | Statut: organisme à but non lucratif",
+    "website": "benevolatlaval.qc.ca",
+    "address": "1870, rue Michelin, Sainte-Rose, Laval, QC, H7L 4R3",
+    "hours": "lundi au dimanche, réserver au minimum 1 semaine à l'avance"
+  },
+  {
     "id": "msss-chsld-montreal-centre-de-crise-emile-nelligan",
     "name": "Centre De Crise Émile-Nelligan",
     "category": "health",
@@ -10594,6 +11407,97 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à CIUSSS De L'Est-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
     "address": "6705, suite 211 rue Jean-Talon Est, Montréal, QC H1S 1N2",
     "hours": "Service disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "centre-de-jour-des-mille-les-lav",
+    "name": "Centre De Jour Des Mille-Îles",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 661-4252",
+    "description": "Centre de jour offrant des services thérapeutiques afin de maintenir l'autonomie de personnes vivant à domicile. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.lavalensante.com/coordonnees/trouver-un-point-de-service",
+    "address": "5436, boulevard Lévesque Est, porte 2, Saint-Vincent-de-Paul, Laval, QC, H7C 1N7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-jour-du-marigot-lav",
+    "name": "Centre De Jour Du Marigot",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-7582",
+    "description": "Centre de jour offrant des services thérapeutiques afin de maintenir l'autonomie de personnes vivant à domicile. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.lavalensante.com/coordonnees/trouver-un-point-de-service",
+    "address": "250, boulevard Cartier Ouest, Laval-des-Rapides, Laval, QC, H7N 5S5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-jour-ste-rose-lav",
+    "name": "Centre De Jour Ste-Rose",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 622-5147",
+    "description": "Centre de jour offrant des services thérapeutiques afin de maintenir l'autonomie de personnes vivant à domicile. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.lavalensante.com/coordonnees/trouver-un-point-de-service",
+    "address": "280, boulevard Roi-du-Nord, Sainte-Rose, Laval, QC, H7L 4L2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-nature-de-laval-lav",
+    "name": "Centre De La Nature De Laval",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-4942",
+    "description": "Parc urbain.* Aires de pique-nique, sentiers de marche et modules de jeu.* Ferme d'animaux.* Jardins et serres.* Location d'équipement de plein air.* Activités extérieures familiales saisonnières.* Activités sportives pour adultes: yoga, essentrics et mise en forme. | Clientèle: grand public | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.laval.ca/centredelanature/Pages/Fr/accueil.aspx",
+    "address": "901, avenue du Parc, Duvernay, Laval, QC, H7E 2T7",
+    "hours": "7 jours, 8h00 à 22h00, administration: lundi au vendredi 8h00 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "centre-de-main-d-oeuvre-opex-82--lav",
+    "name": "Centre De Main-D'Oeuvre Opex'82 - Laval-Laurentides-Lanaudière",
+    "category": "social",
+    "subcategory": "Autochtones",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-7160",
+    "description": "Service spécialisé de main-d'oeuvre visant la réinsertion au marché du travail de personnes judiciarisées.* Information sur le marché du travail.* Ateliers de formation.* Exploration et connaissance de soi.* Formation préparatoire à la recherche d'emploi.* Contact aux entreprises. | Clientèle: adultes ayant un casier judiciaire | Territoire: Laval, Laurentides, Lanaudière | Statut: organisme à but non lucratif",
+    "website": "www.viatravail.ca",
+    "address": "485, boulevard des Laurentides, bureau 102, Pont-Viau, Laval, QC, H7G 2V2",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h00, vendredi 8h30 à 12h00 et 13h00 à 15h00"
+  },
+  {
+    "id": "centre-de-protection-de-l-enfanc-lav",
+    "name": "Centre De Protection De L'Enfance Et De La Jeunesse Avenue Laval",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-4150",
+    "description": "Intervention sociale à toutes les étapes du processus de protection de la jeunesse.* Intervention en situation de crise familiale, soutien éducatif aux familles.* Soutien à la réinsertion sociale pour jeunes placé·e·s en ressource de réadaptation.* Programme qualification des jeunes: développement de l'autonomie au moment de la réinsertion sociale. | Clientèle: enfants et adolescent·e·s en difficulté, jeunes contrevenant·e·s, parents, tuteur·trice·s, personnes intervenantes, programme qualification des jeunes: jeunes de 16 à 19 ans | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.lavalensante.com",
+    "address": "189, avenue Laval, Laval-des-Rapides, Laval, QC, H7N 3V8",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "centre-de-protection-de-l-enfanc-lav-2",
+    "name": "Centre De Protection De L'Enfance Et De La Jeunesse De Laval",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-4150",
+    "description": "Administration des centres jeunesse.* Réception et évaluation des signalements d'actes de négligence, de violence ou d'abus en vertu de la Loi sur la protection de la jeunesse.* Adaptation, réadaptation et intégration sociale en internat ou en foyer de groupe.* Intervention de milieu, soutien éducatif aux familles et intervention de crise.* Services psychosociaux pour jeunes contrevenants lorsque nécessaire (en vertu de la Loi sur le système de justice pénale pour les adolescent·e·s).* Adoption, recherche d'antécédents biologiques et expertise pour la garde d'enfants. | Clientèle: jeunes en difficulté de 0 à 18 ans, jeunes contrevenant·e·s, parents, tuteur·trice·s, personnes intervenantes | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.lavalensante.com",
+    "address": "308, boulevard Cartier Ouest, Laval-des-Rapides, Laval, QC, H7N 2J2",
+    "hours": "lundi au vendredi 8h30 à 16h30, ligne téléphonique des signalements: 24 heures, 7 jours"
   },
   {
     "id": "msss-clsc-quebec-centre-de-protection-de-l-enfance-et-de-la-jeunesse-et-clsc-",
@@ -10658,6 +11562,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
+    "id": "centre-de-r-adaptation-en-d-pend-lav",
+    "name": "Centre De Réadaptation En Dépendance De Laval",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-4054",
+    "description": "Services de deuxième ligne en dépendance. * Réadaptation interne et externe à durée variable.* Réadaptation interne pour adultes (pour substances et jeu) en collaboration avec Déclic-Action.* Réadaptation interne pour adolescents (par entente avec Portage, Pavillon du Nouveau Point de Vue et Le Grand Chemin).* Rédaptation externe (pour substances, jeu et UPI).* Soutien à la désintoxication (point de service Bienville).* Programme TAO.* Évaluation et accompagnement pour les besoins en réinsertion sociale.* Évaluation et suivi de santé pour les problèmes physiques associés à la dépendance.* Soutien aux membres de l'entourage.* Programme d'évaluation des conducteurs à risque PERRCA. | Clientèle: personnes ayant une dépendance à l'alcool, aux drogues, aux jeux de hasard et UPI, leurs proches, personnes sur le programme de substitution | Territoire: Laval | Statut: organisme du gouvernement provincial",
+    "website": "www.lavalensante.com",
+    "address": "312, boulevard Cartier Ouest, Laval-des-Rapides, Laval, QC, H7N 2J2",
+    "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 20h30, vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
     "id": "msss-chsld-montreal-centre-de-readaptation-marie-enfant",
     "name": "Centre De Réadaptation Marie Enfant",
     "category": "health",
@@ -10668,6 +11585,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à Chu Sainte-Justine. Source: MSSS – Fichier M02 des installations.",
     "address": "5200, rue Bélanger, Montréal, QC H1T 1C9",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "centre-de-r-adaptation-pour-les--lav",
+    "name": "Centre De Réadaptation Pour Les Jeunes En Difficultés D'Adaptation Cartier",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-4060",
+    "description": "Centre de réadaptation. | Clientèle: jeunes en difficulté | Territoire: Laval | Statut: organisme parapublic",
+    "website": "lavalensante.com",
+    "address": "306, boulevard Cartier Ouest, Laval-des-Rapides, Laval, QC, H7N 2J2",
+    "hours": "Voir site web"
   },
   {
     "id": "msss-clsc-mont-joli-centre-de-sante-et-de-services-sociaux-de-la-mitis",
@@ -11243,18 +12173,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
-    "id": "msss-hopital-montreal-centre-de-services-ambulatoires-en-sante-mentale-papineau",
-    "name": "Centre De Services Ambulatoires En Santé Mentale Papineau",
-    "category": "health",
-    "subcategory": "Hôpital",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "",
-    "address": "10345, avenue Papineau, 3e étage, Montréal, QC H2B 2A3",
-    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
-  },
-  {
     "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-de-services-ambulatoires-en-sante-mentale-papineau",
     "name": "Centre De Services Ambulatoires En Santé Mentale Papineau",
     "category": "mentalHealth",
@@ -11265,6 +12183,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
     "address": "10345, avenue Papineau, 3e étage, Montréal, QC H2B 2A3",
     "hours": "Service de crise disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "msss-hopital-montreal-centre-de-services-ambulatoires-en-sante-mentale-papineau",
+    "name": "Centre De Services Ambulatoires En Santé Mentale Papineau",
+    "category": "health",
+    "subcategory": "Hôpital",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "",
+    "address": "10345, avenue Papineau, 3e étage, Montréal, QC H2B 2A3",
+    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
     "id": "msss-hopital-laval-centre-de-services-ambulatoires-en-sante-mentale-rene-laenne",
@@ -11580,6 +12510,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-de-services-scolaire-de-l-lav",
+    "name": "Centre De Services Scolaire De Laval",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-7000",
+    "description": "Centre de services scolaire francophone regroupant écoles primaires, secondaires, spécialisées.* Formation professionnelle.* Éducation des adultes.* Test d'équivalence de niveau secondaire (TENS): évaluation des connaissances des adultes n'ayant pas terminé leurs études secondaires en vue d'obtenir une attestation d'équivalence de niveau de scolarité (AENS) facilitant l'accession à certains emplois et formations professionnelles.* Le Guichet-conseil: services d'aide et d'orientation.* Formation à distance assistée (FADA).* Test d'évaluation de français (TEF) et Test de développement général (TDG).* Formation Korpus: service aux entreprises. | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "csslaval.gouv.qc.ca",
+    "address": "955, boulevard Saint-Martin Ouest, Chomedey, Laval, QC, H7S 1M5",
+    "hours": "lundi au vendredi 7h30 à 17h00"
+  },
+  {
     "id": "msss-chsld-montreal-centre-de-soins-prolonges-grace-dart",
     "name": "Centre De Soins Prolongés Grace Dart",
     "category": "health",
@@ -11590,6 +12533,70 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement et de soins de longue durée (CHSLD). Rattaché à Centre De Soins Prolongés Grace Dart. Source: MSSS – Fichier M02 des installations.",
     "address": "5155, rue Sainte-Catherine Est, Montréal, QC H1V 2A5",
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+  },
+  {
+    "id": "centre-des-femmes-de-laval-lav",
+    "name": "Centre Des Femmes De Laval",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 629-1991",
+    "description": "* Lieu de rencontre, d'écoute et de référence.* Friperie Vert l'écolo-partage: vêtements gratuits pour toute la famille.* Halte-garderie.* Activités éducatives et de loisir, formations, danse, comités, actions collectives.* Groupes d'entraide confidentiels et ouverts, groupe de partage, groupe de discussion sur les réalités des femmes immigrantes, soirées de discussion thématiques.?* Défense des droits.* Matériel informatique et centre de documentation. | Clientèle: femmes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.cflaval.org",
+    "address": "69, 8e Rue, Laval-des-Rapides, Laval, QC, H7N 2C5",
+    "hours": "mardi et mercredi de 13h00 à 16h30, vendredi de 13h00 à 20h30"
+  },
+  {
+    "id": "centre-des-femmes-dynamiques-de--lav",
+    "name": "Centre Des Femmes Dynamiques De Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 661-5409",
+    "description": "Lieu de rencontre, de référence et de soutien.* Activités communautaires et éducatives.* Conférences.* Écoute et information.* Activités physiques.* Ateliers de prévention en santé globale.* Dîners communautaires.* Sorties. | Clientèle: femmes de 50 ans et plus | Territoire: Grand Montréal | Statut: organisme à but non lucratif",
+    "address": "3509, boulevard de la Concorde Est, bureau 202, Duvernay, Laval, QC, H7E 2C6",
+    "hours": "lundi au jeudi 9h00 à 16h00"
+  },
+  {
+    "id": "centre-du-sablon-lav",
+    "name": "Centre Du Sablon",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 688-8961",
+    "description": "Centre sportif, communautaire et culturel.* Exercices adaptés pour personnes aînées.* Club des personnes aînées.* Programme Besoins spéciaux pour enfants: activités sportives, culinaires et de compétences sociales.* Programme préscolaire.* Camps de jour d'été et d'hiver, camp de la relâche.* Activités diverses pour enfants.* Activités socioculturelles.* Formations en sauvetage.* Clinique d'impôts.* Parc écologique.* Occasion de bénévolat.* Location de salles.* Piscine, salle de musculation, gymnases, etc. | Clientèle: grand public, programme Besoins spéciaux: enfants ayant un besoin particulier (anxiété, troubles du spectre de l'autisme, syndrome de Down/trisomie, etc.) | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "centredusablon.ca",
+    "address": "755, chemin du Sablon, Chomedey, Laval, QC, H7W 4H5",
+    "hours": "lundi au vendredi 7h00 à 22h00, samedi et dimanche 8h00 à 18h00"
+  },
+  {
+    "id": "centre-du-sablon-clinique-d-imp--lav",
+    "name": "Centre Du Sablon - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 688-8961",
+    "description": "* Clinique d'impôts par rendez-vous. | Clientèle: personnes à faible revenu | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "centredusablon.ca",
+    "address": "755, chemin du Sablon, Chomedey, Laval, QC, H7W 4H5",
+    "hours": "prendre rendez-vous: à partir du 9 mars, lundi au jeudi 9h00 à 13h00, clinique d'impôts 2026: 16 mars au 16 avril"
+  },
+  {
+    "id": "centre-d-fi-jeunesse-de-saint-fr-lav",
+    "name": "Centre Défi-Jeunesse De Saint-François",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 665-3049",
+    "description": "Lieu de rencontre, de services et de référence.* Écoute, accompagnement et consultation.* Activités sportives et culturelles, sorties.* Aide aux devoirs.* Activités de prévention, sensibilisation et d'éducation.* Aide alimentaire, aux 2 semaines.* Apprentissage à la vie démocratique.* Local de musique.* Voyage culturel et humanitaire. | Clientèle: personnes de 11 à 17 ans | Territoire: Saint-François | Statut: organisme à but non lucratif",
+    "website": "www.centredefijeunesse.com",
+    "address": "455, montée du Moulin, Saint-François, Laval, QC, H7A 1Z2",
+    "hours": "mardi au jeudi 17h00 à 21h00, vendredi 17h00 à 22h00"
   },
   {
     "id": "msss-chsld-saint-eustache-centre-d-hebergement-de-sainte-eustache",
@@ -11720,6 +12727,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "centre-int-gr-de-sant-et-de-serv-lav",
+    "name": "Centre Intégré De Santé Et De Services Sociaux De Laval - Pipep",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 743-7613",
+    "description": "Clinique spécialisée pour les personnes de 18 à 35 ans vivant un premier épisode psychotique non traité.* Accueil et évaluation.* Traitement et réadaptation. | Clientèle: personnes de 18 à 35 ans ayant vécu un premier épisode psychotique, incluant tous types de psychoses confondues, à l'exception des psychoses secondaires dues à un trouble physique | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.lavalensante.com",
+    "address": "2008, boulevard René-Laennec, Vimont, Laval, QC, H7M 4J8",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-integre-de-sante-et-de-servi-jol",
     "name": "Centre Intégré de Santé et de Services Sociaux de Lanaudière",
     "category": "employment",
@@ -11783,6 +12803,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "club social ados: mercredi et vendredi 16h00 à 20h00, souper pour adultes et aîné·e·s: jeudi 16h00 à 20h00, rencontre pour jeunes adultes: 2? vendredi du mois 20h30 à 22h30, groupe de soutien pour parents: 2? mardi du mois, groupe de soutien pour personnes transgenres et diversifiées: lundi 18h00 à 20h00 et samedi 13h00 à 16h00, groupe de soutien aux migrants et aux réfugiés: dimanche de 11h30 à 15h00 et mercredi from 19h00 à 21h00"
   },
   {
+    "id": "centre-lire-crire-lav",
+    "name": "Centre Lire-Écrire",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 688-1944",
+    "description": "* Tutorat individuel en alphabétisation, en anglais et en mathématiques.* Ateliers de formation.* Centre de ressources et d'apprentissage communautaire. | Clientèle: communauté anglophone, parents, tuteur·rice·s, formateur·trice·e, apprenant·e·s adultes, coordonnateur·trice·s, éducateur·trice·s | Territoire: Deux-Montagnes, Laval, Montréal-Nord, Saint-Eustache | Statut: organisme à but non lucratif",
+    "website": "tleliteracy.com",
+    "address": "4885, chemin du Souvenir Ouest, Chomedey, Laval, QC, H7W 1E1",
+    "hours": "lundi au vendredi 8h30 à 17h00"
+  },
+  {
+    "id": "centre-marcelle-et-jean-coutu-lav",
+    "name": "Centre Marcelle Et Jean Coutu",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 624-0980",
+    "description": "* Activités adaptées.* Camp de jour estival.* Répit spécialisé de fin de semaine.* Répit estival hebdomadaire.* Hébergement en alternance autisme-jeunesse. | Clientèle: activités et camp de jour: personnes adultes vivant avec une déficience intellectuelle, autonomes, semi-autonomes ou polyhandicapées, répit de fin de semaine et répit estival: enfants de 5 ans à 17 ans et adultes vivant avec une déficience intellectuelle, un trouble du spectre de l'autisme ou une déficience physique, hébergement en alternance: jeunes de moins de 18 ans autistes fréquentant une école | Territoire: le Québec, priorité à Laval | Statut: organisme à but non lucratif",
+    "website": "www.lepilier.org/les-services/le-centre-marcelle-et-jean-coutu",
+    "address": "425, place Jean-Coutu, Auteuil, Laval, QC, H7H 3C8",
+    "hours": "activités et camp de jour: lundi au vendredi 9h30 à 15h30, répit de fin de semaine: vendredi 16h00 au dimanche 19h00, répit estival: lundi au vendredi 9h00 à 15h00, hébergement en alternance: lundi soir au vendredi matin"
+  },
+  {
     "id": "msss-hopital-montreal-centre-multiservice-de-sante-et-de-services-sociaux-de-saint",
     "name": "Centre Multiservice De Santé Et De Services Sociaux De Saint-Henri",
     "category": "health",
@@ -11832,18 +12878,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
-    "id": "msss-clsc-quebec-centre-multiservices-de-sante-et-de-services-sociaux-christ-",
-    "name": "Centre Multiservices De Santé Et De Services Sociaux Christ-Roi",
-    "category": "health",
-    "subcategory": "CLSC",
-    "city": "Québec",
-    "province": "QC",
-    "phone": "418-525-4444",
-    "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CIUSSS De La Capitale-Nationale. Source: MSSS – Fichier M02 des installations.",
-    "address": "900, boulevard Wilfrid-Hamel, Québec, QC G1M 2R9",
-    "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
-  },
-  {
     "id": "msss-clsc-nicolet-centre-multiservices-de-sante-et-de-services-sociaux-christ-",
     "name": "Centre Multiservices De Santé Et De Services Sociaux Christ-Roi",
     "category": "health",
@@ -11853,6 +12887,18 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "819-293-2071",
     "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CIUSSS De La Mauricie-Et-Du-Centre-Du-Québec. Source: MSSS – Fichier M02 des installations.",
     "address": "675, rue Saint-Jean-Baptiste, Nicolet, QC J3T 1S4",
+    "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
+  },
+  {
+    "id": "msss-clsc-quebec-centre-multiservices-de-sante-et-de-services-sociaux-christ-",
+    "name": "Centre Multiservices De Santé Et De Services Sociaux Christ-Roi",
+    "category": "health",
+    "subcategory": "CLSC",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418-525-4444",
+    "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CIUSSS De La Capitale-Nationale. Source: MSSS – Fichier M02 des installations.",
+    "address": "900, boulevard Wilfrid-Hamel, Québec, QC G1M 2R9",
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
@@ -12460,18 +13506,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
-    "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-multiservices-de-sante-et-de-services-sociaux-riviere",
-    "name": "Centre Multiservices De Santé Et De Services Sociaux Rivière-Des-Prairies",
-    "category": "mentalHealth",
-    "subcategory": "Centre hospitalier psychiatrique",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
-    "address": "7070, boulevard Perras, Montréal, QC H1E 1A4",
-    "hours": "Service de crise disponible 24h/24, 7j/7"
-  },
-  {
     "id": "msss-hopital-montreal-centre-multiservices-de-sante-et-de-services-sociaux-riviere",
     "name": "Centre Multiservices De Santé Et De Services Sociaux Rivière-Des-Prairies",
     "category": "health",
@@ -12482,6 +13516,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "address": "7070, boulevard Perras, Montréal, QC H1E 1A4",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
+  },
+  {
+    "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-multiservices-de-sante-et-de-services-sociaux-riviere",
+    "name": "Centre Multiservices De Santé Et De Services Sociaux Rivière-Des-Prairies",
+    "category": "mentalHealth",
+    "subcategory": "Centre hospitalier psychiatrique",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
+    "address": "7070, boulevard Perras, Montréal, QC H1E 1A4",
+    "hours": "Service de crise disponible 24h/24, 7j/7"
   },
   {
     "id": "msss-clsc-quebec-centre-multiservices-de-sante-et-de-services-sociaux-sacre-c",
@@ -13403,6 +14449,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV."
   },
   {
+    "id": "chsld-fernand-larocque-lav",
+    "name": "Chsld Fernand-Larocque",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 661-5440",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée.* Centre de jour offrant des services thérapeutiques afin de maintenir l'autonomie de personnes vivant à domicile.* Soins de fin de vie et palliatifs. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.lavalensante.com/coordonnees/trouver-un-point-de-service",
+    "address": "5436, boulevard Lévesque Est, Saint-Vincent-de-Paul, Laval, QC, H7C 1N7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chsld-idola-saint-jean-lav",
+    "name": "Chsld Idola Saint-Jean",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-6750",
+    "description": "Centre d'hébergement public pour personnes aînés et personnes en perte d'autonomie.* Hébergement et soins de longue durée. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.lavalensante.com/coordonnees/trouver-un-point-de-service",
+    "address": "250, boulevard Cartier Ouest, Laval-des-Rapides, Laval, QC, H7N 5S5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chsld-la-pini-re-lav",
+    "name": "Chsld La Pinière",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 661-3305",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée.* Centre de jour offrant des services thérapeutiques afin de maintenir l'autonomie de personnes vivant à domicile. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.lavalensante.com/coordonnees/trouver-un-point-de-service",
+    "address": "4895, rue Saint-Joseph, Saint-Vincent-de-Paul, Laval, QC, H7C 1H6",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chsld-sainte-doroth-e-lav",
+    "name": "Chsld Sainte-Dorothée",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 689-0933",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.lavalensante.com/coordonnees/trouver-un-point-de-service",
+    "address": "350, boulevard Samson Ouest , Sainte-Dorothée, Laval, QC, H7X 1J4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chsld-sainte-rose-lav",
+    "name": "Chsld Sainte-Rose",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 622-6996",
+    "description": "Centre d'hébergement public pour personnes aînées et personnes en perte d'autonomie.* Hébergement et soins de longue durée.* Centre de jour offrant des services thérapeutiques afin de maintenir l'autonomie de personnes vivant à domicile. | Clientèle: personnes aînées, personnes en perte d'autonomie | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.lavalensante.com/coordonnees/trouver-un-point-de-service",
+    "address": "280, boulevard Roi-du-Nord, Sainte-Rose, Laval, QC, H7L 4L2",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-hopital-montreal-chu-sainte-justine",
     "name": "Chu Sainte-Justine",
     "category": "health",
@@ -13543,6 +14654,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
+    "id": "clinique-des-r-fugi-s-lav",
+    "name": "Clinique Des Réfugiés",
+    "category": "family",
+    "subcategory": "Violence et maltraitance",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 687-5690",
+    "description": "* Bilan de santé physique et psychosocial.* Tests médicaux pour personnes avec un statut de réfugié.* Service d'interprète dans la plupart des langues lors des examens. | Clientèle: personnes réfugiées | Territoire: Laval | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire-ressources/ressource/?nofiche=840",
+    "address": "1665, rue du Couvent, Chomedey, Laval, QC, H7W 3A8",
+    "hours": "lundi au vendredi 7h30 à 20h00, samedi et dimanche 9h00 à 17h00, sur rendez-vous seulement"
+  },
+  {
     "id": "msss-clsc-montreal-clinique-ips-snowdon",
     "name": "Clinique Ips+ Snowdon",
     "category": "health",
@@ -13593,6 +14717,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 17h00, bonhomme à lunette: sans rendez-vous, jeudi 9h30 à 11h30"
   },
   {
+    "id": "clsc-de-sainte-rose-lav",
+    "name": "Clsc De Sainte-Rose",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 622-5110",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Authentification de la carte d'assurance maladie.* Consultation d'une infirmière.* Médecine familiale.* Prélèvements.* Radiologie.* Vaccination contre la grippe. | Territoire: Laval | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire- ressources/ressource/?nofiche=1193&ch_type%5B6%5D=1201&bt_rechType=&theme=clsc&ch_choixReg=&c h_rayon=0&ch_code=H7L4L2",
+    "address": "280, boulevard du Roi-du-Nord, Sainte-Rose, Laval, QC, H7L 4L2",
+    "hours": "lundi au vendredi 7h30 à 20h00, samedi et dimanche 8h00 à 17h00, centre de prélèvements: lundi au vendredi 7h00 à 12h00 et 13h15 à 15h00"
+  },
+  {
+    "id": "clsc-du-marigot-boulevard-cartie-lav",
+    "name": "Clsc Du Marigot - Boulevard Cartier",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-1803",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Authentification de la carte d'assurance maladie.* Changement et suivi de pansement sur rendez-vous.* Consultation d'une infirmière.* Contraception.* Contraception orale d'urgence.* Salle d'allaitement.* Aide aux personnes victimes d'actes criminels.* Vaccination générale.* Vaccination contre la grippe: www.lavalensante.com/vaccingrippelaval/ | Territoire: Laval | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire- ressources/ressource/?nofiche=130125&ch_type%5B6%5D=1201&bt_rechType=&theme=clsc&ch_choixReg= &ch_rayon=0&ch_code=H7N5S5",
+    "address": "250, boulevard Cartier Ouest, Laval-des-Rapides, Laval, QC, H7N 5S5",
+    "hours": "lundi au vendredi 7h30 à 20h00, samedi et dimanche 9h00 à 17h00"
+  },
+  {
+    "id": "clsc-du-marigot-boulevard-des-la-lav",
+    "name": "Clsc Du Marigot - Boulevard Des Laurentides",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-1444",
+    "description": "Services de première ligne en matière de santé et de services sociaux.* Authentification de la carte d'assurance maladie.* Avortement.* Béquilles (location).* Canne (location).* Fauteuil roulant (location).* Tire-lait (location).* Chirurgie mineure.* Contraception.* Dépistage.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues (service gratuit).* Prélèvements.* SIDEP: Service intégré de dépistage et de prévention des ITSS.* Vaccination générale.* Vaccination contre la grippe. | Territoire: Laval | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire- ressources/ressource/?nofiche=57183&ch_type%5B6%5D=1201&bt_rechType=&theme=clsc&ch_choixReg=& ch_rayon=0&ch_code=H7M2Y2",
+    "address": "1351, boulevard des Laurentides, Vimont, Laval, QC, H7M 2Y2",
+    "hours": "lundi au vendredi 7h00 à 20h00, samedi et dimanche 7h30 à 12h00, centre de prélèvements: lundi au vendredi 7h00 à 11h30 et 13h15 à 15h00"
+  },
+  {
+    "id": "clsc-du-ruisseau-papineau-rue-du-lav",
+    "name": "Clsc Du Ruisseau-Papineau - Rue Du Couvent",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 687-5690",
+    "description": "Services de première ligne en matière de santé et de services sociaux.Services sociaux* Aide alimentaire.* Aide au ménage.* Aide matérielle.* Salle d'allaitement.* Services psychosociaux comprenant l'accueil, l'analyse, l'orientation et la référence.* Aide aux victimes d'actes criminels et aux aînés victimes d'abus.* Accompagnement dans les démarches pour porter plainte.* Soutien civique.* Visites à domicile.Santé* Anticoagulothérapie - Ajustement d'ordonnance.* Authentification de la carte d'assurance maladie.* Location de béquilles et de fauteuils roulants.* Consultation d'une infirmière.* Contraception, dépistage et pilule abortive.* Distribution de matériel d'injection neuf aux personnes qui consomment des drogues récupération des seringues et des aiguilles usagées.* Service de dépistage du streptocoque.* Prévention et traitement des dépendances: nicotine, alcool, drogues, médicaments.* Test de cholestérol et test de glycémie.* Test Pap.* Vaccination contre la grippe et influenza. | Territoire: Laval | Statut: organisme parapublic",
+    "website": "sante.gouv.qc.ca/repertoire- ressources/ressource/?nofiche=840&ch_type%5B6%5D=1201&bt_rechType=&theme=clsc&ch_choixReg=&ch _rayon=0&ch_code=H7W3A8",
+    "address": "1665, rue du Couvent, Chomedey, Laval, QC, H7W 3A8",
+    "hours": "lundi au vendredi 7h30 à 20h00, sans rendez-vous: lundi au vendredi 9h à 19h30, samedi, dimanche et jours fériés 9h00 à 17h00"
+  },
+  {
     "id": "club-55-de-kirkland-krk",
     "name": "Club 55+ de Kirkland",
     "category": "social",
@@ -13603,6 +14779,127 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "• Activités récréatives sociales: bridge, jeux de cartes, bingo.• Danse en ligne.• Soupers dansants. | Clientèle: personnes de 55 ans et plus Capacité: 210 membres | Territoire: Kirkland | Frais: membre: 25$ par année | Statut: organisme à but non lucratif",
     "address": "16950, boulevard Hymus, bureau A, Kirkland, Montréal, QC, H9H 3W7",
     "hours": "variables, accueil: lundi 13h30 à 15h00"
+  },
+  {
+    "id": "club-de-gymnastique-laval-excell-lav",
+    "name": "Club De Gymnastique Laval Excellence",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 669-4966",
+    "description": "Club de gymnastique et de cheerleading récréatif et compétitif.* Programme parent-enfant 1.2.3 Gym ! pour les 2 ans et plus.* Programme Bébé-gym pour les enfants de 3 ans.* Programme Bout d'chou pour les filles de 4 à 5 ans.* Groupes récréatifs pour les filles de 6 à 8 ans et 9 ans et plus et les garçons de 4 à 6 ans et 7 ans et plus.* Équipes mixtes de cheerleading pour 5 à 14 ans. | Clientèle: enfants de 2 ans et plus, adolescent·e·s | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.lavalexcellence.ca",
+    "address": "1555, boulevard Saint-Martin Est, Vimont, Laval, QC, H7G 4R4",
+    "hours": "lundi au vendredi 9h00 à 21h00, samedi et dimanche 8h30 à 17h00"
+  },
+  {
+    "id": "club-de-l-ge-d-or-bon-pasteur-de-lav",
+    "name": "Club De L'Âge D'Or Bon Pasteur De Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 641-7802",
+    "description": "Activités sociales et récréatives pour personnes aînées.* Bingo.* Pétanque: parc Paul-Marcel- Maheu.* Billard, table de snooker.* Repas communautaires.* Sorties: méchoui, temps des sucres, dîner des fêtes au restaurant, autres fêtes. | Clientèle: personnes aînées | Territoire: Grand Montréal | Statut: organisme à but non lucratif",
+    "address": "387, boulevard des Prairies, bureaux 005, 105 et 106, Laval-des-Rapides, Laval, QC, H7N 2W4",
+    "hours": "bingo: mercredi 13h00 à 16h00, pétanque: lundi et mercredi 18h30 à 20h30 de fin mai à fin août, billard: lundi au samedi 12h00 à 17h00"
+  },
+  {
+    "id": "club-de-l-ge-d-or-de-havre-des-l-lav",
+    "name": "Club De L'Âge D'Or De Havre-Des-Îles",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-5528",
+    "description": "* Activités récréatives et sociales: bingo, cartes, jeux, bridge, pétanque, etc.* Activités physiques: aquaforme.?* Soupers dansants.* Sorties.?* Bibliothèque.* Ateliers d'informatique.* Location de salle. | Clientèle: personnes aînées | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "2525A, avenue du Havre-des-Îles, Chomedey, Laval, QC, H7W 4C4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "club-de-l-ge-d-or-de-vimont-lav",
+    "name": "Club De L'Âge D'Or De Vimont",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 490-9499",
+    "description": "Activités sociales et récréatives pour personnes aînées.* Cartes, pétanque, whist militaire, etc.* Dîners communautaires. | Clientèle: personnes de 55 ans et plus | Territoire: Laval et les environs | Statut: organisme à but non lucratif",
+    "address": "1900, rue Bédard, Vimont, Laval, QC, H7M 2M7",
+    "hours": "lundi, mardi, jeudi 12h15 à 17h00"
+  },
+  {
+    "id": "club-de-l-ge-d-or-saint-fran-ois-lav",
+    "name": "Club De L'Âge D'Or Saint-François-De-Sales",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 492-2263",
+    "description": "Activités sociales et récréatives pour personnes aînées.* Vie active: mise en forme, yoga sur chaisse.* Cuisinons ensemble.* Bingo, cartes, billard, projection de films, etc.* Repas communautaire avec soirées dansantes.* Ateliers d'apprentissage: ordinateurs, téléphone intelligente, etc. | Clientèle: personnes de 50 ans et plus | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "7100, boulevard des Mille-Îles, Saint-François, Laval, QC, H7A 4C6",
+    "hours": "septembre à juin, yoga: lundi après-midi, cuisiner ensemble: mardi, vie active: mercredi 10h à 11h, bingo: vendredi 13h00"
+  },
+  {
+    "id": "club-de-l-ge-d-or-saint-martin-d-lav",
+    "name": "Club De L'Âge D'Or Saint-Martin De Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 883-4108",
+    "description": "* Activités sociales et récréatives diverses: pétanque, voyages, sorties, jeux, bingo.* Repas communautaires et soupers de Noël.* Exercices léger. | Clientèle: personnes 50 ans et plus | Territoire: île de Montréal, Laval, Terrebonne | Statut: organisme à but non lucratif",
+    "address": "4080, boulevard Saint-Martin Ouest, Chomedey, Laval, QC, H7T 1C1",
+    "hours": "pétanque et bingo: jeudi 18h30 à 22h00"
+  },
+  {
+    "id": "club-de-l-ge-d-or-saint-no-l-cha-lav",
+    "name": "Club De L'Âge D'Or Saint-Noël Chabanel",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 291-8705",
+    "description": "* Activités sociales et récréatives: bingo, dîners thématiques, etc.* Sorties au casino. | Clientèle: personnes de 50 ans et plus | Territoire: Duvernay, Saint-François, Saint-Vincent-de-Paul | Statut: organisme à but non lucratif",
+    "address": "1000, rue Marie-Uguay, Saint-François, Laval, QC, H7A 0K3",
+    "hours": "lundi 11h00 à 15h30"
+  },
+  {
+    "id": "club-de-l-ge-d-or-saint-sylvain-lav",
+    "name": "Club De L'Âge D'Or Saint-Sylvain",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 661-4529",
+    "description": "* Bingo, danse en ligne. | Clientèle: personnes aînées | Territoire: île de Montréal, Laval | Statut: organisme à but non lucratif",
+    "address": "750, boulevard Saint-Sylvain, Duvernay, Laval, QC, H7E 2X3",
+    "hours": "septembre à mai: mardi 19h30 à 22h00, quatrième samedi du mois 19h30 à 22h30, danse en ligne: dimanche 13h00, été: fermé,"
+  },
+  {
+    "id": "club-de-l-ge-d-or-saint-urbain-d-lav",
+    "name": "Club De L'Âge D'Or Saint-Urbain De Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 815-1212",
+    "description": "* Bingo, jeux de cartes, repas communautaires, sorties, pétanque en été.* Vie active: gymnastique, alimentation saine. | Clientèle: personnes de 55 ans et plus | Territoire: Grand Montréal | Statut: organisme à but non lucratif",
+    "address": "1885, avenue Dumouchel, Chomedey, Laval, QC, H7S 1J8",
+    "hours": "mercredi 10h30 à 16h00, vendredi 12h00 à 16h00"
+  },
+  {
+    "id": "club-de-l-ge-d-or-saint-douard-d-lav",
+    "name": "Club De L'Âge D'Or Saint-Édouard De Fabreville",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 799-5644",
+    "description": "* Dîner communautaire hebdomadaire.* Activités sociales et récréatives: bingo, cartes, etc.* Soupers des fêtes.* Sorties mensuelles: casino, souper-spectacle, etc. | Clientèle: personnes de 50 ans et plus | Territoire: Laval et les alentours | Statut: organisme à but non lucratif",
+    "address": "6600, 29e Avenue, Laval-Ouest, Laval, QC, H7R 3N3",
+    "hours": "septembre à juin, mardi 8h00 à 15h30"
   },
   {
     "id": "club-richelieu-repentigny-rep",
@@ -13677,6 +14974,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "• Activités sociales et récréatives: bingo, casino.• Repas thématiques occasionels (Noël, Pâques, etc.). | Clientèle: personnes de 50 ans et plus Capacité: 130 | Territoire: Terrebonne | Frais: adhésion annuelle: 15$ | Statut: organisme à but non lucratif",
     "address": "505, rue Théberge, Terrebonne, Lanaudière, QC, J6W 2R5",
     "hours": "septembre à mai, mardi et jeudi 13h00 à 16h00"
+  },
+  {
+    "id": "clubs-4-h-du-qu-bec-les-lav",
+    "name": "Clubs 4-H Du Québec (Les)",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 314-1942",
+    "description": "Regroupement des Clubs 4-H du Québec.* Développement de l'écocitoyenneté pour aider à la conservation et à l'amélioration de la qualité de l'environnement.* Éveil à la nature et à ce qui l'entoure afin d'en assurer la protection.* Sensibilisation à l'importance de l'arbre et de la forêt. | Clientèle: jeunes de 4 à 17 ans | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.clubs4h.qc.ca",
+    "address": "6500, boulevard Arthur-Sauvé, bureau 202, Laval-Ouest, Laval, QC, H7R 3X7",
+    "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
     "id": "msss-clsc-mistissini-cmc-mistissini",
@@ -13764,6 +15074,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "coll-ge-montmorency-lav",
+    "name": "Collège Montmorency",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-6100",
+    "description": "Établissement public d'enseignement de niveau collégial.* Programmes préuniversitaires et techniques (DEC), attestation d'études collégiales (AEC).* Formation continue et services aux entreprises.* Francisation pour personnes nouvellement arrivées.* Résidences étudiantes. | Territoire: le Québec | Statut: organisme parapublic",
+    "website": "www.cmontmorency.qc.ca",
+    "address": "475, boulevard de l'Avenir, Laval-des-Rapides, Laval, QC, H7N 5H9",
+    "hours": "lundi au vendredi 7h00 à 22h00, samedi et dimanche 7h00 à 19h00"
+  },
+  {
+    "id": "coll-ge-montmorency-clinique-col-lav",
+    "name": "Collège Montmorency - Clinique-École D'Orthèses Et De Prothèses",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-6474",
+    "description": "* Analyse complète des besoins, conception et fabrication d'orthèses plantaires et d'orthèses et prothèses orthopédiques par les personnes étudiantes de 3e année sous la supervision du personnel enseignant. | Territoire: île de Montréal, Laval | Statut: organisme parapublic",
+    "website": "www.cmontmorency.qc.ca/services-au-public/clinique-ecole-ortheses-protheses",
+    "address": "475, boulevard de l'Avenir, porte 5.8, Laval-des-Rapides, Laval, QC, H7N 5H9",
+    "hours": "mercredi et jeudi 8h00 à 16h00, sur rendez-vous"
+  },
+  {
+    "id": "coll-ge-montmorency-clinique-col-lav-2",
+    "name": "Collège Montmorency - Clinique-École De Physiothérapie",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-6474",
+    "description": "* Clinique de physiothérapie offrant des traitements à prix modiques faits par les personnes étudiantes du programme de Techniques de physiothérapie sous la supervision d'un·e physiothérapeute- enseignant·e. | Territoire: île de Montréal, Laval | Statut: organisme parapublic",
+    "website": "www.cmontmorency.qc.ca/services-au-public/cliniques-ecoles/clinique-ecole-de- physiotherapie/nos-services",
+    "address": "475, boulevard de l'Avenir, porte 5.8, Laval-des-Rapides, Laval, QC, H7N 5H9",
+    "hours": "lundi et jeudi 12h00 à 17h00, sur rendez-vous, de septembre à mai sauf en décembre"
+  },
+  {
+    "id": "coll-ge-montmorency-clinique-col-lav-3",
+    "name": "Collège Montmorency - Clinique-École De Soins Infirmiers",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-6474",
+    "description": "Soins infirmiers offerts par des personnes étudiantes sous la supervision de leurs professeur·e·s.* Vaccination.* Activités de prévention et enseignements.* Prélèvements sanguins et tests d'urine. | Clientèle: vaccination: adultes, femmes enceintes, clientèle pédiatrique et antigrippale, prévention: adultes et enfants | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.cmontmorency.qc.ca/services-au-public/cliniques-ecoles/clinique-ecole-en-soins-infirmiers/",
+    "address": "475, boulevard de l'Avenir, porte 5.8, Laval-des-Rapides, Laval, QC, H7N 5H9",
+    "hours": "lundi au jeudi 8h00 à 15h00, février à mai et de septembre à décembre seulement"
+  },
+  {
+    "id": "comit-d-action-en-s-curit-alimen-lav",
+    "name": "Comité D'Action En Sécurité Alimentaire De Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-2121",
+    "description": "* Table de concertation intersectorielle regroupant des personnes représentantes de divers milieux dont le mandat est de favoriser et promouvoir la sécurité alimentaire sur le territoire lavallois. | Clientèle: acteur·trice·s, organismes et partenaires oeuvrant en sécurité alimentaire | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.securitealimentairelaval.org/casal",
+    "address": "800, boulevard Chomedey, tour A, Chomedey, Laval, QC, H7V 3Y4",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "comite-d-action-des-locataires-de-l-pcl",
     "name": "Comité D'Action des Locataires de L'Ouest-de-L'Île",
     "category": "social",
@@ -13799,6 +15174,84 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "• Aide alimentaire.• Paniers de Noël.• Aide vestimentaire.• Vente de vêtements, jouets et accessoires à faible coût.• Écoute et référence. | Clientèle: personnes et familles à faible revenu | Territoire: La Plaine | Frais: aucuns | Statut: organisme à but non lucratif",
     "address": "5611, boulevard Laurier, Terrebonne, Lanaudière, QC, J7M 1T7",
     "hours": "mardi au vendredi 13h00 à 16h30"
+  },
+  {
+    "id": "comit-d-animation-du-troisi-me-g-lav",
+    "name": "Comité D'Animation Du Troisième Âge De Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 622-1228",
+    "description": "* Répit pour les proches aidant·e·s.* Carrefour d'information pour les personnes aînées.* Initiative de travail de milieu auprès des aînés en situation de vulnérabilité (ITMAV).* Journée d'animation: activités sociales, cognitives et sportives, jeux, causeries et sorties.* Repas communautaires à faible coût.* Transport bénévole pour se rendre à l'organisme seulement.* Conférences gratuites.* Jardin collectif.* Clinique d'impôts. | Clientèle: personnes âgées de 50 ans et plus, transport bénévole: personnes sur la liste d'attente pour le transport adapté Capacité: illimitée | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.lecatal.ca",
+    "address": "140, rue Nadon, Sainte-Rose, Laval, QC, H7L 1T5",
+    "hours": "lundi au jeudi 8h30 à 16h00, vendredi 8h30 à 13h30"
+  },
+  {
+    "id": "comit-d-animation-du-troisi-me-g-lav-2",
+    "name": "Comité D'Animation Du Troisième Âge De Laval - Clinique D'Impôts",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 622-1228",
+    "description": "Clinique d'impôts sur rendez-vous. | Clientèle: résident·e·s de Laval, âgé·e·s de 50 ans et plus ayant un revenu de 34 000$ et moins pour une personne seule ou 38 000$ et moins pour un couple, la déclaration de revenu doit être simple: pas de travailleur autonome, ni revenus ou dépenses d'entreprise, pas de vente de résidence, ni de gain en capital, pas de faillite ni de personne décédée | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.lecatal.ca",
+    "address": "140, rue Nadon, Sainte-Rose, Laval, QC, H7L 1T5",
+    "hours": "clinique année fiscale 2025: lundi au jeudi en mars et avril, sur rendez-vous"
+  },
+  {
+    "id": "comit-de-d-veloppement-local-de--lav",
+    "name": "Comité De Développement Local De Chomedey",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 688-9800",
+    "description": "* Projets collectifs et initiatives pour l'amélioration des conditions de vie et l'égalité des chances en misant sur l'engagement des citoyens et des partenaires.* Thématiques adressées: mobilisation citoyenne, sécurité alimentaire (Quartier nourricier), communautés en réseau et réussite éducative.* Lutte contre la pauvreté et l'exclusion sociale.* Fête annuelle de quartier.* Médiation interculturelle. | Clientèle: organismes communautaires, grand public | Territoire: Chomedey | Statut: organisme à but non lucratif",
+    "website": "www.cdlchomedey.org",
+    "address": "3781, boulevard Lévesque Ouest, bureau 210, Chomedey, Laval, QC, H7V 1G5",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "comit-des-citoyens-de-laval-oues-lav",
+    "name": "Comité Des Citoyens De Laval-Ouest",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 575-6024",
+    "description": "* Activités d'animation et fêtes de quartier.* Consultation et représentation auprès des instances influençant le développement du quartier.* Protection de l'environnement.* Membre de la coalition Terrains de golf en transition (TGT). | Clientèle: résident·e·s | Territoire: Laval-Ouest, Fabreville-Ouest | Statut: Nonprofit - Unincorporated",
+    "website": "www.citoyenslavalouest.com",
+    "address": "6600, 29e Avenue, Laval-Ouest, Laval, QC, H7R 3M3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-du-centre-int--lav",
+    "name": "Comité Des Usagers Du Centre Intégré (Cuci)",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-4201",
+    "description": "Comité des personnes usagères.* Renseignements sur les droits et les obligations.* Défense des droits et intérêts.* Accompagnement dans les démarches pour porter plainte. | Clientèle: personnes usagères du CISSS de Laval | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.lavalensante.com/comites-des-usagers-et-de-residents/comite-des-usagers-du-centre- integre-cuci/",
+    "address": "1755, boulevard René-Lannec, bureau c.1.44, Vimont, Laval, QC, H7M 3L9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-du-csss-de-lav-lav",
+    "name": "Comité Des Usagers Du Csss De Laval",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-8609",
+    "description": "Comité des personnes usagères.* Renseignements sur les droits et les obligations.* Défense des droits et intérêts.* Accompagnement dans les démarches pour porter plainte. | Clientèle: personnes usagères du CSSS de Laval | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.cucssslaval.ca",
+    "address": "800, boulevard Chomedey, tour A, local 232, Chomedey, Laval, QC, H7V 3Y4",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-log-quebec-clq",
@@ -14062,6 +15515,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "compassion-laval-lav",
+    "name": "Compassion Laval",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 669-7072",
+    "description": "Aide aux personnes et aux familles dans le besoin.* Banque alimentaire.* Friperie: vêtements neufs et d'occasion pour adultes et enfants à prix modique.* Point de collecte des dons: nourriture non-périssable ou à longue durée, vêtements, articles d'hygiène personnelle, articles de cuisines, articles pour bébés, etc. | Clientèle: personnes et familles à faible revenu | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "1645, boulevard des Laurentides, Vimont, Laval, QC, H7M 2P2",
+    "hours": "friperie: jeudi 11h00 à 16h30, banque alimentaire: samedi 8h30 à 11h00, récupération de dons sur place: mardi au jeudi, été: fermé de fin juin à septembre, hiver: fermé en décembre et au jour de l'an"
+  },
+  {
     "id": "comptoir-alimentaire-sainte-anne-de-sab",
     "name": "Comptoir Alimentaire Sainte-Anne-de-Bellevue",
     "category": "food",
@@ -14097,6 +15562,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Dépannage alimentaire d'urgence et épicerie à prix modique. La Société Saint-Vincent-de-Paul offre aide immédiate aux familles en difficulté.",
     "address": "2580, rue Royale, Trois-Rivières, QC G9A 4L5",
     "hours": "Dépannage lun-ven 8h30-16h30, sam 9h-12h. Appeler avant de se présenter."
+  },
+  {
+    "id": "conseil-r-gional-de-l-environnem-lav",
+    "name": "Conseil Régional De L'Environnement De Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 664-3503",
+    "description": "Regroupement d'individus et d'organismes voués à la protection de l'environnement et à la promotion des principes de transition socio-écologique.* Support technique, matériel et scientifique aux instances locales.* Sensibilisation du public et activités éducatives.* Concertation et publication de documents.* Éducation relative à l'environnement.* Gestion des matières résiduelles, Économie circulaire et Mobilité* Suivi des plaintes et veille environnementale. | Clientèle: individus ou organismes voués à la protection de l'environnement | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.credelaval.qc.ca/fr",
+    "address": "3235, boulevard Saint-Martin Est, bureaux 208-209, Duvernay, Laval, QC, H7E 5G8",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 17h00"
   },
   {
     "id": "conseil-regional-de-l-environnement-ndp",
@@ -14138,6 +15616,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "juin à septembre"
   },
   {
+    "id": "coop-rative-d-initiation-l-entre-lav",
+    "name": "Coopérative D'Initiation À L'Entrepreneuriat Collectif - Laval-Ouest",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 962-8973",
+    "description": "Projets d'entrepreneuriat offert par des jeunes du secondaire.* Services divers pour tous et toutes: entretien paysager, gardiennage d'enfants, entretien ménager, jardinage, animation de fêtes d'enfants, gardiennage d'animaux, menus travaux, etc.* Services aux entreprises. | Clientèle: services: grand public, projets d'entrepreneuriat: étudiant·e·s du secondaire | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "cqcm.coop/initiatives/ciec",
+    "address": "3850, boulevard Sainte-Rose, Laval-Ouest, Laval, QC, H7R 5P8",
+    "hours": "juin à août"
+  },
+  {
     "id": "cooperative-d-initiation-a-l-entrep-trb",
     "name": "Coopérative D'Initiation À L'Entrepreneuriat Collectif - Terrebonne",
     "category": "social",
@@ -14149,6 +15640,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cqcm.coop/microsites/coop-dinitiation-a-lentrepreneuriat-collectif",
     "address": "640, rue Langlois, bureau 3, TERREBONNE, Lanaudière, QC, J6W 4P3",
     "hours": "juin à septembre"
+  },
+  {
+    "id": "coop-rative-de-soutien-domicile--lav",
+    "name": "Coopérative De Soutien À Domicile De Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 972-1313",
+    "description": "Maintien à domicile et gériatrie sociale.Service d'aide à la vie domestique* Entretien ménager léger: lessive, changement de literie, préparation de repas (sans diète), courses, etc.* Entretien ménager lourd (deux fois par année): murs, plafonds, fenêtres, etc.Service de répit et de soutien personnalisé* Répit pour personnes proches aidantes.* Assistance personnelle, soins à la personne.* Gériatrie sociale: accompagnement des personnes en perte d'autonomie et leurs personnes proches aidantes afin de répondre à des problématiques sociales ou cliniques.* Prévention, référencement et accompagnement.* Formation Sentinelle en gériatrie sociale.* Prêt d'équipements: cannes, marchettes, barres d'appui, etc.Service aux entreprises* Service alimentaire pour résidences, HLM et OSBL d'habitation oeuvrant auprès des personnes en perte d'autonomie. | Clientèle: personnes en perte d'autonomie temporaire ou permanente (déficience physique, intellectuelle ou spectre de l'autisme) | Territoire: Laval | Statut: entreprise commerciale (coopérative)",
+    "website": "www.cooplaval.com",
+    "address": "312-A, boulevard Cartier Ouest, Laval-des-Rapides, Laval, QC, H7N 2J2",
+    "hours": "bureau: lundi au vendredi 8h00 à 17h00, services à domicile: variable"
   },
   {
     "id": "cooperative-de-solidarite-havre-du-rep",
@@ -14268,6 +15772,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-jeu sur rendez-vous"
   },
   {
+    "id": "corporation-de-d-veloppement-com-lav",
+    "name": "Corporation De Développement Communautaire De Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-2388",
+    "description": "Regroupement dont la mission est d'assurer la participation active du mouvement populaire et communautaire au développement socioéconomique de son milieu. | Clientèle: organismes communautaires | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.cdclaval.qc.ca",
+    "address": "1450, boulevard Pie-X, bureau 215, Chomedey, Laval, QC, H7V 3C1",
+    "hours": "lundi au jeudi 9h00 à 16h00"
+  },
+  {
+    "id": "corporation-int-gration-la-vie-a-lav",
+    "name": "Corporation Intégration À La Vie Active Des Personnes Handicapées De Laval",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-1429",
+    "description": "Suivi et soutien individuel pour favoriser l'intégration sociale et professionnelle.* Information et références.* Programme d'intégration socioprofessionnelle et programme d'emploi d'été.* Activités de groupe et activités de jour.* Club propulsion: camp de jour adapté pour les personnes de 14 à 21 ans vivant avec un handicap physique.* Camp de jour pour personnes de 18 à 35 ans vivant avec un handicap intellectuel ou un trouble envahissant du développement (TED).* Cuisines collectives. | Clientèle: personnes de 14 à 35 ans vivant avec des limitations physiques, sensorielles ou intellectuelles Capacité: 12 à 17 personnes par activités | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "civaphl.org",
+    "address": "387, boulevard des Prairies, bureau 210-B, Laval-des-Rapides, Laval, QC, H7N 2W4",
+    "hours": "lundi au vendredi 8h30 à 15h30, cuisines collectives: samedi 9h00 à 12h00"
+  },
+  {
     "id": "corporation-pax-habitat-jol",
     "name": "Corporation Pax-Habitat",
     "category": "social",
@@ -14330,6 +15860,71 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Aide et accompagnement dans les pertes et les deuils de la vie.• Aide et accompagnement, individuel et en groupe.• Accompagnement dans les demandes d'aide médicale à mourir.• Formations et ressourcement.• Conférences et ateliers. | Clientèle: personnes vivant des pertes ou des deuils, personnes proches aidantes, personnes intervenantes, professionnel·le·s de la santé, personnes proches aidantes dont la personne aidée est décédée, personne  | Territoire: Lanaudière | Frais: adhésion annuelle: 10$ | Statut: organisme à but non lucratif",
     "website": "https://auxcouleursdelavie.org",
     "address": "190, rue Montcalm, JOLIETTE, Lanaudière, QC, J6E 5G4",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-civile-la-lav",
+    "name": "Cour Du Québec - Chambre Civile - Laval",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 686-5021",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Audition de causes où la somme en litige est inférieure à 100 000$.* Audition de certaines demandes portant sur les affaires municipales et scolaires.* Audition des demandes d'évaluation psychiatrique: administration des jugements en matière de garde provisoire et autorisée en vue d'une évaluation psychiatrique ou à la suite de celle-ci.* Compétence exclusive pour entendre les appels portant sur des décisions rendues par certains tribunaux administratifs, comme le Tribunal administratif du logement.* Demande de dépôt volontaire. | Territoire: district judiciaire de Laval | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-laval",
+    "address": "2800, boulevard Saint-Martin Ouest, Chomedey, Laval, QC, H7T 2S9",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-criminell-lav",
+    "name": "Cour Du Québec - Chambre Criminelle Et Pénale - Laval",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 686-5006",
+    "description": "Cour de justice de l'appareil judiciaire du Québec. * Entend les poursuites entreprises en vertu du Code criminel, du Code de procédure pénale ou de toute autre loi pénale. | Territoire: district judiciaire de Laval | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-laval",
+    "address": "2800, boulevard Saint-Martin Ouest, Chomedey, Laval, QC, H7T 2S9",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-chambre-de-la-jeu-lav",
+    "name": "Cour Du Québec - Chambre De La Jeunesse - Laval",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 686-5910",
+    "description": "Cour de justice de l'appareil judiciaire du Québec. * Entend toutes les causes impliquant une personne mineure.* Entend les causes d'adoption. | Territoire: district judiciaire de Laval | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-laval",
+    "address": "2800, boulevard Saint-Martin Ouest, Chomedey, Laval, QC, H7T 2S9",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-du-qu-bec-division-des-peti-lav",
+    "name": "Cour Du Québec - Division Des Petites Créances - Laval",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 686-5001",
+    "description": "Tribunal qui entend les causes dont la somme d'argent en litige est de 15 000$ ou moins et où les gens se représentent eux-mêmes, sans avocat.* Service de médiation gratuit aux parties souhaitant régler leur litige par une entente avant l'audition de leur cause par le ou la juge. | Clientèle: personne physique ou morale et société ayant employé au plus 10 personnes au cours des 12 mois précédant la date de la réclamation | Territoire: district judiciaire de Laval | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-laval",
+    "address": "2800, boulevard Saint-Martin Ouest, Chomedey, Laval, QC, H7T 2S9",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cour-sup-rieure-laval-lav",
+    "name": "Cour Supérieure - Laval",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 686-5021",
+    "description": "Cour de justice de l'appareil judiciaire du Québec.* Entend les causes dont la somme en litige est de 75 000$ et plus et les litiges administratif, familial et de faillite.* Entend les procès devant jury en matière pénale et les appels en matière de poursuites sommaires. | Territoire: district judiciaire de Laval | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-laval",
+    "address": "2800, boulevard Saint-Martin Ouest, Chomedey, Laval, QC, H7T 2S9",
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
@@ -14646,6 +16241,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV."
   },
   {
+    "id": "diapason-jeunesse-lav",
+    "name": "Diapason-Jeunesse",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-8839",
+    "description": "Organisme de promotion de la persévérance scolaire à travers différents programmes et services.* Aide aux devoirs.* Ateliers de développement des habiletés propices à la réussite.* Activités parascolaires sportives, artistiques et manuelles.* Encadrement et suivi individualisés.* Ateliers d'exploration scolaire et professionnelle.* Soutien aux parents.* Aide et référence par téléphone ou Zoom. | Clientèle: jeunes de 12 à 17 ans, leurs parents Capacité: 280 jeunes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "diapasonjeunesse.ca",
+    "address": "3517, boulevard Lévesque Ouest, Chomedey, Laval, QC, H7V 1E9",
+    "hours": "lundi au vendredi 15h00 à 20h00"
+  },
+  {
+    "id": "dimension-travail-lav",
+    "name": "Dimension Travail",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-7447",
+    "description": "* Aide à la recherche d'emploi pour les femmes dans tous les secteurs, y compris les métiers traditionnellement masculins.* Orientation, préparation de CV, simulation d'entrevues.* Ateliers de groupe et accompagnement personnalisé.* Centre de documentation.* Accès à Internet.* Information et sensibilisation de la population et des milieux concernés. | Clientèle: femmes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.dimensiontravail.com",
+    "address": "1717, boulevard Saint-Martin Ouest, bureau 300, Chomedey, Laval, QC, H7S 1N2",
+    "hours": "lundi à jeudi de 8h30 à 16h30 et vendredi de 8h00 à 15h30"
+  },
+  {
     "id": "diocese-de-joliette-jol",
     "name": "Diocèse de Joliette",
     "category": "social",
@@ -14659,6 +16280,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "dira-laval-lav",
+    "name": "Dira-Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 681-8813",
+    "description": "Accueil et écoute pour victimes d'abus, de violence, de maltraitance, d'intimidation et de négligence.* Dépistage et dénonciation.* Initiative de travail de milieu auprès des aîné·e·s en situation de vulnérabilité (ITMAV).* Information sur les droits des victimes: conférences, présentations et référence.* Accompagnement dans les démarches.* Aide avec la gestion des successions.* Lignes d'écoute relative à la violence et la maltraitance des aîné·e·s. | Clientèle: personnes de 50 ans et plus | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "dira-laval.ca",
+    "address": "1450, boulevard Pie-X, bureau 217, Chomedey, Laval, QC, H7V 3C1",
+    "hours": "sur rendez-vous, lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
     "id": "etat-civil-qc",
     "name": "Directeur de l'état civil du Québec",
     "category": "social",
@@ -14669,6 +16303,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Demande de certificats et copies d'actes : naissance, mariage, union civile, décès, changement de nom ou de sexe. Demande en ligne, par la poste ou en personne. Essentiel pour obtenir passeport, NAS, permis et autres documents officiels.",
     "hours": "Lun-ven 8h30-16h30. En ligne 24h/24 pour certains services.",
     "isProvinceWide": true
+  },
+  {
+    "id": "direction-de-la-sant-publique-de-lav",
+    "name": "Direction De La Santé Publique De Laval",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-2121",
+    "description": "Information, prévention, promotion et protection de l'état de santé général des personnes. * Vigie et surveillance de ce qui peut améliorer ou constituer une menace à l'état de santé actuel.* Promotion d'orientations et de solutions.* Services-conseils au réseau de la santé. | Territoire: Laval | Statut: organisme parapublic",
+    "website": "www.lavalensante.com/employes-et-medecins/direction-de-sante-publique",
+    "address": "800, boulevard Chomedey, tour A, 3e étage, Chomedey, Laval, QC, H7V 3Y4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "direction-des-services-professio-lav",
+    "name": "Direction Des Services Professionnels Correctionnels - Laval-Lanaudière",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 680-6031",
+    "description": "Instance responsable des activités relatives à l'évaluation et au suivi des personnes contrevenantes.* Évaluation des personnes contrevenantes,* Élaboration des plans d'intervention correctionnels.* Administration des sentences dans la communauté. | Clientèle: personnes contrevenantes condamnées à des peines inférieures à 2 ans, personnes prévenues | Territoire: Laval, Lanaudière | Statut: organisme du gouvernement provincial",
+    "website": "www.quebec.ca/securite-situations-urgence/services-correctionnels",
+    "address": "2800, boulevard Saint-Martin Ouest, bureau SS 1.04, Chomedey, Laval, QC, H7T 2S9",
+    "hours": "Voir site web"
   },
   {
     "id": "direction-de-la-sante-publique-de-l-jol",
@@ -14829,6 +16489,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service disponible 24h/24, 7j/7"
   },
   {
+    "id": "division-urgence-sociale-du-serv-lav",
+    "name": "Division Urgence Sociale Du Service De Police De Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-4595",
+    "description": "Intervention psychosociale d'urgence et de première ligne.* Sinistre: soutien psychosocial, hébergement temporaire et distribution de biens de première nécessité.* Décès traumatique (accident, suicide, homicide): intervention conjointe avec le corps policier, soutien psychosocial, accompagnement et référence.* Problématique de santé mentale: intervention à domicile, évaluation de la dangerosité, soutien, accompagnement de la personne et des proches, accompagnement pour l'obtention d'une ordonnance pour examen psychiatrique, intervention conjointe avec le corps policier.* Problème d'insalubrité: évaluation de l'état de santé mentale, accompagnement et référence.* Personnes isolées en perte d'autonomie dont la condition se détériore: évaluation à domicile, accompagnement, référence.* Problèmes familiaux ou de violence: intervention et référence. | Clientèle: citoyens de 18 ans et plus vivant une situation de crise | Territoire: Laval | Statut: organisme municipal",
+    "website": "www.laval.ca/police",
+    "address": "2785, avenue Francis-Hughes, Chomedey, Laval, QC, H7L 3J6",
+    "hours": "lundi au vendredi 8h15 à 12h00 et 13h00 à 17h30"
+  },
+  {
     "id": "dollard-des-ormeaux-sports-loisirs-ddo",
     "name": "Dollard-des-Ormeaux - Sports, Loisirs et Culture",
     "category": "immigration",
@@ -14947,6 +16620,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "d-clic-action-pavillon-la-maison-lav",
+    "name": "Déclic Action - Pavillon La Maisonnée",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 628-1011",
+    "description": "Ressource d'aide en dépendance offrant trois programmes (désintoxication, thérapie et réinsertion sociale).* Centre de réadaptation interne de 21 ou 28 jours.* Programme distinct pour les dépendances aux substances.* Programme distinct pour le jeu excessif.* Programme mixé pour les dépendances.* Soutien à la désintoxication interne de 15 jours.* Réinsertion sociale pouvant aller jusqu'à trois mois.* Soutien à l'entourage.* Hébergement reconnu par les services correctionnels pour les personnes prévenues, en libération conditionnelle ou sous probation. | Clientèle: personnes ayant des problèmes reliés à la consommation de drogue, d'alcool ou de jeu Capacité: 23 hommes, 15 femmes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.declicaction.com",
+    "address": "2255, rue Bienville, Auteuil, Laval, QC, H7H 3C9",
+    "hours": "24 heures, 7 jours"
+  },
+  {
     "id": "defi-integration-developpement-acco-rep",
     "name": "Défi-Intégration-Développement-Accompagnement (dida) - Repentigny",
     "category": "employment",
@@ -14971,6 +16657,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://dslanaudiere.org",
     "address": "200, rue De Salaberry, JOLIETTE, Lanaudière, QC, J6E 4G1",
     "hours": "lundi au vendredi 8h30 à 17h00"
+  },
+  {
+    "id": "d-veloppement-conomique-de-la-vi-lav",
+    "name": "Développement Économique De La Ville De Laval",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-5959",
+    "description": "Stimulation de l'entrepreneuriat, de la création d'emploi et du développement socioéconomique.* Appui financier aux entreprises.* Programmes de financements: fonds et subventions.* Localisation d'entreprises.* Soutien à l'entrepreneuriat.* Services-conseils.* Soutien à la mobilité et aux affaires internationales. | Clientèle: entreprises privées et d'économie sociale | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "lavaleconomique.com",
+    "address": "1333, boulevard Chomedey, bureau 401, Chomedey, Laval, QC, H7V 3Y1",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "ab-ecca",
@@ -15068,6 +16767,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "pw7",
+    "name": "Emploi-Québec",
+    "category": "employment",
+    "subcategory": "Services d'emploi",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-888-643-4721",
+    "description": "Services publics d'emploi. Aide à la recherche d'emploi, formations professionnelles et prestations.",
+    "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service.",
+    "isProvinceWide": true
+  },
+  {
     "id": "emp-emploi-quebec",
     "name": "Emploi-Québec",
     "category": "employment",
@@ -15079,19 +16791,6 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.emploiquebec.gouv.qc.ca",
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30.",
-    "isProvinceWide": true
-  },
-  {
-    "id": "pw7",
-    "name": "Emploi-Québec",
-    "category": "employment",
-    "subcategory": "Services d'emploi",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-888-643-4721",
-    "description": "Services publics d'emploi. Aide à la recherche d'emploi, formations professionnelles et prestations.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service.",
     "isProvinceWide": true
   },
   {
@@ -15120,6 +16819,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service."
   },
   {
+    "id": "en-droit-de-laval-l-lav",
+    "name": "En-Droit De Laval (L')",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-1058",
+    "description": "Promotion et défense des droits individuels et collectifs des personnes usagères de services en santé mentale.* Centre de documentation.* Formation, aide et accompagnement.* Conférences.* Promotion- vigilance.* Action systémique. | Clientèle: adultes vivant ou ayant vécu avec des problèmes de santé mentale | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.endroitlaval.com",
+    "address": "34F, boulevard Cartier Ouest, Laval-des-Rapides, Laval, QC, H7N 2H3",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
     "id": "enfance-libre-lanaudiere-jol",
     "name": "Enfance Libre Lanaudière",
     "category": "family",
@@ -15131,6 +16843,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://enfancelibrelanaudiere.ca",
     "address": "1208, rue de Lanaudière, Joliette, Lanaudière, QC, J6E 3P1",
     "hours": "lundi au jeudi 8h30 à 16h30"
+  },
+  {
+    "id": "enfant-d-abord-lav",
+    "name": "Enfant D'Abord",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 681-1154",
+    "description": "* Banque alimentaire.* Distribution de produits d'hygiènes.* Accompagnement de jardins collectifs et communautaires.* Livraison de denrées dans les écoles primaires et les organismes.* Ateliers d'éducation en agriculture urbaine dans les écoles primaires et auprès des familles et citoyens de Laval: planification du potager, préparations des semis, mise en pot ou en terre, entretien des plantes.* Réinsertion sociale pour adoslescent·e·s.* Travaux compensatoires. | Clientèle: personnes dans le besoin, banque alimentaire: personnes à faible revenu, réinsertion sociale: adolescent·e·s de 14 à 17 ans | Territoire: Laval, banque alimentaire: Chomedey | Statut: organisme à but non lucratif",
+    "website": "www.enfantdabord.org",
+    "address": "3781, boulevard Lévesque Ouest, bureau 209, Chomedey, Laval, QC, H7V 1G5",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00, dépannage alimentaire d'urgence: mardi, jeudi et vendredi 9h30 à 15h00"
+  },
+  {
+    "id": "entraide-pont-viau-et-laval-des--lav",
+    "name": "Entraide (Pont-Viau Et Laval Des Rapides) Inc. (L')",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 663-8039",
+    "description": "* Enfants de 0 à 5 ans: halte-garderie, ateliers de stimulation, préparation à la maternelle, ateliers de parents et ateliers parents-enfants.* Jeunes de 6 à 12 ans: activités parascolaires, aide aux devoirs, camps de jour, ateliers culinaires, initiations sportives, etc.* Espace citoyen: évènements sociaux, économie sociale, location de salle, frigo communautaire, friperie, accueil et orientation, écrivain public, commissaire à l'assermentation.* Le Grand Cerf-Volant: activités de socialisation pour personnes aînées. | Clientèle: enfants, adultes, familles, personnes aînées | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.entraidelaval.org",
+    "address": "664, rue Saint-André, Pont-Viau, Laval, QC, H7G 3A5",
+    "hours": "variables"
   },
   {
     "id": "envol-l-btv",
@@ -15237,6 +16975,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "1431, rue Fullum, bureau 102, Montréal, QC H2K 0B5",
     "hours": "Lun-ven 9h-17h. Consultations sur RV.",
     "isProvinceWide": true
+  },
+  {
+    "id": "fadoq-r-gion-de-laval-lav",
+    "name": "Fadoq - Région De Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 686-2339",
+    "description": "* Rassemblement et représentation visant à conserver et améliorer la qualité de vie.* Défense et promotion des droits, valorisation de l'apport dans la société.* Ateliers et programmes de sensibilisation sur divers sujets.* Programme privilèges: accès à des rabais sur divers produits et services.* Activités récréatives et sociales.* Aîné-Avisé: programme de sensibilisation à la fraude et à la maltraitance envers les personnes aînées. | Clientèle: personnes de 50 ans et plus | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.fadoq.ca/laval",
+    "address": "2345, rue Michelin, bureau 230, Chomedey, Laval, QC, H7S 5B9",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
     "id": "fadoq-region-lanaudiere-jol",
@@ -15372,6 +17123,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "femmes-en-emploi-lav",
+    "name": "Femmes En Emploi",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 490-4895",
+    "description": "Favoriser l'intégration sociale, culturelle et professionnelle des femmes en situation de précarité, particulièrement les femmes issues de l'immigration.* Programme de recherche d'emploi et formation à l'emploi.* Soutien pour les premières démarches d'installation et accompagnement pour personnes immigrantes nouvellement arrivées.* Ateliers en informatique: recherche sur Internet, compte bancaire en ligne, etc.* Ateliers d'information sur la culture et les lois canadiennes et la vie au Canada, au Québec et à Laval.* Services de traduction.* Service de consultation et références.* Récupération d'objets: petit électro et meubles.* Colloques, ateliers et autres activités socio-éducatives sur les enjeux de discrimination et de préjugés raciaux.* Événements et sensibilisation sur l'environnement.* Occasion de bénévolat. | Clientèle: femmes en situation de précarité, particulièrement les femmes issues de l'immigration, soutien pour les premières démarches d'installation et accompagnement: résident·e·s permanent·e·s et temporaires, demandeur·euse·s d'asile | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "femmesenemploi.org",
+    "address": "1688, boulevard des Laurentides, bureau 102-103-104, Vimont, Laval, QC, H7M 2P4",
+    "hours": "lundi au vendredi 9h00 à 17h00, ateliers en informatique: mardi et mercredi"
+  },
+  {
+    "id": "ferme-jeunes-au-travail-lav",
+    "name": "Ferme Jeunes Au Travail",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 923-1251",
+    "description": "Intégration socioprofessionnelle.* Stage rémunéré de 6 mois ou plus sur une ferme maraîchère biologique: serre, jardins, kiosque saisonnier, légumes biologiques, ébénisterie, menuiserie.* Suivi et accompagnement individuel et de groupe. | Clientèle: jeunes en difficulté âgés de 16 à 35 ans Capacité: 60 jeunes par année | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.jeunesautravail.ca",
+    "address": "2595, rang du Haut-Saint-François, Duvernay, Laval, QC, H7E 4P2",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
     "id": "fermette-enchantee-la-msc",
     "name": "Fermette Enchantée (la)",
     "category": "social",
@@ -15383,6 +17160,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://la-fermette-enchantee.business.site",
     "address": "1283, chemin de la Cabane-Ronde, Mascouche, Lanaudière, QC, J7K 0P2",
     "hours": "lundi au dimanche 9h30 à 17h00"
+  },
+  {
+    "id": "fibromyalgie-laval-lav",
+    "name": "Fibromyalgie Laval",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 622-1414",
+    "description": "* Groupes d'entraide mensuels.* Écoute et soutien thérapeutique.* Information et conférences.* Gestion de la douleur.* Activités physiques: aquaforme, pilates, etc.* Hypnose.* Ateliers divers virtuels et présentiels.* Ateliers de gestion du stress.* Rendez-vous artistiques et cafés-rencontres.* Programme d'accompagnement.* Programme d'équilibre. | Clientèle: personnes atteintes de fibromyalgie ou de douleur chronique, leurs proches, étudiant·e·s, professionnel·le·s de la santé | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "fibromyalgielaval.org",
+    "address": "2465, rue Honoré-Mercier, bureau 225, Sainte-Rose, Laval, QC, H7L 2S9",
+    "hours": "lundi au jeudi 10h00 à 16h00"
   },
   {
     "id": "fin-a-la-faim-rep",
@@ -15422,6 +17212,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.westislandphysicallydisabled.ca/index.php",
     "address": "19, rue Sunshine, Dollard-Des Ormeaux, Montréal, QC, H9B 1G1",
     "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "fondation-le-pilier-lav",
+    "name": "Fondation Le Pilier",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 624-9922",
+    "description": "Organisme qui vise à améliorer la qualité de vie des personnes en situation de handicap.* Services d'hébergement dans des milieux résidentiels adaptés et supervisés.* Construction, accueil, vente et administration des projets d'habitation qui facilitent l'intégration sociale des personnes en situation de handicap.* Promotion et développement des loisirs adaptés.* Promotion du respect et des droits des personnes en situation de handicap.* Participation à la recherche.* Centre Marcelle et Jean Coutu. | Clientèle: personnes autistes, personnes ayant une déficience intellectuelle ou physique ou un traumatisme crânien | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.lepilier.org",
+    "address": "425, place Jean-Coutu, Auteuil, Laval, QC, H7H 3C8",
+    "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
     "id": "fondation-papillon-camp-papillon-sain",
@@ -15741,6 +17544,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "g-e-m-e-groupe-d-entraide-pour-u-lav",
+    "name": "G.E.M.E. Groupe D'Entraide Pour Un Mieux-Être - Laval",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "1 866 443-4363",
+    "description": "* Groupes de soutien en personne et virtuels (sur Zoom).* Consultations individuelles en personne et virtuels (sur Zoom).* Groupes de méditation.* Documentation et outils pour gérer les troubles anxieux: capsules vidéos, témoignages, livres, CD de visualisation.* Ateliers et conférences virtuels et en personne à la demande des organisations. | Clientèle: personnes de 18 ans et plus avec des troubles anxieux: stress, phobie simple ou sociale, agoraphobie, trouble panique, burnout, dépression, stress post-traumatique Capacité: groupes de soutien: 15 à 33 personnes | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "website": "www.groupegeme.com",
+    "address": "25, rue Saint-Louis, Pont-Viau, Laval, QC, H7G 4W3",
+    "hours": "bureau: lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00, horaire des groupes: sur le site Internet"
+  },
+  {
     "id": "cpe-pw3",
     "name": "Garde en milieu familial (RSG) – Réseau provincial",
     "category": "family",
@@ -15842,6 +17658,70 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.foodbank.bc.ca",
     "address": "1150 Station St, Vancouver, BC V6A 4C7",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
+  },
+  {
+    "id": "groupe-alpha-laval-le-lav",
+    "name": "Groupe Alpha Laval (Le)",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 669-3232",
+    "description": "* Ateliers d'alphabétisation: lecture, écriture et calcul.* Accueil et référence.* Activités d'éducation populaire.* Activités de sensibilisation à la problématique de l'analphabétisme.* Démarche en développement de l'employabilité et aide à la recherche d'emploi. | Clientèle: personnes peu alphabétisées s'exprimant en français Capacité: 5 à 8 personnes par groupe | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.groupealphalaval.com",
+    "address": "485, boulevard des Laurentides, bureaux 101 et 105, 1er et 3e étage, Pont-Viau, Laval, QC, H7G 2V2",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "groupe-d-entraide-d-clic-lav",
+    "name": "Groupe D'Entraide Déclic",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 736-0966",
+    "description": "Centre de traitement en dépendance affective et en gestion des émotions.* Thérapie individuelle, de couple, familiale ou de groupe. | Clientèle: personnes vivant avec une dépendance affective | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "60, Terrasse Coutu, Auteuil, Laval, QC, H7J 1A6",
+    "hours": "lundi au vendredi 8h30 à 16h30, variables selon les services"
+  },
+  {
+    "id": "groupe-d-entraide-la-ros-e-lav",
+    "name": "Groupe D'Entraide La Rosée",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 962-9971",
+    "description": "* Friperie-meublerie: vente à prix modique et récupération sur place de vêtements, meubles, livres, vélos.* Popote roulante.* Dépannage alimentaire d'urgence: une fois par mois par famille maximum.* Don de meubles et vêtements sur référence. | Clientèle: personnes à faible revenu, personnes en perte d'autonomie | Territoire: Laval-Ouest, Fabreville, Sainte-Dorothée (codes postaux débutant par H7R, H7P, H7Y et",
+    "website": "larosee.qc.ca",
+    "address": "5565, boulevard Dagenais, Laval-Ouest, Laval, QC, H7R 1M1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-d-entraide-la-ros-e-accom-lav",
+    "name": "Groupe D'Entraide La Rosée - Accompagnement-Transport",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 962-9971",
+    "description": "* Accompagnement-transport pour rendez-vous médicaux par des bénévoles. | Clientèle: personnes aînées, personnes en perte d'autonomie permanente ou temporaire, personnes en situation de vulnérabilité | Territoire: Laval-Ouest, Fabreville, Sainte-Dorothée (codes postaux débutant par H7R, H7P, H7Y et H7X), rendez-vous: Grand Montréal | Statut: organisme à but non lucratif",
+    "website": "larosee.qc.ca",
+    "address": "5565, boulevard Dagenais, Laval-Ouest, Laval, QC, H7R 1M1",
+    "hours": "lundi au vendredi"
+  },
+  {
+    "id": "groupe-de-loisirs-la-relance-lav",
+    "name": "Groupe De Loisirs La Relance",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 661-4276",
+    "description": "Activités sportives, culturelles et récréatives pour personnes aînées.* Activités sportives: danse, aquaforme, danse en ligne, qi gong, yoga.* Activités physiques: mise en forme, exercices adaptés, programme Viactive.* Activités artistiques: création littéraire, peinture, aquarelle.* Cours de langues: anglais, espagnol, italien.* Cours d'informatique.* Courts voyages et sorties.* Dîners communautaires.* Souper de Noël. | Clientèle: personnes pré-retraitées et retraitées | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "groupe-loisirs-relance.org",
+    "address": "3235, boulevard Saint-Martin Est, bureau 110, Duvernay, Laval, QC, H7E 5G8",
+    "hours": "bureau: lundi au jeudi 9h00 à 12h00 et 13h00 à 14h00, vendredi 9h00 à 12h00, activités: lundi au vendredi 9h00 à 16h00"
   },
   {
     "id": "msss-hopital-val-d-or-groupe-de-medecine-de-famille-universitaire-de-la-vallee-de-",
@@ -16024,6 +17904,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "groupe-priorit-travail-lav",
+    "name": "Groupe Priorité Travail",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 681-4472",
+    "description": "* Aide à la recherche d'emploi et à la transition de carrière: CV, placement assisté, évaluation socioprofessionnelle.* Aide lors de licenciement collectif.* Orientation, bilan des compétences.* Accompagnement pour les employeurs à la recherche de personnel qualifié. | Clientèle: personnes en recherche d'emploi ou en réorientation de carrière, employeurs | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.groupeprioritetravail.com",
+    "address": "665, boulevard Curé-Labelle, Chomedey, Laval, QC, H7V 2T8",
+    "hours": "lundi au vendredi 8h00 à 16h30"
+  },
+  {
+    "id": "groupe-promo-sant-lav",
+    "name": "Groupe Promo-Santé",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-2121",
+    "description": "Promotion des saines habitudes de vie.* Aide au démarrage de groupes d'activité physique (club de marche, groupes Viactive, etc.).* Conférences et formations sur les saines habitudes de vie, l'activité physique et l'alimentation.* Éducation nutritionnelle.* Kinésiologie.* Ligne Info-Actif: ligne d'information sur l'activité physique.* Camp de jour Bouffe-Nature: activités sur l'alimentation et sur la découverte de la nature.* Clinique Promo-Santé.* Aide au démarrage de cuisines collectives pour aîné·e·s. | Clientèle: grand public, organismes communautaires, écoles, CPE, entreprises | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "groupepromosante.com",
+    "address": "3235, boulevard Saint-Martin Est, bureau 210, Duvernay, Laval, QC, H7E 5G8",
+    "hours": "lundi au vendredi 8h00 à 16h00, variables"
+  },
+  {
     "id": "groupe-ressources-des-moulins-msc",
     "name": "Groupe Ressources des Moulins",
     "category": "social",
@@ -16059,6 +17965,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.gymnolanaudiere.org",
     "address": "130, rue Valmont, Repentigny, Lanaudière, QC, J5Y 1N9",
     "hours": "Voir site web"
+  },
+  {
+    "id": "gymno-laval-lav",
+    "name": "Gymno Laval",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 625-2674",
+    "description": "Activités de loisirs adaptées pour enfants de 3 à 17 ans avec des difficultés d'apprentissage.* Camp de jour estival.* Activités parent-enfant.* Cours de danse.* Activités physiques, théâtrales et aquatiques. | Clientèle: personnes de 3 à 17 ans avec des difficultés d'apprentissage, camp de jour: personnes 5 à 17 ans, activités parent-enfant: enfants de 3 à 4 ans, leurs parents | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.gymno.org/article/257-gymno-laval.html",
+    "address": "2465, rue Honoré-Mercier, Sainte-Rose, Laval, QC, H7L 2S9",
+    "hours": "bureau: lundi au vendredi 9h00 à 16h00, activités: vendredi soir, samedi et dimanche matin, camp de jour estival: 7h15 à 17h30"
   },
   {
     "id": "generation-elles-drv",
@@ -16166,6 +18085,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30."
   },
   {
+    "id": "habitations-ararat-lav",
+    "name": "Habitations Ararat",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 934-7589",
+    "description": "Logements abordables subventionnés avec services.* Appartements 2½, 3½ et 4½.* Chauffage, électricité, téléphone et câble.* 7 repas par semaine.* Surveillance 24/7. | Clientèle: personnes âgées de 60 ans et plus et autonomes, personnes à faible revenu Capacité: 74 logements | Territoire: Grand Montréal | Statut: organisme à but non lucratif",
+    "address": "5025, chemin du Souvenir, Chomedey, Laval, QC, H7W 0J9",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
     "id": "habitations-cine-des-coeurs-chl",
     "name": "Habitations Ciné des Coeurs",
     "category": "social",
@@ -16176,6 +18107,56 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Logements subventionnés et non-subventionnés pour personnes aînées ou jeunes parents.• Appartements 3½, 4½ et 5½. | Clientèle: personnes ainées autonomes de 60 ans et plus, jeunes parents (en couplpe ou monoparentales) de 35 ans et moins avec enfants de 5 ans et moins ayant un plan de vie ou étant aux études Capacité: 18 loge | Territoire: MRC L'Assomption, MRC Les Moulins | Frais: logements subventionnés: 25% du revenu | Statut: organisme à but non lucratif",
     "address": "87, rue du Sacré-Coeur, Charlemagne, Lanaudière, QC, J5Z 1W9",
     "hours": "lundi au jeudi, sur rendez-vous"
+  },
+  {
+    "id": "habitations-du-rendez-vous-les-lav",
+    "name": "Habitations Du Rendez-Vous (Les)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 781-9782",
+    "description": "Logements subventionnés pour personnes aînées.* Appartements 3½ et 4½.* Logements adaptés pour personnes à mobilité réduite.* Services de surveillance 24 heures, 7 jours pour les urgences. | Clientèle: personnes de 60 ans et plus, autonomes ou en légère perte d'autonomie, à faible revenu Capacité: 18 logements 3½, 2 logements 4½ | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "925, avenue du Bois-de-Boulogne, bureau 101, Chomedey, Laval, QC, H7N 4G1",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "habitations-l-envol-e-les-lav",
+    "name": "Habitations L'Envolée (Les)",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 937-2255",
+    "description": "Appartements supervisés pour jeunes et jeunes parents monoparentaux de 18 à 30 ans.* Soutien dans une démarche de transition vers l'autonomie. | Clientèle: personnes de 18 à 30 ans ayant des besoins particuliers, jeunes parents monoparentaux de 18 à 30 ans avec 1 ou 2 enfants Capacité: 30 logements: 26 appartements 3 ½ pour personnes seules et 4 appartements 4 ½ pour familles monoparentales avec 1 ou 2 enfants | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "leshabitationslenvolee.ca",
+    "address": "181, rue L'Allier, Sainte-Rose, Laval, QC, H7L 2K9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "habitations-saint-christophe-les-lav",
+    "name": "Habitations Saint-Christophe (Les)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 688-0184",
+    "description": "Logements subventionnés avec services pour personnes aînées en perte d'autonomie.* Chambres et 3½.* Logements adaptés pour personnes à mobilité réduite.* Présence d'un·e préposé·e aux bénéficiaires 24 heures, 7 jours.* Présence d'un·e aide infirmier·ère, d'un·e ergothérapeute et d'un·e travailleur·euse social provenant du CLSC Marigot.* Activités récréatives et physiques.* Clinique d'impôts pour les résident·e·s. | Clientèle: personnes en perte d'autonomie sévère, adultes vivant avec une déficience physique grave Capacité: 51 logements | Territoire: le Québec | Statut: organisme à but non lucratif",
+    "address": "15, rue Berri, bureau 1, Pont-Viau, Laval, QC, H7G 2W4",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "halte-de-l-orchidbleue-la-lav",
+    "name": "Halte De L'Orchidbleue (La)",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 575-3276",
+    "description": "* Activités parascolaires pour adolescent·e·s.* Camp de jour d'été de sept semaines.* Activités durant la semaine de relâche.* Activités de jour pour les adultes. | Clientèle: personnes de 12 ans et plus ayant une déficience intellectuelle avec ou sans TSA | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "halte-orchidbleue.ca",
+    "address": "113, boulevard de la Concorde Ouest, Laval-des-Rapides, Laval, QC, H7N 1H8",
+    "hours": "lundi au vendredi 6h30 à 18h00, samedi 9h00 à 15h00"
   },
   {
     "id": "nb-shelter-moncton",
@@ -17134,18 +19115,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
-    "id": "msss-hopital-montreal-hopital-general-juif",
-    "name": "Hôpital Général Juif",
-    "category": "health",
-    "subcategory": "Hôpital",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "",
-    "address": "4335, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E4",
-    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
-  },
-  {
     "id": "msss-hopital-montreal-hopital-general-juif-2",
     "name": "Hôpital Général Juif",
     "category": "health",
@@ -17157,6 +19126,18 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "3755, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E2",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "msss-hopital-montreal-hopital-general-juif",
+    "name": "Hôpital Général Juif",
+    "category": "health",
+    "subcategory": "Hôpital",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "",
+    "address": "4335, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E4",
+    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
     "id": "msss-hopital-saint-hyacinthe-hopital-honore-mercier",
@@ -17209,6 +19190,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "3205, place Alton-Goldbloom, Laval, QC H7V 1R2",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "h-pital-juif-de-r-adaptation-aid-lav",
+    "name": "Hôpital Juif De Réadaptation - Aides Techniques Et Aides À La Communication",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 688-5728",
+    "description": "* Évaluation, recommandation et attribution d'aides à la mobilité et à la posture et d'aides à la communication.* Entretien et réparation des aides fournies.* Dépannage d'urgence pour personnes en fauteuil roulant manuel ou motorisé. | Clientèle: adultes et enfants vivant avec une déficience physique, adultes vivant avec une incapacité significative et persistante à communiquer, parler, écrire, utiliser un ordinateur ou contrôler l'environnement | Territoire: île de Montréal, Laval, Rive-Nord, Lanaudière, dépannage d'urgence: Laval | Statut: organisme parapublic",
+    "website": "lavalensante.com/hjr-jrh",
+    "address": "3205, place Alton-Goldbloom, Chomedey, Laval, QC, H7V 1R2",
+    "hours": "Voir site web"
   },
   {
     "id": "msss-hopital-montreal-hopital-maisonneuve-rosemont",
@@ -17644,6 +19638,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "initiative-locale-st-fran-ois-en-lav",
+    "name": "Initiative Locale St-François En Action",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 936-2557",
+    "description": "Concertation et mobilisation pour le développement social du quartier Saint-François.* Comité jeunesse: mise sur pied d'activités pour les jeunes.* Comité sécurité alimentaire: mobilisation autour de la sécurité alimentaire.* Comité environnement.* Comité Services accessibles et de qualité.* Comité Intergénérationnel et interculturel.* Amélioration des services de proximité.* Collaboration avec différents organismes du quartier. | Clientèle: citoyen·ne·s, organismes communautaires, institutions | Territoire: quartiers Saint-François et Duvernay-Est, comité sécurité alimentaire: quartiers Saint- François et Saint-Vincent-de-Paul | Statut: organisme à but non lucratif",
+    "website": "www.stfrancoisenaction.org",
+    "address": "1000, rue Marie-Uguay, Saint-François, Laval, QC, H7A 0K3",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
     "id": "msss-hopital-montreal-institut-de-cardiologie-de-montreal",
     "name": "Institut De Cardiologie De Montréal",
     "category": "health",
@@ -17655,6 +19662,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "5000, rue Bélanger, Montréal, QC H1T 1C8",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
+  },
+  {
+    "id": "institut-des-troubles-d-apprenti-lav",
+    "name": "Institut Des Troubles D'Apprentissage - Section Laval",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 404-7886",
+    "description": "* Information et écoute active.* Cafés-causeries pour les parents.* Cafés-rencontres thématiques pour adultes.* Conférences.* Y'APP: groupe d'entraide pour les parents d'enfants avec des difficultés scolaires ou un TDA/H.* Kiosques d'information.* Dépistage précoce et accompagnement dans les services de garde.* Centre de documentation.* Ateliers de sensibilisation et d'information.* Activités familiales. | Clientèle: enfants et adultes ayant des difficultés d'apprentissage ou d'attention, incluant les TDA/H, leurs parents | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.italaval.com",
+    "address": "100, rue Tourangeau Est, Pont-Viau, Laval, QC, H7G 1L1",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "qc-sm-montreal-douglas",
@@ -17780,6 +19800,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.interfemmes.ca",
     "address": "21, rue Alain, Repentigny, Lanaudière, QC, J6A 5C9",
     "hours": "lundi au mercredi 8h30 à 16h00, jeudi 8h30 à 20h00"
+  },
+  {
+    "id": "interaction-loisirs-lav",
+    "name": "Interaction Loisirs",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 681-1536",
+    "description": "Animation en milieu de vie auprès des personnes aînées vivant en ressource d'hébergement à Laval. | Clientèle: personnes âgées ou vivant avec un handicap, en perte d'autonomie | Territoire: Laval et les environs | Statut: organisme à but non lucratif",
+    "website": "interactionloisirs.com",
+    "address": "435, boulevard Curé-Labelle, bureau 219, Chomedey, Laval, QC, H7V 2S8",
+    "hours": "lundi au vendredi 9h00 à 16h30"
   },
   {
     "id": "v-interligne",
@@ -17913,6 +19946,20 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: lundi au vendredi 9h00 à 16h00, activités: lundi au jeudi 9h00 à 16h00, sur rendez- vous seulement"
   },
   {
+    "id": "urgent-jeu-aide",
+    "name": "Jeu : aide et référence",
+    "category": "mentalHealth",
+    "subcategory": "Dépendance et addiction",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-461-0140",
+    "description": "Ligne provinciale gratuite pour les personnes aux prises avec un problème de jeu compulsif. Disponible 24h/24, 7j/7. Écoute, soutien, référence vers les centres de traitement et groupes d'entraide. Les proches peuvent aussi appeler.",
+    "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
+    "isUrgent": true,
+    "isProvinceWide": true
+  },
+  {
     "id": "mh-jeu-aide",
     "name": "Jeu : aide et référence",
     "category": "mentalHealth",
@@ -17927,18 +19974,17 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
-    "id": "urgent-jeu-aide",
-    "name": "Jeu : aide et référence",
-    "category": "mentalHealth",
-    "subcategory": "Dépendance et addiction",
-    "city": "Province de Québec",
+    "id": "jeun-est-en-forme-lav",
+    "name": "Jeun'Est En Forme",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
     "province": "QC",
-    "phone": "1-800-461-0140",
-    "description": "Ligne provinciale gratuite pour les personnes aux prises avec un problème de jeu compulsif. Disponible 24h/24, 7j/7. Écoute, soutien, référence vers les centres de traitement et groupes d'entraide. Les proches peuvent aussi appeler.",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
-    "isUrgent": true,
-    "isProvinceWide": true
+    "phone": "438 365-3989",
+    "description": "Table de quartier et service d'accompagnement pour la population de l'Est de Laval en situation de vulnérabilité.* Information et référence vers les activités et services des organismes et institutions du secteur.* Aide pour remplir les formulaires des logements sociaux. | Clientèle: grand public | Territoire: Est de Laval: Duvernay, Saint-Vincent-de-Paul | Statut: organisme à but non lucratif",
+    "website": "jeunestenforme.com",
+    "address": "4901, rue Saint-Joseph, Saint-Vincent-de-Paul, Laval, QC, H7C 1H6",
+    "hours": "lundi au jeudi 9h00 à 16h00"
   },
   {
     "id": "urgent-kids-help",
@@ -18458,6 +20504,110 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "laval-comptoir-multiservice-lav",
+    "name": "Laval - Comptoir Multiservice",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "",
+    "description": "* Assermentation.* Vignettes de stationnement.* Rôle d'évaluation et paiement des taxes municipales.* Paiement des contraventions.* Permis de construction et de rénovation.* Permis pour chiens et chats.* Permis de déneigement. | Territoire: Laval | Statut: organisme municipal",
+    "website": "www.laval.ca/lieux/Pages/Fr/comptoir-multiservice.aspx",
+    "address": "1333, boulevard Chomedey, Chomedey, Laval, QC, H7V 3Z4",
+    "hours": "téléphone: lundi au vendredi 8h15 à 20h15, samedi et dimanche 9h00 à 16h00, en personne: sur rendez-vous"
+  },
+  {
+    "id": "laval-cour-municipale-lav",
+    "name": "Laval - Cour Municipale",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-4466",
+    "description": "Cour de justice de première instance où sont entendus les litiges en matière de règlements municipaux ou d'infractions au Code de la sécurité routière.* Paiement ou contestation de contraventions.* Recouvrement de sommes dues. | Territoire: Laval | Statut: organisme municipal",
+    "website": "www.laval.ca/Pages/Fr/A-propos/cour-municipale.aspx",
+    "address": "55, boulevard des Laurentides, Pont-Viau, Laval, QC, H7G 2T1",
+    "hours": "lundi au vendredi 8h30 à 12h30 et 13h30 à 16h30"
+  },
+  {
+    "id": "laval-culture-loisirs-sport-et-d-lav",
+    "name": "Laval - Culture, Loisirs, Sport Et Développement Social",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "",
+    "description": "* Favorisation de la participation citoyenne et des partenariats dans les domaines de la culture, des loisirs, du sport et du développement social.* Service de proximité de première ligne répondant aux besoins de la population et des organismes.* Activités sportives extérieures, patinoires, piscines, terrains et installations sportives.* Camp de jour estival et camp de jour de la relâche scolaire.* Centre communautaire et centre de loisirs.* Location de salles. | Territoire: Laval | Statut: organisme municipal",
+    "website": "www.laval.ca/Pages/Fr/A-propos/culture-loisirs-sport-developpement-social.aspx",
+    "address": "1200, boulevard Chomedey, 9e étage, Chomedey, Laval, QC, H7V 3Z4",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "laval-ombudsman-lav",
+    "name": "Laval - Ombudsman",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-3699",
+    "description": "Service de dernier recours lorsqu'une personne est lésée dans ses droits relativement à un acte, une décision, une recommandation ou une omission de la ville de Laval.* Formulaire de plainte en ligne: ombudsmanlaval.com/formuler-une-plainte/avant-de-porter-plainte | Clientèle: grand public | Territoire: Laval | Statut: organisme municipal",
+    "website": "ombudsmanlaval.com",
+    "address": "1200, boulevard Chomedey, bureau 500, Chomedey, Laval, QC, H7V 3Z3",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "laval-r-cup-ration-d-appareils-r-lav",
+    "name": "Laval - Récupération D'Appareils Réfrigérant",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "",
+    "description": "* Récupération d'appareils réfrigérants: réfrigérateurs, congélateurs, celliers, glacières électriques, climatiseurs, déshumidificateurs et refroidisseurs.* Collecte à domicile. | Territoire: Laval | Statut: organisme municipal",
+    "website": "www.laval.ca/Pages/Fr/Citoyens/appareils-refrigerants.aspx",
+    "address": "1333, boulevard Chomedey, Chomedey, Laval, QC, H7V 3Z4",
+    "hours": "lundi au vendredi 8h15 à 20h15, samedi et dimanche 9h00 à 16h00"
+  },
+  {
+    "id": "laval-soutien-des-personnes-g-es-lav",
+    "name": "Laval - Soutien Des Personnes Âgées De 65 Ans Et Plus",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-5700",
+    "description": "Subvention pour favoriser le soutien des personnes âgées de 65 ans ou plus.* 150$ par logement, chambre conforme, unité d'habitation ou logement intergénérationnel occupé par au moins une personne âgée de 65 ans ou plus qui agit à titre de locataire, de propriétaire ou d'occupant.* 300$ par logement, chambre conforme, unité d'habitation ou logement intergénérationnel occupé par au moins une personne âgée de 65 ans ou plus qui agit à titre de locataire, de propriétaire ou d'occupant et qui bénéficie du supplément de revenu garanti versé par le gouvernement du Canada en vertu de la loi sur la sécurité de la vieillesse. | Clientèle: personnes de 65 ans ou plus qui résident sur le territoire de la Ville, au 1er mai, et utilisent ce logement ou cette unité d'habitation à titre de résidence principale | Territoire: Laval | Statut: organisme municipal",
+    "website": "www.laval.ca/Pages/Fr/Citoyens/favoriser-le-soutien-des-personnes-agees-de-65-ans-et- plus.aspx",
+    "address": "1333, boulevard Chomedey, bureau 101, Chomedey, Laval, QC, H7V 3Y1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "laval-ville-lav",
+    "name": "Laval - Ville",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "",
+    "description": "Administration municipale.* Sécurité publique: service de police et service de sécurité incendie.* Permis pour chiens et chats.* Information sur les horaires de collecte des ordures ménagères, des matières recyclables et des objets volumineux.* Info-travaux: géolocalisation des travaux d'infrastructures.* Permis de construction et de certificats d'autorisation.* Comptes de taxes municipales et évaluation foncière.* Vignettes de stationnement.* Bibliothèques.* Assermentation.* Subventions pour l'achat de couches lavables.* Subvention de 50$ pour l'achat de produits d'hygiène durable: coupes et disques menstruels, serviettes et protèges- dessous lavables, sous-vêtements absorbants lavables, culottes d'incontinence lavables. | Territoire: Laval | Statut: organisme municipal",
+    "website": "www.laval.ca/Pages/Fr/accueil.aspx",
+    "address": "1333, boulevard Chomedey, Chomedey, Laval, QC, H7V 3Z4",
+    "hours": "téléphone: lundi au vendredi 7h00 à 21h00, samedi et dimanche 8h00 à 17h00, en personne: lundi au vendredi 8h30 à 16h30, sur rendez-vous"
+  },
+  {
+    "id": "laval-cocentre-principal-lav",
+    "name": "Laval - Écocentre Principal",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "",
+    "description": "Site de réemploi et de récupération des matières résiduelles.* Bois: bois de construction, branches, meubles en bois et mélamine, troncs d'arbres.* Résidus de construction, de rénovation et de démolition, résidus domestiques dangereux.* Produits électroniques, lampes au mercure.* Électroménagers, appareils réfrigérants, matelas et sommiers.* Métaux et ferraille.* Pneus.* Piles et batteries, huiles, peinture, propane, polystyrène, textiles et carton. | Clientèle: citoyen·ne·s, commerces | Territoire: Laval | Statut: organisme municipal",
+    "website": "www.laval.ca/Pages/Fr/Citoyens/ecocentre.aspx",
+    "address": "1205, boulevard Dagenais Ouest, Sainte-Rose, Laval, QC, H7L 0A5",
+    "hours": "lundi et mardi 8h30 à 17h30, mercredi, jeudi et vendredi 8h00 à 19h30, samedi et dimanche 8h00 à 17h30"
+  },
+  {
     "id": "s-bunker-mtl",
     "name": "Le Bunker – Hébergement jeunes",
     "category": "social",
@@ -18884,6 +21034,32 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "loisibourg-lav",
+    "name": "Loisibourg",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "",
+    "description": "Activités de loisir.* Activités pour jeunes: anglais langue seconde, cuisine, cours de gardiens avertis, gymnastique, Prêts à rester seuls (formation en sécurité), etc.* Activités pour ados: yoga, volleyball, basketball, cuisine, etc.* Activités pour adultes: club de jogging, club de marche, volleyball, espagnol, yoga, zumba, activités virtuelles, etc.* Camps de jour.* Service de garde gratuit pour les personnes qui participent aux activités. | Clientèle: activités pour jeunes: enfants de 3 à 12 ans, camps de jours: jeunes de 7 à 15 ans, activités pour ados: jeunes de 12 ans et plus, activités pour adultes: personnes de 16 ans et plus | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.loisibourg.org",
+    "address": "1350, rue du Relais, Sainte-Dorothée, Laval, QC, H7Y 1W2",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "loisirs-renaud-coursol-lav",
+    "name": "Loisirs Renaud-Coursol",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 933-5274",
+    "description": "* Cours d'anglais et d'espagnol pour enfants et adultes.* Cours de préparation aux examens du secondaire.* Activités diverses: spectacles, conférences, fête d'hiver, sorties, bazar, expositions, etc.* Cours artistiques pour jeunes: peinture, dessin et théâtre.* Cours artistiques pour adultes: tricot, crochet, peinture, dessin, aquarelle, etc.* Activités sportives pour jeunes: danse, arts martiaux, sports d'équipe, etc.* Activités sportives pour adultes: cardio, étirements, yoga, zumba, arts martiaux, sports d'équipe, etc.* Activités aquatiques pour jeunes et adultes: cours de natation, aquaforme et aquajogging. | Clientèle: grand public | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "renaudcoursol.com",
+    "address": "25, rue Saint-Louis, bureau 110, Pont-Viau, Laval, QC, H7G 4W3",
+    "hours": "variables"
+  },
+  {
     "id": "drum-garde-louise-beland",
     "name": "Louise Beland",
     "category": "family",
@@ -18907,6 +21083,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.lueurduphare.org",
     "address": "676, boulevard Manseau, Joliette, Lanaudière, QC, J6E 3E6",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, activités: variables"
+  },
+  {
+    "id": "lumi-vie-lav",
+    "name": "Lumi-Vie",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 687-8311",
+    "description": "* Information et référence.* Accompagnement et soutien des personnes endeuillées et des personnes en fin de vie.* Rencontres individuelles pour enfants, adolescent·e·s et adultes endeuillé·e·s.* Accompagnement des proches aidant·e·s d'une personne dont la maladie est à une phase avancée.* Atelier sur le deuil et l'accompagnement d'une personne endeuillée. | Clientèle: adultes, adolescent·e·s et enfants endeuillé·e·s, proches aidant·e·s, personnes en fin de vie | Territoire: Grand Montréal | Statut: organisme à but non lucratif",
+    "website": "lumivie.com",
+    "address": "1850, boulevard Le Corbusier, bureau 303, Chomedey, Laval, QC, H7S 2K1",
+    "hours": "lundi au vendredi 9h00 à 17h00, horaire d'été: lundi au jeudi 9h00 à 17h00, vendredi 9h00 à 12h00"
   },
   {
     "id": "ab-women-shelter-ab",
@@ -19104,6 +21293,45 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "maison-de-la-famille-de-laval-ou-lav",
+    "name": "Maison De La Famille De Laval-Ouest",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 962-3367",
+    "description": "Alimentation* Jardin communautaire.* Cuisines collectives, ateliers de cuisine.* Aide alimentaire.* Paniers de Noël pour les membres seulement.Famille* Informations, référence et milieu de vie.* Halte- garderie.* Soutien scolaire pour les 6 à 12 ans.* Ateliers d'estime de soi pour les 6 à 12 ans.* Petits Cuistots pour les 6 à 12 ans.* Ateliers éducatifs et ateliers de communication et de langage pour les enfants de 2 à 5 ans.* Ateliers prénataux.* Café-rencontres.* Volet Paternité.* Conférences pour parents, programme Y'APP (compétences parentales).* Club de marche.* Activités parents-enfants et familiales.* Bougeotte en famille: activité récréative. | Clientèle: familles avec enfants de 0 à 12 ans | Territoire: Laval-Ouest, Sainte-Dorothée, Fabreville-Ouest | Statut: organisme à but non lucratif",
+    "website": "www.mfl-o.org",
+    "address": "7190, 21e Avenue, Laval-Ouest, Laval, QC, H7R 3G8",
+    "hours": "lundi au vendredi 9h00 à 16h00, été: fermé de la mi-juin à la mi-août, à l'exception du club de marche et du jardin communautaire"
+  },
+  {
+    "id": "maison-de-la-famille-de-st-fran--lav",
+    "name": "Maison De La Famille De St-François",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 665-6510",
+    "description": "Soutien à la famille.* Activités familiales.* Ateliers pour adultes et enfants.* Activités jeunes parents (24 ans et moins).* Activités pères-enfants.* Cuisines collectives mensuelles.* Aide alimentaire.* Halte- garderie.* Bonhomme à lunettes: service d'opticien.* Friperie.* Croque-livre.* Accès internet et photocopieuse.* Aide et écoute sur rendez-vous, sur place ou au téléphone. | Clientèle: familles Capacité: 75 personnes | Territoire: Laval-Est | Statut: organisme à but non lucratif",
+    "website": "maisonfamillestfrancois.com",
+    "address": "8190, boulevard Lévesque Est, Saint-François, Laval, QC, H7A 1V4",
+    "hours": "administration: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, activités: horaires variables"
+  },
+  {
+    "id": "maison-de-la-s-r-nit-lav",
+    "name": "Maison De La Sérénité",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 936-4300",
+    "description": "Soins palliatifs spécialisés.* Accompagnement et soutien. | Clientèle: personnes de 18 ans et plus en fin de vie Capacité: 12 lits | Territoire: Laval et Rive-Nord, priorité aux résidents de Laval | Statut: organisme à but non lucratif",
+    "website": "www.msplaval.ca",
+    "address": "655, avenue Bellevue, Saint-Vincent-de-Paul, Laval, QC, H7C 0A8",
+    "hours": "administration: lundi au vendredi 8h00 à 16h00"
+  },
+  {
     "id": "msss-clsc-montreal-maison-de-naissance-anne-courtemanche",
     "name": "Maison De Naissance Anne-Courtemanche",
     "category": "health",
@@ -19258,6 +21486,45 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre local de services communautaires (CLSC). Services de première ligne en santé et services sociaux. Rattaché à CISSS De Chaudière-Appalaches. Source: MSSS – Fichier M02 des installations.",
     "address": "182, rue de Saint-Romuald, Lévis, QC G6W 3G9",
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
+  },
+  {
+    "id": "maison-de-quartier-de-fabreville-lav",
+    "name": "Maison De Quartier De Fabreville",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 625-5453",
+    "description": "Milieu de vie pour les parents, les enfants et les jeunes.* Dépannage alimentaire.* Ateliers divers pour les parents.* Y'a personne de parfait (YAPP): atelier de compétences parentales.* Bébé tendre bougeotte: atelier de stimulation pour enfant de 0 à 12 mois.* Ateliers pour parents et enfants de 2 à 5 ans.* Vers la maternelle: atelier de préparation à l'école pour les enfants de 3 à 5 ans.* Halte-garderie pour activités structurées et répit.* Yoga.* Cuisines collectives diverses.* Cuisine ta boîte à lunch: atelier de cuisine pour parents et enfants de 6 à 12 ans.* Aide aux devoirs pour les enfants de 6 à 12 ans.* Ateliers variés pour les enfants de 6 à 12 ans.* Secteur jeunesse 12 à 17 ans.* Atelier de musique et de cuisine pour les 12 à 17 ans.* Activités variées pour les familles. | Clientèle: enfants, adolescent·e·s, adultes, familles Capacité: 25 | Territoire: Fabreville, Sainte-Rose | Statut: organisme à but non lucratif",
+    "website": "www.mqfabreville.org",
+    "address": "3031, boulevard Dagenais, Fabreville, Laval, QC, H7P 1T4",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "maison-de-quartier-de-fabreville-lav-2",
+    "name": "Maison De Quartier De Fabreville - Secteur Jeunesse",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 937-1702",
+    "description": "Local pour ados.* Ateliers pour jeunes.* Ateliers de cuisine.* Soupers communautaires.* Activités sociorécréatives.* Ateliers de créativité.* Ateliers de musique.* Point de service Aire ouverte: conseils, soutien et services en santé mentale pour les adolescent·e·s. | Clientèle: jeunes de 12 à 17 ans | Territoire: Fabreville, Sainte-Rose | Statut: organisme à but non lucratif",
+    "website": "www.mqfabreville.org/ados",
+    "address": "727, montée Montrougeau, Fabreville, Laval, QC, H7P 3M1",
+    "hours": "mardi et mercredi 15h30 à 20h00, jeudi et vendredi 15h30 à 21h00"
+  },
+  {
+    "id": "maison-de-quartier-vimont-lav",
+    "name": "Maison De Quartier Vimont",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-0580",
+    "description": "Milieu de vie, lieu d'accueil et d'écoute.* 0 à 5 ans: halte-garderie, ateliers de stimulation variés, activités d'initiation à la lecture et l'écriture.* 6 à 12 ans: camp de jour, aide aux devoirs et activités parascolaires.* 12 à 17 ans: local pour adolescents, ateliers de prévention et de promotion de saines habitudes, relation d'aide.* Paternité: groupes d'entraide, activités père-enfant, soutien et accompagnement.* Famille et communauté: accueil, écoute, références, ateliers de développement des compétences parentales, groupe pour jeunes parents, conférences, rencontres entre parents. | Clientèle: familles, adolescent·e·s Capacité: 60 personnes | Territoire: Vimont, Auteuil | Statut: organisme à but non lucratif",
+    "website": "www.maisonquartiervimont.com",
+    "address": "1747, rue Lavoie, Vimont, Laval, QC, H7M 2N1",
+    "hours": "familles: lundi au vendredi 9h00 à 21h00, local ados: mercredi au vendredi 16h00 à 21h00"
   },
   {
     "id": "msss-hopital-kuujjuaq-maison-de-transit-centre-de-sante-tulattavik-de-l-ungava",
@@ -19681,6 +21948,119 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "maison-des-enfants-le-dauphin-de-lav",
+    "name": "Maison Des Enfants Le Dauphin De Laval",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-2664",
+    "description": "* Ateliers parents-enfants suivis d'un café-causerie.* Activités permettant une séparation douce et harmonieuse entre le parent et l'enfant.* Ateliers de stimulation.* Mini-camp de jour.* Atelier de préparation à la rentrée scolaire.* Activités libres.* Activités pour les 6-12 ans.* Aide aux devoirs.* Confidences à un dauphin: correspondance confidentielle par courrier dans les écoles. | Clientèle: activités: enfants de 0 à 5 ans, leurs parents, activités libres: enfants de 6 à 12 ans | Territoire: Laval, aide aux devoirs: Chomedey | Statut: organisme à but non lucratif",
+    "website": "maisondesenfants.qc.ca/en",
+    "address": "799, rue Loranger, Chomedey, Laval, QC, H7V 1Z5",
+    "hours": "lundi au jeudi 9h00 à 18h00, vendredi 9h00 à 16h00, été: lundi au jeudi 9h00 à 16h30, vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "maison-des-familles-de-saint-vin-lav",
+    "name": "Maison Des Familles De Saint-Vincent-De-Paul",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 664-4711",
+    "description": "Alimentation* Cuisines collectives.* Banque alimentaire pour familles à faible revenu.* Frigo communautaire.* Jardins communautaires.Jeunesse* Ateliers culinaires pour enfants.* Sorties éducatives, contes et chansons, activités de stimulation pour enfants.* Parc intérieur.* Camp de jour estival.* Préparation à la rentrée préscolaire.* Activités hebdomadaires pour les 6 à 12 ans.Famille* Ateliers de stimulation précoce pour parents et enfants.* Sorties parents-enfants.* Halte-garderie.* Cafés-conférences. | Clientèle: familles | Territoire: quartiers Saint-Vincent-de-Paul, Duvernay et Saint-François | Statut: organisme à but non lucratif",
+    "website": "rqsvp.com",
+    "address": "4899, rue Saint-Joseph, Saint-Vincent-de-Paul, Laval, QC, H7C 1H6",
+    "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 20h00, dépannage alimentaire: jeudi 11h15, période estivale: lundi au jeudi 8h30 à 16h30"
+  },
+  {
+    "id": "maison-des-grands-parents-de-lav-lav",
+    "name": "Maison Des Grands-Parents De Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 575-4443",
+    "description": "* Jumelage intergénérationnel et correspondance avec des enfants en collaboration avec la Maison des enfants Le Dauphin.* Participation à des événements culturels et des activités dans les écoles primaires et secondaires.* Salon de tricot.* Un coup d'coeur pour toi: confection de baluchons et de doudous pour le Centre jeunesse de Laval.* Jumelage d'aînés avec des étudiants du Collège Montmorency et du Centre culturel québéco-syrien visant à briser l'isolement des aînés et à approfondir l'apprentissage du français des participants. | Clientèle: personnes âgées, enfants et adolescents | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "111-25, rue Saint-Louis, Pont-Viau, Laval, QC, H7G 4W3",
+    "hours": "lundi au jeudi 9h00 à 15h00"
+  },
+  {
+    "id": "maison-des-jeunes-de-l-est-de-la-lav",
+    "name": "Maison Des Jeunes De L'Est De Laval",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 664-1009",
+    "description": "Lieu d'appartenance et de rassemblement.* Activités culturelles, sportives et éducatives.* Accès à un ordinateur, connexion Wi-Fi gratuite, mini gymnase, billard, soccer sur table, jeux de société, jeux vidéo, cuisine, etc.* Aide et consultation.* Activités de valorisation.* Prévention et éducation. | Clientèle: jeunes de 12 à 17 ans Capacité: 60 | Territoire: Duvernay, Saint-Vincent-de-Paul | Statut: organisme à but non lucratif",
+    "website": "www.mdjel.com",
+    "address": "3602, boulevard de la Concorde Est, Duvernay, Laval, QC, H7E 2C9",
+    "hours": "mardi au vendredi 14h00 à 20h00, été 12h00 à 19h00"
+  },
+  {
+    "id": "maison-des-jeunes-de-laval-ouest-lav",
+    "name": "Maison Des Jeunes De Laval-Ouest",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 962-8973",
+    "description": "* Écoute, aide et référence.* Intervention individuelle et de groupe.* Activités socioculturelles et récréatives. | Clientèle: jeunes de 12 à 17 ans Capacité: 30 | Territoire: Laval-Ouest, Fabreville ouest | Statut: organisme à but non lucratif",
+    "address": "3850, boulevard Sainte-Rose, Laval-Ouest, Laval, QC, H7R 1V1",
+    "hours": "lundi au vendredi 16h00 à 21h00"
+  },
+  {
+    "id": "maison-des-jeunes-de-sainte-doro-lav",
+    "name": "Maison Des Jeunes De Sainte-Dorothée",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 689-8000",
+    "description": "Centre de rencontre, d'animation, d'information et d'entraide.* Accueil, écoute.* Conférences et échanges.* Activités récréatives et sportives.* Réalisation de projets.* Aide aux devoirs.* Ateliers culinaires.* Sorties, voyages. | Clientèle: jeunes de 12 à 17 ans | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "mdjstedorothee.ca",
+    "address": "625, rue Sylvie, Sainte-Dorothée, Laval, QC, H7X 2X2",
+    "hours": "lundi au vendredi 15h30 à 21h00, septembre à juin: samedi 11h00 à 17h00"
+  },
+  {
+    "id": "maison-des-jeunes-du-marigot-lav",
+    "name": "Maison Des Jeunes Du Marigot",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-3939",
+    "description": "Lieu de rencontre animé.* Écoute, soutien et accompagnement.* Activités sportives: salle de conditionnement, sport et cours de danse.* Activités récréatives: expression artistique, conférences thématiques, journal ados Marigot, cinéma maison et billard.* Internet et bibliothèque.* Cours de cuisine. | Clientèle: jeunes de 12 à 17 ans Capacité: 30 jeunes | Territoire: Laval-des-Rapides, Pont-Viau | Statut: organisme à but non lucratif",
+    "address": "599, rue Saint-André, Pont-Viau, Laval, QC, H7G 3A4",
+    "hours": "lundi au vendredi 16h00 à 21h00"
+  },
+  {
+    "id": "maison-du-marigot-la-lav",
+    "name": "Maison Du Marigot (La)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 249-9668",
+    "description": "Logements subventionnés pour personnes aînées.* Studio et 3½.* Logements adaptés pour personnes à mobilité réduite.* Surveillance en cas d'urgence 24 heures, 7 jours.* Clinique d'impôts pour les résident·e·s. | Clientèle: personnes de 75 ans et plus autonomes ou en légère perte d'autonomie, à faible revenu Capacité: 28 logements | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "260, boulevard Cartier Ouest, Laval-des-Rapides, Laval, QC, H7N 6K7",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "maison-du-pas-sage-lav",
+    "name": "Maison Du Pas Sage",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 937-1628",
+    "description": "* Hébergement supervisé pour personnes vivant avec une déficience intellectuelle ou un trouble du spectre de l'autisme. | Clientèle: personnes vivant avec une déficience intellectuelle ou un trouble du spectre de l'autisme Capacité: 12 | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.maisondupassage.org",
+    "address": "101, boulevard Sainte-Rose, Sainte-Rose, Laval, QC, H7L 3J7",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-entre-familles-ibsg",
     "name": "Maison Entre Familles (LA)",
     "category": "food",
@@ -20041,6 +22421,31 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "manoir-cardinal-lav",
+    "name": "Manoir Cardinal",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 688-4250",
+    "description": "Logements pour personnes aînées.* Salon de coiffure.* Buanderie.* Salons communautaires. | Clientèle: personnes autonomes de 55 ans et plus, retraitées ou semi-retraitées, ayant un revenu annuel de moins de 40 000$ pour une personne seule ou 60 000$ pour 2 personnes Capacité: 100 appartements | Territoire: Chomedey | Statut: organisme à but non lucratif",
+    "website": "www.manoircardinal.ca",
+    "address": "1111, boulevard Chomedey, local 101, Chomedey, Laval, QC, H7V 3S4",
+    "hours": "lundi au vendredi 10h00 à 17h00"
+  },
+  {
+    "id": "manoir-des-prairies-lav",
+    "name": "Manoir Des Prairies",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-1765",
+    "description": "Logements pour personnes retraitées autonomes. | Clientèle: personnes retraitées autonomes de 55 ans et plus Capacité: 105 logements: 3 ½ et 4 ½ | Territoire: Laval-des-Rapides | Statut: organisme à but non lucratif",
+    "address": "180, avenue Legrand, Laval-des-Rapides, Laval, QC, H7N 5V9",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
     "id": "msss-chsld-laval-manoir-st-patrice",
     "name": "Manoir St-Patrice",
     "category": "health",
@@ -20077,6 +22482,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "mardis-de-l-amiti-sainte-b-atric-lav",
+    "name": "Mardis De L'Amitié Sainte-Béatrice (Les)",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 506-4687",
+    "description": "* Activités récréatives et sociales: danse, cartes, scrabble, etc.* Sorties occasionnelles.* Repas occasionnels. | Clientèle: personnes de 45 ans et plus | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "475, avenue des Perron, porte 4, Auteuil, Laval, QC, H7H 1E2",
+    "hours": "septembre à mai, cours de danse: mardi 10h00 à 11h30, jeux: mardi 13h00 à 16h00"
   },
   {
     "id": "tr-garde-marie-christine-heroux",
@@ -20195,6 +22612,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "mesures-alternatives-jeunesse-de-lav",
+    "name": "Mesures Alternatives Jeunesse De Laval",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 663-7674",
+    "description": "Application des mesures prévues par la Loi sur le système de justice pénale pour les adolescent·e·s.* Réparation envers les victimes: médiation, excuses, compensation.* Réparation envers la collectivité: travaux bénévoles, don à la communauté.* Développement des habiletés sociales: formation, rencontres individuelles ou en groupe.* Ateliers de prévention de la criminalité dans les écoles. | Clientèle: adolescent·e·s, parents, intervenant·e·s, personnel scolaire | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.majl.org",
+    "address": "234, boulevard des Laurentides, Laval-des-Rapides, Laval, QC, H7G 2T6",
+    "hours": "lundi, jeudi et vendredi 9h00 à 17h00, mardi et mercredi 9h00 à 20h00"
+  },
+  {
     "id": "ns-shelter-halif",
     "name": "Metro Turning Point – Hébergement",
     "category": "housing",
@@ -20206,6 +22636,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.metroworks.org",
     "address": "2099 Gottingen St, Halifax, NS B3K 3B2",
     "hours": "Hébergement d'urgence: accueil 24h/24, 7j/7."
+  },
+  {
+    "id": "microentreprendre-laval-lav",
+    "name": "Microentreprendre Laval",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-1200",
+    "description": "Accompagnement et financement personnalisé par le crédit communautaire pour entreprise en prédémarrage, en démarrage ou en consolidation.* Prêts à des taux avantageux aux entrepreneur·e·s, accès au microcrédit entrepreneurial.* Animation de conférences et formations à l'entrepreneuriat.* Accompagnement et suivi personnalisé. | Clientèle: entrepreneur·e·s résident·e·s de Laval ou ayant une entreprise à Laval avec citoyenneté ou résidence permanente canadienne | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.socle.org",
+    "address": "512, boulevard des Laurentides, bureau 202, Laval-des-Rapides, Laval, QC, H7G 2V4",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "mieux-na-tre-laval-lav",
+    "name": "Mieux-Naître À Laval",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "438 830-4323",
+    "description": "Centre de ressources périnatales (CRP). * Soutien aux parents et aux personnes enceintes, avant, pendant et après l'accouchement.* Écoute et références.* Rencontres prénatales (cours prénataux).* Yoga prénatal et postnatal.* Relevailles: répit à domicile.* Activités physiques prénatales et postnatales.* Soins au nouveau-né, ateliers de portage et cours de massage de bébé.* Consultation en allaitement.* Langage des signes pour bébé.* Atelier de diversification alimentaire menée par l'enfant (DME).* Milieu de vie communautaire et interculturel dédié aux femmes et à leur famille lors de la période périnatale: accès à un service de prêts de livres, cafés causeries et aire de jeux pour les tout-petits.* Réception de dons de vêtements de bébé (taille 0-24 mois) et de vêtements de maternité. * Café-friperie. | Clientèle: futurs et nouveaux parents | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "mieuxnaitre.org",
+    "address": "3534, boulevard de la Concorde Est, Duvernay, Laval, QC, H7E 2C5",
+    "hours": "lundi au jeudi 9h00 à 16h00"
   },
   {
     "id": "drum-garde-milieux-familial-chez-cindy",
@@ -21043,6 +23499,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 16h00, fermé l'été"
   },
   {
+    "id": "mouvement-personne-d-abord-de-la-lav",
+    "name": "Mouvement Personne D'Abord De Laval",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 972-2099",
+    "description": "* Promotion et défense des droits.* Entraide.* Accueil et références.* Accompagnement.* Café- rencontre.* Chorale. | Clientèle: personnes vivant avec une déficience intellectuelle Capacité: 55 | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "304, boulevard Cartier Ouest, bureau 240, Laval-des-Rapides, Laval, QC, H7N 2J2",
+    "hours": "lundi au jeudi, horaire variable"
+  },
+  {
     "id": "pw-msmq-santement",
     "name": "Mouvement Santé Mentale Québec",
     "category": "mentalHealth",
@@ -21449,6 +23917,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.orea.com",
     "address": "99 Duncan Mill Rd, Toronto, ON M3B 1Z2",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h."
+  },
+  {
+    "id": "oasis-unit-mobile-d-intervention-lav",
+    "name": "Oasis, Unité Mobile D'Intervention",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 967-0410",
+    "description": "Unité mobile d'intervention de proximité dans les parcs et les quartiers de Laval.* Écoute, aide, référence et prévention.* Distribution de condoms et de matériel de consommation stérile.* Distribution de trousses de naloxone.* Distribution de bandelettes de test du Fentanyl.* Prévention des ITSS et du VIH/sida.* Nomade: service de consommation et d'analyse de substances. | Clientèle: jeunes de 12 ans et plus, adultes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "oasisunitemobile.com",
+    "address": "27, boulevard Lévesque Est, Pont-Viau, Laval, QC, H7G 1B3",
+    "hours": "site fixe: mercredi et jeudi 14h00 à 20h00, rendez-vous: mardi au jeudi sur appel, livraison de matériel de consommation: jeudi 13h00 à 18h00, unité mobile: mardi au jeudi"
   },
   {
     "id": "oeuvres-de-galilee-les-trb",
@@ -21864,6 +24345,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "palais-de-justice-de-laval-lav",
+    "name": "Palais De Justice De Laval",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 686-5001",
+    "description": "Administration des services judiciaires de Laval. * Soutien aux différentes cours de justice constituant l'appareil judiciaire du Québec ainsi qu'à certains tribunaux spécialisés.* Services judiciaires: curatelle, tutelle ou testament, mariage ou union civile, archives des divorces, médiation familiale, pension alimentaire. | Territoire: district judiciaire de Laval | Statut: organisme du gouvernement provincial",
+    "website": "www.justice.gouv.qc.ca/nous-joindre/trouver-un-palais-de-justice/palais-de-justice-de-laval",
+    "address": "2800, boulevard Saint-Martin Ouest, Chomedey, Laval, QC, H7T 2S9",
+    "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "panda-de-la-mrc-l-assomption-rep",
     "name": "Panda de la MRC L'Assomption",
     "category": "social",
@@ -21900,6 +24394,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.parenfants.org",
     "address": "2492, chemin Sainte-Marie, Mascouche, Lanaudière, QC, J7K 1M5",
     "hours": "lundi au vendredi 9h00 à 16h00, samedi selon les activités"
+  },
+  {
+    "id": "parent-le-de-laval-la-lav",
+    "name": "Parentèle De Laval (La)",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-9835",
+    "description": "* Milieu de vie, espaces de socialisation et de rencontre pour les parents.* Causeries.* Ateliers parents/enfants.* Ateliers de compétences parentales.* Activités de stimulation pour les tout-petits.* Répit et service de jumelage.* Halte-garderie lors de certaines activités.* Activités pour les 6-12 ans.* Soutien alimentaire et initiatives visant la sécurité alimentaire.* Cuisines collectives.* Accompagnement individuel.* Information, soutien et référencement. | Clientèle: familles | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "laparenteledelaval.com",
+    "address": "196, 7e Avenue, Laval-des-Rapides, Laval, QC, H7N 4J6",
+    "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h00"
   },
   {
     "id": "parrainage-civique-lanaudiere-point-jol",
@@ -21979,6 +24486,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "412, rue du Conseil, Sherbrooke, QC J1G 1L4",
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux.",
     "isUrgent": true
+  },
+  {
+    "id": "partage-saint-maxime-lav",
+    "name": "Partage Saint-Maxime",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 973-4242",
+    "description": "Centre interculturel, intergénérationnel et interreligieux.* Accueil et écoute.* Soutien à la réinsertion sociale des anciens détenus.* Banque alimentaire, dépannage d'urgence.* Comptoir vestimentaire.* Récupération sur place de vêtements et de nourriture. | Clientèle: personnes et familles à faible revenu, marginalisées, monoparentales ou immigrantes | Territoire: Chomedey: secteur de la paroisse Saint-Maxime | Statut: organisme à but non lucratif",
+    "website": "www.paroissesaintmaxime.org",
+    "address": "3700, boulevard Lévesque Ouest, bureau 1, Chomedey, Laval, QC, H7V 1E8",
+    "hours": "lundi au vendredi 10h00 à 16h00, distribution alimentaire: sur rendez-vous, lundi au vendredi 10h00 à 11h00"
   },
   {
     "id": "qc-food-laval-partageons",
@@ -22148,6 +24668,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "centre: 24 heures, 7 jours,"
   },
   {
+    "id": "perspective-carri-re-lav",
+    "name": "Perspective Carrière",
+    "category": "social",
+    "subcategory": "Éducation et alphabétisation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 682-2278",
+    "description": "* Aide à la recherche d'emploi.* Services spécialisés pour les personnes immigrantes.* Service d'accueil pour les demandeurs d'asile.* Exploration professionnelle, bilan et transition de carrière, information sur le marché du travail.* Cours de français à temps partiel.* Ordinateurs, photocopieur, télécopieur, téléphone.* Session Objectif Intégration. | Clientèle: personnes immigrantes, nouveaux·elles arrivant·e·s et minorités visibles, demandeurs d'asile | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "pcarriere.com",
+    "address": "1772, boulevard le Corbusier, Chomedey, Laval, QC, H7S 2K1",
+    "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00, vendredi 8h00 à 12h00"
+  },
+  {
     "id": "perspective-communautaire-en-sante-pfd",
     "name": "Perspective Communautaire en Santé Mentale",
     "category": "housing",
@@ -22159,6 +24692,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://pcsm-cpmh.org",
     "address": "9665, boulevard Gouin Ouest, Pierrefonds-Roxboro, Montréal, QC, H8Y 1R4",
     "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "perspective-famille-lav",
+    "name": "Perspective Famille",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 622-0524",
+    "description": "* Aide individuelle pour les enfants, jeunes, parents, conjoint·e·s séparé·e·s et nouveaux·elles conjoint·e·s.* Ateliers de groupe pour les enfants, parents, beaux-parents et conjoint·e·s séparé·e·s.* Soutien à la coparentalité.* Estime de soi: camp de jour.* Activité familiale mensuelle.* Conférences. | Clientèle: familles vivant ou ayant vécu une transition familiale (séparation, divorce, recomposition familiale), familles monoparentales, familles à risque d'isolement social, de stress parental ou d'épuisement, familles disposant de ressources personnelles, sociales ou financières limitées, parents, femmes, hommes et enfants | Territoire: Laval, Lanaudière, Laurentides, île de Montréal | Statut: organisme à but non lucratif",
+    "website": "www.perspectivefamille.org",
+    "address": "140, rue Nadon, Sainte-Rose, Laval, QC, H7L 1T5",
+    "hours": "sur rendez-vous: lundi au jeudi 9h00 à 20h00, samedi 9h00 à 17h00, en ligne ou par téléphone: lundi au samedi 9h00 à 17h00"
   },
   {
     "id": "perspectives-nouvelles-repentigny-rep",
@@ -22198,6 +24744,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://laclef-perspectives.com",
     "address": "500, boulevard des Seigneurs, bureau 2, Terrebonne, Lanaudière, QC, J6W 1T3",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "petits-fr-res-les-laval-lav",
+    "name": "Petits Frères (Les) - Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 934-8955",
+    "description": "Organisme visant à contrer l'isolement des personnes aînées jusqu'à la fin de leur vie.* Accompagnement et jumelage avec des bénévoles. * Visites dans le milieu de vie de la personne: à domicile, à l'hôpital ou au CHSLD, à leur résidence, etc. * Séjours de vacances au Domaine Juliette-Huot d'Oka. * Accompagnement en fin de vie. * Réception de Noël et de Pâques. | Clientèle: personnes de 75 ans et plus sans famille présente ou contact social significatif | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "petitsfreres.ca",
+    "address": "435, boulevard Curé-Labelle Sud, local 205, Chomedey, Laval, QC, H7V 2S8",
+    "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
     "id": "petits-freres-les-ouest-de-l-ile-pcl",
@@ -22329,6 +24888,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi, mercredi et jeudi 7h00 et 13h00, livraison: lundi, mercredi et jeudi 10h00 et 12h00"
   },
   {
+    "id": "popote-roulante-saint-no-l-chaba-lav",
+    "name": "Popote Roulante Saint-Noël-Chabanel",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 665-3919",
+    "description": "Préparation et distribution de repas chauds. | Clientèle: personnes âgées seules, handicapées ou en perte d'autonomie temporaire ou permanente | Territoire: Saint-François et Duvernay Est | Statut: organisme à but non lucratif",
+    "address": "8560, rue de l'Église, Saint-François, Laval, QC, H7A 1K9",
+    "hours": "mardi au jeudi 9h00 à 12h00, livraison: mardi, mercredi et jeudi"
+  },
+  {
     "id": "popote-roulante-les-moulins-trb",
     "name": "Popote Roulante les Moulins",
     "category": "social",
@@ -22442,6 +25013,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Ateliers, soutien parental, activités familiales."
   },
   {
+    "id": "pro-vision-laval-lav",
+    "name": "Pro-Vision Laval",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "579 631-3663",
+    "description": "* Distribution hebdomadaire de produits de boulangerie et de paniers alimentaires.* Friperie: vente d'articles usagés.* Activités communautaires. | Clientèle: personnes dans le besoin ou en situation d'itinérance Capacité: 50 | Territoire: Laval: codes postaux débutant par H7N ou H7G | Statut: organisme à but non lucratif",
+    "website": "provisionlaval.ca/fr",
+    "address": "34-K, rue Cartier Ouest, Laval-des-Rapides, Laval, QC, H7N 2H3",
+    "hours": "banque alimentaire: mardi 8h30 à 10h30, inscription pour la banque alimentaire: le dernier vendredi de chaque mois de 14h00 à 15h00"
+  },
+  {
     "id": "qc-immo-montreal-achat",
     "name": "Programme Accès Logis Montréal",
     "category": "realestate",
@@ -22532,6 +25116,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.projetgenese.org",
     "address": "4735, Côte-des-Neiges, Montréal, QC H3V 1G1",
     "hours": "Lun-ven 9h-17h. Consultation et défense des droits des locataires."
+  },
+  {
+    "id": "projet-humanitaire-ethnoculturel-lav",
+    "name": "Projet Humanitaire Ethnoculturel Mon Premier Panier",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 687-7715",
+    "description": "Aide alimentaire aux familles réfugiés ou demandeuses d'asile.* Aide alimentaire d'urgence.* Repas pour emporter.* Cuisine collective.* Intégration et assistance aux familles.* Jardin intérieur et extérieur.* Programme jeunesse: intégration, emploi d'été.* Programme de bénévolat.* Paniers de Noël. | Clientèle: familles demandeuses d'asile, familles réfugiés à faible revenu Capacité: 100 | Territoire: Chomedey | Statut: organisme à but non lucratif",
+    "address": "976, boulevard Curé-Labelle, Chomedey, Laval, QC, H7V 2V5",
+    "hours": "lundi au vendredi 9h00 à 17h00, inscription et encadrement nouvelles familles: lundi et mardi, repas pour emporter: mercredi et vendredi"
   },
   {
     "id": "emp-equitas-mtl",
@@ -22746,6 +25342,30 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "refuge-de-laval-le-lav",
+    "name": "Refuge De Laval (Le)",
+    "category": "housing",
+    "subcategory": "Itinérance",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "438 378-8247",
+    "description": "Refuge d'urgence.* Hébergement, lavage, douches.* Souper, déjeuner et collation.* Intervention psychosociale sur place.* Infirmière practiciennes spécialisées (IPS) sur place. | Clientèle: personnes en situation d'itinérance Capacité: 30 lits | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "3550, boulevard Lévesque Ouest, Chomedey, Laval, QC, H7V 1E8",
+    "hours": "7 jours, volet jour: 7h30 à 16h30, hébergement: 17h00 à 7h00, milieu de vie et Café de rue de Laval: lundi au dimanche de 7h30 à 16h30"
+  },
+  {
+    "id": "refuge-de-laval-le-milieu-de-vie-lav",
+    "name": "Refuge De Laval (Le) - Milieu De Vie De Jour",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "579 640-6040",
+    "description": "Lieu d'accueil.* Aide dans les démarches.* Références.* Accès à des ordinateurs et des téléphones.* Prêt d'adresse.* Répit.* Collations. | Clientèle: personnes en situation d'itinérance ou à risque de le devenir, personnes vivant l'exclusion sociale, la marginalité et qui sont peu rejoints par les services sociaux réguliers | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "3550, boulevard Lévesque Ouest, Chomedey, Laval, QC, H7V 1E8",
+    "hours": "7 jours, 7h30 à 16h30"
+  },
+  {
     "id": "s-stmichaels-shelter",
     "name": "Refuge des jeunes de Montréal",
     "category": "social",
@@ -22784,6 +25404,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.reginafoodbank.ca",
     "address": "1440 Scarth St, Regina, SK S4R 2E9",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
+  },
+  {
+    "id": "regroupement-lavallois-pour-la-r-lav",
+    "name": "Regroupement Lavallois Pour La Réussite Éducative",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-7000",
+    "description": "Instance régionale de concertation (IRC) promouvant la persévérance scolaire et la réussite éducative. * Carrefour de ressources: ressources pour parents, matériel de sensibilisation et d'animation, etc.* Projets en persévérance scolaire: Journées de la persévérance scolaire (JPS), valorisation de la lecture, conciliation études-travail, transition vers la maternelle, etc. | Clientèle: groupes et acteurs porteurs d'initiatives en faveur de la persévérance scolaire et éducative, sensibilisation: grand public | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "rlpre.org",
+    "address": "500, boulevard Saint-Martin Ouest, bureau 205, Chomedey, Laval, QC, H7M 3Y2",
+    "hours": "Voir site web"
   },
   {
     "id": "regroupement-des-aidants-naturels-d-rep",
@@ -22838,6 +25471,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Défense des droits et services spécialisés."
   },
   {
+    "id": "relais-communautaire-de-laval-lav",
+    "name": "Relais Communautaire De Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-8727",
+    "description": "Aide alimentaire* Repas communautaires: dîners.* Distribution alimentaire.* Dépannage d'urgence.* Distribution de soupes et de sandwichs aux personnes vulnérables.Aide matérielle* Carrefour des Aubaines: vente de vêtements et d'articles de maisons usagés.* Point de service du Bonhomme à lunettes.Communautaire* Accueil, information, et références vers les ressources et services du milieu.* Suivi et accompagnement individualisés.* Écoute active.* Gestion des crises.* Centre de jour.* Relais santé beauté: coiffure sur place et à domicile sur demande dans les foyers pour aîné·e·s, maquillage pour les occasions spéciales, épilation de sourcils, etc.Éducation* Écono Bouffe: ateliers d'éducation à l'alimentation saine et abordable avec préparation de repas.* Ateliers divers: peinture, tricot, transformation de meubles, développement personnel, couture.* Ateliers d'éducation populaire.* Événements spéciaux.Immigration* Accueil, information et référence.* Activités d'intégration et de rapprochements interculturels.* Conversation en français.* Repas thématiques.Emploi* Stages et emplois subventionnés.* Programme de réinsertion professionnelle.* Bénévolat.* Travaux communautaires et compensatoires.Activités de Noël* Paniers de Noël pour les membres.* Animation et cadeaux pour les enfants. | Clientèle: personnes à faible revenu Capacité: 50 | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "relais-communautaire.org",
+    "address": "111, boulevard des Laurentides, bureau 101, Pont-Viau, Laval, QC, H7G 2T2",
+    "hours": "lundi, mercredi et vendredi 8h00 à 17h00, mardi et jeudi 8h15 à 17h00, distribution alimentaire: mardi et jeudi 8h30 à 16h30, carrefour des aubaines: lundi et vendredi 9h00 à 16h00, mardi et jeudi 10h00 à 17h00, mercredi 9h00 à 17h00, salon de coiffure sur rendez-vous: mardi et jeudi 9h00 à 19h00, mercredi 9h00 à 17h00, écono-bouffe: mercredi et jeudi 13h00 à 15h00, activités: variables"
+  },
+  {
+    "id": "relais-communautaire-de-laval-r--lav",
+    "name": "Relais Communautaire De Laval - Récupération D'Articles Usagés",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-8727",
+    "description": "* Récupération d'articles usagés sur place: nourriture, vêtements, meubles, électroménagers, articles de maison, jouets et équipement de loisirs.* Collecte de dons à domicile: électroménagers et meubles. | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "relais-communautaire.org/page/carrefour-des-aubaines/dons-et-ramassage-darticles",
+    "address": "111, boulevard des Laurentides, bureau 101, Pont-Viau, Laval, QC, H7G 2T2",
+    "hours": "lundi, mercredi et vendredi 8h00 à 16h00, mardi et jeudi 8h00 à 16h30"
+  },
+  {
+    "id": "relais-familial-d-auteuil-le-lav",
+    "name": "Relais Familial D'Auteuil (Le)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 628-3246",
+    "description": "Soutien aux enfants et à leurs familles.* Préparation à la maternelle pour les enfants de 3 à 5 ans.* Dépannage alimentaire pour les besoins ponctuels.* Aide aux devoirs.* Ateliers d'improvisation.* Croque- livres.* Camp de jour.* Ateliers de cuisines thématiques.* Le Troc du Relais: troc d'items pour enfants 4 fois par année.* Sorties pour les jeunes et les familles.* Ateliers papa-enfant, café-création et conférences.* Aide et référence.* 15 logements à loyer modique.* Ventes de garage. | Clientèle: familles, HLM: familles monoparentales à faible revenu | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "relais-familial-auteuil.org",
+    "address": "6135, boulevard des Laurentides, bureau 1, Auteuil, Laval, QC, H7H 2V3",
+    "hours": "lundi au jeudi 8h30 à 16h30"
+  },
+  {
     "id": "relais-de-mascouche-le-msc",
     "name": "Relais de Mascouche (le)",
     "category": "food",
@@ -22862,6 +25534,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.atelierspecialiselesmoulins.org",
     "address": "421, rue Léveillé, Terrebonne, Lanaudière, QC, J6W 1Z7",
     "hours": "lundi à mercredi: 9h00 à 18h00, jeudi et vendredi: 9h00 à 19h00, samedi et dimanche: 9h à 17h, centre de dons: lundi à mercredi: 8h00 à 18h00, jeudi et vendredi: 8h00 à 19h00, samedi et dimanche: 8h00 à 17h00"
+  },
+  {
+    "id": "renaissance-qu-bec-fripe-centre--lav",
+    "name": "Renaissance Québec - Fripe Centre Saint-Martin",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 681-9821",
+    "description": "* Récupération et vente de vêtements, articles de maison, fournitures sportives et scolaires, petits électroménagers, matériel informatique, livres et vélos. | Territoire: Laval-des-Rapides | Statut: organisme à but non lucratif",
+    "website": "renaissancequebec.ca/fr",
+    "address": "965, boulevard Curé-Labelle, Chomedey, Laval, QC, H7V 2V7",
+    "hours": "friperie: lundi au vendredi 9h00 à 21h00, samedi et dimanche 9h00 à 17h00, centre de dons: lundi au vendredi 8h00 à 21h00, samedi et dimanche 8h00 à 17h00"
+  },
+  {
+    "id": "renaissance-qu-bec-fripe-des-lau-lav",
+    "name": "Renaissance Québec - Fripe Des Laurentides",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 663-8060",
+    "description": "Récupération et vente de vêtements, articles de maison, fournitures sportives et scolaires, petits électroménagers, matériel informatique, livres et vélos. | Territoire: Pont-Viau | Statut: organisme à but non lucratif",
+    "website": "renaissancequebec.ca/fr",
+    "address": "1770, boulevard des Laurentides, Chomedey, Laval, QC, H7M 2Y4",
+    "hours": "friperie: lundi au vendredi 9h00 à 21h00, samedi et dimanche 9h00 à 17h00, centre de dons: lundi au vendredi 8h00 à 21h00, samedi et dimanche 8h00 à 17h00"
   },
   {
     "id": "renaissance-quebec-fripe-galeries-d-ddo",
@@ -23019,6 +25717,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
   },
   {
+    "id": "revenu-qu-bec-programme-de-perce-lav",
+    "name": "Revenu Québec - Programme De Perception Des Pensions Alimentaires",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "1 800 488-2323",
+    "description": "Somme versée périodiquement selon un jugement rendu habituellement au Québec servant à répondre aux besoins essentiels de la vie des enfants ou du créancier alimentaire. | Clientèle: personnes devant recevoir ou verser une pension alimentaire | Territoire: le Québec | Statut: organisme du gouvernement provincial",
+    "website": "www.revenuquebec.ca/fr/pensions-alimentaires",
+    "address": "5, Place-Laval, bureau 147, Chomedey, Laval, QC, H7N 5Y3",
+    "hours": "lundi au vendredi 10h00 à 16h30, services téléphoniques: lundi au vendredi 8h30 à 16h30"
+  },
+  {
     "id": "soc-rev1",
     "name": "Revenu Québec – Aide aux personnes à faible revenu",
     "category": "social",
@@ -23135,6 +25846,123 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.reseautoxicomanie.com",
     "address": "200, rue de Salaberry, local 308, Joliette, Lanaudière, QC, J6E 4G1",
     "hours": "sur rendez-vous seulement, lundi au vendredi 9h00 à 17h00, certaines disponibilités le soir"
+  },
+  {
+    "id": "r-seau-des-biblioth-ques-de-lava-lav-2",
+    "name": "Réseau Des Bibliothèques De Laval - Bibliothèque Gabrielle-Roy",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-8909",
+    "description": "* Prêts et accès à des documents imprimés et audiovisuels.* Ordinateurs, accès à Internet et outils d'impression.* Activités d'animation ou de lecture pour tous les âges.* Club de lecture estival pour enfants.* Blibliomobile: bibliothèque mobile dans les parcs durant l'été.* Services spécialisés: expositions, formations en technologies de l'information pour personnes aînées, trousse pour les proches aidant·e·s, trousses d'éveil à la lecture pour les enfants de 5 ans et moins.* Prêt à domicile pour personnes à mobilité réduite.* Prêt de télescope. | Clientèle: grand public | Territoire: Laval | Statut: organisme municipal",
+    "website": "biblio.laval.ca",
+    "address": "3505, boulevard Dagenais Ouest, Fabreville, Laval, QC, H7P 4V9",
+    "hours": "lundi au vendredi 10h00 à 21h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "r-seau-des-biblioth-ques-de-lava-lav-3",
+    "name": "Réseau Des Bibliothèques De Laval - Bibliothèque Germaine-Guèvremont",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-4002",
+    "description": "* Prêts et accès à des documents imprimés et audiovisuels.* Ordinateurs, accès à Internet et outils d'impression.* Activités d'animation ou de lecture pour tous les âges.* Club de lecture estival pour enfants.* Bibliomobile: bibliothèque mobile dans les parcs durant l'été.* Services spécialisés: expositions, trousse pour les personnes proches aidantes, trousses d'éveil à la lecture pour les enfants de 5 ans et moins.* Prêt à domicile pour personnes à mobilité réduite.* Prêt de télescope. | Clientèle: grand public | Territoire: Laval | Statut: organisme municipal",
+    "website": "biblio.laval.ca",
+    "address": "2900, boulevard de la Concorde Est, Duvernay, Laval, QC, H7E 2B6",
+    "hours": "lundi au vendredi 10h00 à 21h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "r-seau-des-biblioth-ques-de-lava-lav-4",
+    "name": "Réseau Des Bibliothèques De Laval - Bibliothèque Laure-Conan",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-4975",
+    "description": "* Prêts et accès à des documents imprimés et audiovisuels.* Ordinateurs, accès à Internet et outils d'impression.* Activités d'animation ou de lecture pour tous les âges.* Club de lecture estival pour enfants.* Bibliomobile: bibliothèque mobile dans les parcs durant l'été.* Services spécialisés: expositions, formations en technologies de l'information pour personnes aînées, trousse pour les personnes proches aidantes, trousses de l'éveil à la lecture pour les enfants de 5 ans et moins.* Prêt à domicile pour personnes à mobilité réduite.* Prêt de télescope. | Territoire: Laval | Statut: organisme municipal",
+    "website": "biblio.laval.ca",
+    "address": "4660, boulevard des Laurentides, Vimont, Laval, QC, H7K 2J4",
+    "hours": "lundi au vendredi 10h00 à 21h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "r-seau-des-biblioth-ques-de-lava-lav-5",
+    "name": "Réseau Des Bibliothèques De Laval - Bibliothèque Marius-Barbeau",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-4005",
+    "description": "* Prêts et accès à des documents imprimés et audiovisuels.* Ordinateurs, accès à Internet et outils d'impression.* Activités d'animation ou de lecture pour tous les âges.* Club de lecture estival pour enfants.* Bibliomobile: bibliothèque mobile dans les parcs durant l'été.* Services spécialisés: expositions, formations en technologies de l'information pour personnes aînées, trousse pour les personnes proches aidantes, trousses d'éveil à la lecture pour les enfants de cinq ans et moins.* Prêt à domicile pour personnes à mobilité réduite.* Prêt de télescope. | Territoire: Laval | Statut: organisme municipal",
+    "website": "www.laval.ca/carte-interactive/bibliotheque-marius-barbeau",
+    "address": "1000, rue Marie-Uguay, Saint-François, Laval, QC, H7A 0K3",
+    "hours": "lundi au vendredi 10h00 à 21h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "r-seau-des-biblioth-ques-de-lava-lav-6",
+    "name": "Réseau Des Bibliothèques De Laval - Bibliothèque Philippe-Panneton",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-8919",
+    "description": "* Prêts et accès à des documents imprimés et audiovisuels.* Ordinateurs, accès à Internet et outils d'impression.* Activités d'animation ou de lecture pour tous les âges.* Club de lecture estival pour enfants.* Bibliomobile: bibliothèque mobile dans les parcs durant l'été.* Services spécialisés: expositions, formations en technologies de l'information pour personnes aînées, trousse pour les personnes proches aidantes, trousses d'éveil à la lecture pour les enfants de 5 ans et moins.* Prêt à domicile pour personnes à mobilité réduite.* Prêt de télescope. | Clientèle: grand public | Territoire: Laval | Statut: organisme municipal",
+    "website": "biblio.laval.ca",
+    "address": "4747, boulevard Arthur-Sauvé, Laval-Ouest, Laval, QC, H7R 5P8",
+    "hours": "lundi au vendredi 10h00 à 21h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "r-seau-des-biblioth-ques-de-lava-lav-7",
+    "name": "Réseau Des Bibliothèques De Laval - Bibliothèque Sylvain-Garneau",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-3940",
+    "description": "* Prêts et accès à des documents imprimés et audiovisuels.* Ordinateurs, accès à Internet et outils d'impression.* Activités d'animation ou de lecture pour tous les âges.* Club de lecture estival pour enfants.* Bibliomobile: bibliothèque mobile dans les parcs durant l'été.* Services spécialisés: expositions, formations en technologies de l'information pour personnes aînées, trousse pour les personnes proches aidantes, trousses d'éveil à la lecture pour les enfants de 5 ans et moins.* Prêt à domicile pour personnes à mobilité réduite.* Prêt de télescope. | Territoire: Laval | Statut: organisme municipal",
+    "website": "biblio.laval.ca",
+    "address": "187, boulevard Sainte-Rose, Sainte-Rose, Laval, QC, H7L 1L5",
+    "hours": "lundi au vendredi 10h00 à 21h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "r-seau-des-biblioth-ques-de-lava-lav-8",
+    "name": "Réseau Des Bibliothèques De Laval - Bibliothèque Yves-Thériault",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 978-6599",
+    "description": "* Prêts et accès à des documents imprimés et audiovisuels.* Ordinateurs, accès à Internet et outils d'impression.* Activités d'animation ou de lecture pour tous les âges.* Club de lecture estival pour enfants.* Bibliomobile: bibliothèque mobile dans les parcs durant l'été.* Services spécialisés: expositions, trousse pour les personnes proches aidantes, trousses d'éveil à la lecture pour les enfants de 5 ans et moins.* Prêt à domicile pour personnes à mobilité réduite.* Prêt de télescope. | Territoire: Laval | Statut: organisme municipal",
+    "website": "biblio.laval.ca",
+    "address": "670, rue de la Place-Publique, Sainte-Dorothée, Laval, QC, H7X 1G1",
+    "hours": "lundi au vendredi 10h00 à 21h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "r-seau-des-biblioth-ques-de-lava-lav",
+    "name": "Réseau Des Bibliothèques De Laval - Bibliothèque Émile-Nelligan",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-4973",
+    "description": "* Prêts et accès à des documents imprimés et audio-visuels.* Ordinateurs, accès à Internet et outils d'impression.* Activités d'animation ou de lecture pour tous les âges.* Club de lecture estival pour enfants.* Bibliomobile: bibliothèque mobile dans les parcs durant l'été.* Services spécialisés: expositions, formations en technologies de l'information pour personnes aînées, trousse pour les proches aidant·e·s, trousses d'éveil à la lecture pour les enfants de 5 ans et moins.* Prêt à domicile pour personnes à mobilité réduite.* Prêt de télescope. | Territoire: Laval | Statut: organisme municipal",
+    "website": "biblio.laval.ca",
+    "address": "325, boulevard Cartier Ouest , Laval-des-Rapides, Laval, QC, H7N 2J5",
+    "hours": "lundi au vendredi 10h00 à 21h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "r-seau-des-organismes-en-itin-ra-lav",
+    "name": "Réseau Des Organismes En Itinérance De Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 490-7645",
+    "description": "Lieu d'échange et de concertation des partenaires afin d'offrir des alternatives, des services et des activités aux personnes vivant l'instabilité résidentielle, l'itinérance et la pauvreté.* Promotion de la justice sociale.* Information et sensibilisation de la population à la problématique de l'itinérance.* Redistribution de dons aux organismes membres. | Clientèle: organismes communautaires concernés par les questions d'itinérance | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "roiil.squarespace.com",
+    "address": "3550, boulevard Lévesque Ouest, Chomedey, Laval, QC, H7V 1E8",
+    "hours": "sur rendez-vous"
   },
   {
     "id": "hlth-aine1",
@@ -23264,6 +26092,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "514 718-7121",
     "description": "Logements subventionnés pour personnes aînées.• Appartements 3½ et 4½. | Clientèle: personnes de 55 ans et plus, autonomes et à faible revenu Capacité: logements: 13 3½, 9 4½ | Territoire: Repentigny | Frais: 25% du revenu (plus électricité) | Statut: organisme à but non lucratif",
     "address": "896, boulevard Iberville, Repentigny, Lanaudière, QC, J5Y 1Z7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-sidence-fun-raire-laval-lav",
+    "name": "Résidence Funéraire Laval",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "1 877 677-2230",
+    "description": "Coopérative funéraire. | Territoire: Laval | Statut: entreprise commerciale (coopérative)",
+    "website": "www.cfgrandmontreal.com",
+    "address": "2000, rue Cunard, Chomedey, Laval, QC, H7S 2G5",
     "hours": "Voir site web"
   },
   {
@@ -23612,18 +26453,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
-    "id": "re-pw1",
-    "name": "SCHL – Société canadienne d'hypothèques",
-    "category": "realestate",
-    "subcategory": "Programme gouvernemental",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-668-2642",
-    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
-    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
-    "isProvinceWide": true
-  },
-  {
     "id": "on-cmhc-on",
     "name": "SCHL – Société canadienne d'hypothèques",
     "category": "realestate",
@@ -23634,6 +26463,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "website": "https://www.cmhc-schl.gc.ca",
     "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
+    "isProvinceWide": true
+  },
+  {
+    "id": "re-pw1",
+    "name": "SCHL – Société canadienne d'hypothèques",
+    "category": "realestate",
+    "subcategory": "Programme gouvernemental",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-668-2642",
+    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
     "isProvinceWide": true
   },
@@ -24007,6 +26848,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "scama-lav",
+    "name": "Scama",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 681-4240",
+    "description": "Centre communautaire d'activités sociales et récréatives.* Services alimentaires: popote roulante, dépannage alimentaire, cantine sur place, livraison de repas congelés.* Centre communautaire: exercices physiques sur chaise, cafés causeries, ateliers de conversation française, conférences, sorties, bingo, yoga, etc.* Projet Amperâge: accompagnement multilingue pour personnes âgées, pour briser l'isolement et repérer les situations à risque par l'entremise d'appels et de visites à domicile.* Zoothérapie.* Accompagnement et transport médical pour les rendez-vous occasionnels. | Clientèle: personnes âgées de 50 ans et plus | Territoire: popote roulante et dépannage alimentaire: Chomedey, projet Amperâge et centre communautaire: Laval, autres services: Laval, île de Montréal | Statut: organisme à but non lucratif",
+    "website": "centrescama.org",
+    "address": "3168, boulevard Cartier Ouest, Chomedey, Laval, QC, H7V 1J7",
+    "hours": "lundi au jeudi 8h00 à 16h30, vendredi 8h00 à 13h00, dépannage alimentaire: vendredi 2 fois par mois"
+  },
+  {
+    "id": "scama-accompagnement-transport-lav",
+    "name": "Scama - Accompagnement-Transport",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 681-4240",
+    "description": "* Accompagnement-transport médical pour des rendez-vous occasionnels par des bénévoles. | Clientèle: personnes âgées de 50 ans et plus | Territoire: Chomedey, rendez-vous: Laval et hôpital Sacré-Coeur seulement | Statut: organisme à but non lucratif",
+    "website": "centrescama.org",
+    "address": "3168, boulevard Cartier Ouest, Chomedey, Laval, QC, H7V 1J7",
+    "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 13h00"
+  },
+  {
     "id": "senneville-village-sen",
     "name": "Senneville - Village",
     "category": "housing",
@@ -24044,6 +26911,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://serlan.com",
     "address": "505, rue Lanaudière, REPENTIGNY, Lanaudière, QC, J6A 7N1",
     "hours": "lundi au jeudi 7h00 à 16h00"
+  },
+  {
+    "id": "service-b-n-vole-d-entraide-de-v-lav-2",
+    "name": "Service Bénévole D'Entraide De Vimont-Auteuil",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-1341",
+    "description": "* Popote roulante.* Dîners d'amitié.* Plats congelés.* Friperie: vente et récupération sur place de vêtements, petits appareils électroniques et électroménagers, ustensiles de cuisine, livres, équipement de sport et jouets.* Accompagnement à l'épicerie.* Appels de sécurité et d'amitié.* Visites amicales. | Clientèle: personnes en perte d'autonomie permanente ou temporaire, popote roulante et plats congelés: personnes en perte d'autonomie permanente ou temporaire et personnes pair·e·s aidant·e·s, dîners d'amitié: personnes aînées et personnes en légère perte d'autonomie | Territoire: Laval: codes postaux débutant par H7L, H7K, H7H | Statut: organisme à but non lucratif",
+    "website": "www.sbeva.com",
+    "address": "2287-B, rue Aladin, Vimont, Laval, QC, H7K 2T6",
+    "hours": "lundi au vendredi 8h00 à 15h30, dîner d'amitié: mardi"
+  },
+  {
+    "id": "service-b-n-vole-d-entraide-de-v-lav",
+    "name": "Service Bénévole D'Entraide De Vimont-Auteuil - Accompagnement-Transport",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-1341",
+    "description": "* Accompagnement-transport médical par des bénévoles. | Clientèle: personnes en perte d'autonomie temporaire ou permanente | Territoire: Laval: codes postaux débutant par H7L, H7K, H7H et H7M, rendez-vous: Laval et île de Montréal | Statut: organisme à but non lucratif",
+    "website": "www.sbeva.com",
+    "address": "2287B, rue Aladin, Vimont, Laval, QC, H7K 2T6",
+    "hours": "lundi au vendredi 8h00 à 15h30, plus tard si disponibilité"
   },
   {
     "id": "emp-pw2",
@@ -24086,6 +26979,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "service-correctionnel-canada-ser-lav",
+    "name": "Service Correctionnel Canada - Services Aux Victimes",
+    "category": "family",
+    "subcategory": "Violence et maltraitance",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "1 866 806-2275",
+    "description": "Services aux victimes d'actes criminels.* Inscription des victimes: obtention d'informations sur le délinquant ayant commis un acte criminel à leur endroit.* Réception des déclarations des victimes.* Notification des victimes.* Traitement des plaintes concernant Service correctionnel Canada (SCC).* Références vers les services appropriés et information au sujet du SCC. | Clientèle: victimes d'actes criminels dont l'auteur·rice du crime est sous responsabilité fédérale | Territoire: Canada | Statut: organisme du gouvernement fédéral",
+    "website": "www.csc-scc.gc.ca/victimes/003006-index-fr.shtml",
+    "address": "4, Place Laval, bureau 400, Chomedey, Laval, QC, H7N 5Y3",
+    "hours": "Voir site web"
+  },
+  {
     "id": "service-correctionnel-canada-etabli-jol",
     "name": "Service Correctionnel Canada - Établissement Joliette",
     "category": "social",
@@ -24124,6 +27030,70 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 12h30 et 13h30 à 16h30"
   },
   {
+    "id": "service-d-entraide-de-sainte-b-a-lav",
+    "name": "Service D'Entraide De Sainte-Béatrice",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 625-0725",
+    "description": "* Distribution de bons d'achat et de sacs de nourriture.* Paniers de Noël. | Clientèle: personnes à faible revenu | Territoire: paroisse Sainte-Béatrice, paniers de Noël: Auteuil | Statut: organisme à but non lucratif",
+    "address": "475, avenue des Perron, Auteuil, Laval, QC, H7H 1E2",
+    "hours": "sur rendez-vous"
+  },
+  {
+    "id": "service-de-police-de-laval-genda-lav",
+    "name": "Service De Police De Laval - Gendarmerie De L'Est",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-4242",
+    "description": "Maintien de la paix, de l'ordre et de la sécurité publique.* Prévention et répression des crimes et infractions.* Vérification des antécédents judiciaires.* Volet sociocommunautaire, équipes spécialisées et sensibilisation. | Territoire: Vimont | Statut: organisme à but non lucratif",
+    "website": "www.laval.ca/police",
+    "address": "2785, avenue Francis-Hughes, Chomedey, Laval, QC, H7L 3J6",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "service-de-police-de-laval-poste-lav",
+    "name": "Service De Police De Laval - Poste De Police - Comptoir De Service",
+    "category": "social",
+    "subcategory": "Services gouvernementaux",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-4242",
+    "description": "Maintien de la paix, de l'ordre et de la sécurité publique.* Prévention et répression des crimes et infractions.* Vérification des antécédents judiciaires.* Volet sociocommunautaire, équipes spécialisées et sensibilisation. | Territoire: Chomedey | Statut: organisme à but non lucratif",
+    "website": "www.laval.ca/police",
+    "address": "2911, boulevard Chomedey, Chomedey, Laval, QC, H7P 0B8",
+    "hours": "lundi au vendredi 8h15 à 17h30"
+  },
+  {
+    "id": "service-de-police-de-laval-quart-lav",
+    "name": "Service De Police De Laval - Quartier Général Et Gendarmerie De L'Ouest",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-4242",
+    "description": "Maintien de la paix, de l'ordre et de la sécurité publique.* Prévention et répression des crimes et infractions.* Volet sociocommunautaire, équipes spécialisées et sensibilisation.* Vérification des antécédents judiciaires.* Vérification des sièges d'auto.* Responsable du Bureau d'intégrité et d'éthique de Laval. | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.laval.ca/police",
+    "address": "2455, boulevard Curé Labelle, Chomedey, Laval, QC, H7T 2Z3",
+    "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "service-des-loisirs-du-bon-paste-lav",
+    "name": "Service Des Loisirs Du Bon-Pasteur",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 669-2151",
+    "description": "Centre de loisirs.* Activités sociales, sportives, culturelles et de loisirs.* Cours de francisation à temps complet ou partiel.* Cuisine collective.* Camp de la relâche et camp de jour.* Activités parascolaires. | Clientèle: jeunes, familles, population générale | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "loisirsbonpasteur.com",
+    "address": "387, boulevard des Prairies, Laval-des-Rapides, Laval, QC, H7N 2W4",
+    "hours": "loisirs: lundi au vendredi 9h00 à 21h00, samedi 9h00 à 14h30, dimanche 9h00 à 12h30, francisation: mardi au jeudi 9h00 à 21h00"
+  },
+  {
     "id": "info-social-811",
     "name": "Service Info-Social 811",
     "category": "mentalHealth",
@@ -24149,6 +27119,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://sito-outaouais.com",
     "address": "75, rue d'Edmonton, Gatineau, QC J8Y 6X3",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "service-populaire-de-psychoth-ra-lav",
+    "name": "Service Populaire De Psychothérapie",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-2182",
+    "description": "* Psychothérapie individuelle.* Groupes de développement personnel. | Clientèle: population lavalloise à faible et modeste revenu | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "spp-laval.qc.ca",
+    "address": "100, rue Tourangeau Est, Pont-Viau, Laval, QC, H7G 1L1",
+    "hours": "réception: lundi et vendredi 9h00 à 12h00, mardi au jeudi 9h00 à 16h00, psychothérapie: lundi au vendredi 9h00 à 21h00"
   },
   {
     "id": "service-specialise-de-main-d-oeuvre-rep",
@@ -24455,6 +27438,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi à jeudi 9h00 à 17h00, vendredi 9h00 à 14h00"
   },
   {
+    "id": "services-du-chat-bott-les-lav",
+    "name": "Services Du Chat Botté (Les)",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 663-5551",
+    "description": "* Répit de fin de semaine avec hébergement et répit dépannage d'urgence.* Camps de jour d'été, de la relâche et pour la semaine de Noël.* Activités de loisirs: karaté, danse, curling, cinéma, cuisine, etc.* Activités sociales et récréatives pour personnes vivant avec le syndrome d'Asperger.* Activités socioprofessionnelles pour adultes à la Bioferme située au 573, rang Saint-Antoine, H7R 6E8.* Activités de jour. | Clientèle: personnes autistes, activités de jour: personnes semi-autonomes de 21 ans, autistes ou vivant avec un trouble du comportement ou une déficience intellectuelle Capacité: répit: 24 | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.autismelaval.org",
+    "address": "155, boulevard Je-Me-Souviens, Sainte-Rose, Laval, QC, H7L 1V6",
+    "hours": "lundi au vendredi 8h30 à 15h00"
+  },
+  {
     "id": "emp-services-quebec-centre",
     "name": "Services Québec – Centre de services",
     "category": "employment",
@@ -24495,6 +27491,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30.",
     "isProvinceWide": true
+  },
+  {
+    "id": "services-sociaux-hell-niques-du--lav",
+    "name": "Services Sociaux Helléniques Du Québec - Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 688-2091",
+    "description": "Alimentation* Banque alimentaire hebdomadaire.* Livraison à domicile.* Paniers de Noël.Soutien* Information et références.* Écoute active et accompagnement.* Interprétation et traduction.* Aide pour remplir les documents et les formulaires.* Cliniques et ateliers ponctuels en collaboration avec le CLSC.* Aide aux personnes aînées, aux familles et aux jeunes.* Défense des intérêts.Personnes aînées* Aide pour personnes victimes de maltraitance.* Appels d'amitié.* Programme intégré d'équilibre dynamique (PIED).* Soutien pour les proches aidants: groupes de soutien, cafés-rencontres, information et références, kiosques info-mobile dans les événements publics.* Activités de loisirs et programmes de rapprochement.* Rencontre café.* Cours d'exercice.Éducation* Cours d'informatique: tablettes et cellulaires.* Cours de français. | Clientèle: grand public, principalement d'origine grecque | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "hcgm.org",
+    "address": "4865, rue du souvenir, Chomedey, Laval, QC, H7W 1E1",
+    "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
     "id": "nt-employment-nt",
@@ -24728,6 +27737,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service disponible 24h/24, 7j/7"
   },
   {
+    "id": "soci-t-alzheimer-laval-lav",
+    "name": "Société Alzheimer Laval",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 975-0966",
+    "description": "* Soutien téléphonique.* Consultation individuelle ou familiale sur place ou à domicile avec suivi.* Groupes de soutien pour les personnes vivant avec l'Alzheimer et les personnes proches aidantes.* Centre d'animation et de répit, halte-répit de dépannage.* Répit stimulation à domicile: blocs de 4 heures par semaine ou de 8 heures aux 2 semaines.* Hébergement-répit ou permanent.* Formation pour personnes proches aidantes. | Clientèle: personnes vivant avec la maladie d'Alzheimer ou une autre maladie neuro-cognitive, personnes proches aidantes, personnes professionnelles Capacité: hébergement répit: 2 chambres privées, hébergement permanent: 10 chambres privées | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.alzheimerlaval.org",
+    "address": "2525, boulevard René-Laennec, Vimont, Laval, QC, H7K 0B2",
+    "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00, centre d'animation et de répit: lundi au vendredi 9h00 à 16h00, halte-répit: lundi au vendredi 11h00 à 20h00, samedi et dimanche 8h00 à 22h00, groupes de soutien de jour pour personnes atteintes et de soir pour personnes proches aidantes, ateliers de formation en soirée, hébergement-répit: à l'année, 24 heures"
+  },
+  {
     "id": "societe-alzheimer-de-lanaudiere-la-jol",
     "name": "Société Alzheimer de Lanaudière (la)",
     "category": "social",
@@ -24752,6 +27774,202 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://spcanada.ca/sp-canada-lanaudiere",
     "address": "2500, boulevard Mascouche, bureau 221, Mascouche, Lanaudière, QC, J7K 0H5",
     "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "soci-t-de-l-autisme-et-des-ted-l-lav",
+    "name": "Société De L'Autisme Et Des Ted - Laval",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 663-5551",
+    "description": "* Information et conférences.* Écoute et soutien téléphonique.* Rencontres pour parents.* Formation pour intervenant·e·s et spécialistes.* Centre de documentation.* Défense des droits. | Clientèle: personnes autistes ou vivant avec un trouble envahissant du développement, avec ou sans déficience intellectuelle, leur famille | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.autismelaval.org",
+    "address": "155, boulevard Je-Me-Souviens, Sainte-Rose, Laval, QC, H7L 1V6",
+    "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--lav",
+    "name": "Société De Saint-Vincent De Paul - Bon-Pasteur",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "438 823-9105",
+    "description": "* Aide alimentaire: distribution de bons d'achat et de denrées.* Activités pour enfants.* Paniers de Noël.* Aide pour fournitures scolaires. | Clientèle: personnes à faibles revenus ou ayant des difficultés financières | Territoire: Laval-Des-Rapides, Chomedey | Statut: organisme à but non lucratif",
+    "website": "ssvp-mtl.org/fr",
+    "address": "400, rue Laurier, Laval-des-Rapides, Laval, QC, H7N 2P6",
+    "hours": "sur rendez-vous, habituellement les jeudis et vendredis"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--lav-2",
+    "name": "Société De Saint-Vincent De Paul - Conférence Saint-Claude",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 256-0134",
+    "description": "* Bons d'achat et sacs de nourriture.* Paniers de Noël pour les membres.* Bons d'achat pour les fournitures scolaires pour les membres. | Clientèle: personnes à faible revenu Capacité: 40 rencontres (ou familles) par mois | Territoire: paroisse Saint-Claude, comprenant la paroisse fusionnée Notre-Dame-de-Pontmain: entre le boulevard Saint-Martin au nord, le boulevard des Prairies au sud, le boulevard des Laurentides à l'est et le chemin de fer à l'ouest | Statut: organisme à but non lucratif",
+    "address": "80, rue Meunier Ouest, Laval-des-Rapides, Laval, QC, H7N 1V6",
+    "hours": "sur rendez-vous, ouvert mardi et vendredi les deux dernières semaines de chaque mois"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--lav-3",
+    "name": "Société De Saint-Vincent De Paul - François-De-Laval",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 490-9900",
+    "description": "* Distribution de bons d'achat et de sacs de nourriture.* Distribution de coupons pour les fournitures scolaires.* Paniers de Noël. | Clientèle: adultes à faible revenu | Territoire: paroisse Bienheureux-François-de-Montmorency-Laval, paroisses fusionnées Saint- Christophe, Saint-Gilles, Saint-Julien-Eymard, Saint-Louis-de-Montfort et Saint-Maurice-de-Duvernay | Statut: organisme à but non lucratif",
+    "address": "9, rue Saint-Louis, Pont-Viau, Laval, QC, H7G 2J1",
+    "hours": "lundi et jeudi 10h00 à 12h00, été: jeudi 10h00 à 12h00"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--lav-4",
+    "name": "Société De Saint-Vincent De Paul - Saint-Elzéar",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 506-7512",
+    "description": "* Bons d'achat de nourriture.* Paniers et certificats-cadeaux de Noël.* Opération Bonne Mine: bons d'achat de fournitures scolaires.* Vestiaire: vente et récupération de dons de vêtements sur place. | Clientèle: personnes à faible revenu | Territoire: paroisse Saint-Elzéar: code postal débutant par H7M | Statut: organisme à but non lucratif",
+    "address": "16, boulevard Saint-Elzéar Est, Vimont, Laval, QC, H7M 1C2",
+    "hours": "vestiaire: mercredi 9h00 à 12h00, vendredi 12h00 à 15h00, aide alimentaire: sur rendez-vous"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--lav-5",
+    "name": "Société De Saint-Vincent De Paul - Saint-Ferdinand",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 991-7837",
+    "description": "* Distribution de bons d'achat et de sacs de nourriture.* Paniers de Noël pour les personnes bénéficiant déjà du service d'aide alimentaire.* Fournitures scolaires. | Clientèle: personnes à faible revenu | Territoire: paroisse Saint-Ferdinand | Statut: organisme à but non lucratif",
+    "address": "3250, rue Esther, Fabreville, Laval, QC, H7P 4X3",
+    "hours": "mercredi sur rendez-vous"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--lav-6",
+    "name": "Société De Saint-Vincent De Paul - Saint-François-De-Sales",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 666-3563",
+    "description": "* Distribution de bons d'achat et de sacs de nourriture.* Paniers de Noël.* Distribution de fournitures scolaires. | Clientèle: personnes à faible revenu | Territoire: paroisse Saint-François-de-Sales | Statut: organisme à but non lucratif",
+    "address": "7070, boulevard des Mille-Îles, Saint-François, Laval, QC, H7A 4B3",
+    "hours": "sur rendez-vous"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--lav-7",
+    "name": "Société De Saint-Vincent De Paul - Saint-Léopold",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 625-1190",
+    "description": "* Distribution de denrées alimentaires et de bons d'achat.* Paniers de Noël. | Clientèle: personnes à faible revenu | Territoire: paroisse Saint-Léopold | Statut: organisme à but non lucratif",
+    "address": "3827, boulevard Sainte-Rose, Fabreville, Laval, QC, H7P 4G1",
+    "hours": "distribution: jeudi avant-midi"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--lav-8",
+    "name": "Société De Saint-Vincent De Paul - Saint-Martin",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 682-5493",
+    "description": "* Aide alimentaire: distribution de bons d'achat et de denrées non périssables.* Paniers de Noël pour les membres.* Opération Bonne Mine: aide pour fournitures scolaires. | Clientèle: personnes à faible revenu Capacité: 15 demandes par semaine | Territoire: paroisses Saint-Martin, Saint-Pie-X et Saint-Urbain | Statut: organisme à but non lucratif",
+    "address": "4080, boulevard Saint-Martin Ouest, Chomedey, Laval, QC, H7T 1C1",
+    "hours": "jeudi après-midi: sur rendez-vous seulement"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--lav-9",
+    "name": "Société De Saint-Vincent De Paul - Saint-Noël-Chabanel",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 665-0550",
+    "description": "* Distribution de bons d'achat et de sacs de nourriture.* Paniers de Noël.* Distribution de fournitures scolaires.* Récupération sur place de nourriture et de fournitures scolaires. | Clientèle: personnes à faible revenu | Territoire: paroisse Saint-Noël-Chabanel | Statut: organisme à but non lucratif",
+    "address": "8560, rue de l'Église, Saint-François, Laval, QC, H7A 1K9",
+    "hours": "sur rendez-vous, retour d'appel: 7 jours, 9h00 à 16h00"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--lav-10",
+    "name": "Société De Saint-Vincent De Paul - Sainte-Dorothé",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "438 395-8219",
+    "description": "* Aide alimentaire et dépannage d'urgence: paniers de nourriture et bons d'achat.* Paniers de Noël.* Fournitures scolaires.* Magasin: dons et vente de vêtements et d'articles de maison usagés.* Récupération sur place de nourriture non-périssable, vêtements, ustensiles de cuisine, livres, jouets, etc. | Clientèle: personnes à faible revenu, personnes nouvellement arrivées | Territoire: Sainte-Dorothée | Statut: organisme à but non lucratif",
+    "address": "996, montée Gravel, Sainte-Dorothée, Laval, QC, H7X 1E3",
+    "hours": "magasin: mercredi 13h00 à 15h00, aide alimentaire: sur rendez-vous, fermé: janvier et juillet"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--lav-11",
+    "name": "Société De Saint-Vincent-De-Paul - Conférence Saint-Vincent-De-Paul (Laval)",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 661-3061",
+    "description": "* Bons d'achat de nourriture.* Vestiaire: don et vente de vêtements et d'articles de maison usagés.* Paniers de Noël.* Fournitures scolaires. | Clientèle: personnes à faible revenu | Territoire: paroisse Saint-Vincent-de-Paul | Statut: organisme à but non lucratif",
+    "address": "1111, place Jean-Eudes-Blanchard, Saint-Vincent-de-Paul, Laval, QC, H7C 1T1",
+    "hours": "lundi au vendredi 9h00 à 17h00, laisser un message pour un rendez-vous"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--lav-12",
+    "name": "Société De Saint-Vincent-De-Paul - Saint-Théophile",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 314-1219",
+    "description": "* Distribution de sacs de nourriture.* Paniers de Noël.* Fournitures scolaires. | Clientèle: personnes à faible revenu Capacité: environ 90 familles par mois | Territoire: paroisse Saint-Théophile | Statut: organisme à but non lucratif",
+    "address": "6000, 31e Avenue, Laval-Ouest, Laval, QC, H7R 3N1",
+    "hours": "sur rendez-vous, dépannage alimentaire: vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--lav-13",
+    "name": "Société De Saint-Vincent-De-Paul - Sainte-Rose-De-Lima",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 625-1963",
+    "description": "* Distribution de bons d'achat et de sacs de nourriture.* Aide alimentaire d'urgence.* Soupière Sainte-Rose: repas communautaires.* Paniers de Noël.* Fournitures scolaires. | Clientèle: personnes à faible revenu | Territoire: paroisse Sainte-Rose-de-Lima | Statut: organisme à but non lucratif",
+    "address": "219, boulevard Sainte-Rose, Sainte-Rose, Laval, QC, H7L 1L7",
+    "hours": "mercredi 8h30 à 10h00"
+  },
+  {
+    "id": "soci-t-de-transport-de-laval-lav",
+    "name": "Société De Transport De Laval",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 688-6520",
+    "description": "Service de transport collectif de Laval. | Territoire: Laval | Statut: organisme parapublic",
+    "website": "stlaval.ca",
+    "address": "2250, avenue Francis-Hugues, Chomedey, Laval, QC, H7S 2C3",
+    "hours": "centre contact clients: lundi au vendredi 6h30 à 20h00, samedi et dimanche 8h00 à 17h00, bureau: lundi au jeudi 8h30 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "soci-t-de-transport-de-laval-ser-lav",
+    "name": "Société De Transport De Laval - Service Du Transport Adapté",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 688-6520",
+    "description": "Service de transport adapté de Laval: bus et taxis.* Application mobile STL Compagnon: aide pour l'utilisation du réseau de transport régulier pour les personnes vivant avec une défience intellectuelle légère ou un trouble du spectre de l'autisme. | Clientèle: personnes handicapées et personnes avec des limitations sur le plan de la mobilité, 12 ans et plus | Territoire: Laval | Statut: organisme parapublic",
+    "website": "stlaval.ca/transport-adapte/info",
+    "address": "2250, avenue Francis Hughes, Chomedey, Laval, QC, H7S 2C3",
+    "hours": "centre d'appels du transport adapté: lundi au jeudi 6h30 à 23h00, vendredi 6h30 à 24h00, samedi 8h00 à 24h00, dimanche 8h00 à 23h00, jours fériés 8h00 à 24h00, centre contact clients: lundi au vendredi 6h30 à 20h00, samedi et dimanche 8h00 à 17h00, centre de réservations: lundi au vendredi 6h30 à 17h00, samedi 8h00 à 17h00"
   },
   {
     "id": "qc-food-sherbrooke-sv",
@@ -24867,6 +28085,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
   },
   {
+    "id": "sourires-solidaires-lav",
+    "name": "Sourires Solidaires",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 232-5540",
+    "description": "Clinique pédiatrique en dentisterie sociale adaptée.* Services dentaires pédiatriques accessibles, sécuritaires et adaptés à chaque enfant.* Éducation et prévention en santé bucco-dentaire pédiatrique.* Formulaire de référencement pour enfants en milieu défavorisé: cliquer ici | Clientèle: personnes de 0 à 17 ans n'ayant pas accès à des soins dentaires adaptés | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "souriressolidaires.com",
+    "address": "2550, boulevard Daniel-Johnson, bureau 130, Chomedey, Laval, QC, H7T 2L1",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
     "id": "sp-canada-banlieue-ouest-drv",
     "name": "Sp Canada Banlieue Ouest",
     "category": "social",
@@ -24880,6 +28111,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "bureau: mardi au jeudi 9h00 à 16h00"
   },
   {
+    "id": "sph-re-sant-sexuelle-globale-lav",
+    "name": "Sphère - Santé Sexuelle Globale",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 669-3099",
+    "description": "* Soutien individuel.* Groupes de soutien.* Information ITSS et VIH.* Espace de socialisation 2SLGBTQIA+.* Distribution de matériel de prévention : protection contre les ITSS, matériel d'hormonothérapie, matériel de consommation stérile.* Distribution de naloxone.* Clinique de dépistage des ITSS gratuite.* Centre de services de santé communautaire.* Atelier d'éducation à la sexualité.* Formation aux professionnel·le·s.* Projet Plur·iels: soutien individuel, groupes de soutien, accompagnement et éducation pour les personnes de la diversité de genre ou en questionnement et leurs proches.* Site fixe.* Accès à du matériel d'affirmation de genre, à la friperie et la bibliothèque privée de l'organisme. | Clientèle: personnes vivant avec le VIH/SIDA ou autre ITSS, personnes trans, non-binaires, s'identifiant à la communauté LGBTQ+ ou en questionnement, jeunes, hommes ayant des relations sexuelles avec les hommes, travailleuses du sexe, utilisateur·trice·s de drogues injectables et d'inhalation, personnes provenant de pays où le VIH est endémique (Afrique, Haïti et Caraïbes), grand public | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.spheressg.org",
+    "address": "90, boulevard Lévesque Est, Pont-Viau, Laval, QC, H7G 1B9",
+    "hours": "mardi au vendredi, variable"
+  },
+  {
+    "id": "sports-laval-lav",
+    "name": "Sports Laval",
+    "category": "health",
+    "subcategory": "Santé",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 664-1917",
+    "description": "Promotion de la vie active afin de contribuer au mieux-être. * Partenariat et mobilisation.* Programme Kino-Québec.* Soutien aux athlètes.* Évènements sportifs.* Camps sportifs. | Clientèle: athlètes de niveau relève ou élite, entraîneurs, partenaires sportifs, enseignants en éducation physique, toute autre personne intéressée par le sport | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "sportslaval.qc.ca",
+    "address": "3235, boulevard Saint-Martin Est, bureau 221, Duvernay, Laval, QC, H7E 5G8",
+    "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
     "id": "drum-garde-stephanie",
     "name": "Stephanie",
     "category": "family",
@@ -24890,6 +28147,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "stimulearts-lav",
+    "name": "Stimulearts",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-8226",
+    "description": "Contribue au pouvoir d'agir des adultes de Laval vivant avec une déficience intellectuelle, un trouble du spectre de l'autisme ou une déficience physique, en soutenant le maintien et le développement de leurs acquis.?* Activités de jour adaptées: art, peinture, bricolage, expériences créatrices et sensorielles.* Activités et événements spéciaux.* Marché de Noël annuel. | Clientèle: personnes de 21 ans et plus, avec une déficience intellectuelle, un handicap physique ou polyhandicap, personnes autistes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "stimularts.com",
+    "address": "201, 7e Avenue, Laval-des-Rapides, Laval, QC, H7N 4J7",
+    "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
     "id": "v-suicide-action-mtl",
@@ -24987,6 +28257,18 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "t-r-e-s-th-tral-lav",
+    "name": "T.R.E.S. Théâtral",
+    "category": "social",
+    "subcategory": "Handicaps",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 817-9464",
+    "description": "Spectacles et activités théâtrales.* Promotion du théâtre pour personnes sourdes et entendantes. | Clientèle: personnes sourdes et entendantes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "921, rue Noël, Sainte-Dorothée, Laval, QC, H7X 1X9",
+    "hours": "variables"
+  },
+  {
     "id": "imm-tcri",
     "name": "TCRI – Table de concertation des organismes au service des personnes réfugiées et immigrantes",
     "category": "immigration",
@@ -25026,6 +28308,32 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "5800, ch. Côte-Saint-Antoine, Montréal, QC H4A 1R9",
     "hours": "Service disponible 24h/24, 7j/7",
     "isUrgent": true
+  },
+  {
+    "id": "table-de-concertation-de-laval-e-lav",
+    "name": "Table De Concertation De Laval En Condition Féminine",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 682-8739",
+    "description": "Regroupement régional travaillant avec ses membres à l'amélioration de la qualité et des conditions de vie des femmes, tant sur les plans social, économique que politique.* Promotion et défense des droits et des intérêts des femmes, particulièrement des Lavalloises.* Espace de solidarité et de militance animé par des valeurs féministes.* Réalisation d'actions collectives qui mèneront à une véritable égalité et équité entre les femmes et les hommes et entre les femmes elles-mêmes. | Clientèle: femmes, organismes membres | Territoire: Laval, Grand Montréal | Statut: organisme à but non lucratif",
+    "website": "www.tclcf.qc.ca",
+    "address": "1450, boulevard Pie-X, bureau 203, Chomedey, Laval, QC, H7V 3C1",
+    "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "table-r-gionale-de-concertation--lav",
+    "name": "Table Régionale De Concertation Des Aînés De Laval",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 667-8839",
+    "description": "Concertation régionale sur les enjeux et besoins des personnes aînées lavalloises.* Capsules d'information, calendrier d'activités, actualités et ressources sur le site web et chaîne YouTube.* Présentation des 55 organismes membres et promotion de leurs services et activités répertoriés par catégories.* Activités de valorisation des personnes aînées dont la Journée internationale des aînés et soirée de reconnaissance annuelle. | Clientèle: Personnes de 50 ans et plus, organismes communautaires, proches aidants | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "tableaineslaval.ca",
+    "address": "435, boulevard Curé-Labelle sud, bureau 220, Chomedey, Laval, QC, H7V 2S8",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
     "id": "table-regionale-de-concertation-des-jol",
@@ -25174,6 +28482,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h15 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
   },
   {
+    "id": "textil-art-laval-lav",
+    "name": "Textil'Art Laval",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 682-7474",
+    "description": "Entreprise-école.* Intégration sociale et professionnelle.* Accompagnement individuel en démarche d'emploi.* Programme rémunéré de formation-travail dans le domaine du textile.* Intégration en français pour personnes nouvellement arrivées.* Récupération de chandails à manches courtes en coton et en coton ouaté. | Clientèle: personnes sans emploi, personnes nouvellement arrivées Capacité: 55 personnes par année | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.textilart.ca",
+    "address": "2615, boulevard Le Corbusier, Chomedey, Laval, QC, H7S 2E8",
+    "hours": "lundi au jeudi 7h50 à 16h00, vendredi 8h00 à 12h10"
+  },
+  {
     "id": "on-toronto-public-health",
     "name": "Toronto Public Health",
     "category": "health",
@@ -25198,6 +28519,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.letournesoldelarivenord.com",
     "address": "294, boulevard Iberville, Repentigny, Lanaudière, QC, J6A 2A3",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "travail-de-rue-le-de-laval-lav",
+    "name": "Travail De Rue Île De Laval",
+    "category": "food",
+    "subcategory": "Alimentation",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 662-6444",
+    "description": "* Écoute, accompagnement, suivi et référence personnalisée.* Échange de matériel d'injection et de consommation.* Station des jeunes: local communautaire avec activités, dépannage alimentaire, laveuse- sécheuse et douche.* Distribution de trousses de naloxone.* Distribution et livraison de bandelettes de test du fentanyl.* Interventions en milieu festif.* Projet DOPE (Drogue, opioïdes, prévention, éducation): information et livraison de matériel stérile. | Clientèle: jeunes et jeunes adultes de 12 à 24 ans | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "www.trilstation.org",
+    "address": "106, boulevard de la Concorde Est, Pont-Viau, Laval, QC, H7G 2B9",
+    "hours": "administration: lundi au vendredi 9h00 à 16h30, Station des jeunes: lundi et mercredi 12h00 à 18h00, mardi et jeudi 18h00 à 22h00"
   },
   {
     "id": "travail-de-rue-lavaltrie-lava",
@@ -25254,6 +28588,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "tribunal-administratif-du-logeme-lav",
+    "name": "Tribunal Administratif Du Logement - Laval",
+    "category": "social",
+    "subcategory": "Justice et défense des droits",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "514 873-2245",
+    "description": "Tribunal spécialisé en matière de bail résidentiel.* Information sur les droits et obligations découlant du bail.* Conciliation des relations entre propriétaires et locataires.* Protection des droits des locataires.* Aide pour remplir les formulaires de demande au tribunal.* Demande en ligne: www.tal.gouv.qc.ca/fr/services-en- ligne/votre-demande-en-ligne/soumettre-une-demande-en-ligne* Outil en ligne pour le calcul de la fixation de loyer: www.tal.gouv.qc.ca/fr/calcul-pour-la-fixation-de-loyer/outil-de-calcul* Outil en ligne d'accès à l'information juridique relative au bail de logement: justicebot.ca* Outil en ligne permettant d'ajouter la preuve de la notification de la demande ainsi qu'une liste des pièces: extranet.tal.gouv.qc.ca/internet/asp/transmissionDoc/transmetDoc.asp | Clientèle: locataires, propriétaires | Territoire: Laval | Statut: organisme du gouvernement provincial",
+    "website": "www.tal.gouv.qc.ca",
+    "address": "1434, boulevard Daniel-Johnson, 2e étage, Chomedey, Laval, QC, H7V 4B5",
+    "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, sur rendez-vous seulement"
+  },
+  {
     "id": "taq-qc",
     "name": "Tribunal administratif du Québec (TAQ)",
     "category": "social",
@@ -25305,6 +28652,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://tetesenlair.org",
     "address": "5165, rue Sherbrooke Ouest, bureau 480, Montréal, QC H4A 1T6",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "un-habit-pour-un-ami-lav",
+    "name": "Un Habit Pour Un Ami",
+    "category": "social",
+    "subcategory": "Friperie et aide matérielle",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 668-8727",
+    "description": "Collecte et redistribution de vêtements d'hiver.* Items acceptés: habits de neige, manteaux, bottes d'hiver et accessoires (mitaines, gants, tuques, cache-cous et foulards).* Trouver un point de collecte: carte | Clientèle: personnes et familles dans le besoin | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "relais-communautaire.org/page/un-habit-pour-un-ami",
+    "address": "111, boulevard des Laurentides, bureau 101, Pont-Viau, Laval, QC, H7G 2T2",
+    "hours": "Voir site web"
   },
   {
     "id": "bc-shelter-vancouver",
@@ -25673,6 +29033,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "7 jours, 9h00 à 17h00"
   },
   {
+    "id": "z-panouis-les-lav",
+    "name": "Zépanouis (Les)",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 682-0277",
+    "description": "Accueil, évaluation clinique et accompagnement.* Services psychosociaux et médicaux pour la clientèle suivie.* Services de nature volontaire qui requiert la participation active de la famille.* Suivis et activités visant le développement global des enfants.* Orientation et références vers des services complémentaires. | Clientèle: enfants en situation de vulnérabilité de 0 à 14 ans et leur famille qui résident à Place Saint-Martin, Pont-Viau ou Chomedey | Territoire: Laval: codes postaux débutant par H7S, H7M , H7T, H7W, H7V, H7N ou H7G | Statut: organisme à but non lucratif",
+    "website": "leszepanouis.org/fr",
+    "address": "1880, avenue Dumouchel, appartement 1, Chomedey, Laval, QC, H7S 1J8",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "z-panouis-les-point-de-service-c-lav",
+    "name": "Zépanouis (Les) - Point De Service Chomedey",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 682-0277",
+    "description": "Accueil, évaluation clinique et accompagnement.* Services psychosociaux et médicaux pour la clientèle suivie.* Services de nature volontaire qui requiert la participation ctive de la famille.* Suivis et activités visant le développement global des enfants.* Orientation et références vers des services complémentaires. | Clientèle: enfants en situation de vulnérabilité de 0 à 14 ans et leur famille résidant à Chomedey | Territoire: Laval: codes postaux débutant par H7V, H7W ou H7T | Statut: organisme à but non lucratif",
+    "website": "leszepanouis.org/fr",
+    "address": "832, 79ème avenue, Chomedey, Laval, QC, H7V 3J1",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "z-panouis-les-point-de-service-p-lav",
+    "name": "Zépanouis (Les) - Point De Service Pont-Viau",
+    "category": "family",
+    "subcategory": "Enfance, jeunesse et famille",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 682-0277",
+    "description": "Accueil, évaluation clinique et accompagnement.* Services psychosociaux and medicaux pour la clientèle suivie.* Service de nature volontaire qui requiert la participation active de la famille.* Suivis et activités visant le développement global des enfants.* Orientation et références vers des services complémentaires. | Clientèle: enfants en situation de vulnérabilité de 0 à 14 ans et leur famille résidant à Pont-Viau | Territoire: Laval: codes postaux débutant par H7G ou H7N | Statut: organisme à but non lucratif",
+    "website": "leszepanouis.org/fr",
+    "address": "100, place Juge-Desnoyers, Pont-Viau, Laval, QC, H7G 1A4",
+    "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
     "id": "tr-garde-cathy-tremblay",
     "name": "cathy tremblay",
     "category": "family",
@@ -25811,6 +29210,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "ge-d-or-de-st-ferdinand-lav",
+    "name": "Âge D'Or De St-Ferdinand",
+    "category": "social",
+    "subcategory": "Aînés",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 628-2698",
+    "description": "Club social pour personnes aînées.* Activités sociales et récréatives: bingo, cartes, cours de danse, pétanque, etc.* Repas communautaire.* Sorties occasionnelles. | Clientèle: personnes 50 ans et plus | Territoire: Laval | Statut: organisme à but non lucratif",
+    "address": "725, montée Montrougeau, Fabreville, Laval, QC, H7P 3M1",
+    "hours": "septembre à mai, mercredi 9h30 à 16h00, vendredi 17h15 à 22h00, été: lundi et mercredi 7h00 to 9h00"
+  },
+  {
+    "id": "co-nature-lav",
+    "name": "Éco-Nature",
+    "category": "social",
+    "subcategory": "Action Communautaire",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 622-1020",
+    "description": "Protection, conservation et mise en valeur de la rivière des Mille Îles et de ses affluents.* Programmes d'éducation à l'environnement et activités récréotouristiques.* Gestion du Parc de la Rivière-des- Mille-Îles.* Réinsertion sociale: emplois subventionnés.* Service-conseil, expertise professionnelle et scientifique. | Clientèle: grand public | Territoire: Laval, Rive-Nord | Statut: organisme à but non lucratif",
+    "website": "www.parc-mille-iles.qc.ca",
+    "address": "345, boulevard Sainte-Rose, Sainte-Rose, Laval, QC, H7L 1M7",
+    "hours": "lundi au dimanche 10h00 à 17h00"
+  },
+  {
     "id": "eglise-presbyterienne-st-columba-by-pcl",
     "name": "Église Presbytérienne St. Columba-By-The-Lake (l) - Programme Alimentaire",
     "category": "food",
@@ -25874,6 +29298,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.equipeentreprise.org",
     "address": "1375, route Transcanadienne, bureau 100, Dorval, Montréal, QC, H9P 2W8",
     "hours": "lundi au jeudi 9h00 à 15h30"
+  },
+  {
+    "id": "quipe-sp-cialis-e-en-pr-vention--lav",
+    "name": "Équipe Spécialisée En Prévention Du Suicide",
+    "category": "mentalHealth",
+    "subcategory": "Santé mentale et dépendances",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "",
+    "description": "* Groupe de thérapie pour adultes.* Intervention de postvention dans les milieux (école, travail, famille, centre de loisirs) auprès des individus suite à un suicide.* Formation professionnelle et supervision clinique. | Clientèle: adultes endeuillé·e·s par le suicide d'un·e proche | Territoire: CISSS de Laval | Statut: organisme à but non lucratif",
+    "website": "www.lavalensante.com/employes-et-medecins/direction-de-sante-publique/prevention-du-suicide/",
+    "address": "4250, boulevard Dagenais Ouest, Fabreville, Laval, QC, H7R 1L3",
+    "hours": "groupes de thérapie en soirée, autres activités en journée et en soirée"
+  },
+  {
+    "id": "tape-l-point-de-service-de-laval-lav",
+    "name": "Étape (L') - Point De Service De Laval",
+    "category": "employment",
+    "subcategory": "Emploi et soutien au revenu",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450 667-9999",
+    "description": "Services d'intégration et de maintien en emploi pour les personnes en situation de handicap. | Clientèle: personnes vivant avec une déficience physique, auditive ou intellectuelle, personnes autistes Capacité: 200 personnes | Territoire: Laval | Statut: organisme à but non lucratif",
+    "website": "letape.org/laval",
+    "address": "1435, boulevard Saint-Martin Ouest, bureau 400, Chomedey, Laval, QC, H7S 2C6",
+    "hours": "lundi au vendredi 8h30 à 16h30"
   }
 ];
 
