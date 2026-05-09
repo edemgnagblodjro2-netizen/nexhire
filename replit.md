@@ -10,6 +10,12 @@ A mobile application connecting vulnerable individuals with community and social
 - **TODO post-launch — site vitrine `attentezero.ca`** : créer un nouvel artifact `marketing-site` dans le monorepo Replit (React/Vite, one-pager : hero + boutons App Store/Play Store + 3 blocs features + stats + footer mentions légales). Servir aussi `/.well-known/assetlinks.json` pour vérifier les deep links Android. Pointer le domaine `attentezero.ca` via Cloudflare (CNAME → URL Replit).
 - Mentions à jour à pousser progressivement : footer admin, page « À propos » mobile, App Store/Play Store « Développeur », signatures emails transactionnels.
 
+## Sécurité — décisions prises (mai 2026)
+- **Audit pré-launch effectué** : reset password (5 essais max sur 6 chiffres), quota IA 15/jour côté serveur, signature webhook Stripe vérifiée → 3 points critiques OK 🟢.
+- **MFA / SMS / SSO** : explicitement écarté pour le launch. Public cible vulnérable (sans-abri, immigrants sans statut, femmes en fuite) → un MFA obligatoire exclurait les utilisateurs à protéger. À reconsidérer post-launch UNIQUEMENT si retour terrain le justifie, et alors privilégier biométrie optionnelle (gratuite, sans téléphone) plutôt que SMS.
+- **Backups BDD automatiques Replit** : à confirmer dans le dashboard avant launch.
+- **TODO post-launch sécurité** : vraie auth admin (sessions par admin + 2FA) pour remplacer la clé partagée en localStorage ; rotation annuelle des secrets ; audit log actions admin.
+
 ## Run & Operate
 - `pnpm --filter @workspace/service-qc run start`: Runs the Expo mobile app.
 - `pnpm --filter @workspace/admin run dev`: Starts the Admin panel web app.
