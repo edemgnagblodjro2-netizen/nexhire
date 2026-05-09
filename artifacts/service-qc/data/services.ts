@@ -118,6 +118,19 @@ export const CATEGORY_LABELS: Record<Category, string> = {
 // ─────────────────────────────────────────────────────────────────────────────
 const __SERVICES_FROM_API: Service[] = [
   {
+    "id": "121e-groupe-st-tienne-ca",
+    "name": "121e Groupe St-Étienne",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Étienne-de-Lauzon",
+    "province": "QC",
+    "phone": "418-836-0494",
+    "description": "Participation au développement global des jeunes * contribution à l'éducation des jeunes et à leur épanouissement afin de les préparer à jouer un rôle constructif dans la société * apprentissage au se ... [Plus] | Âges : 7 an(s) - 25 an(s)",
+    "website": "http://www.121groupestetienne.com",
+    "address": "90 Rue Marois, Lévis, QC G6J 1K9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "1313-chomedey-le-lav",
     "name": "1313 Chomedey (Le)",
     "category": "social",
@@ -377,6 +390,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "a-droit-de-chaudi-re-appalaches--ca",
+    "name": "A-DROIT de Chaudière-Appalaches (L')",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-837-1113 poste 0",
+    "description": "Promotion et défense des droits des personnes ayant ou ayant vécu un trouble de santé mentale * aide et accompagnement dans les démarches individuelles de défense des droits * information et sensibili ... [Plus] | Clientèle : Jeunes, adultes et aînés ayant ou ayant vécu un problème de santé mentale | Âges : 14 an(s) et plus",
+    "website": "https://ladroit.org/ladroit/",
+    "address": "5680 Rue Saint-Louis, Lévis, QC G6V 5X6, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "a-b-c-des-manoirs-trb",
     "name": "A.b.c. des Manoirs",
     "category": "social",
@@ -388,6 +414,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.abcdesmanoirs.com",
     "address": "568, rue Léon-Martel, Terrebonne, Lanaudière, QC, J6W 2J8",
     "hours": "septembre à fin juin, lundi au vendredi 9h00 à 17h00, période des fêtes: fermé pendant 2 semaines"
+  },
+  {
+    "id": "abc-lotbini-re-ca",
+    "name": "ABC Lotbinière",
+    "category": "immigration",
+    "subcategory": "",
+    "city": "Notre-Dame-du-Sacré-Coeur-d'Issoudun",
+    "province": "QC",
+    "phone": "418-728-2226",
+    "description": "Promotion et formation à l'alphabétisation populaire, aide à l'intégration des personnes ayant des difficultés à lire et écrire Ateliers * lecture, écriture et calcul * francisation * informatique de ... [Plus] | Clientèle : Jeunes adultes et adultes peu alphabétisés * personnes immigrantes * aînés * | Âges : 16 an(s) et plus",
+    "website": "https://www.abclotbiniere.com/",
+    "address": "268A Rue Principale, Notre-Dame-du-Sacré-Coeur-d'Issoudun, QC G0S 1L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "abc-des-hauts-plateaux-l-ca",
+    "name": "ABC des Hauts Plateaux (L')",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Pamphile",
+    "province": "QC",
+    "phone": "418-356-3737 poste 112",
+    "description": "Prévention de l'analphabétisme par ateliers d'alphabétisation aux adultes, lutte au décrochage scolaire et éveil à la lecture pour bébé et enfants préscolaire Parents et enfants * Lire et faire lire : ... [Plus]",
+    "website": "http://www.abcsud.com",
+    "address": "21 Rue Principale, Saint-Pamphile, QC G0R 3X0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "abc-des-hauts-plateaux-l-point-d-ca",
+    "name": "ABC des Hauts Plateaux (L'), Point de service Saint-Paul-de-Montminy",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Paul-de-Montminy",
+    "province": "QC",
+    "phone": "418-469-1311",
+    "description": "Prévention de l'analphabétisme par ateliers d'alphabétisation aux adultes et lutte au décrochage scolaire Parents et enfants * Lire et faire lire : ateliers animés par des retraités, offerts dans les ... [Plus]",
+    "website": "http://www.abcsud.com",
+    "address": "22 Rue de l'Église, Lac-Frontière, QC G0R 1T0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "mh-acsm-quebec",
@@ -496,6 +561,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service disponible 24h/24, 7j/7",
     "isUrgent": true,
     "isProvinceWide": true
+  },
+  {
+    "id": "ape-accompagne-votre-parcours-en-ca",
+    "name": "APE Accompagne votre parcours en emploi, Bureau de Lévis",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-837-1221",
+    "description": "Développement du potentiel humain de la personne, tout en favorisant l’identification d’un projet personnel et professionnel mobilisateur, notamment par l’obtention, la création et le maintien d’un em ... [Plus] | Clientèle : Adultes sans emploi ou à temps partiel, occupant un emploi saisonnier, précaire, en recherche d'emploi * retraités ou préretraités * prestataires de l'assurance-emploi ou de l'assistance-emploi * personnes sans revenu | Âges : 18 an(s) et plus",
+    "website": "http://ape.qc.ca",
+    "address": "5731 Rue Saint-Louis bureau 300, Lévis, QC G6V 4E2, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "v-aqris",
@@ -655,6 +733,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "accueil-s-r-nit-ca",
+    "name": "Accueil - sérénité",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sainte-Claire",
+    "province": "QC",
+    "phone": "418-883-2121",
+    "description": "Accompagnement et soutien aux personnes vivant ou ayant vécu un épisode de cancer et à leurs proches * aide psychologique : individuelle et groupe de soutien * soutien au bien-être physique et à la ge ... [Plus] | Clientèle : Personnes vivant ou ayant vécu un épisode de cancer et leurs proches * information et prévention pour le grand public * personnes endeuillées * personnes en soins palliatifs ou en soins de fin de vie | Âges : 18 an(s) et plus",
+    "website": "http://www.accueil-serenite.org",
+    "address": "101 Rue Principale, Sainte-Claire, QC G0R 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "accueil-bonneau-tr",
     "name": "Accueil Bonneau",
     "category": "food",
@@ -678,6 +769,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Maison d'hébergement pour jeunes.• Soutien, information et référence. | Clientèle: jeunes de 12 à 17 ans en difficulté Capacité: 9 lits | Territoire: Lanaudière | Frais: 7$ par jour | Statut: organisme à but non lucratif",
     "address": "1094, boulevard Manseau, Joliette, Lanaudière, QC, J6E 3G8",
     "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "accueil-notre-dame-ca",
+    "name": "Accueil Notre-Dame",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Damien-de-Buckland",
+    "province": "QC",
+    "phone": "418-789-2647",
+    "description": "Lieu de répit, de repos et de ressourcement * écoute discrète et accompagnement personnalisé | Clientèle : Cellulaire 581-996-5963 | Âges : 18 an(s) et plus",
+    "website": "http://congndps.qc.ca/ensemble/au-lac-vert",
+    "address": "Saint-Damien-de-Buckland, QC G0R, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "imm-acet",
@@ -716,6 +820,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Point d'accueil et de référence pour orienter les personnes vulnérables de Trois-Rivières vers les bons organismes : hébergement d'urgence, dépannage alimentaire, santé mentale, immigration, aide juridique. Accompagnement par des travailleurs de milieu.",
     "address": "1060, rue St-François-Xavier, local 310, Trois-Rivières, QC G9A 1R8",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "accueil-grossesse-beauce-appalac-ca",
+    "name": "Accueil grossesse Beauce - Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-225-6554",
+    "description": "Soutien moral et matériel aux filles et femmes enceintes ainsi qu'aux nouvelles mamans et papas * accueil, écoute et soutien * rencontres individuelles * aide matérielle : vêtements de bébé, articles ... [Plus] | Clientèle : Adolescentes * femmes enceintes * nouveaux parents * familles | Âges : 54 an(s) et moins",
+    "website": "https://accueilgrossesse.com/",
+    "address": "10949 Av. 2e, Saint-Georges, QC G5Y 1V9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "accueil-parrainage-outaouais-out",
@@ -844,6 +961,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "actionintegration.org",
     "address": "6180, rue Agathe, Brossard, Montérégie, QC, J4Z 1E1",
     "hours": "bureau: lundi au vendredi 8h30 à 16h30, activités: 7 jours"
+  },
+  {
+    "id": "action-jeunesse-c-te-sud-ca",
+    "name": "Action Jeunesse Côte-Sud",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Damien-de-Buckland",
+    "province": "QC",
+    "phone": "418-789-1370",
+    "description": "Organisme de justice alternative visant à prévenir et intervenir avec et auprès des jeunes et des membres de la communauté qui vivent des défis liés aux conflits, à la dépendance ou à la criminalité, ... [Plus] | Clientèle : Médiation entre citoyens * grand public | Âges : 5 an(s) - 24 an(s)",
+    "website": "http://www.jeunessecs.com",
+    "address": "159 Rue Commerciale bur 111, Saint-Damien-de-Buckland, QC G0R 2Y0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "action-jeunesse-roussillon-mtg",
@@ -1067,6 +1197,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi 16h00 à 21h00, mardi et mercredi 12h00 à 13h00 et 16h00 à 21h00, jeudi 16h00 à 21h00, vendredi 16h00 à 22h30"
   },
   {
+    "id": "adstock-h-tel-de-ville-ca",
+    "name": "Adstock. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "418-422-2135",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Comité sportif 418-422-2135 poste 237",
+    "website": "http://www.adstock.ca",
+    "address": "Adstock, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "aguanish-h-tel-de-ville-cn",
     "name": "Aguanish. Hôtel de ville",
     "category": "social",
@@ -1106,6 +1249,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 16h00"
   },
   {
+    "id": "aidants-scolaires-ca",
+    "name": "Aidants scolaires",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux écoles et aux services de garde éducatifs à l’enfance (SGÉE) dans la structuration de leur bénévolat afin d'offrir au personnel « deux bras de plus » pour le bénéfice des élèves * inscription ... [Plus] | Clientèle : Établissements affiliés ou désirant s'affilier * bénévoles | Âges : 1 an(s) - 18 an(s)",
+    "website": "http://www.aidantsscolaires.com",
+    "address": "Québec City, QC G1R 4S9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "aide-aux-familles-paroisse-saint-mtg",
     "name": "Aide Aux Familles - Paroisse Saint-Hubert",
     "category": "food",
@@ -1117,6 +1273,110 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "paroissesthubert.org/pastorale-sociale-laide-aux-familles",
     "address": "5310, chemin Chambly, Longueuil, Montérégie, QC, J3Y 3N7",
     "hours": "sur rendez vous, distribution alimentaire: jeudi 9h00 à 11h00, dépannage d'urgence: sur appel"
+  },
+  {
+    "id": "aide-alimentaire-lotbini-re-ca",
+    "name": "Aide alimentaire Lotbinière",
+    "category": "family",
+    "subcategory": "",
+    "city": "Laurier-Station",
+    "province": "QC",
+    "phone": "418-728-4201",
+    "description": "Organisme assurant la sécurité alimentaire des personnes et familles en situation de précarité * dépannage d'urgence * responsabilisation et sensibilisation de la communauté * éducation populaire * pa ... [Plus] | Clientèle : Personnes et familles en situation de précarité (à faible revenu)",
+    "website": "http://aidealimentairelotbiniere.org",
+    "address": "246 Rue du Parc, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "aide-alimentaire-lotbini-re-poin-ca",
+    "name": "Aide alimentaire Lotbinière, Point de distribution Laurier-Station",
+    "category": "social",
+    "subcategory": "",
+    "city": "Laurier-Station",
+    "province": "QC",
+    "phone": "418-728-4201",
+    "description": "Dépannage alimentaire * paniers de Noël | Clientèle : Paniers de Noël",
+    "website": "http://aidealimentairelotbiniere.org",
+    "address": "246 Rue du Parc, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "aide-alimentaire-lotbini-re-poin-ca-2",
+    "name": "Aide alimentaire Lotbinière, Point de distribution Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lotbinière",
+    "province": "QC",
+    "phone": "418-728-4201",
+    "description": "Dépannage alimentaire * paniers de Noël | Clientèle : Paniers de Noël : consulter notre site internet à la mi-novembre 2025",
+    "website": "http://aidealimentairelotbiniere.org",
+    "address": "246 Rue du Parc, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "aide-alimentaire-lotbini-re-poin-ca-3",
+    "name": "Aide alimentaire Lotbinière, Point de distribution Saint-Agapit",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Agapit",
+    "province": "QC",
+    "phone": "418-728-4201",
+    "description": "Dépannage alimentaire * paniers de Noël | Clientèle : Paniers de Noël",
+    "website": "http://aidealimentairelotbiniere.org",
+    "address": "246 Rue du Parc, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "aide-alimentaire-lotbini-re-poin-ca-5",
+    "name": "Aide alimentaire Lotbinière, Point de distribution Saint-Patrice-de-Beaurivage",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Patrice-de-Beaurivage",
+    "province": "QC",
+    "phone": "418-728-4201",
+    "description": "Dépannage alimentaire * paniers de Noël | Clientèle : Paniers de Noël",
+    "website": "http://aidealimentairelotbiniere.org",
+    "address": "Municipalité de Saint-Patrice-de-Beaurivage, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "aide-alimentaire-lotbini-re-poin-ca-4",
+    "name": "Aide alimentaire Lotbinière, Point de distribution Saint-Édouard-de-Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Édouard-de-Lotbinière",
+    "province": "QC",
+    "phone": "418-728-4201",
+    "description": "Dépannage alimentaire * paniers de Noël | Clientèle : Panier de Noël: consulter notre site internet à la mi-novembre 2025",
+    "website": "http://aidealimentairelotbiniere.org",
+    "address": "246 Rue du Parc, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "aide-alimentaire-lotbini-re-poin-ca-6",
+    "name": "Aide alimentaire Lotbinière, Point de distribution Val-Alain",
+    "category": "social",
+    "subcategory": "",
+    "city": "Val-Alain",
+    "province": "QC",
+    "phone": "418-728-4201",
+    "description": "Dépannage alimentaire * paniers de Noël | Clientèle : Personnes et familles en situation de précarité (à faible revenu)",
+    "website": "http://aidealimentairelotbiniere.org",
+    "address": "246 Rue du Parc, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "aide-aux-travailleurs-accident-s-ca",
+    "name": "Aide aux travailleurs accidentés",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-9844",
+    "description": "Regroupement de soutien aux accidentés du travail * information et écoute * aide technique pour suivi du dossier * démarches collectives pour la reconnaissance des droits des accidentés * soutien pour ... [Plus]",
+    "website": "http://www.aideauxtravailleurs.com",
+    "address": "114-B Av. de Gaspé E, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "ab-legal-aid-ab",
@@ -1757,6 +2017,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous"
   },
   {
+    "id": "albatros-l-vis-ca",
+    "name": "Albatros Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-952-0598",
+    "description": "Albatros Lévis offre en toute gratuité des services d’accompagnement à toute personne dès l’annonce d’un diagnostic de maladie évolutive et terminale jusqu’au dernier stade de sa vie, ce qui procure é ... [Plus] | Clientèle : Personnes ayant un diagnostic de maladie évolutive et terminale et toutes personnes intéressées par l'accompagnement palliatif (pour devenir bénévole ou par intérêt personnel) | Âges : 18 an(s) et plus",
+    "website": "http://www.albatroslevis.com",
+    "address": "49 Rue Fortier suite 107, Levis, QC G6V 6K9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "albatros-thetford-ca",
+    "name": "Albatros Thetford",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-7777 poste 54183",
+    "description": "Services visant à accompagner les personnes en fin de vie ainsi que leurs proches * Accompagnement bénévole des personnes diagnostiquées soins palliatifs et fin de vie Services offerts * à domicile, à ... [Plus] | Clientèle : Personnes ayant reçu un diagnostic de soins palliatifs et fin de vie * proches aidants",
+    "website": "https://mouvementalbatros.org/organisme/albatros-thetford/",
+    "address": "1637 Rue Notre Dame E local 231, Thetford Mines, QC G6G 2V3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "albatros-vall-e-de-la-gatineau-m-out",
     "name": "Albatros Vallée-De-La-Gatineau (Maniwaki)",
     "category": "social",
@@ -1875,6 +2161,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "alliance-jeunesse-chutes-de-la-c-ca",
+    "name": "Alliance-Jeunesse Chutes-de-la-Chaudière",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418 834-9808",
+    "description": "Depuis 1990, Alliance-Jeunesse Chutes-de-la-Chaudière est là avec et pour les jeunes et les jeunes adultes de 12 à 35 ans, ainsi que pour les familles qui traversent des moments plus difficiles Trempl ... [Plus] | Clientèle : Direction générale | Âges : 12 an(s) - 35 an(s)",
+    "website": "http://www.alliancejeunesse.com",
+    "address": "1659 Bd Guillaume-Couture, Lévis, QC G6W 0L3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "alpha-bellechasse-ca",
+    "name": "Alpha Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Anselme",
+    "province": "QC",
+    "phone": "418-885-1587",
+    "description": "Augmentation des habiletés en lecture, écriture, calcul et informatique afin d'améliorer les conditions de vie et l'autonomie des personnes Alphabétisation : * Ateliers en lecture, écriture, calcul, c ... [Plus] | Clientèle : Centre d'accès communautaire à Internet 418-885-1587 poste 108",
+    "website": "http://alphabellechasse.org",
+    "address": "5 Rue Morin, Saint-Anselme, QC G0R 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "alpha-iota-mtg",
     "name": "Alpha Iota",
     "category": "social",
@@ -1888,6 +2200,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h45 à 16h00, période d'activité: du début du mois de septembre jusqu'au 24 juin de chaque année"
   },
   {
+    "id": "alpha-entraide-des-chutes-de-la--ca",
+    "name": "Alpha-entraide des Chutes-de-la-Chaudière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-834-3011",
+    "description": "Adultes désirant améliorer leurs compétences de base en lecture, en écriture, en calcul et en informatique * alphabétisation populaire * sensibilisation à l’analphabétisme Ateliers d’alphabétisation p ... [Plus] | Clientèle : Adultes",
+    "website": "http://www.alphaentraide.ca",
+    "address": "49 Rue Fortier, Lévis, QC G6V 6K9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "alphabetisation-sans-limites-pcl",
     "name": "Alphabétisation Sans Limites (Literacy Unlimited)",
     "category": "social",
@@ -1899,6 +2224,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://literacyunlimited.ca",
     "address": "90 Av. de Jubilee Square, Pointe-Claire, QC H9R 1M3",
     "hours": "Lun-jeu 9h-16h. Fermé mi-juin à septembre."
+  },
+  {
+    "id": "alphare-ca",
+    "name": "Alphare",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-226-4111",
+    "description": "Ateliers en petits groupes et accompagnement personnalisé pour l'amélioration des compétences en lecture, écriture, calcul, informatique de base et nouvelles technologies * amélioration des conditions ... [Plus] | Clientèle : Personnes faiblement alphabétisées ou ayant des difficultés de lecture et d'écriture * personnes dyslexiques * personnes immigrantes, aînés, parents ou travailleurs peu scolarisés | Âges : 16 an(s) et plus",
+    "website": "http://www.alphare.ca",
+    "address": "2640 Bd Dionne, Saint-Georges, QC G5Y 3X8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "alternative-aliment-terre-mtg",
@@ -1938,6 +2276,110 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.laltou.com",
     "address": "885, boulevard de la Carrière, bureau 201, Gatineau, Outaouais, QC, J8Y 6S6",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "amalgame-mdj-ouest-ca",
+    "name": "Amalgame MDJ Ouest",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "418-831-7582",
+    "description": "Administration des maisons de jeunes de Saint-Nicolas, Saint-Rédempteur et autres projets Voir dossiers individuels * Maison des jeunes du Parc Jean-Dumet * Maison des jeunes du Parc Soleil * Maison d ... [Plus] | Clientèle : Variable selon le service | Âges : 11 an(s) - 49 an(s)",
+    "website": "http://www.amalgamemdjouest.com",
+    "address": "85-A Rue du Grand-Tronc, Saint-Rédempteur, QC G6K 1C3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "amalgame-mdj-ouest-maison-des-je-ca-4",
+    "name": "Amalgame MDJ Ouest, Maison des jeunes Villieu, Maison des jeunes Jungle D'jy",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "Administration 418-831-7582",
+    "description": "Lieu de rencontre animé dans la communauté où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * écoute * prévention, information et sens ... [Plus] | Clientèle : 418-831-7673 | Âges : 11 an(s) - 17 an(s)",
+    "website": "http://www.amalgamemdjouest.com",
+    "address": "85-A Rue du Grand-Tronc, Saint-Rédempteur, QC G6K 1C3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "amalgame-mdj-ouest-maison-des-je-ca-5",
+    "name": "Amalgame MDJ Ouest, Maison des jeunes Villieu, Projet Azur",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "Administration 418-831-7582",
+    "description": "Lieu de rencontre animé pour les jeunes présentant des difficultés dans leurs communications interpersonnelles * écoute * lieu de rencontre * prévention, information et sensibilisation * projets, acti ... [Plus] | Clientèle : Jeunes présentant des difficultés au niveau des communications interpersonnelles (trouble du langage, dysphasie, déficience motrice, déficience intellectuelle légère ou difficultés d'adaptation) | Âges : 11 an(s) - 17 an(s)",
+    "website": "http://www.amalgamemdjouest.com",
+    "address": "85-A Rue du Grand-Tronc, Saint-Rédempteur, QC G6K 1C3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "amalgame-mdj-ouest-maison-des-je-ca",
+    "name": "Amalgame MDJ Ouest, Maison des jeunes de Saint-Rédempteur",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "Administration 418-831-7582",
+    "description": "Lieu de rencontre animé dans la communauté où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * écoute * prévention, information et sens ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "website": "http://www.amalgamemdjouest.com",
+    "address": "Saint-Rédempteur, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "amalgame-mdj-ouest-maison-des-je-ca-2",
+    "name": "Amalgame MDJ Ouest, Maison des jeunes du Parc Jean-Dumets",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-831-1657",
+    "description": "Lieu de rencontre animé dans leur communauté où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * écoute * prévention, information et se ... [Plus] | Clientèle : Administration 418-831-7582 | Âges : 11 an(s) - 17 an(s)",
+    "website": "http://www.amalgamemdjouest.com",
+    "address": "Parc Jean-Dumets, Lévis, QC G7A 4M5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "amalgame-mdj-ouest-maison-des-je-ca-3",
+    "name": "Amalgame MDJ Ouest, Maison des jeunes du Parc Soleil",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "Administration 418-831-7582",
+    "description": "Lieu de rencontre animé dans leur communauté où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * écoute * prévention, information et se ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "website": "http://www.amalgamemdjouest.com",
+    "address": "Parc Soleil, 897 Rue du Rocher, Lévis, QC G7A 3X9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "amalgame-mdj-ouest-projet-flash-ca",
+    "name": "Amalgame MDJ Ouest, Projet Flash",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "Administration 418-831-7582",
+    "description": "Lieu de rencontre animé pour les jeunes adultes vivant avec une limitation intellectuelle légère, un trouble du spectre de l'autisme (TSA) ou des difficultés d'adaptation * ces jeunes pourront, au con ... [Plus] | Clientèle : Jeunes adultes ayant un trouble du spectre de l'autisme, des difficultés d'adaptation ou une déficience intellectuelle légère | Âges : 18 an(s) - 49 an(s)",
+    "website": "http://www.amalgamemdjouest.com",
+    "address": "85-A Rue du Grand-Tronc, Saint-Rédempteur, QC G6K 1C3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "amalgame-mdj-ouest-projet-l-acca-ca",
+    "name": "Amalgame MDJ Ouest, Projet l'Accalmie",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-837-2172",
+    "description": "Jumelage personnalisé à domicile pour enfants ou adultes vivant avec une déficience physique (DP), intellectuelle (DI) ou un trouble du spectre de l’autisme (TSA) * référence d'accompagnateurs selon l ... [Plus] | Clientèle : Jumelage personnalisé pour enfants ou adultes vivant avec une déficience physique (DP), intellectuelle (DI) ou un trouble du spectre de l’autisme (TSA) * leurs proches et famille naturelle * accompagnateurs * proches aidants",
+    "website": "http://www.rophrca.org",
+    "address": "85-A Rue du Grand-Tronc, Saint-Rédempteur, QC G6K 1C3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "ami-aide-alimentaire-l-mtg",
@@ -1987,6 +2429,30 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "amicale.ca",
     "address": "405, rue Notre-Dame, Gatineau, Outaouais, QC, J8P 1L7",
     "hours": "lundi au vendredi 9h00 à 15h00, dîners pour les membres: lundi, mercredi et vendredi"
+  },
+  {
+    "id": "amies-de-panet-les-ca",
+    "name": "Amies de Panet (Les)",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Fabien-de-Panet",
+    "province": "QC",
+    "phone": "418-234-3496",
+    "description": "Services de maintien à domicile * accompagnement-transport pour visites médicales * repas communautaires * popote roulante * comptoir vestimentaire au sous-sol de l'église, 29-A, rue Principale Saint- ... [Plus] | Clientèle : Aînés * familles à faible revenu * comptoir vestimentaire pour le grand public",
+    "address": "200 Rue Boutin, Saint-Fabien-de-Panet, QC G0R 2J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "amies-de-l-entraide-les-ca",
+    "name": "Amies de l'entraide (Les)",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Just-de-Bretenières",
+    "province": "QC",
+    "phone": "418-244-3887",
+    "description": "Repas et activités pour les personnes âgées | Âges : 50 an(s) et plus",
+    "address": "Saint-Just-de-Bretenières, QC G0R, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "amis-de-lamater-les-trb",
@@ -2103,6 +2569,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Service d'accompagnement en employabilité: orientation professionnelle à court terme, aide à la recherche d'emploi.* Service d'accueil et de régionalisation: permettre aux immigrant·e·s demeurant à l'extérieur du territoire de s'établir en région.* Service d'accompagnement aux entreprises: sensibilisation de la diversité culturelle auprès des entrepreneur·euse·s de la région. | Clientèle: personnes immigrantes depuis moins de cinq ans | Territoire: MRC Le Haut-Richelieu | Statut: organisme à but non lucratif",
     "website": "lancre.ca",
     "address": "49, rue Saint-Jacques, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 2J8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "ancre-l-regroupement-des-parents-ca",
+    "name": "Ancre (L'), Regroupement des parents et amis des personnes atteintes de maladie mentale",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-0068",
+    "description": "Soutien à l’entourage des personnes présentant un trouble de santé mentale Services professionnels, gratuits et confidentiels * relation d'aide individuelle, de couple et familiale en personne ou par ... [Plus] | Clientèle : Membres de l'entourage de personnes présentant un trouble majeur de santé mentale tel que schizophrénie, trouble bipolaire, dépression majeure, trouble obsessif-compulsif et troubles de la personnalité",
+    "website": "http://www.lancre.org",
+    "address": "Montmagny, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -2273,6 +2752,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h00, sur rendez-vous"
   },
   {
+    "id": "apprendre-autrement-ca",
+    "name": "Apprendre autrement",
+    "category": "immigration",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-9780",
+    "description": "Ateliers permettant aux adultes d'acquérir des compétences de base * acquisition et enrichissement de la connaissance en langue française des personnes immigrantes * aide au raccrochage scolaire, sout ... [Plus] | Clientèle : Jeunes, adultes et aînés ayant des difficultés en écriture, calcul et lecture * personnes immigrantes * bibliothèque mobile pour enfants de 0-5 ans et leurs parents",
+    "website": "http://www.apprendre-autrement.com",
+    "address": "2A Pl. de l'Église, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "arc-assistance-and-referral-cent-mtg",
     "name": "Arc - Assistance And Referral Centre",
     "category": "social",
@@ -2336,6 +2828,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "arc-en-ciel-l-regroupement-de-pa-ca",
+    "name": "Arc-en-ciel (L') - Regroupement de parents et de personnes handicapées",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-3055",
+    "description": "Aide aux familles et enfants ayant un handicap physique ou intellectuel, ou ayant un trouble du spectre de l'autisme (TSA) * répit-gardiennage de jour et de nuit * camps de vacances et de jour * centr ... [Plus] | Clientèle : Personnes ayant un trouble du spectre de l'autisme (TSA) ou autre handicap, limitation intellectuelle ou physique, trouble du langage * leurs parents et proches",
+    "website": "http://www.arcencielrpph.com",
+    "address": "Montmagny, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "arche-lanaudiere-l-jol",
     "name": "Arche Lanaudière (l')",
     "category": "social",
@@ -2386,6 +2891,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "larche-outaouais.ca/psychosocial",
     "address": "19, rue Hanson, Gatineau, Outaouais, QC, J8Y 3M4",
     "hours": "soutien individuel: sur rendez-vous, groupes de soutien virtuel: mardi 12h30 à 13h30, groupes de soutien en présentiel: mercredi 18h30 à 20h00, ateliers virtuels: mercredi 12h00 à 13h00"
+  },
+  {
+    "id": "armagh-h-tel-de-ville-ca",
+    "name": "Armagh. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Armagh",
+    "province": "QC",
+    "phone": "418-466-2916",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * transports en commun en milieu urbain * assainissement des eaux usé ... [Plus] | Clientèle : Bibliothèque 418-466-3004",
+    "website": "http://armagh.ca",
+    "address": "Armagh, QC G0R, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "arm-e-du-salut-centre-communauta-out",
@@ -2451,6 +2969,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.larrimage.ca",
     "address": "500, boulevard Saint-Martin Ouest, bureau 370, Chomedey, Laval, QC, H7M 3Y2",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "artistes-et-artisans-du-grand-l--ca",
+    "name": "Artistes et artisans du Grand-Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Information et inscription 418-903-6520",
+    "description": "Promotion des artistes et artisans de Lévis * organisation de salons et expositions * Foire aux cadeaux Répertoire des membres https://www.aagl.ca/membres ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.aagl.ca",
+    "address": "3995 Rue de la Fabrique, Lévis, QC G6W 1J6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "assortie-bellechasse-l-ca",
+    "name": "AsSortie Bellechasse (L')",
+    "category": "social",
+    "subcategory": "",
+    "city": "Honfleur",
+    "province": "QC",
+    "phone": "418-982-3328",
+    "description": "Promotion et défense des droits et intérêts des personnes ayant un handicap visant l'amélioration de leur qualité de vie et leur intégration sociale et communautaire Services * accueil et référence * ... [Plus] | Clientèle : Personnes ayant un handicap physique, intellectuel, trouble neurodéveloppemental * leur famille | Âges : 5 an(s) et plus",
+    "website": "https://www.lassortie.org/",
+    "address": "Honfleur, QC G0R, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "assembl-e-des-groupes-de-femmes--out",
@@ -3008,6 +3552,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "samedi 10h00 à 12h00"
   },
   {
+    "id": "association-horizon-soleil-ca",
+    "name": "Association Horizon soleil",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-9507",
+    "description": "Intégration des personnes ayant un handicap * écoute, entraide, référence et accompagnement * atelier de travail en usine avec la participation des entreprises locales * formation en intégration socia ... [Plus] | Clientèle : Personnes ayant un handicap physique, une légère déficience intellectuelle ou un trouble envahissant du développement (TED)",
+    "address": "35 Av. de Gaspé O, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-iris-programme-de-so-lav",
     "name": "Association Iris - Programme De Soutien À La Vie En Logement - Laval",
     "category": "mentalHealth",
@@ -3267,6 +3823,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 10h00 à 21h00, samedi 9h00 à 17h00, dimanche 10h00 à 17h00"
   },
   {
+    "id": "association-renaissance-des-appa-ca",
+    "name": "Association Renaissance des Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "581-679-0852",
+    "description": "Promotion et défense des droits et intérêts des personnes vivant avec une déficience intellectuelle (DI) ou un trouble du spectre de l'autisme (TSA) * reconnaissance de leurs capacités * intégration e ... [Plus] | Clientèle : Personnes vivant avec une déficience intellectuelle (DI) ou un trouble du spectre de l'autisme (TSA) * leur famille | Âges : 6 an(s) et plus",
+    "website": "https://www.associationrenaissance.org/",
+    "address": "488 9e Rue N, Thetford Mines, QC G6G 1V8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-r-cr-ative-de-temple-out",
     "name": "Association Récréative De Templeton",
     "category": "social",
@@ -3343,6 +3912,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h00, déjeuners-conférences: septembre à mai"
   },
   {
+    "id": "association-b-n-vole-beauce-sart-ca",
+    "name": "Association bénévole Beauce-Sartigan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-0007",
+    "description": "Amélioration des conditions de vie des gens dans le besoin et maintien à domicile * recrutement, orientation, formation et encadrement des bénévoles dans un lieu d'appartenance et d'échange * collabor ... [Plus] | Clientèle : Travailleur de milieu ITMAV",
+    "website": "http://www.benevolatbeauce.com",
+    "address": "11400 1st Ave bureau 120-A, Saint-Georges, QC G5Y 2C3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ab-cmha-ab",
     "name": "Association canadienne santé mentale Alberta",
     "category": "mentalHealth",
@@ -3408,6 +3990,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-coop-rative-d-conomi-ca",
+    "name": "Association coopérative d'économie familiale Appalaches - Beauce - Etchemins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-4755",
+    "description": "Intervention dans les domaines du budget, crédit, endettement et protection des consommateurs et défense des droits des bénéficiaires de l'assistance sociale et des locataires. Consultation budgétaire ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.acef-abe.org",
+    "address": "1176 Rue Notre Dame E, Thetford Mines, QC G6G 2T8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-d-entraide-communaut-ca",
+    "name": "Association d'entraide communautaire La Fontaine",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-2890",
+    "description": "Soutien aux personnes ou proches de personnes ayant une limitation physique ou intellectuelle, un trouble du spectre de l'autiste (TSA) * répit avec ou sans hébergement * répit TSA * ateliers occupati ... [Plus] | Clientèle : Personnes ayant une limitation physique ou intellectuelle, un trouble du spectre de l'autisme (TSA) et leurs proches",
+    "website": "https://aeclafontaine.ca/",
+    "address": "341 Bd Vachon N, Sainte-Marie, QC G6E 1L8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-de-l-ouest-de-l-ile-pou-pcl",
     "name": "Association de L'Ouest de L'Île pour les Handicapés Intellectuels",
     "category": "social",
@@ -3457,6 +4065,110 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.aramusique.org",
     "address": "543, rue Notre-Dame, bureau 101, Repentigny, Lanaudière, QC, J6A 2T6",
     "hours": "lundi au vendredi 9h00 à 17h00"
+  },
+  {
+    "id": "association-de-baseball-beauce-n-ca",
+    "name": "Association de baseball Beauce-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-563-4555",
+    "description": "Activités de baseball pour les jeunes de la Nouvelle-Beauce * pratiques * tournois | Clientèle : Enfants * adolescents | Âges : 4 an(s) - 21 an(s)",
+    "website": "http://www.abbn.ca/fr/index.html",
+    "address": "657 Av. des Émeraudes, Sainte-Marie, QC G6E 0H5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-de-baseball-chaudi-r-ca",
+    "name": "Association de baseball Chaudière - Ouest",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Étienne-de-Lauzon",
+    "province": "QC",
+    "phone": "418-999-3728",
+    "description": "Initiation et soutien au développement des jeunes par le baseball dans le plaisir et le respect * regroupement des secteurs de Saint-Nicolas, Saint-Rédempteur et Saint-Étienne | Âges : 5 an(s) - 18 an(s)",
+    "website": "http://www.baseballabco.ca",
+    "address": "66 Rue de Touraine, Saint-Étienne-de-Lauzon, QC G6J 1Z8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-de-baseball-l-vis-ce-ca",
+    "name": "Association de baseball Lévis-Centre",
+    "category": "social",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "",
+    "description": "Encouragement, promotion et développement du baseball sur le territoire de Chaudière-Est de la Ville de Lévis * recrutement et formation des instructeurs, entraîneurs, arbitres et dirigeants * inscrip ... [Plus] | Âges : 4 an(s) - 23 an(s)",
+    "website": "http://www.baseball-leviscentre.ca",
+    "address": "8001 Av. des Églises, Lévis, QC G6X 1X5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-de-baseball-mineur-d-ca",
+    "name": "Association de baseball mineur Desjardins",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "",
+    "description": "Organisation du baseball mineur et promotion de son développement et de la participation des jeunes de son arrondissement dans un souci d'équité et de justice | Âges : 4 an(s) - 23 an(s)",
+    "website": "http://www.abmd.net",
+    "address": "36 Rue Valère-Plante, Lévis, QC G6V 6Z5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-de-d-fense-des-droit-ca",
+    "name": "Association de défense des droits sociaux de la Rive-Sud",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-4774",
+    "description": "Lieu de rencontre, d'accueil et de réflexion assurant la défense individuelle et collective des droits des personnes sans emploi Défense collective des droits * représentation politique * mobilisation ... [Plus] | Clientèle : Personnes sans emploi ou à faible revenu * priorité aux personnes assistées sociales",
+    "website": "http://addsrivesud.com",
+    "address": "301 Rue de Carillon, Québec, QC G1K 5B3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-de-fibromyalgie-r-gi-ca",
+    "name": "Association de fibromyalgie région Chaudière-Appalaches",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-7379",
+    "description": "Soutien et outils aux personnes et leurs proches vivant avec la fibromyalgie et des douleurs chroniques afin d’améliorer leur qualité de vie * sensibilisation * représentation * centre de documentatio ... [Plus] | Clientèle : Personnes atteintes du syndrome de la fibromyalgie et leurs proches * personnes souffrant d'arthrite",
+    "website": "https://afrca.ca/",
+    "address": "1017 Bd Vachon N #205, Sainte-Marie, QC G6E 1M3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-de-l-action-volontai-ca",
+    "name": "Association de l'action volontaire Appalaches",
+    "category": "food",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-334-0111",
+    "description": "Maintien à domicile des aînés en perte d'autonomie de la MRC des Appalaches Services aux aînés * accueil, information et référence * popote roulante (voir dossier individuel) * téléphones et visites d ... [Plus] | Clientèle : Aînés en perte d'autonomie liée au vieillissement * aînés (65 ans et plus) * personnes en convalescence * personnes avec diagnostic de cancer",
+    "website": "https://www.aavart.ca/",
+    "address": "257 Rue Notre Dame O, Thetford Mines, QC G6G 1J7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-de-l-action-volontai-ca-2",
+    "name": "Association de l'action volontaire Appalaches, Popote roulante",
+    "category": "food",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "Inscription et information 418-334-0111",
+    "description": "Services visant à assurer le maintien à domicile des personnes en perte d'autonomie liée au vieillissement et des personnes âgées démunies * livraison de repas à domicile | Clientèle : Aînés en perte d'autonomie * ainés (65 ans et plus) * personnes ayant reçues un diagnostic de cancer * personnes en convalescence * proches aidants",
+    "website": "http://www.aavart.ca",
+    "address": "95 9e Rue N, Thetford Mines, QC G6G 5J1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "association-de-la-communaute-noire-pfd",
@@ -3511,6 +4223,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-de-loisirs-pour-pers-ca",
+    "name": "Association de loisirs pour personnes handicapées dans l'Islet-Sud",
+    "category": "social",
+    "subcategory": "",
+    "city": "Tourville",
+    "province": "QC",
+    "phone": "418-356-2011",
+    "description": "Loisirs pour les personnes handicapées offerts en collaboration avec le Centre de réadaptation en déficience intellectuelle et en troubles envahissants du développement de Chaudière-Appalaches (CRDITE ... [Plus] | Âges : 5 an(s) et plus",
+    "website": "http://alphis.ca",
+    "address": "Tourville, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-de-parents-d-enfants-ca",
+    "name": "Association de parents d'enfants ayant un déficit de l'attention avec ou sans hyperactivité ou autres troubles neurologiques et plus",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-0030 poste 31312",
+    "description": "Information, sensibilisation et soutien auprès des parents et des enfants, pour une meilleure connaissance du problème de leurs enfants vivant avec un déficit de l'attention avec ou sans hyperactivité ... [Plus]",
+    "website": "http://www.apedah.weebly.com",
+    "address": "Saint-Georges, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-de-radio-exp-rimenta-ca",
+    "name": "Association de radio expérimentale du Sud de Québec - VE2CSQ",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "418-456-8733",
+    "description": "Club de radio amateur * développement des habiletés techniques * promotion et protection des intérêts des radioamateurs * développement et promotion de la pratique de la radio amateur * équipements * ... [Plus]",
+    "website": "http://www.aresqc.org",
+    "address": "Saint-Jean-Chrysostome, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-des-commissions-scolair-drv",
     "name": "Association des Commissions Scolaires Anglophones du Québec",
     "category": "social",
@@ -3521,6 +4272,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "• Coordination et soutien des commissions scolaires anglophones membres en matière de relations de travail et de gestion des ressources humaines.• Veille informationnelle en ligne pour les commissions scolaires anglophones membres. | Clientèle: commissions scolaires anglophones | Territoire: le Québec | Statut: organisme à but non lucratif",
     "website": "https://qesba.qc.ca",
     "address": "185, avenue Dorval, bureau 502, Dorval, Montréal, QC, H9S 5J9",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-nig-riens-de-qu--ca",
+    "name": "Association des Nigériens de Québec",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "581-999-3810",
+    "description": "Défense des droits des membres * promotion de la vie communautaire * développement de projets d'intérêt social et humanitaire",
+    "address": "St-Romuald, Levis, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -3614,6 +4377,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-des-artistes-de-la-r-ca",
+    "name": "Association des artistes de la Rive-Sud",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-905-8202",
+    "description": "Regroupement des artistes de toutes les disciplines * ateliers de formation et de perfectionnement * organisation de symposiums et expositions",
+    "website": "http://www.aarslevis.com",
+    "address": "Saint-Nicolas, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ab-crea-ab",
     "name": "Association des courtiers immobiliers AB",
     "category": "realestate",
@@ -3641,6 +4417,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-des-familles-monopar-ca",
+    "name": "Association des familles monoparentales et recomposées la Chaudière",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-8041",
+    "description": "Regroupement de personnes ayant vécu une rupture et de familles recomposées afin de créer un lien d'appartenance et un réseau social * accueil et soutien personnalisé aux personnes vivant des enjeux d ... [Plus] | Clientèle : Personnes ayant vécu une rupture * familles monoparentales ou recomposées",
+    "website": "https://www.afmrc.qc.ca/",
+    "address": "12910 Av. 2e, Saint-Georges, QC G5Y 1Y3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-des-handicap-s-adult-cn",
     "name": "Association des handicapés adultes de la Côte-Nord",
     "category": "family",
@@ -3663,6 +4452,31 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-296-5209",
     "description": "Implication communautaire des résidents de l'immeuble s'appuyant sur leur potentiel à améliorer leur qualité de vie et à dynamiser leur milieu * accompagnement et suivi communautaire, référence, proje ... [Plus] | Clientèle : Résidents de l'immeuble",
     "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-maisons-de-jeune-ca",
+    "name": "Association des maisons de jeunes de Chaudière-Appalaches",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "418-839-5874",
+    "description": "Structure de soutien, d'information, d'échange et de partage permettant aux maisons de jeune du territoire de Chaudière-Appalaches d'unir leurs forces et compétences pour travailler des dossiers commu ... [Plus]",
+    "address": "Saint-Rédempteur, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-musulmanes-et-mu-ca",
+    "name": "Association des musulmanes et musulmans du grand Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "",
+    "description": "Regroupement de Musulmans de Lévis dotant cette communauté d'un lieu de culte * promotion de l'intégration des membres dans la société québécoise * rencontres sociales * information, conférences et do ... [Plus] | Clientèle : Membres de la communauté musulmane * le grand public",
+    "website": "http://mosqueedelevis.com",
+    "address": "5020 Bd Guillaume-Couture, Lévis, QC G6V, Canada",
     "hours": "Voir site web"
   },
   {
@@ -3692,6 +4506,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-des-personnes-handic-ca-4",
+    "name": "Association des personnes handicapées de Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "418-881-3884",
+    "description": "Regroupement de personnes ayant des limitations fonctionnelles physiques ou intellectuelles * amélioration de leur autonomie et conditions de vie * accueil, référence et information * représentation p ... [Plus] | Clientèle : Personnes ayant des limitations fonctionnelles qui peuvent être physiques ou intellectuelles * personnes atteintes d'un trouble du spectre de l'autisme (TSA) * leur famille",
+    "website": "https://www.auvoilierdelili.com/",
+    "address": "16 Rue du Collège, Saint-Apollinaire, QC G0S 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-personnes-handic-ca-3",
+    "name": "Association des personnes handicapées de Lévis",
+    "category": "food",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-832-8053",
+    "description": "Réponse aux besoins des personnes handicapées et de leur famille * information et référence * loisirs : chorale, aquaforme, work-out, théâtre, activités de socialisation, cuisine, atelier artistique * ... [Plus] | Clientèle : Enfants et adultes ayant une déficience intellectuelle, physique, un trouble du spectre de l'autisme (TSA) | Âges : 1 an(s) et plus",
+    "website": "https://aphlevis.com/",
+    "address": "8069 Bd du Centre-Hospitalier, Lévis, QC G6X 1L3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-personnes-handic-ca",
+    "name": "Association des personnes handicapées de la Chaudière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-1224",
+    "description": "Défense et promotion des droits individuels et collectifs des personnes handicapées * soutien à leur autonomie et intégration sociale * soutien à l'amélioration de leurs conditions de vie * accueil, é ... [Plus] | Clientèle : Personnes ayant une déficience physique ou sensorielle * leurs proches * personnes intéressées ou sympathisantes à la cause | Âges : 5 an(s) et plus",
+    "website": "https://www.aphchaudiere.org/",
+    "address": "1175 Bd Dionne, Saint-Georges, QC G5Y 3V1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-personnes-handic-ca-2",
+    "name": "Association des personnes handicapées de la Chaudière, Point de services Saint-Joseph-de-Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-397-8084",
+    "description": "Défense et promotion des droits individuels et collectifs des personnes handicapées * soutien à leur autonomie et intégration sociale * soutien à l'amélioration de leurs conditions de vie * accueil, é ... [Plus] | Clientèle : Personnes ayant une déficience physique, intellectuelle ou sensorielle * leurs proches * personnes intéressées ou sympathisantes à la cause",
+    "website": "http://www.aphchaudiere.org",
+    "address": "1175 Bd Dionne, Saint-Georges, QC G5Y 3V1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-des-pompiers-volonta-cn",
     "name": "Association des pompiers volontaires des Escoumins",
     "category": "social",
@@ -3701,6 +4567,69 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-514-8735",
     "description": "Aide financière aux victimes d'incendie et autres sinistres",
     "address": "Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-propri-taires-du-ca",
+    "name": "Association des propriétaires du lac à la Truite",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "",
+    "description": "Protection de l' environnement et entretien d'un chemin * préservation de la qualité de l'eau * protection de l’environnement et de la qualité de l’eau du lac et des bassins versants * mise en valeur ... [Plus]",
+    "website": "http://aplt.ca/fr",
+    "address": "Lac-à-la-Truite, Thetford Mines, QC G0N 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-propri-taires-ri-ca",
+    "name": "Association des propriétaires riverains du lac Bolduc",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "",
+    "description": "Association de propriétaires riverains",
+    "address": "Lac-Bolduc, QC G0N 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-riverains-de-pla-ca",
+    "name": "Association des riverains de Place Idéale",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "",
+    "description": "Association de propriétaires riverains * soutien de l'environnement des propriétés des membres * entretien et réparations des chemins communs",
+    "address": "Adstock, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-riverains-du-lac-ca",
+    "name": "Association des riverains du lac Jolicoeur",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "819-239-6644",
+    "description": "Association de propriétaires riverains * promotion des intérêts des riverains et protection du lac * activité de financement",
+    "website": "https://associationlacjolicoeur.ca/",
+    "address": "Lac Jolicoeur, Adstock, QC G0N 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-des-r-fugi-s-et-immi-ca",
+    "name": "Association des réfugiés et immigrés sans frontière",
+    "category": "family",
+    "subcategory": "",
+    "city": "Vallée-Jonction",
+    "province": "QC",
+    "phone": "",
+    "description": "Services d'aide et soutien virtuels pour personnes issues de l'immigration dans le besoin. * gestion du loisir et de la culture * soutien pour l'établissement des familles en régions * aiguillage vers ... [Plus] | Clientèle : toute personne issue de l'immigration dans le besoin",
+    "website": "https://arisf.ca/fr/",
+    "address": "Vallée-Jonction, QC G0S, Canada",
     "hours": "Voir site web"
   },
   {
@@ -3743,6 +4672,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-du-chemin-du-pied-de-ca",
+    "name": "Association du chemin du Pied de la montagne",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "418-928-5858",
+    "description": "Protection de l'environnement * gestion et entretien d'un chemin commun",
+    "address": "Rte du Pied de la Montagne, Adstock, QC G0N 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-du-hockey-mineur-de--cn",
     "name": "Association du hockey mineur de Sept-Îles",
     "category": "social",
@@ -3753,6 +4694,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Organisation du hockey mineur * encadrement des intervenants, formation et perfectionnement à tous les niveaux * tournois | Âges : 8 an(s) - 21 an(s)",
     "website": "https://www.ahmsi.org/fr/index.html",
     "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-du-hockey-mineur-les-ca",
+    "name": "Association du hockey mineur les Éclaireurs Chaudière - Etchemin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "",
+    "description": "Promotion et développement de la pratique du hockey dans son territoire * gestion du festival Pré-novice les Éclaireurs Chaudière-Etchemin et du tournoi peewee les Éclaireurs Chaudière-Etchemin * occa ... [Plus] | Âges : 4 an(s) - 21 an(s)",
+    "website": "http://www.eclaireurs.qc.ca",
+    "address": "Charny, Levis, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -3781,6 +4735,110 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "association-f-ministe-d-ducation-ca",
+    "name": "Association féministe d'éducation et d'action sociale",
+    "category": "social",
+    "subcategory": "",
+    "city": "Cap-Saint-Ignace",
+    "province": "QC",
+    "phone": "514-251-1636",
+    "description": "Promotion des droits des femmes et amélioration de la société par l'éducation et l'action sociale * soutien à l'obtention d'identité propre, statut égal, liberté de choix et autonomie des femmes * act ... [Plus] | Clientèle : Femmes",
+    "website": "http://www.afeas.qc.ca",
+    "address": "Cap-Saint-Ignace, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-f-ministe-d-ducation-ca-3",
+    "name": "Association féministe d'éducation et d'action sociale, Association locale secteur East Broughton, Secrétariat régional Québec - Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "East Broughton",
+    "province": "QC",
+    "phone": "418-246-5535",
+    "description": "Promotion des droits des femmes et amélioration de la société par l'éducation et l'action sociale * soutien à l'obtention d'identité propre, statut égal, liberté de choix et autonomie des femmes * act ... [Plus] | Clientèle : Femmes",
+    "website": "http://www.afeas.qc.ca",
+    "address": "East Broughton, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-f-ministe-d-ducation-ca-4",
+    "name": "Association féministe d'éducation et d'action sociale, Association locale secteur Lévis, Secrétariat régional Québec - Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-473-9679",
+    "description": "Promotion des droits des femmes et amélioration de la société par l'éducation et l'action sociale * soutien à l'obtention d'identité propre, statut égal, liberté de choix et autonomie des femmes * act ... [Plus] | Clientèle : Femmes | Âges : 18 an(s) et plus",
+    "website": "http://www.afeas.qc.ca",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-f-ministe-d-ducation-ca-5",
+    "name": "Association féministe d'éducation et d'action sociale, Association locale secteur Montmagny, Secrétariat régional Québec - Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-246-5535",
+    "description": "Promotion des droits des femmes et amélioration de la société par l'éducation et l'action sociale * soutien à l'obtention d'identité propre, statut égal, liberté de choix et autonomie des femmes * act ... [Plus] | Clientèle : Femmes | Âges : 18 an(s) et plus",
+    "website": "http://www.afeas.qc.ca",
+    "address": "Montmagny, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-f-ministe-d-ducation-ca-6",
+    "name": "Association féministe d'éducation et d'action sociale, Association locale secteur Saint-Georges, Secrétariat régional Québec - Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-246-5535",
+    "description": "Promotion des droits des femmes et amélioration de la société par l'éducation et l'action sociale * soutien à l'obtention d'identité propre, statut égal, liberté de choix et autonomie des femmes * act ... [Plus] | Clientèle : Femmes",
+    "website": "http://www.afeas.qc.ca",
+    "address": "Saint-Georges, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-f-ministe-d-ducation-ca-2",
+    "name": "Association féministe d'éducation et d'action sociale, Association locale secteur de Disraeli, Secrétariat régional Estrie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "418-449-4484",
+    "description": "Promotion des droits des femmes et amélioration de la société par l'éducation et l'action sociale * soutien à l'obtention d'identité propre, statut égal, liberté de choix et autonomie des femmes * act ... [Plus]",
+    "website": "http://www.afeas.qc.ca",
+    "address": "Disraeli, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-f-ministe-d-ducation-ca-7",
+    "name": "Association féministe d'éducation et d'action sociale, Secrétariat régional Québec - Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Cap-Saint-Ignace",
+    "province": "QC",
+    "phone": "418-246-5535",
+    "description": "Promotion des droits des femmes et amélioration de la société par l'éducation et l'action sociale * soutien à l'obtention d'identité propre, statut égal, liberté de choix et autonomie des femmes * act ... [Plus] | Clientèle : Femmes | Âges : 18 an(s) et plus",
+    "website": "https://afeas.qc.ca/",
+    "address": "Cap-Saint-Ignace, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-hockey-mineur-chaudi-ca",
+    "name": "Association hockey mineur Chaudière - Ouest",
+    "category": "social",
+    "subcategory": "",
+    "city": "Chutes-de-la-Chaudière-Ouest",
+    "province": "QC",
+    "phone": "581-745-2053",
+    "description": "Organisation du hockey mineur dans son secteur * encadrement des intervenants, formation et perfectionnement à tous les niveaux * hockey masculin et féminin : pré-novice, novice, atome, pee-wee, banta ... [Plus]",
+    "website": "http://www.huskyco.com",
+    "address": "Les Chutes-de-la-Chaudière-Ouest, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "bc-rebgv",
     "name": "Association immobilière du Grand Vancouver",
     "category": "realestate",
@@ -3794,6 +4852,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h."
   },
   {
+    "id": "association-paraguayenne-de-qu-b-ca",
+    "name": "Association paraguayenne de Québec",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "Résidence 418-831-3002",
+    "description": "Regroupement de personnes paraguayennes facilitant leur intégration au milieu québécois * rencontres et activités culturelles * échanges entre Paraguayens et Québécois Collaboration avec la Confédérat ... [Plus] | Clientèle : Paraguayens * Québécois | Âges : 3 an(s) et plus",
+    "address": "Saint-Rédempteur, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-pour-l-int-gration-s-ca",
+    "name": "Association pour l'intégration sociale région Beauce-Sartigan",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-5021",
+    "description": "Promotion, sensibilisation, répits et défense des droits des personnes vivant avec une déficience intellectuelle (DI) ou un trouble du spectre de l'autisme (TSA) et de leur famille (naturelle, d'accue ... [Plus] | Clientèle : Personnes ayant une déficience intellectuelle (DI) ou un trouble du spectre de l'autisme (TSA) * leurs proches",
+    "website": "https://aisbeaucesartigan.com/",
+    "address": "Saint-Georges, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "association-pour-la-protection-d-cn",
     "name": "Association pour la protection des intérêts des consommateurs de la Côte-Nord (L')",
     "category": "social",
@@ -3804,6 +4887,44 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Protection et défense des droits et intérêts des consommateurs * aide à la préparation de la déclaration des revenus (rapport d'impôt) de mars à mai Intervention en éducation financière (IEF) : * cons ... [Plus] | Clientèle : Le grand public * personnes souhaitant faire leur budget, ayant des difficultés financières * personnes désirant des informations sur la protection à la consommation et la protection du consommateur.",
     "website": "http://www.apiccotenord.org",
     "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-pour-la-protection-e-ca",
+    "name": "Association pour la protection environnementale du lac du Huit",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "",
+    "description": "Préservation et conservation du lac et de ses écosystème pour le bien-être de tous * représentation des intérêts des membres * promotion de la protection et préservation du lac et de son environnement ... [Plus] | Âges : 5 an(s) et plus",
+    "website": "http://www.apelduhuit.com",
+    "address": "Lac du Huit, Adstock, QC G0N 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-qu-b-coise-de-d-fens-ca",
+    "name": "Association québécoise de défense des droits des personnes aînées Beauce - Etchemins - Appalaches",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-222-0000",
+    "description": "Défense des droits économiques, politiques, sociaux et culturels des aînés * information, référence et accompagnement * déjeuners-conférences, tables rondes * formation en maltraitance envers les aîné ... [Plus] | Âges : 50 an(s) et plus",
+    "address": "1925 118e Rue, Saint-Georges, QC G5Y 5S1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-qu-b-coise-de-d-fens-ca-2",
+    "name": "Association québécoise de défense des droits des personnes retraitées et préretraitées Montmagny - L'Islet",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-247-0033",
+    "description": "Défense, protection et promotion des droits des personnes retraitées et préretraitées. Droits économiques, sociaux, politiques et culturels s'inscrivant dans toutes les problématiques des personnes de ... [Plus] | Clientèle : Personnes à la retraite ou en préretraite (10 % des membres peuvent avoir moins de 50 ans) | Âges : 50 an(s) et plus",
+    "website": "http://www.aqdrmontmagny-lislet.org",
+    "address": "Montmagny, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -3820,6 +4941,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "association-qu-b-coise-de-d-fens-ca-3",
+    "name": "Association québécoise de défense des droits des personnes retraitées et préretraitées section Lévis - Rive-Sud",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-9061",
+    "description": "Défense des droits économiques, politiques, sociaux et culturels des personnes retraitées ou préretraitées * lutte contre la violence et l'abus envers les aînés * promotion de la bientraitance * accom ... [Plus] | Clientèle : Personnes aînées et leurs proches | Âges : 18 an(s) et plus",
+    "website": "http://aqdr-levis.org",
+    "address": "Place de la Cité | Tour Cominar, 2640, boulevard Laurier, bureau 0150, Québec, QC G1V 5C2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-qu-b-coise-de-lutte--ca",
+    "name": "Association québécoise de lutte contre la pollution atmosphérique",
+    "category": "social",
+    "subcategory": "",
+    "city": "Frampton",
+    "province": "QC",
+    "phone": "418-479-2185",
+    "description": "Contribution à l'amélioration de la qualité de l’atmosphère au Québec et à la mise en place de solutions concrètes et adaptées à la réalité des besoins des parties prenantes, par l’acquisition de conn ... [Plus]",
+    "website": "http://www.aqlpa.com",
+    "address": "720 7e Rang, Frampton, QC G0R 1M0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "mh-aqps",
     "name": "Association québécoise de prévention du suicide (AQPS)",
     "category": "mentalHealth",
@@ -3832,6 +4979,45 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "8000, boul. Langelier, bureau 802, Montréal, QC H1P 3K2",
     "hours": "Service disponible 24h/24, 7j/7",
     "isProvinceWide": true
+  },
+  {
+    "id": "association-qu-b-coise-des-spa-e-ca",
+    "name": "Association québécoise des SPA et SPCA",
+    "category": "social",
+    "subcategory": "",
+    "city": "Regroupement d’organisations indépendantes d'expertise de la protection, du contrôle et du bien-être animal",
+    "province": "QC",
+    "phone": "",
+    "description": "Association québécoise des SPA et SPCA",
+    "website": "http://aqss.ca/association-quebecoise-scpa-spa",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-r-gionale-de-loisir--ca",
+    "name": "Association régionale de loisir pour personnes handicapées de Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-4495",
+    "description": "Promotion du loisir par et pour les personnes ayant un handicap dans la région de Chaudière-Appalaches * soutien au développement * information, orientation et référence * formation Responsable région ... [Plus] | Clientèle : Personnes ayant un handicap",
+    "website": "http://www.arlphca.com",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-r-gionale-de-loisir--ca-2",
+    "name": "Association régionale de loisir pour personnes handicapées de Chaudière-Appalaches, Carte accompagnement loisir",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-4495",
+    "description": "Organisme régional accréditeur du programme Carte accompagnement loisir (CAL) * gratuité d'entrée à l'accompagnateur d'une personne âgée d'au moins 5 ans, ayant un handicap ou un problème de santé men ... [Plus] | Clientèle : Personnes ayant un handicap et leurs accompagnateurs | Âges : 5 an(s) et plus",
+    "website": "http://www.aqlph.qc.ca/carte-accompagnement-loisir",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "association-r-gionale-de-loisirs-cn",
@@ -3857,6 +5043,31 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Organisme régional accréditeur du programme Carte accompagnement loisir (CAL) * gratuité d'entrée à l'accompagnateur d'une personne âgée d'au moins 12 ans, ayant un handicap ou un problème de santé me ... [Plus] | Clientèle : Personnes ayant un handicap et leurs accompagnateurs",
     "website": "http://www.arlphcotenord.com",
     "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-r-gionale-de-soccer--ca",
+    "name": "Association régionale de soccer de Québec",
+    "category": "social",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-988-3191",
+    "description": "Promotion du soccer dans les régions de la Capitale-Nationale et de la Chaudière-Appalaches Clubs membres https://www.arsq.qc.ca/clubs-de-larsq ... [Plus] | Âges : 4 an(s) et plus",
+    "website": "http://www.arsq.qc.ca",
+    "address": "8087 Bd du Centre-Hospitalier bureau 218, Charny, QC G6X 1K2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "association-r-gionale-des-trappe-ca",
+    "name": "Association régionale des trappeurs de Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-655-8382",
+    "description": "Association de trappeurs * éducation et formation aux trappeurs * promotion de la conservation de la faune * conférences et formations * revue « Coureur des bois » * capture d'animaux nuisibles selon ... [Plus] | Âges : 12 an(s) et plus",
+    "address": "Levis, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -3909,6 +5120,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Pour urgence: 811 (Info-Santé) ou urgence hospitalière.",
     "isProvinceWide": true
+  },
+  {
+    "id": "atelier-bleu-m-ajjjiiik-l-ca",
+    "name": "Atelier Bleu M'ajjjiiik (L')",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "418-831-3774",
+    "description": "Diffuseur en théâtre jeune public * présentation de pièces de théâtre thématiques basées sur le respect, la vie en société, le goût de vivre et l’estime de soi * spectacles * ateliers pour élèves et e ... [Plus] | Âges : 5 an(s) et plus",
+    "website": "http://www.bleumajjjiiik.com",
+    "address": "173 Rue Gariépy, Lévis, QC G6K 1M5, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "atelier-d-ducation-populaire-out",
@@ -3987,6 +5211,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "larche.ca/fr",
     "address": "455, boulevard Riel, Unité 12, Gatineau, Outaouais, QC, J8Z 2J8",
     "hours": "7 jours, 8h30 à 15h00"
+  },
+  {
+    "id": "atelier-occupationnel-rive-sud-ca",
+    "name": "Atelier occupationnel Rive-Sud",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-1478 poste 221",
+    "description": "Atelier de formation et de travail adapté pour adultes présentant une déficience intellectuelle (DI), un trouble du spectre de l'autisme (TSA) ou une déficience physique (DP) * développement de l'auto ... [Plus] | Clientèle : Adultes ayant une déficience intellectuelle, physique ou ayant un TSA * entreprises | Âges : 21 an(s) et plus",
+    "website": "https://atelierlevis.ca/",
+    "address": "4275 Bd Guillaume-Couture, Lévis, QC G6W 6M9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "atelier-pour-hommes-de-l-ouest-de-l-pcl",
@@ -4077,6 +5314,71 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.aupanier.org",
     "address": "3700, boulevard Notre-Dame, Chomedey, Laval, QC, H7V 1R4",
     "hours": "lundi et mardi 10h00 à 17h00, mercredi, jeudi et vendredi 10h00 à 19h00, samedi 10h00 à 17h00"
+  },
+  {
+    "id": "au-bercail-ca",
+    "name": "Au bercail",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-4181",
+    "description": "Hébergement et réinsertion sociale d'hommes et femmes sans-abri * hébergement de transition en santé mentale et en situation de crise en collaboration avec le Centre intégré de santé et de services so ... [Plus] | Clientèle : Personnes sans-abri * personnes ayant un trouble de santé mentale * joueurs compulsifs * personnes en séparation * multi-problématiques | Âges : 18 an(s) et plus",
+    "website": "https://www.aubercail.net/",
+    "address": "12165 Av. 2e, Saint-Georges, QC G5Y 1X6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "au-bercail-accueil-inconditionne-ca",
+    "name": "Au bercail, Accueil inconditionnel",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-221-1814",
+    "description": "Inclusion sociale des personnes vulnérables et exclues * accueil, évaluation et référence aux organismes les plus susceptibles de répondre aux besoins exprimés * accompagnement * conseils * dépannage ... [Plus] | Clientèle : Personnes en situation de grande exclusion sociale | Âges : 18 an(s) et plus",
+    "website": "http://aubercail.net",
+    "address": "12165 Av. 2e, Saint-Georges, QC G5Y 1X6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "au-bercail-assiett-e-beauceronne-ca",
+    "name": "Au bercail, Assiettée beauceronne (L')",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-6373",
+    "description": "Service de soupe populaire, lieu de rencontre, de socialisation et d’éducation populaire * Soutien aux personnes et familles à faible revenu * service de repas chauds * écoute active et référence * cu ... [Plus] | Clientèle : Personnes et familles à faible revenu",
+    "website": "http://www.aubercail.net/assiettee-beauceronne",
+    "address": "Saint-Georges, QC G5Y 1X4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "au-bercail-services-d-urgence-ca",
+    "name": "Au bercail, Services d'urgence",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-4181",
+    "description": "Services d'urgence * abris 15 lits * 8 lits de transition | Clientèle : Services d'urgence ouverts à la population en général",
+    "website": "http://aubercail.net",
+    "address": "12165 Av. 2e, Saint-Georges, QC G5Y 1X6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "aube-de-la-paix-ca",
+    "name": "Aube de la paix",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-9141",
+    "description": "Programme de thérapie pour adultes souffrant d'alcoolisme et de toxicomanie dans le but de retrouver une vie normale Thérapie de groupe basée sur les 12 étapes des Alcooliques anonymes et cognitivo-co ... [Plus] | Clientèle : Adultes ayant des problèmes d'alcoolisme, de toxicomanie, ayant à la source un mal de vivre ou dépendance affective (sauf dépendance à l'héroïne et trouble sévère de santé mentale) | Âges : 18 an(s) et plus",
+    "website": "https://www.laubedelapaix.com/",
+    "address": "1390 Rue Setlakwe, Thetford Mines, QC G6G 7Z3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "auberge-du-coeur-h-berge-ados-out",
@@ -4257,6 +5559,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Dépannage alimentaire. | Clientèle: personnes démunies | Territoire: secteur Sud de la MRC Vallée-de-la-Gatineau: Blue Sea, Bouchette, Gracefield, Denholm, Kazabazua, Lac-Sainte-Marie, Low | Statut: organisme à but non lucratif",
     "address": "56, rue Saint Joseph, Gracefield, Outaouais, QC, J0X 1W0",
     "hours": "dépannage alimentaire: sur rendez-vous uniquement, téléphoner avant mercredi 12h00, distribution le vendredi matin, friperie: mardi au vendredi 10h00 à 15h00"
+  },
+  {
+    "id": "aux-quatre-vents-ca",
+    "name": "Aux Quatre Vents",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-3532",
+    "description": "Création d'un réseau social et amélioration de la qualité de vie des adultes ayant ou ayant eu une problématique en santé mentale * information * soutien et accompagnement * ateliers * formations * ac ... [Plus] | Clientèle : Adultes vivant ou ayant vécu une problématique en santé mentale | Âges : 18 an(s) et plus",
+    "website": "http://www.auxquatrevents.ca",
+    "address": "220 Rue Saint-Joseph, Lévis, QC G6V 1C9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "aux-sources-du-bassin-de-chambly-mtg",
@@ -4729,6 +6044,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h45, vendredi 8h00 à 12h00"
   },
   {
+    "id": "beauce-centre-conomique-ca",
+    "name": "Beauce-Centre Économique",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-397-4354",
+    "description": "Soutien à l’entrepreneuriat, à l’innovation et au développement économique dans la MRC Beauce-Centre * accompagnement personnalisé et soutien technique pour les projets d’entreprise * soutien à la rec ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.bceconomique.com",
+    "address": "785 Av. Guy-Poulin, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "beauceville-h-tel-de-ville-ca",
+    "name": "Beauceville. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Beauceville",
+    "province": "QC",
+    "phone": "418-774-9137",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, assainissement des eaux usées et autres La nature, l'étendue et l'exercice ... [Plus]",
+    "website": "http://www.ville.beauceville.qc.ca",
+    "address": "Beauceville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "beauharnois-cocentre-mtg",
     "name": "Beauharnois - Écocentre",
     "category": "social",
@@ -4740,6 +6081,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "ville.beauharnois.qc.ca/ecocentre",
     "address": "50, chemin des Hauts-Fourneaux, Beauharnois, Montérégie, QC, J6N 1W5",
     "hours": "jeudi au samedi 8h00 à 15h45, été: jeudi au samedi 8h00 à 15h45, dimanche 8h00 à 12h45"
+  },
+  {
+    "id": "beaulac-garthby-h-tel-de-ville-ca",
+    "name": "Beaulac-Garthby. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Beaulac-Garthby",
+    "province": "QC",
+    "phone": "418-458-2375",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.beaulac-garthby.com",
+    "address": "Municipalité de Beaulac-Garthby, QC G0Y 1B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "beaulac-garthby-h-tel-de-ville-p-ca",
+    "name": "Beaulac-Garthby. Hôtel de ville, Programme de sécurité civile",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Beaulac-Garthby",
+    "province": "QC",
+    "phone": "418-458-2375",
+    "description": "Programme de sécurité civile * prévention des sinistres * gestion des risques * création et maintien de la sécurité civile * centre d'hébergement | Clientèle : Philippe Côté, directeur général et coordonnateur des mesures d'urgence, cellulaire 418-629-7638",
+    "website": "http://www.beaulac-garthby.com",
+    "address": "Municipalité de Beaulac-Garthby, QC G0Y 1B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "beaumont-h-tel-de-ville-ca",
+    "name": "Beaumont. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Beaumont",
+    "province": "QC",
+    "phone": "418-833-3369",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * transports en commun en milieu urbain * assainissement des eaux usé ... [Plus] | Clientèle : Bibliothèque 418-837-2658",
+    "website": "http://beaumont-qc.com",
+    "address": "Beaumont, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "beloeil-cour-municipale-mtg",
@@ -4779,6 +6159,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "benado.org",
     "address": "197, chemin Saint-François-Xavier, Delson, Montérégie, QC, J5B 1X7",
     "hours": "lundi, mardi, jeudi et vendredi 8h30 à 17h00, mercredi 8h30 à 20h30"
+  },
+  {
+    "id": "berceau-le-ca",
+    "name": "Berceau (Le)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-0356",
+    "description": "Aide aux jeunes mères en périodes prénatale et postnatale et leurs enfants * enrichissement de l'expérience parentale chez les jeunes parents * réseau d'entraide entre jeunes mères pouvant contrer l'i ... [Plus] | Clientèle : Jeunes femmes ou mères en périodes prénatale et postnatale (25 ans et moins) et leurs enfants | Âges : 25 an(s) et moins",
+    "website": "http://leberceau.ca",
+    "address": "255 136e Rue, Saint-Georges, QC G5Y 1Z4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "berceau-le-vall-e-jonction-ca",
+    "name": "Berceau (Le), Vallée-Jonction",
+    "category": "family",
+    "subcategory": "",
+    "city": "Vallée-Jonction",
+    "province": "QC",
+    "phone": "418-387-7974",
+    "description": "Soutien et outils pour jeunes mères en périodes prénatale et postnatale leur permettant de briser l'isolement et de partager leurs expériences * écoute et soutien * rencontres thématiques, ateliers de ... [Plus] | Clientèle : Jeunes mères * femmes enceintes | Âges : 25 an(s) et moins",
+    "website": "http://leberceau.ca",
+    "address": "Rue Principale, Vallée-Jonction, QC G0S 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "berthier-sur-mer-h-tel-de-ville-ca",
+    "name": "Berthier-sur-Mer. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Berthier-sur-Mer",
+    "province": "QC",
+    "phone": "418-259-7343",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-259-7343 poste 203",
+    "website": "https://berthiersurmer.ca/",
+    "address": "Municipalité de Berthier-sur-Mer, QC G0R, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "biblioth-que-aur-lien-doucet-out",
@@ -5455,6 +6874,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi, mardi, jeudi et vendredi 8h30 à 15h00, mardi 10h30 à 15h00"
   },
   {
+    "id": "boulodrome-de-l-vis-ca",
+    "name": "Boulodrome de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "",
+    "description": "Promotion de la pratique de la pétanque auprès de la population * organisation d'activités de ligues et tournois de pétanque",
+    "address": "Charny, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "drum-garde-bousquet-lyn",
     "name": "Bousquet Lyn",
     "category": "family",
@@ -6012,6 +7443,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-17h. Consultations sur RV."
   },
   {
+    "id": "bureau-d-cologie-appliqu-e-ca",
+    "name": "Bureau d'écologie appliquée",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Étienne-de-Lauzon",
+    "province": "QC",
+    "phone": "418-831-6487",
+    "description": "Coopérative de services-conseils en environnement opérant à une échelle humaine en réponse aux besoins du milieu * validation de milieux humides pour respect des lois et règlements * validation des li ... [Plus] | Clientèle : Ministères * municipalités * MRC * organismes de conservation ou désirant monter un programme de conservation * firmes (consultants, génie civil) * propriétaires privés * entrepreneurs * milieu scolaire * grand public",
+    "website": "http://www.coop-ecologie.com",
+    "address": "14 Chem. des Abouts-de-Saint-Thomas, Lévis, QC G6J 1A8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "bureau-des-infractions-et-amendes-j-jol",
     "name": "Bureau des Infractions et Amendes - Joliette",
     "category": "social",
@@ -6220,6 +7664,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30.",
     "isUrgent": true,
     "isProvinceWide": true
+  },
+  {
+    "id": "cdc-ici-montmagny-l-islet-ca",
+    "name": "CDC ICI Montmagny - L'Islet",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-358-0648",
+    "description": "Regroupement d'organisations communautaires assurant la participation active du mouvement populaire et communautaire au développement socio-économique de son milieu * aide à l'arrimage et la cohésion ... [Plus] | Clientèle : Organismes communautaires * le grand public",
+    "website": "http://icimontmagnylislet.blogspot.com",
+    "address": "Saint-Jean-Port-Joli, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cdc-ici-montmagny-l-islet-co-v-c-ca",
+    "name": "CDC ICI Montmagny - L'Islet, CO-V - Covoiturage",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "Administration 418-358-0648",
+    "description": "Plate-forme de covoiturage permettant de trouver des partenaires pour du covoiturage régulier ou pour un déplacement unique ou occasionnel * babillard d'affichage des offres et demandes de transport ... [Plus] | Clientèle : Personnes souhaitant faire du covoiturage comme passagers ou conducteurs",
+    "website": "http://www.cdcicimontmagnylislet.com",
+    "address": "318 Rue Verreault, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-immo-celiapp",
@@ -11430,6 +12900,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "cadets-canada-cadets-de-l-air-es-ca",
+    "name": "Cadets Canada, Cadets de l'air - Escadron 544 Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Agapit",
+    "province": "QC",
+    "phone": "367-383-7544",
+    "description": "Rejoins l'Escadron 544 Lotbinière ! Aujourd’hui, tu prends ton envol vers une aventure unique ! Au programme : * initiation à l’aéronautique (et des vols en vrai !) * leadership et esprit d’équipe * a ... [Plus] | Âges : 12 an(s) - 18 an(s)",
+    "website": "https://inscription.cadets.gc.ca/demarrer.html?unitId=139",
+    "address": "Saint-Agapit, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cadets-canada-corps-de-cadets-26-ca",
+    "name": "Cadets Canada, Corps de Cadets 2648 de Lévis",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "581-984-4651",
+    "description": "Formation de bons citoyens * promotion de la bonne condition physique * familiarisation des jeunes avec les Forces canadiennes * le Programme des cadets s’adresse aux les jeunes de 12 à 18 ans * forma ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 18 an(s)",
+    "website": "http://cc2648levis.wix.com/cadets2648levis",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cadets-canada-corps-de-cadets-26-ca-2",
+    "name": "Cadets Canada, Corps de Cadets 2648 de Lévis, Escadron de Cadets de l'Aviation royale du Canada, 776 Rotary Lévis",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-4776",
+    "description": "Formation de bons citoyens * promotion de la bonne condition physique * familiarisation des jeunes avec les Forces canadiennes * le programme des cadets demeure un mouvement pour les jeunes même s'il ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 18 an(s)",
+    "website": "http://esc776.com",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cadets-canada-corps-de-cadets-28-ca",
+    "name": "Cadets Canada, Corps de Cadets 2820 des Chutes-de-la-Chaudière",
+    "category": "family",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "Cellulaire 418-563-9281",
+    "description": "Formation de bons citoyens * promotion de la bonne condition physique * familiarisation des jeunes avec les Forces canadiennes * formations * camp d'été * activités facultatives : musique, tir, peloto ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 18 an(s)",
+    "website": "http://www.corpsdecadets2820.ca",
+    "address": "Chutes de la Chaudière, Lévis, QC G6X 1K8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "cadets-canada-corps-de-cadets-de-cn",
     "name": "Cadets Canada, Corps de Cadets de la marine - succursale 117 Jacques-Cartier",
     "category": "family",
@@ -11439,6 +12961,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "",
     "description": "Programme jeunesse encourageant les adolescents à devenir des citoyens responsables et engagés au sein de leur collectivité * promotion de la bonne condition physique et acquisition de compétence en n ... [Plus] | Âges : 12 an(s) - 18 an(s)",
     "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cadets-canada-ligue-navale-du-ca-ca",
+    "name": "Cadets Canada, Ligue navale du Canada - succursale 317 Pointe-Lévy",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "581-992-9890",
+    "description": "Programme civil offert aux jeunes, favorisant le leadership, le civisme et la forme physique * découverte de l'environnement maritime, voile, matelotage et autres * formations * camps d'été * régates ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 18 an(s)",
+    "website": "http://navyleague.ca/fr/",
+    "address": "55 Rue des Commandeurs, Lévis, QC G6V 6P5, Canada",
     "hours": "Voir site web"
   },
   {
@@ -11532,6 +13067,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi 15h00 à 19h00, mercredi 13h00 à 19h00, jeudi 13h00 à 19h00, vendredi 13h00 à 16h30, dépannage alimentaire: sur inscription, lundi 17h00 à 19h00"
   },
   {
+    "id": "caf-la-mosa-que-ca",
+    "name": "Café la Mosaïque",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-3000",
+    "description": "Entreprise d'économie sociale offrant un lieu d'échanges et de rencontres * soutien au développement d'un esprit critique et d'entraide * promotion de produits équitables et écologiques * Internet san ... [Plus]",
+    "website": "http://www.cafelamosaique.org",
+    "address": "5727 Rue Saint-Louis, Lévis, QC G6V 4E2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "caf-th-tre-graffiti-cn",
     "name": "Café-théâtre Graffiti",
     "category": "social",
@@ -11610,6 +13158,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "7 jours, 9h00 à 16h30"
   },
   {
+    "id": "camp-rive-sud-ca",
+    "name": "Camp Rive-Sud",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-834-2522",
+    "description": "Camp de jour offrant une variété de camps spécialisés, sportifs, artistiques et éducatifs pour les jeunes * camps de jour * camp de vacances avec hébergement * formation | Âges : 3 an(s) - 16 an(s)",
+    "website": "https://www.camprivesud.com/",
+    "address": "30 Rue du Juvénat, Saint-Romuald, QC G6W 7X2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "camp-de-jour-richelieu-repentigny-rep",
     "name": "Camp de Jour Richelieu-Repentigny",
     "category": "social",
@@ -11646,6 +13207,31 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "campbellsbay.ca/fr",
     "address": "59, rue Leslie, Campbell's Bay, Outaouais, QC, J0X 1K0",
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "camps-odyss-e-camp-trois-saumons-ca",
+    "name": "Camps Odyssée, Camp Trois-Saumons",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Aubert",
+    "province": "QC",
+    "phone": "418-598-6410",
+    "description": "Camps de vacances * camp de jour * camps de vacances traditionnels et spécialisés * classes nature * activités pour les groupes Programmes d'aide financière * aide financière pour l'accès aux camps de ... [Plus] | Clientèle : Enfants * adolescents * familles | Âges : 4 an(s) - 17 an(s)",
+    "website": "http://camps-odyssee.com/trois-saumons",
+    "address": "420 Rte du Lac-Trois-Saumons, Saint-Aubert, QC G0R 2R0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "camps-de-jour-l-vis-ca",
+    "name": "Camps de jour, Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Camp de jour sur le territoire de la ville de Lévis Breakeyville",
+    "description": "Âges : 4 an(s) - 35 an(s)",
+    "address": "30 Rue du Juvénat, Saint-Romuald, QC G6W 7X2, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "campus-3-out",
@@ -11739,6 +13325,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "canada-service-canada-centre-ser-ca",
+    "name": "Canada. Service Canada, Centre Service Canada Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "",
+    "description": "Guichet gouvernemental unique pour un accès à une variété de programmes et de services * aide à la localisation et au dépôt de demandes pour les programmes gouvernementaux Services Tous les canadiens ... [Plus]",
+    "website": "http://www.servicecanada.gc.ca",
+    "address": "Place Lévis, 50 Rte du Président-Kennedy Bureau 175, Levis, QC G6V 6W8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "canada-service-canada-centre-ser-ca-2",
+    "name": "Canada. Service Canada, Centre Service Canada Montmagny",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "",
+    "description": "Guichet gouvernemental unique pour un accès à une variété de programmes et de services * aide à la localisation et au dépôt de demandes pour les programmes gouvernementaux Services Tous les canadiens ... [Plus]",
+    "website": "http://www.servicecanada.gc.ca",
+    "address": "37 Av. Ste Brigitte S, Montmagny, QC G5V 2Y3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "canada-service-canada-centre-ser-ca-3",
+    "name": "Canada. Service Canada, Centre Service Canada Saint-Georges",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "",
+    "description": "Guichet gouvernemental unique pour un accès à une variété de programmes et de services * aide à la localisation et au dépôt de demandes pour les programmes gouvernementaux Services Tous les canadiens ... [Plus]",
+    "website": "http://www.servicecanada.gc.ca",
+    "address": "11400 1st Ave 2e Étage, Saint-Georges, QC G5Y 2C3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "canada-service-canada-centre-ser-cn-3",
     "name": "Canada. Service Canada, Centre Service Canada Sept-Îles",
     "category": "social",
@@ -11749,6 +13374,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Guichet gouvernemental unique pour un accès à une variété de programmes et de services * aide à la localisation et au dépôt de demandes pour les programmes gouvernementaux Services Canadiens * cherche ... [Plus]",
     "website": "http://www.servicecanada.gc.ca",
     "address": "701 Bd Laure 3e étage, Sept-Îles, QC G4R 1X8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "canada-service-canada-centre-ser-ca-4",
+    "name": "Canada. Service Canada, Centre Service Canada Thetford Mines",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "",
+    "description": "Guichet gouvernemental unique pour un accès à une variété de programmes et de services * aide à la localisation et au dépôt de demandes pour les programmes gouvernementaux Services Tous les canadiens ... [Plus]",
+    "website": "http://www.servicecanada.gc.ca",
+    "address": "350 Bd Frontenac O Suite 500, Thetford Mines, QC G6G 6N7, Canada",
     "hours": "Voir site web"
   },
   {
@@ -11879,6 +13517,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "capsante-outaouais.org",
     "address": "92, boulevard Saint-Raymond, bureau 304, Gatineau, Outaouais, QC, J8Y 1S7",
     "hours": "sur rendez-vous uniquement"
+  },
+  {
+    "id": "cap-saint-ignace-h-tel-de-ville-ca",
+    "name": "Cap-Saint-Ignace. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Cap-Saint-Ignace",
+    "province": "QC",
+    "phone": "418-246-5631",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-246-3037",
+    "website": "http://www.capsaintignace.ca",
+    "address": "Municipalité de Cap-Saint-Ignace, QC G0R, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "carat-centre-d-aide-et-de-r-habi-mtg",
@@ -12370,6 +14021,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "carrefour-r-gion-montmagny-ca",
+    "name": "Carrefour Région Montmagny",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-3522",
+    "description": "Accompagnement et aide aux jeunes adultes dans leurs démarches d'insertion socioprofessionnelle * accueil et référence * accompagnement dans la recherche d'emploi ou vers un retour aux études * réalis ... [Plus] | Clientèle : Jeunes adultes | Âges : 14 an(s) - 35 an(s)",
+    "website": "http://www.cjemontmagny.com",
+    "address": "65 Av. de la Gare, Montmagny, QC G5V 2T1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "carrefour-solidaire-haute-c-te-n-cn",
     "name": "Carrefour Solidaire Haute Côte-Nord",
     "category": "family",
@@ -12433,6 +14097,70 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://sites.google.com/site/ainesfrancais",
     "address": "14068, boulevard Gouin Ouest, Pierrefonds-Roxboro, Montréal, QC, H8Z 1Y1",
     "hours": "lundi au vendredi 8h30 à 16h00, bureau: lundi, mardi et jeudi 9h00 à 12h00 et 13h00 à 15h00, mercredi et vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "carrefour-des-a-n-s-de-la-r-gion-ca",
+    "name": "Carrefour des Aînés de la région de Thetford",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "481-332-4743",
+    "description": "Le Carrefour des Aînés est un espace de vie solidaire et intergénérationnel pour briser l’isolement, valoriser les savoirs des aînés et favoriser leur participation active à la communauté par des acti ... [Plus] | Clientèle : Grand public",
+    "address": "31 Rue Dumais N, Thetford Mines, QC G6G 3R2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-des-personnes-a-n-es-d-ca",
+    "name": "Carrefour des personnes aînées de Lotbinière",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Flavien",
+    "province": "QC",
+    "phone": "418-728-4825",
+    "description": "Activités favorisant le soutien à domicile des aînés et le soutien aux bénévoles travaillant à leur mieux-être * accompagnement-transport des aînés vers les services médicaux et civiques * transport v ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "http://www.cpalotbiniere.com",
+    "address": "1000 Rte Saint-Joseph, Saint-Flavien, QC G0S 2M0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-emploi-lotbini-re-ca",
+    "name": "Carrefour emploi Lotbinière",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Agapit",
+    "province": "QC",
+    "phone": "418-888-8855",
+    "description": "Intégration sociale et économique des jeunes adultes par l'accompagnement dans leur cheminement vers l'emploi Persévérance scolaire : * École près de chez vous (école alternative) * rencontre individu ... [Plus] | Âges : 16 an(s) - 35 an(s)",
+    "website": "http://www.carrefouremploilotbiniere.com",
+    "address": "1159 Rue Principale, Saint-Agapit, QC G0S 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-employabilit-travail-d-ca",
+    "name": "Carrefour employabilité - Travail de rue (Le)-immigration",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Anselme",
+    "province": "QC",
+    "phone": "418 887-7117",
+    "description": "Soutien au parcours social, professionnel et économique des jeunes et des adultes de la MRC de Bellechasse * contribution au développement des conditions de vie des jeunes et des adultes en facilitant ... [Plus] | Clientèle : Travailleurs de rue",
+    "website": "https://cestmoncarrefour.com/",
+    "address": "580 Rte Bégin, Saint-Anselme, QC G0R 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-employabilit-travail-d-ca-2",
+    "name": "Carrefour employabilité - Travail de rue (Le)-immigration, Place aux jeunes Bellechasse",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Anselme",
+    "province": "QC",
+    "phone": "418-887-7117 poste 114",
+    "description": "Lutte contre l'exode et aide à la migration, l'établissement et le maintien des jeunes qualifiés dans la MRC de Bellechasse * séjours exploratoires * promotion de l'engagement social et de l'intégrati ... [Plus] | Clientèle : Jeunes adultes finissants et diplômés d'études postsecondaires | Âges : 18 an(s) - 35 an(s)",
+    "website": "http://www.cestmoncarrefour.com",
+    "address": "580 Rte Bégin, Saint-Anselme, QC G0R 2N0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "carrefour-familial-de-chute-aux--cn",
@@ -12510,6 +14238,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cjelaval.com",
     "address": "1700, boul. Le Corbusier, Laval, QC H7S 2K1",
     "hours": "Lun-ven 8h30-16h30. Services gratuits aide CV, RV, orientation professionnelle."
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-les-et-ca",
+    "name": "Carrefour jeunesse-emploi Les Etchemins",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-2533",
+    "description": "Accueil, information, orientation et accompagnement des jeunes adultes dans leurs projets de formation, recherche d'emploi et intégration au milieu * orientation, information scolaire et professionnel ... [Plus] | Clientèle : Jeunes adultes (pour les services CJE) et toutes clientèles pour les services en emploi, orientation et immigration | Âges : 16 an(s) et plus",
+    "website": "http://www.cjeetchemins.ca",
+    "address": "1554-2, route 277, Lac-Etchemin, QC G0R 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-les-et-ca-2",
+    "name": "Carrefour jeunesse-emploi Les Etchemins, École autrement (L')",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-2533 poste 226",
+    "description": "École alternative pour jeunes ayant abandonné le milieu scolaire, leur permettant de poursuivre leurs études et vivre des expériences enrichissantes, apprendre à se connaître, reconnaître leurs forces ... [Plus] | Âges : 16 an(s) - 24 an(s)",
+    "website": "http://www.cjeetchemins.ca",
+    "address": "1554-2, route 277, Lac-Etchemin, QC G0R 1S0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-emp-longueuil-cjel",
@@ -12603,6 +14357,84 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Services gratuits aide CV, RV, orientation professionnelle."
   },
   {
+    "id": "carrefour-jeunesse-emploi-de-bea-ca",
+    "name": "Carrefour jeunesse-emploi de Beauce-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-386-2532",
+    "description": "Accueil personnalisé, information, formation et accompagnement tout au long du cheminement des jeunes vers l'intégration en emploi, en collaboration avec les partenaires du milieu * accueil, informati ... [Plus] | Clientèle : Jeunes adultes * immigrants de tout âge * contacter le CJE pour connaître son admissibilité aux différents services | Âges : 16 an(s) - 35 an(s)",
+    "website": "http://www.cjebn.com",
+    "address": "168 Rue Notre Dame S, Sainte-Marie, QC G6E 4A6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-bea-ca-3",
+    "name": "Carrefour jeunesse-emploi de Beauce-Nord, Point de service Saint-Joseph-de-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-397-8045",
+    "description": "Accueil personnalisé, information, formation et accompagnement tout au long du cheminement des jeunes vers l'intégration en emploi, en collaboration avec les partenaires du milieu * accueil, informati ... [Plus] | Clientèle : Jeunes adultes * immigrants de tout âge * contacter le CJE pour connaître son admissibilité aux différents services | Âges : 15 an(s) - 35 an(s)",
+    "website": "http://www.cjebn.com",
+    "address": "785 Av. Guy-Poulin, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-bea-ca-2",
+    "name": "Carrefour jeunesse-emploi de Beauce-Nord, École Nouvelle option Beauce-Nord",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-386-2532",
+    "description": "Retour aux études pour les jeunes ne cadrant pas dans le milieu scolaire régulier, dans une école adaptée et différente * accompagnement par un enseignant du Centre de services scolaires de la Beauce- ... [Plus] | Clientèle : Jeunes adultes désirant compléter leur formation en français, mathématiques et anglais, prioritairement pour les 14-18 ans | Âges : 14 an(s) - 35 an(s)",
+    "website": "http://www.cjebn.com",
+    "address": "168 Rue Notre Dame S, Sainte-Marie, QC G6E 4A6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-bea-ca-4",
+    "name": "Carrefour jeunesse-emploi de Beauce-Sud",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-9610",
+    "description": "Amélioration des conditions de vie des jeunes en les accompagnant dans leur cheminement vers l'emploi ou un retour aux études * développement de leur autonomie et potentiel * recherche d'emploi * orie ... [Plus] | Clientèle : Adolescents * jeunes adultes * immigrants de tous âges | Âges : 15 an(s) - 35 an(s)",
+    "website": "http://www.cjebeauce-sud.com",
+    "address": "11920 1re Avenue, Saint-Georges, QC G5Y 2C8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-bea-ca-5",
+    "name": "Carrefour jeunesse-emploi de Beauce-Sud, Système d'échange local Beauce-Sartigan, Mon grain de SEL",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-9610",
+    "description": "Réseau d'entraide permettant aux membres de donner, recevoir et s'échanger gratuitement des services en utilisant le temps comme monnaie d'échange selon le principe une heure de service rendu vaut une ... [Plus] | Clientèle : Le grand public * autorisation et supervision parentale requise pour les personnes de moins de 18 ans | Âges : 15 an(s) et plus",
+    "website": "http://www.mongraindeselbce.com",
+    "address": "11920 1re Avenue, Saint-Georges, QC G5Y 2C8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-bea-ca-6",
+    "name": "Carrefour jeunesse-emploi de Beauce-Sud, Versión en español",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-9610",
+    "description": "Mejorar las condiciones de vida de los jóvenes acompañándoles de forma individual y personalizada en su proceso hacia el empleo o el regreso a los estudios. Facilitar la integración social hacia el de ... [Plus] | Clientèle : Adultos jóvenes * inmigrantes de todas edades | Âges : 18 an(s) - 35 an(s)",
+    "website": "http://www.cjebeauce-sud.com",
+    "address": "11920 1re Avenue, Saint-Georges, QC G5Y 2C8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "carrefour-jeunesse-emploi-de-dup-cn",
     "name": "Carrefour jeunesse-emploi de Duplessis",
     "category": "family",
@@ -12639,6 +14471,45 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Soutien aux jeunes dans leur insertion socioprofessionnelle tout en favorisant leur autonomie personnelle, sociale et économique * accueil, information et accompagnement personnalisé dans les différen ... [Plus] | Clientèle : Jeunes * personnes à faible revenu ayant besoin d'un soutien en réinsertion sociale | Âges : 35 an(s) et moins",
     "website": "http://www.cjed.qc.ca",
     "address": "2 Rue Elie Rochefort, Port-Cartier, QC G5B 2N2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-fro-ca",
+    "name": "Carrefour jeunesse-emploi de Frontenac",
+    "category": "family",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-0802",
+    "description": "Insertion sociale, professionnelle et économique des jeunes * orientation professionnelle et scolaire * information scolaire * aide à la rédaction de curriculum vitæ et à la recherche d'emploi * trava ... [Plus] | Clientèle : Jeunes adultes | Âges : 16 an(s) - 35 an(s)",
+    "website": "http://www.cjefrontenac.com",
+    "address": "257 Rue Notre Dame O, Thetford Mines, QC G6G 3M4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-fro-ca-2",
+    "name": "Carrefour jeunesse-emploi de Frontenac, Place aux jeunes Appalaches",
+    "category": "family",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-0802 poste 209",
+    "description": "Le projet Place aux Jeunes (PAJ) vise à favoriser l’attraction, l’intégration et l’enracinement des jeunes qualifiés de 18 à 35 ans en région, principalement au profit des jeunes eux-mêmes, mais égale ... [Plus] | Clientèle : Être diplômé, en voie d’être diplômé ou détenir une expérience significative dans un domaine se rapportant à une formation postsecondaire. | Âges : 18 an(s) - 35 an(s)",
+    "website": "https://placeauxjeunes.qc.ca/regions/chaudiere-appalaches/appalaches",
+    "address": "257 Rue Notre Dame O, Thetford Mines, QC G6G 3M4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-fro-ca-3",
+    "name": "Carrefour jeunesse-emploi de Frontenac, Point de service Disraeli",
+    "category": "family",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "418-335-0802",
+    "description": "Insertion sociale, professionnelle et économique des jeunes * orientation professionnelle et scolaire * information scolaire * aide à la rédaction de curriculum vitæ et à la recherche d'emploi * progr ... [Plus] | Clientèle : Jeunes adultes | Âges : 16 an(s) - 35 an(s)",
+    "website": "http://www.cjefrontenac.com",
+    "address": "Disraeli, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -12730,6 +14601,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Le Carrefour jeunesse-emploi de La Haute-Côte-Nord est un organisme communautaire ayant pour mandat d’accompagner et guider les jeunes adultes de 15 à 35 ans dans leurs démarches d’autonomie personnel ... [Plus] | Clientèle : Jeunes adultes | Âges : 16 an(s) - 35 an(s)",
     "website": "http://www.cjehcn.qc.ca",
     "address": "31 Rte 138 local 102, Forestville, QC G0T 0A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-la--ca",
+    "name": "Carrefour jeunesse-emploi de la MRC de L'Islet",
+    "category": "family",
+    "subcategory": "",
+    "city": "Tourville",
+    "province": "QC",
+    "phone": "418-359-3730",
+    "description": "Intégration en emploi et formation des jeunes Emploi * rédaction d'outils de recherche d'emploi * techniques et simulations d'entrevues d'embauche * tendances du marché du travail * programmes et trav ... [Plus] | Clientèle : Jeunes adultes * personne immigrante de tous âges | Âges : 16 an(s) - 35 an(s)",
+    "website": "http://www.cjelislet.qc.ca",
+    "address": "962 Rue des Trembles #300, Tourville, QC G0R 4M0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "carrefour-jeunesse-emploi-de-la--ca-2",
+    "name": "Carrefour jeunesse-emploi de la MRC de L'Islet, Point de service L'Islet",
+    "category": "family",
+    "subcategory": "",
+    "city": "L'Islet",
+    "province": "QC",
+    "phone": "418-247-7335",
+    "description": "Intégration en emploi et formation des jeunes Emploi * rédaction d'outils de recherche d'emploi * techniques et simulations d'entrevues d'embauche * tendances du marché du travail * programmes et trav ... [Plus] | Clientèle : Adolescents * jeunes adultes * adultes * personnes immigrantes de tous âges | Âges : 15 an(s) et plus",
+    "website": "http://www.cjelislet.qc.ca",
+    "address": "962 Rue des Trembles #300, Tourville, QC G0R 4M0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -13150,6 +15047,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.casourdrivesud.org/alpha-sourd-rive-sud",
     "address": "2010, chemin de Chambly, local B, Longueuil, Montérégie, QC, J4J 3Y2",
     "hours": "sur rendez-vous, lundi 9h00 à 16h00, mardi au jeudi 9h00 à 15h00"
+  },
+  {
+    "id": "centre-alter-agir-ca",
+    "name": "Centre Alter agir",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-9717",
+    "description": "Consultation pour hommes en violence ou en difficulté * rencontres individuelles d'accueil et d'évaluation * rencontres individuelles d'aide à la gestion de l'agressivité * activités de prévention et ... [Plus] | Clientèle : Hommes exerçants des comportements violents ou en difficulté, en prévention de la violence * rencontres individuelles d'aide à la gestion de l'agressivité pour adolescents 12-17 ans | Âges : 12 an(s) et plus",
+    "website": "http://centrealteragir.com",
+    "address": "110 Rue Notre Dame E, Thetford Mines, QC G6G 2J8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-amiti-de-solidarit-intern-ca",
+    "name": "Centre Amitié de solidarité internationale de la région des Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-6211",
+    "description": "Aide aux populations économiquement défavorisées, principalement en Amérique centrale et du Sud * projets de développement dans les pays ciblés * formation de coopérants bénévoles * sensibilisation du ... [Plus] | Clientèle : Adultes * jeunes accompagnés des parents",
+    "website": "http://www.casira.org",
+    "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "centre-amiti-jeunesse-chambly-mtg",
@@ -16939,18 +18862,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
-    "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-de-services-ambulatoires-bois-de-boulogne",
-    "name": "Centre De Services Ambulatoires Bois-De-Boulogne",
-    "category": "mentalHealth",
-    "subcategory": "Centre hospitalier psychiatrique",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
-    "address": "1575, boulevard Henri-Bourassa Ouest, Montréal, QC H3M 3A9",
-    "hours": "Service de crise disponible 24h/24, 7j/7"
-  },
-  {
     "id": "msss-hopital-montreal-centre-de-services-ambulatoires-bois-de-boulogne",
     "name": "Centre De Services Ambulatoires Bois-De-Boulogne",
     "category": "health",
@@ -16961,6 +18872,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "address": "1575, boulevard Henri-Bourassa Ouest, Montréal, QC H3M 3A9",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
+  },
+  {
+    "id": "msss-centre-hospitalier-psychiatrique-montreal-centre-de-services-ambulatoires-bois-de-boulogne",
+    "name": "Centre De Services Ambulatoires Bois-De-Boulogne",
+    "category": "mentalHealth",
+    "subcategory": "Centre hospitalier psychiatrique",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS Du Nord-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
+    "address": "1575, boulevard Henri-Bourassa Ouest, Montréal, QC H3M 3A9",
+    "hours": "Service de crise disponible 24h/24, 7j/7"
   },
   {
     "id": "msss-centre-hospitalier-psychiatrique-quebec-centre-de-services-ambulatoires-boulevard-laurier",
@@ -18047,6 +19970,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 16h30"
   },
   {
+    "id": "centre-domr-my-des-appalaches-ca",
+    "name": "Centre Domrémy des Appalaches",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-3529",
+    "description": "Aide et assistance aux personnes ayant des problèmes d'alcoolisme ou de toxicomanie et aux personnes démunies vivant des difficultés. * hébergement : réinsertion sociale (7 lits) dégrisement et désint ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.centredomremy.com",
+    "address": "100 Rue Caouette O, Thetford Mines, QC G6G 5R9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-du-sablon-lav",
     "name": "Centre Du Sablon",
     "category": "social",
@@ -18149,6 +20085,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi au jeudi 9h30 à 12h00"
   },
   {
+    "id": "centre-ex-equo-ca",
+    "name": "Centre Ex-Equo",
+    "category": "social",
+    "subcategory": "",
+    "city": "Scott",
+    "province": "QC",
+    "phone": "418-390-1900",
+    "description": "Aide aux adultes et adolescents qui présentent un trouble du comportement sexuel ainsi qu'aux hommes et femmes aux prises avec un problème de comportement violent dans un contexte conjugal ou familial ... [Plus] | Clientèle : Hommes et femmes aux prises avec un problème de violence conjugale ou familial * adolescents et adultes ayant commis ou craignant commettre une infraction à caractère sexuel * adultes présentant un trouble hypersexuel (dépendance sexuelle) | Âges : 12 an(s) et plus",
+    "website": "http://www.exequo.ca",
+    "address": "265 Rue Drouin #100, Scott, QC G0S 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-ex-equo-point-de-service--ca",
+    "name": "Centre Ex-Equo, Point de service Charny",
+    "category": "social",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-832-6588",
+    "description": "Aide aux adultes et adolescents qui présentent un trouble du comportement sexuel ainsi qu'aux hommes et femmes aux prises avec un problème de comportement violent dans un contexte conjugal ou familial ... [Plus] | Clientèle : Personnes aux prises avec un problème de violence conjugale ou familial * adolescents et adultes ayant commis ou craignant commettre une infraction à caractère sexuel * adultes présentant un trouble hypersexuel (dépendance sexuelle) | Âges : 12 an(s) et plus",
+    "website": "http://www.exequo.ca",
+    "address": "8165 Rue du Mistral, Lévis, QC G6W 1G9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-ex-equo-point-de-service--ca-2",
+    "name": "Centre Ex-Equo, Point de service Saint-Georges",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-3238",
+    "description": "Aide aux adultes et adolescents qui présentent un trouble du comportement sexuel ainsi qu'aux hommes et femmes aux prises avec un problème de comportement violent dans un contexte conjugal ou familial ... [Plus] | Clientèle : Personnes aux prises avec un problème de violence conjugale ou familial * adolescents et adultes ayant commis ou craignant commettre une infraction à caractère sexuel * adultes présentant un trouble hypersexuel (dépendance sexuelle) | Âges : 12 an(s) et plus",
+    "website": "http://www.exequo.ca",
+    "address": "12427 1re Avenue, Saint-Georges, QC G5Y 2E3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-famille-snap-pfd",
     "name": "Centre Famille Snap",
     "category": "social",
@@ -18172,6 +20147,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Un espace pour te déposer, être toi-même et prendre ton élan. Le Centre Femmes aux 4 Vents, situé à Sept-Îles sur la Côte-Nord, est un carrefour solidaire dédié à toutes les femmes et à leurs parcours ... [Plus] | Clientèle : Femmes, sans égard à leur statut social et économique, désirant briser l'isolement, se confier ou s'impliquer socialement | Âges : 14 an(s) et plus",
     "website": "http://femmes4vents.com",
     "address": "831 Bd Laure, Sept-Îles, QC G4R 1Y6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-femmes-la-rose-des-vents-ca",
+    "name": "Centre Femmes la Rose des Vents",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-5453",
+    "description": "Lieu d'échange et d'information visant l'autonomie des femmes * prévention de la violence faite aux femmes et développement de leur solidarité * défense des droits * accueil, référence vers les ressou ... [Plus] | Clientèle : Femmes | Âges : 18 an(s) et plus",
+    "website": "http://www.centrefemmesrosedesvents.ca",
+    "address": "95 Rue Notre Dame E, Thetford Mines, QC G6G 2J6, Canada",
     "hours": "Voir site web"
   },
   {
@@ -18419,6 +20407,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.centrelavenir.ca",
     "address": "508, rue Masson, Terrebonne, Lanaudière, QC, J6W 2Z3",
     "hours": "lundi au jeudi 8h00 à 16h00 et 18h00 à 20h30, vendredi 8h00 à 15h00"
+  },
+  {
+    "id": "centre-la-barre-du-jour-ca",
+    "name": "Centre La Barre du jour",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Gervais",
+    "province": "QC",
+    "phone": "418-887-7100",
+    "description": "Organisme communautaire alternatif, La Barre du Jour a pour mission d’offrir un espace de confiance, d’accueil et d’accompagnement aux personnes vivant avec des enjeux de santé mentale. À travers des ... [Plus] | Clientèle : Personnes vivant ou ayant vécu avec une difficulté de santé mentale | Âges : 18 an(s) et plus",
+    "website": "http://www.labarredujour.com/",
+    "address": "35 Rue Leclerc, Saint-Gervais, QC G0R 3C0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "msss-chsld-montreal-centre-le-cardinal",
@@ -19413,6 +21414,30 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV ou référence médicale."
   },
   {
+    "id": "centre-rond-point-ca",
+    "name": "Centre Rond-Point",
+    "category": "food",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-423-2960",
+    "description": "Lieu de ressourcement, justice sociale, rencontre et aide * Marche-santé * cuisines collectives * rond-point du bel âge : jeux pour aînés * activités culturelles : scrabble, cours de tam-tam et de pei ... [Plus] | Clientèle : Adultes * aînés",
+    "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-rousseau-saint-jean-port--ca",
+    "name": "Centre Rousseau Saint-Jean-Port-Joli",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-3144",
+    "description": "Aréna * abri temporaire en cas de sinistre",
+    "address": "390 Verreault, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-r-gional-d-archives-de-l--out",
     "name": "Centre Régional D'Archives De L'Outaouais",
     "category": "social",
@@ -19567,6 +21592,84 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "centre-yvon-mercier-ca",
+    "name": "Centre Yvon Mercier",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "L'Islet",
+    "province": "QC",
+    "phone": "Administration et intervenants 418-247-7600",
+    "description": "Programme d'aide aux hommes en difficulté dans leur relation conjugale, familiale ou sociale et désireux de modifier leurs comportements impulsifs et violents (verbal, psychologique ou physique) * acc ... [Plus] | Clientèle : Hommes présentant des comportements impulsifs et violents dans leur relation conjugale, familiale et sociale * hommes reconnus auteur de violences conjugales suite à une décision de justice | Âges : 18 an(s) et plus",
+    "website": "http://centre-cym.com",
+    "address": "62 Chem. Lamartine O, L'Islet, QC G0R 1X0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-aide-et-pr-vention-jeunes-ca",
+    "name": "Centre aide et prévention jeunesse de Lévis",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Aide à la jeunesse, accueil, soutien et accompagnement",
+    "description": "Clinique mobile, La Zone 418-956-0130 | Clientèle : Tous pour toit 418-999-4247 | Âges : 12 an(s) - 49 an(s)",
+    "website": "http://www.capjlevis.com",
+    "address": "302 Rue Saint-Joseph, Lévis, QC G6V 1G2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-aide-et-pr-vention-jeunes-ca-3",
+    "name": "Centre aide et prévention jeunesse de Lévis, Logements famille",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-6906 poste 3",
+    "description": "Hébergement de dépannage (durée variable) et soutien aux familles momentanément sans logis * aide à la relocalisation et référencement * soutien dans les démarches facilitant la réponse aux besoins de ... [Plus] | Clientèle : Famille momentanément sans logis | Âges : 18 an(s) et plus",
+    "website": "http://capjlevis.com",
+    "address": "302 Rue Saint-Joseph, Lévis, QC G6V 1G2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-aide-et-pr-vention-jeunes-ca-4",
+    "name": "Centre aide et prévention jeunesse de Lévis, Refuge Roger Cantin",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-5102",
+    "description": "Hébergement d'urgence à haut seuil d'acceptation pour les adultes vivant de l'instabilité résidentielle ou à risque d'itinérance * accessible à la diversité des genres et sexuelle * hébergement de nui ... [Plus] | Clientèle : Administration 418-838-6906 poste 3 | Âges : 18 an(s) et plus",
+    "website": "http://www.capjlevis.com/refuge-roger-cantin",
+    "address": "302 Rue Saint-Joseph, Lévis, QC G6V 1G2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-aide-et-pr-vention-jeunes-ca-2",
+    "name": "Centre aide et prévention jeunesse de Lévis, Rose des vents - Hébergement transitoire",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-6906",
+    "description": "Hébergement transitoire pour adultes ayant des troubles de santé mentale * milieu sécurisant favorisant l'autonomie et le développement d'un projet de vie * appartements meublés, vaisselle de base | Clientèle : Adultes présentant des troubles de santé mentale sévères et persistants, présentant un certain degré d’autonomie fonctionnelle et référés par une organisation œuvrant en santé mentale | Âges : 18 an(s) - 60 an(s)",
+    "website": "http://www.capjlevis.com",
+    "address": "302 Rue Saint-Joseph, Lévis, QC G6V 1G2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-aide-et-pr-vention-jeunes-ca-5",
+    "name": "Centre aide et prévention jeunesse de Lévis, Triptyque 1 et 2",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-6906 poste 3",
+    "description": "Hébergement transitoire aux jeunes adultes (durée variable) * accompagnement dans l'apprentissage de l'autonomie * aide à l'intégration sociale et économique * stabilité résidentielle * remise en proj ... [Plus] | Clientèle : Jeunes adultes vivant de l'instabilité résidentielle ou à risque d'itinérance * personnes seules * familles monoparentales avec un seul enfant de moins de trois ans (exceptionnellement) | Âges : 17 an(s) - 25 an(s)",
+    "website": "http://capjlevis.com",
+    "address": "302 Rue Saint-Joseph, Lévis, QC G6V 1G2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-alpha-lira-cn",
     "name": "Centre alpha Lira",
     "category": "social",
@@ -19580,6 +21683,84 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-communautaire-normandie-ca",
+    "name": "Centre communautaire Normandie",
+    "category": "food",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-3158",
+    "description": "Centre de services communautaires * répit-parents (0-5 ans) * ado-bouffe * après-midi récréatif pour les aînés * ateliers d'informatique * parties de cartes * repas communautaires * cuisine collective ... [Plus]",
+    "website": "http://ccnormandie.ca",
+    "address": "599 Chemin St Léon, Montmagny, QC G5V 3R9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-communautaire-d-issoudun-ca",
+    "name": "Centre communautaire d'Issoudun",
+    "category": "social",
+    "subcategory": "",
+    "city": "Notre-Dame-du-Sacré-Coeur-d'Issoudun",
+    "province": "QC",
+    "phone": "418-728-2006",
+    "description": "Abri temporaire lors de situation d'urgence",
+    "website": "http://www.issoudun.qc.ca",
+    "address": "Issoudun, Notre-Dame-du-Sacré-Coeur-d'Issoudun, QC G0S 1L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-communautaire-juridique-d-ca",
+    "name": "Centre communautaire juridique de Québec, Bureau d'aide juridique de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-1740",
+    "description": "Services d'aide juridique aux personnes à faible revenu * service d'aide à l'homologation d'une entente (SAH) à l'ensemble de la population Les services d'aide juridique couverts par le régime sont re ... [Plus] | Clientèle : Communiquer avec le bureau pour connaître les critères d'admissibilité * SAH aux personnes qui s'entendent sur les modifications à apporter à leur jugement et qui veulent présenter une demande conjointe",
+    "website": "http://www.aidejuridiquequebec.qc.ca",
+    "address": "5130 Bd Guillaume-Couture #200, Lévis, QC G6V 9L4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-communautaire-juridique-d-ca-2",
+    "name": "Centre communautaire juridique de Québec, Bureau d'aide juridique de Montmagny",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-3230",
+    "description": "Services d'aide juridique aux personnes à faible revenu * service d'aide à l'homologation d'une entente (SAH) à l'ensemble de la population Les services d'aide juridique couverts par le régime sont re ... [Plus] | Clientèle : Communiquer avec le bureau pour connaître les critères d'admissibilité * SAH aux personnes qui s’entendent sur les modifications à apporter à leur jugement et qui veulent présenter une demande conjointe",
+    "website": "http://www.aidejuridiquequebec.qc.ca",
+    "address": "68 Rue du Palais de Justice Bureau 103, Montmagny, QC G5V 1P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-communautaire-juridique-d-ca-3",
+    "name": "Centre communautaire juridique de Québec, Bureau d'aide juridique de Saint-Georges",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-226-3351",
+    "description": "Services d'aide juridique aux personnes à faible revenu * service d'aide à l'homologation d'une entente (SAH) à l'ensemble de la population Les services d'aide juridique couverts par le régime sont re ... [Plus] | Clientèle : Communiquer avec le bureau pour connaître les critères d'admissibilité * SAH aux personnes qui s'entendent sur les modifications à apporter à leur jugement et qui veulent présenter une demande conjointe",
+    "website": "http://www.aidejuridiquequebec.qc.ca",
+    "address": "Saint-Georges, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-communautaire-juridique-d-ca-4",
+    "name": "Centre communautaire juridique de Québec, Bureau d'aide juridique de Saint-Joseph-de-Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-397-7288",
+    "description": "Services d'aide juridique aux personnes à faible revenu * service d'aide à l'homologation d'une entente (SAH) à l'ensemble de la population Les services d'aide juridique couverts par le régime sont re ... [Plus] | Clientèle : Communiquer avec le bureau pour connaître les critères d'admissibilité * SAH aux personnes qui s’entendent sur les modifications à apporter à leur jugement et qui veulent présenter une demande conjointe",
+    "website": "http://www.aidejuridiquequebec.qc.ca",
+    "address": "700 Av. Robert Cliche bureau 100, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-communautaire-pour-les-a--cn",
     "name": "Centre communautaire pour les aînés de Ragueneau",
     "category": "health",
@@ -19590,6 +21771,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Amélioration de la qualité de vie, bris de l'isolement et maintien de l'autonomie des aînés * information et prévention * promotion de la santé * activités éducatives et culturelles * activités avec l ... [Plus] | Âges : 55 an(s) et plus",
     "website": "https://www.lappui.org/fr/organisation/centre-communautaire-pour-les-aines-de-ragueneau-inc/",
     "address": "Ragueneau, QC G0H 0A4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-culturel-godend-art-ca",
+    "name": "Centre culturel Godend'Art",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Pamphile",
+    "province": "QC",
+    "phone": "418-356-5600",
+    "description": "Mise en valeur du patrimoine culturel de la région de L’Islet-Sud: * conservation et archivage d'objets et documents patrimoniaux * expositions d'œuvres et de produits * spectacles : musique, chant, t ... [Plus]",
+    "address": "60 Rue du Foyer N, Saint-Pamphile, QC G0R 3X0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -19617,6 +21810,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cimoi.com",
     "address": "4734 rue Alexander, Pierrefonds-Roxboro, QC H8Y 2B1",
     "hours": "Lun-ven 8h30-16h30. Cours francisation : lun-mer 18h-21h."
+  },
+  {
+    "id": "centre-d-action-b-n-vole-beauce--ca",
+    "name": "Centre d'action bénévole Beauce - Etchemin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-397-0135",
+    "description": "Promotion de l'action bénévole et communautaire * soutien à domicile des personnes en perte d'autonomie * proches aidants * recrutement, formations et occasions de bénévolat Soutien aux individus * re ... [Plus] | Clientèle : Popote roulante 418-397-0135 poste 300 | Âges : 55 an(s) et plus",
+    "website": "https://cabbe.org/",
+    "address": "135 Rue Ste Christine local 302, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "s-cab-mtl",
@@ -19681,6 +21887,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Promotion de l'action bénévole dans la MRC de Manicouagan * popote roulante (livraison de repas à domicile) * accompagnement-transport vers services médicaux * visite d'amitié * appel de courtoisie * ... [Plus]",
     "website": "http://www.cabmrcmanic.com",
     "address": "20 Bd Comeau, Baie-Comeau, QC G4Z 3A8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-des-app-ca",
+    "name": "Centre d'action bénévole des Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Beaulac-Garthby",
+    "province": "QC",
+    "phone": "418-458-2737",
+    "description": "Promotion du bénévolat comme instrument de développement personnel et social - soutien à l'action bénévole des organismes pour améliorer la qualité de leur gestion et l'efficacité de leurs interventio ... [Plus] | Clientèle : Personnes et organismes bénévoles * aidants * aide à la déclaration de revenus pour personnes à faible revenu",
+    "website": "http://www.cabappalaches.org",
+    "address": "9 Rue de la Chapelle, Beaulac-Garthby, QC G0Y 1B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-action-b-n-vole-des-mrc-ca",
+    "name": "Centre d'action bénévole des MRC de Montmagny et de L'Islet",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-7242",
+    "description": "Promotion et développement de l'action bénévole Action bénévole * recrutement de bénévoles * formations * promotion et reconnaissance du bénévolat * soutien aux organisations Soutien à domicile * acco ... [Plus] | Clientèle : Action bénévole 418-248-7242 poste 109 | Âges : 18 an(s) et plus",
+    "website": "http://www.cabml.ca",
+    "address": "25 Bd Taché O #101, Montmagny, QC G5V 2Z9, Canada",
     "hours": "Voir site web"
   },
   {
@@ -19762,6 +21994,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
   },
   {
+    "id": "centre-d-aide-aux-entreprises-be-ca",
+    "name": "Centre d'aide aux entreprises Beauce-Chaudière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-222-5830",
+    "description": "Orientation et soutien au développement et à la réussite de projets entrepreneuriaux et collectifs sur son territoire, un conseil à la fois * aide technique et services-conseils, l'élaboration de plan ... [Plus] | Clientèle : Entreprises et organisations de la MRC de Beauce-Sartigann | Âges : 18 an(s) et plus",
+    "website": "http://www.caebeauce.com",
+    "address": "13555 Bd Lacroix, Saint-Georges, QC G5Y 1P1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-aide-aux-entreprises-mo-ca",
+    "name": "Centre d'aide aux entreprises Montmagny-L’Islet",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-4815",
+    "description": "Orientation et soutien au développement et à la réussite de projets entrepreneuriaux et collectifs sur son territoire, un conseil à la fois * aide technique et services-conseils, l'élaboration de plan ... [Plus] | Clientèle : Entreprises et organisations des MRC de L'Islet et de Montmagny | Âges : 18 an(s) et plus",
+    "website": "http://www.caeml.qc.ca",
+    "address": "144 Av. de la Gare bureau 101A, Montmagny, QC G5V 2T3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-aide-aux-personnes-immi-ca",
+    "name": "Centre d'aide aux personnes immigrantes et leurs familles",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "581-777-7093",
+    "description": "Accueil et promotion des talents des personnes issues de l’immigration * développement de leur sentiment d’appartenance dans la région * création de lien sociaux et aide aux immigrants vulnérables * a ... [Plus]",
+    "website": "http://www.capif.ca",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "emp-centre-aide-travailleurs",
     "name": "Centre d'aide aux travailleurs – Québec",
     "category": "employment",
@@ -19789,6 +22060,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-d-aide-et-de-lutte-contre-ca",
+    "name": "Centre d'aide et de lutte contre les agressions à caractère sexuel Chaudière-Appalaches",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "581-428-6856",
+    "description": "Aide et accompagnement aux enfants, adolescents et femmes ayant vécu une ou des agressions sexuelles Adultes * accueil et garde psychosociale * rencontres d'évaluation * suivis individuels : déplaceme ... [Plus] | Clientèle : Enfants et adolescents victimes d'agression sexuelle et leurs proches * femmes victimes d'agression sexuelle et leurs proches | Âges : 3 an(s) et plus",
+    "website": "http://www.calacsca.qc.ca",
+    "address": "Saint-Georges, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-d-aide-et-de-lutte-contre-cn-2",
     "name": "Centre d'aide et de lutte contre les agressions à caractère sexuel Lumière Boréale de Baie-Comeau",
     "category": "social",
@@ -19802,6 +22086,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-d-aide-et-de-lutte-contre-ca-2",
+    "name": "Centre d'aide et de lutte contre les agressions à caractère sexuel Rive-Sud",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-8342",
+    "description": "Services d'aide et d'accompagnement aux femmes, adolescentes et leurs proches ayant un vécu une forme d'agression à caractère sexuel récente ou passée * relation d'aide individuelle et de groupe * acc ... [Plus] | Clientèle : Adolescentes * femmes * leurs proches | Âges : 14 an(s) et plus",
+    "website": "http://calacsrivesud.org",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-d-aide-et-de-lutte-contre-cn",
     "name": "Centre d'aide et de lutte contre les agressions à caractère sexuel de Sept-Îles - La Pointe du jour",
     "category": "social",
@@ -19812,6 +22109,58 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Soutien aux femmes et adolescentes ayant vécu ou vivant une agression à caractère sexuel (inceste, harcèlement, viol) * sensibilisation de la population à la problématique des agressions à caractère s ... [Plus] | Clientèle : Port-Cartier 418-444-2116 | Âges : 14 an(s) et plus",
     "website": "http://www.lapointedujour.org",
     "address": "Cp. 340, Sept-Îles, QC G4R 0K6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-aide-et-de-recherche-d--ca",
+    "name": "Centre d'aide et de recherche d'emploi Montmagny - L'Islet",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-9559",
+    "description": "Aide à l'intégration ou réintégration au marché du travail par des interventions individuelles * conception de curriculum vitæ * rédaction de lettres de présentation * préparation à des entrevues d'em ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.lecare.ca",
+    "address": "213 Rue de la Salle, Saint-Fabien-de-Panet, QC G0R 2J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-aide-et-de-recherche-d--ca-2",
+    "name": "Centre d'aide et de recherche d'emploi Montmagny - L'Islet, Point de service Saint-Jean-Port-Joli",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide à l'intégration ou réintégration au marché du travail par des interventions individuelles * conception de curriculum vitæ * rédaction de lettres de présentation * préparation à des entrevues d'em ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.lecare.ca",
+    "address": "Saint-Jean-Port-Joli, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-aide-et-de-recherche-d--ca-3",
+    "name": "Centre d'aide et de recherche d'emploi Montmagny - L'Islet, Point de service Saint-Pamphile",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Pamphile",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide à l'intégration ou réintégration au marché du travail par des interventions individuelles * conception de curriculum vitæ * rédaction de lettres de présentation * préparation à des entrevues d'em ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.lecare.ca",
+    "address": "213 Rue de la Salle, Saint-Fabien-de-Panet, QC G0R 2J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-aide-et-de-recherche-d--ca-4",
+    "name": "Centre d'aide et de recherche d'emploi Montmagny - L'Islet, Point de service Saint-Paul-de-Montminy",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Paul-de-Montminy",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide à l'intégration ou réintégration au marché du travail par des interventions individuelles * conception de curriculum vitæ * rédaction de lettres de présentation * préparation à des entrevues d'em ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.lecare.ca",
+    "address": "Saint-Paul-de-Montminy, QC G0R, Canada",
     "hours": "Voir site web"
   },
   {
@@ -19837,6 +22186,44 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre multiservice apportant une meilleure qualité de vie grâce à des services répondant aux besoins culturels, matériels et sociaux des autochtones en milieu urbain. Le centre est ouvert à toutes la ... [Plus]",
     "website": "https://www.rcaaq.ca/centre-amitie/centre-damitie-autochtone-de-sept-iles/",
     "address": "37 Rue Père Divet, Sept-Îles, QC G4R 3N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-archives-de-la-r-gion-d-ca",
+    "name": "Centre d'archives de la région de Thetford",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-8591 poste 306",
+    "description": "Acquisition, traitement, conservation et diffusion des archives régionales * salle de consultation Accrédité par Bibliothèque et Archives nationales du Québec (BAnQ)",
+    "website": "https://centrearchivesregionthetford.ca/",
+    "address": "2600 Bd Frontenac O, Thetford Mines, QC G6H 2C6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-arts-martiaux-gasshokan-ca",
+    "name": "Centre d'arts martiaux Gasshokan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "",
+    "description": "Enseignement du Yoseikan Budo en transmettant les connaissances et techniques combinées de plusieurs arts martiaux dont l'aïkido, le judo, le karaté, le ju-jitsu, le Iaïdo et le kobudo dans le respect ... [Plus]",
+    "address": "Saint-Nicolas, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-assistance-et-d-accompa-ca",
+    "name": "Centre d'assistance et d'accompagnement aux plaintes - Chaudière-Appalaches",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-8414",
+    "description": "Assistance et accompagnement des usagers qui désirent porter plainte concernant les soins et services dispensés par le Centre intégré de santé et de services sociaux de Chaudière-Appalaches (CISSS de ... [Plus]",
+    "website": "http://caap.quebec",
+    "address": "167 Rue Notre Dame N, Sainte-Marie, QC G6E 3Z4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -19878,6 +22265,82 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Dépannage lun-ven 8h30-16h30, sam 9h-12h. Appeler avant de se présenter."
   },
   {
+    "id": "centre-d-entraide-de-la-r-gion-d-ca",
+    "name": "Centre d'entraide de la région de Disraeli",
+    "category": "food",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "418-449-5155",
+    "description": "Accueil, écoute, aide et référence Services alimentaires : * dépannage alimentaire * dépannage pour les biens de subsistance primaire * cuisines collectives * paniers de Noël * jardins collectifs * at ... [Plus] | Clientèle : Paniers de Noël 418-449-5155 poste 4",
+    "website": "http://cerd.ca",
+    "address": "401 Av. Montcalm, Disraeli, QC G0N 1E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-entraide-de-la-r-gion-d-ca-2",
+    "name": "Centre d'entraide de la région de Disraeli, Maison la Roseraie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "418-449-5155",
+    "description": "Résidence privée pour aînés autonomes (RPA) * studios * appartements 3 1/2 et 4 1/2 * buanderie, salle communautaire, salle à manger, système d'appel d'urgence * entretien ménager * surveillance 24 he ... [Plus] | Âges : 70 an(s) et plus",
+    "website": "http://cerd.ca/roseraie.html",
+    "address": "946 Rue St Antoine, Disraeli, QC G0N 1E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-entraide-familiale-de-s-ca",
+    "name": "Centre d'entraide familiale de Saint-Henri",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Henri",
+    "province": "QC",
+    "phone": "418-882-0366",
+    "description": "Soutien aux familles à faible revenu * aide alimentaire (collaboration avec Frigos pleins) et vestimentaire occasionnelle * vente de vêtements, jouets et vaisselle * paniers de Noël | Clientèle : Le grand public * paniers de Noël pour personnes à faible revenu",
+    "address": "9 Rue Laliberté, Saint-Henri, QC G0R 3E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-entraide-familiale-de-l-ca",
+    "name": "Centre d'entraide familiale de la MRC de Montmagny",
+    "category": "family",
+    "subcategory": "",
+    "city": "Notre-Dame-du-Rosaire",
+    "province": "QC",
+    "phone": "418-469-3988",
+    "description": "Amélioration des conditions de vie des familles, de l'estime de soi et des compétences parentales * bris du cercle de la pauvreté et de l'isolement * soutien au développement communautaire et économiq ... [Plus] | Clientèle : Jardin des petits pieds Saint-Paul-de-Montmigny 418-469-2591",
+    "website": "http://www.cefmontmagny.com",
+    "address": "144 Rue Principale, Notre-Dame-du-Rosaire, QC G0R 2H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-entraide-familiale-de-l-ca-2",
+    "name": "Centre d'entraide familiale de la MRC de Montmagny, Joujouthèque du parc des Appalaches",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Paul-de-Montminy",
+    "province": "QC",
+    "phone": "418-469-3988",
+    "description": "Service de location de jeux de groupe, sportifs, individuels et de table pour les familles et organismes de la région Location : * jeux pour les enfants 0-12 ans * jeux gonflables Au jardin des petits ... [Plus] | Clientèle : Enfants et leur famille * écoles * services de garde * organismes * municipalités * Au jardin des petits pieds pour enfants (0-7 ans)",
+    "website": "https://cefmontmagny.com/joujoutheque-3/",
+    "address": "144 Rue Principale, Notre-Dame-du-Rosaire, QC G0R 2H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-entraide-le-spot-ca",
+    "name": "Centre d'entraide le Spot",
+    "category": "food",
+    "subcategory": "",
+    "city": "East Broughton",
+    "province": "QC",
+    "phone": "418-427-2608 poste 227",
+    "description": "Aide alimentaire et milieu rassembleur favorisant la socialisation, l'éducation populaire et le développement de l'autonomie dans une perspective de réduction des inégalités sociales * cuisines collec ... [Plus]",
+    "address": "600 10e Avenue S, East Broughton Station, QC G0N 1H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-d-h-bergement-tipinuaikan-cn",
     "name": "Centre d'hébergement Tipinuaikan",
     "category": "housing",
@@ -19913,6 +22376,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Accueil et soutien des jeunes et adultes marginalisés de la région * travail de rue, de milieu de vie et en dépendance * information, activités diverses, cafés-rencontres, ateliers et formation * soup ... [Plus] | Clientèle : Travail de rue 418-965-1483 * 418-409-6758",
     "website": "http://www.lerondpoint.ca",
     "address": "101 Rue Tortellier, Sept-Îles, QC G4R 3Z7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-d-coute-et-de-pr-vention--ca",
+    "name": "Centre d'écoute et de prévention du suicide Beauce - Etchemins",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "Ligne d'écoute 418-228-0001 (appels à frais virés acceptés)",
+    "description": "Promotion du mieux-vivre, prévention de la détresse et de l'isolement Écoute téléphonique à la population * aide, référence et écoute * formation à l'écoute active pour individus et organismes * forma ... [Plus] | Clientèle : Administration - Devenir bénévole, demande de conférences ou d'accompagnement d'endeuillés 418-228-3106 | Âges : 18 an(s) et plus",
+    "website": "http://cepsbeauceetchemins.com",
+    "address": "1925 118e Rue, Saint-Georges, QC G5Y 5S1, Canada",
     "hours": "Voir site web"
   },
   {
@@ -20299,6 +22775,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-de-la-petite-enfance-peti-ca",
+    "name": "Centre de la petite enfance Petit tambour",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-1142",
+    "description": "Centre de la petite enfance * 60 places dont 10 pour poupons Installation, Petit tambour : 60 places dont 10 pour poupons (17 mois et moins) Installation, Tambourin : 80 places dont 20 poupons (17 moi ... [Plus] | Clientèle : Entre 3 mois et 5 ans",
+    "website": "http://www.petittambour.ca",
+    "address": "2272 Rue Alphonse-Ouellet, Saint-Romuald, QC G6W 2W3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-de-la-petite-enfance-rito-cn",
     "name": "Centre de la petite enfance Ritourn’ailes",
     "category": "family",
@@ -20321,6 +22810,93 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Services de garde pour enfants * services de garde en installation ou milieu familial Succursales * Milles Merveilles, 123, rue de la Vérendrye (57 places) * Jardin des rêves, 51 rue Josephat-Méthot ( ... [Plus] | Âges : 5 an(s) et moins",
     "website": "https://www.cpebontoit.com/",
     "address": "123 Rue de la Vérendrye, Sept-Îles, QC G4R 5V3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-vire-ca",
+    "name": "Centre de la petite enfance Vire-crêpe",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-831-2622",
+    "description": "Centre de la petite enfance * gestion de garde en milieu familial (111 milieux) Quatre installations dans le quartier Saint-Nicolas (Lévis) : * La Bambinerie, 512, de la Sorbonne, Lévis, 45 places don ... [Plus] | Âges : 5 an(s) et moins",
+    "website": "http://virecrepe.com",
+    "address": "581 Rue de Bernières, Saint-Nicolas, QC G7A 1E5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-de-l-ca",
+    "name": "Centre de la petite enfance de la Chaudière",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "418-839-5070",
+    "description": "Centre de la petite enfance * programme d'activités * repas selon le guide alimentaire canadien | Âges : 5 an(s) et moins",
+    "website": "http://gw.micro-acces.com/cpest-jean/publique/Accueil.aspx",
+    "address": "1026 Rue du Basilic, Lévis, QC G6Z 1E7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-de-l-ca-2",
+    "name": "Centre de la petite enfance de la chenille au papillon",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Étienne-de-Lauzon",
+    "province": "QC",
+    "phone": "418-831-8383",
+    "description": "Centre de la petite enfance (place à contribution réduite) * service de garde pour les enfants de 3 mois à 5 ans * 70 places dont 10 pour poupons (17 mois et moins) | Âges : 5 an(s) et moins",
+    "address": "2646 Rte Lagueux, Saint-Étienne-de-Lauzon, QC G6J 1A4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-la-p-ca",
+    "name": "Centre de la petite enfance la petite grenouille",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-837-9595",
+    "description": "Centre de la petite enfance * certains enfants ayant des besoins particuliers reçoivent du soutien d’une éducatrice spécialisée * 130 places dont 10 pour poupons (17 mois et moins) | Âges : 5 an(s) et moins",
+    "address": "13245 Bd Valcartier, Québec, QC G2A 2N5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-le-c-ca",
+    "name": "Centre de la petite enfance le coffre aux trésors de Breakeyville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Hélène-de-Breakeyville",
+    "province": "QC",
+    "phone": "418-832-7272",
+    "description": "Centre de la petite enfance * 74 places dont 10 pour poupons (18 mois et moins) * 79 places dont 15 pour poupons (18 mois et moins) Succursale au 3491, avenue Brassard, Lévis | Clientèle : Bébés et enfants d'âge préscolaire | Âges : 5 an(s) et moins",
+    "address": "3552 Av. Brassard, Lévis, QC G6Z 7Y9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-le-p-ca",
+    "name": "Centre de la petite enfance le petit train",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-6091",
+    "description": "Centre de la petite enfance et bureau coordonnateur de la garde éducative en milieu familial | Âges : 5 an(s) et moins",
+    "website": "https://www.lepetittrain.ca/",
+    "address": "23 Rue Vincent-Chagnon, Lévis, QC G6V 4V6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-la-petite-enfance-les--ca",
+    "name": "Centre de la petite enfance les mousses",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "418-831-6181",
+    "description": "Centre de la petite enfance * 80 places dont 14 pour poupons (17 mois et moins) | Clientèle : Bébés et enfants d'âge préscolaire | Âges : 5 an(s) et moins",
+    "address": "Ctre de la petite enfance Les Mousses, 170 12e Rue, Saint-Rédempteur, QC G6K 1G3, Canada",
     "hours": "Voir site web"
   },
   {
@@ -20363,6 +22939,71 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "5, rue du Domaine, Lévis QC G6V 7G5",
     "hours": "Service disponible 24h/24, 7j/7",
     "isUrgent": true
+  },
+  {
+    "id": "centre-de-p-diatrie-sociale-les--ca",
+    "name": "Centre de pédiatrie sociale Les Passerelles",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Martin",
+    "province": "QC",
+    "phone": "418-382-0255",
+    "description": "Soutien aux enfants et aux familles à risque ou en situation de vulnérabilité en favorisant le mieux-être et le développement optimal des enfants, dans le respect de leurs droits et intérêts * évaluat ... [Plus] | Clientèle : Enfants issus d'un milieu vulnérable | Âges : 18 an(s) et moins",
+    "website": "http://cpslespasserelles.com",
+    "address": "129 A 1ere Avenue E, Saint-Martin, QC G0M 1B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-p-diatrie-sociale-de-l-ca",
+    "name": "Centre de pédiatrie sociale de Lévis",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-603-2775",
+    "description": "Soutien aux enfants et aux familles à risque ou en situation de vulnérabilité pour assurer le mieux-être et le développement optimal des enfants, dans le respect de leurs droits et intérêts * diagnost ... [Plus] | Clientèle : Enfants issus d'un milieu vulnérable | Âges : 18 an(s) et moins",
+    "website": "http://www.pediatriesocialelevis.org",
+    "address": "4950 Bd Guillaume-Couture, Lévis, QC G6V 4Z6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-p-diatrie-sociale-des--ca",
+    "name": "Centre de pédiatrie sociale des Appalaches",
+    "category": "health",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-755-0497",
+    "description": "Soutien aux enfants et à leur famille en situation de vulnérabilité et désaffiliés du système de santé public pour assurer le mieux-être et le développement optimal des enfants, dans le respect de leu ... [Plus]",
+    "website": "http://cpscdesappalaches.com",
+    "address": "189 Rue Dubé, Thetford Mines, QC G6G 3B6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-recherche-d-emploi-bea-ca",
+    "name": "Centre de recherche d'emploi Beauce - Etchemins",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-5445",
+    "description": "Programme de recherche d'emploi gratuit et personnalisé visant à améliorer les techniques des participants afin d'obtenir rapidement l'emploi qui leur convient * curriculum vitæ (CV) et lettre de prés ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.crebe.qc.ca",
+    "address": "1925 118e Rue, Saint-Georges, QC G5Y 5S1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-recherche-d-emploi-bea-ca-2",
+    "name": "Centre de recherche d'emploi Beauce - Etchemins, Bureau de Sainte-Marie",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-386-4445",
+    "description": "Programme de recherche d'emploi visant à améliorer les techniques des participants afin qu'ils obtiennent rapidement l'emploi qui leur convient * curriculum vitæ (CV) et lettre de présentation * reche ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.crebe.qc.ca",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "centre-de-recherche-et-d-informa-cn",
@@ -20558,6 +23199,357 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-de-services-scolaire-de-l-ca",
+    "name": "Centre de services scolaire de la Beauce - Etchemin",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418 228-5541",
+    "description": "Services éducatifs répondant aux besoins de formation des jeunes, adultes ainsi que des entreprises et des organismes de son territoire * éducation préscolaire, enseignement primaire et secondaire et ... [Plus]",
+    "website": "http://cssbe.gouv.qc.ca/",
+    "address": "1925 118e Rue, Saint-Georges, QC G5Y 5S1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-12",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Centre d'éducation des adultes Mgr-Beaudoin - Les Sources",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "Édifice Mgr-Beaudoin, jour 418-228-5541 poste 63000",
+    "description": "Établissement d'enseignement répondant aux besoins de formation liés au développement intellectuel, social ou culturel des adultes du territoire de la commission scolaire, en partenariat avec les orga ... [Plus] | Clientèle : Édifice Les Sources 418-228-5541 poste 63000 | Âges : 16 an(s) et plus",
+    "website": "http://cssbe.gouv.qc.ca/etablissement/edifice-monseigneur-beaudoin",
+    "address": "1925 118e Rue, Saint-Georges, QC G5Y 5S1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-10",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Centre d'éducation des adultes de Saint-Prosper et de Sainte-Justine",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Prosper",
+    "province": "QC",
+    "phone": "418-228-5541 poste 62800",
+    "description": "Établissements d'enseignement répondant aux besoins de formation liés au développement intellectuel, social ou culturel des adultes du territoire de la commission scolaire, en partenariat avec les org ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "http://cssbe.gouv.qc.ca",
+    "address": "Saint-Prosper, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-11",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Centre d'éducation des adultes de Saint-Prosper et de Sainte-Justine, Point de service Saint-Prosper",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Prosper",
+    "province": "QC",
+    "phone": "418-228-5541 poste 62800",
+    "description": "Établissement d'enseignement répondant aux besoins de formation liés au développement intellectuel, social ou culturel des adultes du territoire de la commission scolaire, en partenariat avec les orga ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "http://cssbe.gouv.qc.ca",
+    "address": "Saint-Prosper, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-7",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Centre de La Guadeloupe, Centre d'éducation des adultes Mgr-Beaudoin - Les Sources",
+    "category": "social",
+    "subcategory": "",
+    "city": "La Guadeloupe",
+    "province": "QC",
+    "phone": "Jour 418-228-5541 poste 63000",
+    "description": "Établissement d'enseignement répondant aux besoins de formation liés au développement intellectuel, social ou culturel des adultes du territoire de la commission scolaire, en partenariat avec les orga ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "http://cssbe.gouv.qc.ca/etablissement/edifice-monseigneur-beaudoin",
+    "address": "Les Sources Regional County Municipality, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-8",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Centre de Saint-Martin, Centre d'éducation des adultes Mgr-Beaudoin - Les Sources",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Martin",
+    "province": "QC",
+    "phone": "418-228-5541 poste 63500",
+    "description": "Établissement d'enseignement répondant aux besoins de formation liés au développement intellectuel, social ou culturel des adultes du territoire de la commission scolaire, en partenariat avec les orga ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "http://cssbe.gouv.qc.ca/etablissement/edifice-monseigneur-beaudoin",
+    "address": "Saint-Martin, QC G0M, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-2",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Centre de formation des Bâtisseurs",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "Administration 418-386-5541 poste 6130",
+    "description": "Établissements d'enseignement offrant des programmes de formation menant à l'obtention d'un diplôme d'études professionnelles (DEP), un diplôme d'études secondaires (DES) ou d'une attestation d'études ... [Plus] | Clientèle : Secteur Beauceville, Centre d'éducation des adultes de Beauceville 418-228-5541 poste 63700 | Âges : 16 an(s) et plus",
+    "website": "http://www.cfbatisseurs.ca",
+    "address": "925 Rte Saint-Martin, Sainte-Marie, QC G6E 1E6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-3",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Centre de formation des Bâtisseurs, Centre d'éducation des adultes de Beauceville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Beauceville",
+    "province": "QC",
+    "phone": "418-228-5541 poste 63700",
+    "description": "Établissement d'enseignement répondant aux besoins de formation liés au développement intellectuel, social ou culturel des adultes du territoire de la commission scolaire, en partenariat avec les orga ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cfbatisseurs.ca",
+    "address": "1925 118e Rue, Saint-Georges, QC G5Y 5S1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-5",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Centre de formation des Bâtisseurs, Secteur Saint-Joseph",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-386-5541 poste 60300",
+    "description": "Établissement d'enseignement offrant des programmes de formation menant à l'obtention d'un diplôme d'études professionnelles (DEP), d'un diplôme d'études secondaires (DES) ou d'une attestation d'étude ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cfbatisseurs.ca",
+    "address": "925 Rte Saint-Martin, Sainte-Marie, QC G6E 1E6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-4",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Centre de formation des Bâtisseurs, Secteur Sainte-Marie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-386-5541 poste 61300",
+    "description": "Établissement d'enseignement offrant des programmes de formation menant à l'obtention d'un diplôme d'études professionnelles (DEP), d'un diplôme d'études secondaires ou d'une attestation de spécialisa ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cfbatisseurs.ca",
+    "address": "925 Rte Saint-Martin, Sainte-Marie, QC G6E 1E6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-6",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Centre de formation professionnelle Pozer",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-5541",
+    "description": "Établissement d'enseignement offrant des programmes de formation menant à l'obtention d'un diplôme d'études professionnelles (DEP) ou d'une attestation d'études professionnelles (AEP) Programmes : Adm ... [Plus] | Âges : 16 an(s) et plus",
+    "website": "http://cfppozer.cssbe.gouv.qc.ca",
+    "address": "425 16th Street, Saint-Georges, QC G5Y 4W2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-13",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Centre intégré de mécanique industrielle de la Chaudière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-1993",
+    "description": "Établissement d'enseignement du Centre de services scolaire de la Beauce-Etchemin, du Cégep Beauce-Appalaches et du Centre universitaire des Appalaches ayant pour mission d'offrir et de dispenser des ... [Plus]",
+    "website": "https://cimic.cssbe.gouv.qc.ca/",
+    "address": "11700 Av. 25e, Saint-Georges, QC G5Y 8B8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-15",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Point de service Sainte-Justine, Centre d'éducation des adultes de Saint-Prosper et de Sainte-Justine",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Justine",
+    "province": "QC",
+    "phone": "418-228-5541 poste 62600",
+    "description": "Établissement d'enseignement répondant aux besoins de formation liés au développement intellectuel, social ou culturel des adultes du territoire de la commission scolaire, en partenariat avec les orga ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "https://cssbe.gouv.qc.ca/",
+    "address": "Sainte-Justine, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-9",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Services d'accueil, de référence, de conseil et d'accompagnement",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-5541 poste 2620",
+    "description": "Accueil, référence, conseil et accompagnement par des conseillers en formation vers les ressources disponibles dans la communauté * évaluation de dossier académique * reconnaissance d'acquis scolaires ... [Plus] | Âges : 16 an(s) et plus",
+    "website": "https://cssbe.gouv.qc.ca/",
+    "address": "1925 118e Rue, Saint-Georges, QC G5Y 5S1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-14",
+    "name": "Centre de services scolaire de la Beauce - Etchemin, Édifice Les Sources, Centre d'éducation des adultes Mgr-Beaudoin - Les Sources",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-5541 poste 63000",
+    "description": "Établissement d'enseignement répondant aux besoins de formation liés au développement intellectuel, social ou culturel des adultes du territoire de la commission scolaire, en partenariat avec les orga ... [Plus] | Clientèle : Jeunes adultes * adultes * leurs enfants (0-5 ans) | Âges : 16 an(s) et plus",
+    "website": "https://cssbe.gouv.qc.ca/etablissement/edifice-monseigneur-beaudoin/",
+    "address": "Les Sources Regional County Municipality, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-16",
+    "name": "Centre de services scolaire de la Côte-du-Sud",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-1001",
+    "description": "Services éducatifs répondant aux besoins de formation des jeunes, adultes, entreprises et organismes de son territoire * organisation de l'enseignement préscolaire, primaire, secondaire, de la formati ... [Plus] | Âges : 4 an(s) et plus",
+    "website": "http://www.csscotesud.gouv.qc.ca",
+    "address": "157 Rue St Louis, Montmagny, QC G5V 4N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-21",
+    "name": "Centre de services scolaire de la Côte-du-Sud, Centre d'éducation des adultes de Bellechasse",
+    "category": "immigration",
+    "subcategory": "",
+    "city": "Saint-Gervais",
+    "province": "QC",
+    "phone": "418-887-1308 poste 2900",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes * formation générale et formation sur mesure * formation de base * francisation * reconnaissance des acquis : test ... [Plus] | Clientèle : Adultes et jeunes adultes | Âges : 16 an(s) et plus",
+    "website": "http://ceabellechasse.cscotesud.qc.ca",
+    "address": "157 Rue St Louis, Montmagny, QC G5V 4N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-22",
+    "name": "Centre de services scolaire de la Côte-du-Sud, Centre d'éducation des adultes de L'Islet-Sud",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Pamphile",
+    "province": "QC",
+    "phone": "418-356-3314",
+    "description": "Établissement d'enseignement offrant des programmes de formation générale aux adultes visant l'obtention d'un diplôme d'études secondaire (DES) ou l'atteinte de préalables nécessaires à l'admission en ... [Plus] | Clientèle : Adultes | Âges : 16 an(s) et plus",
+    "website": "http://cealisletsud.cscotesud.qc.ca",
+    "address": "157 Rue St Louis, Montmagny, QC G5V 4N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-23",
+    "name": "Centre de services scolaire de la Côte-du-Sud, Centre d'éducation des adultes de Montmagny-L'Islet-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-0181",
+    "description": "Centre de formation générale aux adultes Voir dossiers individuels * Point de service l'Islet * Point de service Montmagny | Clientèle : Jeunes adultes * adultes * 16 ans avant le 30 juin | Âges : 16 an(s) et plus",
+    "website": "http://ceamontmagny-lisletnord.cscotesud.qc.ca",
+    "address": "157 Rue St Louis, Montmagny, QC G5V 4N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-24",
+    "name": "Centre de services scolaire de la Côte-du-Sud, Centre d'éducation des adultes de Montmagny-L'Islet-Nord, Point de service Montmagny",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-0181",
+    "description": "Établissement d'enseignement offrant un service de formation générale aux adultes * soutien pédagogique * alphabétisation * présecondaire * premier cycle du secondaire * second cycle du secondaire * i ... [Plus] | Clientèle : Jeunes adultes * adultes * 16 ans avant le 30 juin | Âges : 16 an(s) et plus",
+    "website": "http://ceamontmagny-lisletnord.cscotesud.qc.ca",
+    "address": "157 Rue St Louis, Montmagny, QC G5V 4N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-25",
+    "name": "Centre de services scolaire de la Côte-du-Sud, Centre d'éducation des adultes de Saint-Paul",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Paul-de-Montminy",
+    "province": "QC",
+    "phone": "418-469-2117 poste 6106",
+    "description": "Établissement d'enseignement offrant un service de formation générale de niveau secondaire aux adultes * préparation aux études secondaires * cours de 1re à 5e secondaire * préalables aux études collé ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cscotesud.qc.ca",
+    "address": "157 Rue St Louis, Montmagny, QC G5V 4N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-17",
+    "name": "Centre de services scolaire de la Côte-du-Sud, Centre de formation agricole Saint-Anselme",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Anselme",
+    "province": "QC",
+    "phone": "418-885-4517 poste 1661",
+    "description": "Établissement d'enseignement offrant des programmes de formation dans le domaine de l'agriculture menant à l'obtention d'un diplôme d'études professionnelles (DEP) et d'une attestation de spécialisati ... [Plus] | Clientèle : * Être titulaire d'un diplôme d'études secondaires (DES) ou l'équivalent | Âges : 15 an(s) et plus",
+    "website": "http://www.cfastanselme.com",
+    "address": "819 Rte Bégin, Saint-Anselme, QC G0R 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-18",
+    "name": "Centre de services scolaire de la Côte-du-Sud, Centre de formation en entreprise et récupération de Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Raphaël",
+    "province": "QC",
+    "phone": "418-243-3757",
+    "description": "Établissement de formation favorisant le développement des élèves par un curriculum particulier leur permettant de partager leur temps entre la classe et l'entreprise Programme de trois ans en classe ... [Plus] | Âges : 15 an(s) - 18 an(s)",
+    "website": "http://www.cferbellechasse.ca",
+    "address": "157 Rue St Louis, Montmagny, QC G5V 4N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-19",
+    "name": "Centre de services scolaire de la Côte-du-Sud, Centre de formation professionnelle de L'Envolée",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-2370 poste 4750",
+    "description": "Établissement d'enseignement offrant des programmes de formation répondant aux besoins des entreprises régionales et menant à l'obtention d'un diplôme d'études professionnelles (DEP) ou une attestatio ... [Plus] | Clientèle : Variable selon les programmes | Âges : 16 an(s) et plus",
+    "website": "http://www.cfpenvolee.com",
+    "address": "157 Rue St Louis, Montmagny, QC G5V 4N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-26",
+    "name": "Centre de services scolaire de la Côte-du-Sud, Centre sectoriel des plastiques",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Damien-de-Buckland",
+    "province": "QC",
+    "phone": "418-789-3350",
+    "description": "Établissement d'enseignement offrant des programmes d'études menant à l'obtention d'un diplôme d'études professionnelles (DEP) Programmes * conduite et réglage des machines à mouler * opérateur d'équi ... [Plus] | Clientèle : * titulaires du diplôme d'études secondaires (DES) ou équivalent reconnu | Âges : 16 an(s) et plus",
+    "website": "http://formationplastique.com",
+    "address": "74 Rte Saint-Gérard, Saint-Damien-de-Buckland, QC G0R 2Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-27",
+    "name": "Centre de services scolaire de la Côte-du-Sud, Point de service L'Islet, Centre d'éducation des adultes de Montmagny-L'Islet-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "L'Islet",
+    "province": "QC",
+    "phone": "418-247-3957 poste 5108",
+    "description": "Établissement d'enseignement offrant des services de formation générale aux adultes * soutien pédagogique * alphabétisation * présecondaire * premier cycle du secondaire * deuxième cycle du secondaire ... [Plus] | Clientèle : Jeunes adultes * adultes * 16 ans avant le 30 juin | Âges : 16 an(s) et plus",
+    "website": "http://ceamontmagny-lisletnord.cscotesud.qc.ca",
+    "address": "157 Rue St Louis, Montmagny, QC G5V 4N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-de-l-ca-20",
+    "name": "Centre de services scolaire de la Côte-du-Sud, Sakado (SARCA)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "Sakado : 418-234-2574",
+    "description": "Accueil, référence, conseil et accompagnement pour toute personne, avec ou sans diplôme, souhaitant terminer son secondaire, obtenir de l’aide dans ses études ou se perfectionner dans son domaine | Clientèle : Centre de services scolaire de la Côte-du-Sud : 418-248-1001 | Âges : 16 an(s) et plus",
+    "website": "http://tonsakado.ca",
+    "address": "157 Rue St Louis, Montmagny, QC G5V 4N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-de-services-scolaire-de-l-cn",
     "name": "Centre de services scolaire de la Moyenne-Côte-Nord",
     "category": "family",
@@ -20594,6 +23586,201 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Accueil, référence, conseil et accompagnement, démarche d'orientation et suivi en formation pour les adultes sans diplôme afin de les aider à déterminer leur projet de vie * accompagnement à travers l ... [Plus] | Âges : 16 an(s) et plus",
     "website": "http://www.csmcn.qc.ca/fr/services-complementaires.htm",
     "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca",
+    "name": "Centre de services scolaire des Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-7800",
+    "description": "Regroupement de 19 écoles primaires, trois écoles secondaires, un centre d'éducation aux adultes et son point de service, un centre de formation professionnelle et son point de service Écoles primaire ... [Plus] | Âges : 4 an(s) et plus",
+    "website": "http://www.cssa.gouv.qc.ca",
+    "address": "650 Rue Lapierre, Thetford Mines, QC G6G 5W1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-6",
+    "name": "Centre de services scolaire des Appalaches, Centre Marius-Ouellet, Centre d'éducation des adultes L'Escale",
+    "category": "social",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "418-449-4173 poste 0",
+    "description": "Établissement d'enseignement offrant de la formation secondaire aux adultes, de l'alphabétisation et des programmes en intégration sociale et socioprofessionnelle Formation * alphabétisation * anglais ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.centrelescale.qc.ca",
+    "address": "1265 Rue Notre Dame E, Thetford Mines, QC G6G 6M9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-4",
+    "name": "Centre de services scolaire des Appalaches, Centre d'éducation des adultes L'Escale",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-7806 poste 2133",
+    "description": "Établissement d'enseignement offrant de la formation secondaire aux adultes, de l'alphabétisation et des programmes en participation sociale et socioprofessionnelle Formation * anglais * chimie * fran ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.centrelescale.qc.ca",
+    "address": "1265 Rue Notre Dame E, Thetford Mines, QC G6G 6M9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-5",
+    "name": "Centre de services scolaire des Appalaches, Centre d'éducation des adultes L'Escale, Services d'accueil, référence, conseil et accompagnement",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-7806 poste 2130",
+    "description": "Accueil de toute clientèle (16 ans et plus) pour des services en lien avec un projet de vie * conseillers en formation pour information et accompagnement en collaboration avec les partenaires et resso ... [Plus] | Âges : 16 an(s) et plus",
+    "website": "http://www.centrelescale.qc.ca/sarca",
+    "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-2",
+    "name": "Centre de services scolaire des Appalaches, Centre de formation professionnelle de Black Lake",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-2921",
+    "description": "Établissement d'enseignement offrant des programmes de formation menant à l'obtention d'un diplôme d'études professionnelles (DEP) ou d'une attestation d'études professionnelles (AEP) Programmes * coi ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.cfpletremplin.com",
+    "address": "Black Lake, Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-3",
+    "name": "Centre de services scolaire des Appalaches, Centre de formation professionnelle de Black Lake, Centre de formation professionnelle Le Tremplin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-2921",
+    "description": "Établissement d'enseignement offrant des programmes de formation menant à l'obtention d'un diplôme d'études professionnelles (DEP), attestation de spécialisation professionnelle (ASP) ou attestation d ... [Plus] | Clientèle : Services aux entreprises 418-338-7808 | Âges : 16 an(s) et plus",
+    "website": "http://www.cfpletremplin.com",
+    "address": "Black Lake, Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-7",
+    "name": "Centre de services scolaire des Navigateurs",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-0500",
+    "description": "Le Centre de services scolaire des Navigateurs couvre le territoire de la Ville de Lévis, de la MRC de Lotbinière et des municipalités de Saint-Henri et Saint-Lambert * il regroupe 38 écoles primaires ... [Plus] | Clientèle : Formation continue et services aux entreprises 418-839-0500 poste 40101 | Âges : 4 an(s) et plus",
+    "website": "http://web.cssdn.gouv.qc.ca/",
+    "address": "1860 1e Rue, Saint-Romuald, QC G6W 5M6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-12",
+    "name": "Centre de services scolaire des Navigateurs, Centre d'éducation des adultes des Navigateurs",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-6482 poste 32097",
+    "description": "Établissement d'enseignement offrant des programmes de formation destinés aux adultes qui désirent poursuivre des études secondaires adaptées à leurs besoins * accueil, référence, conseil et accompagn ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.educationdesadultes.qc.ca",
+    "address": "1172 Bd Guillaume-Couture, Saint-Romuald, QC G6W 0R8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-9",
+    "name": "Centre de services scolaire des Navigateurs, Centre de formation en montage de lignes",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Henri",
+    "province": "QC",
+    "phone": "418-834-2463",
+    "description": "Établissement d'enseignement offrant des programmes de formation en montage de lignes électriques et de télécommunications menant à l'obtention d'un diplôme d'études professionnelles (DEP) Services au ... [Plus] | Âges : 16 an(s) - 55 an(s)",
+    "website": "http://taformation.ca/centres/centre-de-formation-en-montage-de-lignes",
+    "address": "42 Rte du Président-Kennedy, Saint-Henri, QC G0R 3E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-8",
+    "name": "Centre de services scolaire des Navigateurs, Centre de formation en mécanique de véhicules lourds",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "418-838-8542 poste 43001",
+    "description": "Établissement d'enseignement offrant des programmes de formation professionnelle menant à l'obtention d'un diplôme d'études professionnelles (DEP), d'une attestation de spécialisation professionnelle ... [Plus] | Clientèle : Titulaires d'un DEP ou 4e secondaire (mathématiques, anglais, français) | Âges : 16 an(s) et plus",
+    "website": "http://taformation.ca/centres/centre-de-formation-en-mecanique-de-vehicules-lourds",
+    "address": "Saint-Jean-Chrysostome, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-11",
+    "name": "Centre de services scolaire des Navigateurs, Centre de formation professionnelle Gabriel-Rousseau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-0508 poste 44001",
+    "description": "Établissement d'enseignement offrant des programmes de formation menant à l'obtention d'un diplôme d'études secondaires (DES), professionnelles (DEP) ou à une attestation de spécialisation professionn ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.taformation.ca/cfpgr",
+    "address": "1155 Bd Guillaume-Couture, Lévis, QC G6W 0S2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-10",
+    "name": "Centre de services scolaire des Navigateurs, Centre de formation professionnelle de Lévis",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-8400",
+    "description": "Établissement d'enseignement offrant des programmes de formation professionnelle pour les jeunes, adultes et entreprises, menant à l'obtention d'une attestation de spécialisation professionnelle (ASP) ... [Plus] | Clientèle : Variable selon le programme | Âges : 16 an(s) et plus",
+    "website": "http://taformation.ca/centres/centre-de-formation-professionnelle-de-levis/",
+    "address": "30 Rue Vincent-Chagnon, Lévis, QC G6V 4V6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-13",
+    "name": "Centre de services scolaire des Navigateurs, Centre national de conduite d'engins de chantier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "418-834-0311",
+    "description": "Établissement d'enseignement offrant un programme de formation menant à l'obtention d'un diplôme d'études professionnelles (DEP) Conduite d'engins de chantier (alternance jour et soir) * bouteurs * ch ... [Plus] | Âges : 17 an(s) et plus",
+    "website": "http://taformation.ca/cncec",
+    "address": "1050 Chem. Bélair O, Saint-Jean-Chrysostome, QC G6Z 2L2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-15",
+    "name": "Centre de services scolaire des Navigateurs, Services d'accueil, de référence, de conseil et d'accompagnement",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-838-3398",
+    "description": "Accueil, référence, conseil et accompagnement vers les services offerts aux adultes au Centre de services scolaire des Navigateurs ou dans d'autres établissements scolaires et orientation vers les res ... [Plus] | Âges : 16 an(s) et plus",
+    "website": "http://sarca.ca",
+    "address": "1135 Bd Guillaume-Couture, Lévis, QC G6W 0S2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-services-scolaire-des--ca-14",
+    "name": "Centre de services scolaire des Navigateurs, École des parents",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-838-8300 poste 52088",
+    "description": "Formation pour les parents d'élèves du préscolaire, primaire et secondaire favorisant la réussite éducative et assurant une meilleure communication entre l'école, la famille et la communauté * formati ... [Plus] | Clientèle : Parents d'enfants d'âges préscolaire, primaire et secondaire",
+    "website": "http://cssdn.gouv.qc.ca/parents-et-eleves/outils-pour-les-parents/lecole-des-parents",
+    "address": "1860 1e Rue, Saint-Romuald, QC G6W 5M6, Canada",
     "hours": "Voir site web"
   },
   {
@@ -20879,6 +24066,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-de-stimulation-l-intercom-ca",
+    "name": "Centre de stimulation l'Intercom",
+    "category": "family",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-755-0309",
+    "description": "Ateliers de stimulation aux enfants ayant reçu ou non un diagnostic en lien avec leur développement tel que trouble de la communication, de langage, trouble déficitaire de l'attention avec ou sans hyp ... [Plus] | Âges : 6 an(s) et moins",
+    "website": "http://www.centrestimulationintercom.ca",
+    "address": "63 Bd Frontenac O, Thetford Mines, QC G6G 1M9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-de-vie-de-bellechasse-ca",
+    "name": "Centre de vie de Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Claire",
+    "province": "QC",
+    "phone": "418-883-4058",
+    "description": "Activités sociales, culturelles, intellectuelles et physique * maintien et amélioration de leur qualité de vie en brisant l'isolement et en facilitant l'intégration sociale * défense des droits et pro ... [Plus] | Clientèle : Adultes * aînés autonomes et semi-autonomes | Âges : 50 an(s) et plus",
+    "website": "http://centredeviebellechasse.jimdo.com",
+    "address": "Rue de la Fabrique, Sainte-Claire, QC G0R 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-des-femmes-west-island-pcl",
     "name": "Centre des Femmes West Island",
     "category": "social",
@@ -20918,6 +24131,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "centre-femmes-l-ancrage-ca",
+    "name": "Centre femmes L'Ancrage",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-3733",
+    "description": "Milieu de vie défini par et pour les femmes, brisant leur isolement et favorisant leur autonomie * soutien aux femmes et implication dans toutes les démarches d'amélioration de leurs conditions de vie ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://centrefemmeslancrage.com",
+    "address": "4535 Bd Guillaume-Couture, Lévis, QC G6W 6M6, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "on-camh",
     "name": "Centre for Addiction and Mental Health (CAMH)",
     "category": "mentalHealth",
@@ -20942,6 +24168,525 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.cicscanada.com",
     "address": "1280 Finch Ave W, Toronto, ON M3J 3K6",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "Information 418-386-3363",
+    "description": "Planifier, coordonner, organiser et offrir à la population de son territoire l'ensemble des services sociaux et de santé, selon les orientations et les directives ministérielles * déterminer les mécan ... [Plus] | Clientèle : Plainte 418-338-7767",
+    "website": "http://www.cisssca.com",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-2",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, Bureau de Thetford Mines, Programme Déficience physique",
+    "category": "health",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-7778",
+    "description": "Services spécialisés ou de réadaptation et d'intégration sociale aux personnes présentant une déficience motrice, du langage, auditive et visuelle * accompagnement et soutien à leur entourage * défici ... [Plus] | Clientèle : Personnes présentant une déficience motrice, du langage, auditive ou visuelle",
+    "website": "http://www.cisssca.com/soins-et-services/deficience-et-handicap/deficience-physique",
+    "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-27",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC Monseigneur-Bourget",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-837-9331",
+    "description": "Centre local de services communautaires * SIDEP - Service intégré de dépistage et de prévention des ITSS * dépistage * soins à domicile Inscription à la liste d’attente pour avoir accès à un médecin d ... [Plus]",
+    "website": "http://www.cisssca.com",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-5",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC d'Adstock",
+    "category": "health",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "418-422-2024",
+    "description": "Services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * authentification de la carte d'assurance maladie sur rendez-vous * prélèvement ... [Plus] | Clientèle : Demande d'inscription à la liste d'attente pour avoir accès à un médecin de famille 418-248‑0630 poste 5146",
+    "website": "http://www.cisssca.com",
+    "address": "Adstock, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-40",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC d'East Broughton, CLSC d'East Broughton",
+    "category": "health",
+    "subcategory": "",
+    "city": "East Broughton",
+    "province": "QC",
+    "phone": "418-427-2015",
+    "description": "Services de santé et services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * authentification de la carte d'assurance maladie * assistance pour l'obtention d'u ... [Plus] | Clientèle : Demande d'inscription à la liste d'attente pour avoir accès à un médecin de famille 418-338‑7400",
+    "website": "http://www.cisssca.com",
+    "address": "East Broughton, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-38",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Beauceville, CLSC de Beauceville",
+    "category": "health",
+    "subcategory": "",
+    "city": "Beauceville",
+    "province": "QC",
+    "phone": "Consultation d'une infirmière 418-774-5722",
+    "description": "Offre, en première ligne, à la population du territoire qu'ils dessert, des services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * so ... [Plus] | Clientèle : 418-774‑3304",
+    "website": "http://www.cisssca.com",
+    "address": "253 QC-108, Beauceville, QC G5X 0C3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-6",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Beauceville, Centre de réadaptation en alcoolisme et toxicomanie de Beauceville",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Beauceville",
+    "province": "QC",
+    "phone": "418-774-3329",
+    "description": "Centre public de réadaptation pour les personnes vivant des problèmes de dépendance à l'alcool, drogues, médicaments ou aux prises avec un problème de jeu excessif * désintoxication et lit de dépannag ... [Plus]",
+    "website": "http://www.cisssca.com",
+    "address": "253 QC-108, Beauceville, QC G5X 2Z3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-7",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Beauceville, Programme Déficience physique, Bureau de Beauceville",
+    "category": "health",
+    "subcategory": "",
+    "city": "Beauceville",
+    "province": "QC",
+    "phone": "418-774-3410",
+    "description": "Services spécialisés ou de réadaptation et d'intégration sociale aux personnes présentant une déficience motrice, du langage, auditive et visuelle * accompagnement et soutien à leur entourage * défici ... [Plus] | Clientèle : Personnes présentant une déficience motrice, du langage, auditive ou visuelle",
+    "website": "http://www.cisssca.com/soins-et-services/deficience-et-handicap/deficience-physique",
+    "address": "253 QC-108, Beauceville, QC G5X 0C3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-8",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Disraeli",
+    "category": "health",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "Information générale et prélèvements 418-449-3513",
+    "description": "Services de santé et services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * authentification de la carte d'assurance maladie sur rendez-vous * chirurgie mineu ... [Plus] | Clientèle : Demande d'inscription à la liste d'attente pour avoir accès à un médecin de famille 418-248‑0630 poste 5146",
+    "website": "http://www.cisssca.com",
+    "address": "Disraeli, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-13",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de L'Isle-aux-Grues",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Antoine-de-L'Isle-aux-Grues",
+    "province": "QC",
+    "phone": "418-248-4651",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Demande d'inscription à la liste d'attente pour avoir accès à un médecin de famille 418-248‑0630",
+    "website": "http://www.cisssca.com",
+    "address": "L'Isle-aux-Grues, Saint-Antoine-de-l'Isle-aux-Grues, QC G0R 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-39",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de La Guadeloupe, CLSC de La Guadeloupe",
+    "category": "health",
+    "subcategory": "",
+    "city": "La Guadeloupe",
+    "province": "QC",
+    "phone": "Pour la clientèle sans médecin (guichet d'accès) : 418-459-3441",
+    "description": "Offre, en première ligne, à la population du territoire qu'ils dessert, des services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * so ... [Plus] | Clientèle : Santé voyage 418-228-2572",
+    "website": "http://www.cisssca.com",
+    "address": "437 15e Rue O, La Guadeloupe, QC G6G 0L1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-9",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Lac-Etchemin",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-8001",
+    "description": "Offre, en première ligne, à la population du territoire, des services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion Soins et services g ... [Plus] | Clientèle : Demande d’inscription à la liste d’attente pour avoir accès à un médecin de famille 418-248‑0630 poste 5146",
+    "website": "http://www.cisssca.com",
+    "address": "331 Rue du Sanatorium, Lac-Etchemin, QC G0R 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-10",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Laurier-Station",
+    "category": "health",
+    "subcategory": "",
+    "city": "Laurier-Station",
+    "province": "QC",
+    "phone": "Numéro général et prélèvement 418-728-3435",
+    "description": "Offre, en première ligne, à la population du territoire qu'ils dessert, des services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion Soin ... [Plus] | Clientèle : Centre de rendez-vous pour consultation et imagerie médicale 418-728-3435 option 3",
+    "website": "http://www.cisssca.com",
+    "address": "135 Rue de la Station, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-12",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Lévis",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Général, CHSLD et rendez-vous pour prélèvements 418-835-3400",
+    "description": "Offre, en première ligne, à la population du territoire qu'ils dessert, des services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * au ... [Plus] | Clientèle : Femmes enceintes sans médecin de famille 418-380-2072",
+    "website": "http://www.cisssca.com",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-11",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Lévis, Centre de réadaptation en dépendance de Lévis",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-3400",
+    "description": "Centre public de réadaptation pour les personnes vivant des problèmes de dépendance à l'alcool, drogues (opioïdes), médicaments ou aux prises avec un problème de jeu excessif * réadaptation externe : ... [Plus] | Clientèle : Personnes vivant des problèmes de dépendance à l'alcool, drogues, médicaments * personnes aux prises avec un problème de jeu excessif",
+    "website": "http://www.cisssca.com",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-14",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Montmagny",
+    "category": "health",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-2572",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Demande d'inscription à la liste d'attente pour avoir accès à un médecin de famille 418-248‑0630 poste 5146",
+    "website": "http://www.cisssca.com",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-16",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Saint-Fabien-de-Panet",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Fabien-de-Panet",
+    "province": "QC",
+    "phone": "418-249-2572 poste 2",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Pour l'infirmière 418-249-2511 poste 6758",
+    "website": "http://www.cisssca.com",
+    "address": "10 Rue Alphonse, Saint-Fabien-de-Panet, QC G0R 2J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-18",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Saint-Georges",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "Numéro général et prélèvements 418-228-2244",
+    "description": "Offre, en première ligne, à la population du territoire qu'ils dessert, des services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * au ... [Plus] | Clientèle : Centrale de rendez-vous 418-228-2572",
+    "website": "http://www.cisssca.com",
+    "address": "12523 Av. 25e, Saint-Georges, QC G5Y 5N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-17",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Saint-Gédéon-de-Beauce",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Gédéon-de-Beauce",
+    "province": "QC",
+    "phone": "418-582-3355",
+    "description": "Offre, en première ligne, à la population du territoire qu'ils dessert, des services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * au ... [Plus]",
+    "website": "http://www.cisssca.com",
+    "address": "127 1 Avenue S, Saint-Gédéon-de-Beauce, QC G0M 1T0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-19",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Saint-Jean-Port-Joli",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-3355",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Centre de rendez-vous 418-598-3355 poste 6364",
+    "website": "http://www.cisssca.com",
+    "address": "430 Rue Jean-Leclerc, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-20",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Saint-Joseph-de-Beauce",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-397-5722",
+    "description": "Offre, en première ligne, à la population du territoire qu'il dessert, des services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * aut ... [Plus] | Clientèle : Prélèvement 418-774-5762",
+    "website": "http://www.cisssca.com",
+    "address": "1125 Av. du Palais, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-21",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Saint-Lazare-de-Bellechasse",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-883-2227",
+    "description": "Offre, en première ligne, à la population du territoire qu'ils dessert, des services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * au ... [Plus]",
+    "website": "http://www.cisssca.com",
+    "address": "100-A Rue Monseigneur-Bilodeau, Saint-Lazare-de-Bellechasse, QC G0R 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-22",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Saint-Pamphile",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Pamphile",
+    "province": "QC",
+    "phone": "418-356-3393",
+    "description": "Offre en première ligne des services de santé et des services sociaux courants et, à la population du territoire qu'il dessert, des services de santé et des services sociaux de nature préventive et cu ... [Plus] | Clientèle : Consultation d'une infirmière 418-356-3393 poste 6510",
+    "website": "http://www.cisssca.com",
+    "address": "Saint-Pamphile, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-23",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Saint-Prosper",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Prosper",
+    "province": "QC",
+    "phone": "418-594-8282",
+    "description": "Offre, en première ligne, à la population du territoire, des services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * ajustement d'ordo ... [Plus] | Clientèle : Infirmière 418-594-8282 poste 45200 * 418-594-8181",
+    "website": "http://www.cisssca.com",
+    "address": "Saint-Prosper, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-24",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Saint-Romuald",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-380-8991",
+    "description": "Offre, en première ligne, à la population du territoire qu'ils dessert, des services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * aj ... [Plus] | Clientèle : Centre de rendez-vous 418-380‑2090",
+    "website": "http://www.cisssca.com",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-25",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Saint-Romuald, Groupe pour personnes endeuillées à la suite d'un suicide",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-883-2227 poste 82291",
+    "description": "Groupe d’entraide pour personnes endeuillées par suicide * soutien pour exprimer la détresse, surmonter la culpabilité et traverser le deuil * aide à se reconstruire et à réorganiser sa vie | Clientèle : Personnes endeuillées à la suite d'un suicide | Âges : 18 an(s) et plus",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-15",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Sainte-Marie",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-8181",
+    "description": "Offre, en première ligne, à la population du territoire qu'ils dessert, des services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * au ... [Plus] | Clientèle : Centre de rendez-vous 418-387-6060",
+    "website": "http://www.cisssca.com",
+    "address": "775 Rue Étienne-Raymond, Sainte-Marie, QC G6E 0B9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-26",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, CLSC de Thetford Mines",
+    "category": "health",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-3511",
+    "description": "Services de santé et des services sociaux courants, de nature préventive ou curative, de réadaptation ou de réinsertion * authentification de la carte d'assurance maladie * assistance pour l'obtention ... [Plus]",
+    "website": "http://www.cisssca.com",
+    "address": "17 Rue Notre Dame O #100, Thetford Mines, QC G6G 1J1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-37",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, Centre Paul-Gilbert, Centre Paul-Gilbert",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-380-8993",
+    "description": "Centre hospitalier de soins généraux et spécialisés * centre d'hébergement de soins longue durée * hôpital de jour * clinique d'évaluation * consultations externes * centre de prélèvements * imagerie ... [Plus] | Clientèle : Salle d'urgence 418-380-8993 poste 182063",
+    "website": "http://www.cisssca.com",
+    "address": "Charny, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-3",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, Centre jeunesse Chaudière-Appalaches",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "",
+    "description": "Services de nature psychosociale, de réadaptation et d'urgence sociale, requis par la situation d'un jeune en vertu de la Loi sur la protection de la jeunesse (LPJ) et de la Loi sur le système de just ... [Plus] | Clientèle : Points de service | Âges : 17 an(s) et moins",
+    "website": "http://www.cisssca.com",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-4",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, Centres d'hébergement - Chaudière-Appalaches",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "",
+    "description": "Centres d'hébergement de longue durée dans la région de la Chaudière-Appalaches Contacter le CLSC de son secteur pour obtenir une place Liste complète des CHSLD https://www.cisssca.com/nous-joindre/co ... [Plus]",
+    "website": "http://www.cisssca.com/nous-joindre/coordonnees-des-points-de-service/chsld/",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-28",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, Hôpital de Montmagny",
+    "category": "health",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-0630",
+    "description": "Établissement de soins généraux et spécialisés exerçant une fonction unique sur le territoire et offrant des services spécialisés dont oncologie, chirurgie, obstétrique et hémodialyse * changement et ... [Plus]",
+    "website": "http://www.cisssca.com",
+    "address": "350 Bd Taché O, Montmagny, QC G5V 3R8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-29",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, Hôpital de Montmagny, Programme Déficience physique, Bureau de Montmagny",
+    "category": "health",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-0639",
+    "description": "Services spécialisés ou de réadaptation et d'intégration sociale aux personnes présentant une déficience motrice, du langage, auditive et visuelle * accompagnement et soutien à leur entourage * défici ... [Plus] | Clientèle : Personnes présentant une déficience motrice, du langage, auditive ou visuelle",
+    "website": "http://www.cisssca.com/soins-et-services/deficience-et-handicap/deficience-physique",
+    "address": "350 Bd Taché O, Montmagny, QC G5V 3R8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-30",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, Hôpital de Saint-Georges",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-2031",
+    "description": "Établissement offrant des services diagnostiques et des soins médicaux généraux et spécialisés * changement et suivi de pansement * consultation d'une infirmière * contraception * dépistage * distribu ... [Plus] | Clientèle : Centre de rendez-vous 418-228‑8063",
+    "website": "http://www.cisssca.com",
+    "address": "1515 17e Rue, Saint-Georges, QC G5Y 4T8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-31",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, Hôpital de Thetford Mines",
+    "category": "health",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "Renseignements généraux 418-338-7777",
+    "description": "Centre hospitalier de soins et services de santé * coloscopie * dépistage * désintoxication * distribution gratuite de matériel d'injection neuf aux personnes qui consomment des drogues et récupératio ... [Plus] | Clientèle : Urgence 418-338-7711",
+    "website": "http://www.cisssca.com",
+    "address": "1717 Rue Notre Dame E, Thetford Mines, QC G6G 2V4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-34",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, Hôtel-Dieu de Lévis",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Renseignements généraux et chambres 418-835-7121",
+    "description": "L'Hôtel-Dieu de Lévis assume des missions de soins, enseignement, recherche et évaluation des modes d’intervention * il dessert une clientèle locale, régionale et suprarégionale * soins généraux, spéc ... [Plus] | Clientèle : Centre de rendez-vous 418-835-7150",
+    "website": "http://www.cisssca.com",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-32",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, Hôtel-Dieu de Lévis - Centre de médecine de plongée du Québec",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-7121 poste 11505",
+    "description": "Assistance médicale pour les plongeurs professionnels et les plongeurs sportifs du Québec * accès à un médecin en ligne en situation urgente * activités de planification, prévention et formation auprè ... [Plus] | Clientèle : Le grand public * plongeurs * médecins * entreprises",
+    "website": "http://www.cmpq.org",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-33",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, Hôtel-Dieu de Lévis - Centre de planification familiale et de gynécologie",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-7121 poste 13602",
+    "description": "Services spécialisés visant à répondre aux besoins de la population de la région de la Chaudière-Appalaches en matière de santé reproductive * suivi de grossesse * soutien et conseils relatifs à la co ... [Plus] | Clientèle : Le grand public * femmes * couples * personnes désirant recourir à l'interruption volontaire de grossesse",
+    "website": "http://www.cisssca.com",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-35",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, Maison de naissance Mimosa",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-0205",
+    "description": "Suivi de grossesse dans un environnement chaleureux * accompagnement lors de l'accouchement à la maison de naissance, à l'Hôtel-Dieu de Lévis et au domicile des parents * suivi postnatal * rencontres ... [Plus]",
+    "website": "https://www.cisssca.com/soins-et-services/grossesse-et-maternite/vous-etes-enceinte-ou-vous-etes-une-nouvelle-maman/etre-enceinte/lieux-de-naissance/maison-de-naissance-mimosa",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-int-gr-de-sant-et-de-serv-ca-36",
+    "name": "Centre intégré de santé et de services sociaux de Chaudière-Appalaches, Programme Déficience physique",
+    "category": "health",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-380-2064",
+    "description": "Services spécialisés ou de réadaptation et d'intégration sociale aux personnes présentant une déficience motrice, du langage, auditive et visuelle * accompagnement et soutien à leur entourage * défici ... [Plus] | Clientèle : Guichet d'accès 418-761-2737 (418-761-CRDP)",
+    "website": "http://www.cisssca.com/soins-et-services/deficience-et-handicap/deficience-physique",
+    "address": "975 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "centre-int-gr-de-sant-et-de-serv-cn",
@@ -21606,6 +25351,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sans RV ou sur RV selon service."
   },
   {
+    "id": "centre-marianiste-d-ducation-de--ca",
+    "name": "Centre marianiste d'éducation de la foi",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Henri",
+    "province": "QC",
+    "phone": "418-882-0002",
+    "description": "Communauté chrétienne de personnes voulant vivre la vie marianiste et s'y engageant selon leurs dons, goûts et disponibilités * écoute-prière en personne ou au téléphone * sessions pour grandir dans l ... [Plus]",
+    "website": "http://www.centremarianiste.org",
+    "address": "1525 Chem. du Bord-de-l'Eau, Saint-Henri, QC G0R 3E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "centre-r-sidentiel-communautaire-cn",
     "name": "Centre résidentiel communautaire Kapatakan Gilles-Jourdain",
     "category": "social",
@@ -21632,6 +25390,108 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "centre-universitaire-des-appalac-ca",
+    "name": "Centre universitaire des Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-8484",
+    "description": "Centre de services offrant des formations de niveau universitaire * analyse des besoins régionaux, promotion des programmes, recrutement des étudiants, services immédiats offerts en région et organisa ... [Plus]",
+    "website": "http://www.cua.qc.ca",
+    "address": "1055 116e Rue, Saint-Georges, QC G5Y 3G1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-universitaire-des-appalac-ca-2",
+    "name": "Centre universitaire des Appalaches, Point de service Thetford Mines",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-228-8484 poste 6205",
+    "description": "Centre de services offrant des formations de niveau universitaire * analyse des besoins régionaux, promotion des programmes, recrutement des étudiants, services immédiats offerts en région et organisa ... [Plus]",
+    "website": "http://www.cua.qc.ca",
+    "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-dieu-l-ami-ca",
+    "name": "Centre-Dieu L'Ami",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-7545",
+    "description": "Lieu permettant ressourcement et prière * accueil * accompagnement et écoute avec un prêtre, diacre ou personne laïque (avec rendez-vous) * lieu de prière et d'adoration * démarche de pardon en groupe ... [Plus] | Âges : 18 an(s) et plus",
+    "address": "11400 1re Avenue, Saint-Georges, QC G5Y 2B9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-dieu-l-oasis-ca",
+    "name": "Centre-Dieu L'Oasis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-837-5484",
+    "description": "Lieu permettant ressourcement et prière * écoute et accueil * prière",
+    "address": "1200 Bd Alphonse-Desjardins, Lévis, QC G6V 7Z6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-femmes-de-beauce-ca",
+    "name": "Centre-Femmes de Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-4037",
+    "description": "Lieu d'appartenance et d'entraide pour les femmes de toute condition et situation économique * solidarité sociale * soutien à l'amélioration de la condition féminine * justice sociale * accueil, écout ... [Plus] | Clientèle : Femmes * aînées * femmes à faible revenu et leur famille | Âges : 18 an(s) et plus",
+    "website": "http://www.centrefemmesdebeauce.org",
+    "address": "12725 Bd Lacroix, Saint-Georges, QC G5Y 1M5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-femmes-de-lotbini-re-ca",
+    "name": "Centre-Femmes de Lotbinière",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Flavien",
+    "province": "QC",
+    "phone": "418-728-4402",
+    "description": "Lieu de rencontre, échange, information, entraide et formation offert aux femmes * accueil sur place, au téléphone ou via Zoom pour relation d'aide et référence * cuisines collectives * centre de docu ... [Plus] | Clientèle : Femmes * cuisines collectives pour femmes ayant des enfants et qui sont à faible revenu",
+    "website": "http://www.cflotbiniere.org",
+    "address": "139 Rue Principale, Saint-Flavien, QC G0S 2M0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-femmes-la-jardilec-ca",
+    "name": "Centre-femmes La Jardilec",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-9677",
+    "description": "Lieu de rencontre, échanges, information, entraide et formation * réalisation de projets sur les enjeux sociaux, économiques et politiques affectant la réalité des femmes Axes d'intervention : santé m ... [Plus] | Clientèle : Femmes",
+    "website": "http://www.cflajardilec.org",
+    "address": "25 Rue Gérard-Ouellet, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "centre-femmes-de-bellechasse-ca",
+    "name": "Centre-femmes de Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Claire",
+    "province": "QC",
+    "phone": "418-883-3633",
+    "description": "Amélioration de la condition de vie des femmes * écoute, soutien dans les situations de vie difficiles * offre d'activités visant à briser l'isolement des femmes et favoriser leur autonomie * animatio ... [Plus] | Clientèle : Femmes | Âges : 16 an(s) et plus",
+    "website": "http://centrefemmesbellechasse.com",
+    "address": "55-A Rue de la Fabrique, Sainte-Claire, QC G0R 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "tr-fam1",
     "name": "Centre-femmes de la Mauricie",
     "category": "family",
@@ -21642,6 +25502,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre de ressources pour femmes à Trois-Rivières. Soutien psychosocial, ateliers de développement personnel, aide aux démarches administratives, accompagnement. Accueil gratuit, espace sécuritaire et sans jugement.",
     "address": "889, rue du Haut-Boc, Trois-Rivières, QC G9A 4W7",
     "hours": "Lun-ven 8h30-16h30. Sur RV."
+  },
+  {
+    "id": "cercle-de-l-amiti-de-cap-saint-i-ca",
+    "name": "Cercle de l'amitié de Cap-Saint-Ignace",
+    "category": "food",
+    "subcategory": "",
+    "city": "Cap-Saint-Ignace",
+    "province": "QC",
+    "phone": "418-241-9512",
+    "description": "Services aux aînés et personnes ayant un handicap léger * accompagnement-transport pour rendez-vous médicaux * activités et loisirs * repas communautaires * popote roulante * Service fraternel de dépa ... [Plus] | Clientèle : Aînés en perte d'autonomie * personnes malades, ayant un handicap intellectuel, sensoriel ou physique léger * Service fraternel de dépannage pour familles en difficulté",
+    "address": "Municipalité de Cap-Saint-Ignace, QC G0R, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "cercle-des-mycologues-de-sept-le-cn",
@@ -21668,6 +25540,175 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "cfq.qc.ca",
     "address": "1193, rue Maisonneuve, Longueuil, Montérégie, QC, J4K 2S7",
     "hours": "lundi au vendredi 8h30 à 16h30"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-ca",
+    "name": "Cercles de Fermières du Québec, Cercle de Fermières de Breakeyville, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Hélène-de-Breakeyville",
+    "province": "QC",
+    "phone": "418-832-4288",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * diffusion d'information et organisat ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "Breakeyville, Lévis, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-ca-2",
+    "name": "Cercles de Fermières du Québec, Cercle de Fermières de Saint-Aubert, Fédération 05 Les Appalaches",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Aubert",
+    "province": "QC",
+    "phone": "418-598-9731",
+    "description": "Cercle de Fermières dont les membres sont vouées à l'amélioration des conditions de vie de la femme et la famille ainsi qu'à la transmission du patrimoine culturel et artisanal * partage des connaissa ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://cfq.qc.ca",
+    "address": "Côte de Saint-Aubert, Saint-Aubert, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-ca-3",
+    "name": "Cercles de Fermières du Québec, Cercle des Fermières Christ-Roi, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-952-4285",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * diffusion d'information et organisat ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "435 Rue Gosford O, Sainte-Agathe-de-Lotbinière, QC G0S 2A0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-ca-10",
+    "name": "Cercles de Fermières du Québec, Cercle des Fermières Lévis Est, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-837-1476",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * diffusion d'information et organisat ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "1007 Av. Taniata, Saint-Jean-Chrysostome, QC G6Z 3H4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-ca-11",
+    "name": "Cercles de Fermières du Québec, Cercle des Fermières Saint-David, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-3572",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * diffusion d'information et organisat ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-ca-13",
+    "name": "Cercles de Fermières du Québec, Cercle des Fermières Saint-Étienne-de-Lauzon, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Étienne-de-Lauzon",
+    "province": "QC",
+    "phone": "418-836-2630",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * diffusion d'information et organisat ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.fermieres-st-etienne.com",
+    "address": "1 Pl. Chamberland #3, Saint-Étienne-de-Lauzon, QC G6J 1R8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-ca-12",
+    "name": "Cercles de Fermières du Québec, Cercle des Fermières Sainte-Bernadette, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * diffusion d'information et organisat ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-ca-4",
+    "name": "Cercles de Fermières du Québec, Cercle des Fermières de Charny, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-832-5864",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * diffusion d'information et organisat ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "3332 Av. des Églises, Charny, QC G6X 1W4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-ca-5",
+    "name": "Cercles de Fermières du Québec, Cercle des Fermières de Pintendre, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Pintendre",
+    "province": "QC",
+    "phone": "581-984-6147",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * diffusion d'information et organisat ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "Pintendre, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-ca-6",
+    "name": "Cercles de Fermières du Québec, Cercle des Fermières de Saint-Bernard, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Bernard",
+    "province": "QC",
+    "phone": "418-475-6553",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * diffusion d'information et organisat ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "Saint-Bernard, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-ca-7",
+    "name": "Cercles de Fermières du Québec, Cercle des Fermières de Saint-Jean-Chrysostome, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "418-839-1777",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * diffusion d'information et organisat ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "1007 Av. Taniata, Saint-Jean-Chrysostome, QC G6Z 3H4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-ca-8",
+    "name": "Cercles de Fermières du Québec, Cercle des Fermières de Saint-Nicolas, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-573-0940",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * diffusion d'information et organisat ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "Saint-Nicolas, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-c-ca-9",
+    "name": "Cercles de Fermières du Québec, Cercle des Fermières de Saint-Romuald, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-803-1105",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * diffusion d'information et organisat ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "St-Romuald, Levis, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "cercles-de-fermi-res-du-qu-bec-c-cn",
@@ -21746,6 +25787,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "cercles-de-fermi-res-du-qu-bec-f-ca",
+    "name": "Cercles de Fermières du Québec, Fédération 06 Bellechasse / Etchemins / Montmagny",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-469-2040",
+    "description": "Par son action et les différentes œuvres caritatives soutenues, elle contribution à l'amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "Les Etchemins Regional County Municipality, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-f-ca-2",
+    "name": "Cercles de Fermières du Québec, Fédération 09 Beauce / Appalaches",
+    "category": "family",
+    "subcategory": "",
+    "city": "MRC Beauce-Centre",
+    "province": "QC",
+    "phone": "",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * information et conférences * magazin ... [Plus] | Clientèle : Femmes * adolescentes * projets annuels pour les jeunes de l'école primaire | Âges : 14 an(s) et plus",
+    "website": "http://cfq.qc.ca",
+    "address": "298 Rue Principale, Saint-Victor, QC G0M 2B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cercles-de-fermi-res-du-qu-bec-f-ca-3",
+    "name": "Cercles de Fermières du Québec, Fédération 10 Lévis / Lotbinière / Nouvelle-Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Chaudière-Appalaches",
+    "province": "QC",
+    "phone": "",
+    "description": "Amélioration des conditions de vie de la femme et de la famille * transmission du patrimoine culturel et artisanal * partage des connaissances et du savoir-faire * diffusion d'information et organisat ... [Plus] | Clientèle : Femmes * adolescentes | Âges : 14 an(s) et plus",
+    "website": "http://www.cfq.qc.ca",
+    "address": "401 Rue Jean-Marie-Rousseau, Vallée-Jonction, QC G0S 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "chambly-ville-mtg",
     "name": "Chambly - Ville",
     "category": "social",
@@ -21782,6 +25862,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Regroupement de gens d'affaires intéressés à mettre en commun leur vision du développement régional, leurs expériences et expertise afin de promouvoir et défendre les intérêts économiques, sociaux, ci ... [Plus] | Clientèle : Gens d'affaires * entreprises",
     "website": "https://www.ccsium.net/",
     "address": "6 Rue Napoléon, Sept-Îles, QC G4R 3K4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chambre-de-commerce-et-d-industr-ca",
+    "name": "Chambre de commerce et d'industrie Nouvelle-Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-2006",
+    "description": "Développement socioéconomique des 11 municipalités de la MRC de la Nouvelle-Beauce * activités de réseautage et événements | Clientèle : Commerçants * entrepreneurs * industriels * professionnels * travailleurs autonomes * entreprises * entreprises de services * commerces * organismes | Âges : 18 an(s) et plus",
+    "website": "http://www.ccinb.ca",
+    "address": "280 Bd Vachon N bureau 315, Sainte-Marie, QC G6E 0H2, Canada",
     "hours": "Voir site web"
   },
   {
@@ -21823,6 +25916,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "chap-alliance-ca",
+    "name": "Chap alliance",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-397-4341",
+    "description": "Entreprise adaptée offrant des emplois aux personnes ayant des limitations * jointage de bois à forfait, moulures * entretien ménager industriel * gardiens de sécurité Voir dossiers individuels : * Ch ... [Plus] | Clientèle : Personnes ayant des limitations physiques, intellectuelles et mentales",
+    "website": "http://chapalliance.com",
+    "address": "1280 Du Palais Ave, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chap-alliance-hichaud-division-b-ca",
+    "name": "Chap alliance, Hichaud division Beauce",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-7431",
+    "description": "Entreprise adaptée offrant des emplois aux personnes ayant des limitations * travaux de couture, confection Chap aubaines : vente au détail * bottes pour enfants * nourriture https://chapalliance.com/ ... [Plus] | Clientèle : Personnes ayant des limitations physiques, intellectuelles et mentales",
+    "website": "http://chapalliance.com/",
+    "address": "Saint-Georges, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "charlemagne-loisirs-et-culture-chl",
     "name": "Charlemagne - Loisirs et Culture",
     "category": "social",
@@ -21834,6 +25953,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.charlemagne.ca/evenements",
     "address": "84, rue du Sacré-Coeur, Charlemagne, Lanaudière, QC, J5Z 1W8",
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "chaudronn-e-la-ca",
+    "name": "Chaudronnée (La)",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-3235",
+    "description": "Popote roulante pour les aînés, nouveaux parents, proches aidants et personnes convalescentes ou en perte d'autonomie * repas 3 services | Clientèle : Aînés * nouveaux parents * proches aidants * personnes convalescentes ou en perte d'autonomie",
+    "website": "http://www.lachaudronnee.org",
+    "address": "Saint-Jean-Port-Joli, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "chaumiere-jeunesse-de-rawdon-la-rwd",
@@ -21889,6 +26021,169 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "clinique d'impôt 2026: sur rendez-vous seulement, 2 mars au 30 avril, lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00, mardi et mercredi 16h30 à 18h30"
   },
   {
+    "id": "chevaliers-de-colomb-de-berni-re-ca",
+    "name": "Chevaliers de Colomb de Bernières - Saint-Nicolas, conseil 9896",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-531-0967",
+    "description": "Mouvement catholique laïque et masculin assurant la promotion d'œuvres éducatives, charitables, religieuses et sociales * soutien financier aux organismes à but non lucratif",
+    "website": "http://chevaliersdecolomb.com",
+    "address": "Rue de Bernières, Lévis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-de-charny-c-ca",
+    "name": "Chevaliers de Colomb de Charny, conseil 6852",
+    "category": "social",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-832-2643",
+    "description": "Mouvement catholique laïque et masculin assurant la promotion d'œuvres éducatives, charitables, religieuses et sociales * soutien financier aux organismes à but non lucratif",
+    "website": "http://chevaliersdecolomb.com",
+    "address": "2506 Chem. de Charny, Charny, QC G6X 2V3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-de-lauzon-c-ca",
+    "name": "Chevaliers de Colomb de Lauzon, conseil 10650",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-837-4780",
+    "description": "Mouvement catholique laïque et masculin assurant la promotion d'œuvres éducatives, charitables, religieuses et sociales * soutien financier aux organismes à but non lucratif",
+    "address": "234 Rue de la Grande-Hermine, Saint-Romuald, QC G6W 3A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-de-l-vis-co-ca",
+    "name": "Chevaliers de Colomb de Lévis, conseil 2651",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-208-1600",
+    "description": "Mouvement catholique laïque et masculin assurant la promotion d'œuvres éducatives, charitables, religieuses et sociales * soutien financier aux organismes à but non lucratif",
+    "website": "http://chevaliersdecolomb.com",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-de-saint-da-ca",
+    "name": "Chevaliers de Colomb de Saint-David de l'Auberivière, conseil 9913",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-891-9477",
+    "description": "Mouvement catholique laïque et masculin assurant la promotion d'œuvres éducatives, charitables, religieuses et sociales * soutien financier aux organismes à but non lucratif | Âges : 18 an(s) et plus",
+    "website": "http://chevaliersdecolomb.com",
+    "address": "Saint-David-de-l'Auberivière, Lévis, QC G6W 1H7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-de-saint-lo-ca",
+    "name": "Chevaliers de Colomb de Saint-Louis-de-Pintendre, conseil 11764",
+    "category": "social",
+    "subcategory": "",
+    "city": "Pintendre",
+    "province": "QC",
+    "phone": "418-887-3307",
+    "description": "Mouvement catholique laïque et masculin assurant la promotion d'œuvres éducatives, charitables, religieuses et sociales * soutien financier aux organismes à but non lucratif | Âges : 18 an(s) et plus",
+    "website": "http://chevaliersdecolomb.com",
+    "address": "815 Chem. Pintendre, Pintendre, QC G6C 1C6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-de-saint-ro-ca",
+    "name": "Chevaliers de Colomb de Saint-Romuald, conseil 2981",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-8184",
+    "description": "Mouvement catholique laïque et masculin assurant la promotion d'œuvres éducatives, charitables, religieuses et sociales * soutien financier aux organismes à but non lucratif",
+    "website": "http://chevaliersdecolomb.com",
+    "address": "234 Rue de la Grande-Hermine, Saint-Romuald, QC G6W 3A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-de-saint-r--ca",
+    "name": "Chevaliers de Colomb de Saint-Rédempteur, conseil 12222",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "418-554-9967",
+    "description": "Mouvement catholique laïque et masculin assurant la promotion d'œuvres éducatives, charitables, religieuses et sociales * soutien financier aux organismes à but non lucratif | Âges : 18 an(s) et plus",
+    "website": "http://chevaliersdecolomb.com",
+    "address": "Rue du Grand-Tronc, Lévis, QC G6K 1C3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-l-ca",
+    "name": "Chevaliers de Colomb du Québec, Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis * programme Arbre enchanté des Chevaliers de Colomb Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevali ... [Plus] | Âges : 18 an(s) et plus",
+    "address": "234 Rue de la Grande-Hermine, Saint-Romuald, QC G6W 3A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-m-ca-9",
+    "name": "Chevaliers de Colomb du Québec, MRC Robert-Cliche",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC Beauce-Centre",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC Robert-Cliche * Beaucevill ... [Plus]",
+    "address": "111 107e Rue, Beauceville, QC G5X 2P9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-m-ca",
+    "name": "Chevaliers de Colomb du Québec, MRC de Beauce-Sartigan",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Beauce-Sartigan",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC de Beauce-Sartigan * Notre ... [Plus]",
+    "address": "12375 Bd Lacroix, Saint-Georges, QC G5Y 1L8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-m-ca-2",
+    "name": "Chevaliers de Colomb du Québec, MRC de Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Bellechasse",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC de Bellechasse * Saint-Dam ... [Plus]",
+    "address": "Bellechasse Regional County Municipality, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-m-ca-4",
+    "name": "Chevaliers de Colomb du Québec, MRC de L'Islet",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de L'Islet",
+    "province": "QC",
+    "phone": "418-247-3449",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC de L'Islet * L'Islet Conse ... [Plus]",
+    "address": "L'Islet Regional County Municipality, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "chevaliers-de-colomb-du-qu-bec-m-cn",
     "name": "Chevaliers de Colomb du Québec, MRC de La Haute-Côte-Nord",
     "category": "social",
@@ -21898,6 +26193,18 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "",
     "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC de La Haute-Côte-Nord * Fo ... [Plus]",
     "address": "26 Rue De La Rivère #101, Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-m-ca-5",
+    "name": "Chevaliers de Colomb du Québec, MRC de Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Lotbinière",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC de Lotbinière * Saint-Agap ... [Plus]",
+    "address": "126 Rue Olivier, Laurier-Station, QC G0S 1N0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -21925,6 +26232,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "chevaliers-de-colomb-du-qu-bec-m-ca-6",
+    "name": "Chevaliers de Colomb du Québec, MRC de Montmagny",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Montmagny",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC de Montmagny * Cap-Saint-I ... [Plus]",
+    "address": "6 Rue St Jean Baptiste E Bureau 300, Montmagny, QC G5V 1J7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "chevaliers-de-colomb-du-qu-bec-m-cn-4",
     "name": "Chevaliers de Colomb du Québec, MRC de Sept-Rivières",
     "category": "social",
@@ -21934,6 +26253,42 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "",
     "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC de Sept-Rivières * Port-Ca ... [Plus]",
     "address": "Sept-Rivières, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-m-ca-3",
+    "name": "Chevaliers de Colomb du Québec, MRC de la Nouvelle-Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de la Nouvelle-Beauce",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC de la Nouvelle-Beauce * Sa ... [Plus]",
+    "address": "280 Bd Vachon N, Sainte-Marie, QC G6E 0H2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-m-ca-7",
+    "name": "Chevaliers de Colomb du Québec, MRC des Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC des Appalaches",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC des Appalaches * Disraéli ... [Plus]",
+    "address": "233 Bd Frontenac O, Thetford Mines, QC G6G 6K2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "chevaliers-de-colomb-du-qu-bec-m-ca-8",
+    "name": "Chevaliers de Colomb du Québec, MRC des Etchemins",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC Les Etchemins",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide aux plus démunis Répertoire des conseils des Chevaliers de Colomb http://www.chevaliersdecolomb.com/recherche_regions.html Conseils des Chevaliers de Colomb dans la MRC des Etchemins * Lac-Etchem ... [Plus]",
+    "address": "223 2e Avenue, Lac-Etchemin, QC G0R 1S0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -22413,6 +26768,58 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.ville-cheneville.com",
     "address": "63, rue de l'Hôtel-de-Ville, Chénéville, Outaouais, QC, J0V 1E0",
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "ch-ur-des-saisons-ca",
+    "name": "Chœur des saisons",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "581-986-1459",
+    "description": "Groupe vocal à quatre voix mixtes * chants francophone * volet chant liturgique * concert en juin | Clientèle : Adultes",
+    "website": "https://www.choeurdessaisons.com/?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExQmZ3V2tTN1o2VFJjOGJIMXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR5szmQmLgyajG2cKZNgrwT-YhLKh",
+    "address": "Saint-Nicolas, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "ch-ur-du-monde-ca",
+    "name": "Chœur du Monde",
+    "category": "social",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-657-1369",
+    "description": "Ensemble vocal à quatre voix mixtes accompagné de musiciens * répertoire populaire et classique * concerts",
+    "website": "http://choeurdumonde.org",
+    "address": "3224 Pl. de l'Église, Charny, QC G6X 3L8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "ch-ur-du-c-gep-de-l-vis-ca",
+    "name": "Chœur du cégep de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "",
+    "description": "Chorale à quatre voix mixtes * répertoire varié * concerts",
+    "website": "http://www.choeurcegeplevis.ca",
+    "address": "205 Rue Monseigneur-Bourget, Lévis, QC G6V 6Z9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "ch-ur-polyphonique-de-l-vis-ca",
+    "name": "Chœur polyphonique de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "581-999-5506",
+    "description": "Chœur de chant choral polyphonique * répertoire classique, sacré et profane * concerts | Âges : 16 an(s) et plus",
+    "website": "http://choeurpolyphoniquedelevis.org",
+    "address": "Levis, QC G6V 1G2, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "cienov-rep",
@@ -23404,6 +27811,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "atelier: lundi au vendredi 9h00 à 16h00, bouquinerie: lundi au vendredi 9h00 à 16h00 et le premier dimanche du mois, juillet et août: fermé, sauf le premier dimanche du mois"
   },
   {
+    "id": "cl-de-l-alpha-ca",
+    "name": "Clé de L'Alpha",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-8193",
+    "description": "Services d'alphabétisation * ateliers de français et de calcul * formation de base en informatique * activités extérieures reliées à l'apprentissage | Clientèle : Jeunes adultes et adultes analphabètes | Âges : 16 an(s) et plus",
+    "website": "http://www.clealpha.ca",
+    "address": "159 Rue Notre Dame E, Thetford Mines, QC G6G 2S1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-clsc-mistissini-cmc-mistissini",
     "name": "Cmc Mistissini",
     "category": "health",
@@ -24056,6 +28476,56 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 16h30"
   },
   {
+    "id": "comit-culturel-et-patrimonial-de-ca",
+    "name": "Comité culturel et patrimonial de Beauceville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Beauceville",
+    "province": "QC",
+    "phone": "418-774-5212",
+    "description": "Offre et promotion de toutes formes d'activités culturelles, arts de la scène, métiers d'art et arts visuels * sensibilisation à la protection et à la mise en valeur du patrimoine humain * défense et ... [Plus] | Clientèle : Le grand public | Âges : 6 an(s) et plus",
+    "address": "Beauceville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-d-aide-beauceville-ca",
+    "name": "Comité d'aide Beauceville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Beauceville",
+    "province": "QC",
+    "phone": "418-774-5444 poste 2",
+    "description": "Soutien, aide alimentaire et matérielle aux personnes à faible revenu * distribution de nourriture (à Saint-Alfred * Saint-Odilon-de-Cranbourne * Beauceville) * vente de vêtements, vaisselle, jouets, ... [Plus] | Clientèle : Personnes et familles à faible revenu * personnes sinistrées | Âges : 18 an(s) et plus",
+    "address": "116 Rte Fraser, Beauceville, QC G5X 2H7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-d-appui-aux-travailleurs-e-ca",
+    "name": "Comité d'appui aux travailleurs et travailleuses accidentés de la région des Appalaches",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-8787",
+    "description": "Assistance, représentation et défense des droits des victimes d'accidents du travail, des normes du travail et des personnes atteintes de maladies professionnelles * accueil, écoute et information * f ... [Plus] | Clientèle : Personnes accidentées du travail * personnes atteintes de maladies professionnelles * personnes victimes de harcèlement psychologique ou sexuel au travail * personnes ayant enregistré une plainte en vertu de la Loi sur les normes du travail | Âges : 18 an(s) et plus",
+    "website": "https://cattara.org/",
+    "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-de-promotion-industrielle--ca",
+    "name": "Comité de Promotion industrielle d’Adstock",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "418-422-2135 poste 235",
+    "description": "Soutien aux entrepreneurs locaux, développement local et régional * appuie, promotion et développement de l’expansion industrielle, commerciale et économique de la Municipalité d’Adstock. * informatio ... [Plus]",
+    "website": "http://www.adstock.ca/developpement-socio-economique/soutien-aux-organismes-et-aux-entreprises/",
+    "address": "Adstock, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "comit-de-b-n-voles-de-sacr-coeur-cn",
     "name": "Comité de bénévoles de Sacré-Coeur",
     "category": "social",
@@ -24117,6 +28587,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "comit-de-pr-vention-de-l-alcool--ca",
+    "name": "Comité de prévention de l'alcool au volant de Bellechasse",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-883-2227 poste 84214 demandez la responsable de la prévention de l'alcool au volant",
+    "description": "Sensibilisation de la population à la prévention de la conduite avec capacités affaiblies Trousse prêtée gratuitement pour aider tout organisateur d'activités à prévenir, auprès de ses invités, la con ... [Plus]",
+    "website": "http://www.mrcbellechasse.qc.ca/prevalcoolvolant.html",
+    "address": "Saint-Lazare-de-Bellechasse, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "comite-des-usagers-de-l-hopital-sai-sab",
     "name": "Comité des Usagers de L'Hôpital Sainte-Anne",
     "category": "social",
@@ -24169,6 +28652,42 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous"
   },
   {
+    "id": "comit-des-loisirs-sacr-coeur-de--ca",
+    "name": "Comité des loisirs Sacré-Coeur-de-Marie inc, Comité des loisirs Sacré-Coeur-de-Marie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "418-334-6895",
+    "description": "Organisation d'activités récréatives * patinoire * raquette * gym | Âges : 5 an(s) et plus",
+    "address": "Sacré-Coeur-de-Marie-Partie-Sud, QC G0N 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-loisirs-de-saint-danie-ca",
+    "name": "Comité des loisirs de Saint-Daniel",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "",
+    "description": "Organisation d'activités récréatives",
+    "address": "Saint-Daniel, QC G0N 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-loisirs-de-la-p-tite-c-ca",
+    "name": "Comité des loisirs de la p'tite école",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-839-4331",
+    "description": "Organisation d'activités récréatives",
+    "address": "290 Rue Ernest-Bégin, Lévis, QC G6W, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "comit-des-loisirs-et-de-d-velopp-cn",
     "name": "Comité des loisirs et de développement social de Franquelin",
     "category": "social",
@@ -24191,6 +28710,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-350-3466",
     "description": "Favoriser l'installation, l'accueil et la rétention des nouveaux arrivants en contribuant à leur intégration sociale | Clientèle : Nous accompagnons les familles et nous proposons des activités familiales | Âges : 18 an(s) et plus",
     "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comit-des-usagers-d-alphonse-des-ca",
+    "name": "Comité des usagers d'Alphonse-Desjardins du CISSS de Chaudière-Appalaches",
+    "category": "health",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-380-8994 poste 81439",
+    "description": "Information sur les droits et les responsabilités des usagers * accompagnement des usagers du service de santé dans leurs démarches pour porter plainte ou autres déclarations à l'établissement * promo ... [Plus] | Clientèle : Usagers du système de santé et des services sociaux dans les installations publiques situées à l'intérieur du secteur desservi",
+    "website": "http://www.cisssca.com/cisss/droits-des-usagers/comites-des-usagers/comite-des-usagers-ad",
+    "address": "525 Wilfrid-Hamel Blvd bureau C-106, Québec City, QC G1M 2S8, Canada",
     "hours": "Voir site web"
   },
   {
@@ -24337,19 +28869,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-17h. Consultation et défense des droits des locataires."
   },
   {
-    "id": "qc-log-laval-cll",
-    "name": "Comité logement de Laval",
-    "category": "housing",
-    "subcategory": "Droits locataires",
-    "city": "Laval",
-    "province": "QC",
-    "phone": "450-661-7906",
-    "description": "",
-    "website": "https://www.comitelogementlaval.ca",
-    "address": "1326, boul. Saint-Martin Est, Laval, QC H7E 3M1",
-    "hours": "Lun-ven 9h-17h. Consultation et défense des droits des locataires."
-  },
-  {
     "id": "h-cl-laval",
     "name": "Comité logement de Laval",
     "category": "housing",
@@ -24361,6 +28880,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://comitelogementlaval.org",
     "address": "295, boul. Cartier Ouest, bureau 5, Laval, QC H7N 2J5",
     "hours": "Lun-ven 9h-17h. Consultations sur RV."
+  },
+  {
+    "id": "qc-log-laval-cll",
+    "name": "Comité logement de Laval",
+    "category": "housing",
+    "subcategory": "Droits locataires",
+    "city": "Laval",
+    "province": "QC",
+    "phone": "450-661-7906",
+    "description": "",
+    "website": "https://www.comitelogementlaval.ca",
+    "address": "1326, boul. Saint-Martin Est, Laval, QC H7E 3M1",
+    "hours": "Lun-ven 9h-17h. Consultation et défense des droits des locataires."
   },
   {
     "id": "qc-log-sherbrooke-cls",
@@ -24546,6 +29078,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "compagnons-du-chantier-maritime--ca",
+    "name": "Compagnons du chantier maritime A.C. Davie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Information et réservation au Musée 418-838-8202",
+    "description": "Protection, sauvegarde, restauration, mise en valeur et intégration commémorative du Lieu historique national du Canada du chantier A.C. Davie et assurance de sa pérennité pour les générations futures ... [Plus]",
+    "website": "http://www.acdavie.com",
+    "address": "6210 Rue Saint-Laurent, Lévis, QC G6V 3P4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "compassion-laval-lav",
     "name": "Compassion Laval",
     "category": "food",
@@ -24618,6 +29163,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://cfterrebonne.ca",
     "address": "529, rue Saint-Louis, Terrebonne, Lanaudière, QC, J6W 1J1",
     "hours": "lundi au mercredi 9h00 à 18h00, jeudi et vendredi 9h00 à 21h00, samedi 9h00 à 17h00, dimanche 12h00 à 17h00"
+  },
+  {
+    "id": "comptoir-le-grenier-ca",
+    "name": "Comptoir Le Grenier",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-5336",
+    "description": "Aide alimentaire offerte aux personnes et aux familles dans le besoin, sans préjugé, dans le respect et la dignité * accueil et référencement personnalisés (aux utilisateurs de l'organisme seulement) ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.comptoirlegrenier.com",
+    "address": "491 Rue du Christ-Roi, Lévis, QC G6V 6E4, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "comptoir-notre-dame-de-lorette-mtg",
@@ -24694,6 +29252,80 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "comptoir-d-imp-ts-b-n-vole-saint-ca",
+    "name": "Comptoir d'impôts bénévole - Saint-Georges",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-957-9182",
+    "description": "Aide à la préparation de déclarations de revenus simples (rapport d'impôt) par des bénévoles (déclarations fédérales et provinciales) | Âges : 16 an(s) et plus",
+    "address": "Saint-Georges, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comptoir-familial-de-black-lake-ca",
+    "name": "Comptoir familial de Black Lake",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-423-7615",
+    "description": "Comptoir familial * centre de récupération, recyclage communautaire et vente d'articles à bas prix * collecte de dons et récupération : vêtements, meubles, électroménagers, jouets, articles ménagers, ... [Plus]",
+    "address": "4015 Bd Frontenac O, Thetford Mines, QC G6H 2A9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comptoir-familial-de-disraeli-ca",
+    "name": "Comptoir familial de Disraeli",
+    "category": "social",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "581-209-4110",
+    "description": "Aide aux personnes à faible revenu * point de collecte, récupération et vente * vêtements, chaussures, articles divers et quelques meubles * livres, vaisselle, jouets, draps, couvertures, matériel de ... [Plus] | Clientèle : Information pour don de meuble (téléphoner avant d'apporter des meubles) Nancy Perkins Rousseau 581-209-4110",
+    "address": "801-B, Av. Champlain, Disraeli, QC G0N 1E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comptoir-familial-de-thetford-mi-ca",
+    "name": "Comptoir familial de Thetford Mines",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-8835",
+    "description": "Soutien matériel aux membres de la communauté * vêtements, appareils électroniques et objets d'utilité courante * meubles et électroménagers * cueillette et livraison de meubles (dans un rayon de 40 k ... [Plus] | Clientèle : Personnes à faible revenu * le grand public",
+    "address": "17 Rue de la Fabrique, Thetford Mines, QC G6G 2N4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comptoir-r-gional-de-beauce-ca",
+    "name": "Comptoir régional de Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-0560 poste 221",
+    "description": "Aide aux gens dans le besoin par la récupération et la vente de biens usagés * vente à bas prix de vêtements, chaussures, bijoux, literie, vaisselle, jouets, articles de sport, stores, articles pour b ... [Plus] | Clientèle : Aide et dépannage alimentaire 418-228-0560 postes 228 et 221",
+    "website": "http://www.comptoirregionalbce.ca",
+    "address": "12425 1re Avenue, Saint-Georges, QC G5Y 2E6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "comptoir-r-gional-de-beauce-r-cu-ca",
+    "name": "Comptoir régional de Beauce, Récupération et vente de meubles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-0560",
+    "description": "Aide aux personnes à faible revenu par la récupération et la vente de meubles et objets usagés * livraison et cueillette à domicile | Clientèle : Le grand public * aide pour personnes à faible revenu",
+    "website": "http://www.comptoirregionalbce.ca",
+    "address": "12425 1re Avenue, Saint-Georges, QC G5Y 2E6, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "comquat-mtg",
     "name": "Comquat",
     "category": "social",
@@ -24705,6 +29337,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.comquat.ca",
     "address": "25, boulevard Don Quichotte, local 132A, L'Île-Perrot, Montérégie, QC, J7V 7X4",
     "hours": "bureau: lundi au jeudi 9h00 à 16h30, cours: lundi au jeudi, matin, après-midi et soir"
+  },
+  {
+    "id": "connexion-emploi-ressources-femm-ca",
+    "name": "Connexion Emploi ressources femmes",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-839-3109",
+    "description": "Aide à l'intégration ou à la réintégration des femmes sur le marché du travail par une formation qualifiante ou l'obtention d'un emploi * service de groupe ou en individuel * orientation professionnel ... [Plus] | Clientèle : Femmes | Âges : 16 an(s) et plus",
+    "website": "http://www.connexionemploiressources.com",
+    "address": "bureau 102, 1201 Rue Charles-Rodrigue, Lévis, QC G6W 0N1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "conseil-canadien-des-aveugles-de-mtg",
@@ -24785,6 +29430,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "conseil-des-a-n-s-de-la-mrc-des--ca",
+    "name": "Conseil des aînés de la MRC des Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "Nicole Champagne, présidente 418-422-5937",
+    "description": "Structure de consultation et de concertation regroupant les organisations d'aînés et de retraités de la MRC des Appalaches ainsi que les organismes offrant des services aux aînés * soutien à l'amélior ... [Plus] | Clientèle : Consultation et concertation pour organisations d'aînés et de retraités de la MRC des Appalaches, organismes offrant des services aux aînés et membres individuels | Âges : 50 an(s) et plus",
+    "website": "https://tabledesainesca.com/tables-locales/des-appalaches/",
+    "address": "233 Bd Frontenac O, Thetford Mines, QC G6G 6K2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "conseil-qu-b-cois-de-la-coop-rat-ca",
+    "name": "Conseil québécois de la coopération et de la mutualité",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-3710",
+    "description": "Instance démocratique assumant le plein développement du potentiel des réseaux coopératifs et mutualistes québécois * participation au développement social et économique * promotion et éducation des v ... [Plus]",
+    "website": "http://www.cqcm.coop",
+    "address": "1500 Rue Métivier bureau 210, Lévis, QC G6V 0P6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "conseil-r-gional-de-l-environnem-ca",
+    "name": "Conseil régional de l'environnement Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Hélène-de-Breakeyville",
+    "province": "QC",
+    "phone": "418-832-2722",
+    "description": "Implantation d'une vision régionale du développement durable et de l'environnement avec les acteurs socioéconomiques de la région * ressource, concertation et mise en contact des intervenants œuvrant ... [Plus] | Clientèle : Le grand public * organismes",
+    "website": "http://www.creca.qc.ca",
+    "address": "2485 Rue Sainte-Hélène, Lévis, QC G6Z 7K7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "conseil-conomique-de-beauce-ca",
+    "name": "Conseil économique de Beauce",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-8123",
+    "description": "Promotion et soutien du développement économique et de la création d'emplois * services d'aide au démarrage, consolidation et développement des entreprises pour entrepreneurs potentiels ou en activité ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.cebeauce.com",
+    "address": "11515 1re Avenue #201, Saint-Georges, QC G5Y 2C7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "contact-richelieu-yamaska-mtg",
     "name": "Contact Richelieu Yamaska",
     "category": "mentalHealth",
@@ -24796,6 +29493,110 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "contactry.qc.ca",
     "address": "420, rue de la Concorde Nord, Saint-Hyacinthe, Montérégie, QC, J2S 4N9",
     "hours": "24 heures, 7 jours, intervention face à face: 9h00 à 21h00"
+  },
+  {
+    "id": "contrevent-le-ca",
+    "name": "Contrevent (Le)",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-1967",
+    "description": "Aide aux membres de l'entourage de personnes ayant un trouble majeur de santé mentale * rencontres téléphoniques, en bureau ou visioconférence * soutien et écoute * conférences, formation * informatio ... [Plus] | Clientèle : Membres de l'entourage d'une personne ayant un trouble majeur de santé mentale | Âges : 18 an(s) - 65 an(s)",
+    "website": "http://www.contrevent.org",
+    "address": "190 Rue Saint-Joseph, Lévis, QC G6V 1C9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "convergence-action-b-n-vole-ca",
+    "name": "Convergence action bénévole",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-4094",
+    "description": "Promotion et reconnaissance de l'action bénévole dans sa diversité Soutien aux organisations et aux groupes bénévoles (voir dossier individuel) * formation * soutien professionnel et organisationnel * ... [Plus] | Clientèle : Bénévoles et aspirants bénévoles * organismes à but non lucratif * personnes en difficulté, à faible revenu, perte d'autonomie ou socialement isolées * personnes atteintes de cancer et leurs proches * personnes ayant un problème de santé mentale | Âges : 18 an(s) et plus",
+    "website": "http://www.benevoleenaction.com",
+    "address": "10 Rue Giguère, Lévis, QC G6V 1N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "convergence-action-b-n-vole-espo-ca",
+    "name": "Convergence action bénévole, Espoir Cancer de Lévis",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-4094 poste 233",
+    "description": "Ressource d'entraide et soutien pour les personnes touchées par le cancer et leurs proches aidants * accueil et référence * soutien individuel * groupes de soutien et d'entraide pour hommes et pour fe ... [Plus] | Clientèle : Personnes atteintes d'un cancer et leurs proches aidants | Âges : 18 an(s) et plus",
+    "website": "http://www.benevoleenaction.com/espoir-cancer-de-levis/qui-sommes-nous",
+    "address": "10 Rue Giguère, Lévis, QC G6V 1N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "convergence-action-b-n-vole-sout-ca-3",
+    "name": "Convergence action bénévole, Soutien aux organisations et aux groupes bénévoles",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-4094",
+    "description": "Promotion et soutien de l'action bénévole comme source d'épanouissement personnel et collectif dans différents champs d'implication * outils et soutien relatifs à la gestion des bénévoles * documentat ... [Plus] | Clientèle : Bénévoles * organisations où œuvrent des bénévoles",
+    "website": "http://www.benevoleenaction.com",
+    "address": "10 Rue Giguère, Lévis, QC G6V 1N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "convergence-action-b-n-vole-sout-ca-4",
+    "name": "Convergence action bénévole, Soutien aux organisations et aux groupes bénévoles, Programme Accès-transport Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-4094",
+    "description": "Programme visant à rendre le transport en commun davantage accessible aux personnes vivant sous le seuil de faible revenu et aux personnes confrontées à une situation personnelle inhabituelle, les ren ... [Plus] | Clientèle : Personnes dont le revenu familial  se situe sous le seuil de faible revenu, tel que défini chaque année par le gouvernement du Canada * personnes confrontées à une situation personnelle inhabituelle, les rendant vulnérables économiquement",
+    "website": "https://www.benevoleenaction.com/programme-acces-transport",
+    "address": "10 Rue Giguère, Lévis, QC G6V 1N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "convergence-action-b-n-vole-sout-ca",
+    "name": "Convergence action bénévole, Soutien à domicile",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-4094 poste 222",
+    "description": "Soutien aux personnes ayant une incapacité temporaire ou persistante et demeurant à domicile * accompagnement avec transport pour raisons médicales ou sorties essentielles (épicerie, institutions fina ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.benevoleenaction.com/soutien-a-domicile/qui-sommes-nous",
+    "address": "10 Rue Giguère, Lévis, QC G6V 1N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "convergence-action-b-n-vole-sout-ca-2",
+    "name": "Convergence action bénévole, Soutien à domicile, Agence PAIR Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Information et inscription 418-838-4094 poste 230",
+    "description": "Programme de prévention et sécurité à domicile pour les personnes vivant seules * appel quotidien personnalisé, au moment choisi par la personne, pour assurer la sécurité ou la prise de médication * a ... [Plus] | Clientèle : Adultes et aînés qui en ressentent le besoin * personnes vivant seules * personnes ayant une santé précaire",
+    "website": "https://www.benevoleenaction.com/services-aux-individus/programme-p-a-i-r-",
+    "address": "10 Rue Giguère, Lévis, QC G6V 1N6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "convergence-action-b-n-vole-tel--ca",
+    "name": "Convergence action bénévole, Tel-Écoute du Littoral",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Administration 418-838-4094",
+    "description": "Ligne d'écoute active destinée à toute personne ressentant le besoin de parler, de briser l'isolement et d'exprimer une détresse | Clientèle : Ligne d'écoute pour Lévis 418-838-4095 | Âges : 18 an(s) et plus",
+    "website": "http://www.benevoleenaction.com/tel-ecoute-du-littoral/le-service",
+    "address": "10 Rue Giguère, Lévis, QC G6V 1N6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "coop-aide-chez-soi-rive-sud-mtg",
@@ -24822,6 +29623,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.coopdes1001corvees.ca",
     "address": "119, rue Papineau, Papineauville, Outaouais, QC, J0V 1R0",
     "hours": "bureau: lundi au jeudi 8h00 à 16h00, services: lundi au vendredi"
+  },
+  {
+    "id": "coop-fa-ca",
+    "name": "Coop FA",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-2949",
+    "description": "Projets en éducation relative à l’environnement (ERE) auprès des écoles, des citoyens et des organisations, inspirant l’action écoresponsable Projets écoles * carbone Scol'ERE (élèves de 4e, 5e et 6e ... [Plus] | Clientèle : Écoles et institutions d'enseignement * entreprises * organisateurs d'événements",
+    "website": "http://coopfa.com",
+    "address": "5955 Rue Saint-Laurent bureau 205, Lévis, QC G6V 3P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coop-rative-aide-chez-soi-en-bea-ca",
+    "name": "Coopérative Aide chez soi en Beauce",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-397-8283",
+    "description": "Services de maintien à domicile Aide domestique * entretien ménager léger et lourd * lessive * emplettes et commissions * préparation des repas selon les recettes personnelles pour consommation immédi ... [Plus] | Clientèle : Adultes convalescents, en perte d'autonomie temporaire ou permanente * adultes ayant un handicap physique ou intellectuel * adultes désirant s'offrir plus de temps * aidants naturels * aînés",
+    "website": "http://www.vivreadomicile.com",
+    "address": "700 Av. Robert Cliche suite 102, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coop-rative-aide-chez-soi-en-bea-ca-2",
+    "name": "Coopérative Aide chez soi en Beauce, Point de service Saint-Georges",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-225-9144",
+    "description": "Services de maintien à domicile Aide domestique * entretien ménager léger et lourd * lessive * emplettes et commissions * préparation des repas selon les recettes personnelles pour consommation immédi ... [Plus] | Clientèle : Adultes convalescents, en perte d'autonomie temporaire ou permanente * adultes ayant un handicap physique ou intellectuel * adultes désirant s'offrir plus de temps * aidants naturels * aînés",
+    "website": "http://www.vivreadomicile.com",
+    "address": "17785 Bd Lacroix, Saint-Georges, QC G5Y 5B8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "coop-rative-d-habitation-reboul-out",
@@ -25108,6 +29948,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-17h. Certaines agences ouvertes sam matin."
   },
   {
+    "id": "coop-rative-de-sant-robert-clich-ca",
+    "name": "Coopérative de santé Robert-Cliche",
+    "category": "health",
+    "subcategory": "",
+    "city": "Beauceville",
+    "province": "QC",
+    "phone": "Beauceville 418-774-9878",
+    "description": "Développement d'un réseau de services de proximité en soins de santé * offre globale de services dont la médecine familiale, des soins alternatifs et complémentaires * prévention et promotion de la sa ... [Plus] | Clientèle : Saint-Joseph-de-Beauce 418-397-5878",
+    "website": "http://www.coopsanterc.com",
+    "address": "463 Bd Renault, Beauceville, QC G5X 1N5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coop-rative-de-services-rive-sud-ca",
+    "name": "Coopérative de services Rive-Sud",
+    "category": "family",
+    "subcategory": "",
+    "city": "Pintendre",
+    "province": "QC",
+    "phone": "418-838-4019",
+    "description": "Soutien à domicile aux aînés et à certaines personnes requérant des services permanents ou temporaires * aide à la personne : lever, coucher, aide à l'hygiène * répit aux familles de personnes ayant u ... [Plus] | Clientèle : Aînés * personnes requérant des services permanents ou temporaires",
+    "website": "http://www.servicesrivesud.com",
+    "address": "730 Rte du Président-Kennedy, Lévis, QC G6C 1E2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coop-rative-de-services-domicile-ca-3",
+    "name": "Coopérative de services à domicile L'Islet Nord-Sud",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-7488",
+    "description": "Services de soutien à domicile Aide domestique * entretien ménager léger et lourd * préparation de repas * lessive * approvisionnement et autres courses Aide à la personne et répit aux aidants * hygiè ... [Plus] | Clientèle : Familles * aînés | Âges : 18 an(s) et plus",
+    "website": "http://cooplisletns.com",
+    "address": "598 Rte de l'Église, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coop-rative-de-services-domicile-ca",
+    "name": "Coopérative de services à domicile de la MRC de Montmagny",
+    "category": "food",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-2433",
+    "description": "Aide à la vie domestique à domicile * entretien ménager * préparation de repas à domicile * buanderie * accompagnement, courses (emplettes) et autres * assistance personnelle à domicile : aide au leve ... [Plus] | Clientèle : Le grand public",
+    "website": "http://www.coopsd.com",
+    "address": "7 Rue St Jean Baptiste E, Montmagny, QC G5V 1J6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coop-rative-de-services-domicile-ca-2",
+    "name": "Coopérative de services à domicile de la région de Thetford",
+    "category": "food",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-334-0852",
+    "description": "Services de maintien à domicile Aide domestique * entretien ménager léger * grand ménage * accompagnement pour emplettes (commissions) * préparation de repas * entretien des vêtements Assistance perso ... [Plus] | Clientèle : Aînés * familles * aidants * personnes ayant un handicap physique ou intellectuel * personnes en convalescence",
+    "website": "http://www.coopservicesadomicile.com",
+    "address": "17 Rue Notre Dame O, Thetford Mines, QC G6G 1J1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "coop-rative-de-solidarit-aspire--cn",
     "name": "Coopérative de solidarité Aspire-tout",
     "category": "food",
@@ -25145,6 +30050,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "coop-rative-de-solidarit-de-sant-ca",
+    "name": "Coopérative de solidarité de santé des Monts de Bellechasse",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Damien-de-Buckland",
+    "province": "QC",
+    "phone": "418-789-2007",
+    "description": "Développement d'un réseau de services de proximité en soins de santé * prévention et promotion de la santé Offre globale de services dont : * médecine familiale, quatre médecins et une infirmière prat ... [Plus]",
+    "website": "http://www.coopsantebellechasse.com",
+    "address": "Saint-Damien-de-Buckland, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coop-rative-de-solidarit-de-serv-ca",
+    "name": "Coopérative de solidarité de services à domicile de Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Flavien",
+    "province": "QC",
+    "phone": "418-728-4881",
+    "description": "Services en entretien ménager, aide à la personne et répit aux proches aidants * aide à la personne : hygiène de base, assistance aux déplacements (lever, coucher, transfert), exercices de réadaptatio ... [Plus] | Clientèle : aînés * personne en perte d'autonomie * personnes en convalescence * proches aidants * familles * personnes ayant un handicap physique ou intellectuel",
+    "website": "http://www.cooplotbiniere.com",
+    "address": "92 Rue Principale, Saint-Flavien, QC G0S 2M0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coop-rative-de-solidarit-de-serv-ca-2",
+    "name": "Coopérative de solidarité de services à domicile des Etchemins",
+    "category": "food",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-4500",
+    "description": "Aide au maintien à domicile temporaire ou permanent * personnes en perte d'autonomie, famille ou résident de la MRC Les Etchemins * entretien ménager * préparation de repas * accompagnement aux course ... [Plus]",
+    "website": "http://cssdetchemins.com",
+    "address": "1553-b QC-277, Lac-Etchemin, QC G0R 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "coop-rative-de-solidarit-d-aide--cn",
     "name": "Coopérative de solidarité d’aide à domicile de la Haute-Côte-Nord",
     "category": "food",
@@ -25168,6 +30112,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Soutien au maintien à domicile des personnes aînées, en perte d'autonomie ou en difficulté * services aux individus * préparation de repas (sans diète restrictive) * soins d'hygiène partiels ou comple ... [Plus] | Clientèle : Personnes en perte d'autonomie * aînés * personnes et familles en difficulté * personnes référées par le CISSS * proches aidants",
     "website": "http://www.cadm.coop",
     "address": "Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "coop-rative-de-solidarit-sant-de-ca",
+    "name": "Coopérative de solidarité santé de Saint-Bernard",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Bernard",
+    "province": "QC",
+    "phone": "Administration 418-475-6122",
+    "description": "Développement d'un réseau de services de proximité en soins de santé * offre globale de services dont la médecine familiale, des soins alternatifs et complémentaires * prévention et promotion de la sa ... [Plus] | Clientèle : Rendez-vous 418-475-6615",
+    "website": "http://www.coopsantestbernard.com",
+    "address": "1629 Rue St Georges, Saint-Bernard, QC G0S 2G0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -25326,6 +30283,148 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "corporation-de-d-fense-de-droits-ca",
+    "name": "Corporation de défense de droits sociaux de Lotbinière",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Laurier-Station",
+    "province": "QC",
+    "phone": "418-728-4054",
+    "description": "Promotion et défense des droits individuels et collectifs des personnes chômeuses, sans-emploi, prestataires de l'aide sociale ou de la solidarité sociale et des travailleurs à faible revenu * informa ... [Plus] | Clientèle : Personnes à faible revenu ou sans revenu * chômeurs * prestataires de l'aide sociale ou de la solidarité sociale * aide à la préparation des déclarations de revenu pour personnes à faible revenu",
+    "website": "http://www.cddslotbiniere.com",
+    "address": "388-C Rue St Joseph, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-d-veloppement-com-ca",
+    "name": "Corporation de développement communautaire Beauce - Etchemins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-3454",
+    "description": "Regroupement d'organismes communautaires de la région * soutien suscitant l'intérêt du milieu pour le développement communautaire * rencontres des membres * formations * promotion des organismes commu ... [Plus] | Clientèle : Organismes membres * organismes communautaires * entreprises d'économie sociale",
+    "website": "http://www.cdcbe.org",
+    "address": "13545 Av. 2e, Saint-Georges, QC G5Y 2P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-d-veloppement-com-ca-3",
+    "name": "Corporation de développement communautaire Beauce - Etchemins, Frigos communautaires libre-service Saint-Georges",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "",
+    "description": "Réfrigérateurs en libre-service servant au partage de la nourriture * don de denrées par le public, restaurateurs et épiceries * aliments disponibles pour tous, selon le besoin à combler Frigos-partag ... [Plus]",
+    "website": "http://www.cdcbe.org",
+    "address": "13545 Av. 2e, Saint-Georges, QC G5Y 2P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-d-veloppement-com-ca-2",
+    "name": "Corporation de développement communautaire Beauce - Etchemins, Groupe de réflexion et d'action sur la pauvreté dans la MRC de Beauce-Sartigan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-3454",
+    "description": "Lutte à la pauvreté * sensibilisation et information auprès de la population, des partenaires et des élus au sujet des réalités vécues par les personnes en situation de pauvreté * développement social",
+    "address": "2727 Bd Dionne, Saint-Georges, QC G5Y 3Y1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-d-veloppement-com-ca-4",
+    "name": "Corporation de développement communautaire de Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-883-1587 poste 202",
+    "description": "Regroupement multisectoriel du réseau communautaire et d'économie sociale de Bellechasse * contribution au développement socioéconomique par la concertation et le partenariat * soutien aux membres : c ... [Plus] | Clientèle : Organismes",
+    "website": "http://cdcbellechasse.ca",
+    "address": "110 Rue Principale, Saint-Lazare-de-Bellechasse, QC G0R 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-d-veloppement-com-ca-5",
+    "name": "Corporation de développement communautaire de Brome-Missisquoi",
+    "category": "social",
+    "subcategory": "",
+    "city": "Regroupement d'organismes communautaires favorisant leur participation au développement socioéconomique du territoire * promotion et défense des intérêts de la population et des organismes communautai ... [Plus]",
+    "province": "QC",
+    "phone": "450-293-3344",
+    "description": "Corporation de développement communautaire de Brome-Missisquoi",
+    "website": "http://www.cdcbm.org/",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-d-veloppement-com-ca-7",
+    "name": "Corporation de développement communautaire de Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Laurier-Station",
+    "province": "QC",
+    "phone": "418-415-0646",
+    "description": "Regroupement d'organismes communautaires et d'entreprises d'économie sociale dans la MRC de Lotbinière favorisant leur concertation et participation au développement socioéconomique du milieu * représ ... [Plus] | Clientèle : Organismes communautaires desservant le territoire de la MRC de Lotbinière",
+    "website": "http://www.cdclotbiniere.org",
+    "address": "179 Bd Laurier, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-d-veloppement-com-ca-6",
+    "name": "Corporation de développement communautaire de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-603-3785",
+    "description": "Regroupement d'organismes communautaires favorisant leur participation au développement socioéconomique du territoire * promotion et défense des intérêts de la population et des organismes communautai ... [Plus] | Clientèle : Organismes communautaires",
+    "website": "http://www.cdclevis.ca",
+    "address": "6150 Rue Saint-Georges, Lévis, QC G6V 4J8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-d-veloppement-com-ca-8",
+    "name": "Corporation de développement communautaire des Appalaches, région de Thetford",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "CDC : 418-334-0465",
+    "description": "Regroupement d'organisations communautaires œuvrant dans divers champs d'activités * promotion de la participation active du mouvement populaire et communautaire au développement socioéconomique du mi ... [Plus] | Clientèle : Impôts : 418-755-0516",
+    "website": "http://www.cdcappalaches.org",
+    "address": "257 Rue Notre Dame O, Thetford Mines, QC G6G 3M4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-d-veloppement-de--ca",
+    "name": "Corporation de développement de la communauté d'expression anglaise de Mégantic",
+    "category": "health",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-332-3851",
+    "description": "Promotion du bien-être de la population anglophone par le développement et l'offre de services complémentaires à ceux du secteur public dans les domaines de la santé et des services sociaux et communa ... [Plus] | Clientèle : Communauté d'expression anglaise",
+    "website": "http://www.mcdc.info",
+    "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-de-d-veloppement-dur-ca",
+    "name": "Corporation de développement durable de Saint-Léon-de-Standon",
+    "category": "immigration",
+    "subcategory": "",
+    "city": "Saint-Léon-de-Standon",
+    "province": "QC",
+    "phone": "418-642-2893",
+    "description": "Soutien à l'expansion industrielle, commerciale, touristique, culturelle, économique et sociale de la municipalité et amélioration de la qualité de vie des citoyens * accueil des nouveaux arrivants * ... [Plus]",
+    "website": "http://www.st-leon-de-standon.com",
+    "address": "Saint-Léon-de-Standon, QC G0R 4L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "corporation-de-d-veloppement-tou-cn",
     "name": "Corporation de développement touristique et culturel du Canton de Brest",
     "category": "social",
@@ -25365,6 +30464,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "corporation-de-d-veloppement-con-ca",
+    "name": "Corporation de développement économique de Val-ALain",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Val-Alain",
+    "province": "QC",
+    "phone": "418-744-3222, poste 6",
+    "description": "Stimulation de l'entrepreneuriat et soutien aux initiatives d'entreprise et à la création d'emplois * services aux individus, aux groupes et aux organismes * aide : démarrage, gestion, expansion et fi ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.val-alain.com/corporation-de-developpement-economique/",
+    "address": "Val-Alain, QC G0S 3H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "corporation-de-protection-de-l-e-cn",
     "name": "Corporation de protection de l'environnement de Sept-Îles",
     "category": "social",
@@ -25388,6 +30500,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Organisation du transport en commun et adapté à Sept-Îles * transport adapté : de porte à porte, accessible aux personnes vivant avec des limitations ayant un impact sur leur mobilité * Taxibus Sept-Î ... [Plus] | Clientèle : Taxibus Sept-Îles et Interbus 418-968-2877 | Âges : 5 an(s) et plus",
     "website": "http://ville.sept-iles.qc.ca/fr/transport_75",
     "address": "652 Av. de Quen, Sept-Îles, QC G4R 2R5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "corporation-des-a-n-s-de-saint-a-ca",
+    "name": "Corporation des aînés de Saint-Apollinaire",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "418-881-4433",
+    "description": "Habitation pour ainés autonomes * appartements 3 1/2 et 4 1/2 * salle communautaire, salle à manger, système d'appel d'urgence * aides à la mobilisation et aux déplacements * services de prélèvements ... [Plus] | Clientèle : Aînés autonomes",
+    "address": "52, de, Rue de l'Église, Saint-Apollinaire, QC G0S 2E0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -25479,6 +30603,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "cpmaide.ca",
     "address": "196, chemin Saint-Louis, Beauharnois, Montérégie, QC, J6N 2J1",
     "hours": "lundi 8h30 à 12h00 et 13h00 à 15h30, mardi au jeudi 8h30 à 12h00 et 13h00 à 16h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "coup-de-pouce-nourrice-ca",
+    "name": "Coup de pouce nourrice",
+    "category": "family",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "",
+    "description": "Information, soutien, écoute et aide aux familles ainsi qu'aux futures familles qui choisissent l'allaitement maternel * rencontres hebdomadaires : thèmes en réponse aux besoins des familles * cliniqu ... [Plus]",
+    "website": "https://www.coup-de-pouce.ca/",
+    "address": "76 Rue St Joseph N, Thetford Mines, QC G6G 3N8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "cour-du-qu-bec-chambre-civile-la-lav",
@@ -25923,6 +31060,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "courcelles-saint-variste-h-tel-d-ca",
+    "name": "Courcelles-Saint-Évariste. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Évariste-de-Forsyth",
+    "province": "QC",
+    "phone": "418-459-6488 poste 2",
+    "description": "Assume des responsabilités aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs et autres La nature, l'étendue et l'exercice de ces responsabilités varient se ... [Plus] | Clientèle : Centre aquatique et récréatif de la Haute-Beauce 418-459-6488",
+    "website": "http://www.st-evariste.qc.ca",
+    "address": "Saint-Évariste-de-Forsyth, QC G0M, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "court-du-quebec-chambre-de-la-jeune-jol",
     "name": "Court du Québec - Chambre de la Jeunesse - Joliette",
     "category": "family",
@@ -25963,6 +31113,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service disponible 24h/24, 7j/7"
   },
   {
+    "id": "crois-e-la-regroupement-de-paren-ca",
+    "name": "Croisée (La) - Regroupement de parents et amis de la personne atteinte de maladie mentale - MRC des Appalaches",
+    "category": "family",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-1184",
+    "description": "Regroupement de parents et amis de la personne atteinte de maladie mentale * accueil, aide et entraide * écoute et soutien * répit et dépannage * information et sensibilisation | Clientèle : Parents et amis de la personne atteinte de maladie mentale",
+    "website": "http://lacroisee.info",
+    "address": "233 Bd Frontenac O, Thetford Mines, QC G6G 6K2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "crois-e-de-longueuil-la-r-cup-ra-mtg",
     "name": "Croisée De Longueuil (La) - Récupération D'Articles Usagés",
     "category": "social",
@@ -25974,6 +31137,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.lacroiseedelongueuil.qc.ca",
     "address": "1230, rue Green, Longueuil, Montérégie, QC, J4K 4Z5",
     "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 15h30, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "crois-e-des-chemins-la-ca",
+    "name": "Croisée des chemins (La)",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-0897",
+    "description": "Aide aux personnes éprouvant des difficultés reliées à diverses dépendances par la prévention des conséquences de l'abus et le retrait temporaire du milieu * thérapie externe * évaluation * conscienti ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://croiseedeschemins.ca",
+    "address": "18480 Bd Lacroix, Saint-Georges, QC G5Y 5B8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "urgent-croix-rouge",
@@ -26130,6 +31306,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "bureau: lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00, centre de copies: mardi au jeudi 9h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "c-tal-ca",
+    "name": "CÉTAL",
+    "category": "social",
+    "subcategory": "",
+    "city": "Laurier-Station",
+    "province": "QC",
+    "phone": "418-728-3119",
+    "description": "Intégration des personnes handicapées par le développement de projets favorisant leur bien-être, leur épanouissement et l'amélioration de leur qualité de vie * organisation et administration des milie ... [Plus] | Clientèle : Personnes ayant un handicap | Âges : 16 an(s) et plus",
+    "website": "http://www.cetal.ca",
+    "address": "132 Rue Olivier, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "c-dres-les-loisirs-culture-et-vi-mtg",
     "name": "Cèdres (Les) - Loisirs, Culture Et Vie Communautaire",
     "category": "social",
@@ -26140,6 +31329,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Activités sportives, culturelles et de loisir.* Parcs, terrains de sports.* Location de salles. | Territoire: Les Cèdres | Statut: organisme municipal",
     "website": "www.ville.lescedres.qc.ca/fr/services-aux-citoyens/loisirs-culture-et-vie-communautaire",
     "address": "1060, chemin du Fleuve, Les Cèdres, Montérégie, QC, J7T 1A1",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "c-gep-beauce-appalaches-ca",
+    "name": "Cégep Beauce-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-8896",
+    "description": "Établissement d'enseignement collégial assurant une éducation globale et valorisant la réussite de sa clientèle * préparation à la poursuite d'études universitaires ou à l'intégration au marché du tra ... [Plus] | Âges : 17 an(s) et plus",
+    "website": "http://www.cegepba.qc.ca",
+    "address": "1150 Bd Vachon N, Sainte-Marie, QC G6E 0R1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "c-gep-beauce-appalaches-c-gep-be-ca",
+    "name": "Cégep Beauce-Appalaches, Cégep Beauce - Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-8896",
+    "description": "Établissement d'enseignement collégial assurant une éducation globale et valorisant la réussite de sa clientèle * préparation à la poursuite d'études universitaires ou à l'intégration au marché du tra ... [Plus] | Clientèle : Programmes de formation : variable selon les programmes et les domaines d'études * services à la collectivité pour le grand public | Âges : 17 an(s) et plus",
+    "website": "http://www.cegepba.qc.ca",
+    "address": "1055 116e Rue, Saint-Georges, QC G5Y 3G1, Canada",
     "hours": "Voir site web"
   },
   {
@@ -26247,6 +31462,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "c-gep-de-la-pocati-re-centre-d-t-ca",
+    "name": "Cégep de La Pocatière, Centre d'études collégiales de Montmagny",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-7164",
+    "description": "Établissement d'enseignement de niveau collégial Tremplin DEC, programme d'accueil et intégration Programmes d'études préuniversitaires * arts, lettres et communications, option langues * science de l ... [Plus] | Âges : 16 an(s) et plus",
+    "website": "http://www.cegeplapocatiere.qc.ca",
+    "address": "115 Bd Taché E, Montmagny, QC G5V 1B9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "c-gep-de-l-vis-ca",
+    "name": "Cégep de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-5110",
+    "description": "Établissement d'enseignement de niveau collégial offrant de la formation préuniversitaire, technique collégiale et continue, des services aux entreprises, de la recherche appliquée et de l'aide techni ... [Plus] | Clientèle : Formation continue 418-835-1421",
+    "website": "http://www.cegeplevis.ca/dfc",
+    "address": "205 Rue Monseigneur-Bourget, Lévis, QC G6V 6Z9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "c-gep-de-l-vis-secteur-saint-rom-ca",
+    "name": "Cégep de Lévis, Secteur Saint-Romuald",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-835-1421",
+    "description": "Établissement d'enseignement de niveau collégial offrant de la formation continue * attestations d'études collégiales (AEC) * reconnaissance des acquis et des compétences (RAC) * cours à temps partiel ... [Plus]",
+    "website": "http://www.cegeplevis.ca/dfc",
+    "address": "St-Romuald, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "c-gep-de-sept-les-cn",
     "name": "Cégep de Sept-îles",
     "category": "social",
@@ -26257,6 +31511,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Établissement d'enseignement collégial offrant des programmes préuniversitaires et techniques * formation continue * diplôme d'études collégiales (DEC) Cheminement d'intégration * Tremplin DEC Enseign ... [Plus] | Clientèle : Variable selon les programmes et les domaines d'étude",
     "website": "https://cegepsi.ca",
     "address": "175 Rue de la Vérendrye, Sept-Îles, QC G4R 5G7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "c-gep-de-thetford-ca",
+    "name": "Cégep de Thetford",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-8591",
+    "description": "Établissement d'enseignement de niveau collégial offrant des programmes de formation préuniversitaire, technique, formation continue et services au grand public Formation préuniversitaire : Sciences d ... [Plus] | Clientèle : Variable selon les programmes et les domaines d'études | Âges : 17 an(s) et plus",
+    "website": "http://www.cegepthetford.ca",
+    "address": "671 Bd Frontenac O, Thetford Mines, QC G6G 1N1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "c-gep-de-thetford-centre-d-tudes-ca",
+    "name": "Cégep de Thetford, Centre d'études collégiales de Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Agapit",
+    "province": "QC",
+    "phone": "418-338-8591 poste 309",
+    "description": "Établissement d'enseignement de niveau collégial offrant des programmes de formation préuniversitaire et technique * sciences de la nature (formule hybride) * sciences humaines : profil individu, soci ... [Plus] | Clientèle : Variable selon les programmes et les domaines d'études | Âges : 17 an(s) et plus",
+    "website": "https://www.campuslotbiniere.ca/",
+    "address": "Saint-Agapit, QC G0S, Canada",
     "hours": "Voir site web"
   },
   {
@@ -26454,6 +31734,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Horaires varient selon point de distribution."
   },
   {
+    "id": "danseurs-de-sainte-marie-les-ca",
+    "name": "Danseurs de Sainte-Marie (Les)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "",
+    "description": "Cours de danse pour enfants * danses internationales, québécoises et gigue * spectacles | Clientèle : Enfants | Âges : 3 an(s) - 12 an(s)",
+    "website": "http://dansemanigance.com",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "de-soi-l-emploi-mtg",
     "name": "De Soi À L'Emploi",
     "category": "social",
@@ -26491,6 +31784,43 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "denholm.ca",
     "address": "419, chemin du Poisson Blanc, Denholm, Outaouais, QC, J8N 9C8",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "dessercom-accompagnement-et-tran-ca",
+    "name": "Dessercom - Accompagnement et transport médical",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-7154",
+    "description": "Transport médical et accompagnement aux personnes requérant des soins, des examens ou encore des traitements dans un établissement de santé privé ou du réseau de la santé et des services sociaux * tra ... [Plus] | Clientèle : Accompagnement et transport médical 418-835-7474",
+    "website": "http://www.dessercom.com",
+    "address": "5600 Rue J.-B.- Michaud, Lévis, QC G6V 0N9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "diab-te-beauce-etchemin-ca",
+    "name": "Diabète Beauce - Etchemin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-1608",
+    "description": "Information, écoute, entraide, éducation, dépistage, rencontres et échanges aux personnes diabétiques * colloques et conférences * bulletins d'information et documentation * personnes-ressources * ser ... [Plus] | Clientèle : Personnes diabétiques",
+    "address": "11600 Bd Lacroix, Saint-Georges, QC G5Y 1L2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "diab-te-c-te-sud-ca",
+    "name": "Diabète Côte-Sud",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-5784",
+    "description": "Association au service des personnes diabétiques * ateliers : soins des pieds, étiquettes d'information nutritionnelle * visites en épicerie",
+    "address": "50 Bd Taché O, Montmagny, QC G5V 3A2, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "diab-te-mont-r-gie-mtg",
@@ -26584,6 +31914,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 15h00 à 20h00"
   },
   {
+    "id": "diffusion-avant-sc-ne-ca",
+    "name": "Diffusion Avant-Scène",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-1018",
+    "description": "Animation et gestion de la salle de spectacles du Vieux bureau de poste (voir dossier individuel)",
+    "website": "http://www.vieuxbureaudeposte.com",
+    "address": "2172 Chem. du Fleuve, Lévis, QC G6W 1Y6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "diffusion-avant-sc-ne-vieux-bure-ca",
+    "name": "Diffusion Avant-Scène, Vieux bureau de poste",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-1018",
+    "description": "Salle de spectacle offrant proximité entre artistes et public dans l'enceinte d'un bâtiment historique * mise en valeur des artistes émergents de la région et opportunités de découvertes artistiques * ... [Plus]",
+    "website": "http://www.vieuxbureaudeposte.com",
+    "address": "2172 Chem. du Fleuve, Lévis, QC G6W 1Y6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "diffusion-culturelle-de-l-vis-ca",
+    "name": "Diffusion culturelle de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-6001",
+    "description": "Diffuseur en arts de la scène et en arts visuels Centre d’exposition Louise-Carrier * expositions d’œuvres d’artistes professionnels dans les domaines des arts visuels et des métiers d’art * visites c ... [Plus]",
+    "website": "http://espacedcl.ca",
+    "address": "33 Rue Wolfe, Lévis, QC G6V 3X5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "diffusion-culturelle-de-l-vis-an-ca",
+    "name": "Diffusion culturelle de Lévis, Anglicane (L')",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Billetterie 418-838-6000",
+    "description": "Salle de spectacle (260 places) * programmation en théâtre, musique et variétés * matinées scolaires * location de salle | Clientèle : Administration 418-838-6001",
+    "website": "http://langlicane.com",
+    "address": "33 Rue Wolfe, Lévis, QC G6V 3X5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "dimension-travail-lav",
     "name": "Dimension Travail",
     "category": "social",
@@ -26595,6 +31977,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.dimensiontravail.com",
     "address": "1717, boulevard Saint-Martin Ouest, bureau 300, Chomedey, Laval, QC, H7S 1N2",
     "hours": "lundi à jeudi de 8h30 à 16h30 et vendredi de 8h00 à 15h30"
+  },
+  {
+    "id": "dimension-sportive-et-culturelle-ca",
+    "name": "Dimension sportive et culturelle",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "418-265-8853",
+    "description": "Organisation d'activités parascolaires dans le but de contribuer à la persévérance scolaire, au développement multidimensionnel des enfants et à l’adoption de saines habitudes de vie Activités diverti ... [Plus] | Clientèle : Enfants fréquentant une école participante | Âges : 4 an(s) - 16 an(s)",
+    "website": "http://www.dimensionsportive.com",
+    "address": "2652 Rte des Rivières, Saint-Rédempteur, QC G6K 1J6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "dioc-se-de-saint-hyacinthe-mtg",
@@ -26712,6 +32107,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.diocesedejoliette.org",
     "address": "2, rue Saint-Charles-Borromée Nord, Joliette, Lanaudière, QC, J6E 6H6",
     "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "dioc-se-de-qu-bec-secteur-amiant-ca",
+    "name": "Diocèse de Québec, Secteur Amiante - Lotbinière - Bois-Francs",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Lotbinière",
+    "province": "QC",
+    "phone": "Services pastoraux et célébrations eucharistiques régulières Unité missionnaire de L’Amiante (regroupement de 3 paroisses) Paroisse Saint-Jean-Marie-Vianney 418-423-4253",
+    "description": "Les personnes catholiques du territoire, par le biais des paroisses",
+    "website": "http://ecdq.org/amiante-lotbiniere-bois-franc",
+    "address": "126 Rue Olivier, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "dioc-se-de-qu-bec-secteur-chaudi-ca",
+    "name": "Diocèse de Québec, Secteur Chaudière",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Beauce-Sartigan",
+    "province": "QC",
+    "phone": "418-688-1211 poste 204",
+    "description": "Services pastoraux et célébrations eucharistiques régulières sur le territoire * accompagnement des paroisses dans les réaménagements pastoraux Unité missionnaire Beauce-sud 3 paroisses Paroisse Saint ... [Plus] | Clientèle : Personnes catholiques du territoire",
+    "website": "https://ecdq.org/",
+    "address": "Beauce-Sartigan Regional County Municipality, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "dioc-se-de-qu-bec-secteur-rive-s-ca",
+    "name": "Diocèse de Québec, Secteur Rive-Sud",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Services pastoraux et célébrations eucharistiques régulières Paroisses : Unité missionnaire Bellechasse-Etchemins (regroupant 3 paroisses) Paroisse Saint-Benoît de Bellechasse 418-887-3942",
+    "description": "Diocèse de Québec, Secteur Rive-Sud",
+    "website": "http://ecdq.org",
+    "address": "1 Rue des Remparts niveau 600, Québec, QC G1R 5L7, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "dira-laval-lav",
@@ -26950,6 +32384,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
+    "id": "disraeli-h-tel-de-ville-ca",
+    "name": "Disraeli. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "418-449-2771",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque municipale 418-449-2771 poste 2228 * en soirée 418-449-3200 poste 4110",
+    "website": "http://www.villededisraeli.ca",
+    "address": "550 Av. Jacques Cartier, Disraeli, QC G0N 1E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ab-distress-calgary",
     "name": "Distress Centre Calgary",
     "category": "mentalHealth",
@@ -27014,6 +32461,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00, comptoir-caisse: lundi au vendredi 8h00 à 16h00"
   },
   {
+    "id": "domaine-joly-de-lotbini-re-ca",
+    "name": "Domaine Joly-De Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Croix",
+    "province": "QC",
+    "phone": "418-926-2462",
+    "description": "Préservation et mise en valeur du Domaine Joly-De Lotbinière * site naturel avec sentiers en forêt et accès au fleuve * centre d'interprétation et d'expositions * jardins : collection de végétaux (plu ... [Plus]",
+    "website": "http://www.domainejoly.com",
+    "address": "Domaine Joly-De Lotbinière, 7015 Rte de Pointe Platon, Sainte-Croix, QC G0S 2H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "domaine-perce-neige-gatineau-out",
     "name": "Domaine Perce-Neige - Gatineau",
     "category": "mentalHealth",
@@ -27025,6 +32485,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "domaineperceneige.com",
     "address": "156, boulevard Lorrain, GATINEAU, Outaouais, QC, J8P 2G2",
     "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "domaine-pointe-de-saint-vallier-ca",
+    "name": "Domaine Pointe de Saint-Vallier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Vallier",
+    "province": "QC",
+    "phone": "418-884-4081",
+    "description": "Protection et mise en valeur du patrimoine bâti et naturel du domaine * site patrimonial ayant plus de 300 ans * visites du manoir, sentiers de marche * animation du site par des activités respectant ... [Plus] | Clientèle : Le grand public * toute personne ayant les facultés affaiblies sera invitée à quitter les lieux",
+    "website": "http://www.pointedesaintvallier.com",
+    "address": "116 Chem. Lemieux, Saint-Vallier, QC G0R 4J0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "donne-toi-une-chance-out",
@@ -27090,6 +32563,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.ville.dorval.qc.ca/fr/communaute/page/assistance-communautaire",
     "address": "1335 chemin Bord-du-Lac, bureau S-020, Dorval, QC H9S 2E5",
     "hours": "Lun-ven 8h30-16h30"
+  },
+  {
+    "id": "dosquet-h-tel-de-ville-ca",
+    "name": "Dosquet. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Dosquet",
+    "province": "QC",
+    "phone": "418-728-3653",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-415-1015",
+    "website": "http://www.municipalitedosquet.com",
+    "address": "Dosquet, QC G0S, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "mh-drogue-aide",
@@ -27223,6 +32709,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "d-fi-jeunesse-qu-bec-ca",
+    "name": "Défi jeunesse Québec",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lotbinière",
+    "province": "QC",
+    "phone": "418-796-2137",
+    "description": "Centre de formation spirituelle * programme résidentiel de 14-18 mois fondé sur l'acceptation des principes bibliques comme moyen de transformation * cours, mini-conférences, travaux, activités * suiv ... [Plus] | Clientèle : Hommes avec problèmes psychosociaux, en rupture avec leur entourage et désirant se prendre en main avec l'aide de Dieu | Âges : 18 an(s) et plus",
+    "website": "http://www.defijeunesse.org",
+    "address": "878 Rang St François, Lotbinière, QC G0S 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "defi-integration-developpement-acco-rep",
     "name": "Défi-Intégration-Développement-Accompagnement (dida) - Repentigny",
     "category": "employment",
@@ -27236,6 +32735,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 15h30"
   },
   {
+    "id": "d-fi-sant-nouvelle-beauce-ca",
+    "name": "Défi-Santé Nouvelle-Beauce",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-4942",
+    "description": "Promotion de saines habitudes de vie * organisation d'un triathlon hivernal et d'autres activités sportives | Clientèle : Le grand public",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "d-l-age-municipalit-out",
     "name": "Déléage - Municipalité",
     "category": "social",
@@ -27247,6 +32758,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.deleage.ca",
     "address": "175, route 107, Maniwaki, Outaouais, QC, J9E 3A8",
     "hours": "lundi au jeudi 8h00 à 12h00 et 12h30 à 16h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "d-pannage-alimentaire-d-urgence--ca",
+    "name": "Dépannage alimentaire d'urgence dans la MRC Beauce-Sartigan, Informations générales",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Beauce-Sartigan",
+    "province": "QC",
+    "phone": "Liste des organismes d'aide alimentaire et les secteurs desservis Comptoir régional de Beauce, 418-228-0560 poste 225 (inclus panier de Noël)",
+    "description": "Dépannage alimentaire d'urgence dans la MRC Beauce-Sartigan, Informations générales",
+    "address": "2727 Bd Dionne, Saint-Georges, QC G5Y 3Y1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "d-pannage-de-l-anse-cn",
@@ -27325,6 +32848,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "d-veloppement-conomique-bellecha-ca",
+    "name": "Développement économique Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-883-2249",
+    "description": "Contribution au développement économique, social et culturel durable sur le territoire * promotion de l'entrepreneurship * bureaux d'information touristique * représentation du territoire auprès de ce ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.mrcbellechasse.qc.ca/fr/developpement-economique-bellechasse/",
+    "address": "100 Rue Monseigneur-Bilodeau, Saint-Lazare-de-Bellechasse, QC G0R 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "d-veloppement-conomique-nouvelle-ca",
+    "name": "Développement économique Nouvelle-Beauce",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-386-1608",
+    "description": "Soutien aux entrepreneurs dans le démarrage ou la croissance de leurs projets d’affaires * agent facilitateur pour le maillage d’affaires et le dénouement d’embûches * levier économique et travail en ... [Plus] | Clientèle : Adultes * personnes morales | Âges : 18 an(s) et plus",
+    "website": "http://denb.ca",
+    "address": "280 Bd Vachon N #325, Sainte-Marie, QC G6E 0H2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "d-veloppement-conomique-port-car-cn",
     "name": "Développement économique Port-Cartier",
     "category": "social",
@@ -27361,6 +32910,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.ecca.org",
     "address": "640-6 Ave SW, Calgary, AB T2P 0S4",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "espace-chaudi-re-appalaches-ca",
+    "name": "ESPACE Chaudière-Appalaches",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-603-8383",
+    "description": "Prévention de la violence faite aux enfants (physique, verbale, psychologique, sexuelle) Programme éducatif pour les enfants de 3-12 ans, leurs parents et personnel des milieux offert dans les écoles ... [Plus] | Clientèle : Enfants de 3-12 ans * parents * personnel scolaire * éducatrices * services de garde * centres de la petite enfance * adultes | Âges : 3 an(s) et plus",
+    "website": "http://www.espacesansviolence.org",
+    "address": "881 Av. Taniata, Saint-Jean-Chrysostome, QC G6Z 2E3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "east-broughton-h-tel-de-ville-ca",
+    "name": "East Broughton. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "East Broughton",
+    "province": "QC",
+    "phone": "418-427-2608",
+    "description": "Assume des responsabilités en : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres Fait partie de : * MRC Le ... [Plus] | Clientèle : Bibliothèque 418-351-1329",
+    "website": "http://municipaliteeastbroughton.com",
+    "address": "10e Avenue S, East Broughton, QC G0N 1H0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "ab-edmonton-food",
@@ -27575,6 +33150,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "ensemble-vocal-echo-gospel-de-l--ca",
+    "name": "Ensemble vocal Echo gospel de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "",
+    "description": "Chant gospel et arts de la scène * accent mis sur la technique vocale spécifique au Gospel, l'interprétation, l'harmonie des voix et l'implication des choristes * spectacles * participation à des évén ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.echogospel.com",
+    "address": "Saint-Jean-Chrysostome, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "entourage-sant-mentale-mtg",
     "name": "Entourage Santé Mentale",
     "category": "family",
@@ -27678,6 +33266,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi à mercredi 9h00 à 18h00, jeudi et vendredi 9h00 à 21h00, samedi et dimanche 9h30 à 17h00, centre intérieur de réception des dons: 7 jours, 8h00 à 17h00, fermé les jours fériés"
   },
   {
+    "id": "entraide-parkinson-beauce-ca",
+    "name": "Entraide Parkinson Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Éphrem-de-Beauce",
+    "province": "QC",
+    "phone": "418-484-2860",
+    "description": "Sensibilisation et information aux personnes atteintes de la maladie de Parkinson et à leurs proches * soutien à la recherche et collaboration avec les organismes existants * activités de financement ... [Plus] | Clientèle : Personnes atteintes de la maladie de Parkinson et leurs proches",
+    "address": "Saint-Éphrem-de-Beauce, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "entraide-pascal-tach-ca",
+    "name": "Entraide Pascal-Taché",
+    "category": "family",
+    "subcategory": "",
+    "city": "L'Islet",
+    "province": "QC",
+    "phone": "418-607-0545",
+    "description": "Regroupement de personnes ayant un handicap et leur famille * sensibilisation de la population aux besoins et capacités de la personne ayant un handicap * collaboration avec les bénévoles et partenair ... [Plus] | Clientèle : Personnes ayant une déficience physique, intellectuelle, sensorielle, un trouble envahissant du développement (TED), problème de santé mentale et leurs proches | Âges : 15 an(s) et plus",
+    "website": "http://www.entraidepascaltache.org",
+    "address": "147 Rue Labbé, L'Islet, QC G0R 2B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "entraide-pour-familles-monoparen-mtg",
     "name": "Entraide Pour Familles Monoparentales Et Familles Recomposées Du Suroît",
     "category": "family",
@@ -27729,6 +33342,44 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "sur rendez-vous, Frigo communautaire: mai à octobre"
   },
   {
+    "id": "entraide-sainte-croix-ca",
+    "name": "Entraide Sainte-Croix",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Croix",
+    "province": "QC",
+    "phone": "418-926-3888",
+    "description": "Aide et référence aux personnes et familles temporairement dans le besoin * aide alimentaire * comptoir vestimentaire, accessoires et petits meubles * paniers de Noël * ateliers ponctuels * rencontres ... [Plus] | Clientèle : Personnes et familles à faible revenu ou dans le besoin * transport médical pour personne bénéficiant du programme de solidarité sociale | Âges : 18 an(s) et plus",
+    "address": "Municipalité de Sainte-Croix, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "entraide-solidarit-bellechasse-ca",
+    "name": "Entraide Solidarité Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Claire",
+    "province": "QC",
+    "phone": "418-883-3699",
+    "description": "Services de maintien à domicile pour les personnes ainées ou en perte d'autonomie sur le territoire de la MRC de Bellechasse * groupes d'animation VIACTIVE * accompagnement-transport bénévole * visite ... [Plus] | Clientèle : Personnes ainées ou en perte d'autonomie | Âges : 50 an(s) et plus",
+    "website": "http://www.entraidesolidarite.com",
+    "address": "27d Bd Bégin, Sainte-Claire, QC G0R 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "entraide-de-saint-apollinaire-ca",
+    "name": "Entraide de Saint-Apollinaire",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "418-881-2179",
+    "description": "Aide aux personnes dans le besoin * aide matérielle, alimentaire et vestimentaire * vente de vêtements et articles divers * paniers de Noël | Clientèle : Familles * personnes à faible revenu",
+    "website": "https://jeannotm.wixsite.com/entraide",
+    "address": "9 R.Industrielle, Saint-Apollinaire, QC G0S 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "entraide-deuil-de-l-outaouais-out",
     "name": "Entraide-Deuil De L'Outaouais",
     "category": "social",
@@ -27740,6 +33391,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "entraide-deuil.qc.ca",
     "address": "115, boulevard Sacré-Coeur, bureau 204, Gatineau, Outaouais, QC, J8X 1C5",
     "hours": "lundi au vendredi 8h30 à 16h30, Mon premier Noël sans toi: le premier samedi de décembre"
+  },
+  {
+    "id": "entraide-secours-ca",
+    "name": "Entraide-secours",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Isidore",
+    "province": "QC",
+    "phone": "418-882-7446",
+    "description": "Aide alimentaire et soutien financier, selon des critères prédéterminés par le CA, aux personnes vivant une situation difficile dans la municipalité de Saint-Isidore * aide alimentaire mensuel une foi ... [Plus]",
+    "address": "Saint-Isidore, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "entre-deux-roues-out",
@@ -27846,6 +33509,44 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "clinique 2026: mars, sur rendez-vous"
   },
   {
+    "id": "equijustice-l-vis-ca",
+    "name": "Equijustice Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-834-0155",
+    "description": "Justice réparatrice et médiation citoyenne * accueil et accompagnement d'adolescents ayant commis un délit dans l'accomplissement d'une mesure réparatrice : travaux communautaires, dédommagement et au ... [Plus] | Clientèle : Adolescents * parents * victimes * citoyens vivant des conflits * milieux préscolaires et scolaires * organisations * entreprises * communautés",
+    "website": "http://equijustice.ca/fr/membres/levis",
+    "address": "5955 Rue Saint-Laurent #203, Lévis, QC G6V 3P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "equijustice-l-vis-m-diation-cito-ca",
+    "name": "Equijustice Lévis, Médiation citoyenne, accompagnement en résolution de conflits",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Lévis et MRC de Lotbinière 418-834-0155 poste 201",
+    "description": "Favoriser l’accès et l’implication des personnes dans les activités de justice, en marge des tribunaux, de promouvoir la communication et le vivre ensemble, de mettre en place des espaces d’échanges s ... [Plus] | Clientèle : Ligne provinciale de médiation citoyenne en violences sexuelles 514-522-2554 poste 2011",
+    "website": "http://equijustice.ca/fr/membres/levis",
+    "address": "5955 Rue Saint-Laurent #203, Lévis, QC G6V 3P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "ermitage-notre-dame-de-gr-ce-ca",
+    "name": "Ermitage Notre-Dame de Grâce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "Immeuble patrimonial construit en 1867 et partie de l'ensemble patrimonial du Domaine Pâquet avec la chapelle Notre-Dame de Grâce",
+    "description": "Ermitage Notre-Dame de Grâce",
+    "address": "Saint-Nicolas, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "escale-familiale-de-boucherville-mtg",
     "name": "Escale Familiale De Boucherville (L')",
     "category": "social",
@@ -27923,6 +33624,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 14h00, vendredi 8h30 à 12h00, boutique MAM: lundi au jeudi 8h30 à 14h00, fermé les jours fériés"
   },
   {
+    "id": "espace-m-lilot-ca",
+    "name": "Espace Mélilot",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-440-2818",
+    "description": "Organisme communautaire accompagnant ses résidentes dans leur projet de vie par de l'intervention sociale adaptée favorisant la stabilité résidentielle et l'inclusion sociale * 18 logements transitoir ... [Plus] | Clientèle : Femmes | Âges : 18 an(s) et plus",
+    "address": "1201 Rue Charles-Rodrigue, Lévis, QC G6W, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "espace-outaouais-out",
     "name": "Espace Outaouais",
     "category": "social",
@@ -27975,6 +33688,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "septembre à juin, lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "espace-culturel-du-quartier-sain-ca",
+    "name": "Espace culturel du Quartier Saint-Nicolas (L')",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-831-5257",
+    "description": "Institution muséale * exposition permanente sur l’histoire du quartier Saint-Nicolas * expositions temporaires en arts visuels * activités et événements culturels",
+    "website": "http://www.ecqsn.com",
+    "address": "1450 Rue des Pionniers, Saint-Nicolas, QC G7A 4L6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "espace-finances-ca",
+    "name": "Espace finances",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-6633",
+    "description": "Soutien aux consommateurs dans la gestion de leurs finances personnelles par des activités d'aide, d'éducation et d'information * défense collective des droits et intérêts des consommateurs * aide per ... [Plus]",
+    "website": "http://www.espacefinances.ca",
+    "address": "33 Rue Carrier, Lévis, QC G6V 5N5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "espoir-rosalie-de-gatineau-out",
     "name": "Espoir Rosalie De Gatineau",
     "category": "social",
@@ -27998,6 +33737,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre d'hébergement temporaire et permanent visant le mieux-être des adultes ayant un handicap, une déficience physique, intellectuelle, un trouble du spectre de l'autisme ou de santé mentale * resso ... [Plus] | Clientèle : Assistance immédiate 418-538-3672 poste 5 | Âges : 18 an(s) et plus",
     "website": "http://www.espoirdeshelna.ca",
     "address": "1075 Prom. Des Anciens, Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "essentiel-des-etchemins-l-ca",
+    "name": "Essentiel des Etchemins (L')",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-4112",
+    "description": "Réduction des effets de la pauvreté dans le respect des individus par l'offre de services reliés aux besoins des personnes à faible revenu du territoire * soutien à l'autonomie alimentaire et l'inclus ... [Plus] | Clientèle : Comptoir alimentaire pour les personnes à faible revenu * cuisines collectives pour le grand public * éducation populaire pour les utilisateurs du comptoir alimentaire, organismes et le grand public * Friperie pour le grand public",
+    "website": "http://lessentieletchemins.com",
+    "address": "216 2e Avenue A, Lac-Etchemin, QC G0R 1S0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -28052,6 +33804,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi de 9h00 à 17h00"
   },
   {
+    "id": "expression-centre-d-coute-active-ca",
+    "name": "Expression, centre d'écoute active",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "Ligne d'écoute 418-338-5522",
+    "description": "Prévention de la détresse psychologique et du suicide et promotion de la santé mentale * service confidentiel et anonyme d'écoute téléphonique, soutien et relation d'aide * sensibilisation en préventi ... [Plus] | Clientèle : Administration 418-338-3933 | Âges : 18 an(s) et plus",
+    "website": "http://ligneexpression.ca",
+    "address": "CP 541, Thetford Mines, QC G6G 0C2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-soc-exæquo",
     "name": "Exæquo – Personnes handicapées physiques",
     "category": "social",
@@ -28091,6 +33856,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Défense des droits et services spécialisés."
   },
   {
+    "id": "fadoq-club-bonne-entente-saint-t-ca",
+    "name": "FADOQ. Club Bonne entente Saint-Étienne-de-Lauzon",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Étienne-de-Lauzon",
+    "province": "QC",
+    "phone": "418-836-2331",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "http://club.fadoq.ca/L075",
+    "address": "14 Rue de Saint-Étienne-de-Lauzon, Saint-Étienne-de-Lauzon, QC G6J 1J3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-christ-roi-l-vis-ca",
+    "name": "FADOQ. Club Christ-Roi Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-5053",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "http://www.fadoq.ca/quebec-et-chaudiere-appalaches/a-propos/clubs-fadoq/secteur-levis-chutes-chaudiere",
+    "address": "Rue du Christ-Roi, Lévis, QC G6V, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fadoq-club-les-pionniers-cn",
     "name": "FADOQ. Club Les Pionniers",
     "category": "social",
@@ -28116,6 +33907,31 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "fadoq-club-pintendre-ca",
+    "name": "FADOQ. Club Pintendre",
+    "category": "social",
+    "subcategory": "",
+    "city": "Pintendre",
+    "province": "QC",
+    "phone": "Résidence 418-837-7053",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "http://club.fadoq.ca/L080",
+    "address": "Pintendre, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-amiti-saint-m-thode-ca",
+    "name": "FADOQ. Club amitié Saint-Méthode",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "418-334-4769",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "address": "Saint-Sylvestre, QC G0S 3C0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fadoq-club-anneaux-d-or-de-galli-cn",
     "name": "FADOQ. Club anneaux d’or de Gallix (les)",
     "category": "social",
@@ -28125,6 +33941,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-766-4039",
     "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
     "address": "Gallix, Sept-Îles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-de-l-amiti-de-charny-ca",
+    "name": "FADOQ. Club de l'amitié de Charny",
+    "category": "social",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-903-9739",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "http://club.fadoq.ca/L069",
+    "address": "2504 Chem. de Charny, Charny, QC G6X 2V3, Canada",
     "hours": "Voir site web"
   },
   {
@@ -28149,6 +33978,81 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-589-1566",
     "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
     "address": "102 Rue Alexandre, Godbout, QC G0H 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-de-l-ge-d-or-les-amis-ca",
+    "name": "FADOQ. Club de l'âge d'or les Amis dynamiques de Saint-Rédempteur",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "418-496-1730",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "http://www.fadoq.ca/quebec-et-chaudiere-appalaches/a-propos/clubs-fadoq/secteur-levis-chutes-chaudiere",
+    "address": "Saint-Rédempteur, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-du-nouvel-ge-de-saint-ca",
+    "name": "FADOQ. Club du nouvel âge de Saint-Nicolas (Le)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-930-2580",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "http://www.fadoq.ca",
+    "address": "Saint-Sylvestre, QC G0S 3C0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-l-anneau-d-or-ca",
+    "name": "FADOQ. Club l'anneau d'or",
+    "category": "social",
+    "subcategory": "",
+    "city": "Armagh",
+    "province": "QC",
+    "phone": "",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "address": "Armagh, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-les-riverains-de-brea-ca",
+    "name": "FADOQ. Club les Riverains de Breakeyville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Hélène-de-Breakeyville",
+    "province": "QC",
+    "phone": "418-580-2579",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "address": "Breakeyville, Lévis, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-club-tournesol-saint-danie-ca",
+    "name": "FADOQ. Club tournesol Saint-Daniel",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "address": "Saint-Daniel, QC G0N 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fadoq-saint-david-de-l-auberivi--ca",
+    "name": "FADOQ. Saint-David-de-L'Auberivière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-1552",
+    "description": "Club social pour aînés affilié à la Fédération des clubs de l'âge d'or du Québec (FADOQ) * réunions d'information * représentation, défense des droits et référence aux organismes partenaires * rabais ... [Plus] | Âges : 50 an(s) et plus",
+    "website": "http://club.fadoq.ca/U057",
+    "address": "Saint-David-de-l'Auberivière, Lévis, QC G6W 1H7, Canada",
     "hours": "Voir site web"
   },
   {
@@ -28217,6 +34121,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.lefablier.org",
     "address": "2014, chemin de Chambly, Longueuil, Montérégie, QC, J4J 3Y2",
     "hours": "mardi au jeudi 9h00 à 15h00, lundi 9h00 à 15h00 mais fermé au public"
+  },
+  {
+    "id": "fabrique-de-la-paroisse-sainte-f-ca",
+    "name": "Fabrique de la paroisse Sainte-Famille-de-Beauce - Communauté de l'Enfant-Jésus",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Vallée-Jonction",
+    "province": "QC",
+    "phone": "418-253-5355",
+    "description": "Service d'aide alimentaire aux personnes à faible revenu offert par les Chevaliers de Colomb * dépannage alimentaire * bons d'achat à l'épicerie locale (sauf boissons alcoolisées, cigarettes et loteri ... [Plus] | Clientèle : Personnes à faible revenu",
+    "address": "477 Rue Principale, Saint-Patrice-de-Beaurivage, QC G0S 1B0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "fadoq-boucherville-mtg",
@@ -28552,6 +34468,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 16h00"
   },
   {
+    "id": "ferme-p-dagogique-marichel-ca",
+    "name": "Ferme pédagogique Marichel",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Agathe-de-Lotbinière",
+    "province": "QC",
+    "phone": "418-599-2949",
+    "description": "Ferme pédagogique offrant des séjours en milieu agricole * camps de vacances * classes-nature * séjours pour groupes et familles * réservation commande : produits de la ferme lors des activités, viand ... [Plus] | Clientèle : Le grand public * groupes scolaires ou parascolaires | Âges : 5 an(s) et plus",
+    "website": "http://fermemarichel.com",
+    "address": "809 Rang Bois Franc, Sainte-Agathe-de-Lotbinière, QC G0S 2A0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fermette-enchantee-la-msc",
     "name": "Fermette Enchantée (la)",
     "category": "social",
@@ -28630,6 +34559,44 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 10h00 à 16h00"
   },
   {
+    "id": "filles-d-isabelle-cercle-marie-c-ca",
+    "name": "Filles d'Isabelle, cercle Marie-Cécile 1295",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Étienne-de-Lauzon",
+    "province": "QC",
+    "phone": "Comptoir familial 418-836-2779",
+    "description": "Organisation caritative composée de femmes catholiques assurant dans sa paroisse la promotion d'œuvres éducatives, charitables, religieuses et sociales * aide aux personnes à faible revenu Comptoir fa ... [Plus] | Clientèle : Information 418-456-2368",
+    "address": "4119 Rte des Rivières, Saint-Étienne-de-Lauzon, QC G6J 1J3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "filon-le-ca",
+    "name": "Filon (Le)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-603-3915",
+    "description": "Soutien aux initiatives collectives durables pour améliorer le vivre ensemble, les conditions de vie, tout en permettant à tous de participer à la construction d’une communauté solidaire, créative et ... [Plus]",
+    "website": "http://www.filon.ca",
+    "address": "4577 Bd Guillaume-Couture, Lévis, QC G6W 6M6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "filon-le-banque-pitons-ca",
+    "name": "Filon (Le), Banque à pitons",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-603-3915",
+    "description": "Réseau de solidarité et d'échange de services entre personnes et organismes permettant de se rendre des services gratuitement en échange de temps dans le but d'améliorer leurs conditions de vie et de ... [Plus] | Clientèle : Le grand public * organismes membres",
+    "website": "http://www.banqueapitons.org",
+    "address": "4577 Bd Guillaume-Couture, Lévis, QC G6W 6M6, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fin-a-la-faim-rep",
     "name": "Fin À la Faim...",
     "category": "social",
@@ -28641,6 +34608,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.finalafaim.org",
     "address": "50, rue Thouin, bureau 223, Repentigny, Lanaudière, QC, J6A 4J4",
     "hours": "bureau: lundi au vendredi de 8h30 à 16h30, distribution de nourriture: sur rendez-vous, jeudi 12h00 à 16h00, horaire du temps des fêtes: fermé du 19 décembre 2025 au 5 janvier 2026"
+  },
+  {
+    "id": "foi-et-partage-qu-bec-ca",
+    "name": "Foi et partage Québec",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-831-0125",
+    "description": "Retraites de recueillement, prière et fraternité Ressourcement * journée de prière mensuelle (apporter son repas) : mini-retraite ou retraite, eucharistie, accueil inconditionnel, équipes de prière et ... [Plus] | Clientèle : Adultes désirant faire une démarche spirituelle",
+    "website": "https://foietpartage.net",
+    "address": "Saint-Nicolas, Levis, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "foie-canada-sab",
@@ -28708,6 +34688,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 16h00, vendredi 9h00 à 12h00"
   },
   {
+    "id": "fondation-elizabeth-et-roger-par-ca",
+    "name": "Fondation Elizabeth et Roger Parent",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "581-997-9919",
+    "description": "Organisation de « journées de rêve » pour groupes d'aînés * transport, repas et animation | Clientèle : Organismes et résidences ayant une clientèle aînée * groupes d'aînés (25 participants maximum) https://fondationparent.org/inscrire-groupe.aspx",
+    "website": "http://fondationparent.org",
+    "address": "local 203, 950 Rue de la Concorde, Lévis, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-gus-ca",
+    "name": "Fondation GUS",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-834-9108",
+    "description": "Soutien aux personnes sinistrées sans ressources et sans assurances par l'achat de biens essentiels et de services professionnels après sinistre Assistance pour * achat de biens essentiels",
+    "website": "http://www.fondationgus.com",
+    "address": "4105 Bd Guillaume-Couture, Lévis, QC G6W 6M9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fondation-le-pilier-lav",
     "name": "Fondation Le Pilier",
     "category": "social",
@@ -28773,6 +34779,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "fondation-philippe-boucher-ca",
+    "name": "Fondation Philippe Boucher",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "418-564-6885",
+    "description": "Soutien financier aux enfants handicapés, malades ou défavorisés * équipements spécialisés * aide aux athlètes handicapés | Clientèle : Enfants handicapés, malades, en difficultés ou défavorisés | Âges : 18 an(s) et moins",
+    "website": "http://www.fondationphilippeboucher.com",
+    "address": "34 Rue Masse, Saint-Apollinaire, QC G0S 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-pier-yves-bouchard-ca",
+    "name": "Fondation Pier-Yves Bouchard",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-0022",
+    "description": "Aide aux personnes ayant subi un traumatisme craniocérébral sportif par des gestes concrets auprès des victimes, leur famille ou auprès des organismes qui les appuient * soutien matériel * sensibilisa ... [Plus] | Clientèle : Victimes de traumatisme craniocérébral sportif et leur famille * organismes qui les appuient",
+    "website": "http://fondationpy.com",
+    "address": "Rue Bouchard, Lévis, QC G6C, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fondation-pour-les-a-n-s-de-l-ou-out",
     "name": "Fondation Pour Les Aînés De L'Outaouais",
     "category": "social",
@@ -28784,6 +34816,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "cabaneenboisrond.com",
     "address": "331, boulevard de la Cité-des-Jeunes, Gatineau, Outaouais, QC, J8Y 6T3",
     "hours": "lundi au vendredi 8h00 à 16h30"
+  },
+  {
+    "id": "fondation-saison-nouvelle-ca",
+    "name": "Fondation Saison nouvelle",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-1068",
+    "description": "Aide aux organismes de charité intervenant auprès des groupes en besoin social, économique, psychologique ou spirituel * aide pour projets ponctuels relevant entre autres de l’entraide communautaire, ... [Plus] | Clientèle : Organismes à but non lucratif autorisés à émettre des reçus de charité",
+    "website": "http://fondationsaisonnouvelle.org",
+    "address": "825 Rue de la Concorde, Saint-Romuald, QC G6W 8A7, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "fondation-se-reconstruire-centre-mtg",
@@ -28812,6 +34857,56 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "fondation-chevalerie-passion-ca",
+    "name": "Fondation chevalerie passion",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-806-5919",
+    "description": "Programme d'équitation offrant aux personnes ayant des besoins particuliers l'occasion de vivre une expérience équestre menant à l'accomplissement de soi Session d'équitation (10 séances) * en présenc ... [Plus] | Clientèle : Personnes ayant une déficience intellectuelle, physique ou un trouble envahissant du développement (TED), des troubles de santé mentale, de comportement et d'adaptation, des besoins socio-affectifs particuliers",
+    "website": "http://www.fondationchevaleriepassion.ca",
+    "address": "1963 Rte Marie-Victorin, Lévis, QC G7A 4H2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-d-aide-pour-les-a-n-s--ca",
+    "name": "Fondation d'aide pour les aînés d'Adstock",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "Yves Gilbert 418-334-1893",
+    "description": "Aide à la mobilité et au maintien en forme des personnes en perte d'autonomie * activités de financement * dons en aménagement et en équipement | Clientèle : Personnes et aînés en perte d'autonomie ou convalescents",
+    "address": "Adstock, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-du-clsc-ca",
+    "name": "Fondation du CLSC",
+    "category": "family",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-3511",
+    "description": "Réponse aux besoins particuliers qui ne sont pas couverts par d'autres services, quand aucune autre ressource n'est disponible * aide aux enfants de familles à faible revenu qui sont dans l'incapacité ... [Plus] | Clientèle : Enfants de famille à faible revenu qui sont dans l'incapacité de satisfaire leurs besoins de base * location d'équipements pour personnes ayant des incapacités temporaire",
+    "website": "http://www.cisssca.com/cisss/fondations/fondation-du-clsc-region-de-thetford/",
+    "address": "17 Rue Notre Dame E, Thetford Mines, QC G6G 2J6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-du-m-morial-des-milita-ca",
+    "name": "Fondation du Mémorial des militaires",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-576-3064",
+    "description": "Reconnaissance du courage, du dévouement et des sacrifices des soldats, policiers et travailleurs humanitaires * préservation et mise en valeur du patrimoine militaire à Lévis, des sites historiques d ... [Plus]",
+    "address": "10 Rue du Christ-Roi, Lévis, QC G6V 6E3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "fondation-du-syndrome-angelman-la-pfd",
     "name": "Fondation du Syndrome Angelman (la)",
     "category": "social",
@@ -28823,6 +34918,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://angelman.ca/fr",
     "address": "14400, boulevard Gouin Ouest, Pierrefonds-Roxboro, Montréal, QC, H9H 1B1",
     "hours": "vendredi 17h00 à dimanche 16h00"
+  },
+  {
+    "id": "fondation-du-c-ur-beauce-etchemi-ca",
+    "name": "Fondation du cœur Beauce-Etchemin",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-1843",
+    "description": "Collectes de dons en soutien aux programmes de prévention, de réadaptation et de maintien en santé et promotion de l'accès aux technologies médicales avancées pour la population de Beauce-Etchemins * ... [Plus] | Clientèle : Personnes atteintes de maladies chroniques (cœur, poumons, diabète et autres) ou démontrant des facteurs de risque pour ces maladies",
+    "website": "http://www.fondation.coeur.ca",
+    "address": "2640 Bd Dionne, Saint-Georges, QC G5Y 3X8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-le-cr-puscule-ca",
+    "name": "Fondation le Crépuscule",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-1314",
+    "description": "Collaboration avec les organismes responsables des services de santé et des services sociaux dans la MRC de la Nouvelle-Beauce Services aux organismes : * soutien financier en partenariat avec différe ... [Plus] | Clientèle : Organismes responsables des services de santé et des services sociaux dans la MRC de la Nouvelle-Beauce",
+    "website": "http://lecrepuscule.ca",
+    "address": "774-G Rue Étienne-Raymond, Sainte-Marie, QC G6E 0K6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "fondation-qu-b-coise-du-cancer-c-ca",
+    "name": "Fondation québécoise du cancer, Centre régional de Québec, Maison Dessercom de Lévis",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "581-502-0184",
+    "description": "Hôtellerie hospitalière qui accueille et héberge des personnes devant séjourner à Lévis, en raison de soins médicaux contre le cancer * à proximité de l’Hôtel-Dieu de Lévis, des services d'autobus, de ... [Plus] | Clientèle : Personnes devant recevoir des traitements contre cancer * leur accompagnateur",
+    "website": "http://www.fqc.qc.ca",
+    "address": "160 Rue Wolfe, Lévis, QC G6V 3Z5, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "fonds-d-aide-de-l-ouest-de-l-ile-pfd",
@@ -28873,6 +35007,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque Camille-Bouchard 418-587-4482 poste 3103",
     "website": "https://www.facebook.com/villedeforestville/",
     "address": "Forestville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "formaca-ca",
+    "name": "Formaca",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-5611",
+    "description": "Entreprise adaptée favorisant l'intégration socioprofessionnelle de personnes ayant des limitations physiques, mentales ou intellectuelles * sous-traitance industrielle : emballage, assemblage, ensach ... [Plus] | Clientèle : Entreprise ayant pour mission de créer des emplois pour personnes ayant des limitations physiques, mentales ou intellectuelles | Âges : 16 an(s) et plus",
+    "website": "http://formaca.ca",
+    "address": "23 Av. Ste Brigitte N, Montmagny, QC G5V 0H4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -28953,6 +35100,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "frampton-h-tel-de-ville-ca",
+    "name": "Frampton. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Frampton",
+    "province": "QC",
+    "phone": "418-479-5363",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.frampton.ca",
+    "address": "Frampton, QC G0R 1M0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "shawi-garde-france-gignac",
     "name": "France Gignac",
     "category": "family",
@@ -29024,6 +35184,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "",
     "description": "Frigo ouvert à tous. Toute la communauté peut déposer des denrées alimentaires afin d'en faire profiter aux personnes ne pouvant répondre à leurs besoins alimentaires. Sauve ta bouffe - Répertoire des ... [Plus]",
     "address": "Longue-Pointe-de-Mingan, QC G0G 1V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "frigos-pleins-ca",
+    "name": "Frigos pleins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-883-1399",
+    "description": "Aide relative aux besoins alimentaires des personnes * promotion de la sécurité alimentaire * soutien aux besoins alimentaires * implication citoyenne et participation au développement durable des com ... [Plus] | Clientèle : Toute personne rencontrant des difficultés à se nourrir peut faire une demande qui sera analysée | Âges : 18 an(s) et plus",
+    "website": "http://www.frigospleins.com",
+    "address": "197 Rue Principale, Saint-Lazare-de-Bellechasse, QC G0R 3J0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -29178,6 +35351,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30.",
     "isProvinceWide": true
+  },
+  {
+    "id": "f-te-de-la-famille-de-l-vis-ca",
+    "name": "Fête de la famille de Lévis",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "418-262-9597",
+    "description": "Organisation de la fête de la famille à Lévis * animation et spectacles * recrutement de bénévoles pour l'événement Site de la fête, 1325, rue Saint-Denis, Lévis",
+    "website": "https://www.festivalfamillelevis.com/",
+    "address": "1325 Rue de Saint-Denis, Lévis, QC G6K 1N1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "drum-garde-g-au-chateau-des-amis",
@@ -29355,6 +35541,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.groupegeme.com",
     "address": "375, avenue Bessette, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 2N8",
     "hours": "bureau: lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00, horaire des groupes: sur le site Internet"
+  },
+  {
+    "id": "gris-chaudi-re-appalaches-ca",
+    "name": "GRIS Chaudière-Appalaches",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-903-7878",
+    "description": "Aide aux jeunes gais, lesbiennes, bisexuels et transsexuels face à leur orientation sexuelle et leur identité de genre de la région de Chaudière-Appalaches * information et sensibilisation à la compré ... [Plus] | Clientèle : Groupe Espace : adolescents 12-17 ans",
+    "website": "http://www.grischap.org",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "cpe-pw3",
@@ -29668,6 +35867,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "grand-village-ca",
+    "name": "Grand village",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-831-1677",
+    "description": "Expériences enrichissantes et adaptées aux enfants, adolescents et adultes à besoins spécifiques * aide aux familles en offrant un répit sécuritaire Nos services: * camps de vacances * camp de jour * ... [Plus] | Clientèle : Enfants, adolescents et adultes ayant une déficience physique (DP), intellectuelle (DI) ou un trouble du spectre de l'autisme (TSA) | Âges : 5 an(s) et plus",
+    "website": "http://www.grand-village.com",
+    "address": "2434 Rte Marie-Victorin, Lévis, QC G7A 4H7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "grand-remous-municipalit-out",
     "name": "Grand-Remous - Municipalité",
     "category": "social",
@@ -29692,6 +35904,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.gfgsm.org",
     "address": "2949 rue Picard, bureau 201, Saint-Hyacinthe, Montérégie, QC, J2S 1H2",
     "hours": "lundi au vendredi 9h00 à 16h00"
+  },
+  {
+    "id": "grands-fr-res-grandes-s-urs-des--ca",
+    "name": "Grands frères grandes sœurs des Appalaches",
+    "category": "family",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-7404",
+    "description": "Création d'une relation significative entre un adulte et un enfant ayant besoin d'un soutien, d'un modèle ou d'un ami favorisant son épanouissement, le développement de ses talents et son estime de so ... [Plus] | Clientèle : Enfants vivant des difficultés personnelles * adultes désirant être grand frère ou grande sœur | Âges : 6 an(s) - 21 an(s)",
+    "website": "http://appalaches.grandsfreresgrandessoeurs.ca",
+    "address": "733 Bd Frontenac O, Thetford Mines, QC G6G 7X9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "bc-greater-vancouver-food",
@@ -29810,6 +36035,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "groupe-alpha-montmagny-ca",
+    "name": "Groupe Alpha Montmagny",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-241-5024",
+    "description": "Ateliers en petits groupes ou tutorat auprès d'adultes afin d'améliorer ou maintenir leurs connaissances en lecture, en écriture, en calcul et en informatique. Ateliers (4-12 personnes, jour ou soir), ... [Plus] | Clientèle : Adultes * bibliomobile pour enfants âgés de 0 à 5 ans * ateliers d'initiation à l'informatique et français pour le grand public",
+    "website": "http://www.groupealphamty.com",
+    "address": "74 Rue St Jean Baptiste E #2, Montmagny, QC G5V 1K1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-alpha-des-etchemins-ca",
+    "name": "Groupe Alpha des Etchemins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-2550",
+    "description": "Organisme communautaire de la MRC Les Etchemins en alphabétisation populaire * ateliers de lecture, écriture et calcul * ateliers d'initiation à l'informatique * activités sociales et culturelles : so ... [Plus] | Clientèle : Adultes analphabètes * activités sociales et culturelles pour les participants aux ateliers | Âges : 16 an(s) et plus",
+    "website": "https://www.alphaetchemins.alphabetisation.ca/",
+    "address": "212 2e Avenue, Lac-Etchemin, QC G0R 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "groupe-amical-de-sainte-julie-le-mtg",
     "name": "Groupe Amical De Sainte-Julie (Le)",
     "category": "food",
@@ -29819,6 +36070,44 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "514 371-4912",
     "description": "* Repas communautaires.* Repas de Noël.* Activités: bingo et jeux de cartes. | Clientèle: résident·e·s de Sainte-Julie | Territoire: Sainte-Julie | Statut: organisme à but non lucratif",
     "address": "550, boulevard Saint-Joseph, Sainte-Julie, Montérégie, QC, J3E 1W8",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-aptas-ca",
+    "name": "Groupe Aptas",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-4003",
+    "description": "Entreprise adaptée offrant des emplois aux personnes ayant des limitations * conception de boîtes sur mesure * manutention * recyclage : matériel informatique, électroménagers et tubulures d’érablière ... [Plus] | Clientèle : Emplois pour personnes ayant des limitations",
+    "website": "http://groupeaptas.com",
+    "address": "1332 Bd Vachon N, Sainte-Marie, QC G6E 1B3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-autobus-auger-ca",
+    "name": "Groupe Autobus Auger",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-833-2181",
+    "description": "Services de transport en commun et transport adapté Transport adapté M. Auger (voir dossier individuel)",
+    "website": "http://autobusauger.com",
+    "address": "880 Rue de Saint-Romuald, Saint-Romuald, QC G6W 5M6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-autobus-auger-transport-a-ca",
+    "name": "Groupe Autobus Auger, Transport adapté M. Auger",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "Réservations 418-833-3339",
+    "description": "Service de transport adapté pour personne à mobilité réduite",
+    "address": "880 Rue de Saint-Romuald, Saint-Romuald, QC G6W 5M6, Canada",
     "hours": "Voir site web"
   },
   {
@@ -29833,6 +36122,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "groupedeschenes.myfreesites.net",
     "address": "55, chemin Vanier, Gatineau, Outaouais, QC, J9H 1X5",
     "hours": "lundi au vendredi 9h00 à 17h00, bonhomme à lunette: sans rendez-vous, mercredi 11h30 à 14h00"
+  },
+  {
+    "id": "groupe-cultur-art-ca",
+    "name": "Groupe Cultur'Art",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "",
+    "description": "Promotion et diffusion des arts visuels et métiers d'art ainsi que des artistes et artisans de la grande région de Lévis * organisation d'événements, Rallye Cultur’Art de Lévis",
+    "website": "http://www.rallyeculturartdelevis.com",
+    "address": "2931 Rue Gravel, Saint-Romuald, QC G6W 1W9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "groupe-d-entraide-d-clic-lav",
@@ -30104,6 +36406,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "groupe-esp-rance-et-cancer-ca",
+    "name": "Groupe Espérance et cancer",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "Saint-Georges 418-227-1607",
+    "description": "Réseau d'entraide pour les personnes atteintes de cancer, leurs proches aidants et les personnes endeuillées par le cancer * milieu de vie, services et activités favorisant leur prise en charge * amél ... [Plus] | Clientèle : Personnes atteintes du cancer et leurs proches aidants | Âges : 18 an(s) et plus",
+    "website": "http://www.esperanceetcancer.org",
+    "address": "477 90e Rue, Saint-Georges, QC G5Y 3L1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "groupe-priorit-travail-lav",
     "name": "Groupe Priorité Travail",
     "category": "social",
@@ -30140,6 +36455,45 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "• Comptoir familial de vêtements, articles de maison, matériel informatique, livres, jouets et vélos. | Clientèle: grand public | Territoire: Lanaudière | Frais: variables | Statut: organisme à but non lucratif",
     "address": "208, chemin des Anglais, Mascouche, Lanaudière, QC, J7L 3N8",
     "hours": "mercredi au vendredi 10h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "groupe-traq-ca",
+    "name": "Groupe TRAQ",
+    "category": "social",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-832-1438",
+    "description": "Promotion et sauvegarde du patrimoine ferroviaire au Québec * information et sensibilisation du public * activités culturelles : musée ferroviaire, séminaires, journée culturelle et autres * forum des ... [Plus] | Âges : 6 an(s) et plus",
+    "website": "http://groupe-traq.com",
+    "address": "2326 Rue de la Gare, Charny, QC G6X 1Z3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-d-accompagnement-jonathan-ca",
+    "name": "Groupe d'accompagnement Jonathan",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-6888",
+    "description": "Accompagnement des personnes atteintes de cancer * soutien aux proches aidants, aux personnes en soins palliatifs et fin de vie et en deuil Vivre d'espoir : accompagnement pour les gens touchés par le ... [Plus] | Clientèle : Personnes touchées par le cancer * personnes en fin de vie * personnes endeuillées * proches aidants",
+    "website": "http://www.groupejonathan.ca",
+    "address": "1017 Bd Vachon N Bureau 200A, Sainte-Marie, QC G6E 1M3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-d-entraide-cancer-et-vie-ca",
+    "name": "Groupe d'entraide Cancer et Vie",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-5355",
+    "description": "Aide aux personnes ayant ou ayant eu un diagnostic de cancer et leurs proches en contribuant à améliorer leur qualité de vie physique et psychologique tout au long des étapes de la maladie et des trai ... [Plus] | Clientèle : Personnes ayant ou ayant eu un diagnostic de cancer et leurs proches",
+    "website": "https://www.canceretvie.com/",
+    "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "groupe-entraide-sante-mentale",
@@ -30180,6 +36534,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "groupe-de-ressources-techniques--ca",
+    "name": "Groupe de ressources techniques Nouvel habitat",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-6652",
+    "description": "Promotion du développement de logements sociaux et communautaires * soutien au développement de projets * services de gestion financière et immobilière * centre de référence pour demande d’accès à un ... [Plus] | Clientèle : Personnes à la recherche d'un logement * organismes à but non lucratif (OBNL) * coopératives",
+    "website": "http://www.grtnouvelhabitat.com",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-de-r-flexion-et-d-action--ca",
+    "name": "Groupe de réflexion et d'action sur la pauvreté dans la MRC de Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Laurier-Station",
+    "province": "QC",
+    "phone": "418-415-0646",
+    "description": "Lutte à la pauvreté * lieu de concertation reconnu par la MRC de Lotbinière * sensibilisation et information auprès de la population, des partenaires et des élus au sujet des réalités vécues par les p ... [Plus] | Clientèle : Organismes communautaires",
+    "website": "http://www.cdclotbiniere.org",
+    "address": "126 Rue Olivier, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-des-ornithologues-de-beau-ca",
+    "name": "Groupe des ornithologues de Beauce Etchemin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-1058",
+    "description": "Fait connaître et protège la faune ailée * sensibilise la population à la découverte des oiseaux * excursions d'observation * recensements d'oiseaux | Clientèle : Personnes intéressées par l'ornithologie",
+    "website": "http://www.gobe-qc.com",
+    "address": "11600 Bd Lacroix, Saint-Georges, QC G5Y 1L2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "groupe-scout-de-port-cartier-cn",
     "name": "Groupe scout de Port-Cartier",
     "category": "family",
@@ -30202,6 +36595,45 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Âges : 7 an(s) - 17 an(s)",
     "website": "https://scoutsducanada.ca",
     "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-scout-de-thetford-ca",
+    "name": "Groupe scout de Thetford",
+    "category": "family",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "Boîte vocale 418-423-4931",
+    "description": "Contribution à l'éducation des jeunes et à leur épanouissement afin de les préparer à jouer un rôle constructif dans la société * apprentissage par le jeu, les techniques, le sport et l'expression au ... [Plus] | Clientèle : Enfants * adolescents * jeunes adultes | Âges : 7 an(s) - 21 an(s)",
+    "website": "http://www.scoutsthetford.com",
+    "address": "4334 Rue St Jean, Thetford Mines, QC G6H 1S2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-vocal-legato-ca",
+    "name": "Groupe vocal Legato",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "",
+    "description": "Groupe vocal pour jeunes * répertoire d’œuvres populaires et traditionnelles * concerts * pratiques | Clientèle : Jeunes | Âges : 7 an(s) - 17 an(s)",
+    "website": "http://www.groupevocallegato.com",
+    "address": "St-Romuald, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "groupe-vocal-port-e-de-voix-ca",
+    "name": "Groupe vocal À portée de voix",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "",
+    "description": "Groupe vocal * répertoire varié, actuel et populaire * spectacles * mise en scène | Clientèle : Adultes | Âges : 16 an(s) et plus",
+    "website": "http://www.aporteedevoix.org",
+    "address": "9 Rue Monseigneur-Gosselin, Lévis, QC G6V 5K1, Canada",
     "hours": "Voir site web"
   },
   {
@@ -30281,6 +36713,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "legiteami.org",
     "address": "85, rue Morin, Gatineau, Outaouais, QC, J8X 0A1",
     "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "g-t-e-la-ca",
+    "name": "Gîtée (La)",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-5551",
+    "description": "Aide et hébergement pour femmes victimes de violence conjugale et leurs enfants * écoute téléphonique * accueil * hébergement * accompagnement dans les démarches * suivi individuel et de groupe, sans ... [Plus] | Clientèle : Femmes victimes de violence conjugale et leurs enfants de moins de 18 ans",
+    "website": "http://www.lagitee.ca",
+    "address": "CP 363, Thetford Mines, QC G6G 0C2, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "habeo-grt-coop-de-solidarite-jol",
@@ -30373,6 +36818,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://habitatgta.ca",
     "address": "155 Bermondsey Rd, Toronto, ON M4A 1X9",
     "hours": "Lun-ven 8h30-16h30."
+  },
+  {
+    "id": "habitation-populaire-de-la-c-te--ca",
+    "name": "Habitation populaire de la Côte du Sud",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-4558 poste 104",
+    "description": "Groupe de ressources techniques (GRT) assurant promotion et soutien au développement de coopératives et d'organismes à but non lucratif (OBNL) d'habitation comme solution collective de logement * acco ... [Plus] | Clientèle : Organismes communautaires * le grand public * aînés * familles * personnes ayant un handicap * personnes ayant un trouble de santé mentale",
+    "website": "http://www.grthabitationcotesud.com/services.html",
+    "address": "118 Rue St Thomas, Montmagny, QC G5V 1M2, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "habitations-ararat-lav",
@@ -30486,6 +36944,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
+    "id": "habitations-panet-ca",
+    "name": "Habitations Panet",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Fabien-de-Panet",
+    "province": "QC",
+    "phone": "418-249-4066",
+    "description": "Habitation pour aînés autonomes et semi-autonomes * studios, 2 1/2, 3 1/2, 4 1/2 et autres * salle communautaire, salle à manger, système d'appel d'urgence * assistance personnelle : accompagnement à ... [Plus] | Clientèle : Aînés autonomes et semi-autonomes",
+    "address": "29 Rue Principale E, Saint-Fabien-de-Panet, QC G0R 2J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "habitations-partag-es-de-l-outao-out",
     "name": "Habitations Partagées De L'Outaouais (Les)",
     "category": "social",
@@ -30536,6 +37006,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "habitations-adapt-es-de-bellecha-ca",
+    "name": "Habitations adaptées de Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Claire",
+    "province": "QC",
+    "phone": "418-883-1300",
+    "description": "Location d'unités résidentielles adaptées et services aux personnes vivant avec des limitations intellectuelles légères ou physiques significatives et persistantes * environnement sécuritaire sans bar ... [Plus] | Clientèle : Personnes présentant un handicap physique ou intellectuel léger, suffisamment autonomes pour demeurer seules en logement et ne nécessitant pas de surveillance ou de soins d’assistance en tout temps | Âges : 18 an(s) et plus",
+    "address": "84 Bd Bégin, Sainte-Claire, QC G0R 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "halte-de-l-orchidbleue-la-lav",
     "name": "Halte De L'Orchidbleue (La)",
     "category": "social",
@@ -30560,6 +37042,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "lahalteducoin.org",
     "address": "1, boulevard Curé-Poirier Est, Longueuil, Montérégie, QC, J4J 2C6",
     "hours": "hébergement d'urgence de nuit: période d'inscription: 7 jours, 8h15 à 16h00, admission: à partir de 16h30, fermé les mercredis de 13h00 à 16h30, centre de jour: vendredi, samedi et dimanche 8h15 à 15h45"
+  },
+  {
+    "id": "harmonie-de-la-nouvelle-beauce-ca",
+    "name": "Harmonie de la Nouvelle-Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-389-4933",
+    "description": "Groupe de musique (harmonie) * pratiques * spectacles",
+    "website": "http://www.sainte-marie.ca/activites/musique-groupe-harmonie",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "nb-shelter-moncton",
@@ -30599,6 +37094,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "ourharbour.org",
     "address": "440, avenue Notre-Dame, Saint-Lambert, Montérégie, QC, J4P 2K4",
     "hours": "lundi au vendredi 9h00 à 16h30"
+  },
+  {
+    "id": "havre-l-claircie-ca",
+    "name": "Havre L'Éclaircie",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-1025",
+    "description": "Maison d'aide et d'hébergement spécialisée dans l'intervention et la prévention de la problématique de la violence conjugale * milieu de vie sécurisant et chaleureux pour les femmes victimes de violen ... [Plus] | Clientèle : Femmes et enfants victimes de violence",
+    "website": "http://www.havre-eclaircie.ca",
+    "address": "Saint-Georges, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "havre-des-femmes-le-ca",
+    "name": "Havre des femmes (Le)",
+    "category": "housing",
+    "subcategory": "",
+    "city": "L'Islet",
+    "province": "QC",
+    "phone": "418-247-7622",
+    "description": "Aide et hébergement pour femmes victimes de violence conjugale et leurs enfants * hébergement gratuit en chambre privée * accueil * écoute téléphonique * encadrement favorisant l'autonomie par la cont ... [Plus] | Clientèle : Femmes victimes de violence conjugale et leurs enfants",
+    "website": "http://www.lehavredesfemmes.com",
+    "address": "Cp 2008, L'Islet, QC G0R 2B0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "havre-saint-pierre-h-tel-de-vill-cn",
@@ -30750,6 +37271,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "hockey-mineur-beauce-nord-ca",
+    "name": "Hockey mineur Beauce-Nord",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "",
+    "description": "Organisation du hockey mineur * gestion des inscriptions * pratiques * tournois Prénovice 1 à Junior | Âges : 4 an(s) - 21 an(s)",
+    "website": "http://www.rapidesbeaucenord.com/fr",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "hom-asculin-port-cartier-cn",
     "name": "Hom'asculin Port-Cartier",
     "category": "social",
@@ -30799,6 +37333,44 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Soutien aux hommes dans la prévention et la résolution de leurs problèmes personnels * écoute téléphonique * rencontres de groupes * accueil, accompagnement et référence * occasion de bénévolat * form ... [Plus] | Clientèle : Hommes * pères | Âges : 14 an(s) et plus",
     "website": "http://www.hommesseptils.com",
     "address": "893 Av. Brochu, Sept-Îles, QC G4R 2Y7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "honfleur-h-tel-de-ville-ca",
+    "name": "Honfleur. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Honfleur",
+    "province": "QC",
+    "phone": "418-885-9195",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de Bellechasse Circonsc ... [Plus] | Clientèle : Bibliothèque 418-885-8212",
+    "website": "http://munhonfleur.net",
+    "address": "Honfleur, France",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "hop-la-vie-du-sud-de-l-islet-ca",
+    "name": "Hop ! La vie ! du Sud de l'Islet",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Pamphile",
+    "province": "QC",
+    "phone": "418-359-2179",
+    "description": "Amélioration de la qualité de vie des aînés et des personnes seules * prévention de l'isolement social * soutien à l'autonomie et promotion de saines habitudes de vie * entraide entre participants * d ... [Plus] | Clientèle : Aînés * personnes seules | Âges : 55 an(s) et plus",
+    "address": "112 Rue Principale, Saint-Pamphile, QC G0R 3X0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "horisol-ca",
+    "name": "Horisol",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-3048",
+    "description": "Coopérative de travail favorisant la création d'emplois et l'intégration des personnes handicapées sur le marché du travail * fabrication de planches de clôture | Clientèle : Personnes présentant un handicap physique, psychique ou mental",
+    "website": "http://horisol.ca",
+    "address": "31 Rue Legros, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -30866,6 +37438,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.lacasa.quebec",
     "address": "7160, chemin Chambly, Longueuil, Montérégie, QC, J3Y 3R5",
     "hours": "24 heures, 7 jours"
+  },
+  {
+    "id": "h-bergement-d-urgence-pour-les-m-ca",
+    "name": "Hébergement d'urgence pour les ménages en attente de leur résidence à Lévis, Informations générales",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Office municipal d'habitation de Lévis (OMHL) 418-833-1490",
+    "description": "Soutien et référence aux personnes devant trouver un logement temporaire de façon urgente ou pressante Information et référence pour Lévis : * Office municipal d'habitation de Lévis (OMHL) 418-833-149 ... [Plus]",
+    "address": "4449 Rue Saint-Laurent, Lévis, QC G6V 3V9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "msss-hopital-quebec-hopital-1re-avenue",
@@ -31752,6 +38336,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
+    "id": "msss-hopital-montreal-hopital-general-juif",
+    "name": "Hôpital Général Juif",
+    "category": "health",
+    "subcategory": "Hôpital",
+    "city": "Montréal",
+    "province": "QC",
+    "phone": "514-934-0354",
+    "description": "",
+    "address": "4335, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E4",
+    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
+  },
+  {
     "id": "msss-hopital-montreal-hopital-general-juif-2",
     "name": "Hôpital Général Juif",
     "category": "health",
@@ -31763,18 +38359,6 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "3755, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E2",
     "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h",
     "isUrgent": true
-  },
-  {
-    "id": "msss-hopital-montreal-hopital-general-juif",
-    "name": "Hôpital Général Juif",
-    "category": "health",
-    "subcategory": "Hôpital",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "",
-    "address": "4335, chemin de la Côte-Sainte-Catherine, Montréal, QC H3T 1E4",
-    "hours": "Urgences 24h/24. Services ambulatoires sur rendez-vous: lun-ven 8h-16h"
   },
   {
     "id": "msss-hopital-saint-hyacinthe-hopital-honore-mercier",
@@ -32557,18 +39141,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
-    "id": "msss-centre-hospitalier-psychiatrique-montreal-institut-universitaire-en-sante-mentale-de-montreal",
-    "name": "Institut Universitaire En Santé Mentale De Montréal",
-    "category": "mentalHealth",
-    "subcategory": "Centre hospitalier psychiatrique",
-    "city": "Montréal",
-    "province": "QC",
-    "phone": "514-934-0354",
-    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS De L'Est-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
-    "address": "7401, rue Hochelaga, Montréal, QC H1N 3M5",
-    "hours": "Service de crise disponible 24h/24, 7j/7"
-  },
-  {
     "id": "msss-chsld-montreal-institut-universitaire-en-sante-mentale-de-montreal",
     "name": "Institut Universitaire En Santé Mentale De Montréal",
     "category": "health",
@@ -32581,16 +39153,16 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
-    "id": "msss-chsld-quebec-institut-universitaire-en-sante-mentale-de-quebec",
-    "name": "Institut Universitaire En Santé Mentale De Québec",
-    "category": "health",
-    "subcategory": "CHSLD",
-    "city": "Québec",
+    "id": "msss-centre-hospitalier-psychiatrique-montreal-institut-universitaire-en-sante-mentale-de-montreal",
+    "name": "Institut Universitaire En Santé Mentale De Montréal",
+    "category": "mentalHealth",
+    "subcategory": "Centre hospitalier psychiatrique",
+    "city": "Montréal",
     "province": "QC",
-    "phone": "418-525-4444",
-    "description": "",
-    "address": "2601, chemin de la Canardière, Québec, QC G1J 2G3",
-    "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
+    "phone": "514-934-0354",
+    "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS De L'Est-De-L'Île-De-Montréal. Source: MSSS – Fichier M02 des installations.",
+    "address": "7401, rue Hochelaga, Montréal, QC H1N 3M5",
+    "hours": "Service de crise disponible 24h/24, 7j/7"
   },
   {
     "id": "msss-centre-hospitalier-psychiatrique-quebec-institut-universitaire-en-sante-mentale-de-quebec",
@@ -32603,6 +39175,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre hospitalier offrant des soins psychiatriques spécialisés. Rattaché à CIUSSS De La Capitale-Nationale. Source: MSSS – Fichier M02 des installations.",
     "address": "2601, chemin de la Canardière, Québec, QC G1J 2G3",
     "hours": "Service de crise disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "msss-chsld-quebec-institut-universitaire-en-sante-mentale-de-quebec",
+    "name": "Institut Universitaire En Santé Mentale De Québec",
+    "category": "health",
+    "subcategory": "CHSLD",
+    "city": "Québec",
+    "province": "QC",
+    "phone": "418-525-4444",
+    "description": "",
+    "address": "2601, chemin de la Canardière, Québec, QC G1J 2G3",
+    "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
     "id": "institut-d-enseignement-de-sept--cn",
@@ -32627,6 +39211,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-962-8138",
     "description": "Institut de karaté Shotokan de Sept-Îles",
     "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "institut-du-troisi-me-ge-de-thet-ca",
+    "name": "Institut du troisième âge de Thetford Mines",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-2981 poste 304",
+    "description": "Service d'éducation populaire par cours et ateliers offrant la possibilité d'acquérir ou d'entretenir des connaissances, développer des habiletés et demeurer actif et bien informé tout en socialisant ... [Plus] | Clientèle : Personnes retraitées ou préretraitées * adultes intéressés | Âges : 18 an(s) et plus",
+    "website": "http://www.ita-t.org",
+    "address": "5 Rue de la Fabrique, Thetford Mines, QC G6G 5T3, Canada",
     "hours": "Voir site web"
   },
   {
@@ -32736,6 +39333,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Hébergement confidentiel 24h/24. Appeler d'abord."
   },
   {
+    "id": "intervalle-l-ca",
+    "name": "Intervalle (L')",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-1694",
+    "description": "Maison d'hébergement et de transition pour les personnes atteintes de maladie mentale * collaboration à la mise sur pied de services d'hébergement et autres * évaluation, orientation, référence * acti ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.intervalleappalaches.com",
+    "address": "173 Rue Ste Catherine, Thetford Mines, QC G6G 4C1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "int-gration-comp-tences-mtg",
     "name": "Intégration Compétences",
     "category": "social",
@@ -32801,6 +39411,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service essentiel provincial."
   },
   {
+    "id": "irlande-h-tel-de-ville-ca",
+    "name": "Irlande. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Irlande",
+    "province": "QC",
+    "phone": "418-428-9216",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, loisirs, développement communautaire et culturel La nature, l'étendue et l'exercice de ces responsabilités varient selon les ... [Plus]",
+    "website": "http://www.mundirlande.qc.ca",
+    "address": "Municipalité de Irlande, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "tr-garde-isabelle-dumas",
     "name": "Isabelle Dumas",
     "category": "family",
@@ -32825,6 +39448,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://jardinhumani-terre.ca",
     "address": "1172, rang Double, Saint-Lin–Laurentides, Lanaudière, QC, J5M 1X8",
     "hours": "sur rendez-vous, lundi au jeudi (consulter le calendrier des activités via le site internet ou la page Facebook)"
+  },
+  {
+    "id": "jardin-communautaire-de-montmagn-ca",
+    "name": "Jardin communautaire de Montmagny",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-6022",
+    "description": "Jardin communautaire * location d'espaces de jardinage aux membres * cabanon et outils 78 emplacements de 726 pieds carrés (22 X 33) | Âges : 18 an(s) et plus",
+    "address": "22 Av. Couillard Després, Montmagny, QC G5V 2H4, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "jardin-du-ruisseau-bois-joli-cn",
@@ -32903,20 +39538,6 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: lundi au vendredi 9h00 à 16h00, activités: lundi au jeudi 9h00 à 16h00, sur rendez- vous seulement"
   },
   {
-    "id": "mh-jeu-aide",
-    "name": "Jeu : aide et référence",
-    "category": "mentalHealth",
-    "subcategory": "Dépendance jeu",
-    "city": "Province",
-    "province": "QC",
-    "phone": "1-800-461-0140",
-    "description": "Ligne provinciale gratuite 24/7 pour problèmes de jeu. Source: aidejeu.ca.",
-    "website": "https://aidejeu.ca",
-    "address": "N/A — service téléphonique/en ligne",
-    "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi.",
-    "isProvinceWide": true
-  },
-  {
     "id": "urgent-jeu-aide",
     "name": "Jeu : aide et référence",
     "category": "mentalHealth",
@@ -32928,6 +39549,20 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
     "isUrgent": true,
+    "isProvinceWide": true
+  },
+  {
+    "id": "mh-jeu-aide",
+    "name": "Jeu : aide et référence",
+    "category": "mentalHealth",
+    "subcategory": "Dépendance jeu",
+    "city": "Province",
+    "province": "QC",
+    "phone": "1-800-461-0140",
+    "description": "Ligne provinciale gratuite 24/7 pour problèmes de jeu. Source: aidejeu.ca.",
+    "website": "https://aidejeu.ca",
+    "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi.",
     "isProvinceWide": true
   },
   {
@@ -33074,6 +39709,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
+    "id": "jonction-pour-elle-la-ca",
+    "name": "Jonction pour elle (La)",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-8002",
+    "description": "Hébergement et aide aux femmes victimes de violence conjugale ainsi qu'à leurs enfants * écoute téléphonique * accompagnement dans les démarches * accueil et hébergement gratuit * consultations extern ... [Plus] | Clientèle : Femmes victimes de violence conjugale * leurs enfants | Âges : 18 an(s) et plus",
+    "website": "http://www.jonctionpourelle.com",
+    "address": "Rue de la Jonction, Lévis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "jonction-pour-elle-la-maison-den-ca",
+    "name": "Jonction pour elle (La), Maison Denise-Ruel",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-5205",
+    "description": "Maison de deuxième étape pour femmes poursuivant un hébergement en violence post-séparation * entente de services (location de chambres) * intervention en postséparation femmes et enfants externe et t ... [Plus] | Clientèle : Femmes victimes de violence conjugale postseparation | Âges : 18 an(s) et plus",
+    "website": "http://www.jonctionpourelle.com",
+    "address": "Rue Louis Philippe Ruel, Lévis, QC G6V, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "drum-garde-josee-gauthier",
     "name": "Josée Gauthier",
     "category": "family",
@@ -33097,6 +39758,149 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.joujouthequefarfouille.org",
     "address": "845, rue Saint-Louis, Joliette, Lanaudière, QC, J6E 3A3",
     "hours": "mardi 9h00 à 17h00, mercredi 9h00 à 20h00, jeudi 9h00 à 17h00, vendredi et samedi 9h00 à 15h00"
+  },
+  {
+    "id": "journal-le-hublot-ca",
+    "name": "Journal Le Hublot",
+    "category": "social",
+    "subcategory": "",
+    "city": "L'Islet",
+    "province": "QC",
+    "phone": "418-247-3333",
+    "description": "Journal communautaire d’informations publié et distribué gratuitement aux résidents de L'Islet * actualité locale, agenda communautaire, affaires municipales, événements culturels et réalisations, vie ... [Plus]",
+    "website": "http://lehublot.ca",
+    "address": "L'Islet, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "journal-communautaire-coup-d-oei-ca",
+    "name": "Journal communautaire Coup d'Oeil sur Saint-Marcel",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Marcel",
+    "province": "QC",
+    "phone": "",
+    "description": "Bulletin municipal d’informations publié et distribué gratuitement aux résidents de Saint-Marcel * actualité locale, agenda communautaire, affaires municipales, événements culturels et réalisations, v ... [Plus]",
+    "website": "http://www.saintmarcel.qc.ca/pages/journal-coup-doeil-sur-st-marcel",
+    "address": "Saint-Marcel, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "journal-communautaire-l-attis-e-ca",
+    "name": "Journal communautaire L'Attisée",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-9590",
+    "description": "Bulletin municipal d’informations publié et distribué gratuitement aux résidents de Saint-Jean-Port-Joli * actualité locale, agenda communautaire, affaires municipales, événements culturels et réalisa ... [Plus]",
+    "website": "http://www.lattisee.com",
+    "address": "Saint-Jean-Port-Joli, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "journal-communautaire-le-beau-re-ca",
+    "name": "Journal communautaire Le beau regard",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Lucie-de-Beauregard",
+    "province": "QC",
+    "phone": "",
+    "description": "Bulletin municipal d’informations publié et distribué gratuitement aux résidents de Sainte-Lucie-de-Beauregard Oui* actualité locale et régionale, agenda communautaire, affaires municipales, événement ... [Plus] | Clientèle : 418- 223-3231",
+    "website": "http://www.sainteluciedebeauregard.com/loisirs-et-vie-communautaire/journal-le-beau-regard",
+    "address": "Chem. Beauregard, Sainte-Lucie-de-Beauregard, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "journal-communautaire-le-cantonn-ca",
+    "name": "Journal communautaire Le cantonnier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "418-449-1888",
+    "description": "Bulletin municipal d’informations publié et distribué gratuitement aux résidents de Disraëli * actualité locale, agenda communautaire, affaires municipales, événements culturels et réalisations, vie m ... [Plus]",
+    "website": "http://lecantonnier.com",
+    "address": "888 Rue St Antoine, Disraeli, QC G0N 1E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "journal-communautaire-le-contact-ca",
+    "name": "Journal communautaire Le contact de Beaulac-Garthby",
+    "category": "social",
+    "subcategory": "",
+    "city": "Beaulac-Garthby",
+    "province": "QC",
+    "phone": "418-458-2737",
+    "description": "Bulletin municipal d’informations publié et distribué gratuitement aux résidents de Beaulac-Garthby * actualité locale, agenda communautaire, affaires municipales, événements culturels et réalisations ... [Plus]",
+    "website": "http://www.regionthetford.com/en/region-de-thetford/business-directory/journal-le-contact",
+    "address": "Rue de Beaulac, Beaulac-Garthby, QC G0Y 1B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "journal-communautaire-le-pierr-e-ca",
+    "name": "Journal communautaire Le pierr'eau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Pierre-de-la-Rivière-du-Sud",
+    "province": "QC",
+    "phone": "",
+    "description": "Bulletin municipal d’informations publié et distribué aux résidents de Saint-Pierre-de-la-Rivière-du-Sud * actualité locale, agenda communautaire, affaires municipales, événements culturels et réalisa ... [Plus]",
+    "website": "http://stpierrerds.ca/index.php/le-pierr-eau",
+    "address": "Saint-Pierre-de-la-Rivière-du-Sud, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "journal-communautaire-le-r-veil-ca",
+    "name": "Journal communautaire Le réveil",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Fabien-de-Panet",
+    "province": "QC",
+    "phone": "514-209-8050",
+    "description": "Bulletin municipal d’informations publié à 455 exemplaires et distribué gratuitement aux résidents de Saint-Fabien-de-Panet * actualité locale, agenda communautaire, affaires municipales, événements c ... [Plus]",
+    "website": "http://journal-le-reveil.com",
+    "address": "199B Rue Bilodeau, Saint-Fabien-de-Panet, QC G0R 2J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "journal-communautaire-l-arrivage-ca",
+    "name": "Journal communautaire l'Arrivage d'Adstock",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "418-338-1412",
+    "description": "Bulletin municipal d’informations publié et distribué gratuitement aux résidents d'Adstock * actualité locale, agenda communautaire, affaires municipales, événements culturels et réalisations, vie mun ... [Plus]",
+    "website": "http://www.adstock.ca/services-aux-citoyens/larrivage",
+    "address": "Adstock, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "journal-communautaire-l-cho-d-en-ca",
+    "name": "Journal communautaire l'Écho d'en Haut",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Pamphile",
+    "province": "QC",
+    "phone": "418-356-5491",
+    "description": "Bulletin municipal d’information numérique touchant l'actualité des 7 paroisses de L’Islet-Sud * actualité locale, agenda communautaire, affaires municipales, événements culturels et réalisations, vie ... [Plus] | Âges : 5 an(s) et plus",
+    "website": "http://echodenhaut.org",
+    "address": "35 Rue Principale, Saint-Pamphile, QC G0R 3X0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "journal-communautaire-l-cho-de-s-ca",
+    "name": "Journal communautaire l'Écho de Saint-François",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-François-de-la-Rivière-du-Sud",
+    "province": "QC",
+    "phone": "418-259-2177",
+    "description": "Journal communautaire d’informations publié et distribué gratuitement aux résidents de Saint-François-de-la-Rivière-du-Sud * actualité locale, agenda communautaire, affaires municipales, événements cu ... [Plus]",
+    "website": "http://www.echosf.org",
+    "address": "534 Chem. St François O, Saint-François-de-la-Rivière-du-Sud, QC G0R 3A0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "journal-communautaire-le-portage-cn",
@@ -33294,6 +40098,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "kinnear-s-mills-h-tel-de-ville-ca",
+    "name": "Kinnear's Mills. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Kinnear's Mills",
+    "province": "QC",
+    "phone": "418-424-3377",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs et autre La nature, l'étendue et l'exercice de ces responsabilités varient ... [Plus]",
+    "website": "http://www.kinnearsmills.com",
+    "address": "Kinnear's Mills, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "kirkland-service-des-loisirs-et-de-krk",
     "name": "Kirkland - Service des Loisirs et de la Vie Communautaire",
     "category": "immigration",
@@ -33333,6 +40150,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur rendez-vous pour suivi."
   },
   {
+    "id": "l-alternative-appalaches-inc-ca",
+    "name": "L'Alternative Appalaches inc.",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-6636",
+    "description": "Organisme de soutien en matière de justice alternative et réparatrice, de gestion des différends et du décrochage scolaire * application des mesures judiciaires et extrajudiciaire en vertu de la loi s ... [Plus] | Âges : 6 an(s) et plus",
+    "website": "http://www.alternativeappalaches.com",
+    "address": "250 Rue Caouette O, Thetford Mines, QC G6G 7M7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "l-ange-gardien-municipalit-out",
     "name": "L'Ange-Gardien - Municipalité",
     "category": "social",
@@ -33344,6 +40174,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "municipalitedelangegardien.com",
     "address": "1177, route 315, L'ange-Gardien, Outaouais, QC, J8L 0L4",
     "hours": "lundi au mercredi 8h00 à 12h00 et 12h30 à 16h30, jeudi 10h30 à 12h00 et 12h30 à 16h30, vendredi 8h00 à 12h00 et 12h30 à 16h30"
+  },
+  {
+    "id": "l-arche-chaudi-re-appalaches-ca",
+    "name": "L'Arche Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Malachie",
+    "province": "QC",
+    "phone": "Demande d'admission aux résidences, au répit et au Centre d'activités de jour 418-642-5785",
+    "description": "Milieu de vie communautaire favorisant le plein épanouissement des personnes ayant une déficience intellectuelle * participation à des événements publics de sensibilisation et d'éducation * trois foye ... [Plus] | Clientèle : Adultes ayant une déficience intellectuelle, des troubles du spectre de l'autisme (TSA) ou des handicaps multiples. | Âges : 18 an(s) et plus",
+    "website": "http://larcheleprintemps.org",
+    "address": "Saint-Malachie, QC G0R, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "mh-crise-ouest-mtl",
@@ -33408,6 +40251,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "pontiacouest.ca/allumettes",
     "address": "75, rue Notre-Dame, Chapeau, Outaouais, QC, J0X 1M0",
     "hours": "lundi au jeudi 8h00 à 16h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "l-islet-h-tel-de-ville-ca",
+    "name": "L'Islet. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "L'Islet",
+    "province": "QC",
+    "phone": "418 247-3060",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque Jean-Paul-Bourque 418 247-7576",
+    "website": "http://www.lislet.com",
+    "address": "L'Islet, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "drum-garde-l-envol-des-nuances",
@@ -33590,6 +40446,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "la-durantaye-h-tel-de-ville-ca",
+    "name": "La Durantaye. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "La Durantaye",
+    "province": "QC",
+    "phone": "418-884-3465",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * transports en commun en milieu urbain * assainissement des eaux usé ... [Plus]",
+    "website": "http://www.munladurantaye.qc.ca",
+    "address": "La Durantaye, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "la-guadeloupe-h-tel-de-ville-ca",
+    "name": "La Guadeloupe. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "La Guadeloupe",
+    "province": "QC",
+    "phone": "418-459-3342",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.munlaguadeloupe.qc.ca",
+    "address": "La Guadeloupe, QC G0M, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-hopital-quebec-la-maison-michel-sarrazin",
     "name": "La Maison Michel-Sarrazin",
     "category": "health",
@@ -33757,6 +40639,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
   },
   {
+    "id": "la-ch-vre-et-le-chou-ca",
+    "name": "La chèvre et le chou",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-234-6642",
+    "description": "Marché de proximité * produits locaux et artisanaux en ligne regroupant plus de 1500 produits de la région de Montmagny-L'Islet * marché passant du virtuel au physique lors des périodes de cueillette ... [Plus]",
+    "website": "http://lachevreetlechou.ca",
+    "address": "15 Rue Jacob, Cap-Saint-Ignace, QC G0R 1H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "la-rencontre-organisme-en-sant-m-ca",
+    "name": "La rencontre, organisme en santé mentale",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-3650",
+    "description": "Services de soutien, d'éducation et d'orientation facilitant l'adaptation et le fonctionnement dans la société des personnes ayant un trouble de santé mentale * concertation entre les organismes conce ... [Plus] | Clientèle : Adultes vivant avec des enjeux de santé mentale | Âges : 18 an(s) et plus",
+    "website": "http://www.entraidelarencontre.org",
+    "address": "165 Rue Notre Dame N, Sainte-Marie, QC G6E 3Z4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "lab-le-out",
     "name": "Lab (Le)",
     "category": "mentalHealth",
@@ -33795,6 +40703,84 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.lacdesplages.com",
     "address": "2053, chemin Tour-du-Lac, Saint-Émile-De-Suffolk, Outaouais, QC, J0T 1K0",
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "lac-etchemin-h-tel-de-ville-ca",
+    "name": "Lac-Etchemin. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "Administration 418-625-4521",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-625-4521 poste 2100",
+    "website": "http://www.lac-etchemin.ca",
+    "address": "Lac-Etchemin, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "lac-fronti-re-h-tel-de-ville-ca",
+    "name": "Lac-Frontière. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Frontière",
+    "province": "QC",
+    "phone": "418-245-3553",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.lac-frontiere.ca",
+    "address": "Lac-Frontière Township, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "lac-fronti-re-h-tel-de-ville-inf-ca",
+    "name": "Lac-Frontière. Hôtel de ville, Information d'urgence - Incendie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Frontière",
+    "province": "QC",
+    "phone": "418-245-3553",
+    "description": "Bureaux municipaux des services d'urgence",
+    "website": "http://www.lac-frontiere.ca",
+    "address": "Lac-Frontière Township, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "lac-fronti-re-h-tel-de-ville-inf-ca-2",
+    "name": "Lac-Frontière. Hôtel de ville, Information d'urgence - Inondation",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Frontière",
+    "province": "QC",
+    "phone": "418-245-3553",
+    "description": "Bureaux municipaux des services d'urgence",
+    "website": "http://www.lac-frontiere.ca",
+    "address": "Lac-Frontière Township, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "lac-fronti-re-h-tel-de-ville-inf-ca-3",
+    "name": "Lac-Frontière. Hôtel de ville, Information d'urgence - Urgence sanitaire",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Frontière",
+    "province": "QC",
+    "phone": "418-245-3553",
+    "description": "Bureaux municipaux des services d'urgence",
+    "website": "http://www.lac-frontiere.ca",
+    "address": "Lac-Frontière Township, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "lac-poulin-h-tel-de-ville-ca",
+    "name": "Lac-Poulin. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Poulin",
+    "province": "QC",
+    "phone": "418-228-7585",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, assainissement des eaux usées et autres La nature, l'étendue et l'exercice ... [Plus]",
+    "website": "https://www.lacpoulin.ca/",
+    "address": "Municipalité de Village de Lac-Poulin, QC G0M 1P0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "lac-sainte-marie-municipalit-out",
@@ -33885,6 +40871,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Shawinigan. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "821, 5e Avenue, Shawinigan QC G9T 2M9",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "laurier-station-h-tel-de-ville-ca",
+    "name": "Laurier-Station. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Laurier-Station",
+    "province": "QC",
+    "phone": "418-728-3852",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-728-5939",
+    "website": "http://www.ville.laurier-station.qc.ca",
+    "address": "Laurier-Station, QC G0S, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "laval-comptoir-multiservice-lav",
@@ -34043,6 +41042,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "le-comptoir-d-aide-le-fouillis-ca",
+    "name": "Le Comptoir d'aide Le Fouillis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-1625",
+    "description": "Comptoir d'aide à prix symbolique (vêtements, objets du quotidien, livres, jouets, vaisselle, literie...) * lieu d'accueil, d'implication et de réinsertion * réhabilitation sociale * valorisation des ... [Plus] | Clientèle : Personnes à faible revenu * le grand public",
+    "website": "http://www.lefouillis.ca",
+    "address": "47 Rue Saint-Joseph, Lévis, QC G6V 1A8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "v-grand-chemin",
     "name": "Le Grand Chemin",
     "category": "mentalHealth",
@@ -34069,6 +41081,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "le-regroupement-des-auberges-du--ca",
+    "name": "Le Regroupement des Auberges du cœur du Québec, ADOberge Chaudière-Appalaches (L')",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "418-834-3603",
+    "description": "Hébergement et services de prévention pour les jeunes Le Séjour * hébergement temporaire de 1-37 jours (5 semaines) avec présence d'intervenants qualifiés en service pour les hébergés et leur famille ... [Plus] | Clientèle : Adolescents, garçons et filles | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.adoberge.com",
+    "address": "881 Av. Taniata, Saint-Jean-Chrysostome, QC G6Z 2E3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "le-regroupement-des-auberges-du--ca-2",
+    "name": "Le Regroupement des Auberges du cœur du Québec, ADOberge Chaudière-Appalaches - Point de service Saint-Georges",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-313-3603",
+    "description": "Hébergement et services de prévention pour les jeunes Le Séjour * hébergement temporaire de 1-37 jours (5 semaines) avec présence d'intervenants qualifiés en service pour les hébergés et leur famille ... [Plus] | Clientèle : Adolescents, garçons et filles | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.adoberge.com",
+    "address": "Saint-Georges, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "le-rep-re-manicouagan-cn",
     "name": "Le Repère Manicouagan",
     "category": "family",
@@ -34079,6 +41117,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Services de centre de jour et de halte-garderie destinés majoritairement aux familles à faibles revenus ou vulnérables * soutien, aide et références * ateliers et formations visant a favoriser l'appre ... [Plus] | Clientèle : pour le service de halte-garderie 8 mois à 5 ans préscolaire",
     "website": "https://www.accueilmariedelincarnation.com/",
     "address": "51 Pl. la Salle, Baie-Comeau, QC G4Z 1J8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "le-st-edmond-ca",
+    "name": "Le St-Edmond",
+    "category": "social",
+    "subcategory": "",
+    "city": "Val-Alain",
+    "province": "QC",
+    "phone": "418-728-7528",
+    "description": "Église patrimoniale vouée à l'animation culturelle * organisation d'évènements et spectacles * location de salle",
+    "website": "http://lestedmond.com",
+    "address": "1172 Rue de l'Église, Val-Alain, QC G0S 3H0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -34143,6 +41194,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.quebec.ca/famille-et-soutien-aux-personnes/enfance/garderies-et-services-de-garde/portail-inscription/parents/acceder-parents",
     "address": "500, rue des Forges, Trois-Rivières QC G9A 2H5",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "leclercville-h-tel-de-ville-ca",
+    "name": "Leclercville. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Leclercville",
+    "province": "QC",
+    "phone": "819-292-2331",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de Lotbinière Circonscr ... [Plus]",
+    "website": "http://www.munleclercville.qc.ca",
+    "address": "Leclercville, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "on-lasi-lgr",
@@ -34271,6 +41335,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "les-souliers-nergiques-ca",
+    "name": "Les Souliers Énergiques",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "581-980-7794",
+    "description": "Club de marche situé dans le secteur de Saint-Nicolas à Lévis invite la population à pratiquer la marche comme activité physique * parcours de 3 à 5 km | Âges : 18 an(s) et plus",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "shawi-garde-les-amis-d-amina",
     "name": "Les amis d'Amina",
     "category": "family",
@@ -34320,6 +41396,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "les-couleurs-du-vent-maison-de-f-ca",
+    "name": "Les couleurs du vent, Maison de fin de vie",
+    "category": "health",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-755-1732",
+    "description": "Accueillir et accompagner des personnes en fin de vie pour des soins palliatifs * répit pour l'entourage * sédation palliative * aide médicale à mourir",
+    "website": "https://www.lescouleursduvent.org/",
+    "address": "1489 Rue Mooney O, Thetford Mines, QC G6G 8A5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "drum-garde-les-oisillons-du-bonheur",
     "name": "Les oisillons du bonheur",
     "category": "family",
@@ -34355,6 +41444,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.libertedechoisir.ca",
     "address": "40, rue Sainte-Cécile, bureau 100, Salaberry-de-Valleyfield, Montérégie, QC, J6T 1L7",
     "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "lien-partage-ca",
+    "name": "Lien-Partage",
+    "category": "health",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-3391",
+    "description": "Soutien à domicile pour personnes en perte d'autonomie, aux personnes proches aidantes d'adultes et activités de promotion de la santé * référence aux ressources * activités de groupe * aide alimentai ... [Plus] | Clientèle : Paniers de Noël pour résidents de Saint-Bernard, sur réservation au 488-475-4335 * pas de livraison * date de prise de possession déterminée suite à la réservation * 1 panier par foyer",
+    "website": "http://www.lienpartage.org",
+    "address": "1083 Bd Vachon N Local 105, Sainte-Marie, QC G6E 1M8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "urgent-aide-abus-aines",
@@ -34546,6 +41648,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "livraison-d-picerie-au-domicile--ca",
+    "name": "Livraison d'épicerie au domicile des personnes confinées, Informations générales",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "",
+    "description": "Vérifier si l'appelant a les moyens de payer les frais de livraison Si oui : * rechercher les coordonnées de l'épicerie demandée (secteur de Lévis) * rechercher les coordonnées de l'épicerie demandée ... [Plus]",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "local-des-jeunes-de-franquelin-j-cn",
     "name": "Local des jeunes de Franquelin Jonathan Soucy",
     "category": "family",
@@ -34556,6 +41670,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Lieu de rencontre animé dans leur communauté où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * activités et divertissement : ordinate ... [Plus] | Clientèle : Adolescents | Âges : 8 an(s) - 17 an(s)",
     "website": "http://www.municipalitefranquelin.ca/loisirs-culture/local-jeunes",
     "address": "Franquelin, QC G0H 1E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "local-des-jeunes-de-saint-vallie-ca",
+    "name": "Local des jeunes de Saint-Vallier",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Vallier",
+    "province": "QC",
+    "phone": "418-884-2559",
+    "description": "Lieu de rencontre animé dans leur communauté où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * espace de détente et de divertissement ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 16 an(s)",
+    "website": "http://www.stvallierbellechasse.qc.ca/pages/divertir-local-des-jeunes",
+    "address": "Bd de Saint-Vallier, Saint-Vallier, QC G0R 4J0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -34780,6 +41907,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "1er avril au 31 octobre: lundi au vendredi 8h00 à 18h00, samedi et dimanche 8h00 à 17h00, 1er novembre au 31 mars: lundi au vendredi 9h00 à 18h00, samedi et dimanche 9h00 à 17h00"
   },
   {
+    "id": "lotbini-re-h-tel-de-ville-ca",
+    "name": "Lotbinière. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lotbinière",
+    "province": "QC",
+    "phone": "418-796-2103",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-796-2912 poste 12250",
+    "website": "http://www.municipalite-lotbiniere.com",
+    "address": "Lotbinière, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "drum-garde-louise-beland",
     "name": "Louise Beland",
     "category": "family",
@@ -34803,6 +41943,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.lowquebec.ca",
     "address": "4A, chemin d'Amour, Low, Outaouais, QC, J0X 2C0",
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "ludoth-que-de-l-vis-ca",
+    "name": "Ludothèque de Lévis",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-4944",
+    "description": "Lieu de référence et de découverte ludique afin que tous les Lévisiens, des enfants aux aînés, puissent se rassembler, se divertir et développer ou perfectionner de nouvelles compétences, selon les be ... [Plus] | Clientèle : Maison de la famille de Lévis 418-835-5603",
+    "website": "http://ludothequelevis.com",
+    "address": "36 Rue Valère-Plante, Lévis, QC G6W 1K8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "lueur-du-phare-de-lanaudiere-la-poi-jol",
@@ -34869,6 +42022,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "livraison de repas: mercredi, crible: mardi, mercredi, café-rencontres, jeux-questionnaires: jeudi, fléchettes: vendredi, dimanche"
   },
   {
+    "id": "l-gion-royale-canadienne-filiale-ca",
+    "name": "Légion royale canadienne, Filiale 06-012, Commandeur Alphonse Desjardins Lévis",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-802-5068",
+    "description": "Aide aux vétérans, aux membres en service actif des Forces armées canadiennes et de la Gendarmerie royale du Canada et leur famille * défense de leurs droits et intérêts * promotion du Souvenir * camp ... [Plus] | Clientèle : Responsable des adhésions 418-835-6097",
+    "website": "https://xn--lgionfilliale012levis-b5b.com/",
+    "address": "Bd Alphonse-Desjardins, Lévis, QC G6V, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "l-ry-ville-mtg",
     "name": "Léry - Ville",
     "category": "housing",
@@ -34880,6 +42046,149 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.lery.ca",
     "address": "1, rue de l'Hôtel-de-Ville, Léry, Montérégie, QC, J6N 1E8",
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "l-vis-h-tel-de-ville-ca",
+    "name": "Lévis. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-2002",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, sports, transports en commun en milieu urbain, assainissement des eaux usé ... [Plus]",
+    "website": "http://www.ville.levis.qc.ca",
+    "address": "2175 Chem. du Fleuve, Lévis, QC G6W 7W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "l-vis-h-tel-de-ville-3-1-1-ca",
+    "name": "Lévis. Hôtel de ville, 3-1-1",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "Appels interurbains 418-839-2002",
+    "description": "Numéro de téléphone général de la Ville de Lévis permettant de joindre facilement le Centre de relation avec les citoyens * renseignements sur un service * transmission d'un commentaire, demande d'int ... [Plus] | Clientèle : Renseignements généraux, bureaux d'arrondissement et tout service non urgent 3-1-1",
+    "website": "http://www.ville.levis.qc.ca",
+    "address": "2175 Chem. du Fleuve, Lévis, QC G6W 7W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "l-vis-h-tel-de-ville-ar-nas-ca",
+    "name": "Lévis. Hôtel de ville, Arénas",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Séances de patinage libre dans les arénas de la ville de Lévis, 311 ou 418-839-2002 Aquaréna Léo-Paul-Bédard, 8001, avenue des Églises Aréna André-Lacroix, 7300, boulevard Guillaume-Couture Aréna BSR, ... [Plus]",
+    "description": "Lévis. Hôtel de ville, Arénas",
+    "website": "https://www.ville.levis.qc.ca/loisirs/activites-libres/patinoires-et-arenas/",
+    "address": "2175 Chem. du Fleuve, Lévis, QC G6W 7W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "l-vis-h-tel-de-ville-camp-de-jou-ca",
+    "name": "Lévis. Hôtel de ville, Camp de jour",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Inscription 418-835-8574, option 1",
+    "description": "Camps de jour de la Ville de Lévis pour les jeunes âgés de 4 et 12 ans de la fin juin à la mi-août Breakeyville * Édifice des Bâtisseurs, 2485, rue Sainte-Hélène, G6Z 7K7 * inscription en ligne : 7 av ... [Plus] | Clientèle : Information 311 | Âges : 4 an(s) - 12 an(s)",
+    "website": "https://www.ville.levis.qc.ca/loisirs/camps-de-jour/",
+    "address": "2175 Chem. du Fleuve, Lévis, QC G6W 7W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "l-vis-h-tel-de-ville-circuits-d--ca",
+    "name": "Lévis. Hôtel de ville, Circuits d'exercices en plein air Lévis'active",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "",
+    "description": "Parcours de marche et d’entraînement accessibles gratuitement dans différents parcs situés à proximité du parcours des Anses * proposition de divers défis en fonction de l’entraînement souhaité et du ... [Plus]",
+    "website": "http://www.ville.levis.qc.ca/loisirs/installations-sportives/parcours-de-marche-et-dentrainement",
+    "address": "2175 Chem. du Fleuve, Lévis, QC G6W 7W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "l-vis-h-tel-de-ville-jardins-col-ca",
+    "name": "Lévis. Hôtel de ville, Jardins collectifs et communautaires - Ville de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Répertoire des jardins communautaires de la ville de Lévis Chutes-de-la-Chaudière Est Charny",
+    "description": "Lévis. Hôtel de ville, Jardins collectifs et communautaires - Ville de Lévis",
+    "website": "http://www.ville.levis.qc.ca/environnement-et-collectes/agir-au-quotidien/jardins-communautaires-et-collectifs",
+    "address": "2175 Chem. du Fleuve, Lévis, QC G6W 7W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "l-vis-h-tel-de-ville-jeux-d-eau-ca",
+    "name": "Lévis. Hôtel de ville, Jeux d'eau",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "",
+    "description": "Période d'ouverture de la mi-mai jusqu'à la mi-septembre Charny * Parc du Maréchal-Joffre, 6273, rue des Airelles (fermé pour la saison 2023) Lévis * Parc de l'Anse-Tibbits, 4685, rue Saint-Laurent * ... [Plus]",
+    "website": "https://www.ville.levis.qc.ca/loisirs/installations-sportives/piscines/",
+    "address": "2175 Chem. du Fleuve, Lévis, QC G6W 7W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "l-vis-h-tel-de-ville-patinoires--ca",
+    "name": "Lévis. Hôtel de ville, Patinoires extérieures",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-8270",
+    "description": "Pour l'horaire des patinoires extérieures, surfaces et sentiers glacés, consulter le site Internet Patinoires extérieures Arrondissement des Chutes-de-la-Chaudière-Est Charny * Parc de la Rivière, 303 ... [Plus]",
+    "website": "http://www.ville.levis.qc.ca/loisirs/activites-libres/patinoires-exterieures",
+    "address": "2175 Chem. du Fleuve, Lévis, QC G6W 7W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "l-vis-h-tel-de-ville-piscines-ex-ca",
+    "name": "Lévis. Hôtel de ville, Piscines extérieures",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Extérieur de Lévis 418-839-2002",
+    "description": "Piscines extérieures chauffées Charny * Parc de la Rivière, 3030, rue Louis-Philippe-Robitaille Accessibilité : escalier avec une main courante, rampe d'accès, prêt de chaise roulante en toile pour l' ... [Plus]",
+    "website": "http://www.ville.levis.qc.ca/loisirs/installations-sportives/piscines/",
+    "address": "2175 Chem. du Fleuve, Lévis, QC G6W 7W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "l-vis-h-tel-de-ville-piscines-in-ca",
+    "name": "Lévis. Hôtel de ville, Piscines intérieures",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Bains libres Secteur Charny",
+    "description": "Extérieur de la Ville de Lévis : 418-839-2002",
+    "website": "http://www.ville.levis.qc.ca/loisirs/activites-libres/piscines/",
+    "address": "2175 Chem. du Fleuve, Lévis, QC G6W 7W9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "l-vis-h-tel-de-ville-lus-municip-ca",
+    "name": "Lévis. Hôtel de ville, Élus municipaux",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-2002",
+    "description": "Élus municipaux Maire Gilles Lehouillier Président du comité exécutif gilles.lehouillier@ville.levis.qc.ca District 1 Secteur Saint-Étienne Serge Bonin, conseiller sbonin@ville.levis.qc.ca District 2 ... [Plus]",
+    "website": "http://www.ville.levis.qc.ca/la-ville/conseil-municipal/elus",
+    "address": "2175 Chem. du Fleuve, Lévis, QC G6W 7W9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "m-ado-jeunes-out",
@@ -35051,6 +42360,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "services: variables, administration: lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "magasin-g-n-ral-de-l-vis-ca",
+    "name": "Magasin Général de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-2166",
+    "description": "Soutien aux personnes en situation de précarité et à la population en général par l’accès à des biens essentiels à faible coût * vente ou don de meubles, électroménagers, vêtements et petits articles ... [Plus] | Clientèle : Le grand public * personnes à faible revenu",
+    "website": "http://www.magasingeneraldelevis.com",
+    "address": "4075 Bd Guillaume-Couture, Lévis, QC G6W 6M9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "magasin-partage-mtl",
     "name": "Magasin-Partage de Montréal",
     "category": "food",
@@ -35164,6 +42486,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Maison d'hébergement de 2e étape pour les femmes ayant vécu de la violence conjugale accompagnées ou non de leurs enfants * 8 espaces locatifs transitoires et sécuritaires (séjour de 12 mois maximum 3 ... [Plus] | Clientèle : Femmes ayant vécu de la violence conjugale accompagnées ou non de leurs enfants",
     "website": "http://maisonanitalebel.org",
     "address": "Rue Lebel, Baie-Comeau, QC G5C, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-cap-d-espoir-ca",
+    "name": "Maison Cap d'Espoir",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Cap-Saint-Ignace",
+    "province": "QC",
+    "phone": "418-476-1728",
+    "description": "Centre de thérapie en dépendances * hébergement avec programme interne (28 jours) * atelier de groupe * suivi individuel * suivi externe post-thérapie * écoute et référence vers les ressources ... [Plus] | Clientèle : Adultes ayant des troubles de dépendance à des substances psychoactives (alcool, drogues, médicaments) | Âges : 18 an(s) et plus",
+    "website": "http://maisoncapdespoir.com",
+    "address": "2 Chemin Ste Croix, Cap-Saint-Ignace, QC G0R 1H0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -36843,6 +44178,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours, admission: lundi au vendredi 9h00 à 16h00"
   },
   {
+    "id": "maison-l-odyss-e-ca",
+    "name": "Maison L'Odyssée",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-7071",
+    "description": "Aide aux personnes aux prises avec une dépendance au jeu, à la cyberdépendance et à la toxicomanie * thérapie interne de 28 jours- capacité d'accueil : neuf personnes * thérapie externe à raison d'une ... [Plus] | Clientèle : Adultes ayant principalement une dépendance au jeu ou à la cyberdépendance | Âges : 18 an(s) et plus",
+    "website": "http://www.maisonlodyssee.com",
+    "address": "717 Ave Saint-Alfred, Sainte-Marie, QC G6E 1G2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-la-fronti-re-ca",
+    "name": "Maison La Frontière",
+    "category": "food",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-7133",
+    "description": "Accueil et aide pour personnes en difficulté. * Accueil inconditionnel. * Écoute et soutien. * Aide alimentaire. * Milieu de vie. * Douche et buanderie. * Lit de repos et repas sur place. * Distributi ... [Plus] | Clientèle : personnes en difficulté * personnes en situation de précarité* personnes en situation d’itinérance * personnes en situation d’instabilité résidentielle",
+    "website": "https://maisonlafrontiere.com/",
+    "address": "5 Rue St Jean Baptiste E, Montmagny, QC G5V 1J6, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-la-grande-ourse-mont-r-gi-mtg",
     "name": "Maison La Grande Ourse Montérégie",
     "category": "mentalHealth",
@@ -36893,6 +44254,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.maisonlavirevolte.com",
     "address": "335, rue Le Moyne Ouest, Longueuil, Montérégie, QC, J4H 1W4",
     "hours": "lundi au jeudi 9h00 à 17h00"
+  },
+  {
+    "id": "maison-le-p-riscope-ca",
+    "name": "Maison Le Périscope",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-814-8518",
+    "description": "Accompagner les parents et leurs proches à travers le deuil périnatal * soutien lors d’une fausse couche ou d’une interruption médicale de grossesse * accompagnement sur mesure * référer vers les ress ... [Plus]",
+    "website": "https://www.maisonleperiscope.ca/",
+    "address": "1180 Rue Johnson, Thetford Mines, QC G6G 5W6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "maison-le-ricochet-out",
@@ -37050,6 +44424,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours"
   },
   {
+    "id": "maison-d-h-l-ne-la-ca",
+    "name": "Maison d'Hélène (La)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-241-2666",
+    "description": "Maison spécialisée en soins palliatifs offrant gratuitement des services aux personnes provenant des MRC de Montmagny et de L'Islet | Âges : 4 an(s) et plus",
+    "website": "http://www.lamaisondhelene.org",
+    "address": "350 Avenue St David, Montmagny, QC G5V 4P9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-d-aide-et-d-h-bergement-d-cn",
     "name": "Maison d'aide et d'hébergement de Fermont",
     "category": "housing",
@@ -37088,6 +44475,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "maison-de-la-famille-nouvelle-be-ca",
+    "name": "Maison de la Famille Nouvelle-Beauce et Centre de pédiatrie sociale en communauté",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-3585",
+    "description": "Service de soutien, référencement et éducation pour favoriser l’adaptation, le bien-être et le fonctionnement des familles à toutes les étapes de la vie * halte-garderie (enfants de 0-5 ans sans milie ... [Plus] | Clientèle : * Familles * enfants * adolescents * adultes * couples * parents * grands-parents * aînés",
+    "website": "http://www.maisonfamillenb.com",
+    "address": "392 Av. Proulx, Sainte-Marie, QC G6E 4B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-de-la-culture-innue-cn",
     "name": "Maison de la culture Innue",
     "category": "social",
@@ -37098,6 +44498,96 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Lieu de rassemblement et de partage de la culture et du mode de vie du peuple innu * échanges interculturels et intergénérationnels * transmission de savoirs artisanaux, médicinaux et linguistiques * ... [Plus] | Clientèle : Le grand public",
     "website": "http://maisoncultureinnue.com",
     "address": "34 Rue Nashipetimit, Longue-Pointe-de-Mingan, QC G0G 1V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-de-la-culture-de-bellecha-ca",
+    "name": "Maison de la culture de Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Damien-de-Buckland",
+    "province": "QC",
+    "phone": "418-789-2588",
+    "description": "Réponse aux besoins de formation artistique et culturelle de la population et diffusion des arts de la scène * spectacles et cinéma * cours et ateliers (sessions automne et hiver) : musique, arts visu ... [Plus]",
+    "website": "http://www.culturebellechasse.qc.ca",
+    "address": "163c Rue Commerciale, Saint-Damien-de-Buckland, QC G0R 2Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-de-la-famille-beauce-etch-ca",
+    "name": "Maison de la famille Beauce - Etchemins La grande ourse",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-9192",
+    "description": "Promotion du bien-être de la famille * lieu d'échange, d'entraide et de partage sur les difficultés et les réussites des parents * information et référence * intervention de groupe * formation aux fam ... [Plus] | Clientèle : Individus * familles * conjoints * adolescents * enfants * aînés",
+    "website": "http://www.mfbeauceetchemins.org",
+    "address": "565 161e Rue, Saint-Georges, QC G5Y 2H6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-de-la-famille-beauce-etch-ca-2",
+    "name": "Maison de la famille Beauce - Etchemins La grande ourse, Aide alimentaire",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-0097",
+    "description": "Service d'aide alimentaire * paniers de Noël (pour leur clientèle) | Clientèle : Personne à faible revenu, en situation de vulnérabilité, en perte d'emploi ou sans emploi",
+    "address": "565 161e Rue, Saint-Georges, QC G5Y 2H6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-de-la-famille-chutes-chau-ca",
+    "name": "Maison de la famille Chutes-Chaudière",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "418-839-1869",
+    "description": "Soutien aux personnes et familles dans les difficultés aux différents stades de la vie * consultations psychosociales : anxiété, difficultés sociales, problèmes de comportement des enfants, thérapie d ... [Plus] | Clientèle : Familles * proches | Âges : 12 an(s) et moins",
+    "website": "http://www.maisonfamille.net",
+    "address": "730 Av. Taniata, Saint-Jean-Chrysostome, QC G6Z 2C5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-de-la-famille-rev-rive-su-ca",
+    "name": "Maison de la famille REV Rive-Sud",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-5926",
+    "description": "Maintien de la continuité des liens familiaux par le biais du droit de visite et de sortie * lieu d'accueil neutre * prévention de la négligence et la violence Supervision de droits d'accès * visites ... [Plus] | Clientèle : Familles * parents et leur enfant",
+    "website": "http://maisonfamillerev.com",
+    "address": "33 Rte du Président-Kennedy, Lévis, QC G6V 6C1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-de-la-famille-rive-sud-ca",
+    "name": "Maison de la famille Rive-Sud",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-5603",
+    "description": "Aide aux familles selon leur étape de développement * halte-répit Les Amis (6 mois-5 ans) * consultation psychosociale individuelle, familiale et conjugale * ateliers et formations; parents coachs, pa ... [Plus]",
+    "website": "http://www.maisonfamille-rs.org",
+    "address": "5501 Rue Saint-Georges, Lévis, QC G6V 4M7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-de-la-famille-de-bellecha-ca",
+    "name": "Maison de la famille de Bellechasse",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-883-3101",
+    "description": "Soutien et référence aux familles et individus Ateliers * parents-enfants 0-2 ans et 2-5 ans : soutien aux parents et enrichissement de leurs habiletés * parents-enfants 9 mois-5 ans : psychomotricité ... [Plus] | Clientèle : Familles * futurs et nouveaux parents * personnes seules",
+    "website": "http://www.mfbellechasse.org",
+    "address": "132 Rue Aubé, Saint-Lazare-de-Bellechasse, QC G0R 3J0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -37149,6 +44639,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "address": "40, rue Grant, Longueuil, QC J4H 3H5",
     "hours": "Lun-ven 8h30-16h30. Ateliers, soutien parental, activités familiales."
+  },
+  {
+    "id": "maison-de-la-famille-de-lotbini--ca",
+    "name": "Maison de la famille de Lotbinière",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "418-881-3486",
+    "description": "Offre de services pour toutes les familles, des jeunes aux aînés de la MRC de Lotbinière Services périnataux et parentaux * soutien à l'allaitement par une spécialiste en maternité (téléphonique, virt ... [Plus] | Clientèle : Enfants * adolescents * adultes * couples * familles * parents * grands-parents",
+    "website": "http://www.maisonfamillelotbiniere.com",
+    "address": "81 Rue Rousseau, Saint-Apollinaire, QC G0S 2E0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-mf-montreal-mdf",
@@ -37213,6 +44716,44 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://maisonfamillesherbrooke.com",
     "address": "455, rue du Conseil, Sherbrooke, QC J1G 1J1",
     "hours": "Lun-ven 8h30-16h30. Ateliers, soutien parental, activités familiales."
+  },
+  {
+    "id": "maison-de-la-famille-de-la-mrc-d-ca",
+    "name": "Maison de la famille de la MRC de L'Islet",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Pamphile",
+    "province": "QC",
+    "phone": "Accueil et écoute, Arianne Lacasse 418-710-0274",
+    "description": "Promotion du mieux-être des familles, couples et individus à travers des programmes de soutien, d’entraide et d’animation communautaire * accueil et écoute * ateliers : compétences parentales, éveil d ... [Plus] | Clientèle : Popote roulante 418-356-3737 poste 102",
+    "website": "http://www.maisonfamillemrclislet.com",
+    "address": "21 Rue Principale, Saint-Pamphile, QC G0R 3X0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-de-la-famille-de-la-mrc-d-ca-2",
+    "name": "Maison de la famille de la MRC de L'Islet, Dépano-meubles",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-2012 poste 1",
+    "description": "Vente à bas prix de meubles, électroménagers, jouets, livres et articles de maison usagés * vente de meubles, électroménagers, jouets, livres, articles ménagers, etc. * aide matérielle auprès des fami ... [Plus] | Clientèle : Le grand public",
+    "website": "http://maisonfamillemrclislet.com/activites-et-services-suite/depano-meubles",
+    "address": "80 Av. de Gaspé E, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-de-quartier-louis-fr-chet-ca",
+    "name": "Maison de quartier Louis-Fréchette Lévis inc., Maison de quartier Louis-Fréchette Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Cellulaire: 581-988-8248",
+    "description": "Club social pour aînés favorisant rencontres sociales et activités récréatives * location de salles * tournois de cartes : Joffre, Whist militaire, 500, 4 de Pique et Cribble",
+    "address": "Hospitalie, 8069 Bd du Centre-Hospitalier, Levis, QC G6X 1L3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "maison-des-jeunes-a-ma-baie-pfd",
@@ -37330,6 +44871,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "maison-des-jeunes-d-fi-ados-ca",
+    "name": "Maison des jeunes Défi-Ados",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-6906 poste 4",
+    "description": "Lieu d'accueil, prévention, promotion de la santé et animation pour les adolescents * information, aide, écoute et référence * animation et sensibilisation * activités socioculturelles et sorties * co ... [Plus] | Clientèle : Administration 418-838-6906 poste 3 | Âges : 11 an(s) - 17 an(s)",
+    "website": "http://www.capjlevis.com",
+    "address": "807 Rue Olympique, Pintendre, QC G6C 1C6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-d-fi-ados-espa-ca",
+    "name": "Maison des jeunes Défi-Ados, Espace communautaire jeunesse / famille",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Cellulaire 418-956-0429",
+    "description": "Lieu d'accueil, prévention, promotion de la santé et animation pour les adolescents et leurs parents * information, aide, écoute et référence * animation et sensibilisation * activités socioculturelle ... [Plus] | Clientèle : Administration 418-903-2626 | Âges : 11 an(s) - 17 an(s)",
+    "website": "https://www.capjlevis.com/",
+    "address": "9009 Bd du Centre-Hospitalier, Charny, QC G6X 1L4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-d-fi-ados-poin-ca",
+    "name": "Maison des jeunes Défi-Ados, Point de service rue Saint-Joseph",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-6906 poste 4",
+    "description": "Lieu d'accueil, prévention, promotion de la santé et animation pour les adolescents * information, aide, écoute et référence * animation et sensibilisation * activités socioculturelles et sorties * co ... [Plus] | Clientèle : Administration 418-838-6906 poste 3 | Âges : 11 an(s) - 17 an(s)",
+    "website": "https://www.capjlevis.com/",
+    "address": "Rue Saint-Joseph, Lévis, QC G6V, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "s-mj-hochelaga",
     "name": "Maison des jeunes Hochelaga-Maisonneuve",
     "category": "social",
@@ -37352,6 +44932,43 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-939-2442",
     "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et références * ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
     "address": "Baie-Trinité, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-l-azymut-est-o-ca",
+    "name": "Maison des jeunes L'Azymut Est-Ouest",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-831-8328",
+    "description": "Lieu de rencontre pour les adolescents * organisation d'activités * relation d'aide * prévention, suivi et accompagnement Secteur ouest, Maison des jeunes Celtic (voir dossier individuel) ... [Plus] | Clientèle : Adolescents | Âges : 10 an(s) - 17 an(s)",
+    "website": "http://mdjazymut.com",
+    "address": "550 Rue de la Sorbonne, Lévis, QC G7A 1Y1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-l-azymut-est-o-ca-2",
+    "name": "Maison des jeunes L'Azymut Est-Ouest, Maison des jeunes Celtic",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-831-8328",
+    "description": "Lieu de rencontre pour les adolescents * organisation d'activités * relation d'aide * prévention, suivi et accompagnement | Clientèle : Adolescents | Âges : 10 an(s) - 17 an(s)",
+    "address": "550 Rue de la Sorbonne, Saint-Nicolas, QC G7A 1Y1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-d-east-brought-ca",
+    "name": "Maison des jeunes d'East Broughton",
+    "category": "family",
+    "subcategory": "",
+    "city": "East Broughton",
+    "province": "QC",
+    "phone": "418-281-9336",
+    "description": "Lieu de rencontre animé pour les jeunes, leur permettant de faire les apprentissages de vie communautaire, démocratie, prise en charge et autonomie * activités sociales, culturelles et sportives | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "address": "232 Av. du Collège, East Broughton, QC G0N 1G0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -37381,6 +44998,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "maison-des-jeunes-de-beauce-sart-ca",
+    "name": "Maison des jeunes de Beauce-Sartigan",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-6272",
+    "description": "Lieu de rencontre animé permettant le développement de l'autonomie et l'implication des jeunes dans différents projets * accès sans fil à Internet (Wi-Fi) * disco * activités de prévention * atelier S ... [Plus] | Clientèle : Travail de rue 418-222-7783, 418-313-3808 ou 418-222-4701 | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdjbeaucesartigan.com",
+    "address": "11725 3e Avenue, Saint-Georges, QC G5Y 1V5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-beauce-sart-ca-2",
+    "name": "Maison des jeunes de Beauce-Sartigan, Maison des jeunes de Saint-Martin",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Martin",
+    "province": "QC",
+    "phone": "418-382-3870",
+    "description": "Lieu de rencontre animé permettant le développement de l'autonomie et l'implication des jeunes dans différents projets * activités de prévention * accès sans fil à Internet (Wi-Fi) * atelier Saines ha ... [Plus] | Clientèle : Travail de rue 418-222-7783 ou 418-222-4701 ou 418-313-3808 | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdjbeaucesartigan.com",
+    "address": "Saint-Martin, QC G0M, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-des-jeunes-de-bergeronnes-cn",
     "name": "Maison des jeunes de Bergeronnes La Ramasse",
     "category": "family",
@@ -37402,6 +45045,32 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-461-2530",
     "description": "Centre permanent d'animation et d'éducation pour les jeunes offrant un lieu de rencontre où socialiser, s'exprimer, s'impliquer, se sensibiliser, créer, partager, se responsabiliser, s'initier, appren ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
     "address": "Blanc-Sablon, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-charny-ca",
+    "name": "Maison des jeunes de Charny",
+    "category": "family",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-832-4795",
+    "description": "Notre mission Co-construire un milieu de vie bienveillant avec les adolescent·es de 11 à 17 ans pour le secteur Charny, Breakeyville, en leur offrant des opportunités à leur image par le partage d’exp ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "website": "https://www.mdjcharny.com/",
+    "address": "9009 Bd du Centre-Hospitalier, Charny, QC G6X 1L4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-charny-poin-ca",
+    "name": "Maison des jeunes de Charny, Point de service Breakeyville",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Hélène-de-Breakeyville",
+    "province": "QC",
+    "phone": "418-832-6850",
+    "description": "Notre mission: Co-construire un milieu de vie bienveillant avec les adolescent·es de 11 à 17 ans pour le secteur Charny, Breakeyville, en leur offrant des opportunités à leur image par le partage d’ex ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "website": "https://www.mdjcharny.com/",
+    "address": "Breakeyville, Lévis, QC G0S, Canada",
     "hours": "Voir site web"
   },
   {
@@ -37465,6 +45134,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "maison-des-jeunes-de-l-islet-nor-ca",
+    "name": "Maison des jeunes de L'Islet-Nord",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-3942",
+    "description": "Promotion de saines habitudes de vie et prévention psychosociale * lieu où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens impliqués et responsables * écoute et soutien * ... [Plus] | Clientèle : Travailleur de rue 418-234-2032 | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdj-lislet-nord.com",
+    "address": "10-B Av. de Gaspé E, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-l-islet-nor-ca-2",
+    "name": "Maison des jeunes de L'Islet-Nord, Point de service L'Islet",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "L'Islet",
+    "province": "QC",
+    "phone": "418-607-0650",
+    "description": "Promotion de saines habitudes de vie et prévention psychosociale * lieu où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens impliqués et responsables * écoute et soutien * ... [Plus] | Clientèle : Administration 418-598-3942 | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdj-lislet-nord.com",
+    "address": "112 Chem. des Pionniers O, L'Islet, QC G0R 2B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-des-jeunes-de-longue-rive-cn",
     "name": "Maison des jeunes de Longue-Rive le Phare",
     "category": "family",
@@ -37474,6 +45169,19 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-587-3935",
     "description": "Lieu de rencontre animé où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * aide et écoute * défense et promotion des intérêts des jeun ... [Plus] | Clientèle : Adolescents | Âges : 8 an(s) - 17 an(s)",
     "address": "333 Rte 138, Longue-Rive, QC G0T 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-montmagny-l-ca",
+    "name": "Maison des jeunes de Montmagny L'Incontournable",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-7123",
+    "description": "Lieu de rencontre animé où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * activités sociales, culturelles, éducatives et sportives * ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdjmontmagny.com",
+    "address": "Montmagny, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -37563,6 +45271,143 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "maison-des-jeunes-de-saint-berna-ca",
+    "name": "Maison des jeunes de Saint-Bernard",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Bernard",
+    "province": "QC",
+    "phone": "418-475-5429",
+    "description": "Lieu de rencontre animé pour les jeunes qui, au contact d'adultes significatifs, pourront devenir des citoyens actifs, critiques, et responsables | Clientèle : Adolescents | Âges : 10 an(s) - 15 an(s)",
+    "website": "http://saint-bernard.quebec/loisirs-et-activites/maison-des-jeunes",
+    "address": "Saint-Bernard, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-saint-henri-ca",
+    "name": "Maison des jeunes de Saint-Henri L'Adozone",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Henri",
+    "province": "QC",
+    "phone": "418-882-6173",
+    "description": "Endroit de rencontre avec d'autres jeunes offrant des activités diversifiées et des moments de communication * billard, ping-pong, Xbox One, jeux de société, télévision, babyfoot, arts plastiques * sp ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "address": "Saint-Henri, QC G0R 3E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-saint-isido-ca",
+    "name": "Maison des jeunes de Saint-Isidore",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Isidore",
+    "province": "QC",
+    "phone": "418-882-5852",
+    "description": "Lieu de rencontre animé pour les jeunes favorisant leur responsabilisation et de les impliquant dans les activités de la communauté * activités préventives et récréatives * rencontres de groupe * écou ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "address": "Saint-Isidore, QC G0S 2S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-saint-jean--ca",
+    "name": "Maison des jeunes de Saint-Jean-Chrysostome",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "418-839-5874",
+    "description": "Notre mission Co-construire un milieu de vie bienveillant avec les adolescent. es de 11 à 17 ans pour le secteur Saint-Jean-Chrysostome en leur offrant des opportunités à leur image par le partage d’e ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "website": "https://mdjsjc.com/",
+    "address": "940 Rue Nolin, Saint-Jean-Chrysostome, QC G6Z 3H7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-saint-l-on--ca",
+    "name": "Maison des jeunes de Saint-Léon-de-Standon Stan-jeunes",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Léon-de-Standon",
+    "province": "QC",
+    "phone": "418-642-2124",
+    "description": "Lieu de rencontre pour les adolescents visant l'amélioration de leur qualité de vie et la défense de leurs intérêts * activités récréatives et sportives * sorties | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "address": "Saint-Léon-de-Standon, QC G0R 4L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-saint-malac-ca",
+    "name": "Maison des jeunes de Saint-Malachie Isotope",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Malachie",
+    "province": "QC",
+    "phone": "418-215-1788",
+    "description": "Lieu de rencontre pour les jeunes proposant des activités qui favorisent autonomie, initiative et sens des responsabilités * shuffleboard, jeux vidéo, ping-pong, ordinateurs, billard * visionnement de ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "address": "Municipalité de paroisse de Saint-Malachie, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-saint-miche-ca",
+    "name": "Maison des jeunes de Saint-Michel-de-Bellechasse",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Michel-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-884-3630",
+    "description": "Milieu de vie offrant éducation, information, référence et lieu de rassemblement aux jeunes * développement du sens des responsabilités et autonomie, implication des jeunes dans différents projets et ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "address": "129 QC-132 E, Saint-Michel-de-Bellechasse, QC G0R 3S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-saint-rapha-ca",
+    "name": "Maison des jeunes de Saint-Raphaël",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Raphaël",
+    "province": "QC",
+    "phone": "418-243-3457",
+    "description": "Lieu de rencontre, regroupement, activité et entraide pour les jeunes * activités sociales, récréatives, éducatives et autres * écoute et références | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "address": "431 Boul St-Pierre, Saint-Raphaël, QC G0R 4C0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-saint-romua-ca",
+    "name": "Maison des jeunes de Saint-Romuald La Ruche",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-5304",
+    "description": "Lieu de rencontre valorisant et favorisant l'autonomie, par le biais de diverses activités choisies par les jeunes * écoute * soutien * information * accueil * activités culturelles, sportives et soci ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "website": "http://mdjlaruche.com",
+    "address": "1683 Rue Lavoisier, Saint-Romuald, QC G6W 2H9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-saint-tienn-ca",
+    "name": "Maison des jeunes de Saint-Étienne-de-Lauzon L'Aigle",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Étienne-de-Lauzon",
+    "province": "QC",
+    "phone": "418-496-0925",
+    "description": "Milieu de vie animé où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * accueil, encadrement et écoute active du vécu des jeunes avec d ... [Plus] | Clientèle : Adolescents | Âges : 11 an(s) - 17 an(s)",
+    "website": "http://www.mdjaigle.com",
+    "address": "Saint-Étienne-de-Lauzon, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-sainte-mari-ca",
+    "name": "Maison des jeunes de Sainte-Marie L'Utopie",
+    "category": "family",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-386-3364",
+    "description": "Lieu de rencontre animé où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * écoute, aide et référence * ateliers de prévention et de pr ... [Plus] | Clientèle : Travail de rue | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdjutopie.com",
+    "address": "Sainte-Marie, Montreal, QC H2K, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-des-jeunes-de-tadoussac-cn",
     "name": "Maison des jeunes de Tadoussac",
     "category": "family",
@@ -37575,6 +45420,84 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "maison-des-jeunes-de-thetford-mi-ca",
+    "name": "Maison des jeunes de Thetford Mines",
+    "category": "family",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-5075",
+    "description": "Lieu de rencontre animé où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * activités socioculturelles, sportives, éducatives et préven ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://mdjthetford.com",
+    "address": "534 Rue Ste Marthe, Thetford Mines, QC G6G 1S3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-thetford-mi-ca-2",
+    "name": "Maison des jeunes de Thetford Mines, Point de service Black Lake",
+    "category": "family",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "Administration 418-335-5075",
+    "description": "Lieu de rencontre animé où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * activités socioculturelles, sportives, éducatives et préven ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdjthetford.com",
+    "address": "534 Rue Ste Marthe, Thetford Mines, QC G6G 1S3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-la-mrc-robe-ca",
+    "name": "Maison des jeunes de la MRC Robert-Cliche",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-397-5722 poste 38144",
+    "description": "Administration des cinq points de service de la Maison des jeunes de la MRC Robert-Cliche * soutien à l'équipe d'animation * lieu de rencontre et réalisation d'activités pour les jeunes * activités de ... [Plus] | Clientèle : Cellulaire administratif 418-957-2892 | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdj-mrc-rc.net",
+    "address": "1125 Av. du Palais, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-la-mrc-robe-ca-2",
+    "name": "Maison des jeunes de la MRC Robert-Cliche, Maison des jeunes de Saint-Odilon-de-Cranbourne",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Odilon-de-Cranbourne",
+    "province": "QC",
+    "phone": "418-464-2211",
+    "description": "Lieu de rencontre animé où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * activités diverses, inclusion sociale, intégration, prévent ... [Plus] | Clientèle : Cellulaire 581-761-1417 | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdj-mrc-rc.net",
+    "address": "1125 Av. du Palais, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-la-mrc-robe-ca-3",
+    "name": "Maison des jeunes de la MRC Robert-Cliche, Maison des jeunes de Saint-Victor",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Victor",
+    "province": "QC",
+    "phone": "418-588-5386",
+    "description": "Lieu de rencontre animé où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * activités diverses, inclusion sociale, intégration, prévent ... [Plus] | Clientèle : Cellulaire administratif 418-957-2892 | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdj-mrc-rc.net",
+    "address": "1125 Av. du Palais, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-de-la-mrc-robe-ca-4",
+    "name": "Maison des jeunes de la MRC Robert-Cliche, Maison des jeunes de Tring-Jonction",
+    "category": "family",
+    "subcategory": "",
+    "city": "Tring-Jonction",
+    "province": "QC",
+    "phone": "418-426-3363",
+    "description": "Lieu de rencontre animé où les jeunes de 12-17 ans, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * activités diverses, inclusion sociale, intégra ... [Plus] | Clientèle : Cellulaire 581-761-0137 | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdj-mrc-rc.net",
+    "address": "1125 Av. du Palais, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "maison-des-jeunes-des-escoumins--cn",
     "name": "Maison des jeunes des Escoumins L'Entrados",
     "category": "family",
@@ -37584,6 +45507,82 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "418-233-3519",
     "description": "Lieu de rencontre animé pour et par des jeunes qui, au contact d'adultes significatifs, auront l'opportunité de devenir des citoyens actifs, critiques et responsables * écoute, soutien et référence * ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
     "address": "Les Escoumins, QC G0T 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-des-etchemins--ca",
+    "name": "Maison des jeunes des Etchemins L'Olivier",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Prosper",
+    "province": "QC",
+    "phone": "418-594-5886",
+    "description": "Administration des maisons des jeunes de Saint-Prosper et Lac-Etchemin Voir dossiers individuels * Le Chabotté * L'Ado-manie | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdjolivieretchemins.com",
+    "address": "Saint-Prosper, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-des-etchemins--ca-3",
+    "name": "Maison des jeunes des Etchemins L'Olivier, Maison des jeunes Le Chabotté",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-5978",
+    "description": "Lieu de rencontre animé où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * activités récréatives * rencontres de groupe * écoute, info ... [Plus] | Clientèle : Administration 418-594-5886 | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdjolivieretchemins.com",
+    "address": "2105 25ieme Avenue, Saint-Prosper, QC G0M 1Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-des-etchemins--ca-2",
+    "name": "Maison des jeunes des Etchemins L'Olivier, Maison des jeunes l'Ado-manie",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Prosper",
+    "province": "QC",
+    "phone": "418-594-5654",
+    "description": "Lieu de rencontre animé où les jeunes, au contact d'adultes significatifs, pourront devenir des citoyens critiques, actifs et responsables * activités récréatives * rencontres de groupe * écoute, info ... [Plus] | Clientèle : Administration 418-594-5886 | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.mdjolivieretchemins.com",
+    "address": "2105 25ieme Avenue, Saint-Prosper, QC G0M 1Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-des-fronti-res-ca",
+    "name": "Maison des jeunes des Frontières du Sud",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Pamphile",
+    "province": "QC",
+    "phone": "418-356-5655",
+    "description": "Soutien à l'autonomie et la prise en charge des jeunes * éducation et prévention * promotion des échanges entre adolescents, développement de leur sens critique et de leur sens des responsabilités * s ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "address": "195 Rue Saint-Pierre, Saint-Pamphile, QC G0R 3X0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-du-lac-aylmer-ca",
+    "name": "Maison des jeunes du Lac Aylmer",
+    "category": "family",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "MDJ 581-209-0015",
+    "description": "Milieu de vie animé pour les jeunes qui, au contact d'adultes significatifs, pourront devenir des citoyens actifs, critiques et responsables * activités récréatives, éducatives et sportives * accompag ... [Plus] | Clientèle : Administration 418-333-3631 | Âges : 11 an(s) - 17 an(s)",
+    "website": "http://www.mdjlacaylmer.org/",
+    "address": "Lac Aylmer, Quebec, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-des-jeunes-du-lac-aylmer--ca",
+    "name": "Maison des jeunes du Lac Aylmer, Espace - familles maison sud",
+    "category": "family",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "Administration 581-209-0015",
+    "description": "Milieu de vie créé pour et par les familles, où les activités sont choisies et planifiées selon les préférences des parents et de leurs enfants (0-8 ans) * endroit de rassemblement, divertissement et ... [Plus] | Clientèle : Adolescents (12-17 ans) | Âges : 17 an(s) et moins",
+    "address": "113 Rue Bilodeau, Disraeli, QC G0N 1E0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -37611,6 +45610,32 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "550, boul. René-Lévesque Est, Montréal, QC H2L 2L3",
     "hours": "Dépannage lun-ven 8h30-16h30, sam 9h-12h. Appeler avant de se présenter.",
     "isUrgent": true
+  },
+  {
+    "id": "maison-du-tournant-la-ca",
+    "name": "Maison du Tournant (La)",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-4700",
+    "description": "Répit par hébergement aux familles naturelles vivant avec une personne ayant un trouble du spectre de l'autisme (TSA), une déficience intellectuelle ou physique afin de leur éviter l'épuisement * séjo ... [Plus] | Clientèle : Personnes ayant une déficience physique ou intellectuelle | Âges : 4 an(s) et plus",
+    "website": "https://www.lamaisondutournant.net/",
+    "address": "289 2e Avenue, Lac-Etchemin, QC G0R 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "maison-du-loisir-50-ca",
+    "name": "Maison du loisir 50+",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-4100",
+    "description": "Centre communautaire d'activités dédié aux personnes de 50 ans et plus de Lévis et des alentours * activités sociales, physiques, culturelles et éducatives animées par des bénévoles, des employés ou d ... [Plus] | Clientèle : Aînés * personnes seules et isolées | Âges : 50 an(s) et plus",
+    "website": "http://www.maisonduloisir50.ca",
+    "address": "10 Rue Giguère, Lévis, QC G6V 1N6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "maison-du-tonnerre-cn",
@@ -37672,6 +45697,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Lieu de socialisation visant à briser l'isolement.• Écoute.• Dépannage alimentaire d'urgence, incluant les week-ends.• Activités récréatives: tricot, yoga, etc.• Ateliers: santé et bien-être, cuisine-santé, arts, etc.• Souper mensuel.• Fête et souper de Noël.• Visites dans les résidences pour personnes aînées.• Sorties culturelles.• Vente de garage biannuelle.• Collecte de dons: vêtements, meubles, livres, etc. | Clientèle: aide alimentaire: grand public, activités: résident·e·s de L'Assomption | Territoire: L'Assomption | Frais: aucuns | Statut: organisme à but non lucratif",
     "address": "245, rue Sainte-Ursule, L'Assomption, Lanaudière, QC, J5W 1M6",
     "hours": "accueil: lundi au jeudi 13h00 à 16h00, aide alimentaire: mercredi 8h30 à 12h00, vendredi 8h30 à 12h00 et 13h00 à 16h00, aide alimentaire d'urgence: sur rendez-vous, vente de garage: mai et automne"
+  },
+  {
+    "id": "maison-natale-de-louis-fr-chette-ca",
+    "name": "Maison natale de Louis Fréchette",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-837-4174",
+    "description": "Préservation de la maison natale de l'homme de lettre lévisien Louis Fréchette et centre de diffusion culturelle * valorisation et promotion des arts de la parole et de l’écrit * sensibilisation à la ... [Plus]",
+    "website": "http://www.maisonfrechette.com",
+    "address": "4385 Rue Saint-Laurent, Lévis, QC G6V 3V9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "maisons-d-a-cote-de-lanaudiere-les-jol",
@@ -37865,6 +45903,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.mansfield-pontefract.com",
     "address": "314, rue Principale, Davidson, Outaouais, QC, J0X 1R0",
     "hours": "lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "march-aux-caissons-ca",
+    "name": "Marché aux caissons",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Louise",
+    "province": "QC",
+    "phone": "418-919-0510",
+    "description": "Lieu d'achat issu de l'implication citoyenne, offrant des produits locaux et biologiques ainsi que des articles de base * produits régionaux (fruits, légumes, produits: laitiers, surgelés, et autres) ... [Plus]",
+    "address": "537, rue principale Sainte-Louise-des, Saint-Roch-des-Aulnaies, QC G0R 3K0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "mardis-de-l-amiti-sainte-b-atric-lav",
@@ -38121,6 +46171,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "meubletout.com",
     "address": "185, boulevard Sir-Wilfrid-Laurier, Mcmasterville, Montérégie, QC, J3G 1P9",
     "hours": "mardi au vendredi 9h00 à 16h30, samedi 9h00 à 12h00"
+  },
+  {
+    "id": "microentreprendre-chaudi-re-appa-ca",
+    "name": "MicroEntreprendre Chaudière-Appalaches",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-903-3824",
+    "description": "Services-conseils gratuits et aide financière aux personnes qui désirent créer leur emploi ou leur entreprise et qui sont exclus des réseaux traditionnels de financement * développement du potentiel é ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.microentreprendreca.org",
+    "address": "2089 Bd Guillaume-Couture #202, Saint-Romuald, QC G6W 2P5, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "microentreprendre-laval-lav",
@@ -38686,6 +46749,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service disponible 24h/24, 7j/7"
   },
   {
+    "id": "mode-sans-fronti-re-ca",
+    "name": "Mode sans frontière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-9131",
+    "description": "Récupération et vente d'articles usagés dans le but de favorisé le recyclage et la réutilisation d'objet. Les surplus vont en soutien à la Maison de secours La Frontière * vêtements * meubles et élect ... [Plus] | Clientèle : Grand public",
+    "address": "128 Av. de la Gare, Montmagny, QC G5V 2T3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "module-d-panouissement-la-vie-de-cn",
     "name": "Module d'épanouissement à la vie de Havre-Saint-Pierre",
     "category": "social",
@@ -39164,6 +47239,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30"
   },
   {
+    "id": "montmagny-accueille-cdemm-ca",
+    "name": "Montmagny Accueille (CDEMM)",
+    "category": "immigration",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-5985 poste 223",
+    "description": "Amélioration de l'accueil et de l’intégration des personnes issues de l’immigration à Montmagny pour un meilleur vivre-ensemble * rencontre individuelle * évaluation des besoins * soutien dans les dém ... [Plus]",
+    "website": "http://montmagnyaccueille.com",
+    "address": "6 Rue St Jean Baptiste E bureau 141, Montmagny, QC G5V 1J7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "montmagny-h-tel-de-ville-ca",
+    "name": "Montmagny. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-3361",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Avis publics et information 418-248-1740",
+    "website": "http://www.ville.montmagny.qc.ca",
+    "address": "143 Rue St Jean Baptiste E, Montmagny, QC G5V 1K4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "montpellier-municipalit-out",
     "name": "Montpellier - Municipalité",
     "category": "social",
@@ -39227,6 +47328,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi, horaire variable"
   },
   {
+    "id": "mouvement-retrouvailles-adopt-e--ca",
+    "name": "Mouvement Retrouvailles adopté(e)s - non adopté(e)s - parents",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "418-903-9960",
+    "description": "Défense des droits des personnes confiées à l'adoption, parents biologiques et adoptants * sensibilisation à la problématique des retrouvailles en vue d'éliminer les tabous face à l'adoption * soutien ... [Plus] | Clientèle : Personnes concernées par l'adoption | Âges : 18 an(s) et plus",
+    "website": "http://www.mouvement-retrouvailles.qc.ca",
+    "address": "Saint-Jean-Chrysostome, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "mouvement-retrouvailles-adopt-e--ca-2",
+    "name": "Mouvement Retrouvailles adopté(e)s - non adopté(e)s - parents, Frontenac - Estrie",
+    "category": "family",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-9522",
+    "description": "Défense des droits des personnes confiées à l'adoption, parents biologiques et adoptants * sensibilisation à la problématique des retrouvailles en vue d'éliminer les tabous face à l'adoption * soutien ... [Plus] | Clientèle : Personnes concernées par l'adoption | Âges : 18 an(s) et plus",
+    "website": "http://www.mouvement-retrouvailles.qc.ca",
+    "address": "Frontenac, QC G0Y, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "pw-msmq-santement",
     "name": "Mouvement Santé Mentale Québec",
     "category": "mentalHealth",
@@ -39252,6 +47379,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "mouvementsem.org",
     "address": "368, rue Laurier, Saint-Jean-sur-Richelieu, Montérégie, QC, J3B 6L3",
     "hours": "lundi au vendredi 8h30 à 12h00 et 13h00 à 16h30, disponibilité en soirée sur rendez-vous, aide aux devoirs: 15h00 à 17h30, service des droits d'accès: samedi et dimanche 8h00 à 17h00 sur rendez-vous"
+  },
+  {
+    "id": "mouvement-des-amis-de-la-rivi-re-ca",
+    "name": "Mouvement des amis de la Rivière-du-Sud",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Raphaël",
+    "province": "QC",
+    "phone": "418-243-2853",
+    "description": "Protection et mise en valeur la rivière du Sud et ses cours d'eau affluents * publication, sensibilisation et information, organisation d'activités diverses * aménagement et mise en valeur",
+    "address": "Chem. de la Rivière-du-Sud, Saint-Raphaël, QC G0R 4C0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "mrc-d-acton-terre-d-accueil-mtg",
@@ -39507,6 +47646,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
   },
   {
+    "id": "multi-art-chute-chaudi-re-ca",
+    "name": "Multi-art Chute Chaudière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Étienne-de-Lauzon",
+    "province": "QC",
+    "phone": "Coordination 418-806-5993",
+    "description": "Promotion des arts et des activités culturelles assurée par un regroupement de professeurs dans les domaines culturels et récréatifs Activités offertes dans le cadre de la programmation des loisirs de ... [Plus] | Clientèle : Contacter un membre de l'équipe https://multiartchutechaudiere.ca/contact/ | Âges : 4 an(s) et plus",
+    "website": "http://multiartchutechaudiere.ca",
+    "address": "Saint-Étienne-de-Lauzon, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-food-laval-multicaf",
     "name": "Multicaf – Cuisine communautaire Côte-des-Neiges",
     "category": "food",
@@ -39585,6 +47737,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "municipalit-de-saint-vallier-ca",
+    "name": "Municipalité de Saint-Vallier",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Vallier",
+    "province": "QC",
+    "phone": "418-884-2559",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-804-3190",
+    "website": "http://www.stvallierbellechasse.qc.ca",
+    "address": "Municipalité de Saint-Vallier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-de-sainte-justine-ca",
+    "name": "Municipalité de Sainte-Justine",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Justine",
+    "province": "QC",
+    "phone": "418-383-5397",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-383-5399",
+    "website": "http://www.stejustine.net",
+    "address": "Municipalité de Sainte-Justine, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "municipalit-r-gionale-de-comt-mr-cn",
     "name": "Municipalité régionale de comté (MRC) de Caniapiscau, Municipalité régionale de comté de Caniapiscau",
     "category": "social",
@@ -39595,6 +47773,97 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Mise en commun des services pour le regroupement des 2 municipalités locales Municipalités de la MRC (voir dossiers individuels) * Fermont * Schefferville Territoires non organisés (TNO) * Caniapiscau ... [Plus] | Clientèle : Nous offrons des services à toute la population.",
     "website": "http://caniapiscau.ca",
     "address": "Fermont, QC G0G 1J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-be-ca",
+    "name": "Municipalité régionale de comté Beauce-Centre",
+    "category": "social",
+    "subcategory": "",
+    "city": "Beauceville",
+    "province": "QC",
+    "phone": "418-774-9828",
+    "description": "Supervision de l'aménagement du territoire * gestion des matières résiduelles * application du schéma de couverture de risques en sécurité-incendie * conception des rôles d'évaluation foncière * conce ... [Plus]",
+    "website": "http://www.mrcbeaucecentre.ca",
+    "address": "Beauceville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-ca",
+    "name": "Municipalité régionale de comté de Beauce-Sartigan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-8418",
+    "description": "Mise en commun des services pour le regroupement des 16 municipalités locales Municipalités de la MRC de Beauce-Sartigan (voir dossiers individuels) * Lac-Poulin * La Guadeloupe * Notre-Dame-des-Pins ... [Plus]",
+    "website": "http://www.mrcbeaucesartigan.com",
+    "address": "2727 Bd Dionne, Saint-Georges, QC G5Y 3Y1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-ca-2",
+    "name": "Municipalité régionale de comté de Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-883-3347",
+    "description": "Composée exclusivement de municipalités rurales, la MRC de Bellechasse, en plus d'exercer les mandats qui lui sont obligatoires de par la loi, assume d'autres responsabilités Mandats obligatoires * ad ... [Plus]",
+    "website": "http://www.mrcbellechasse.qc.ca",
+    "address": "100 Rue Monseigneur-Bilodeau, Saint-Lazare-de-Bellechasse, QC G0R 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-ca-3",
+    "name": "Municipalité régionale de comté de Bellechasse, Transport adapté de Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-883-2437",
+    "description": "Service de transport pour les personnes ayant un handicap * transport par minibus et taxis adaptés * déplacement à Lévis et Québec pour rendez-vous médicaux | Clientèle : Personnes ayant un handicap permanent",
+    "website": "http://www.mrcbellechasse.qc.ca/mrc/page6_1.html",
+    "address": "Saint-Lazare-de-Bellechasse, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-ca-4",
+    "name": "Municipalité régionale de comté de Bellechasse, Transport collectif de Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-883-2437",
+    "description": "Service de transport collectif * transport collectif dans la MRC de Bellechasse * transport interurbain de Lac-Etchemin à Lévis (via route 277) https://www.mrcbellechasse.qc.ca/fichiersUpload/fichiers ... [Plus]",
+    "website": "http://www.mrcbellechasse.qc.ca/fr/pour-les-citoyens/transport-de-personnes",
+    "address": "100 Rue Monseigneur-Bilodeau, Saint-Lazare-de-Bellechasse, QC G0R 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-ca-6",
+    "name": "Municipalité régionale de comté de L'Islet",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-3076",
+    "description": "Contribution au développement social et culturel durable sur le territoire * aménagement du territoire * évaluation * sécurité incendie * cour municipale * gestion des programmes de rénovation domicil ... [Plus]",
+    "website": "http://www.mrclislet.com",
+    "address": "Saint-Jean-Port-Joli, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-ca-7",
+    "name": "Municipalité régionale de comté de L'Islet, Accès L'Islet",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-3076",
+    "description": "Service de transport collectif et adapté pour les municipalités de L'Islet-Nord * Taxibus : transport collectif par véhicules taxi et taxi adapté * transport adapté * transport interrégional | Clientèle : Le grand public * personnes ayant un handicap et admises au transport adapté",
+    "website": "http://mrclislet.com/services/acces-lislet-transport-collectif-et-adapte/",
+    "address": "34 Rue Fortin, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -39624,6 +47893,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "municipalit-r-gionale-de-comt-de-ca-5",
+    "name": "Municipalité régionale de comté de La Nouvelle-Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-3444",
+    "description": "Planification, organisation, direction et contrôle des activités de la MRC * application des décisions du conseil des maires Principaux champs de compétence * évaluation foncière des propriétés réside ... [Plus]",
+    "website": "http://www.nouvellebeauce.com",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-ca-8",
+    "name": "Municipalité régionale de comté de Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Laurier-Station",
+    "province": "QC",
+    "phone": "418-926-3407",
+    "description": "Mise en commun des services pour le regroupement des 18 municipalités rurales locales Les municipalités de la MRC de Lotbinière ont opté pour la délégation et la prise en charge des compétences suivan ... [Plus]",
+    "website": "http://www.mrclotbiniere.org",
+    "address": "Laurier-Station, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "municipalit-r-gionale-de-comt-de-cn-3",
     "name": "Municipalité régionale de comté de Manicouagan",
     "category": "social",
@@ -39650,6 +47945,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "municipalit-r-gionale-de-comt-de-ca-9",
+    "name": "Municipalité régionale de comté de Montmagny",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-5985",
+    "description": "Mise en vigueur d'un schéma d'aménagement applicable à l'ensemble de son territoire * vérification de la conformité au schéma d'aménagement des plans et règlements d'urbanisme des municipalités locale ... [Plus]",
+    "website": "http://www.montmagny.com/la-mrc",
+    "address": "45 Av. du Bass. N, Montmagny, QC G5V 4E5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-ca-10",
+    "name": "Municipalité régionale de comté de Montmagny, Service affaires - Comité local de développement",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-5985",
+    "description": "Soutien au développement de l'économie et à la création d'emplois sur son territoire en concertation avec les gens du milieu et accompagnement des collectivités dans leurs besoins sociaux * établissem ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.montmagny.com",
+    "address": "6 Rue St Jean Baptiste E, Montmagny, QC G5V 1J7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "municipalit-r-gionale-de-comt-de-cn-5",
     "name": "Municipalité régionale de comté de Sept-Rivières",
     "category": "social",
@@ -39663,6 +47984,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "municipalit-r-gionale-de-comt-de-ca-11",
+    "name": "Municipalité régionale de comté des Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-332-2757",
+    "description": "La MRC est chargée des compétences suivantes auprès de ses municipalités membres * aménagement * aménagement forestier * évaluation * gestion des cours d'eau * matières résiduelles * programmes de sub ... [Plus]",
+    "website": "http://www.mrcdesappalaches.ca",
+    "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "municipalit-r-gionale-de-comt-de-ca-12",
+    "name": "Municipalité régionale de comté des Etchemins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-9000",
+    "description": "Mise en commun des services pour le regroupement des 13 municipalités locales Prise en charge des compétences suivantes * aménagement du territoire * service régional d'inspection * gestion des matièr ... [Plus]",
+    "website": "http://www.mrcetchemins.qc.ca",
+    "address": "212 2e Avenue local a1, Lac-Etchemin, QC G0R 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "municipalit-r-gionale-de-comt-du-cn",
     "name": "Municipalité régionale de comté du Golfe-du-Saint-Laurent",
     "category": "social",
@@ -39673,6 +48020,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Mise en commun des services pour le regroupement des 5 municipalités locales Municipalités de la MRC (voir dossiers individuels) * Blanc-Sablon * Bonne-Espérance * Côte-Nord-du-Golfe-du-Saint-Laurent ... [Plus] | Clientèle : Gros-Mécatina 418-773-2614",
     "website": "http://mrcgsl.ca",
     "address": "Côte-Nord-du-Golfe-du-Saint-Laurent, QC G0G 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "murmure-le-ca",
+    "name": "Murmure (Le)",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Beauceville",
+    "province": "QC",
+    "phone": "418-774-2444",
+    "description": "Regroupement de personnes ayant ou ayant eu un problème de santé mentale visant l'amélioration de leur qualité de vie et désirant améliorer leur mieux-être * Accompagnement de la personne dans sa déma ... [Plus] | Clientèle : Personnes ayant ou ayant eu un problème de santé mentale | Âges : 18 an(s) et plus",
+    "website": "http://lemurmure.org",
+    "address": "620 Bd Renault, Beauceville, QC G5X 1M7, Canada",
     "hours": "Voir site web"
   },
   {
@@ -39920,6 +48280,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Pour urgence: 811 (Info-Santé) ou urgence hospitalière."
   },
   {
+    "id": "notre-dame-auxiliatrice-de-buckl-ca",
+    "name": "Notre-Dame-Auxiliatrice-de-Buckland. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Notre-Dame-Auxiliatrice-de-Buckland",
+    "province": "QC",
+    "phone": "418-789-3119",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.buckland.qc.ca",
+    "address": "Notre-Dame-Auxiliatrice-de-Buckland, QC G0R 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "notre-dame-de-bonsecours-municip-out",
     "name": "Notre-Dame-De-Bonsecours - Municipalité",
     "category": "social",
@@ -39972,6 +48345,58 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi à jeudi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "notre-dame-des-pins-h-tel-de-vil-ca",
+    "name": "Notre-Dame-des-Pins. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Notre-Dame-des-Pins",
+    "province": "QC",
+    "phone": "418-774-9718",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de Beauce-Sartigan Circ ... [Plus] | Clientèle : Bibliothèque 418-228-5541 poste 71080",
+    "website": "http://notredamedespins.qc.ca",
+    "address": "111 30e Rue #209, Notre-Dame-des-Pins, QC G0M 1K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "notre-dame-du-rosaire-h-tel-de-v-ca",
+    "name": "Notre-Dame-du-Rosaire. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Notre-Dame-du-Rosaire",
+    "province": "QC",
+    "phone": "418-469-2802",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.notredamedurosaire.com",
+    "address": "Notre-Dame-du-Rosaire, QC G0R 2H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "notre-dame-du-sacr-c-ur-d-issoud-ca",
+    "name": "Notre-Dame-du-Sacré-Cœur-d'Issoudun. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Notre-Dame-du-Sacré-Coeur-d'Issoudun",
+    "province": "QC",
+    "phone": "418-728-2006",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs et autres La nature, l'étendue et l'exercice de ces responsabilités varient ... [Plus] | Clientèle : Bibliothèque 418-728-9061",
+    "website": "http://www.issoudun.qc.ca",
+    "address": "Notre-Dame-du-Sacré-Coeur-d'Issoudun, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "nourri-source-chaudi-re-appalach-ca",
+    "name": "Nourri - Source Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-3101 poste 42207",
+    "description": "Mouvement d’entraide pour l’allaitement maternel, composé de marraines d’allaitement formées au soutien et à l'accompagnement des mères * écoute active, encouragement et conseils techniques * ateliers ... [Plus]",
+    "website": "http://nourri-source.org/fr/chaudiere-appalaches",
+    "address": "331 Rue du Sanatorium, Lac-Etchemin, QC G0R 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "nourri-source-lanaudiere-msc",
     "name": "Nourri-Source - Lanaudière",
     "category": "family",
@@ -39995,6 +48420,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Marraines d'allaitement: jumelage téléphonique et par messagerie.* Halte-allaitement.* Conférences en ligne.* Prêt de tire-laits.* Ateliers prénataux.* Cliniques d'allaitement.* Défi allaitement. | Clientèle: femmes enceintes, femmes qui allaitent | Territoire: MRC Vaudreuil-Soulanges, MRC Le Haut-Saint-Laurent, MRC Beauharnois-Salaberry, MRC Roussillon, MRC Acton, MRC Maskoutain, MRC Brome-Missisquoi, MRC Haute-Yamaska | Statut: organisme à but non lucratif",
     "website": "nourri-source.org",
     "address": "1255, rue Émile-Bouchard, local 208, Vaudreuil-Dorion, Montérégie, QC, J7V 0B7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "nouveaux-sentiers-de-la-mrc-de-l-ca",
+    "name": "Nouveaux sentiers de la MRC de L'Islet (Les)",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sainte-Perpétue (région 12)",
+    "province": "QC",
+    "phone": "418-359-3348",
+    "description": "Amélioration de la qualité de vie des personnes ayant un trouble de santé mentale * soutien à leur réintégration sociale, personnelle et professionnelle * activités annuelles ou thématiques : voyages, ... [Plus] | Clientèle : Adultes ayant un trouble de santé mentale : schizophrénie, dépression majeure, trouble bipolaire, troubles de la personnalité, trouble obsessif-compulsif (TOC) et trouble de l'anxiété | Âges : 18 an(s) et plus",
+    "website": "http://www.nouveauxsentiers.org",
+    "address": "183 Rang Terrebonne, Sainte-Perpétue, QC G0R 3Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "nouvel-essor-ca",
+    "name": "Nouvel Essor",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Justine",
+    "province": "QC",
+    "phone": "418-383-5252",
+    "description": "Amélioration de la qualité de vie des personnes ayant une limitation intellectuelle, physique et/ou autiste, soutien à domicile des aînés, proches aidants et personnes à faible revenu Services à la cl ... [Plus] | Clientèle : Travail de milieu (ITMAV) : 581-372-0323 | Âges : 5 an(s) et plus",
+    "website": "http://www.nouvelessor.org",
+    "address": "191 Rue Langevin, Sainte-Justine, QC G0R 1Y0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -40204,6 +48655,44 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.orea.com",
     "address": "99 Duncan Mill Rd, Toronto, ON M3B 1Z2",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h."
+  },
+  {
+    "id": "otj-saint-m-thode-ca",
+    "name": "OTJ Saint-Méthode",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "",
+    "description": "Organisation d'activités saisonnières et récréatives dans la municipalité d'Adstock",
+    "address": "Rte De St Méthode, Adstock, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "oasis-saint-damien-ca",
+    "name": "Oasis Saint-Damien",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Damien-de-Buckland",
+    "province": "QC",
+    "phone": "418-789-3147",
+    "description": "Résidence pour personnes âgées leur permettant de maintenir et stimuler leurs facultés et capacités, tout en procurant assistance et services essentiels au bien-être physique, psychologique et social ... [Plus] | Clientèle : Personnes âgées autonomes, en perte légère d'autonomie ou ayant des besoins plus nombreux * personnes âgées en lourde perte d'autonomie * personnes convalescentes ou en besoin de soins palliatifs | Âges : 65 an(s) et plus",
+    "website": "https://residenceoasisstdamien.com/",
+    "address": "65 Rte Saint-Gérard, Saint-Damien-de-Buckland, QC G0R 2Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "oasis-de-lotbini-re-ca",
+    "name": "Oasis de Lotbinière",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Flavien",
+    "province": "QC",
+    "phone": "418-728-2085",
+    "description": "Amélioration de la qualité de vie des personnes vivant ou ayant vécu des problèmes de santé mentale, difficulté, déséquilibre émotionnel * briser l'isolement Vie associative et implication * dîners co ... [Plus] | Clientèle : Inscription et rendez-vous 418-728-2085 poste 6 | Âges : 18 an(s) et plus",
+    "website": "http://www.oasisdelotbiniere.org",
+    "address": "17 Rue des Érables, Saint-Flavien, QC G0S 2M0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "oasis-du-bel-ge-cn",
@@ -40805,6 +49294,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Bureau lun-ven 8h30-16h30. Liste d'attente – inscription requise."
   },
   {
+    "id": "offices-municipaux-d-habitation--ca",
+    "name": "Offices municipaux d'habitation de la région de la Chaudière-Appalaches, Informations générales",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Chaudière-Appalaches",
+    "province": "QC",
+    "phone": "",
+    "description": "Logements de qualité à bas prix pour personnes seules et familles à faible revenu Répertoire des offices municipaux d'habitation (OMH), des coopératives d'habitation ou d'OBNL en particulier http://ww ... [Plus] | Clientèle : Personnes et familles à faible revenu",
+    "website": "http://www.habitation.gouv.qc.ca/repertoire.html",
+    "address": "615 Rue Monfette E, Thetford Mines, QC G6G 7H4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "offices-municipaux-d-habitation--cn",
     "name": "Offices municipaux d'habitation de la région de la Côte-Nord, Informations générales",
     "category": "housing",
@@ -40896,6 +49398,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "op-ration-nez-rouge-centrale-bea-ca",
+    "name": "Opération Nez rouge, Centrale Beauce-Nord, Opération Nez rouge Beauce-Etchemins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "Information bénévole 418-227-0808",
+    "description": "Valorisation, par une approche non moralisatrice, de l'adoption d'un comportement responsable face à la conduite avec les facultés affaiblies en rendant possible l'existence d'un service de raccompagn ... [Plus] | Clientèle : Personnes qui possèdent ou ont la responsabilité d'un véhicule au moment de l'appel",
+    "website": "http://www.operationnezrouge.com",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "op-ration-nez-rouge-centrale-cha-ca",
+    "name": "Opération Nez rouge, Centrale Chaudière, Opération Nez rouge Beauce-Etchemins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "Raccompagnement 418-227-0808",
+    "description": "Valorisation, par une approche non moralisatrice, de l'adoption d'un comportement responsable face à la conduite avec les facultés affaiblies en rendant possible l'existence d'un service de raccompagn ... [Plus] | Clientèle : Information bénévole 418-227-0808",
+    "website": "http://www.operationnezrouge.com",
+    "address": "2121 119e Rue, Saint-Georges, QC G5Y 5S1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "op-ration-nez-rouge-centrale-etc-ca",
+    "name": "Opération Nez rouge, Centrale Etchemins, Opération Nez rouge Beauce-Etchemins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "Raccompagnement 418-625-3000",
+    "description": "Valorisation, par une approche non moralisatrice, de l'adoption d'un comportement responsable face à la conduite avec les facultés affaiblies en rendant possible l'existence d'un service de raccompagn ... [Plus] | Clientèle : Information bénévole 418-227-0808 | Âges : 18 an(s) et plus",
+    "website": "http://www.operationnezrouge.com",
+    "address": "Lac-Etchemin, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "op-ration-nez-rouge-op-ration-ne-cn",
     "name": "Opération Nez rouge, Opération Nez Rouge Baie-Comeau",
     "category": "social",
@@ -40935,6 +49476,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "op-ration-nez-rouge-op-ration-ne-ca",
+    "name": "Opération Nez rouge, Opération Nez rouge Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "Raccompagnement 418-338-1441",
+    "description": "Valorisation, par une approche non moralisatrice, de l'adoption d'un comportement responsable face à la conduite avec les facultés affaiblies en rendant possible l'existence d'un service de raccompagn ... [Plus] | Clientèle : Information bénévole 418-338-1441",
+    "website": "http://www.operationnezrouge.com",
+    "address": "Rue des Appalaches, Thetford Mines, QC G6G, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "op-ration-nez-rouge-op-ration-ne-ca-2",
+    "name": "Opération Nez rouge, Opération Nez rouge Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "Raccompagnement 418-881-4422",
+    "description": "Valorisation, par une approche non moralisatrice, de l'adoption d'un comportement responsable face à la conduite avec les facultés affaiblies en rendant possible l'existence d'un service de raccompagn ... [Plus] | Clientèle : Information bénévoles 581-995-3480",
+    "website": "http://www.operationnezrouge.com",
+    "address": "152 Rue Notre Dame, Donnacona, QC G3M 1G4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "op-ration-sac-dos-longueuil-mtg",
     "name": "Opération Sac À Dos - Longueuil",
     "category": "social",
@@ -40945,6 +49512,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "* Distribution de sacs à dos, fournitures scolaires et boîte à lunch isolantes aux enfants de familles dans le besoin. | Clientèle: familles dans le besoin Capacité: 500 | Territoire: Vieux Longueuil, codes postaux débutant par: codes postaux J4G, J4H, J4J, J4K, J4L,",
     "website": "regroupementpartage.ca",
     "address": "1230, rue Green, Longueuil, Montérégie, QC, J4K 4Z5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "orchestre-d-harmonie-des-chutes-ca",
+    "name": "Orchestre d'harmonie des Chutes",
+    "category": "family",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-717-6612",
+    "description": "Orchestre à vents et percussions ayant pour but de donner aux musiciens la chance d'exercer la musique d'ensemble * concerts * halte-garderie pendant les pratiques",
+    "website": "http://ohdc.net",
+    "address": "Av. des Chutes, Lévis, QC G6X, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "orchestre-symphonique-de-l-vis-ca",
+    "name": "Orchestre symphonique de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-603-3138",
+    "description": "Orchestre symphonique de formation, composé de musiciens bénévoles * activités gratuites : répétitions devant public, ateliers de direction et autres * concerts",
+    "website": "http://www.oslevis.org",
+    "address": "3995 Rue de la Fabrique, Lévis, QC G6W 1S7, Canada",
     "hours": "Voir site web"
   },
   {
@@ -41089,6 +49682,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "organisme-de-bassins-versants-de-ca",
+    "name": "Organisme de bassins versants de la zone du Chêne",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Croix",
+    "province": "QC",
+    "phone": "",
+    "description": "Concertation des acteurs de l'eau, protection, amélioration et mise en valeur de la ressource eau dans sa zone d'intervention, ainsi que des ressources et habitats qui y sont associés * restauration d ... [Plus] | Clientèle : Le grand public",
+    "website": "http://www.obvduchene.org",
+    "address": "St-Croix, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "organisme-des-bassins-versants-d-ca",
+    "name": "Organisme des bassins versants de la Côte-du-Sud",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-4566",
+    "description": "Amélioration de la qualité de l'eau des rivières et des lacs * protection, mise en valeur et restauration des écosystèmes aquatiques et riverains de son territoire, composé de nombreux bassins versant ... [Plus] | Clientèle : Acteurs de l'eau * promoteurs de projets communautaires * écoles * le grand public",
+    "website": "http://www.obvcotedusud.org",
+    "address": "6 Rue St Jean Baptiste E #136, Montmagny, QC G5V 1J7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "organisme-des-bassins-versants-d-cn",
     "name": "Organisme des bassins versants de la Haute-Côte-Nord",
     "category": "social",
@@ -41230,6 +49849,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h-20h. Sam-dim et fériés 8h-16h. Sur RV pour certains services."
   },
   {
+    "id": "ouvre-ton-c-ur-l-espoir-ca",
+    "name": "Ouvre ton cœur à l'espoir",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-222-6044",
+    "description": "Aide financière et matérielle aux familles ayant un enfant atteint de cancer ou d'une autre maladie menaçant leur vie * accompagnement des familles * soutien financier et matériel relatif à la maladie ... [Plus] | Clientèle : Enfants atteints de cancer ou de toute autre maladie menaçant leur vie * leur famille | Âges : 17 an(s) et moins",
+    "website": "http://www.ouvretoncoeuralespoir.com",
+    "address": "2640 Bd Dionne, Saint-Georges, QC G5Y 5C8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ouvre-bo-te-culturel-l-cn",
     "name": "Ouvre-boîte culturel (L')",
     "category": "employment",
@@ -41240,6 +49872,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Salle de spectacle et espace culturel alternatif de diffusion des arts et de la culture dans la région de la Côte-Nord * travail en partenariat avec les organismes et entreprises œuvrant déjà à l’épan ... [Plus]",
     "website": "http://www.louvreboiteculturel.com",
     "address": "27 Pl. la Salle, Baie-Comeau, QC G4Z 1J8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "ouvroir-missionnaire-sainte-mari-ca",
+    "name": "Ouvroir Missionnaire Sainte-Marie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-7173",
+    "description": "Œuvre de bienfaisance d'inspiration chrétienne fondée pour aimer et servir Dieu dans Ses pauvres Récupération des biens de première nécessité et redistribution aux personnes à faible revenu * vêtement ... [Plus]",
+    "address": "538 Rue Notre Dame N, Sainte-Marie, QC G6E 2K9, Canada",
     "hours": "Voir site web"
   },
   {
@@ -41540,6 +50184,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h00, sur rendez-vous: vendredi"
   },
   {
+    "id": "parc-r-gional-des-appalaches-ca",
+    "name": "Parc régional des Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Lucie-de-Beauregard",
+    "province": "QC",
+    "phone": "Administration 418-223-3423",
+    "description": "Lieu de découvertes et d'émerveillement quatre saisons pour les amateurs de plein air * randonnée pédestre * activités nautiques : canot-kayak, canot-camping, plage et baignade * vélo * Cani-raid FouB ... [Plus] | Clientèle : Bureaux d'accueil",
+    "website": "http://www.parcappalaches.com",
+    "address": "Appalachian Park, 105 Rue Principale, Sainte-Lucie-de-Beauregard, QC G0R 3L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "parenfants-de-mascouche-maison-de-l-msc",
     "name": "Parenfants de Mascouche - Maison de la Famille",
     "category": "social",
@@ -41551,6 +50208,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.parenfants.org",
     "address": "2492, chemin Sainte-Marie, Mascouche, Lanaudière, QC, J7K 1M5",
     "hours": "lundi au vendredi 9h00 à 16h00, samedi selon les activités"
+  },
+  {
+    "id": "parentaime-maison-de-la-famille--ca",
+    "name": "Parentaime Maison de la famille des Etchemins",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-2223",
+    "description": "Soutien aux parents et familles dans leur rôle parental * aide au développement optimal de l'enfant * écoute téléphonique * ateliers prénataux * aide postnatale pour les parents * ateliers de purées * ... [Plus] | Clientèle : Familles avec enfants de 0-17 ans | Âges : 17 an(s) et moins",
+    "website": "http://www.parentaime.com",
+    "address": "319 Rue du Sanatorium, Lac-Etchemin, QC G0R 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "parentaime-maison-de-la-famille--ca-2",
+    "name": "Parentaime Maison de la famille des Etchemins, Succursale Saint-Prosper",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Prosper",
+    "province": "QC",
+    "phone": "418-625-2223",
+    "description": "Soutien aux parents et familles dans leur rôle parental * aide au développement optimal de l'enfant * écoute téléphonique * ateliers prénataux * aide postnatale pour les parents * ateliers de purées * ... [Plus] | Clientèle : Familles avec enfants de 0-17 ans | Âges : 17 an(s) et moins",
+    "website": "http://www.parentaime.com",
+    "address": "Saint-Prosper, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "parents-d-anges-beauce-etchemins-ca",
+    "name": "Parents d'anges Beauce-Etchemins",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "581-372-6859",
+    "description": "Accompagnement des personnes touchées par le deuil périnatal et leurs proches * rencontres individuelles pour couples, enfants et personnes touchées par le deuil périnatal * activités de groupe, déjeu ... [Plus] | Clientèle : Personnes touchées par le deuil périnatal et leurs proches",
+    "website": "http://www.parentsdanges.com",
+    "address": "120 112e Rue Bureau 203, Saint-Georges, QC G5Y 3J1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "parent-le-de-laval-la-lav",
@@ -41695,6 +50391,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h30"
   },
   {
+    "id": "parrainage-jeunesse-ca",
+    "name": "Parrainage jeunesse",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-221-7123",
+    "description": "Accompagnement aux jeunes pour favoriser leur mieux-être et le développement de leur plein potentiel Mentorat * sélection des candidats et recrutement de bénévoles * jumelage entre adultes bénévoles e ... [Plus] | Clientèle : Enfants et adolescents ayant besoin d'entretenir une relation supplémentaire avec un adulte significatif, ne présentant pas de problèmes de comportement considérables, de handicap restreignant ou de déficience intellectuelle importante | Âges : 3 an(s) - 17 an(s)",
+    "website": "https://www.parrainagejeunesse.com",
+    "address": "2640 Bd Dionne, Saint-Georges, QC G5Y 3X8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "partage-point-de-service-saint-c-mtg",
     "name": "Partage - Point De Service Saint-Constant",
     "category": "social",
@@ -41813,6 +50522,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 10h00 à 16h00, distribution alimentaire: sur rendez-vous, lundi au vendredi 10h00 à 11h00"
   },
   {
+    "id": "partage-au-masculin-ca",
+    "name": "Partage au masculin",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "Lévis, Laurier-Station et Saint-Gervais 418-835-9444",
+    "description": "Ressources et services adaptés aux besoins de croissance et aux difficultés que rencontrent les hommes * accueil * analyse des besoins et référence * ateliers et conférences * écoute téléphonique * re ... [Plus] | Clientèle : Montmagny 418-248-1212 | Âges : 18 an(s) et plus",
+    "website": "http://www.partageaumasculin.com",
+    "address": "925 Bd Dionne, Saint-Georges, QC G5Y 3V1, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qc-food-laval-partageons",
     "name": "Partageons l'Espoir – Banque alimentaire Laval",
     "category": "food",
@@ -41864,6 +50586,45 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "passeport-travail-de-beauce-ca",
+    "name": "Passeport travail de Beauce",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-1550",
+    "description": "Services d'accompagnement à l'intégration et au maintien en emploi dans une démarche d'orientation ou d'acquisition de compétences * services individuels ou de groupe d'orientation et intégration au t ... [Plus] | Clientèle : Prestataires d'assurance emploi ou de la sécurité du revenu * adultes sans emploi, en emploi précaire ou à temps partiel | Âges : 18 an(s) et plus",
+    "website": "http://www.passeporttravail.org",
+    "address": "12008 1re Avenue, Saint-Georges, QC G5Y 2C8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "passeport-travail-de-beauce-poin-ca",
+    "name": "Passeport travail de Beauce, Point de service Sainte-Marie",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-227-1550",
+    "description": "Services d'accompagnement à l'intégration et au maintien en emploi dans une démarche d'orientation ou d'acquisition de compétences * services individuels ou de groupe d'orientation et intégration au t ... [Plus] | Clientèle : Prestataires d'assurance emploi ou de la sécurité du revenu * adultes sans emploi, en emploi précaire ou à temps partiel | Âges : 18 an(s) et plus",
+    "website": "http://www.passeporttravail.org",
+    "address": "1083 Bd Vachon N, Sainte-Marie, QC G6E 4B4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "passerelle-la-ca",
+    "name": "Passerelle (La)",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-832-1555",
+    "description": "Amélioration de la qualité de vie et de l'autonomie des personnes vivant avec un problème de santé mentale * encouragement au soutien mutuel et à l'entraide des membres Volet travail * écoute et souti ... [Plus] | Clientèle : Personnes vivant avec un problème de santé mentale | Âges : 18 an(s) et plus",
+    "website": "http://www.la-passerelle.ca",
+    "address": "3288 Av. des Églises, Charny, QC G6X 1W3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "patrimoine-canadien-out",
     "name": "Patrimoine Canadien",
     "category": "social",
@@ -41901,6 +50662,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.patronrocamadour.org",
     "address": "500, rue Saint-Joseph Est, Québec, QC G1K 3B7",
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Apporter pièce identité et preuve de résidence."
+  },
+  {
+    "id": "patro-de-l-vis-ca",
+    "name": "Patro de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418 833-4477",
+    "description": "Animation de loisirs accessibles et services communautaires offrant à la communauté lévisienne de toute condition des milieux de vie où l'on peut partager, s'amuser, créer des liens et évoluer en s'im ... [Plus]",
+    "website": "http://www.patrolevis.com",
+    "address": "6150 Rue Saint-Georges, Lévis, QC G6V 4J8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "patrouille-canadienne-de-ski-div-cn",
@@ -42018,6 +50792,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "pavillon-du-c-ur-beauce-etchemin-ca",
+    "name": "Pavillon du cœur Beauce-Etchemin",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-1843",
+    "description": "Programmes, activités et services de prévention, d'éducation, de réadaptation et de maintien aux personnes atteintes de maladie chronique, à risque de l'être et à toute personne soucieuse de sa santé ... [Plus] | Âges : 12 an(s) et plus",
+    "website": "http://www.coeur.ca",
+    "address": "2640 Bd Dionne, Saint-Georges, QC G5Y 3X8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "msss-hopital-montreal-pavillon-edouard-asselin",
     "name": "Pavillon Édouard-Asselin",
     "category": "health",
@@ -42054,6 +50841,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre de ressources pour les vétéranes. * Programme Lifeshops: retraite d'une fin de semaine offrant du soutien et des ressources pour les femmes effectuant la transition entre la vie militaire et la vie civile ou qui s'apprêtent à le faire.* Au-delà du traumatisme: retraite d'une journée pour les femmes ayant vécu un traumatisme sexuel.* Fins de semaine sans horaire: programme libre.* Mercredi Femmes Fortes: causeries avec différentes invitées sur plusieurs sujets touchant les vétéranes. | Clientèle: femmes vétéranes, femmes membres des Forces armées canadiennes, femmes de la Gendarmerie royale du Canada | Territoire: Canada | Statut: organisme à but non lucratif",
     "website": "pepperpod.ca/fr/",
     "address": "35, chemin Nordik, Chelsea, Outaouais, QC, J9B 2P7",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "personnes-handicap-es-en-action--ca",
+    "name": "Personnes handicapées en action de la Rive-Sud",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-4922",
+    "description": "Intégration et autonomie des personnes ayant un handicap * amélioration de leurs conditions de vie par la concertation avec les organismes communautaires * inscription obligatoire * accueil, accompagn ... [Plus] | Clientèle : Personnes ayant un handicap physique, intellectuel, sensoriel ou un trouble du spectre de l'autisme (TSA) * leurs proches * leur famille | Âges : 6 an(s) et plus",
+    "website": "http://www.phars.org",
+    "address": "6150 Rue Saint-Georges, Lévis, QC G6V 4J8, Canada",
     "hours": "Voir site web"
   },
   {
@@ -42224,6 +51024,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "petitsfreres.ca",
     "address": "435, boulevard Curé-Labelle Sud, local 205, Chomedey, Laval, QC, H7V 2S8",
     "hours": "lundi au vendredi 8h00 à 16h00"
+  },
+  {
+    "id": "petits-fr-res-les-l-vis-ca",
+    "name": "Petits Frères (Les), Lévis",
+    "category": "family",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-903-5553",
+    "description": "Accueil et accompagnement des personnes seules du grand âge, afin de contrer leur isolement, en créant autour d’elles une famille engagée et fidèle jusqu’à la fin de leur vie * jumelage avec bénévole ... [Plus] | Clientèle : Aînés socialement isolés ou victimes d'exclusion, vulnérables et fragilisés, sans lien affectif ou contact significatif avec la famille ou l'entourage, de toute condition physique, psychologique et sociale | Âges : 75 an(s) et plus",
+    "website": "http://petitsfreres.ca/trouver-une-region/levis/",
+    "address": "8032 Av. des Églises Suite 226, Charny, QC G6X 1W6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "petits-fr-res-les-thetford-mines-ca",
+    "name": "Petits Frères (Les), Thetford Mines",
+    "category": "family",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-755-0994",
+    "description": "Accueil et accompagnement des personnes seules du grand âge afin de contrer leur isolement en créant autour d'elles une famille engagée et fidèle jusqu'à la fin de leur vie * accompagnement personnali ... [Plus] | Clientèle : Aînés seuls et sans famille présente ou sans liens affectifs | Âges : 75 an(s) et plus",
+    "website": "http://www.petitsfreres.ca/thetfordmines",
+    "address": "44 Rue St Alphonse-Sud local 53, Thetford Mines, QC G6G 3T7, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "petits-freres-les-ouest-de-l-ile-pcl",
@@ -42663,6 +51489,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "popote-roulante-l-islet-ca",
+    "name": "Popote roulante L'Islet",
+    "category": "food",
+    "subcategory": "",
+    "city": "L'Islet",
+    "province": "QC",
+    "phone": "418-356-3737, poste 105",
+    "description": "Service offrant principalement des repas chauds livrés à domicile pour les aînés, personnes en convalescence, handicap ou nouveau parents pour les résidents de L’Islet et de Saint-Cyrille-de-Lessard * ... [Plus] | Clientèle : Aînés, personnes en perte d'autonomie, convalescentes, malades ou ayant un handicap, femme ayant une grossesse difficile, proches aidants, jeunes parents",
+    "website": "http://maisonfamillemrclislet.com/activites-et-services-suite/popote-roulante/",
+    "address": "L'Islet, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "popote-roulante-tr",
     "name": "Popote roulante Trois-Rivières",
     "category": "food",
@@ -42673,6 +51512,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Livraison de repas chauds à domicile pour personnes âgées, malades ou à mobilité réduite à Trois-Rivières. Repas nutritifs et visite de bienveillance quotidienne.",
     "address": "929, rue du Père-Daniel, Trois-Rivières, QC G9A 2W9",
     "hours": "Livraison à domicile lun-ven matin. Inscription requise."
+  },
+  {
+    "id": "popote-roulante-des-aulnaies-ca",
+    "name": "Popote roulante des Aulnaies",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Roch-des-Aulnaies",
+    "province": "QC",
+    "phone": "Cellulaire 418-291-6322",
+    "description": "Service de popote roulante aux aînés, personnes convalescentes ou ayant un handicap * livraison de repas à domicile | Clientèle : Aînés * personnes convalescentes ou ayant un handicap",
+    "address": "992 Rte de la Seigneurie, Saint-Roch-des-Aulnaies, QC G0R 4E0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "popotes-roulantes-qc",
@@ -42712,6 +51563,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Lun-ven 8h30-16h30. Urgences: appeler le 811 ou aller à l'urgence.",
     "isProvinceWide": true
+  },
+  {
+    "id": "portage-centre-r-sidentiel-saint-ca",
+    "name": "Portage, Centre résidentiel Saint-Malachie",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Malachie",
+    "province": "QC",
+    "phone": "418-642-2472 poste 0",
+    "description": "Programme de réadaptation en dépendance pour adolescents et jeunes adultes (14-21 ans) qui vivent des troubles de l'usage des substances et qui souhaitent débuter un parcours de rétablissement dans un ... [Plus] | Clientèle : Adolescents et jeunes adultes ayant un problème de toxicomanie, d'alcoolisme ou de délinquance | Âges : 14 an(s) - 21 an(s)",
+    "website": "https://portage.ca/fr/quebec/programme-adolescents-francais-est/",
+    "address": "244 Chem. de la Montagne, Saint-Malachie, QC G0R 3N0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "portage-du-fort-municipalit-out",
@@ -42818,6 +51682,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "potager-b-n-vole-ca",
+    "name": "Potager bénévole",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-389-7254",
+    "description": "Soutien à des organismes communautaires de la région * entretien bénévole d'un potager * don de légumes à des particuliers et organismes | Clientèle : Organismes communautaires * personnes dans le besoin",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "potagers-communautaires-de-repentig-rep",
     "name": "Potagers Communautaires de Repentigny (les)",
     "category": "food",
@@ -42856,6 +51732,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 17h00, vendredi et samedi 9h00 à 12h00"
   },
   {
+    "id": "premiers-secours-ca",
+    "name": "Premiers secours",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Prosper",
+    "province": "QC",
+    "phone": "581-573-8630, Maison des jeunes prend le message",
+    "description": "Services de dépannage alimentaire et orientation * aide alimentaire : bons d'achat et Moisson Beauce * paniers de Noël * référence aux cuisines collectives | Clientèle : Personnes à faible revenu",
+    "address": "Saint-Prosper, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "drum-garde-princesses-et-dragons",
     "name": "Princesses et Dragons",
     "category": "family",
@@ -42866,6 +51754,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Milieu familial (subventionné) à Drummondville. Tarif : 9.65 $/jour. Inscriptions via La Place 0-5 (laplace0-5.com).",
     "address": "234, rue Moisan, Drummondville QC J2C 1W8",
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
+  },
+  {
+    "id": "prisme-h-bergement-ca",
+    "name": "Prisme hébergement",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Beauceville",
+    "province": "QC",
+    "phone": "418-774-4406",
+    "description": "Logements de transition pour personnes ayant des troubles de santé mentale Capacité d'accueil : *704 boulevard Renault,15 chambres contractuelles *702 boulevard Renault, 4 chambres *702-A 1 appartemen ... [Plus] | Clientèle : Personnes ayant des troubles de santé mentale référées par un intervenant du Centre intégré de santé et de services sociaux (CISSS) de Chaudière-Appalaches | Âges : 18 an(s) et plus",
+    "address": "702 Bd Renault, Beauceville, QC G5X 1L8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-mf-quebec-prisme",
@@ -42986,6 +51886,55 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "programme-des-b-n-voles-en-imp-t-ca",
+    "name": "Programme des bénévoles en impôt - Club Lions Sainte-Marie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide à la préparation de déclarations de revenus simples (rapport d'impôt) par des bénévoles (déclarations fédérale et provinciale) | Clientèle : Personnes à faible revenu",
+    "website": "http://www.clublionssainte-marie.org/",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "programme-des-b-n-voles-en-imp-t-ca-2",
+    "name": "Programme des bénévoles en impôt - Saint-Jean-Port-Joli",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-9731",
+    "description": "Aide à la préparation de déclarations de revenus simples (rapport d'impôt) par des bénévoles (déclarations fédérale et provinciale) | Clientèle : Personnes à faible revenu ayant une situation financière simple",
+    "address": "Saint-Jean-Port-Joli, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "programme-des-b-n-voles-en-imp-t-ca-3",
+    "name": "Programme des bénévoles en impôt - Saint-Joseph-de-Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-397-4173",
+    "description": "Aide à la préparation de déclarations de revenus simples (rapport d'impôt) par des bénévoles (déclarations fédérale et provinciale) | Clientèle : Personnes à faible revenu (personne seule, moins de 32 000 $/an * couple, moins de 40 000 $/an) ayant une situation financière simple (excluant divorce, décès, faillite ou revenus de 2 000 $ et plus)",
+    "address": "Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "programme-des-b-n-voles-en-imp-t-ca-4",
+    "name": "Programme des bénévoles en impôt - Saint-Rédempteur",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "Service d'entraide de Saint-Rédempteur 418-831-1451",
+    "description": "Aide à la préparation et transmission des déclarations de revenus simples (rapport d'impôt fédéral et provincial) par des bénévoles | Clientèle : Personnes ayant une situation financière simple dont le revenu familial est inférieur à 45000 $ ou un revenu personnel inférieur à 35000 $",
+    "address": "Saint-Rédempteur, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "projet-communautaire-de-pierrefonds-pfd",
     "name": "Projet Communautaire de Pierrefonds",
     "category": "social",
@@ -43101,6 +52050,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 16h00"
   },
   {
+    "id": "pr-sence-lotbini-re-ca",
+    "name": "Présence Lotbinière",
+    "category": "family",
+    "subcategory": "",
+    "city": "Laurier-Station",
+    "province": "QC",
+    "phone": "581-983-9294",
+    "description": "Accompagnement de la personne gravement malade (soins palliatifs) ou au dernier stade de sa vie et soutien à sa famille * répit aux proches aidants à domicile * soutien de groupe ou individuel pour le ... [Plus] | Âges : 14 an(s) et plus",
+    "website": "http://presencelotbiniere.com",
+    "address": "388 A Rue St Joseph, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "pr-vention-des-d-pendances-l-arc-mtg",
     "name": "Prévention Des Dépendances L'Arc-En-Ciel",
     "category": "mentalHealth",
@@ -43166,6 +52128,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30, activités: variable, parfois en soirée"
   },
   {
+    "id": "qu-bec-province-d-put-s-provinci-ca",
+    "name": "Québec (Province). Députés provinciaux de la région de la Chaudière-Appalaches, Informations générales",
+    "category": "health",
+    "subcategory": "",
+    "city": "Chaudière-Appalaches",
+    "province": "QC",
+    "phone": "418-643-7239",
+    "description": "Beauce-Nord Luc Provençal (CAQ) * Président de la Commission de la santé et des services sociaux * courriel luc.provencal.beno@assnat.qc.ca Bureau de circonscription * 452, boulevard Vachon Nord, Sai ... [Plus]",
+    "website": "http://www.assnat.qc.ca",
+    "address": "Chaudière-Appalaches, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qu-bec-province-d-put-s-provinci-cn",
     "name": "Québec (Province). Députés provinciaux de la région de la Côte-Nord, Informations générales",
     "category": "employment",
@@ -43176,6 +52151,32 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Duplessis Kateri Champagne Jourdain (CAQ) Ministre de l’Emploi Ministre responsable de la région de la Côte-Nord Bureau de circonscription * 421, avenue Arnaud, bureau 202, Sept-Îles, G4R 3B3 * 418-9 ... [Plus]",
     "website": "http://www.assnat.qc.ca",
     "address": "Côte-Nord, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-centre-communautaire-juri-ca",
+    "name": "Québec. Centre communautaire juridique de l'Estrie, Bureau d'aide juridique de Disraeli",
+    "category": "social",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "418-338-2133",
+    "description": "Aide juridique aux personnes à faible revenu du territoire Les services d'aide juridique couverts par le régime sont rendus aux personnes financièrement admissibles, gratuitement ou moyennant le verse ... [Plus] | Clientèle : Personnes à faible revenu",
+    "website": "http://aidejuridiqueestrie.ca",
+    "address": "Disraeli, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-centre-communautaire-juri-ca-2",
+    "name": "Québec. Centre communautaire juridique de l'Estrie, Bureau d'aide juridique de Thetford Mines",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-2133",
+    "description": "Aide juridique aux personnes à faible revenu du territoire Les services d'aide juridique couverts par le régime sont rendus aux personnes financièrement admissibles, gratuitement ou moyennant le verse ... [Plus] | Clientèle : Personnes à faible revenu",
+    "website": "http://aidejuridiqueestrie.ca",
+    "address": "57 Rue Notre Dame O, Thetford Mines, QC G6G 1J4, Canada",
     "hours": "Voir site web"
   },
   {
@@ -43257,6 +52258,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qu-bec-commission-des-normes-de--ca",
+    "name": "Québec. Commission des normes, de l'équité, de la santé et de la sécurité du travail, Direction régionale de la Chaudière-Appalaches, Santé et sécurité du travail",
+    "category": "health",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "",
+    "description": "Direction régionale de la santé et sécurité au travail Prévention et inspection * soutien aux travailleurs et aux employeurs dans leurs démarches pour éliminer à la source les dangers présents dans le ... [Plus]",
+    "website": "http://www.cnesst.gouv.qc.ca",
+    "address": "St-Romuald, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qu-bec-commission-des-normes-de--cn",
     "name": "Québec. Commission des normes, de l'équité, de la santé et de la sécurité du travail, Direction régionale de la Côte-Nord, Santé et sécurité du travail",
     "category": "health",
@@ -43322,6 +52336,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qu-bec-minist-re-de-l-emploi-et--ca",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Lac-Etchemin",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-6801",
+    "description": "Guichet multiservice des services gouvernementaux provinciaux offerts aux individus et aux entreprises offrant un accès simplifié aux services publics * renseignements généraux sur les programmes et s ... [Plus]",
+    "website": "https://www.quebec.ca/services-quebec",
+    "address": "1010 Rue Borne, Québec, QC G1N 1L9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-l-emploi-et--ca-2",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Lévis",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-835-1500",
+    "description": "Guichet multiservice des services gouvernementaux provinciaux offerts aux individus et aux entreprises offrant un accès simplifié aux services publics * renseignements généraux sur les programmes et s ... [Plus]",
+    "website": "http://www.quebec.ca/services-quebec",
+    "address": "1010 Rue Borne, Québec, QC G1N 1L9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-l-emploi-et--ca-3",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Montmagny",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-0163",
+    "description": "Guichet multiservice des services gouvernementaux provinciaux offerts aux individus et aux entreprises offrant un accès simplifié aux services publics * renseignements généraux sur les programmes et s ... [Plus]",
+    "website": "http://www.quebec.ca/services-quebec",
+    "address": "1010 Rue Borne, Québec, QC G1N 1L9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qu-bec-minist-re-de-l-emploi-et--cn-4",
     "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Port-Cartier",
     "category": "employment",
@@ -43332,6 +52385,71 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Guichet multiservice du gouvernement provincial offert aux individus et aux entreprises permettant un accès simplifié aux services publics * renseignements généraux sur les programmes et services gouv ... [Plus]",
     "website": "http://www.quebec.ca/services-quebec",
     "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-l-emploi-et--ca-6",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Saint-Georges",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-9711",
+    "description": "Guichet multiservice des services gouvernementaux provinciaux offerts aux individus et aux entreprises offrant un accès simplifié aux services publics * renseignements généraux sur les programmes et s ... [Plus]",
+    "website": "https://www.quebec.ca/services-quebec",
+    "address": "Saint-Georges, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-l-emploi-et--ca-7",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Saint-Jean-Port-Joli",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-1806",
+    "description": "Guichet multiservice des services gouvernementaux provinciaux offerts aux individus et aux entreprises offrant un accès simplifié aux services publics * renseignements généraux sur les programmes et s ... [Plus]",
+    "website": "http://www.quebec.ca/services-quebec",
+    "address": "Saint-Jean-Port-Joli, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-l-emploi-et--ca-8",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Saint-Lazare",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-883-3307",
+    "description": "Guichet multiservice des services gouvernementaux provinciaux offerts aux individus et aux entreprises offrant un accès simplifié aux services publics * renseignements généraux sur les programmes et s ... [Plus]",
+    "website": "http://www.quebec.ca/services-quebec",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-l-emploi-et--ca-4",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Sainte-Croix",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sainte-Croix",
+    "province": "QC",
+    "phone": "418-926-3580",
+    "description": "Guichet multiservice des services gouvernementaux provinciaux offerts aux individus et aux entreprises offrant un accès simplifié aux services publics * renseignements généraux sur les programmes et s ... [Plus]",
+    "website": "http://www.quebec.ca/services-quebec",
+    "address": "St-Croix, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-de-l-emploi-et--ca-5",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Sainte-Marie",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-386-8784",
+    "description": "Guichet multiservice des services gouvernementaux provinciaux offerts aux individus et aux entreprises offrant un accès simplifié aux services publics * renseignements généraux sur les programmes et s ... [Plus]",
+    "website": "http://www.quebec.ca/services-quebec",
+    "address": "1010 Rue Borne, Québec, QC G1N 1L9, Canada",
     "hours": "Voir site web"
   },
   {
@@ -43348,6 +52466,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qu-bec-minist-re-de-l-emploi-et--ca-9",
+    "name": "Québec. Ministère de l'Emploi et de la Solidarité sociale, Services Québec - Bureau régional de Thetford Mines",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-334-2500",
+    "description": "Guichet multiservice des services gouvernementaux provinciaux offerts aux individus et aux entreprises offrant un accès simplifié aux services publics * renseignements généraux sur les programmes et s ... [Plus]",
+    "website": "https://www.quebec.ca/services-quebec",
+    "address": "1010 Rue Borne, Québec, QC G1N 1L9, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qu-bec-minist-re-de-la-s-curit-p-cn",
     "name": "Québec. Ministère de la Sécurité publique, Direction régionale de la sécurité civile et de la sécurité incendie - Côte-Nord",
     "category": "social",
@@ -43358,6 +52489,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Promotion des dispositions de la Loi sur la sécurité civile et de la Loi sur la sécurité incendie auprès des municipalités et des partenaires * soutien aux municipalités pour l'élaboration ou la bonif ... [Plus]",
     "website": "http://www.securitepublique.gouv.qc.ca/securite-civile.html",
     "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-minist-re-des-transports--ca",
+    "name": "Québec. Ministère des Transports et de la Mobilité durable, Direction générale de la Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-7978",
+    "description": "Assure sur tout le territoire, la mobilité des personnes et des marchandises par des systèmes de transport efficaces et sécuritaires qui contribuent au développement durable du Québec Québec 511 Info ... [Plus]",
+    "website": "http://www.transports.gouv.qc.ca/fr/nous-joindre/directions-territoriales/Pages/chaudiere-appalaches.aspx",
+    "address": "St-Romuald, Levis, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -43426,6 +52570,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-ca",
+    "name": "Québec. Société de l'assurance automobile du Québec, Centre de services de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-643-7620",
+    "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "44 Rte du Président-Kennedy, Lévis, QC G6V 0P7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-ca-2",
+    "name": "Québec. Société de l'assurance automobile du Québec, Centre de services de Montmagny",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "",
+    "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "145 Bd Taché O, Montmagny, QC G5V 4P5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qu-bec-soci-t-de-l-assurance-aut-cn-4",
     "name": "Québec. Société de l'assurance automobile du Québec, Centre de services de Port-Cartier",
     "category": "social",
@@ -43436,6 +52606,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
     "website": "http://www.saaq.gouv.qc.ca",
     "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-ca-3",
+    "name": "Québec. Société de l'assurance automobile du Québec, Centre de services de Saint-Joseph-de-Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "",
+    "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "local 103, 1021 Av. du Palais, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -43452,6 +52635,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-ca-4",
+    "name": "Québec. Société de l'assurance automobile du Québec, Centre de services de Thetford Mines",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-2106",
+    "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "222 Bd Frontenac O, Thetford Mines, QC G6G 6N7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qu-bec-soci-t-de-l-assurance-aut-cn-6",
     "name": "Québec. Société de l'assurance automobile du Québec, Centre de services du Havre-Saint-Pierre",
     "category": "social",
@@ -43462,6 +52658,97 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Centre de services offrant l'ensemble des services de la Société Permis de conduire * délivrance de permis de conduire * état dossier de conduite * examen pratique véhicule de promenade * examen prati ... [Plus]",
     "website": "http://www.saaq.gouv.qc.ca",
     "address": "843 Bd de l'Escale, Havre-Saint-Pierre, QC G0G 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-ca-11",
+    "name": "Québec. Société de l'assurance automobile du Québec, Point de service Disraeli",
+    "category": "social",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "418-449-1717",
+    "description": "Mandataire privé de la Société Permis de conduire * prise de photo * remplacement ou annulation de permis de conduire * renouvellement de permis de conduire * renouvellement de permis d'apprenti condu ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "8306 QC-112, Disraeli, QC G0N 1E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-ca-5",
+    "name": "Québec. Société de l'assurance automobile du Québec, Point de service de la Caisse Desjardins du Sud de L'Islet et des Hautes-Terres",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Pamphile",
+    "province": "QC",
+    "phone": "418-356-3336 poste 241",
+    "description": "Mandataire privé de la Société Permis de conduire * prise de photo * remplacement ou annulation de permis de conduire * renouvellement de permis de conduire * renouvellement de permis d'apprenti condu ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "112 Rue Principale, Saint-Pamphile, QC G0R 3X0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-ca-6",
+    "name": "Québec. Société de l'assurance automobile du Québec, Point de service de la Corporation municipale de Sainte-Claire",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Claire",
+    "province": "QC",
+    "phone": "418-883-2290",
+    "description": "Mandataire privé de la Société Permis de conduire * prise de photo * remplacement ou annulation de permis de conduire * renouvellement de permis de conduire * renouvellement de permis d'apprenti condu ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "Sainte-Claire, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-ca-7",
+    "name": "Québec. Société de l'assurance automobile du Québec, Point de service de la MRC de La Nouvelle-Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-3444",
+    "description": "Mandataire privé de la Société Permis de conduire * prise de photo * remplacement ou annulation de permis de conduire * renouvellement de permis de conduire * renouvellement de permis d'apprenti condu ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "280 Bd Vachon N, Sainte-Marie, QC G6E 0H2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-ca-8",
+    "name": "Québec. Société de l'assurance automobile du Québec, Point de service de la MRC des Etchemins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-5252",
+    "description": "Mandataire privé de la Société Permis de conduire * prise de photo * remplacement ou annulation de permis de conduire * renouvellement de permis de conduire * renouvellement de permis d'apprenti condu ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "223 2e Avenue, Lac-Etchemin, QC G0R 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-ca-9",
+    "name": "Québec. Société de l'assurance automobile du Québec, Point de service de la municipalité de Saint-Apollinaire",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "418-881-7227",
+    "description": "Mandataire privé de la Société Permis de conduire * prise de photo * remplacement ou annulation de permis de conduire * renouvellement de permis de conduire * renouvellement de permis d'apprenti condu ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "11 R.Industrielle, Saint-Apollinaire, QC G0S 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-soci-t-de-l-assurance-aut-ca-10",
+    "name": "Québec. Société de l'assurance automobile du Québec, Point de service de la municipalité de Saint-Évariste-de-Forsyth",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Évariste-de-Forsyth",
+    "province": "QC",
+    "phone": "418-459-6113",
+    "description": "Mandataire privé de la Société Permis de conduire * prise de photo * remplacement ou annulation de permis de conduire * renouvellement de permis de conduire * renouvellement de permis d'apprenti condu ... [Plus]",
+    "website": "http://www.saaq.gouv.qc.ca",
+    "address": "Saint-Évariste-de-Forsyth, QC G0M, Canada",
     "hours": "Voir site web"
   },
   {
@@ -43478,6 +52765,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "qu-bec-tribunal-administratif-du-ca",
+    "name": "Québec. Tribunal administratif du logement, Bureau de Saint-Joseph-de-Beauce",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "",
+    "description": "Tribunal spécialisé exerçant sa compétence en matière de bail résidentiel : décisions relatives aux litiges dont il est saisi dans le cadre d'une procédure simple et respectueuse des règles de justice ... [Plus] | Clientèle : Le grand public * locataires et propriétaires",
+    "website": "http://www.tal.gouv.qc.ca",
+    "address": "Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "qu-bec-tribunal-administratif-du-cn-2",
     "name": "Québec. Tribunal administratif du logement, Bureau de Sept-Îles",
     "category": "housing",
@@ -43488,6 +52788,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Tribunal spécialisé exerçant sa compétence en matière de bail résidentiel : décisions relatives aux litiges dont il est saisi dans le cadre d'une procédure simple et respectueuse des règles de justice ... [Plus]",
     "website": "http://www.tal.gouv.qc.ca",
     "address": "456 Av. Arnaud, Sept-Îles, QC G4R 3B1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "qu-bec-tribunal-administratif-du-ca-2",
+    "name": "Québec. Tribunal administratif du logement, Bureau de Thetford Mines",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "",
+    "description": "Tribunal spécialisé exerçant sa compétence en matière de bail résidentiel : décisions relatives aux litiges dont il est saisi dans le cadre d'une procédure simple et respectueuse des règles de justice ... [Plus] | Clientèle : Le grand public * locataires et propriétaires",
+    "website": "http://www.tal.gouv.qc.ca",
+    "address": "693 Rue Saint-Alphonse N, Thetford Mines, QC G6G 3X3, Canada",
     "hours": "Voir site web"
   },
   {
@@ -43652,6 +52965,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "radio-bellechasse-etchemins-pass-ca",
+    "name": "Radio Bellechasse - Etchemins, Passion FM",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-3737",
+    "description": "Station de radio communautaire d'information locale et régionale * émissions de divertissement, surtout musicales * diffusion et publication sur Internet des activités des organismes membres Studio sa ... [Plus] | Clientèle : Radio satellite, Radio Bellechasse - Etchemins 418-243-3747",
+    "website": "http://www.passion-fm.com",
+    "address": "1540 QC-277, Lac-Etchemin, QC G0R 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "radio-communautaire-ckna-fm-104--cn",
     "name": "Radio communautaire CKNA-FM 104,1",
     "category": "social",
@@ -43730,6 +53056,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi 13h00 à 16h00, mardi et mercredi 9h00 à 12h00 et 13h00 à 16h00, jeudi 11h00 à 17h00"
   },
   {
+    "id": "rappel-groupe-d-entraide-de-pers-ca",
+    "name": "Rappel - Groupe d'entraide de personnes atteintes d'une maladie mentale",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-2025",
+    "description": "Dans le respect de ses limites et capacités, accueil la personne ayant un trouble de santé mentale pour lui offrir des services spécialisés afin qu'elle puisse reprendre le contrôle de sa vie * activi ... [Plus] | Clientèle : Adultes ayant un trouble de santé mentale | Âges : 18 an(s) et plus",
+    "website": "https://lerappel.org/",
+    "address": "2790 1re Avenue Clermont-Pépin, Saint-Georges, QC G5Y 3P3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "re-source-int-gration-out",
     "name": "Re-Source Intégration",
     "category": "employment",
@@ -43741,6 +53080,58 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.resourceintegration.ca",
     "address": "312, rue Saint-Louis, Gatineau, Outaouais, QC, J8P 8B3",
     "hours": "lundi au vendredi 8h00 à 16h30"
+  },
+  {
+    "id": "re-lait-montmagny-l-islet-le-ca",
+    "name": "Re-lait Montmagny-L'Islet (Le)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-291-8383",
+    "description": "Promotion de l'allaitement maternel en tant que mode d'alimentation de l'enfant et modèle de relation mère-enfant * valorisation et reconnaissance des rôles spécifiques de la mère et du père auprès de ... [Plus] | Clientèle : Femmes enceintes, leur conjoint et leurs proches * familles ayant un bébé ou un bambin | Âges : 54 an(s) et moins",
+    "website": "http://www.lerelait.com",
+    "address": "122 Rue Boulet, Montmagny, QC G5V 1Y1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "re-pers-ca",
+    "name": "Re.pers",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-7611",
+    "description": "Intégration sociale des personnes ayant un handicap, en complémentarité avec les ressources existantes * promotion de l'accessibilité des commerces et édifices publics * sensibilisation, représentatio ... [Plus] | Clientèle : Personnes ayant un handicap physique ou sensoriel * leur famille et proches",
+    "website": "http://www.repers.org",
+    "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "recherche-et-sauvetage-qu-bec-m--ca",
+    "name": "Recherche et sauvetage Québec-métro",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-834-4001",
+    "description": "Recherche et sauvetage de personnes portées disparues sur le territoire desservi * travail conjoint avec la Sûreté du Québec (SQ) et les corps policiers municipaux * partenaire de la sécurité civile r ... [Plus]",
+    "website": "http://www.rsqm.qc.ca",
+    "address": "1137 Rue Paul-Émile-Dubé, Saint-Romuald, QC G6W 0R1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "refuge-anni-maux-ca",
+    "name": "Refuge Anni-maux",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Saint-Bernard",
+    "province": "QC",
+    "phone": "418-475-1253",
+    "description": "Refuge pour chiens et chats de toutes races fonctionnant par le biais d'un réseau de familles d'accueil et de bénévoles",
+    "website": "http://www.anni-maux.com",
+    "address": "380 Rang St Marc, Saint-Bernard, QC G0S 2G0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "refuge-de-laval-le-lav",
@@ -43816,6 +53207,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.toronto.ca/community-people/housing-shelter/",
     "address": "Metro Hall, 55 John St, Toronto, ON M5V 3C6",
     "hours": "Hébergement d'urgence: accueil 24h/24, 7j/7."
+  },
+  {
+    "id": "regart-centre-d-artistes-en-art--ca",
+    "name": "Regart, centre d'artistes en art actuel",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-837-4099",
+    "description": "Centre d'artistes en art actuel offrant une programmation annuelle et disposant d'ateliers d'artistes L'Autre gare, 5995, rue Saint-Laurent, Lévis * galerie d'art alternative et disponible pour de la ... [Plus]",
+    "website": "http://www.centreregart.org",
+    "address": "6018 Rue Saint-Laurent, Lévis, QC G6V 3P4, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "sk-foodbank-regina",
@@ -43947,6 +53351,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "regroupement-des-jeunes-de-lotbi-ca",
+    "name": "Regroupement des jeunes de Lotbinière",
+    "category": "family",
+    "subcategory": "",
+    "city": "Dosquet",
+    "province": "QC",
+    "phone": "418-728-4665",
+    "description": "Administration des quatre Maisons des Jeunes de Lotbinière * lieux de rencontre animés pour les jeunes qui, au contact d'adultes significatifs, pourront devenir des citoyens actifs, critiques et respo ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "website": "https://www.rjlotbiniere.com/",
+    "address": "1 Rue Viger, Dosquet, QC G0S 1H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "regroupement-des-jeunes-de-lotbi-ca-4",
+    "name": "Regroupement des jeunes de Lotbinière, Maison de jeunes de Dosquet L'Opale",
+    "category": "family",
+    "subcategory": "",
+    "city": "Dosquet",
+    "province": "QC",
+    "phone": "418-728-4665",
+    "description": "Lieu de rencontre volontaire où les animateurs accueillent les adolescents dans un milieu de vie encadré et ouvert à leurs idées et projets * équipements de loisir : télévision, système de son, table ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.rjlotbiniere.com",
+    "address": "1 Rue Viger, Dosquet, QC G0S 1H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "regroupement-des-jeunes-de-lotbi-ca-2",
+    "name": "Regroupement des jeunes de Lotbinière, Maison de jeunes de Notre-Dame-du-Sacré-Cœur-d'Issoudun Le Saphir",
+    "category": "family",
+    "subcategory": "",
+    "city": "Notre-Dame-du-Sacré-Coeur-d'Issoudun",
+    "province": "QC",
+    "phone": "418-728-9196",
+    "description": "Lieu de rencontre volontaire où les animateurs accueillent les adolescents, dans un milieu de vie encadré et ouvert à leurs idées et projets * équipements de loisir * organisation et planification d'a ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.rjlotbiniere.com",
+    "address": "1 Rue Viger, Dosquet, QC G0S 1H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "regroupement-des-jeunes-de-lotbi-ca-5",
+    "name": "Regroupement des jeunes de Lotbinière, Maison de jeunes de Saint-Apollinaire L'Améthyste",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "418-728-4665 (Bureau situé à Dosquet)",
+    "description": "Lieu de rencontre volontaire où les animateurs accueillent les adolescents dans un milieu de vie encadré et ouvert à leurs idées et projets * équipements de loisirs : télévision, système de son, table ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "website": "https://www.rjlotbiniere.com/",
+    "address": "1 Rue Viger, Dosquet, QC G0S 1H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "regroupement-des-jeunes-de-lotbi-ca-3",
+    "name": "Regroupement des jeunes de Lotbinière, Maison de jeunes de Saint-Gilles L'Azur",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Gilles",
+    "province": "QC",
+    "phone": "418-888-4027",
+    "description": "Lieu de rencontre volontaire où les animateurs accueillent les adolescents dans un milieu de vie encadré et ouvert à leurs idées et projets * équipements de loisir : télévision, système de son, table ... [Plus] | Clientèle : Adolescents | Âges : 12 an(s) - 17 an(s)",
+    "website": "http://www.rjlotbiniere.com",
+    "address": "Saint-Gilles, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "regroupement-des-organismes-comm-cn",
     "name": "Regroupement des organismes communautaires et alternatifs en santé mentale Côte-Nord",
     "category": "mentalHealth",
@@ -43957,6 +53426,70 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Regroupement de ressources communautaires œuvrant en santé mentale en vue de favoriser la concertation, le développement, la solidarité des organismes communautaires et des ressources alternatives en ... [Plus] | Clientèle : Ressources communautaires membres du regroupement",
     "website": "http://rocasmcn.com",
     "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "regroupement-des-organismes-de-p-ca",
+    "name": "Regroupement des organismes de personnes handicapées Région Chaudière-Appalaches",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-837-2172",
+    "description": "Regroupement et concertation des organismes de promotion et de défense des droits des personnes vivant avec une limitation * soutien à leur famille * représentation auprès des instances dirigeantes et ... [Plus] | Clientèle : Personnes vivant avec une limitation telle que déficience intellectuelle, physique, sensorielle et trouble du spectre de l'autisme (TSA) * leur famille * associations de personnes handicapées",
+    "website": "http://www.rophrca.org",
+    "address": "5731 Rue Saint-Louis Bureau 104, Lévis, QC G6V 4E2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "regroupement-des-parents-et-amis-ca",
+    "name": "Regroupement des parents et amis de la personne atteinte d'une maladie mentale, Le Sillon",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-6464",
+    "description": "Organisme de soutien aux proches d'une personne vivant avec un trouble de santé mentale * intervention psychosociale individuelle, de couple, familiale ou multidisciplinaire * rencontre en personne, p ... [Plus] | Âges : 10 an(s) et plus",
+    "website": "http://www.lesillon.com",
+    "address": "477 90e Rue, Saint-Georges, QC G5Y 5Y2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "regroupement-des-personnes-aidan-ca",
+    "name": "Regroupement des personnes aidantes de Lotbinière",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Flavien",
+    "province": "QC",
+    "phone": "418-728-2663",
+    "description": "Aide à la qualité de vie des proches aidants qui soutiennent un membre de leur famille ou un proche ayant une limitation physique ou une déficience intellectuelle affectant son autonomie * référence p ... [Plus] | Clientèle : Personnes aidantes prenant soin d'un proche peu importe la nature de la maladie et l'âge de la personne aidée, à domicile ou en hébergement",
+    "website": "http://aidants-lotbiniere.org",
+    "address": "1000 Route Saint-Joseph, Saint-Flavien, QC G0S 2M0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "regroupement-des-personnes-avec--ca",
+    "name": "Regroupement des personnes avec surdité de la communauté métropolitaine de Québec",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "",
+    "description": "Amélioration de la vie des personnes Sourdes * promotion, sensibilisation et défense des droits des personnes sourdes * aide aux personnes sourdes dans l'expression de leurs besoins et revendications ... [Plus] | Clientèle : Adultes et aînés Sourds * Comité 50 ans et plus pour aînés Sourds | Âges : 18 an(s) et plus",
+    "address": "400 Bd Jean-Lesage, Québec, QC G1K 8W1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "regroupement-des-proches-aidants-ca",
+    "name": "Regroupement des proches aidants de Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-883-1587 poste 208",
+    "description": "Ressources de soutien et activités pour améliorer la qualité de vie et le bien-être des personnes proches aidantes * promotion et défense de leurs droits * écoute et accompagnement individuel * groupe ... [Plus] | Clientèle : Le grand public * proches aidants",
+    "website": "http://www.rpab.ca",
+    "address": "110-B Rue Principale, Saint-Lazare-de-Bellechasse, QC G0R 3J0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -43971,6 +53504,18 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.rmjq.org",
     "address": "600, rue Fullum, bureau 6.130, Montréal, QC H2K 4L1",
     "hours": "Lun-ven 8h30-16h30. Défense des droits et services spécialisés."
+  },
+  {
+    "id": "regroupement-social-saint-george-ca",
+    "name": "Regroupement social Saint-Georges",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-3578",
+    "description": "Lieu de rencontre et de socialisation dans un environnement sans alcool ni drogue * billard, jeux de cartes * ateliers * soirées de danse | Clientèle : Personnes ayant arrêté de consommer * le grand public | Âges : 50 an(s) et plus",
+    "address": "11020 1re Avenue, Saint-Georges, QC G5Y 5S3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "rehabex-campbell-s-bay-out",
@@ -44259,6 +53804,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "librairie et centre de dons: lundi au vendredi 9h00 à 17h00, samedi et dimanche 8h00 à 18h00"
   },
   {
+    "id": "renaissance-qu-bec-fripe-plaza-c-ca",
+    "name": "Renaissance Québec, Fripe Plaza Charles-A.-Cadieux",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-8889",
+    "description": "Récupération et vente d'articles usagés et revalorisés * insertion à l'emploi Vente d'articles de seconde main * vêtements * accessoires * petits meubles * antiquités * articles ménagers Formulaire po ... [Plus]",
+    "address": "Rue Charles-A.- Cadieux, Levis, QC G6V, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "repas-du-passant-le-mtg",
     "name": "Repas Du Passant (Le)",
     "category": "food",
@@ -44477,6 +54034,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "ressourcerie-beauce-sartigan-ca",
+    "name": "Ressourcerie Beauce-Sartigan",
+    "category": "social",
+    "subcategory": "",
+    "city": "La Guadeloupe",
+    "province": "QC",
+    "phone": "418-459-3981",
+    "description": "Récupération et revente de surplus domestiques dans une perspective de préservation de l'environnement * récupération, recyclage, vente et revalorisation de vêtements, jouets, vaisselle, meubles, mate ... [Plus] | Clientèle : Personnes à faible revenu * le grand public",
+    "website": "http://www.ressourceriebeauce.com",
+    "address": "266 14e Avenue, La Guadeloupe, QC G6G 0L1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "ressourcerie-bellechasse-ca",
+    "name": "Ressourcerie Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Léon-de-Standon",
+    "province": "QC",
+    "phone": "418-642-5627",
+    "description": "Récupération, revalorisation et revente des matières résiduelles, meubles, vêtements et électroménagers * vente de meubles, électroménagers et vêtements usagés * cueillette et livraison de meubles à d ... [Plus] | Clientèle : Personnes à faible revenu * personnes en démarche d'intégration à l'emploi * le grand public",
+    "website": "http://ressourceriebellechasse.com",
+    "address": "491 277 Rte, Saint-Léon-de-Standon, QC G0R 4L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "ressourcerie-de-lotbini-re-ca",
+    "name": "Ressourcerie de Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Laurier-Station",
+    "province": "QC",
+    "phone": "418-728-1900",
+    "description": "Entreprise régionale d'économie sociale * réduction, la réutilisation et le recyclage des produits textiles et domestiques Services offerts * ressourcerie (vente de produits recyclés à bas prix) : vêt ... [Plus]",
+    "website": "http://www.ressourcerielotbiniere.ca",
+    "address": "248 Rue du Parc, Laurier-Station, QC G0S 1N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "ressources-communautaires-omega-drv",
     "name": "Ressources Communautaires Omega",
     "category": "employment",
@@ -44488,6 +54084,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://omegacenter.org",
     "address": "600, avenue de l'Église, Dorval, Montréal, QC, H9S 1R3",
     "hours": "administration et centre de jour: lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "ressources-naissances-ca",
+    "name": "Ressources-Naissances",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-834-8085",
+    "description": "Services et activités accessibles à tous, durant la grossesse et la première année de l'enfant favorisant les échanges entre les familles, l'entraide et l'implication communautaire * cafés-rencontres ... [Plus] | Clientèle : Femmes enceinte, leurs partenaires * familles avec bébé",
+    "website": "http://www.ressources-naissances.com",
+    "address": "2160 Bd Guillaume-Couture #201, Lévis, QC G6W 2S6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "resto-plateau-mtl",
@@ -44747,6 +54356,149 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.associationlarosebleue.com",
     "address": "2904, rue Dupras, Mascouche, Lanaudière, QC, J7K 1T2",
     "hours": "lundi au vendredi 8h30 à 16h00"
+  },
+  {
+    "id": "r-hab-ca",
+    "name": "RÉHAB",
+    "category": "social",
+    "subcategory": "",
+    "city": "Vallée-Jonction",
+    "province": "QC",
+    "phone": "",
+    "description": "Prévention de la récidive et la délinquance * promotion et soutien à la réhabilitation et la réinsertion sociale de la clientèle judiciarisée * 48 programmes répartis dans douze centres de services en ... [Plus] | Clientèle : Adultes judiciarisés et leurs proches | Âges : 18 an(s) et plus",
+    "website": "http://www.rehabqc.com",
+    "address": "294 Rue Bisson, Vallée-Jonction, QC G0S 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-hab-centre-r-sidentiel-communa-ca-3",
+    "name": "RÉHAB, Centre résidentiel communautaire Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Vallée-Jonction",
+    "province": "QC",
+    "phone": "418-253-6764",
+    "description": "Aide à la réintégration dans la communauté des hommes judiciarisés, par l'entremise d'une maison de transition et de programmes, en intervenant au niveau des différents facteurs qui contribuent à leur ... [Plus] | Clientèle : Hommes judiciarisés, en attente de sentence ou non-judiciarisés | Âges : 18 an(s) et plus",
+    "website": "http://www.rehabqc.com/programmes/crc-beauce",
+    "address": "294 Rue Bisson, Vallée-Jonction, QC G0S 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-hab-centre-r-sidentiel-communa-ca",
+    "name": "RÉHAB, Centre résidentiel communautaire Beauce, Accès-emploi",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Vallée-Jonction",
+    "province": "QC",
+    "phone": "",
+    "description": "Aide et motivation aux adultes possédant ou ayant possédé un dossier judiciaire à effectuer des démarches d'emploi soutenues et structurées * aide à la personne afin de mieux se connaître, gérer adéqu ... [Plus] | Clientèle : Hommes et femmes chercheurs d'emploi et possédant un casier judiciaire | Âges : 18 an(s) et plus",
+    "website": "http://www.rehabqc.com/programmes/acces-emploi",
+    "address": "294 Rue Bisson, Vallée-Jonction, QC G0S 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-hab-centre-r-sidentiel-communa-ca-2",
+    "name": "RÉHAB, Centre résidentiel communautaire Beauce, Azimut (L')",
+    "category": "social",
+    "subcategory": "",
+    "city": "Vallée-Jonction",
+    "province": "QC",
+    "phone": "418-253-6764",
+    "description": "Aide professionnelle permettant aux participants de développer une motivation pour changer leur mode de vie * entrevue d'accueil * identification du niveau de la problématique de consommation * atelie ... [Plus] | Clientèle : Hommes et femmes adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.rehabqc.com/programmes/lazimut",
+    "address": "294 Rue Bisson, Vallée-Jonction, QC G0S 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-hab-centre-r-sidentiel-communa-ca-4",
+    "name": "RÉHAB, Centre résidentiel communautaire Beauce, Nouveau jour, pour hommes non judiciarisés ou en attente de sentence",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Vallée-Jonction",
+    "province": "QC",
+    "phone": "418-253-6764",
+    "description": "Service de thérapie interne et hébergement temporaire pour les hommes ayant un problème de consommation | Clientèle : Hommes ayant un problème de consommation, non judiciarisés ou en attente de sentence | Âges : 18 an(s) et plus",
+    "website": "http://www.rehabqc.com/programmes/crc-beauce/nouveau-jour",
+    "address": "294 Rue Bisson, Vallée-Jonction, QC G0S 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-hab-centre-r-sidentiel-communa-ca-5",
+    "name": "RÉHAB, Centre résidentiel communautaire Beauce, Programme Arna-cœur",
+    "category": "social",
+    "subcategory": "",
+    "city": "Vallée-Jonction",
+    "province": "QC",
+    "phone": "418-253-6764",
+    "description": "Programme spécialisé dans la cessation des conduites manipulatoires et des comportements menant au vol et à la fraude * soutien à l'insertion sociale des participants * ateliers thématiques en groupe ... [Plus] | Clientèle : Hommes adultes possédant un casier judiciaire et présentant une dynamique délinquante axée sur des comportements de fraude, de vol ou de jeux d’hasard et d’argent | Âges : 18 an(s) et plus",
+    "website": "http://www.rehabqc.com/programmes/crc-beauce/arna-coeur",
+    "address": "294 Rue Bisson, Vallée-Jonction, QC G0S 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-hab-centre-r-sidentiel-communa-ca-6",
+    "name": "RÉHAB, Centre résidentiel communautaire Beauce, Programme Réinsertion sociale",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Vallée-Jonction",
+    "province": "QC",
+    "phone": "418-253-6764",
+    "description": "Soutien assidu et intervention axée sur l'acquisition d'habiletés psychosociales de base afin de permettre la réintégration des hommes judiciarisés dans la société * soutien au retour sur le marché du ... [Plus] | Clientèle : Hommes judiciarisés | Âges : 18 an(s) et plus",
+    "website": "http://www.rehabqc.com/programmes/crc-beauce/reinsertion-sociale",
+    "address": "294 Rue Bisson, Vallée-Jonction, QC G0S 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-hab-centre-r-sidentiel-communa-ca-7",
+    "name": "RÉHAB, Centre résidentiel communautaire Beauce, Programmes d'aide en toxicomanie Nouveau jour",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Vallée-Jonction",
+    "province": "QC",
+    "phone": "418-253-6764",
+    "description": "Service d'aide spécialisé en toxicomanie portant assistance aux hommes judiciarisés et non judiciarisés dans la résolution de leur problème de surconsommation d'intoxicants tels que alcool, drogues et ... [Plus] | Clientèle : Hommes judiciarisés, en attente de sentence ou non-judiciarisés * programme Action pour résidents inscrits au programme Nouveau jour * Hommes adultes présentant un problème de surconsommation d’intoxicants (alcool, drogues, médicaments). | Âges : 18 an(s) et plus",
+    "website": "http://www.rehabqc.com/programmes/crc-beauce/nouveau-jour",
+    "address": "294 Rue Bisson, Vallée-Jonction, QC G0S 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-hab-pavillon-l-entre-temps-ca",
+    "name": "RÉHAB, Pavillon L'Entre-Temps",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-253-6764 poste 300",
+    "description": "Dégrisement, désintoxication et hébergement temporaire en dépendance * soins alternatifs et dépannage en santé mentale * Capacité d'accueil 12 places | Âges : 18 an(s) et plus",
+    "website": "http://www.rehabqc.com/programmes/pavillon-lentre-temps",
+    "address": "6661 Rue Saint-Georges, Lévis, QC G6V 8P6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-hab-r-sidence-henri-dutil-ca",
+    "name": "RÉHAB, Résidence Henri Dutil",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-253-6764 poste 521",
+    "description": "Ressource intermédiaire pour adultes avec des problématiques de santé mentale Capacité d'hébergement 9 résidents | Clientèle : Adultes avec des problématiques de santé mentale | Âges : 18 an(s) et plus",
+    "website": "http://www.rehabqc.com/programmes/residence-henri-dutil/",
+    "address": "305 Rue de Saint-Romuald, Lévis, QC G6W 3H7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-cup-ration-frontenac-ca",
+    "name": "Récupération Frontenac",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-8551",
+    "description": "Centre de travail adapté pour personne ayant un handicap * aide à l'intégration des personnes ayant un handicap en milieu de travail * tri et traitement des matières recyclables * collecte commerciale ... [Plus]",
+    "website": "http://www.recuperationfrontenac.com",
+    "address": "217 Rue Monfette O, Thetford Mines, QC G6G 7Y3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "r-gie-intermunicipale-de-police--mtg",
@@ -45202,6 +54954,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Défense des droits et services spécialisés."
   },
   {
+    "id": "r-seau-d-entraide-des-appalaches-ca",
+    "name": "Réseau d'entraide des Appalaches",
+    "category": "food",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-2024",
+    "description": "Programmes de prévention, réinsertion sociale et services d'aide aux jeunes familles * accueil, information et référence * suivi et accompagnement * sécurité alimentaire : cuisines collectives et dépa ... [Plus] | Clientèle : Travailleurs de rue 418-814-9429 * 418-341-0699 * 418-332-8719",
+    "website": "http://reseauentraideappalaches.ca",
+    "address": "88 Rue Notre Dame O, Thetford Mines, QC G6G 1J3, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "reseau-des-proches-aidants-les-moul-msc",
     "name": "Réseau des Proches Aidants les Moulins",
     "category": "social",
@@ -45243,6 +55008,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "r-seau-des-groupes-de-femmes-cha-ca",
+    "name": "Réseau des groupes de femmes Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-831-7588",
+    "description": "Promotion de la défense collective des droits des femmes * réflexion, concertation et circulation d'information et d'action entre les groupes de femmes membres sur les questions mettant en jeu les int ... [Plus] | Clientèle : Femmes * groupes de femmes",
+    "website": "http://www.femmesca.com",
+    "address": "2150 Rte Lagueux #104, Saint-Nicolas, QC G7A 1A7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "r-seau-du-sport-tudiant-du-qu-be-cn",
     "name": "Réseau du sport étudiant du Québec Côte-Nord",
     "category": "health",
@@ -45268,6 +55046,19 @@ const __SERVICES_FROM_API: Service[] = [
     "address": "N/A — service téléphonique/en ligne",
     "hours": "Hébergement d'urgence: accueil 24h/24, 7j/7.",
     "isProvinceWide": true
+  },
+  {
+    "id": "r-seau-qu-b-cois-d-accompagnante-ca",
+    "name": "Réseau québécois d'accompagnantes à la naissance",
+    "category": "social",
+    "subcategory": "",
+    "city": "MRC de Lotbinière",
+    "province": "QC",
+    "phone": "",
+    "description": "Regroupement d'accompagnantes à la naissance mettant en réseau les savoirs et expériences de ses membres * promotion d'une expérience positive de la grossesse, de la naissance et des semaines qui suiv ... [Plus] | Clientèle : Femmes enceintes * nouvelles mamans (postnatal)",
+    "website": "http://www.naissance.ca",
+    "address": "Boul Laurier, Québec, QC G1V 2L2, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "r-seaux-mtg",
@@ -45333,6 +55124,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "r-sidence-charles-couillard-ca",
+    "name": "Résidence Charles Couillard",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Charles-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-887-6455",
+    "description": "Habitation pour aînés autonomes et semi-autonomes * chambres, studios et appartements 2 1/2 * salle communautaire, salle à manger, système d'appel d'urgence, téléphonie et Internet * assistance person ... [Plus] | Clientèle : Aînés autonomes et semi-autonomes | Âges : 70 an(s) et plus",
+    "address": "20 Av St-Georges, Saint-Charles-de-Bellechasse, QC G0R 2T0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "residence-claire-marchand-la-rep",
     "name": "Résidence Claire Marchand (la)",
     "category": "social",
@@ -45394,6 +55197,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Coopérative funéraire. | Territoire: Montérégie | Statut: entreprise commerciale (coopérative)",
     "website": "www.cfgrandmontreal.com",
     "address": "5000, boulevard Cousineau, Longueuil, Montérégie, QC, J3Y 7G5",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "r-sidence-interlude-ca",
+    "name": "Résidence Interlude",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-397-5264",
+    "description": "Résidence pour jeunes atteints de déficience intellectuelle offrant un milieu de vie familial * hébergement et repas * soins d'aide et d'assistance * développement des personnes en collaboration avec ... [Plus] | Clientèle : Adultes en déficiences intellectuelles",
+    "address": "Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -45792,18 +55607,6 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
-    "id": "re-pw1",
-    "name": "SCHL – Société canadienne d'hypothèques",
-    "category": "realestate",
-    "subcategory": "Programme gouvernemental",
-    "city": "Province de Québec",
-    "province": "QC",
-    "phone": "1-800-668-2642",
-    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
-    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
-    "isProvinceWide": true
-  },
-  {
     "id": "on-cmhc-on",
     "name": "SCHL – Société canadienne d'hypothèques",
     "category": "realestate",
@@ -45814,6 +55617,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "",
     "website": "https://www.cmhc-schl.gc.ca",
     "address": "N/A — service téléphonique/en ligne",
+    "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
+    "isProvinceWide": true
+  },
+  {
+    "id": "re-pw1",
+    "name": "SCHL – Société canadienne d'hypothèques",
+    "category": "realestate",
+    "subcategory": "Programme gouvernemental",
+    "city": "Province de Québec",
+    "province": "QC",
+    "phone": "1-800-668-2642",
+    "description": "Programme fédéral d'assurance hypothécaire (mise de fonds 5 %-19,99 %). Calculateurs de budget, guides du premier acheteur, aide aux familles vulnérables. Obligatoire si mise de fonds < 20 %.",
     "hours": "Lun-ven 9h-17h. Sam 9h-12h pour certains bureaux. En ligne 24h.",
     "isProvinceWide": true
   },
@@ -46122,6 +55937,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "sos-miss-dolittle-ca",
+    "name": "SOS miss Dolittle",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Henri",
+    "province": "QC",
+    "phone": "418-561-2484",
+    "description": "Centre d'aide pour animaux sauvages * gestion des animaux sauvages à Lévis * réhabilitation et remise en liberté d'animaux sauvages blessés ou orphelins * éducation de la population à l'importance de ... [Plus] | Clientèle : Bénévoles | Âges : 17 an(s) et plus",
+    "website": "https://sosmissdolittle.com/",
+    "address": "Refuge SOS Miss Dolittle, 175 Chem. du Bras, Saint-Henri, QC G0R 3E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "s-sos-violence-conjugale",
     "name": "SOS violence conjugale",
     "category": "social",
@@ -46135,6 +55963,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Service disponible 24h/24, 7j/7",
     "isUrgent": true,
     "isProvinceWide": true
+  },
+  {
+    "id": "sp-canada-section-chaudi-re-appa-ca",
+    "name": "SP Canada, Section Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-830-1515",
+    "description": "Aide aux personnes atteintes de la sclérose en plaques * séances d'information aux nouveaux diagnostiqués * écoute * cafés-rencontres * gym adaptée ou autres cours * gym sur ZOOM * documentation * con ... [Plus] | Clientèle : Personnes ayant la sclérose en plaques, leur famille et leurs proches aidants",
+    "website": "http://spcanada.ca/sp-canada-chaudière-appalaches",
+    "address": "245 Rue Soumande #202, Québec, QC G1M 3H6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "sp-canada-section-c-te-nord-cn",
@@ -46163,6 +56004,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "sacr-c-ur-de-j-sus-h-tel-de-vill-ca",
+    "name": "Sacré-Cœur-de-Jésus. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sacré-Coeur-de-Jésus",
+    "province": "QC",
+    "phone": "418-427-3447",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * sentiers pédestres MRC des Appalaches Circonscriptions électorales : * Lotbin ... [Plus]",
+    "website": "http://municipalites-du-quebec.com/sacre-coeur-de-jesus/",
+    "address": "Municipalité de paroisse de Sacré-Coeur-de-Jésus, QC G0N 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "saga-maison-des-jeunes-la-beaudr-out",
     "name": "Saga Maison Des Jeunes (La) - Beaudry",
     "category": "social",
@@ -46187,6 +56041,45 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Milieu de vie 24h/24. Admin: lun-ven 8h-16h. Visites: 8h-21h30"
   },
   {
+    "id": "saint-adalbert-h-tel-de-ville-ca",
+    "name": "Saint-Adalbert. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Adalbert",
+    "province": "QC",
+    "phone": "418-356-5271",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque municipale 418-356-5271",
+    "website": "http://www.saintadalbert.qc.ca",
+    "address": "Saint-Adalbert, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-adrien-d-irlande-h-tel-de--ca",
+    "name": "Saint-Adrien-d'Irlande. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Adrien-d'Irlande",
+    "province": "QC",
+    "phone": "418-335-2585",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * transports en commun en milieu urbain * assainissement des eaux usé ... [Plus]",
+    "website": "http://www.stadriendirlande.ca",
+    "address": "Municipalité de Saint-Adrien-d'Irlande, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-agapit-h-tel-de-ville-ca",
+    "name": "Saint-Agapit. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Agapit",
+    "province": "QC",
+    "phone": "418-888-4620",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, assainissement des eaux usées et autres La nature, l'étendue et l'exercice de ces r ... [Plus] | Clientèle : Bibliothèque 418-888-3961 poste 26050",
+    "website": "http://st-agapit.qc.ca",
+    "address": "Saint-Agapit, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "saint-alexandre-municipalit-mtg",
     "name": "Saint-Alexandre - Municipalité",
     "category": "family",
@@ -46198,6 +56091,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.saint-alexandre.ca",
     "address": "453, rue Saint-Denis, Saint-Alexandre, Montérégie, QC, J0J 1S0",
     "hours": "lundi au jeudi 9h00 à 12h00 et 13h00 à 16h30, vendredi 9h00 à 12h00"
+  },
+  {
+    "id": "saint-alfred-h-tel-de-ville-ca",
+    "name": "Saint-Alfred. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Alfred",
+    "province": "QC",
+    "phone": "418-774-2068",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.st-alfred.qc.ca",
+    "address": "Saint-Alfred, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "saint-andr-avellin-municipalit-out",
@@ -46213,6 +56119,97 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 9h00 à 12h00 et 14h00 à 17h00, vendredi 9h00 à 12h00"
   },
   {
+    "id": "saint-anselme-h-tel-de-ville-ca",
+    "name": "Saint-Anselme. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Anselme",
+    "province": "QC",
+    "phone": "418-885-4977",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, assainissement des eaux usées et autre La nature, l'étendue et l'exercice ... [Plus] | Clientèle : Bibliothèque 418-885-0024",
+    "website": "http://www.st-anselme.ca",
+    "address": "Saint-Anselme Aerodrome, Saint-Anselme, QC G0R 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-anselme-h-tel-de-ville-jou-ca",
+    "name": "Saint-Anselme. Hôtel de ville, Journal communautaire Le tour des ponts",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Anselme",
+    "province": "QC",
+    "phone": "418-885-4977",
+    "description": "Bulletin municipal d’informations publié et distribué gratuitement aux résidents de Saint-Anselme * actualité locale, agenda communautaire, affaires municipales, événements culturels et réalisations, ... [Plus]",
+    "website": "http://www.st-anselme.ca/decouvrir-st-anselme/le-tour-des-ponts",
+    "address": "134 Rue Principale, Saint-Anselme, QC G0R 2N0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-antoine-de-l-isle-aux-grue-ca",
+    "name": "Saint-Antoine-de-L'Isle-aux-Grues. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Antoine-de-L'Isle-aux-Grues",
+    "province": "QC",
+    "phone": "418-248-8060",
+    "description": "Services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs et autres MRC de Montmagny Circonscriptions électorales : * Côte-du-Sud (provinciale) * ... [Plus] | Clientèle : Bibliothèque 418-248-6923",
+    "website": "http://www.isle-aux-grues.com",
+    "address": "Saint-Antoine-de-l'Isle-aux-Grues, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-antoine-de-tilly-h-tel-de--ca",
+    "name": "Saint-Antoine-de-Tilly. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Antoine-de-Tilly",
+    "province": "QC",
+    "phone": "418-886-2441",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-886-2441, poste 110",
+    "website": "http://www.saintantoinedetilly.com",
+    "address": "Municipalité de Saint-Antoine-de-Tilly, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-apollinaire-h-tel-de-ville-ca",
+    "name": "Saint-Apollinaire. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "418-881-3996",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-881-2447",
+    "website": "http://www.st-apollinaire.com",
+    "address": "Saint-Apollinaire, QC G0S 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-apollinaire-h-tel-de-ville-ca-2",
+    "name": "Saint-Apollinaire. Hôtel de ville, Service d'incendie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "Caserne - Permis de brûlage et renseignements 418-808-9410",
+    "description": "Sauvegarde de la vie, protection des biens, préservation de l’environnement de la municipalité et des citoyens par la prévention, l’éducation du public, l’implication communautaire et par des interven ... [Plus]",
+    "website": "http://www.st-apollinaire.com",
+    "address": "39 Industrial St #101, Saint-Apollinaire, QC G0S 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-aubert-h-tel-de-ville-ca",
+    "name": "Saint-Aubert. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Aubert",
+    "province": "QC",
+    "phone": "418-598-3368",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, approvisionnement en eau potable, environnement et développement durable, développement communautaire et culturel, loisirs, ... [Plus] | Clientèle : Bibliothèque Charles-E.-Harpe 418-598-3623",
+    "website": "http://saint-aubert.net",
+    "address": "Municipalité de Saint-Aubert, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "saint-augustin-r-gion-09-h-tel-d-cn",
     "name": "Saint-Augustin (région 09). Hôtel de ville",
     "category": "social",
@@ -46223,6 +56220,58 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
     "website": "http://www.mamh.gouv.qc.ca/repertoire-des-municipalites/fiche/municipalite/98012/",
     "address": "Saint-Augustin-de-Desmaures, QC G3A 2E3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-benjamin-h-tel-de-ville-ca",
+    "name": "Saint-Benjamin. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Benjamin",
+    "province": "QC",
+    "phone": "418-594-8156",
+    "description": "Services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC Les Etchemins Circonscriptions électorales ... [Plus] | Clientèle : Bibliothèque 418-594-6068 * 418-594-5635",
+    "website": "http://www.st-benjamin.qc.ca",
+    "address": "Municipalité de Saint-Benjamin, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-beno-t-labre-h-tel-de-vill-ca",
+    "name": "Saint-Benoît-Labre. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Benoît-Labre",
+    "province": "QC",
+    "phone": "418-228-9250",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de Beauce-Sartigan Circ ... [Plus] | Clientèle : Bibliothèque 418-228-9202",
+    "website": "http://www.saintbenoitlabre.com",
+    "address": "Saint-Benoît-Labre, QC G0M, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-beno-t-labre-h-tel-de-vill-ca-2",
+    "name": "Saint-Benoît-Labre. Hôtel de ville, Cuisines collectives",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Benoît-Labre",
+    "province": "QC",
+    "phone": "418-228-9250 poste 107",
+    "description": "Cuisines collectives permettant de cuisiner en groupe * planification des recettes * achats et partage des coûts entre les participants * cuisine en groupe * évaluation des recettes | Âges : 14 an(s) et plus",
+    "website": "http://www.saintbenoitlabre.com",
+    "address": "Saint-Benoît-Labre, QC G0M, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-bernard-h-tel-de-ville-ca",
+    "name": "Saint-Bernard. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Bernard",
+    "province": "QC",
+    "phone": "418-475-6060",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-475-4669",
+    "website": "http://saint-bernard.quebec",
+    "address": "6 Rue de l'Eglise, Sainte-Thérèse, QC J7E 1W9, Canada",
     "hours": "Voir site web"
   },
   {
@@ -46237,6 +56286,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "stbruno.ca/citoyens/collectes/ecocentre",
     "address": "600, rue Sagard, Saint-Bruno-de-Montarville, Montérégie, QC, J3V 6B9",
     "hours": "lundi au vendredi 7h30 à 18h00, samedi et dimanche 10h00 à 17h00"
+  },
+  {
+    "id": "saint-camille-de-lellis-h-tel-de-ca",
+    "name": "Saint-Camille-de-Lellis. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Camille-de-Lellis",
+    "province": "QC",
+    "phone": "418-595-2233",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-595-2978",
+    "website": "http://www.saint-camille.net",
+    "address": "Municipalité de paroisse de Saint-Camille-de-Lellis, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-charles-de-bellechasse-h-t-ca",
+    "name": "Saint-Charles-de-Bellechasse. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Charles-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-887-6600",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-887-6561",
+    "website": "http://www.saint-charles.ca",
+    "address": "Saint-Charles, Saint-Charles-de-Bellechasse, QC G0R 0B8, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "saint-constant-cour-municipale-mtg",
@@ -46265,6 +56340,240 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi et samedi 8h00 à 11h45 et 13h00 à 16h45, vendredi 8h00 à 11h45"
   },
   {
+    "id": "saint-cyprien-h-tel-de-ville-ca",
+    "name": "Saint-Cyprien. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Cyprien (région 12)",
+    "province": "QC",
+    "phone": "418-383-5274",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, assainissement des eaux usées et autres La nature, l'étendue et l'exercice ... [Plus]",
+    "website": "http://www.st-cyprien.qc.ca",
+    "address": "Saint-Cyprien, QC G0L, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-cyrille-de-lessard-h-tel-d-ca",
+    "name": "Saint-Cyrille-de-Lessard. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Cyrille-de-Lessard",
+    "province": "QC",
+    "phone": "418-247-5186",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, loisirs, développement communautaire et culturel La nature, l'étendue et l'exercice de ces responsabilités varient selon les ... [Plus] | Clientèle : Bibliothèque 418-247-5505",
+    "website": "http://www.st-cyrille-de-lessard.ca",
+    "address": "Saint-Cyrille-de-Lessard, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-c-me-lini-re-h-tel-de-vill-ca",
+    "name": "Saint-Côme-Linière. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Côme-Linière",
+    "province": "QC",
+    "phone": "418-685-3825",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.stcomeliniere.com",
+    "address": "Saint-Côme-Linière, QC G0M, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-damase-de-l-islet-h-tel-de-ca",
+    "name": "Saint-Damase-de-L'Islet. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Damase-de-L'Islet",
+    "province": "QC",
+    "phone": "418-598-9370",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://saintdamasedelislet.com",
+    "address": "Saint-Damase-de-L'Islet, QC G0R 2X0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-damien-de-buckland-h-tel-d-ca",
+    "name": "Saint-Damien-de-Buckland. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Damien-de-Buckland",
+    "province": "QC",
+    "phone": "Bureau municipal et Bibliothèque 418-789-2526",
+    "description": "Responsabilités et services : * aménagement et urbanisme * voirie * enlèvement de la neige * protection incendie * développement * culture et loisirs * entretien municipal * réseau d’aqueduc et d’égou ... [Plus]",
+    "website": "http://www.saint-damien.com",
+    "address": "Municipalité de paroisse de Saint-Damien-de-Buckland, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-elz-ar-h-tel-de-ville-ca",
+    "name": "Saint-Elzéar. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Elzéar (région 12)",
+    "province": "QC",
+    "phone": "418-387-2534",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de La Nouvelle-Beauce C ... [Plus]",
+    "website": "http://st-elzear.ca",
+    "address": "597 Rue des Érables, Saint-Elzéar, QC G0S 2J2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-fabien-de-panet-h-tel-de-v-ca",
+    "name": "Saint-Fabien-de-Panet. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Fabien-de-Panet",
+    "province": "QC",
+    "phone": "418-249-4471",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-249-4417",
+    "website": "http://www.saintfabiendepanet.com",
+    "address": "83 QC-283, Saint-Fabien-de-Panet, QC G0R 2J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-flavien-h-tel-de-ville-ca",
+    "name": "Saint-Flavien. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Flavien",
+    "province": "QC",
+    "phone": "418-728-4190",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.st-flavien.com",
+    "address": "Saint-Flavien, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-fortunat-h-tel-de-ville-ca",
+    "name": "Saint-Fortunat. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Fortunat",
+    "province": "QC",
+    "phone": "819-344-5399",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.municipalitesaint-fortunat.net",
+    "address": "173 Rue Principale, Saint-Fortunat, QC G0P 1G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-fran-ois-de-la-rivi-re-du--ca",
+    "name": "Saint-François-de-la-Rivière-du-Sud. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-François-de-la-Rivière-du-Sud",
+    "province": "QC",
+    "phone": "418-259-7228",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de Montmagny Circonscri ... [Plus] | Clientèle : Bibliothèque Du Rocher 418-259-7626",
+    "website": "http://www.stfrancois.ca",
+    "address": "375 Chem. St François O, Saint-François-de-la-Rivière-du-Sud, QC G0R 3A0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-fr-d-ric-h-tel-de-ville-ca",
+    "name": "Saint-Frédéric. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Frédéric",
+    "province": "QC",
+    "phone": "418-426-3357",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.saint-frederic.com",
+    "address": "Saint-Frédéric Aerodrome, 2075 QC-112, Saint-Frédéric, QC G0N 1P0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-georges-h-tel-de-ville-ca",
+    "name": "Saint-Georges. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-5555",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-226-2271",
+    "website": "http://www.saint-georges.ca",
+    "address": "11700 Bd Lacroix, Saint-Georges, QC G5Y 1L3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-gervais-h-tel-de-ville-ca",
+    "name": "Saint-Gervais. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Gervais",
+    "province": "QC",
+    "phone": "418-887-6116",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-887-3628",
+    "website": "http://www.saint-gervais.ca",
+    "address": "Saint-Gervais, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-gilles-h-tel-de-ville-ca",
+    "name": "Saint-Gilles. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Gilles",
+    "province": "QC",
+    "phone": "418-888-3198",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, assainissement des eaux usées et autres La nature, l'étendue et l'exercice ... [Plus] | Clientèle : Centre récréatif 418 888-3863",
+    "website": "http://www.st-gilles.qc.ca",
+    "address": "Saint-Gilles, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-g-d-on-de-beauce-h-tel-de--ca",
+    "name": "Saint-Gédéon-de-Beauce. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Gédéon-de-Beauce",
+    "province": "QC",
+    "phone": "418-582-3341",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.st-gedeon-de-beauce.qc.ca",
+    "address": "Saint-Gédéon-de-Beauce, QC G0M, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-henri-h-tel-de-ville-ca",
+    "name": "Saint-Henri. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Henri",
+    "province": "QC",
+    "phone": "418-882-2401",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Maison de la culture et bibliothèque 418-882-2401",
+    "website": "http://www.saint-henri.ca",
+    "address": "Saint-Henri, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-hilaire-de-dorset-h-tel-de-ca",
+    "name": "Saint-Hilaire-de-Dorset. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Hilaire-de-Dorset",
+    "province": "QC",
+    "phone": "418-459-6872",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs MRC de Beauce-Sartigan Circonscriptions électorales : * Beauce-Sud (p ... [Plus]",
+    "website": "https://www.sthilairededorset.ca/",
+    "address": "Saint-Hilaire-de-Dorset, QC G0M, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-honor-de-shenley-h-tel-de--ca",
+    "name": "Saint-Honoré-de-Shenley. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Honoré-de-Shenley",
+    "province": "QC",
+    "phone": "418-485-6738",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://sthonoredeshenley.com",
+    "address": "499 Rue Principale, Saint-Honoré-de-Shenley, QC G0M 1V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "saint-hubert-arrondissement-mtg",
     "name": "Saint-Hubert - Arrondissement",
     "category": "social",
@@ -46291,6 +56600,84 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 16h30, vendredi 8h30 à 12h00"
   },
   {
+    "id": "saint-isidore-h-tel-de-ville-ca",
+    "name": "Saint-Isidore. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Isidore",
+    "province": "QC",
+    "phone": "418-882-5670",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Aréna 418-882-5130 * 418-882-5644",
+    "website": "http://www.saint-isidore.net",
+    "address": "Municipalité de Saint-Isidore, QC G0S 2S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-isidore-service-d-incendie-ca",
+    "name": "Saint-Isidore. Service d'incendie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Isidore",
+    "province": "QC",
+    "phone": "418-882-5670",
+    "description": "Service de protection contre les incendies * prévention Véhicules et équipements * 231 Freightliner : autopompe * 531 Unité d'urgence * 631 Freightliner : citerne",
+    "website": "http://www.saint-isidore.net",
+    "address": "188 Rue Ste Geneviève, Saint-Isidore, QC G0S 2S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-jacques-de-leeds-h-tel-de--ca",
+    "name": "Saint-Jacques-de-Leeds. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jacques-de-Leeds",
+    "province": "QC",
+    "phone": "418-424-3321",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autre MRC des Appalaches Circonscr ... [Plus] | Clientèle : Bibliothèque 418-424-3181",
+    "website": "http://www.saintjacquesdeleeds.ca",
+    "address": "Municipalité de Saint-Jacques-de-Leeds, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-jacques-le-majeur-de-wolfe-ca",
+    "name": "Saint-Jacques-le-Majeur-de-Wolfestown. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jacques-le-Majeur-de-Wolfestown",
+    "province": "QC",
+    "phone": "418-449-1531",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC des Appalaches Circonsc ... [Plus]",
+    "website": "http://www.st-jacques-le-majeur-de-wolfestown.ca",
+    "address": "877 QC-263, Disraeli, QC G0N 1E2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-janvier-de-joly-h-tel-de-v-ca",
+    "name": "Saint-Janvier-de-Joly. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Janvier-de-Joly",
+    "province": "QC",
+    "phone": "418-728-2984",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * transports en commun en milieu urbain * assainissement des eaux usé ... [Plus]",
+    "website": "http://www.municipalitedejoly.com",
+    "address": "Saint-Janvier-de-Joly, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-jean-port-joli-centre-muni-ca",
+    "name": "Saint-Jean-Port-Joli. Centre municipal",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-598-3084",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports pour personnes ayant un handicap, d'assainissement des eaux usé ... [Plus] | Clientèle : Bibliothèque 418-598-3187",
+    "website": "http://saintjeanportjoli.com",
+    "address": "Saint-Jean-Port-Joli, Saint-Jean-Port-Joli, QC G0R 3G0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "saint-jean-sur-richelieu-cour-mu-mtg",
     "name": "Saint-Jean-Sur-Richelieu - Cour Municipale",
     "category": "social",
@@ -46302,6 +56689,214 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "sjsr.ca/cour-municipale",
     "address": "855, 1ère Rue, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 3C7",
     "hours": "lundi, mardi, jeudi et vendredi 9h00 à 12h00 et 13h00 à 16h30, mercredi 10h30 à 12h00 et 13h00 à 16h30, horaire estival: lundi, mardi et jeudi 8h30 à 12h00 et 13h00 à 16h45, mercredi 10h30 à 12h00 et 13h00 à 16h45, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "saint-jean-de-br-beuf-h-tel-de-v-ca",
+    "name": "Saint-Jean-de-Brébeuf. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-de-Brébeuf",
+    "province": "QC",
+    "phone": "418-453-7774",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-453-2571",
+    "website": "http://www.st-jean-de-brebeuf.ca",
+    "address": "Saint-Jean-de-Brébeuf, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-joseph-de-beauce-h-tel-de--ca",
+    "name": "Saint-Joseph-de-Beauce. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-397-4358",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-397-6160",
+    "website": "http://www.vsjb.ca",
+    "address": "843 Av. du Palais, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-joseph-de-coleraine-h-tel--ca",
+    "name": "Saint-Joseph-de-Coleraine. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Coleraine",
+    "province": "QC",
+    "phone": "418-423-4000 poste 221",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, assainissement des eaux usées et autres La nature, l'étendue et l'exercice ... [Plus] | Clientèle : Service des travaux publics 418-423-4000 poste 224",
+    "website": "http://www.coleraine.qc.ca",
+    "address": "Saint-Joseph-de-Coleraine, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-joseph-des-rables-h-tel-de-ca",
+    "name": "Saint-Joseph-des-Érables. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joseph-des-Érables",
+    "province": "QC",
+    "phone": "418-397-4772",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "https://stjosephdeserables.com/",
+    "address": "Saint-Joseph-des-Érables, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-jules-h-tel-de-ville-ca",
+    "name": "Saint-Jules. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jules",
+    "province": "QC",
+    "phone": "418-397-5444",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.st-jules.qc.ca",
+    "address": "Municipalité de paroisse de Saint-Jules, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-julien-h-tel-de-ville-ca",
+    "name": "Saint-Julien. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Julien",
+    "province": "QC",
+    "phone": "418-423-4295",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs et autres La nature, l'étendue et l'exercice de ces responsabilités varient ... [Plus] | Clientèle : Bibliothèque des Z'Hauteurs 418-423-7474",
+    "website": "http://www.st-julien.ca",
+    "address": "Saint-Julien, QC G0N 1B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-just-de-breteni-res-h-tel--ca",
+    "name": "Saint-Just-de-Bretenières. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Just-de-Bretenières",
+    "province": "QC",
+    "phone": "418-244-3637",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.saintjustdebretenieres.com",
+    "address": "370 QC-204, Saint-Just-de-Bretenières, QC G0R 3H0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-lambert-de-lauzon-h-tel-de-ca",
+    "name": "Saint-Lambert-de-Lauzon. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Lambert-de-Lauzon",
+    "province": "QC",
+    "phone": "418-889-9715",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de La Nouvelle-Beauce C ... [Plus] | Clientèle : Bibliothèque 418-830-9945",
+    "website": "http://mun-sldl.ca",
+    "address": "Saint-Lambert-de-Lauzon, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-lazare-de-bellechasse-h-te-ca",
+    "name": "Saint-Lazare-de-Bellechasse. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-883-3841",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.st-lazare-qc.com",
+    "address": "Municipalité de Saint-Lazare-de-Bellechasse, QC G0R 3J0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-louis-de-gonzague-h-tel-de-ca",
+    "name": "Saint-Louis-de-Gonzague. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Louis-de-Gonzague",
+    "province": "QC",
+    "phone": "418-267-5931",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.st-louisdegonzague.qc.ca",
+    "address": "Saint-Louis-de-Gonzague, QC J0S 1T0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-luc-de-bellechasse-h-tel-d-ca",
+    "name": "Saint-Luc-de-Bellechasse. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Luc-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-636-2176",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-636-2176 poste 4",
+    "website": "http://www.st-luc-bellechasse.qc.ca",
+    "address": "Saint-Luc-de-Bellechasse, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-l-on-de-standon-h-tel-de-v-ca",
+    "name": "Saint-Léon-de-Standon. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Léon-de-Standon",
+    "province": "QC",
+    "phone": "418-642-5034",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de Bellechasse Circonsc ... [Plus]",
+    "website": "http://www.st-leon-de-standon.com",
+    "address": "Saint-Léon-de-Standon, QC G0R 4L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-magloire-h-tel-de-ville-ca",
+    "name": "Saint-Magloire. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Magloire",
+    "province": "QC",
+    "phone": "418-257-4421",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-257-4421 poste 103",
+    "website": "http://www.saint-magloire.com",
+    "address": "Saint-Magloire, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-malachie-h-tel-de-ville-ca",
+    "name": "Saint-Malachie. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Malachie",
+    "province": "QC",
+    "phone": "418-642-2102",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-642-5127",
+    "website": "http://st-malachie.qc.ca",
+    "address": "Municipalité de paroisse de Saint-Malachie, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-marcel-h-tel-de-ville-ca",
+    "name": "Saint-Marcel. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Marcel",
+    "province": "QC",
+    "phone": "418-356-2691",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de L'Islet Circonscript ... [Plus] | Clientèle : Bibliothèque 418-356-2635 * 418-356-5554",
+    "website": "http://www.saintmarcel.qc.ca",
+    "address": "Sainte-Thérèse, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-martin-h-tel-de-ville-ca",
+    "name": "Saint-Martin. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Martin",
+    "province": "QC",
+    "phone": "418-382-5035",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de Beauce-Sartigan Circ ... [Plus] | Clientèle : Bibliothèque 418-382-5035 poste 102",
+    "website": "http://www.st-martin.qc.ca",
+    "address": "Municipalité de paroisse de Saint-Martin, QC G0M, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "saint-mathieu-municipalit-mtg",
@@ -46317,6 +56912,97 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi et mardi 9h00 à 12h00 et 13h00 à 16h30, mercredi et jeudi 9h00 à 12h00 et 13h00 à 18h30, vendredi 9h00 à 12h00"
   },
   {
+    "id": "saint-michel-de-bellechasse-h-te-ca",
+    "name": "Saint-Michel-de-Bellechasse. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Michel-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-884-2865",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-884-2766",
+    "website": "http://www.stmicheldebellechasse.ca",
+    "address": "Saint-Michel-de-Bellechasse, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-narcisse-de-beaurivage-h-t-ca",
+    "name": "Saint-Narcisse-de-Beaurivage. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Narcisse-de-Beaurivage",
+    "province": "QC",
+    "phone": "418-475-6842",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de Lotbinière Circonscr ... [Plus] | Clientèle : Bibliothèque 418-475-6464",
+    "website": "http://www.saintnarcissedebeaurivage.ca",
+    "address": "Municipalité de paroisse de Saint-Narcisse-de-Beaurivage, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-nazaire-de-dorchester-h-te-ca",
+    "name": "Saint-Nazaire-de-Dorchester. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nazaire-de-Dorchester",
+    "province": "QC",
+    "phone": "418-642-1305",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque René-Blais 418-642-2945",
+    "website": "http://saint-nazaire-de-dorchester.com",
+    "address": "Saint-Nazaire-de-Dorchester, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-n-r-e-de-bellechasse-h-tel-ca",
+    "name": "Saint-Nérée-de-Bellechasse. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nérée-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-243-2735",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transport en commun en milieu urbain, assainissement des eaux usées et aut ... [Plus] | Clientèle : Bibliothèque 418-243-3649",
+    "website": "http://www.st-neree.qc.ca",
+    "address": "Saint-Nérée-de-Bellechasse, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-odilon-de-cranbourne-h-tel-ca",
+    "name": "Saint-Odilon-de-Cranbourne. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Odilon-de-Cranbourne",
+    "province": "QC",
+    "phone": "418-464-4801",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de Beauce-Centre Circon ... [Plus] | Clientèle : Bibliothèque 418-464-4803",
+    "website": "http://saint-odilon.qc.ca",
+    "address": "Saint-Odilon-de-Cranbourne, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-omer-h-tel-de-ville-ca",
+    "name": "Saint-Omer. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Omer",
+    "province": "QC",
+    "phone": "418-356-5634",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.st-omer.qc.ca",
+    "address": "Municipalité de Saint-Omer, QC G0R 4R0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-pamphile-h-tel-de-ville-ca",
+    "name": "Saint-Pamphile. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Pamphile",
+    "province": "QC",
+    "phone": "418-356-5501",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.saintpamphile.ca",
+    "address": "Saint-Pamphile, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "saint-patrice-de-sherrington-bib-mtg",
     "name": "Saint-Patrice-De-Sherrington - Bibliothèque Municipale",
     "category": "family",
@@ -46330,6 +57016,149 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi et vendredi 14h30 à 17h30, jeudi 18h00 à 20h30, samedi 9h30 à 12h00"
   },
   {
+    "id": "saint-patrice-de-beaurivage-h-te-ca",
+    "name": "Saint-Patrice-de-Beaurivage. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Patrice-de-Beaurivage",
+    "province": "QC",
+    "phone": "418-596-2362",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées * inspecteur municipal * collecte des ... [Plus] | Clientèle : Bibliothèque 418-596-2439",
+    "website": "http://www.ville.saint-patrice-de-beaurivage.qc.ca",
+    "address": "Municipalité de Saint-Patrice-de-Beaurivage, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-paul-de-montminy-h-tel-de--ca",
+    "name": "Saint-Paul-de-Montminy. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Paul-de-Montminy",
+    "province": "QC",
+    "phone": "418-469-3120",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.stpauldemontminy.com",
+    "address": "Saint-Paul-de-Montminy, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-philibert-h-tel-de-ville-ca",
+    "name": "Saint-Philibert. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Philibert",
+    "province": "QC",
+    "phone": "418-228-8759",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.st-philibert.qc.ca",
+    "address": "Municipalité de Saint-Philibert, QC G0M, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-phil-mon-h-tel-de-ville-ca",
+    "name": "Saint-Philémon. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Philémon",
+    "province": "QC",
+    "phone": "418-469-2890",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * transports en commun en milieu urbain * assainissement des eaux usé ... [Plus]",
+    "website": "http://www.saintphilemon.com",
+    "address": "Municipalité de paroisse de Saint-Philémon, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-pierre-de-broughton-h-tel--ca",
+    "name": "Saint-Pierre-de-Broughton. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Pierre-de-Broughton",
+    "province": "QC",
+    "phone": "418-424-3572",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-424-3450",
+    "website": "http://www.saintpierredebroughton.ca",
+    "address": "Municipalité de Saint-Pierre-de-Broughton, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-pierre-de-la-rivi-re-du-su-ca",
+    "name": "Saint-Pierre-de-la-Rivière-du-Sud. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Pierre-de-la-Rivière-du-Sud",
+    "province": "QC",
+    "phone": "418-248-8277",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de Montmagny Circonscri ... [Plus] | Clientèle : Bibliothèque 418-241-5396",
+    "website": "http://stpierrerds.ca",
+    "address": "Municipalité de paroisse de Saint-Pierre-de-la-Rivière-du-Sud, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-prosper-h-tel-de-ville-ca",
+    "name": "Saint-Prosper. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Prosper",
+    "province": "QC",
+    "phone": "Administration 418-594-8135 poste 1",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC des Etchemins Circonscr ... [Plus] | Clientèle : Bibliothèque 418-594-8135 poste 3",
+    "website": "http://www.saint-prosper.com",
+    "address": "Saint-Prosper, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-rapha-l-h-tel-de-ville-ca",
+    "name": "Saint-Raphaël. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Raphaël",
+    "province": "QC",
+    "phone": "418-243-2853",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-243-3437",
+    "website": "http://www.saint-raphael.ca",
+    "address": "Municipalité de Saint-Raphaël, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-ren-h-tel-de-ville-ca",
+    "name": "Saint-René. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-René",
+    "province": "QC",
+    "phone": "418-382-5226",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.st-rene.ca",
+    "address": "Municipalité de paroisse de Saint-René, QC G0M 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-ren-h-tel-de-ville-cuisine-ca",
+    "name": "Saint-René. Hôtel de ville, Cuisines collectives",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-René",
+    "province": "QC",
+    "phone": "418-382-5226",
+    "description": "Cuisines collectives permettant de cuisiner en groupe * planification des recettes * achats et partage des coûts entre les participants * cuisine en groupe * évaluation des recettes * ateliers sur l'a ... [Plus]",
+    "website": "http://www.st-rene.ca/pages/cuisine-collective",
+    "address": "Municipalité de paroisse de Saint-René, QC G0M 1Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-roch-des-aulnaies-h-tel-de-ca",
+    "name": "Saint-Roch-des-Aulnaies. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Roch-des-Aulnaies",
+    "province": "QC",
+    "phone": "418-354-2892",
+    "description": "Services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de L'Islet Circonscriptions électorales : ... [Plus] | Clientèle : Bibliothèque 418-354-1831",
+    "website": "http://www.saintrochdesaulnaies.ca",
+    "address": "Municipalité de Saint-Roch-des-Aulnaies, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "saint-r-mi-cour-municipale-mtg",
     "name": "Saint-Rémi - Cour Municipale",
     "category": "social",
@@ -46341,6 +57170,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.saint-remi.ca/services/services-au-citoyen/cour-municipale",
     "address": "105, rue de la Mairie, Saint-Rémi, Montérégie, QC, J0L 2L0",
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h30, vendredi 8h00 à 13h00"
+  },
+  {
+    "id": "saint-simon-les-mines-h-tel-de-v-ca",
+    "name": "Saint-Simon-les-Mines. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Simon-les-Mines",
+    "province": "QC",
+    "phone": "418-774-3317",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.sslm.ca",
+    "address": "Saint-Simon-les-Mines, QC G0M, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "saint-sixte-municipalit-out",
@@ -46369,6 +57211,84 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h15 à 12h00 et 13h00 à 17h00, vendredi 8h00 à 12h00"
   },
   {
+    "id": "saint-sylvestre-h-tel-de-ville-ca",
+    "name": "Saint-Sylvestre. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Sylvestre",
+    "province": "QC",
+    "phone": "418-596-2384",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, assainissement des eaux usées et autres La nature, l'étendue et l'exercice ... [Plus] | Clientèle : Caserne des pompiers 418-596-2455",
+    "website": "http://st-sylvestre.org",
+    "address": "Saint-Sylvestre, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-s-verin-h-tel-de-ville-ca",
+    "name": "Saint-Séverin. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Séverin",
+    "province": "QC",
+    "phone": "418-426-2423",
+    "description": "Assume des responsabilités en : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres Fait partie de : * MRC Ro ... [Plus]",
+    "website": "http://www.st-severin.qc.ca",
+    "address": "Municipalité de paroisse de Saint-Séverin, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-th-ophile-h-tel-de-ville-ca",
+    "name": "Saint-Théophile. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Théophile",
+    "province": "QC",
+    "phone": "418-597-3998",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.sainttheophile.qc.ca",
+    "address": "Saint-Théophile, QC G0M 2A0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-victor-h-tel-de-ville-ca",
+    "name": "Saint-Victor. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Victor",
+    "province": "QC",
+    "phone": "418-588-6854",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-588-6854 poste 31",
+    "website": "http://www.st-victor.qc.ca",
+    "address": "Municipalité de Saint-Victor, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-zacharie-h-tel-de-ville-ca",
+    "name": "Saint-Zacharie. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Zacharie",
+    "province": "QC",
+    "phone": "418-593-3185",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, assainissement des eaux usées et autres La nature, l'étendue et l'exercice ... [Plus] | Clientèle : Bibliothèque 418-593-3154",
+    "website": "http://st-zacharie.qc.ca",
+    "address": "Saint-Zacharie, QC G0M, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-douard-de-lotbini-re-h-tel-ca",
+    "name": "Saint-Édouard-de-Lotbinière. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Édouard-de-Lotbinière",
+    "province": "QC",
+    "phone": "418-796-2971",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, prévention des incendies, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainiss ... [Plus] | Clientèle : Bibliothèque 418-796-2433 poste 12050",
+    "website": "http://st-edouard.com",
+    "address": "Saint-Édouard-de-Lotbinière, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "saint-mile-de-suffolk-municipali-out",
     "name": "Saint-Émile-De-Suffolk - Municipalité",
     "category": "social",
@@ -46380,6 +57300,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.st-emile-de-suffolk.com",
     "address": "299, route des Cantons, Saint-Émile-De-Suffolk, Outaouais, QC, J0V 1Y0",
     "hours": "lundi au jeudi 8h00 à 12h00 et 13h00 à 16h00"
+  },
+  {
+    "id": "saint-phrem-de-beauce-h-tel-de-v-ca",
+    "name": "Saint-Éphrem-de-Beauce. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Éphrem-de-Beauce",
+    "province": "QC",
+    "phone": "418-484-5716",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-484-5716 poste 234",
+    "website": "http://www.saint-ephrem.com",
+    "address": "Municipalité de Saint-Éphrem-de-Beauce, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "saint-phrem-de-beauce-h-tel-de-v-ca-2",
+    "name": "Saint-Éphrem-de-Beauce. Hôtel de ville, Cuisines collectives",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Éphrem-de-Beauce",
+    "province": "QC",
+    "phone": "Information et inscription 418-484-5716 poste 225",
+    "description": "Cuisines collectives permettant de cuisiner en groupe * planification des recettes * achats et partage des coûts entre les participants * cuisine en groupe * évaluation des recettes * ateliers sur l'a ... [Plus]",
+    "website": "http://www.saint-ephrem.com",
+    "address": "Municipalité de Saint-Éphrem-de-Beauce, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-agathe-de-lotbini-re-h-te-ca",
+    "name": "Sainte-Agathe-de-Lotbinière. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Agathe-de-Lotbinière",
+    "province": "QC",
+    "phone": "418-599-2605",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-599-2830",
+    "website": "http://www.steagathedelotbiniere.com",
+    "address": "Sainte-Agathe-de-Lotbinière, QC G0S, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "sainte-anne-de-bellevue-ville-sab",
@@ -46395,6 +57354,110 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h00 à 12h00 et 12h45 à 16h30, vendredi 8h00 à 12h00"
   },
   {
+    "id": "sainte-apolline-de-patton-h-tel--ca",
+    "name": "Sainte-Apolline-de-Patton. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Apolline-de-Patton",
+    "province": "QC",
+    "phone": "418-469-3031",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque L'Évasion 418-469-3185",
+    "website": "http://www.sainteapollinedepatton.ca",
+    "address": "Municipalité de paroisse de Sainte-Apolline-de-Patton, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-aur-lie-h-tel-de-ville-ca",
+    "name": "Sainte-Aurélie. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Aurélie",
+    "province": "QC",
+    "phone": "418-593-3021",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, assainissement des eaux usées et autres La nature, l'étendue et l'exercice ... [Plus]",
+    "website": "http://www.ste-aurelie.qc.ca",
+    "address": "Sainte-Aurélie, QC G0M 1M0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-claire-h-tel-de-ville-ca",
+    "name": "Sainte-Claire. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Claire",
+    "province": "QC",
+    "phone": "418-883-3314",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de Bellechasse Circonsc ... [Plus] | Clientèle : Bibliothèque 418-883-2275",
+    "website": "http://ste-claire.ca",
+    "address": "Sainte-Claire, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-clotilde-de-beauce-h-tel--ca",
+    "name": "Sainte-Clotilde-de-Beauce. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Clotilde-de-Beauce",
+    "province": "QC",
+    "phone": "418-427-2637",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, assainissement des eaux usées et autres La nature, l'étendue et l'exercice ... [Plus]",
+    "website": "http://www.ste-clotilde.com",
+    "address": "Municipalité de Sainte-Clotilde-de-Beauce, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-croix-h-tel-de-ville-ca",
+    "name": "Sainte-Croix. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Croix",
+    "province": "QC",
+    "phone": "418-926-3494",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-796-0503 poste 27050",
+    "website": "http://www.ville-sainte-croix.ca",
+    "address": "Municipalité de Sainte-Croix, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-euph-mie-sur-rivi-re-du-s-ca",
+    "name": "Sainte-Euphémie-sur-Rivière-du-Sud. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Euphémie-sur-Rivière-du-Sud",
+    "province": "QC",
+    "phone": "418-469-3427",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://municipalites-du-quebec.ca/ste-euphemie",
+    "address": "Sainte-Euphémie-sur-Rivière-du-Sud, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-f-licit-h-tel-de-ville-ca",
+    "name": "Sainte-Félicité. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Félicité (région 12)",
+    "province": "QC",
+    "phone": "418-359-2321",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.ste-felicite.ca",
+    "address": "Sainte-Félicité, QC G0J 2K0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-h-n-dine-h-tel-de-ville-ca",
+    "name": "Sainte-Hénédine. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Hénédine",
+    "province": "QC",
+    "phone": "418-935-7125",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-935-3993",
+    "website": "http://ste-henedine.com",
+    "address": "Sainte-Hénédine, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "sainte-justine-de-newton-bibliot-mtg",
     "name": "Sainte-Justine-De-Newton - Bibliothèque",
     "category": "social",
@@ -46408,6 +57471,110 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi 18h30 à 20h00, samedi 10h00 à 12h00"
   },
   {
+    "id": "sainte-louise-h-tel-de-ville-ca",
+    "name": "Sainte-Louise. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Louise",
+    "province": "QC",
+    "phone": "418-354-2509",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.saintelouise.qc.ca",
+    "address": "Sainte-Louise, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-lucie-de-beauregard-h-tel-ca",
+    "name": "Sainte-Lucie-de-Beauregard. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Lucie-de-Beauregard",
+    "province": "QC",
+    "phone": "418-223-3122 poste 1",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain et autres La nature, l'étendue et l' ... [Plus] | Clientèle : Bibliothèque La Bouquinerie 418-223-3122 poste 5",
+    "website": "http://www.sainteluciedebeauregard.com",
+    "address": "Municipalité de Sainte-Lucie-de-Beauregard, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-marguerite-h-tel-de-ville-ca",
+    "name": "Sainte-Marguerite. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marguerite",
+    "province": "QC",
+    "phone": "418-935-7103",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres MRC de La Nouvelle-Beauce C ... [Plus] | Clientèle : Bibliothèque 418-935-7089",
+    "website": "http://www.sainte-marguerite.ca",
+    "address": "Sainte-Marguerite, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-marie-h-tel-de-ville-ca",
+    "name": "Sainte-Marie. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-2301",
+    "description": "Responsabilités et services : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * transports en commun en milieu urbain * assainissement des eaux usé ... [Plus] | Clientèle : Bibliothèque 418-387-2240",
+    "website": "http://www.sainte-marie.ca",
+    "address": "270 Av. Marguerite-Bourgeoys, Sainte-Marie, QC G6E 3Z3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-perp-tue-r-gion-12-h-tel--ca",
+    "name": "Sainte-Perpétue (région 12). Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Perpétue (région 12)",
+    "province": "QC",
+    "phone": "418-359-2966",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-359-3833",
+    "website": "http://www.sainteperpetue.com",
+    "address": "307 Rue Principale, Sainte-Perpétue, QC G0R 3Z0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-prax-de-h-tel-de-ville-ca",
+    "name": "Sainte-Praxède. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Praxède",
+    "province": "QC",
+    "phone": "418-449-2250",
+    "description": "Assume des responsabilités en : * aménagement et urbanisme * habitation * voirie * développement communautaire et culturel * loisirs * assainissement des eaux usées et autres Fait partie de : * MRC Le ... [Plus] | Clientèle : Bibliothèque Jeanne-D’Arc-Ruel 418-449-2626",
+    "website": "http://ste-praxede.ca",
+    "address": "Sainte-Praxède, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-rose-de-watford-h-tel-de--ca",
+    "name": "Sainte-Rose-de-Watford. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Rose-de-Watford",
+    "province": "QC",
+    "phone": "418-267-5811",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-267-5811 poste 1230",
+    "website": "http://www.sainterosedewatford.qc.ca",
+    "address": "Sainte-Rose-de-Watford, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "sainte-sabine-h-tel-de-ville-ca",
+    "name": "Sainte-Sabine. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Sabine (région 12)",
+    "province": "QC",
+    "phone": "418-383-5488",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque poste 4",
+    "website": "https://ste-sabine.com/",
+    "address": "Municipalité de paroisse de Sainte-Sabine, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "sainte-th-r-se-de-la-gatineau-mu-out",
     "name": "Sainte-Thérèse-De-La-Gatineau - Municipalité",
     "category": "housing",
@@ -46419,6 +57586,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.sainte-therese-de-la-gatineau.ca",
     "address": "27, chemin Principal, Sainte-Thérèse-De-La-Gatineau, Outaouais, QC, J0X 2X0",
     "hours": "lundi à jeudi 9h00 à 12h00 et 13h00 à 16h00, vendredi 8h00 à 12h00"
+  },
+  {
+    "id": "saints-anges-h-tel-de-ville-ca",
+    "name": "Saints-Anges. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saints-Anges",
+    "province": "QC",
+    "phone": "418-253-5230 poste 101",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.saintsanges.com",
+    "address": "Saints-Anges, QC G0S, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "salon-des-jeunes-de-thurso-out",
@@ -46444,6 +57624,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Promotion de la lecture par le rayonnement du livre et de ses créateurs sur l’ensemble de son territoire * visite scolaire * tournée littéraire * concours d'écriture",
     "website": "https://salondulivrecotenord.com/",
     "address": "406 Av. Brochu Bureau 104, Sept-Îles, QC G4R 2W8, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "samaritain-disraeli-le-ca",
+    "name": "Samaritain Disraeli (Le)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "418-281-9855",
+    "description": "Aide aux familles et personnes à faible revenu * distribution alimentaire | Clientèle : Familles et personnes à faible revenu ou en situation de crise",
+    "address": "Ville de Disraeli, QC G0N 1E0, Canada",
     "hours": "Voir site web"
   },
   {
@@ -46507,6 +57699,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.smqrivesud.ca",
     "address": "150, rue Grant, bureau 227, Longueuil, Montérégie, QC, J4H 3H6",
     "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 15h00"
+  },
+  {
+    "id": "sant-mentale-qu-bec-chaudi-re-ap-ca",
+    "name": "Santé mentale Québec - Chaudière-Appalaches",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-5920",
+    "description": "Promotion de la santé mentale et prévention de la détresse psychologique * réalisation d'activités de sensibilisation auprès de la population * conférences, formations, exposés participatifs et atelie ... [Plus] | Clientèle : Le grand public",
+    "website": "http://www.santementaleca.com",
+    "address": "3034 Av. Joseph-Hudon bureau 300, Lévis, QC G6X 1W3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "sant-mentale-qu-bec-c-te-nord-cn",
@@ -46589,6 +57794,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "savourables-les-ca",
+    "name": "Savourables (Les)",
+    "category": "food",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-830-0055",
+    "description": "Vente de repas livrés à domicile * repas emballés sous vide en portions individuelles (se conservent 7 jours au réfrigérateur et jusqu'à 3 mois au congélateur) Consulter la carte des secteurs desservi ... [Plus] | Clientèle : Le grand public * personnes en perte d'autonomie temporaire ou permanente * personnes convalescentes * personnes âgées * organismes communautaires",
+    "website": "http://www.lessavourables.com",
+    "address": "257 Rue Saint-Joseph, Lévis, QC G6V 1E6, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "scama-lav",
     "name": "Scama",
     "category": "social",
@@ -46639,6 +57857,84 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "sclerodermie.ca",
     "address": "550, chemin Chambly, bureau 040, Longueuil, Montérégie, QC, J4H 3L8",
     "hours": "lundi au vendredi 9h00 à 16h00, écoute téléphonique: 10h00 à 16h00"
+  },
+  {
+    "id": "scott-h-tel-de-ville-ca",
+    "name": "Scott. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Scott",
+    "province": "QC",
+    "phone": "418-387-2037",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque 418-386-2736",
+    "website": "http://www.municipalitescott.com",
+    "address": "Scott, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "scouts-du-district-de-l-est-du-q-ca",
+    "name": "Scouts du district de l'Est-du-Québec",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "",
+    "description": "Participation au développement global des jeunes * apprentissage au sein d'une équipe par le jeu, les techniques, le sport et l'expression * activités intérieures et extérieures * camps d'hiver et d'é ... [Plus] | Clientèle : Adultes * enfants * adolescents | Âges : 7 an(s) - 25 an(s)",
+    "website": "http://scoutsducanada.ca/districtdelestduquebec",
+    "address": "St-Romuald, Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "scouts-du-district-de-l-est-du-q-ca-2",
+    "name": "Scouts du district de l'Est-du-Québec, Groupe scout Chaudière Ouest",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "418-934-2533",
+    "description": "Participation au développement global des jeunes * contribution à l'éducation des jeunes et à leur épanouissement afin de les préparer à jouer un rôle constructif dans la société * apprentissage au se ... [Plus] | Âges : 7 an(s) - 25 an(s)",
+    "website": "http://www.scoutchaudiereouest.com",
+    "address": "85 Rue du Grand-Tronc, Lévis, QC G6K 1C3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "scouts-du-district-de-l-est-du-q-ca-5",
+    "name": "Scouts du district de l'Est-du-Québec, Groupe scout Déziel (Lévis - Desjardins)",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-4933",
+    "description": "Participation au développement global des jeunes * contribution à l'éducation des jeunes et à leur épanouissement afin de les préparer à jouer un rôle constructif dans la société * apprentissage au se ... [Plus] | Âges : 7 an(s) - 25 an(s)",
+    "website": "http://www.scoutsdeziel.ca/",
+    "address": "51a Rue Déziel A, Levis, QC G6V 3T7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "scouts-du-district-de-l-est-du-q-ca-3",
+    "name": "Scouts du district de l'Est-du-Québec, Groupe scout de Charny",
+    "category": "family",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "",
+    "description": "Participation au développement global des jeunes * contribution à l'éducation des jeunes et à leur épanouissement afin de les préparer à jouer un rôle constructif dans la société * apprentissage au se ... [Plus] | Âges : 7 an(s) - 25 an(s)",
+    "website": "http://www.scout128.ca",
+    "address": "6273 Rue des Airelles, Charny, QC G6X 2J7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "scouts-du-district-de-l-est-du-q-ca-4",
+    "name": "Scouts du district de l'Est-du-Québec, Groupe scout de Saint-Jean-Chrysostome",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "418-839-0484",
+    "description": "Participation au développement global des jeunes * contribution à l'éducation des jeunes et à leur épanouissement afin de les préparer à jouer un rôle constructif dans la société * apprentissage au se ... [Plus] | Âges : 7 an(s) - 17 an(s)",
+    "website": "http://groupe129.com",
+    "address": "6273 Rue des Airelles, Charny, QC G6X 2J7, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "sdem-semo-mont-r-gie-mtg",
@@ -46706,6 +58002,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00, sur rendez-vous seulement"
   },
   {
+    "id": "secours-tiers-monde-ca",
+    "name": "Secours Tiers-Monde",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-5778",
+    "description": "Promotion des projets de développement en santé, éducation, agriculture et alimentation par l'intermédiaire de missionnaires québécois et d'organismes locaux afin de favoriser l'autonomie des populati ... [Plus]",
+    "website": "http://www.secourstiersmonde.org",
+    "address": "20 Rue Notre Dame, Lévis, QC G6V 4A4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "senneville-village-sen",
     "name": "Senneville - Village",
     "category": "housing",
@@ -46730,6 +58039,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://lesentier-thetrail.ca",
     "address": "945 Chemin Bord-du-Lac-Lakeshore, Dorval, Montréal, QC, H9S 2C7",
     "hours": "variable"
+  },
+  {
+    "id": "sentiers-la-ballade-de-l-vis-les-ca",
+    "name": "Sentiers la Ballade de Lévis (Les)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "Service à la clientèle et condition des pistes 418-839-1551",
+    "description": "Club de ski de fond * sentiers de ski de fond, raquette, marche et fatbike et vélo de montagne * location d'équipement * location de salle Secteur Saint-Romuald : 2686, rue de l’Abbaye",
+    "website": "http://lessentierslabalade.com",
+    "address": "705 Rue du Moulin-Larochelle, Lévis, QC G6Z 1X6, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "sept-les-h-tel-de-ville-cn",
@@ -47249,6 +58571,160 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 8h30-16h30. Services d'accueil, intégration, références."
   },
   {
+    "id": "service-d-entraide-berni-res-sai-ca",
+    "name": "Service d'entraide Bernières - Saint-Nicolas",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-831-8160",
+    "description": "Aide aux personnes vivant une situation financière, familiale ou sociale difficile et aux aînés en perte d'autonomie ou souffrant de solitude * aide alimentaire * popote roulante * soutien moral * com ... [Plus] | Clientèle : Inscription au panier de noël 418-831-8160 poste 101",
+    "website": "http://www.serviceebsn.com",
+    "address": "1361 Rte Marie-Victorin local 119, Lévis, QC G7A 4S5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-d-entraide-saint-tienne-ca",
+    "name": "Service d'entraide Saint-Étienne",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Étienne-de-Lauzon",
+    "province": "QC",
+    "phone": "418-836-0468",
+    "description": "Promotion de l'entraide et contribution à l'amélioration de la qualité de vie auprès de la communauté de St-Étienne * information et référence * comptoir vestimentaire : friperie et jouets * accompagn ... [Plus] | Clientèle : Personnes à faible revenu ou dans le besoin",
+    "address": "4044 Rte des Rivières, Saint-Étienne-de-Lauzon, QC G6J 1H3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-d-entraide-de-breakeyvil-ca",
+    "name": "Service d'entraide de Breakeyville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Hélène-de-Breakeyville",
+    "province": "QC",
+    "phone": "418-832-1671",
+    "description": "Lutte contre la pauvreté * soutien à domicile des aînés et personnes en perte d'autonomie par bénévolat et entraide * soutien à la participation de la communauté et des organismes du milieu à l'amélio ... [Plus] | Clientèle : Service d'impôts et paniers de Noël 418-832-1671 poste 221 | Âges : 10 an(s) et plus",
+    "website": "http://www.sebreakeyville.ca",
+    "address": "700 Rue Davie-Anderson, Lévis, QC G6Z 7N2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-d-entraide-de-breakeyvil-ca-2",
+    "name": "Service d'entraide de Breakeyville, Soutien aux proches aidants",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sainte-Hélène-de-Breakeyville",
+    "province": "QC",
+    "phone": "418-832-1671",
+    "description": "Soutien aux proches aidants * soutien psychosocial (offert aussi de soir sur rendez-vous) * référence aux ressources existantes * ateliers thématiques * centre de documentation * bulletin d'informatio ... [Plus] | Clientèle : Proches aidants de personnes de tous âges | Âges : 10 an(s) et plus",
+    "website": "http://www.sebreakeyville.ca",
+    "address": "Breakeyville, Lévis, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-d-entraide-de-charny-ca",
+    "name": "Service d'entraide de Charny",
+    "category": "family",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-832-0768",
+    "description": "Promotion de l'entraide sociale et bénévole chez les individus, les groupes et la collectivité afin de venir en aide aux familles à faible revenu et aux aînés * comptoir de vêtements Aux Petits trésor ... [Plus] | Clientèle : Personnes ou familles à faible revenu * aînés",
+    "website": "http://serviceentraidecharny.com",
+    "address": "2480 Chem. de Charny, Charny, QC G6X 2V2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-d-entraide-de-pintendre-ca",
+    "name": "Service d'entraide de Pintendre",
+    "category": "social",
+    "subcategory": "",
+    "city": "Pintendre",
+    "province": "QC",
+    "phone": "418-833-6731",
+    "description": "Promotion de l'entraide sociale bénévole et amélioration de la qualité de vie des résidents du milieu Services et activités à la communauté * accueil, échange et référence * répit art-peinture : ateli ... [Plus] | Clientèle : Le grand public",
+    "website": "http://www.entraidepintendre.org",
+    "address": "344 Rue Thomas-Wilson, Lévis, QC G6C 1G7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-d-entraide-de-saint-elz--ca",
+    "name": "Service d'entraide de Saint-Elzéar",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Elzéar (région 12)",
+    "province": "QC",
+    "phone": "418-387-3668",
+    "description": "Aide aux personnes à faible revenu * aide au rétablissement en cas de situation d'urgence * coupon de dépannage alimentaire * paniers de Noël | Clientèle : Personnes à faible revenu",
+    "address": "Saint-Elzéar, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-d-entraide-de-saint-jean-ca",
+    "name": "Service d'entraide de Saint-Jean-Chrysostome",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "418-839-0749",
+    "description": "Soutien matériel, alimentaire et social aux personnes en difficulté * aide au maintien des personnes dans leur milieu de vie * encouragement et reconnaissance de l’action bénévole auprès de la communa ... [Plus] | Clientèle : Service d'impôts 418-839-0749 poste 4",
+    "website": "http://www.entraidestjean.org",
+    "address": "1008 Rue Alphonse-Ferland, Saint-Jean-Chrysostome, QC G6Z 3H6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-d-entraide-de-saint-lamb-ca",
+    "name": "Service d'entraide de Saint-Lambert-de-Lauzon",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Lambert-de-Lauzon",
+    "province": "QC",
+    "phone": "418-889-5109",
+    "description": "Aide matérielle, alimentaire et psychologique aux personnes à faible revenu * maintien à domicile des aînés et en perte d'autonomie * promotion et reconnaissance de l'action bénévole Services aux aîné ... [Plus] | Clientèle : Aînés * personnes en perte d'autonomie * familles * personnes à faible revenu",
+    "website": "http://www.servicedentraide-sldl.com",
+    "address": "1189 Rue du Pont, Saint-Lambert-de-Lauzon, QC G0S 2W0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-d-entraide-de-saint-romu-ca",
+    "name": "Service d'entraide de Saint-Romuald",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-5588",
+    "description": "Amélioration des conditions de vie à Saint-Romuald * aide alimentaire * aide personnalisée et référencement * accompagnement-transport pour rendez-vous médicaux * aide matérielle (Le Chiffonnier) : vê ... [Plus] | Clientèle : Personnes en situation de faible revenu ou de perte d'autonomie",
+    "website": "http://entraidest-romuald.org",
+    "address": "285 Rue de Saint-Romuald, Saint-Romuald, QC G6W 3H6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-d-entraide-de-saint-romu-ca-2",
+    "name": "Service d'entraide de Saint-Romuald, Popote roulante",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-839-5588",
+    "description": "Amélioration des conditions de vie à Saint-Romuald * popote roulante dans les quartiers Charny, Saint-Romuald et Saint-Jean-Chrysostome seulement | Clientèle : Aînés en situation de faible revenu ou de perte d'autonomie",
+    "website": "http://entraidest-romuald.org",
+    "address": "285 Rue de Saint-Romuald, Saint-Romuald, QC G6W 3H6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-d-entraide-de-saint-r-de-ca",
+    "name": "Service d'entraide de Saint-Rédempteur",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "Administration 418-831-1451",
+    "description": "Amélioration des conditions de vie et soutien à l'autonomie des personnes à faible revenu et défavorisées sur les plans socioculturel, physique et psychologique * aide matérielle, alimentaire et vesti ... [Plus] | Clientèle : Magasin la Bonne affaire 418-531-0515",
+    "website": "http://entraidest-redempteur.com",
+    "address": "2385 Rte des Rivières, Saint-Rédempteur, QC G6K 0E2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "imm-soit-quebec",
     "name": "Service d'orientation et d'intégration des immigrants au travail (SOIT)",
     "category": "immigration",
@@ -47426,6 +58902,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 7h-18h. Fermeture jours fériés et 2 semaines l'été."
   },
   {
+    "id": "service-de-police-de-thetford-mi-ca",
+    "name": "Service de police de Thetford Mines, Agence PAIR Thetford Mines",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-0111 poste 848",
+    "description": "Programme gratuit de prévention et sécurité à domicile * système automatisé d'appels qui rejoint quotidiennement les personnes abonnées par téléphone pour s'assurer que tout va bien * rappel de prise ... [Plus] | Clientèle : Inscription 418-338-3511",
+    "website": "https://www.villethetford.ca/vivre-a-thetford/aines/programme-pair/",
+    "address": "160 Rue Caouette O, Thetford Mines, QC G6G 7M7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "police-trois-rivieres",
     "name": "Service de police de Trois-Rivières (SPTR)",
     "category": "social",
@@ -47475,6 +58964,70 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Interprétariat et traduction communautaire pour immigrants lors de rendez-vous médicaux, légaux ou administratifs. Disponible en plusieurs langues.",
     "address": "919, boulevard du Saint-Maurice, Trois-Rivières, QC G9A 3R1",
     "hours": "Lun-ven 8h30-16h30. Sur RV pour consultations spécialisées."
+  },
+  {
+    "id": "service-de-transport-adapt-et-co-ca",
+    "name": "Service de transport adapté et collectif de Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "418-881-3884",
+    "description": "Services de transport adapté et collectif qui facilitent les déplacements des résidents de la MRC de Lotbinière à l'intérieur et vers l'extérieur du territoire Voir dossiers individuels * Express Lotb ... [Plus]",
+    "website": "http://transportadaptelotbiniere.com",
+    "address": "16 Rue du Collège, Saint-Apollinaire, QC G0S 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-de-transport-adapt-et-co-ca-2",
+    "name": "Service de transport adapté et collectif de Lotbinière, Express Lotbinière - Transport collectif",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "418-747-0266",
+    "description": "Services de transport collectif qui facilitent les déplacements des résidents de la MRC de Lotbinière à l'intérieur et vers l'extérieur du territoire.",
+    "website": "http://express-lotbiniere.com",
+    "address": "16 Rue du Collège, Saint-Apollinaire, QC G0S 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-de-transport-adapt-et-co-ca-3",
+    "name": "Service de transport adapté et collectif de Lotbinière, Lobicar - Transport adapté",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "418-881-3884 poste 101",
+    "description": "Personnes ayant un handicap admissibles au transport adapté",
+    "website": "http://transportadaptelotbiniere.com",
+    "address": "16 Rue du Collège, Saint-Apollinaire, QC G0S 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-d-entraide-de-sainte-mar-ca",
+    "name": "Service d’entraide de Sainte-Marie",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-389-7883",
+    "description": "Aide aux personnes à faible revenu en leur fournissant nourriture et vêtements * soutien financier à la mission des organismes communautaires de la communauté * soutien au logement | Clientèle : Personnes à faible revenu * organismes communautaires de la région | Âges : 5 an(s) - 80 an(s)",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "service-externe-de-main-d-uvre-c-ca",
+    "name": "Service externe de main-d'œuvre Chaudière-Appalaches",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-838-3036 poste 101",
+    "description": "Aide et soutien aux personnes ayant un limitation physique, intellectuel, sensoriel ou psychologique afin de les aider à intégrer le marché du travail Participants * counseling * développement de l'em ... [Plus] | Clientèle : Personnes ayant un handicap physique, intellectuel, sensoriel ou psychologique | Âges : 16 an(s) et plus",
+    "website": "http://www.semoca.org",
+    "address": "St-Romuald, Levis, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "qc-imm-longueuil-sia",
@@ -47929,6 +59482,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.siloam.ca",
     "address": "300 Princess St, Winnipeg, MB R3B 1L8",
     "hours": "Service disponible 24h/24, 7j/7"
+  },
+  {
+    "id": "soci-t-alzheimer-chaudi-re-appal-ca",
+    "name": "Société Alzheimer Chaudière-Appalaches",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-1230 poste 1",
+    "description": "Soulagement de la détresse et de l'incapacité causées par la maladie d'Alzheimer ou les affections connexes auprès des personnes vivant avec la maladie, leurs proches, des intervenants concernés et du ... [Plus] | Clientèle : Personnes vivant avec la maladie d'Alzheimer ou autre maladie cognitive, leur famille et proches * intervenants * le grand public",
+    "website": "http://www.alzheimerchap.qc.ca",
+    "address": "1494 Rte du Président Kennedy N, Sainte-Marie, QC G6E 3B4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-alzheimer-chaudi-re-appal-ca-2",
+    "name": "Société Alzheimer Chaudière-Appalaches, Centre de soutien Alzheimer de Lévis",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Jean-Chrysostome",
+    "province": "QC",
+    "phone": "418-837-6131 poste 2",
+    "description": "Soulagement de la détresse et l'incapacité causées par la maladie d'Alzheimer ou les affections connexes auprès des personnes vivant la maladie, leurs proches, des intervenants concernés et du public ... [Plus] | Clientèle : Personnes vivant avec la maladie d'Alzheimer ou maladies apparentées, leur famille et proches * intervenants de la santé et des services sociaux * le grand public",
+    "website": "http://www.alzheimerchap.qc.ca",
+    "address": "730 Av. Taniata local 110, Saint-Jean-Chrysostome, QC G6Z 2C5, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "soci-t-alzheimer-c-te-nord-cn",
@@ -48521,6 +60100,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h, sam 9h-13h. Apporter pièce identité et preuve de résidence."
   },
   {
+    "id": "soci-t-via-ca",
+    "name": "Société VIA",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Centre de tri de Lévis et siège social 418-833-0421",
+    "description": "Entreprise adaptée, spécialisée dans le conditionnement et la valorisation des matières recyclables pour l’Est du Québec * guide des matières recyclables Centres de tri * 1200, rue des Riveurs, Lévis, ... [Plus] | Clientèle : Centre de tri de Québec 418-527-0421",
+    "website": "http://www.societevia.com",
+    "address": "1200 Rue des Riveurs, Lévis, QC G6Y 9G2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "soci-t-canadienne-de-la-scl-rose-cn",
     "name": "Société canadienne de la sclérose en plaques - Section Côte-Nord",
     "category": "social",
@@ -48534,6 +60126,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "soci-t-d-aide-au-d-veloppement-d-ca",
+    "name": "Société d'aide au développement de la collectivité Bellechasse - Etchemins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Léon-de-Standon",
+    "province": "QC",
+    "phone": "418-642-2844",
+    "description": "Promotion du développement socioéconomique de la collectivité par l'instauration de projets et soutien des partenaires du milieu * services aux entreprises et organisations Aide financière * prêts rég ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.sadcbe.qc.ca",
+    "address": "Saint-Léon-de-Standon, QC G0R 4L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-aide-au-d-veloppement-d-ca-3",
+    "name": "Société d'aide au développement de la collectivité de Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Laurier-Station",
+    "province": "QC",
+    "phone": "418-728-3330",
+    "description": "Contribution au développement et à l’essor de la communauté de Lotbinière par des services d’accompagnement en affaires et du financement adapté aux besoins des entrepreneurs * initiation et soutien a ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.sadclotbiniere.qc.ca",
+    "address": "Laurier-Station, QC G0S, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "soci-t-d-aide-au-d-veloppement-d-cn-2",
     "name": "Société d'aide au développement de la collectivité de Manicouagan",
     "category": "social",
@@ -48544,6 +60162,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Développement économique et mise en œuvre d'initiatives locales en dynamisant le milieu et en investissant dans les entreprises Développement local * femmes entrepreneures Fonds d'investissement * prê ... [Plus] | Clientèle : Personnes ayant un projet entrepreneurial * petites entreprises (moins de 200 employés) | Âges : 18 an(s) et plus",
     "website": "http://sadcmanic.ca",
     "address": "Baie-Comeau, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-aide-au-d-veloppement-d-ca-2",
+    "name": "Société d'aide au développement de la collectivité de l'Amiante",
+    "category": "family",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-4531",
+    "description": "Soutien à la participation de la collectivité dans la prise en charge de son avenir * aide financière et technique * développement des collectivités * programme Stratégie Jeunesse : financement sous f ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.sadcamiante.com",
+    "address": "653 Rue Pie XI, Thetford Mines, QC G6G 7Z1, Canada",
     "hours": "Voir site web"
   },
   {
@@ -48585,6 +60216,71 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "soci-t-d-histoire-de-l-vis-ca",
+    "name": "Société d'histoire de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-837-2050",
+    "description": "Diffusion des faits historiques de la ville de Lévis et la seigneurie de Lauzon (Incluant les anciennes municipalités de Lauzon, Saint-David-de-l'Auberivière et Saint-Louis-de-Pintendre) . * promotion ... [Plus] | Clientèle : Personnes intéressées à l'histoire locale | Âges : 18 an(s) et plus",
+    "website": "http://histoirelevis.com",
+    "address": "9 Rue Monseigneur-Gosselin, Lévis, QC G6V 5K1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-histoire-de-montmagny-ca",
+    "name": "Société d'histoire de Montmagny",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-5660",
+    "description": "Mise en valeur du patrimoine local * sensibilisation de la population à la valeur de son héritage historique et à la nécessité de préserver ce qui en témoigne * activités diverses pour les membres * d ... [Plus] | Clientèle : Personnes intéressées à l'histoire locale et à la généalogie",
+    "website": "http://www.societehistoiremontmagny.qc.ca",
+    "address": "4 Rue de la Station, Montmagny, QC G5V 3T2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-histoire-de-saint-romua-ca",
+    "name": "Société d'histoire de Saint-Romuald",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-834-3662",
+    "description": "Acquisition, conservation et diffusion du patrimoine historique de Saint-Romuald sous toutes ses formes * conférences, participation aux événements locaux, publications, interventions de nature pédago ... [Plus]",
+    "website": "http://www.histoiresaintromuald.com",
+    "address": "295 rue de Montfort suite #2 Quartier, Lévis, QC G6W 3G9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-horticulture-la-chaudi--ca",
+    "name": "Société d'horticulture La Chaudière fleurie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-230-2747",
+    "description": "Regroupement de personnes intéressées par l'horticulture et la préservation de l'environnement * conférences et ateliers * visites de jardins publics et privés * rencontre amicale annuelle",
+    "website": "http://fsheq.com/societe-1553",
+    "address": "Ville de, Saint-Georges, QC G5Y 5C4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-horticulture-de-l-vis-ca",
+    "name": "Société d'horticulture de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-9578",
+    "description": "Diffusion et développement de l'horticulture dans le milieu en offrant à ses membres et aux visiteurs des renseignements pratiques pour réussir en jardinage * conférences * soupers et échange de plant ... [Plus]",
+    "website": "http://fsheq.com/societe-1513",
+    "address": "999 Av. De Rochebelle local 121, Québec, QC G1V 0J6, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "soci-t-d-horticulture-de-port-ca-cn",
     "name": "Société d'horticulture de Port-Cartier",
     "category": "social",
@@ -48595,6 +60291,57 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Regroupement de personnes intéressées par l'horticulture et la préservation de l'environnement * ateliers et conférences",
     "website": "https://fsheq.com/societe-1559",
     "address": "Port-Cartier, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-horticulture-et-d-colog-ca",
+    "name": "Société d'horticulture et d'écologie de Beauceville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Beauceville",
+    "province": "QC",
+    "phone": "418-774-9212",
+    "description": "Regroupement de personnes intéressées par l'horticulture et la préservation de l'environnement * diffusion d'information dans les domaines de l'horticulture ornementale, l'arboriculture, la culture po ... [Plus]",
+    "address": "Beauceville, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-horticulture-et-d-colog-ca-2",
+    "name": "Société d'horticulture et d'écologie de Lotbinière",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Apollinaire",
+    "province": "QC",
+    "phone": "",
+    "description": "Promotion de l'éducation au respect et à l'embellissement de l'environnement à travers l'horticulture * formation et partage des connaissances en horticulture dans un climat convivial * fête des semen ... [Plus] | Clientèle : Personnes intéressées par l'horticulture et l'écologie",
+    "website": "http://www.amelanchier.com",
+    "address": "Saint-Apollinaire, QC G0S 2E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-horticulture-et-d-colog-ca-3",
+    "name": "Société d'horticulture et d'écologie de Montmagny",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-246-2271",
+    "description": "Regroupement de personnes intéressées par l'horticulture et l'écologie * promotion de l'horticulture et participation à la conservation et la protection du patrimoine horticole * conférences mensuelle ... [Plus]",
+    "website": "http://www.fsheq.com/societe-1546",
+    "address": "Montmagny, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-d-horticulture-et-d-colog-ca-4",
+    "name": "Société d'horticulture et d'écologie de Saint-Nicolas",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-831-2641",
+    "description": "Diffusion et développement de l'horticulture dans le milieu en offrant à ses membres et aux visiteurs des renseignements pratiques pour réussir en jardinage * conférences * visites biannuelles de jard ... [Plus]",
+    "website": "http://shorticulture.wixsite.com/shestnicolas",
+    "address": "Saint-Nicolas, Levis, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -48661,6 +60408,213 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "jeudi 9h00 à 12h00, samedi 9h00 à 12h00"
   },
   {
+    "id": "soci-t-de-saint-vincent-de-paul--ca",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Christ-Roi",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-522-5741 poste 361",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * bons alimentaires * aide à l’obtention de mobiliers et d'électroménagers",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=51",
+    "address": "1330 Ch Ste-Foy, Québec, QC G1S 0C9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-2",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Notre-Dame-de-Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-522-5741 poste 359",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * bons alimentaires",
+    "website": "http://ssvp-quebec.org/programmes-et-services?id=52",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-3",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Saint-Alphonse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-5102",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * distributions alimentaires (régulière ou immédiate selon les besoins)",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=70",
+    "address": "1330 Ch Ste-Foy, Québec, QC G1S 0C9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-4",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Saint-Antoine-de-Bienville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-522-5741 poste 359",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * bons alimentaires * aide à l'achat de vêtement et mobiliers",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=53",
+    "address": "1330 Ch Ste-Foy, Québec, QC G1S 0C9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-5",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Saint-David",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-603-3271",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * bons alimentaires Vestiaire Saint-David * vente de vêtements | Clientèle : Vestiaire 418-837-1315",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=54",
+    "address": "1330 Ch Ste-Foy, Québec, QC G1S 0C9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-6",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Saint-Désiré-Black-Lake",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "581-679-0680",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * bons alimentaires",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=71",
+    "address": "Black Lake, Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-8",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Saint-Flavien",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Flavien",
+    "province": "QC",
+    "phone": "418-728-3380",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * bons alimentaires sur demande",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=40",
+    "address": "1330 Ch Ste-Foy, Québec, QC G1S 0C9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-9",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Saint-George Ouest",
+    "category": "family",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-1110",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * distributions alimentaires (régulière ou immédiate selon les besoins) * paniers de Noël * cadeaux pour les enfants à Noël",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=44",
+    "address": "Saint-Georges, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-10",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Saint-Georges Est",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-0513",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * distributions alimentaires (régulière ou immédiate selon les besoins)",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=45",
+    "address": "Saint-Georges-Est, Saint-Georges, QC G5Y 2E6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-13",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Saint-Joseph-Robertsonville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-2302",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * distributions alimentaires (régulière ou immédiate selon les besoins)",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=72",
+    "address": "1330 Ch Ste-Foy, Québec, QC G1S 0C9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-11",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Saint-Joseph-de-Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "581-226-8696",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * distributions alimentaires (régulière ou immédiate selon les besoins)",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=42",
+    "address": "Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-12",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Saint-Joseph-de-Lauzon",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-2842",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * bons alimentaires Vestiaire Saint-Joseph de Lauzon * vente de vêtements * vente de mobilier",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=55",
+    "address": "1330 Ch Ste-Foy, Québec, QC G1S 0C9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-14",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Saint-Louis-de-Pintendre",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-7077",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * bons alimentaires * paniers de Noël Vestiaire Saint-Louis de Pintendre * vente de vêtements * vente de mobilier",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=56",
+    "address": "1330 Ch Ste-Foy, Québec, QC G1S 0C9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-15",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Saint-Noel",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-755-0940",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * distributions alimentaires (régulière ou immédiate selon les besoins)",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=73",
+    "address": "Québec City, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-7",
+    "name": "Société de Saint-Vincent de Paul de Québec, Conférence Sainte-Marthe",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-5105",
+    "description": "Aide à toute personne à faible revenu vivant une situation difficile * distributions alimentaires (régulière ou immédiate selon les besoins)",
+    "website": "https://ssvp-quebec.org/programmes-et-services?id=74",
+    "address": "1330 Ch Ste-Foy, Québec, QC G1S 0C9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-saint-vincent-de-paul--ca-16",
+    "name": "Société de Saint-Vincent de Paul, Conférence Ozanam de Montmagny",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-7178",
+    "description": "Aide aux personnes par la vente d'articles à bas prix * comptoir de collecte, récupération et vente de vêtements et articles usagés",
+    "address": "Montmagny, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "societe-de-saint-vincent-de-paul-co-lep",
     "name": "Société de Saint-Vincent-de-Paul - Conférence L'Épiphanie",
     "category": "social",
@@ -48698,6 +60652,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Lun-ven 9h-16h. Vérifier horaires locaux."
   },
   {
+    "id": "soci-t-de-conservation-du-patrim-ca",
+    "name": "Société de conservation du patrimoine de Saint-François-de-la-Rivière-du-Sud",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-François-de-la-Rivière-du-Sud",
+    "province": "QC",
+    "phone": "Jacques Boulet 418-259-7805",
+    "description": "Regroupement de personnes intéressées par la généalogie, le patrimoine et l'histoire de Saint-François-de-la-Rivière-du-Sud * recherches généalogiques et historiques * mise en valeur du site patrimoni ... [Plus] | Clientèle : Soutien aux chercheurs en généalogie Jacques Blais 418-234-1949",
+    "website": "http://www.patrimoinesaintfrancois.org",
+    "address": "Saint-François-de-la-Rivière-du-Sud, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-d-veloppement-de-sacr--ca",
+    "name": "Société de développement de Sacré-Coeur-de-Marie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "418-334-6895",
+    "description": "Interaction bénévole avec le monde municipal, les collectivités, les entrepreneurs, les promoteurs et les organismes gouvernementaux afin de favoriser la qualité de vie tout en contribuant à la prospé ... [Plus]",
+    "website": "http://www.adstock.ca/developpement-socio-economique/soutien-aux-organismes-et-aux-entreprises",
+    "address": "Sacré-Coeur-de-Marie-Partie-Sud, QC G0N 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "soci-t-de-d-veloppement-conomiqu-cn",
     "name": "Société de développement économique de Uashat - Maliotenam",
     "category": "employment",
@@ -48708,6 +60688,44 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Soutien au développement socioéconomique de la communauté * création d'emplois, entreprises, partenariats et occasions d'affaire * consultation, orientation et référence * diffusion d'offres d'emploi ... [Plus] | Clientèle : Chercheurs d'emploi * personnes désirant débuter ou développer des projets économiques (entreprises, partenariats, occasions d'affaire) * entreprises",
     "website": "http://www.sdeum.ca",
     "address": "Réserve indienne de Uashat, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-d-veloppement-conomiqu-ca",
+    "name": "Société de développement économique de la région de Thetford",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-2188",
+    "description": "La Société de développement économique (SDE) de la région de Thetford * services gratuits pour les entrepreneurs, les entreprises et les projets de développement économique dans la MRC des Appalaches ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "website": "http://www.regionthetford.com/fr/region-de-thetford/sdert",
+    "address": "81 Rue Notre Dame O, Thetford Mines, QC G6G 1J4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-g-n-alogie-de-l-vis-ca",
+    "name": "Société de généalogie de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "418-988-0848",
+    "description": "Regroupement de personnes intéressées à la généalogie * soutien personnalisé à la recherche * ateliers et conférences * centre informatisé de recherche pour consultation de banques de données et réper ... [Plus]",
+    "website": "http://sglevis.ca",
+    "address": "4 Rue Raymond-Blais, Levis, QC G6W 6N3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-g-n-alogie-de-la-beauc-ca",
+    "name": "Société de généalogie de la Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-228-3509",
+    "description": "Regroupement de personnes intéressées à la généalogie * services de recherche * soutien à la construction d'un arbre généalogique * consultation de recueils de généalogie, registres de baptêmes, maria ... [Plus]",
+    "address": "250 18e Rue, Saint-Georges, QC G5Y 4T9, Canada",
     "hours": "Voir site web"
   },
   {
@@ -48723,6 +60741,82 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "soci-t-de-r-adaptation-et-d-int--ca",
+    "name": "Société de réadaptation et d'intégration communautaire, Maison des Hauts-Bois",
+    "category": "food",
+    "subcategory": "",
+    "city": "Saint-Romuald",
+    "province": "QC",
+    "phone": "418-834-7751",
+    "description": "Hébergement de crise, de dépannage et d'urgence pour adultes en situation de crise psychosociale * hébergement de courte durée (7 jours), 9 chambres individuelles avec repas * possibilité d'hébergemen ... [Plus] | Âges : 18 an(s) et plus",
+    "website": "http://www.lasric.org",
+    "address": "1635 Bd Guillaume-Couture, Lévis, QC G6W 0L2, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-de-transport-de-l-vis-ca",
+    "name": "Société de transport de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Service clientèle 418-837-2401",
+    "description": "Responsable du transport collectif et adapté facilitant les déplacements des citoyens de Lévis et de la municipalité de Saint-Lambert-de-Lauzon, d'Est en Ouest ainsi que de la Rive Sud à la Rive Nord ... [Plus] | Clientèle : Transport adapté 418-837-9552",
+    "website": "http://www.stlevis.ca",
+    "address": "1100 Rue Saint-Omer, Lévis, QC G6V 6N4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-du-patrimoine-de-saint-l--ca",
+    "name": "Société du patrimoine de Saint-Léon-de-Standon",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Saint-Léon-de-Standon",
+    "province": "QC",
+    "phone": "418-642-2363",
+    "description": "Mise en valeur du patrimoine et de l'histoire de Saint-Léon-de-Standon Musée Espaces mémoires * expositions : agriculture, acériculture, drave, travail des femmes, magasin général, ligne du temps, éco ... [Plus]",
+    "website": "http://www.societedupatrimoinestandon.com",
+    "address": "Saint-Léon-de-Standon, QC G0R 4L0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-du-patrimoine-de-saint-vi-ca",
+    "name": "Société du patrimoine de Saint-Victor-de-Beauce (La)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Victor",
+    "province": "QC",
+    "phone": "418-588-6854",
+    "description": "Préservation de l'héritage historique, ethnographique, agricole et religieux de la collectivité victoroise * sauvegarde, conservation et diffusion du patrimoine",
+    "address": "109 Rue Commerciale, Saint-Victor, QC G0M 2B0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-du-patrimoine-de-sainte-c-ca",
+    "name": "Société du patrimoine de Sainte-Claire",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Claire",
+    "province": "QC",
+    "phone": "418-883-4246",
+    "description": "Mise en valeur et conservation du patrimoine local * centre d'interprétation : La maison du docteur Joseph Arthur Noé Chabot et La maison de M. Eugène Prévost * exposition permanente : Médecins de cam ... [Plus] | Âges : 8 an(s) et plus",
+    "website": "http://www.maisonschabotprevost.ca",
+    "address": "108 Rue Principale, Sainte-Claire, QC G0R 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-du-patrimoine-de-thetford-ca",
+    "name": "Société du patrimoine de Thetford Mines",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-332-2103 poste 305",
+    "description": "Conservation et mise en valeur du patrimoine culturel et historique de Thetford Mines",
+    "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "soci-t-d-horticulture-de-sept-le-cn",
     "name": "Société d’horticulture de Sept-Îles",
     "category": "social",
@@ -48732,6 +60826,82 @@ const __SERVICES_FROM_API: Service[] = [
     "phone": "",
     "description": "Regroupement de personnes intéressées par l'horticulture et la préservation de l'environnement * ateliers et conférences",
     "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-historique-alphonse-desja-ca",
+    "name": "Société historique Alphonse-Desjardins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-2090",
+    "description": "Sauvegarde et mise en valeur l'histoire et le patrimoine du Mouvement Desjardins et de son fondateur * visites guidées, exposition permanente, documentation spécialisée, publications historiques, acti ... [Plus]",
+    "website": "http://www.desjardins.com/a-propos/desjardins/qui-nous-sommes/notre-histoire-musee/index.jsp",
+    "address": "Bd Alphonse-Desjardins, Lévis, QC G6V, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-historique-sartigan-ca",
+    "name": "Société historique Sartigan",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-6176",
+    "description": "Protection, interprétation, valorisation et diffusion du patrimoine de Saint-Georges * exposition * documentaires et exposition participative « Au cœur de notre rivière Chaudière » * publications",
+    "website": "http://www.shsartigan.com",
+    "address": "250 18e Rue, Saint-Georges, QC G5Y 4T9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-historique-de-bellechasse-ca",
+    "name": "Société historique de Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Damien-de-Buckland",
+    "province": "QC",
+    "phone": "418-907-5350",
+    "description": "Promotion et diffusion du patrimoine de Bellechasse * accès aux bibliothèques généalogiques de Beaumont et de Sainte-Claire * rénovation, inventaire et sauvegarde du patrimoine * ateliers d'initiation ... [Plus] | Âges : 16 an(s) et plus",
+    "website": "http://www.shbellechasse.com",
+    "address": "163A Rue Commerciale, Saint-Damien-de-Buckland, QC G0R 2Y0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-historique-de-disraeli-ca",
+    "name": "Société historique de Disraeli",
+    "category": "social",
+    "subcategory": "",
+    "city": "Disraeli",
+    "province": "QC",
+    "phone": "418-449-5155 poste 6",
+    "description": "Préservation et diffusion du patrimoine * sensibilisation de la population à l'histoire locale * expositions et conférences * ateliers de recherche en généalogie | Clientèle : Personnes intéressées à l'histoire locale | Âges : 12 an(s) et plus",
+    "address": "Ville de Disraeli, QC G0N 1E0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-historique-de-nouvelle-be-ca",
+    "name": "Société historique de Nouvelle-Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-7221",
+    "description": "Promotion de la reconnaissance des pionniers de l'air, civils et protection du patrimoine * Musée de l'aviation * Musée du Major Dupuis, 2eme Guerre Mondiale, débarquement de Normandie * cabane à sucr ... [Plus]",
+    "website": "http://www.museedelaviation.com",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-historique-de-saint-nicol-ca",
+    "name": "Société historique de Saint-Nicolas et Bernières",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-496-1994",
+    "description": "Conservation et diffusion du patrimoine * promotion de la généalogie * centre de documentation avec volet de généalogie * publications en vente au presbytère | Âges : 7 an(s) et plus",
+    "address": "1012 Chem. Olivier, Saint-Nicolas, QC G7A 2M9, Canada",
     "hours": "Voir site web"
   },
   {
@@ -48783,6 +60953,31 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Amélioration de la qualité de vie des animaux domestiques en contribuant à leur santé, bien-être et sécurité * éducation et sensibilisation de la population à l'importance de la vie animale * refuge p ... [Plus]",
     "website": "http://spcacotenord.ca",
     "address": "Sept-Iles, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-protectrice-des-animaux-d-ca-2",
+    "name": "Société protectrice des animaux de Thetford Mines",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-332-2772",
+    "description": "Protection des animaux * information et éducation du public * refuge : adoption (liste des animaux via Facebook), réclamation et réception * boutique : vente de nourriture et articles pour animaux * c ... [Plus]",
+    "address": "Thetford Mines, QC G6H 4G6, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "soci-t-protectrice-des-animaux-d-ca",
+    "name": "Société protectrice des animaux de la Ville de Lévis",
+    "category": "housing",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-832-2525",
+    "description": "Amélioration de la qualité de vie des animaux domestiques en contribuant à leur santé, bien-être et sécurité * promotion du respect de la vie animale * animaux perdus ou trouvés, contrôle, hébergement ... [Plus]",
+    "website": "http://spadelevis.com",
+    "address": "Saint-Nicolas, Levis, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -48850,6 +61045,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "mardi et jeudi 10h30 à 12h30"
   },
   {
+    "id": "soupe-au-bouton-ca",
+    "name": "Soupe au bouton",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Jean-Port-Joli",
+    "province": "QC",
+    "phone": "418-358-6001",
+    "description": "Développement et soutien des initiatives en sécurité alimentaire et matérielle afin de favoriser l'autonomie des personnes et le développement social * accompagnement pour la mise en place de jardins ... [Plus]",
+    "website": "http://soupeaubouton.ca",
+    "address": "Saint-Jean-Port-Joli, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "soupi-re-de-l-amiti-de-gatineau--out",
     "name": "Soupière De L'Amitié De Gatineau (La)",
     "category": "food",
@@ -48887,6 +61095,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.lasourcedesjeunes.net",
     "address": "100, rue du Commandeur, Cantley, Outaouais, QC, J8V 3T5",
     "hours": "administration: lundi au vendredi 9h00 à 16h00, activités: mercredi 17h00 à 20h00, jeudi et vendredi 17h00 à 21h00"
+  },
+  {
+    "id": "source-de-sainte-marie-la-ca",
+    "name": "Source de Sainte-Marie (La)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-387-6501 (laisser un message)",
+    "description": "Aide aux personnes démunies par dépannage alimentaire et vestimentaire * soutien au mieux-être et développement de l'autonomie * accueil * information sur les ressources du milieu * expérience de trav ... [Plus]",
+    "website": "http://lasourcestemarie.com/",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "source-de-sainte-marie-la-compto-ca",
+    "name": "Source de Sainte-Marie (La), Comptoir vestimentaire",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Sainte-Marie",
+    "province": "QC",
+    "phone": "418-209-8529",
+    "description": "Récupération et vente de vêtements, meubles et petits accessoires * expérience de travail bénévole",
+    "website": "http://lasourcestemarie.com",
+    "address": "Sainte-Marie, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "sourire-sans-fin-mtg",
@@ -48990,6 +61224,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Radio communautaire anglaise * information critique et participation du milieu * programmation variée en musique et information Accrédité par le Conseil de la radiodiffusion et des télécommunications ... [Plus] | Clientèle : Le grand public",
     "website": "http://www.cjasradio.ca",
     "address": "Ariège, France",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "station-de-radio-cjmd-96-9-fm-ca",
+    "name": "Station de radio CJMD 96,9 FM",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "Studio 418-903-5969",
+    "description": "Production d'émissions préconisant information, éducation et divertissement * lieu de rassemblement pour la population offrant encadrement du personnel et formation des bénévoles, présence active dans ... [Plus] | Clientèle : Administration 418-903-7969",
+    "website": "http://969fm.ca",
+    "address": "Levis, QC, Canada",
     "hours": "Voir site web"
   },
   {
@@ -49309,6 +61556,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isUrgent": true
   },
   {
+    "id": "table-action-solidarit-bellechas-ca",
+    "name": "Table Action Solidarité Bellechasse",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Lazare-de-Bellechasse",
+    "province": "QC",
+    "phone": "418-883-1587 poste 202",
+    "description": "Regroupement de personnes et organisations de Bellechasse préoccupées par l'appauvrissement, la pauvreté et l'exclusion sociale * élaboration, mise en œuvre et soutien d'un plan d'action territorial d ... [Plus] | Clientèle : Organismes communautaires * le grand public",
+    "website": "http://www.cdcbellechasse.ca",
+    "address": "27d Bd Bégin, Sainte-Claire, QC G0R 2V0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "table-de-concertation-de-laval-e-lav",
     "name": "Table De Concertation De Laval En Condition Féminine",
     "category": "social",
@@ -49514,6 +61774,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "table-r-gionale-des-organismes-c-ca",
+    "name": "Table régionale des organismes communautaires actifs en santé mentale Région 12",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-4948 poste 105",
+    "description": "Lieu d'échange, de ressourcement, de diffusion d'informations et de formation dans le domaine de la santé mentale * soutien au regroupement, à la solidarité et la concertation des organismes communaut ... [Plus] | Clientèle : Organismes communautaires œuvrant dans le secteur de la santé mentale",
+    "website": "http://trocasm.com",
+    "address": "Montmagny, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "table-r-gionale-des-organismes-c-ca-2",
+    "name": "Table régionale des organismes communautaires de Chaudière-Appalaches",
+    "category": "health",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-5334",
+    "description": "Regroupement d'organismes visant à représenter le mouvement communautaire en santé et services sociaux de Chaudière-Appalaches * défense des droits * représentation et accompagnement Collaboration ave ... [Plus] | Clientèle : Organismes communautaires œuvrant en santé et services sociaux sur le territoire et reconnus par le Centre intégré de santé et de services sociaux de Chaudière-Appalaches (CISSS)",
+    "website": "http://www.trocca.com",
+    "address": "Levis, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "table-r-gionale-des-organismes-c-cn",
     "name": "Table régionale des organismes communautaires et Corporation de développement communautaire de la Côte-Nord",
     "category": "social",
@@ -49524,6 +61810,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Regroupement régional d'organismes d'action communautaire autonome * interlocuteur officiel pour les dossiers d'intérêt commun * tables d'organismes communautaires (TOC) dans chaque MRC * soutien et f ... [Plus] | Clientèle : Organismes d'action communautaire autonome",
     "website": "https://troc09.org/",
     "address": "767 Rue de Puyjalon, Baie-Comeau, QC G5C 1M9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "table-r-gionale-d-conomie-social-ca",
+    "name": "Table régionale d’économie sociale de Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "",
+    "description": "Regroupement d’entreprises d’économie sociale et de partenaires en développement économique et communautaire concernés par l’économie sociale | Clientèle : Entreprises d'économie sociale",
+    "website": "http://www.tresca.ca",
+    "address": "6150 Rue Saint-Georges, Lévis, QC G6V 4J8, Canada",
     "hours": "Voir site web"
   },
   {
@@ -49603,6 +61902,32 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://tandem-mauricie.org",
     "address": "1579, rue Laviolette, Trois-Rivières, QC G9A 1W5",
     "hours": "Lun-ven 8h30-16h30. Sur RV ou référence médicale."
+  },
+  {
+    "id": "taxibus-saint-georges-ca",
+    "name": "Taxibus Saint-Georges",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-221-0066",
+    "description": "Service de transport collectif par taxi Localiser une borne https://www.saint-georges.ca/storage/app/media/services/services-aux-citoyens/taxibus/Carte-Taxibus.pdf ... [Plus] | Clientèle : Résidents de Saint-Georges",
+    "website": "http://taxibus.saint-georges.ca",
+    "address": "11280 Av. 2e, Saint-Georges, QC G5Y 1W1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "taxibus-thetford-mines-ca",
+    "name": "Taxibus Thetford Mines",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-7888",
+    "description": "Service de transport collectif par taxi * carte des points d'arrêt disponible au bureau de répartition et à l'hôtel de ville, au 144, rue Notre-Dame Ouest ou via le site Internet",
+    "website": "http://www.villethetford.ca/vivre-a-thetford/deplacements/taxibus",
+    "address": "40 Rue Notre Dame E, Thetford Mines, QC G6G 2J7, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "tdl-lanaudiere-msc",
@@ -49738,6 +62063,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au jeudi 7h50 à 16h00, vendredi 8h00 à 12h10"
   },
   {
+    "id": "thetford-mines-h-tel-de-ville-ca",
+    "name": "Thetford Mines. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-2981",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque de Black Lake 418-423-4291 poste 3320",
+    "website": "http://www.villethetford.ca",
+    "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "thorne-municipalit-out",
     "name": "Thorne - Municipalité",
     "category": "housing",
@@ -49790,6 +62128,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "toastmasters-division-i-capitale-ca",
+    "name": "Toastmasters, Division I - Capitale-Nationale - Chaudière-Appalaches - Bas-Saint-Laurent - Saguenay-Lac-Saint-Jean - Saint-Georges de Beauce, Division I - Capitale-Nationale - Chaudière-Appalaches - Bas-Saint-Laurent - Saguenay-Lac-Saint-Jean, Saint-Georges de Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "",
+    "description": "Développement des connaissances en communication orale et en leadership dans le but d'accroître sa confiance en soi et favoriser la croissance personnelle Rencontres hebdomadaires pour * apprendre à p ... [Plus] | Clientèle : Adultes | Âges : 18 an(s) et plus",
+    "address": "Saint-Georges, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "toits-d-mile-les-mtg",
     "name": "Toits D'Émile (Les)",
     "category": "mentalHealth",
@@ -49827,6 +62177,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://www.toronto.ca/community-people/health-wellness-care/",
     "address": "100 Queen St W, Toronto, ON M5H 2N2",
     "hours": "Lun-ven 8h30-16h30. Pour urgence: 811 (Info-Santé) ou urgence hospitalière."
+  },
+  {
+    "id": "tourisme-chaudi-re-appalaches-ca",
+    "name": "Tourisme Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Nicolas",
+    "province": "QC",
+    "phone": "418-831-4411",
+    "description": "Développement et promotion du tourisme dans la région de la Chaudière-Appalaches * accueil et information * promotion touristique des MRC sur le territoire et de la ville de Lévis * sensibilisation * ... [Plus]",
+    "website": "http://www.chaudiereappalaches.com",
+    "address": "800 A. Jean-Lesage, Saint-Nicolas, QC G7A 1E3, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "tourisme-c-te-nord-cn",
@@ -49881,6 +62244,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h30 à 16h30"
   },
   {
+    "id": "tourville-h-tel-de-ville-ca",
+    "name": "Tourville. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Tourville",
+    "province": "QC",
+    "phone": "418-359-2106",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://muntourville.qc.ca",
+    "address": "Tourville, QC G0R, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "tra-mont-r-gie-mtg",
     "name": "Tra Montérégie",
     "category": "family",
@@ -49918,6 +62294,45 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.traitdunionoutaouais.com/fr/accueil",
     "address": "109, rue Wright, bureau 109, Gatineau, Outaouais, QC, J8X 2G7",
     "hours": "lundi au vendredi 8h00 à 15h00"
+  },
+  {
+    "id": "trait-d-union-le-groupe-d-entrai-ca",
+    "name": "Trait d'union (Le), groupe d'entraide en santé mentale",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-4948",
+    "description": "Regroupement d'entraide aux niveaux personnel, social ou professionnel pour adultes ayant ou ayant eu une problématique de santé mentale Volet entraide * ateliers : développement personnel et connaiss ... [Plus] | Clientèle : Adultes vivant avec un problème de santé mentale (fonctionnant bien en groupe et qui a une capacité d'introspection) | Âges : 18 an(s) et plus",
+    "website": "http://traitdunionmontmagny.com",
+    "address": "64 Rue St Jean Baptiste O, Montmagny, QC G5V 3B7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "trajectoire-emploi-ca",
+    "name": "Trajectoire emploi",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-7122",
+    "description": "Services en employabilité, recherche d'emploi, orientation, bilan des compétences, stage en entreprise, entrepreneuriat, services sans rendez-vous, soutien personnalisé * accompagnement et soutien à l ... [Plus] | Clientèle : Jeunes adultes * adultes",
+    "website": "http://www.trajectoireemploi.com",
+    "address": "49 Rue Fortier Bureau 203, Lévis, QC G6V 6K9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "trajectoire-emploi-services-carr-ca",
+    "name": "Trajectoire emploi, Services Carrefour jeunesse-emploi",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-7122",
+    "description": "Intégration sociale et professionnelle des jeunes adultes * information : marché du travail, stages et études à l'étranger, programmes d'études, établissements d'enseignement, demandes d'inscription, ... [Plus] | Clientèle : Jeunes adultes * adultes | Âges : 15 an(s) - 49 an(s)",
+    "website": "http://www.trajectoireemploi.com",
+    "address": "49 Rue Fortier Bureau 203, Lévis, QC G6V 6K9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "transit-sept-les-cn",
@@ -49959,6 +62374,83 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "administration: lundi au vendredi 8h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "transport-autonomie-beauce-etche-ca",
+    "name": "Transport Autonomie Beauce-Etchemins",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Georges",
+    "province": "QC",
+    "phone": "418-227-4147",
+    "description": "Organisation du service de transport des personnes ayant un handicap et du transport collectif pour les MRC de Beauce-Sartigan et des Etchemins Transport des personnes ayant un handicap * quatre minib ... [Plus] | Clientèle : Taxi collectif 418-227-2626",
+    "website": "http://transportautonomie.com",
+    "address": "10961 Av. 2e, Saint-Georges, QC G5Y 1V9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "transport-adapt-de-la-r-gion-de--ca",
+    "name": "Transport adapté de la région de Thetford",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-6599",
+    "description": "Service de transport adapté par minibus et taxi accessible | Clientèle : Personnes admissibles au transport adapté",
+    "address": "37 Rue Notre Dame O, Thetford Mines, QC G6G 1J1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "transport-adapt-et-collectif-l-i-ca",
+    "name": "Transport adapté et collectif L'Islet-Sud",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Pamphile",
+    "province": "QC",
+    "phone": "418-356-2116",
+    "description": "Transport adapté aux personnes ayant un handicap et transport collectif selon les places disponibles | Clientèle : Personnes admises ayant un handicap intellectuel, ambulatoire ou psychique * le grand public selon les places disponibles",
+    "website": "http://www.transadaptelislet.ca",
+    "address": "240 Rue Saint-Pierre, Saint-Pamphile, QC G0R 3X0, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "transport-collectif-et-adapt-de--ca",
+    "name": "Transport collectif et adapté de la MRC de Montmagny",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-0445 poste 1",
+    "description": "Service de transport collectif et adapté, sur demande, pour tous les citoyens de la MRC de Montmagny pour rendez-vous médicaux, loisirs, travail et études * voyages spéciaux ouverts à tous pour activi ... [Plus]",
+    "website": "http://tcamontmagny.ca",
+    "address": "6 Rue St Jean Baptiste E bureau 143, Montmagny, QC G5V 1J7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "transport-collectif-et-adapt-de--ca-2",
+    "name": "Transport collectif et adapté de la MRC de Montmagny, Transport adapté",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-0445",
+    "description": "Service de transport adapté desservant 8 municipalités de la MRC de Montmagny : * Saint-Just-de-Bretenières * Sainte-Lucie-de-Beauregard * Lac-Frontière * Saint-Fabien-de-Panet * Sainte-Apolline-de-Pa ... [Plus]",
+    "website": "https://tcamontmagny.ca/",
+    "address": "6 Rue St Jean Baptiste E bureau 143, Montmagny, QC G5V 1J7, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "transport-collectif-et-adapt-de--ca-3",
+    "name": "Transport collectif et adapté de la MRC de Montmagny, Transport en commun",
+    "category": "social",
+    "subcategory": "",
+    "city": "Montmagny",
+    "province": "QC",
+    "phone": "418-248-0445",
+    "description": "Service de transport en commun desservant le territoire de la MRC de Montmagny",
+    "website": "http://tcamontmagny.ca",
+    "address": "6 Rue St Jean Baptiste E bureau 143, Montmagny, QC G5V 1J7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "travail-de-rue-le-de-laval-lav",
     "name": "Travail De Rue Île De Laval",
     "category": "food",
@@ -49970,6 +62462,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.trilstation.org",
     "address": "106, boulevard de la Concorde Est, Pont-Viau, Laval, QC, H7G 2B9",
     "hours": "administration: lundi au vendredi 9h00 à 16h30, Station des jeunes: lundi et mercredi 12h00 à 18h00, mardi et jeudi 18h00 à 22h00"
+  },
+  {
+    "id": "travail-jeunesse-ca",
+    "name": "Travail Jeunesse",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-7182",
+    "description": "Entreprise d'insertion œuvrant dans la sous-traitance manufacturière * insertion en emploi pour des jeunes (17-35 ans) permettant l'acquisition de compétences professionnelles et personnelles Programm ... [Plus] | Âges : 17 an(s) - 35 an(s)",
+    "website": "http://travailjeunesse.ca",
+    "address": "8890 Bd Guillaume-Couture, Lévis, QC G6V 9H1, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "travail-de-rue-lavaltrie-lava",
@@ -50065,6 +62570,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "24 heures, 7 jours, admission hébergement de crise: 9h00 à 20h00"
   },
   {
+    "id": "tremplin-le-centre-pour-personne-ca",
+    "name": "Tremplin (Le), Centre pour personnes immigrantes et leurs familles",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-603-3512",
+    "description": "Soutien et intégration des personnes immigrantes et à leurs familles de la région de Lévis * services adaptés aux besoins des individus, des entreprises et des organisations Service aux personnes immi ... [Plus] | Clientèle : Personnes immigrantes et leur famille",
+    "website": "http://www.letremplinlevis.com",
+    "address": "735 Av. Nérée-Tremblay, Québec, QC G1V 4W5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "tremplin-des-lecteurs-le-out",
     "name": "Tremplin Des Lecteurs (Le)",
     "category": "social",
@@ -50155,6 +62673,19 @@ const __SERVICES_FROM_API: Service[] = [
     "isProvinceWide": true
   },
   {
+    "id": "tring-jonction-h-tel-de-ville-ca",
+    "name": "Tring-Jonction. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Tring-Jonction",
+    "province": "QC",
+    "phone": "418-426-2497",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus]",
+    "website": "http://www.tringjonction.qc.ca",
+    "address": "Tring-Jonction, QC G0N, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "troupe-art-sc-ne-la-cn",
     "name": "Troupe Art scène (La)",
     "category": "social",
@@ -50194,6 +62725,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "troupe-de-th-tre-entr-amis-l-vis-ca",
+    "name": "Troupe de théâtre Entr'Amis Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Étienne-de-Lauzon",
+    "province": "QC",
+    "phone": "819-562-4032",
+    "description": "Troupe de théâtre regroupant des comédiens amateurs * montage et présentation d'une pièce de théâtre annuellement",
+    "website": "http://www.entramislevis.ca",
+    "address": "5234 Rte des Rivières, Saint-Étienne-de-Lauzon, QC G6J 1A8, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "troupe-le-th-tre-la-patente-cn",
     "name": "Troupe le théâtre La Patente",
     "category": "social",
@@ -50217,6 +62761,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "tressaintredempteur.ca",
     "address": "769, route Principale, Très-Saint-Rédempteur, Montérégie, QC, J0P 1P1",
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30"
+  },
+  {
+    "id": "t-l-surveillance-sant-chaudi-re--ca",
+    "name": "Télé-surveillance Santé - Chaudière-Appalaches",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-3301",
+    "description": "Équipements et services de communication aidant au maintien à domicile des personnes en perte d’autonomie ou à risque sur le plan biopsychosocial dans la région administrative de Chaudière-Appalaches ... [Plus] | Clientèle : Personnes de tous âges en perte d’autonomie, ayant des problèmes de santé ou des déficiences physiques, ou souhaitant bénéficier d’un sentiment de sécurité à leur domicile",
+    "website": "http://www.tssca.ca",
+    "address": "Lac-Etchemin, QC G0R, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "nb-health-line",
@@ -50258,6 +62815,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "www.tvrs.ca",
     "address": "893, boulevard Guimond, Longueuil, Montérégie, QC, J4G 2M7",
     "hours": "9h00 à 17h00"
+  },
+  {
+    "id": "t-l-vision-communautaire-de-la-r-ca",
+    "name": "Télévision communautaire de la région des Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-8444",
+    "description": "Télévision communautaire assurant la promotion des intérêts sociaux, économiques et culturels de la région * diffusion d'information, formation et participation populaire * production de 7 émissions t ... [Plus]",
+    "website": "http://www.tvcra.com",
+    "address": "228 Rue Notre Dame O, Thetford Mines, QC G6G 2X9, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "t-l-vision-communautaire-du-litt-cn",
@@ -50400,6 +62970,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 8h00 à 15h00, nuits très froides: 22h00 à 6h00"
   },
   {
+    "id": "unit-r-gionale-de-loisir-et-de-s-ca",
+    "name": "Unité régionale de loisir et de sport de la Chaudière-Appalaches",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-5678",
+    "description": "Contribution, en concertation avec l'ensemble de ses partenaires, à l'amélioration de la qualité de vie dans la région de la Chaudière-Appalaches, par une accessibilité universelle à la pratique sécur ... [Plus] | Clientèle : Organismes de la Chaudière-Appalaches et leurs membres",
+    "website": "http://www.urls-ca.qc.ca",
+    "address": "5501 Rue Saint-Georges, Lévis, QC G6V 4M7, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "universit-de-sherbrooke-clinique-mtg",
     "name": "Université De Sherbrooke - Clinique De Médiation",
     "category": "social",
@@ -50465,6 +63048,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "universit-du-qu-bec-rimouski-cam-ca",
+    "name": "Université du Québec à Rimouski, Campus de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-8800",
+    "description": "Institution de formation, de recherche et de services à la collectivité de niveau universitaire Baccalauréat * administration * enseignement au préscolaire-primaire * enseignement en adaptation scolai ... [Plus] | Clientèle : Variable selon les programmes",
+    "website": "https://www.uqar.ca/",
+    "address": "1595 Bd Alphonse-Desjardins, Lévis, QC G6V 0A6, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "vaisseau-d-or-des-moulins-le-trb",
     "name": "Vaisseau D'Or (des Moulins) (le)",
     "category": "food",
@@ -50476,6 +63072,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "https://vaisseaudor.com",
     "address": "486, rue Gagnon, Terrebonne, Lanaudière, QC, J6W 2N7",
     "hours": "lundi au vendredi 10h00 à 17h00"
+  },
+  {
+    "id": "val-alain-h-tel-de-ville-ca",
+    "name": "Val-Alain. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Val-Alain",
+    "province": "QC",
+    "phone": "418-744-3222",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain et autres La nature, l'étendue et l' ... [Plus] | Clientèle : Bibliothèque 418-744-3313",
+    "website": "https://www.val-alain.com/",
+    "address": "Val-Alain, QC G0S 3H0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "val-des-bois-municipalit-out",
@@ -50527,6 +63136,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Accompagnement de la personne gravement atteinte (soins palliatifs) ou au dernier stade de sa vie et soutien à sa famille * répit aux proches aidants à domicile * soutien de groupe ou individuel pour ... [Plus] | Clientèle : Ligne d'écoute Fil d'espoir 418-589-7741",
     "website": "http://lavalleedesroseaux.org",
     "address": "2370 Bd Laflèche, Baie-Comeau, QC G5C 1E4, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "vall-e-jonction-h-tel-de-ville-ca",
+    "name": "Vallée-Jonction. Hôtel de ville",
+    "category": "social",
+    "subcategory": "",
+    "city": "Vallée-Jonction",
+    "province": "QC",
+    "phone": "418-253-5515",
+    "description": "Assume des responsabilités en aménagement et urbanisme, habitation, voirie, développement communautaire et culturel, loisirs, transports en commun en milieu urbain, assainissement des eaux usées et au ... [Plus] | Clientèle : Bibliothèque Saint-François d'Assise 418-253-5515 poste 106",
+    "website": "http://www.valleejonction.qc.ca",
+    "address": "Vallée-Jonction, QC G0S, Canada",
     "hours": "Voir site web"
   },
   {
@@ -50699,6 +63321,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "vigne-la-ca",
+    "name": "Vigne (La)",
+    "category": "food",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-338-0500",
+    "description": "Collecte et distribution d'aliments aux personnes à faible revenu * banque alimentaire * panier de Noël | Clientèle : Personnes à faible revenu référées par les Sociétés de Saint-Vincent de Paul, intervenants des services sociaux, autorités religieuses ou comités de citoyens",
+    "website": "http://www.banquealimentairelavigne.com",
+    "address": "47 Rue Gagné Porte 6, Thetford Mines, QC G6G 4G4, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "vilavi-centre-de-traitement-des-dep-trb",
     "name": "Vilavi - Centre de Traitement des Dépendances",
     "category": "mentalHealth",
@@ -50824,6 +63459,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "visiontravail.ca",
     "address": "125, chemin du Coteau-Rouge, bureau 201, Longueuil, Montérégie, QC, J4J 1W7",
     "hours": "lundi au jeudi 8h30 à 12h00 et 13h00 à 16h30, vendredi 8h30 à 12h00"
+  },
+  {
+    "id": "vivre-et-aimer-ca",
+    "name": "Vivre et Aimer",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "418-496-3882",
+    "description": "Mouvement de pastorale familiale favorisant la croissance du couple * suivi et communauté de soutien * fins de semaine de ressourcement * fins de semaine avec d'autres couples * animation par des pers ... [Plus] | Clientèle : Couples * prêtres * religieux * religieuses | Âges : 18 an(s) et plus",
+    "website": "http://www.vivreetaimer.com",
+    "address": "Saint-Rédempteur, Levis, QC, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "voix-et-solidarit-des-aidants-na-out",
@@ -51342,6 +63990,32 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 7h00 à 16h00, samedi 10h00 à 16h00"
   },
   {
+    "id": "cole-crescendo-de-saint-r-dempte-ca",
+    "name": "École Crescendo de Saint-Rédempteur",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Rédempteur",
+    "province": "QC",
+    "phone": "418-956-3375",
+    "description": "École de musique offrant à tous une chance de découverte, d'amélioration ou de perfectionnement de son intérêt pour la musique * cours de musique : batterie, chant, éveil musical (3-5 ans), flûte, gui ... [Plus] | Clientèle : Enfants * adolescents * adultes",
+    "website": "https://ecolecrescendo.ca/",
+    "address": "95 Rue du Grand-Tronc, Saint-Rédempteur, QC G6K 1E5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cole-solidartis-ca",
+    "name": "École Solidartis",
+    "category": "employment",
+    "subcategory": "",
+    "city": "Charny",
+    "province": "QC",
+    "phone": "367-383-3821",
+    "description": "Cours et ateliers en arts visuels et métiers d’arts à travers différents médiums * initiation aux arts visuels * travail du verre: bijoux, fusion, mosaïque, thermoformage et vitrail, émail sur cuivre, ... [Plus] | Âges : 7 an(s) et plus",
+    "website": "http://ecolesolidartis.ca",
+    "address": "3315 Av. des Églises, Charny, QC G6X 1W2, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "cole-de-danse-de-sept-les-cn",
     "name": "École de danse de Sept-Îles",
     "category": "social",
@@ -51355,6 +64029,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "Voir site web"
   },
   {
+    "id": "cole-de-danse-l-danse-ca",
+    "name": "École de danse Élédanse",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-6031",
+    "description": "École de danse * cours de danse : ballet classique, contemporain, danse enfant, danse de couple, jazz * troupes de danse (dès 8 ans) * programme Danse-études en collaboration avec le Centre de service ... [Plus] | Âges : 2 an(s) et plus",
+    "website": "http://eledanse.com",
+    "address": "36 Rue Valère-Plante, Lévis, QC G6V 6Z5, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "cole-de-musique-c-te-nord-cn",
     "name": "École de musique Côte-Nord",
     "category": "social",
@@ -51365,6 +64052,19 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Académie musicale et organisation à but non lucratif offrant des cours d'instrument musical et de chant, individuels et en groupes * formation préparatoire musicale complète académique et de loisirs ( ... [Plus] | Âges : 3 an(s) et plus",
     "website": "http://www.emcn.org",
     "address": "1660 Rue de Bretagne, Baie-Comeau, QC G5C 3S3, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cole-de-musique-j-sus-marie-ca",
+    "name": "École de musique Jésus-Marie",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-833-4530",
+    "description": "Enseignement de la musique pour élèves débutants, intermédiaires et avancés * formation instrumentale : accordéon, alto, basse électrique, batterie, chant, chorale, clarinette, combo, contrebasse, flû ... [Plus] | Clientèle : Enfants et adultes",
+    "website": "http://www.emjm.org",
+    "address": "294 Rue Saint-Joseph, Lévis, QC G6V 1G2, Canada",
     "hours": "Voir site web"
   },
   {
@@ -51390,6 +64090,57 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "École d'enseignement de la musique * cours individuels ou de groupe * concert",
     "website": "https://ecoledemusique7iles.proinscription.com/inscription",
     "address": "500 Av. Jolliet, Sept-Îles, QC G4R 2A1, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cole-de-musique-l-accroche-notes-ca",
+    "name": "École de musique l'Accroche Notes",
+    "category": "family",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-838-6104",
+    "description": "Enseignement de la musique pour étudiants débutants et avancés Cours aux enfants (jusqu'à 12 ans) * éveil musical (18 mois à 5 ans) * initiation à un instrument (guitare, piano, chant) (4 à 10 ans) * ... [Plus] | Clientèle : Tout-petits dès 18 mois avec un parent * enfants * adolescents * adultes",
+    "website": "http://www.accrochenotes.ca",
+    "address": "36 Rue Valère-Plante, Lévis, QC G6V 6Z5, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cole-des-puces-de-saint-lambert--ca",
+    "name": "École des puces de Saint-Lambert-de-Lauzon",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Saint-Lambert-de-Lauzon",
+    "province": "QC",
+    "phone": "418-889-9679",
+    "description": "Préparation des enfants à la maternelle et soutien aux parents * ateliers de stimulation, socialisation, enrichissement des connaissances générales et linguistiques * développement de la psychomotrici ... [Plus] | Clientèle : Enfants d'âge préscolaire | Âges : 3 an(s) - 5 an(s)",
+    "address": "Saint-Lambert-de-Lauzon, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "cole-du-milieu-de-l-vis-ca",
+    "name": "École du milieu de Lévis",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-741-3477",
+    "description": "Milieu alternatif d'apprentissage accompagnant les personnes sans diplôme dans leur processus de réconciliation avec l'école au moyen de services adaptés * enseignement adapté du français et des mathé ... [Plus] | Clientèle : Jeunes adultes sans diplôme souhaitant être accompagnées dans leur processus de réconciliation avec l'école | Âges : 16 an(s) et plus",
+    "website": "http://www.ecoledumilieu.ca",
+    "address": "49 Rue Fortier Bureau 203, Lévis, QC G6V 6K9, Canada",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "colivres-ca",
+    "name": "Écolivres",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lévis",
+    "province": "QC",
+    "phone": "418-835-5150 poste 0",
+    "description": "Entreprise d'économie sociale œuvrant dans la vente et le recyclage de livres, revues et disques usagés * cueillette à domicile, recyclage, récupération et vente de livres, revues et disques usagés * ... [Plus] | Clientèle : Le grand public * personnes vivant des difficultés d'intégration au travail",
+    "website": "http://www.ecolivres.org",
+    "address": "38 Rue Charles-A.- Cadieux Suite 130, Lévis, QC G6V 7Z6, Canada",
     "hours": "Voir site web"
   },
   {
@@ -51549,6 +64300,18 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 17h00"
   },
   {
+    "id": "picerie-pop-ca",
+    "name": "Épicerie Pop",
+    "category": "social",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-3836",
+    "description": "Épicerie économique * produits de première nécessité à prix modique et plat préparés",
+    "address": "199B Rue du Sanatorium, Lac-Etchemin, QC G0R 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "picerie-sociale-pi-soc-mtg",
     "name": "Épicerie Sociale Épi'Soc",
     "category": "food",
@@ -51560,6 +64323,19 @@ const __SERVICES_FROM_API: Service[] = [
     "website": "cabiberville.org",
     "address": "290, avenue des Conseillers, Saint-Jean-sur-Richelieu, Montérégie, QC, J2X 1Z8",
     "hours": "mardi et mercredi 13h00 à 16h00, jeudi et vendredi 8h30 à 11h30"
+  },
+  {
+    "id": "quijustice-beauce-ca",
+    "name": "Équijustice Beauce",
+    "category": "social",
+    "subcategory": "",
+    "city": "Saint-Joseph-de-Beauce",
+    "province": "QC",
+    "phone": "418-397-6578",
+    "description": "* gestion et application des mesures prévues par la Loi sur le système de justice pénale pour les adolescents (LSJPA) * gestion et application du programme de mesures de rechange général (PMRG) * gest ... [Plus] | Clientèle : Médiation citoyenne 418-397-6578 poste 1 | Âges : 12 an(s) et plus",
+    "website": "http://www.equijustice.ca",
+    "address": "Rue Ste Christine, Saint-Joseph-de-Beauce, QC G0S 2V0, Canada",
+    "hours": "Voir site web"
   },
   {
     "id": "quijustice-c-te-nord-est-cn",
@@ -51640,6 +64416,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 17h00"
   },
   {
+    "id": "quinoxes-de-thetford-mines-les-ca",
+    "name": "Équinoxes de Thetford Mines (Les)",
+    "category": "social",
+    "subcategory": "",
+    "city": "Thetford Mines",
+    "province": "QC",
+    "phone": "418-335-3651",
+    "description": "Promotion et développement de la natation à Thetford Mines * cours de natation en groupe * bains libres * entraînement * formation de maîtres-nageurs Piscine du club * Polyvalente de Thetford Mines, 5 ... [Plus] | Clientèle : Le grand public",
+    "website": "http://www.natationequinoxes.ca",
+    "address": "Thetford Mines, QC, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "equipe-entreprise-l-drv",
     "name": "Équipe Entreprise (l')",
     "category": "food",
@@ -51718,6 +64507,19 @@ const __SERVICES_FROM_API: Service[] = [
     "hours": "lundi au vendredi 9h00 à 12h00 et 13h00 à 16h00"
   },
   {
+    "id": "veil-l-ca",
+    "name": "Éveil (L')",
+    "category": "mentalHealth",
+    "subcategory": "",
+    "city": "Lac-Etchemin",
+    "province": "QC",
+    "phone": "418-625-3817",
+    "description": "Amélioration de la qualité de vie des personnes atteintes d'un trouble de santé mentale et soutien à leur intégration sociale * atelier d'information et discussion * loisir * entraide Travail * savonn ... [Plus] | Clientèle : Adultes atteints d'un trouble de santé mentale | Âges : 18 an(s) - 65 an(s)",
+    "website": "http://www.lesateliersdeleveil.com",
+    "address": "200 Rue du Sanatorium, Lac-Etchemin, QC G0R 1S0, Canada",
+    "hours": "Voir site web"
+  },
+  {
     "id": "tre-et-devenir-out",
     "name": "Être Et Devenir",
     "category": "family",
@@ -51728,6 +64530,18 @@ const __SERVICES_FROM_API: Service[] = [
     "description": "Soutien des activités communautaires favorisant l'engagement et le leadership des personnes de 9 à 34 ans. * Activités sociales et sportives: marches, club de lecture, soirées pour enfants, etc. * Ateliers. * Dîner Soupe et Sandwich. | Clientèle: personnes de 9 à 34 ans | Territoire: Outaouais | Statut: organisme à but non lucratif",
     "website": "www.venostastation.com",
     "address": "8, chemin de la Station, Venosta, Outaouais, QC, J0X 3E0",
+    "hours": "Voir site web"
+  },
+  {
+    "id": "uvres-communautaires-saint-m-tho-ca",
+    "name": "Œuvres communautaires Saint-Méthode",
+    "category": "social",
+    "subcategory": "",
+    "city": "Adstock",
+    "province": "QC",
+    "phone": "418-422-5511",
+    "description": "Récupération et vente de vêtements",
+    "address": "38 Rue Principale O, Adstock, QC G0N 1S0, Canada",
     "hours": "Voir site web"
   }
 ];
