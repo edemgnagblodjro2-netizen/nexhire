@@ -121,16 +121,19 @@ function HeroMarquee({ text, fontSize }: { text: string; fontSize: number }) {
       style={styles.marqueeWrap}
       onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}
     >
-      <Animated.Text
-        numberOfLines={1}
-        onLayout={(e) => setTextWidth(e.nativeEvent.layout.width)}
-        style={[
-          styles.marqueeText,
-          { fontSize, transform: [{ translateX: tx }] },
-        ]}
+      <Animated.View
+        style={{
+          flexDirection: "row",
+          transform: [{ translateX: tx }],
+        }}
       >
-        {text}
-      </Animated.Text>
+        <Text
+          onLayout={(e) => setTextWidth(e.nativeEvent.layout.width)}
+          style={[styles.marqueeText, { fontSize }]}
+        >
+          {text}
+        </Text>
+      </Animated.View>
     </View>
   );
 }
@@ -297,12 +300,7 @@ export default function HomeScreen() {
               />
             </View>
             <View style={{ flex: 1, minWidth: 0 }}>
-              <Text
-                style={[styles.heroAppName, { fontSize: 26 * seniorScale }]}
-                numberOfLines={1}
-                adjustsFontSizeToFit
-                minimumFontScale={0.7}
-              >
+              <Text style={[styles.heroAppName, { fontSize: 26 * seniorScale }]}>
                 AttenteZéro <Text style={styles.heroFleur}>⚜️</Text>
               </Text>
             </View>
