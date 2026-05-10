@@ -11,6 +11,7 @@ import router from "./routes";
 import { logger } from "./lib/logger";
 import { authMiddleware } from "./middlewares/authMiddleware";
 import { handleStripeWebhook } from "./routes/stripe";
+import publicLinksRouter from "./routes/publicLinks";
 
 const app: Express = express();
 
@@ -162,6 +163,11 @@ const captchaLimiter = rateLimit({
   message: { error: "Trop de demandes de captcha." },
 });
 app.use("/api/captcha/challenge", captchaLimiter);
+
+// publicLinks routes (/.well-known/* + /s/:id) are mounted at ROOT, not under /api,
+// because mobile share links and Apple/Google App Site Association files MUST be at root
+// (e.g. https://attentezero.ca/s/<id>, https://attentezero.ca/.well-known/apple-app-site-association).
+app.use(publicLinksRouter);
 
 app.use("/api", router);
 
