@@ -5,6 +5,8 @@ import { useRouter } from "expo-router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
+  Animated,
+  Easing,
   Image,
   Keyboard,
   Platform,
@@ -86,6 +88,52 @@ const ALL_CITIES: ReadonlyArray<{ key: string; emoji: string }> = [
   { key: "Baie-Comeau", emoji: "🌊" },
   { key: "Alma", emoji: "🌲" },
 ];
+
+/**
+ * Marquee défilante en boucle (droite → gauche). Mesure la largeur du texte,
+ * puis duplique 2× pour un défilement continu sans saut visible.
+ * useNativeDriver dispo sur iOS/Android (web tombera en JS-driven, c'est OK).
+ */
+function HeroMarquee({ text, fontSize }: { text: string; fontSize: number }) {
+  const [textWidth, setTextWidth] = React.useState(0);
+  const [containerWidth, setContainerWidth] = React.useState(0);
+  const tx = React.useRef(new Animated.Value(0)).current;
+
+  React.useEffect(() => {
+    if (textWidth <= 0 || containerWidth <= 0) return;
+    // Vitesse ~ 50 px/s → durée proportionnelle à la longueur du texte.
+    const duration = Math.max(8000, (textWidth + containerWidth) * 20);
+    tx.setValue(containerWidth);
+    const loop = Animated.loop(
+      Animated.timing(tx, {
+        toValue: -textWidth,
+        duration,
+        easing: Easing.linear,
+        useNativeDriver: Platform.OS !== "web",
+      }),
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [textWidth, containerWidth, tx]);
+
+  return (
+    <View
+      style={styles.marqueeWrap}
+      onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}
+    >
+      <Animated.Text
+        numberOfLines={1}
+        onLayout={(e) => setTextWidth(e.nativeEvent.layout.width)}
+        style={[
+          styles.marqueeText,
+          { fontSize, transform: [{ translateX: tx }] },
+        ]}
+      >
+        {text}
+      </Animated.Text>
+    </View>
+  );
+}
 
 export default function HomeScreen() {
   const colors = useColors();
@@ -250,19 +298,13 @@ export default function HomeScreen() {
             </View>
             <View style={{ flex: 1, minWidth: 0 }}>
               <Text
-                style={[styles.heroAppName, { fontSize: 22 * seniorScale }]}
+                style={[styles.heroAppName, { fontSize: 26 * seniorScale }]}
                 numberOfLines={1}
                 adjustsFontSizeToFit
                 minimumFontScale={0.7}
               >
-                AttenteZéro <Text style={{ fontSize: 16 * seniorScale }}>⚜️</Text>
+                AttenteZéro <Text style={styles.heroFleur}>⚜️</Text>
               </Text>
-              <Text
-                style={[styles.heroTagline, { fontSize: 12 * seniorScale }]}
-                numberOfLines={2}
-                adjustsFontSizeToFit
-                minimumFontScale={0.75}
-              >{t.tagline}</Text>
             </View>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
@@ -299,6 +341,9 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
         </View>
+
+        {/* Tagline défilante (marquee) — droite → gauche, en boucle. */}
+        <HeroMarquee text={t.tagline} fontSize={13 * seniorScale} />
 
         {/* Stats strip — chaque cellule = 1 ligne max + auto-shrink pour éviter
             les wraps qui causent un layout shift visible au chargement (les
@@ -894,17 +939,34 @@ const styles = StyleSheet.create({
     height: 32,
   },
   heroAppName: {
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: "800",
     fontFamily: "Inter_700Bold",
     color: "#fff",
     letterSpacing: -0.3,
+    textShadowColor: "rgba(0,0,0,0.25)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
   },
-  heroTagline: {
-    fontSize: 12,
-    fontFamily: "Inter_400Regular",
-    color: "rgba(255,255,255,0.75)",
-    marginTop: 1,
+  heroFleur: {
+    fontSize: 22,
+    color: "#FFD700",
+    textShadowColor: "rgba(0,0,0,0.35)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
+  },
+  marqueeWrap: {
+    overflow: "hidden",
+    backgroundColor: "rgba(0,0,0,0.18)",
+    borderRadius: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 4,
+    marginTop: 4,
+  },
+  marqueeText: {
+    fontFamily: "Inter_500Medium",
+    color: "rgba(255,255,255,0.95)",
+    letterSpacing: 0.2,
   },
   langBtn: {
     flexDirection: "row",
