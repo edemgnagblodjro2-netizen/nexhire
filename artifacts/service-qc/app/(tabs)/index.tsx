@@ -124,12 +124,15 @@ function HeroMarquee({ text, fontSize }: { text: string; fontSize: number }) {
       <Animated.View
         style={{
           flexDirection: "row",
+          flexShrink: 0,
           transform: [{ translateX: tx }],
         }}
       >
         <Text
+          numberOfLines={1}
+          ellipsizeMode="clip"
           onLayout={(e) => setTextWidth(e.nativeEvent.layout.width)}
-          style={[styles.marqueeText, { fontSize }]}
+          style={[styles.marqueeText, { fontSize, flexShrink: 0 }]}
         >
           {text}
         </Text>
@@ -300,7 +303,10 @@ export default function HomeScreen() {
               />
             </View>
             <View style={{ flex: 1, minWidth: 0 }}>
-              <Text style={[styles.heroAppName, { fontSize: 22 * seniorScale }]}>
+              <Text
+                numberOfLines={1}
+                style={[styles.heroAppName, { fontSize: 18 * seniorScale }]}
+              >
                 AttenteZéro <Text style={styles.heroFleur}>⚜️</Text>
               </Text>
             </View>
@@ -937,7 +943,7 @@ const styles = StyleSheet.create({
     height: 32,
   },
   heroAppName: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "800",
     fontFamily: "Inter_700Bold",
     color: "#fff",
@@ -947,17 +953,19 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
   },
   heroFleur: {
-    fontSize: 18,
+    fontSize: 16,
     color: "#FFD700",
     textShadowColor: "rgba(0,0,0,0.35)",
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 4,
   },
   marqueeWrap: {
+    flexDirection: "row",
     overflow: "hidden",
     backgroundColor: "rgba(0,0,0,0.18)",
     borderRadius: 10,
-    paddingVertical: 6,
+    height: 28,
+    alignItems: "center",
     paddingHorizontal: 4,
     marginTop: 4,
   },
