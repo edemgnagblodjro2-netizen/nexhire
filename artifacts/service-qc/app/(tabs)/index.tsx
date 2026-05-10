@@ -304,8 +304,10 @@ export default function HomeScreen() {
             </View>
             <View style={{ flex: 1, minWidth: 0 }}>
               <Text
+                style={[styles.heroAppName, { fontSize: 22 * seniorScale }]}
                 numberOfLines={1}
-                style={[styles.heroAppName, { fontSize: 18 * seniorScale }]}
+                adjustsFontSizeToFit
+                minimumFontScale={0.65}
               >
                 AttenteZéro <Text style={styles.heroFleur}>⚜️</Text>
               </Text>
@@ -943,21 +945,15 @@ const styles = StyleSheet.create({
     height: 32,
   },
   heroAppName: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: "800",
     fontFamily: "Inter_700Bold",
     color: "#fff",
     letterSpacing: -0.3,
-    textShadowColor: "rgba(0,0,0,0.25)",
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 3,
   },
   heroFleur: {
     fontSize: 16,
     color: "#FFD700",
-    textShadowColor: "rgba(0,0,0,0.35)",
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 4,
   },
   marqueeWrap: {
     flexDirection: "row",
