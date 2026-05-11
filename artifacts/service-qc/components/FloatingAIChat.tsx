@@ -258,7 +258,7 @@ export default function FloatingAIChat() {
   if (isHidden) return null;
 
   // Tab bar height varies by platform; lift the FAB above it.
-  const tabBarBuffer = Platform.OS === "ios" ? 78 + insets.bottom : 70;
+  const tabBarBuffer = 60 + insets.bottom + 24;
   const isDark = colors.background !== "#ffffff" && colors.background !== "#fff";
   const suggestions = isFr ? SUGGESTIONS_FR : SUGGESTIONS_EN;
 
