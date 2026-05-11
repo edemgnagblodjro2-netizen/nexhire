@@ -129,8 +129,6 @@ function HeroMarquee({ text, fontSize }: { text: string; fontSize: number }) {
         }}
       >
         <Text
-          numberOfLines={1}
-          ellipsizeMode="clip"
           onLayout={(e) => setTextWidth(e.nativeEvent.layout.width)}
           style={[styles.marqueeText, { fontSize, flexShrink: 0 }]}
         >
