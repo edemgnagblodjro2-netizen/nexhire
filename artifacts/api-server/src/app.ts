@@ -333,6 +333,80 @@ Courriel : <a href="mailto:contact@attentezero.ca">contact@attentezero.ca</a></p
 </html>`);
 });
 
+app.get(["/api/support", "/support"], (_req, res) => {
+  res.type("html").send(`<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assistance — AttenteZéro</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;max-width:680px;margin:0 auto;padding:2rem 1rem;line-height:1.7;color:#1f2937;background:#f9fafb}
+header{text-align:center;padding:2rem 1rem 1.5rem;background:#0d9488;border-radius:16px;margin-bottom:2rem;color:#fff}
+header h1{margin:0 0 .25rem;font-size:1.8rem;font-weight:700}
+header p{margin:0;opacity:.85;font-size:.95rem}
+.logo{font-size:2.5rem;margin-bottom:.5rem}
+h2{color:#0d9488;font-size:1.1rem;margin-top:2rem}
+.card{background:#fff;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+a{color:#0d9488;text-decoration:none;font-weight:500}
+a:hover{text-decoration:underline}
+.email-btn{display:inline-block;background:#0d9488;color:#fff!important;padding:.65rem 1.4rem;border-radius:8px;margin-top:.5rem;font-weight:600}
+.divider{border:none;border-top:1px solid #e5e7eb;margin:2rem 0}
+.lang{font-size:.8rem;color:#9ca3af;margin-bottom:.25rem;text-transform:uppercase;letter-spacing:.05em}
+footer{text-align:center;font-size:.8rem;color:#9ca3af;margin-top:2.5rem}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🏥</div>
+  <h1>AttenteZéro</h1>
+  <p>Services communautaires du Québec · Community Services Québec</p>
+</header>
+
+<div class="card">
+  <div class="lang">FR</div>
+  <h2>Besoin d'aide ?</h2>
+  <p>AttenteZéro est une application gratuite qui vous aide à trouver des services communautaires près de chez vous : banques alimentaires, hébergement d'urgence, santé mentale, aide juridique, et plus encore.</p>
+  <p>Pour toute question, signalement d'un problème ou suggestion :</p>
+  <a class="email-btn" href="mailto:contact@attentezero.ca?subject=Assistance%20AttenteZéro">contact@attentezero.ca</a>
+  <p style="margin-top:1rem;font-size:.9rem">Nous répondons dans un délai de <strong>48 h</strong> (jours ouvrables).</p>
+</div>
+
+<div class="card">
+  <div class="lang">EN</div>
+  <h2>Need help?</h2>
+  <p>AttenteZéro is a free app helping you find community services near you: food banks, emergency shelters, mental health, legal aid, and more.</p>
+  <p>For any question, issue report, or suggestion:</p>
+  <a class="email-btn" href="mailto:contact@attentezero.ca?subject=AttenteZero%20Support">contact@attentezero.ca</a>
+  <p style="margin-top:1rem;font-size:.9rem">We reply within <strong>48 hours</strong> (business days).</p>
+</div>
+
+<hr class="divider">
+
+<div class="card">
+  <h2>🚨 Urgence / Emergency</h2>
+  <p>En cas de danger immédiat · In case of immediate danger: <strong>911</strong></p>
+  <p>Ligne de crise · Crisis line: <strong>1-866-APPELLE (277-3553)</strong></p>
+  <p>Service 211 Québec: <a href="tel:211">211</a></p>
+</div>
+
+<hr class="divider">
+
+<p style="font-size:.9rem;color:#4b5563;text-align:center">
+  <a href="/privacy">Politique de confidentialité · Privacy Policy</a>
+  &nbsp;·&nbsp;
+  <a href="/delete-account">Supprimer mon compte · Delete account</a>
+</p>
+
+<footer>
+  AttenteZéro — un produit <strong>CivicAI</strong> · NEQ 2280791601<br>
+  © ${new Date().getFullYear()} CivicAI. Tous droits réservés.
+</footer>
+</body>
+</html>`);
+});
+
 // Serve admin panel as static files (production)
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const adminDistCandidates = [
