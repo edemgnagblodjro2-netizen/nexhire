@@ -29,7 +29,7 @@
     },
     "android": {
       "package": "com.attentezero.app",
-      "versionCode": 78,
+      "versionCode": 79,
       "intentFilters": [
         {
           "action": "VIEW",
