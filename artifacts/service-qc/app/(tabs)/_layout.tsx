@@ -121,10 +121,8 @@ function ClassicTabLayout() {
       <Tabs.Screen
         name="map"
         options={{
+          href: null,
           title: "Carte",
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon name="map-pin" color={color} focused={focused} />
-          ),
         }}
       />
       <Tabs.Screen
