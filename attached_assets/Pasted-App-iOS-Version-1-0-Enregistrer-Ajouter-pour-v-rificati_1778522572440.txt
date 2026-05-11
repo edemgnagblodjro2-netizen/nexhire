@@ -1,0 +1,191 @@
+App iOS Version 1.0
+Enregistrer
+Ajouter pour vérification
+Les ressources et métadonnées ci‑dessous apparaissent sur la page produit de votre app lorsque des utilisateurs et utilisatrices l’installent. Elles sont également utilisées pour les résultats de recherche des moteurs web dès que vous publiez votre app.
+
+Français (Canada)
+?
+Aperçus et captures d’écran
+?
+L’ajout de captures d’écran précises de votre app sur les appareils les plus récents peut vous permettre de mieux représenter l’expérience utilisateur de l’app. Gardez à l’esprit que nous utiliserons ces captures d’écran pour toutes les langues et les tailles d’écran. Les captures d’écran ne sont nécessaires que pour les apps iOS, et seules les 3 premières seront utilisées sur les fiches d’installation de l’app.
+
+iPhone
+iPad
+Apple Watch
+Afficher toutes les tailles dans le gestionnaire des visuels
+
+iPhone
+Écran de 6,5 pouces
+
+
+
+
+
+
+
+
+
+
+0/3 aperçus d’app
+
+5/10 captures d’écran
+
+Choisir un fichier
+
+Tout supprimer
+
+Texte promotionnel
+?
+Trouvez rapidement des services communautaires, ressources et aides au Québec grâce à une recherche intelligente et une IA multilingue.
+170
+
+Description
+?
+AttenteZéro est une plateforme intelligente conçue pour faciliter l’accès aux services communautaires, ressources sociales et aides essentielles partout au Québec.
+
+Grâce à une recherche rapide et une assistance IA intégrée, trouvez facilement :
+• aide alimentaire
+• logement
+• santé mentale
+• soutien jeunesse
+• services aux familles
+• centres communautaires
+• aide d’urgence
+• ressources pour nouveaux arrivants
+• transport et accompagnement
+• soutien aux aînés
+• services d’emploi
+• et bien plus.
+
+UNE APPLICATION SIMPLE ET ACCESSIBLE
+
+AttenteZéro aide les utilisateurs à trouver rapidement les bonnes ressources selon leurs besoins et leur emplacement.
+
+Fonctionnalités principales :
+• Recherche intelligente de services
+• Assistant IA intégré
+• Géolocalisation des ressources
+• Recherche par catégories
+• Accès rapide aux organismes
+• Numéros et informations utiles
+• Interface moderne et simple
+• Support multilingue
+• Accès gratuit pour tous
+
+ASSISTANT IA ATTENTEZÉRO
+
+L’assistant IA intégré peut vous aider à :
+• trouver des ressources près de vous
+• obtenir des informations rapidement
+• découvrir des organismes adaptés
+• accéder à des services d’urgence
+• simplifier vos recherches
+
+RECHERCHE RAPIDE
+
+Effectuez des recherches simples comme :
+• “J’ai besoin d’aide alimentaire”
+• “Trouver un logement”
+• “Aide psychologique”
+• “Centre communautaire près de moi”
+
+SERVICES COMMUNAUTAIRES
+
+Des milliers de ressources et services disponibles :
+• organismes communautaires
+• banques alimentaires
+• centres de soutien
+• cliniques et ressources sociales
+• aide aux familles
+• ressources jeunesse
+• services régionaux
+
+IMPORTANT
+
+AttenteZéro est une application indépendante et n’est pas affiliée au gouvernement du Québec ni au service 211 Québec.
+
+En situation d’urgence, contactez immédiatement les services d’urgence locaux.
+4,000
+
+Mots-clés
+?
+attentezero, aide, services communautaires, québec, assistance, aide alimentaire, logement...
+100
+
+URL de l’assistance
+?
+https://attentezero.ca/support
+URL marketing
+?
+https://attentezero.ca/support
+Version
+?
+1.0
+Copyright
+?
+2026 CivicAI
+200
+
+Fichier de couverture géographique
+?
+No file chosen
+Choisir un fichier
+
+Extrait d’app
+
+App iMessage
+?
+Build
+Chargez vos builds en utilisant l’un des outils proposés dans la section Outils de chargement.
+
+Game Center
+Vous pouvez désormais ajouter des composants Game Center pour vérification directement depuis la section Game Center. Vous ne pouvez plus les sélectionner depuis la page de la version de l’app. En savoir plus
+
+
+Informations utiles à la vérification de l’app
+Informations de connexion
+?
+Veuillez fournir un nom d’utilisateur et un mot de passe. Ces informations nous seront nécessaires afin de nous connecter à votre app et de mener à bien le processus de vérification.
+
+
+Connexion requise
+demo@attentezero.ca
+Demo2026!
+Coordonnées
+?
+Ayaovi Edem 
+GNAGBLODJRO
+9058097798
+edemgnagblodjro36@gmail.com
+Remarques
+?
+AttenteZéro est un répertoire gratuit de services communautaires 
+au Québec (banques alimentaires, hébergement, santé mentale, 
+aide juridique, etc.).
+
+Le compte de démo permet d'accéder à toutes les fonctionnalités 
+incluant l'assistant IA (quota: 15 questions/jour).
+
+L'app fonctionne sans compte (navigation libre), mais le compte 
+est requis pour les favoris et l'IA. La géolocalisation est 
+optionnelle — l'utilisateur peut saisir son code postal 
+manuellement.
+
+Langue par défaut : français (Canada). Disponible aussi en EN, 
+ES, AR, HT.
+3,457
+
+Pièce jointe
+?
+No file chosen
+Choisir un fichier (facultatif)
+Publication de la version dans l’App Store
+Pour rendre disponible votre app dans l’App Store, vous pouvez la publier automatiquement après qu’elle ait été approuvée par l’équipe de vérification des apps. Vous pouvez également la publier manuellement dans l’App Store à une date ultérieure.
+
+
+Publier cette version manuellement
+
+Publier cette version automatiquement
+
+Publier cette version automatiquement après la vérification de l’app, mais pas avant le
+Date et heure locales
