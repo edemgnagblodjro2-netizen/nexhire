@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { LinearGradient } from "@/components/SafeLinearGradient";
-import { useFocusEffect, useRouter } from "expo-router";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
@@ -83,7 +83,11 @@ export default function MapScreen() {
   const { services } = useServicesData();
   const isFr = language !== "en";
 
-  const [tab, setTab] = useState<Tab>("nearby");
+  const params = useLocalSearchParams<{ tab?: string }>();
+  const [tab, setTab] = useState<Tab>(params.tab === "favorites" ? "favorites" : "nearby");
+  useEffect(() => {
+    if (params.tab === "favorites") setTab("favorites");
+  }, [params.tab]);
   const [favIds, setFavIds] = useState<string[]>([]);
   const [locTried, setLocTried] = useState(false);
   const [catFilter, setCatFilter] = useState<CatFilter>("all");

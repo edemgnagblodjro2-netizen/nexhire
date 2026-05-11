@@ -27,6 +27,8 @@ import { useColors } from "@/hooks/useColors";
 import { authedFetch } from "@/lib/apiClient";
 import { getApiBaseUrl } from "@/lib/apiBase";
 import { getHistory, clearHistory, type HistoryEntry } from "@/lib/history";
+import { getFavorites } from "@/lib/favorites";
+import { useServicesData } from "@/contexts/ServicesContext";
 import { getAvatarUri, setAvatarUri } from "@/lib/avatar";
 import { UserAvatar } from "@/components/UserAvatar";
 import { CATEGORY_ICONS, getCategoryColor } from "@/utils/categoryColors";
@@ -46,6 +48,104 @@ const FUNDING_OPTIONS = [
   { icon: "tag" as const, color: "#059669", bg: "#f0fdf4", darkBg: "#052e1c", titleFr: "Publicité locale responsable", titleEn: "Local responsible advertising", descFr: "Pour organismes et institutions seulement — zéro pub intrusive", descEn: "For orgs and institutions only — zero intrusive ads", badgeFr: "Bientôt", badgeEn: "Soon", badgeColor: "#059669", route: null },
 ];
 
+
+function FavoritesCard({ isFr }: { isFr: boolean }) {
+  const colors = useColors();
+  const router = useRouter();
+  const { services } = useServicesData();
+  const [favIds, setFavIds] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const reload = React.useCallback(() => {
+    setLoading(true);
+    getFavorites().then((arr) => {
+      setFavIds(arr);
+      setLoading(false);
+    });
+  }, []);
+
+  useFocusEffect(React.useCallback(() => { reload(); }, [reload]));
+
+  if (loading) return null;
+
+  const items = favIds
+    .map((id) => services.find((s) => s.id === id))
+    .filter((s): s is NonNullable<typeof s> => Boolean(s))
+    .slice(0, 5);
+
+  const openAll = () => {
+    Haptics.selectionAsync();
+    router.push({ pathname: "/(tabs)/map" as any, params: { tab: "favorites" } });
+  };
+
+  return (
+    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <Feather name="heart" size={16} color="#e11d48" />
+          <Text style={[styles.cardTitle, { color: colors.foreground, marginBottom: 0 }]}>
+            {isFr ? "Mes favoris" : "My favorites"}
+          </Text>
+          {favIds.length > 0 ? (
+            <View style={{ backgroundColor: "#e11d4818", paddingHorizontal: 8, paddingVertical: 2, borderRadius: 10 }}>
+              <Text style={{ fontSize: 11, color: "#e11d48", fontWeight: "700" }}>{favIds.length}</Text>
+            </View>
+          ) : null}
+        </View>
+        {favIds.length > 0 ? (
+          <Pressable onPress={openAll} hitSlop={10}>
+            <Text style={{ fontSize: 12, color: colors.primary, fontWeight: "600" }}>
+              {isFr ? "Voir tout" : "See all"}
+            </Text>
+          </Pressable>
+        ) : null}
+      </View>
+
+      {favIds.length === 0 ? (
+        <Text style={{ fontSize: 13, color: colors.mutedForeground, lineHeight: 18, fontFamily: "Inter_400Regular" }}>
+          {isFr
+            ? "Touchez le cœur ♡ sur une fiche service pour l'ajouter à vos favoris."
+            : "Tap the heart ♡ on any service card to add it to your favorites."}
+        </Text>
+      ) : (
+        items.map((s, idx) => {
+          const cat = s.category as Category;
+          const catColor = getCategoryColor(cat, colors);
+          const icon = CATEGORY_ICONS[cat] ?? "tag";
+          const name = s.name;
+          return (
+            <Pressable
+              key={s.id}
+              onPress={() => { Haptics.selectionAsync(); router.push(`/service/${s.id}` as any); }}
+              style={({ pressed }) => [
+                styles.advancedRow,
+                {
+                  borderBottomColor: idx === items.length - 1 ? "transparent" : colors.border,
+                  opacity: pressed ? 0.7 : 1,
+                },
+              ]}
+            >
+              <View style={[styles.infoIcon, { backgroundColor: catColor + "20" }]}>
+                <Feather name={icon as any} size={15} color={catColor} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.actionText, { color: colors.foreground }]} numberOfLines={1}>
+                  {name}
+                </Text>
+                {s.city ? (
+                  <Text style={{ fontSize: 11, color: colors.mutedForeground, marginTop: 2 }} numberOfLines={1}>
+                    {s.city}
+                  </Text>
+                ) : null}
+              </View>
+              <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+            </Pressable>
+          );
+        })
+      )}
+    </View>
+  );
+}
 
 function HistoryCard({ isFr }: { isFr: boolean }) {
   const colors = useColors();
@@ -706,6 +806,9 @@ export default function ProfileScreen() {
             </Pressable>
           </View>
         )}
+
+        {/* ── Mes favoris ── */}
+        <FavoritesCard isFr={isFr} />
 
         {/* ── Historique (services consultés) ── */}
         <HistoryCard isFr={isFr} />
