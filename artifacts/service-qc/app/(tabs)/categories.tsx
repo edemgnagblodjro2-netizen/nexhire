@@ -47,19 +47,19 @@ const SECTIONS: Section[] = [
     key: "essentiels",
     titleFr: "Essentiels du quotidien",
     titleEn: "Daily essentials",
-    categories: ["food", "hypermarche", "pharmacie", "housing", "realestate", "transport"],
+    categories: ["food", "hypermarche", "pharmacie", "housing", "realestate"],
   },
   {
     key: "sante-famille",
     titleFr: "Santé & famille",
     titleEn: "Health & family",
-    categories: ["health", "mentalHealth", "seniors", "family", "childcare", "social"],
+    categories: ["health", "mentalHealth", "seniors", "family", "social"],
   },
   {
     key: "demarches",
     titleFr: "Démarches & services",
     titleEn: "Services & paperwork",
-    categories: ["employment", "immigration", "administrative", "legal", "banking", "tourism"],
+    categories: ["employment", "immigration", "legal", "tourism"],
   },
   {
     key: "guides",
