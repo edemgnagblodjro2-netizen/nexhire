@@ -135,4 +135,49 @@ router.get("/s/:id", async (req, res) => {
 </html>`);
 });
 
+router.get("/r/:code", (req, res) => {
+  const code = escapeHtml(req.params.code ?? "");
+  res.set("Content-Type", "text/html; charset=utf-8").send(`<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>AttenteZéro — Services communautaires</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta property="og:title" content="AttenteZéro — Services communautaires du Québec" />
+  <meta property="og:description" content="Trouvez rapidement des services communautaires près de chez vous. Application gratuite." />
+  <style>
+    *,*::before,*::after{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:linear-gradient(135deg,#0d9488,#0a5e52);min-height:100vh;color:#fff;display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);border-radius:24px;max-width:420px;width:100%;padding:40px 28px;text-align:center}
+    .logo{font-size:52px;margin-bottom:8px}
+    h1{margin:0 0 6px;font-size:26px;font-weight:800;letter-spacing:-0.5px}
+    .sub{opacity:.8;font-size:15px;margin-bottom:24px;line-height:1.5}
+    .code-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);padding:8px 18px;border-radius:999px;font-size:13px;margin-bottom:28px}
+    .code-val{font-weight:700;letter-spacing:2px;font-size:15px}
+    .btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:15px 20px;border-radius:14px;text-decoration:none;font-weight:700;margin:8px 0;font-size:15px}
+    .btn-apple{background:#fff;color:#0a5e52}
+    .btn-android{background:rgba(255,255,255,0.15);color:#fff;border:1.5px solid rgba(255,255,255,0.35)}
+    .footer{margin-top:24px;font-size:12px;opacity:.6}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">🏥</div>
+    <h1>AttenteZéro</h1>
+    <p class="sub">Services communautaires gratuits<br>partout au Québec</p>
+    <div class="code-pill">
+      🎁 Code ambassadeur : <span class="code-val">${code}</span>
+    </div>
+    <a href="${escapeHtml(APP_STORE_URL)}" class="btn btn-apple">
+       Télécharger sur l'App Store
+    </a>
+    <a href="${escapeHtml(PLAY_STORE_URL)}" class="btn btn-android">
+      Télécharger sur Google Play
+    </a>
+    <div class="footer">Entrez le code <strong>${code}</strong> lors de votre inscription · Application 100% gratuite</div>
+  </div>
+</body>
+</html>`);
+});
+
 export default router;

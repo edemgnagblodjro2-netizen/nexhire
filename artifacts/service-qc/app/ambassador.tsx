@@ -71,7 +71,7 @@ export default function AmbassadorScreen() {
     };
   }, [user?.id, isFr, getToken]);
 
-  const shareUrl = data ? `https://attentezero.app/?ref=${data.code}` : "";
+  const shareUrl = data ? `https://attentezero.ca/r/${data.code}` : "";
 
   async function copyCode() {
     if (!data) return;
