@@ -1,0 +1,114 @@
+Informations sur l’app
+Ces informations sont utilisées sur toutes les plateformes. Toute modification apportée sera publiée dans la prochaine version de votre app.
+
+Enregistrer
+Informations localisables
+Français (Canada)
+?
+Nom
+AttenteZéro
+19
+Sous-titre
+30
+Informations générales
+Identifiant de lot
+com.attentezero.app
+
+UGS
+attentezero-ios
+
+Identifiant Apple
+6766750916
+
+Droits relatifs au contenu
+Configurer les informations sur les droits relatifs au contenu
+Contrat de licence
+Modifier
+Contrat type de Licence Utilisateur Final d’Apple
+
+Langue principale
+Français (Canada)
+
+Catégorie
+
+Principale
+
+Secondaire (facultatif)
+Classifications par âge
+La classification par âge aide les utilisateurs à mieux comprendre si votre app contient du contenu contestable. Pour déterminer la catégorie d’âge de votre app, il vous sera demandé d’indiquer la disponibilité ou la fréquence de certaines fonctionnalités et de certains types de contenu dans votre app. En fonction de vos réponses, une catégorie d’âge sera attribuée pour chaque pays ou région en fonction de ses normes de classification par âge. La catégorie d’âge attibuée apparaîtra dans l’App Store de chaque pays ou région et sera identique sur toutes les plateformes de ce pays ou de cette région. En savoir plus
+
+Configurer les classifications par âge
+En savoir plus sur les classifications par âge
+Pour en savoir plus et avoir des exemples de fonctionnalités et de contenu utilisés pour déterminer les classifications par âge, sélectionnez une catégorie ci‑dessous.
+
+Contrôles intégrés
+
+Contrôle parental, Validation de l’âge
+
+Capacités
+
+Accès au Web sans restrictions, Contenu généré par les utilisateurs, Messagerie et chat, Publicité
+
+Thèmes matures
+
+Vulgarité ou humour grossier, Thématique horreur/peur, Consommation ou références à l’alcool, au tabac ou aux drogues
+
+Médical ou bien‑être
+
+Informations médicales ou de traitement, Sujets de santé ou de bien‑être
+
+Sexualité ou nudité
+
+Thèmes matures ou suggestifs, Contenus à caractère sexuel ou nudité, Contenus sexuellement explicites et nudité
+
+Violence
+
+Scènes de violence animée ou fantastique, Scènes de violence réalistes, Scènes réalistes et prolongées de violence explicite ou sadique, Armes à feu ou autres armes
+
+Activités basées sur le hasard
+
+Jeux de hasard, Simulation de jeux de hasard, Concours, Coffres à butin
+
+Documents sur le chiffrement des apps
+
+Indiquez si vous utilisez un chiffrement dans Xcode. Pour cela, ajoutez la clé Chiffrement non exempté au fichier Info.plist de votre app avec une valeur booléenne indiquant si votre app utilise le chiffrement. En savoir plus
+
+Vous devez fournir des documents si votre app contient l’un des éléments suivants :
+
+Algorithmes de chiffrement propriétaires ou non considérés comme standard par les organismes de normalisation internationaux (IEEE, IETF, UIT, etc.)
+Algorithmes de chiffrement standard à la place ou en complément de l’utilisation du chiffrement employé dans le système d’exploitation d’Apple ou de l’accès à ce chiffrement
+Vous pouvez fournir les documents avant de soumettre votre build.
+
+Charger
+Réglementations et autorisations de l’App Store
+La législation sur les services numériques
+Ce développeur s’est identifié comme commerçant pour cette app.Modifier
+
+Ajouter des étiquettes et des marquages
+Licence de jeu pour le Vietnam
+Si votre jeu est disponible dans l’App Store au Vietnam, vous pouvez ajouter une licence de jeu conformément aux exigences des autorités réglementaires vietnamiennes. En savoir plus
+
+Ajouter
+Dispositifs médicaux réglementés
+Si votre app se trouve dans les catégories Médecine ou Santé et remise en forme, ou si vous avez sélectionné « fréquent » pour « Informations médicales ou de traitement » dans le questionnaire de classification par âge d’App Store Connect, vous devez déclarer s’il s’agit d’un dispositif médical réglementé afin de continuer à la distribuer dans l’App Store dans certaines régions. En savoir plus
+
+Déclarer un dispositif médical réglementé
+
+Notifications du serveur de l’App Store
+Les notifications du serveur de l’App Store fournissent des informations sur les évènements clés liés à vos achats intégrés. Pour tester les notifications avant de les mettre en œuvre en production, vous pouvez configurer une URL du serveur Sandbox séparée. En savoir plus
+
+URL du serveur de production
+Configurer l’URL
+URL du serveur Sandbox
+Configurer l’URL
+Secret partagé spécifique à l’app
+Le secret partagé spécifique à l’app est un code unique permettant de recevoir des reçus pour les abonnements avec renouvellement automatique de cette app uniquement. Vous pouvez utiliser un secret partagé spécifique à l’app si vous transférez cette app à un autre développeur, ou si vous voulez garder confidentiel votre secret partagé principal.
+
+Gérer
+
+Informations complémentaires
+Afficher dans l’App Store
+
+Modifier l’accès utilisateur
+
+Supprimer l’app
