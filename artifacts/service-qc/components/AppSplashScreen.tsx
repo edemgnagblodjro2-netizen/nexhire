@@ -6,7 +6,7 @@ interface AppSplashScreenProps {
   onDone?: () => void;
 }
 
-const SERVICES_COUNT_LABEL = "8 037";
+const SERVICES_COUNT_LABEL = "7 957";
 
 const RING_SIZES = [180, 360, 540, 720, 900];
 

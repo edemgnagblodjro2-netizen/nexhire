@@ -368,7 +368,7 @@ export default function HomeScreen() {
               adjustsFontSizeToFit
               minimumFontScale={0.7}
             >
-              {language === "fr" ? "services" : "services"}
+              {language === "fr" ? "services au Québec" : "services in Québec"}
             </Text>
           </View>
           <View style={styles.statDivider} />
@@ -387,7 +387,7 @@ export default function HomeScreen() {
               adjustsFontSizeToFit
               minimumFontScale={0.7}
             >
-              {language === "fr" ? "villes" : "cities"}
+              {language === "fr" ? "villes QC" : "QC cities"}
             </Text>
           </View>
           <View style={styles.statDivider} />

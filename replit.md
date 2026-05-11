@@ -97,6 +97,13 @@ A mobile application connecting vulnerable individuals with community and social
 - Submit TestFlight #1 : `3d968bce-6392-4348-8933-b7b63ba9dad7` ⏳ en cours.
 - **Gotcha credentials** : tout premier `eas build --platform ios` exige mode interactif (Apple ID + 2FA), même avec ASC API key. Ensuite stockés sur EAS, builds suivants tournent en `--non-interactive`.
 
+## v1.1.16 vc91 — Fix stats "au Québec" + splash count corrigé
+- **Stats strip accueil corrigées** : labels sous les chiffres passent de `"services"` → `"services au Québec"` (FR) / `"services in Québec"` (EN) et `"villes"` → `"villes QC"` / `"QC cities"`.
+- **Splash count corrigé** : `SERVICES_COUNT_LABEL` corrigé `8 037 → 7 957` (vrai count BDD prod).
+- **Cache v32→v33** : force un fresh fetch côté app pour afficher le bon total (7 892 filtrés QC).
+- Android versionCode 76→77, iOS buildNumber EAS auto-bump 90→91.
+- EAS build production lancé iOS + Android (v1.1.16) avec auto-submit.
+
 ## v1.1.15 vc89 — Fix tab bar Android (safe area insets)
 - **Bug Android corrigé** : tab bar partiellement cachée derrière la barre de navigation système (gestes ou boutons) sur certains téléphones Android. Fix : `useSafeAreaInsets()` dans `_layout.tsx`, `height: 60 + insets.bottom` + `paddingBottom: insets.bottom` sur `tabBarStyle`. Les onglets Accueil/Services/IA sont maintenant toujours accessibles.
 - iOS buildNumber EAS auto-bump 88→89, Android versionCode 75→76.
