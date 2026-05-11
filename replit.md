@@ -97,6 +97,13 @@ A mobile application connecting vulnerable individuals with community and social
 - Submit TestFlight #1 : `3d968bce-6392-4348-8933-b7b63ba9dad7` ⏳ en cours.
 - **Gotcha credentials** : tout premier `eas build --platform ios` exige mode interactif (Apple ID + 2FA), même avec ASC API key. Ensuite stockés sur EAS, builds suivants tournent en `--non-interactive`.
 
+## v1.1.14 vc85 — Overflow numéro téléphone + couverture services (mai 2026)
+- **Bug UI corrigé** : débordement du numéro de téléphone dans `ServiceCard.tsx` quand le texte est long. Footer `flexWrap: "wrap"` + `flex: 1` sur `cityRow` → le bouton appel passe automatiquement à la ligne suivante si trop large. `flexShrink: 0` sur callButton, `flexShrink: 1` sur callText.
+- **+80 services ajoutés en prod** (7 957 → 8 037) sur 12 villes QC sous-couvertes : mentalHealth (JEVI, CPS RN, CPS Val-d'Or, CEPS 02 Saguenay/Alma/Laurentides), health (CLSCs Sherbrooke/Saguenay/Saint-Jérôme/Rouyn-Noranda/Mirabel/Blainville/Val-d'Or/Alma), administrative (Service Canada x7), food (Ressourcerie RN, Action Source Vie STJ, BAM Magog, Entraide Mirabel), immigration (Le Coffret STJ, Groupe Inclusia Saguenay), employment (CJE Abitibi-Est Val-d'Or), social (CABS Sherbrooke), family (La Cigogne Alma).
+- iOS buildNumber 84→87 (auto-incrémenté par EAS), Android versionCode 74→75.
+- **Splash count mis à jour** : `SERVICES_COUNT_LABEL` → 8 037 (à faire manuellement dans AppSplashScreen.tsx pour le prochain build).
+- EAS build production lancé : Android `644afb9e` (new) + iOS en cours.
+
 ## v1.1.13 vc78 (en attente OK build) — Tab bar redesign
 - `app/(tabs)/_layout.tsx` retravaillé pour un look plus designer :
   - Fond `#0d9488` (teal moderne, cohérent avec splash B au lieu du vieux `#0E7E6E`).

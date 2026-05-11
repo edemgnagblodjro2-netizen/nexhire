@@ -354,13 +354,16 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    flexWrap: "wrap",
+    gap: 8,
     marginTop: 4,
   },
   cityRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
+    flex: 1,
+    minWidth: 80,
   },
   city: {
     fontSize: 12,
@@ -373,11 +376,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 7,
     borderRadius: 20,
+    flexShrink: 0,
   },
   callText: {
     fontSize: 12,
     fontWeight: "600",
     color: "#fff",
     fontFamily: "Inter_600SemiBold",
+    flexShrink: 1,
   },
 });
