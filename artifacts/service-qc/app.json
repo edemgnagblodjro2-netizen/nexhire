@@ -25,7 +25,7 @@
         "NSCameraUsageDescription": "AttenteZéro utilise l'appareil photo pour prendre une photo de profil.",
         "ITSAppUsesNonExemptEncryption": false
       },
-      "buildNumber": "94"
+      "buildNumber": "95"
     },
     "android": {
       "package": "com.attentezero.app",
