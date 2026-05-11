@@ -1,0 +1,43 @@
+Documents sur le chiffrement des apps
+
+Indiquez si vous utilisez un chiffrement dans Xcode. Pour cela, ajoutez la clé Chiffrement non exempté au fichier Info.plist de votre app avec une valeur booléenne indiquant si votre app utilise le chiffrement. En savoir plus
+
+Vous devez fournir des documents si votre app contient l’un des éléments suivants :
+
+Algorithmes de chiffrement propriétaires ou non considérés comme standard par les organismes de normalisation internationaux (IEEE, IETF, UIT, etc.)
+Algorithmes de chiffrement standard à la place ou en complément de l’utilisation du chiffrement employé dans le système d’exploitation d’Apple ou de l’accès à ce chiffrement
+Vous pouvez fournir les documents avant de soumettre votre build.
+
+Charger
+Réglementations et autorisations de l’App Store
+La législation sur les services numériques
+Ce développeur s’est identifié comme commerçant pour cette app.Modifier
+
+Ajouter des étiquettes et des marquages
+Licence de jeu pour le Vietnam
+Si votre jeu est disponible dans l’App Store au Vietnam, vous pouvez ajouter une licence de jeu conformément aux exigences des autorités réglementaires vietnamiennes. En savoir plus
+
+Ajouter
+Dispositifs médicaux réglementés
+Si votre app se trouve dans les catégories Médecine ou Santé et remise en forme, ou si vous avez sélectionné « fréquent » pour « Informations médicales ou de traitement » dans le questionnaire de classification par âge d’App Store Connect, vous devez déclarer s’il s’agit d’un dispositif médical réglementé afin de continuer à la distribuer dans l’App Store dans certaines régions. En savoir plus
+
+Déclarer un dispositif médical réglementé
+
+Notifications du serveur de l’App Store
+Les notifications du serveur de l’App Store fournissent des informations sur les évènements clés liés à vos achats intégrés. Pour tester les notifications avant de les mettre en œuvre en production, vous pouvez configurer une URL du serveur Sandbox séparée. En savoir plus
+
+URL du serveur de production
+Configurer l’URL
+URL du serveur Sandbox
+Configurer l’URL
+Secret partagé spécifique à l’app
+Le secret partagé spécifique à l’app est un code unique permettant de recevoir des reçus pour les abonnements avec renouvellement automatique de cette app uniquement. Vous pouvez utiliser un secret partagé spécifique à l’app si vous transférez cette app à un autre développeur, ou si vous voulez garder confidentiel votre secret partagé principal.
+
+Gérer
+
+Informations complémentaires
+Afficher dans l’App Store
+
+Modifier l’accès utilisateur
+
+Supprimer l’app
