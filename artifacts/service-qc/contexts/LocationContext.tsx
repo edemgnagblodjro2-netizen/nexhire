@@ -13,6 +13,7 @@ type LocationStatus = "idle" | "requesting" | "granted" | "denied";
 
 interface LocationContextValue {
   userLocation: Coordinates | null;
+  userCity: string | null;
   locationError: string | null;
   locationStatus: LocationStatus;
   requestLocation: (opts?: { force?: boolean }) => Promise<void>;
@@ -20,10 +21,38 @@ interface LocationContextValue {
 
 const LocationContext = createContext<LocationContextValue>({
   userLocation: null,
+  userCity: null,
   locationError: null,
   locationStatus: "idle",
   requestLocation: async () => {},
 });
+
+async function reverseGeocodeCity(lat: number, lng: number): Promise<string | null> {
+  try {
+    if (Platform.OS === "web") {
+      // Best-effort via Nominatim public endpoint (no key, polite UA).
+      const r = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=10&addressdetails=1`,
+        {
+          headers: {
+            "Accept-Language": "fr",
+            // Nominatim policy requires identifying User-Agent. Replit Workspace
+            // sets the Referer automatically; keep this static so caching works.
+            "User-Agent": "AttenteZero/1.1 (https://attentezero.ca)",
+          },
+        },
+      );
+      if (!r.ok) return null;
+      const j = await r.json();
+      return j?.address?.city || j?.address?.town || j?.address?.village || j?.address?.municipality || null;
+    }
+    const arr = await Location.reverseGeocodeAsync({ latitude: lat, longitude: lng });
+    const a = arr?.[0];
+    return a?.city || a?.subregion || null;
+  } catch {
+    return null;
+  }
+}
 
 function withTimeout<T>(p: Promise<T>, ms: number, label = "timeout"): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -34,8 +63,16 @@ function withTimeout<T>(p: Promise<T>, ms: number, label = "timeout"): Promise<T
 
 export function LocationProvider({ children }: { children: React.ReactNode }) {
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
+  const [userCity, setUserCity] = useState<string | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [locationStatus, setLocationStatus] = useState<LocationStatus>("idle");
+
+  const updateLocationAndCity = useCallback(async (lat: number, lng: number) => {
+    setUserLocation({ lat, lng });
+    setLocationStatus("granted");
+    const city = await reverseGeocodeCity(lat, lng);
+    if (city) setUserCity(city);
+  }, []);
 
   const requestLocation = useCallback(async (opts?: { force?: boolean }) => {
     setLocationStatus("requesting");
@@ -53,8 +90,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
             maximumAge: 60_000,
           });
         });
-        setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-        setLocationStatus("granted");
+        await updateLocationAndCity(pos.coords.latitude, pos.coords.longitude);
         return;
       }
 
@@ -84,8 +120,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
           requiredAccuracy: 1000,
         });
         if (last) {
-          setUserLocation({ lat: last.coords.latitude, lng: last.coords.longitude });
-          setLocationStatus("granted");
+          await updateLocationAndCity(last.coords.latitude, last.coords.longitude);
         }
       } catch {
         // ignore — we'll fetch fresh below
@@ -98,8 +133,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
           15000,
           "GPS timeout",
         );
-        setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-        setLocationStatus("granted");
+        await updateLocationAndCity(pos.coords.latitude, pos.coords.longitude);
       } catch (err) {
         // If we already have a last-known fix, keep granted; otherwise mark denied
         if (!userLocation) {
@@ -113,11 +147,11 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
       setLocationError(msg);
       setLocationStatus("denied");
     }
-  }, [userLocation]);
+  }, [userLocation, updateLocationAndCity]);
 
   return (
     <LocationContext.Provider
-      value={{ userLocation, locationError, locationStatus, requestLocation }}
+      value={{ userLocation, userCity, locationError, locationStatus, requestLocation }}
     >
       {children}
     </LocationContext.Provider>

@@ -26,6 +26,7 @@ import { isOpenNow } from "@/utils/openHours";
 import { haversineDistance } from "@/utils/location";
 import { type LangCode, LANG_LABELS, inferLanguages } from "@/utils/serviceLanguages";
 import { getProvince211 } from "@/utils/province211";
+import { citiesMatch } from "@/utils/cityMatch";
 import { Linking } from "react-native";
 
 /* ─────────── Step definitions ─────────── */
@@ -100,6 +101,7 @@ function scoreService(
   d: Diagnosis,
   userLoc: { lat: number; lng: number } | null,
   userProvince: ProvinceCode,
+  userCity: string | null,
 ): number {
   let score = 0;
 
@@ -127,13 +129,23 @@ function scoreService(
     if (d.language !== "fr" && !langs.includes(d.language)) score -= 20;
   }
 
-  // Proximity
+  // City match (works even without GPS coordinates on the service).
+  // Exact match only, to avoid Laval↔Lavaltrie / Victoria↔Victoriaville collisions.
+  if (d.useLocation && userCity && s.city && citiesMatch(userCity, s.city)) {
+    score += 40;
+  }
+
+  // Proximity (boost near, penalize far) — only when location is enabled and the service has GPS coordinates.
+  // Province-wide / no-coordinate services are NOT penalized so they remain reachable.
   if (d.useLocation && userLoc && s.coordinates) {
     const km = haversineDistance(userLoc, s.coordinates);
     if (km < 2) score += 30;
     else if (km < 5) score += 20;
     else if (km < 10) score += 10;
     else if (km < 25) score += 5;
+    else if (km < 50) score -= 5;
+    else if (km < 100) score -= 20;
+    else score -= 40;
   }
 
   // Open now
@@ -166,7 +178,7 @@ export default function DiagnosticScreen() {
   const insets = useSafeAreaInsets();
   const { language } = useLanguage();
   const { services } = useServicesData();
-  const { userLocation, requestLocation } = useLocation();
+  const { userLocation, userCity, requestLocation } = useLocation();
   const { province: userProvince, setProvince: setUserProvince } = useUserProvince();
   const isFr = language !== "en";
 
@@ -188,7 +200,7 @@ export default function DiagnosticScreen() {
 
     // First pass: score with the chosen language
     let scored = services
-      .map((s) => ({ s, score: scoreService(s, diag, userLocation, userProvince) }))
+      .map((s) => ({ s, score: scoreService(s, diag, userLocation, userProvince, userCity) }))
       .filter((x) => x.score > 0)
       .sort((a, b) => b.score - a.score);
 
@@ -202,14 +214,14 @@ export default function DiagnosticScreen() {
         fallback = true;
         const diagNoLang = { ...diag, language: null };
         scored = services
-          .map((s) => ({ s, score: scoreService(s, diagNoLang, userLocation, userProvince) }))
+          .map((s) => ({ s, score: scoreService(s, diagNoLang, userLocation, userProvince, userCity) }))
           .filter((x) => x.score > 0)
           .sort((a, b) => b.score - a.score);
       }
     }
 
     return { recommendations: scored.slice(0, 12), langFallback: fallback };
-  }, [step, services, diag, userLocation, userProvince]);
+  }, [step, services, diag, userLocation, userProvince, userCity]);
 
   function next() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -401,6 +413,21 @@ export default function DiagnosticScreen() {
           <Text style={[styles.stepSub, { color: colors.mutedForeground }]}>
             {isFr ? "On peut prioriser les services proches de vous." : "We can prioritize nearby services."}
           </Text>
+
+          {userCity ? (
+            <View style={{
+              flexDirection: "row", alignItems: "center", gap: 8,
+              backgroundColor: "#10b98118", borderColor: "#10b98140", borderWidth: 1,
+              borderRadius: 10, paddingHorizontal: 12, paddingVertical: 10,
+              marginBottom: 12,
+            }}>
+              <Feather name="map-pin" size={14} color="#10b981" />
+              <Text style={{ fontSize: 13, color: colors.foreground, flex: 1 }}>
+                {isFr ? "Position détectée : " : "Detected location: "}
+                <Text style={{ fontWeight: "700" }}>{userCity}</Text>
+              </Text>
+            </View>
+          ) : null}
 
           <Pressable
             onPress={handleUseLocation}
