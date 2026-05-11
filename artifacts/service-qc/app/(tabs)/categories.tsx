@@ -47,7 +47,7 @@ const SECTIONS: Section[] = [
     key: "essentiels",
     titleFr: "Essentiels du quotidien",
     titleEn: "Daily essentials",
-    categories: ["food", "hypermarche", "pharmacie", "housing", "realestate", "moving", "transport"],
+    categories: ["food", "hypermarche", "pharmacie", "housing", "realestate", "transport"],
   },
   {
     key: "sante-famille",
