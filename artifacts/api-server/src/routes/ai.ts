@@ -1,7 +1,7 @@
 import { Router, type Request } from "express";
 import { openai } from "@workspace/integrations-openai-ai-server";
-import { db, usersTable, aiTrialsTable } from "@workspace/db";
-import { eq, sql } from "drizzle-orm";
+import { db, usersTable, aiTrialsTable, servicesTable } from "@workspace/db";
+import { and, asc, desc, eq, ilike, inArray, or, sql, type SQL } from "drizzle-orm";
 import { getSession, getSessionId } from "../lib/auth.js";
 
 // ── Free-tier daily quota for AI chat ────────────────────────────
@@ -533,7 +533,178 @@ ${risks.length > 0 ? `- Alertes de risques actives :\n  • ${risks.join("\n  �
 `.trim();
 }
 
-function buildSystemPrompt(language: string): string {
+/* ────────────────────────────────────────────────────────────────────
+ * RAG retrieval (Option A) — May 2026
+ *
+ * Why: the static SERVICES_CATALOG above only carries ~250 services, but the
+ * production DB has ~8 000. Without retrieval the model either invents
+ * numbers or admits ignorance for 97% of the catalog. We extract keywords
+ * (city + category + urgency) from the user's question, run a cheap
+ * server-side lookup against the live `services` table, and inject the
+ * top 15 matches into the system prompt.
+ *
+ * The static SERVICES_CATALOG is kept ONLY as a fail-soft fallback when the
+ * DB lookup throws or returns nothing — guarantees we never regress UX.
+ * EMERGENCY_CATALOG (911 dispatch + crisis lines) is always included.
+ * ──────────────────────────────────────────────────────────────────── */
+
+type Keywords = { cities: string[]; categories: string[]; isUrgent: boolean };
+
+const CITY_PATTERNS: { canonical: string; patterns: RegExp[] }[] = [
+  { canonical: "Montréal", patterns: [/\bmont(?:r[ée]al)?\b/i, /\bmtl\b/i] },
+  { canonical: "Québec", patterns: [/\bville\s+de\s+qu[ée]bec\b/i, /\bqu[ée]bec\s+(?:ville|city)\b/i] },
+  { canonical: "Laval", patterns: [/\blaval\b/i] },
+  { canonical: "Gatineau", patterns: [/\bgatineau\b/i, /\bhull\b/i, /\boutaouais\b/i] },
+  { canonical: "Longueuil", patterns: [/\blongueuil\b/i, /\brive[-\s]?sud\b/i] },
+  { canonical: "Sherbrooke", patterns: [/\bsherbrooke\b/i, /\bestrie\b/i] },
+  { canonical: "Trois-Rivières", patterns: [/\btrois[-\s]?rivi[eè]res?\b/i, /\bmauricie\b/i] },
+  { canonical: "Shawinigan", patterns: [/\bshawinigan\b/i] },
+  { canonical: "Drummondville", patterns: [/\bdrummond(?:ville)?\b/i] },
+  { canonical: "Victoriaville", patterns: [/\bvictoriaville\b/i, /\barthabaska\b/i] },
+  { canonical: "Saguenay", patterns: [/\bsaguenay\b/i, /\bchicoutimi\b/i, /\bjonqui[eè]re\b/i] },
+  { canonical: "Saint-Jérôme", patterns: [/\bsaint?[-\s]?j[ée]r[ôo]me\b/i, /\blaurentides\b/i] },
+  { canonical: "Rouyn-Noranda", patterns: [/\brouyn[-\s]?noranda\b/i, /\babitibi\b/i] },
+  { canonical: "Val-d'Or", patterns: [/\bval[-\s]?d['']?or\b/i] },
+  { canonical: "Rimouski", patterns: [/\brimouski\b/i, /\bbas[-\s]?st?[-\s]?laurent\b/i] },
+  { canonical: "Sept-Îles", patterns: [/\bsept[-\s]?[iîíì]les?\b/i, /\bc[ôo]te[-\s]?nord\b/i] },
+  { canonical: "Gaspé", patterns: [/\bgasp[eé](?:sie)?\b/i] },
+  { canonical: "Lévis", patterns: [/\bl[ée]vis\b/i] },
+  { canonical: "Joliette", patterns: [/\bjoliette\b/i, /\blanaudi[eè]re\b/i] },
+  { canonical: "Saint-Jean-sur-Richelieu", patterns: [/\bsaint?[-\s]?jean[-\s]?sur[-\s]?richelieu\b/i] },
+];
+
+// Each entry maps an intent to ALL category slugs that may carry those services
+// in the DB. We MUST list both EN and FR slugs because the production data
+// carries both (legacy of separate import scripts — `food` AND `alimentation`,
+// `health` AND `sante`, etc.). Listing only the EN slug used to drop 50%+ of
+// matches. To be cleaned up post-launch with a one-time UPDATE migration.
+const CATEGORY_KEYWORDS: { slugs: string[]; patterns: RegExp[] }[] = [
+  { slugs: ["housing", "logement"],            patterns: [/\b(logement|h[eé]berg\w*|sans[-\s]?abri|itin[eé]rance|refuge|dorm\w*|[ée]viction|expulsion|shelter|homeless|housing|appartement|loyer)\b/i] },
+  { slugs: ["food", "alimentation"],           patterns: [/\b(nourriture|faim|manger|banque\s+alimentaire|popote|food|hungry|meal|repas|alimentation)\b/i] },
+  { slugs: ["mentalHealth", "santemental"],    patterns: [/\b(d[eé]pression|suicid\w*|anxi[eé]t\w*|crise|sant[eé]\s+mentale|psy(?:cho|chiatre|chologue)?\b|mental|th[eé]rapie|therapy|d[eé]tresse)\b/i] },
+  { slugs: ["health", "sante"],                patterns: [/\b(malade|m[eé]decin|doctor|clsc|h[oô]pital|ambulance|soins|sick|maladie|douleur)\b/i] },
+  { slugs: ["immigration"],                    patterns: [/\b(immigr\w*|r[eé]fugi[eé]\w*|papiers|sans[-\s]?papiers?|asile|ircc|mifi|csq|parrainage|asylum|sponsorship|nouveau\s+arrivant|nouvelle\s+arrivante|visa)\b/i] },
+  { slugs: ["employment", "emploi"],           patterns: [/\b(emploi|travail|job|cje|ch[oô]mage|work|unemployed|formation|carri[eè]re)\b/i] },
+  { slugs: ["family", "famille"],              patterns: [/\b(famille|enfant|conjugal|violence|dpj|victime|family|child|abuse|maltraitance)\b/i] },
+  { slugs: ["social", "soutienSocial"],        patterns: [/\b(centraide|211|r[eé]f[eé]rence\s+communautaire|organisme\s+communautaire)\b/i] },
+  { slugs: ["childcare"],                      patterns: [/\b(garderie|cpe|daycare|garde\s+(?:d['']enfant|en\s+milieu))\b/i] },
+  { slugs: ["legal"],                          patterns: [/\b(juridique|avocat|notaire|droit|legal|lawyer|aide\s+juridique)\b/i] },
+  { slugs: ["seniors"],                        patterns: [/\b(a[iî]n[eé]\w*|vieillesse|alzheimer|fadoq|retraite|senior|elder|proche\s+aidant|chsld|popote\s+roulante)\b/i] },
+  { slugs: ["realestate", "achatImmobilier"],  patterns: [/\b(achat\s+(?:de\s+)?maison|hypoth[eè]que|mortgage|schl|premi[eè]re\s+(?:maison|propri[eé]t[eé])|first[-\s]?home|propri[eé]taire)\b/i] },
+  { slugs: ["banking"],                        patterns: [/\b(banque|compte\s+bancaire|desjardins|scotia|rbc|td|bmo|laurentienne|caisse\s+populaire|bank)\b/i] },
+  { slugs: ["transport"],                      patterns: [/\b(transport|m[eé]tro|stm|rtc|stl|rtl|opus|autobus|\bbus\b)/i] },
+  { slugs: ["moving"],                         patterns: [/\b(d[eé]m[eé]nag\w*|mover|moving)\b/i] },
+  { slugs: ["pharmacie"],                      patterns: [/\b(pharmacie|pharmacy|m[eé]dicament)\b/i] },
+];
+
+const URGENT_PATTERNS = /\b(urgent|maintenant|tout\s+de\s+suite|asap|danger|en\s+crise|urgence|emergency|now|help\s+me|aide[-\s]moi|imm[eé]diatement|sos)\b/i;
+
+function extractKeywords(message: string, history: { role: string; content: string }[]): Keywords {
+  // Pull recent user turns into the search text so short follow-ups
+  // ("et à Trois-Rivières?") still inherit context from prior questions.
+  const recentUser = history.filter((h) => h.role === "user").slice(-2).map((h) => h.content).join(" ");
+  const text = `${recentUser} ${message}`;
+
+  const cities: string[] = [];
+  for (const { canonical, patterns } of CITY_PATTERNS) {
+    if (patterns.some((p) => p.test(text))) cities.push(canonical);
+  }
+
+  const categories: string[] = [];
+  for (const { slugs, patterns } of CATEGORY_KEYWORDS) {
+    if (patterns.some((p) => p.test(text))) categories.push(...slugs);
+  }
+
+  // Urgency only from the CURRENT message — we don't want a one-off "urgent"
+  // from 5 turns ago to keep boosting urgent services forever.
+  const isUrgent = URGENT_PATTERNS.test(message);
+  return { cities, categories, isUrgent };
+}
+
+type RetrievedService = {
+  id: string; name: string; category: string; subcategory: string;
+  city: string; phone: string; description: string;
+  isUrgent: boolean; isProvinceWide: boolean;
+};
+
+async function retrieveServices(kw: Keywords): Promise<RetrievedService[]> {
+  const conditions: SQL[] = [eq(servicesTable.active, true)];
+
+  if (kw.cities.length > 0) {
+    // Match the city directly OR include province-wide entries — the latter
+    // are valid answers everywhere and we don't want to hide pw1/pw2/etc.
+    const cityClauses = kw.cities.map((c) => ilike(servicesTable.city, `%${c}%`));
+    const cityOrPw = or(...cityClauses, eq(servicesTable.isProvinceWide, true));
+    if (cityOrPw) conditions.push(cityOrPw);
+  }
+
+  if (kw.categories.length > 0) {
+    conditions.push(inArray(servicesTable.category, kw.categories));
+  }
+
+  try {
+    const rows = await db
+      .select({
+        id: servicesTable.id,
+        name: servicesTable.name,
+        category: servicesTable.category,
+        subcategory: servicesTable.subcategory,
+        city: servicesTable.city,
+        phone: servicesTable.phone,
+        description: servicesTable.description,
+        isUrgent: servicesTable.isUrgent,
+        isProvinceWide: servicesTable.isProvinceWide,
+      })
+      .from(servicesTable)
+      .where(and(...conditions))
+      .orderBy(
+        // In a crisis, urgent services come first. Otherwise we put local
+        // (non-province-wide) services first so the user gets actionable
+        // hyper-local answers instead of generic 1-800 lines.
+        kw.isUrgent ? desc(servicesTable.isUrgent) : asc(servicesTable.isProvinceWide),
+        desc(servicesTable.isUrgent),
+        asc(servicesTable.name),
+      )
+      .limit(15);
+    return rows;
+  } catch {
+    // Fail-soft — caller falls back to the static catalog so the user
+    // never sees a blank response just because the DB hiccupped.
+    return [];
+  }
+}
+
+function formatServicesForPrompt(rows: RetrievedService[]): string {
+  if (rows.length === 0) return "";
+  return rows.map((r) => {
+    const tags: string[] = [];
+    if (r.isUrgent) tags.push("URGENT");
+    if (r.isProvinceWide) tags.push("province");
+    const tagStr = tags.length ? ` [${tags.join(",")}]` : "";
+    const phoneStr = r.phone ? ` | Tél:${r.phone}` : "";
+    const cityStr = r.city ? ` (${r.city})` : "";
+    const descStr = r.description ? ` — ${r.description.slice(0, 110)}` : "";
+    const sub = r.subcategory ? `/${r.subcategory}` : "";
+    return `- ID:${r.id} | ${r.name}${cityStr} | ${r.category}${sub}${descStr}${phoneStr}${tagStr}`;
+  }).join("\n");
+}
+
+// Always-injected safety net — these tiny lifelines stay in EVERY prompt
+// regardless of intent detection, so the model never misses a crisis line.
+const SAFETY_LIFELINES = `LIGNES DE SECOURS PROVINCIALES (à mentionner si la situation l'exige) :
+- ID:pw1 | 211 Québec | Référence communautaire toutes catégories | Tél:211
+- ID:pw2 | Info-Santé 811 | Santé - infirmières 24h | Tél:811
+- ID:pw3 | SOS Violence Conjugale | Violence conjugale 24h | Tél:1-800-363-9010
+- ID:pw4 | DPJ Protection de la jeunesse | Enfants en danger | Tél:1-800-463-9019
+- ID:pw5 | Suicide Action / Tel-Jeunes | Prévention suicide 24h | Tél:1-866-APPELLE
+- ID:pw6 | Tel-Aide Québec | Écoute anonyme | Tél:514-935-1101
+- ID:pw7 | Emploi-Québec | Emploi / formations | Tél:1-888-643-4721
+- ID:pw8 | TCRI | Réfugiés et demandeurs d'asile | Tél:514-272-6060
+- ID:pw9 | Hébergement femmes battues | Femmes violences | Tél:514-879-9010
+- ID:pw10 | RSIQ | Itinérance | Tél:514-933-9373
+- 911 | Urgence police/pompiers/ambulance partout au Québec | Tél:911`.trim();
+
+function buildSystemPrompt(language: string, retrievedBlock: string): string {
   const isEn = language === "en";
   const isEs = language === "es";
   const isAr = language === "ar";
@@ -635,15 +806,17 @@ EMERGENCY SERVICES CATALOG:
 (Note : la section "AUTRES PROVINCES ET TERRITOIRES" sert UNIQUEMENT à rediriger un Québécois qui aurait un proche hors-Québec ou qui prévoit déménager. Elle ne doit JAMAIS être proposée comme service principal — l'utilisateur de l'app est au Québec.)
 ${EMERGENCY_CATALOG}
 
-COMMUNITY SERVICES CATALOG:
-${SERVICES_CATALOG}
+${SAFETY_LIFELINES}
+
+COMMUNITY SERVICES CATALOG (LIVE — extrait dynamiquement de la base de données ${retrievedBlock ? "selon la question de l'usager" : "(aucun match — utiliser les lignes de secours et le catalogue de référence ci-dessous)"}):
+${retrievedBlock || SERVICES_CATALOG}
 
 Guidelines:
 - Keep responses under 200 words
 - Always end with the [SERVICES: ...] tag if recommending any services
-- If unsure about region, recommend province-wide services (pw1–pw10)
+- If unsure about region, recommend province-wide services (pw1–pw10) from the safety lifelines above
 - For emergency queries, always start with 911 instruction
-- Never make up service IDs — only use IDs from the catalogs above
+- Never make up service IDs — only use IDs from the catalogs above (LIVE catalog IDs are real database identifiers — use them verbatim)
 - Never be dismissive — every situation deserves a caring, actionable response
 - For mental health and crisis topics: validate feelings first, then provide resources`;
 }
@@ -739,9 +912,21 @@ router.post("/ai/chat", async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
   try {
+    // ── RAG retrieval (Option A) ─────────────────────────────────
+    // Pull the 15 most relevant LIVE services from the DB for this question
+    // and inject them in place of the static SERVICES_CATALOG. Falls back
+    // silently to the static catalog if the DB returns nothing.
+    const keywords = extractKeywords(message, history);
+    const retrieved = await retrieveServices(keywords);
+    const retrievedBlock = formatServicesForPrompt(retrieved);
+    req.log.info(
+      { cities: keywords.cities, categories: keywords.categories, urgent: keywords.isUrgent, retrievedCount: retrieved.length },
+      "AI chat retrieval",
+    );
+
     const messages: { role: "system" | "user" | "assistant"; content: string }[] =
       [
-        { role: "system", content: buildSystemPrompt(language) },
+        { role: "system", content: buildSystemPrompt(language, retrievedBlock) },
         ...history.slice(-6).map((h) => ({
           role: h.role as "user" | "assistant",
           content: h.content,
