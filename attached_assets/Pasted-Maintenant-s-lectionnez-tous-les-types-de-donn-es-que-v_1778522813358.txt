@@ -1,0 +1,219 @@
+Maintenant, sélectionnez tous les types de données que vous ou vos partenaires tiers collectez via cette app. Si votre app est actuellement disponible sur l’App Store, assurez-vous que vos réponses prennent en compte les données collectées uniquement via cette version de l’app.
+
+
+Divulgation facultative
+Vous n’avez pas à divulguer les types de données qui répondent à l’ensemble des critères suivants :
+
+Les données ne sont pas utilisées à des fins de suivi (cela signifie qu’elles ne sont pas partagées avec un courtier de données ou qu’elles ne sont pas associées à d’autres données tierces concernant l’utilisateur ou l’appareil pour des campagnes publicitaires ou afin d’en évaluer les performances). Pour en savoir plus, consultez l’article Informations sur les pratiques de confidentialité des apps dans l’App Store.
+Les données ne sont pas utilisées pour des campagnes publicitaires tierces, pour vos propres campagnes publicitaires, pour vos activités marketing ni à d’autres fins, selon les conditions définies dans l’article Informations sur les pratiques de confidentialité des apps dans l’App Store.
+La collecte des données est réalisée seulement dans des cas peu fréquents, hors utilisation des fonctionnalités principales de votre app et lorsque les fonctionnalités utilisées sont optionnelles.
+Les données collectées doivent être clairement présentées dans l'interface de votre app au moment où l’utilisateur les fournit, le nom de l’utilisateur ou le nom de son compte doivent apparaître en évidence dans le formulaire d’envoi, de même que toute autre donnée envoyée, et l’utilisateur doit autoriser à chaque fois la collecte de ces données.
+Si un type de données collecté via votre app répond à certains des critères énoncés ci‑dessus mais pas à tous, cela doit être divulgué dans la section sur la confidentialité.
+
+Parmi les exemples de données qu’iI n’est pas nécessaire de divulguer, on trouve les données collectées dans des formulaires de retour facultatifs ou des demandes de service client sans lien avec l’objectif premier de l’app et qui répondent aux autres critères mentionnés ci-dessus.
+
+Pour plus de clarté, la collecte récurrente de données effectuée après une demande d’autorisation initiale doit être divulguée.
+
+
+Divulgation de prestations de services financiers réglementés
+Vous n’avez pas à divulguer les types de données collectés via une app qui facilite des prestations de services financiers réglementés lorsque les données collectées répondent à l’ensemble des critères suivants :
+
+La collecte des données réglementées est effectuée conformément à un avis de confidentialité requis en vertu des lois ou des réglementations applicables en matière de services financiers ou de protection des données (par exemple, le RGPD ou le GLBA).
+La collecte des données via l’app est réalisée uniquement hors utilisation des fonctionnalités principales de votre app et lorsque les fonctionnalités utilisées sont optionnelles.
+Un tel avis mentionne que les données ne sont pas partagées avec des tiers non affiliés dans le but de commercialiser des produits et des services.
+Ces données ne sont pas associées à des données tierces à des fins publicitaires. Elles ne sont pas non plus communiquées à un courtier de données, sauf en cas de détection ou de prévention des fraudes ou pour des raisons de sécurité, ni partagées avec une agence d’évaluation du crédit chargée d’évaluer la solvabilité du consommateur.
+Si un type de données collecté via votre app répond à certains des critères énoncés ci‑dessus mais pas à tous, cela doit être divulgué dans la section sur la confidentialité.
+
+
+Divulgation des recherches médicales
+Vous n’avez pas à divulguer les types des données collectés dans le cadre d’une étude de recherche médicale lorsque les données collectées répondent à l’ensemble des critères suivants :
+
+Les données sont collectées par une entité signataire d’un formulaire de consentement éclairé dans le cadre d’une étude de recherche médicale vérifiée et approuvée par un comité d’examen institutionnel ou un comité d’éthique.
+La collecte de telles données doit être effectuée selon les instructions du guide de l’App Store et les données ne peuvent être utilisées à des fins de suivi, comme défini dans l’article Informations sur les pratiques de confidentialité des apps dans l’App Store.
+Si le type de données collecté via votre app répond à certains des critères énoncés ci‑dessus mais pas à tous, cela doit être divulgué dans la section sur la confidentialité.
+
+
+Coordonnées
+
+Nom
+
+Notamment le nom ou le prénom.
+
+
+Adresse e‑mail
+
+Notamment (mais non exclusivement) une adresse e‑mail hachée.
+
+
+Numéro de téléphone
+
+Notamment (mais non exclusivement) un numéro de téléphone haché.
+
+
+Adresse physique
+
+Par exemple, une adresse de domicile, une adresse physique ou une adresse postale.
+
+
+Autres coordonnées de l’utilisateur
+
+Toute autre information pouvant être utilisée pour contacter l’utilisateur en dehors de l’app.
+
+Santé et activité physique
+
+Santé
+
+Données de santé et médicales, provenant notamment de l’API Dossiers médicaux, de l’API HealthKit, des API Troubles du mouvement, des recherches médicales réalisées sur des sujets humains ou toute autre donnée médicale de l’utilisateur.
+
+
+Activité physique
+
+Données relatives à la forme et aux exercices physiques, provenant notamment de l’API Mouvements et Activité physique.
+
+Informations financières
+
+Informations de paiement
+
+Par exemple, les modes de paiement, le numéro de carte de paiement ou le numéro de compte bancaire. Si votre app utilise un service de paiement, les informations de paiement sont saisies en dehors de votre app et vous, en tant que développeur, n’avez jamais accès à ces informations, qui ne sont donc pas collectées et qui n’ont pas besoin d’être déclarées.
+
+
+Informations sur le crédit
+
+Par exemple, la cote de crédit.
+
+
+Autres informations financières
+
+Par exemple, le salaire, les revenus, les biens immobiliers, les dettes ou toute autre information d’ordre financier.
+
+Emplacement
+
+Emplacement précis
+
+Informations indiquant l’emplacement d’un utilisateur ou d’un appareil avec une résolution identique ou supérieure aux coordonnées de latitude et de longitude de trois chiffres ou plus après la virgule.
+
+
+Emplacement approximatif
+
+Informations indiquant l’emplacement d’un utilisateur ou d’un appareil avec une résolution inférieure aux coordonnées de latitude et de longitude de trois chiffres ou plus après la virgule, telles que les services de localisation approximative.
+
+
+Informations sensibles
+
+Par exemple, des informations sur les origines raciales ou ethniques, l’orientation sexuelle, la grossesse ou l’accouchement, un handicap, les convictions religieuses ou philosophiques, l’affiliation syndicale, l’opinion politique ou encore des données génétiques ou biométriques.
+
+
+Contacts
+
+Par exemple, une liste de contacts figurant dans le téléphone de l’utilisateur, dans son carnet d’adresses ou dans son graphe social.
+
+Contenu utilisateur
+
+E‑mails ou SMS
+
+Notamment l’objet, l’expéditeur, les destinataires et le contenu de l’e‑mail ou du message.
+
+
+Photos ou vidéos
+
+Photos ou vidéos de l’utilisateur.
+
+
+Données audio
+
+Enregistrements sonores ou voix de l’utilisateur.
+
+
+Contenu des expériences de jeu
+
+Par exemple, le contenu généré par l’utilisateur lorsqu’il joue à un jeu.
+
+
+Assistance client
+
+Données générées par l’utilisateur lors d’une demande adressée à l’assistance client.
+
+
+Autre contenu utilisateur
+
+Tout autre contenu généré par l’utilisateur.
+
+
+Historique de navigation
+
+Informations sur les contenus consultés par l’utilisateur qui ne font pas partie de l’app, comme des sites web par exemple.
+
+
+Historique de recherche
+
+Informations sur les recherches effectuées dans l’app.
+
+Identifiants
+
+Identifiant de l’utilisateur
+
+Par exemple, le nom d’utilisateur, le pseudonyme, l’identifiant de compte, l’identifiant de l’utilisateur assigné, le numéro client, l’identifiant aléatoire ou un autre identifiant de niveau utilisateur ou compte pouvant servir à identifier un utilisateur ou un compte en particulier.
+
+
+Identifiant de l’appareil
+
+Par exemple, l’identifiant publicitaire de l’appareil ou d’autres identifiants de l’appareil.
+
+
+Achats
+
+Achats ou tendances d’achat d’un compte ou d’une personne.
+
+Données d’utilisation
+
+Interaction avec le produit
+
+Par exemple, les lancements d’apps, les zones touchées de l’écran, les clics, les informations de défilement, les données relatives à la musique écoutée, les visionnages de vidéos, l’enregistrement de la progression dans un jeu, une vidéo ou chanson, ou d’autres informations sur les différentes interactions de l’utilisateur avec l’app.
+
+
+Données publicitaires
+
+Par exemple, les informations sur les publicités vues par l’utilisateur.
+
+
+Autres données d’utilisation
+
+Toute autre donnée concernant l’activité de l’utilisateur dans l’app.
+
+Diagnostic
+
+Données sur les pannes
+
+Par exemple, les journaux de pannes.
+
+
+Données de performance
+
+Par exemple, l’heure de lancement, le taux de panne ou la consommation énergétique.
+
+
+Autres données de diagnostic
+
+Toute autre donnée collectée pour réaliser des diagnostics techniques de l’app.
+
+Environnement
+
+Balayage de l’environnement
+
+Par exemple, le maillage, les plans, la classification des scènes ou la détection d’images dans l’environnement de l’utilisateur.
+
+Corps
+
+Mains
+
+La structure et les mouvements des mains de l’utilisateur.
+
+
+Tête
+
+Les mouvements de la tête de l’utilisateur.
+
+
+Autres données
+
+Tout autre type de données non mentionné.
