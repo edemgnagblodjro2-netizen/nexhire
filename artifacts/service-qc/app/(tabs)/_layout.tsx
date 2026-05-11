@@ -1,12 +1,11 @@
-import { BlurView } from "expo-blur";
 import { Tabs } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import React from "react";
-import { Platform, StyleSheet, View, useColorScheme } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import FloatingAIChat from "@/components/FloatingAIChat";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useColors } from "@/hooks/useColors";
 
 const TAB_BG = "#0d9488";
 const TAB_BG_TOP_BORDER = "rgba(255,255,255,0.08)";
@@ -36,12 +35,11 @@ function TabIcon({
 }
 
 function ClassicTabLayout() {
-  const colors = useColors();
-  const colorScheme = useColorScheme();
   const { t } = useLanguage();
-  const isDark = colorScheme === "dark";
-  const isIOS = Platform.OS === "ios";
   const isWeb = Platform.OS === "web";
+  const insets = useSafeAreaInsets();
+
+  const tabBarHeight = isWeb ? 84 : 60 + insets.bottom;
 
   return (
     <Tabs
@@ -62,7 +60,8 @@ function ClassicTabLayout() {
           shadowOpacity: 0.18,
           shadowRadius: 14,
           overflow: "hidden",
-          ...(isWeb ? { height: 84 } : {}),
+          height: tabBarHeight,
+          paddingBottom: insets.bottom,
         },
         tabBarBackground: () => (
           <View

@@ -97,6 +97,12 @@ A mobile application connecting vulnerable individuals with community and social
 - Submit TestFlight #1 : `3d968bce-6392-4348-8933-b7b63ba9dad7` ⏳ en cours.
 - **Gotcha credentials** : tout premier `eas build --platform ios` exige mode interactif (Apple ID + 2FA), même avec ASC API key. Ensuite stockés sur EAS, builds suivants tournent en `--non-interactive`.
 
+## v1.1.15 vc89 — Fix tab bar Android (safe area insets)
+- **Bug Android corrigé** : tab bar partiellement cachée derrière la barre de navigation système (gestes ou boutons) sur certains téléphones Android. Fix : `useSafeAreaInsets()` dans `_layout.tsx`, `height: 60 + insets.bottom` + `paddingBottom: insets.bottom` sur `tabBarStyle`. Les onglets Accueil/Services/IA sont maintenant toujours accessibles.
+- iOS buildNumber EAS auto-bump 88→89, Android versionCode 75→76.
+- Cleanup imports inutilisés (`BlurView`, `useColors`, `useColorScheme`, `isDark`, `isIOS`).
+- EAS build production lancé iOS + Android (v1.1.15).
+
 ## v1.1.14 vc85 — Overflow numéro téléphone + couverture services (mai 2026)
 - **Bug UI corrigé** : débordement du numéro de téléphone dans `ServiceCard.tsx` quand le texte est long. Footer `flexWrap: "wrap"` + `flex: 1` sur `cityRow` → le bouton appel passe automatiquement à la ligne suivante si trop large. `flexShrink: 0` sur callButton, `flexShrink: 1` sur callText.
 - **+80 services ajoutés en prod** (7 957 → 8 037) sur 12 villes QC sous-couvertes : mentalHealth (JEVI, CPS RN, CPS Val-d'Or, CEPS 02 Saguenay/Alma/Laurentides), health (CLSCs Sherbrooke/Saguenay/Saint-Jérôme/Rouyn-Noranda/Mirabel/Blainville/Val-d'Or/Alma), administrative (Service Canada x7), food (Ressourcerie RN, Action Source Vie STJ, BAM Magog, Entraide Mirabel), immigration (Le Coffret STJ, Groupe Inclusia Saguenay), employment (CJE Abitibi-Est Val-d'Or), social (CABS Sherbrooke), family (La Cigogne Alma).
