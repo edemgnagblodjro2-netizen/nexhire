@@ -262,73 +262,144 @@ app.get(["/api/privacy", "/privacy"], (_req, res) => {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Politique de confidentialité — AttenteZéro</title>
 <style>
-body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:760px;margin:2rem auto;padding:1rem;line-height:1.6;color:#1f2937}
-h1{color:#0ea5e9;border-bottom:2px solid #e5e7eb;padding-bottom:.5rem}
-h2{color:#0369a1;margin-top:2rem}
-a{color:#0ea5e9}
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;max-width:780px;margin:0 auto;padding:2rem 1rem;line-height:1.7;color:#1f2937;background:#f9fafb}
+header{background:#0d9488;color:#fff;border-radius:16px;padding:2rem;margin-bottom:2rem;text-align:center}
+header h1{margin:0 0 .25rem;font-size:1.6rem}
+header p{margin:0;opacity:.85;font-size:.9rem}
+h2{color:#0d9488;font-size:1.05rem;margin-top:2rem;border-left:3px solid #0d9488;padding-left:.75rem}
+.card{background:#fff;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#f0fdf9;color:#0d9488;text-align:left;padding:.5rem .75rem;border-bottom:2px solid #d1fae5}
+td{padding:.5rem .75rem;border-bottom:1px solid #e5e7eb;vertical-align:top}
+ul{padding-left:1.5rem;margin:.5rem 0}
+li{margin:.3rem 0}
+a{color:#0d9488}
+.badge{display:inline-block;background:#f0fdf9;color:#065f46;border:1px solid #a7f3d0;border-radius:6px;padding:2px 8px;font-size:.8rem;font-weight:600;margin:2px}
+.warn{background:#fffbeb;border-left:4px solid #f59e0b;padding:1rem;border-radius:8px;margin:1rem 0}
+footer{text-align:center;font-size:.8rem;color:#9ca3af;margin-top:2rem}
 </style>
 </head>
 <body>
-<h1>Politique de confidentialité — AttenteZéro</h1>
-<p><strong>Dernière mise à jour :</strong> 19 avril 2026</p>
+<header>
+  <h1>Politique de confidentialité</h1>
+  <p>AttenteZéro · CivicAI · NEQ 2280791601 · Dernière mise à jour : 12 mai 2026</p>
+</header>
 
-<p>AttenteZéro (« nous », « notre application ») est une application mobile qui aide les personnes au Québec à trouver rapidement des services communautaires (banques alimentaires, hébergement d'urgence, santé mentale, aide juridique, etc.). La présente politique décrit les renseignements personnels que nous collectons et la façon dont nous les utilisons, conformément à la Loi 25 du Québec sur la protection des renseignements personnels.</p>
+<div class="card">
+<p>AttenteZéro est une application mobile gratuite qui aide les personnes au Québec et au Canada à trouver rapidement des services communautaires (banques alimentaires, hébergement d'urgence, santé mentale, aide juridique, etc.). Elle est développée par <strong>CivicAI</strong> (NEQ 2280791601), entreprise québécoise.</p>
+<p>La présente politique décrit les renseignements personnels collectés et leur utilisation, conformément à la <strong>Loi 25 du Québec</strong> sur la protection des renseignements personnels.</p>
+</div>
 
-<h2>1. Renseignements collectés</h2>
+<h2>1. Données collectées</h2>
+<div class="card">
+<table>
+<tr><th>Type de donnée</th><th>Détail</th><th>Obligatoire ?</th></tr>
+<tr><td><strong>Adresse courriel</strong></td><td>Utilisée pour créer votre compte, vous authentifier et envoyer les emails de réinitialisation de mot de passe.</td><td>Non — l'app fonctionne sans compte</td></tr>
+<tr><td><strong>Mot de passe</strong></td><td>Haché avec bcrypt (jamais stocké en clair). Jamais partagé.</td><td>Non</td></tr>
+<tr><td><strong>Géolocalisation approximative</strong></td><td>Position utilisée uniquement pour afficher les services près de vous. Non partagée avec des tiers publicitaires. Vous pouvez refuser et saisir votre code postal manuellement.</td><td>Non — toujours optionnelle</td></tr>
+<tr><td><strong>Recherches effectuées</strong></td><td>Termes de recherche et services consultés, agrégés anonymement pour améliorer les résultats et produire des statistiques régionales (B2G). Aucun profil individuel n'est conservé.</td><td>Automatique en utilisant l'app</td></tr>
+<tr><td><strong>Données audio (micro)</strong></td><td>Uniquement si vous activez la dictée vocale pour l'assistant IA. L'audio est envoyé à OpenAI (Whisper) pour transcription uniquement. Non stocké après transcription.</td><td>Non — optionnel</td></tr>
+<tr><td><strong>Données de paiement</strong></td><td>Traitement entièrement géré par Stripe. Nous ne stockons jamais vos numéros de carte. Sur iOS, toutes les fonctionnalités sont gratuites — aucun paiement collecté.</td><td>Non</td></tr>
+</table>
+</div>
+
+<h2>2. Utilisation des données</h2>
+<div class="card">
 <ul>
-<li><strong>Compte utilisateur :</strong> adresse courriel, mot de passe chiffré, langue préférée.</li>
-<li><strong>Géolocalisation :</strong> position approximative (avec votre consentement) pour afficher les services à proximité. Vous pouvez refuser et saisir manuellement votre code postal.</li>
-<li><strong>Caméra :</strong> uniquement utilisée si vous choisissez d'ajouter une photo à votre profil ou de scanner un code QR. Aucune photo n'est transmise sans votre action explicite.</li>
-<li><strong>Données d'usage :</strong> recherches effectuées, services consultés, favoris (anonymisés à des fins statistiques).</li>
-<li><strong>Paiement :</strong> traité par Stripe ; nous ne stockons aucune information de carte bancaire.</li>
+<li>Authentifier votre compte et sécuriser l'accès à vos données personnelles.</li>
+<li>Afficher les services communautaires les plus proches de votre position.</li>
+<li>Faire fonctionner l'assistant IA multilingue (GPT-4o-mini via OpenAI).</li>
+<li>Produire des statistiques régionales agrégées et anonymisées pour les administrations publiques (données B2G — seuil minimum de 5 occurrences avant publication).</li>
+<li>Envoyer les emails transactionnels (réinitialisation de mot de passe uniquement).</li>
+<li>Améliorer la pertinence des résultats de recherche.</li>
 </ul>
+<div class="warn">⚠ Nous ne vendons jamais vos données. Nous n'affichons aucune publicité. Nous n'utilisons pas vos données à des fins de marketing direct.</div>
+</div>
 
-<h2>2. Utilisation des renseignements</h2>
+<h2>3. Stockage et sécurité</h2>
+<div class="card">
 <ul>
-<li>Fournir des recommandations géolocalisées de services.</li>
-<li>Améliorer la pertinence des résultats par intelligence artificielle.</li>
-<li>Détecter les situations de crise et orienter vers les ressources appropriées (911, 211, ligne 1-866-APPELLE).</li>
-<li>Gérer les abonnements et facturation.</li>
+<li><strong>Hébergement :</strong> Replit Inc. (serveurs aux États-Unis), base de données PostgreSQL chiffrée au repos.</li>
+<li><strong>Mots de passe :</strong> hachés avec bcrypt (facteur de coût 12). Jamais visibles même par nos équipes.</li>
+<li><strong>Connexions :</strong> chiffrées TLS 1.2+ entre l'app et nos serveurs.</li>
+<li><strong>Adresses IP :</strong> jamais stockées directement. Seul un hash SHA-256 est conservé temporairement pour la limitation de taux (anti-abus), sans possibilité de reconstitution.</li>
+<li><strong>Journaux d'accès :</strong> conservés 12 mois maximum à des fins de sécurité.</li>
 </ul>
+</div>
 
-<h2>3. Partage des renseignements</h2>
-<p>Nous ne vendons jamais vos données. Nous partageons uniquement avec :</p>
+<h2>4. Partage avec des tiers</h2>
+<div class="card">
+<table>
+<tr><th>Tiers</th><th>Finalité</th><th>Données partagées</th></tr>
+<tr><td>OpenAI (É.-U.)</td><td>Assistant IA et transcription vocale</td><td>Texte des questions (anonymisé), audio si dictée activée</td></tr>
+<tr><td>Stripe (É.-U.)</td><td>Paiements Android uniquement</td><td>Email et montant — aucune donnée de carte</td></tr>
+<tr><td>Replit Inc. (É.-U.)</td><td>Hébergement serveur et base de données</td><td>Toutes les données applicatives</td></tr>
+</table>
+<p style="margin-top:1rem;font-size:.9rem">Aucun autre tiers. Aucun courtier de données. Aucun réseau publicitaire.</p>
+</div>
+
+<h2>5. Conservation des données</h2>
+<div class="card">
 <ul>
-<li>Stripe (traitement des paiements)</li>
-<li>Fournisseur d'hébergement (Replit Inc., serveurs au Canada/É.-U.)</li>
-<li>Fournisseur d'IA (OpenAI / Anthropic, données anonymisées)</li>
+<li><strong>Compte actif :</strong> données conservées tant que le compte existe.</li>
+<li><strong>Après suppression du compte :</strong> toutes les données personnelles identifiables sont effacées dans les 30 jours.</li>
+<li><strong>Exception légale :</strong> les factures et historiques de paiement sont conservés 7 ans (obligation fiscale Québec/Canada).</li>
+<li><strong>Journaux de sécurité anonymisés :</strong> conservés 12 mois.</li>
 </ul>
+</div>
 
-<h2>4. Conservation</h2>
-<p>Vos données sont conservées tant que votre compte est actif. Vous pouvez demander la suppression à tout moment.</p>
-
-<h2>5. Vos droits (Loi 25 Québec)</h2>
+<h2>6. Suppression de compte</h2>
+<div class="card">
+<p>Vous pouvez supprimer votre compte à tout moment :</p>
 <ul>
-<li>Accès à vos renseignements personnels</li>
-<li>Rectification des données inexactes</li>
-<li>Suppression de votre compte</li>
-<li>Retrait de votre consentement à tout moment</li>
-<li>Portabilité de vos données</li>
+<li><strong>Dans l'app :</strong> Profil → Paramètres → Supprimer mon compte (immédiat et définitif).</li>
+<li><strong>Par courriel :</strong> <a href="mailto:contact@attentezero.ca?subject=Demande%20de%20suppression%20de%20compte">contact@attentezero.ca</a> (traitement sous 30 jours).</li>
 </ul>
+<p><a href="/delete-account">→ Page dédiée à la suppression de compte</a></p>
+</div>
 
-<h2>6. Sécurité</h2>
-<p>Mots de passe hachés (bcrypt), connexions chiffrées TLS, base de données chiffrée au repos, journalisation des accès administratifs.</p>
+<h2>7. Vos droits (Loi 25 Québec)</h2>
+<div class="card">
+<p>Conformément à la Loi 25 sur la protection des renseignements personnels dans le secteur privé, vous disposez des droits suivants :</p>
+<span class="badge">Accès</span>
+<span class="badge">Rectification</span>
+<span class="badge">Suppression</span>
+<span class="badge">Portabilité</span>
+<span class="badge">Retrait du consentement</span>
+<span class="badge">Opposition au traitement</span>
+<p style="margin-top:1rem">Pour exercer vos droits : <a href="mailto:contact@attentezero.ca">contact@attentezero.ca</a></p>
+<p>Pour déposer une plainte : <a href="https://www.cai.gouv.qc.ca">Commission d'accès à l'information du Québec (CAI)</a></p>
+</div>
 
-<h2>7. Mineurs</h2>
-<p>L'application est destinée aux personnes de 13 ans et plus. Nous ne collectons pas sciemment de données d'enfants de moins de 13 ans.</p>
+<h2>8. Mineurs</h2>
+<div class="card">
+<p>L'application est destinée aux personnes de <strong>13 ans et plus</strong>. Nous ne collectons pas sciemment de données d'enfants de moins de 13 ans. Si vous êtes parent et pensez que votre enfant a créé un compte, contactez-nous à <a href="mailto:contact@attentezero.ca">contact@attentezero.ca</a> pour suppression immédiate.</p>
+</div>
 
-<h2>8. Modifications</h2>
-<p>Toute modification importante sera notifiée dans l'application au moins 30 jours avant son entrée en vigueur.</p>
+<h2>9. Intelligence artificielle</h2>
+<div class="card">
+<p>L'assistant IA intégré utilise le modèle <strong>GPT-4o-mini d'OpenAI</strong>. Vos messages sont transmis à OpenAI pour générer des réponses. Ils ne sont pas utilisés pour entraîner les modèles d'OpenAI (conformément aux conditions API d'OpenAI). Les conversations ne sont pas stockées sur nos serveurs après la session.</p>
+<p>La transcription vocale utilise <strong>Whisper (OpenAI)</strong>. L'audio est traité en temps réel et non conservé.</p>
+</div>
 
-<h2>9. Contact</h2>
-<p>Responsable de la protection des renseignements personnels :<br>
-<strong>Startup Ayas</strong><br>
-Courriel : <a href="mailto:contact@attentezero.ca">contact@attentezero.ca</a></p>
+<h2>10. Modifications</h2>
+<div class="card">
+<p>Toute modification importante à cette politique sera notifiée dans l'application au moins <strong>30 jours</strong> avant son entrée en vigueur. La date de la dernière mise à jour est toujours affichée en haut de cette page.</p>
+</div>
 
-<p>Pour déposer une plainte : <a href="https://www.cai.gouv.qc.ca">Commission d'accès à l'information du Québec</a>.</p>
+<h2>11. Contact</h2>
+<div class="card">
+<p><strong>Responsable de la protection des renseignements personnels :</strong><br>
+CivicAI — NEQ 2280791601<br>
+Courriel : <a href="mailto:contact@attentezero.ca">contact@attentezero.ca</a><br>
+Application : AttenteZéro</p>
+</div>
 
-<hr>
-<p style="font-size:.85rem;color:#6b7280">AttenteZéro complète le service 211 Québec en offrant une réponse géolocalisée plus rapide. AttenteZéro ne remplace pas les services d'urgence — en cas de danger immédiat, composez le 911.</p>
+<footer>
+  AttenteZéro — un produit CivicAI · NEQ 2280791601 · © 2026 CivicAI. Tous droits réservés.<br>
+  <a href="/support">Assistance</a> · <a href="/delete-account">Supprimer mon compte</a>
+</footer>
 </body>
 </html>`);
 });

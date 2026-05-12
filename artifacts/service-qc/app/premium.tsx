@@ -162,6 +162,14 @@ export default function PremiumScreen() {
   }, [cardAnims]);
 
   async function handleUserPremium() {
+    if (Platform.OS === "ios") {
+      Alert.alert(
+        "Gratuit sur iOS",
+        "Toutes les fonctionnalités Premium sont gratuites sur iOS. Profitez-en sans restriction !",
+        [{ text: "Super, merci !", style: "default" }]
+      );
+      return;
+    }
     if (!isAuthenticated) {
       Alert.alert(
         "Connexion requise",
