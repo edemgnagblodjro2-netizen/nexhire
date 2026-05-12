@@ -409,6 +409,11 @@ export default function ServiceDetailScreen() {
               {service.hours ?? t.hoursUnavailable}
             </Text>
           </View>
+          <Text style={[styles.hoursDisclaimer, { color: colors.mutedForeground }]}>
+            {lang === "fr"
+              ? "⚠ Horaires indicatifs — vérifier avant de vous déplacer"
+              : "⚠ Indicative hours — verify before visiting"}
+          </Text>
         </View>
 
         {showFallback && fallbacks.length > 0 ? (
@@ -846,6 +851,12 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     marginTop: 2,
     lineHeight: 18,
+  },
+  hoursDisclaimer: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    marginTop: 6,
+    fontStyle: "italic",
   },
   actionsSection: {
     gap: 10,

@@ -243,6 +243,8 @@ export function getOpenStatus(
   if (nextOpenToday !== null) {
     return { kind: "opens-at", label: formatMinutes(nextOpenToday) };
   }
-  return foundAnyApplicableToday ? { kind: "closed" } : { kind: "unknown" };
+  // Ne jamais afficher "Fermé" — nos données d'horaires peuvent être inexactes.
+  // Mieux vaut ne rien afficher que d'induire l'utilisateur en erreur.
+  return { kind: "unknown" };
 }
 
