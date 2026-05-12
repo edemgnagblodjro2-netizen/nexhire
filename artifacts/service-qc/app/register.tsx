@@ -52,9 +52,9 @@ const TYPE_OPTIONS: {
 ];
 
 export default function RegisterScreen() {
-  const { register, isAuthenticated } = useAuth();
+  const { register, isAuthenticated, getToken } = useAuth();
   const router = useRouter();
-  const params = useLocalSearchParams<{ type?: string }>();
+  const params = useLocalSearchParams<{ type?: string; ref?: string }>();
 
   // Type d'inscription — peut être préselectionné via deep-link (?type=organisme).
   const [accountType, setAccountType] = useState<AccountType>(() => {
@@ -85,6 +85,11 @@ export default function RegisterScreen() {
   const [captchaAnswer, setCaptchaAnswer] = useState<string>("");
   const [captchaLoading, setCaptchaLoading] = useState(false);
   const [honeypot, setHoneypot] = useState<string>(""); // jamais visible
+
+  const [referralCode, setReferralCode] = useState(() => {
+    const c = params.ref ?? "";
+    return typeof c === "string" ? c.toUpperCase() : "";
+  });
 
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -193,6 +198,27 @@ export default function RegisterScreen() {
         fetchCaptcha();
       }
       return;
+    }
+
+    // Après inscription réussie : réclamer le code ambassadeur si présent.
+    const code = referralCode.trim().toUpperCase();
+    if (code.length >= 4) {
+      try {
+        const { getApiBaseUrl } = await import("@/lib/apiBase");
+        const token = await getToken();
+        if (token) {
+          await fetch(`${getApiBaseUrl()}/api/referrals/claim`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ code }),
+          });
+        }
+      } catch {
+        // Erreur silencieuse — le code peut être invalide ou déjà utilisé, ça ne bloque pas l'inscription.
+      }
     }
 
     setLoading(false);
@@ -486,6 +512,37 @@ export default function RegisterScreen() {
                 />
               </View>
 
+              {/* ─── Code ambassadeur (optionnel) ─── */}
+              <View style={styles.referralWrap}>
+                <View style={styles.referralDivider}>
+                  <View style={styles.dividerLine} />
+                  <Text style={styles.dividerLabel}>Code ambassadeur</Text>
+                  <View style={styles.dividerLine} />
+                </View>
+                <View style={styles.inputWrapper}>
+                  <Feather name="gift" size={16} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
+                  <TextInput
+                    style={[styles.input, styles.flex]}
+                    placeholder="Code de parrainage (optionnel)"
+                    placeholderTextColor="rgba(255,255,255,0.5)"
+                    value={referralCode}
+                    onChangeText={(t) => setReferralCode(t.toUpperCase())}
+                    autoCapitalize="characters"
+                    autoCorrect={false}
+                    maxLength={16}
+                    returnKeyType="done"
+                  />
+                  {referralCode.length > 0 && (
+                    <Pressable onPress={() => setReferralCode("")} hitSlop={8}>
+                      <Feather name="x" size={15} color="rgba(255,255,255,0.6)" />
+                    </Pressable>
+                  )}
+                </View>
+                <Text style={styles.referralHint}>
+                  Un ami vous a recommandé l'app ? Entrez son code ici.
+                </Text>
+              </View>
+
               {/* Free / Premium summary */}
               <View style={styles.planSummary}>
                 <View style={styles.planSummaryHead}>
@@ -722,6 +779,20 @@ const styles = StyleSheet.create({
     color: "rgba(255,255,255,0.65)",
     fontSize: 11,
     lineHeight: 14,
+  },
+  referralWrap: {
+    gap: 8,
+  },
+  referralDivider: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  referralHint: {
+    color: "rgba(255,255,255,0.6)",
+    fontSize: 11,
+    lineHeight: 14,
+    paddingHorizontal: 4,
   },
   // Honeypot caché (hors écran). Surface large pour bots, invisible pour humains.
   honeypot: {
