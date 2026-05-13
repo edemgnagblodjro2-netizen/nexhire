@@ -33,6 +33,18 @@ const T = {
     hero_title: "Technologie au service\nde vos idées.",
     hero_sub: "CivicAI conçoit des solutions numériques intelligentes pour les entreprises, organisations et administrations publiques — partout au Canada.",
     hero_cta: "Demander une démo", hero_cta2: "Voir nos services",
+    trust_stats: [
+      { value: "7 957", label: "services communautaires\nrépertoriés au Québec" },
+      { value: "5", label: "langues supportées\n(FR · EN · ES · AR · HT)" },
+      { value: "100 %", label: "données hébergées\nau Canada" },
+      { value: "Gratuit", label: "pour les citoyens\nmodèle B2G" },
+    ],
+    trust_badges: [
+      { icon: "🏢", label: "Entreprise québécoise", sub: "NEQ 2280791601" },
+      { icon: "🔒", label: "Conforme Loi 25 QC", sub: "Protection des données" },
+      { icon: "🌐", label: "Multilingue", sub: "FR · EN · ES · AR · HT" },
+      { icon: "🤝", label: "Open approach", sub: "Sans engagement" },
+    ],
     services_tag: "Nos services", services_title: "Ce que nous faisons",
     services_sub: "Des solutions technologiques complètes, de l'automatisation IA au marketing digital.",
     how_tag: "Notre approche", how_title: "Comment ça fonctionne",
@@ -99,6 +111,18 @@ const T = {
     hero_title: "Technology at the service\nof your ideas.",
     hero_sub: "CivicAI designs intelligent digital solutions for businesses, organizations, and public administrations — across Canada.",
     hero_cta: "Request a demo", hero_cta2: "See our services",
+    trust_stats: [
+      { value: "7,957", label: "community services\nlisted in Quebec" },
+      { value: "5", label: "supported languages\n(FR · EN · ES · AR · HT)" },
+      { value: "100%", label: "data hosted\nin Canada" },
+      { value: "Free", label: "for citizens\nB2G model" },
+    ],
+    trust_badges: [
+      { icon: "🏢", label: "Quebec company", sub: "NEQ 2280791601" },
+      { icon: "🔒", label: "Law 25 QC compliant", sub: "Data protection" },
+      { icon: "🌐", label: "Multilingual", sub: "FR · EN · ES · AR · HT" },
+      { icon: "🤝", label: "Open approach", sub: "No commitment" },
+    ],
     services_tag: "Our services", services_title: "What we do",
     services_sub: "Complete technology solutions, from AI automation to digital marketing.",
     how_tag: "Our approach", how_title: "How it works",
@@ -361,6 +385,49 @@ export default function Home() {
               </a>
             </motion.div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* CHIFFRES CLÉS + GARANTIES */}
+      <section className="py-16 px-6 bg-white border-b border-slate-100" data-testid="section-trust">
+        <div className="max-w-6xl mx-auto">
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+            {t.trust_stats.map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.5 }}
+                className="text-center"
+              >
+                <div className="text-3xl md:text-4xl font-black text-blue-700 mb-2 tracking-tight">{stat.value}</div>
+                <div className="text-xs text-slate-500 leading-snug whitespace-pre-line">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
+          {/* Divider */}
+          <div className="border-t border-slate-100 mb-10" />
+          {/* Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            {t.trust_badges.map((b, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.07, duration: 0.4 }}
+                className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-5 py-3"
+              >
+                <span className="text-xl">{b.icon}</span>
+                <div>
+                  <div className="text-sm font-bold text-slate-800 leading-tight">{b.label}</div>
+                  <div className="text-xs text-slate-400">{b.sub}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
