@@ -26,7 +26,7 @@
         "NSMicrophoneUsageDescription": "AttenteZéro utilise le microphone uniquement lorsque vous activez la dictée vocale dans l'assistant IA. L'audio est envoyé à OpenAI (Whisper) pour transcription en temps réel et n'est jamais stocké sur nos serveurs.",
         "ITSAppUsesNonExemptEncryption": false
       },
-      "buildNumber": "101"
+      "buildNumber": "102"
     },
     "android": {
       "package": "com.attentezero.app",
