@@ -1,0 +1,121 @@
+DNS
+
+Records
+Configure DNS records and review proxy status of your hostnames.
+
+
+civicai.ca is pending until you complete the instructions on the Overview page and we are able to verify ownership. Learn more about pending domains.
+Recommendations
+Hide
+Add an SPF record (type: TXT) to define which servers are allowed to send email for this domain.
+Add a DMARC record so your email provider can stop fake emails from reaching inboxes.
+Proxying is required for most security and performance features
+Set your DNS records to proxied by clicking "Edit" in the table below, to benefit from DDoS protection, security rules, caching, and more.
+
+DNS management for civicai.ca
+Review, add, and edit DNS records. Changes propagate globally within minutes.
+DNS Setup: Full
+
+
+Import and Export
+
+
+Dashboard Display Settings
+Search DNS Records
+Your search yielded 8 results
+
+Type
+
+Name
+
+Content
+
+Proxy status
+
+
+
+TTL
+
+Actions
+
+A
+civicai.ca
+34.111.179.208
+
+DNS only
+
+Auto
+EditWhen toggled open, an additional table row will be added below this row to enable editing DNS records.
+
+CNAME
+www
+quebec-aid-finder.replit.app
+
+DNS only
+
+Auto
+EditWhen toggled open, an additional table row will be added below this row to enable editing DNS records.
+
+MX
+civicai.ca
+eforward5.registrar-servers.com
+
+20
+DNS only
+
+Auto
+EditWhen toggled open, an additional table row will be added below this row to enable editing DNS records.
+
+MX
+civicai.ca
+eforward4.registrar-servers.com
+
+15
+DNS only
+
+Auto
+EditWhen toggled open, an additional table row will be added below this row to enable editing DNS records.
+
+MX
+civicai.ca
+eforward3.registrar-servers.com
+
+10
+DNS only
+
+Auto
+EditWhen toggled open, an additional table row will be added below this row to enable editing DNS records.
+
+MX
+civicai.ca
+eforward2.registrar-servers.com
+
+10
+DNS only
+
+Auto
+EditWhen toggled open, an additional table row will be added below this row to enable editing DNS records.
+
+MX
+civicai.ca
+eforward1.registrar-servers.com
+
+10
+DNS only
+
+Auto
+EditWhen toggled open, an additional table row will be added below this row to enable editing DNS records.
+
+TXT
+civicai.ca
+"replit-verify=109734be-8b2f-47f7-86f1-578ad6cf7be1"
+DNS only
+
+Auto
+EditWhen toggled open, an additional table row will be added below this row to enable editing DNS records.
+Cloudflare Nameservers
+To use Cloudflare, change your nameservers, or authoritative DNS servers. These are your assigned Cloudflare nameservers.
+
+Type	Value
+NS	sage.ns.cloudflare.com
+NS	zara.ns.cloudflare.com
