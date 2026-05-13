@@ -33,8 +33,6 @@ const T = {
     hero_title: "Technologie au service\nde vos idées.",
     hero_sub: "CivicAI conçoit des solutions numériques intelligentes pour les entreprises, organisations et administrations publiques — partout au Canada.",
     hero_cta: "Demander une démo", hero_cta2: "Voir nos services",
-    partners_title: "Ils nous font confiance",
-    partners: ["Ville de Québec", "CIUSSS MCQ", "CHSLD Réseau QC", "Hébergement Solidaire", "Carrefour Aide", "La Maison du Père"],
     services_tag: "Nos services", services_title: "Ce que nous faisons",
     services_sub: "Des solutions technologiques complètes, de l'automatisation IA au marketing digital.",
     how_tag: "Notre approche", how_title: "Comment ça fonctionne",
@@ -101,8 +99,6 @@ const T = {
     hero_title: "Technology at the service\nof your ideas.",
     hero_sub: "CivicAI designs intelligent digital solutions for businesses, organizations, and public administrations — across Canada.",
     hero_cta: "Request a demo", hero_cta2: "See our services",
-    partners_title: "They trust us",
-    partners: ["City of Quebec", "CIUSSS MCQ", "CHSLD Network QC", "Solidarity Housing", "Carrefour Aide", "La Maison du Père"],
     services_tag: "Our services", services_title: "What we do",
     services_sub: "Complete technology solutions, from AI automation to digital marketing.",
     how_tag: "Our approach", how_title: "How it works",
@@ -365,20 +361,6 @@ export default function Home() {
               </a>
             </motion.div>
           </motion.div>
-        </div>
-      </section>
-
-      {/* PARTENAIRES */}
-      <section className="py-12 px-6 bg-white border-b border-slate-100" data-testid="section-partners">
-        <div className="max-w-6xl mx-auto">
-          <p className="text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-8">{t.partners_title}</p>
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 opacity-70 grayscale hover:grayscale-0 transition-all duration-700">
-            {t.partners.map((p, i) => (
-              <div key={i} className="text-base md:text-xl font-black text-slate-700 tracking-tight" data-testid={`text-partner-${i}`}>
-                {p}
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
