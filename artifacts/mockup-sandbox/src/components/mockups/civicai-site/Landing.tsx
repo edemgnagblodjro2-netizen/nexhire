@@ -453,7 +453,7 @@ export function Landing() {
               <h2 className="text-3xl font-black text-slate-900 mb-6">{t.mission_title}</h2>
               <p className="text-slate-600 text-lg leading-relaxed mb-6">{t.mission_text}</p>
               <div className="flex flex-col gap-2">
-                {[t.mission_neq, t.mission_hq, lang === "fr" ? "Fondée en 2024" : "Founded in 2024"].map((item, i) => (
+                {[t.mission_neq, t.mission_hq, lang === "fr" ? "Fondée en 2026" : "Founded in 2026"].map((item, i) => (
                   <div key={i} className="flex items-center gap-2 text-sm text-slate-500">
                     <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
                     {item}
