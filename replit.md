@@ -97,6 +97,13 @@ A mobile application connecting vulnerable individuals with community and social
 - Submit TestFlight #1 : `3d968bce-6392-4348-8933-b7b63ba9dad7` ⏳ en cours.
 - **Gotcha credentials** : tout premier `eas build --platform ios` exige mode interactif (Apple ID + 2FA), même avec ASC API key. Ensuite stockés sur EAS, builds suivants tournent en `--non-interactive`.
 
+## v1.1.18 vc80 build100 — Fix refus Apple + Programme ambassadeur
+- **Fix 3.1.1 Apple** : Stripe complètement retiré sur iOS. Toutes les fonctionnalités Premium (chat IA illimité, favoris, alertes) gratuites sur iOS via `Platform.OS === "ios"` dans `usePremiumGate.ts` et `premium.tsx`.
+- **Fix 5.1.1 Apple** : Politique de confidentialité entièrement refondue sur `attentezero.ca/privacy` (données collectées, email, géoloc, audio IA, stockage, sécurité, suppression compte, droits Loi 25 QC).
+- **Champ code ambassadeur à l'inscription** : champ "Code ambassadeur" visible dans le formulaire `register.tsx`, auto-claim après inscription réussie.
+- **Android vc80** : ✅ Approuvé et disponible sur Play Store.
+- **iOS build 100** : ⏳ En review Apple (soumis après refus 3.1.1 + 5.1.1 sur v1.1.17).
+
 ## v1.1.16 vc91 — Fix stats "au Québec" + splash count corrigé
 - **Stats strip accueil corrigées** : labels sous les chiffres passent de `"services"` → `"services au Québec"` (FR) / `"services in Québec"` (EN) et `"villes"` → `"villes QC"` / `"QC cities"`.
 - **Splash count corrigé** : `SERVICES_COUNT_LABEL` corrigé `8 037 → 7 957` (vrai count BDD prod).
