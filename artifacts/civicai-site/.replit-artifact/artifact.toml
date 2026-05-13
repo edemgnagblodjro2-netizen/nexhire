@@ -1,5 +1,5 @@
 kind = "web"
-previewPath = "/civicai-site/"
+previewPath = "/"
 title = "CivicAI — Site corporatif"
 version = "1.0.0"
 id = "artifacts/civicai-site"
@@ -11,7 +11,7 @@ version = "1.0.0"
 
 [[services]]
 name = "web"
-paths = [ "/civicai-site/", "/" ]
+paths = [ "/" ]
 localPort = 23745
 
 [services.development]
@@ -28,4 +28,4 @@ to = "/index.html"
 
 [services.env]
 PORT = "23745"
-BASE_PATH = "/civicai-site/"
+BASE_PATH = "/"
