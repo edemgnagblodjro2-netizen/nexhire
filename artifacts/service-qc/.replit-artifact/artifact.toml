@@ -1,5 +1,5 @@
 kind = "mobile"
-previewPath = "/"
+previewPath = "/m/"
 title = "ServiceQC — Community Services Quebec"
 version = "1.0.0"
 id = "artifacts/service-qc"
@@ -12,7 +12,7 @@ version = "1.0.0"
 [[services]]
 ensurePreviewReachable = "/status"
 name = "expo"
-paths = [ "/" ]
+paths = [ "/m/" ]
 localPort = 22729
 
 [services.development]
