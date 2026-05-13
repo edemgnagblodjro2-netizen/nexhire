@@ -251,10 +251,7 @@ export function Landing() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-slate-100">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center">
-              <span className="text-white font-black text-sm">C</span>
-            </div>
-            <span className="font-bold text-lg tracking-tight">CivicAI</span>
+            <img src="/civicai-logo.png" alt="CivicAI" className="h-9 w-auto" />
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
             <a href="#mission" className="hover:text-teal-600 transition-colors">{t.nav_mission}</a>
@@ -339,6 +336,7 @@ export function Landing() {
         {/* Hero text below banner */}
         <div className="py-16 px-6 bg-gradient-to-b from-slate-50 to-white">
           <div className="max-w-4xl mx-auto">
+            <img src="/civicai-logo.png" alt="CivicAI" className="h-16 w-auto mb-8" />
             <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 text-teal-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse" />
               {t.hero_tag}
@@ -502,11 +500,10 @@ export function Landing() {
 
       {/* FOOTER */}
       <footer className="py-8 px-6 bg-slate-900 text-center">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <div className="w-6 h-6 rounded-md bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center">
-            <span className="text-white font-black text-xs">C</span>
+        <div className="flex items-center justify-center mb-3">
+          <div className="bg-white rounded-lg px-3 py-1.5 inline-flex items-center">
+            <img src="/civicai-logo.png" alt="CivicAI" className="h-7 w-auto" />
           </div>
-          <span className="text-white font-bold text-sm">CivicAI</span>
         </div>
         <p className="text-slate-500 text-xs">{t.footer}</p>
         <div className="flex items-center justify-center gap-4 mt-3 text-xs text-slate-600">
