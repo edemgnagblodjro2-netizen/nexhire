@@ -283,7 +283,7 @@ footer{text-align:center;font-size:.8rem;color:#9ca3af;margin-top:2rem}
 <body>
 <header>
   <h1>Politique de confidentialité</h1>
-  <p>AttenteZéro · CivicAI · NEQ 2280791601 · Dernière mise à jour : 12 mai 2026</p>
+  <p>AttenteZéro · CivicAI · NEQ 2280791601 · Dernière mise à jour : 13 mai 2026</p>
 </header>
 
 <div class="card">
@@ -299,7 +299,7 @@ footer{text-align:center;font-size:.8rem;color:#9ca3af;margin-top:2rem}
 <tr><td><strong>Mot de passe</strong></td><td>Haché avec bcrypt (jamais stocké en clair). Jamais partagé.</td><td>Non</td></tr>
 <tr><td><strong>Géolocalisation approximative</strong></td><td>Position utilisée uniquement pour afficher les services près de vous. Non partagée avec des tiers publicitaires. Vous pouvez refuser et saisir votre code postal manuellement.</td><td>Non — toujours optionnelle</td></tr>
 <tr><td><strong>Recherches effectuées</strong></td><td>Termes de recherche et services consultés, agrégés anonymement pour améliorer les résultats et produire des statistiques régionales (B2G). Aucun profil individuel n'est conservé.</td><td>Automatique en utilisant l'app</td></tr>
-<tr><td><strong>Données audio (micro)</strong></td><td>Uniquement si vous activez la dictée vocale pour l'assistant IA. L'audio est envoyé à OpenAI (Whisper) pour transcription uniquement. Non stocké après transcription.</td><td>Non — optionnel</td></tr>
+<tr><td><strong>Données audio (micro)</strong></td><td>Uniquement si vous appuyez sur le bouton microphone dans l'assistant IA pour dicter votre question. L'audio est transmis en temps réel à OpenAI (Whisper) pour transcription, puis immédiatement supprimé. Jamais stocké sur nos serveurs, jamais utilisé à d'autres fins. L'accès au microphone n'est demandé que lorsque vous l'activez explicitement.</td><td>Non — strictement optionnel, à la demande de l'utilisateur</td></tr>
 <tr><td><strong>Données de paiement</strong></td><td>Traitement entièrement géré par Stripe. Nous ne stockons jamais vos numéros de carte. Sur iOS, toutes les fonctionnalités sont gratuites — aucun paiement collecté.</td><td>Non</td></tr>
 </table>
 </div>

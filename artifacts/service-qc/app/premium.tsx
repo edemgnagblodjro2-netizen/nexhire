@@ -263,16 +263,18 @@ export default function PremiumScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[styles.scroll, { paddingBottom: insets.bottom + 32 }]}
       >
-        {/* ── Trust strip (Stripe, sans engagement, etc.) ── */}
+        {/* ── Trust strip ── */}
         <View style={[styles.trustStrip, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <View style={styles.trustItem}>
             <Feather name="shield" size={14} color="#0e7e6e" />
-            <Text style={[styles.trustText, { color: colors.foreground }]}>Paiement sécurisé Stripe</Text>
+            <Text style={[styles.trustText, { color: colors.foreground }]}>
+              {Platform.OS === "ios" ? "Données protégées" : "Paiement sécurisé"}
+            </Text>
           </View>
           <View style={[styles.trustDivider, { backgroundColor: colors.border }]} />
           <View style={styles.trustItem}>
             <Feather name="x-circle" size={14} color="#0e7e6e" />
-            <Text style={[styles.trustText, { color: colors.foreground }]}>Annulable à tout moment</Text>
+            <Text style={[styles.trustText, { color: colors.foreground }]}>Sans engagement</Text>
           </View>
           <View style={[styles.trustDivider, { backgroundColor: colors.border }]} />
           <View style={styles.trustItem}>
@@ -359,9 +361,13 @@ export default function PremiumScreen() {
 
                 <View style={styles.priceRow}>
                   <Text style={styles.priceText} numberOfLines={1} adjustsFontSizeToFit>
-                    {tier.priceLabel}
+                    {Platform.OS === "ios" && tier.ctaKind === "premium"
+                      ? "Gratuit"
+                      : Platform.OS === "ios" && tier.ctaKind === "contact"
+                      ? "Sur demande"
+                      : tier.priceLabel}
                   </Text>
-                  {tier.priceUnit && (
+                  {tier.priceUnit && Platform.OS !== "ios" && (
                     <Text style={styles.priceUnit} numberOfLines={1}>{tier.priceUnit}</Text>
                   )}
                 </View>
@@ -410,7 +416,9 @@ export default function PremiumScreen() {
                         color="#fff"
                       />
                       <Text style={styles.ctaBtnText} numberOfLines={1} adjustsFontSizeToFit>
-                        {tier.ctaLabel}
+                        {Platform.OS === "ios" && tier.ctaKind === "premium"
+                          ? "Profiter du Premium — Gratuit"
+                          : tier.ctaLabel}
                       </Text>
                     </>
                   )}

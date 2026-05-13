@@ -230,13 +230,13 @@ export default function RegisterScreen() {
         return {
           title: "Compte Organisme",
           price: "Gratuit · 14 j d'essai",
-          note: "Badge vérifié · édition de votre fiche · stats de vues · mise en avant. Forfait à vie 149,99 $ (optionnel).",
+          note: "Badge vérifié · édition de votre fiche · stats de vues · mise en avant.",
         };
       case "partenaire":
         return {
           title: "Compte Partenaire",
           price: "Gratuit · 14 j d'essai",
-          note: "Reconnaissance publique · accès anticipé · code promo · support 24h. Forfait à vie 299,99 $ (optionnel).",
+          note: "Reconnaissance publique · accès anticipé · code promo · support 24h.",
         };
       default:
         return {
