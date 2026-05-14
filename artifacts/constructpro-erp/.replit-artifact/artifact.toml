@@ -10,9 +10,9 @@ name = "react-vite"
 version = "1.0.0"
 
 [[services]]
-name = "web"
-paths = [ "/constructpro-erp/" ]
-localPort = 19381
+name = "app"
+paths = [ "/constructpro-erp-dev/" ]
+localPort = 19400
 
 [services.development]
 run = "pnpm --filter @workspace/constructpro-erp run dev"
@@ -27,5 +27,5 @@ from = "/*"
 to = "/index.html"
 
 [services.env]
-PORT = "19381"
+PORT = "19400"
 BASE_PATH = "/constructpro-erp/"

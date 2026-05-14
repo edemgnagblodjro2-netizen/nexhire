@@ -57,10 +57,10 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdn.jsdelivr.net"],
         imgSrc: ["'self'", "data:", "https:"],
         connectSrc: ["'self'", "https:"],
-        fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
+        fontSrc: ["'self'", "data:", "https://fonts.gstatic.com", "https://cdn.jsdelivr.net"],
         objectSrc: ["'none'"],
         baseUri: ["'self'"],
         formAction: ["'self'"],
@@ -527,6 +527,29 @@ if (adminDist) {
   };
   app.get("/admin", adminMissing);
   app.get("/admin/:rest(.*)", adminMissing);
+}
+
+// Serve ConstructPro ERP as static files
+const erpDistCandidates = [
+  path.resolve(__dirname, "../../constructpro-erp/dist/public"),
+  path.resolve(__dirname, "../../../constructpro-erp/dist/public"),
+  path.resolve(process.cwd(), "artifacts/constructpro-erp/dist/public"),
+];
+const erpDist = erpDistCandidates.find((p) => fs.existsSync(p));
+
+if (erpDist) {
+  logger.info({ erpDist }, "Serving ConstructPro ERP from static files");
+  app.use("/constructpro-erp", express.static(erpDist, { index: false }));
+  const sendErpIndex = (_req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const indexPath = path.join(erpDist, "index.html");
+    res.sendFile(indexPath, (err) => {
+      if (err) {
+        if (!res.headersSent) next(err);
+      }
+    });
+  };
+  app.get("/constructpro-erp", sendErpIndex);
+  app.get(/^\/constructpro-erp\/.*$/, sendErpIndex);
 }
 
 export default app;
