@@ -205,6 +205,39 @@ export async function aiSuggestService(
   return res.json();
 }
 
+// ── Store Status ─────────────────────────────────────────────────────────────
+
+export type StoreVersion = {
+  version: string;
+  state: string;
+  stateLabel: string;
+  stateSeverity: "live" | "review" | "pending" | "rejected" | "unknown";
+  updatedAt?: string;
+};
+
+export type StoreStatus = {
+  ios: {
+    live: StoreVersion | null;
+    inReview: StoreVersion | null;
+    fetchedAt: string;
+    error?: string;
+  };
+  android: {
+    live: StoreVersion | null;
+    fetchedAt: string;
+    error?: string;
+    storeUrl: string;
+  };
+};
+
+export async function fetchStoreStatus(adminKey: string): Promise<StoreStatus> {
+  const res = await fetch(`${API_BASE}/api/admin/store-status`, {
+    headers: headers(adminKey),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
 export async function verifyService(
   adminKey: string,
   id: string,

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchMeta } from "@/lib/api";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import StoreStatusWidget from "@/components/StoreStatusWidget";
 
 const COLORS = ["#0d9488", "#0891b2", "#7c3aed", "#dc2626", "#d97706", "#16a34a"];
 
@@ -114,6 +115,8 @@ export default function Dashboard({ adminKey }: { adminKey: string }) {
           </div>
         </div>
       </div>
+
+      <StoreStatusWidget adminKey={adminKey} />
 
       <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm mt-6">
         <h2 className="text-base font-semibold text-gray-900 mb-4">Répartition par statut</h2>
