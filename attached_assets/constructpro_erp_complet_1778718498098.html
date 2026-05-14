@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ConstructPro ERP</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+  --bg:#F7F6F3;--surf:#FFF;--surf2:#F0EFE9;--bord:#E2E0D8;--bord2:#C8C6BE;
+  --txt:#1A1916;--txt2:#6B6960;--txt3:#9E9C95;
+  --green:#1D9E75;--gbg:#EAF3DE;--gtxt:#27500A;
+  --blue:#185FA5;--bbg:#E6F1FB;--btxt:#0C447C;
+  --amber:#BA7517;--abg:#FAEEDA;--atxt:#633806;
+  --red:#A32D2D;--rbg:#FCEBEB;--rtxt:#501313;
+  --teal:#0F6E56;--tbg:#E1F5EE;--ttxt:#085041;
+  --purp:#534AB7;--pbg:#EEEDFE;--ptxt:#26215C;
+  --r:8px;--rl:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);font-size:14px;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+/* TOPBAR */
+.topbar{height:48px;background:var(--surf);border-bottom:1px solid var(--bord);display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px;margin-right:8px}
+.logo i{color:var(--green)}
+.role-sw{display:flex;background:var(--bg);border:1px solid var(--bord);border-radius:var(--rl);padding:3px;gap:2px}
+.rb{font-size:11px;padding:4px 12px;border-radius:var(--r);border:none;cursor:pointer;color:var(--txt2);background:transparent;display:flex;align-items:center;gap:5px;transition:all .15s}
+.rb i{font-size:13px}
+.rb.on{background:var(--txt);color:#fff;font-weight:600}
+.spacer{flex:1}
+.notif-btn{width:32px;height:32px;border-radius:var(--r);border:1px solid var(--bord);display:flex;align-items:center;justify-content:center;color:var(--txt2);font-size:16px;cursor:pointer;position:relative}
+.notif-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--red);border:2px solid var(--surf)}
+.offline-badge{display:none;align-items:center;gap:4px;font-size:10px;padding:3px 8px;border-radius:20px;background:var(--abg);color:var(--atxt);border:1px solid #FAC775}
+.user-info{font-size:11px;color:var(--txt2)}
+.av-sm{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.av-md{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.av-t{background:var(--tbg);color:var(--ttxt)}
+.av-b{background:var(--bbg);color:var(--btxt)}
+.av-a{background:var(--abg);color:var(--atxt)}
+.av-g{background:var(--surf2);color:var(--txt2)}
+.av-p{background:var(--pbg);color:var(--ptxt)}
+.av-gr{background:var(--gbg);color:var(--gtxt)}
+/* SHELL */
+.shell{display:flex;flex:1;overflow:hidden}
+/* SIDEBAR */
+.sb{width:200px;background:var(--surf);border-right:1px solid var(--bord);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sb-head{padding:12px 14px;border-bottom:1px solid var(--bord)}
+.sb-role{font-size:10px;color:var(--txt3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.sb-uname{font-size:13px;font-weight:600;color:var(--txt)}
+.sb-nav{padding:8px;flex:1}
+.sbs{font-size:9px;color:var(--txt3);padding:10px 8px 4px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.sbi{display:flex;align-items:center;gap:7px;padding:7px 9px;border-radius:var(--r);cursor:pointer;font-size:12px;color:var(--txt2);margin-bottom:1px;transition:all .12s;position:relative}
+.sbi i{font-size:15px;flex-shrink:0}
+.sbi:hover{background:var(--bg);color:var(--txt)}
+.sbi.on{background:var(--bg);color:var(--txt);font-weight:600}
+.sbi.on::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:18px;background:var(--green);border-radius:0 2px 2px 0}
+.sbi-badge{margin-left:auto;background:var(--rbg);color:var(--red);font-size:10px;padding:1px 5px;border-radius:10px;font-weight:600}
+.sbi.locked{opacity:.35;cursor:default}
+.sbi.locked:hover{background:transparent;color:var(--txt2)}
+.lock-note{margin:6px 8px;padding:7px 9px;background:var(--abg);border-radius:var(--r);font-size:10px;color:var(--atxt);line-height:1.4}
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
+.mhdr{padding:0 20px;height:52px;background:var(--surf);border-bottom:1px solid var(--bord);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.mtitle{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px}
+.mtitle i{font-size:16px;color:var(--txt2)}
+.macts{display:flex;gap:6px}
+.mbody{flex:1;overflow-y:auto;padding:16px 20px}
+/* BTN */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--r);font-size:12px;cursor:pointer;border:1px solid var(--bord);background:var(--surf);color:var(--txt);font-family:inherit;transition:all .12s}
+.btn:hover{background:var(--bg)}
+.btn.pri{background:var(--txt);color:#fff;border-color:var(--txt)}
+.btn.pri:hover{background:#2c2a26}
+.btn.grn{background:var(--green);color:#fff;border-color:var(--green)}
+.btn.grn:hover{background:var(--teal)}
+.btn.red{background:var(--rbg);color:var(--red);border-color:#F7C1C1}
+/* CARDS */
+.card{background:var(--surf);border:1px solid var(--bord);border-radius:var(--rl);padding:14px 16px;margin-bottom:12px}
+.chdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.ctitle{font-size:12px;font-weight:700;color:var(--txt);display:flex;align-items:center;gap:6px}
+.ctitle i{font-size:14px;color:var(--txt2)}
+/* KPI */
+.krow{display:grid;gap:8px;margin-bottom:14px}
+.k4{grid-template-columns:repeat(4,1fr)}
+.k3{grid-template-columns:repeat(3,1fr)}
+.k2{grid-template-columns:repeat(2,1fr)}
+.kpi{background:var(--surf2);border-radius:var(--r);padding:10px 12px}
+.klbl{font-size:10px;color:var(--txt2);margin-bottom:3px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.kval{font-size:22px;font-weight:700;color:var(--txt);line-height:1}
+.ksub{font-size:10px;color:var(--txt3);margin-top:3px}
+/* BADGE */
+.bdg{display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;white-space:nowrap}
+.bg{background:var(--gbg);color:var(--gtxt)}
+.bb{background:var(--bbg);color:var(--btxt)}
+.ba{background:var(--abg);color:var(--atxt)}
+.br{background:var(--rbg);color:var(--rtxt)}
+.bgr{background:var(--surf2);color:var(--txt2);border:1px solid var(--bord)}
+.bt{background:var(--tbg);color:var(--ttxt)}
+.bp{background:var(--pbg);color:var(--ptxt)}
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{font-size:10px;font-weight:700;color:var(--txt2);text-align:left;padding:6px 8px;border-bottom:1px solid var(--bord);text-transform:uppercase;letter-spacing:.04em}
+.tbl td{padding:7px 8px;border-bottom:1px solid var(--bord);color:var(--txt);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--bg)}
+/* PROGRESS */
+.pb{height:6px;background:var(--bord);border-radius:3px;overflow:hidden}
+.pf{height:100%;border-radius:3px}
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+/* ALERT */
+.alert{padding:9px 12px;border-radius:var(--r);display:flex;gap:8px;align-items:flex-start;margin-bottom:10px;font-size:12px;line-height:1.5}
+.alert i{font-size:15px;flex-shrink:0;margin-top:1px}
+.al-a{background:var(--abg);color:var(--atxt)}
+.al-r{background:var(--rbg);color:var(--rtxt)}
+.al-g{background:var(--gbg);color:var(--gtxt)}
+.al-b{background:var(--bbg);color:var(--btxt)}
+/* TIMELINE */
+.tli{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--bord)}
+.tli:last-child{border-bottom:none}
+.tli-body{flex:1}
+.tli-title{font-size:12px;font-weight:500;color:var(--txt)}
+.tli-sub{font-size:11px;color:var(--txt2);margin-top:1px;line-height:1.4}
+.tli-time{font-size:10px;color:var(--txt3);flex-shrink:0;padding-top:2px}
+/* FORM */
+input,select,textarea{font-family:inherit;font-size:12px;padding:7px 10px;border:1px solid var(--bord);border-radius:var(--r);background:var(--surf);color:var(--txt);width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green)}
+label{font-size:11px;font-weight:600;color:var(--txt2);display:block;margin-bottom:4px}
+.fr{display:grid;gap:10px;margin-bottom:10px}
+.fr2{grid-template-columns:1fr 1fr}
+.fr3{grid-template-columns:1fr 1fr 1fr}
+/* KANBAN */
+.kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kchdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.kctitle{font-size:11px;font-weight:700;color:var(--txt2);display:flex;align-items:center;gap:5px}
+.kcount{font-size:10px;background:var(--surf2);padding:1px 6px;border-radius:10px;color:var(--txt3)}
+.kcard{background:var(--surf);border:1px solid var(--bord);border-radius:var(--r);padding:10px;margin-bottom:6px;cursor:pointer;transition:border-color .12s}
+.kcard:hover{border-color:var(--bord2)}
+.kcard.kact{border-left:3px solid var(--blue)}
+.kcard.kdone{opacity:.65}
+.kname{font-size:12px;font-weight:600;color:var(--txt)}
+.ksub2{font-size:11px;color:var(--txt2);margin:2px 0 6px}
+.kfoot{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.kadd{border:1px dashed var(--bord2);border-radius:var(--r);padding:8px;text-align:center;font-size:11px;color:var(--txt3);cursor:pointer;margin-bottom:6px}
+.kadd:hover{background:var(--bg);color:var(--txt2)}
+/* CHECK */
+.chi{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bord);font-size:12px}
+.chi:last-child{border-bottom:none}
+.chb{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--bord2);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .12s}
+.chb.chk{background:var(--green);border-color:var(--green);color:#fff}
+/* DOT */
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+.dg{background:var(--green)}.da{background:var(--amber)}.dr{background:var(--red)}.dgr{background:var(--txt3)}
+/* SCROLL */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bord2);border-radius:3px}
+/* TAG */
+.tag{font-size:10px;padding:2px 7px;border-radius:20px;background:var(--surf2);color:var(--txt2);border:1px solid var(--bord);display:inline-block;margin:1px}
+/* PHONE */
+.phone-wrap{background:var(--surf2);padding:14px;display:flex;justify-content:center;border-radius:var(--rl)}
+.phone{width:240px;border:1.5px solid var(--bord2);border-radius:22px;overflow:hidden;background:var(--surf)}
+.ph-notch{height:20px;background:var(--surf2);display:flex;align-items:center;justify-content:center}
+.ph-pill{width:36px;height:4px;background:var(--bord2);border-radius:2px}
+.ph-hdr{padding:10px 12px 8px;border-bottom:1px solid var(--bord)}
+.ph-title{font-size:12px;font-weight:700;color:var(--txt)}
+.ph-sub{font-size:10px;color:var(--txt2);margin-top:1px}
+.ph-body{padding:10px 12px}
+.ph-sec{font-size:9px;font-weight:700;color:var(--txt3);letter-spacing:.07em;text-transform:uppercase;margin:7px 0 4px}
+.ph-card{background:var(--surf2);border-radius:var(--r);padding:7px 9px;margin-bottom:5px}
+.ph-nav{display:flex;border-top:1px solid var(--bord);background:var(--surf2)}
+.pni{flex:1;padding:7px 2px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;font-size:8px;color:var(--txt3)}
+.pni.on{color:var(--green)}
+.pni i{font-size:15px}
+/* GANTT */
+.gantt-wrap{overflow-x:auto}
+.gtbl{width:100%;border-collapse:collapse;font-size:11px}
+.gtbl th{font-size:9px;font-weight:700;color:var(--txt3);padding:4px;border-bottom:1px solid var(--bord);text-align:center}
+.gtbl th.gl{text-align:left;padding-left:8px}
+.gtbl td{padding:3px 2px;border-bottom:1px solid var(--bord);vertical-align:middle}
+.gtbl tr:last-child td{border-bottom:none}
+.gbar{height:16px;border-radius:3px;display:flex;align-items:center;padding:0 5px;font-size:9px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="logo"><i class="ti ti-building-warehouse"></i>ConstructPro ERP</div>
+  <div class="role-sw">
+    <button class="rb on" id="rb-bureau" onclick="setRole('bureau')"><i class="ti ti-building"></i>Bureau</button>
+    <button class="rb" id="rb-terrain" onclick="setRole('terrain')"><i class="ti ti-hard-hat"></i>Terrain</button>
+    <button class="rb" id="rb-client" onclick="setRole('client')"><i class="ti ti-user-circle"></i>Client</button>
+  </div>
+  <div class="spacer"></div>
+  <div class="offline-badge" id="off-badge"><i class="ti ti-wifi-off"></i>Hors-ligne</div>
+  <button class="btn" id="off-btn" onclick="toggleOffline()" style="font-size:11px;padding:4px 10px"><i class="ti ti-wifi"></i>Simuler hors-ligne</button>
+  <div class="notif-btn"><i class="ti ti-bell"></i><div class="notif-dot"></div></div>
+  <div class="user-info" id="uinfo">Marc Leblanc &middot; Direction</div>
+  <div class="av-sm av-t" id="uav">ML</div>
+</div>
+
+<div class="shell">
+  <div class="sb" id="sb"></div>
+  <div class="main">
+    <div class="mhdr">
+      <div class="mtitle" id="mtitle"><i class="ti ti-layout-dashboard"></i>Tableau de bord</div>
+      <div class="macts" id="macts"></div>
+    </div>
+    <div class="mbody" id="mbody"></div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────
+var CH = [
+  {id:'A',name:'Résidences du Lac',phase:'Structure — Dalle B',pct:74,chef:'Sophie T.',st:'actif',budget:1200000,dep:890000},
+  {id:'B',name:'Entrepôt Industriel',phase:'Charpente métallique',pct:41,chef:'Julie D.',st:'retard',budget:850000,dep:480000},
+  {id:'C',name:'Centre Médical Est',phase:'Fondations',pct:12,chef:'Julie D.',st:'actif',budget:2100000,dep:252000},
+  {id:'D',name:'Tour Laurier',phase:'Excavation',pct:5,chef:'À affecter',st:'démarrage',budget:3400000,dep:170000},
+  {id:'E',name:'Hôtel Nord',phase:'Finition intérieure',pct:95,chef:'Marc L.',st:'actif',budget:620000,dep:589000}
+];
+var EMP = [
+  {id:'ML',nom:'Marc Leblanc',titre:'Directeur de projet',cat:'direction',exp:12,dispo:'disponible',chantier:'Tous',skills:['Gestion projet','Budget','CCQ','Planification'],av:'av-t'},
+  {id:'ST',nom:'Sophie Tremblay',titre:'Contremaître sénior',cat:'direction',exp:9,dispo:'disponible',chantier:'A',skills:['Coffrage','Béton','SST'],av:'av-b'},
+  {id:'JD',nom:'Julie Deschamps',titre:'Contremaître',cat:'direction',exp:6,dispo:'partiel',chantier:'B/C',skills:['Maçonnerie','Inspection'],av:'av-p'},
+  {id:'FR',nom:'François Roy',titre:'Charpentier A',cat:'structure',exp:8,dispo:'disponible',chantier:'A',skills:['Charpente','Coffrage'],av:'av-a'},
+  {id:'KM',nom:'Kevin Morin',titre:'Opérateur machinerie',cat:'structure',exp:7,dispo:'disponible',chantier:'C',skills:['Excavatrice','Grue','Classe 1'],av:'av-g'},
+  {id:'PB',nom:'Patrick Bergeron',titre:'Ferrailleur',cat:'structure',exp:5,dispo:'disponible',chantier:'A',skills:['Armature acier','Béton armé'],av:'av-g'},
+  {id:'CL',nom:'Claude Lapointe',titre:'Plombier maître',cat:'mep',exp:10,dispo:'partiel',chantier:'A/E',skills:['Plomberie','Chauffage','RBQ'],av:'av-b'},
+  {id:'LG',nom:'Louis Gagné',titre:'Électricien maître',cat:'mep',exp:8,dispo:'disponible',chantier:'B',skills:['600V','Domotique','RBQ'],av:'av-t'},
+  {id:'NF',nom:'Nathalie Fortin',titre:'Finisseur A',cat:'finition',exp:6,dispo:'conge',chantier:'—',skills:['Peinture','Gypse','Isolation'],av:'av-a'},
+  {id:'RL',nom:'Robert Laberge',titre:'Carreleur',cat:'finition',exp:4,dispo:'disponible',chantier:'E',skills:['Céramique','Plancher'],av:'av-g'}
+];
+var CANDIDATS = [
+  {nom:'Mehdi Alaoui',poste:'Soudeur',exp:'6 ans',st:'attente',skills:['TIG/MIG','Acier struct.'],date:'10 mai',av:'av-b'},
+  {nom:'Annie Côté',poste:'Électricienne',exp:'4 ans',st:'attente',skills:['RBQ','600V'],date:'9 mai',av:'av-t'},
+  {nom:'Tom Nguyen',poste:'Soudeur',exp:'3 ans',st:'attente',skills:['MIG'],date:'8 mai',av:'av-g'},
+  {nom:'Pablo Reyes',poste:'Soudeur',exp:'8 ans',st:'cours',skills:['TIG/MIG','CWB'],date:'Entrevue 14 mai',av:'av-a'},
+  {nom:'Sara Beaulieu',poste:'Électricienne',exp:'7 ans',st:'cours',skills:['RBQ maître','Domotique'],date:'Références',av:'av-t'},
+  {nom:'Jean-F. Paquin',poste:'Charpentier',exp:'5 ans',st:'embauche',skills:['Charpente'],date:'Début 19 mai',av:'av-b'},
+  {nom:'Lise Bergeron',poste:'Finisseur',exp:'2 ans',st:'refuse',skills:['Peinture'],date:'Archivé',av:'av-a'}
+];
+var INCIDENTS = [
+  {id:'INC-003',ch:'B',titre:'Chute matériau — planche 2×4',grav:'mineur',st:'clos',date:'10 mai',rap:'P. Roy',cnesst:true},
+  {id:'INC-002',ch:'A',titre:'Quasi-accident — glissade échafaudage',grav:'moyen',st:'en cours',date:'8 mai',rap:'S. Tremblay',cnesst:false},
+  {id:'INC-001',ch:'C',titre:'Bris équipement — marteau-piqueur',grav:'mineur',st:'clos',date:'2 mai',rap:'K. Morin',cnesst:false}
+];
+var EQUIP = [
+  {nom:'Excavatrice CAT 320',type:'Machinerie lourde',ch:'C',st:'actif',insp:'2025-06-01',h:1240},
+  {nom:'Grue mobile Liebherr',type:'Levage',ch:'A',st:'actif',insp:'2025-05-20',h:890},
+  {nom:'Compacteur Dynapac',type:'Compactage',ch:'D',st:'transit',insp:'2025-07-01',h:560},
+  {nom:'Marteau-piqueur Hilti',type:'Outillage',ch:'C',st:'maintenance',insp:'2025-05-15',h:340}
+];
+var PERMIS = [
+  {proj:'A',type:'Permis de construction',num:'PC-2025-0441',emis:'2025-02-10',exp:'2026-02-10',st:'valide'},
+  {proj:'B',type:"Permis d'occupation",num:'PO-2025-0318',emis:'2025-01-15',exp:'2025-12-15',st:'valide'},
+  {proj:'C',type:'Permis de construction',num:'PC-2025-0612',emis:'2025-05-01',exp:'2026-05-01',st:'valide'},
+  {proj:'D',type:"Permis d'excavation",num:'PEX-2025-0044',emis:'2025-04-20',exp:'2025-10-20',st:'valide'},
+  {proj:'E',type:'Permis de rénovation',num:'PR-2024-0889',emis:'2024-11-01',exp:'2025-06-01',st:'expire-bientot'}
+];
+var DEVIS = [
+  {ref:'DEV-041',client:'Groupe Laval Inc.',type:'Commercial',montant:320000,date:'2 mai 2025',st:'attente'},
+  {ref:'DEV-040',client:'Municipalité St-Lin',type:'Infra publique',montant:1200000,date:'28 avr 2025',st:'soumis'},
+  {ref:'DEV-039',client:'Résidences Boréal',type:'Résidentiel',montant:485000,date:'20 avr 2025',st:'accepte'},
+  {ref:'FAC-018',client:'Résidences Boréal',type:'Facture #1',montant:150000,date:'5 mai 2025',st:'impayee'},
+  {ref:'DEV-038',client:'Logistik Pro',type:'Industriel',montant:210000,date:'15 avr 2025',st:'refuse'}
+];
+var SOUST = [
+  {nom:'Béton Nordique Inc.',spec:'Béton prémélangé',ch:'A/C',contrat:'145 000$',st:'actif',rbq:true,cnesst:true},
+  {nom:'Électro-Concept QC',spec:'Électricité comm.',ch:'B',contrat:'88 000$',st:'actif',rbq:true,cnesst:true},
+  {nom:'Plomberie Laurentides',spec:'Plomberie',ch:'A',contrat:'62 000$',st:'attente',rbq:true,cnesst:false},
+  {nom:'Acier Montréal',spec:'Structure métal',ch:'B',contrat:'310 000$',st:'retard',rbq:false,cnesst:true}
+];
+var FT = [
+  {emp:'Sophie Tremblay',ch:'A',date:'2025-05-13',h:9,taux:'CCQ-N2',tache:'Surveillance coulée béton'},
+  {emp:'François Roy',ch:'A',date:'2025-05-13',h:8,taux:'CCQ-N1',tache:'Coffrage bâtiment C'},
+  {emp:'Kevin Morin',ch:'C',date:'2025-05-13',h:10,taux:'CCQ-OP',tache:'Excavation zone nord'},
+  {emp:'Louis Gagné',ch:'B',date:'2025-05-13',h:8,taux:'CCQ-EL',tache:'Installation conduits'},
+  {emp:'Claude Lapointe',ch:'A',date:'2025-05-12',h:7,taux:'CCQ-PL',tache:'Manchons passage dalle'}
+];
+
+// ── HELPERS ──────────────────────────────────────────────
+function fmt(n){return new Intl.NumberFormat('fr-CA',{style:'currency',currency:'CAD',maximumFractionDigits:0}).format(n);}
+function bdg(st){
+  var map = {
+    actif:'bg',retard:'ba',démarrage:'bb',termine:'bgr',attente:'ba',soumis:'bb',
+    accepte:'bg',impayee:'ba',refuse:'br',valide:'bg','expire-bientot':'ba',
+    clos:'bgr','en cours':'bb',mineur:'bg',moyen:'ba',grave:'br',
+    disponible:'bg',partiel:'ba',conge:'bgr',transit:'ba',maintenance:'br',
+    embauche:'bg',cours:'bb'
+  };
+  var labels = {
+    actif:'Actif',retard:'En retard',démarrage:'Démarrage',termine:'Terminé',attente:'En attente',
+    soumis:'Soumis',accepte:'Accepté',impayee:'Impayée',refuse:'Refusé',valide:'Valide',
+    'expire-bientot':'Expire bientôt',clos:'Clos','en cours':'En cours',
+    mineur:'Mineur',moyen:'Moyen',grave:'Grave',disponible:'Disponible',
+    partiel:'Partiel',conge:'Congé',transit:'En transit',maintenance:'Maintenance',
+    embauche:'Embauché ✓',cours:'En cours'
+  };
+  return '<span class="bdg '+(map[st]||'bgr')+'">'+(labels[st]||st)+'</span>';
+}
+function progBar(pct, color){
+  return '<div class="pb"><div class="pf" style="width:'+pct+'%;background:'+color+'"></div></div>';
+}
+function chantierColor(st){
+  if(st==='retard') return 'var(--amber)';
+  return 'var(--green)';
+}
+
+// ── RENDER PANELS ─────────────────────────────────────────
+function renderDashboard(){
+  var h = '';
+  // KPIs
+  h += '<div class="krow k4">';
+  h += '<div class="kpi"><div class="klbl">Chantiers actifs</div><div class="kval">5</div><div class="ksub" style="color:var(--green)">↑ +1 ce mois</div></div>';
+  h += '<div class="kpi"><div class="klbl">Valeur en cours</div><div class="kval">8,2M$</div><div class="ksub">5 projets</div></div>';
+  h += '<div class="kpi"><div class="klbl">Employés actifs</div><div class="kval">44</div><div class="ksub">sur 52 total</div></div>';
+  h += '<div class="kpi"><div class="klbl">Incidents ouverts</div><div class="kval" style="color:var(--red)">1</div><div class="ksub" style="color:var(--red)">Action requise</div></div>';
+  h += '</div>';
+  h += '<div class="g2">';
+  // Left col
+  h += '<div>';
+  h += '<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-crane"></i>Avancement chantiers</div></div>';
+  for(var i=0;i<CH.length;i++){
+    var c=CH[i];
+    var pctBudget = Math.round(c.dep/c.budget*100);
+    h += '<div style="margin-bottom:10px">';
+    h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">';
+    h += '<span style="font-size:12px;font-weight:600">'+c.id+' · '+c.name+'</span>';
+    h += bdg(c.st);
+    h += '</div>';
+    h += progBar(c.pct, chantierColor(c.st));
+    h += '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txt3);margin-top:2px">';
+    h += '<span>'+c.phase+' · '+c.chef+'</span><span>'+c.pct+'%</span>';
+    h += '</div></div>';
+  }
+  h += '</div>';
+  h += '<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-alert-triangle"></i>Alertes & actions requises</div></div>';
+  h += '<div class="alert al-r"><i class="ti ti-alert-triangle"></i><div><strong>Soudeur manquant</strong> — Entrepôt Industriel bloqué phase charpente</div></div>';
+  h += '<div class="alert al-a"><i class="ti ti-package"></i><div><strong>Stock béton critique</strong> — 42m³ restants, seuil min. 150m³</div></div>';
+  h += '<div class="alert al-a"><i class="ti ti-license"></i><div><strong>Permis rénov. Hôtel Nord</strong> expire le 1er juin 2025</div></div>';
+  h += '<div class="alert al-b"><i class="ti ti-user-plus"></i><div><strong>3 candidats</strong> en attente de révision RH</div></div>';
+  h += '</div>';
+  h += '</div>';
+  // Right col
+  h += '<div>';
+  h += '<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-cash"></i>Finances — bureau seulement</div><span class="bdg br"><i class="ti ti-lock"></i> Confidentiel</span></div>';
+  h += '<div class="krow k2">';
+  h += '<div class="kpi"><div class="klbl">Marge brute YTD</div><div class="kval" style="font-size:16px">342K$</div></div>';
+  h += '<div class="kpi"><div class="klbl">Factures impayées</div><div class="kval" style="font-size:16px;color:var(--red)">540K$</div></div>';
+  h += '<div class="kpi"><div class="klbl">Masse salariale/mois</div><div class="kval" style="font-size:16px">312K$</div></div>';
+  h += '<div class="kpi"><div class="klbl">Devis signés YTD</div><div class="kval" style="font-size:16px">8/11</div></div>';
+  h += '</div></div>';
+  h += '<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-clock"></i>Pointages du jour</div></div>';
+  h += '<table class="tbl"><tr><th>Employé</th><th>Chantier</th><th>Heures</th></tr>';
+  for(var i=0;i<FT.length;i++){
+    if(FT[i].date==='2025-05-13'){
+      var parts = FT[i].emp.split(' ');
+      h += '<tr><td>'+parts[0]+' '+parts[1][0]+'.</td><td><span class="bdg bb">'+FT[i].ch+'</span></td><td><strong>'+FT[i].h+'h</strong></td></tr>';
+    }
+  }
+  h += '</table></div>';
+  h += '<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-user-plus"></i>Recrutement pipeline</div></div>';
+  h += '<div style="display:flex;justify-content:space-around;text-align:center">';
+  h += '<div><div style="font-size:20px;font-weight:700">3</div><div style="font-size:10px;color:var(--txt2)">En attente</div></div>';
+  h += '<div><div style="font-size:20px;font-weight:700;color:var(--blue)">2</div><div style="font-size:10px;color:var(--txt2)">En cours</div></div>';
+  h += '<div><div style="font-size:20px;font-weight:700;color:var(--green)">1</div><div style="font-size:10px;color:var(--txt2)">Embauché</div></div>';
+  h += '<div><div style="font-size:20px;font-weight:700;color:var(--red)">3</div><div style="font-size:10px;color:var(--txt2)">Postes vacants</div></div>';
+  h += '</div></div>';
+  h += '</div>';
+  h += '</div>';
+  return h;
+}
+
+function renderChantiers(){
+  var h='';
+  h+='<div class="krow k4">';
+  for(var i=0;i<CH.length;i++){h+='<div class="kpi"><div class="klbl">Chantier '+CH[i].id+'</div><div class="kval" style="font-size:16px">'+CH[i].pct+'%</div><div class="ksub">'+bdg(CH[i].st)+'</div></div>';}
+  h+='</div>';
+  for(var i=0;i<CH.length;i++){
+    var c=CH[i], pctB=Math.round(c.dep/c.budget*100), reste=c.budget-c.dep;
+    var bcolor = pctB>90?'var(--red)':'var(--blue)';
+    h+='<div class="card">';
+    h+='<div class="chdr"><div class="ctitle"><i class="ti ti-crane"></i>'+c.id+' · '+c.name+'</div>';
+    h+='<div style="display:flex;gap:6px;align-items:center">'+bdg(c.st)+'<span class="bdg bgr">'+c.chef+'</span></div></div>';
+    h+='<div class="g2">';
+    h+='<div>';
+    h+='<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:var(--txt2)">Avancement</span><strong>'+c.pct+'%</strong></div>';
+    h+=progBar(c.pct, chantierColor(c.st));
+    h+='<div style="font-size:10px;color:var(--txt3);margin-top:3px">Phase: <strong>'+c.phase+'</strong></div>';
+    h+='</div>';
+    h+='<div>';
+    h+='<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span style="color:var(--txt2)">Budget</span><span>'+fmt(c.budget)+'</span></div>';
+    h+='<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:var(--txt2)">Dépensé</span><span>'+fmt(c.dep)+' ('+pctB+'%)</span></div>';
+    h+=progBar(pctB, bcolor);
+    h+='<div style="font-size:10px;color:var(--txt3);margin-top:3px">Reste: '+fmt(reste)+'</div>';
+    h+='</div>';
+    h+='</div></div>';
+  }
+  return h;
+}
+
+function renderFeuilles(){
+  var h='';
+  h+='<div class="alert al-b"><i class="ti ti-info-circle"></i>Heures conformes à la classification CCQ. Export automatique disponible pour la paie.</div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-clock"></i>Feuilles de temps — semaine du 12 mai 2025</div>';
+  h+='<div style="display:flex;gap:6px"><button class="btn" onclick="alert(\'Export CCQ simulé!\')"><i class="ti ti-download"></i> Export CCQ</button><button class="btn pri"><i class="ti ti-plus"></i> Nouvelle entrée</button></div></div>';
+  h+='<table class="tbl"><tr><th>Employé</th><th>Chantier</th><th>Date</th><th>Heures</th><th>Classification</th><th>Tâche</th></tr>';
+  for(var i=0;i<FT.length;i++){
+    var f=FT[i];
+    h+='<tr><td><strong>'+f.emp+'</strong></td><td><span class="bdg bb">'+f.ch+'</span></td>';
+    h+='<td style="color:var(--txt2)">'+f.date+'</td><td><strong>'+f.h+'h</strong></td>';
+    h+='<td><span class="bdg bp" style="font-family:monospace">'+f.taux+'</span></td><td style="color:var(--txt2)">'+f.tache+'</td></tr>';
+  }
+  h+='</table></div>';
+  h+='<div class="alert al-g"><i class="ti ti-check"></i>Mode hors-ligne supporté — les pointages sont sauvegardés localement et synchronisés au retour réseau.</div>';
+  return h;
+}
+
+function renderRapports(){
+  var h='';
+  h+='<div class="g2">';
+  h+='<div><div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-file-description"></i>Nouveau rapport — 13 mai 2025</div></div>';
+  h+='<div class="fr fr2"><div><label>Chantier</label><select><option>A · Résidences du Lac</option></select></div><div><label>Responsable</label><select><option>Sophie Tremblay</option></select></div></div>';
+  h+='<div class="fr fr3"><div><label>Météo</label><select><option>Ensoleillé</option><option>Nuageux</option><option>Pluie</option></select></div><div><label>Température</label><input type="text" value="18°C" /></div><div><label>Travailleurs</label><input type="number" value="12" /></div></div>';
+  h+='<div style="margin-bottom:10px"><label>Travaux réalisés</label><textarea style="height:80px;resize:none">Coulée béton dalle B terminée à 11h30. Début barricades zone de prise.</textarea></div>';
+  h+='<div style="margin-bottom:10px"><label>Anomalies</label><textarea style="height:50px;resize:none">Livraison béton retardée 90 min.</textarea></div>';
+  h+='<div style="display:flex;gap:6px"><button class="btn grn" onclick="alert(\'Rapport soumis!\')"><i class="ti ti-check"></i> Soumettre</button><button class="btn"><i class="ti ti-camera"></i> Photos</button></div>';
+  h+='</div></div>';
+  h+='<div><div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-history"></i>Historique</div></div>';
+  var raps=[{d:'13 mai',c:'A',ch:'S. Tremblay'},{d:'12 mai',c:'A',ch:'S. Tremblay'},{d:'12 mai',c:'B',ch:'J. Deschamps'},{d:'11 mai',c:'C',ch:'J. Deschamps'}];
+  for(var i=0;i<raps.length;i++){
+    h+='<div class="tli"><div style="width:28px;height:28px;border-radius:var(--r);background:var(--surf2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--txt2);flex-shrink:0">'+raps[i].c+'</div>';
+    h+='<div class="tli-body"><div class="tli-title">'+raps[i].d+' · Chantier '+raps[i].c+'</div><div class="tli-sub">'+raps[i].ch+'</div></div>';
+    h+='<div class="tli-time"><span class="bdg bg">Soumis</span></div></div>';
+  }
+  h+='</div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-camera"></i>Photos horodatées</div></div>';
+  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">';
+  var photos=['Coffrage B · 07:45','Coulée béton · 09:12','Armatures C · 14:30'];
+  for(var i=0;i<photos.length;i++){
+    h+='<div style="background:var(--surf2);border-radius:var(--r);aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:var(--txt2);text-align:center;padding:6px;border:1px solid var(--bord);cursor:pointer">';
+    h+='<i class="ti ti-photo" style="font-size:20px;margin-bottom:4px;color:var(--txt3)"></i>'+photos[i]+'</div>';
+  }
+  h+='</div></div></div>';
+  h+='</div>';
+  return h;
+}
+
+function renderEquipements(){
+  var h='';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-bulldozer"></i>Parc d\'équipements</div><button class="btn pri"><i class="ti ti-plus"></i> Ajouter</button></div>';
+  h+='<table class="tbl"><tr><th>Équipement</th><th>Type</th><th>Chantier</th><th>Heures</th><th>Inspection</th><th>Statut</th></tr>';
+  for(var i=0;i<EQUIP.length;i++){
+    var e=EQUIP[i];
+    var urgentColor = e.insp<='2025-05-20'?'color:var(--amber);font-weight:600':'color:var(--txt2)';
+    h+='<tr><td><strong>'+e.nom+'</strong></td><td><span class="bdg bgr">'+e.type+'</span></td>';
+    h+='<td><span class="bdg bb">'+e.ch+'</span></td>';
+    h+='<td style="font-family:monospace;font-size:11px">'+e.h+'h</td>';
+    h+='<td style="'+urgentColor+'">'+e.insp+'</td>';
+    h+='<td>'+bdg(e.st)+'</td></tr>';
+  }
+  h+='</table></div>';
+  h+='<div class="alert al-a"><i class="ti ti-tool"></i><strong>Inspection imminente</strong> — Grue mobile Liebherr avant le 20 mai.</div>';
+  return h;
+}
+
+function renderMateriaux(){
+  var mats=[
+    {nom:'Béton prémélangé',u:'m³',stock:42,min:150,c:'C'},
+    {nom:'Acier en barre',u:'t',stock:8.5,min:12,c:'B'},
+    {nom:'Isolant fibre de verre',u:'rouleaux',stock:35,min:80,c:'A'},
+    {nom:'Bois de charpente',u:'m²',stock:620,min:400,c:'A'},
+    {nom:'Gravier 0-20mm',u:'m³',stock:310,min:200,c:'B'},
+    {nom:'Fenêtres PVC std.',u:'unités',stock:24,min:10,c:'E'}
+  ];
+  var h='';
+  h+='<div class="krow k4"><div class="kpi"><div class="klbl">Références actives</div><div class="kval">148</div></div><div class="kpi"><div class="klbl">Alertes stock bas</div><div class="kval" style="color:var(--red)">4</div></div><div class="kpi"><div class="klbl">Commandes en transit</div><div class="kval">6</div></div><div class="kpi"><div class="klbl">Valeur en stock</div><div class="kval">284K$</div></div></div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-package"></i>Inventaire principal</div><button class="btn pri"><i class="ti ti-plus"></i> Commander</button></div>';
+  h+='<table class="tbl"><tr><th>Matériau</th><th>Unité</th><th>En stock</th><th>Min.</th><th>Chantier</th><th>Niveau</th><th>Statut</th></tr>';
+  for(var i=0;i<mats.length;i++){
+    var m=mats[i];
+    var pct=Math.min(Math.round(m.stock/m.min*100),100);
+    var mc=pct<50?'var(--red)':pct<75?'var(--amber)':'var(--green)';
+    var ms=pct<50?'retard':pct<75?'attente':'actif';
+    h+='<tr><td><strong>'+m.nom+'</strong></td><td style="color:var(--txt2)">'+m.u+'</td><td><strong>'+m.stock+'</strong></td>';
+    h+='<td style="color:var(--txt2)">'+m.min+'</td><td><span class="bdg bb">'+m.c+'</span></td>';
+    h+='<td style="width:80px">'+progBar(pct,mc)+'</td><td>'+bdg(ms)+'</td></tr>';
+  }
+  h+='</table></div>';
+  return h;
+}
+
+function renderEquipe(){
+  var h='';
+  h+='<div class="krow k4"><div class="kpi"><div class="klbl">Effectif total</div><div class="kval">18</div></div><div class="kpi"><div class="klbl">Disponibles</div><div class="kval">14</div></div><div class="kpi"><div class="klbl">Partiel / congé</div><div class="kval">4</div></div><div class="kpi"><div class="klbl">Postes à combler</div><div class="kval" style="color:var(--red)">3</div></div></div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-users"></i>Répertoire équipe</div><button class="btn pri"><i class="ti ti-plus"></i> Ajouter employé</button></div>';
+  h+='<table class="tbl"><tr><th>Employé</th><th>Titre</th><th>Catégorie</th><th>Exp.</th><th>Compétences</th><th>Chantier</th><th>Dispo</th></tr>';
+  for(var i=0;i<EMP.length;i++){
+    var e=EMP[i];
+    var initials=e.id;
+    var skills='';
+    for(var j=0;j<Math.min(e.skills.length,2);j++){skills+='<span class="tag">'+e.skills[j]+'</span>';}
+    h+='<tr><td><div style="display:flex;align-items:center;gap:7px"><div class="av-sm '+e.av+'">'+initials+'</div><strong>'+e.nom+'</strong></div></td>';
+    h+='<td style="color:var(--txt2)">'+e.titre+'</td><td><span class="bdg bgr">'+e.cat+'</span></td>';
+    h+='<td>'+e.exp+' ans</td><td>'+skills+'</td>';
+    h+='<td><span class="bdg bb">'+e.chantier+'</span></td><td>'+bdg(e.dispo)+'</td></tr>';
+  }
+  h+='</table></div>';
+  return h;
+}
+
+function renderAffectation(){
+  var h='';
+  h+='<div class="g2">';
+  h+='<div><div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-arrows-transfer-up"></i>Délégations par chantier</div></div>';
+  for(var i=0;i<CH.length;i++){
+    var c=CH[i];
+    h+='<div style="padding:10px 0;border-bottom:1px solid var(--bord)">';
+    h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">';
+    h+='<span style="font-size:12px;font-weight:600">'+c.id+' · '+c.name+'</span>'+bdg(c.st);
+    h+='</div><div style="display:flex;flex-wrap:wrap;gap:4px">';
+    for(var j=0;j<EMP.length;j++){
+      if(EMP[j].chantier.indexOf(c.id)>=0){
+        var e2=EMP[j];
+        h+='<div style="display:flex;align-items:center;gap:5px;padding:3px 8px;background:var(--surf2);border-radius:20px;border:1px solid var(--bord)">';
+        h+='<div class="av-sm '+e2.av+'" style="width:18px;height:18px;font-size:8px">'+e2.id+'</div>';
+        h+='<span style="font-size:11px">'+e2.nom.split(' ')[0]+' '+e2.nom.split(' ')[1][0]+'.</span></div>';
+      }
+    }
+    if(c.id==='B') h+='<div style="padding:3px 8px;background:var(--abg);border-radius:20px;border:1px dashed var(--amber);font-size:11px;color:var(--atxt)">Soudeur manquant</div>';
+    if(c.id==='D') h+='<div style="padding:3px 8px;background:var(--abg);border-radius:20px;border:1px dashed var(--amber);font-size:11px;color:var(--atxt)">Chef requis</div>';
+    h+='</div></div>';
+  }
+  h+='</div></div>';
+  // Right: Gantt
+  h+='<div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-calendar-stats"></i>Gantt 2025</div></div>';
+  h+='<div class="gantt-wrap"><table class="gtbl"><tr><th class="gl" style="width:100px">Chantier</th>';
+  var months=['J','F','M','A','M','J','Jl','A','S','O','N','D'];
+  for(var m=0;m<12;m++) h+='<th>'+months[m]+'</th>';
+  h+='</tr>';
+  var gdata=[
+    {id:'A',phases:[{s:2,e:4,c:'#5DCAA5',l:'Fond.'},{s:4,e:8,c:'#378ADD',l:'Struct.'},{s:7,e:10,c:'#EF9F27',l:'MEP'},{s:9,e:11,c:'#AFA9EC',l:'Fin.'}]},
+    {id:'B',phases:[{s:0,e:3,c:'#5DCAA5',l:'Fond.'},{s:2,e:6,c:'#F09595',l:'Retard'},{s:5,e:9,c:'#EF9F27',l:'MEP'}]},
+    {id:'C',phases:[{s:4,e:7,c:'#5DCAA5',l:'Fond.'},{s:6,e:12,c:'#378ADD',l:'Struct.'}]},
+    {id:'D',phases:[{s:4,e:6,c:'#5DCAA5',l:'Excav.'},{s:6,e:12,c:'#378ADD',l:'Struct.'}]},
+    {id:'E',phases:[{s:0,e:2,c:'#EF9F27',l:'MEP'},{s:1,e:5,c:'#AFA9EC',l:'Finition'}]}
+  ];
+  for(var gi=0;gi<gdata.length;gi++){
+    var gp=gdata[gi];
+    h+='<tr><td style="font-size:11px;font-weight:600;padding-left:8px">'+gp.id+'</td>';
+    var col=0;
+    while(col<12){
+      var found=null;
+      for(var pi=0;pi<gp.phases.length;pi++){
+        if(gp.phases[pi].s<=col && gp.phases[pi].e>col){found=gp.phases[pi];break;}
+      }
+      if(found && found.s===col){
+        var span=Math.min(found.e-found.s,12-col);
+        h+='<td colspan="'+span+'"><div class="gbar" style="background:'+found.c+'">'+found.l+'</div></td>';
+        col+=span;
+      } else if(found){
+        col++;
+      } else {
+        h+='<td></td>';
+        col++;
+      }
+    }
+    h+='</tr>';
+  }
+  h+='</table></div></div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-alert-circle"></i>Conflits détectés</div></div>';
+  h+='<div class="alert al-r"><i class="ti ti-alert-triangle"></i><strong>Claude Lapointe</strong> — requis chantiers A et C simultanément juin.</div>';
+  h+='<div class="alert al-a"><i class="ti ti-alert-triangle"></i><strong>Kevin Morin</strong> — seul opérateur Cl.1 pour chantiers C et D.</div>';
+  h+='<div class="alert al-r"><i class="ti ti-user-off"></i><strong>Soudeur</strong> — poste vacant bloque chantier B.</div>';
+  h+='</div>';
+  h+='</div>';
+  h+='</div>';
+  return h;
+}
+
+function renderRecrutement(){
+  var h='';
+  h+='<div class="krow k4"><div class="kpi"><div class="klbl">Postes ouverts</div><div class="kval" style="color:var(--red)">3</div></div><div class="kpi"><div class="klbl">Candidats total</div><div class="kval">7</div></div><div class="kpi"><div class="klbl">Entrevues semaine</div><div class="kval">1</div></div><div class="kpi"><div class="klbl">Embauchés YTD</div><div class="kval" style="color:var(--green)">1</div></div></div>';
+  h+='<div class="kanban">';
+  var cols=[
+    {key:'attente',label:'En attente',icon:'ti-clock'},
+    {key:'cours',label:'En cours',icon:'ti-refresh'},
+    {key:'termine',label:'Terminé',icon:'ti-check'}
+  ];
+  for(var ci=0;ci<cols.length;ci++){
+    var col=cols[ci];
+    var cards=CANDIDATS.filter(function(c){
+      if(col.key==='termine') return c.st==='embauche'||c.st==='refuse';
+      return c.st===col.key;
+    });
+    h+='<div><div class="kchdr"><div class="kctitle"><i class="ti '+col.icon+'"></i>'+col.label+'</div><span class="kcount">'+cards.length+'</span></div>';
+    for(var ki=0;ki<cards.length;ki++){
+      var cd=cards[ki];
+      var initials=cd.nom.split(' ').map(function(x){return x[0];}).join('').slice(0,2);
+      var extraClass=cd.st==='cours'?'kact':cd.st==='embauche'||cd.st==='refuse'?'kdone':'';
+      h+='<div class="kcard '+extraClass+'">';
+      h+='<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><div class="av-sm '+cd.av+'">'+initials+'</div><div><div class="kname">'+cd.nom+'</div><div class="ksub2">'+cd.poste+' · '+cd.exp+'</div></div></div>';
+      for(var si=0;si<cd.skills.length;si++){h+='<span class="bdg bgr">'+cd.skills[si]+'</span> ';}
+      if(cd.st==='cours') h+='<div style="font-size:10px;padding:3px 6px;background:var(--bbg);color:var(--btxt);border-radius:4px;margin-top:5px">'+cd.date+'</div>';
+      if(cd.st==='embauche') h+='<div style="font-size:10px;padding:3px 6px;background:var(--gbg);color:var(--gtxt);border-radius:4px;margin-top:5px">'+cd.date+'</div>';
+      h+='<div class="kfoot" style="margin-top:6px"><span style="font-size:10px;color:var(--txt3)">'+cd.date+'</span>'+bdg(cd.st)+'</div>';
+      h+='</div>';
+    }
+    h+='<div class="kadd"><i class="ti ti-plus"></i> Ajouter</div>';
+    h+='</div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+function renderFormation(){
+  var certs=[
+    {l:'ASP Construction à jour',pct:88,c:'var(--green)'},
+    {l:'Premiers secours',pct:72,c:'var(--amber)'},
+    {l:'Travail en hauteur',pct:60,c:'var(--red)'},
+    {l:'SIMDUT 2015',pct:95,c:'var(--green)'},
+    {l:'Conduite chariot élévateur',pct:45,c:'var(--red)'},
+    {l:'Espace clos',pct:78,c:'var(--amber)'}
+  ];
+  var h='<div class="g2"><div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-certificate"></i>Certifications — taux de conformité</div></div>';
+  for(var i=0;i<certs.length;i++){
+    var cert=certs[i];
+    h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">';
+    h+='<span style="font-size:11px;color:var(--txt2);width:180px;flex-shrink:0">'+cert.l+'</span>';
+    h+='<div class="pb" style="flex:1"><div class="pf" style="width:'+cert.pct+'%;background:'+cert.c+'"></div></div>';
+    h+='<span style="font-size:11px;color:var(--txt2);width:30px;text-align:right">'+cert.pct+'%</span>';
+    h+='</div>';
+  }
+  h+='</div>';
+  var formations=[
+    {nom:'SST remise à niveau',date:'19 mai 2025',emp:12},
+    {nom:'ASP Construction renouvellement',date:'2 juin 2025',emp:5},
+    {nom:'Travail en hauteur (3m+)',date:'10 juin 2025',emp:8}
+  ];
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-calendar-event"></i>Formations planifiées</div></div>';
+  for(var i=0;i<formations.length;i++){
+    var f=formations[i];
+    h+='<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bord)">';
+    h+='<div style="width:36px;height:36px;border-radius:var(--r);background:var(--pbg);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-certificate" style="font-size:16px;color:var(--ptxt)"></i></div>';
+    h+='<div style="flex:1"><div style="font-size:12px;font-weight:600">'+f.nom+'</div><div style="font-size:10px;color:var(--txt2)">'+f.date+' · '+f.emp+' employés</div></div>';
+    h+='<span class="bdg br">Obligatoire</span></div>';
+  }
+  h+='</div>';
+  h+='</div>';
+  h+='<div><div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-users"></i>Statut certifications par employé</div></div>';
+  h+='<table class="tbl"><tr><th>Employé</th><th>ASP</th><th>Hauteur</th><th>SIMDUT</th></tr>';
+  var certStates=[
+    ['ST','bg','ba','bg'],['ML','bg','bg','bg'],['JD','bg','bg','bg'],
+    ['FR','bg','br','bg'],['KM','bg','bg','bg'],['LG','ba','bg','bg']
+  ];
+  for(var i=0;i<certStates.length;i++){
+    var cs=certStates[i];
+    var emp=null;
+    for(var j=0;j<EMP.length;j++){if(EMP[j].id===cs[0]){emp=EMP[j];break;}}
+    if(emp){
+      var ok='<span class="bdg bg">✓</span>', warn='<span class="bdg ba">⚠</span>', ko='<span class="bdg br">!</span>';
+      h+='<tr><td>'+emp.nom.split(' ')[0]+' '+emp.nom.split(' ')[1][0]+'.</td>';
+      h+='<td>'+(cs[1]==='bg'?ok:cs[1]==='ba'?warn:ko)+'</td>';
+      h+='<td>'+(cs[2]==='bg'?ok:cs[2]==='ba'?warn:ko)+'</td>';
+      h+='<td>'+(cs[3]==='bg'?ok:cs[3]==='ba'?warn:ko)+'</td></tr>';
+    }
+  }
+  h+='</table></div></div></div>';
+  return h;
+}
+
+function renderDevis(){
+  var h='';
+  h+='<div class="krow k4"><div class="kpi"><div class="klbl">Devis ce mois</div><div class="kval">8</div></div><div class="kpi"><div class="klbl">Taux acceptation</div><div class="kval">62%</div></div><div class="kpi"><div class="klbl">Valeur soumise</div><div class="kval">3,1M$</div></div><div class="kpi"><div class="klbl">Impayées</div><div class="kval" style="color:var(--red)">540K$</div></div></div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-file-invoice"></i>Devis & facturation</div><button class="btn pri"><i class="ti ti-plus"></i> Nouveau devis</button></div>';
+  h+='<table class="tbl"><tr><th>Réf.</th><th>Client</th><th>Type</th><th>Montant</th><th>Date</th><th>Statut</th></tr>';
+  for(var i=0;i<DEVIS.length;i++){
+    var d=DEVIS[i];
+    h+='<tr><td style="font-family:monospace;font-size:11px;color:var(--txt2)">'+d.ref+'</td>';
+    h+='<td><strong>'+d.client+'</strong></td><td><span class="bdg bgr">'+d.type+'</span></td>';
+    h+='<td style="font-weight:600">'+fmt(d.montant)+'</td><td style="color:var(--txt2)">'+d.date+'</td>';
+    h+='<td>'+bdg(d.st)+'</td></tr>';
+  }
+  h+='</table></div>';
+  return h;
+}
+
+function renderSousTraitants(){
+  var h='';
+  h+='<div class="alert al-a"><i class="ti ti-alert-triangle"></i><strong>Acier Montréal</strong> — Certificat RBQ expiré. Accès chantier suspendu.</div>';
+  h+='<div class="alert al-a"><i class="ti ti-alert-triangle"></i><strong>Plomberie Laurentides</strong> — Attestation CNESST manquante avant mobilisation.</div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-briefcase"></i>Sous-traitants</div><button class="btn pri"><i class="ti ti-plus"></i> Ajouter</button></div>';
+  h+='<table class="tbl"><tr><th>Entreprise</th><th>Spécialité</th><th>Chantier</th><th>Contrat</th><th>RBQ</th><th>CNESST</th><th>Statut</th></tr>';
+  for(var i=0;i<SOUST.length;i++){
+    var s=SOUST[i];
+    h+='<tr><td><strong>'+s.nom+'</strong></td><td style="color:var(--txt2)">'+s.spec+'</td>';
+    h+='<td><span class="bdg bb">'+s.ch+'</span></td><td style="font-weight:500">'+s.contrat+'</td>';
+    h+='<td>'+(s.rbq?'<span class="bdg bg">✓ Valide</span>':'<span class="bdg br">! Manquant</span>')+'</td>';
+    h+='<td>'+(s.cnesst?'<span class="bdg bg">✓ Conforme</span>':'<span class="bdg br">! Manquant</span>')+'</td>';
+    h+='<td>'+bdg(s.st)+'</td></tr>';
+  }
+  h+='</table></div>';
+  return h;
+}
+
+function renderBudget(){
+  var h='';
+  h+='<div class="alert al-r"><i class="ti ti-lock"></i><strong>Section confidentielle — bureau seulement.</strong> Non visible par l\'équipe terrain.</div>';
+  h+='<div class="krow k4"><div class="kpi"><div class="klbl">Budget total engagé</div><div class="kval">8,2M$</div></div><div class="kpi"><div class="klbl">Dépenses YTD</div><div class="kval">2,4M$</div></div><div class="kpi"><div class="klbl">Marge brute</div><div class="kval" style="color:var(--green)">342K$</div></div><div class="kpi"><div class="klbl">Masse salariale/mois</div><div class="kval">312K$</div></div></div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-chart-bar"></i>Budget par chantier</div></div>';
+  h+='<table class="tbl"><tr><th>Chantier</th><th>Budget</th><th>Dépensé</th><th>Reste</th><th>Utilisation</th><th>Santé</th></tr>';
+  for(var i=0;i<CH.length;i++){
+    var c=CH[i];
+    var pctB=Math.round(c.dep/c.budget*100);
+    var reste=c.budget-c.dep;
+    var bcolor=pctB>90?'var(--red)':pctB>70?'var(--amber)':'var(--blue)';
+    var bst=pctB>90?'retard':pctB>70?'attente':'actif';
+    h+='<tr><td><strong>'+c.id+' · '+c.name.split(' ').slice(0,2).join(' ')+'</strong></td>';
+    h+='<td>'+fmt(c.budget)+'</td><td style="font-weight:600">'+fmt(c.dep)+'</td>';
+    h+='<td>'+fmt(reste)+'</td>';
+    h+='<td><div style="display:flex;align-items:center;gap:6px"><div class="pb" style="width:60px"><div class="pf" style="width:'+pctB+'%;background:'+bcolor+'"></div></div>'+pctB+'%</div></td>';
+    h+='<td>'+bdg(bst)+'</td></tr>';
+  }
+  h+='</table></div>';
+  return h;
+}
+
+function renderPermis(){
+  var h='';
+  h+='<div class="alert al-a"><i class="ti ti-alert-triangle"></i><strong>Permis Hôtel Nord</strong> expire le 1er juin 2025. Renouveler avant le 25 mai.</div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-license"></i>Permis de construction & conformité</div><button class="btn pri"><i class="ti ti-plus"></i> Ajouter permis</button></div>';
+  h+='<table class="tbl"><tr><th>Projet</th><th>Type</th><th>N° permis</th><th>Émis</th><th>Expire</th><th>Statut</th></tr>';
+  for(var i=0;i<PERMIS.length;i++){
+    var p=PERMIS[i];
+    var expColor=p.st==='expire-bientot'?'color:var(--amber);font-weight:600':'';
+    h+='<tr><td><span class="bdg bb">'+p.proj+'</span></td><td style="font-weight:500">'+p.type+'</td>';
+    h+='<td style="font-family:monospace;font-size:11px;color:var(--txt2)">'+p.num+'</td>';
+    h+='<td style="color:var(--txt2)">'+p.emis+'</td>';
+    h+='<td style="'+expColor+'">'+p.exp+'</td>';
+    h+='<td>'+bdg(p.st)+'</td></tr>';
+  }
+  h+='</table></div>';
+  return h;
+}
+
+function renderIncidents(){
+  var h='';
+  h+='<div class="krow k4"><div class="kpi"><div class="klbl">Incidents YTD</div><div class="kval">3</div></div><div class="kpi"><div class="klbl">Ouverts</div><div class="kval" style="color:var(--red)">1</div></div><div class="kpi"><div class="klbl">Déclarés CNESST</div><div class="kval">1</div></div><div class="kpi"><div class="klbl">Jours sans incident</div><div class="kval" style="color:var(--green)">3</div></div></div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-alert-triangle"></i>Registre SST</div><button class="btn red"><i class="ti ti-alert-triangle"></i> Signaler incident</button></div>';
+  h+='<table class="tbl"><tr><th>ID</th><th>Chantier</th><th>Description</th><th>Gravité</th><th>CNESST</th><th>Date</th><th>Statut</th></tr>';
+  for(var i=0;i<INCIDENTS.length;i++){
+    var inc=INCIDENTS[i];
+    h+='<tr><td style="font-family:monospace;font-size:11px;color:var(--txt2)">'+inc.id+'</td>';
+    h+='<td><span class="bdg bb">'+inc.ch+'</span></td>';
+    h+='<td style="font-size:11px">'+inc.titre+'</td>';
+    h+='<td>'+bdg(inc.grav)+'</td>';
+    h+='<td>'+(inc.cnesst?'<span class="bdg bg">Soumis</span>':'<span class="bdg bgr">N/A</span>')+'</td>';
+    h+='<td style="color:var(--txt2)">'+inc.date+'</td>';
+    h+='<td>'+bdg(inc.st)+'</td></tr>';
+  }
+  h+='</table></div>';
+  return h;
+}
+
+function renderPlans(){
+  var plans=[
+    {doc:'Plan structural R+1 — dalle B',c:'A',ver:'v3.2',appro:'Ing. Simard',date:'10 mai',terrain:true},
+    {doc:'Plan électrique RDC',c:'B',ver:'v1.0',appro:'Ing. Côté',date:'5 mai',terrain:true},
+    {doc:'Plan plomberie — colonnes',c:'A',ver:'v2.1',appro:'En attente',date:'—',terrain:false},
+    {doc:'Coupe transversale fondations',c:'C',ver:'v1.0',appro:'Ing. Simard',date:'1 mai',terrain:true},
+    {doc:'Devis descriptif complet',c:'D',ver:'v1.0',appro:'Arch. Larivée',date:'20 avr.',terrain:false}
+  ];
+  var h='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-blueprint"></i>Plans & dessins techniques</div><button class="btn pri"><i class="ti ti-upload"></i> Déposer plan</button></div>';
+  h+='<table class="tbl"><tr><th>Document</th><th>Chantier</th><th>Version</th><th>Approuvé par</th><th>Date</th><th>Accès terrain</th></tr>';
+  for(var i=0;i<plans.length;i++){
+    var p=plans[i];
+    h+='<tr><td><strong>'+p.doc+'</strong></td><td><span class="bdg bb">'+p.c+'</span></td>';
+    h+='<td style="font-family:monospace;font-size:11px">'+p.ver+'</td>';
+    var approColor=p.appro==='En attente'?'color:var(--amber)':'color:var(--txt2)';
+    h+='<td style="'+approColor+'">'+p.appro+'</td>';
+    h+='<td style="color:var(--txt2)">'+p.date+'</td>';
+    h+='<td>'+(p.terrain?'<span class="bdg bg">✓ Visible terrain</span>':'<span class="bdg bgr">Bureau seul</span>')+'</td></tr>';
+  }
+  h+='</table></div>';
+  return h;
+}
+
+function renderRoles(){
+  var roles=[
+    {r:'Direction / Admin',desc:'Accès complet',perms:['Finances','RH complet','Toutes opérations','Config système'],av:'av-t',i:'ML'},
+    {r:'Chef de chantier',desc:'Gestion opérationnelle',perms:['Rapports journaliers','Feuilles de temps','Plans approuvés','Messagerie'],av:'av-b',i:'ST'},
+    {r:'Bureau RH',desc:'Ressources humaines',perms:['Recrutement','Dossiers employés','Formations','Paie (lecture)'],av:'av-p',i:'RH'},
+    {r:'Terrain (ouvrier)',desc:'Vue terrain uniquement',perms:['Mes tâches','Mon pointage','Mon rapport','Chat','Incident'],av:'av-g',i:'TR'},
+    {r:'Client',desc:'Portail lecture seule',perms:['Avancement projet','Photos','Factures reçues'],av:'av-gr',i:'CL'}
+  ];
+  var integrations=[
+    {nom:'Acomba / Sage 50',st:'Connecté',c:'bg'},
+    {nom:'CCQ — paie syndicale',st:'Connecté',c:'bg'},
+    {nom:'Procore (chantiers)',st:'En attente',c:'ba'},
+    {nom:'AutoCAD / Revit',st:'Non connecté',c:'bgr'},
+    {nom:'Google Maps GPS',st:'Connecté',c:'bg'}
+  ];
+  var audits=[
+    {who:'Marc L.',action:'Affecté Sophie T. au chantier A & C',time:'09:55'},
+    {who:'Sophie T.',action:'Soumis rapport journalier — chantier A',time:'09:41'},
+    {who:'RH',action:'Pablo Reyes — entrevue planifiée 14 mai',time:'09:10'},
+    {who:'Marc L.',action:'Budget Q2 approuvé — 80K$ supplémentaire',time:'Hier'},
+    {who:'Système',action:'Alerte stock béton — seuil critique atteint',time:'8 mai'}
+  ];
+  var h='<div class="g2"><div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-shield"></i>Rôles & permissions</div></div>';
+  for(var i=0;i<roles.length;i++){
+    var r=roles[i];
+    h+='<div style="padding:10px 0;border-bottom:1px solid var(--bord)">';
+    h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div class="av-sm '+r.av+'">'+r.i+'</div>';
+    h+='<div><div style="font-size:12px;font-weight:700">'+r.r+'</div><div style="font-size:10px;color:var(--txt2)">'+r.desc+'</div></div></div>';
+    h+='<div>';
+    for(var j=0;j<r.perms.length;j++) h+='<span class="tag">'+r.perms[j]+'</span>';
+    h+='</div></div>';
+  }
+  h+='</div>';
+  h+='<div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-history"></i>Journal d\'audit</div></div>';
+  for(var i=0;i<audits.length;i++){
+    var a=audits[i];
+    h+='<div class="tli"><div class="dot dg" style="margin-top:5px;flex-shrink:0"></div>';
+    h+='<div class="tli-body"><div class="tli-title">'+a.who+' — '+a.action+'</div></div>';
+    h+='<div class="tli-time">'+a.time+'</div></div>';
+  }
+  h+='</div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-plug"></i>Intégrations API</div></div>';
+  for(var i=0;i<integrations.length;i++){
+    var intg=integrations[i];
+    h+='<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bord)">';
+    h+='<i class="ti ti-plug" style="font-size:15px;color:var(--txt3)"></i>';
+    h+='<span style="flex:1;font-size:12px">'+intg.nom+'</span>';
+    h+='<span class="bdg '+intg.c+'">'+intg.st+'</span></div>';
+  }
+  h+='</div>';
+  h+='</div></div>';
+  return h;
+}
+
+// ── TERRAIN PANELS ────────────────────────────────────────
+function renderTerrainAccueil(){
+  var h='';
+  h+='<div class="alert al-g"><i class="ti ti-check"></i>Bonjour Sophie! Vous êtes affectée au <strong>Chantier A — Résidences du Lac</strong> aujourd\'hui.</div>';
+  h+='<div class="g2">';
+  h+='<div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-crane"></i>Mon chantier — Résidences du Lac</div></div>';
+  h+='<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:var(--txt2)">Avancement</span><strong>74%</strong></div>';
+  h+=progBar(74,'var(--green)');
+  h+='<div style="font-size:10px;color:var(--txt3);margin-top:3px">Phase: Structure — Dalle B</div></div>';
+  h+='<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="bdg bb">12 personnes aujourd\'hui</span><span class="bdg ba">Livraison béton 14h</span></div></div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-checkbox"></i>Mes tâches du jour</div></div>';
+  var taches=[
+    {t:'Vérifier coffrages avant coulée béton',done:true},
+    {t:'Valider armatures avec Patrick Bergeron',done:true},
+    {t:'Rapport fin de journée',done:false},
+    {t:'Réunion équipe 16h',done:false}
+  ];
+  for(var i=0;i<taches.length;i++){
+    var tk=taches[i];
+    h+='<div class="chi" onclick="var cb=this.querySelector(\'.chb\');cb.classList.toggle(\'chk\');var lbl=this.querySelectorAll(\'span\')[0];lbl.style.textDecoration=cb.classList.contains(\'chk\')?\'line-through\':\'\';">';
+    h+='<div class="chb'+(tk.done?' chk':'')+'">'+( tk.done?'<i class="ti ti-check"></i>':'')+'</div>';
+    h+='<span style="flex:1;'+(tk.done?'text-decoration:line-through;color:var(--txt3)':'')+'">'+tk.t+'</span></div>';
+  }
+  h+='</div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-bell"></i>Mises à jour du bureau</div></div>';
+  var updates=[
+    {icon:'ti-user-check',txt:'Louis Gagné affecté chantier B dès lundi',time:'Auj. 9h'},
+    {icon:'ti-calendar',txt:'Visite client vendredi — chantier propre requis',time:'Auj.'},
+    {icon:'ti-truck',txt:'Livraison béton reportée à 14h',time:'Hier'}
+  ];
+  for(var i=0;i<updates.length;i++){
+    var u=updates[i];
+    h+='<div class="tli"><div style="width:26px;height:26px;border-radius:var(--r);background:var(--surf2);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti '+u.icon+'" style="font-size:13px;color:var(--txt2)"></i></div>';
+    h+='<div class="tli-body"><div class="tli-title">'+u.txt+'</div></div><div class="tli-time">'+u.time+'</div></div>';
+  }
+  h+='</div>';
+  h+='</div>';
+  // Phone mockup
+  h+='<div class="phone-wrap"><div class="phone"><div class="ph-notch"><div class="ph-pill"></div></div>';
+  h+='<div class="ph-hdr"><div class="ph-title">Bonjour Sophie</div><div class="ph-sub">Chantier A · 13 mai 2025</div></div>';
+  h+='<div class="ph-body">';
+  h+='<div class="ph-sec">Ma délégation</div>';
+  h+='<div class="ph-card"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;font-weight:700">Résidences du Lac</span><span class="bdg bg" style="font-size:9px">74%</span></div><div style="font-size:10px;color:var(--txt2)">Contremaître · Dalle B</div></div>';
+  h+='<div class="ph-sec">Tâches</div>';
+  h+='<div class="ph-card">';
+  h+='<div style="display:flex;align-items:center;gap:5px;padding:3px 0;border-bottom:1px solid var(--bord)"><div style="width:13px;height:13px;border-radius:3px;background:var(--green);border:1px solid var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0"><i class="ti ti-check"></i></div><span style="font-size:10px;color:var(--txt3);text-decoration:line-through">Vérifier coffrages</span></div>';
+  h+='<div style="display:flex;align-items:center;gap:5px;padding:3px 0"><div style="width:13px;height:13px;border-radius:3px;border:1px solid var(--bord2);flex-shrink:0"></div><span style="font-size:10px">Rapport fin de journée</span></div>';
+  h+='</div>';
+  h+='<div class="ph-sec">Mises à jour</div>';
+  h+='<div class="ph-card"><div style="font-size:10px;color:var(--txt2);">Louis G. affecté chantier B lundi</div></div>';
+  h+='</div>';
+  h+='<div class="ph-nav"><div class="pni on"><i class="ti ti-home"></i>Accueil</div><div class="pni"><i class="ti ti-checkbox"></i>Tâches</div><div class="pni"><i class="ti ti-clock"></i>Pointer</div><div class="pni"><i class="ti ti-message-circle"></i>Chat</div><div class="pni"><i class="ti ti-alert-triangle"></i>Incident</div></div>';
+  h+='</div></div>';
+  h+='</div>';
+  return h;
+}
+
+function renderTerrainPointage(){
+  var h='';
+  h+='<div class="krow k3"><div class="kpi"><div class="klbl">Heures semaine</div><div class="kval">36h</div></div><div class="kpi"><div class="klbl">Classification</div><div class="kval" style="font-size:16px;font-family:monospace">CCQ-N2</div></div><div class="kpi"><div class="klbl">Chantier principal</div><div class="kval" style="font-size:16px">A</div></div></div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-clock"></i>Mon pointage — semaine du 12 mai</div></div>';
+  h+='<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bord)">';
+  h+='<span style="width:80px;font-size:11px;color:var(--txt2)">Lun 12 mai</span><span class="bdg bb">Chantier A</span><span style="font-size:11px;color:var(--txt2)">07:00 → 16:00</span><div style="flex:1"></div><strong>8h</strong></div>';
+  h+='<div style="display:flex;align-items:center;gap:10px;padding:8px 0">';
+  h+='<span style="width:80px;font-size:11px;color:var(--txt2)">Mar 13 mai</span><span class="bdg bb">Chantier A</span><span style="font-size:11px;color:var(--txt2)">07:00 → en cours</span><div style="flex:1"></div><strong style="color:var(--green)">En cours</strong></div>';
+  h+='<div style="margin-top:12px"><button class="btn grn" onclick="alert(\'Pointage enregistré!\')"><i class="ti ti-clock"></i> Pointer entrée / sortie</button></div></div>';
+  h+='<div class="alert al-a"><i class="ti ti-wifi-off"></i>Mode hors-ligne: les pointages sont sauvegardés localement et synchronisés au retour réseau.</div>';
+  return h;
+}
+
+function renderTerrainRapport(){
+  var h='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-file-text"></i>Rapport journalier terrain</div></div>';
+  h+='<div class="fr fr2"><div><label>Chantier</label><select><option>A · Résidences du Lac</option></select></div><div><label>Date</label><input type="date" value="2025-05-13"/></div></div>';
+  h+='<div class="fr fr3"><div><label>Météo</label><select><option>Ensoleillé</option><option>Nuageux</option><option>Pluie</option></select></div><div><label>Temp.</label><input value="18°C"/></div><div><label>Travailleurs présents</label><input type="number" value="12"/></div></div>';
+  h+='<div style="margin-bottom:10px"><label>Travaux réalisés</label><textarea style="height:80px;resize:none" placeholder="Décrire les travaux...">Coulée béton dalle B terminée. Armatures C vérifiées.</textarea></div>';
+  h+='<div style="margin-bottom:10px"><label>Anomalies</label><textarea style="height:50px;resize:none">Livraison béton retardée 90 min.</textarea></div>';
+  h+='<div style="margin-bottom:10px"><label>Photos du chantier</label><div style="border:1px dashed var(--bord2);border-radius:var(--r);padding:16px;text-align:center;cursor:pointer;color:var(--txt3)"><i class="ti ti-camera-plus" style="font-size:24px;display:block;margin-bottom:4px"></i><span style="font-size:12px">Ajouter photos horodatées & géolocalisées</span></div></div>';
+  h+='<div style="display:flex;gap:6px"><button class="btn grn" onclick="alert(\'Rapport soumis!\')"><i class="ti ti-check"></i> Soumettre</button><button class="btn"><i class="ti ti-device-floppy"></i> Brouillon</button></div>';
+  h+='</div>';
+  return h;
+}
+
+function renderTerrainIncidents(){
+  var h='';
+  h+='<div class="alert al-r"><i class="ti ti-alert-triangle"></i>En cas d\'urgence grave, appelez immédiatement le <strong>911</strong> et votre responsable de chantier.</div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-alert-triangle"></i>Signaler un incident</div></div>';
+  h+='<div class="fr fr2"><div><label>Type d\'incident</label><select><option>Quasi-accident</option><option>Blessure mineure</option><option>Blessure grave</option><option>Dommage matériel</option></select></div><div><label>Gravité</label><select><option>Mineur</option><option>Moyen</option><option>Grave</option></select></div></div>';
+  h+='<div style="margin-bottom:10px"><label>Description</label><textarea style="height:80px;resize:none" placeholder="Décrire ce qui s\'est passé, où et comment..."></textarea></div>';
+  h+='<div style="margin-bottom:12px"><label>Photo de la situation</label><div style="border:1px dashed var(--bord2);border-radius:var(--r);padding:14px;text-align:center;cursor:pointer;color:var(--txt3)"><i class="ti ti-camera-plus" style="font-size:22px;display:block;margin-bottom:4px"></i>Ajouter une photo</div></div>';
+  h+='<button class="btn red" style="width:100%;justify-content:center" onclick="alert(\'Incident signalé! Le bureau et le responsable SST ont été notifiés.\')"><i class="ti ti-alert-triangle"></i> Signaler l\'incident</button>';
+  h+='</div>';
+  return h;
+}
+
+// ── CLIENT PANELS ─────────────────────────────────────────
+function renderClientDashboard(){
+  var h='';
+  h+='<div class="alert al-b"><i class="ti ti-user-circle"></i>Portail client — Jean Brodeur · Résidences Boréal</div>';
+  h+='<div class="krow k3"><div class="kpi"><div class="klbl">Avancement</div><div class="kval" style="color:var(--green)">74%</div></div><div class="kpi"><div class="klbl">Phase actuelle</div><div class="kval" style="font-size:14px">Structure</div></div><div class="kpi"><div class="klbl">Livraison prévue</div><div class="kval" style="font-size:14px">Oct. 2025</div></div></div>';
+  h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-timeline"></i>Avancement par phase</div></div>';
+  var phases=[
+    {p:'Fondations & excavation',pct:100},
+    {p:'Structure béton',pct:74},
+    {p:'Mécanique électrique plomberie',pct:20},
+    {p:'Finition intérieure',pct:0},
+    {p:'Aménagement extérieur',pct:0}
+  ];
+  for(var i=0;i<phases.length;i++){
+    var ph=phases[i];
+    var pc=ph.pct===100?'var(--green)':ph.pct>0?'var(--blue)':'var(--bord2)';
+    h+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>'+ph.p+'</span><span style="color:var(--txt2)">'+ph.pct+'%</span></div>';
+    h+=progBar(ph.pct,pc);
+    h+='</div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+function renderClientFactures(){
+  var h='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-receipt"></i>Mes factures</div></div>';
+  h+='<table class="tbl"><tr><th>Facture</th><th>Description</th><th>Montant</th><th>Date</th><th>Statut</th></tr>';
+  var facs=[
+    {ref:'FAC-018',desc:'Acompte #1 — Résidences Boréal',m:150000,date:'5 mai 2025',st:'impayee'},
+    {ref:'FAC-012',desc:'Mobilisation & fondations',m:120000,date:'1 avr. 2025',st:'accepte'},
+    {ref:'FAC-008',desc:'Acompte initial',m:50000,date:'25 mars 2025',st:'accepte'}
+  ];
+  for(var i=0;i<facs.length;i++){
+    var f=facs[i];
+    h+='<tr><td style="font-family:monospace;font-size:11px;color:var(--txt2)">'+f.ref+'</td><td>'+f.desc+'</td><td style="font-weight:600">'+fmt(f.m)+'</td><td style="color:var(--txt2)">'+f.date+'</td><td>'+bdg(f.st)+'</td></tr>';
+  }
+  h+='</table></div>';
+  return h;
+}
+
+function renderClientPhotos(){
+  var h='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-camera"></i>Photos du chantier</div></div>';
+  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">';
+  var photos=['Fondations terminées\n1 avr.','Structure R+1\n20 avr.','Dalle B coulée\n13 mai','Coffrages bâtiment C','Vue aérienne du site','Armatures en place'];
+  for(var i=0;i<photos.length;i++){
+    h+='<div style="background:var(--surf2);border-radius:var(--r);aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:var(--txt2);text-align:center;padding:8px;cursor:pointer;border:1px solid var(--bord)">';
+    h+='<i class="ti ti-photo" style="font-size:22px;margin-bottom:5px;color:var(--txt3)"></i>'+photos[i].replace('\n','<br>')+'</div>';
+  }
+  h+='</div></div>';
+  return h;
+}
+
+function renderClientDocs(){
+  var docs=['Contrat de construction signé — 20 mars 2025','Plans architecturaux approuvés — 15 avr. 2025','Devis descriptif — matériaux — 20 mars 2025','Rapport avancement — avril 2025 — 30 avr. 2025'];
+  var h='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-file"></i>Documents partagés</div></div>';
+  for(var i=0;i<docs.length;i++){
+    var parts=docs[i].split(' — ');
+    h+='<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bord)">';
+    h+='<i class="ti ti-file-type-pdf" style="font-size:20px;color:var(--red)"></i>';
+    h+='<div style="flex:1"><div style="font-size:12px;font-weight:600">'+parts[0]+'</div><div style="font-size:10px;color:var(--txt2)">'+parts[1]+'</div></div>';
+    h+='<button class="btn" style="font-size:11px;padding:4px 8px"><i class="ti ti-download"></i> Télécharger</button></div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+// ── PANEL REGISTRY ────────────────────────────────────────
+var PANELS = {
+  'dashboard': renderDashboard,
+  'chantiers': renderChantiers,
+  'feuilles': renderFeuilles,
+  'rapports-chantier': renderRapports,
+  'equipements': renderEquipements,
+  'materiaux': renderMateriaux,
+  'equipe': renderEquipe,
+  'affectation': renderAffectation,
+  'recrutement': renderRecrutement,
+  'formation': renderFormation,
+  'devis': renderDevis,
+  'sous-traitants': renderSousTraitants,
+  'budget': renderBudget,
+  'permis': renderPermis,
+  'incidents': renderIncidents,
+  'plans': renderPlans,
+  'roles': renderRoles,
+  'communication': function(){return '<div class="alert al-b"><i class="ti ti-message-circle"></i>Module messagerie intégré — canaux par chantier, messages filtrés bureau/terrain, signalement incidents. Voir prototype dédié.</div>';},
+  'client-portail': function(){return '<div class="alert al-b"><i class="ti ti-user-circle"></i>Portail client géré via le bouton "Client" en haut. Cliquez sur le rôle Client pour voir la vue.</div>';},
+  'terrain-accueil': renderTerrainAccueil,
+  'terrain-taches': function(){
+    var h='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-checkbox"></i>Mes tâches — semaine du 13 mai</div></div>';
+    var tasks=[
+      {t:'Vérifier coffrages avant coulée béton bâtiment B',prio:'haute',done:true,d:'Auj.'},
+      {t:'Valider armatures avec Patrick Bergeron',prio:'haute',done:true,d:'Auj.'},
+      {t:'Rapport journalier fin de journée',prio:'normale',done:false,d:'Auj. 16h'},
+      {t:'Réunion coordination équipe 16h',prio:'normale',done:false,d:'Auj. 16h'},
+      {t:'Inspecter zone barricadée dalle B',prio:'haute',done:false,d:'Demain'},
+      {t:'Coordonner livraison matériaux bâtiment C',prio:'normale',done:false,d:'Jeudi'}
+    ];
+    for(var i=0;i<tasks.length;i++){
+      var tk=tasks[i];
+      h+='<div class="chi" onclick="var cb=this.querySelector(\'.chb\');cb.classList.toggle(\'chk\');var lbl=this.querySelector(\'.chlbl\');lbl.style.textDecoration=cb.classList.contains(\'chk\')?\'line-through\':\'\';">';
+      h+='<div class="chb'+(tk.done?' chk':'')+'">'+( tk.done?'<i class="ti ti-check"></i>':'')+'</div>';
+      h+='<span class="chlbl" style="flex:1;'+(tk.done?'text-decoration:line-through;color:var(--txt3)':'')+'">'+tk.t+'</span>';
+      h+='<span class="bdg '+(tk.prio==='haute'?'br':'bgr')+'">'+tk.prio+'</span>';
+      h+='<span style="font-size:10px;color:var(--txt3);margin-left:6px">'+tk.d+'</span></div>';
+    }
+    h+='</div>';
+    return h;
+  },
+  'terrain-rapport': renderTerrainRapport,
+  'terrain-pointage': renderTerrainPointage,
+  'terrain-materiaux': function(){
+    var h='<div class="alert al-b"><i class="ti ti-info-circle"></i>Vue terrain: quantités seulement. Prix et fournisseurs masqués.</div>';
+    h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-package"></i>Matériaux — Chantier A</div></div>';
+    h+='<table class="tbl"><tr><th>Matériau</th><th>Disponible</th><th>Niveau</th><th>Livraison prévue</th></tr>';
+    var mats=[{n:'Bois de charpente',s:620,max:800,l:'—'},{n:'Béton (livraison auj.)',s:42,max:200,l:"Aujourd'hui 14h"},{n:'Isolant fibre de verre',s:35,max:100,l:'Vendredi'},{n:'Armatures acier',s:180,max:300,l:'—'}];
+    for(var i=0;i<mats.length;i++){
+      var m=mats[i],pct=Math.round(m.s/m.max*100),mc=pct<30?'var(--red)':pct<60?'var(--amber)':'var(--green)';
+      h+='<tr><td><strong>'+m.n+'</strong></td><td>'+m.s+' / '+m.max+'</td>';
+      h+='<td style="width:90px">'+progBar(pct,mc)+'</td>';
+      h+='<td style="color:'+(m.l.includes('hui')?'var(--blue)':'var(--txt2)')+'">'+m.l+'</td></tr>';
+    }
+    h+='</table></div>';
+    return h;
+  },
+  'terrain-plans': function(){
+    var h='<div class="alert al-b"><i class="ti ti-info-circle"></i>Vous voyez uniquement les plans approuvés pour votre chantier.</div>';
+    h+='<div class="card"><div class="chdr"><div class="ctitle"><i class="ti ti-blueprint"></i>Plans approuvés — lecture seule</div></div>';
+    var plans=[{d:'Plan structural R+1 — dalle B',v:'v3.2',a:'Ing. Simard',dt:'10 mai'},{d:'Coupe transversale fondations',v:'v1.0',a:'Ing. Simard',dt:'1 mai'}];
+    for(var i=0;i<plans.length;i++){
+      var p=plans[i];
+      h+='<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bord)">';
+      h+='<div style="width:36px;height:36px;background:var(--bbg);border-radius:var(--r);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-blueprint" style="color:var(--btxt);font-size:16px"></i></div>';
+      h+='<div style="flex:1"><div style="font-size:12px;font-weight:600">'+p.d+'</div><div style="font-size:10px;color:var(--txt2)">'+p.v+' · Approuvé '+p.dt+'</div></div>';
+      h+='<button class="btn pri" style="font-size:11px;padding:4px 10px"><i class="ti ti-eye"></i> Consulter</button></div>';
+    }
+    h+='</div>';
+    return h;
+  },
+  'terrain-incidents': renderTerrainIncidents,
+  'client-dashboard': renderClientDashboard,
+  'client-docs': renderClientDocs,
+  'client-factures': renderClientFactures,
+  'client-photos': renderClientPhotos
+};
+
+var PANEL_LABELS = {
+  'dashboard':'Tableau de bord','chantiers':'Chantiers','feuilles':'Feuilles de temps CCQ',
+  'rapports-chantier':'Rapports journaliers','equipements':'Équipements & machinerie',
+  'materiaux':'Matériaux & stocks','equipe':'Équipe & compétences','affectation':'Affectation & planification',
+  'recrutement':'Recrutement RH','formation':'Formations & SST','devis':'Devis & facturation',
+  'sous-traitants':'Sous-traitants','budget':'Budget & rapports','permis':'Permis & conformité',
+  'incidents':'Incidents SST','plans':'Plans & dessins','roles':'Rôles & accès',
+  'communication':'Communications','client-portail':'Portail client',
+  'terrain-accueil':'Mon accueil','terrain-taches':'Mes tâches','terrain-rapport':'Rapport journalier',
+  'terrain-pointage':'Mon pointage','terrain-materiaux':'Matériaux chantier',
+  'terrain-plans':'Plans (lecture)','terrain-incidents':'Signaler un incident',
+  'client-dashboard':'Avancement de mon projet','client-docs':'Mes documents',
+  'client-factures':'Mes factures','client-photos':'Photos du chantier'
+};
+var PANEL_ICONS = {
+  'dashboard':'ti-layout-dashboard','chantiers':'ti-crane','feuilles':'ti-clock',
+  'rapports-chantier':'ti-file-description','equipements':'ti-bulldozer','materiaux':'ti-package',
+  'equipe':'ti-users','affectation':'ti-arrows-transfer-up','recrutement':'ti-user-plus',
+  'formation':'ti-certificate','devis':'ti-file-invoice','sous-traitants':'ti-briefcase',
+  'budget':'ti-chart-bar','permis':'ti-license','incidents':'ti-alert-triangle',
+  'plans':'ti-blueprint','roles':'ti-shield','communication':'ti-message-circle',
+  'client-portail':'ti-user-circle','terrain-accueil':'ti-home','terrain-taches':'ti-checkbox',
+  'terrain-rapport':'ti-file-text','terrain-pointage':'ti-clock','terrain-materiaux':'ti-package',
+  'terrain-plans':'ti-blueprint','terrain-incidents':'ti-alert-triangle',
+  'client-dashboard':'ti-home','client-docs':'ti-file','client-factures':'ti-receipt','client-photos':'ti-camera'
+};
+
+// ── ROLE CONFIG ───────────────────────────────────────────
+var ROLES = {
+  bureau:{
+    label:'Espace bureau',uname:'Marc Leblanc',utitle:'Direction',av:'ML',avc:'av-t',
+    nav:[
+      {s:'Vue d\'ensemble',items:[{id:'dashboard',icon:'ti-layout-dashboard',label:'Tableau de bord'},{id:'chantiers',icon:'ti-crane',label:'Chantiers'}]},
+      {s:'Opérations',items:[{id:'feuilles',icon:'ti-clock',label:'Feuilles de temps'},{id:'rapports-chantier',icon:'ti-file-description',label:'Rapports journaliers'},{id:'equipements',icon:'ti-bulldozer',label:'Équipements'},{id:'materiaux',icon:'ti-package',label:'Matériaux & stocks'}]},
+      {s:'RH & Équipe',items:[{id:'equipe',icon:'ti-users',label:'Équipe & compétences'},{id:'affectation',icon:'ti-arrows-transfer-up',label:'Affectation & Gantt'},{id:'recrutement',icon:'ti-user-plus',label:'Recrutement',badge:3},{id:'formation',icon:'ti-certificate',label:'Formations & SST'}]},
+      {s:'Finance',items:[{id:'devis',icon:'ti-file-invoice',label:'Devis & facturation'},{id:'sous-traitants',icon:'ti-briefcase',label:'Sous-traitants'},{id:'budget',icon:'ti-chart-bar',label:'Budget & rapports'}]},
+      {s:'Conformité',items:[{id:'permis',icon:'ti-license',label:'Permis & conformité'},{id:'incidents',icon:'ti-alert-triangle',label:'Incidents SST',badge:1},{id:'plans',icon:'ti-blueprint',label:'Plans & dessins'}]},
+      {s:'Système',items:[{id:'roles',icon:'ti-shield',label:'Rôles & accès'},{id:'communication',icon:'ti-message-circle',label:'Communications'},{id:'client-portail',icon:'ti-user-circle',label:'Portail client'}]}
+    ]
+  },
+  terrain:{
+    label:'Espace terrain',uname:'Sophie Tremblay',utitle:'Contremaître sénior',av:'ST',avc:'av-b',
+    nav:[
+      {s:'Mon chantier',items:[{id:'terrain-accueil',icon:'ti-home',label:'Accueil'},{id:'terrain-taches',icon:'ti-checkbox',label:'Mes tâches'},{id:'terrain-rapport',icon:'ti-file-text',label:'Rapport journalier'},{id:'terrain-pointage',icon:'ti-clock',label:'Mon pointage'}]},
+      {s:'Chantier A',items:[{id:'terrain-materiaux',icon:'ti-package',label:'Matériaux'},{id:'terrain-plans',icon:'ti-blueprint',label:'Plans (lecture)'},{id:'terrain-incidents',icon:'ti-alert-triangle',label:'Signaler incident'}]},
+      {s:'Communication',items:[{id:'communication',icon:'ti-message-circle',label:'Messages'}]},
+      {s:'Bloqué — bureau',locked:true,items:[{icon:'ti-lock',label:'Finances & devis'},{icon:'ti-lock',label:'Paie & salaires'},{icon:'ti-lock',label:'Recrutement RH'},{icon:'ti-lock',label:'Dossiers employés'}]}
+    ]
+  },
+  client:{
+    label:'Portail client',uname:'Jean Brodeur',utitle:'Client — Résidences Boréal',av:'JB',avc:'av-gr',
+    nav:[{s:'Mon projet',items:[{id:'client-dashboard',icon:'ti-home',label:'Avancement'},{id:'client-docs',icon:'ti-file',label:'Documents'},{id:'client-factures',icon:'ti-receipt',label:'Factures'},{id:'client-photos',icon:'ti-camera',label:'Photos chantier'}]}]
+  }
+};
+
+var currentRole = 'bureau';
+var currentPanel = 'dashboard';
+
+function renderSidebar(role){
+  var cfg = ROLES[role];
+  var h = '';
+  h += '<div class="sb-head"><div class="sb-role">'+cfg.label+'</div><div class="sb-uname">'+cfg.uname+'</div></div>';
+  h += '<div class="sb-nav">';
+  for(var gi=0;gi<cfg.nav.length;gi++){
+    var grp = cfg.nav[gi];
+    h += '<div class="sbs">'+grp.s+'</div>';
+    if(grp.locked){
+      h += '<div class="lock-note"><i class="ti ti-lock"></i> Réservé au bureau — accès restreint par rôle</div>';
+      for(var li=0;li<grp.items.length;li++){
+        h += '<div class="sbi locked"><i class="ti '+grp.items[li].icon+'"></i>'+grp.items[li].label+'<i class="ti ti-lock" style="margin-left:auto;font-size:11px"></i></div>';
+      }
+    } else {
+      for(var ii=0;ii<grp.items.length;ii++){
+        var item = grp.items[ii];
+        var active = item.id === currentPanel ? ' on' : '';
+        var badge = item.badge ? '<span class="sbi-badge">'+item.badge+'</span>' : '';
+        h += '<div class="sbi'+active+'" onclick="showPanel(\''+item.id+'\',this)"><i class="ti '+item.icon+'"></i>'+item.label+badge+'</div>';
+      }
+    }
+  }
+  h += '</div>';
+  document.getElementById('sb').innerHTML = h;
+}
+
+function showPanel(id, el){
+  if(!id) return;
+  currentPanel = id;
+  document.querySelectorAll('.sbi').forEach(function(i){i.classList.remove('on');});
+  if(el) el.classList.add('on');
+  var fn = PANELS[id];
+  var body = document.getElementById('mbody');
+  body.innerHTML = fn ? fn() : '<div class="card"><p style="color:var(--txt2)">Module en développement.</p></div>';
+  var icon = PANEL_ICONS[id] || 'ti-layout-dashboard';
+  var label = PANEL_LABELS[id] || id;
+  document.getElementById('mtitle').innerHTML = '<i class="ti '+icon+'"></i>'+label;
+}
+
+function setRole(role){
+  currentRole = role;
+  var cfg = ROLES[role];
+  document.querySelectorAll('.rb').forEach(function(b){b.classList.remove('on');});
+  document.getElementById('rb-'+role).classList.add('on');
+  document.getElementById('uinfo').textContent = cfg.uname + ' \u00b7 ' + cfg.utitle;
+  var av = document.getElementById('uav');
+  av.textContent = cfg.av;
+  av.className = 'av-sm ' + cfg.avc;
+  var first = cfg.nav[0].items[0].id;
+  currentPanel = first;
+  renderSidebar(role);
+  showPanel(first, null);
+  // re-highlight first item
+  setTimeout(function(){
+    var items = document.querySelectorAll('.sbi');
+    for(var i=0;i<items.length;i++){
+      if(items[i].getAttribute('onclick') && items[i].getAttribute('onclick').indexOf(first)>=0){
+        items[i].classList.add('on');
+        break;
+      }
+    }
+  }, 20);
+}
+
+var offlineMode = false;
+function toggleOffline(){
+  offlineMode = !offlineMode;
+  var badge = document.getElementById('off-badge');
+  var btn = document.getElementById('off-btn');
+  badge.style.display = offlineMode ? 'flex' : 'none';
+  if(offlineMode){
+    btn.innerHTML = '<i class="ti ti-wifi"></i>Revenir en ligne';
+    btn.classList.add('red');
+  } else {
+    btn.innerHTML = '<i class="ti ti-wifi"></i>Simuler hors-ligne';
+    btn.classList.remove('red');
+  }
+}
+
+// INIT
+setRole('bureau');
+</script>
+</body>
+</html>
