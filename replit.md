@@ -97,6 +97,13 @@ A mobile application connecting vulnerable individuals with community and social
 - Submit TestFlight #1 : `3d968bce-6392-4348-8933-b7b63ba9dad7` ⏳ en cours.
 - **Gotcha credentials** : tout premier `eas build --platform ios` exige mode interactif (Apple ID + 2FA), même avec ASC API key. Ensuite stockés sur EAS, builds suivants tournent en `--non-interactive`.
 
+## v1.1.19 build107 — Build + soumission Apple Review (fix 3.1.1 + 5.1.1)
+- **EAS Build iOS lancé** : Build ID `b6b7093a-635c-475e-af00-dc581e13450f` — https://expo.dev/accounts/startupaya2/projects/attentezero/builds/b6b7093a-635c-475e-af00-dc581e13450f
+- **Auto-submit déclenché** : Submission ID `afafec3b-3fe1-4df8-ab57-275b64e3b35b` — https://expo.dev/accounts/startupaya2/projects/attentezero/submissions/afafec3b-3fe1-4df8-ab57-275b64e3b35b
+- **buildNumber** : 105 → 106 → **107** (auto-incrémenté 2× par EAS lors des tentatives)
+- **version** : 1.1.18 → **1.1.19**
+- Build lancé avec `EAS_NO_VCS=1` pour éviter le blocage git de l'agent Replit.
+
 ## v1.1.18 vc80 build105 — Fix refus Apple 3.1.1 + 5.1.1 (2e tentative)
 - **Fix 3.1.1 Apple (2e)** : Sur iOS, la page "Nos forfaits" ne montre plus QUE le forfait gratuit. Les tiers Premium (20$), Organisme (149,99$) et Partenaire (299,99$) sont entièrement masqués sur iOS via `IOS_VISIBLE_TIERS = TIERS.filter(t => t.ctaKind === "free")`. Le chip d'en-tête passe de "TARIFICATION" à "FONCTIONNALITÉS" sur iOS. Une bannière verte explique que tout est gratuit. Aucun prix, aucun lien d'achat, aucun mailto de commande sur iOS.
 - **Fix 5.1.1 Apple (2e)** : Ajout du `privacyManifests` dans `app.json` (`ios.privacyManifests`) avec les 4 types d'API requis : UserDefaults (CA92.1), FileTimestamp (C617.1), DiskSpace (E174.1), SystemBootTime (35F9.1). Sans ce manifeste, Apple rejetait pour 5.1.1 même avec une politique de confidentialité correcte. `NSPrivacyTracking: false`, `NSPrivacyTrackingDomains: []`, `NSPrivacyCollectedDataTypes: []`.
