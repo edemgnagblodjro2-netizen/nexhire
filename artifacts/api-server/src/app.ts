@@ -147,7 +147,7 @@ app.use("/api/mobile-auth/reset-password", resetConfirmLimiter);
 // already validated with constant-time compare; this caps attempts.
 const adminLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 60, // 60 attempts / IP / 15 min — enough for normal admin browsing
+  max: 1000, // admin routes are already key-protected; generous limit for dashboard polling
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: "Trop de requêtes admin. Réessayez plus tard." },
