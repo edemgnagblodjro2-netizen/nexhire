@@ -137,6 +137,10 @@ const TIERS: Tier[] = [
   },
 ];
 
+// On iOS we show zero paid tiers — Apple rule 3.1.1 forbids any purchasing
+// mechanism (including email CTAs for paid plans) that bypasses IAP.
+const IOS_VISIBLE_TIERS = TIERS.filter((t) => t.ctaKind === "free");
+
 export default function PremiumScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
@@ -144,8 +148,10 @@ export default function PremiumScreen() {
   const { user, isAuthenticated, refreshUser } = useAuth();
   const [loadingTier, setLoadingTier] = useState<string | null>(null);
 
-  // Stagger entry animations — one Animated.Value per tier card
-  const cardAnims = useRef(TIERS.map(() => new Animated.Value(0))).current;
+  const visibleTiers = Platform.OS === "ios" ? IOS_VISIBLE_TIERS : TIERS;
+
+  // Stagger entry animations — one Animated.Value per visible tier card
+  const cardAnims = useRef(visibleTiers.map(() => new Animated.Value(0))).current;
 
   useEffect(() => {
     Animated.stagger(
@@ -247,7 +253,7 @@ export default function PremiumScreen() {
           </Pressable>
           <View style={styles.chip}>
             <Feather name="zap" size={10} color="#34d399" />
-            <Text style={styles.chipText}>TARIFICATION</Text>
+            <Text style={styles.chipText}>{Platform.OS === "ios" ? "FONCTIONNALITÉS" : "TARIFICATION"}</Text>
           </View>
           <View style={{ width: 38 }} />
         </View>
@@ -296,10 +302,20 @@ export default function PremiumScreen() {
           </View>
         </View>
 
-        {TIERS.map((tier, idx) => {
+        {/* iOS-specific callout: all features free */}
+        {Platform.OS === "ios" && (
+          <View style={[styles.iosFreeCard, { backgroundColor: "#0e7e6e15", borderColor: "#0e7e6e40" }]}>
+            <Feather name="gift" size={18} color="#0e7e6e" />
+            <Text style={[styles.iosFreeText, { color: colors.foreground }]}>
+              Sur iOS, toutes les fonctionnalités de l'app sont gratuites et sans restriction. Aucun achat requis.
+            </Text>
+          </View>
+        )}
+
+        {visibleTiers.map((tier, idx) => {
           const isLoading =
             tier.ctaKind === "premium" && loadingTier === "user-premium";
-          const isPopular = idx === 1; // Premium 10$ — the "best value" tier
+          const isPopular = Platform.OS !== "ios" && idx === 1;
           const anim = cardAnims[idx];
           return (
             <React.Fragment key={`tier-frag-${idx}`}>
@@ -838,5 +854,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "Inter_400Regular",
     lineHeight: 18,
+  },
+
+  iosFreeCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    borderRadius: 14,
+    borderWidth: 1,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+  },
+  iosFreeText: {
+    fontSize: 13,
+    fontFamily: "Inter_500Medium",
+    lineHeight: 19,
+    flex: 1,
   },
 });

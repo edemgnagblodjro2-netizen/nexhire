@@ -97,6 +97,11 @@ A mobile application connecting vulnerable individuals with community and social
 - Submit TestFlight #1 : `3d968bce-6392-4348-8933-b7b63ba9dad7` ⏳ en cours.
 - **Gotcha credentials** : tout premier `eas build --platform ios` exige mode interactif (Apple ID + 2FA), même avec ASC API key. Ensuite stockés sur EAS, builds suivants tournent en `--non-interactive`.
 
+## v1.1.18 vc80 build105 — Fix refus Apple 3.1.1 + 5.1.1 (2e tentative)
+- **Fix 3.1.1 Apple (2e)** : Sur iOS, la page "Nos forfaits" ne montre plus QUE le forfait gratuit. Les tiers Premium (20$), Organisme (149,99$) et Partenaire (299,99$) sont entièrement masqués sur iOS via `IOS_VISIBLE_TIERS = TIERS.filter(t => t.ctaKind === "free")`. Le chip d'en-tête passe de "TARIFICATION" à "FONCTIONNALITÉS" sur iOS. Une bannière verte explique que tout est gratuit. Aucun prix, aucun lien d'achat, aucun mailto de commande sur iOS.
+- **Fix 5.1.1 Apple (2e)** : Ajout du `privacyManifests` dans `app.json` (`ios.privacyManifests`) avec les 4 types d'API requis : UserDefaults (CA92.1), FileTimestamp (C617.1), DiskSpace (E174.1), SystemBootTime (35F9.1). Sans ce manifeste, Apple rejetait pour 5.1.1 même avec une politique de confidentialité correcte. `NSPrivacyTracking: false`, `NSPrivacyTrackingDomains: []`, `NSPrivacyCollectedDataTypes: []`.
+- buildNumber 104 → 105, versionCode Android inchangé (80).
+
 ## v1.1.18 vc80 build100 — Fix refus Apple + Programme ambassadeur
 - **Fix 3.1.1 Apple** : Stripe complètement retiré sur iOS. Toutes les fonctionnalités Premium (chat IA illimité, favoris, alertes) gratuites sur iOS via `Platform.OS === "ios"` dans `usePremiumGate.ts` et `premium.tsx`.
 - **Fix 5.1.1 Apple** : Politique de confidentialité entièrement refondue sur `attentezero.ca/privacy` (données collectées, email, géoloc, audio IA, stockage, sécurité, suppression compte, droits Loi 25 QC).
