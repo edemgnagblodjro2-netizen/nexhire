@@ -25,7 +25,7 @@ import {
   SESSION_TTL,
   type SessionData,
 } from "../lib/auth";
-import { sendEmailTo } from "../lib/notify";
+import { sendEmailTo, sendOwnerEmail } from "../lib/notify";
 
 const OIDC_COOKIE_TTL = 10 * 60 * 1000;
 
@@ -627,6 +627,83 @@ Pour toute question : info@civicai.ca
           if (!r.sent) req.log.warn({ reason: r.reason }, "Org confirmation email not sent");
         })
         .catch((err) => req.log.warn({ err }, "Org confirmation email exception"));
+
+      // ── Admin notification ──────────────────────────────────────────────
+      if (!isIntervenant) {
+        const kindLabel = requestedRole === "partenaire" ? "Partenaire" : "Organisme";
+        const adminSubject = `AttenteZéro — Nouvel ${kindLabel.toLowerCase()} inscrit : ${orgDisplayName}`;
+        const cityLine = organisationCity?.trim() ? `Ville       : ${organisationCity.trim()}` : "";
+        const adminText =
+`Nouvelle inscription ${kindLabel.toLowerCase()} sur AttenteZéro.
+
+Organisme   : ${orgDisplayName}
+Type        : ${kindLabel}
+Contact     : ${firstName} ${lastName}
+Courriel    : ${email}${cityLine ? `\n${cityLine}` : ""}
+
+Statut      : en attente de vérification
+
+→ Panneau admin : ${process.env.ADMIN_URL ?? "https://attentezero.ca/admin/"}
+
+— AttenteZéro / CivicAI`;
+
+        const safeKindLabel = kindLabel;
+        const safeAdminOrgName = orgDisplayName.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const safeAdminContact = `${firstName} ${lastName}`.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const safeAdminEmail = email.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const safeAdminCity = (organisationCity ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const adminPanelUrl = process.env.ADMIN_URL ?? "https://attentezero.ca/admin/";
+
+        const adminHtml = `
+<div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:600px;margin:0 auto;color:#1e293b">
+  <div style="background:#1e3a5f;padding:24px 32px;border-radius:12px 12px 0 0">
+    <h2 style="color:#ffffff;margin:0;font-size:18px">Nouvel ${safeKindLabel.toLowerCase()} inscrit</h2>
+    <p style="color:#93c5fd;margin:8px 0 0;font-size:14px">AttenteZéro — notification interne</p>
+  </div>
+  <div style="background:#f8fafc;padding:24px 32px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 12px 12px">
+    <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin-bottom:20px">
+      <table style="width:100%;border-collapse:collapse">
+        <tr>
+          <td style="padding:5px 0;color:#64748b;font-size:13px;width:140px">Organisme</td>
+          <td style="padding:5px 0;font-size:13px;font-weight:600">${safeAdminOrgName}</td>
+        </tr>
+        <tr>
+          <td style="padding:5px 0;color:#64748b;font-size:13px">Type</td>
+          <td style="padding:5px 0;font-size:13px">${safeKindLabel}</td>
+        </tr>
+        <tr>
+          <td style="padding:5px 0;color:#64748b;font-size:13px">Contact</td>
+          <td style="padding:5px 0;font-size:13px">${safeAdminContact}</td>
+        </tr>
+        <tr>
+          <td style="padding:5px 0;color:#64748b;font-size:13px">Courriel</td>
+          <td style="padding:5px 0;font-size:13px">${safeAdminEmail}</td>
+        </tr>
+        ${safeAdminCity ? `<tr>
+          <td style="padding:5px 0;color:#64748b;font-size:13px">Ville</td>
+          <td style="padding:5px 0;font-size:13px">${safeAdminCity}</td>
+        </tr>` : ""}
+        <tr>
+          <td style="padding:5px 0;color:#64748b;font-size:13px">Statut</td>
+          <td style="padding:5px 0;font-size:13px;color:#d97706;font-weight:600">En attente de vérification</td>
+        </tr>
+      </table>
+    </div>
+    <a href="${adminPanelUrl}" style="display:inline-block;background:#0e7e6e;color:#ffffff;text-decoration:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600">
+      Ouvrir le panneau admin →
+    </a>
+  </div>
+  <p style="color:#94a3b8;font-size:11px;margin-top:12px;text-align:center">
+    CivicAI — NEQ 2280791601 — Québec, Canada
+  </p>
+</div>`;
+
+        sendOwnerEmail({ subject: adminSubject, text: adminText, html: adminHtml })
+          .then((r) => {
+            if (!r.sent) req.log.warn({ reason: r.reason }, "Admin org notification email not sent");
+          })
+          .catch((err) => req.log.warn({ err }, "Admin org notification email exception"));
+      }
     }
 
     // Claim any pending team invitations addressed to this email
