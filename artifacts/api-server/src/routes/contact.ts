@@ -94,6 +94,31 @@ router.post("/contact", async (req, res) => {
     })
     .returning({ id: contactSubmissionsTable.id });
 
+  // ── 1b. Best-effort admin alert to CIVICAI_CONTACT_EMAIL ────────────────
+  // Fired immediately after DB insert so admin is notified even if the
+  // primary sendEmailTo call below fails (and returns 502 to the user).
+  sendEmailTo(DEST, {
+    subject: isFr
+      ? `[CivicAI Contact] Nouveau message de ${name}${service ? ` — ${service}` : ""}`
+      : `[CivicAI Contact] New message from ${name}${service ? ` — ${service}` : ""}`,
+    text: [
+      isFr ? `Nouveau message de contact (ID #${row?.id ?? "?"})` : `New contact message (ID #${row?.id ?? "?"})`,
+      "",
+      `${isFr ? "Nom" : "Name"}: ${name}`,
+      `${isFr ? "Courriel" : "Email"}: ${email}`,
+      org ? `${isFr ? "Organisation" : "Organization"}: ${org}` : null,
+      phone ? `${isFr ? "Téléphone" : "Phone"}: ${phone}` : null,
+      service ? `${isFr ? "Service souhaité" : "Requested service"}: ${service}` : null,
+      "",
+      isFr ? "Message:" : "Message:",
+      msg,
+    ]
+      .filter((l) => l !== null)
+      .join("\n"),
+  }).then(({ sent, reason }) => {
+    if (!sent) req.log?.warn({ reason }, "contact: admin alert email not sent");
+  }).catch((err) => req.log?.warn({ err }, "contact: admin alert email failed"));
+
   // ── 2. Send notification email ───────────────────────────────────────────
   const subject = isFr
     ? `[CivicAI] Nouvelle demande — ${service || "Général"} (${name})`
