@@ -58,6 +58,13 @@ export function Footer() {
                 </a>
               </li>
               <li><Link href="/products" className="hover:text-white transition-colors">ConstructPro ERP</Link></li>
+            </ul>
+
+            <h4 className="text-xs font-bold tracking-widest text-slate-400 uppercase mb-4 mt-6">
+              {t.footer_links_blog}
+            </h4>
+            <ul className="flex flex-col gap-2 text-sm text-slate-300">
+              <li><Link href="/blog" className="hover:text-white transition-colors">{t.footer_blog}</Link></li>
               <li>
                 <a
                   href="https://attentezero.ca/privacy"

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
-import { ArrowRight, ChevronLeft, ChevronRight, Star, Building2, MapPin } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Star, Building2, MapPin, Quote } from "lucide-react";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -497,6 +497,85 @@ export default function Home() {
             <Link href="/contact" className="inline-flex items-center gap-2 bg-blue-700 text-white font-bold px-8 py-4 rounded-xl hover:bg-blue-800 transition-all shadow-md hover:-translate-y-0.5 text-base">
               {t.cta_banner_btn} <ArrowRight className="w-5 h-5" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="py-24 px-6 bg-white" data-testid="section-testimonials">
+        <div className="max-w-6xl mx-auto">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger} className="text-center mb-16">
+            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 bg-blue-100/50 border border-blue-200 text-blue-800 text-sm font-bold px-4 py-2 rounded-full mb-5">
+              {t.testimonials_tag}
+            </motion.div>
+            <motion.h2 variants={fadeUp} className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">{t.testimonials_title}</motion.h2>
+            <motion.p variants={fadeUp} className="text-lg text-slate-600 max-w-2xl mx-auto">{t.testimonials_sub}</motion.p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {t.testimonials.map((testimonial, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="bg-slate-50 rounded-2xl p-6 border border-slate-200 hover:border-blue-200 hover:shadow-md transition-all flex flex-col"
+              >
+                <Quote className="w-7 h-7 text-blue-300 mb-4 flex-shrink-0" />
+                <p className="text-slate-700 text-sm leading-relaxed flex-1 italic mb-5">"{testimonial.quote}"</p>
+                <div className="border-t border-slate-200 pt-4">
+                  <div className="font-bold text-slate-900 text-sm">{testimonial.name}</div>
+                  <div className="text-xs text-slate-500 mt-0.5">{testimonial.role}</div>
+                  <div className="text-xs font-semibold text-blue-700 mt-1">{testimonial.org}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* BLOG PREVIEW */}
+      <section className="py-24 px-6 bg-slate-50" data-testid="section-blog">
+        <div className="max-w-6xl mx-auto">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger} className="mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div>
+              <motion.div variants={fadeUp} className="inline-flex items-center gap-2 bg-blue-100/50 border border-blue-200 text-blue-800 text-sm font-bold px-4 py-2 rounded-full mb-5">
+                {t.blog_tag}
+              </motion.div>
+              <motion.h2 variants={fadeUp} className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">{t.blog_title}</motion.h2>
+              <motion.p variants={fadeUp} className="text-lg text-slate-600 max-w-xl">{t.blog_sub}</motion.p>
+            </div>
+            <motion.div variants={fadeUp}>
+              <Link href="/blog" className="inline-flex items-center gap-2 text-blue-700 font-bold hover:text-blue-800 transition-colors text-sm shrink-0">
+                {t.blog_cta} <ArrowRight className="w-4 h-4" />
+              </Link>
+            </motion.div>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {t.blog_articles.map((article, i) => (
+              <motion.div
+                key={article.slug}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="group bg-white rounded-2xl border border-slate-200 hover:border-blue-300 hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden"
+              >
+                <div className="p-7 flex flex-col flex-1">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-full">{article.category}</span>
+                    <span className="text-xs text-slate-400">{article.readTime}</span>
+                  </div>
+                  <h3 className="font-black text-slate-900 text-lg leading-snug mb-3 group-hover:text-blue-700 transition-colors">{article.title}</h3>
+                  <p className="text-sm text-slate-500 leading-relaxed flex-1 mb-5">{article.excerpt}</p>
+                  <Link href={`/blog/${article.slug}`} className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-700 hover:text-blue-800 transition-colors">
+                    {t.blog_read_more} <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
