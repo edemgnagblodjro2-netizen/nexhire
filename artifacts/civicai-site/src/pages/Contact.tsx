@@ -201,13 +201,13 @@ export default function Contact() {
                     {lang === "fr" ? "Nous contacter directement" : "Contact us directly"}
                   </h3>
                   <div className="flex flex-col gap-4">
-                    <a href="mailto:info@civicai.ca" className="flex items-center gap-3 text-slate-700 hover:text-blue-700 transition-colors group">
+                    <a href="mailto:civicai@attentezero.com" className="flex items-center gap-3 text-slate-700 hover:text-blue-700 transition-colors group">
                       <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center group-hover:bg-blue-100 transition-colors flex-shrink-0">
                         <Mail className="w-5 h-5 text-blue-600" />
                       </div>
                       <div>
                         <div className="text-xs text-slate-400 font-medium mb-0.5">{lang === "fr" ? "Courriel" : "Email"}</div>
-                        <div className="font-semibold text-sm">info@civicai.ca</div>
+                        <div className="font-semibold text-sm">civicai@attentezero.com</div>
                       </div>
                     </a>
                     <div className="flex items-center gap-3 text-slate-700">
