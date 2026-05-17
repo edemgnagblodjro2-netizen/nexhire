@@ -543,6 +543,92 @@ router.post("/mobile-auth/register", async (req: Request, res: Response) => {
       });
     }
 
+    // ── Confirmation email for organisme / partenaire / intervenant ──────────
+    if (organisationId && (requestedRole === "organisme" || requestedRole === "partenaire" || requestedRole === "intervenant")) {
+      const orgDisplayName = organisationName?.trim() || `${firstName} ${lastName}`;
+      const isIntervenant = requestedRole === "intervenant";
+      const confirmSubject = "AttenteZéro — Votre inscription a bien été reçue";
+      const confirmText =
+`Bonjour ${firstName},
+
+Votre inscription sur AttenteZéro a bien été enregistrée.
+
+Organisme : ${orgDisplayName}
+Contact : ${firstName} ${lastName}
+Courriel : ${email}
+
+${isIntervenant
+  ? "Votre profil d'intervenant est maintenant actif. Un essai de 14 jours vous a été accordé."
+  : "Votre demande est en attente de vérification par notre équipe. Vous recevrez une notification dès que votre fiche sera approuvée et visible dans l'annuaire."
+}
+
+En attendant, vous pouvez vous connecter à tout moment pour compléter votre profil et explorer les fonctionnalités disponibles.
+
+Pour toute question : info@civicai.ca
+
+— L'équipe AttenteZéro / CivicAI`;
+
+      const safeOrgName = orgDisplayName.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      const safeFirstName = firstName.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      const safeEmail = email.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      const safeContact = `${firstName} ${lastName}`.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+      const confirmHtml = `
+<div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:600px;margin:0 auto;color:#1e293b">
+  <div style="background:#1e3a5f;padding:24px 32px;border-radius:12px 12px 0 0">
+    <h2 style="color:#ffffff;margin:0;font-size:18px">Inscription reçue — bienvenue !</h2>
+    <p style="color:#93c5fd;margin:8px 0 0;font-size:14px">AttenteZéro par CivicAI</p>
+  </div>
+  <div style="background:#f8fafc;padding:24px 32px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 12px 12px">
+    <p style="margin:0 0 16px;font-size:15px;line-height:1.6">
+      Bonjour <strong>${safeFirstName}</strong>,
+    </p>
+    <p style="margin:0 0 20px;font-size:14px;line-height:1.6;color:#334155">
+      Votre inscription sur <strong>AttenteZéro</strong> a bien été enregistrée.
+      ${isIntervenant
+        ? "Votre profil d&apos;intervenant est maintenant actif avec un essai de <strong>14 jours</strong>."
+        : "Votre fiche est <strong>en attente de vérification</strong> par notre équipe. Vous serez notifié(e) par courriel dès qu&apos;elle sera approuvée et visible dans l&apos;annuaire."
+      }
+    </p>
+    <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin-bottom:20px">
+      <table style="width:100%;border-collapse:collapse">
+        <tr>
+          <td style="padding:5px 0;color:#64748b;font-size:13px;width:140px">Organisme</td>
+          <td style="padding:5px 0;font-size:13px;font-weight:600">${safeOrgName}</td>
+        </tr>
+        <tr>
+          <td style="padding:5px 0;color:#64748b;font-size:13px">Contact</td>
+          <td style="padding:5px 0;font-size:13px">${safeContact}</td>
+        </tr>
+        <tr>
+          <td style="padding:5px 0;color:#64748b;font-size:13px">Courriel</td>
+          <td style="padding:5px 0;font-size:13px">${safeEmail}</td>
+        </tr>
+      </table>
+    </div>
+    ${isIntervenant ? "" : `
+    <div style="background:#eff6ff;border-left:4px solid #3b82f6;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:20px">
+      <p style="margin:0;font-size:13px;color:#1e40af;line-height:1.5">
+        <strong>Prochaine étape :</strong> Notre équipe examine votre demande et vous contactera sous peu pour finaliser la vérification de votre organisme.
+      </p>
+    </div>`}
+    <p style="margin:0;font-size:13px;color:#64748b;line-height:1.6">
+      Des questions ? Écrivez-nous à
+      <a href="mailto:info@civicai.ca" style="color:#0e7e6e;text-decoration:none;font-weight:600">info@civicai.ca</a>.
+    </p>
+  </div>
+  <p style="color:#94a3b8;font-size:11px;margin-top:12px;text-align:center">
+    CivicAI — NEQ 2280791601 — Québec, Canada
+  </p>
+</div>`;
+
+      sendEmailTo(email, { subject: confirmSubject, text: confirmText, html: confirmHtml })
+        .then((r) => {
+          if (!r.sent) req.log.warn({ reason: r.reason }, "Org confirmation email not sent");
+        })
+        .catch((err) => req.log.warn({ err }, "Org confirmation email exception"));
+    }
+
     // Claim any pending team invitations addressed to this email
     const claimed = await claimPendingInvites(newUser.id, newUser.email);
 
