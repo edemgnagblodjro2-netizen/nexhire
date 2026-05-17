@@ -20,6 +20,60 @@ function getAdminVerificationsUrl(): string | null {
   return base ? `${base}/admin/verifications` : null;
 }
 
+function getOrgDashboardUrl(): string {
+  const base = process.env.ADMIN_BASE_URL?.replace(/\/$/, "")
+    ?? (process.env.REPLIT_DOMAINS?.split(",")[0]?.trim()
+        ? `https://${process.env.REPLIT_DOMAINS.split(",")[0].trim()}`
+        : null);
+  return base ? `${base}/admin/organisme/dashboard` : "https://attentezero.ca/admin/organisme/dashboard";
+}
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function buildVerificationApprovedEmail(orgName: string): { subject: string; text: string; html: string } {
+  const dashboardUrl = getOrgDashboardUrl();
+  const safeOrgName = escapeHtml(orgName);
+  const subject = "Votre profil AttenteZéro a été vérifié ✓";
+  const text = `Bonjour,
+
+Nous avons le plaisir de vous confirmer que le profil de votre organisme « ${orgName} » a été vérifié et approuvé par notre équipe.
+
+Votre badge Vérifié est maintenant actif. Les utilisateurs d'AttenteZéro verront ce badge sur votre fiche, ce qui renforce la confiance et la visibilité de votre organisme.
+
+Connectez-vous à votre tableau de bord pour compléter ou mettre à jour votre profil :
+${dashboardUrl}
+
+Merci de faire partie de la communauté AttenteZéro.
+
+— L'équipe AttenteZéro`;
+  const html =
+`<div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:520px;margin:0 auto;padding:24px;color:#0f172a">
+  <h2 style="color:#0e7e6e;margin:0 0 16px">Profil vérifié ✓</h2>
+  <p style="font-size:15px;line-height:1.5">Bonjour,<br>Nous avons le plaisir de vous confirmer que le profil de votre organisme <strong>${safeOrgName}</strong> a été vérifié et approuvé par notre équipe.</p>
+  <div style="background:#f0fdf4;border:2px solid #0e7e6e;border-radius:12px;padding:18px;margin:20px 0;display:flex;align-items:center;gap:12px">
+    <div style="font-size:28px;line-height:1">✅</div>
+    <div>
+      <div style="font-size:15px;font-weight:600;color:#0e7e6e">Badge Vérifié activé</div>
+      <div style="font-size:13px;color:#475569;margin-top:2px">Visible par tous les utilisateurs d'AttenteZéro</div>
+    </div>
+  </div>
+  <p style="font-size:14px;line-height:1.6;color:#334155">Connectez-vous à votre tableau de bord pour compléter ou mettre à jour votre profil :</p>
+  <p style="text-align:center;margin:20px 0">
+    <a href="${dashboardUrl}" style="display:inline-block;background:#0e7e6e;color:#fff;text-decoration:none;padding:12px 24px;border-radius:10px;font-weight:600;font-size:15px">Accéder au tableau de bord</a>
+  </p>
+  <p style="font-size:13px;color:#64748b;line-height:1.5;margin-top:24px">Merci de faire partie de la communauté AttenteZéro et d'aider les personnes dans le besoin à trouver les services dont elles ont besoin.</p>
+  <p style="font-size:12px;color:#94a3b8;margin-top:24px;border-top:1px solid #e2e8f0;padding-top:12px">— L'équipe AttenteZéro</p>
+</div>`;
+  return { subject, text, html };
+}
+
 const router: IRouter = Router();
 
 const ADMIN_KEY = process.env.ADMIN_API_KEY;
@@ -413,6 +467,21 @@ router.post("/admin/verification/:id/approve", async (req, res) => {
       .where(eq(organisationsTable.id, request.organisationId));
   });
 
+  // Best-effort approval email to the organisation.
+  const [org] = await db
+    .select({ email: organisationsTable.email, name: organisationsTable.name })
+    .from(organisationsTable)
+    .where(eq(organisationsTable.id, request.organisationId))
+    .limit(1);
+  if (org?.email) {
+    const mail = buildVerificationApprovedEmail(org.name);
+    sendEmailTo(org.email, mail)
+      .then((r) => {
+        if (!r.sent) logger.warn({ orgId: request.organisationId, reason: r.reason }, "Verification approved email not sent");
+      })
+      .catch((err) => logger.warn({ err, orgId: request.organisationId }, "Verification approved email exception"));
+  }
+
   logger.info({ requestId: id, orgId: request.organisationId }, "Verification approved by admin");
   res.json({ success: true });
 });
@@ -529,6 +598,17 @@ router.post("/admin/organisations/:id/badge", async (req, res) => {
     { orgId: id, verified: parsed.data.verified, kind: existing.kind },
     "Badge toggled by admin",
   );
+
+  // Best-effort approval email — only on false→true transition to avoid duplicates.
+  if (!existing.badgeVerified && parsed.data.verified && existing.email) {
+    const mail = buildVerificationApprovedEmail(existing.name);
+    sendEmailTo(existing.email, mail)
+      .then((r) => {
+        if (!r.sent) logger.warn({ orgId: id, reason: r.reason }, "Badge approved email not sent");
+      })
+      .catch((err) => logger.warn({ err, orgId: id }, "Badge approved email exception"));
+  }
+
   res.json({ organisation: updated });
 });
 
