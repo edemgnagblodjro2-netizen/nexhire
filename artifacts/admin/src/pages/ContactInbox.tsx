@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type ContactSubmission = {
   id: number;
@@ -26,12 +26,39 @@ const STATUS_LABELS: Record<ContactSubmission["status"], string> = {
   archived: "Archivé",
 };
 
+type DateRange = "all" | "7d" | "30d";
+
+const DATE_RANGE_OPTIONS: { key: DateRange; label: string }[] = [
+  { key: "all", label: "Tout" },
+  { key: "7d", label: "7 derniers jours" },
+  { key: "30d", label: "30 derniers jours" },
+];
+
+function highlight(text: string, query: string): React.ReactNode {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp(`(${escaped})`, "gi");
+  const parts = text.split(regex);
+  const matchRegex = new RegExp(`^${escaped}$`, "i");
+  return parts.map((part, i) =>
+    matchRegex.test(part) ? (
+      <mark key={i} className="bg-yellow-200 text-gray-900 rounded-sm px-0.5">
+        {part}
+      </mark>
+    ) : (
+      part
+    ),
+  );
+}
+
 export default function ContactInbox({ adminKey }: { adminKey: string }) {
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | ContactSubmission["status"]>("all");
   const [expanded, setExpanded] = useState<number | null>(null);
+  const [search, setSearch] = useState("");
+  const [dateRange, setDateRange] = useState<DateRange>("all");
 
   async function load() {
     setLoading(true);
@@ -81,12 +108,36 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
     }
   }
 
-  const filtered = filter === "all" ? submissions : submissions.filter((s) => s.status === filter);
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    const now = Date.now();
+    const cutoff =
+      dateRange === "7d"
+        ? now - 7 * 24 * 60 * 60 * 1000
+        : dateRange === "30d"
+          ? now - 30 * 24 * 60 * 60 * 1000
+          : null;
+
+    return submissions.filter((s) => {
+      if (filter !== "all" && s.status !== filter) return false;
+      if (cutoff !== null && new Date(s.createdAt).getTime() < cutoff) return false;
+      if (q) {
+        const haystack = [s.name, s.email, s.org ?? "", s.service ?? "", s.message]
+          .join(" ")
+          .toLowerCase();
+        if (!haystack.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [submissions, filter, search, dateRange]);
+
   const counts = {
     new: submissions.filter((s) => s.status === "new").length,
     read: submissions.filter((s) => s.status === "read").length,
     archived: submissions.filter((s) => s.status === "archived").length,
   };
+
+  const hasActiveFilters = search.trim() !== "" || dateRange !== "all";
 
   return (
     <div className="p-8 max-w-6xl mx-auto">
@@ -94,7 +145,17 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Boîte de réception — Contact</h1>
           <p className="text-sm text-gray-500 mt-1">
-            {submissions.length} message{submissions.length !== 1 ? "s" : ""} au total
+            {hasActiveFilters ? (
+              <>
+                <span className="font-medium text-teal-700">{filtered.length}</span> résultat
+                {filtered.length !== 1 ? "s" : ""} sur {submissions.length} message
+                {submissions.length !== 1 ? "s" : ""}
+              </>
+            ) : (
+              <>
+                {submissions.length} message{submissions.length !== 1 ? "s" : ""} au total
+              </>
+            )}
             {counts.new > 0 && (
               <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
                 {counts.new} nouveau{counts.new !== 1 ? "x" : ""}
@@ -108,6 +169,46 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
         >
           Rafraîchir
         </button>
+      </div>
+
+      <div className="flex flex-col sm:flex-row gap-3 mb-4">
+        <div className="relative flex-1">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+            🔍
+          </span>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Rechercher par nom, email, organisation, service, message…"
+            className="w-full pl-9 pr-9 py-2 text-sm rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+          />
+          {search && (
+            <button
+              onClick={() => setSearch("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              aria-label="Effacer la recherche"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+
+        <div className="flex items-center gap-1 shrink-0 bg-white border border-gray-200 rounded-lg p-1">
+          {DATE_RANGE_OPTIONS.map((opt) => (
+            <button
+              key={opt.key}
+              onClick={() => setDateRange(opt.key)}
+              className={`px-3 py-1.5 text-xs rounded-md transition ${
+                dateRange === opt.key
+                  ? "bg-teal-600 text-white"
+                  : "text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2 mb-6">
@@ -139,12 +240,25 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
         </div>
       ) : filtered.length === 0 ? (
         <div className="text-center py-16 text-gray-400 bg-white rounded-2xl border border-gray-100">
-          Aucun message {filter !== "all" ? `« ${STATUS_LABELS[filter as ContactSubmission["status"]]} »` : ""}
+          {hasActiveFilters ? (
+            <div>
+              <p className="mb-2">Aucun résultat pour ces filtres.</p>
+              <button
+                onClick={() => { setSearch(""); setDateRange("all"); }}
+                className="text-sm text-teal-600 hover:underline"
+              >
+                Effacer les filtres
+              </button>
+            </div>
+          ) : (
+            `Aucun message ${filter !== "all" ? `« ${STATUS_LABELS[filter as ContactSubmission["status"]]} »` : ""}`
+          )}
         </div>
       ) : (
         <div className="space-y-3">
           {filtered.map((s) => {
             const isExpanded = expanded === s.id;
+            const q = search.trim();
             return (
               <div
                 key={s.id}
@@ -162,27 +276,27 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
                         {s.status === "new" && (
                           <span className="w-2 h-2 rounded-full bg-orange-500 shrink-0" />
                         )}
-                        <span className="font-bold text-gray-900">{s.name}</span>
+                        <span className="font-bold text-gray-900">{highlight(s.name, q)}</span>
                         <a
                           href={`mailto:${s.email}`}
                           onClick={(e) => e.stopPropagation()}
                           className="text-sm text-teal-700 hover:underline truncate max-w-[220px]"
                         >
-                          {s.email}
+                          {highlight(s.email, q)}
                         </a>
                         {s.org && (
                           <span className="text-xs text-gray-400 bg-gray-50 border border-gray-100 px-2 py-0.5 rounded-full">
-                            {s.org}
+                            {highlight(s.org, q)}
                           </span>
                         )}
                         {s.service && (
                           <span className="text-xs text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-full">
-                            {s.service}
+                            {highlight(s.service, q)}
                           </span>
                         )}
                       </div>
                       <p className="text-sm text-gray-600 truncate">
-                        {s.message}
+                        {highlight(s.message, q)}
                       </p>
                       <div className="text-xs text-gray-400 mt-1 flex flex-wrap gap-3">
                         <span>
@@ -212,7 +326,7 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
                 {isExpanded && (
                   <div className="px-5 pb-5 border-t border-gray-50">
                     <p className="text-sm text-gray-700 whitespace-pre-wrap mt-4 leading-relaxed bg-gray-50 p-4 rounded-xl border border-gray-100">
-                      {s.message}
+                      {highlight(s.message, q)}
                     </p>
 
                     <div className="flex flex-wrap gap-2 mt-4 items-center">
