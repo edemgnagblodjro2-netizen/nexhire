@@ -1,5 +1,8 @@
+import React from "react";
 import { Link, useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 import { type AdminRole } from "@/lib/auth";
+import { fetchContactStats } from "@/lib/api";
 
 const SUPERADMIN_NAV = [
   { href: "/", icon: "📊", label: "Tableau de bord" },
@@ -9,7 +12,7 @@ const SUPERADMIN_NAV = [
   { href: "/verifications", icon: "🛡️", label: "Vérifications" },
   { href: "/organisations", icon: "🏢", label: "Organismes & Partenaires" },
   { href: "/b2g", icon: "🏛️", label: "B2G — Régions" },
-  { href: "/contact", icon: "✉️", label: "Contact CivicAI" },
+  { href: "/contact", icon: "✉️", label: "Contact CivicAI", badge: true },
   { href: "/bug-reports", icon: "🐛", label: "Signalements" },
   { href: "/stats", icon: "📈", label: "Statistiques" },
 ];
@@ -22,13 +25,25 @@ export default function Layout({
   children,
   onLogout,
   role,
+  adminKey,
 }: {
   children: React.ReactNode;
   onLogout: () => void;
   role: AdminRole;
+  adminKey?: string;
 }) {
   const [location] = useLocation();
   const NAV = role === "b2g" ? B2G_NAV : SUPERADMIN_NAV;
+
+  const { data: contactStats } = useQuery({
+    queryKey: ["contact-stats", adminKey],
+    queryFn: () => fetchContactStats(adminKey!),
+    enabled: !!adminKey && role !== "b2g",
+    staleTime: 60_000,
+    refetchInterval: 60_000,
+  });
+
+  const unreadCount = contactStats?.newCount ?? 0;
 
   return (
     <div className="min-h-screen flex bg-gray-50">
@@ -53,6 +68,7 @@ export default function Layout({
               item.href === "/"
                 ? location === "/" || location === ""
                 : location.startsWith(item.href);
+            const showBadge = item.href === "/contact" && unreadCount > 0;
             return (
               <Link key={item.href} href={item.href}>
                 <a
@@ -63,7 +79,12 @@ export default function Layout({
                   }`}
                 >
                   <span className="text-base">{item.icon}</span>
-                  {item.label}
+                  <span className="flex-1">{item.label}</span>
+                  {showBadge && (
+                    <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-red-500 text-white text-[10px] font-bold leading-none">
+                      {unreadCount > 99 ? "99+" : unreadCount}
+                    </span>
+                  )}
                 </a>
               </Link>
             );

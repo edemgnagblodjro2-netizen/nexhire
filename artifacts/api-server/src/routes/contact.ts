@@ -1,7 +1,7 @@
 import { Router, type Request } from "express";
 import { createHash } from "node:crypto";
 import { z } from "zod";
-import { desc, eq } from "drizzle-orm";
+import { count, desc, eq } from "drizzle-orm";
 import { db, contactSubmissionsTable } from "@workspace/db";
 import { sendEmailTo } from "../lib/notify";
 
@@ -193,6 +193,19 @@ router.post("/contact", async (req, res) => {
   );
 
   res.json({ success: true });
+});
+
+// ── Admin: unread count ──────────────────────────────────────────────────────
+router.get("/contact/stats", async (req, res) => {
+  if (!requireAdmin(req)) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+  const [row] = await db
+    .select({ count: count() })
+    .from(contactSubmissionsTable)
+    .where(eq(contactSubmissionsTable.status, "new"));
+  res.json({ newCount: Number(row?.count ?? 0) });
 });
 
 // ── Admin: list submissions ──────────────────────────────────────────────────

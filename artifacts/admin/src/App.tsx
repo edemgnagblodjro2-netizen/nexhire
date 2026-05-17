@@ -59,7 +59,7 @@ function AdminApp() {
 
   if (role === "b2g") {
     return (
-      <Layout onLogout={handleLogout} role={role}>
+      <Layout onLogout={handleLogout} role={role} adminKey={adminKey!}>
         <Switch>
           <Route path="/" component={() => <B2G adminKey={adminKey!} />} />
           <Route path="/b2g" component={() => <B2G adminKey={adminKey!} />} />
@@ -70,7 +70,7 @@ function AdminApp() {
   }
 
   return (
-    <Layout onLogout={handleLogout} role={role}>
+    <Layout onLogout={handleLogout} role={role} adminKey={adminKey!}>
       <Switch>
         <Route path="/" component={() => <Dashboard adminKey={adminKey!} />} />
         <Route path="/live" component={() => <Live adminKey={adminKey!} />} />

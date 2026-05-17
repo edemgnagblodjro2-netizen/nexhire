@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchMeta } from "@/lib/api";
+import { fetchMeta, fetchContactStats } from "@/lib/api";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import StoreStatusWidget from "@/components/StoreStatusWidget";
+import { Link } from "wouter";
 
 const COLORS = ["#0d9488", "#0891b2", "#7c3aed", "#dc2626", "#d97706", "#16a34a"];
 
@@ -15,6 +16,13 @@ export default function Dashboard({ adminKey }: { adminKey: string }) {
     // succeeds, so the cost is zero in the happy path.
     refetchInterval: (q) => (q.state.error ? 15_000 : false),
     refetchOnWindowFocus: true,
+  });
+
+  const { data: contactStats } = useQuery({
+    queryKey: ["contact-stats", adminKey],
+    queryFn: () => fetchContactStats(adminKey),
+    staleTime: 60_000,
+    refetchInterval: 60_000,
   });
 
   if (isLoading) {
@@ -53,6 +61,7 @@ export default function Dashboard({ adminKey }: { adminKey: string }) {
   }
 
   const { stats, cities, categories } = data;
+  const newMessages = contactStats?.newCount ?? 0;
 
   const statsCards = [
     { label: "Total services", value: stats.total, icon: "🏢", color: "teal" },
@@ -75,7 +84,7 @@ export default function Dashboard({ adminKey }: { adminKey: string }) {
         <p className="text-gray-500 text-sm mt-1">Vue d'ensemble des services communautaires</p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {statsCards.map((card) => (
           <div
             key={card.label}
@@ -88,6 +97,35 @@ export default function Dashboard({ adminKey }: { adminKey: string }) {
             <p className="text-sm text-gray-500 mt-1">{card.label}</p>
           </div>
         ))}
+      </div>
+
+      <div className="mb-8">
+        <Link href="/contact">
+          <a className={`flex items-center gap-4 p-5 rounded-2xl border shadow-sm transition-all cursor-pointer ${
+            newMessages > 0
+              ? "bg-red-50 border-red-200 hover:bg-red-100"
+              : "bg-white border-gray-100 hover:bg-gray-50"
+          }`}>
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0 ${
+              newMessages > 0 ? "bg-red-100" : "bg-gray-100"
+            }`}>
+              ✉️
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className={`text-2xl font-bold ${newMessages > 0 ? "text-red-700" : "text-gray-900"}`}>
+                {newMessages}
+              </p>
+              <p className="text-sm text-gray-500 mt-0.5">
+                {newMessages === 1 ? "Message non lu — Contact CivicAI" : "Messages non lus — Contact CivicAI"}
+              </p>
+            </div>
+            {newMessages > 0 && (
+              <span className="shrink-0 text-xs font-semibold text-red-600 bg-red-100 px-3 py-1 rounded-full">
+                Voir la boîte de réception →
+              </span>
+            )}
+          </a>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

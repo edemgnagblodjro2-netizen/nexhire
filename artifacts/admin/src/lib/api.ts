@@ -238,6 +238,14 @@ export async function fetchStoreStatus(adminKey: string): Promise<StoreStatus> {
   return res.json();
 }
 
+export async function fetchContactStats(adminKey: string): Promise<{ newCount: number }> {
+  const res = await fetch(`${API_BASE}/api/contact/stats`, {
+    headers: headers(adminKey),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
 export async function verifyService(
   adminKey: string,
   id: string,
