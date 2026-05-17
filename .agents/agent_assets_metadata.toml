@@ -102,6 +102,36 @@ uri = "file://artifacts/service-qc/assets/images/banner-canada.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "7ivufz9pzsq25E44VvI-y"
+uri = "file://artifacts/civicai-site/public/slides/slide-ai.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "FHUhpjWP6yI8OKaScmA34"
+uri = "file://artifacts/civicai-site/public/slides/slide-custom.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "InrFvveUNJP5UixaAudbS"
+uri = "file://artifacts/civicai-site/public/slides/slide-optimize.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "wQpBdWAZYcIMEAufcv7z-"
+uri = "file://artifacts/civicai-site/public/slides/slide-web.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "WM2Rw-UEjU3VBax5ERzTR"
+uri = "file://artifacts/civicai-site/public/slides/slide-marketing.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "MnpwCauLVqlWr2VNGXy9y"
 uri = "file://exports/testeurs-aidora-qc.csv"
