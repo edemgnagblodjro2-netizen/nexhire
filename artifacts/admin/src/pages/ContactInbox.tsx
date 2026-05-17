@@ -61,6 +61,7 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
   const [expanded, setExpanded] = useState<number | null>(null);
   const [search, setSearch] = useState("");
   const [dateRange, setDateRange] = useState<DateRange>("all");
+  const [markingAllRead, setMarkingAllRead] = useState(false);
 
   async function load() {
     setLoading(true);
@@ -103,6 +104,25 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
       }
     } catch (err) {
       alert(`Échec : ${(err as Error).message}`);
+    }
+  }
+
+  async function markAllAsRead() {
+    setMarkingAllRead(true);
+    try {
+      const res = await fetch("/api/contact/mark-all-read", {
+        method: "PATCH",
+        headers: { "x-admin-key": adminKey },
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setSubmissions((prev) =>
+        prev.map((s) => (s.status === "new" ? { ...s, status: "read" } : s)),
+      );
+      queryClient.invalidateQueries({ queryKey: ["contact-stats", adminKey] });
+    } catch (err) {
+      alert(`Échec : ${(err as Error).message}`);
+    } finally {
+      setMarkingAllRead(false);
     }
   }
 
@@ -169,12 +189,23 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
             )}
           </p>
         </div>
-        <button
-          onClick={load}
-          className="px-3 py-2 text-sm rounded-lg bg-teal-600 text-white hover:bg-teal-700 transition"
-        >
-          Rafraîchir
-        </button>
+        <div className="flex items-center gap-2">
+          {counts.new > 0 && (
+            <button
+              onClick={markAllAsRead}
+              disabled={markingAllRead}
+              className="px-3 py-2 text-sm rounded-lg bg-orange-100 text-orange-700 border border-orange-200 hover:bg-orange-200 transition disabled:opacity-50"
+            >
+              {markingAllRead ? "En cours…" : `Tout marquer comme lu (${counts.new})`}
+            </button>
+          )}
+          <button
+            onClick={load}
+            className="px-3 py-2 text-sm rounded-lg bg-teal-600 text-white hover:bg-teal-700 transition"
+          >
+            Rafraîchir
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">

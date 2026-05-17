@@ -336,6 +336,20 @@ router.get("/contact", async (req, res) => {
   res.json({ submissions: rows });
 });
 
+// ── Admin: mark all new as read ──────────────────────────────────────────────
+router.patch("/contact/mark-all-read", async (req, res) => {
+  if (!requireAdmin(req)) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+  const result = await db
+    .update(contactSubmissionsTable)
+    .set({ status: "read" })
+    .where(eq(contactSubmissionsTable.status, "new"))
+    .returning({ id: contactSubmissionsTable.id });
+  res.json({ updated: result.length });
+});
+
 // ── Admin: update status ─────────────────────────────────────────────────────
 const PatchBody = z.object({
   status: z.enum(["new", "read", "archived"]),
