@@ -425,13 +425,13 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-3">
-                <a href="https://apps.apple.com/ca/app/attentezero/id6766750916" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-slate-900 text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-slate-800 transition-colors shadow-md">
-                  <FaApple className="w-5 h-5" /> {t.flagship_ios}
-                </a>
+              <div className="flex flex-wrap gap-3 items-center">
                 <a href="https://play.google.com/store/apps/details?id=com.attentezero.app" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white/10 text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-white/15 transition-colors border border-white/10">
                   <FaGooglePlay className="w-5 h-5" /> {t.flagship_android}
                 </a>
+                <span className="flex items-center gap-1.5 text-white/40 text-xs font-medium">
+                  <FaApple className="w-4 h-4" /> {t.flagship_ios} — {t.lang === "fr" ? "Bientôt disponible" : "Coming soon"}
+                </span>
               </div>
             </motion.div>
 

@@ -62,7 +62,7 @@ export function Footer() {
             <ul className="flex flex-col gap-2 text-sm text-slate-300">
               <li>
                 <a
-                  href="https://apps.apple.com/ca/app/attentezero/id6766750916"
+                  href="https://play.google.com/store/apps/details?id=com.attentezero.app"
                   target="_blank" rel="noreferrer"
                   className="hover:text-white transition-colors flex items-center gap-1"
                 >

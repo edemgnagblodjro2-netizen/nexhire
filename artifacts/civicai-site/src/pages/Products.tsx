@@ -156,17 +156,16 @@ export default function Products() {
                   </div>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-3">
-                <a href="https://apps.apple.com/ca/app/attentezero/id6766750916" target="_blank" rel="noreferrer"
-                  className="flex items-center gap-3 bg-slate-900 text-white font-bold px-6 py-4 rounded-xl hover:bg-slate-800 transition-colors shadow-md">
-                  <FaApple className="w-6 h-6" />
-                  <span className="text-left text-sm leading-tight">Download on the<br /><span className="text-base font-black">{t.flagship_ios}</span></span>
-                </a>
+              <div className="flex flex-wrap gap-3 items-center">
                 <a href="https://play.google.com/store/apps/details?id=com.attentezero.app" target="_blank" rel="noreferrer"
                   className="flex items-center gap-3 bg-white border-2 border-slate-200 text-slate-900 font-bold px-6 py-4 rounded-xl hover:border-teal-400 hover:bg-teal-50 transition-all shadow-sm">
                   <FaGooglePlay className="w-6 h-6 text-slate-700" />
                   <span className="text-left text-sm leading-tight">GET IT ON<br /><span className="text-base font-black">{t.flagship_android}</span></span>
                 </a>
+                <div className="flex items-center gap-2 border-2 border-slate-200 text-slate-400 font-bold px-6 py-4 rounded-xl opacity-50 cursor-default select-none">
+                  <FaApple className="w-6 h-6" />
+                  <span className="text-left text-sm leading-tight">{t.lang === "fr" ? "Bientôt sur" : "Coming soon"}<br /><span className="text-base font-black">{t.flagship_ios}</span></span>
+                </div>
               </div>
             </motion.div>
 
