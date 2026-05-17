@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Mail, MapPin, ExternalLink } from "lucide-react";
+import { Mail, MapPin, ExternalLink, Linkedin } from "lucide-react";
 import { useLang, T } from "@/lib/lang";
 
 const LOGO = `${import.meta.env.BASE_URL}civicai-logo.png`;
@@ -26,6 +26,17 @@ export function Footer() {
                 <Mail className="w-4 h-4 text-blue-400 flex-shrink-0" />
                 <a href="mailto:civicai@attentezero.ca" className="hover:text-white transition-colors">
                   civicai@attentezero.ca
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Linkedin className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                <a
+                  href="https://www.linkedin.com/in/civicai-aa2282314/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  LinkedIn
                 </a>
               </div>
             </div>
