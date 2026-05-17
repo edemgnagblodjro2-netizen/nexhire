@@ -35,7 +35,35 @@ export default function BlogPost() {
         title={`${article.title} — CivicAI Blog`}
         description={article.excerpt}
         ogTitle={article.title}
-        ogUrl={`https://www.civicai.ca/blog/${slug}`}
+        ogUrl={`https://civicai.attentezero.ca/blog/${slug}`}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": article.title,
+          "description": article.excerpt,
+          "url": `https://civicai.attentezero.ca/blog/${slug}`,
+          "datePublished": ({ "ia-secteur-public": "2026-05-12", "developpement-web-2026": "2026-04-28", "modele-b2g": "2026-04-10" } as Record<string, string>)[slug] ?? "2026-01-01",
+          "author": {
+            "@type": "Organization",
+            "name": "CivicAI",
+            "url": "https://civicai.attentezero.ca",
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "CivicAI",
+            "url": "https://civicai.attentezero.ca",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://civicai.attentezero.ca/civicai-banner.png",
+            },
+          },
+          "inLanguage": lang === "fr" ? "fr-CA" : "en-CA",
+          "keywords": article.category,
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `https://civicai.attentezero.ca/blog/${slug}`,
+          },
+        }}
       />
       <Navbar />
 
