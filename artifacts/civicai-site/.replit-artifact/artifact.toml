@@ -23,6 +23,18 @@ publicDir = "artifacts/civicai-site/dist/public"
 serve = "static"
 
 [[services.production.rewrites]]
+from = "/services"
+to = "/services.html"
+
+[[services.production.rewrites]]
+from = "/products"
+to = "/products.html"
+
+[[services.production.rewrites]]
+from = "/contact"
+to = "/contact.html"
+
+[[services.production.rewrites]]
 from = "/*"
 to = "/index.html"
 
