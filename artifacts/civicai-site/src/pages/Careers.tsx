@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
+  Briefcase,
   ChevronDown,
   MapPin,
   Clock,
@@ -206,6 +207,25 @@ export default function Careers() {
               </motion.h2>
             </motion.div>
 
+            {!t.careers_positions_open ? (
+              <motion.div
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                className="text-center py-16 px-8 border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-5">
+                  <Briefcase className="w-7 h-7 text-slate-400" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-800 mb-3">
+                  {t.careers_no_jobs_title}
+                </h3>
+                <p className="text-slate-500 max-w-md mx-auto leading-relaxed">
+                  {t.careers_no_jobs_sub}
+                </p>
+              </motion.div>
+            ) : (
             <motion.div
               initial="hidden"
               whileInView="show"
@@ -332,6 +352,7 @@ export default function Careers() {
                 );
               })}
             </motion.div>
+            )}
           </div>
         </section>
 
