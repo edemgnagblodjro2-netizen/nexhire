@@ -32,6 +32,14 @@ const ContactBody = z.object({
   lang: z.enum(["fr", "en"]).default("fr"),
 });
 
+function getAdminInboxUrl(): string | null {
+  const base = process.env.ADMIN_BASE_URL?.replace(/\/$/, "")
+    ?? (process.env.REPLIT_DOMAINS?.split(",")[0]?.trim()
+        ? `https://${process.env.REPLIT_DOMAINS.split(",")[0].trim()}`
+        : null);
+  return base ? `${base}/admin/contact` : null;
+}
+
 function hashIp(ip: string): string {
   const salt = process.env.WAIT_REPORT_SALT ?? "civicai-contact-salt";
   return createHash("sha256").update(`${ip}|${salt}`).digest("hex");
@@ -77,6 +85,7 @@ router.post("/contact", async (req, res) => {
   const { name, email, org, phone, service, msg, lang } = parsed.data;
   const isFr = lang === "fr";
   const DEST = process.env.CIVICAI_CONTACT_EMAIL ?? "info@civicai.ca";
+  const adminInboxUrl = getAdminInboxUrl();
 
   // ── 1. Persist to DB first — guarantees no message is lost ──────────────
   const [row] = await db
@@ -97,24 +106,60 @@ router.post("/contact", async (req, res) => {
   // ── 1b. Best-effort admin alert to CIVICAI_CONTACT_EMAIL ────────────────
   // Fired immediately after DB insert so admin is notified even if the
   // primary sendEmailTo call below fails (and returns 502 to the user).
+  const alertText = [
+    isFr ? `Nouveau message de contact (ID #${row?.id ?? "?"})` : `New contact message (ID #${row?.id ?? "?"})`,
+    "",
+    `${isFr ? "Nom" : "Name"}: ${name}`,
+    `${isFr ? "Courriel" : "Email"}: ${email}`,
+    org ? `${isFr ? "Organisation" : "Organization"}: ${org}` : null,
+    phone ? `${isFr ? "Téléphone" : "Phone"}: ${phone}` : null,
+    service ? `${isFr ? "Service souhaité" : "Requested service"}: ${service}` : null,
+    "",
+    isFr ? "Message:" : "Message:",
+    msg,
+    "",
+    adminInboxUrl
+      ? (isFr ? `Voir dans la boîte de réception admin : ${adminInboxUrl}` : `View in admin inbox: ${adminInboxUrl}`)
+      : null,
+  ]
+    .filter((l) => l !== null)
+    .join("\n");
+
+  const alertHtml = `
+    <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#1e293b">
+      <div style="background:#1e3a5f;padding:24px 32px;border-radius:12px 12px 0 0">
+        <h2 style="color:#fff;margin:0;font-size:18px">
+          ${isFr ? `Nouveau message de contact (ID #${row?.id ?? "?"})` : `New contact message (ID #${row?.id ?? "?"})`} — CivicAI
+        </h2>
+      </div>
+      <div style="background:#f8fafc;padding:24px 32px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 12px 12px">
+        <table style="width:100%;border-collapse:collapse">
+          <tr><td style="padding:6px 0;color:#64748b;width:140px">${isFr ? "Nom" : "Name"}</td><td style="padding:6px 0;font-weight:600">${name}</td></tr>
+          <tr><td style="padding:6px 0;color:#64748b">${isFr ? "Courriel" : "Email"}</td><td style="padding:6px 0"><a href="mailto:${email}" style="color:#2563eb">${email}</a></td></tr>
+          ${org ? `<tr><td style="padding:6px 0;color:#64748b">${isFr ? "Organisation" : "Organization"}</td><td style="padding:6px 0">${org}</td></tr>` : ""}
+          ${phone ? `<tr><td style="padding:6px 0;color:#64748b">${isFr ? "Téléphone" : "Phone"}</td><td style="padding:6px 0">${phone}</td></tr>` : ""}
+          ${service ? `<tr><td style="padding:6px 0;color:#64748b">${isFr ? "Service" : "Service"}</td><td style="padding:6px 0">${service}</td></tr>` : ""}
+        </table>
+        <hr style="border:none;border-top:1px solid #e2e8f0;margin:16px 0">
+        <p style="color:#64748b;margin:0 0 8px 0;font-size:13px">${isFr ? "Message :" : "Message:"}</p>
+        <p style="white-space:pre-wrap;margin:0;background:#fff;padding:16px;border-radius:8px;border:1px solid #e2e8f0;font-size:14px;line-height:1.6">${msg.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
+        ${adminInboxUrl ? `
+        <div style="margin-top:24px;text-align:center">
+          <a href="${adminInboxUrl}" style="display:inline-block;background:#1e3a5f;color:#fff;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600">
+            ${isFr ? "Voir dans la boîte de réception admin →" : "View in admin inbox →"}
+          </a>
+        </div>` : ""}
+      </div>
+      <p style="color:#94a3b8;font-size:11px;margin-top:12px;text-align:center">CivicAI — NEQ 2280791601 — Québec, Canada</p>
+    </div>
+  `;
+
   sendEmailTo(DEST, {
     subject: isFr
       ? `[CivicAI Contact] Nouveau message de ${name}${service ? ` — ${service}` : ""}`
       : `[CivicAI Contact] New message from ${name}${service ? ` — ${service}` : ""}`,
-    text: [
-      isFr ? `Nouveau message de contact (ID #${row?.id ?? "?"})` : `New contact message (ID #${row?.id ?? "?"})`,
-      "",
-      `${isFr ? "Nom" : "Name"}: ${name}`,
-      `${isFr ? "Courriel" : "Email"}: ${email}`,
-      org ? `${isFr ? "Organisation" : "Organization"}: ${org}` : null,
-      phone ? `${isFr ? "Téléphone" : "Phone"}: ${phone}` : null,
-      service ? `${isFr ? "Service souhaité" : "Requested service"}: ${service}` : null,
-      "",
-      isFr ? "Message:" : "Message:",
-      msg,
-    ]
-      .filter((l) => l !== null)
-      .join("\n"),
+    text: alertText,
+    html: alertHtml,
   }).then(({ sent, reason }) => {
     if (!sent) req.log?.warn({ reason }, "contact: admin alert email not sent");
   }).catch((err) => req.log?.warn({ err }, "contact: admin alert email failed"));
@@ -135,6 +180,10 @@ router.post("/contact", async (req, res) => {
     "",
     isFr ? "Message:" : "Message:",
     msg,
+    "",
+    adminInboxUrl
+      ? (isFr ? `Voir dans la boîte de réception admin : ${adminInboxUrl}` : `View in admin inbox: ${adminInboxUrl}`)
+      : null,
   ]
     .filter((l) => l !== null)
     .join("\n");
@@ -157,6 +206,12 @@ router.post("/contact", async (req, res) => {
         <hr style="border:none;border-top:1px solid #e2e8f0;margin:16px 0">
         <p style="color:#64748b;margin:0 0 8px 0;font-size:13px">${isFr ? "Message :" : "Message:"}</p>
         <p style="white-space:pre-wrap;margin:0;background:#fff;padding:16px;border-radius:8px;border:1px solid #e2e8f0;font-size:14px;line-height:1.6">${msg.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
+        ${adminInboxUrl ? `
+        <div style="margin-top:24px;text-align:center">
+          <a href="${adminInboxUrl}" style="display:inline-block;background:#1e3a5f;color:#fff;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600">
+            ${isFr ? "Voir dans la boîte de réception admin →" : "View in admin inbox →"}
+          </a>
+        </div>` : ""}
       </div>
       <p style="color:#94a3b8;font-size:11px;margin-top:12px;text-align:center">CivicAI — NEQ 2280791601 — Québec, Canada</p>
     </div>
