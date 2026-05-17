@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight, Star, Building2, MapPin } from "lucide-react";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 import { Navbar } from "@/components/Navbar";
@@ -9,12 +9,12 @@ import { useLang, T } from "@/lib/lang";
 
 const LOGO = `${import.meta.env.BASE_URL}civicai-logo.png`;
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
 };
 
-const stagger = {
+const stagger: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
@@ -43,7 +43,7 @@ export default function Home() {
 
   const slide = slides[current];
 
-  const slideVariants = {
+  const slideVariants: Variants = {
     enter: (d: number) => ({ x: d > 0 ? 60 : -60, opacity: 0 }),
     center: { x: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
     exit: (d: number) => ({ x: d > 0 ? -60 : 60, opacity: 0, transition: { duration: 0.3 } }),

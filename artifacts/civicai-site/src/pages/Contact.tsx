@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { ArrowRight, Mail, MapPin, ChevronDown, CheckCircle2 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useLang, T } from "@/lib/lang";
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
 };
-const stagger = {
+const stagger: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
@@ -206,6 +206,21 @@ export default function Contact() {
                       ? "Toutes les demandes reçoivent une réponse sous 48 heures ouvrables. La première rencontre est gratuite et sans engagement."
                       : "All requests receive a response within 48 business hours. The first meeting is free and no commitment required."}
                   </p>
+                </div>
+
+                {/* Map placeholder */}
+                <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
+                  <iframe
+                    title="CivicAI — Québec, Canada"
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=-71.3500%2C46.7800%2C-71.1500%2C46.8600&amp;layer=mapnik&amp;marker=46.8139%2C-71.2080"
+                    className="w-full"
+                    style={{ height: 180, border: 0 }}
+                    loading="lazy"
+                  />
+                  <div className="bg-white px-4 py-2.5 flex items-center gap-2 border-t border-slate-100">
+                    <MapPin className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                    <span className="text-xs text-slate-600 font-medium">Québec, Canada — NEQ 2280791601</span>
+                  </div>
                 </div>
 
                 {/* Trust badges */}
