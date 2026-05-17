@@ -8,6 +8,7 @@ import { FaApple, FaGooglePlay } from "react-icons/fa";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useLang, T } from "@/lib/lang";
+import { PageMeta } from "@/components/PageMeta";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -62,6 +63,11 @@ export default function Products() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden">
+      <PageMeta
+        title="Nos produits — CivicAI"
+        description="AttenteZéro, ConstructPro ERP et d'autres solutions SaaS innovantes conçues par CivicAI pour moderniser les services publics et privés au Canada."
+        ogUrl="https://www.civicai.ca/products"
+      />
       <Navbar />
 
       {/* PAGE HEADER */}

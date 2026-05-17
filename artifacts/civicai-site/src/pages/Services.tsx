@@ -4,6 +4,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useLang, T } from "@/lib/lang";
+import { PageMeta } from "@/components/PageMeta";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -21,6 +22,11 @@ export default function Services() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden">
+      <PageMeta
+        title="Nos services — CivicAI"
+        description="Développement web sur mesure, IA appliquée, automatisation et marketing numérique. CivicAI accompagne les organisations dans leur transformation digitale."
+        ogUrl="https://www.civicai.ca/services"
+      />
       <Navbar />
 
       {/* PAGE HEADER */}

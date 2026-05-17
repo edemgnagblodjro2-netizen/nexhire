@@ -4,6 +4,7 @@ import { ArrowRight, Mail, MapPin, ChevronDown, CheckCircle2 } from "lucide-reac
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useLang, T } from "@/lib/lang";
+import { PageMeta } from "@/components/PageMeta";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -50,6 +51,11 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden">
+      <PageMeta
+        title="Contactez-nous — CivicAI"
+        description="Discutons de votre projet. Prenez contact avec l'équipe CivicAI pour un devis, une démonstration ou toute question sur nos services et produits."
+        ogUrl="https://www.civicai.ca/contact"
+      />
       <Navbar />
 
       {/* PAGE HEADER */}

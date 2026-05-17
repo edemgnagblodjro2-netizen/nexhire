@@ -26,12 +26,51 @@ if (!basePath) {
   );
 }
 
+const ROOT = path.resolve(import.meta.dirname);
+
+const ROUTE_TO_HTML: Record<string, string> = {
+  "/services": "/services.html",
+  "/products": "/products.html",
+  "/contact": "/contact.html",
+};
+
+function routeToHtmlMiddleware() {
+  return {
+    name: "route-to-html",
+    configureServer(server: { middlewares: { use: (fn: (req: { url?: string }, res: unknown, next: () => void) => void) => void } }) {
+      server.middlewares.use((req, _res, next) => {
+        if (req.url) {
+          const pathname = req.url.split("?")[0].replace(/\/$/, "") || "/";
+          const htmlFile = ROUTE_TO_HTML[pathname];
+          if (htmlFile) {
+            req.url = htmlFile + (req.url.includes("?") ? "?" + req.url.split("?")[1] : "");
+          }
+        }
+        next();
+      });
+    },
+    configurePreviewServer(server: { middlewares: { use: (fn: (req: { url?: string }, res: unknown, next: () => void) => void) => void } }) {
+      server.middlewares.use((req, _res, next) => {
+        if (req.url) {
+          const pathname = req.url.split("?")[0].replace(/\/$/, "") || "/";
+          const htmlFile = ROUTE_TO_HTML[pathname];
+          if (htmlFile) {
+            req.url = htmlFile + (req.url.includes("?") ? "?" + req.url.split("?")[1] : "");
+          }
+        }
+        next();
+      });
+    },
+  };
+}
+
 export default defineConfig({
   base: basePath,
   plugins: [
     react(),
     tailwindcss(),
     runtimeErrorOverlay(),
+    routeToHtmlMiddleware(),
     ...(process.env.NODE_ENV !== "production" &&
     process.env.REPL_ID !== undefined
       ? [
@@ -53,10 +92,18 @@ export default defineConfig({
     },
     dedupe: ["react", "react-dom"],
   },
-  root: path.resolve(import.meta.dirname),
+  root: ROOT,
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        main: path.resolve(ROOT, "index.html"),
+        services: path.resolve(ROOT, "services.html"),
+        products: path.resolve(ROOT, "products.html"),
+        contact: path.resolve(ROOT, "contact.html"),
+      },
+    },
   },
   server: {
     port,

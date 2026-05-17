@@ -6,6 +6,7 @@ import { FaApple, FaGooglePlay } from "react-icons/fa";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useLang, T } from "@/lib/lang";
+import { PageMeta } from "@/components/PageMeta";
 
 const LOGO = `${import.meta.env.BASE_URL}civicai-logo.png`;
 
@@ -51,6 +52,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden">
+      <PageMeta
+        title="CivicAI — Intelligence artificielle au service du bien commun"
+        description="CivicAI conçoit des solutions numériques intelligentes pour les entreprises, organisations et administrations publiques — partout au Canada."
+        ogTitle="CivicAI — IA au service du bien commun"
+        ogUrl="https://www.civicai.ca/"
+      />
       <Navbar />
 
       {/* HERO CAROUSEL */}
