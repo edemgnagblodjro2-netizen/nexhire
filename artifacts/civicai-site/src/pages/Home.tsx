@@ -246,6 +246,30 @@ export default function Home() {
         </div>
       </section>
 
+      {/* IMPACT STATS */}
+      <section className="py-16 px-6 bg-[#070d24] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            {t.impact_stats.map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.12, duration: 0.5 }}
+                className="flex flex-col items-center"
+              >
+                <div className="text-5xl md:text-6xl font-black text-white mb-2 tracking-tight">{stat.value}</div>
+                <div className="text-blue-200 font-semibold text-base mb-1">{stat.label}</div>
+                <div className="text-blue-400/60 text-sm">{stat.sub}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* WHY CIVICAI */}
       <section className="py-24 px-6 bg-slate-50">
         <div className="max-w-6xl mx-auto">
@@ -419,6 +443,59 @@ export default function Home() {
           <div className="mt-8 text-center">
             <Link href="/products" className="text-sm text-blue-300 hover:text-white transition-colors font-medium underline underline-offset-4">
               {lang === "fr" ? "Voir tous nos produits" : "View all products"} →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* RÉSULTATS CONCRETS */}
+      <section className="py-24 px-6 bg-slate-50">
+        <div className="max-w-6xl mx-auto">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger} className="text-center mb-16">
+            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 bg-blue-100/50 border border-blue-200 text-blue-800 text-sm font-bold px-4 py-2 rounded-full mb-5">
+              {t.results_tag}
+            </motion.div>
+            <motion.h2 variants={fadeUp} className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">{t.results_title}</motion.h2>
+            <motion.p variants={fadeUp} className="text-lg text-slate-600 max-w-2xl mx-auto">{t.results_sub}</motion.p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 gap-6">
+            {t.results_items.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="bg-white rounded-3xl border border-slate-200 hover:border-blue-200 hover:shadow-lg transition-all p-8 flex flex-col gap-5"
+              >
+                <div className="flex items-start gap-4">
+                  <span className="text-4xl flex-shrink-0">{item.icon}</span>
+                  <div>
+                    <div className="font-black text-slate-900 text-lg leading-tight mb-1">{item.sector}</div>
+                    <div className="inline-flex items-center gap-1.5 bg-green-50 border border-green-200 text-green-700 text-sm font-bold px-3 py-1 rounded-full">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0" />
+                      {item.metric}
+                    </div>
+                  </div>
+                </div>
+                <div className="border-t border-slate-100 pt-4 flex flex-col gap-3">
+                  <div>
+                    <div className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">{lang === "fr" ? "Problème" : "Problem"}</div>
+                    <p className="text-slate-600 text-sm leading-relaxed">{item.problem}</p>
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-blue-600 uppercase tracking-wide mb-1">{lang === "fr" ? "Solution CivicAI" : "CivicAI solution"}</div>
+                    <p className="text-slate-700 text-sm font-medium leading-relaxed">{item.solution}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link href="/contact" className="inline-flex items-center gap-2 bg-blue-700 text-white font-bold px-8 py-4 rounded-xl hover:bg-blue-800 transition-all shadow-md hover:-translate-y-0.5 text-base">
+              {t.cta_banner_btn} <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </div>

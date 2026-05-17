@@ -105,6 +105,45 @@ export default function Services() {
         </div>
       </section>
 
+      {/* AUTOMATISATION */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger} className="text-center mb-16">
+            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 bg-blue-100/50 border border-blue-200 text-blue-800 text-sm font-bold px-4 py-2 rounded-full mb-5">
+              {t.automation_tag}
+            </motion.div>
+            <motion.h2 variants={fadeUp} className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">{t.automation_title}</motion.h2>
+            <motion.p variants={fadeUp} className="text-lg text-slate-600 max-w-2xl mx-auto">{t.automation_sub}</motion.p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {t.automation_items.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="bg-slate-50 border border-slate-200 hover:border-blue-200 hover:bg-blue-50/30 hover:shadow-md transition-all rounded-2xl p-7 flex flex-col gap-4"
+              >
+                <div className="text-4xl">{item.icon}</div>
+                <div>
+                  <h3 className="font-bold text-slate-900 text-base mb-2">{item.title}</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+                <ul className="flex flex-col gap-1.5 mt-auto pt-3 border-t border-slate-200">
+                  {item.examples.map((ex, ei) => (
+                    <li key={ei} className="flex items-center gap-2 text-slate-500 text-xs">
+                      <span className="w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />{ex}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* HOW IT WORKS */}
       <section className="py-24 px-6 bg-[#070d24] relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
@@ -118,7 +157,7 @@ export default function Services() {
             <motion.p variants={fadeUp} className="text-xl text-blue-200/80 max-w-2xl mx-auto">{t.how_sub}</motion.p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {t.steps.map((step, i) => (
               <motion.div
                 key={i}

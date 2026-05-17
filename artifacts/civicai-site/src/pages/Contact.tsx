@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { ArrowRight, Mail, MapPin, ChevronDown, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Mail, MapPin, ChevronDown, CheckCircle2, Phone } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useLang, T } from "@/lib/lang";
@@ -202,6 +202,46 @@ export default function Contact() {
                 transition={{ duration: 0.55, delay: 0.1 }}
                 className="flex flex-col gap-6"
               >
+                {/* FOUNDER CARD */}
+                <div className="bg-gradient-to-br from-[#070d24] to-[#0d1a4a] border border-blue-900/50 rounded-2xl p-6 text-white">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-2xl flex-shrink-0">
+                      👤
+                    </div>
+                    <div>
+                      <div className="font-black text-white text-base leading-tight">{t.founder.name}</div>
+                      <div className="text-blue-300 text-sm font-medium">{t.founder.title} · {t.founder.company}</div>
+                      <div className="text-blue-400/70 text-xs mt-0.5">{t.founder.based}</div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <a
+                      href={`tel:${t.founder.phone.replace(/\s/g, "")}`}
+                      className="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-4 py-3 transition-colors group"
+                    >
+                      <Phone className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                      <div>
+                        <div className="text-xs text-blue-400/70 font-medium">{t.founder.cta_phone}</div>
+                        <div className="text-white font-bold text-sm">{t.founder.phone}</div>
+                      </div>
+                    </a>
+                    <a
+                      href="mailto:civicai@attentezero.ca"
+                      className="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-4 py-3 transition-colors"
+                    >
+                      <Mail className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                      <div>
+                        <div className="text-xs text-blue-400/70 font-medium">{t.founder.cta_email}</div>
+                        <div className="text-white font-bold text-sm">civicai@attentezero.ca</div>
+                      </div>
+                    </a>
+                  </div>
+                  <div className="mt-3 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                    <span className="text-green-300 text-xs font-medium">{t.founder.availability}</span>
+                  </div>
+                </div>
+
                 <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
                   <h3 className="font-bold text-slate-900 text-base mb-4">
                     {lang === "fr" ? "Nous contacter directement" : "Contact us directly"}
