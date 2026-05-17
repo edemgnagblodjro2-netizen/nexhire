@@ -20,23 +20,32 @@ export default function Contact() {
 
   const [form, setForm] = useState({ name: "", org: "", email: "", phone: "", service: "", msg: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const isFr = lang === "fr";
-    const subject = encodeURIComponent(
-      isFr
-        ? `[CivicAI] Demande de contact — ${form.service || "Général"}`
-        : `[CivicAI] Contact request — ${form.service || "General"}`
-    );
-    const body = encodeURIComponent(
-      isFr
-        ? `Nom: ${form.name}\nOrganisation: ${form.org}\nTéléphone: ${form.phone}\nService: ${form.service}\n\n${form.msg}`
-        : `Name: ${form.name}\nOrganization: ${form.org}\nPhone: ${form.phone}\nService: ${form.service}\n\n${form.msg}`
-    );
-    window.location.href = `mailto:info@civicai.ca?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, lang }),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else if (res.status === 429) {
+        setError(lang === "fr" ? "Trop de tentatives. Réessayez dans 5 minutes." : "Too many attempts. Please try again in 5 minutes.");
+      } else {
+        setError(lang === "fr" ? "Une erreur est survenue. Veuillez réessayer." : "An error occurred. Please try again.");
+      }
+    } catch {
+      setError(lang === "fr" ? "Impossible d'envoyer le message. Vérifiez votre connexion." : "Unable to send message. Check your connection.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -158,11 +167,20 @@ export default function Contact() {
                       />
                     </div>
 
+                    {error && (
+                      <p className="text-red-600 text-sm font-medium bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+                        {error}
+                      </p>
+                    )}
+
                     <button
                       type="submit"
-                      className="self-start inline-flex items-center gap-2 bg-blue-700 text-white font-bold px-8 py-4 rounded-xl hover:bg-blue-800 transition-all shadow-md hover:-translate-y-0.5 text-base"
+                      disabled={loading}
+                      className="self-start inline-flex items-center gap-2 bg-blue-700 text-white font-bold px-8 py-4 rounded-xl hover:bg-blue-800 transition-all shadow-md hover:-translate-y-0.5 text-base disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      {t.form_send} <ArrowRight className="w-5 h-5" />
+                      {loading
+                        ? (lang === "fr" ? "Envoi en cours…" : "Sending…")
+                        : <>{t.form_send} <ArrowRight className="w-5 h-5" /></>}
                     </button>
                   </form>
                 )}
