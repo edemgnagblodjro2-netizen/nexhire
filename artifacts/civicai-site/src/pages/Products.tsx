@@ -164,7 +164,7 @@ export default function Products() {
                 </a>
                 <div className="flex items-center gap-2 border-2 border-slate-200 text-slate-400 font-bold px-6 py-4 rounded-xl opacity-50 cursor-default select-none">
                   <FaApple className="w-6 h-6" />
-                  <span className="text-left text-sm leading-tight">{t.lang === "fr" ? "Bientôt sur" : "Coming soon"}<br /><span className="text-base font-black">{t.flagship_ios}</span></span>
+                  <span className="text-left text-sm leading-tight">{lang === "fr" ? "Bientôt sur" : "Coming soon"}<br /><span className="text-base font-black">{t.flagship_ios}</span></span>
                 </div>
               </div>
             </motion.div>

@@ -430,7 +430,7 @@ export default function Home() {
                   <FaGooglePlay className="w-5 h-5" /> {t.flagship_android}
                 </a>
                 <span className="flex items-center gap-1.5 text-white/40 text-xs font-medium">
-                  <FaApple className="w-4 h-4" /> {t.flagship_ios} — {t.lang === "fr" ? "Bientôt disponible" : "Coming soon"}
+                  <FaApple className="w-4 h-4" /> {t.flagship_ios} — {lang === "fr" ? "Bientôt disponible" : "Coming soon"}
                 </span>
               </div>
             </motion.div>
