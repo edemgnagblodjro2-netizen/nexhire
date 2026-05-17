@@ -188,7 +188,53 @@ router.post("/contact", async (req, res) => {
   const confirmText = isFr
     ? `Bonjour ${name},\n\nNous avons bien reçu votre message et vous répondrons sous 48 heures ouvrables.\n\nService : ${service || "Général"}\nMessage : ${msg.slice(0, 200)}${msg.length > 200 ? "…" : ""}\n\nPour toute urgence : info@civicai.ca\n\nMerci,\nL'équipe CivicAI`
     : `Hello ${name},\n\nWe received your message and will reply within 48 business hours.\n\nService: ${service || "General"}\nMessage: ${msg.slice(0, 200)}${msg.length > 200 ? "…" : ""}\n\nFor urgent matters: info@civicai.ca\n\nThank you,\nThe CivicAI Team`;
-  sendEmailTo(email, { subject: confirmSubject, text: confirmText }).catch((err) =>
+
+  function escapeHtml(s: string): string {
+    return s
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  const safeName = escapeHtml(name);
+  const safeService = service ? escapeHtml(service) : "";
+  const msgPreview = escapeHtml(msg.slice(0, 200));
+  const confirmHtml = `
+    <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#1e293b">
+      <div style="background:#1e3a5f;padding:24px 32px;border-radius:12px 12px 0 0">
+        <h2 style="color:#fff;margin:0;font-size:18px">
+          ${isFr ? "Message reçu — merci !" : "Message received — thank you!"}
+        </h2>
+        <p style="color:#93c5fd;margin:8px 0 0;font-size:14px">CivicAI</p>
+      </div>
+      <div style="background:#f8fafc;padding:24px 32px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 12px 12px">
+        <p style="margin:0 0 16px;font-size:15px;line-height:1.6">
+          ${isFr ? `Bonjour <strong>${safeName}</strong>,` : `Hello <strong>${safeName}</strong>,`}
+        </p>
+        <p style="margin:0 0 16px;font-size:14px;line-height:1.6;color:#334155">
+          ${isFr
+            ? "Nous avons bien reçu votre message et vous répondrons dans les <strong>48 heures ouvrables</strong>."
+            : "We received your message and will reply within <strong>48 business hours</strong>."}
+        </p>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin-bottom:20px">
+          <table style="width:100%;border-collapse:collapse">
+            ${safeService ? `<tr><td style="padding:4px 0;color:#64748b;font-size:13px;width:130px">${isFr ? "Service" : "Service"}</td><td style="padding:4px 0;font-size:13px;font-weight:600">${safeService}</td></tr>` : ""}
+            <tr><td style="padding:4px 0;color:#64748b;font-size:13px;vertical-align:top">${isFr ? "Message" : "Message"}</td><td style="padding:4px 0;font-size:13px;color:#475569;font-style:italic">${msgPreview}${msg.length > 200 ? "…" : ""}</td></tr>
+          </table>
+        </div>
+        <p style="margin:0;font-size:13px;color:#64748b;line-height:1.6">
+          ${isFr
+            ? `Pour toute urgence, écrivez-nous directement à <a href="mailto:info@civicai.ca" style="color:#2563eb">info@civicai.ca</a>.`
+            : `For urgent matters, email us directly at <a href="mailto:info@civicai.ca" style="color:#2563eb">info@civicai.ca</a>.`}
+        </p>
+      </div>
+      <p style="color:#94a3b8;font-size:11px;margin-top:12px;text-align:center">CivicAI — NEQ 2280791601 — Québec, Canada</p>
+    </div>
+  `;
+
+  sendEmailTo(email, { subject: confirmSubject, text: confirmText, html: confirmHtml }).catch((err) =>
     req.log?.warn({ err }, "contact: confirmation email failed"),
   );
 
