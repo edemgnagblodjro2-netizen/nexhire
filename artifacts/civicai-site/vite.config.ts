@@ -33,7 +33,19 @@ const ROUTE_TO_HTML: Record<string, string> = {
   "/products": "/products.html",
   "/contact": "/contact.html",
   "/careers": "/careers.html",
+  "/blog": "/blog.html",
 };
+
+function resolveHtmlFile(pathname: string): string | undefined {
+  const exact = ROUTE_TO_HTML[pathname];
+  if (exact) return exact;
+  const segments = pathname.split("/");
+  if (segments.length >= 2) {
+    const prefix = "/" + segments[1];
+    if (ROUTE_TO_HTML[prefix]) return ROUTE_TO_HTML[prefix];
+  }
+  return undefined;
+}
 
 function routeToHtmlMiddleware() {
   return {
@@ -42,7 +54,7 @@ function routeToHtmlMiddleware() {
       server.middlewares.use((req, _res, next) => {
         if (req.url) {
           const pathname = req.url.split("?")[0].replace(/\/$/, "") || "/";
-          const htmlFile = ROUTE_TO_HTML[pathname];
+          const htmlFile = resolveHtmlFile(pathname);
           if (htmlFile) {
             req.url = htmlFile + (req.url.includes("?") ? "?" + req.url.split("?")[1] : "");
           }
@@ -54,7 +66,7 @@ function routeToHtmlMiddleware() {
       server.middlewares.use((req, _res, next) => {
         if (req.url) {
           const pathname = req.url.split("?")[0].replace(/\/$/, "") || "/";
-          const htmlFile = ROUTE_TO_HTML[pathname];
+          const htmlFile = resolveHtmlFile(pathname);
           if (htmlFile) {
             req.url = htmlFile + (req.url.includes("?") ? "?" + req.url.split("?")[1] : "");
           }
@@ -104,6 +116,7 @@ export default defineConfig({
         products: path.resolve(ROOT, "products.html"),
         contact: path.resolve(ROOT, "contact.html"),
         careers: path.resolve(ROOT, "careers.html"),
+        blog: path.resolve(ROOT, "blog.html"),
       },
     },
   },
