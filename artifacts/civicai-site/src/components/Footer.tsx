@@ -93,6 +93,8 @@ export function Footer() {
             </h4>
             <ul className="flex flex-col gap-2 text-sm text-slate-300">
               <li><span className="text-slate-500">NEQ 2280791601</span></li>
+              <li><Link href="/resources" className="hover:text-white transition-colors">{lang === "fr" ? "Ressources & Documents" : "Resources & Documents"}</Link></li>
+              <li><Link href="/privacy" className="hover:text-white transition-colors">{t.footer_privacy}</Link></li>
               <li><Link href="/contact" className="hover:text-white transition-colors">{t.footer_about}</Link></li>
             </ul>
           </div>

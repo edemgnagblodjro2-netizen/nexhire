@@ -34,6 +34,8 @@ const ROUTE_TO_HTML: Record<string, string> = {
   "/contact": "/contact.html",
   "/careers": "/careers.html",
   "/blog": "/blog.html",
+  "/resources": "/resources.html",
+  "/privacy": "/privacy.html",
 };
 
 function resolveHtmlFile(pathname: string): string | undefined {
@@ -117,6 +119,8 @@ export default defineConfig({
         contact: path.resolve(ROOT, "contact.html"),
         careers: path.resolve(ROOT, "careers.html"),
         blog: path.resolve(ROOT, "blog.html"),
+        resources: path.resolve(ROOT, "resources.html"),
+        privacy: path.resolve(ROOT, "privacy.html"),
       },
     },
   },
