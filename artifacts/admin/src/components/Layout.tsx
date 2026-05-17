@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { type AdminRole } from "@/lib/auth";
@@ -44,6 +44,11 @@ export default function Layout({
   });
 
   const unreadCount = contactStats?.newCount ?? 0;
+
+  useEffect(() => {
+    const base = role === "b2g" ? "AttenteZéro — B2G" : "AttenteZéro — Admin";
+    document.title = unreadCount > 0 ? `(${unreadCount}) ${base}` : base;
+  }, [unreadCount, role]);
 
   return (
     <div className="min-h-screen flex bg-gray-50">
