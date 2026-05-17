@@ -55,6 +55,31 @@ export default function Contact() {
         title="Contactez-nous — CivicAI"
         description="Discutons de votre projet. Prenez contact avec l'équipe CivicAI pour un devis, une démonstration ou toute question sur nos services et produits."
         ogUrl="https://www.civicai.ca/contact"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          "name": "Contactez CivicAI",
+          "url": "https://www.civicai.ca/contact",
+          "description": "Discutons de votre projet. Prenez contact avec l'équipe CivicAI pour un devis, une démonstration ou toute question sur nos services et produits.",
+          "mainEntity": {
+            "@type": "Organization",
+            "name": "CivicAI",
+            "url": "https://www.civicai.ca",
+            "email": "civicai@attentezero.ca",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Québec",
+              "addressRegion": "QC",
+              "addressCountry": "CA"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "civicai@attentezero.ca",
+              "contactType": "customer service",
+              "availableLanguage": ["French", "English"]
+            }
+          }
+        }}
       />
       <Navbar />
 

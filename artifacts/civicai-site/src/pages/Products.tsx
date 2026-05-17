@@ -67,6 +67,45 @@ export default function Products() {
         title="Nos produits — CivicAI"
         description="AttenteZéro, ConstructPro ERP et d'autres solutions SaaS innovantes conçues par CivicAI pour moderniser les services publics et privés au Canada."
         ogUrl="https://www.civicai.ca/products"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "AttenteZéro",
+            "url": "https://www.attentezero.ca",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "iOS, Android",
+            "description": "Application mobile gratuite connectant les personnes vulnérables aux services communautaires et sociaux au Québec — 7 957 services indexés, 5 langues, IA conversationnelle.",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "CAD"
+            },
+            "author": {
+              "@type": "Organization",
+              "name": "CivicAI",
+              "url": "https://www.civicai.ca"
+            },
+            "downloadUrl": [
+              "https://apps.apple.com/ca/app/attentezero/id6766750916",
+              "https://play.google.com/store/apps/details?id=com.attentezero.app"
+            ]
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "ConstructPro ERP",
+            "url": "https://www.civicai.ca/products",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web",
+            "description": "Logiciel ERP cloud pour les entreprises de construction au Québec — gestion de projets, soumissions, facturation, équipes et tableaux de bord en temps réel.",
+            "author": {
+              "@type": "Organization",
+              "name": "CivicAI",
+              "url": "https://www.civicai.ca"
+            }
+          }
+        ]}
       />
       <Navbar />
 

@@ -57,6 +57,32 @@ export default function Home() {
         description="CivicAI conçoit des solutions numériques intelligentes pour les entreprises, organisations et administrations publiques — partout au Canada."
         ogTitle="CivicAI — IA au service du bien commun"
         ogUrl="https://www.civicai.ca/"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "CivicAI",
+          "url": "https://www.civicai.ca",
+          "logo": "https://www.civicai.ca/civicai-logo.png",
+          "description": "CivicAI conçoit des solutions numériques intelligentes pour les entreprises, organisations et administrations publiques — partout au Canada.",
+          "foundingLocation": {
+            "@type": "Place",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Québec",
+              "addressRegion": "QC",
+              "addressCountry": "CA"
+            }
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "civicai@attentezero.ca",
+            "contactType": "customer service",
+            "availableLanguage": ["French", "English"]
+          },
+          "sameAs": [
+            "https://www.linkedin.com/company/civicai"
+          ]
+        }}
       />
       <Navbar />
 

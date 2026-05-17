@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface PageMetaProps {
   title: string;
@@ -7,6 +7,7 @@ interface PageMetaProps {
   ogDescription?: string;
   ogUrl: string;
   ogImage?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const BASE_OG_IMAGE = "https://www.civicai.ca/civicai-banner.png";
@@ -28,7 +29,10 @@ export function PageMeta({
   ogDescription,
   ogUrl,
   ogImage = BASE_OG_IMAGE,
+  jsonLd,
 }: PageMetaProps) {
+  const scriptRef = useRef<HTMLScriptElement | null>(null);
+
   useEffect(() => {
     document.title = title;
 
@@ -56,6 +60,28 @@ export function PageMeta({
       document.head.appendChild(link);
     }
   }, [title, description, ogTitle, ogDescription, ogUrl, ogImage]);
+
+  useEffect(() => {
+    if (scriptRef.current) {
+      scriptRef.current.remove();
+      scriptRef.current = null;
+    }
+
+    if (jsonLd) {
+      const script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.textContent = JSON.stringify(jsonLd);
+      document.head.appendChild(script);
+      scriptRef.current = script;
+    }
+
+    return () => {
+      if (scriptRef.current) {
+        scriptRef.current.remove();
+        scriptRef.current = null;
+      }
+    };
+  }, [jsonLd]);
 
   return null;
 }
