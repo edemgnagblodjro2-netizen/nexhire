@@ -10,6 +10,15 @@ import {
 import { and, desc, eq, or, inArray } from "drizzle-orm";
 import { z } from "zod";
 import { logger } from "../lib/logger";
+import { sendEmailTo } from "../lib/notify";
+
+function getAdminVerificationsUrl(): string | null {
+  const base = process.env.ADMIN_BASE_URL?.replace(/\/$/, "")
+    ?? (process.env.REPLIT_DOMAINS?.split(",")[0]?.trim()
+        ? `https://${process.env.REPLIT_DOMAINS.split(",")[0].trim()}`
+        : null);
+  return base ? `${base}/admin/verifications` : null;
+}
 
 const router: IRouter = Router();
 
@@ -246,6 +255,61 @@ router.post("/org/verification/request", async (req, res) => {
       { orgId: org.id, requestId: created.id, reason: auto.reason },
       "Verification request queued for manual review",
     );
+
+    // ── Notify admin of new verification request ──────────────────────────
+    const adminVerificationsUrl = getAdminVerificationsUrl();
+    const DEST = process.env.CIVICAI_CONTACT_EMAIL ?? "info@civicai.ca";
+    const alertText = [
+      `Nouvelle demande de vérification d'organisme`,
+      "",
+      `Organisme : ${org.name ?? "(sans nom)"}`,
+      `NEQ : ${parsed.data.neq}`,
+      `Nom légal : ${parsed.data.legalName}`,
+      `Année de fondation : ${parsed.data.foundedYear}`,
+      parsed.data.arcCharityNumber ? `Numéro ARC : ${parsed.data.arcCharityNumber}` : null,
+      `Vérification auto : ${auto.passed ? "✅ passée" : "❌ " + auto.reason}`,
+      "",
+      adminVerificationsUrl
+        ? `Voir dans la file de vérifications admin : ${adminVerificationsUrl}`
+        : null,
+    ]
+      .filter((l) => l !== null)
+      .join("\n");
+
+    const alertHtml = `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#1e293b">
+        <div style="background:#1e3a5f;padding:24px 32px;border-radius:12px 12px 0 0">
+          <h2 style="color:#fff;margin:0;font-size:18px">
+            Nouvelle demande de vérification d'organisme — AttenteZéro
+          </h2>
+        </div>
+        <div style="background:#f8fafc;padding:24px 32px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 12px 12px">
+          <table style="width:100%;border-collapse:collapse">
+            <tr><td style="padding:6px 0;color:#64748b;width:160px">Organisme</td><td style="padding:6px 0;font-weight:600">${(org.name ?? "(sans nom)").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</td></tr>
+            <tr><td style="padding:6px 0;color:#64748b">NEQ</td><td style="padding:6px 0">${parsed.data.neq}</td></tr>
+            <tr><td style="padding:6px 0;color:#64748b">Nom légal</td><td style="padding:6px 0">${parsed.data.legalName.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</td></tr>
+            <tr><td style="padding:6px 0;color:#64748b">Fondé en</td><td style="padding:6px 0">${parsed.data.foundedYear}</td></tr>
+            ${parsed.data.arcCharityNumber ? `<tr><td style="padding:6px 0;color:#64748b">Numéro ARC</td><td style="padding:6px 0">${parsed.data.arcCharityNumber}</td></tr>` : ""}
+            <tr><td style="padding:6px 0;color:#64748b">Vérif. auto</td><td style="padding:6px 0">${auto.passed ? "✅ passée" : `❌ ${auto.reason.replace(/</g, "&lt;").replace(/>/g, "&gt;")}`}</td></tr>
+          </table>
+          ${adminVerificationsUrl ? `
+          <div style="margin-top:24px;text-align:center">
+            <a href="${adminVerificationsUrl}" style="display:inline-block;background:#1e3a5f;color:#fff;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600">
+              Voir dans la file de vérifications admin →
+            </a>
+          </div>` : ""}
+        </div>
+        <p style="color:#94a3b8;font-size:11px;margin-top:12px;text-align:center">CivicAI — NEQ 2280791601 — Québec, Canada</p>
+      </div>
+    `;
+
+    sendEmailTo(DEST, {
+      subject: `[AttenteZéro] Nouvelle demande de vérification — ${org.name ?? parsed.data.legalName}`,
+      text: alertText,
+      html: alertHtml,
+    }).then(({ sent, reason }) => {
+      if (!sent) logger.warn({ reason, orgId: org.id }, "verifications: admin alert email not sent");
+    }).catch((err) => logger.warn({ err, orgId: org.id }, "verifications: admin alert email failed"));
   }
 
   res.status(201).json({
