@@ -12,6 +12,7 @@ import { logger } from "./lib/logger";
 import { authMiddleware } from "./middlewares/authMiddleware";
 import { handleStripeWebhook } from "./routes/stripe";
 import publicLinksRouter from "./routes/publicLinks";
+import blogRouter from "./routes/blog";
 
 const app: Express = express();
 
@@ -168,6 +169,11 @@ app.use("/api/captcha/challenge", captchaLimiter);
 // because mobile share links and Apple/Google App Site Association files MUST be at root
 // (e.g. https://attentezero.ca/s/<id>, https://attentezero.ca/.well-known/apple-app-site-association).
 app.use(publicLinksRouter);
+
+// Blog SSR routes are mounted at ROOT so /blog/:slug is intercepted before the
+// static civicai-site catch-all, allowing server-side meta tag injection for
+// social crawlers (LinkedIn, WhatsApp, X/Twitter do not execute JavaScript).
+app.use(blogRouter);
 
 app.use("/api", router);
 
