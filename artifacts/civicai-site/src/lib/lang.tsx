@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
-import { Bot, Settings, Rocket, Laptop, TrendingUp, Search, Palette, Target } from "lucide-react";
+import { Bot, Settings, Rocket, Laptop, Smartphone, TrendingUp, Search, Palette, Target } from "lucide-react";
 
 export type Lang = "fr" | "en";
 
@@ -45,6 +45,16 @@ export const SLIDES_FR = [
     image: `${BASE}slides/slide-web.png`,
     gradient: "from-cyan-950/95 via-cyan-900/75 to-cyan-800/20",
     icon: <Laptop className="w-7 h-7" />,
+  },
+  {
+    badge: "Développement mobile",
+    title: "Votre application mobile sur mesure.",
+    punch: "iOS, Android — un seul code, deux plateformes.",
+    desc: "Nous concevons des applications mobiles performantes pour iOS et Android, pensées pour vos utilisateurs et vos processus métier.",
+    features: ["Applications iOS & Android", "React Native / Expo", "Design UX intuitif", "Maintenance & mises à jour"],
+    image: `${BASE}slides/slide-web.png`,
+    gradient: "from-violet-950/95 via-violet-900/75 to-violet-800/20",
+    icon: <Smartphone className="w-7 h-7" />,
   },
   {
     badge: "Marketing digital",
@@ -98,6 +108,16 @@ export const SLIDES_EN = [
     image: `${BASE}slides/slide-web.png`,
     gradient: "from-cyan-950/95 via-cyan-900/75 to-cyan-800/20",
     icon: <Laptop className="w-7 h-7" />,
+  },
+  {
+    badge: "Mobile development",
+    title: "Your custom mobile app.",
+    punch: "iOS, Android — one codebase, two platforms.",
+    desc: "We build high-performance mobile apps for iOS and Android, designed around your users and business processes.",
+    features: ["iOS & Android apps", "React Native / Expo", "Intuitive UX design", "Maintenance & updates"],
+    image: `${BASE}slides/slide-web.png`,
+    gradient: "from-violet-950/95 via-violet-900/75 to-violet-800/20",
+    icon: <Smartphone className="w-7 h-7" />,
   },
   {
     badge: "Digital marketing",
@@ -316,7 +336,7 @@ export const T = {
     form_email: "Adresse courriel",
     form_phone: "Téléphone (optionnel)",
     form_service: "Service souhaité",
-    form_service_options: ["IA & Automatisation", "Solutions sur mesure", "Optimisation IA", "Développement web", "Marketing digital", "ConstructPro ERP", "Autre"],
+    form_service_options: ["IA & Automatisation", "Solutions sur mesure", "Optimisation IA", "Développement web", "Développement mobile sur mesure", "Marketing digital", "ConstructPro ERP", "Autre"],
     form_msg: "Décrivez votre projet...",
     form_send: "Envoyer la demande",
     form_success: "Merci ! Nous vous répondrons sous 48h.",
@@ -579,7 +599,7 @@ export const T = {
     form_email: "Email address",
     form_phone: "Phone (optional)",
     form_service: "Desired service",
-    form_service_options: ["AI & Automation", "Custom solutions", "AI Optimization", "Web development", "Digital marketing", "ConstructPro ERP", "Other"],
+    form_service_options: ["AI & Automation", "Custom solutions", "AI Optimization", "Web development", "Custom mobile app", "Digital marketing", "ConstructPro ERP", "Other"],
     form_msg: "Describe your project...",
     form_send: "Send request",
     form_success: "Thank you! We'll get back to you within 48h.",

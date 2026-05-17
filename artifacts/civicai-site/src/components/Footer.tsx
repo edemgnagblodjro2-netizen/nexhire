@@ -50,6 +50,7 @@ export function Footer() {
               <li><Link href="/services" className="hover:text-white transition-colors">IA & Automatisation</Link></li>
               <li><Link href="/services" className="hover:text-white transition-colors">{lang === "fr" ? "Solutions sur mesure" : "Custom solutions"}</Link></li>
               <li><Link href="/services" className="hover:text-white transition-colors">{lang === "fr" ? "Développement web" : "Web development"}</Link></li>
+              <li><Link href="/services" className="hover:text-white transition-colors">{lang === "fr" ? "Développement mobile" : "Mobile development"}</Link></li>
               <li><Link href="/services" className="hover:text-white transition-colors">{lang === "fr" ? "Marketing digital" : "Digital marketing"}</Link></li>
             </ul>
           </div>
