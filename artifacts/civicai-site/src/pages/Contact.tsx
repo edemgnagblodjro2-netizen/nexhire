@@ -176,7 +176,7 @@ export default function Contact() {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="self-start inline-flex items-center gap-2 bg-blue-700 text-white font-bold px-8 py-4 rounded-xl hover:bg-blue-800 transition-all shadow-md hover:-translate-y-0.5 text-base disabled:opacity-60 disabled:cursor-not-allowed"
+                      className="self-start inline-flex items-center gap-2 bg-blue-700 text-white font-bold px-8 py-4 rounded-xl hover:bg-blue-800 transition-all shadow-md hover:-translate-y-0.5 text-base disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
                     >
                       {loading
                         ? (lang === "fr" ? "Envoi en cours…" : "Sending…")

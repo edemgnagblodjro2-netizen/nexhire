@@ -7,8 +7,10 @@ import { sendEmailTo } from "../lib/notify";
 // CivicAI — Formulaire de contact.
 //
 // POST /api/contact → public, IP rate-limited (3 / 5 min).
-//   Envoie une notification par courriel à CIVICAI_CONTACT_EMAIL
-//   (défaut : civicai@attentezero.ca).
+//   1. Valide les données Zod (avec support lang fr/en).
+//   2. Envoie une notification à CIVICAI_CONTACT_EMAIL (défaut : info@civicai.ca).
+//      → Retourne 502 si l'envoi échoue (évite les faux succès).
+//   3. Envoie un email de confirmation à l'expéditeur (best-effort).
 // ─────────────────────────────────────────────────────────────────────────────
 
 const RATE_WINDOW_MS = 5 * 60 * 1000;
@@ -62,7 +64,7 @@ router.post("/contact", async (req, res) => {
 
   const { name, email, org, phone, service, msg, lang } = parsed.data;
   const isFr = lang === "fr";
-  const DEST = process.env.CIVICAI_CONTACT_EMAIL ?? "civicai@attentezero.ca";
+  const DEST = process.env.CIVICAI_CONTACT_EMAIL ?? "info@civicai.ca";
 
   const subject = isFr
     ? `[CivicAI] Nouvelle demande — ${service || "Général"} (${name})`
@@ -110,7 +112,25 @@ router.post("/contact", async (req, res) => {
 
   req.log?.info({ sent, dest: DEST }, "contact form submission");
 
-  res.json({ success: true, delivered: sent });
+  if (!sent) {
+    res.status(502).json({
+      error: isFr
+        ? "L'envoi du message a échoué. Veuillez réessayer ou nous écrire directement à info@civicai.ca."
+        : "Message delivery failed. Please try again or email us directly at info@civicai.ca.",
+    });
+    return;
+  }
+
+  // User confirmation — best-effort, never blocks the success response.
+  const confirmSubject = isFr ? "[CivicAI] Votre message a bien été reçu" : "[CivicAI] We received your message";
+  const confirmText = isFr
+    ? `Bonjour ${name},\n\nNous avons bien reçu votre message et vous répondrons sous 48 heures ouvrables.\n\nService : ${service || "Général"}\nMessage : ${msg.slice(0, 200)}${msg.length > 200 ? "…" : ""}\n\nPour toute urgence : info@civicai.ca\n\nMerci,\nL'équipe CivicAI`
+    : `Hello ${name},\n\nWe received your message and will reply within 48 business hours.\n\nService: ${service || "General"}\nMessage: ${msg.slice(0, 200)}${msg.length > 200 ? "…" : ""}\n\nFor urgent matters: info@civicai.ca\n\nThank you,\nThe CivicAI Team`;
+  sendEmailTo(email, { subject: confirmSubject, text: confirmText }).catch((err) =>
+    req.log?.warn({ err }, "contact: confirmation email failed"),
+  );
+
+  res.json({ success: true });
 });
 
 export default router;
