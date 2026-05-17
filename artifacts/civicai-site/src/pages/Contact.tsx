@@ -205,8 +205,8 @@ export default function Contact() {
                 {/* FOUNDER CARD */}
                 <div className="bg-gradient-to-br from-[#070d24] to-[#0d1a4a] border border-blue-900/50 rounded-2xl p-6 text-white">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-2xl flex-shrink-0">
-                      👤
+                    <div className="w-14 h-14 rounded-2xl overflow-hidden border border-blue-500/30 flex-shrink-0">
+                      <img src={`${import.meta.env.BASE_URL}edem.png`} alt="Edem Gnagblodjro" className="w-full h-full object-cover object-top" />
                     </div>
                     <div>
                       <div className="font-black text-white text-base leading-tight">{t.founder.name}</div>
