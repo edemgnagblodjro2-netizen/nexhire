@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { type AdminRole } from "@/lib/auth";
 import { fetchContactStats } from "@/lib/api";
+import { useNotifications } from "@/hooks/useNotifications";
 
 const SUPERADMIN_NAV = [
   { href: "/", icon: "📊", label: "Tableau de bord" },
@@ -45,10 +46,14 @@ export default function Layout({
 
   const unreadCount = contactStats?.newCount ?? 0;
 
+  const { prefs, setPrefs } = useNotifications(unreadCount);
+
   useEffect(() => {
     const base = role === "b2g" ? "AttenteZéro — B2G" : "AttenteZéro — Admin";
     document.title = unreadCount > 0 ? `(${unreadCount}) ${base}` : base;
   }, [unreadCount, role]);
+
+  const anyNotifOn = prefs.sound || prefs.browser;
 
   return (
     <div className="min-h-screen flex bg-gray-50">
@@ -96,7 +101,64 @@ export default function Layout({
           })}
         </nav>
 
-        <div className="p-3 border-t border-gray-100">
+        <div className="p-3 border-t border-gray-100 space-y-1">
+          {role !== "b2g" && (
+            <div className="px-3 py-2 rounded-xl bg-gray-50 border border-gray-100">
+              <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide mb-1.5">
+                Alertes messages
+              </p>
+              <div className="flex flex-col gap-1">
+                <label className="flex items-center justify-between gap-2 cursor-pointer group">
+                  <span className="text-xs text-gray-600 group-hover:text-gray-900 transition-colors select-none">
+                    🔔 Son
+                  </span>
+                  <button
+                    role="switch"
+                    aria-checked={prefs.sound}
+                    onClick={() => setPrefs({ sound: !prefs.sound })}
+                    className={`relative inline-flex h-4 w-7 shrink-0 rounded-full border-2 transition-colors ${
+                      prefs.sound
+                        ? "bg-teal-500 border-teal-500"
+                        : "bg-gray-200 border-gray-200"
+                    }`}
+                  >
+                    <span
+                      className={`block h-3 w-3 rounded-full bg-white shadow transition-transform ${
+                        prefs.sound ? "translate-x-3" : "translate-x-0"
+                      }`}
+                    />
+                  </button>
+                </label>
+                <label className="flex items-center justify-between gap-2 cursor-pointer group">
+                  <span className="text-xs text-gray-600 group-hover:text-gray-900 transition-colors select-none">
+                    🖥️ Notification
+                  </span>
+                  <button
+                    role="switch"
+                    aria-checked={prefs.browser}
+                    onClick={() => setPrefs({ browser: !prefs.browser })}
+                    className={`relative inline-flex h-4 w-7 shrink-0 rounded-full border-2 transition-colors ${
+                      prefs.browser
+                        ? "bg-teal-500 border-teal-500"
+                        : "bg-gray-200 border-gray-200"
+                    }`}
+                  >
+                    <span
+                      className={`block h-3 w-3 rounded-full bg-white shadow transition-transform ${
+                        prefs.browser ? "translate-x-3" : "translate-x-0"
+                      }`}
+                    />
+                  </button>
+                </label>
+              </div>
+              {!anyNotifOn && (
+                <p className="text-[10px] text-gray-400 mt-1.5 italic">
+                  Alertes désactivées
+                </p>
+              )}
+            </div>
+          )}
+
           <button
             onClick={onLogout}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-500 hover:bg-red-50 hover:text-red-600 transition-all"
