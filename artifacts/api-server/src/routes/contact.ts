@@ -8,7 +8,7 @@ import { sendEmailTo } from "../lib/notify";
 //
 // POST /api/contact → public, IP rate-limited (3 / 5 min).
 //   Envoie une notification par courriel à CIVICAI_CONTACT_EMAIL
-//   (défaut : civicai@attentezero.com).
+//   (défaut : civicai@attentezero.ca).
 // ─────────────────────────────────────────────────────────────────────────────
 
 const RATE_WINDOW_MS = 5 * 60 * 1000;
@@ -62,7 +62,7 @@ router.post("/contact", async (req, res) => {
 
   const { name, email, org, phone, service, msg, lang } = parsed.data;
   const isFr = lang === "fr";
-  const DEST = process.env.CIVICAI_CONTACT_EMAIL ?? "civicai@attentezero.com";
+  const DEST = process.env.CIVICAI_CONTACT_EMAIL ?? "civicai@attentezero.ca";
 
   const subject = isFr
     ? `[CivicAI] Nouvelle demande — ${service || "Général"} (${name})`
