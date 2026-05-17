@@ -47,6 +47,14 @@ from = "/blog/*"
 to = "/blog.html"
 
 [[services.production.rewrites]]
+from = "/resources"
+to = "/resources.html"
+
+[[services.production.rewrites]]
+from = "/privacy"
+to = "/privacy.html"
+
+[[services.production.rewrites]]
 from = "/*"
 to = "/index.html"
 
