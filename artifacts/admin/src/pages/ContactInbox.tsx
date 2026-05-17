@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 type ContactSubmission = {
   id: number;
@@ -52,6 +53,7 @@ function highlight(text: string, query: string): React.ReactNode {
 }
 
 export default function ContactInbox({ adminKey }: { adminKey: string }) {
+  const queryClient = useQueryClient();
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -82,6 +84,7 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
   }, [adminKey]);
 
   async function updateStatus(id: number, status: ContactSubmission["status"]) {
+    const prev_status = submissions.find((s) => s.id === id)?.status;
     try {
       const res = await fetch(`/api/contact/${id}`, {
         method: "PATCH",
@@ -95,6 +98,9 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
       setSubmissions((prev) =>
         prev.map((s) => (s.id === id ? { ...s, status } : s)),
       );
+      if (prev_status === "new" && status !== "new") {
+        queryClient.invalidateQueries({ queryKey: ["contact-stats", adminKey] });
+      }
     } catch (err) {
       alert(`Échec : ${(err as Error).message}`);
     }
