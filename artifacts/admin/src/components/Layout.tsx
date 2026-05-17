@@ -9,6 +9,7 @@ const SUPERADMIN_NAV = [
   { href: "/verifications", icon: "🛡️", label: "Vérifications" },
   { href: "/organisations", icon: "🏢", label: "Organismes & Partenaires" },
   { href: "/b2g", icon: "🏛️", label: "B2G — Régions" },
+  { href: "/contact", icon: "✉️", label: "Contact CivicAI" },
   { href: "/bug-reports", icon: "🐛", label: "Signalements" },
   { href: "/stats", icon: "📈", label: "Statistiques" },
 ];

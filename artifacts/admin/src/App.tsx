@@ -11,6 +11,7 @@ import Verifications from "@/pages/Verifications";
 import Organisations from "@/pages/Organisations";
 import B2G from "@/pages/B2G";
 import BugReports from "@/pages/BugReports";
+import ContactInbox from "@/pages/ContactInbox";
 import Stats from "@/pages/Stats";
 import Live from "@/pages/Live";
 import OrgLogin from "@/pages/OrgLogin";
@@ -79,6 +80,7 @@ function AdminApp() {
         <Route path="/organisations" component={() => <Organisations adminKey={adminKey!} />} />
         <Route path="/b2g" component={() => <B2G adminKey={adminKey!} />} />
         <Route path="/bug-reports" component={() => <BugReports adminKey={adminKey!} />} />
+        <Route path="/contact" component={() => <ContactInbox adminKey={adminKey!} />} />
         <Route path="/stats" component={() => <Stats adminKey={adminKey!} />} />
         <Route component={NotFound} />
       </Switch>

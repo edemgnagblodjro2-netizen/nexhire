@@ -1,16 +1,21 @@
 import { Router, type Request } from "express";
 import { createHash } from "node:crypto";
 import { z } from "zod";
+import { desc, eq } from "drizzle-orm";
+import { db, contactSubmissionsTable } from "@workspace/db";
 import { sendEmailTo } from "../lib/notify";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CivicAI — Formulaire de contact.
 //
-// POST /api/contact → public, IP rate-limited (3 / 5 min).
-//   1. Valide les données Zod (avec support lang fr/en).
+// POST /api/contact          → public, IP rate-limited (3 / 5 min).
+//   1. Persiste la soumission en DB (aucune perte si l'email échoue).
 //   2. Envoie une notification à CIVICAI_CONTACT_EMAIL (défaut : info@civicai.ca).
-//      → Retourne 502 si l'envoi échoue (évite les faux succès).
+//      → Retourne 502 si l'envoi échoue, mais la soumission est déjà sauvegardée.
 //   3. Envoie un email de confirmation à l'expéditeur (best-effort).
+//
+// GET  /api/contact          → admin-only — liste des soumissions.
+// PATCH /api/contact/:id     → admin-only — mise à jour du statut.
 // ─────────────────────────────────────────────────────────────────────────────
 
 const RATE_WINDOW_MS = 5 * 60 * 1000;
@@ -47,6 +52,13 @@ function isRateLimited(ipHash: string): boolean {
   return false;
 }
 
+function requireAdmin(req: Request): boolean {
+  const expected = process.env.ADMIN_API_KEY;
+  if (!expected) return false;
+  const got = req.header("x-admin-key");
+  return typeof got === "string" && got === expected;
+}
+
 const router = Router();
 
 router.post("/contact", async (req, res) => {
@@ -66,6 +78,23 @@ router.post("/contact", async (req, res) => {
   const isFr = lang === "fr";
   const DEST = process.env.CIVICAI_CONTACT_EMAIL ?? "info@civicai.ca";
 
+  // ── 1. Persist to DB first — guarantees no message is lost ──────────────
+  const [row] = await db
+    .insert(contactSubmissionsTable)
+    .values({
+      name,
+      email,
+      org: org || null,
+      phone: phone || null,
+      service: service || null,
+      message: msg,
+      lang,
+      status: "new",
+      emailSent: 0,
+    })
+    .returning({ id: contactSubmissionsTable.id });
+
+  // ── 2. Send notification email ───────────────────────────────────────────
   const subject = isFr
     ? `[CivicAI] Nouvelle demande — ${service || "Général"} (${name})`
     : `[CivicAI] New request — ${service || "General"} (${name})`;
@@ -110,7 +139,15 @@ router.post("/contact", async (req, res) => {
 
   const { sent } = await sendEmailTo(DEST, { subject, text, html });
 
-  req.log?.info({ sent, dest: DEST }, "contact form submission");
+  req.log?.info({ sent, dest: DEST, submissionId: row?.id }, "contact form submission");
+
+  // Update emailSent flag regardless (even partial failure is worth noting)
+  if (row?.id) {
+    await db
+      .update(contactSubmissionsTable)
+      .set({ emailSent: sent ? 1 : 0 })
+      .where(eq(contactSubmissionsTable.id, row.id));
+  }
 
   if (!sent) {
     res.status(502).json({
@@ -121,7 +158,7 @@ router.post("/contact", async (req, res) => {
     return;
   }
 
-  // User confirmation — best-effort, never blocks the success response.
+  // ── 3. User confirmation — best-effort ───────────────────────────────────
   const confirmSubject = isFr ? "[CivicAI] Votre message a bien été reçu" : "[CivicAI] We received your message";
   const confirmText = isFr
     ? `Bonjour ${name},\n\nNous avons bien reçu votre message et vous répondrons sous 48 heures ouvrables.\n\nService : ${service || "Général"}\nMessage : ${msg.slice(0, 200)}${msg.length > 200 ? "…" : ""}\n\nPour toute urgence : info@civicai.ca\n\nMerci,\nL'équipe CivicAI`
@@ -131,6 +168,65 @@ router.post("/contact", async (req, res) => {
   );
 
   res.json({ success: true });
+});
+
+// ── Admin: list submissions ──────────────────────────────────────────────────
+router.get("/contact", async (req, res) => {
+  if (!requireAdmin(req)) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+  const limit = Math.min(500, Math.max(1, Number(req.query.limit ?? 100)));
+  const rows = await db
+    .select({
+      id: contactSubmissionsTable.id,
+      name: contactSubmissionsTable.name,
+      email: contactSubmissionsTable.email,
+      org: contactSubmissionsTable.org,
+      phone: contactSubmissionsTable.phone,
+      service: contactSubmissionsTable.service,
+      message: contactSubmissionsTable.message,
+      lang: contactSubmissionsTable.lang,
+      status: contactSubmissionsTable.status,
+      emailSent: contactSubmissionsTable.emailSent,
+      createdAt: contactSubmissionsTable.createdAt,
+    })
+    .from(contactSubmissionsTable)
+    .orderBy(desc(contactSubmissionsTable.createdAt))
+    .limit(limit);
+  res.json({ submissions: rows });
+});
+
+// ── Admin: update status ─────────────────────────────────────────────────────
+const PatchBody = z.object({
+  status: z.enum(["new", "read", "archived"]),
+});
+
+router.patch("/contact/:id", async (req, res) => {
+  if (!requireAdmin(req)) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id) || id <= 0) {
+    res.status(400).json({ error: "Invalid id" });
+    return;
+  }
+  const parsed = PatchBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: "Invalid status" });
+    return;
+  }
+  const [row] = await db
+    .update(contactSubmissionsTable)
+    .set({ status: parsed.data.status })
+    .where(eq(contactSubmissionsTable.id, id))
+    .returning({ id: contactSubmissionsTable.id, status: contactSubmissionsTable.status });
+  if (!row) {
+    res.status(404).json({ error: "Not found" });
+    return;
+  }
+  res.json(row);
 });
 
 export default router;
