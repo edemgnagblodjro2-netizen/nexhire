@@ -24,9 +24,16 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`[CivicAI] Demande de contact — ${form.service || "Général"}`);
+    const isFr = lang === "fr";
+    const subject = encodeURIComponent(
+      isFr
+        ? `[CivicAI] Demande de contact — ${form.service || "Général"}`
+        : `[CivicAI] Contact request — ${form.service || "General"}`
+    );
     const body = encodeURIComponent(
-      `Nom: ${form.name}\nOrganisation: ${form.org}\nTéléphone: ${form.phone}\nService: ${form.service}\n\n${form.msg}`
+      isFr
+        ? `Nom: ${form.name}\nOrganisation: ${form.org}\nTéléphone: ${form.phone}\nService: ${form.service}\n\n${form.msg}`
+        : `Name: ${form.name}\nOrganization: ${form.org}\nPhone: ${form.phone}\nService: ${form.service}\n\n${form.msg}`
     );
     window.location.href = `mailto:info@civicai.ca?subject=${subject}&body=${body}`;
     setSubmitted(true);

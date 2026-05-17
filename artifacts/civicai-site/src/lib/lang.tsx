@@ -213,7 +213,7 @@ export const T = {
       { value: "Free", label: "for citizens\nB2G model" },
     ],
     trust_badges: [
-      { icon: "🏢", label: "Quebec company", sub: "QEI 2280791601" },
+      { icon: "🏢", label: "Quebec company", sub: "NEQ 2280791601" },
       { icon: "🔒", label: "Law 25 QC compliant", sub: "Data protection" },
       { icon: "🌐", label: "Multilingual", sub: "FR · EN · ES · AR · HT" },
       { icon: "🤝", label: "No commitment", sub: "Free first meeting" },
@@ -276,7 +276,7 @@ export const T = {
     form_send: "Send request",
     form_success: "Thank you! We'll get back to you within 48h.",
     footer_tagline: "TECHNOLOGY AT THE SERVICE OF YOUR IDEAS",
-    footer_copy: "© 2026 CivicAI — QEI 2280791601 — Quebec, Canada",
+    footer_copy: "© 2026 CivicAI — NEQ 2280791601 — Quebec, Canada",
     footer_links_services: "Services",
     footer_links_products: "Products",
     footer_links_legal: "Legal",
