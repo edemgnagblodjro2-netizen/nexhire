@@ -358,8 +358,8 @@ export const T = {
       { title: "Équipe soudée", desc: "Startup en croissance avec une culture directe, bienveillante et ambitieuse. Responsabilités dès le premier jour." },
     ],
     careers_positions_open: false,
-    careers_no_jobs_title: "Aucun poste ouvert pour le moment",
-    careers_no_jobs_sub: "Nous venons de décrocher notre premier contrat et concentrons toutes nos énergies sur sa livraison. Revenez bientôt — la prochaine ouverture de poste ne saurait tarder.",
+    careers_no_jobs_title: "Quelque chose de grand se prépare",
+    careers_no_jobs_sub: "Notre équipe grandit et de nouveaux postes s'ouvriront très bientôt. En attendant, envoyez-nous votre profil — nous aimons rencontrer les talents avant même d'en avoir besoin.",
     careers_jobs_tag: "Postes ouverts",
     careers_jobs_title: "Nous recrutons activement",
     careers_jobs: [
@@ -621,8 +621,8 @@ export const T = {
       { title: "Tight-knit team", desc: "A growing startup with a direct, caring, and ambitious culture. Responsibilities from day one." },
     ],
     careers_positions_open: false,
-    careers_no_jobs_title: "No open positions at the moment",
-    careers_no_jobs_sub: "We just landed our first contract and are focusing all our energy on delivering it. Check back soon — the next opening won't be long.",
+    careers_no_jobs_title: "Something big is coming",
+    careers_no_jobs_sub: "Our team is growing and new positions will open soon. In the meantime, send us your profile — we love meeting great people before we even need them.",
     careers_jobs_tag: "Open positions",
     careers_jobs_title: "We're actively hiring",
     careers_jobs: [
