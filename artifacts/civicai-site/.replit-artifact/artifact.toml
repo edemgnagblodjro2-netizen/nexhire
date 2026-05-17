@@ -35,6 +35,10 @@ from = "/contact"
 to = "/contact.html"
 
 [[services.production.rewrites]]
+from = "/careers"
+to = "/careers.html"
+
+[[services.production.rewrites]]
 from = "/*"
 to = "/index.html"
 

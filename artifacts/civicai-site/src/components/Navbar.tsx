@@ -33,6 +33,7 @@ export function Navbar() {
     { href: "/services", label: t.nav.services },
     { href: "/products", label: t.nav.products },
     { href: "/blog", label: t.nav.blog },
+    { href: "/careers", label: t.nav.careers },
     { href: "/contact", label: t.nav.contact },
   ];
 

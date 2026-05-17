@@ -32,6 +32,7 @@ const ROUTE_TO_HTML: Record<string, string> = {
   "/services": "/services.html",
   "/products": "/products.html",
   "/contact": "/contact.html",
+  "/careers": "/careers.html",
 };
 
 function routeToHtmlMiddleware() {
@@ -102,6 +103,7 @@ export default defineConfig({
         services: path.resolve(ROOT, "services.html"),
         products: path.resolve(ROOT, "products.html"),
         contact: path.resolve(ROOT, "contact.html"),
+        careers: path.resolve(ROOT, "careers.html"),
       },
     },
   },
