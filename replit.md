@@ -57,6 +57,43 @@ A mobile application connecting vulnerable individuals with community and social
 - `artifacts/api-server/src/routes/services.ts`: Service management endpoints.
 - `artifacts/api-server/src/routes/serviceCorrections.ts`: User-submitted location corrections (POST public + admin queue, auto-approve at 3 concordant submissions).
 
+## Projets dans le monorepo — différences et responsabilités
+
+Ce monorepo héberge plusieurs produits distincts sous la bannière CivicAI. Chaque artifact a sa propre base d'utilisateurs, ses propres données et son propre modèle d'affaires.
+
+| Artifact | Produit | Clientèle | Modèle | Base de données |
+|---|---|---|---|---|
+| `artifacts/service-qc` | **AttenteZéro** — app mobile citoyenne | Grand public (personnes vulnérables, immigrants, sans-abri) | Gratuit B2G | PostgreSQL Replit partagée |
+| `artifacts/api-server` | API backend d'AttenteZéro | — (interne) | — | PostgreSQL Replit partagée |
+| `artifacts/admin` | Panneau d'administration AttenteZéro | Équipe CivicAI + partenaires organismes | — | PostgreSQL Replit partagée |
+| `artifacts/civicai-site` | Site corporatif CivicAI | Clients B2G, gouvernements, partenaires | Vitrine | Aucune |
+| `artifacts/constructpro-erp` | **ConstructPro** — ERP construction | PME du secteur construction | B2B SaaS | Isolée (future) |
+| `artifacts/mockup-sandbox` | Sandbox design | Interne dev/design | Dev only | Aucune |
+
+**Points importants :**
+- **AttenteZéro** et **ConstructPro** sont deux produits complètement séparés — marques différentes, clientèles différentes, données jamais mélangées.
+- Le site CivicAI (`civicai-site`) est une vitrine institutionnelle sans données utilisateurs.
+- Le `mockup-sandbox` est un outil de développement, jamais déployé en production.
+
+## Migration base de données — plan futur (AWS / Azure)
+
+**Situation actuelle (mai 2026) :** Toutes les données AttenteZéro (comptes, services, sessions, analytics) sont hébergées dans la base PostgreSQL managée par Replit. Cela convient pour le lancement initial.
+
+**Décision stratégique :** Dès que CivicAI opère plusieurs produits avec des bases d'utilisateurs significatives (AttenteZéro + ConstructPro + futurs produits), les données devront migrer vers un cloud professionnel (AWS RDS ou Azure Database for PostgreSQL) pour :
+
+- **Gestion centralisée par des DBA** : accès direct, monitoring, optimisation des requêtes, alertes.
+- **Isolation par produit** : une base distincte par produit (AttenteZéro, ConstructPro, etc.) avec des credentials séparés.
+- **Backups certifiés** : snapshots automatiques, point-in-time recovery, conformité Loi 25 QC.
+- **Scalabilité** : lecture répliquée, connection pooling (PgBouncer), capacité de croissance sans migration d'urgence.
+- **Conformité B2G** : certains contrats gouvernementaux exigent hébergement canadien certifié — AWS ca-central-1 (Montréal) ou Azure Canada Central (Toronto).
+
+**Recommandation :** AWS RDS PostgreSQL en `ca-central-1` (Montréal) → hébergement 100% canadien, conformité Loi 25, tarifs connus. Prévoir cette migration avant tout contrat gouvernemental signé ou dépassement de 10 000 utilisateurs actifs.
+
+**Quand déclencher la migration :**
+- Premier contrat B2G signé, OU
+- > 10 000 utilisateurs actifs AttenteZéro, OU
+- Lancement de ConstructPro en production avec clients payants.
+
 ## Architecture decisions
 - **B2G Pivot**: Shifted from B2B "Field Mode" to B2G, focusing on free citizen services and anonymized data dashboards for public administrations.
 - **AI-first**: Integrated conversational AI (GPT-4o-mini) for service finding, available as a floating chat widget across the app.
