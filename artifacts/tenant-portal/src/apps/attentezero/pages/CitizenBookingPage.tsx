@@ -8,18 +8,20 @@ async function getBooking(token: string) {
   if (!r.ok) throw new Error("not_found");
   return r.json();
 }
-
+async function getSiblings(token: string) {
+  const r = await fetch(`${BASE}/queue/booking/${token}/siblings`);
+  if (!r.ok) return { siblings: [] };
+  return r.json();
+}
 async function doAction(token: string, action: string, body?: unknown) {
   const r = await fetch(`${BASE}/queue/booking/${token}/${action}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+    method: "POST", headers: { "Content-Type": "application/json" },
     body: body ? JSON.stringify(body) : undefined,
   });
   const data = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error((data as any).error ?? `HTTP ${r.status}`);
   return data;
 }
-
 async function getSlots(tenantId: string) {
   const r = await fetch(`${BASE}/queue/public-slots?tenantId=${tenantId}`);
   if (!r.ok) throw new Error("slots_error");
@@ -28,130 +30,256 @@ async function getSlots(tenantId: string) {
 
 type MainStep = "loading" | "view" | "late_choice" | "reschedule" | "error";
 
-function formatDatetime(iso: string) {
+function fmt(iso: string) {
   return new Intl.DateTimeFormat("fr-CA", {
     weekday: "long", month: "long", day: "numeric",
     hour: "2-digit", minute: "2-digit", timeZone: "America/Toronto",
   }).format(new Date(iso));
 }
-
-function formatShort(iso: string) {
+function fmtShort(iso: string) {
   return new Intl.DateTimeFormat("fr-CA", {
     month: "short", day: "numeric",
     hour: "2-digit", minute: "2-digit", timeZone: "America/Toronto",
   }).format(new Date(iso));
 }
 
-const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string; icon: string }> = {
-  scheduled:   { label: "Confirmé",     color: "#0d9488", bg: "#f0fdf9", icon: "✅" },
-  arrived:     { label: "Arrivé",       color: "#7c3aed", bg: "#faf5ff", icon: "🏃" },
-  late:        { label: "En retard",    color: "#d97706", bg: "#fffbeb", icon: "⏰" },
-  absent:      { label: "Absent",       color: "#dc2626", bg: "#fef2f2", icon: "❌" },
-  cancelled:   { label: "Annulé",       color: "#64748b", bg: "#f8fafc", icon: "🚫" },
-  completed:   { label: "Terminé",      color: "#059669", bg: "#f0fdf4", icon: "🎉" },
-  rescheduled: { label: "Reprogrammé",  color: "#2563eb", bg: "#eff6ff", icon: "📅" },
+const SC: Record<string, { label: string; color: string; bg: string; icon: string }> = {
+  scheduled:   { label: "Confirmé",    color: "#0d9488", bg: "#f0fdf9", icon: "✅" },
+  arrived:     { label: "Arrivé",      color: "#7c3aed", bg: "#faf5ff", icon: "🏃" },
+  late:        { label: "En retard",   color: "#d97706", bg: "#fffbeb", icon: "⏰" },
+  absent:      { label: "Absent",      color: "#dc2626", bg: "#fef2f2", icon: "❌" },
+  cancelled:   { label: "Annulé",      color: "#64748b", bg: "#f8fafc", icon: "🚫" },
+  completed:   { label: "Terminé",     color: "#059669", bg: "#f0fdf4", icon: "🎉" },
+  rescheduled: { label: "Reprogrammé", color: "#2563eb", bg: "#eff6ff", icon: "📅" },
 };
 
+const FINAL = ["cancelled", "absent", "completed", "rescheduled"];
+
+// ── Per-sibling action card ────────────────────────────────────────────────
+function SiblingCard({
+  sib, isActive, onRefresh,
+}: {
+  sib: any; isActive: boolean; onRefresh: () => void;
+}) {
+  const [busy, setBusy]     = useState(false);
+  const [msg, setMsg]       = useState("");
+  const [msgOk, setMsgOk]   = useState(true);
+  const [, setLocation]     = useLocation();
+
+  const cfg = SC[sib.status] ?? SC.scheduled;
+  const isFinal = FINAL.includes(sib.status);
+
+  async function act(action: string, body?: unknown) {
+    setBusy(true); setMsg("");
+    try {
+      if (action === "pay-penalty") {
+        const d = await doAction(sib.citizenToken, "pay-penalty");
+        if (d.checkoutUrl) window.location.href = d.checkoutUrl;
+        return;
+      }
+      await doAction(sib.citizenToken, action, body);
+      onRefresh();
+      if (action === "arrive")  { setMsgOk(true);  setMsg("Arrivée enregistrée !"); }
+      if (action === "cancel")  { setMsgOk(true);  setMsg("Rendez-vous annulé."); }
+      if (action === "absent")  { setMsgOk(true);  setMsg("Absence enregistrée."); }
+    } catch (e: any) {
+      setMsgOk(false);
+      if (e.message === "cancellation_limit_reached")
+        setMsg("Droit d'annulation déjà utilisé cette semaine.");
+      else if (e.message === "invalid_status")
+        setMsg("Action non disponible dans l'état actuel.");
+      else setMsg("Erreur — réessayez.");
+    } finally { setBusy(false); }
+  }
+
+  return (
+    <div style={{
+      border: isActive ? "2px solid #0d9488" : "1.5px solid #e2e8f0",
+      borderRadius: 16, padding: "16px 18px", marginBottom: 12,
+      background: isActive ? "#f0fdf9" : "#fff",
+    }}>
+      {/* Header */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
+        <div>
+          <div style={{ fontWeight: 700, fontSize: 15, color: "#1e293b" }}>{sib.serviceName ?? "Service"}</div>
+          <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>
+            {sib.slotDatetime ? fmtShort(sib.slotDatetime) : "—"}
+          </div>
+        </div>
+        <div style={{
+          background: cfg.bg, border: `1.5px solid ${cfg.color}33`,
+          borderRadius: 10, padding: "5px 10px",
+          fontSize: 11, fontWeight: 700, color: cfg.color,
+          display: "flex", alignItems: "center", gap: 5,
+        }}>
+          {cfg.icon} {cfg.label}
+        </div>
+      </div>
+
+      {/* Flash */}
+      {msg && (
+        <div style={{
+          borderRadius: 8, padding: "8px 12px", marginBottom: 10,
+          background: msgOk ? "#f0fdf9" : "#fef2f2",
+          border: `1px solid ${msgOk ? "#99f6e4" : "#fecaca"}`,
+          color: msgOk ? "#0f766e" : "#dc2626", fontSize: 13,
+        }}>{msg}</div>
+      )}
+
+      {/* Different token → link to manage page */}
+      {!isActive && !isFinal && (
+        <button
+          style={{ fontSize: 12, color: "#0d9488", background: "none", border: "none", cursor: "pointer", padding: 0, textDecoration: "underline", marginBottom: 8 }}
+          onClick={() => setLocation(`/rdv/${sib.citizenToken}`)}
+        >
+          Gérer ce RDV →
+        </button>
+      )}
+
+      {/* Actions for active card or for siblings */}
+      {!isFinal && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 6 }}>
+          {sib.status === "scheduled" && (
+            <>
+              <button style={actBtn("#0d9488")} disabled={busy} onClick={() => act("arrive")}>
+                🏃 Arrivé(e)
+              </button>
+              <button style={actBtn("#d97706")} disabled={busy} onClick={() => act("late")}>
+                ⏰ En retard
+              </button>
+              <button style={actBtn("#dc2626")} disabled={busy} onClick={() => act("absent")}>
+                ❌ Absent(e)
+              </button>
+              {!sib.cancellationUsed && (
+                <button
+                  style={actBtn("#64748b")}
+                  disabled={busy}
+                  onClick={() => {
+                    if (window.confirm(`Annuler le rendez-vous "${sib.serviceName}" ?`)) act("cancel");
+                  }}
+                >
+                  🚫 Annuler
+                </button>
+              )}
+              {sib.cancellationUsed && (
+                <span style={{ fontSize: 11, color: "#94a3b8", alignSelf: "center" }}>
+                  Annulation utilisée
+                </span>
+              )}
+            </>
+          )}
+          {sib.status === "late" && (
+            <>
+              {!sib.penaltyPaidAt && (
+                <button style={actBtn("#d97706")} disabled={busy} onClick={() => act("pay-penalty")}>
+                  💳 Payer pénalité
+                </button>
+              )}
+              <button
+                style={actBtn("#2563eb")}
+                disabled={busy}
+                onClick={() => setLocation(`/rdv/${sib.citizenToken}`)}
+              >
+                📅 Reprogrammer
+              </button>
+            </>
+          )}
+          {sib.status === "arrived" && (
+            <span style={{ fontSize: 12, color: "#7c3aed", fontWeight: 600 }}>
+              🎯 En attente d'être appelé(e)
+            </span>
+          )}
+        </div>
+      )}
+
+      {isFinal && (
+        <div style={{ fontSize: 12, color: "#94a3b8", fontStyle: "italic" }}>
+          {sib.status === "cancelled" && "Ce rendez-vous a été annulé."}
+          {sib.status === "completed" && "Rendez-vous terminé. Merci !"}
+          {sib.status === "absent" && "Absence enregistrée."}
+          {sib.status === "rescheduled" && "Reprogrammé vers un autre créneau."}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function actBtn(bg: string): React.CSSProperties {
+  return {
+    padding: "8px 14px", background: bg, color: "#fff",
+    border: "none", borderRadius: 8, fontSize: 12, fontWeight: 600,
+    cursor: "pointer", flexShrink: 0,
+  };
+}
+
+// ── Main component ─────────────────────────────────────────────────────────
 export function CitizenBookingPage() {
-  const [, params] = useRoute("/rdv/:token");
+  const [, params]  = useRoute("/rdv/:token");
   const [, setLocation] = useLocation();
-  const token = params?.token ?? "";
+  const token       = params?.token ?? "";
 
-  const [step, setStep]         = useState<MainStep>("loading");
-  const [data, setData]         = useState<any>(null);
-  const [slots, setSlots]       = useState<any[]>([]);
-  const [selectedSlot, setSelectedSlot] = useState<string>("");
-  const [busy, setBusy]         = useState(false);
-  const [msg, setMsg]           = useState("");
-  const [msgType, setMsgType]   = useState<"ok" | "err">("ok");
+  const [step, setStep]       = useState<MainStep>("loading");
+  const [data, setData]       = useState<any>(null);
+  const [siblings, setSiblings] = useState<any[]>([]);
+  const [slots, setSlots]     = useState<any[]>([]);
+  const [selSlot, setSelSlot] = useState("");
+  const [busy, setBusy]       = useState(false);
+  const [msg, setMsg]         = useState("");
+  const [msgOk, setMsgOk]     = useState(true);
+  const [cancellingAll, setCancelAll] = useState(false);
 
-  const searchParams = typeof window !== "undefined"
-    ? new URLSearchParams(window.location.search)
-    : new URLSearchParams();
-  const penaltyStatus = searchParams.get("penalty");
+  const penaltyStatus = typeof window !== "undefined"
+    ? new URLSearchParams(window.location.search).get("penalty") : null;
 
   const load = useCallback(async () => {
     if (!token) { setStep("error"); return; }
     try {
-      const d = await getBooking(token);
+      const [d, sib] = await Promise.all([getBooking(token), getSiblings(token)]);
       setData(d);
-      // If penalty just paid, show success message
+      setSiblings(sib.siblings ?? []);
       if (penaltyStatus === "paid" && d.booking.status === "scheduled") {
-        setMsg("Pénalité payée — votre rendez-vous est confirmé !");
-        setMsgType("ok");
+        setMsg("Pénalité payée — votre rendez-vous est confirmé !"); setMsgOk(true);
       }
       setStep("view");
-    } catch {
-      setStep("error");
-    }
+    } catch { setStep("error"); }
   }, [token, penaltyStatus]);
 
   useEffect(() => { load(); }, [load]);
 
-  async function handleArrive() {
-    setBusy(true); setMsg("");
-    try {
-      await doAction(token, "arrive");
-      await load();
-      setMsg("Votre arrivée a été signalée. Merci !");
-      setMsgType("ok");
-    } catch (e: any) {
-      setMsg(e.message === "invalid_status" ? "Action non disponible dans l'état actuel." : "Erreur — réessayez.");
-      setMsgType("err");
-    } finally { setBusy(false); }
-  }
-
-  async function handleLate() {
-    setBusy(true); setMsg("");
-    try {
-      await doAction(token, "late");
-      await load();
-      setStep("late_choice");
-    } catch (e: any) {
-      setMsg("Impossible de signaler le retard.");
-      setMsgType("err");
-    } finally { setBusy(false); }
-  }
-
-  async function handleAbsent() {
-    setBusy(true); setMsg("");
-    try {
-      await doAction(token, "absent");
-      await load();
-      setMsg("Votre absence a été signalée.");
-      setMsgType("ok");
-    } catch (e: any) {
-      setMsg("Impossible de signaler l'absence.");
-      setMsgType("err");
-    } finally { setBusy(false); }
-  }
-
-  async function handleCancel() {
-    if (!window.confirm("Confirmer l'annulation ? Vous n'aurez droit qu'à 1 annulation cette semaine.")) return;
-    setBusy(true); setMsg("");
-    try {
-      await doAction(token, "cancel");
-      await load();
-      setMsg("Rendez-vous annulé. La place est disponible pour d'autres.");
-      setMsgType("ok");
-    } catch (e: any) {
-      if (e.message === "cancellation_limit_reached") {
-        setMsg("Vous avez déjà utilisé votre droit d'annulation cette semaine.");
-      } else {
-        setMsg("Annulation impossible — état du rendez-vous invalide.");
+  async function handleCancelAll() {
+    const active = siblings.filter(s => !FINAL.includes(s.status));
+    if (active.length === 0) return;
+    if (!window.confirm(`Annuler ${active.length} rendez-vous en même temps ? Cette action utilisera votre droit d'annulation.`)) return;
+    setCancelAll(true); setMsg(""); 
+    let cancelled = 0; let errors: string[] = [];
+    for (const sib of active) {
+      try {
+        await doAction(sib.citizenToken, "cancel");
+        cancelled++;
+      } catch (e: any) {
+        errors.push(e.message === "cancellation_limit_reached"
+          ? `${sib.serviceName} : droit d'annulation épuisé`
+          : `${sib.serviceName} : erreur`);
       }
-      setMsgType("err");
-    } finally { setBusy(false); }
+    }
+    await load();
+    if (errors.length === 0) {
+      setMsgOk(true); setMsg(`${cancelled} rendez-vous annulé${cancelled > 1 ? "s" : ""}.`);
+    } else {
+      setMsgOk(false); setMsg(`${cancelled} annulé${cancelled > 1 ? "s" : ""}, ${errors.join(" · ")}`);
+    }
+    setCancelAll(false);
   }
 
-  async function handlePayPenalty() {
+  async function handleReschedule() {
+    if (!selSlot) return;
     setBusy(true); setMsg("");
     try {
-      const d = await doAction(token, "pay-penalty");
-      if (d.checkoutUrl) window.location.href = d.checkoutUrl;
-    } catch {
-      setMsg("Impossible d'ouvrir le paiement. Réessayez.");
-      setMsgType("err");
+      const d = await doAction(token, "reschedule", { newSlotId: selSlot });
+      if (d.newToken) setLocation(`/rdv/${d.newToken}`);
+    } catch (e: any) {
+      setMsgOk(false);
+      setMsg(e.message === "slot_not_available" ? "Ce créneau n'est plus disponible." : "Erreur — réessayez.");
     } finally { setBusy(false); }
   }
 
@@ -162,23 +290,8 @@ export function CitizenBookingPage() {
       setSlots(d.slots ?? []);
       setStep("reschedule");
     } catch {
-      setMsg("Impossible de charger les créneaux disponibles.");
-      setMsgType("err");
+      setMsgOk(false); setMsg("Impossible de charger les créneaux.");
     }
-  }
-
-  async function handleReschedule() {
-    if (!selectedSlot) return;
-    setBusy(true); setMsg("");
-    try {
-      const d = await doAction(token, "reschedule", { newSlotId: selectedSlot });
-      if (d.newToken) {
-        setLocation(`/rdv/${d.newToken}`);
-      }
-    } catch (e: any) {
-      setMsg(e.message === "slot_not_available" ? "Ce créneau n'est plus disponible." : "Erreur — réessayez.");
-      setMsgType("err");
-    } finally { setBusy(false); }
   }
 
   // ── Loading ────────────────────────────────────────────────────────────────
@@ -186,12 +299,11 @@ export function CitizenBookingPage() {
     return (
       <div style={s.shell}>
         <div style={s.spinner} />
-        <p style={{ color: "#64748b", marginTop: 16, fontSize: 14 }}>Chargement de votre rendez-vous…</p>
+        <p style={{ color: "#64748b", marginTop: 16, fontSize: 14 }}>Chargement…</p>
       </div>
     );
   }
 
-  // ── Error ──────────────────────────────────────────────────────────────────
   if (step === "error" || !data) {
     return (
       <div style={s.shell}>
@@ -205,56 +317,49 @@ export function CitizenBookingPage() {
   }
 
   const { booking, slot, queuePosition } = data;
-  const statusCfg = STATUS_CONFIG[booking.status] ?? STATUS_CONFIG.scheduled;
-  const isFinal = ["cancelled", "absent", "completed", "rescheduled"].includes(booking.status);
+  const statusCfg = SC[booking.status] ?? SC.scheduled;
+  const isFinal   = FINAL.includes(booking.status);
 
-  // ── Reschedule picker ──────────────────────────────────────────────────────
+  // Other bookings (not the current token)
+  const others = siblings.filter(sib => sib.citizenToken !== token);
+  const activeOthers = others.filter(sib => !FINAL.includes(sib.status));
+  const totalActive = (!isFinal ? 1 : 0) + activeOthers.length;
+
+  // ── Reschedule ─────────────────────────────────────────────────────────────
   if (step === "reschedule") {
     return (
       <div style={s.page}>
         <div style={s.header}>
           <div style={{ fontSize: 32, marginBottom: 8 }}>📅</div>
-          <h1 style={s.title}>Choisir un nouveau créneau</h1>
-          <p style={s.sub}>Sélectionnez le moment qui vous convient</p>
+          <h1 style={s.title}>Nouveau créneau</h1>
+          <p style={s.sub}>{slot?.serviceName ?? "Service"}</p>
         </div>
 
-        {msg && <div style={{ ...s.msgBox, background: msgType === "ok" ? "#f0fdf9" : "#fef2f2", borderColor: msgType === "ok" ? "#99f6e4" : "#fecaca", color: msgType === "ok" ? "#0f766e" : "#dc2626" }}>{msg}</div>}
+        <Flash msg={msg} ok={msgOk} />
 
         <div style={s.card}>
           {slots.length === 0 ? (
             <p style={{ textAlign: "center", color: "#64748b", fontSize: 14 }}>
-              Aucun créneau disponible pour le moment. Revenez plus tard.
+              Aucun créneau disponible. Revenez plus tard.
             </p>
           ) : slots.map((sl: any) => (
-            <button
-              key={sl.id}
-              style={{
-                ...s.slotBtn,
-                borderColor: selectedSlot === sl.id ? "#0d9488" : "#e2e8f0",
-                background: selectedSlot === sl.id ? "#f0fdf9" : "#fff",
-                color: selectedSlot === sl.id ? "#0f766e" : "#1e293b",
-              }}
-              onClick={() => setSelectedSlot(sl.id)}
-            >
-              <div style={{ fontWeight: 700, fontSize: 15 }}>{formatShort(sl.slotDatetime)}</div>
+            <button key={sl.id} style={{ ...s.slotBtn, borderColor: selSlot === sl.id ? "#0d9488" : "#e2e8f0", background: selSlot === sl.id ? "#f0fdf9" : "#fff" }}
+              onClick={() => setSelSlot(sl.id)}>
+              <div style={{ fontWeight: 700, fontSize: 15 }}>{fmtShort(sl.slotDatetime)}</div>
               <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>
-                {sl.capacity - sl.bookedCount} place{sl.capacity - sl.bookedCount > 1 ? "s" : ""} disponible{sl.capacity - sl.bookedCount > 1 ? "s" : ""}
+                {sl.capacity - sl.bookedCount} place{sl.capacity - sl.bookedCount > 1 ? "s" : ""} dispo
               </div>
             </button>
           ))}
         </div>
 
         <div style={{ padding: "0 16px" }}>
-          <button
-            style={{ ...s.btnPrimary, opacity: (!selectedSlot || busy) ? 0.6 : 1 }}
-            disabled={!selectedSlot || busy}
-            onClick={handleReschedule}
-          >
+          <button style={{ ...s.btnPrimary, opacity: (!selSlot || busy) ? 0.6 : 1 }}
+            disabled={!selSlot || busy} onClick={handleReschedule}>
             {busy ? "Reprogrammation…" : "✅ Confirmer ce créneau"}
           </button>
           <button style={s.btnGhost} onClick={() => setStep("late_choice")}>← Retour</button>
         </div>
-
         <p style={s.footer}>Propulsé par AttenteZéro — CivicAI</p>
       </div>
     );
@@ -270,29 +375,30 @@ export function CitizenBookingPage() {
           <h1 style={s.title}>Vous êtes en retard</h1>
           <p style={s.sub}>Choisissez comment procéder</p>
         </div>
-
-        {msg && <div style={{ ...s.msgBox, background: "#fef2f2", borderColor: "#fecaca", color: "#dc2626" }}>{msg}</div>}
-
+        <Flash msg={msg} ok={msgOk} />
         <div style={s.card}>
           <p style={{ fontSize: 14, color: "#475569", marginBottom: 20, lineHeight: 1.6 }}>
-            Votre retard a été signalé. Vous avez deux options pour conserver votre accès au service :
+            Votre retard a été signalé. Choisissez une option :
           </p>
-
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <button style={s.choiceCard} onClick={handlePayPenalty} disabled={busy}>
+            <button style={s.choiceCard}
+              onClick={async () => {
+                setBusy(true);
+                try { const d = await doAction(token, "pay-penalty"); if (d.checkoutUrl) window.location.href = d.checkoutUrl; }
+                catch { setMsgOk(false); setMsg("Impossible d'ouvrir le paiement."); }
+                finally { setBusy(false); }
+              }} disabled={busy}>
               <div style={{ fontSize: 24, marginBottom: 6 }}>💳</div>
               <div style={{ fontWeight: 700, fontSize: 15, color: "#1e293b" }}>Payer la pénalité</div>
-              <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>{penaltyDollars} $ CAD — votre rendez-vous est maintenu</div>
+              <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>{penaltyDollars} $ CAD — RDV maintenu</div>
             </button>
-
             <button style={s.choiceCard} onClick={loadSlotsForReschedule} disabled={busy}>
               <div style={{ fontSize: 24, marginBottom: 6 }}>📅</div>
               <div style={{ fontWeight: 700, fontSize: 15, color: "#1e293b" }}>Reprogrammer</div>
-              <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>Choisir un autre créneau disponible</div>
+              <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>Choisir un autre créneau</div>
             </button>
           </div>
         </div>
-
         <p style={s.footer}>Propulsé par AttenteZéro — CivicAI</p>
       </div>
     );
@@ -301,123 +407,67 @@ export function CitizenBookingPage() {
   // ── Main view ──────────────────────────────────────────────────────────────
   return (
     <div style={s.page}>
-      {/* Header */}
       <div style={s.header}>
         <div style={{ fontSize: 32, marginBottom: 8 }}>📋</div>
-        <h1 style={s.title}>Mon rendez-vous</h1>
-        <p style={s.sub}>
-          {booking.citizenName} · {slot?.serviceName ?? "Service"}
-        </p>
+        <h1 style={s.title}>Mes rendez-vous</h1>
+        <p style={s.sub}>{booking.citizenName}</p>
       </div>
 
-      {/* Flash message */}
-      {msg && (
-        <div style={{ ...s.msgBox, background: msgType === "ok" ? "#f0fdf9" : "#fef2f2", borderColor: msgType === "ok" ? "#99f6e4" : "#fecaca", color: msgType === "ok" ? "#0f766e" : "#dc2626" }}>
-          {msg}
-        </div>
-      )}
+      <Flash msg={msg} ok={msgOk} />
 
-      {/* Status badge */}
-      <div style={{ ...s.card, display: "flex", alignItems: "center", gap: 14 }}>
-        <div style={{ fontSize: 36 }}>{statusCfg.icon}</div>
-        <div>
-          <div style={{ fontSize: 12, color: "#64748b", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>Statut</div>
-          <div style={{ fontSize: 20, fontWeight: 800, color: statusCfg.color, marginTop: 2 }}>{statusCfg.label}</div>
-        </div>
-        <div style={{ marginLeft: "auto", background: statusCfg.bg, border: `1.5px solid ${statusCfg.color}22`, borderRadius: 10, padding: "6px 12px", fontSize: 12, fontWeight: 700, color: statusCfg.color }}>
-          {booking.status}
-        </div>
-      </div>
+      {/* ── ALL bookings — multi-service cards ───────────────────────────── */}
+      <div style={{ padding: "14px 16px 0" }}>
+        {/* Current booking first */}
+        <SiblingCard
+          sib={{ ...siblings.find(s => s.citizenToken === token) ?? {}, citizenToken: token, status: booking.status, serviceName: slot?.serviceName, slotDatetime: slot?.slotDatetime, cancellationUsed: booking.cancellationUsed, penaltyAmountCents: booking.penaltyAmountCents, penaltyPaidAt: booking.penaltyPaidAt }}
+          isActive={true}
+          onRefresh={load}
+        />
 
-      {/* Appointment details */}
-      <div style={s.card}>
-        <div style={s.infoRow}>
-          <span style={s.infoLabel}>📅 Date & heure</span>
-          <span style={s.infoVal}>{slot ? formatDatetime(slot.slotDatetime) : "—"}</span>
-        </div>
-        <div style={s.infoRow}>
-          <span style={s.infoLabel}>🏢 Service</span>
-          <span style={s.infoVal}>{slot?.serviceName ?? "—"}</span>
-        </div>
-        {booking.status === "scheduled" && (
-          <div style={s.infoRow}>
-            <span style={s.infoLabel}>🔢 Position</span>
-            <span style={{ ...s.infoVal, color: "#0d9488" }}>#{queuePosition} dans la file</span>
+        {/* Other services */}
+        {others.map(sib => (
+          <SiblingCard key={sib.id} sib={sib} isActive={false} onRefresh={load} />
+        ))}
+
+        {/* Queue position info (for scheduled current) */}
+        {booking.status === "scheduled" && queuePosition && (
+          <div style={{ ...s.card, display: "flex", alignItems: "center", gap: 10, margin: "0 0 0 0" }}>
+            <div style={{ fontSize: 28, fontWeight: 900, color: "#0d9488" }}>#{queuePosition}</div>
+            <div>
+              <div style={{ fontSize: 12, color: "#64748b", fontWeight: 600, textTransform: "uppercase" }}>Position dans la file</div>
+              <div style={{ fontSize: 13, color: "#1e293b", fontWeight: 600 }}>{slot?.serviceName ?? "Service"}</div>
+            </div>
           </div>
         )}
-        <div style={s.infoRow}>
-          <span style={s.infoLabel}>✉️ Email</span>
-          <span style={s.infoVal}>{booking.citizenEmail}</span>
-        </div>
       </div>
 
-      {/* Rules reminder */}
-      <div style={{ ...s.card, background: "#fffbeb", border: "1px solid #fde68a" }}>
+      {/* Bulk action — Cancel all */}
+      {totalActive > 1 && (
+        <div style={{ padding: "14px 16px 0" }}>
+          <button
+            style={{ ...s.btnGhost, borderColor: "#fca5a5", color: "#dc2626" }}
+            onClick={handleCancelAll}
+            disabled={cancellingAll}
+          >
+            {cancellingAll ? "Annulation en cours…" : `🚫 Annuler tous mes RDV (${totalActive})`}
+          </button>
+        </div>
+      )}
+
+      {/* Rules */}
+      <div style={{ ...s.card, background: "#fffbeb", border: "1px solid #fde68a", margin: "14px 16px 0" }}>
         <p style={{ margin: 0, fontSize: 12, color: "#92400e", lineHeight: 1.7 }}>
-          <strong>Règles :</strong> Maximum 2 rendez-vous par semaine · 1 annulation autorisée par semaine ·
-          En cas de retard, vous pouvez payer la pénalité ou reprogrammer.
+          <strong>Règles :</strong> Max 2 RDV/semaine · 1 annulation/semaine ·
+          En retard = pénalité ou reprogrammation.
         </p>
       </div>
 
-      {/* Actions — only if not in a final state */}
-      {!isFinal && (
-        <div style={{ padding: "0 16px" }}>
-          {booking.status === "scheduled" && (
-            <>
-              <button style={s.btnPrimary} disabled={busy} onClick={handleArrive}>
-                {busy ? "…" : "🏃 Je suis arrivé(e)"}
-              </button>
-              <button style={{ ...s.btnWarning }} disabled={busy} onClick={handleLate}>
-                {busy ? "…" : "⏰ Je suis en retard"}
-              </button>
-              <button style={{ ...s.btnDanger }} disabled={busy} onClick={handleAbsent}>
-                {busy ? "…" : "❌ Je ne peux pas venir"}
-              </button>
-              {!booking.cancellationUsed && (
-                <button style={s.btnGhost} disabled={busy} onClick={handleCancel}>
-                  🚫 Annuler ce rendez-vous
-                </button>
-              )}
-              {booking.cancellationUsed && (
-                <p style={{ fontSize: 12, color: "#94a3b8", textAlign: "center", marginTop: 12 }}>
-                  Droit d'annulation déjà utilisé cette semaine
-                </p>
-              )}
-            </>
-          )}
-
-          {booking.status === "late" && (
-            <button style={{ ...s.btnPrimary, background: "#d97706" }} disabled={busy} onClick={() => setStep("late_choice")}>
-              ⏰ Voir mes options (retard)
-            </button>
-          )}
-
-          {booking.status === "arrived" && (
-            <div style={{ ...s.card, textAlign: "center", background: "#faf5ff" }}>
-              <div style={{ fontSize: 32, marginBottom: 8 }}>🎯</div>
-              <p style={{ margin: 0, color: "#7c3aed", fontWeight: 700 }}>
-                Votre arrivée est enregistrée. Veuillez patienter — vous serez appelé(e) bientôt.
-              </p>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Final state messages */}
-      {booking.status === "cancelled" && (
-        <div style={{ ...s.card, textAlign: "center" }}>
-          <p style={{ margin: 0, color: "#64748b", fontSize: 14 }}>
-            Ce rendez-vous a été annulé. La place a été libérée pour d'autres personnes.
-          </p>
-        </div>
-      )}
-
-      {booking.status === "completed" && (
-        <div style={{ ...s.card, textAlign: "center", background: "#f0fdf4" }}>
-          <div style={{ fontSize: 32, marginBottom: 8 }}>🎉</div>
-          <p style={{ margin: 0, color: "#059669", fontWeight: 700 }}>
-            Rendez-vous terminé. Merci de votre visite !
-          </p>
+      {/* Late choice quick access */}
+      {booking.status === "late" && (
+        <div style={{ padding: "14px 16px 0" }}>
+          <button style={{ ...s.btnPrimary, background: "#d97706" }} onClick={() => setStep("late_choice")}>
+            ⏰ Voir mes options (retard)
+          </button>
         </div>
       )}
 
@@ -426,145 +476,68 @@ export function CitizenBookingPage() {
   );
 }
 
-// ── Styles ───────────────────────────────────────────────────────────────────
+function Flash({ msg, ok }: { msg: string; ok: boolean }) {
+  if (!msg) return null;
+  return (
+    <div style={{
+      margin: "12px 16px 0", borderRadius: 12, padding: "12px 16px",
+      fontSize: 14, fontWeight: 600, border: "1.5px solid",
+      background: ok ? "#f0fdf9" : "#fef2f2",
+      borderColor: ok ? "#99f6e4" : "#fecaca",
+      color: ok ? "#0f766e" : "#dc2626",
+    }}>{msg}</div>
+  );
+}
+
+// ── Styles ────────────────────────────────────────────────────────────────────
 const s: Record<string, React.CSSProperties> = {
   shell: {
-    minHeight: "100dvh",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    background: "#f8fafc",
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    padding: 24,
+    minHeight: "100dvh", display: "flex", flexDirection: "column",
+    alignItems: "center", justifyContent: "center",
+    background: "#f8fafc", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", padding: 24,
   },
   spinner: {
-    width: 40,
-    height: 40,
-    borderRadius: "50%",
-    border: "3px solid #e2e8f0",
-    borderTopColor: "#0d9488",
+    width: 40, height: 40, borderRadius: "50%",
+    border: "3px solid #e2e8f0", borderTopColor: "#0d9488",
     animation: "spin 0.8s linear infinite",
   },
   page: {
-    minHeight: "100dvh",
-    background: "#f8fafc",
+    minHeight: "100dvh", background: "#f8fafc",
     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    maxWidth: 480,
-    margin: "0 auto",
-    paddingBottom: 48,
+    maxWidth: 480, margin: "0 auto", paddingBottom: 48,
   },
   header: {
     background: "linear-gradient(135deg,#0f766e 0%,#0d9488 100%)",
-    padding: "40px 24px 32px",
-    textAlign: "center",
-    color: "#fff",
+    padding: "40px 24px 32px", textAlign: "center", color: "#fff",
   },
   title: { margin: 0, fontSize: 24, fontWeight: 800, color: "#fff", letterSpacing: -0.5 },
-  sub: { margin: "6px 0 0", fontSize: 13, color: "rgba(255,255,255,0.8)" },
+  sub:   { margin: "6px 0 0", fontSize: 13, color: "rgba(255,255,255,0.8)" },
   card: {
-    background: "#fff",
-    margin: "14px 16px 0",
-    borderRadius: 16,
-    padding: "18px 20px",
-    boxShadow: "0 1px 4px rgba(0,0,0,0.07)",
-  },
-  msgBox: {
-    margin: "12px 16px 0",
-    borderRadius: 12,
-    padding: "12px 16px",
-    fontSize: 14,
-    fontWeight: 600,
-    border: "1.5px solid",
-  },
-  infoRow: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    padding: "10px 0",
-    borderBottom: "1px solid #f1f5f9",
-    gap: 12,
-  },
-  infoLabel: { fontSize: 13, color: "#64748b", flexShrink: 0 },
-  infoVal: { fontSize: 14, fontWeight: 600, color: "#1e293b", textAlign: "right" },
-  btnPrimary: {
-    display: "block",
-    width: "100%",
-    padding: "14px 20px",
-    background: "#0d9488",
-    color: "#fff",
-    border: "none",
-    borderRadius: 12,
-    fontSize: 15,
-    fontWeight: 700,
-    cursor: "pointer",
-    marginTop: 12,
-  },
-  btnWarning: {
-    display: "block",
-    width: "100%",
-    padding: "14px 20px",
-    background: "#d97706",
-    color: "#fff",
-    border: "none",
-    borderRadius: 12,
-    fontSize: 15,
-    fontWeight: 700,
-    cursor: "pointer",
-    marginTop: 10,
-  },
-  btnDanger: {
-    display: "block",
-    width: "100%",
-    padding: "14px 20px",
-    background: "#dc2626",
-    color: "#fff",
-    border: "none",
-    borderRadius: 12,
-    fontSize: 15,
-    fontWeight: 700,
-    cursor: "pointer",
-    marginTop: 10,
-  },
-  btnGhost: {
-    display: "block",
-    width: "100%",
-    padding: "12px 20px",
-    background: "transparent",
-    color: "#64748b",
-    border: "1px solid #e2e8f0",
-    borderRadius: 12,
-    fontSize: 14,
-    fontWeight: 500,
-    cursor: "pointer",
-    marginTop: 10,
+    background: "#fff", margin: "14px 16px 0", borderRadius: 16,
+    padding: "18px 20px", boxShadow: "0 1px 4px rgba(0,0,0,0.07)",
   },
   slotBtn: {
-    display: "block",
-    width: "100%",
-    padding: "14px 16px",
-    border: "2px solid",
-    borderRadius: 12,
-    background: "#fff",
-    textAlign: "left",
-    cursor: "pointer",
-    marginBottom: 8,
+    display: "block", width: "100%", padding: "14px 16px",
+    border: "2px solid", borderRadius: 12, background: "#fff",
+    textAlign: "left", cursor: "pointer", marginBottom: 8,
+  },
+  btnPrimary: {
+    display: "block", width: "100%", padding: "14px 20px",
+    background: "#0d9488", color: "#fff", border: "none", borderRadius: 12,
+    fontSize: 15, fontWeight: 700, cursor: "pointer", marginTop: 12,
+  },
+  btnGhost: {
+    display: "block", width: "100%", padding: "12px 20px",
+    background: "transparent", color: "#64748b", border: "1px solid #e2e8f0",
+    borderRadius: 12, fontSize: 14, fontWeight: 500, cursor: "pointer", marginTop: 10,
   },
   choiceCard: {
-    display: "block",
-    width: "100%",
-    padding: "20px 16px",
-    border: "2px solid #e2e8f0",
-    borderRadius: 16,
-    background: "#fff",
-    textAlign: "center",
-    cursor: "pointer",
-    transition: "border-color 0.15s",
+    display: "block", width: "100%", padding: "20px 16px",
+    border: "2px solid #e2e8f0", borderRadius: 16,
+    background: "#fff", textAlign: "center", cursor: "pointer",
   },
   footer: {
-    fontSize: 11,
-    color: "#cbd5e1",
-    marginTop: 32,
-    textAlign: "center",
+    fontSize: 11, color: "#cbd5e1", marginTop: 32,
+    textAlign: "center", lineHeight: 1.6,
   },
 };

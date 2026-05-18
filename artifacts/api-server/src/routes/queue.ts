@@ -525,6 +525,51 @@ router.get("/queue/public-slots", async (req, res) => {
   }
 });
 
+// ─── GET /api/queue/booking/:token/siblings ─────────────────────────────────
+// Returns all active bookings for the same citizen (same email + tenantId)
+// Uses the token to identify the citizen — never exposes the email in the URL
+router.get("/queue/booking/:token/siblings", async (req, res) => {
+  try {
+    const [booking] = await db
+      .select()
+      .from(queueBookings)
+      .where(eq(queueBookings.citizenToken, req.params.token))
+      .limit(1);
+
+    if (!booking) return res.status(404).json({ error: "not_found" });
+
+    // Load all bookings for same email + tenant (including current)
+    const siblings = await db
+      .select({
+        id: queueBookings.id,
+        citizenToken: queueBookings.citizenToken,
+        status: queueBookings.status,
+        slotId: queueBookings.slotId,
+        cancellationUsed: queueBookings.cancellationUsed,
+        penaltyAmountCents: queueBookings.penaltyAmountCents,
+        penaltyPaidAt: queueBookings.penaltyPaidAt,
+        createdAt: queueBookings.createdAt,
+        // slot details joined
+        slotDatetime: queueSlots.slotDatetime,
+        serviceName: queueSlots.serviceName,
+      })
+      .from(queueBookings)
+      .leftJoin(queueSlots, eq(queueBookings.slotId, queueSlots.id))
+      .where(
+        and(
+          eq(queueBookings.tenantId, booking.tenantId),
+          eq(queueBookings.citizenEmail, booking.citizenEmail),
+        )
+      )
+      .orderBy(queueSlots.slotDatetime);
+
+    return res.json({ siblings });
+  } catch (err) {
+    logger.error({ err }, "queue/booking/siblings error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
 // ═══════════════════════════════════════════════════════════════════════════
 // AGENT ROUTES — require JWT Bearer token
 // ═══════════════════════════════════════════════════════════════════════════
