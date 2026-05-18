@@ -5,6 +5,7 @@ import { db } from "@workspace/db";
 import { tenants } from "@workspace/db/schema";
 import { eq } from "drizzle-orm";
 import { signTenantJWT, tenantRateLimit, getTenantMetrics, getAllMetrics } from "@workspace/tenant";
+import { sendOwnerEmail, sendEmailTo } from "../lib/notify.js";
 import pg from "pg";
 
 const { Pool } = pg;
@@ -115,6 +116,95 @@ router.post("/create-org", authLimiter, async (req, res) => {
     email,
     roleName: "admin",
   });
+
+  // ── Notifications email (best-effort, never blocks the response) ──────────
+  const PRODUCT_LABELS: Record<string, string> = {
+    constructpro: "ConstructPro ERP",
+    attentezero: "AttenteZéro",
+    "sites-web": "Sites web",
+    "erp-gestion": "ERP & Gestion",
+    "marketing-digital": "Marketing digital",
+    "automatisation-crm": "Automatisation & CRM",
+  };
+  const SERVICE_LABELS: Record<string, string> = {
+    "site-vitrine": "Site vitrine (dès 800$)",
+    "site-ecommerce": "Site e-commerce (dès 1 500$)",
+    "portail-mesure": "Portail sur mesure (dès 2 500$)",
+    "maintenance-mensuelle-web": "Maintenance mensuelle web (100$/mois)",
+    "erp-starter": "ERP Starter (99$/mois)",
+    "erp-pro": "ERP Professionnel (249$/mois)",
+    "erp-enterprise": "ERP Entreprise (499$/mois)",
+    "erp-setup": "Setup & formation ERP (500–1 500$)",
+    "marketing-strategie": "Stratégie & conseil marketing (dès 500$/mois)",
+    "marketing-reseaux": "Réseaux sociaux (dès 400$/mois)",
+    "marketing-ads": "Publicités Ads (dès 600$/mois)",
+    "marketing-seo": "SEO & référencement (dès 450$/mois)",
+    "auto-analyse": "Analyse & conception automatisation (sur devis)",
+    "auto-dev": "Développement automatisation (sur devis)",
+    "auto-crm": "CRM sur mesure (sur devis)",
+    "auto-support": "Support mensuel automatisation (150$/mois)",
+  };
+
+  const productLines = enabledProducts.map(k => `  • ${PRODUCT_LABELS[k] ?? k}`).join("\n") || "  (aucun)";
+  const serviceLines = enabledServices.map(k => `  • ${SERVICE_LABELS[k] ?? k}`).join("\n") || "  (aucun)";
+
+  const notifyText = `
+Nouvelle organisation inscrite sur le portail CivicAI
+
+Entreprise   : ${companyName}
+Code          : civicai.ca/${tenantSlug}
+Plan          : ${plan}
+Contact       : ${firstName} ${lastName} <${email}>
+ID tenant     : ${tenantId}
+Date          : ${new Date().toLocaleString("fr-CA", { timeZone: "America/Toronto" })}
+
+CATÉGORIES SÉLECTIONNÉES
+${productLines}
+
+SERVICES SÉLECTIONNÉS
+${serviceLines}
+
+───────────────────────────────────────
+Accédez au panel admin pour activer les services :
+${process.env.PORTAL_URL ?? "https://portal.civicai.ca"}/admin/tenants/${tenantId}
+  `.trim();
+
+  const welcomeText = `
+Bonjour ${firstName},
+
+Votre organisation « ${companyName} » a été créée avec succès sur le portail CivicAI.
+
+Code d'accès : ${tenantSlug}
+
+Voici ce que vous avez sélectionné :
+${productLines}
+
+Services :
+${serviceLines}
+
+Notre équipe vous contactera dans les 24–48 heures pour confirmer votre sélection et discuter des prochaines étapes.
+
+En attendant, vous pouvez accéder à votre tableau de bord via :
+${process.env.PORTAL_URL ?? "https://portal.civicai.ca"}
+
+À bientôt,
+L'équipe CivicAI
+services@civicai.ca
+  `.trim();
+
+  // Fire-and-forget — don't await, don't block the response
+  Promise.all([
+    sendOwnerEmail({
+      subject: `🆕 Nouvelle org inscrite : ${companyName} (${tenantSlug})`,
+      text: notifyText,
+      html: notifyText.replace(/\n/g, "<br>").replace(/─+/g, "<hr>"),
+    }),
+    sendEmailTo(email, {
+      subject: `Bienvenue sur CivicAI Portal — ${companyName}`,
+      text: welcomeText,
+      html: welcomeText.replace(/\n/g, "<br>"),
+    }),
+  ]).catch(() => { /* best-effort */ });
 
   res.status(201).json({
     token,
