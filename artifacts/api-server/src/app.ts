@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 import router from "./routes";
 import { logger } from "./lib/logger";
 import { authMiddleware } from "./middlewares/authMiddleware";
+import { tenantMiddleware } from "@workspace/tenant";
 import { handleStripeWebhook } from "./routes/stripe";
 import publicLinksRouter from "./routes/publicLinks";
 import blogRouter from "./routes/blog";
@@ -115,6 +116,7 @@ app.use(cookieParser());
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 app.use(authMiddleware);
+app.use(tenantMiddleware());
 
 // ── Rate limiting on sensitive auth endpoints ─────────────────────────────
 const authLimiter = rateLimit({

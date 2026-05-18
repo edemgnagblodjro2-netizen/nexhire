@@ -18,6 +18,7 @@ import analyticsRouter from "./analytics";
 import referralsRouter from "./referrals";
 import storeStatusRouter from "./storeStatus";
 import contactRouter from "./contact";
+import tenantsRouter from "./tenants";
 
 // Pivot v1.0.33 — sensitive-data modules retired:
 // `clients`, `appointments`, `team`, and the activity-feed endpoints have been
@@ -48,5 +49,6 @@ router.use(analyticsRouter);
 router.use(referralsRouter);
 router.use(storeStatusRouter);
 router.use(contactRouter);
+router.use("/admin/tenants", tenantsRouter);
 
 export default router;

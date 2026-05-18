@@ -1,0 +1,153 @@
+Je veux implémenter une architecture SaaS multi-tenant professionnelle et scalable pour la plateforme CivicAI et ses applications :
+
+- AttenteZéro
+- ConstructPro
+- futurs SaaS CivicAI
+
+Architecture souhaitée :
+- Une seule instance PostgreSQL au départ
+- Un schema PostgreSQL par client (tenant)
+- Isolation logique complète des données par organisation
+
+Exemple :
+
+public
+tenant_companyA
+tenant_companyB
+tenant_hospital_xyz
+tenant_city_service
+
+Chaque tenant doit avoir ses propres tables :
+- users
+- roles
+- permissions
+- projects
+- tasks
+- tickets
+- queues
+- appointments
+- invoices
+- notifications
+- analytics
+- settings
+- audit_logs
+- etc.
+
+Je veux une architecture réutilisable pour plusieurs applications SaaS.
+
+OBJECTIFS :
+
+1. Table globale tenants dans le schema public
+
+Créer une table :
+public.tenants
+
+Contenant :
+- id
+- company_name
+- schema_name
+- subdomain
+- custom_domain
+- app_type
+- plan
+- status
+- db_host
+- db_name
+- created_at
+
+2. Multi-tenant dynamique
+
+Le backend doit :
+- détecter automatiquement le tenant via :
+  - subdomain
+  - domain
+  - tenant_id
+- charger automatiquement le bon schema PostgreSQL
+- définir dynamiquement le PostgreSQL search_path
+
+Exemple :
+
+SET search_path TO tenant_companyA, public;
+
+3. Isolation complète des données
+
+Un tenant ne doit jamais accéder aux données d’un autre tenant.
+
+4. Création automatique des tenants
+
+Quand une nouvelle organisation s’inscrit :
+- créer automatiquement un nouveau schema PostgreSQL
+- exécuter automatiquement les migrations/tables
+- enregistrer le tenant dans public.tenants
+- créer les données par défaut
+
+5. Architecture scalable enterprise-ready
+
+Je veux pouvoir plus tard :
+- migrer un tenant vers une base PostgreSQL dédiée
+- migrer un tenant vers une infrastructure dédiée
+- garder le même code backend sans refactor majeur
+
+6. Architecture réutilisable CivicAI
+
+Je veux un Core SaaS Engine réutilisable entre :
+- AttenteZéro
+- ConstructPro
+- futurs projets
+
+Le Core doit gérer :
+- tenants
+- authentication
+- RBAC permissions
+- notifications
+- billing
+- analytics
+- audit logs
+- onboarding
+- file storage
+- feature flags
+
+7. Technologies
+
+Utiliser :
+- Node.js
+- TypeScript
+- Express ou NestJS
+- PostgreSQL
+- Prisma ORM ou Drizzle ORM
+
+8. Bonnes pratiques
+
+Je veux :
+- architecture propre
+- modular architecture
+- scalable folders structure
+- secure SQL queries
+- migrations automatisées
+- connection pooling
+- tenant middleware
+- reusable services
+- API REST propre
+- architecture enterprise SaaS
+
+9. Très important
+
+Je NE veux PAS une architecture basée principalement sur :
+- tenant_id dans toutes les tables partagées
+
+Je veux utiliser principalement :
+- PostgreSQL schemas multi-tenant
+
+10. Générer
+
+Génère :
+- architecture complète backend
+- structure des dossiers
+- middleware tenant resolver
+- exemples SQL
+- onboarding tenant automatique
+- système de migrations
+- exemple auth multi-tenant
+- Prisma/Drizzle configuration
+- exemples de code complets
+- bonnes pratiques SaaS enterprise
