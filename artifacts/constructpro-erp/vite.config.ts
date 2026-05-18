@@ -1,32 +1,15 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
-import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
-
-const isBuild = process.argv.includes("build");
 
 const rawPort = process.env.PORT;
-const port = rawPort ? Number(rawPort) : 19400;
+const port = rawPort ? Number(rawPort) : 23747;
 const basePath = process.env.BASE_PATH ?? "/constructpro-erp/";
 
 export default defineConfig({
   base: basePath,
   plugins: [
     react(),
-    runtimeErrorOverlay(),
-    ...(process.env.NODE_ENV !== "production" &&
-    process.env.REPL_ID !== undefined
-      ? [
-          await import("@replit/vite-plugin-cartographer").then((m) =>
-            m.cartographer({
-              root: path.resolve(import.meta.dirname, ".."),
-            }),
-          ),
-          await import("@replit/vite-plugin-dev-banner").then((m) =>
-            m.devBanner(),
-          ),
-        ]
-      : []),
   ],
   resolve: {
     alias: {

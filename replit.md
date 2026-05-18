@@ -187,7 +187,7 @@ Pour tout **nouvel artifact** dans ce monorepo, le `localPort` dans `artifact.to
 | 23744 | 3002 | admin |
 | 23745 | 3003 | civicai-site |
 | 23746 | 4200 | **tenant-portal** |
-| 23747 | 5173 | libre |
+| 23747 | 5173 | constructpro-erp |
 | 23748 | 8008 | libre |
 | 23749 | 6800 | libre |
 | 23750 | 9000 | libre |

@@ -1,31 +1,32 @@
 kind = "web"
-previewPath = "/constructpro-erp/"
-title = "ConstructPro ERP"
-version = "1.0.0"
-id = "artifacts/constructpro-erp"
-router = "path"
+  previewPath = "/constructpro-erp/"
+  title = "ConstructPro ERP"
+  version = "1.0.0"
+  id = "artifacts/constructpro-erp"
+  router = "path"
 
-[[integratedSkills]]
-name = "react-vite"
-version = "1.0.0"
+  [[integratedSkills]]
+  name = "react-vite"
+  version = "1.0.0"
 
-[[services]]
-name = "app"
-paths = [ "/constructpro-erp-dev/" ]
-localPort = 19400
+  [[services]]
+  name = "app"
+  paths = [ "/constructpro-erp/" ]
+  localPort = 23747
 
-[services.development]
-run = "pnpm --filter @workspace/constructpro-erp run dev"
+  [services.development]
+  run = "pnpm --filter @workspace/constructpro-erp run dev"
 
-[services.production]
-build = [ "pnpm", "--filter", "@workspace/constructpro-erp", "run", "build" ]
-publicDir = "artifacts/constructpro-erp/dist/public"
-serve = "static"
+  [services.production]
+  build = [ "pnpm", "--filter", "@workspace/constructpro-erp", "run", "build" ]
+  publicDir = "artifacts/constructpro-erp/dist/public"
+  serve = "static"
 
-[[services.production.rewrites]]
-from = "/*"
-to = "/index.html"
+  [[services.production.rewrites]]
+  from = "/*"
+  to = "/index.html"
 
-[services.env]
-PORT = "19400"
-BASE_PATH = "/constructpro-erp/"
+  [services.env]
+  PORT = "23747"
+  BASE_PATH = "/constructpro-erp/"
+  
