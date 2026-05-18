@@ -2,20 +2,31 @@ import { Router } from "express";
 import { db } from "@workspace/db";
 import { tenants } from "@workspace/db/schema";
 import { eq } from "drizzle-orm";
-import { createTenantSchema, dropTenantSchema, tenantSchemaExists } from "@workspace/tenant";
+import { createTenantSchema, dropTenantSchema, tenantSchemaExists, verifyTenantJWT, extractBearerToken } from "@workspace/tenant";
 import { z } from "zod";
 
 const router = Router();
 
 const ADMIN_KEY = process.env.ADMIN_KEY;
 
-function requireAdmin(req: any, res: any, next: any) {
+async function requireAdmin(req: any, res: any, next: any) {
+  // Accept shared admin key (legacy)
   const key = req.headers["x-admin-key"] || req.query.adminKey;
-  if (!ADMIN_KEY || key !== ADMIN_KEY) {
-    res.status(401).json({ error: "Unauthorized" });
-    return;
+  if (ADMIN_KEY && key === ADMIN_KEY) { next(); return; }
+
+  // Accept JWT from a tenant user with role admin or super_admin
+  const raw = extractBearerToken(req.headers.authorization);
+  if (raw) {
+    try {
+      const payload = await verifyTenantJWT(raw);
+      if (payload.roleName === "admin" || payload.roleName === "super_admin") {
+        (req as any).adminTenant = payload;
+        next(); return;
+      }
+    } catch { /* invalid token */ }
   }
-  next();
+
+  res.status(401).json({ error: "Unauthorized" });
 }
 
 const CreateTenantSchema = z.object({
