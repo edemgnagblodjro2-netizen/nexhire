@@ -1,0 +1,132 @@
+1. Politique de confidentialité obligatoire
+
+Ton application doit obligatoirement avoir :
+
+une politique de confidentialité,
+un lien dans App Store Connect,
+un lien visible dans l’application.
+Cette politique doit expliquer :
+Quelles données sont collectées
+
+Exemple :
+
+nom,
+email,
+numéro,
+localisation,
+appareil,
+analytics,
+notifications.
+Pourquoi elles sont collectées
+
+Exemple :
+
+connexion,
+réservation,
+statistiques,
+notifications d’attente.
+Avec qui elles sont partagées
+
+Exemple :
+
+Firebase,
+Google Analytics,
+OneSignal,
+OpenAI,
+IA tierces.
+2. Consentement obligatoire
+
+Si ton application collecte des données :
+
+➡️ tu dois demander l’autorisation clairement.
+
+Même pour :
+
+analytics,
+tracking,
+publicité,
+données anonymes.
+Exemple concret pour AttenteZéro
+
+Tu dois demander :
+
+autorisation notifications,
+localisation (si utilisée),
+accès caméra,
+accès photos,
+suivi publicitaire.
+
+Mais seulement si nécessaire.
+
+3. Tu ne dois demander que le strict nécessaire
+
+Apple interdit de demander des permissions inutiles.
+
+Mauvais exemple :
+
+Demander le microphone alors que l’application sert juste à gérer une file d’attente.
+
+➡️ risque de rejet.
+
+4. L’utilisateur doit pouvoir refuser
+
+Tu ne peux pas forcer :
+
+la localisation,
+le tracking,
+les notifications,
+
+pour utiliser l’application (sauf nécessité réelle).
+
+5. Connexion obligatoire : attention
+
+Si l’application peut fonctionner sans compte :
+
+➡️ Apple veut que tu permettes l’utilisation sans connexion.
+
+Et si tu crées des comptes :
+✅ tu dois permettre la suppression du compte directement dans l’application.
+
+C’est une règle très importante maintenant.
+
+6. Interdiction de collecte cachée
+
+Apple interdit :
+
+❌ espionnage
+❌ collecte cachée
+❌ récupération secrète de mots de passe
+❌ création de profils utilisateurs cachés
+❌ vente des données utilisateurs.
+
+7. Si tu utilises des IA tierces
+
+Très important pour toi avec OpenAI ou d’autres IA :
+
+➡️ tu dois informer l’utilisateur si ses données sont envoyées à une IA tierce.
+
+8. Les données ne peuvent pas être réutilisées librement
+
+Si tu collectes un email pour :
+
+connexion,
+
+tu ne peux pas ensuite :
+
+envoyer du marketing,
+publicité,
+
+sans consentement supplémentaire.
+
+9. Très important pour AttenteZéro
+
+Voici ce que je te recommande :
+
+À mettre dans ton application
+
+✅ Politique de confidentialité
+✅ Conditions d’utilisation
+✅ Suppression de compte
+✅ Consentement notifications
+✅ Consentement analytics
+✅ Consentement IA si utilisé
