@@ -27,8 +27,8 @@ const PRODUCTS = {
     icon: Heart,
     color: "text-teal-500",
     bg: "bg-teal-50",
-    appUrl: "https://attentezero.ca",
-    kind: "mobile" as const,
+    appUrl: "/apps/attentezero/queues",
+    kind: "web" as const,
   },
 } satisfies Record<string, { icon: React.ElementType; color: string; bg: string; appUrl: string; kind: "web" | "mobile" }>;
 
@@ -42,17 +42,22 @@ const SERVICE_ICONS: Record<string, React.ElementType> = {
 };
 
 // ── Helpers ────────────────────────────────────────────────────────────────
-function openProduct(key: string, token: string) {
-  const cfg = PRODUCTS[key as keyof typeof PRODUCTS];
-  if (!cfg) return;
-  if (cfg.kind === "mobile") {
-    window.open(cfg.appUrl, "_blank", "noopener");
-    return;
-  }
-  // Pass tenant token so the app can auto-authenticate
-  const url = new URL(cfg.appUrl, window.location.origin);
-  url.searchParams.set("tenant_token", token);
-  window.open(url.toString(), "_blank", "noopener");
+const INTERNAL_APPS = new Set(["attentezero"]);
+
+function makeOpenProduct(setLocation: (path: string) => void) {
+  return function openProduct(key: string, token: string) {
+    const cfg = PRODUCTS[key as keyof typeof PRODUCTS];
+    if (!cfg) return;
+    // Internal apps: navigate within the portal (no new tab)
+    if (INTERNAL_APPS.has(key)) {
+      setLocation(cfg.appUrl);
+      return;
+    }
+    // External web apps: open in new tab with tenant token
+    const url = new URL(cfg.appUrl, window.location.origin);
+    url.searchParams.set("tenant_token", token);
+    window.open(url.toString(), "_blank", "noopener");
+  };
 }
 
 // ── Sub-components ─────────────────────────────────────────────────────────
@@ -90,6 +95,7 @@ export function Dashboard() {
   const { t } = useLang();
   const { data: user, isLoading, isError, error } = useGetTenantCurrentUser();
   const [activeService, setActiveService] = useState<{ key: string; label: string } | null>(null);
+  const openProduct = makeOpenProduct(setLocation);
 
   useEffect(() => {
     if (isError && (error as any)?.status === 401) { logout(); setLocation("/login"); }
@@ -218,10 +224,7 @@ export function Dashboard() {
                   <CardContent className="pt-0 flex items-center justify-between">
                     <Badge className="text-xs bg-teal-600">{t.activated}</Badge>
                     <span className="flex items-center gap-1 text-xs text-teal-600 opacity-0 group-hover:opacity-100 transition-opacity font-medium">
-                      {cfg?.kind === "mobile"
-                        ? <><Smartphone className="h-3 w-3" /> App mobile</>
-                        : <><ExternalLink className="h-3 w-3" /> {t.openApp}</>
-                      }
+                      <ExternalLink className="h-3 w-3" /> {t.openApp}
                     </span>
                   </CardContent>
                 </Card>

@@ -62,8 +62,6 @@ const T = {
     profile: "Mon profil",
     profileTitle: "Profil & sécurité",
     displayName: "Nom affiché",
-    firstName: "Prénom",
-    lastName: "Nom",
     saveChanges: "Enregistrer",
     saving: "Enregistrement…",
     changePassword: "Changer le mot de passe",
@@ -141,8 +139,6 @@ const T = {
     profile: "My profile",
     profileTitle: "Profile & security",
     displayName: "Display name",
-    firstName: "First Name",
-    lastName: "Last Name",
     saveChanges: "Save changes",
     saving: "Saving…",
     changePassword: "Change password",
@@ -187,7 +183,7 @@ export function LangProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <LangContext.Provider value={{ lang, setLang, t: T[lang] }}>
+    <LangContext.Provider value={{ lang, setLang, t: T[lang] as Translations }}>
       {children}
     </LangContext.Provider>
   );
