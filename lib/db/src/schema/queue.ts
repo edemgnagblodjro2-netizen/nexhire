@@ -2,6 +2,23 @@ import { sql } from "drizzle-orm";
 import { boolean, index, integer, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 /**
+ * queue_config — configuration kiosk par tenant.
+ * closingTime: "HH:MM" heure locale (ex: "17:00")
+ * serviceIntervalMin: durée d'un créneau en minutes
+ * lateWalkInFeeCents: montant de la pénalité retard en cents CAD
+ */
+export const queueConfig = pgTable("queue_config", {
+  id:                  varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  tenantId:            varchar("tenant_id").notNull().unique(),
+  closingTime:         text("closing_time").notNull().default("17:00"),
+  timezone:            text("timezone").notNull().default("America/Toronto"),
+  serviceIntervalMin:  integer("service_interval_min").notNull().default(30),
+  lateWalkInFeeCents:  integer("late_walk_in_fee_cents").notNull().default(500),
+  createdAt:           timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt:           timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+/**
  * queue_slots — plages horaires disponibles par tenant/service.
  * L'agent crée des créneaux (ex: 9h, 9h30, 10h).
  * booked_count s'incrémente à chaque réservation, se décrémente à l'annulation.

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { db, queueSlots, queueBookings } from "@workspace/db";
-import { and, eq, lt, sql, count, desc, gte } from "drizzle-orm";
+import { db, queueSlots, queueBookings, queueConfig } from "@workspace/db";
+import { and, eq, lt, sql, count, desc, gte, or } from "drizzle-orm";
 import { logger } from "../lib/logger";
 import { sendEmailTo } from "../lib/notify";
 import { getUncachableStripeClient } from "../stripeClient";
@@ -525,6 +525,279 @@ router.get("/queue/public-slots", async (req, res) => {
   }
 });
 
+// ═══════════════════════════════════════════════════════════════════════════
+// KIOSK ROUTES — public, no auth (scan QR code at location)
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ─── Helper: get or create tenant queue config ────────────────────────────
+async function getOrCreateConfig(tenantId: string) {
+  const existing = await db.select().from(queueConfig).where(eq(queueConfig.tenantId, tenantId)).limit(1);
+  if (existing[0]) return existing[0];
+  const [created] = await db.insert(queueConfig).values({ tenantId }).returning();
+  return created;
+}
+
+// ─── Helper: check if proposed slot fits before closing ──────────────────
+function localHHMM(date: Date, tz: string): string {
+  return new Intl.DateTimeFormat("fr-CA", {
+    hour: "2-digit", minute: "2-digit", hour12: false, timeZone: tz,
+  }).format(date).replace("h", ":").padStart(5, "0");
+}
+function canFitBeforeClosing(now: Date, intervalMin: number, closingTime: string, tz: string): boolean {
+  const proposed = new Date(now.getTime() + intervalMin * 60000);
+  const proposedHHMM = localHHMM(proposed, tz);
+  return proposedHHMM <= closingTime;
+}
+
+// ─── GET /api/queue/kiosk/config/:tenantId ───────────────────────────────
+// Public — returns tenant queue config (closing time, interval, fee)
+router.get("/queue/kiosk/config/:tenantId", async (req, res) => {
+  try {
+    const cfg = await getOrCreateConfig(req.params.tenantId);
+    return res.json({
+      closingTime: cfg.closingTime,
+      timezone: cfg.timezone,
+      serviceIntervalMin: cfg.serviceIntervalMin,
+      lateWalkInFeeCents: cfg.lateWalkInFeeCents,
+    });
+  } catch (err) {
+    logger.error({ err }, "queue/kiosk/config error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ─── POST /api/queue/kiosk/lookup ────────────────────────────────────────
+// Find today's active bookings for a citizen by email OR phone
+router.post("/queue/kiosk/lookup", async (req, res) => {
+  const { tenantId, contact } = req.body;
+  if (!tenantId || !contact) return res.status(400).json({ error: "missing_fields" });
+
+  try {
+    const cfg = await getOrCreateConfig(tenantId);
+    const tz = cfg.timezone;
+
+    // Today's window in UTC — start of local day to end of local day
+    const nowLocal = new Intl.DateTimeFormat("fr-CA", {
+      year: "numeric", month: "2-digit", day: "2-digit", timeZone: tz,
+    }).format(new Date()); // "YYYY-MM-DD"
+    const todayStart = new Date(`${nowLocal}T00:00:00`);
+    const todayEnd   = new Date(`${nowLocal}T23:59:59`);
+
+    const contact_lower = contact.toLowerCase().trim();
+
+    const bookings = await db
+      .select({
+        id:              queueBookings.id,
+        citizenToken:    queueBookings.citizenToken,
+        status:          queueBookings.status,
+        slotId:          queueBookings.slotId,
+        cancellationUsed: queueBookings.cancellationUsed,
+        penaltyAmountCents: queueBookings.penaltyAmountCents,
+        penaltyPaidAt:   queueBookings.penaltyPaidAt,
+        slotDatetime:    queueSlots.slotDatetime,
+        serviceName:     queueSlots.serviceName,
+      })
+      .from(queueBookings)
+      .leftJoin(queueSlots, eq(queueBookings.slotId, queueSlots.id))
+      .where(
+        and(
+          eq(queueBookings.tenantId, tenantId),
+          or(
+            eq(queueBookings.citizenEmail, contact_lower),
+            eq(queueBookings.citizenPhone, contact.trim()),
+          ),
+          sql`${queueSlots.slotDatetime} >= ${todayStart}`,
+          sql`${queueSlots.slotDatetime} <= ${todayEnd}`,
+          sql`${queueBookings.status} NOT IN ('cancelled','absent','completed','rescheduled')`,
+        )
+      )
+      .orderBy(queueSlots.slotDatetime);
+
+    return res.json({
+      bookings,
+      config: {
+        closingTime: cfg.closingTime,
+        timezone: cfg.timezone,
+        serviceIntervalMin: cfg.serviceIntervalMin,
+        lateWalkInFeeCents: cfg.lateWalkInFeeCents,
+      },
+    });
+  } catch (err) {
+    logger.error({ err }, "queue/kiosk/lookup error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ─── POST /api/queue/kiosk/late-ticket ───────────────────────────────────
+// Citizen is late — check if a walk-in slot can be created before closing.
+// If yes, returns Stripe checkout URL. If no, returns canFit=false.
+router.post("/queue/kiosk/late-ticket", async (req, res) => {
+  const { citizenToken } = req.body;
+  if (!citizenToken) return res.status(400).json({ error: "missing_fields" });
+
+  try {
+    const [booking] = await db
+      .select()
+      .from(queueBookings)
+      .where(eq(queueBookings.citizenToken, citizenToken))
+      .limit(1);
+
+    if (!booking) return res.status(404).json({ error: "not_found" });
+    if (!["scheduled", "late"].includes(booking.status)) {
+      return res.status(409).json({ error: "invalid_status" });
+    }
+
+    const cfg = await getOrCreateConfig(booking.tenantId);
+    const now = new Date();
+    const proposedSlotDatetime = new Date(now.getTime() + cfg.serviceIntervalMin * 60000);
+
+    const canFit = canFitBeforeClosing(now, cfg.serviceIntervalMin, cfg.closingTime, cfg.timezone);
+
+    if (!canFit) {
+      // Mark as late (for records) but don't charge
+      if (booking.status === "scheduled") {
+        await db.update(queueBookings)
+          .set({ status: "late", lateSignaledAt: now, penaltyAmountCents: 0 })
+          .where(eq(queueBookings.id, booking.id));
+      }
+      return res.json({ canFit: false, proposedSlotDatetime: proposedSlotDatetime.toISOString() });
+    }
+
+    // Mark as late + record penalty
+    await db.update(queueBookings)
+      .set({ status: "late", lateSignaledAt: now, penaltyAmountCents: cfg.lateWalkInFeeCents })
+      .where(eq(queueBookings.id, booking.id));
+
+    // Create Stripe checkout
+    const stripe = await getUncachableStripeClient();
+    const baseUrl = process.env.QUEUE_BASE_URL ?? "https://civicai.ca";
+    const slotTime = new Intl.DateTimeFormat("fr-CA", {
+      hour: "2-digit", minute: "2-digit", timeZone: cfg.timezone,
+    }).format(proposedSlotDatetime);
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: [{
+        price_data: {
+          currency: "cad",
+          unit_amount: cfg.lateWalkInFeeCents,
+          product_data: { name: `Ticket retard — créneau ${slotTime}` },
+        },
+        quantity: 1,
+      }],
+      metadata: {
+        kind: "kiosk_late",
+        bookingToken: citizenToken,
+        proposedSlotDatetime: proposedSlotDatetime.toISOString(),
+        tenantId: booking.tenantId,
+      },
+      success_url: `${baseUrl}/queue/kiosk-success?token=${citizenToken}`,
+      cancel_url: `${baseUrl}/kiosk/${booking.tenantId}`,
+    });
+
+    return res.json({
+      canFit: true,
+      checkoutUrl: session.url,
+      proposedSlotDatetime: proposedSlotDatetime.toISOString(),
+    });
+  } catch (err) {
+    logger.error({ err }, "queue/kiosk/late-ticket error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ─── POST /api/queue/kiosk-payment-webhook ───────────────────────────────
+// Stripe webhook for kiosk late ticket payment
+router.post("/queue/kiosk-payment-webhook", async (req, res) => {
+  const sig = req.headers["stripe-signature"] as string;
+  if (!sig) return res.status(400).json({ error: "no_sig" });
+
+  try {
+    const stripe = await getUncachableStripeClient();
+    const secret = process.env.STRIPE_WEBHOOK_SECRET_KIOSK ?? process.env.STRIPE_WEBHOOK_SECRET ?? "";
+    const event = stripe.webhooks.constructEvent(req.body, sig, secret);
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object as any;
+      const { kind, bookingToken, proposedSlotDatetime, tenantId } = session.metadata ?? {};
+
+      if (kind !== "kiosk_late" || !bookingToken || !proposedSlotDatetime) {
+        return res.json({ received: true });
+      }
+
+      // Find original booking
+      const [original] = await db
+        .select()
+        .from(queueBookings)
+        .where(eq(queueBookings.citizenToken, bookingToken))
+        .limit(1);
+
+      if (!original) { return res.json({ received: true }); }
+
+      const newToken = generateToken();
+      const slotDt = new Date(proposedSlotDatetime);
+
+      await db.transaction(async (tx) => {
+        // Create walk-in slot at proposed time (capacity 1, walk-in)
+        const [newSlot] = await tx.insert(queueSlots).values({
+          tenantId,
+          serviceName: "Ticket retard (walk-in)",
+          slotDatetime: slotDt,
+          capacity: 1,
+          bookedCount: 1,
+          isActive: true,
+        }).returning();
+
+        // Create new booking
+        await tx.insert(queueBookings).values({
+          tenantId,
+          slotId: newSlot.id,
+          citizenToken: newToken,
+          citizenName: original.citizenName,
+          citizenEmail: original.citizenEmail,
+          citizenPhone: original.citizenPhone,
+          weekKey: getWeekKey(slotDt),
+          status: "scheduled",
+          cancellationUsed: original.cancellationUsed,
+          penaltyAmountCents: session.amount_total ?? original.penaltyAmountCents,
+          penaltyPaidAt: new Date(),
+        });
+
+        // Mark original as rescheduled
+        await tx.update(queueBookings)
+          .set({ status: "rescheduled", rescheduledToSlotId: newSlot.id })
+          .where(eq(queueBookings.id, original.id));
+
+        // Free original slot
+        await tx.update(queueSlots)
+          .set({ bookedCount: sql`GREATEST(0, ${queueSlots.bookedCount} - 1)` })
+          .where(eq(queueSlots.id, original.slotId));
+      });
+
+      // Send confirmation email
+      const cfg = await getOrCreateConfig(tenantId);
+      const slotTimeFmt = new Intl.DateTimeFormat("fr-CA", {
+        hour: "2-digit", minute: "2-digit", timeZone: cfg.timezone,
+      }).format(slotDt);
+      const baseUrl = process.env.QUEUE_BASE_URL ?? "https://civicai.ca";
+
+      await sendEmailTo(original.citizenEmail, {
+        subject: "Votre ticket retard est confirmé",
+        text: `Bonjour ${original.citizenName},\n\nVotre ticket retard a été accepté. Votre nouveau créneau est à ${slotTimeFmt}.\n\nGérer votre RDV : ${baseUrl}/rdv/${newToken}`,
+        html: `<p>Bonjour <strong>${original.citizenName}</strong>,</p>
+<p>Votre paiement a été accepté. Votre nouveau créneau est à <strong>${slotTimeFmt}</strong>.</p>
+<p><a href="${baseUrl}/rdv/${newToken}" style="background:#0d9488;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;display:inline-block">Voir mon billet →</a></p>`,
+      });
+    }
+
+    return res.json({ received: true });
+  } catch (err) {
+    logger.error({ err }, "queue/kiosk-payment-webhook error");
+    return res.status(400).json({ error: "webhook_error" });
+  }
+});
+
 // ─── GET /api/queue/booking/:token/siblings ─────────────────────────────────
 // Returns all active bookings for the same citizen (same email + tenantId)
 // Uses the token to identify the citizen — never exposes the email in the URL
@@ -701,6 +974,43 @@ router.patch("/queue/agent/bookings/:id/status", requireAgent, async (req, res) 
     return res.json({ ok: true, status });
   } catch (err) {
     logger.error({ err }, "queue/agent/bookings PATCH error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ─── GET /api/queue/agent/config ─────────────────────────────────────────────
+router.get("/queue/agent/config", requireAgent, async (req, res) => {
+  const tenantId = (req as any).tenantPayload.tenantId;
+  try {
+    const cfg = await getOrCreateConfig(tenantId);
+    return res.json({ config: cfg });
+  } catch (err) {
+    logger.error({ err }, "queue/agent/config GET error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ─── PUT /api/queue/agent/config ─────────────────────────────────────────────
+router.put("/queue/agent/config", requireAgent, async (req, res) => {
+  const tenantId = (req as any).tenantPayload.tenantId;
+  const { closingTime, serviceIntervalMin, lateWalkInFeeCents, timezone } = req.body;
+  try {
+    const existing = await db.select().from(queueConfig).where(eq(queueConfig.tenantId, tenantId)).limit(1);
+    const updates: Record<string, any> = { updatedAt: new Date() };
+    if (closingTime)          updates.closingTime = closingTime;
+    if (serviceIntervalMin)   updates.serviceIntervalMin = Number(serviceIntervalMin);
+    if (lateWalkInFeeCents)   updates.lateWalkInFeeCents = Number(lateWalkInFeeCents);
+    if (timezone)             updates.timezone = timezone;
+
+    if (existing[0]) {
+      await db.update(queueConfig).set(updates).where(eq(queueConfig.tenantId, tenantId));
+    } else {
+      await db.insert(queueConfig).values({ tenantId, ...updates });
+    }
+    const cfg = await getOrCreateConfig(tenantId);
+    return res.json({ config: cfg });
+  } catch (err) {
+    logger.error({ err }, "queue/agent/config PUT error");
     return res.status(500).json({ error: "server_error" });
   }
 });

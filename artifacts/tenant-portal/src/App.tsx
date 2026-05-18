@@ -21,6 +21,7 @@ import { StaffPage }         from "@/apps/attentezero/pages/StaffPage";
 import { PortalPage }        from "@/apps/attentezero/pages/PortalPage";
 import { CRMPage }           from "@/apps/attentezero/pages/CRMPage";
 import { SlotManagerPage }   from "@/apps/attentezero/pages/SlotManagerPage";
+import { KioskPage }         from "@/apps/attentezero/pages/KioskPage";
 import { PublicTicketPage }    from "@/apps/attentezero/pages/PublicTicketPage";
 import { CitizenBookingPage }  from "@/apps/attentezero/pages/CitizenBookingPage";
 import { BookAppointmentPage } from "@/apps/attentezero/pages/BookAppointmentPage";
@@ -116,6 +117,10 @@ function Router() {
       </Route>
       <Route path="/reserver/:tenantId">
         <BookAppointmentPage />
+      </Route>
+      {/* Kiosk QR scan landing — public, no auth */}
+      <Route path="/kiosk/:tenantId">
+        <KioskPage />
       </Route>
       <Route>
         {isAuthenticated ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
