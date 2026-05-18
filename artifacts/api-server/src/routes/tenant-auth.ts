@@ -189,7 +189,7 @@ ${process.env.PORTAL_URL ?? "https://portal.civicai.ca"}
 
 À bientôt,
 L'équipe CivicAI
-services@civicai.ca
+contact@attentezero.ca
   `.trim();
 
   // Fire-and-forget — don't await, don't block the response
