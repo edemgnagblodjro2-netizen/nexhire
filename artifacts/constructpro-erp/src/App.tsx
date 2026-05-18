@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './erp.css';
+import { StoreProvider } from './store';
 
 import Topbar from './components/Topbar';
 import Sidebar from './components/Sidebar';
@@ -97,7 +98,7 @@ export default function App() {
   }
 
   return (
-    <>
+    <StoreProvider>
       <Topbar
         currentRole={currentRole}
         onSetRole={handleSetRole}
@@ -130,6 +131,6 @@ export default function App() {
           </div>
         </div>
       </div>
-    </>
+    </StoreProvider>
   );
 }
