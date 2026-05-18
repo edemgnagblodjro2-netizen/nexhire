@@ -20,6 +20,7 @@ import storeStatusRouter from "./storeStatus";
 import contactRouter from "./contact";
 import tenantsRouter from "./tenants";
 import tenantAuthRouter from "./tenant-auth";
+import attentezeroRouter from "./attentezero";
 
 // Pivot v1.0.33 — sensitive-data modules retired:
 // `clients`, `appointments`, `team`, and the activity-feed endpoints have been
@@ -52,5 +53,6 @@ router.use(storeStatusRouter);
 router.use(contactRouter);
 router.use("/admin/tenants", tenantsRouter);
 router.use("/tenant-auth", tenantAuthRouter);
+router.use("/", attentezeroRouter);
 
 export default router;

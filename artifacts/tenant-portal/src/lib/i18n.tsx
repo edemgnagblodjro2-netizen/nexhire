@@ -106,8 +106,6 @@ const T = {
     createAccount: "Create account",
     alreadyAccount: "Already have an account?",
     loginLink: "Sign in",
-    firstName: "First Name",
-    lastName: "Last Name",
     registerSuccess: "Account created",
     registerSuccessDesc: "Successfully registered and logged in.",
     registerFailed: "Registration failed",
