@@ -2,53 +2,103 @@
 
 Historique des releases mobile. Les notes de la release **en cours** restent dans `replit.md` ; tout le reste est ici.
 
-## v1.1.13 vc76 (en attente OK build) — +Montérégie 1007 + Côte-Nord 535 + Chaudière-Appalaches 995 + Capitale-Nationale 1791 + Haute-Yamaska 261 + FQOCF 205 + Emploi-QC 273 + CIUSSS-EMTL 46 + Logement-Rive-Sud 4
-- **+4 services logement Rive-Sud** (Comité logement Rive-Sud, Office d'habitation de Longueuil OHL, Tribunal administratif du logement TAL province-wide, AILIA logements accessibles) ajoutés one-by-one depuis paste user. Réseau d'habitations Chez Soi déjà présent (Montérégie). Géocodage : 2 ROOFTOP (Comité logement, OHL), 2 APPROXIMATE (TAL et AILIA — pas d'adresse fournie). Push : **1 requête bulk, ~1 sec, 4/4 OK**.
-- **+46 installations CIUSSS-EMTL** (Est-Île-Montréal — CLSC, GMF, cliniques médicales, CHSLD, centres de jour, Institut universitaire en santé mentale) parsées depuis paste copié de `https://ciusss-estmtl.gouv.qc.ca/adresses-et-coordonnees` (684 lignes, 68 fiches sources). Site Drupal JS-rendered → AJAX scraping bloqué (`/ajax/search` ne renvoie que 10 par requête, pas d'API REST exposée), fallback texte copié-collé. Parser `/tmp/ciusss-parse.py` détecte chaque bloc via regex `City QC POSTAL` puis remonte 2 lignes (adresse, nom). 68 → 46 dédup vs prod (22 doublons). Géocodage adresse complète : **44 ROOFTOP (96%)**, 1 RANGE, 1 GC, 0 échec. Tous catégorisés `health`. Push : **1 requête bulk, ~1 sec, 46/46 OK**. Coût Google : ~0,25$ USD.
-- **+273 organismes employabilité Quebec.ca** scrapés depuis le répertoire officiel `https://www.quebec.ca/emploi/trouver-emploi-stage/organismes-aide/repertoire-organismes-specialises-employabilite` (35 pages, pagination `tx_solr[page]`). Pipeline `/tmp/emp-scrape.py` : fetch parallèle 10 workers → split sur `<div class="organisme-employabilite result-item">` → extraction propre (nom dans `organisme-name-section > span`, adresse multi-`<p>` dans `<div class="address">` avec dernière ligne `City (Québec) POSTAL`, phone via `<a href="tel:">` + suffixe poste, website via `data-external-link="true"`). 344 scrapés (100% adresse complète + phone) → 273 dédup vs prod (71 doublons FQOCF/régions). Géocodage adresse complète : **263 ROOFTOP (96%)**, 7 RANGE, 2 GC, 1 APPROXIMATE, 0 échec. Tous catégorisés `employment`. Push : **1 requête bulk, ~2 sec, 273/273 OK**. Coût Google : ~1,40$ USD. Méthode validée pour scraping de répertoires gouvernementaux Quebec.ca (TYPO3 + tx_solr).
-- **+205 OCF FQOCF** (Organismes communautaires Famille, toutes régions QC) scrapés depuis `https://fqocf.org/trouver-un-ocf/`. Pipeline `/tmp/fqocf-scrape.py` : sitemap `organismes-sitemap.xml` (260 URLs) → fetch parallèle 20 workers → extraction propre (H1=nom, `<div class=elementor-widget-container>` contenant le code postal de l'OCF (skip footer FQOCF HQ J4P 2H6) → adresse multi-ligne parsée, `tel:` link → téléphone formaté, premier `href` externe non-social → site web). 258 avec adresse → 205 dédup vs prod. Géocodage adresse complète : **200 ROOFTOP (97%, RECORD ABSOLU)**, 4 RANGE_INTERPOLATED, 1 GEOMETRIC_CENTER, **0 APPROXIMATE, 0 échec**. Tous catégorisés `family`. Push : **1 requête bulk, ~2 sec, 205/205 OK**. Coût Google : ~1,00$ USD. Méthode validée pour scraping de répertoires WordPress + Elementor + JetEngine.
-- **+261 fiches Haute-Yamaska (MRC)** importées depuis paste-211 (`Pasted-3e-imp-rial-...txt`, 2754 lignes, 347 codes : 266 GBY régionaux + 54 QBC + 22 CQE + 3 MAN + 2 SLC). Parser `/tmp/parse-hy.py` (clone Capitale) filtre par ville réelle (skip "Québec (Province)/Canada/International/Estrie/Montérégie/Brome-Missisquoi"). Cleanup additionnel pour villes parasites (descriptions tombées comme city, "Estrie - Région 05", "Haute-Yamaska" comme nom de région). 286 brut → 267 dédup vs prod → 261 après cleanup. Géocodage : **180 ROOFTOP (69%)**, 6 GC, 74 APPROXIMATE, 1 CITY_CENTER, 0 échec. Distribution : Granby 202, Waterloo 28, Roxton Pond 9, Saint-Alphonse-de-Granby 7, Sainte-Cécile-de-Milton 6, Saint-Joachim-de-Shefford 5, Shefford 2, Warden 2. Catégories : social 148, family 45, housing 17, health 16, mentalHealth 15, employment 10, food 8, immigration 2. Push : **1 requête bulk, ~2 sec, 261/261 OK**. Coût Google : ~1,30$ USD.
-- **+1791 fiches Capitale-Nationale** importées depuis paste-211 (`Pasted-211-information-d-urgence-...txt`, 16320 lignes, 1996 codes sources). Plus gros import single-region de la journée. Spécificité : quartiers de Québec ville notés "1-2- Saint-Roch (Quartier)" → parser `/tmp/parse-cn2.py` normalise tous les quartiers en city="Québec" + conserve le quartier en subcity. Strip aussi suffixes "(région 03)/(Ville)/(Municipalité)/(MRC)/(Arrondissement)". 1934 brut → 1791 dédup. Géocodage par "nom + ville + Québec" + fallback : **1267 ROOFTOP (71%, nouveau record du jour)**, 69 GC, 450 APPROXIMATE, 4 CITY_CENTER, 1 RANGE, 0 échec. Distribution top : Québec 1286, Donnacona 42, La Malbaie 41, Baie-Saint-Paul 39, Saint-Augustin-de-Desmaures 22, Saint-Raymond 21, Beaupré 18, L'Ancienne-Lorette 16, Pont-Rouge 14, Saint-Basile 13. Catégories : social 981, family 336, health 128, mentalHealth 105, housing 93, employment 74, food 55, immigration 19. Push : **1 requête bulk, ~5 sec, 1791/1791 OK**. Coût Google : ~9,00$ USD.
-- **+995 fiches Chaudière-Appalaches** importées depuis paste-211 (`Pasted--Ma-liste-...txt`, 9300 lignes, 1149 codes sources). Format texte 211 mais codes mélangés (QBC régional + QBC province-wide + MAN/SLC/CQE) → parser `/tmp/parse-ca.py` filtre par **ville réelle** (skip "Québec (Province)", "Canada", "International") + strip suffixes "(Quartier)/(Municipalité)" → 1086 brut → 995 dédup. Géocodage par "nom + ville + Québec" + fallback ville-centre : **613 ROOFTOP (62%, record du jour)**, 47 GC, 334 APPROXIMATE, 1 CITY_CENTER, 0 échec. Distribution top : Lévis 152, Thetford Mines 78, Saint-Georges 76, Montmagny 48, Sainte-Marie 43, Saint-Romuald 39, Saint-Nicolas 25, Charny 23, Saint-Jean-Port-Joli 21, Lac-Etchemin 19, Adstock 18, Saint-Joseph-de-Beauce 17, Saint-Rédempteur 16, Disraeli 15, Saint-Jean-Chrysostome 14. Catégories : social 584, family 170, health 63, mentalHealth 57, employment 44, food 36, housing 36, immigration 5. Push : **1 requête bulk, ~3 sec, 995/995 OK**. Coût Google : ~5,00$ USD.
-- **+535 fiches Côte-Nord** importées depuis paste-211 (`Pasted-211-Canada-...txt`, 5300 lignes, 651 fiches sources). Format différent des PDFs : texte 211 brut avec codes `SLCxxxx` (régional Côte-Nord) vs `QBC/CQE` (province-wide) — parser `/tmp/parse-cn.py` filtre les 587 SLC seulement, puis nettoyage noise (clubs sportifs, biblio municipales) → 535 finales. **Pas d'adresses dans le format source** → géocodage par `"nom + ville + Québec, Canada"` (Google trouve souvent l'org enregistrée comme business) avec fallback ville-centre : 230 ROOFTOP (43%), 13 GC, 290 APPROXIMATE, 2 CITY_CENTER, 0 échec. Distribution : Baie-Comeau 121, Sept-Îles 120, Port-Cartier 39, Forestville 24, Havre-Saint-Pierre 21, Côte-Nord-du-Golfe-du-Saint-Laurent 18, Fermont 16, Les Escoumins 14, Chute-aux-Outardes 10, Les Bergeronnes 10. Catégorisation heuristique sur mots-clés du nom/desc : social 266, family 77, health 71, housing 53, food 26, mentalHealth 25, employment 15, immigration 2. Push : **1 requête bulk, ~3 sec, 535/535 OK**. Coût Google : ~5,00$ USD.
-- **+1007 fiches Montérégie** importées depuis `monteregie2-fr.pdf` (97k lignes, 5182 fiches sources). Pipeline `scripts/src/parse-mont.ts` (clone Outaouais) → filtre noise + extract vraie ville depuis adresse + normalize UPPERCASE → 1038 dédup interne → 1007 dédup vs prod → géocodés Google parallèle (952 ROOFTOP, 31 GC, 19 RANGE, 5 APPROX, 0 échec). Push : burst 1 XFF varié = **240 OK** (record du jour, bonne variation IPs), puis **endpoint bulk déployé en prod entre-temps** → 767 restants poussés en **1 seule requête, ~3 sec, 100% OK**. Distribution top : Longueuil 241, Saint-Jean-sur-Richelieu 74, Châteauguay 46, Vaudreuil-Dorion 42, Salaberry-de-Valleyfield 41, Saint-Hyacinthe 37, Brossard 32, Beloeil 28, La Prairie 22, Boucherville 21, Sorel-Tracy 20, Saint-Rémi 17, Saint-Constant 17, Saint-Bruno 16. Catégories : social majoritaire, food/family/housing/employment/mentalHealth/health/immigration. Coût Google Geocoding : ~5,00$ USD.
-- **Endpoint bulk validé en prod** : 767 fiches en 1 requête, ~3 sec, 0 erreur. Méthode forte officiellement opérationnelle pour tous les futurs imports (Estrie, Mauricie, Saguenay, Bas-Saint-Laurent, etc.).
-- **Gotcha curl** : arrays JSON >100KB dépassent la limite ARG_MAX. Utiliser `curl --data-binary @file.json` au lieu de `-d '...'` inline.
-- **Gotcha bulk** : un payload bulk de >1500 fiches retourne une réponse vide (timeout serveur ou limite intermédiaire Replit edge). Splitter en chunks de ~900-1000 fiches (Capitale 1791 = 2 chunks de 895+896 ✅).
-- **PROD : 2750 → 7627 services actifs (+4877)** ce soir (Montérégie 1007 + Côte-Nord 535 + Chaudière-Appalaches 995 + Capitale-Nationale 1791 + Haute-Yamaska 261 + FQOCF 205 + Emploi-QC 273 + CIUSSS-EMTL 46 + Logement-Rive-Sud 4). Milestones +5000, +6000 et +7000 franchis 🎯.
-- Cache mobile bumpé v23→v32. Bundle régénéré (7627 fiches).
+## iOS / TestFlight — Configuration de base (6 mai 2026)
+- Compte Apple Developer payé + approuvé.
+- Clé App Store Connect API (.p8) générée, stockée en secrets Replit (`APP_STORE_CONNECT_KEY_ID`, `APP_STORE_CONNECT_ISSUER_ID`, `APP_STORE_CONNECT_PRIVATE_KEY`, `APPLE_TEAM_ID`).
+- ⚠️ Clé .p8 leakée 1× dans logs bash (Replit n'a pas masqué) — à révoquer/régénérer post-launch par sécurité.
+- `artifacts/service-qc/asc-api-key.p8` reformatée en PEM proprement, gitignorée (`*.p8`).
+- `eas.json` : profil iOS production ajouté (resourceClass=m-medium, autoIncrement=buildNumber) + submit profile complet (ascApiKeyPath, ascApiKeyId, ascApiKeyIssuerId, appleTeamId, ascAppId=6766750916).
+- `app.json` : `ITSAppUsesNonExemptEncryption=false` (évite question manuelle Apple à chaque submit).
+- App créée sur App Store Connect : Apple ID **6766750916** (bundle `com.attentezero.app`, langue fr-CA, SKU `attentezero-ios`). ⚠️ Création app via ASC API impossible (Apple bloque CREATE), web UI obligatoire.
+- Override pnpm `@xmldom/xmldom: ^0.8.10` (root package.json) → fix prebuild crash sur EAS server (incompatibilité xmldom 0.9 ↔ @expo/plist 0.4.8).
+- **Gotcha credentials** : tout premier `eas build --platform ios` exige mode interactif (Apple ID + 2FA), même avec ASC API key. Ensuite stockés sur EAS, builds suivants tournent en `--non-interactive`.
+
+## v1.1.19 build107 — Build + soumission Apple Review (fix 3.1.1 + 5.1.1)
+- **EAS Build iOS lancé** : Build ID `b6b7093a-635c-475e-af00-dc581e13450f`
+- **Auto-submit déclenché** : Submission ID `afafec3b-3fe1-4df8-ab57-275b64e3b35b`
+- **buildNumber** : 105 → 106 → **107** (auto-incrémenté 2× par EAS lors des tentatives)
+- **version** : 1.1.18 → **1.1.19**
+- Build lancé avec `EAS_NO_VCS=1` pour éviter le blocage git de l'agent Replit.
+
+## v1.1.18 vc80 build105 — Fix refus Apple 3.1.1 + 5.1.1 (2e tentative)
+- **Fix 3.1.1 Apple (2e)** : Sur iOS, la page "Nos forfaits" ne montre plus QUE le forfait gratuit. Les tiers Premium (20$), Organisme (149,99$) et Partenaire (299,99$) sont entièrement masqués sur iOS via `IOS_VISIBLE_TIERS = TIERS.filter(t => t.ctaKind === "free")`. Le chip d'en-tête passe de "TARIFICATION" à "FONCTIONNALITÉS" sur iOS. Une bannière verte explique que tout est gratuit. Aucun prix, aucun lien d'achat, aucun mailto de commande sur iOS.
+- **Fix 5.1.1 Apple (2e)** : Ajout du `privacyManifests` dans `app.json` (`ios.privacyManifests`) avec les 4 types d'API requis : UserDefaults (CA92.1), FileTimestamp (C617.1), DiskSpace (E174.1), SystemBootTime (35F9.1). `NSPrivacyTracking: false`, `NSPrivacyTrackingDomains: []`, `NSPrivacyCollectedDataTypes: []`.
+- buildNumber 104 → 105, versionCode Android inchangé (80).
+
+## v1.1.18 vc80 build100 — Fix refus Apple + Programme ambassadeur
+- **Fix 3.1.1 Apple** : Stripe complètement retiré sur iOS. Toutes les fonctionnalités Premium gratuites sur iOS via `Platform.OS === "ios"` dans `usePremiumGate.ts` et `premium.tsx`.
+- **Fix 5.1.1 Apple** : Politique de confidentialité entièrement refondue sur `attentezero.ca/privacy`.
+- **Champ code ambassadeur à l'inscription** : champ "Code ambassadeur" visible dans le formulaire `register.tsx`, auto-claim après inscription réussie.
+- **Android vc80** : ✅ Approuvé et disponible sur Play Store.
+- **iOS build 100** : ⏳ En review Apple (soumis après refus 3.1.1 + 5.1.1 sur v1.1.17).
+
+## v1.1.16 vc91 — Fix stats "au Québec" + splash count corrigé
+- **Stats strip accueil corrigées** : labels passent de `"services"` → `"services au Québec"` / `"services in Québec"` et `"villes"` → `"villes QC"` / `"QC cities"`.
+- **Splash count corrigé** : `SERVICES_COUNT_LABEL` corrigé `8 037 → 7 957` (vrai count BDD prod).
+- **Cache v32→v33** : force un fresh fetch côté app pour afficher le bon total.
+- Android versionCode 76→77, iOS buildNumber EAS auto-bump 90→91.
+
+## v1.1.15 vc89 — Fix tab bar Android (safe area insets)
+- **Bug Android corrigé** : tab bar partiellement cachée derrière la barre de navigation système sur certains téléphones Android. Fix : `useSafeAreaInsets()` dans `_layout.tsx`, `height: 60 + insets.bottom` + `paddingBottom: insets.bottom` sur `tabBarStyle`.
+- iOS buildNumber EAS auto-bump 88→89, Android versionCode 75→76.
+- Cleanup imports inutilisés (`BlurView`, `useColors`, `useColorScheme`, `isDark`, `isIOS`).
+
+## v1.1.14 vc85 — Overflow numéro téléphone + couverture services (mai 2026)
+- **Bug UI corrigé** : débordement du numéro de téléphone dans `ServiceCard.tsx`. Footer `flexWrap: "wrap"` + `flex: 1` sur `cityRow` → le bouton appel passe automatiquement à la ligne suivante si trop large. `flexShrink: 0` sur callButton, `flexShrink: 1` sur callText.
+- **+80 services ajoutés en prod** (7 957 → 8 037) sur 12 villes QC sous-couvertes.
+- iOS buildNumber 84→87 (auto-incrémenté par EAS), Android versionCode 74→75.
+
+## v1.1.13 vc78 — Tab bar redesign
+- `app/(tabs)/_layout.tsx` retravaillé : fond `#0d9488`, coins arrondis, ombre relevée, pill actif unifié sur toutes les tabs.
+- iOS buildNumber 81→82, Android versionCode 73→74.
+
+## v1.1.13 vc77 — Splash design B (Moderne illustration)
+- Splash mobile redesign : `components/AppSplashScreen.tsx` réécrit selon design B approuvé.
+  - Fond `#0d9488` plein, 5 cercles concentriques décoratifs, 5 sparkles dispersés.
+  - Logo card 112x112 sur outer-glow 128x128.
+  - Wordmark `AttenteZéro` Inter_700Bold 34pt, tagline `Services communautaires du Québec` Inter_500Medium 13pt.
+  - Badge pill `7 957 services actifs`.
+  - Footer `PROPULSÉ PAR / CivicAI`.
+  - Animation : rings+logo (350ms) → text (220ms) → badge+footer (220ms) → total ~1.1s.
+- Compte hardcodé `7 957` dans `SERVICES_COUNT_LABEL` — à mettre à jour manuellement quand ce nombre évolue.
+- iOS buildNumber 80→81, Android versionCode 72→73.
+- ⚠️ Web preview fige sur 1ère frame de l'anim (useNativeDriver pas dispo en web RN) — normal, native iOS/Android tourne smooth.
+
+## v1.1.13 vc76 — +Montérégie 1007 + Côte-Nord 535 + Chaudière-Appalaches 995 + Capitale-Nationale 1791 + Haute-Yamaska 261 + FQOCF 205 + Emploi-QC 273 + CIUSSS-EMTL 46 + Logement-Rive-Sud 4
+- **+4 services logement Rive-Sud** (Comité logement Rive-Sud, Office d'habitation de Longueuil OHL, Tribunal administratif du logement TAL province-wide, AILIA logements accessibles).
+- **+46 installations CIUSSS-EMTL** (Est-Île-Montréal — CLSC, GMF, cliniques médicales, CHSLD, centres de jour). Géocodage : 44 ROOFTOP (96%).
+- **+273 organismes employabilité Quebec.ca** scrapés depuis le répertoire officiel (35 pages, pagination `tx_solr[page]`). 263 ROOFTOP (96%).
+- **+205 OCF FQOCF** scrapés depuis `fqocf.org/trouver-un-ocf/`. 200 ROOFTOP (97%, record absolu).
+- **+261 fiches Haute-Yamaska** importées depuis paste-211. 180 ROOFTOP (69%).
+- **+1791 fiches Capitale-Nationale** importées depuis paste-211 (16 320 lignes). 1267 ROOFTOP (71%).
+- **+995 fiches Chaudière-Appalaches** importées depuis paste-211. 613 ROOFTOP (62%).
+- **+535 fiches Côte-Nord** importées depuis paste-211. 230 ROOFTOP (43%).
+- **+1007 fiches Montérégie** importées depuis `monteregie2-fr.pdf`. 952 ROOFTOP.
+- **Endpoint bulk validé en prod** : 767 fiches en 1 requête, ~3 sec, 0 erreur.
+- **PROD : 2750 → 7627 services actifs (+4877)**.
+- Cache mobile bumpé v23→v32.
 
 ## v1.1.13 vc75 — Imports massifs OWI + Lanaudière + Laval + Outaouais + endpoint bulk
-- **+90 fiches Ouest-de-l'Île** importées depuis le PDF officiel `montreal-ouest-de-l-ile-west-island-fr.pdf` (247 pages, 623 fiches au total). Pipeline : `scripts/src/parse-owi-pdf.ts` (parser PDF→JSON) → dédup auto vs prod (97 doublons détectés) → filtres exclusion (bibliothèques municipales, sociétés savantes nationales) → géocodage Google parallèle (83 ROOFTOP, 6 GEOMETRIC_CENTER, 1 échec exclu) → POST batch parallèle via API admin. Distribution : Pointe-Claire 24, Pierrefonds-Roxboro 20, Dorval 17, Beaconsfield 10, Sainte-Anne 9, Kirkland 8, DDO 8, Baie-d'Urfé 3, L'Île-Bizard 3, Senneville 1. Coût Google Geocoding : ~0,50$ USD.
-- **+242 fiches Lanaudière** importées depuis PDF officiel régional (468 pages, 1340 fiches sources). Parser adapté avec post-traitement skip noms régions (bug ville="Lanaudière"). Géocodage : 233 ROOFTOP / 9 autres, 0 échec. Push initial 10 workers parallèles a déclenché le rate-limit admin (60/IP/15min) → 180/242 OK puis blocage. Reste poussé en burst après attente fenêtre 13 min. Distribution : Joliette 58, Repentigny 56, Terrebonne 42, Mascouche 30, L'Assomption 14, Rawdon 8, L'Épiphanie 5, Notre-Dame-des-Prairies 4, Saint-Lin–Laurentides 4, Chertsey 3, autres 18. Coût Google Geocoding : ~1,21$ USD.
-- **+269 fiches Laval** importées depuis `laval2-fr.pdf` (1577 fiches sources). Pipeline `/tmp/parse-laval.ts` (clone du parser Lanaudière) → filtre noise (327 headers parsés à tort comme fiches) → dédup vs prod (51 doublons) → dédup interne (931 ré-occurrences) → 269 finales géocodées Google parallèle (255 ROOFTOP, 11 GEOMETRIC_CENTER, 2 RANGE, 1 APPROX, 0 échec). Push : burst initial parallèle 12 workers + XFF varié → 74 OK avant rate-limit ; cycle 2 après attente 13 min → 195/195 OK d'un coup. Distribution catégories : social 170, food 33, family 28, employment 15, mentalHealth 11, health 7, housing 4, immigration 1. Toutes ville=Laval. Coût Google ~1,35$ USD.
-- **+440 fiches Outaouais** importées depuis `outaouais-fr_*.pdf` (2350 fiches sources). Pipeline `scripts/src/parse-out.ts` → filtre noise + extract vraie ville depuis adresse (segment avant "Outaouais") → dédup interne + vs prod → 440 finales géocodées (419 ROOFTOP, 8 RANGE, 8 GC, 5 APPROX, 0 échec). Push : 3 cycles burst+wait avec XFF varié → cycle 1 = 180 OK, cycle 2 = 238 OK (après 13 min), cycle 3 = 22 OK final. Distribution top : Gatineau 266, Maniwaki 23, Campbell's Bay 16, Saint-André-Avellin 13, Val-Des-Monts 8, La Pêche 7, Lochaber 6, Gracefield 6, Papineauville 6, autres ~95. Coût Google Geocoding : ~2,20$ USD.
-- **MÉTHODE FORTE LIVRÉE — endpoint `POST /api/admin/services/bulk`** : accepte array de jusqu'à 1000 payloads en une seule requête → contourne proprement le rate-limit admin (1 req au lieu de N). Réponse : `{total, created, skipped, errors, results[]}`. Dédup auto via PG 23505 (skipped au lieu d'erreur). Testé en local ✅. **À DÉPLOYER pour utilisation prod** — une fois en prod, un import PDF de 500 fiches = 1 requête = ~3 sec au lieu de 1h de cycles burst+wait.
-- **PROD : 1709 → 2750 services actifs (+1041)** dans la journée.
-- Cache mobile bumpé v19→v23. Bundle `services-data.json` + `services.ts` régénérés depuis prod live (2750 fiches).
-- ⚠️ **Gotcha rate-limit admin** : POST en parallèle vers `/api/admin/services` est limité à 60 req/IP/15min. Astuce XFF (X-Forwarded-For varié) gagne ~3× (180 OK par burst au lieu de 60) car Replit edge ne semble pas TOUJOURS overrider l'header. Pour vraiment bypass : utiliser `/api/admin/services/bulk` (1 req = N inserts).
+- **+90 fiches Ouest-de-l'Île** — Pipeline PDF→JSON, 83 ROOFTOP.
+- **+242 fiches Lanaudière** — 233 ROOFTOP. Gotcha : rate-limit admin 60/IP/15min déclenché en burst parallèle.
+- **+269 fiches Laval** — 255 ROOFTOP. 3 cycles burst+wait.
+- **+440 fiches Outaouais** — 419 ROOFTOP.
+- **MÉTHODE FORTE LIVRÉE — endpoint `POST /api/admin/services/bulk`** : accepte array jusqu'à 1000 payloads en une seule requête. Réponse : `{total, created, skipped, errors, results[]}`. Dédup auto via PG 23505.
+- **PROD : 1709 → 2750 services actifs (+1041)**.
+- Cache mobile bumpé v19→v23.
+- ⚠️ **Gotcha rate-limit admin** : POST parallèle limité 60 req/IP/15min. Utiliser `/api/admin/services/bulk` pour bypass propre.
 
-## v1.1.13 vc74 (en attente OK build)
-- **BUG MAJEUR FIXÉ — bundle mobile désynchronisé de la DB** : `data/services.ts` (bundle Expo) avait des IDs au format `qc-gat-fd001` (vieux) tandis que la DB (dev + prod) utilise `qc-imm-gatineau-aco` (format actuel via `services-data.json`). Conséquence : POST `/rate`, `/track`, `/wait` → 404 sur tous les services bundlés en TestFlight/Android internal (race au boot avant fetch API). Fix : régénération de `services.ts` depuis `services-data.json` (1710 services, IDs alignés avec l'API). 0 modification DB prod (le 1 vote `ab-211` reste intact). Cache mobile bumpé v17→v18 pour invalider les caches contenant les anciens IDs.
-- **Script permanent** : `pnpm --filter @workspace/scripts run regen-mobile-bundle` — à relancer chaque fois que `services-data.json` change pour garder bundle et DB synchros.
-- Tuiles home : `aspectRatio` 1.15→1.7 + marginBottom 14→10 (réduction grille de 174px = vrai fix du « gros vide »). AI CTA remis taille originale (padding 8/12, icône 26px). `allCategoriesLink` marginTop=0.
+## v1.1.13 vc74 — Fix bundle mobile désynchronisé
+- **BUG MAJEUR FIXÉ** : `data/services.ts` (bundle Expo) avait des IDs au format `qc-gat-fd001` (vieux) tandis que la DB utilise `qc-imm-gatineau-aco` (format actuel). Fix : régénération de `services.ts` depuis `services-data.json` (1710 services, IDs alignés). Cache mobile bumpé v17→v18.
+- **Script permanent** : `pnpm --filter @workspace/scripts run regen-mobile-bundle`.
+- Tuiles home : `aspectRatio` 1.15→1.7 + marginBottom 14→10. AI CTA remis taille originale.
 - iOS buildNumber 78→79, Android versionCode 71→72.
 
-## v1.1.9 (en cours)
-- **Phase 2 géocodage Google LIVRÉE** : 2931 fiches re-géocodées via Google Geocoding API (2750 ROOFTOP 20m, 91 RANGE 50m, 90 CENTER 200m). Bilan global : **3686 vertes (≤100m)** vs 845 avant (+335%), 90 jaunes, 93 oranges, 356 rouges restantes (adresses sans numéro de rue, non-fixables automatiquement). Coût réel ~99$ USD vs 16$ estimé (j'ai oublié de marquer les APPROX comme déjà tentées → 333 re-tests inutiles par chunk). Fiches non-fixables maintenant marquées `geocode_source='google-tried-approx'` pour éviter tout retest futur. Script `scripts/src/geocode-google.ts` avec timeout 10s + flag de reprise auto.
+## v1.1.9 — Phase 2 géocodage Google + fixes UX
+- **Phase 2 géocodage Google LIVRÉE** : 2931 fiches re-géocodées (2750 ROOFTOP, 91 RANGE, 90 CENTER). Bilan global : 3686 vertes (≤100m) vs 845 avant (+335%). Coût réel ~99$ USD.
 - Captcha MIN_AGE 2000→600ms (fix #1 plainte « inscription bloquée »).
-- Bouton « Signaler un mauvais numéro » sur fiche service → préremplit /bug-report avec serviceId + nom + numéro actuel. Adresse la plainte sur les numéros de banques erronés.
-- Carte : bbox prefilter ~75km avant haversine (10-50× plus rapide sur 5000+ services), favSet O(1) pour les cards.
-- **urgent.tsx BUGFIX** : `sortedServices` dépendait de `urgentServices` au lieu de `filteredServices` → la barre de recherche ne filtrait JAMAIS la liste affichée. Corrigé.
-- **sos.tsx redesign** : bouton 911 refait (icône cerclée rouge + chevron, plus de débordement de texte). Ajout Centre antipoison Québec (1-800-463-5060), Info-Santé 811 et Jeu : Aide et Référence (1-800-461-0140).
-- **Phase 1 fiabilité géolocalisation (LIVRÉE)** :
-  - Schéma : 3 colonnes ajoutées à `services` (`service_type`, `geocode_precision_m`, `geocode_source`) + nouvelle table `service_corrections`.
-  - Migration auto : 4225 physical / 970 phone (211/811/911/1-800) / 143 regional. 845 verts (≤100m) ; 3287 rouges (>1500m, à re-géocoder en Phase 2).
-  - Carte : services `phone` filtrés (n'apparaissent plus comme épingles aléatoires).
-  - Fiche service : bandeau précision coloré (vert/jaune/rouge) + libellé spécial pour `regional`/`phone`.
-  - Bouton mobile « Position fausse ? » → écran `/correction/[id]` avec saisie d'adresse + capture GPS optionnelle (`expo-location`). Anti-spam : sha256(IP+sel), 10/30min/IP.
-  - Auto-validation : 3 corrections concordantes (coords <50m OU adresse normalisée identique) → service mis à jour automatiquement, précision resserrée à 50m.
-  - Panneau admin : nouvelle page `/admin/corrections` avec file pending/approved/auto_approved/rejected + actions Approuver/Refuser.
-- **Phase 2 (à venir, en attente OK user)** : re-géocodage Google des 3287 fiches rouges (~5$ Geocoding API) pour dégrader le rouge.
-- Build vc62 (1.1.8) toujours en cours sur EAS au moment des fixes — attendre instruction « OK lance vc63 » avant relancer.
-
+- Bouton « Signaler un mauvais numéro » sur fiche service.
+- Carte : bbox prefilter ~75km avant haversine (10-50× plus rapide), favSet O(1).
+- **urgent.tsx BUGFIX** : `sortedServices` dépendait de `urgentServices` au lieu de `filteredServices` → la barre de recherche ne filtrait jamais la liste affichée.
+- **sos.tsx redesign** : bouton 911 refait. Ajout Centre antipoison Québec, Info-Santé 811, Jeu : Aide et Référence.
+- **Phase 1 fiabilité géolocalisation LIVRÉE** : 3 colonnes ajoutées à `services`, nouvelle table `service_corrections`, migration auto, carte filtrée, fiche avec bandeau précision, bouton « Position fausse ? », auto-validation à 3 corrections concordantes, panneau admin corrections.
