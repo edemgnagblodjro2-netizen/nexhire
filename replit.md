@@ -75,24 +75,88 @@ Ce monorepo héberge plusieurs produits distincts sous la bannière CivicAI. Cha
 - Le site CivicAI (`civicai-site`) est une vitrine institutionnelle sans données utilisateurs.
 - Le `mockup-sandbox` est un outil de développement, jamais déployé en production.
 
-## Migration base de données — plan futur (AWS / Azure)
+## Architecture multi-tenant — sessions par client + DBA
 
-**Situation actuelle (mai 2026) :** Toutes les données AttenteZéro (comptes, services, sessions, analytics) sont hébergées dans la base PostgreSQL managée par Replit. Cela convient pour le lancement initial.
+### Principe fondamental (applicable à tous les produits CivicAI)
 
-**Décision stratégique :** Dès que CivicAI opère plusieurs produits avec des bases d'utilisateurs significatives (AttenteZéro + ConstructPro + futurs produits), les données devront migrer vers un cloud professionnel (AWS RDS ou Azure Database for PostgreSQL) pour :
+Chaque produit CivicAI, et chaque client enterprise de ces produits, dispose de sa propre session de base de données complètement isolée, gérée par un DBA dédié. Les données d'un client ne touchent jamais celles d'un autre.
 
-- **Gestion centralisée par des DBA** : accès direct, monitoring, optimisation des requêtes, alertes.
-- **Isolation par produit** : une base distincte par produit (AttenteZéro, ConstructPro, etc.) avec des credentials séparés.
-- **Backups certifiés** : snapshots automatiques, point-in-time recovery, conformité Loi 25 QC.
-- **Scalabilité** : lecture répliquée, connection pooling (PgBouncer), capacité de croissance sans migration d'urgence.
-- **Conformité B2G** : certains contrats gouvernementaux exigent hébergement canadien certifié — AWS ca-central-1 (Montréal) ou Azure Canada Central (Toronto).
+```
+CivicAI (compte AWS/Azure maître)
+├── AttenteZéro
+│   └── DB: attentezero_prod  ← DBA: dba_attentezero
+│
+├── ConstructPro
+│   ├── DB: constructpro_clientA  ← DBA: dba_constructpro_clientA
+│   ├── DB: constructpro_clientB  ← DBA: dba_constructpro_clientB
+│   └── DB: constructpro_clientC  ← DBA: dba_constructpro_clientC
+│
+└── [Futur produit]
+    └── DB: produit_client  ← DBA: dba_produit_client
+```
 
-**Recommandation :** AWS RDS PostgreSQL en `ca-central-1` (Montréal) → hébergement 100% canadien, conformité Loi 25, tarifs connus. Prévoir cette migration avant tout contrat gouvernemental signé ou dépassement de 10 000 utilisateurs actifs.
+### Règles par type de produit
+
+**Produits citoyens gratuits (AttenteZéro, futurs B2G) :**
+- 1 seule base de données partagée par produit (pas de multi-tenant, tous les citoyens dans la même DB)
+- 1 DBA CivicAI avec accès complet
+- Isolation : entre produits (AttenteZéro ne voit jamais les données ConstructPro)
+
+**Produits B2B/SaaS (ConstructPro ERP, futurs) :**
+- 1 base de données distincte **par client enterprise**
+- 1 DBA dédié par client (peut être le même DBA CivicAI avec credentials séparés, ou un DBA externe mandaté par le client)
+- Le client peut demander à avoir son propre DBA avec accès direct à SA base uniquement
+- Isolation totale : Client A ne peut jamais accéder aux données Client B
+
+### Ce que représente une "session client"
+
+Pour chaque nouveau client enterprise (ex: entreprise de construction qui achète ConstructPro) :
+
+| Élément | Détail |
+|---|---|
+| Base de données | `constructpro_<slug_client>` — instance RDS dédiée ou schéma dédié |
+| Utilisateur PostgreSQL | `dba_<slug_client>` avec mot de passe fort généré |
+| Permissions | `GRANT ALL ON SCHEMA <slug_client> TO dba_<slug_client>` |
+| Accès CivicAI | Compte admin séparé pour support/maintenance |
+| Accès client | Optionnel — le client peut avoir ses propres credentials lecture seule ou DBA |
+| Backups | Snapshot quotidien automatique, rétention 30 jours |
+| Monitoring | Alertes CPU/mémoire/connexions séparées par client |
+
+### Phase 1 — Maintenant sur Replit (schemas PostgreSQL)
+
+Avant la migration AWS/Azure, l'isolation peut être faite via **schemas PostgreSQL** dans la base Replit existante :
+
+```sql
+-- Créer un schema isolé par client
+CREATE SCHEMA constructpro_clientA;
+CREATE SCHEMA constructpro_clientB;
+
+-- Créer un utilisateur dédié par client
+CREATE USER dba_clientA WITH PASSWORD 'xxxxx';
+GRANT USAGE ON SCHEMA constructpro_clientA TO dba_clientA;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA constructpro_clientA TO dba_clientA;
+```
+
+Chaque client se connecte avec sa propre `DATABASE_URL` qui pointe vers son schéma uniquement.
+
+### Phase 2 — Migration AWS / Azure (cible)
+
+**Recommandation :** AWS RDS PostgreSQL en `ca-central-1` (Montréal) — hébergement 100% canadien, conformité Loi 25, requis pour contrats gouvernementaux.
+
+**Structure AWS cible :**
+- 1 compte AWS CivicAI (maître)
+- 1 instance RDS par produit (AttenteZéro, ConstructPro)
+- Pour ConstructPro : 1 database par client dans l'instance, ou 1 instance dédiée pour les gros clients
 
 **Quand déclencher la migration :**
 - Premier contrat B2G signé, OU
-- > 10 000 utilisateurs actifs AttenteZéro, OU
-- Lancement de ConstructPro en production avec clients payants.
+- Plus de 10 000 utilisateurs actifs AttenteZéro, OU
+- Premier client ConstructPro en production payant
+
+**Coût estimé AWS RDS (ca-central-1) :**
+- Petite instance (db.t3.medium, 20 Go) : ~60 $/mois/client
+- Instance moyenne (db.t3.large, 100 Go) : ~150 $/mois/client
+- Multi-AZ (haute disponibilité) : ×2 du coût ci-dessus
 
 ## Architecture decisions
 - **B2G Pivot**: Shifted from B2B "Field Mode" to B2G, focusing on free citizen services and anonymized data dashboards for public administrations.
