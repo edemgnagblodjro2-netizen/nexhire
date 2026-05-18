@@ -17,6 +17,14 @@ export interface TenantInfo {
   updatedAt: Date;
 }
 
+export interface TenantUser {
+  userId: string;
+  email: string;
+  fullName: string | null;
+  roleId: string | null;
+  roleName: string | null;
+}
+
 export interface CreateTenantInput {
   companyName: string;
   subdomain: string;
@@ -29,6 +37,7 @@ declare global {
   namespace Express {
     interface Request {
       tenant?: TenantInfo;
+      tenantUser?: TenantUser;
     }
   }
 }

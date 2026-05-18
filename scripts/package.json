@@ -18,6 +18,7 @@
     "regen-mobile-bundle": "node ../node_modules/tsx/dist/cli.mjs ./src/regen-mobile-bundle.ts",
     "backup-prod": "node ../node_modules/tsx/dist/cli.mjs ./src/backup-prod.ts",
     "restore-prod": "node ../node_modules/tsx/dist/cli.mjs ./src/restore-prod.ts",
+    "test-isolation": "node ../node_modules/tsx/dist/cli.mjs ./src/test-tenant-isolation.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

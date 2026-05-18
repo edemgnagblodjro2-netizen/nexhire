@@ -9,6 +9,7 @@
   "dependencies": {
     "@workspace/db": "workspace:*",
     "drizzle-orm": "catalog:",
+    "jose": "^6.0.10",
     "pg": "^8.20.0"
   },
   "devDependencies": {
