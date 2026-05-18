@@ -74,15 +74,15 @@ export function Register() {
             CivicAI Portal
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Create a new organisation account
+            Créer une organisation CivicAI
           </p>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle>Register</CardTitle>
+            <CardTitle>Créer votre organisation</CardTitle>
             <CardDescription>
-              Set up your organisation's portal access.
+              Accédez à l'ensemble des produits et services CivicAI depuis un seul portail.
             </CardDescription>
           </CardHeader>
           <CardContent>

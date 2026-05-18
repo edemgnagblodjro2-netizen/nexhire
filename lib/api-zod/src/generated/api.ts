@@ -96,10 +96,13 @@ export const TenantLoginResponse = zod.object({
   user: zod.object({
     id: zod.string(),
     tenantSlug: zod.string(),
+    companyName: zod.string().optional(),
     email: zod.string().email(),
     firstName: zod.string(),
     lastName: zod.string(),
     role: zod.string(),
+    enabledProducts: zod.array(zod.string()),
+    enabledServices: zod.array(zod.string()),
   }),
 });
 
@@ -123,10 +126,13 @@ export const GetTenantCurrentUserHeader = zod.object({
 export const GetTenantCurrentUserResponse = zod.object({
   id: zod.string(),
   tenantSlug: zod.string(),
+  companyName: zod.string().optional(),
   email: zod.string().email(),
   firstName: zod.string(),
   lastName: zod.string(),
   role: zod.string(),
+  enabledProducts: zod.array(zod.string()),
+  enabledServices: zod.array(zod.string()),
 });
 
 export const ListTenantsHeader = zod.object({

@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, varchar, jsonb } from "drizzle-orm/pg-core";
 
 export const tenants = pgTable("tenants", {
   id: varchar("id", { length: 36 })
@@ -11,6 +11,8 @@ export const tenants = pgTable("tenants", {
   appType: text("app_type").notNull(),
   plan: text("plan").notNull().default("free"),
   status: text("status").notNull().default("active"),
+  enabledProducts: jsonb("enabled_products").$type<string[]>().notNull().default([]),
+  enabledServices: jsonb("enabled_services").$type<string[]>().notNull().default([]),
   dbHost: text("db_host"),
   dbName: text("db_name"),
   createdAt: timestamp("created_at").notNull().defaultNow(),

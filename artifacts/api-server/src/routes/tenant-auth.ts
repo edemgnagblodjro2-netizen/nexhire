@@ -170,10 +170,13 @@ router.get("/me", async (req, res) => {
   res.json({
     id: u.id,
     tenantSlug: tenantRow?.subdomain ?? req.tenant.schemaName,
+    companyName: tenantRow?.companyName ?? "",
     email: u.email,
     firstName: nameParts[0] ?? "",
     lastName: nameParts.slice(1).join(" ") || "",
     role: u.role_name ?? "member",
+    enabledProducts: (tenantRow?.enabledProducts as string[]) ?? [],
+    enabledServices: (tenantRow?.enabledServices as string[]) ?? [],
   });
 });
 

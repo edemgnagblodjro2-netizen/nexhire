@@ -386,11 +386,13 @@ components:
           $ref: "#/components/schemas/TenantUserProfile"
     TenantUserProfile:
       type: object
-      required: [id, tenantSlug, email, firstName, lastName, role]
+      required: [id, tenantSlug, email, firstName, lastName, role, enabledProducts, enabledServices]
       properties:
         id:
           type: string
         tenantSlug:
+          type: string
+        companyName:
           type: string
         email:
           type: string
@@ -401,6 +403,14 @@ components:
           type: string
         role:
           type: string
+        enabledProducts:
+          type: array
+          items:
+            type: string
+        enabledServices:
+          type: array
+          items:
+            type: string
     Tenant:
       type: object
       required: [id, slug, name, plan, createdAt]

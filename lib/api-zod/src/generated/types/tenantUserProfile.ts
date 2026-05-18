@@ -9,8 +9,11 @@
 export interface TenantUserProfile {
   id: string;
   tenantSlug: string;
+  companyName?: string;
   email: string;
   firstName: string;
   lastName: string;
   role: string;
+  enabledProducts: string[];
+  enabledServices: string[];
 }
