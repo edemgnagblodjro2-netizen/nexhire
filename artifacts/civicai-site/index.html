@@ -2,6 +2,16 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var subdomain = window.location.hostname.split(".")[0];
+        var map = { erp: "/constructpro-erp/", portal: "/tenant-portal/" };
+        var target = map[subdomain];
+        if (target && window.location.pathname === "/") {
+          window.location.replace(target);
+        }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>CivicAI — Intelligence artificielle au service du bien commun</title>
     <meta name="description" content="CivicAI conçoit des solutions numériques intelligentes pour les entreprises, organisations et administrations publiques — partout au Canada." />
