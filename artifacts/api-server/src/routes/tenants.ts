@@ -98,6 +98,23 @@ router.patch("/:id/status", requireAdmin, async (req, res) => {
   res.json(updated);
 });
 
+router.patch("/:id/modules", requireAdmin, async (req, res) => {
+  const Body = z.object({
+    enabledProducts: z.array(z.string()).optional(),
+    enabledServices: z.array(z.string()).optional(),
+  });
+  const parsed = Body.safeParse(req.body);
+  if (!parsed.success) { res.status(400).json({ error: parsed.error.flatten() }); return; }
+
+  const set: Record<string, unknown> = { updatedAt: new Date() };
+  if (parsed.data.enabledProducts !== undefined) set.enabledProducts = parsed.data.enabledProducts;
+  if (parsed.data.enabledServices !== undefined) set.enabledServices = parsed.data.enabledServices;
+
+  const [updated] = await db.update(tenants).set(set as any).where(eq(tenants.id, req.params.id)).returning();
+  if (!updated) { res.status(404).json({ error: "Tenant not found" }); return; }
+  res.json(updated);
+});
+
 router.delete("/:id", requireAdmin, async (req, res) => {
   const [tenant] = await db
     .select()

@@ -180,6 +180,53 @@ router.get("/me", async (req, res) => {
   });
 });
 
+router.patch("/me", async (req, res) => {
+  if (!req.tenantUser) { res.status(401).json({ error: "Not authenticated" }); return; }
+  if (!req.tenant) { res.status(400).json({ error: "Tenant context missing" }); return; }
+
+  const BodySchema = z.object({
+    firstName: z.string().min(1).optional(),
+    lastName: z.string().min(1).optional(),
+    currentPassword: z.string().optional(),
+    newPassword: z.string().min(8).optional(),
+  });
+  const parsed = BodySchema.safeParse(req.body);
+  if (!parsed.success) { res.status(400).json({ error: parsed.data }); return; }
+  const { firstName, lastName, currentPassword, newPassword } = parsed.data;
+
+  if (newPassword) {
+    if (!currentPassword) { res.status(400).json({ error: "currentPassword required" }); return; }
+    const pwRow = await pool.query(
+      `SELECT password_hash FROM "${req.tenant.schemaName}".user_passwords WHERE user_id=$1`,
+      [req.tenantUser.userId]
+    );
+    if (!pwRow.rows[0]) { res.status(400).json({ error: "No password set" }); return; }
+    const valid = await bcrypt.compare(currentPassword, pwRow.rows[0].password_hash);
+    if (!valid) { res.status(400).json({ error: "Wrong current password" }); return; }
+    const hash = await bcrypt.hash(newPassword, 12);
+    await pool.query(
+      `INSERT INTO "${req.tenant.schemaName}".user_passwords (user_id, password_hash)
+       VALUES ($1,$2) ON CONFLICT (user_id) DO UPDATE SET password_hash=$2, updated_at=now()`,
+      [req.tenantUser.userId, hash]
+    );
+  }
+
+  if (firstName !== undefined || lastName !== undefined) {
+    const existing = await pool.query(
+      `SELECT full_name FROM "${req.tenant.schemaName}".users WHERE id=$1`, [req.tenantUser.userId]
+    );
+    const parts = (existing.rows[0]?.full_name ?? "").split(" ");
+    const newFirst = firstName ?? parts[0] ?? "";
+    const newLast = lastName ?? parts.slice(1).join(" ") ?? "";
+    await pool.query(
+      `UPDATE "${req.tenant.schemaName}".users SET full_name=$1, updated_at=now() WHERE id=$2`,
+      [`${newFirst} ${newLast}`.trim(), req.tenantUser.userId]
+    );
+  }
+
+  res.json({ success: true });
+});
+
 // Admin: get tenant metrics
 router.get("/metrics/:tenantId", async (req, res) => {
   const key = req.headers["x-admin-key"];

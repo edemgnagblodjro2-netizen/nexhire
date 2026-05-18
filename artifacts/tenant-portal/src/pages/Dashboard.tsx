@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { useGetTenantCurrentUser } from "@workspace/api-client-react";
 import { useAuth } from "@/lib/auth";
@@ -10,17 +10,27 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { LangToggle } from "@/components/LangToggle";
 import {
   Building2, LogOut, Server, CheckCircle2, Circle,
-  HardHat, Heart, Cpu, Users, Zap, Globe, GraduationCap, BarChart3
+  HardHat, Heart, Cpu, Users, Zap, Globe, GraduationCap,
+  BarChart3, ExternalLink, Smartphone, Mail, Lock
 } from "lucide-react";
 
-const PRODUCT_ICONS: Record<string, React.ElementType> = {
-  constructpro: HardHat,
-  attentezero: Heart,
-};
-const PRODUCT_COLORS: Record<string, string> = {
-  constructpro: "text-orange-500",
-  attentezero: "text-teal-500",
-};
+// ── Product catalogue ──────────────────────────────────────────────────────
+const PRODUCTS = {
+  constructpro: {
+    icon: HardHat,
+    color: "text-orange-500",
+    bg: "bg-orange-50",
+    appUrl: "/constructpro-erp/",
+    kind: "web" as const,
+  },
+  attentezero: {
+    icon: Heart,
+    color: "text-teal-500",
+    bg: "bg-teal-50",
+    appUrl: "https://attentezero.ca",
+    kind: "mobile" as const,
+  },
+} satisfies Record<string, { icon: React.ElementType; color: string; bg: string; appUrl: string; kind: "web" | "mobile" }>;
 
 const SERVICE_ICONS: Record<string, React.ElementType> = {
   digitalisation: Cpu,
@@ -31,11 +41,55 @@ const SERVICE_ICONS: Record<string, React.ElementType> = {
   formation: GraduationCap,
 };
 
+// ── Helpers ────────────────────────────────────────────────────────────────
+function openProduct(key: string, token: string) {
+  const cfg = PRODUCTS[key as keyof typeof PRODUCTS];
+  if (!cfg) return;
+  if (cfg.kind === "mobile") {
+    window.open(cfg.appUrl, "_blank", "noopener");
+    return;
+  }
+  // Pass tenant token so the app can auto-authenticate
+  const url = new URL(cfg.appUrl, window.location.origin);
+  url.searchParams.set("tenant_token", token);
+  window.open(url.toString(), "_blank", "noopener");
+}
+
+// ── Sub-components ─────────────────────────────────────────────────────────
+function ServiceContactModal({ serviceKey, label, onClose }: { serviceKey: string; label: string; onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full mx-4" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center gap-3 mb-3">
+          <div className="p-2 bg-teal-50 rounded-lg">
+            <Mail className="h-5 w-5 text-teal-600" />
+          </div>
+          <h3 className="font-semibold text-gray-900">{label}</h3>
+        </div>
+        <p className="text-sm text-gray-500 mb-4">
+          Ce service est actif dans votre organisation. Contactez votre responsable CivicAI pour accéder à ce module ou planifier une session.
+        </p>
+        <a
+          href="mailto:services@civicai.ca?subject=Service actif : ${label}"
+          className="block w-full text-center bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+        >
+          Contacter CivicAI
+        </a>
+        <button onClick={onClose} className="block w-full text-center mt-2 text-sm text-gray-400 hover:text-gray-600">
+          Fermer
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── Main dashboard ─────────────────────────────────────────────────────────
 export function Dashboard() {
   const [, setLocation] = useLocation();
-  const { logout } = useAuth();
+  const { logout, token } = useAuth();
   const { t } = useLang();
   const { data: user, isLoading, isError, error } = useGetTenantCurrentUser();
+  const [activeService, setActiveService] = useState<{ key: string; label: string } | null>(null);
 
   useEffect(() => {
     if (isError && (error as any)?.status === 401) { logout(); setLocation("/login"); }
@@ -64,6 +118,7 @@ export function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
           <div className="flex items-center gap-2">
@@ -72,12 +127,18 @@ export function Dashboard() {
           </div>
           <div className="flex items-center gap-3">
             <LangToggle />
-            <Avatar className="h-8 w-8">
-              <AvatarFallback className="bg-teal-600 text-white text-xs">{initials}</AvatarFallback>
-            </Avatar>
-            <span className="hidden sm:block text-sm font-medium text-gray-700">
-              {user.firstName} {user.lastName}
-            </span>
+            <button
+              onClick={() => setLocation("/profile")}
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+              title={t.profile}
+            >
+              <Avatar className="h-8 w-8">
+                <AvatarFallback className="bg-teal-600 text-white text-xs">{initials}</AvatarFallback>
+              </Avatar>
+              <span className="hidden sm:block text-sm font-medium text-gray-700">
+                {user.firstName} {user.lastName}
+              </span>
+            </button>
             {isAdmin && <Badge variant="secondary" className="text-xs">Admin</Badge>}
             <Button variant="ghost" size="sm" onClick={() => { logout(); setLocation("/login"); }}>
               <LogOut className="h-4 w-4" />
@@ -96,12 +157,8 @@ export function Dashboard() {
             {t.activeProducts(enabledProducts.length)} · {t.activeServices(enabledServices.length)}
           </p>
           <div className="mt-3 flex items-center gap-2 flex-wrap">
-            <Badge className="bg-white/20 text-white border-white/30 font-mono text-xs">
-              {user.tenantSlug}
-            </Badge>
-            <Badge className="bg-white/20 text-white border-white/30 text-xs capitalize">
-              {user.role}
-            </Badge>
+            <Badge className="bg-white/20 text-white border-white/30 font-mono text-xs">{user.tenantSlug}</Badge>
+            <Badge className="bg-white/20 text-white border-white/30 text-xs capitalize">{user.role}</Badge>
           </div>
         </div>
 
@@ -118,36 +175,64 @@ export function Dashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {allProductKeys.map((key) => {
               const active = enabledProducts.includes(key);
-              const Icon = PRODUCT_ICONS[key] ?? Building2;
-              const color = PRODUCT_COLORS[key] ?? "text-gray-500";
+              const cfg = PRODUCTS[key as keyof typeof PRODUCTS];
+              const Icon = cfg?.icon ?? Building2;
               const p = t.products[key];
+
+              if (!active) {
+                return (
+                  <Card key={key} className="opacity-50 bg-gray-50 border-gray-200 select-none">
+                    <CardHeader className="flex flex-row items-center gap-3 pb-2">
+                      <div className="p-2 rounded-lg bg-gray-100">
+                        <Icon className="h-5 w-5 text-gray-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <CardTitle className="text-sm font-semibold">{p.label}</CardTitle>
+                        <p className="text-xs text-muted-foreground">{p.desc}</p>
+                      </div>
+                      <Lock className="h-4 w-4 text-gray-300 flex-shrink-0" />
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <Badge variant="outline" className="text-xs">{t.inactive}</Badge>
+                    </CardContent>
+                  </Card>
+                );
+              }
+
               return (
-                <Card key={key} className={`transition-all ${active ? "border-teal-200 bg-white shadow-sm" : "opacity-60 bg-gray-50"}`}>
+                <Card
+                  key={key}
+                  className="border-teal-200 bg-white shadow-sm hover:shadow-md hover:border-teal-400 transition-all cursor-pointer group"
+                  onClick={() => openProduct(key, token ?? "")}
+                >
                   <CardHeader className="flex flex-row items-center gap-3 pb-2">
-                    <div className={`p-2 rounded-lg ${active ? "bg-teal-50" : "bg-gray-100"}`}>
-                      <Icon className={`h-5 w-5 ${active ? color : "text-gray-400"}`} />
+                    <div className={`p-2 rounded-lg ${cfg?.bg ?? "bg-teal-50"}`}>
+                      <Icon className={`h-5 w-5 ${cfg?.color ?? "text-teal-500"}`} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <CardTitle className="text-sm font-semibold">{p.label}</CardTitle>
                       <p className="text-xs text-muted-foreground">{p.desc}</p>
                     </div>
-                    {active
-                      ? <CheckCircle2 className="h-4 w-4 text-teal-500 flex-shrink-0" />
-                      : <Circle className="h-4 w-4 text-gray-300 flex-shrink-0" />}
+                    <CheckCircle2 className="h-4 w-4 text-teal-500 flex-shrink-0" />
                   </CardHeader>
-                  <CardContent className="pt-0">
-                    <Badge variant={active ? "default" : "outline"} className={`text-xs ${active ? "bg-teal-600" : ""}`}>
-                      {active ? t.activated : t.inactive}
-                    </Badge>
+                  <CardContent className="pt-0 flex items-center justify-between">
+                    <Badge className="text-xs bg-teal-600">{t.activated}</Badge>
+                    <span className="flex items-center gap-1 text-xs text-teal-600 opacity-0 group-hover:opacity-100 transition-opacity font-medium">
+                      {cfg?.kind === "mobile"
+                        ? <><Smartphone className="h-3 w-3" /> App mobile</>
+                        : <><ExternalLink className="h-3 w-3" /> {t.openApp}</>
+                      }
+                    </span>
                   </CardContent>
                 </Card>
               );
             })}
 
-            <Card className="border-dashed border-2 border-gray-200 bg-transparent flex items-center justify-center min-h-[100px] cursor-pointer hover:border-teal-300 transition-colors">
-              <div className="text-center text-sm text-gray-400 p-4">
+            {/* Add product placeholder */}
+            <Card className="border-dashed border-2 border-gray-200 bg-transparent flex items-center justify-center min-h-[108px] cursor-pointer hover:border-teal-300 hover:bg-teal-50/30 transition-all group">
+              <div className="text-center text-sm text-gray-400 p-4 group-hover:text-teal-600 transition-colors">
                 <div className="text-2xl mb-1">+</div>
-                <div>{t.addProduct}</div>
+                <div className="font-medium">{t.addProduct}</div>
                 <div className="text-xs mt-1">{t.contactCivicAI}</div>
               </div>
             </Card>
@@ -163,8 +248,15 @@ export function Dashboard() {
               const Icon = SERVICE_ICONS[key] ?? Cpu;
               const s = t.services[key];
               return (
-                <div key={key} className={`flex items-center gap-3 p-3 rounded-lg border transition-all
-                  ${active ? "bg-white border-teal-200 shadow-sm" : "bg-gray-50 border-gray-200 opacity-60"}`}>
+                <div
+                  key={key}
+                  onClick={() => active && setActiveService({ key, label: s.label })}
+                  className={`flex items-center gap-3 p-3 rounded-lg border transition-all
+                    ${active
+                      ? "bg-white border-teal-200 shadow-sm hover:shadow-md hover:border-teal-400 cursor-pointer group"
+                      : "bg-gray-50 border-gray-200 opacity-50 cursor-default"
+                    }`}
+                >
                   <div className={`p-1.5 rounded-md ${active ? "bg-teal-50" : "bg-gray-100"}`}>
                     <Icon className={`h-4 w-4 ${active ? "text-teal-600" : "text-gray-400"}`} />
                   </div>
@@ -173,7 +265,7 @@ export function Dashboard() {
                     <div className="text-xs text-gray-500">{s.desc}</div>
                   </div>
                   {active
-                    ? <CheckCircle2 className="h-4 w-4 text-teal-500 flex-shrink-0" />
+                    ? <CheckCircle2 className="h-4 w-4 text-teal-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
                     : <Circle className="h-4 w-4 text-gray-200 flex-shrink-0" />}
                 </div>
               );
@@ -181,6 +273,15 @@ export function Dashboard() {
           </div>
         </section>
       </main>
+
+      {/* Service contact modal */}
+      {activeService && (
+        <ServiceContactModal
+          serviceKey={activeService.key}
+          label={activeService.label}
+          onClose={() => setActiveService(null)}
+        />
+      )}
     </div>
   );
 }

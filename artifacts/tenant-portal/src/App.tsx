@@ -10,6 +10,7 @@ import { Login } from "@/pages/Login";
 import { Register } from "@/pages/Register";
 import { AdminTenants } from "@/pages/AdminTenants";
 import { AdminTenantDetail } from "@/pages/AdminTenantDetail";
+import { Profile } from "@/pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,9 @@ function Router() {
       </Route>
       <Route path="/dashboard">
         <ProtectedRoute component={Dashboard} />
+      </Route>
+      <Route path="/profile">
+        <ProtectedRoute component={Profile} />
       </Route>
       <Route path="/admin/tenants">
         <ProtectedRoute component={AdminTenants} />
