@@ -20,7 +20,9 @@ import { NotificationsPage } from "@/apps/attentezero/pages/NotificationsPage";
 import { StaffPage }         from "@/apps/attentezero/pages/StaffPage";
 import { PortalPage }        from "@/apps/attentezero/pages/PortalPage";
 import { CRMPage }           from "@/apps/attentezero/pages/CRMPage";
-import { PublicTicketPage }  from "@/apps/attentezero/pages/PublicTicketPage";
+import { PublicTicketPage }    from "@/apps/attentezero/pages/PublicTicketPage";
+import { CitizenBookingPage }  from "@/apps/attentezero/pages/CitizenBookingPage";
+import { BookAppointmentPage } from "@/apps/attentezero/pages/BookAppointmentPage";
 
 const queryClient = new QueryClient();
 
@@ -103,6 +105,13 @@ function Router() {
       {/* Public — no auth required */}
       <Route path="/apps/attentezero-public/:slug">
         <PublicTicketPage />
+      </Route>
+      {/* Citizen appointment pages — public, no auth */}
+      <Route path="/rdv/:token">
+        <CitizenBookingPage />
+      </Route>
+      <Route path="/reserver/:tenantId">
+        <BookAppointmentPage />
       </Route>
       <Route>
         {isAuthenticated ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}

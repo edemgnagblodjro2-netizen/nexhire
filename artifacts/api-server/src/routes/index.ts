@@ -20,6 +20,7 @@ import storeStatusRouter from "./storeStatus";
 import contactRouter from "./contact";
 import tenantsRouter from "./tenants";
 import tenantAuthRouter from "./tenant-auth";
+import queueRouter from "./queue";
 import attentezeroRouter from "./attentezero";
 
 // Pivot v1.0.33 — sensitive-data modules retired:
@@ -53,6 +54,7 @@ router.use(storeStatusRouter);
 router.use(contactRouter);
 router.use("/admin/tenants", tenantsRouter);
 router.use("/tenant-auth", tenantAuthRouter);
+router.use(queueRouter);
 router.use("/", attentezeroRouter);
 
 export default router;
