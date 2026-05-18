@@ -100,6 +100,8 @@ app.use(
           hostname.endsWith(".replit.dev") ||
           hostname.endsWith(".replit.app") ||
           hostname.endsWith(".repl.co") ||
+          hostname.endsWith(".attentezero.ca") ||
+          hostname === "attentezero.ca" ||
           hostname === "localhost" ||
           hostname === "127.0.0.1"
         ) {
@@ -111,6 +113,24 @@ app.use(
     },
   }),
 );
+
+// ── Subdomain-based routing ───────────────────────────────────────────────
+// Maps subdomains of attentezero.ca to their respective app paths so that
+// erp.attentezero.ca → /constructpro-erp/, portal.attentezero.ca → /tenant-portal/, etc.
+const SUBDOMAIN_PATHS: Record<string, string> = {
+  erp: "/constructpro-erp/",
+  portal: "/tenant-portal/",
+  civicai: "/civicai-site/",
+};
+app.use((req, res, next) => {
+  const host = req.hostname ?? "";
+  const subdomain = host.split(".")[0];
+  const targetPath = SUBDOMAIN_PATHS[subdomain];
+  if (targetPath && !req.path.startsWith(targetPath) && req.path === "/") {
+    return res.redirect(302, targetPath);
+  }
+  next();
+});
 
 app.use(cookieParser());
 app.use(express.json({ limit: "1mb" }));
