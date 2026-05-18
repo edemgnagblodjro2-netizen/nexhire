@@ -32,6 +32,8 @@ android/
 artifacts/admin/
 artifacts/api-server/
 artifacts/mockup-sandbox/
+artifacts/civicai-site/
+artifacts/constructpro-erp/
 
 # Logs / tmp / exports
 *.log

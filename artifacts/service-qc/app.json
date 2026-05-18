@@ -2,7 +2,7 @@
   "expo": {
     "name": "AttenteZéro",
     "slug": "attentezero",
-    "version": "1.1.19",
+    "version": "1.1.20",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "service-qc",
@@ -57,7 +57,7 @@
           }
         ]
       },
-      "buildNumber": "107"
+      "buildNumber": "112"
     },
     "android": {
       "package": "com.attentezero.app",

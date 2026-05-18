@@ -1009,8 +1009,9 @@ export default function ChatScreen() {
         </View>
       )}
 
-      {/* Quota banner — shown to free users when ≤2 messages remain */}
-      {quotaRemaining !== null && quotaLimit !== null && quotaRemaining <= 2 && (
+      {/* Quota banner — shown to free users when ≤2 messages remain.
+          Hidden on iOS: all features are free there (App Store rule 3.1.1). */}
+      {Platform.OS !== "ios" && quotaRemaining !== null && quotaLimit !== null && quotaRemaining <= 2 && (
         <Pressable
           onPress={() => router.push("/premium" as any)}
           style={[

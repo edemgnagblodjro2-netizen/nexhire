@@ -382,6 +382,45 @@ export default function ProfileScreen() {
     await logout();
   }
 
+  async function handleDeleteAccount() {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    Alert.alert(
+      isFr ? "Supprimer mon compte" : "Delete my account",
+      isFr
+        ? "Cette action est irréversible. Votre compte et toutes vos données seront définitivement supprimés."
+        : "This action cannot be undone. Your account and all your data will be permanently deleted.",
+      [
+        { text: isFr ? "Annuler" : "Cancel", style: "cancel" },
+        {
+          text: isFr ? "Supprimer définitivement" : "Delete permanently",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              const res = await authedFetch(`/api/mobile-auth/account`, {
+                method: "DELETE",
+              });
+              if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                Alert.alert(
+                  isFr ? "Erreur" : "Error",
+                  (data as { error?: string }).error ?? (isFr ? "Erreur serveur." : "Server error."),
+                );
+                return;
+              }
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+              await logout();
+            } catch {
+              Alert.alert(
+                isFr ? "Erreur" : "Error",
+                isFr ? "Impossible de contacter le serveur." : "Unable to reach the server.",
+              );
+            }
+          },
+        },
+      ],
+    );
+  }
+
   const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ") || "—";
 
   if (!isAuthenticated) {
@@ -747,8 +786,8 @@ export default function ProfileScreen() {
           </Pressable>
         </View>
 
-        {/* ── Mon abonnement (Stripe billing portal) ── */}
-        {user?.email && (
+        {/* ── Mon abonnement (Stripe billing portal) — masqué sur iOS (règle 3.1.1) ── */}
+        {user?.email && Platform.OS !== "ios" && (
           <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <Text style={[styles.cardTitle, { color: colors.foreground }]}>
               {isFr ? "Mon abonnement" : "My subscription"}
@@ -973,6 +1012,16 @@ export default function ProfileScreen() {
         >
           <Feather name="log-out" size={18} color="#ef4444" />
           <Text style={styles.logoutText}>{isFr ? "Se déconnecter" : "Log out"}</Text>
+        </Pressable>
+
+        {/* Suppression de compte — requis App Store 5.1.1(v) */}
+        <Pressable
+          onPress={handleDeleteAccount}
+          style={({ pressed }) => [{ opacity: pressed ? 0.7 : 1, alignItems: "center", paddingVertical: 8 }]}
+        >
+          <Text style={{ fontSize: 13, color: colors.mutedForeground, fontFamily: "Inter_400Regular", textDecorationLine: "underline" }}>
+            {isFr ? "Supprimer mon compte" : "Delete my account"}
+          </Text>
         </Pressable>
 
         <Text style={[styles.version, { color: colors.mutedForeground }]}>AttenteZéro · v1.0</Text>

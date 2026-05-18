@@ -1067,4 +1067,46 @@ router.post("/mobile-auth/reset-password", async (req: Request, res: Response) =
   }
 });
 
+// ── Delete account ────────────────────────────────────────────────────────
+// Apple App Store guideline 5.1.1(v): apps that support account creation
+// must provide account deletion. This endpoint permanently removes the user
+// and all associated data. Organisations cascade-delete on user removal.
+router.delete("/mobile-auth/account", async (req: Request, res: Response) => {
+  const sid = getSessionId(req);
+  if (!sid) {
+    res.status(401).json({ error: "Non authentifié." });
+    return;
+  }
+
+  const session = await getSession(sid);
+  if (!session?.user?.id || !session.user.email) {
+    res.status(401).json({ error: "Session invalide." });
+    return;
+  }
+
+  const userId = session.user.id;
+  const email = session.user.email.toLowerCase();
+
+  try {
+    // Invalidate all password reset tokens (no FK cascade on this table)
+    await db
+      .delete(passwordResetTokensTable)
+      .where(eq(passwordResetTokensTable.email, email));
+
+    // Delete user row — FK cascades handle: organisations, organisationMembers
+    await db
+      .delete(usersTable)
+      .where(eq(usersTable.id, userId));
+
+    // Invalidate all active sessions for this account
+    await deleteAllSessionsByEmail(email);
+
+    req.log.info({ userId }, "Account deleted by user request");
+    res.json({ success: true });
+  } catch (err) {
+    req.log.error({ err }, "Delete account error");
+    res.status(500).json({ error: "Erreur serveur. Veuillez réessayer." });
+  }
+});
+
 export default router;

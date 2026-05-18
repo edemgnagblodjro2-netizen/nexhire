@@ -19,6 +19,8 @@ attached_assets/
 artifacts/admin/
 artifacts/api-server/
 artifacts/mockup-sandbox/
+artifacts/civicai-site/
+artifacts/constructpro-erp/
 
 # Node + build artifacts at every level
 node_modules/
