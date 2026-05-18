@@ -1,10 +1,24 @@
 import { Router } from "express";
 import { db, queueSlots, queueBookings } from "@workspace/db";
-import { and, eq, lt, sql, count } from "drizzle-orm";
+import { and, eq, lt, sql, count, desc, gte } from "drizzle-orm";
 import { logger } from "../lib/logger";
 import { sendEmailTo } from "../lib/notify";
 import { getUncachableStripeClient } from "../stripeClient";
+import { verifyTenantJWT, extractBearerToken } from "@workspace/tenant";
 import crypto from "crypto";
+
+// ─── Agent auth middleware ───────────────────────────────────────────────────
+async function requireAgent(req: any, res: any, next: any) {
+  const raw = extractBearerToken(req.headers.authorization);
+  if (!raw) return res.status(401).json({ error: "Unauthorized" });
+  try {
+    const payload = await verifyTenantJWT(raw);
+    req.tenantPayload = payload;
+    next();
+  } catch {
+    return res.status(401).json({ error: "Invalid token" });
+  }
+}
 
 const router = Router();
 
@@ -45,10 +59,10 @@ router.get("/queue/slots/:tenantId", async (req, res) => {
       )
       .orderBy(queueSlots.slotDatetime);
 
-    res.json({ slots });
+    return res.json({ slots });
   } catch (err) {
     logger.error({ err }, "queue/slots error");
-    res.status(500).json({ error: "server_error" });
+    return res.status(500).json({ error: "server_error" });
   }
 });
 
@@ -134,10 +148,10 @@ router.post("/queue/book", async (req, res) => {
 <p style="color:#666;font-size:12px">Vous pouvez annuler une seule fois. Maximum 2 rendez-vous par semaine.</p>`,
     });
 
-    res.status(201).json({ token, bookingId: token });
+    return res.status(201).json({ token, bookingId: token });
   } catch (err) {
     logger.error({ err }, "queue/book error");
-    res.status(500).json({ error: "server_error" });
+    return res.status(500).json({ error: "server_error" });
   }
 });
 
@@ -170,10 +184,10 @@ router.get("/queue/booking/:token", async (req, res) => {
         )
       );
 
-    res.json({ booking, slot, queuePosition: Number(position) + 1 });
+    return res.json({ booking, slot, queuePosition: Number(position) + 1 });
   } catch (err) {
     logger.error({ err }, "queue/booking/:token GET error");
-    res.status(500).json({ error: "server_error" });
+    return res.status(500).json({ error: "server_error" });
   }
 });
 
@@ -196,10 +210,10 @@ router.post("/queue/booking/:token/arrive", async (req, res) => {
       .set({ status: "arrived", arrivedAt: new Date() })
       .where(eq(queueBookings.id, booking.id));
 
-    res.json({ ok: true, status: "arrived" });
+    return res.json({ ok: true, status: "arrived" });
   } catch (err) {
     logger.error({ err }, "queue/arrive error");
-    res.status(500).json({ error: "server_error" });
+    return res.status(500).json({ error: "server_error" });
   }
 });
 
@@ -225,10 +239,10 @@ router.post("/queue/booking/:token/late", async (req, res) => {
       .set({ status: "late", lateSignaledAt: new Date(), penaltyAmountCents })
       .where(eq(queueBookings.id, booking.id));
 
-    res.json({ ok: true, status: "late", penaltyAmountCents });
+    return res.json({ ok: true, status: "late", penaltyAmountCents });
   } catch (err) {
     logger.error({ err }, "queue/late error");
-    res.status(500).json({ error: "server_error" });
+    return res.status(500).json({ error: "server_error" });
   }
 });
 
@@ -259,10 +273,10 @@ router.post("/queue/booking/:token/absent", async (req, res) => {
         .where(eq(queueSlots.id, booking.slotId));
     });
 
-    res.json({ ok: true, status: "absent" });
+    return res.json({ ok: true, status: "absent" });
   } catch (err) {
     logger.error({ err }, "queue/absent error");
-    res.status(500).json({ error: "server_error" });
+    return res.status(500).json({ error: "server_error" });
   }
 });
 
@@ -323,10 +337,10 @@ router.post("/queue/booking/:token/cancel", async (req, res) => {
         .where(eq(queueSlots.id, booking.slotId));
     });
 
-    res.json({ ok: true, status: "cancelled" });
+    return res.json({ ok: true, status: "cancelled" });
   } catch (err) {
     logger.error({ err }, "queue/cancel error");
-    res.status(500).json({ error: "server_error" });
+    return res.status(500).json({ error: "server_error" });
   }
 });
 
@@ -395,10 +409,10 @@ router.post("/queue/booking/:token/reschedule", async (req, res) => {
         .where(eq(queueSlots.id, newSlotId));
     });
 
-    res.json({ ok: true, newToken });
+    return res.json({ ok: true, newToken });
   } catch (err) {
     logger.error({ err }, "queue/reschedule error");
-    res.status(500).json({ error: "server_error" });
+    return res.status(500).json({ error: "server_error" });
   }
 });
 
@@ -446,10 +460,10 @@ router.post("/queue/booking/:token/pay-penalty", async (req, res) => {
       .set({ penaltyStripeSessionId: session.id })
       .where(eq(queueBookings.id, booking.id));
 
-    res.json({ checkoutUrl: session.url });
+    return res.json({ checkoutUrl: session.url });
   } catch (err) {
     logger.error({ err }, "queue/pay-penalty error");
-    res.status(500).json({ error: "server_error" });
+    return res.status(500).json({ error: "server_error" });
   }
 });
 
@@ -475,10 +489,10 @@ router.post("/queue/penalty-webhook", async (req, res) => {
       }
     }
 
-    res.json({ received: true });
+    return res.json({ received: true });
   } catch (err) {
     logger.error({ err }, "queue/penalty-webhook error");
-    res.status(400).json({ error: "webhook_error" });
+    return res.status(400).json({ error: "webhook_error" });
   }
 });
 
@@ -504,11 +518,189 @@ router.get("/queue/public-slots", async (req, res) => {
       )
       .orderBy(queueSlots.slotDatetime);
 
-    res.json({ slots });
+    return res.json({ slots });
   } catch (err) {
     logger.error({ err }, "queue/public-slots error");
-    res.status(500).json({ error: "server_error" });
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// AGENT ROUTES — require JWT Bearer token
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ─── GET /api/queue/agent/slots ─────────────────────────────────────────────
+// List all slots for the agent's tenant (including past, with booking counts)
+router.get("/queue/agent/slots", requireAgent, async (req, res) => {
+  try {
+    const tenantId = (req as any).tenantPayload.tenantId;
+    const { from, to } = req.query;
+
+    const conditions = [eq(queueSlots.tenantId, tenantId)];
+    if (from) conditions.push(gte(queueSlots.slotDatetime, new Date(from as string)));
+    if (to)   conditions.push(lt(queueSlots.slotDatetime, new Date(to as string)));
+
+    const slots = await db
+      .select()
+      .from(queueSlots)
+      .where(and(...conditions))
+      .orderBy(desc(queueSlots.slotDatetime));
+
+    return res.json({ slots });
+  } catch (err) {
+    logger.error({ err }, "queue/agent/slots GET error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ─── POST /api/queue/agent/slots ────────────────────────────────────────────
+// Create one or multiple slots
+router.post("/queue/agent/slots", requireAgent, async (req, res) => {
+  const tenantId = (req as any).tenantPayload.tenantId;
+  const { slotDatetime, capacity, serviceName, repeat, repeatCount } = req.body;
+
+  if (!slotDatetime || !capacity) {
+    return res.status(400).json({ error: "missing_fields" });
+  }
+
+  try {
+    const base = new Date(slotDatetime);
+    const slots: any[] = [];
+
+    const count = repeat && repeatCount > 1 ? Math.min(repeatCount, 60) : 1;
+    const intervalMin = req.body.intervalMin ?? 30;
+
+    for (let i = 0; i < count; i++) {
+      const dt = new Date(base.getTime() + i * intervalMin * 60000);
+      slots.push({
+        tenantId,
+        serviceName: serviceName ?? "Service principal",
+        slotDatetime: dt,
+        capacity: Number(capacity),
+      });
+    }
+
+    const created = await db.insert(queueSlots).values(slots).returning();
+    return res.status(201).json({ slots: created });
+  } catch (err) {
+    logger.error({ err }, "queue/agent/slots POST error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ─── DELETE /api/queue/agent/slots/:id ──────────────────────────────────────
+router.delete("/queue/agent/slots/:id", requireAgent, async (req, res) => {
+  const tenantId = (req as any).tenantPayload.tenantId;
+  try {
+    const [slot] = await db.select().from(queueSlots).where(eq(queueSlots.id, req.params.id)).limit(1);
+    if (!slot || slot.tenantId !== tenantId) return res.status(404).json({ error: "not_found" });
+
+    // Soft-delete: deactivate
+    await db.update(queueSlots).set({ isActive: false }).where(eq(queueSlots.id, req.params.id));
+    return res.json({ ok: true });
+  } catch (err) {
+    logger.error({ err }, "queue/agent/slots DELETE error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ─── GET /api/queue/agent/slots/:id/bookings ────────────────────────────────
+router.get("/queue/agent/slots/:id/bookings", requireAgent, async (req, res) => {
+  const tenantId = (req as any).tenantPayload.tenantId;
+  try {
+    const [slot] = await db.select().from(queueSlots).where(eq(queueSlots.id, req.params.id)).limit(1);
+    if (!slot || slot.tenantId !== tenantId) return res.status(404).json({ error: "not_found" });
+
+    const bookings = await db
+      .select()
+      .from(queueBookings)
+      .where(eq(queueBookings.slotId, req.params.id))
+      .orderBy(queueBookings.createdAt);
+
+    return res.json({ slot, bookings });
+  } catch (err) {
+    logger.error({ err }, "queue/agent/bookings GET error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ─── PATCH /api/queue/agent/bookings/:id/status ──────────────────────────────
+// Agent updates booking status (call citizen, mark served, mark absent, etc.)
+router.patch("/queue/agent/bookings/:id/status", requireAgent, async (req, res) => {
+  const tenantId = (req as any).tenantPayload.tenantId;
+  const { status } = req.body;
+
+  const VALID = ["scheduled", "arrived", "called", "served", "late", "absent", "cancelled", "completed"];
+  if (!VALID.includes(status)) return res.status(400).json({ error: "invalid_status" });
+
+  try {
+    const [booking] = await db.select().from(queueBookings).where(eq(queueBookings.id, req.params.id)).limit(1);
+    if (!booking || booking.tenantId !== tenantId) return res.status(404).json({ error: "not_found" });
+
+    const updates: Record<string, any> = { status };
+    if (status === "arrived") updates.arrivedAt = new Date();
+    if (status === "cancelled") { updates.cancelledAt = new Date(); }
+
+    // If agent marks as absent/cancelled → free the slot
+    if (["absent", "cancelled"].includes(status)) {
+      await db.transaction(async (tx) => {
+        await tx.update(queueBookings).set(updates).where(eq(queueBookings.id, booking.id));
+        await tx.update(queueSlots)
+          .set({ bookedCount: sql`GREATEST(0, ${queueSlots.bookedCount} - 1)` })
+          .where(eq(queueSlots.id, booking.slotId));
+      });
+    } else {
+      await db.update(queueBookings).set(updates).where(eq(queueBookings.id, booking.id));
+    }
+
+    return res.json({ ok: true, status });
+  } catch (err) {
+    logger.error({ err }, "queue/agent/bookings PATCH error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ─── GET /api/queue/agent/stats ─────────────────────────────────────────────
+// Dashboard stats for agent home
+router.get("/queue/agent/stats", requireAgent, async (req, res) => {
+  const tenantId = (req as any).tenantPayload.tenantId;
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today.getTime() + 86400000);
+
+    // Slots today
+    const todaySlots = await db.select().from(queueSlots).where(
+      and(
+        eq(queueSlots.tenantId, tenantId),
+        gte(queueSlots.slotDatetime, today),
+        lt(queueSlots.slotDatetime, tomorrow),
+      )
+    );
+    const slotIds = todaySlots.map(s => s.id);
+
+    let todayBookings: any[] = [];
+    if (slotIds.length > 0) {
+      todayBookings = await db.select().from(queueBookings).where(
+        and(eq(queueBookings.tenantId, tenantId), sql`${queueBookings.slotId} = ANY(${sql`ARRAY[${sql.join(slotIds.map(id => sql`${id}`), sql`,`)}]::text[]`})`)
+      );
+    }
+
+    const stats = {
+      slotsToday: todaySlots.length,
+      bookedToday: todayBookings.length,
+      arrivedToday: todayBookings.filter(b => ["arrived", "completed"].includes(b.status)).length,
+      lateToday: todayBookings.filter(b => b.status === "late").length,
+      cancelledToday: todayBookings.filter(b => b.status === "cancelled").length,
+      absentToday: todayBookings.filter(b => b.status === "absent").length,
+    };
+
+    return res.json({ stats });
+  } catch (err) {
+    logger.error({ err }, "queue/agent/stats error");
+    return res.status(500).json({ error: "server_error" });
   }
 });
 
 export default router;
+

@@ -20,6 +20,7 @@ import { NotificationsPage } from "@/apps/attentezero/pages/NotificationsPage";
 import { StaffPage }         from "@/apps/attentezero/pages/StaffPage";
 import { PortalPage }        from "@/apps/attentezero/pages/PortalPage";
 import { CRMPage }           from "@/apps/attentezero/pages/CRMPage";
+import { SlotManagerPage }   from "@/apps/attentezero/pages/SlotManagerPage";
 import { PublicTicketPage }    from "@/apps/attentezero/pages/PublicTicketPage";
 import { CitizenBookingPage }  from "@/apps/attentezero/pages/CitizenBookingPage";
 import { BookAppointmentPage } from "@/apps/attentezero/pages/BookAppointmentPage";
@@ -101,6 +102,9 @@ function Router() {
       </Route>
       <Route path="/apps/attentezero/crm">
         <ProtectedRoute component={CRMPage} />
+      </Route>
+      <Route path="/apps/attentezero/slot-manager">
+        <ProtectedRoute component={SlotManagerPage} />
       </Route>
       {/* Public — no auth required */}
       <Route path="/apps/attentezero-public/:slug">

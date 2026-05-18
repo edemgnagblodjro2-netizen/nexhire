@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   Users, Calendar, BarChart3, MapPin, Monitor, Bell,
-  UserCog, Globe, BookUser, ArrowLeft, Menu, X, Wifi
+  UserCog, Globe, BookUser, ArrowLeft, Menu, X, Wifi, CalendarCheck
 } from "lucide-react";
 import { useState } from "react";
 
 const MODULES = [
-  { key: "queues",        icon: Users,     labelFr: "File d'attente",       labelEn: "Queue",           badge: null },
-  { key: "appointments",  icon: Calendar,  labelFr: "Rendez-vous",          labelEn: "Appointments",    badge: null },
+  { key: "queues",        icon: Users,         labelFr: "File d'attente",  labelEn: "Queue",            badge: null },
+  { key: "slot-manager",  icon: CalendarCheck, labelFr: "Créneaux & RDV",  labelEn: "Slots & Bookings", badge: null },
+  { key: "appointments",  icon: Calendar,      labelFr: "Rendez-vous",     labelEn: "Appointments",     badge: null },
   { key: "analytics",     icon: BarChart3, labelFr: "Analytics",            labelEn: "Analytics",       badge: null },
   { key: "sites",         icon: MapPin,    labelFr: "Multi-sites",          labelEn: "Multi-sites",     badge: null },
   { key: "display",       icon: Monitor,   labelFr: "Écrans affichage",     labelEn: "Display screens", badge: null },
