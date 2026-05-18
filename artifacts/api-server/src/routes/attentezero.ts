@@ -12,132 +12,138 @@ const initializedSchemas = new Set<string>();
 
 async function ensureAzTables(schema: string) {
   if (initializedSchemas.has(schema)) return;
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS "${schema}".az_sites (
-      id          VARCHAR(36) PRIMARY KEY DEFAULT gen_random_uuid()::text,
-      name        TEXT NOT NULL,
-      city        TEXT NOT NULL,
-      address     TEXT NOT NULL DEFAULT '',
-      status      TEXT NOT NULL DEFAULT 'active',
-      counters    INT NOT NULL DEFAULT 1,
-      created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
-      updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
-    );
+  // Mark immediately to prevent concurrent init races
+  initializedSchemas.add(schema);
 
-    CREATE TABLE IF NOT EXISTS "${schema}".az_staff (
-      id          VARCHAR(36) PRIMARY KEY DEFAULT gen_random_uuid()::text,
-      site_id     VARCHAR(36),
-      full_name   TEXT NOT NULL,
-      role        TEXT NOT NULL DEFAULT 'agent',
-      guichet     TEXT,
-      status      TEXT NOT NULL DEFAULT 'offline',
-      served_today INT NOT NULL DEFAULT 0,
-      avg_time_sec INT NOT NULL DEFAULT 0,
-      created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
-      updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
-    );
+  // Each CREATE TABLE in its own query — pg driver doesn't support multi-statement strings
+  await pool.query(`CREATE TABLE IF NOT EXISTS "${schema}".az_sites (
+    id          VARCHAR(36) PRIMARY KEY DEFAULT gen_random_uuid()::text,
+    name        TEXT NOT NULL,
+    city        TEXT NOT NULL,
+    address     TEXT NOT NULL DEFAULT '',
+    status      TEXT NOT NULL DEFAULT 'active',
+    counters    INT NOT NULL DEFAULT 1,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+  )`);
 
-    CREATE TABLE IF NOT EXISTS "${schema}".az_queues (
-      id          VARCHAR(36) PRIMARY KEY DEFAULT gen_random_uuid()::text,
-      site_id     VARCHAR(36),
-      name        TEXT NOT NULL DEFAULT 'File principale',
-      prefix      TEXT NOT NULL DEFAULT 'A',
-      status      TEXT NOT NULL DEFAULT 'open',
-      created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
-      updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
-    );
+  await pool.query(`CREATE TABLE IF NOT EXISTS "${schema}".az_staff (
+    id           VARCHAR(36) PRIMARY KEY DEFAULT gen_random_uuid()::text,
+    site_id      VARCHAR(36),
+    full_name    TEXT NOT NULL,
+    role         TEXT NOT NULL DEFAULT 'agent',
+    guichet      TEXT,
+    status       TEXT NOT NULL DEFAULT 'offline',
+    served_today INT NOT NULL DEFAULT 0,
+    avg_time_sec INT NOT NULL DEFAULT 0,
+    created_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at   TIMESTAMPTZ NOT NULL DEFAULT now()
+  )`);
 
-    CREATE TABLE IF NOT EXISTS "${schema}".az_tickets (
-      id          VARCHAR(36) PRIMARY KEY DEFAULT gen_random_uuid()::text,
-      queue_id    VARCHAR(36),
-      site_id     VARCHAR(36),
-      number      TEXT NOT NULL,
-      client_name TEXT,
-      phone       TEXT,
-      priority    TEXT NOT NULL DEFAULT 'normal',
-      status      TEXT NOT NULL DEFAULT 'waiting',
-      guichet     TEXT,
-      staff_id    VARCHAR(36),
-      called_at   TIMESTAMPTZ,
-      served_at   TIMESTAMPTZ,
-      created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
-    );
+  await pool.query(`CREATE TABLE IF NOT EXISTS "${schema}".az_queues (
+    id         VARCHAR(36) PRIMARY KEY DEFAULT gen_random_uuid()::text,
+    site_id    VARCHAR(36),
+    name       TEXT NOT NULL DEFAULT 'File principale',
+    prefix     TEXT NOT NULL DEFAULT 'A',
+    status     TEXT NOT NULL DEFAULT 'open',
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+  )`);
 
-    CREATE TABLE IF NOT EXISTS "${schema}".az_appointments (
-      id          VARCHAR(36) PRIMARY KEY DEFAULT gen_random_uuid()::text,
-      site_id     VARCHAR(36),
-      client_name TEXT NOT NULL,
-      email       TEXT,
-      phone       TEXT,
-      service     TEXT NOT NULL,
-      appt_date   DATE NOT NULL,
-      appt_time   TEXT NOT NULL,
-      status      TEXT NOT NULL DEFAULT 'pending',
-      notes       TEXT,
-      created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
-      updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
-    );
+  await pool.query(`CREATE TABLE IF NOT EXISTS "${schema}".az_tickets (
+    id          VARCHAR(36) PRIMARY KEY DEFAULT gen_random_uuid()::text,
+    queue_id    VARCHAR(36),
+    site_id     VARCHAR(36),
+    number      TEXT NOT NULL,
+    client_name TEXT,
+    phone       TEXT,
+    priority    TEXT NOT NULL DEFAULT 'normal',
+    status      TEXT NOT NULL DEFAULT 'waiting',
+    guichet     TEXT,
+    staff_id    VARCHAR(36),
+    called_at   TIMESTAMPTZ,
+    served_at   TIMESTAMPTZ,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+  )`);
 
-    CREATE TABLE IF NOT EXISTS "${schema}".az_crm_clients (
-      id           VARCHAR(36) PRIMARY KEY DEFAULT gen_random_uuid()::text,
-      client_name  TEXT NOT NULL,
-      email        TEXT,
-      phone        TEXT,
-      tags         JSONB NOT NULL DEFAULT '[]',
-      notes        TEXT,
-      is_vip       BOOLEAN NOT NULL DEFAULT false,
-      visit_count  INT NOT NULL DEFAULT 0,
-      last_visit   DATE,
-      created_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
-      updated_at   TIMESTAMPTZ NOT NULL DEFAULT now()
-    );
-  `);
+  await pool.query(`CREATE TABLE IF NOT EXISTS "${schema}".az_appointments (
+    id          VARCHAR(36) PRIMARY KEY DEFAULT gen_random_uuid()::text,
+    site_id     VARCHAR(36),
+    client_name TEXT NOT NULL,
+    email       TEXT,
+    phone       TEXT,
+    service     TEXT NOT NULL,
+    appt_date   DATE NOT NULL,
+    appt_time   TEXT NOT NULL,
+    status      TEXT NOT NULL DEFAULT 'pending',
+    notes       TEXT,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+  )`);
+
+  await pool.query(`CREATE TABLE IF NOT EXISTS "${schema}".az_crm_clients (
+    id          VARCHAR(36) PRIMARY KEY DEFAULT gen_random_uuid()::text,
+    client_name TEXT NOT NULL,
+    email       TEXT,
+    phone       TEXT,
+    tags        JSONB NOT NULL DEFAULT '[]',
+    notes       TEXT,
+    is_vip      BOOLEAN NOT NULL DEFAULT false,
+    visit_count INT NOT NULL DEFAULT 0,
+    last_visit  DATE,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+  )`);
 
   // Seed demo data only if tables are empty
   const siteCount = await pool.query(`SELECT count(*) FROM "${schema}".az_sites`);
   if (siteCount.rows[0].count === "0") {
     await pool.query(`
-      INSERT INTO "${schema}".az_sites (name, city, address, status, counters)
-      VALUES
+      INSERT INTO "${schema}".az_sites (name, city, address, status, counters) VALUES
         ('Bureau Principal',    'Montréal',  '1000 rue Saint-Denis',      'active',   6),
         ('Succursale Nord',     'Laval',     '345 boul. Cartier O.',       'active',   3),
         ('Succursale Sud',      'Longueuil', '880 chemin Chambly',         'active',   4),
         ('Point de service Est','Repentigny','225 rue Notre-Dame',         'inactive', 2),
-        ('Kiosque Aéroport',    'Dorval',    'Aéroport Montréal-Trudeau', 'active',   2);
+        ('Kiosque Aéroport',    'Dorval',    'Aéroport Montréal-Trudeau', 'active',   2)
     `);
 
     const sites = await pool.query(`SELECT id FROM "${schema}".az_sites WHERE status='active' LIMIT 1`);
     const siteId: string = sites.rows[0]?.id;
 
     if (siteId) {
-      await pool.query(`
-        INSERT INTO "${schema}".az_queues (site_id, name, prefix) VALUES ($1, 'File principale', 'A');
-        INSERT INTO "${schema}".az_staff (site_id, full_name, role, guichet, status, served_today, avg_time_sec)
-        VALUES
+      await pool.query(
+        `INSERT INTO "${schema}".az_queues (site_id, name, prefix) VALUES ($1, 'File principale', 'A')`,
+        [siteId]
+      );
+      await pool.query(
+        `INSERT INTO "${schema}".az_staff (site_id, full_name, role, guichet, status, served_today, avg_time_sec) VALUES
           ($1, 'Marie Thibault',   'agent_principal', 'Guichet 1', 'active',  48, 372),
           ($1, 'Jean-Paul Dubois', 'agent',           'Guichet 2', 'active',  44, 426),
           ($1, 'Sara Khalil',      'agent_principal', 'Guichet 3', 'active',  52, 348),
           ($1, 'Karim Benali',     'agent',           'Guichet 4', 'paused',  39, 504),
-          ($1, 'Lucie Fontaine',   'superviseur',     NULL,        'offline',  0,  0);
-        INSERT INTO "${schema}".az_appointments (site_id, client_name, email, phone, service, appt_date, appt_time, status)
-        VALUES
+          ($1, 'Lucie Fontaine',   'superviseur',     NULL,        'offline',  0,  0)`,
+        [siteId]
+      );
+      await pool.query(
+        `INSERT INTO "${schema}".az_appointments (site_id, client_name, email, phone, service, appt_date, appt_time, status) VALUES
           ($1, 'Marie Dupont',   'marie@example.com',  '514-555-0101', 'Service civil',        '2026-05-18', '09:00', 'confirmed'),
           ($1, 'Ahmed Benali',   'ahmed@example.com',  '438-555-0202', 'Immigration',           '2026-05-18', '09:30', 'confirmed'),
           ($1, 'Julie Tremblay', 'julie@example.com',  '450-555-0303', 'Permis construction',  '2026-05-18', '10:00', 'pending'),
           ($1, 'Carlos Morales', 'carlos@example.com', '514-555-0404', 'Consultation sociale', '2026-05-18', '10:30', 'confirmed'),
-          ($1, 'Fatima Osei',    'fatima@example.com', '514-555-0505', 'Impôts / fiscalité',   '2026-05-19', '14:00', 'pending');
-        INSERT INTO "${schema}".az_crm_clients (client_name, email, phone, tags, notes, is_vip, visit_count, last_visit)
-        VALUES
+          ($1, 'Fatima Osei',    'fatima@example.com', '514-555-0505', 'Impôts / fiscalité',   '2026-05-19', '14:00', 'pending')`,
+        [siteId]
+      );
+      await pool.query(
+        `INSERT INTO "${schema}".az_crm_clients (client_name, email, phone, tags, notes, is_vip, visit_count, last_visit) VALUES
           ('Marie Dupont',   'marie@example.com',  '514-555-0101', '["VIP","Service civil"]',  'Cliente régulière, préfère les matins', true,  24, '2026-05-18'),
           ('Ahmed Benali',   'ahmed@example.com',  '438-555-0202', '["Immigration"]',           'Dossier immigration en cours',         false, 12, '2026-05-15'),
           ('Julie Tremblay', 'julie@example.com',  '450-555-0303', '["Construction"]',          'Permis mensuel suivi',                 false,  8, '2026-05-10'),
           ('Carlos Morales', 'carlos@example.com', '514-555-0404', '["VIP","Interprète"]',      'Interprète requis — espagnol',         true,  31, '2026-05-17'),
-          ('Fatima Osei',    'fatima@example.com', '514-555-0505', '["Impôts"]',                '',                                     false,  5, '2026-05-12');
-      `, [siteId]);
+          ('Fatima Osei',    'fatima@example.com', '514-555-0505', '["Impôts"]',                '',                                     false,  5, '2026-05-12')`
+      );
     }
   }
 
-  initializedSchemas.add(schema);
 }
 
 // ── Auth middleware shorthand ────────────────────────────────────────────────
@@ -551,6 +557,29 @@ router.post("/attentezero/public/:tenantSlug/ticket", async (req, res) => {
     position: (posRow.rows[0].position ?? 0) + 1,
     total_waiting: parseInt(waitingCount.rows[0].count) || 1,
     estimated_wait_min: ((posRow.rows[0].position ?? 0) + 1) * 4,
+  });
+});
+
+// Public: get tenant info + open queues (no auth — for the citizen landing page)
+router.get("/attentezero/public/:tenantSlug/info", async (req, res) => {
+  const { tenantSlug } = req.params;
+  const { db: dbI } = await import("@workspace/db");
+  const { tenants: tenantsT } = await import("@workspace/db/schema");
+  const { eq: eqI } = await import("drizzle-orm");
+  const [t] = await dbI.select().from(tenantsT).where(eqI(tenantsT.subdomain, tenantSlug)).limit(1);
+  if (!t) { res.status(404).json({ error: "Tenant not found" }); return; }
+  const s = t.schemaName;
+  await ensureAzTables(s);
+
+  const sitesRow = await pool.query(`SELECT id, name, city, address, status FROM "${s}".az_sites WHERE status='active' ORDER BY name LIMIT 10`);
+  const queuesRow = await pool.query(`SELECT id, name, prefix, site_id FROM "${s}".az_queues WHERE status='open' ORDER BY name`);
+  const waitRow = await pool.query(`SELECT count(*)::int as waiting FROM "${s}".az_tickets WHERE status='waiting' AND created_at::date=CURRENT_DATE`);
+
+  res.json({
+    tenantName: t.name ?? tenantSlug,
+    sites: sitesRow.rows,
+    queues: queuesRow.rows,
+    totalWaiting: waitRow.rows[0]?.waiting ?? 0,
   });
 });
 

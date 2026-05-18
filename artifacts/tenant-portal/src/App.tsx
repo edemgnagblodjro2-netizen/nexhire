@@ -20,6 +20,7 @@ import { NotificationsPage } from "@/apps/attentezero/pages/NotificationsPage";
 import { StaffPage }         from "@/apps/attentezero/pages/StaffPage";
 import { PortalPage }        from "@/apps/attentezero/pages/PortalPage";
 import { CRMPage }           from "@/apps/attentezero/pages/CRMPage";
+import { PublicTicketPage }  from "@/apps/attentezero/pages/PublicTicketPage";
 
 const queryClient = new QueryClient();
 
@@ -98,6 +99,10 @@ function Router() {
       </Route>
       <Route path="/apps/attentezero/crm">
         <ProtectedRoute component={CRMPage} />
+      </Route>
+      {/* Public — no auth required */}
+      <Route path="/apps/attentezero-public/:slug">
+        <PublicTicketPage />
       </Route>
       <Route>
         {isAuthenticated ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}

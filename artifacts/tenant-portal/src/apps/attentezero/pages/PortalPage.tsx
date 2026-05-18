@@ -2,15 +2,18 @@ import { AttenteZeroLayout } from "../AttenteZeroLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/lib/i18n";
-import { Globe, QrCode, Smartphone, Eye, Copy, Check, ExternalLink } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Globe, QrCode, Smartphone, Eye, Copy, Check, ExternalLink, Printer } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import QRCode from "qrcode";
 
 function getTenantSlug(): string {
   try {
     const token = localStorage.getItem("tenant_token");
     if (token) {
       const payload = JSON.parse(atob(token.split(".")[1]));
-      // schemaName is like "tenant_demo" → slug is "demo"
+      // JWT has user.tenantSlug = the actual subdomain (e.g. "demo-civicai")
+      if (payload.user?.tenantSlug) return payload.user.tenantSlug as string;
+      // Fallback: derive from schemaName
       const schema: string = payload.schemaName ?? "";
       return schema.replace(/^tenant_/, "") || "demo";
     }
@@ -29,11 +32,58 @@ export function PortalPage() {
   const [copied, setCopied] = useState(false);
   const [slug] = useState(() => getTenantSlug());
   const portalUrl = buildPortalUrl(slug);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Generate QR code on canvas once URL is known
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    QRCode.toCanvas(canvasRef.current, portalUrl, {
+      width: 200,
+      margin: 2,
+      color: { dark: "#0f766e", light: "#ffffff" },
+    }).catch(() => {});
+  }, [portalUrl]);
 
   function copy() {
     navigator.clipboard.writeText(portalUrl).catch(() => {});
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  }
+
+  function printQR() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const dataUrl = canvas.toDataURL("image/png");
+    const win = window.open("", "_blank");
+    if (!win) return;
+    win.document.write(`
+      <!DOCTYPE html><html><head>
+      <title>QR Code — ${slug}</title>
+      <style>
+        body { font-family: -apple-system, sans-serif; text-align: center; padding: 40px; }
+        img { width: 260px; height: 260px; display: block; margin: 0 auto 20px; }
+        h2 { margin: 0 0 8px; font-size: 20px; color: #0f766e; }
+        p  { margin: 0; font-size: 13px; color: #64748b; }
+        .url { font-size: 11px; color: #94a3b8; margin-top: 16px; word-break: break-all; }
+        @media print { body { padding: 20px; } }
+      </style></head><body>
+      <img src="${dataUrl}" alt="QR Code"/>
+      <h2>${fr ? "Scannez pour prendre un ticket" : "Scan to take a ticket"}</h2>
+      <p>${fr ? "Aucune application requise • 100% gratuit" : "No app required • 100% free"}</p>
+      <p class="url">${portalUrl}</p>
+      <script>window.onload=()=>{window.print();}<\/script>
+      </body></html>
+    `);
+    win.document.close();
+  }
+
+  function downloadQR() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const link = document.createElement("a");
+    link.download = `qr-${slug}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
   }
 
   return (
@@ -66,20 +116,36 @@ export function PortalPage() {
           </CardContent>
         </Card>
 
-        {/* QR Code placeholder */}
+        {/* QR Code — real, generated */}
         <Card>
-          <CardContent className="p-6 text-center">
-            <div className="flex flex-col items-center gap-3">
-              <div className="h-32 w-32 bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center">
-                <QrCode className="h-16 w-16 text-gray-400" />
+          <CardContent className="p-6">
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+              {/* Canvas QR */}
+              <div className="flex-shrink-0 p-3 bg-white border-2 border-teal-100 rounded-2xl shadow-sm">
+                <canvas ref={canvasRef} className="rounded-lg" />
               </div>
-              <div>
-                <div className="font-semibold text-sm text-gray-900">{fr ? "QR Code à imprimer" : "Printable QR code"}</div>
-                <div className="text-xs text-gray-500 mt-0.5">{fr ? "Affichez-le à l'accueil ou en salle d'attente" : "Display at reception or in the waiting room"}</div>
+              {/* Info + actions */}
+              <div className="flex-1 space-y-3 text-center sm:text-left">
+                <div>
+                  <div className="font-semibold text-sm text-gray-900">{fr ? "QR Code à imprimer" : "Printable QR code"}</div>
+                  <div className="text-xs text-gray-500 mt-1 leading-relaxed">
+                    {fr
+                      ? "Affichez-le à l'accueil, à l'entrée ou en salle d'attente. Vos clients scannent avec leur téléphone et prennent leur ticket sans installation."
+                      : "Display at reception, the entrance, or in the waiting room. Clients scan with their phone and take a ticket with no app."}
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+                  <Button size="sm" className="gap-1.5 bg-teal-600 hover:bg-teal-700" onClick={printQR}>
+                    <Printer className="h-3.5 w-3.5" /> {fr ? "Imprimer" : "Print"}
+                  </Button>
+                  <Button size="sm" variant="outline" className="gap-1.5" onClick={downloadQR}>
+                    <QrCode className="h-3.5 w-3.5" /> {fr ? "Télécharger PNG" : "Download PNG"}
+                  </Button>
+                </div>
+                <div className="text-xs text-gray-400">
+                  {fr ? "Format A4 avec instructions incluses lors de l'impression." : "A4 format with instructions included when printing."}
+                </div>
               </div>
-              <Button size="sm" variant="outline" className="gap-1.5">
-                <Copy className="h-3.5 w-3.5" /> {fr ? "Télécharger QR" : "Download QR"}
-              </Button>
             </div>
           </CardContent>
         </Card>
