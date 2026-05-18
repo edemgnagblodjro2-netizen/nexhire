@@ -51,6 +51,55 @@ export interface ErrorEnvelope {
   error: string;
 }
 
+export interface TenantLoginInput {
+  /** @minLength 1 */
+  tenantSlug: string;
+  email: string;
+  /** @minLength 1 */
+  password: string;
+}
+
+export interface TenantRegisterInput {
+  /** @minLength 1 */
+  tenantSlug: string;
+  email: string;
+  /** @minLength 8 */
+  password: string;
+  /** @minLength 1 */
+  firstName: string;
+  /** @minLength 1 */
+  lastName: string;
+}
+
+export interface TenantUserProfile {
+  id: string;
+  tenantSlug: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+}
+
+export interface TenantAuthResult {
+  token: string;
+  user: TenantUserProfile;
+}
+
+export interface Tenant {
+  id: string;
+  slug: string;
+  name: string;
+  plan: string;
+  /** @nullable */
+  primaryColor?: string | null;
+  /** @nullable */
+  logoUrl?: string | null;
+  /** @nullable */
+  contactEmail?: string | null;
+  active?: boolean;
+  createdAt: string;
+}
+
 /**
  * Opaque session token — `Bearer <sid>`.
  */

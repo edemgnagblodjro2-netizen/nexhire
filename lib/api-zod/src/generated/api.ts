@@ -85,6 +85,87 @@ export const ExchangeMobileAuthorizationCodeResponse = zod.object({
   token: zod.string(),
 });
 
+export const TenantLoginBody = zod.object({
+  tenantSlug: zod.string().min(1),
+  email: zod.string().email(),
+  password: zod.string().min(1),
+});
+
+export const TenantLoginResponse = zod.object({
+  token: zod.string(),
+  user: zod.object({
+    id: zod.string(),
+    tenantSlug: zod.string(),
+    email: zod.string().email(),
+    firstName: zod.string(),
+    lastName: zod.string(),
+    role: zod.string(),
+  }),
+});
+
+export const tenantRegisterBodyPasswordMin = 8;
+
+export const TenantRegisterBody = zod.object({
+  tenantSlug: zod.string().min(1),
+  email: zod.string().email(),
+  password: zod.string().min(tenantRegisterBodyPasswordMin),
+  firstName: zod.string().min(1),
+  lastName: zod.string().min(1),
+});
+
+export const GetTenantCurrentUserHeader = zod.object({
+  Authorization: zod
+    .string()
+    .optional()
+    .describe("Opaque session token — `Bearer <sid>`."),
+});
+
+export const GetTenantCurrentUserResponse = zod.object({
+  id: zod.string(),
+  tenantSlug: zod.string(),
+  email: zod.string().email(),
+  firstName: zod.string(),
+  lastName: zod.string(),
+  role: zod.string(),
+});
+
+export const ListTenantsHeader = zod.object({
+  "x-admin-key": zod.string(),
+});
+
+export const ListTenantsResponseItem = zod.object({
+  id: zod.string(),
+  slug: zod.string(),
+  name: zod.string(),
+  plan: zod.string(),
+  primaryColor: zod.string().nullish(),
+  logoUrl: zod.string().nullish(),
+  contactEmail: zod.string().nullish(),
+  active: zod.boolean().optional(),
+  createdAt: zod.coerce.date(),
+});
+export const ListTenantsResponse = zod.array(ListTenantsResponseItem);
+
+export const GetTenantParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const GetTenantHeader = zod.object({
+  "x-admin-key": zod.string(),
+});
+
+export const GetTenantResponse = zod.object({
+  id: zod.string(),
+  slug: zod.string(),
+  name: zod.string(),
+  plan: zod.string(),
+  primaryColor: zod.string().nullish(),
+  logoUrl: zod.string().nullish(),
+  contactEmail: zod.string().nullish(),
+  active: zod.boolean().optional(),
+  createdAt: zod.coerce.date(),
+});
+
 /**
  * @summary Delete a mobile session token
  */

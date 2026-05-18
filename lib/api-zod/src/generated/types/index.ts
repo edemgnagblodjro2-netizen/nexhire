@@ -16,3 +16,8 @@ export * from "./healthStatus";
 export * from "./logoutSuccess";
 export * from "./mobileTokenExchangeRequest";
 export * from "./mobileTokenExchangeSuccess";
+export * from "./tenant";
+export * from "./tenantAuthResult";
+export * from "./tenantLoginInput";
+export * from "./tenantRegisterInput";
+export * from "./tenantUserProfile";

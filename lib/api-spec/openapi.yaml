@@ -12,6 +12,10 @@ tags:
     description: Health operations
   - name: Auth
     description: Browser and mobile authentication endpoints.
+  - name: TenantAuth
+    description: Tenant user authentication endpoints.
+  - name: TenantAdmin
+    description: Admin endpoints for managing tenants.
 paths:
   /healthz:
     get:
@@ -128,6 +132,118 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorEnvelope'
+  /tenant-auth/login:
+    post:
+      tags: [TenantAuth]
+      operationId: tenantLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TenantLoginInput"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TenantAuthResult"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+  /tenant-auth/register:
+    post:
+      tags: [TenantAuth]
+      operationId: tenantRegister
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TenantRegisterInput"
+      responses:
+        "201":
+          description: User registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TenantAuthResult"
+        "409":
+          description: Email already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+  /tenant-auth/me:
+    get:
+      tags: [TenantAuth]
+      operationId: getTenantCurrentUser
+      parameters:
+        - $ref: "#/components/parameters/AuthorizationSessionHeader"
+      responses:
+        "200":
+          description: Current tenant user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TenantUserProfile"
+        "401":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+  /admin/tenants:
+    get:
+      tags: [TenantAdmin]
+      operationId: listTenants
+      parameters:
+        - name: x-admin-key
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of tenants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Tenant"
+  /admin/tenants/{id}:
+    get:
+      tags: [TenantAdmin]
+      operationId: getTenant
+      parameters:
+        - name: x-admin-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tenant detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tenant"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
   /mobile-auth/logout:
     post:
       tags: [Auth]
@@ -228,3 +344,83 @@ components:
       properties:
         error:
           type: string
+    TenantLoginInput:
+      type: object
+      required: [tenantSlug, email, password]
+      properties:
+        tenantSlug:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 1
+    TenantRegisterInput:
+      type: object
+      required: [tenantSlug, email, password, firstName, lastName]
+      properties:
+        tenantSlug:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        firstName:
+          type: string
+          minLength: 1
+        lastName:
+          type: string
+          minLength: 1
+    TenantAuthResult:
+      type: object
+      required: [token, user]
+      properties:
+        token:
+          type: string
+        user:
+          $ref: "#/components/schemas/TenantUserProfile"
+    TenantUserProfile:
+      type: object
+      required: [id, tenantSlug, email, firstName, lastName, role]
+      properties:
+        id:
+          type: string
+        tenantSlug:
+          type: string
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+    Tenant:
+      type: object
+      required: [id, slug, name, plan, createdAt]
+      properties:
+        id:
+          type: string
+        slug:
+          type: string
+        name:
+          type: string
+        plan:
+          type: string
+        primaryColor:
+          type: ["string", "null"]
+        logoUrl:
+          type: ["string", "null"]
+        contactEmail:
+          type: ["string", "null"]
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time

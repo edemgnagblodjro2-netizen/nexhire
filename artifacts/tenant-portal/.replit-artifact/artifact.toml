@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/tenant-portal/"
+title = "CivicAI — Tenant Portal"
+version = "1.0.0"
+id = "artifacts/tenant-portal"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/tenant-portal/" ]
+localPort = 23746
+
+[services.development]
+run = "pnpm --filter @workspace/tenant-portal run dev"
+
+[services.env]
+PORT = "23746"
+BASE_PATH = "/tenant-portal/"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/tenant-portal", "run", "build" ]
+publicDir = "artifacts/tenant-portal/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"

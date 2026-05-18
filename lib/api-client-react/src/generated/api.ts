@@ -25,6 +25,11 @@ import type {
   LogoutSuccess,
   MobileTokenExchangeRequest,
   MobileTokenExchangeSuccess,
+  Tenant,
+  TenantAuthResult,
+  TenantLoginInput,
+  TenantRegisterInput,
+  TenantUserProfile,
 } from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
@@ -554,6 +559,378 @@ export const useExchangeMobileAuthorizationCode = <
     getExchangeMobileAuthorizationCodeMutationOptions(options),
   );
 };
+
+export const getTenantLoginUrl = () => {
+  return `/api/tenant-auth/login`;
+};
+
+export const tenantLogin = async (
+  tenantLoginInput: TenantLoginInput,
+  options?: RequestInit,
+): Promise<TenantAuthResult> => {
+  return customFetch<TenantAuthResult>(getTenantLoginUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(tenantLoginInput),
+  });
+};
+
+export const getTenantLoginMutationOptions = <
+  TError = ErrorType<ErrorEnvelope>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof tenantLogin>>,
+    TError,
+    { data: BodyType<TenantLoginInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof tenantLogin>>,
+  TError,
+  { data: BodyType<TenantLoginInput> },
+  TContext
+> => {
+  const mutationKey = ["tenantLogin"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof tenantLogin>>,
+    { data: BodyType<TenantLoginInput> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return tenantLogin(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type TenantLoginMutationResult = NonNullable<
+  Awaited<ReturnType<typeof tenantLogin>>
+>;
+export type TenantLoginMutationBody = BodyType<TenantLoginInput>;
+export type TenantLoginMutationError = ErrorType<ErrorEnvelope>;
+
+export const useTenantLogin = <
+  TError = ErrorType<ErrorEnvelope>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof tenantLogin>>,
+    TError,
+    { data: BodyType<TenantLoginInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof tenantLogin>>,
+  TError,
+  { data: BodyType<TenantLoginInput> },
+  TContext
+> => {
+  return useMutation(getTenantLoginMutationOptions(options));
+};
+
+export const getTenantRegisterUrl = () => {
+  return `/api/tenant-auth/register`;
+};
+
+export const tenantRegister = async (
+  tenantRegisterInput: TenantRegisterInput,
+  options?: RequestInit,
+): Promise<TenantAuthResult> => {
+  return customFetch<TenantAuthResult>(getTenantRegisterUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(tenantRegisterInput),
+  });
+};
+
+export const getTenantRegisterMutationOptions = <
+  TError = ErrorType<ErrorEnvelope>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof tenantRegister>>,
+    TError,
+    { data: BodyType<TenantRegisterInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof tenantRegister>>,
+  TError,
+  { data: BodyType<TenantRegisterInput> },
+  TContext
+> => {
+  const mutationKey = ["tenantRegister"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof tenantRegister>>,
+    { data: BodyType<TenantRegisterInput> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return tenantRegister(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type TenantRegisterMutationResult = NonNullable<
+  Awaited<ReturnType<typeof tenantRegister>>
+>;
+export type TenantRegisterMutationBody = BodyType<TenantRegisterInput>;
+export type TenantRegisterMutationError = ErrorType<ErrorEnvelope>;
+
+export const useTenantRegister = <
+  TError = ErrorType<ErrorEnvelope>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof tenantRegister>>,
+    TError,
+    { data: BodyType<TenantRegisterInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof tenantRegister>>,
+  TError,
+  { data: BodyType<TenantRegisterInput> },
+  TContext
+> => {
+  return useMutation(getTenantRegisterMutationOptions(options));
+};
+
+export const getGetTenantCurrentUserUrl = () => {
+  return `/api/tenant-auth/me`;
+};
+
+export const getTenantCurrentUser = async (
+  options?: RequestInit,
+): Promise<TenantUserProfile> => {
+  return customFetch<TenantUserProfile>(getGetTenantCurrentUserUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetTenantCurrentUserQueryKey = () => {
+  return [`/api/tenant-auth/me`] as const;
+};
+
+export const getGetTenantCurrentUserQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTenantCurrentUser>>,
+  TError = ErrorType<ErrorEnvelope>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getTenantCurrentUser>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetTenantCurrentUserQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getTenantCurrentUser>>
+  > = ({ signal }) => getTenantCurrentUser({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getTenantCurrentUser>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetTenantCurrentUserQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTenantCurrentUser>>
+>;
+export type GetTenantCurrentUserQueryError = ErrorType<ErrorEnvelope>;
+
+export function useGetTenantCurrentUser<
+  TData = Awaited<ReturnType<typeof getTenantCurrentUser>>,
+  TError = ErrorType<ErrorEnvelope>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getTenantCurrentUser>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetTenantCurrentUserQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+export const getListTenantsUrl = () => {
+  return `/api/admin/tenants`;
+};
+
+export const listTenants = async (options?: RequestInit): Promise<Tenant[]> => {
+  return customFetch<Tenant[]>(getListTenantsUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getListTenantsQueryKey = () => {
+  return [`/api/admin/tenants`] as const;
+};
+
+export const getListTenantsQueryOptions = <
+  TData = Awaited<ReturnType<typeof listTenants>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listTenants>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getListTenantsQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof listTenants>>> = ({
+    signal,
+  }) => listTenants({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listTenants>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type ListTenantsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listTenants>>
+>;
+export type ListTenantsQueryError = ErrorType<unknown>;
+
+export function useListTenants<
+  TData = Awaited<ReturnType<typeof listTenants>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listTenants>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getListTenantsQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+export const getGetTenantUrl = (id: string) => {
+  return `/api/admin/tenants/${id}`;
+};
+
+export const getTenant = async (
+  id: string,
+  options?: RequestInit,
+): Promise<Tenant> => {
+  return customFetch<Tenant>(getGetTenantUrl(id), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetTenantQueryKey = (id: string) => {
+  return [`/api/admin/tenants/${id}`] as const;
+};
+
+export const getGetTenantQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTenant>>,
+  TError = ErrorType<ErrorEnvelope>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getTenant>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetTenantQueryKey(id);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTenant>>> = ({
+    signal,
+  }) => getTenant(id, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!id,
+    ...queryOptions,
+  } as UseQueryOptions<Awaited<ReturnType<typeof getTenant>>, TError, TData> & {
+    queryKey: QueryKey;
+  };
+};
+
+export type GetTenantQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTenant>>
+>;
+export type GetTenantQueryError = ErrorType<ErrorEnvelope>;
+
+export function useGetTenant<
+  TData = Awaited<ReturnType<typeof getTenant>>,
+  TError = ErrorType<ErrorEnvelope>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getTenant>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetTenantQueryOptions(id, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
 
 /**
  * @summary Delete a mobile session token

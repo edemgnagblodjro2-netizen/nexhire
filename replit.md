@@ -178,6 +178,22 @@ Chaque client se connecte avec sa propre `DATABASE_URL` qui pointe vers son sch�
 - I want iterative development.
 - Ask before making major changes.
 
+## Ports des artifacts — règle critique
+
+Pour tout **nouvel artifact** dans ce monorepo, le `localPort` dans `artifact.toml` **doit** être choisi dans la plage pré-provisionnée du registre réseau Replit :
+
+| localPort | externalPort | Artifact actuel |
+|-----------|-------------|-----------------|
+| 23744 | 3002 | admin |
+| 23745 | 3003 | civicai-site |
+| 23746 | 4200 | **tenant-portal** |
+| 23747 | 5173 | libre |
+| 23748 | 8008 | libre |
+| 23749 | 6800 | libre |
+| 23750 | 9000 | libre |
+
+Pourquoi : Replit pré-provisionne les namespaces réseau uniquement pour les ports listés dans `.replit [[ports]]`. Un port hors de cette liste (ex: 22337, 24567) donne un `DIDNT_OPEN_A_PORT` persistant même si le serveur démarre correctement — le namespace réseau n'existe pas.
+
 ## Gotchas
 - **`.npmrc` for `pnpm install`**: Ensure `.npmrc` with `node-linker=hoisted` and `shamefully-hoist=true` is present in the root to avoid `expo-router` resolution issues during `pnpm install`.
 - **Database Schema Updates**: Drizzle-kit symlink issues can occur; `CREATE TABLE IF NOT EXISTS` is sometimes used as a fallback.
