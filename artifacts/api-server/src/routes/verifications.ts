@@ -312,7 +312,7 @@ router.post("/org/verification/request", async (req, res) => {
 
     // ── Notify admin of new verification request ──────────────────────────
     const adminVerificationsUrl = getAdminVerificationsUrl();
-    const DEST = process.env.CIVICAI_CONTACT_EMAIL ?? "info@civicai.ca";
+    const DEST = process.env.CIVICAI_CONTACT_EMAIL ?? "info@attentezero.ca";
     const alertText = [
       `Nouvelle demande de vérification d'organisme`,
       "",

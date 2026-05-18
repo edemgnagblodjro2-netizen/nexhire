@@ -564,7 +564,7 @@ ${isIntervenant
 
 En attendant, vous pouvez vous connecter à tout moment pour compléter votre profil et explorer les fonctionnalités disponibles.
 
-Pour toute question : info@civicai.ca
+Pour toute question : info@attentezero.ca
 
 — L'équipe AttenteZéro / CivicAI`;
 
@@ -614,7 +614,7 @@ Pour toute question : info@civicai.ca
     </div>`}
     <p style="margin:0;font-size:13px;color:#64748b;line-height:1.6">
       Des questions ? Écrivez-nous à
-      <a href="mailto:info@civicai.ca" style="color:#0e7e6e;text-decoration:none;font-weight:600">info@civicai.ca</a>.
+      <a href="mailto:info@attentezero.ca" style="color:#0e7e6e;text-decoration:none;font-weight:600">info@attentezero.ca</a>.
     </p>
   </div>
   <p style="color:#94a3b8;font-size:11px;margin-top:12px;text-align:center">

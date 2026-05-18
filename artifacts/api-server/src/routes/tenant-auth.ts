@@ -152,7 +152,7 @@ router.post("/create-org", authLimiter, async (req, res) => {
 Nouvelle organisation inscrite sur le portail CivicAI
 
 Entreprise   : ${companyName}
-Code          : civicai.ca/${tenantSlug}
+Code          : attentezero.ca/${tenantSlug}
 Plan          : ${plan}
 Contact       : ${firstName} ${lastName} <${email}>
 ID tenant     : ${tenantId}
@@ -166,7 +166,7 @@ ${serviceLines}
 
 ───────────────────────────────────────
 Accédez au panel admin pour activer les services :
-${process.env.PORTAL_URL ?? "https://portal.civicai.ca"}/admin/tenants/${tenantId}
+${process.env.PORTAL_URL ?? "https://attentezero.ca"}/admin/tenants/${tenantId}
   `.trim();
 
   const welcomeText = `
@@ -185,7 +185,7 @@ ${serviceLines}
 Notre équipe vous contactera dans les 24–48 heures pour confirmer votre sélection et discuter des prochaines étapes.
 
 En attendant, vous pouvez accéder à votre tableau de bord via :
-${process.env.PORTAL_URL ?? "https://portal.civicai.ca"}
+${process.env.PORTAL_URL ?? "https://attentezero.ca"}
 
 À bientôt,
 L'équipe CivicAI

@@ -88,7 +88,7 @@ function ServiceContactModal({ label, onClose }: { label: string; onClose: () =>
           Ce service est actif dans votre organisation. Contactez votre conseiller CivicAI pour accéder à ce module ou planifier une session.
         </p>
         <a
-          href={`mailto:services@civicai.ca?subject=Service actif : ${encodeURIComponent(label)}`}
+          href={`mailto:partenaires@attentezero.ca?subject=Service actif : ${encodeURIComponent(label)}`}
           className="block w-full text-center bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
         >
           Contacter CivicAI
@@ -287,7 +287,7 @@ export function Dashboard() {
             {/* Add category CTA */}
             <div
               className="rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center min-h-[112px] cursor-pointer hover:border-teal-300 hover:bg-teal-50/30 transition-all group"
-              onClick={() => window.open("mailto:services@civicai.ca?subject=Ajouter une catégorie", "_blank")}
+              onClick={() => window.open("mailto:partenaires@attentezero.ca?subject=Ajouter une catégorie", "_blank")}
             >
               <div className="text-center text-sm text-gray-400 p-4 group-hover:text-teal-600 transition-colors">
                 <div className="text-2xl mb-1">+</div>
@@ -342,7 +342,7 @@ export function Dashboard() {
           <div className="text-center py-12 text-gray-400">
             <Building2 className="h-10 w-10 mx-auto mb-3 opacity-30" />
             <p className="text-sm font-medium">Aucun service configuré pour le moment.</p>
-            <p className="text-xs mt-1">Contactez <a href="mailto:services@civicai.ca" className="text-teal-600 hover:underline">services@civicai.ca</a> pour configurer votre organisation.</p>
+            <p className="text-xs mt-1">Contactez <a href="mailto:partenaires@attentezero.ca" className="text-teal-600 hover:underline">partenaires@attentezero.ca</a> pour configurer votre organisation.</p>
           </div>
         )}
       </main>

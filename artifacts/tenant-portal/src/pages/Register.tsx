@@ -589,7 +589,7 @@ export function Register() {
                     Code organisation <span className="text-gray-400 font-normal">(identifiant unique, permanent)</span>
                   </label>
                   <div className="flex">
-                    <span className="flex items-center text-sm text-gray-400 bg-gray-50 border border-r-0 border-gray-200 rounded-l-md px-3 h-10 whitespace-nowrap">civicai.ca/</span>
+                    <span className="flex items-center text-sm text-gray-400 bg-gray-50 border border-r-0 border-gray-200 rounded-l-md px-3 h-10 whitespace-nowrap">attentezero.ca/</span>
                     <Input className={`rounded-l-none ${errors.tenantSlug ? "border-red-400" : ""}`}
                       placeholder="agence-montreal" value={tenantSlug}
                       onChange={e => { setTenantSlug(slugify(e.target.value)); setSlugEdited(true); }} />

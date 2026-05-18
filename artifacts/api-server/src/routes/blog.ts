@@ -23,7 +23,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 //   Falls back to the unmodified blog.html for unknown slugs.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CANONICAL_ORIGIN = "https://www.civicai.ca";
+const CANONICAL_ORIGIN = "https://www.attentezero.ca";
 
 async function readBlogHtml(): Promise<string | null> {
   // At runtime, compiled code lives in artifacts/api-server/dist/, so

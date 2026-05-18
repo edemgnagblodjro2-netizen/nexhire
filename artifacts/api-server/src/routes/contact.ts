@@ -10,7 +10,7 @@ import { sendEmailTo } from "../lib/notify";
 //
 // POST /api/contact          → public, IP rate-limited (3 / 5 min).
 //   1. Persiste la soumission en DB (aucune perte si l'email échoue).
-//   2. Envoie une notification à CIVICAI_CONTACT_EMAIL (défaut : info@civicai.ca).
+//   2. Envoie une notification à CIVICAI_CONTACT_EMAIL (défaut : info@attentezero.ca).
 //      → Retourne 502 si l'envoi échoue, mais la soumission est déjà sauvegardée.
 //   3. Envoie un email de confirmation à l'expéditeur (best-effort).
 //
@@ -84,7 +84,7 @@ router.post("/contact", async (req, res) => {
 
   const { name, email, org, phone, service, msg, lang } = parsed.data;
   const isFr = lang === "fr";
-  const DEST = process.env.CIVICAI_CONTACT_EMAIL ?? "info@civicai.ca";
+  const DEST = process.env.CIVICAI_CONTACT_EMAIL ?? "info@attentezero.ca";
   const adminInboxUrl = getAdminInboxUrl();
 
   // ── 1. Persist to DB first — guarantees no message is lost ──────────────
@@ -232,8 +232,8 @@ router.post("/contact", async (req, res) => {
   if (!sent) {
     res.status(502).json({
       error: isFr
-        ? "L'envoi du message a échoué. Veuillez réessayer ou nous écrire directement à info@civicai.ca."
-        : "Message delivery failed. Please try again or email us directly at info@civicai.ca.",
+        ? "L'envoi du message a échoué. Veuillez réessayer ou nous écrire directement à info@attentezero.ca."
+        : "Message delivery failed. Please try again or email us directly at info@attentezero.ca.",
     });
     return;
   }
@@ -241,8 +241,8 @@ router.post("/contact", async (req, res) => {
   // ── 3. User confirmation — best-effort ───────────────────────────────────
   const confirmSubject = isFr ? "[CivicAI] Votre message a bien été reçu" : "[CivicAI] We received your message";
   const confirmText = isFr
-    ? `Bonjour ${name},\n\nNous avons bien reçu votre message et vous répondrons sous 48 heures ouvrables.\n\nService : ${service || "Général"}\nMessage : ${msg.slice(0, 200)}${msg.length > 200 ? "…" : ""}\n\nPour toute urgence : info@civicai.ca\n\nMerci,\nL'équipe CivicAI`
-    : `Hello ${name},\n\nWe received your message and will reply within 48 business hours.\n\nService: ${service || "General"}\nMessage: ${msg.slice(0, 200)}${msg.length > 200 ? "…" : ""}\n\nFor urgent matters: info@civicai.ca\n\nThank you,\nThe CivicAI Team`;
+    ? `Bonjour ${name},\n\nNous avons bien reçu votre message et vous répondrons sous 48 heures ouvrables.\n\nService : ${service || "Général"}\nMessage : ${msg.slice(0, 200)}${msg.length > 200 ? "…" : ""}\n\nPour toute urgence : info@attentezero.ca\n\nMerci,\nL'équipe CivicAI`
+    : `Hello ${name},\n\nWe received your message and will reply within 48 business hours.\n\nService: ${service || "General"}\nMessage: ${msg.slice(0, 200)}${msg.length > 200 ? "…" : ""}\n\nFor urgent matters: info@attentezero.ca\n\nThank you,\nThe CivicAI Team`;
 
   function escapeHtml(s: string): string {
     return s
@@ -281,8 +281,8 @@ router.post("/contact", async (req, res) => {
         </div>
         <p style="margin:0;font-size:13px;color:#64748b;line-height:1.6">
           ${isFr
-            ? `Pour toute urgence, écrivez-nous directement à <a href="mailto:info@civicai.ca" style="color:#2563eb">info@civicai.ca</a>.`
-            : `For urgent matters, email us directly at <a href="mailto:info@civicai.ca" style="color:#2563eb">info@civicai.ca</a>.`}
+            ? `Pour toute urgence, écrivez-nous directement à <a href="mailto:info@attentezero.ca" style="color:#2563eb">info@attentezero.ca</a>.`
+            : `For urgent matters, email us directly at <a href="mailto:info@attentezero.ca" style="color:#2563eb">info@attentezero.ca</a>.`}
         </p>
       </div>
       <p style="color:#94a3b8;font-size:11px;margin-top:12px;text-align:center">CivicAI — NEQ 2280791601 — Québec, Canada</p>

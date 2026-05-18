@@ -195,7 +195,7 @@ export function AdminTenants() {
                       <PlanBadge plan={t.plan} />
                     </div>
                     <div className="flex items-center gap-3 mt-1 text-xs text-gray-400 flex-wrap">
-                      <span className="font-mono">civicai.ca/{t.subdomain}</span>
+                      <span className="font-mono">attentezero.ca/{t.subdomain}</span>
                       <span className="flex items-center gap-1"><Layers className="h-3 w-3" />{(t.enabledProducts ?? []).length} produits</span>
                       <span className="flex items-center gap-1"><Wrench className="h-3 w-3" />{(t.enabledServices ?? []).length} services</span>
                       <span>{fmtDate(t.createdAt)}</span>

@@ -187,7 +187,7 @@ export function AdminTenantDetail() {
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block mb-0.5">Code organisation</span>
-                    <span className="font-mono text-gray-700">civicai.ca/{tenant.subdomain}</span>
+                    <span className="font-mono text-gray-700">attentezero.ca/{tenant.subdomain}</span>
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block mb-0.5">Schéma BDD</span>

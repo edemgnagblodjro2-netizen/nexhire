@@ -141,10 +141,10 @@ router.post("/queue/book", async (req, res) => {
 
     await sendEmailTo(citizenEmail, {
       subject: "Votre rendez-vous est confirmé",
-      text: `Bonjour ${citizenName},\n\nVotre rendez-vous est confirmé pour le ${slotTime}.\n\nPour gérer votre rendez-vous (arrivée, annulation, retard) :\n${process.env.QUEUE_BASE_URL ?? "https://civicai.ca"}/queue/booking/${token}\n\nÀ bientôt !`,
+      text: `Bonjour ${citizenName},\n\nVotre rendez-vous est confirmé pour le ${slotTime}.\n\nPour gérer votre rendez-vous (arrivée, annulation, retard) :\n${process.env.QUEUE_BASE_URL ?? "https://attentezero.ca"}/queue/booking/${token}\n\nÀ bientôt !`,
       html: `<p>Bonjour <strong>${citizenName}</strong>,</p>
 <p>Votre rendez-vous est confirmé pour le <strong>${slotTime}</strong>.</p>
-<p><a href="${process.env.QUEUE_BASE_URL ?? "https://civicai.ca"}/queue/booking/${token}" style="background:#0d9488;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;display:inline-block;margin:16px 0">Gérer mon rendez-vous</a></p>
+<p><a href="${process.env.QUEUE_BASE_URL ?? "https://attentezero.ca"}/queue/booking/${token}" style="background:#0d9488;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;display:inline-block;margin:16px 0">Gérer mon rendez-vous</a></p>
 <p style="color:#666;font-size:12px">Vous pouvez annuler une seule fois. Maximum 2 rendez-vous par semaine.</p>`,
     });
 
@@ -435,7 +435,7 @@ router.post("/queue/booking/:token/pay-penalty", async (req, res) => {
     }
 
     const stripe = await getUncachableStripeClient();
-    const baseUrl = process.env.QUEUE_BASE_URL ?? "https://civicai.ca";
+    const baseUrl = process.env.QUEUE_BASE_URL ?? "https://attentezero.ca";
     const amount = booking.penaltyAmountCents ?? 500;
 
     const session = await stripe.checkout.sessions.create({
@@ -670,7 +670,7 @@ router.post("/queue/kiosk/late-ticket", async (req, res) => {
 
     // Create Stripe checkout
     const stripe = await getUncachableStripeClient();
-    const baseUrl = process.env.QUEUE_BASE_URL ?? "https://civicai.ca";
+    const baseUrl = process.env.QUEUE_BASE_URL ?? "https://attentezero.ca";
     const slotTime = new Intl.DateTimeFormat("fr-CA", {
       hour: "2-digit", minute: "2-digit", timeZone: cfg.timezone,
     }).format(proposedSlotDatetime);
@@ -780,7 +780,7 @@ router.post("/queue/kiosk-payment-webhook", async (req, res) => {
       const slotTimeFmt = new Intl.DateTimeFormat("fr-CA", {
         hour: "2-digit", minute: "2-digit", timeZone: cfg.timezone,
       }).format(slotDt);
-      const baseUrl = process.env.QUEUE_BASE_URL ?? "https://civicai.ca";
+      const baseUrl = process.env.QUEUE_BASE_URL ?? "https://attentezero.ca";
 
       await sendEmailTo(original.citizenEmail, {
         subject: "Votre ticket retard est confirmé",
