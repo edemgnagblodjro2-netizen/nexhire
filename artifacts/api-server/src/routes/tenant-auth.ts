@@ -32,6 +32,96 @@ async function resolveTenantBySlug(slug: string): Promise<{ id: string; schemaNa
   return t ?? null;
 }
 
+// ── Self-service org creation (new tenant + admin user from scratch) ──────────
+const CreateOrgSchema = z.object({
+  companyName:     z.string().min(2),
+  tenantSlug:      z.string().min(2).max(50).regex(/^[a-z0-9-]+$/, "Slug must be lowercase letters, numbers, and hyphens only"),
+  plan:            z.enum(["free", "starter", "pro", "enterprise"]).default("free"),
+  enabledProducts: z.array(z.string()).default([]),
+  enabledServices: z.array(z.string()).default([]),
+  firstName:       z.string().min(1),
+  lastName:        z.string().min(1),
+  email:           z.string().email(),
+  password:        z.string().min(8),
+});
+
+router.post("/create-org", authLimiter, async (req, res) => {
+  const parsed = CreateOrgSchema.safeParse(req.body);
+  if (!parsed.success) { res.status(400).json({ error: parsed.error.flatten() }); return; }
+
+  const { companyName, tenantSlug, plan, enabledProducts, enabledServices, firstName, lastName, email, password } = parsed.data;
+
+  // Check slug uniqueness
+  const existing = await db.select().from(tenants).where(eq(tenants.subdomain, tenantSlug)).limit(1);
+  if (existing.length > 0) { res.status(409).json({ error: "Ce code organisation est déjà pris. Choisissez-en un autre." }); return; }
+
+  const schemaName = `tenant_${tenantSlug.replace(/-/g, "_")}`;
+  const tenantId = crypto.randomUUID();
+
+  // Create tenant record
+  await db.insert(tenants).values({
+    id: tenantId,
+    companyName,
+    schemaName,
+    subdomain: tenantSlug,
+    appType: "portal",
+    plan,
+    status: "active",
+    enabledProducts,
+    enabledServices,
+  });
+
+  // Provision schema (tables + default roles)
+  const { createTenantSchema } = await import("@workspace/tenant");
+  await createTenantSchema(schemaName);
+
+  // Ensure password table exists
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS "${schemaName}".user_passwords (
+      user_id VARCHAR(36) PRIMARY KEY,
+      password_hash TEXT NOT NULL,
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    )
+  `);
+
+  const passwordHash = await bcrypt.hash(password, 12);
+  const adminRole = await pool.query(`SELECT id FROM "${schemaName}".roles WHERE name = 'admin' LIMIT 1`);
+  const roleId = adminRole.rows[0]?.id ?? null;
+
+  const newUser = await pool.query(
+    `INSERT INTO "${schemaName}".users (email, full_name, role_id, status)
+     VALUES ($1, $2, $3, 'active') RETURNING id`,
+    [email, `${firstName} ${lastName}`, roleId]
+  );
+  const userId: string = newUser.rows[0].id;
+
+  await pool.query(
+    `INSERT INTO "${schemaName}".user_passwords (user_id, password_hash) VALUES ($1, $2)`,
+    [userId, passwordHash]
+  );
+
+  try {
+    await pool.query(
+      `INSERT INTO "${schemaName}".audit_logs (user_id, action, resource, resource_id)
+       VALUES ($1, 'create_org', 'tenant', $2)`,
+      [userId, tenantId]
+    );
+  } catch { /* best-effort */ }
+
+  const token = await signTenantJWT({
+    tenantId,
+    schemaName,
+    userId,
+    email,
+    roleName: "admin",
+  });
+
+  res.status(201).json({
+    token,
+    user: { id: userId, tenantSlug, email, firstName, lastName, role: "admin" },
+  });
+});
+
 router.post("/register", authLimiter, async (req, res) => {
   const parsed = RegisterSchema.safeParse(req.body);
   if (!parsed.success) { res.status(400).json({ error: parsed.error.flatten() }); return; }
