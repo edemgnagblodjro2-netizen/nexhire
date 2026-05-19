@@ -27,6 +27,7 @@ type ServiceItem = {
   border: string;
   activeBorder: string;
   activeBg: string;
+  planGroup?: string;     // items sharing a planGroup are mutually exclusive (radio behavior)
 };
 
 type Category = {
@@ -161,6 +162,7 @@ const CATALOGUE: Category[] = [
         border: "border-purple-200",
         activeBorder: "border-purple-500",
         activeBg: "bg-purple-50",
+        planGroup: "erp-plan",
         features: [
           "Gestion de projets & tâches",
           "CRM de base",
@@ -181,6 +183,7 @@ const CATALOGUE: Category[] = [
         border: "border-indigo-200",
         activeBorder: "border-indigo-500",
         activeBg: "bg-indigo-50",
+        planGroup: "erp-plan",
         features: [
           "Tout le plan Starter",
           "Gestion RH & équipes",
@@ -201,6 +204,7 @@ const CATALOGUE: Category[] = [
         border: "border-violet-200",
         activeBorder: "border-violet-500",
         activeBg: "bg-violet-50",
+        planGroup: "erp-plan",
         features: [
           "Tout le plan Pro",
           "Multi-sites & filiales",
@@ -492,8 +496,22 @@ export function Register() {
     );
   }
 
+  // Flat map of all catalogue items for lookups
+  const ALL_ITEMS = CATALOGUE.flatMap(c => c.items);
+
   function toggleService(id: string) {
-    setServices(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id]);
+    const item = ALL_ITEMS.find(i => i.id === id);
+    if (item?.planGroup) {
+      // Radio behavior: deselect all others in same group, then toggle this one
+      const groupIds = ALL_ITEMS.filter(i => i.planGroup === item.planGroup).map(i => i.id);
+      setServices(s => {
+        const isSelected = s.includes(id);
+        if (isSelected) return s.filter(x => x !== id); // deselect
+        return [...s.filter(x => !groupIds.includes(x)), id]; // select exclusively
+      });
+    } else {
+      setServices(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id]);
+    }
   }
 
   // Services visible in step 3 = items of selected categories (or all if none selected)
@@ -809,55 +827,82 @@ export function Register() {
                 </p>
               </div>
 
-              {visibleCategories.map(cat => (
-                <div key={cat.id}>
-                  <div className={`flex items-center gap-2 mb-3 px-1`}>
-                    <div className={`w-1 h-5 rounded-full bg-gradient-to-b ${cat.gradient}`} />
-                    <h3 className="font-semibold text-gray-800 text-sm">{cat.label}</h3>
+              {visibleCategories.map(cat => {
+                // Detect if this category has mutually exclusive plan groups
+                const planGroupIds = new Set(cat.items.map(i => i.planGroup).filter(Boolean));
+                const hasPlanGroup = planGroupIds.size > 0;
+
+                return (
+                  <div key={cat.id}>
+                    <div className="flex items-center justify-between mb-3 px-1">
+                      <div className="flex items-center gap-2">
+                        <div className={`w-1 h-5 rounded-full bg-gradient-to-b ${cat.gradient}`} />
+                        <h3 className="font-semibold text-gray-800 text-sm">{cat.label}</h3>
+                      </div>
+                      {hasPlanGroup && (
+                        <span className="text-xs text-gray-400 flex items-center gap-1">
+                          <span className="w-3 h-3 rounded-full border-2 border-gray-300 inline-block" />
+                          Plan : sélectionnez-en un seul
+                        </span>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {cat.items.map(item => {
+                        const Icon = item.icon;
+                        const active = services.includes(item.id);
+                        const isPlan = !!item.planGroup;
+                        return (
+                          <button key={item.id} type="button" onClick={() => toggleService(item.id)}
+                            className={`text-left rounded-xl border-2 overflow-hidden transition-all shadow-sm hover:shadow-md ${
+                              active ? item.activeBorder : item.border
+                            } ${active ? item.activeBg : "bg-white"}`}
+                          >
+                            {/* Colored header */}
+                            <div className={`${item.accent} px-4 py-3 flex items-center justify-between`}>
+                              <div className="flex items-center gap-2">
+                                <Icon className="h-4 w-4 opacity-90" />
+                                <span className="font-bold text-sm">{item.label}</span>
+                                {isPlan && (
+                                  <span className="text-[10px] font-semibold bg-white/20 rounded px-1.5 py-0.5 tracking-wide">PLAN</span>
+                                )}
+                              </div>
+                              {/* Radio for plans, checkbox for addons */}
+                              {isPlan ? (
+                                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                                  active ? "bg-white border-white" : "border-white/50"
+                                }`}>
+                                  {active && <div className="w-2.5 h-2.5 rounded-full bg-gray-800" />}
+                                </div>
+                              ) : (
+                                <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
+                                  active ? "bg-white border-white" : "border-white/50"
+                                }`}>
+                                  {active && <Check className="h-3 w-3 text-gray-800" />}
+                                </div>
+                              )}
+                            </div>
+                            {/* Body */}
+                            <div className="px-4 py-3">
+                              <p className="text-xs text-gray-500 mb-3 leading-relaxed">{item.tagline}</p>
+                              <ul className="space-y-1.5 mb-3">
+                                {item.features.map(f => (
+                                  <li key={f} className="flex items-center gap-2 text-xs text-gray-700">
+                                    <span className={`w-2 h-2 rounded-full flex-shrink-0 ${item.featureDot}`} />
+                                    {f}
+                                  </li>
+                                ))}
+                              </ul>
+                              <div className={`text-center py-1.5 rounded-lg text-sm font-bold ${item.accent}`}>
+                                {item.price}
+                              </div>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {cat.items.map(item => {
-                      const Icon = item.icon;
-                      const active = services.includes(item.id);
-                      return (
-                        <button key={item.id} type="button" onClick={() => toggleService(item.id)}
-                          className={`text-left rounded-xl border-2 overflow-hidden transition-all shadow-sm hover:shadow-md ${
-                            active ? item.activeBorder : item.border
-                          } ${active ? item.activeBg : "bg-white"}`}
-                        >
-                          {/* Colored header */}
-                          <div className={`${item.accent} px-4 py-3 flex items-center justify-between`}>
-                            <div className="flex items-center gap-2">
-                              <Icon className="h-4 w-4 opacity-90" />
-                              <span className="font-bold text-sm">{item.label}</span>
-                            </div>
-                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                              active ? "bg-white border-white" : "border-white/50"
-                            }`}>
-                              {active && <Check className="h-3 w-3 text-gray-800" />}
-                            </div>
-                          </div>
-                          {/* Body */}
-                          <div className="px-4 py-3">
-                            <p className="text-xs text-gray-500 mb-3 leading-relaxed">{item.tagline}</p>
-                            <ul className="space-y-1.5 mb-3">
-                              {item.features.map(f => (
-                                <li key={f} className="flex items-center gap-2 text-xs text-gray-700">
-                                  <span className={`w-2 h-2 rounded-full flex-shrink-0 ${item.featureDot}`} />
-                                  {f}
-                                </li>
-                              ))}
-                            </ul>
-                            <div className={`text-center py-1.5 rounded-lg text-sm font-bold ${item.accent}`}>
-                              {item.price}
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
 
               {services.length > 0 && (
                 <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 text-sm text-teal-800">
