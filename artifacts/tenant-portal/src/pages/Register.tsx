@@ -550,9 +550,7 @@ export function Register() {
       {/* Top bar */}
       <header className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/10 bg-white/5 backdrop-blur-sm sticky top-0">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-md bg-teal-500 flex items-center justify-center">
-            <span className="text-white font-bold text-xs">C</span>
-          </div>
+          <img src="/tenant-portal/civicai-logo.png" alt="CivicAI" className="w-7 h-7 rounded-md object-contain bg-white/10 p-0.5" />
           <span className="font-bold text-white">CivicAI Portal</span>
         </div>
         <div className="flex items-center gap-4">

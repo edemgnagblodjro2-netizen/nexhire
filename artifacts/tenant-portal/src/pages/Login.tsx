@@ -76,9 +76,7 @@ export function Login() {
         {/* Logo */}
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-9 h-9 rounded-lg bg-teal-500 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">C</span>
-            </div>
+            <img src="/tenant-portal/civicai-logo.png" alt="CivicAI" className="w-9 h-9 rounded-lg object-contain bg-white/10 p-1" />
             <span className="text-white font-bold text-lg tracking-tight">CivicAI Portal</span>
           </div>
         </div>
@@ -128,9 +126,7 @@ export function Login() {
           {/* Mobile logo */}
           <div className="flex items-center justify-between mb-8 lg:hidden">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-md bg-teal-500 flex items-center justify-center">
-                <span className="text-white font-bold text-xs">C</span>
-              </div>
+              <img src="/tenant-portal/civicai-logo.png" alt="CivicAI" className="w-7 h-7 rounded-md object-contain" />
               <span className="font-bold text-gray-900">CivicAI Portal</span>
             </div>
             <LangToggle />
