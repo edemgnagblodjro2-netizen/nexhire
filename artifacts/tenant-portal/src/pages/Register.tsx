@@ -11,7 +11,7 @@ import {
   Megaphone, BrainCircuit, Code2, HeartHandshake, Settings,
   Check, ChevronRight, ChevronLeft, Shield, Smartphone,
   CreditCard, Package, Truck, LayoutDashboard, KeyRound,
-  Plug, Camera, Mail, Share2,
+  Plug, Camera, Mail, Share2, Phone, MapPin, Briefcase,
 } from "lucide-react";
 
 // ── Catalogue complet ─────────────────────────────────────────────────────────
@@ -435,7 +435,23 @@ function slugify(s: string): string {
     .slice(0, 40);
 }
 
-const STEPS = ["Organisation", "Catégories", "Services", "Compte admin"];
+const STEPS = ["Organisation", "Informations", "Catégories", "Services", "Compte admin"];
+
+const SECTORS = [
+  "Construction",
+  "Services professionnels",
+  "Santé et services sociaux",
+  "Commerce de détail",
+  "Technologie",
+  "Organisme à but non lucratif",
+  "Éducation",
+  "Municipal / Gouvernement",
+  "Immobilier",
+  "Transport et logistique",
+  "Autre",
+];
+
+const USER_COUNTS = ["1–5", "6–20", "21–100", "101–500", "500+"];
 
 // ── Main component ────────────────────────────────────────────────────────────
 export function Register() {
@@ -449,6 +465,14 @@ export function Register() {
   const [companyName, setCompanyName] = useState("");
   const [tenantSlug, setTenantSlug] = useState("");
   const [slugEdited, setSlugEdited] = useState(false);
+  // Step 1 — company details
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [neq, setNeq] = useState("");
+  const [sector, setSector] = useState("");
+  const [userCount, setUserCount] = useState("");
+  const [contactTitle, setContactTitle] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
   const [services, setServices] = useState<string[]>([]);
   const [firstName, setFirstName] = useState("");
@@ -484,7 +508,14 @@ export function Register() {
       if (!tenantSlug.trim()) e.tenantSlug = "Code requis";
       if (!/^[a-z0-9-]+$/.test(tenantSlug)) e.tenantSlug = "Lettres minuscules, chiffres et tirets uniquement";
     }
-    if (step === 3) {
+    if (step === 1) {
+      if (!phone.trim()) e.phone = "Numéro de téléphone requis";
+      if (!address.trim()) e.address = "Adresse requise";
+      if (!city.trim()) e.city = "Ville requise";
+      if (!sector) e.sector = "Secteur requis";
+      if (!userCount) e.userCount = "Nombre d'utilisateurs requis";
+    }
+    if (step === 4) {
       if (!firstName.trim()) e.firstName = "Prénom requis";
       if (!lastName.trim()) e.lastName = "Nom requis";
       if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = "Courriel invalide";
@@ -510,6 +541,13 @@ export function Register() {
           plan: "free",
           enabledProducts: categories,
           enabledServices: services,
+          phone: phone.trim(),
+          address: address.trim(),
+          city: city.trim(),
+          neq: neq.trim(),
+          sector,
+          userCount,
+          contactTitle: contactTitle.trim(),
           firstName: firstName.trim(),
           lastName: lastName.trim(),
           email: email.trim(),
@@ -617,8 +655,102 @@ export function Register() {
             </div>
           )}
 
-          {/* ── Step 1 — Categories ────────────────────────────────────────── */}
+          {/* ── Step 1 — Company details ───────────────────────────────────── */}
           {step === 1 && (
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 space-y-6">
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-1">Informations de l'entreprise</h2>
+                <p className="text-sm text-gray-500">Ces informations nous permettent de vous contacter et de préparer votre dossier client.</p>
+              </div>
+
+              {/* Phone + Title */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    <span className="flex items-center gap-1.5"><Phone className="h-3.5 w-3.5 text-gray-400" />Téléphone professionnel</span>
+                  </label>
+                  <Input placeholder="514-555-0100" value={phone} onChange={e => setPhone(e.target.value)}
+                    className={errors.phone ? "border-red-400" : ""} />
+                  {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Titre / Fonction <span className="text-gray-400 font-normal">(optionnel)</span></label>
+                  <Input placeholder="ex. Directeur général" value={contactTitle} onChange={e => setContactTitle(e.target.value)} />
+                </div>
+              </div>
+
+              {/* Address */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-gray-400" />Adresse</span>
+                </label>
+                <Input placeholder="123, rue des Érables" value={address} onChange={e => setAddress(e.target.value)}
+                  className={errors.address ? "border-red-400" : ""} />
+                {errors.address && <p className="text-xs text-red-500 mt-1">{errors.address}</p>}
+              </div>
+
+              {/* City + NEQ */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Ville</label>
+                  <Input placeholder="Montréal" value={city} onChange={e => setCity(e.target.value)}
+                    className={errors.city ? "border-red-400" : ""} />
+                  {errors.city && <p className="text-xs text-red-500 mt-1">{errors.city}</p>}
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    NEQ <span className="text-gray-400 font-normal">(optionnel)</span>
+                  </label>
+                  <Input placeholder="1234567890" value={neq} onChange={e => setNeq(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                    maxLength={10} />
+                  <p className="text-xs text-gray-400 mt-1">Numéro d'entreprise du Québec (10 chiffres).</p>
+                </div>
+              </div>
+
+              {/* Sector */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-gray-400" />Secteur d'activité</span>
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {SECTORS.map(s => (
+                    <button key={s} type="button" onClick={() => setSector(s)}
+                      className={`text-sm px-3 py-1.5 rounded-lg border transition-all ${
+                        sector === s
+                          ? "bg-teal-600 border-teal-600 text-white font-medium"
+                          : "border-gray-200 text-gray-600 hover:border-teal-400 hover:text-teal-700 bg-white"
+                      }`}>
+                      {s}
+                    </button>
+                  ))}
+                </div>
+                {errors.sector && <p className="text-xs text-red-500 mt-2">{errors.sector}</p>}
+              </div>
+
+              {/* User count */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  <span className="flex items-center gap-1.5"><Users className="h-3.5 w-3.5 text-gray-400" />Nombre d'utilisateurs prévus</span>
+                </label>
+                <div className="flex gap-2 flex-wrap">
+                  {USER_COUNTS.map(u => (
+                    <button key={u} type="button" onClick={() => setUserCount(u)}
+                      className={`text-sm px-4 py-2 rounded-lg border transition-all font-medium ${
+                        userCount === u
+                          ? "bg-teal-600 border-teal-600 text-white"
+                          : "border-gray-200 text-gray-600 hover:border-teal-400 hover:text-teal-700 bg-white"
+                      }`}>
+                      {u}
+                    </button>
+                  ))}
+                </div>
+                {errors.userCount && <p className="text-xs text-red-500 mt-2">{errors.userCount}</p>}
+              </div>
+            </div>
+          )}
+
+          {/* ── Step 2 — Categories ────────────────────────────────────────── */}
+          {step === 2 && (
             <div className="space-y-4">
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-1">Quels services vous intéressent ?</h2>
@@ -664,8 +796,8 @@ export function Register() {
             </div>
           )}
 
-          {/* ── Step 2 — Services ─────────────────────────────────────────── */}
-          {step === 2 && (
+          {/* ── Step 3 — Services ─────────────────────────────────────────── */}
+          {step === 3 && (
             <div className="space-y-8">
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-1">Choisissez vos services</h2>
@@ -736,8 +868,8 @@ export function Register() {
             </div>
           )}
 
-          {/* ── Step 3 — Admin account ─────────────────────────────────────── */}
-          {step === 3 && (
+          {/* ── Step 4 — Admin account ─────────────────────────────────────── */}
+          {step === 4 && (
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 space-y-6">
               <div>
                 <h2 className="text-lg font-semibold text-gray-900 mb-1">Compte administrateur</h2>
@@ -754,6 +886,18 @@ export function Register() {
                   <span className="text-gray-500">Code</span>
                   <code className="text-xs bg-white border border-slate-200 rounded px-2 py-0.5 text-teal-700">{tenantSlug}</code>
                 </div>
+                {city && <div className="flex justify-between">
+                  <span className="text-gray-500">Ville</span>
+                  <span className="text-gray-900">{city}</span>
+                </div>}
+                {sector && <div className="flex justify-between">
+                  <span className="text-gray-500">Secteur</span>
+                  <span className="text-gray-900">{sector}</span>
+                </div>}
+                {userCount && <div className="flex justify-between">
+                  <span className="text-gray-500">Utilisateurs</span>
+                  <span className="text-gray-900">{userCount}</span>
+                </div>}
                 <div className="flex justify-between">
                   <span className="text-gray-500">Catégories</span>
                   <span className="text-gray-900">{categories.length === 0 ? "—" : categories.map(id => CATALOGUE.find(c => c.id === id)?.label).join(", ")}</span>

@@ -13,6 +13,15 @@ export const tenants = pgTable("tenants", {
   status: text("status").notNull().default("active"),
   enabledProducts: jsonb("enabled_products").$type<string[]>().notNull().default([]),
   enabledServices: jsonb("enabled_services").$type<string[]>().notNull().default([]),
+  metadata: jsonb("metadata").$type<{
+    neq?: string;
+    phone?: string;
+    address?: string;
+    city?: string;
+    sector?: string;
+    userCount?: string;
+    contactTitle?: string;
+  }>().default({}),
   dbHost: text("db_host"),
   dbName: text("db_name"),
   createdAt: timestamp("created_at").notNull().defaultNow(),

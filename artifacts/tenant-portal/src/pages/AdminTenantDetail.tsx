@@ -12,6 +12,7 @@ import {
   Layers, ShoppingCart, LayoutDashboard, Wrench,
   Rocket, Users, BrainCircuit, Share2, Megaphone, Search,
   Code2, HeartHandshake, Settings, Clock, XCircle, Pencil,
+  Phone, MapPin, Briefcase,
 } from "lucide-react";
 
 // ── Full product catalogue ─────────────────────────────────────────────────
@@ -44,6 +45,16 @@ const ALL_SERVICES = [
 ];
 
 // ── Types ──────────────────────────────────────────────────────────────────
+interface TenantMetadata {
+  neq?: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  sector?: string;
+  userCount?: string;
+  contactTitle?: string;
+}
+
 interface Tenant {
   id: string;
   companyName: string;
@@ -54,6 +65,7 @@ interface Tenant {
   status: "active" | "suspended" | "trial";
   enabledProducts: string[];
   enabledServices: string[];
+  metadata?: TenantMetadata;
   createdAt: string;
   updatedAt: string;
 }
@@ -214,6 +226,47 @@ export function AdminTenantDetail() {
                     <span className="text-xs text-gray-400 block mb-0.5">Schéma BDD</span>
                     <span className="font-mono text-xs text-gray-500">{tenant.schemaName}</span>
                   </div>
+
+                  {/* Metadata fields */}
+                  {tenant.metadata?.phone && (
+                    <div>
+                      <span className="text-xs text-gray-400 flex items-center gap-1 mb-0.5"><Phone className="h-3 w-3" />Téléphone</span>
+                      <span className="text-gray-700">{tenant.metadata.phone}</span>
+                    </div>
+                  )}
+                  {(tenant.metadata?.address || tenant.metadata?.city) && (
+                    <div>
+                      <span className="text-xs text-gray-400 flex items-center gap-1 mb-0.5"><MapPin className="h-3 w-3" />Adresse</span>
+                      <span className="text-gray-700 text-xs">
+                        {[tenant.metadata?.address, tenant.metadata?.city].filter(Boolean).join(", ")}
+                      </span>
+                    </div>
+                  )}
+                  {tenant.metadata?.neq && (
+                    <div>
+                      <span className="text-xs text-gray-400 block mb-0.5">NEQ</span>
+                      <span className="font-mono text-sm text-gray-700">{tenant.metadata.neq}</span>
+                    </div>
+                  )}
+                  {tenant.metadata?.sector && (
+                    <div>
+                      <span className="text-xs text-gray-400 flex items-center gap-1 mb-0.5"><Briefcase className="h-3 w-3" />Secteur</span>
+                      <span className="text-gray-700">{tenant.metadata.sector}</span>
+                    </div>
+                  )}
+                  {tenant.metadata?.userCount && (
+                    <div>
+                      <span className="text-xs text-gray-400 flex items-center gap-1 mb-0.5"><Users className="h-3 w-3" />Utilisateurs prévus</span>
+                      <span className="text-gray-700">{tenant.metadata.userCount}</span>
+                    </div>
+                  )}
+                  {tenant.metadata?.contactTitle && (
+                    <div>
+                      <span className="text-xs text-gray-400 block mb-0.5">Titre du contact</span>
+                      <span className="text-gray-700">{tenant.metadata.contactTitle}</span>
+                    </div>
+                  )}
+
                   {/* Plan changer */}
                   <div className="pt-2 border-t border-gray-100">
                     <span className="text-xs text-gray-400 block mb-2">Plan</span>

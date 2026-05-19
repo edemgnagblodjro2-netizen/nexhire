@@ -44,13 +44,22 @@ const CreateOrgSchema = z.object({
   lastName:        z.string().min(1),
   email:           z.string().email(),
   password:        z.string().min(8),
+  // Company details
+  phone:        z.string().optional(),
+  address:      z.string().optional(),
+  city:         z.string().optional(),
+  neq:          z.string().optional(),
+  sector:       z.string().optional(),
+  userCount:    z.string().optional(),
+  contactTitle: z.string().optional(),
 });
 
 router.post("/create-org", authLimiter, async (req, res) => {
   const parsed = CreateOrgSchema.safeParse(req.body);
   if (!parsed.success) { res.status(400).json({ error: parsed.error.flatten() }); return; }
 
-  const { companyName, tenantSlug, plan, enabledProducts, enabledServices, firstName, lastName, email, password } = parsed.data;
+  const { companyName, tenantSlug, plan, enabledProducts, enabledServices, firstName, lastName, email, password,
+          phone, address, city, neq, sector, userCount, contactTitle } = parsed.data;
 
   // Check slug uniqueness
   const existing = await db.select().from(tenants).where(eq(tenants.subdomain, tenantSlug)).limit(1);
@@ -70,6 +79,7 @@ router.post("/create-org", authLimiter, async (req, res) => {
     status: "active",
     enabledProducts,
     enabledServices,
+    metadata: { phone, address, city, neq, sector, userCount, contactTitle },
   });
 
   // Provision schema (tables + default roles)
