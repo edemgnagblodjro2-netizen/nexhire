@@ -85,6 +85,9 @@ export function AdminTenantDetail() {
   const [savingStatus, setSavingStatus] = useState(false);
   const [editingStatus, setEditingStatus] = useState(false);
   const [pendingStatus, setPendingStatus] = useState<"active" | "suspended" | "trial">("active");
+  const [savingPlan, setSavingPlan] = useState(false);
+  const [editingPlan, setEditingPlan] = useState(false);
+  const [pendingPlan, setPendingPlan] = useState<"free" | "starter" | "pro" | "enterprise">("free");
 
   async function fetchTenant() {
     setLoading(true); setError(null);
@@ -98,6 +101,7 @@ export function AdminTenantDetail() {
       setProducts(data.enabledProducts ?? []);
       setServices(data.enabledServices ?? []);
       setPendingStatus(data.status ?? "active");
+      setPendingPlan((data.plan ?? "free") as "free" | "starter" | "pro" | "enterprise");
     } catch { setError("Impossible de joindre le serveur."); }
     finally { setLoading(false); }
   }
@@ -125,6 +129,23 @@ export function AdminTenantDetail() {
     } catch (e: any) {
       toast({ title: "Erreur", description: e.message, variant: "destructive" });
     } finally { setSavingModules(false); }
+  }
+
+  async function savePlan() {
+    setSavingPlan(true);
+    try {
+      const r = await fetch(`/api/admin/tenants/${id}/plan`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ plan: pendingPlan }),
+      });
+      if (!r.ok) throw new Error((await r.json()).error ?? "Erreur");
+      await fetchTenant();
+      setEditingPlan(false);
+      toast({ title: "Plan mis à jour", description: `Plan passé en : ${pendingPlan}` });
+    } catch (e: any) {
+      toast({ title: "Erreur", description: e.message, variant: "destructive" });
+    } finally { setSavingPlan(false); }
   }
 
   async function saveStatus() {
@@ -193,9 +214,49 @@ export function AdminTenantDetail() {
                     <span className="text-xs text-gray-400 block mb-0.5">Schéma BDD</span>
                     <span className="font-mono text-xs text-gray-500">{tenant.schemaName}</span>
                   </div>
-                  <div>
-                    <span className="text-xs text-gray-400 block mb-0.5">Plan</span>
-                    <Badge className="capitalize bg-purple-100 text-purple-700">{tenant.plan}</Badge>
+                  {/* Plan changer */}
+                  <div className="pt-2 border-t border-gray-100">
+                    <span className="text-xs text-gray-400 block mb-2">Plan</span>
+                    {editingPlan ? (
+                      <div className="space-y-2">
+                        {([
+                          { key: "free",       label: "Gratuit",      color: "text-gray-600" },
+                          { key: "starter",    label: "Starter",      color: "text-blue-600" },
+                          { key: "pro",        label: "Professionnel",color: "text-purple-600" },
+                          { key: "enterprise", label: "Entreprise",   color: "text-orange-600" },
+                        ] as const).map(p => (
+                          <label key={p.key} className="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="plan" value={p.key} checked={pendingPlan === p.key}
+                              onChange={() => setPendingPlan(p.key)} className="accent-teal-600" />
+                            <span className={`text-sm font-medium ${p.color}`}>{p.label}</span>
+                          </label>
+                        ))}
+                        <div className="flex gap-2 mt-3">
+                          <Button size="sm" className="bg-teal-600 hover:bg-teal-700 flex-1" onClick={savePlan} disabled={savingPlan}>
+                            {savingPlan ? <Loader2 className="h-3 w-3 animate-spin" /> : <Save className="h-3 w-3 mr-1" />}
+                            Sauvegarder
+                          </Button>
+                          <Button size="sm" variant="outline" onClick={() => setEditingPlan(false)}>Annuler</Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-between">
+                        <Badge className={`capitalize ${
+                          tenant.plan === "enterprise" ? "bg-orange-100 text-orange-700" :
+                          tenant.plan === "pro"        ? "bg-purple-100 text-purple-700" :
+                          tenant.plan === "starter"    ? "bg-blue-100 text-blue-700" :
+                          "bg-gray-100 text-gray-600"
+                        }`}>
+                          {tenant.plan === "pro" ? "Professionnel" :
+                           tenant.plan === "enterprise" ? "Entreprise" :
+                           tenant.plan === "starter" ? "Starter" : "Gratuit"}
+                        </Badge>
+                        <button onClick={() => setEditingPlan(true)}
+                          className="text-xs text-teal-600 hover:underline flex items-center gap-1">
+                          <Pencil className="h-3 w-3" /> Changer
+                        </button>
+                      </div>
+                    )}
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block mb-0.5">Type d'application</span>

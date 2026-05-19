@@ -109,6 +109,25 @@ router.patch("/:id/status", requireAdmin, async (req, res) => {
   res.json(updated);
 });
 
+router.patch("/:id/plan", requireAdmin, async (req, res) => {
+  const { plan } = z
+    .object({ plan: z.enum(["free", "starter", "pro", "enterprise"]) })
+    .parse(req.body);
+
+  const [updated] = await db
+    .update(tenants)
+    .set({ plan, updatedAt: new Date() })
+    .where(eq(tenants.id, req.params.id))
+    .returning();
+
+  if (!updated) {
+    res.status(404).json({ error: "Tenant not found" });
+    return;
+  }
+  req.log.info({ tenantId: updated.id, plan }, "Tenant plan updated");
+  res.json(updated);
+});
+
 router.patch("/:id/modules", requireAdmin, async (req, res) => {
   const Body = z.object({
     enabledProducts: z.array(z.string()).optional(),
