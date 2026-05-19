@@ -62,7 +62,7 @@ export function AdminTenants() {
   async function fetchTenants() {
     setLoading(true); setError(null);
     try {
-      const res = await fetch("/api/tenants", {
+      const res = await fetch("/api/admin/tenants", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) { setError("Accès refusé ou erreur serveur."); return; }

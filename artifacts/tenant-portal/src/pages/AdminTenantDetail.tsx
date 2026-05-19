@@ -89,7 +89,7 @@ export function AdminTenantDetail() {
   async function fetchTenant() {
     setLoading(true); setError(null);
     try {
-      const res = await fetch(`/api/tenants/${id}`, {
+      const res = await fetch(`/api/admin/tenants/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) { setError("Organisation introuvable ou accès refusé."); return; }
@@ -114,7 +114,7 @@ export function AdminTenantDetail() {
   async function saveModules() {
     setSavingModules(true);
     try {
-      const r = await fetch(`/api/tenants/${id}/modules`, {
+      const r = await fetch(`/api/admin/tenants/${id}/modules`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ enabledProducts: products, enabledServices: services }),
@@ -130,7 +130,7 @@ export function AdminTenantDetail() {
   async function saveStatus() {
     setSavingStatus(true);
     try {
-      const r = await fetch(`/api/tenants/${id}/status`, {
+      const r = await fetch(`/api/admin/tenants/${id}/status`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ status: pendingStatus }),
