@@ -158,7 +158,7 @@ export function Dashboard() {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
           <div className="flex items-center gap-2">
-            <Building2 className="h-6 w-6 text-teal-600" />
+            <img src="/tenant-portal/civicai-logo.png" alt="CivicAI" className="h-7 w-7 rounded-md object-contain" />
             <span className="font-bold text-lg text-gray-900">{t.portalName}</span>
           </div>
           <div className="flex items-center gap-3">
@@ -180,15 +180,57 @@ export function Dashboard() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
         {/* Welcome banner */}
-        <div className="bg-gradient-to-r from-teal-600 to-teal-500 rounded-xl p-6 text-white">
-          <p className="text-teal-100 text-sm font-medium mb-1">{t.dashboard}</p>
-          <h1 className="text-2xl font-bold">{t.welcome}, {companyName}</h1>
-          <p className="text-teal-100 mt-1 text-sm">
-            {t.activeProducts(activeCategories.length)} · {t.activeServices(enabledServices.length)}
-          </p>
-          <div className="mt-3 flex items-center gap-2 flex-wrap">
-            <Badge className="bg-white/20 text-white border-white/30 font-mono text-xs">{user.tenantSlug}</Badge>
-            <Badge className="bg-white/20 text-white border-white/30 text-xs capitalize">{user.role}</Badge>
+        <div className="relative rounded-2xl overflow-hidden text-white" style={{ background: "linear-gradient(135deg, #0f172a 0%, #0f2744 50%, #0c3547 100%)" }}>
+          {/* Dot-grid decoration */}
+          <svg className="absolute inset-0 w-full h-full opacity-[0.07] pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="db-dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1.5" fill="#14b8a6" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#db-dots)" />
+          </svg>
+          {/* Teal glow blobs */}
+          <div className="absolute -top-10 -left-10 w-48 h-48 rounded-full opacity-20 blur-3xl pointer-events-none" style={{ background: "#14b8a6" }} />
+          <div className="absolute bottom-0 right-64 w-32 h-32 rounded-full opacity-10 blur-2xl pointer-events-none" style={{ background: "#0ea5e9" }} />
+
+          {/* Content row */}
+          <div className="relative z-10 flex items-stretch">
+            {/* Left: text content */}
+            <div className="flex-1 p-6 lg:p-8">
+              <div className="flex items-center gap-2 mb-4">
+                <img src="/tenant-portal/civicai-logo.png" alt="CivicAI" className="h-8 w-8 rounded-lg object-contain bg-white/10 p-1" />
+                <span className="text-teal-300 text-sm font-semibold tracking-wide uppercase">CivicAI · {t.dashboard}</span>
+              </div>
+              <h1 className="text-2xl lg:text-3xl font-bold leading-tight">
+                {t.welcome}, <span className="text-teal-300">{companyName}</span>
+              </h1>
+              <p className="text-slate-300 mt-2 text-sm max-w-md">
+                Gérez vos projets, vos équipes et vos services depuis un seul espace — sécurisé, rapide et conçu au Québec.
+              </p>
+              <div className="mt-4 flex items-center gap-3 flex-wrap">
+                <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1 text-xs font-medium text-teal-200">
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-400 inline-block" />
+                  {t.activeProducts(activeCategories.length)}
+                </div>
+                <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1 text-xs font-medium text-slate-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-sky-400 inline-block" />
+                  {t.activeServices(enabledServices.length)}
+                </div>
+                <Badge className="bg-white/10 text-white border-white/20 font-mono text-xs">{user.tenantSlug}</Badge>
+                <Badge className="bg-teal-500/30 text-teal-200 border-teal-500/40 text-xs capitalize">{user.role}</Badge>
+              </div>
+            </div>
+            {/* Right: decorative image */}
+            <div className="hidden lg:block w-64 xl:w-80 flex-shrink-0 relative overflow-hidden">
+              <img
+                src="/tenant-portal/civicai-banner.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover object-left opacity-30"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a] via-transparent to-transparent" />
+            </div>
           </div>
         </div>
 
