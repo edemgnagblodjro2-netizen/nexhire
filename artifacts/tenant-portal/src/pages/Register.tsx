@@ -6,424 +6,90 @@ import { LangToggle } from "@/components/LangToggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Building2, Globe, BarChart3, TrendingUp, Zap,
-  ShoppingCart, Layers, Wrench, Rocket, Users, Search,
-  Megaphone, BrainCircuit, Code2, HeartHandshake, Settings,
-  Check, ChevronRight, ChevronLeft, Shield, Smartphone,
-  CreditCard, Package, Truck, LayoutDashboard, KeyRound,
-  Plug, Camera, Mail, Share2, Phone, MapPin, Briefcase,
+  Rocket, BarChart3, Building2, Check, ChevronRight, ChevronLeft,
+  Users, Phone, MapPin, Briefcase, Globe, TrendingUp, Zap, Star,
 } from "lucide-react";
 
-// ── Catalogue complet ─────────────────────────────────────────────────────────
-type ServiceItem = {
+// ── Plans ERP (sélection unique obligatoire) ──────────────────────────────────
+type PlanOption = {
   id: string;
   label: string;
   tagline: string;
   price: string;
+  priceNote: string;
   features: string[];
   icon: React.ElementType;
-  accent: string;         // header bg + text
-  featureDot: string;     // bullet color
-  border: string;
-  activeBorder: string;
-  activeBg: string;
-  planGroup?: string;     // items sharing a planGroup are mutually exclusive (radio behavior)
+  recommended?: boolean;
+  accentFrom: string;
+  accentTo: string;
+  badgeColor: string;
 };
 
-type Category = {
-  id: string;
-  label: string;
-  desc: string;
-  icon: React.ElementType;
-  gradient: string;       // card gradient (registration step)
-  labelColor: string;
-  itemColor: string;
-  border: string;
-  activeBorder: string;
-  activeBg: string;
-  items: ServiceItem[];
-};
-
-const CATALOGUE: Category[] = [
+const PLAN_OPTIONS: PlanOption[] = [
   {
-    id: "sites-web",
-    label: "Sites web",
-    desc: "Présence digitale professionnelle clé en main",
-    icon: Globe,
-    gradient: "from-blue-900 to-blue-800",
-    labelColor: "text-blue-300",
-    itemColor: "bg-blue-800/50 border-blue-700",
-    border: "border-blue-800",
-    activeBorder: "border-blue-400",
-    activeBg: "bg-blue-950/60",
-    items: [
-      {
-        id: "site-vitrine",
-        label: "Site vitrine",
-        tagline: "Présentez votre entreprise avec un design moderne et professionnel qui inspire confiance.",
-        price: "À partir de 800$",
-        icon: Layers,
-        accent: "bg-blue-600 text-white",
-        featureDot: "bg-blue-500",
-        border: "border-blue-200",
-        activeBorder: "border-blue-500",
-        activeBg: "bg-blue-50",
-        features: [
-          "Design sur mesure à votre image",
-          "Responsive mobile & tablette",
-          "SEO optimisé dès le lancement",
-          "Formulaire de contact",
-          "Galerie photos & réalisations",
-          "Intégration réseaux sociaux",
-        ],
-      },
-      {
-        id: "site-ecommerce",
-        label: "Site e-commerce",
-        tagline: "Vendez vos produits ou services en ligne avec une boutique complète, sécurisée et facile à gérer.",
-        price: "À partir de 1 500$",
-        icon: ShoppingCart,
-        accent: "bg-emerald-700 text-white",
-        featureDot: "bg-emerald-500",
-        border: "border-emerald-200",
-        activeBorder: "border-emerald-500",
-        activeBg: "bg-emerald-50",
-        features: [
-          "Catalogue produits complet",
-          "Paiement sécurisé (Stripe/PayPal)",
-          "Gestion des commandes",
-          "Suivi des livraisons",
-          "Paniers abandonnés",
-          "Tableau de bord ventes",
-        ],
-      },
-      {
-        id: "portail-mesure",
-        label: "Portail & application web",
-        tagline: "Une application web sur mesure pour gérer vos opérations, vos clients ou votre équipe — adaptée à vos besoins précis.",
-        price: "À partir de 2 500$",
-        icon: LayoutDashboard,
-        accent: "bg-purple-700 text-white",
-        featureDot: "bg-purple-500",
-        border: "border-purple-200",
-        activeBorder: "border-purple-500",
-        activeBg: "bg-purple-50",
-        features: [
-          "Développement sur mesure",
-          "Authentification sécurisée",
-          "Tableau de bord personnalisé",
-          "Gestion des utilisateurs",
-          "Intégrations API",
-          "Mode mobile inclus",
-        ],
-      },
-      {
-        id: "maintenance-mensuelle-web",
-        label: "Maintenance mensuelle",
-        tagline: "Gardez votre site à jour, sécurisé et performant sans vous en préoccuper.",
-        price: "Dès 100$/mois",
-        icon: Wrench,
-        accent: "bg-slate-600 text-white",
-        featureDot: "bg-slate-500",
-        border: "border-slate-200",
-        activeBorder: "border-slate-500",
-        activeBg: "bg-slate-50",
-        features: [
-          "Mises à jour régulières",
-          "Sauvegardes automatiques",
-          "Monitoring de disponibilité",
-          "Correctifs sécurité",
-          "Support réactif",
-          "Rapport mensuel",
-        ],
-      },
+    id: "starter",
+    label: "Plan Starter",
+    tagline: "L'essentiel pour digitaliser vos opérations dès le premier mois.",
+    price: "99$",
+    priceNote: "/mois",
+    icon: Rocket,
+    accentFrom: "from-purple-600",
+    accentTo: "to-purple-700",
+    badgeColor: "bg-purple-100 text-purple-700",
+    features: [
+      "Gestion de projets & tâches",
+      "CRM de base",
+      "Facturation simple",
+      "5 utilisateurs inclus",
+      "Tableau de bord",
+      "Support par courriel",
     ],
   },
   {
-    id: "erp-gestion",
-    label: "ERP & Gestion",
-    desc: "Pilotez vos opérations avec un ERP adapté à votre secteur",
+    id: "pro",
+    label: "Plan Professionnel",
+    tagline: "Des fonctionnalités avancées pour les équipes en croissance.",
+    price: "249$",
+    priceNote: "/mois",
     icon: BarChart3,
-    gradient: "from-purple-900 to-purple-800",
-    labelColor: "text-purple-300",
-    itemColor: "bg-purple-800/50 border-purple-700",
-    border: "border-purple-800",
-    activeBorder: "border-purple-400",
-    activeBg: "bg-purple-950/60",
-    items: [
-      {
-        id: "erp-starter",
-        label: "Plan Starter",
-        tagline: "L'essentiel pour digitaliser vos opérations et gagner en efficacité dès le premier mois.",
-        price: "99$/mois",
-        icon: Rocket,
-        accent: "bg-purple-600 text-white",
-        featureDot: "bg-purple-500",
-        border: "border-purple-200",
-        activeBorder: "border-purple-500",
-        activeBg: "bg-purple-50",
-        planGroup: "erp-plan",
-        features: [
-          "Gestion de projets & tâches",
-          "CRM de base",
-          "Facturation simple",
-          "5 utilisateurs inclus",
-          "Tableau de bord",
-          "Support par courriel",
-        ],
-      },
-      {
-        id: "erp-pro",
-        label: "Plan Professionnel",
-        tagline: "Des fonctionnalités avancées pour les équipes en croissance qui ont besoin de plus de puissance.",
-        price: "249$/mois",
-        icon: BarChart3,
-        accent: "bg-indigo-700 text-white",
-        featureDot: "bg-indigo-500",
-        border: "border-indigo-200",
-        activeBorder: "border-indigo-500",
-        activeBg: "bg-indigo-50",
-        planGroup: "erp-plan",
-        features: [
-          "Tout le plan Starter",
-          "Gestion RH & équipes",
-          "Rapports avancés",
-          "25 utilisateurs inclus",
-          "Intégrations tierces",
-          "Support prioritaire",
-        ],
-      },
-      {
-        id: "erp-enterprise",
-        label: "Plan Entreprise",
-        tagline: "Solution complète pour les grandes organisations avec des besoins complexes et multi-sites.",
-        price: "499$/mois",
-        icon: Building2,
-        accent: "bg-violet-700 text-white",
-        featureDot: "bg-violet-500",
-        border: "border-violet-200",
-        activeBorder: "border-violet-500",
-        activeBg: "bg-violet-50",
-        planGroup: "erp-plan",
-        features: [
-          "Tout le plan Pro",
-          "Multi-sites & filiales",
-          "Utilisateurs illimités",
-          "DBA dédié",
-          "SLA 99.9 %",
-          "Onboarding sur site",
-        ],
-      },
-      {
-        id: "erp-setup",
-        label: "Setup & formation",
-        tagline: "Déploiement clé en main et formation de vos équipes pour une adoption rapide et réussie.",
-        price: "500$ à 1 500$",
-        icon: Users,
-        accent: "bg-rose-700 text-white",
-        featureDot: "bg-rose-500",
-        border: "border-rose-200",
-        activeBorder: "border-rose-500",
-        activeBg: "bg-rose-50",
-        features: [
-          "Configuration complète",
-          "Import de vos données",
-          "Formation des administrateurs",
-          "Formation des utilisateurs",
-          "Documentation personnalisée",
-          "Suivi post-déploiement",
-        ],
-      },
+    recommended: true,
+    accentFrom: "from-indigo-600",
+    accentTo: "to-indigo-700",
+    badgeColor: "bg-indigo-100 text-indigo-700",
+    features: [
+      "Tout le plan Starter",
+      "Gestion RH & équipes",
+      "Rapports avancés",
+      "25 utilisateurs inclus",
+      "Intégrations tierces",
+      "Support prioritaire",
     ],
   },
   {
-    id: "marketing-digital",
-    label: "Marketing digital",
-    desc: "Visibilité, acquisition et fidélisation de clientèle",
-    icon: TrendingUp,
-    gradient: "from-teal-900 to-teal-800",
-    labelColor: "text-teal-300",
-    itemColor: "bg-teal-800/50 border-teal-700",
-    border: "border-teal-800",
-    activeBorder: "border-teal-400",
-    activeBg: "bg-teal-950/60",
-    items: [
-      {
-        id: "marketing-strategie",
-        label: "Stratégie & conseil",
-        tagline: "Définissez une stratégie digitale claire et mesurable alignée sur vos objectifs d'affaires.",
-        price: "Dès 500$/mois",
-        icon: BrainCircuit,
-        accent: "bg-teal-700 text-white",
-        featureDot: "bg-teal-500",
-        border: "border-teal-200",
-        activeBorder: "border-teal-500",
-        activeBg: "bg-teal-50",
-        features: [
-          "Audit digital complet",
-          "Personas & cibles",
-          "Plan d'action 90 jours",
-          "KPIs & tableaux de bord",
-          "Veille concurrentielle",
-          "Revue mensuelle",
-        ],
-      },
-      {
-        id: "marketing-reseaux",
-        label: "Réseaux sociaux",
-        tagline: "Créez une présence engageante sur les plateformes où se trouvent vos clients.",
-        price: "Dès 400$/mois",
-        icon: Share2,
-        accent: "bg-cyan-700 text-white",
-        featureDot: "bg-cyan-500",
-        border: "border-cyan-200",
-        activeBorder: "border-cyan-500",
-        activeBg: "bg-cyan-50",
-        features: [
-          "Gestion des comptes",
-          "Création de contenu",
-          "Calendrier éditorial",
-          "Community management",
-          "Stories & Reels",
-          "Rapport de performance",
-        ],
-      },
-      {
-        id: "marketing-ads",
-        label: "Publicités (Ads)",
-        tagline: "Atteignez vos cibles avec des campagnes publicitaires performantes sur Google et Meta.",
-        price: "Dès 600$/mois",
-        icon: Megaphone,
-        accent: "bg-orange-700 text-white",
-        featureDot: "bg-orange-500",
-        border: "border-orange-200",
-        activeBorder: "border-orange-500",
-        activeBg: "bg-orange-50",
-        features: [
-          "Google Ads & Meta Ads",
-          "Ciblage avancé",
-          "A/B testing des annonces",
-          "Optimisation continue",
-          "Remarketing",
-          "Rapport hebdomadaire",
-        ],
-      },
-      {
-        id: "marketing-seo",
-        label: "SEO & référencement",
-        tagline: "Apparaissez en tête des résultats de recherche et générez un trafic qualifié durable.",
-        price: "Dès 450$/mois",
-        icon: Search,
-        accent: "bg-lime-700 text-white",
-        featureDot: "bg-lime-500",
-        border: "border-lime-200",
-        activeBorder: "border-lime-500",
-        activeBg: "bg-lime-50",
-        features: [
-          "Audit SEO technique",
-          "Recherche de mots-clés",
-          "Optimisation on-page",
-          "Création de contenu SEO",
-          "Netlinking",
-          "Suivi de positionnement",
-        ],
-      },
+    id: "enterprise",
+    label: "Plan Entreprise",
+    tagline: "Solution complète pour les grandes organisations multi-sites.",
+    price: "499$",
+    priceNote: "/mois",
+    icon: Building2,
+    accentFrom: "from-violet-600",
+    accentTo: "to-violet-700",
+    badgeColor: "bg-violet-100 text-violet-700",
+    features: [
+      "Tout le plan Pro",
+      "Multi-sites & filiales",
+      "Utilisateurs illimités",
+      "DBA dédié",
+      "SLA 99,9 %",
+      "Onboarding sur site",
     ],
   },
-  {
-    id: "automatisation-crm",
-    label: "Automatisation & CRM",
-    desc: "Automatisez vos processus et centralisez vos données clients",
-    icon: Zap,
-    gradient: "from-cyan-900 to-cyan-800",
-    labelColor: "text-cyan-300",
-    itemColor: "bg-cyan-800/50 border-cyan-700",
-    border: "border-cyan-800",
-    activeBorder: "border-cyan-400",
-    activeBg: "bg-cyan-950/60",
-    items: [
-      {
-        id: "auto-analyse",
-        label: "Analyse & conception",
-        tagline: "Cartographiez vos processus et concevez l'architecture idéale avant de développer.",
-        price: "Sur devis",
-        icon: BrainCircuit,
-        accent: "bg-cyan-700 text-white",
-        featureDot: "bg-cyan-500",
-        border: "border-cyan-200",
-        activeBorder: "border-cyan-500",
-        activeBg: "bg-cyan-50",
-        features: [
-          "Cartographie des processus",
-          "Identification des gains",
-          "Architecture solution",
-          "Cahier des charges",
-          "Proof of concept",
-          "Feuille de route",
-        ],
-      },
-      {
-        id: "auto-dev",
-        label: "Développement",
-        tagline: "Automatisations sur mesure connectées à vos outils existants — sans friction pour vos équipes.",
-        price: "Sur devis",
-        icon: Code2,
-        accent: "bg-blue-700 text-white",
-        featureDot: "bg-blue-500",
-        border: "border-blue-200",
-        activeBorder: "border-blue-500",
-        activeBg: "bg-blue-50",
-        features: [
-          "Workflows automatisés",
-          "Intégrations API (Zapier, Make…)",
-          "Bots & assistants IA",
-          "Traitement de données",
-          "Notifications automatiques",
-          "Tests & documentation",
-        ],
-      },
-      {
-        id: "auto-crm",
-        label: "CRM sur mesure",
-        tagline: "Un CRM conçu pour votre réalité — pas l'inverse. Suivi client, pipeline et relances automatiques.",
-        price: "Sur devis",
-        icon: HeartHandshake,
-        accent: "bg-violet-700 text-white",
-        featureDot: "bg-violet-500",
-        border: "border-violet-200",
-        activeBorder: "border-violet-500",
-        activeBg: "bg-violet-50",
-        features: [
-          "Base clients centralisée",
-          "Pipeline de ventes",
-          "Relances automatiques",
-          "Historique interactions",
-          "Devis & contrats intégrés",
-          "Tableaux de bord commerciaux",
-        ],
-      },
-      {
-        id: "auto-support",
-        label: "Support mensuel",
-        tagline: "Un accompagnement continu pour maintenir, faire évoluer et optimiser vos automatisations.",
-        price: "Dès 150$/mois",
-        icon: Settings,
-        accent: "bg-slate-700 text-white",
-        featureDot: "bg-slate-500",
-        border: "border-slate-200",
-        activeBorder: "border-slate-500",
-        activeBg: "bg-slate-50",
-        features: [
-          "Maintenance corrective",
-          "Évolutions mineures",
-          "Monitoring des flux",
-          "Alertes & incidents",
-          "Réunion mensuelle",
-          "Rapport d'activité",
-        ],
-      },
-    ],
-  },
+];
+
+const OTHER_INTERESTS = [
+  { id: "sites-web",          label: "Sites web",            icon: Globe },
+  { id: "marketing-digital",  label: "Marketing digital",    icon: TrendingUp },
+  { id: "automatisation-crm", label: "Automatisation & CRM", icon: Zap },
 ];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -439,7 +105,7 @@ function slugify(s: string): string {
     .slice(0, 40);
 }
 
-const STEPS = ["Organisation", "Informations", "Catégories", "Services", "Compte admin"];
+const STEPS = ["Organisation", "Informations", "Plan", "Compte admin"];
 
 const SECTORS = [
   "Construction",
@@ -477,8 +143,9 @@ export function Register() {
   const [sector, setSector] = useState("");
   const [userCount, setUserCount] = useState("");
   const [contactTitle, setContactTitle] = useState("");
-  const [categories, setCategories] = useState<string[]>([]);
-  const [services, setServices] = useState<string[]>([]);
+  // Step 2 — Plan selection (single choice)
+  const [selectedPlan, setSelectedPlan] = useState("");
+  const [otherInterests, setOtherInterests] = useState<string[]>([]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -490,34 +157,9 @@ export function Register() {
     if (!slugEdited) setTenantSlug(slugify(v));
   }
 
-  function toggleCategory(id: string) {
-    setCategories(p =>
-      p.includes(id) ? p.filter(x => x !== id) : [...p, id]
-    );
+  function toggleInterest(id: string) {
+    setOtherInterests(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
   }
-
-  // Flat map of all catalogue items for lookups
-  const ALL_ITEMS = CATALOGUE.flatMap(c => c.items);
-
-  function toggleService(id: string) {
-    const item = ALL_ITEMS.find(i => i.id === id);
-    if (item?.planGroup) {
-      // Radio behavior: deselect all others in same group, then toggle this one
-      const groupIds = ALL_ITEMS.filter(i => i.planGroup === item.planGroup).map(i => i.id);
-      setServices(s => {
-        const isSelected = s.includes(id);
-        if (isSelected) return s.filter(x => x !== id); // deselect
-        return [...s.filter(x => !groupIds.includes(x)), id]; // select exclusively
-      });
-    } else {
-      setServices(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id]);
-    }
-  }
-
-  // Services visible in step 3 = items of selected categories (or all if none selected)
-  const visibleCategories = categories.length > 0
-    ? CATALOGUE.filter(c => categories.includes(c.id))
-    : CATALOGUE;
 
   function validateStep(): boolean {
     const e: Record<string, string> = {};
@@ -533,7 +175,10 @@ export function Register() {
       if (!sector) e.sector = "Secteur requis";
       if (!userCount) e.userCount = "Nombre d'utilisateurs requis";
     }
-    if (step === 4) {
+    if (step === 2) {
+      if (!selectedPlan) e.selectedPlan = "Veuillez choisir un plan pour continuer";
+    }
+    if (step === 3) {
       if (!firstName.trim()) e.firstName = "Prénom requis";
       if (!lastName.trim()) e.lastName = "Nom requis";
       if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = "Courriel invalide";
@@ -556,9 +201,9 @@ export function Register() {
         body: JSON.stringify({
           companyName: companyName.trim(),
           tenantSlug,
-          plan: "free",
-          enabledProducts: categories,
-          enabledServices: services,
+          plan: selectedPlan,
+          enabledProducts: otherInterests,
+          enabledServices: [],
           phone: phone.trim(),
           address: address.trim(),
           city: city.trim(),
@@ -767,154 +412,102 @@ export function Register() {
             </div>
           )}
 
-          {/* ── Step 2 — Categories ────────────────────────────────────────── */}
+          {/* ── Step 2 — Plan selection ────────────────────────────────────── */}
           {step === 2 && (
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-1">Quels services vous intéressent ?</h2>
-                <p className="text-sm text-gray-500">Sélectionnez une ou plusieurs catégories. Vous affinerez ensuite service par service.</p>
+                <h2 className="text-lg font-semibold text-gray-900 mb-1">Choisissez votre plan</h2>
+                <p className="text-sm text-gray-500">
+                  Un seul plan actif à la fois. Votre conseiller CivicAI vous contactera après l'inscription pour confirmer et activer votre accès.
+                </p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {CATALOGUE.map(cat => {
-                  const Icon = cat.icon;
-                  const active = categories.includes(cat.id);
+
+              <div className="grid grid-cols-1 gap-4">
+                {PLAN_OPTIONS.map(plan => {
+                  const Icon = plan.icon;
+                  const active = selectedPlan === plan.id;
                   return (
-                    <button key={cat.id} type="button" onClick={() => toggleCategory(cat.id)}
-                      className={`relative text-left rounded-2xl overflow-hidden border-2 transition-all shadow-sm hover:shadow-md ${
-                        active ? cat.activeBorder : cat.border
-                      }`}
+                    <button key={plan.id} type="button" onClick={() => setSelectedPlan(plan.id)}
+                      className={`text-left rounded-2xl border-2 overflow-hidden transition-all shadow-sm hover:shadow-md ${
+                        active ? "border-teal-500 shadow-teal-200" : "border-gray-200 hover:border-gray-300"
+                      } bg-white`}
                     >
-                      {/* Dark gradient header */}
-                      <div className={`bg-gradient-to-br ${cat.gradient} p-5`}>
-                        <div className="flex items-center justify-between mb-3">
-                          <Icon className={`h-6 w-6 ${cat.labelColor}`} />
-                          <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                            active ? "bg-white border-white" : "border-white/40"
-                          }`}>
-                            {active && <Check className="h-3.5 w-3.5 text-gray-900" />}
+                      <div className={`bg-gradient-to-r ${plan.accentFrom} ${plan.accentTo} px-5 py-4 flex items-center justify-between`}>
+                        <div className="flex items-center gap-3">
+                          <Icon className="h-5 w-5 text-white/90" />
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-bold text-white text-base">{plan.label}</span>
+                              {plan.recommended && (
+                                <span className="text-[10px] font-semibold bg-white/20 text-white rounded-full px-2 py-0.5 flex items-center gap-1">
+                                  <Star className="h-2.5 w-2.5" />RECOMMANDÉ
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs text-white/70 mt-0.5">{plan.tagline}</p>
                           </div>
                         </div>
-                        <h3 className="text-white font-bold text-base mb-1">{cat.label}</h3>
-                        <p className={`text-xs ${cat.labelColor} leading-relaxed`}>{cat.desc}</p>
-                      </div>
-                      {/* Items preview */}
-                      <div className={`p-3 bg-white space-y-1.5 ${active ? cat.activeBg : ""}`}>
-                        {cat.items.map(item => (
-                          <div key={item.id} className={`flex items-center justify-between text-xs px-2.5 py-1.5 rounded-lg border ${cat.itemColor.replace("border-", "border-").replace("bg-", "bg-")}`}>
-                            <span className="text-white/90 font-medium">{item.label}</span>
-                            <span className={`${cat.labelColor} font-semibold`}>{item.price}</span>
+                        <div className="flex items-center gap-3 flex-shrink-0 ml-4">
+                          <div className="text-right">
+                            <span className="text-2xl font-black text-white">{plan.price}</span>
+                            <span className="text-white/60 text-xs">{plan.priceNote}</span>
                           </div>
-                        ))}
+                          <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${
+                            active ? "bg-white border-white" : "border-white/40"
+                          }`}>
+                            {active && <div className="w-3 h-3 rounded-full bg-gray-800" />}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="px-5 py-4">
+                        <div className="flex flex-wrap gap-x-6 gap-y-1.5">
+                          {plan.features.map(f => (
+                            <div key={f} className="flex items-center gap-1.5 text-sm text-gray-700">
+                              <Check className="h-3.5 w-3.5 text-teal-500 flex-shrink-0" />
+                              {f}
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </button>
                   );
                 })}
               </div>
-              <p className="text-xs text-center text-gray-400">Aucune sélection requise — vous pouvez tout explorer à l'étape suivante.</p>
-            </div>
-          )}
 
-          {/* ── Step 3 — Services ─────────────────────────────────────────── */}
-          {step === 3 && (
-            <div className="space-y-8">
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-1">Choisissez vos services</h2>
-                <p className="text-sm text-gray-500">
-                  {categories.length > 0
-                    ? `Services des ${categories.length} catégorie${categories.length > 1 ? "s" : ""} sélectionnée${categories.length > 1 ? "s" : ""}.`
-                    : "Tous les services CivicAI disponibles."}
-                  {" "}Sélectionnez ceux qui correspondent à vos besoins.
-                </p>
-              </div>
-
-              {visibleCategories.map(cat => {
-                // Detect if this category has mutually exclusive plan groups
-                const planGroupIds = new Set(cat.items.map(i => i.planGroup).filter(Boolean));
-                const hasPlanGroup = planGroupIds.size > 0;
-
-                return (
-                  <div key={cat.id}>
-                    <div className="flex items-center justify-between mb-3 px-1">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-1 h-5 rounded-full bg-gradient-to-b ${cat.gradient}`} />
-                        <h3 className="font-semibold text-gray-800 text-sm">{cat.label}</h3>
-                      </div>
-                      {hasPlanGroup && (
-                        <span className="text-xs text-gray-400 flex items-center gap-1">
-                          <span className="w-3 h-3 rounded-full border-2 border-gray-300 inline-block" />
-                          Plan : sélectionnez-en un seul
-                        </span>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {cat.items.map(item => {
-                        const Icon = item.icon;
-                        const active = services.includes(item.id);
-                        const isPlan = !!item.planGroup;
-                        return (
-                          <button key={item.id} type="button" onClick={() => toggleService(item.id)}
-                            className={`text-left rounded-xl border-2 overflow-hidden transition-all shadow-sm hover:shadow-md ${
-                              active ? item.activeBorder : item.border
-                            } ${active ? item.activeBg : "bg-white"}`}
-                          >
-                            {/* Colored header */}
-                            <div className={`${item.accent} px-4 py-3 flex items-center justify-between`}>
-                              <div className="flex items-center gap-2">
-                                <Icon className="h-4 w-4 opacity-90" />
-                                <span className="font-bold text-sm">{item.label}</span>
-                                {isPlan && (
-                                  <span className="text-[10px] font-semibold bg-white/20 rounded px-1.5 py-0.5 tracking-wide">PLAN</span>
-                                )}
-                              </div>
-                              {/* Radio for plans, checkbox for addons */}
-                              {isPlan ? (
-                                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                                  active ? "bg-white border-white" : "border-white/50"
-                                }`}>
-                                  {active && <div className="w-2.5 h-2.5 rounded-full bg-gray-800" />}
-                                </div>
-                              ) : (
-                                <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-                                  active ? "bg-white border-white" : "border-white/50"
-                                }`}>
-                                  {active && <Check className="h-3 w-3 text-gray-800" />}
-                                </div>
-                              )}
-                            </div>
-                            {/* Body */}
-                            <div className="px-4 py-3">
-                              <p className="text-xs text-gray-500 mb-3 leading-relaxed">{item.tagline}</p>
-                              <ul className="space-y-1.5 mb-3">
-                                {item.features.map(f => (
-                                  <li key={f} className="flex items-center gap-2 text-xs text-gray-700">
-                                    <span className={`w-2 h-2 rounded-full flex-shrink-0 ${item.featureDot}`} />
-                                    {f}
-                                  </li>
-                                ))}
-                              </ul>
-                              <div className={`text-center py-1.5 rounded-lg text-sm font-bold ${item.accent}`}>
-                                {item.price}
-                              </div>
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              })}
-
-              {services.length > 0 && (
-                <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 text-sm text-teal-800">
-                  <strong>{services.length} service{services.length > 1 ? "s" : ""} sélectionné{services.length > 1 ? "s" : ""}</strong>
-                  {" "}— Un conseiller CivicAI vous contactera après la création de votre compte pour préciser votre devis.
-                </div>
+              {errors.selectedPlan && (
+                <p className="text-sm text-red-500 text-center font-medium">{errors.selectedPlan}</p>
               )}
+
+              {/* Optional: other interests */}
+              <div className="bg-white/5 border border-white/10 rounded-xl p-5">
+                <p className="text-sm font-medium text-slate-300 mb-3">
+                  Intéressé par d'autres services CivicAI ? <span className="text-slate-500 font-normal">(optionnel)</span>
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  {OTHER_INTERESTS.map(item => {
+                    const Icon = item.icon;
+                    const active = otherInterests.includes(item.id);
+                    return (
+                      <button key={item.id} type="button" onClick={() => toggleInterest(item.id)}
+                        className={`flex items-center gap-2 text-sm px-4 py-2 rounded-lg border transition-all ${
+                          active
+                            ? "bg-teal-600 border-teal-500 text-white font-medium"
+                            : "border-white/20 text-slate-400 hover:border-white/40 hover:text-slate-200"
+                        }`}
+                      >
+                        <Icon className="h-3.5 w-3.5" />
+                        {item.label}
+                      </button>
+                    );
+                  })}
+                </div>
+                <p className="text-xs text-slate-500 mt-3">Ces services sont sur devis — notre équipe vous contactera pour en discuter.</p>
+              </div>
             </div>
           )}
 
-          {/* ── Step 4 — Admin account ─────────────────────────────────────── */}
-          {step === 4 && (
+          {/* ── Step 3 — Admin account ─────────────────────────────────────── */}
+          {step === 3 && (
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 space-y-6">
               <div>
                 <h2 className="text-lg font-semibold text-gray-900 mb-1">Compte administrateur</h2>
@@ -944,13 +537,19 @@ export function Register() {
                   <span className="text-gray-900">{userCount}</span>
                 </div>}
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Catégories</span>
-                  <span className="text-gray-900">{categories.length === 0 ? "—" : categories.map(id => CATALOGUE.find(c => c.id === id)?.label).join(", ")}</span>
+                  <span className="text-gray-500">Plan sélectionné</span>
+                  <span className="font-semibold text-teal-700">
+                    {PLAN_OPTIONS.find(p => p.id === selectedPlan)?.label ?? "—"}
+                  </span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Services choisis</span>
-                  <span className="font-semibold text-teal-700">{services.length} service{services.length !== 1 ? "s" : ""}</span>
-                </div>
+                {otherInterests.length > 0 && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Autres intérêts</span>
+                    <span className="text-gray-900 text-right text-xs">
+                      {otherInterests.map(id => OTHER_INTERESTS.find(o => o.id === id)?.label).join(", ")}
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4">

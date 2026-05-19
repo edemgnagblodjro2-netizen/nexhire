@@ -128,55 +128,43 @@ router.post("/create-org", authLimiter, async (req, res) => {
   });
 
   // ── Notifications email (best-effort, never blocks the response) ──────────
-  const PRODUCT_LABELS: Record<string, string> = {
-    constructpro: "ConstructPro ERP",
-    attentezero: "AttenteZéro",
-    "sites-web": "Sites web",
-    "erp-gestion": "ERP & Gestion",
-    "marketing-digital": "Marketing digital",
+  const PLAN_LABELS: Record<string, string> = {
+    starter:    "Plan Starter (99$/mois)",
+    pro:        "Plan Professionnel (249$/mois)",
+    enterprise: "Plan Entreprise (499$/mois)",
+  };
+
+  const INTEREST_LABELS: Record<string, string> = {
+    "sites-web":          "Sites web",
+    "marketing-digital":  "Marketing digital",
     "automatisation-crm": "Automatisation & CRM",
   };
-  const SERVICE_LABELS: Record<string, string> = {
-    "site-vitrine": "Site vitrine (dès 800$)",
-    "site-ecommerce": "Site e-commerce (dès 1 500$)",
-    "portail-mesure": "Portail sur mesure (dès 2 500$)",
-    "maintenance-mensuelle-web": "Maintenance mensuelle web (100$/mois)",
-    "erp-starter": "ERP Starter (99$/mois)",
-    "erp-pro": "ERP Professionnel (249$/mois)",
-    "erp-enterprise": "ERP Entreprise (499$/mois)",
-    "erp-setup": "Setup & formation ERP (500–1 500$)",
-    "marketing-strategie": "Stratégie & conseil marketing (dès 500$/mois)",
-    "marketing-reseaux": "Réseaux sociaux (dès 400$/mois)",
-    "marketing-ads": "Publicités Ads (dès 600$/mois)",
-    "marketing-seo": "SEO & référencement (dès 450$/mois)",
-    "auto-analyse": "Analyse & conception automatisation (sur devis)",
-    "auto-dev": "Développement automatisation (sur devis)",
-    "auto-crm": "CRM sur mesure (sur devis)",
-    "auto-support": "Support mensuel automatisation (150$/mois)",
-  };
 
-  const productLines = enabledProducts.map(k => `  • ${PRODUCT_LABELS[k] ?? k}`).join("\n") || "  (aucun)";
-  const serviceLines = enabledServices.map(k => `  • ${SERVICE_LABELS[k] ?? k}`).join("\n") || "  (aucun)";
+  const planLabel = PLAN_LABELS[plan] ?? plan;
+  const interestLines = enabledProducts.map(k => `  • ${INTEREST_LABELS[k] ?? k}`).join("\n") || "  (aucun)";
 
   const notifyText = `
-Nouvelle organisation inscrite sur le portail CivicAI
+🆕 NOUVELLE INSCRIPTION — CivicAI Portal
 
-Entreprise   : ${companyName}
-Code          : attentezero.ca/${tenantSlug}
-Plan          : ${plan}
-Contact       : ${firstName} ${lastName} <${email}>
-ID tenant     : ${tenantId}
-Date          : ${new Date().toLocaleString("fr-CA", { timeZone: "America/Toronto" })}
+Entreprise  : ${companyName}
+Code        : attentezero.ca/${tenantSlug}
+Plan choisi : ${planLabel}
+Contact     : ${firstName} ${lastName} <${email}>
+Téléphone   : ${phone || "—"}
+Adresse     : ${address ? `${address}, ${city}` : city || "—"}
+NEQ         : ${neq || "—"}
+Secteur     : ${sector || "—"}
+Utilisateurs: ${userCount || "—"}
+Titre       : ${contactTitle || "—"}
+ID tenant   : ${tenantId}
+Date        : ${new Date().toLocaleString("fr-CA", { timeZone: "America/Toronto" })}
 
-CATÉGORIES SÉLECTIONNÉES
-${productLines}
-
-SERVICES SÉLECTIONNÉS
-${serviceLines}
+AUTRES INTÉRÊTS DÉCLARÉS
+${interestLines}
 
 ───────────────────────────────────────
-Accédez au panel admin pour activer les services :
-${process.env.PORTAL_URL ?? "https://attentezero.ca"}/admin/tenants/${tenantId}
+⚡ ACTION REQUISE : Contactez le client dans 24–48 h pour confirmer le plan et activer l'accès.
+Panel admin : ${process.env.PORTAL_URL ?? "https://attentezero.ca"}/admin/tenants/${tenantId}
   `.trim();
 
   const welcomeText = `
@@ -185,14 +173,9 @@ Bonjour ${firstName},
 Votre organisation « ${companyName} » a été créée avec succès sur le portail CivicAI.
 
 Code d'accès : ${tenantSlug}
+Plan sélectionné : ${planLabel}
 
-Voici ce que vous avez sélectionné :
-${productLines}
-
-Services :
-${serviceLines}
-
-Notre équipe vous contactera dans les 24–48 heures pour confirmer votre sélection et discuter des prochaines étapes.
+Notre équipe vous contactera dans les 24–48 heures pour confirmer votre accès et discuter des prochaines étapes.
 
 En attendant, vous pouvez accéder à votre tableau de bord via :
 ${process.env.PORTAL_URL ?? "https://attentezero.ca"}
