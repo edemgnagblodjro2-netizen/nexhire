@@ -198,10 +198,7 @@ export function Dashboard() {
           <div className="relative z-10 flex items-stretch">
             {/* Left: text content */}
             <div className="flex-1 p-6 lg:p-8">
-              <div className="flex items-center gap-2 mb-4">
-                <img src="/tenant-portal/civicai-logo.png" alt="CivicAI" className="h-8 w-8 rounded-lg object-contain bg-white/10 p-1" />
-                <span className="text-teal-300 text-sm font-semibold tracking-wide uppercase">CivicAI · {t.dashboard}</span>
-              </div>
+              <p className="text-teal-400 text-xs font-semibold tracking-widest uppercase mb-3">{t.dashboard}</p>
               <h1 className="text-2xl lg:text-3xl font-bold leading-tight">
                 {t.welcome}, <span className="text-teal-300">{companyName}</span>
               </h1>
