@@ -531,40 +531,57 @@ export function Register() {
   const progress = (step / (STEPS.length - 1)) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 flex flex-col">
+    <div className="min-h-screen bg-[#0f172a] flex flex-col">
+      {/* Background decoration */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-teal-600/15 blur-3xl" />
+        <div className="absolute top-1/3 -right-32 w-80 h-80 rounded-full bg-indigo-600/15 blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 w-64 h-64 rounded-full bg-teal-500/10 blur-2xl" />
+        <svg className="absolute inset-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="dots-reg" width="24" height="24" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1.5" fill="white" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#dots-reg)" />
+        </svg>
+      </div>
+
       {/* Top bar */}
-      <header className="flex items-center justify-between px-6 py-4 border-b bg-white/80 backdrop-blur-sm sticky top-0 z-10">
+      <header className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/10 bg-white/5 backdrop-blur-sm sticky top-0">
         <div className="flex items-center gap-2">
-          <Building2 className="h-5 w-5 text-teal-600" />
-          <span className="font-bold text-gray-900">CivicAI Portal</span>
+          <div className="w-7 h-7 rounded-md bg-teal-500 flex items-center justify-center">
+            <span className="text-white font-bold text-xs">C</span>
+          </div>
+          <span className="font-bold text-white">CivicAI Portal</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <LangToggle />
-          <span className="text-sm text-gray-500">
+          <span className="text-sm text-slate-400">
             Déjà un compte ?{" "}
-            <Link href="/login" className="text-teal-600 font-medium hover:underline">Se connecter</Link>
+            <Link href="/login" className="text-teal-400 font-medium hover:text-teal-300">Se connecter</Link>
           </span>
         </div>
       </header>
 
-      <div className="flex-1 flex flex-col items-center py-10 px-4">
+      <div className="relative z-10 flex-1 flex flex-col items-center py-10 px-4">
         <div className="w-full max-w-3xl">
           {/* Progress */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-2">
-              <h1 className="text-2xl font-bold text-gray-900">Créer votre organisation</h1>
-              <span className="text-sm text-gray-400">{step + 1} / {STEPS.length}</span>
+              <h1 className="text-2xl font-bold text-white">Créer votre organisation</h1>
+              <span className="text-sm text-slate-500">{step + 1} / {STEPS.length}</span>
             </div>
             <div className="flex gap-1.5 mb-3 flex-wrap">
               {STEPS.map((s, i) => (
                 <span key={s} className={`flex items-center gap-1 text-xs px-3 py-1 rounded-full font-medium transition-all ${
-                  i === step ? "bg-teal-600 text-white" : i < step ? "bg-teal-100 text-teal-700" : "bg-gray-100 text-gray-400"
+                  i === step ? "bg-teal-500 text-white" : i < step ? "bg-teal-500/20 text-teal-400" : "bg-white/10 text-slate-500"
                 }`}>
                   {i < step && <Check className="h-3 w-3" />}{s}
                 </span>
               ))}
             </div>
-            <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
               <div className="h-full bg-teal-500 rounded-full transition-all duration-500" style={{ width: `${progress}%` }} />
             </div>
           </div>
