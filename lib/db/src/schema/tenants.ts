@@ -21,6 +21,7 @@ export const tenants = pgTable("tenants", {
     sector?: string;
     userCount?: string;
     contactTitle?: string;
+    clientMessage?: string;
   }>().default({}),
   dbHost: text("db_host"),
   dbName: text("db_name"),

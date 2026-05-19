@@ -146,6 +146,7 @@ export function Register() {
   // Step 2 — Plan selection (single choice)
   const [selectedPlan, setSelectedPlan] = useState("");
   const [otherInterests, setOtherInterests] = useState<string[]>([]);
+  const [clientMessage, setClientMessage] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -204,6 +205,7 @@ export function Register() {
           plan: selectedPlan,
           enabledProducts: otherInterests,
           enabledServices: [],
+          clientMessage: clientMessage.trim(),
           phone: phone.trim(),
           address: address.trim(),
           city: city.trim(),
@@ -476,6 +478,33 @@ export function Register() {
 
               {errors.selectedPlan && (
                 <p className="text-sm text-red-500 text-center font-medium">{errors.selectedPlan}</p>
+              )}
+
+              {/* Message / besoins spécifiques */}
+              {selectedPlan && (
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 space-y-2">
+                  <label className="block text-sm font-medium text-gray-800">
+                    Décrivez brièvement vos besoins{" "}
+                    <span className="text-gray-400 font-normal">(optionnel)</span>
+                  </label>
+                  <p className="text-xs text-gray-400">
+                    Personnalisations souhaitées, intégrations existantes, délais, contraintes particulières…
+                    Notre conseiller lira votre message avant de vous appeler.
+                  </p>
+                  <textarea
+                    value={clientMessage}
+                    onChange={e => setClientMessage(e.target.value)}
+                    maxLength={1000}
+                    rows={4}
+                    placeholder={
+                      selectedPlan === "enterprise"
+                        ? "Ex. : Nous avons 3 chantiers actifs, un ERP maison à remplacer, et besoin d'une intégration avec QuickBooks…"
+                        : "Ex. : Nous cherchons à centraliser nos projets et notre facturation pour une équipe de 8 personnes…"
+                    }
+                    className="w-full text-sm rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-400 resize-none text-gray-800 placeholder-gray-300"
+                  />
+                  <p className="text-xs text-gray-300 text-right">{clientMessage.length}/1000</p>
+                </div>
               )}
 
               {/* Optional: other interests */}

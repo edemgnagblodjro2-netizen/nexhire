@@ -51,7 +51,8 @@ const CreateOrgSchema = z.object({
   neq:          z.string().optional(),
   sector:       z.string().optional(),
   userCount:    z.string().optional(),
-  contactTitle: z.string().optional(),
+  contactTitle:   z.string().optional(),
+  clientMessage:  z.string().max(1000).optional(),
 });
 
 router.post("/create-org", authLimiter, async (req, res) => {
@@ -59,7 +60,7 @@ router.post("/create-org", authLimiter, async (req, res) => {
   if (!parsed.success) { res.status(400).json({ error: parsed.error.flatten() }); return; }
 
   const { companyName, tenantSlug, plan, enabledProducts, enabledServices, firstName, lastName, email, password,
-          phone, address, city, neq, sector, userCount, contactTitle } = parsed.data;
+          phone, address, city, neq, sector, userCount, contactTitle, clientMessage } = parsed.data;
 
   // Check slug uniqueness
   const existing = await db.select().from(tenants).where(eq(tenants.subdomain, tenantSlug)).limit(1);
@@ -79,7 +80,7 @@ router.post("/create-org", authLimiter, async (req, res) => {
     status: "active",
     enabledProducts,
     enabledServices,
-    metadata: { phone, address, city, neq, sector, userCount, contactTitle },
+    metadata: { phone, address, city, neq, sector, userCount, contactTitle, clientMessage },
   });
 
   // Provision schema (tables + default roles)
@@ -162,7 +163,7 @@ Date        : ${new Date().toLocaleString("fr-CA", { timeZone: "America/Toronto"
 AUTRES INTÉRÊTS DÉCLARÉS
 ${interestLines}
 
-───────────────────────────────────────
+${clientMessage ? `MESSAGE DU CLIENT\n${clientMessage}\n\n───────────────────────────────────────` : "───────────────────────────────────────"}
 ⚡ ACTION REQUISE : Contactez le client dans 24–48 h pour confirmer le plan et activer l'accès.
 Panel admin : ${process.env.PORTAL_URL ?? "https://attentezero.ca"}/admin/tenants/${tenantId}
   `.trim();
