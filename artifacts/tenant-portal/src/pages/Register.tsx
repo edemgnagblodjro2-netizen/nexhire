@@ -939,24 +939,53 @@ export function Register() {
             </div>
           )}
 
-          {/* Navigation */}
-          <div className="flex items-center justify-between mt-6">
-            {step > 0
-              ? <Button variant="outline" onClick={back} className="gap-1.5"><ChevronLeft className="h-4 w-4" /> Retour</Button>
-              : <div />
-            }
-            {step < STEPS.length - 1
-              ? <Button onClick={next} className="gap-1.5 bg-teal-600 hover:bg-teal-700">Continuer <ChevronRight className="h-4 w-4" /></Button>
-              : <Button onClick={submit} disabled={submitting} className="gap-1.5 bg-teal-600 hover:bg-teal-700 px-6">
-                  {submitting ? "Création en cours…" : "Créer l'organisation →"}
-                </Button>
-            }
-          </div>
-
-          <p className="text-center text-xs text-gray-400 mt-5">
+          <p className="text-center text-xs text-gray-400 mt-8">
             En créant un compte, vous acceptez les{" "}
-            <a href="/privacy" target="_blank" className="underline hover:text-gray-600">conditions d'utilisation</a> de CivicAI.
+            <a href="/privacy" target="_blank" className="underline hover:text-gray-300">conditions d'utilisation</a> de CivicAI.
           </p>
+        </div>
+      </div>
+
+      {/* ── Navigation bar — sticky bottom ─────────────────────────────────── */}
+      <div className="sticky bottom-0 z-20 border-t border-white/10 bg-[#0a1628]/95 backdrop-blur-md">
+        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+          {step > 0 ? (
+            <button
+              type="button"
+              onClick={back}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl border-2 border-white/25 text-white font-medium text-sm hover:border-white/50 hover:bg-white/10 transition-all"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Retour
+            </button>
+          ) : (
+            <div />
+          )}
+
+          <div className="flex items-center gap-3">
+            <span className="text-xs text-slate-500 hidden sm:block">
+              Étape {step + 1} sur {STEPS.length}
+            </span>
+            {step < STEPS.length - 1 ? (
+              <button
+                type="button"
+                onClick={next}
+                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-white font-semibold text-sm transition-all shadow-lg shadow-teal-500/25"
+              >
+                Continuer
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={submit}
+                disabled={submitting}
+                className="flex items-center gap-2 px-7 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-60 text-white font-semibold text-sm transition-all shadow-lg shadow-teal-500/25"
+              >
+                {submitting ? "Création en cours…" : "Créer l'organisation →"}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
