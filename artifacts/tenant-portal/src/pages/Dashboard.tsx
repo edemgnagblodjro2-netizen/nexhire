@@ -221,15 +221,24 @@ export function Dashboard() {
                 <Badge className="bg-teal-500/30 text-teal-200 border-teal-500/40 text-xs capitalize">{user.role}</Badge>
               </div>
             </div>
-            {/* Right: decorative image */}
-            <div className="hidden lg:block w-64 xl:w-80 flex-shrink-0 relative overflow-hidden">
-              <img
-                src="/tenant-portal/civicai-banner.png"
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 w-full h-full object-cover object-left opacity-30"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a] via-transparent to-transparent" />
+            {/* Right: abstract geometric decoration */}
+            <div className="hidden lg:flex w-56 xl:w-72 flex-shrink-0 items-center justify-center relative overflow-hidden pr-6">
+              {/* Concentric rings */}
+              <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                <div className="w-48 h-48 rounded-full border border-teal-500/20 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                <div className="w-36 h-36 rounded-full border border-teal-400/25 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                <div className="w-24 h-24 rounded-full border border-teal-300/30 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                {/* Center glow node */}
+                <div className="w-10 h-10 rounded-full bg-teal-500/30 backdrop-blur-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+                  <div className="w-4 h-4 rounded-full bg-teal-400/70" />
+                </div>
+                {/* Orbiting dots */}
+                <div className="w-2.5 h-2.5 rounded-full bg-teal-400/60 absolute" style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%) translate(60px, -42px)" }} />
+                <div className="w-2 h-2 rounded-full bg-sky-400/50 absolute" style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%) translate(-55px, 38px)" }} />
+                <div className="w-1.5 h-1.5 rounded-full bg-teal-300/50 absolute" style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%) translate(30px, 70px)" }} />
+              </div>
+              {/* Left fade */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a] via-transparent to-transparent pointer-events-none" />
             </div>
           </div>
         </div>
