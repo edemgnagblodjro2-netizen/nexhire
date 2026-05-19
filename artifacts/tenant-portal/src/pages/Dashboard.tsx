@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { LangToggle } from "@/components/LangToggle";
 import {
-  Building2, LogOut, Server, CheckCircle2, Circle, Lock,
+  Building2, LogOut, Server, CheckCircle2, Circle, Lock, ChevronRight,
   HardHat, Heart, Globe, BarChart3, TrendingUp, Zap,
   Layers, ShoppingCart, LayoutDashboard, Wrench,
   Rocket, Users, BrainCircuit, Share2, Megaphone, Search,
@@ -286,15 +286,30 @@ export function Dashboard() {
           </section>
         )}
 
+        {/* ── Admin quick-access (super_admin / admin only) ────────── */}
+        {isAdmin && (
+          <section>
+            <h2 className="text-base font-semibold text-gray-900 mb-3">Administration CivicAI</h2>
+            <div
+              onClick={() => setLocation("/admin/tenants")}
+              className="flex items-center gap-4 p-4 rounded-xl border border-slate-200 bg-white shadow-sm hover:border-teal-400 hover:shadow-md transition-all cursor-pointer group"
+            >
+              <div className="p-3 rounded-lg bg-slate-100 group-hover:bg-teal-50 transition-colors flex-shrink-0">
+                <Server className="h-5 w-5 text-slate-500 group-hover:text-teal-600 transition-colors" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-gray-900 text-sm">Gestion des tenants</p>
+                <p className="text-xs text-gray-400 mt-0.5">Consultez, activez et configurez les produits et services de chaque organisation cliente.</p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-gray-300 group-hover:text-teal-500 transition-colors flex-shrink-0" />
+            </div>
+          </section>
+        )}
+
         {/* ── Service categories ─────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-base font-semibold text-gray-900">{t.yourProducts}</h2>
-            {isAdmin && (
-              <Button variant="ghost" size="sm" className="text-xs text-teal-600" onClick={() => setLocation("/admin/tenants")}>
-                <Server className="h-3 w-3 mr-1" /> {t.tenantDir}
-              </Button>
-            )}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {allCategoryKeys.map(key => {
