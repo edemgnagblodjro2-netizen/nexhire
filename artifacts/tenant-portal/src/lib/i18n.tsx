@@ -50,6 +50,7 @@ const T = {
       // Deployable apps
       constructpro:         { label: "ConstructPro",         desc: "ERP construction & chantiers" },
       attentezero:          { label: "AttenteZéro",          desc: "Services communautaires QC" },
+      "civicai-crm":        { label: "CivicAI CRM Pro",      desc: "Gestion clients & pipeline ventes" },
       // CivicAI service categories
       "sites-web":          { label: "Sites web",            desc: "Présence digitale professionnelle" },
       "erp-gestion":        { label: "ERP & Gestion",        desc: "Pilotez vos opérations" },
@@ -146,6 +147,7 @@ const T = {
     products: {
       constructpro:         { label: "ConstructPro",         desc: "Construction ERP & site management" },
       attentezero:          { label: "AttenteZéro",          desc: "Community services – Québec" },
+      "civicai-crm":        { label: "CivicAI CRM Pro",      desc: "Client management & sales pipeline" },
       "sites-web":          { label: "Web Sites",            desc: "Professional digital presence" },
       "erp-gestion":        { label: "ERP & Management",     desc: "Run your operations" },
       "marketing-digital":  { label: "Digital Marketing",    desc: "Visibility & growth" },

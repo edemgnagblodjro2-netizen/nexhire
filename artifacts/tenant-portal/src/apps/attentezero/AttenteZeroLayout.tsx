@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   Users, Calendar, BarChart3, MapPin, Monitor, Bell,
-  UserCog, Globe, BookUser, ArrowLeft, Menu, X, Wifi, CalendarCheck
+  UserCog, Globe, ArrowLeft, Menu, X, Wifi, CalendarCheck
 } from "lucide-react";
 import { useState } from "react";
 
@@ -18,7 +18,6 @@ const MODULES = [
   { key: "notifications", icon: Bell,      labelFr: "Notifications",        labelEn: "Notifications",   badge: "3"  },
   { key: "staff",         icon: UserCog,   labelFr: "Employés / Guichets", labelEn: "Staff / Counters", badge: null },
   { key: "portal",        icon: Globe,     labelFr: "Portail client",       labelEn: "Client portal",   badge: null },
-  { key: "crm",           icon: BookUser,  labelFr: "CRM",                  labelEn: "CRM",             badge: null },
 ] as const;
 
 type ModuleKey = (typeof MODULES)[number]["key"];

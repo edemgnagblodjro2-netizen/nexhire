@@ -19,7 +19,7 @@ import { DisplayPage }       from "@/apps/attentezero/pages/DisplayPage";
 import { NotificationsPage } from "@/apps/attentezero/pages/NotificationsPage";
 import { StaffPage }         from "@/apps/attentezero/pages/StaffPage";
 import { PortalPage }        from "@/apps/attentezero/pages/PortalPage";
-import { CRMPage }           from "@/apps/attentezero/pages/CRMPage";
+import { CRMPage }           from "@/apps/civicai-crm/pages/CRMPage";
 import { SlotManagerPage }   from "@/apps/attentezero/pages/SlotManagerPage";
 import { KioskPage }         from "@/apps/attentezero/pages/KioskPage";
 import { PublicTicketPage }    from "@/apps/attentezero/pages/PublicTicketPage";
@@ -101,7 +101,7 @@ function Router() {
       <Route path="/apps/attentezero/portal">
         <ProtectedRoute component={PortalPage} />
       </Route>
-      <Route path="/apps/attentezero/crm">
+      <Route path="/apps/civicai-crm">
         <ProtectedRoute component={CRMPage} />
       </Route>
       <Route path="/apps/attentezero/slot-manager">

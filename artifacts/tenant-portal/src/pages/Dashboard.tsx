@@ -19,8 +19,9 @@ import {
 
 // ── Deployable apps (launchable from Dashboard) ────────────────────────────
 const APPS: Record<string, { icon: React.ElementType; color: string; bg: string; appUrl: string; internal: boolean }> = {
-  constructpro: { icon: HardHat, color: "text-orange-500", bg: "bg-orange-50", appUrl: "/constructpro-erp/", internal: false },
-  attentezero:  { icon: Heart,   color: "text-teal-500",   bg: "bg-teal-50",   appUrl: "/apps/attentezero/queues", internal: true },
+  constructpro:  { icon: HardHat,        color: "text-orange-500", bg: "bg-orange-50",  appUrl: "/constructpro-erp/",   internal: false },
+  attentezero:   { icon: Heart,          color: "text-teal-500",   bg: "bg-teal-50",    appUrl: "/apps/attentezero/queues", internal: true },
+  "civicai-crm": { icon: HeartHandshake, color: "text-indigo-500", bg: "bg-indigo-50",  appUrl: "/apps/civicai-crm",   internal: true },
 };
 
 // ── Category visuals (matching registration wizard) ────────────────────────
