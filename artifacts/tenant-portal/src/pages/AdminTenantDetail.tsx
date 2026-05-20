@@ -17,12 +17,13 @@ import {
 
 // ── Full product catalogue ─────────────────────────────────────────────────
 const ALL_PRODUCTS = [
-  { key: "constructpro",        icon: HardHat,   color: "text-orange-500", bg: "bg-orange-50" },
-  { key: "attentezero",         icon: Heart,     color: "text-teal-500",   bg: "bg-teal-50"   },
-  { key: "sites-web",           icon: Globe,     color: "text-blue-500",   bg: "bg-blue-50"   },
-  { key: "erp-gestion",         icon: BarChart3, color: "text-purple-500", bg: "bg-purple-50" },
-  { key: "marketing-digital",   icon: TrendingUp,color: "text-teal-500",   bg: "bg-teal-50"   },
-  { key: "automatisation-crm",  icon: Zap,       color: "text-cyan-500",   bg: "bg-cyan-50"   },
+  { key: "constructpro",        icon: HardHat,       color: "text-orange-500", bg: "bg-orange-50" },
+  { key: "attentezero",         icon: Heart,         color: "text-teal-500",   bg: "bg-teal-50"   },
+  { key: "civicai-crm",         icon: HeartHandshake,color: "text-indigo-500", bg: "bg-indigo-50" },
+  { key: "sites-web",           icon: Globe,         color: "text-blue-500",   bg: "bg-blue-50"   },
+  { key: "erp-gestion",         icon: BarChart3,     color: "text-purple-500", bg: "bg-purple-50" },
+  { key: "marketing-digital",   icon: TrendingUp,    color: "text-teal-500",   bg: "bg-teal-50"   },
+  { key: "automatisation-crm",  icon: Zap,           color: "text-cyan-500",   bg: "bg-cyan-50"   },
 ];
 
 const ALL_SERVICES = [
