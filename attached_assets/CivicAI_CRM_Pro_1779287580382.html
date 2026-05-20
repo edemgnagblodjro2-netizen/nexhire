@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM Pro — CivicAI</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0C14;
+  --bg2: #0F1220;
+  --bg3: #141828;
+  --bg4: #1A2035;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --blue: #3B6EF5;
+  --blue2: #5885F7;
+  --teal: #0FD4A0;
+  --amber: #F5A623;
+  --red: #F55656;
+  --purple: #9B6DF5;
+  --pink: #F56DB0;
+  --cyan: #38C9F5;
+  --text: #E8EAF0;
+  --text2: #8B90A8;
+  --text3: #5A5F75;
+  --green: #22C87A;
+  --sidebar-w: 240px;
+  --header-h: 60px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  font-size: 14px;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 2px; }
+
+/* ══════ SIDEBAR ══════ */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.sidebar-logo {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-mark {
+  width: 32px; height: 32px;
+  background: var(--blue);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 14px; color: #fff;
+  flex-shrink: 0;
+}
+.logo-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; }
+.logo-text span { color: var(--blue2); }
+.logo-badge {
+  margin-left: auto;
+  font-size: 9px; font-weight: 600;
+  background: rgba(59,110,245,0.2);
+  color: var(--blue2);
+  padding: 2px 7px; border-radius: 10px;
+  border: 1px solid rgba(59,110,245,0.3);
+}
+
+.sidebar-section {
+  padding: 14px 12px 6px;
+  font-size: 10px; font-weight: 600;
+  color: var(--text3);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  margin: 1px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text2);
+  font-size: 13.5px;
+  font-weight: 400;
+  transition: all .15s;
+  position: relative;
+}
+.nav-item:hover { background: var(--bg3); color: var(--text); }
+.nav-item.active {
+  background: rgba(59,110,245,0.15);
+  color: var(--blue2);
+  font-weight: 500;
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute; left: -8px; top: 50%;
+  transform: translateY(-50%);
+  width: 3px; height: 18px;
+  background: var(--blue);
+  border-radius: 0 2px 2px 0;
+}
+.nav-icon { font-size: 16px; width: 18px; text-align: center; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto;
+  background: var(--red);
+  color: #fff;
+  font-size: 10px; font-weight: 700;
+  padding: 1px 6px; border-radius: 10px;
+  min-width: 18px; text-align: center;
+}
+.nav-badge.green { background: var(--teal); }
+.nav-badge.amber { background: var(--amber); }
+
+.sidebar-bottom {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  padding: 12px;
+}
+.user-card {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.user-card:hover { background: var(--bg3); }
+.user-avatar {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: #fff;
+  flex-shrink: 0;
+}
+.user-name { font-size: 13px; font-weight: 500; }
+.user-role { font-size: 11px; color: var(--text3); }
+.user-more { margin-left: auto; color: var(--text3); font-size: 16px; }
+
+/* ══════ MAIN ══════ */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* ── HEADER ── */
+.header {
+  height: var(--header-h);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  flex-shrink: 0;
+}
+.header-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; }
+.header-subtitle { font-size: 12px; color: var(--text3); margin-top: 1px; }
+.header-search {
+  margin-left: auto;
+  display: flex; align-items: center;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 12px;
+  gap: 8px;
+  width: 240px;
+  transition: all .2s;
+}
+.header-search:focus-within { border-color: var(--blue); width: 280px; }
+.header-search input {
+  background: none; border: none; outline: none;
+  color: var(--text); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; padding: 8px 0; width: 100%;
+}
+.header-search input::placeholder { color: var(--text3); }
+.search-icon { color: var(--text3); font-size: 14px; }
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+  cursor: pointer; border: none; transition: all .15s;
+}
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover { background: var(--blue2); }
+.btn-ghost { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--bg4); color: var(--text); }
+.btn-icon { padding: 7px 10px; }
+.notif-btn {
+  width: 36px; height: 36px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text2); font-size: 16px; position: relative;
+}
+.notif-dot {
+  position: absolute; top: 5px; right: 5px;
+  width: 8px; height: 8px; background: var(--red);
+  border-radius: 50%; border: 2px solid var(--bg2);
+}
+
+/* ── CONTENT ── */
+.content {
+  flex: 1; overflow: auto; padding: 24px;
+}
+
+/* ══════ TABS ══════ */
+.tabs {
+  display: flex; gap: 4px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+.tab {
+  padding: 8px 16px; font-size: 13px; font-weight: 500;
+  color: var(--text2); cursor: pointer; border-bottom: 2px solid transparent;
+  transition: all .15s; margin-bottom: -1px;
+}
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--blue2); border-bottom-color: var(--blue); }
+
+/* ══════ KPI CARDS ══════ */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.kpi {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.kpi:hover { border-color: var(--border2); }
+.kpi::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--kc, var(--blue));
+}
+.kpi-label { font-size: 12px; color: var(--text3); font-weight: 500; margin-bottom: 10px; }
+.kpi-value { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+.kpi-change { font-size: 12px; display: flex; align-items: center; gap: 4px; }
+.kpi-change.up { color: var(--teal); }
+.kpi-change.down { color: var(--red); }
+.kpi-icon {
+  position: absolute; right: 18px; top: 18px;
+  font-size: 22px; opacity: 0.15;
+}
+
+/* ══════ TABLE ══════ */
+.table-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.table-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+}
+.table-title { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 15px; }
+.table-count {
+  background: var(--bg3);
+  color: var(--text2);
+  font-size: 11px; font-weight: 600;
+  padding: 2px 8px; border-radius: 10px;
+}
+.filter-row {
+  display: flex; gap: 8px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.filter-chip {
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 12px; font-weight: 500; cursor: pointer;
+  background: var(--bg3); color: var(--text2);
+  border: 1px solid var(--border);
+  transition: all .15s;
+}
+.filter-chip.active { background: rgba(59,110,245,0.15); color: var(--blue2); border-color: rgba(59,110,245,0.3); }
+.filter-chip:hover { background: var(--bg4); }
+
+table { width: 100%; border-collapse: collapse; }
+thead tr { border-bottom: 1px solid var(--border); }
+th {
+  padding: 10px 16px;
+  font-size: 11px; font-weight: 600;
+  color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px;
+  text-align: left; cursor: pointer; white-space: nowrap;
+}
+th:hover { color: var(--text2); }
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .1s;
+  cursor: pointer;
+}
+tbody tr:hover { background: var(--bg3); }
+tbody tr:last-child { border-bottom: none; }
+td { padding: 12px 16px; font-size: 13px; }
+
+.avatar-cell { display: flex; align-items: center; gap: 10px; }
+.avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.cell-name { font-weight: 500; }
+.cell-sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
+
+.badge {
+  display: inline-flex; align-items: center;
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 600;
+  white-space: nowrap;
+}
+.badge-green { background: rgba(15,212,160,0.12); color: var(--teal); }
+.badge-blue { background: rgba(59,110,245,0.12); color: var(--blue2); }
+.badge-amber { background: rgba(245,166,35,0.12); color: var(--amber); }
+.badge-red { background: rgba(245,86,86,0.12); color: var(--red); }
+.badge-purple { background: rgba(155,109,245,0.12); color: var(--purple); }
+.badge-gray { background: var(--bg3); color: var(--text2); }
+.badge-cyan { background: rgba(56,201,245,0.12); color: var(--cyan); }
+
+.progress-bar {
+  height: 4px; background: var(--bg4);
+  border-radius: 2px; overflow: hidden; width: 80px;
+}
+.progress-fill { height: 100%; border-radius: 2px; }
+
+.star-score { color: var(--amber); font-size: 13px; letter-spacing: 1px; }
+
+/* ══════ DASHBOARD GRID ══════ */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.panel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.panel-hdr {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.panel-title { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 14px; }
+.panel-body { padding: 16px 20px; }
+
+/* Mini chart bars */
+.mini-chart {
+  display: flex; align-items: flex-end;
+  gap: 4px; height: 60px;
+}
+.bar {
+  flex: 1; border-radius: 3px 3px 0 0;
+  cursor: pointer; transition: opacity .15s;
+}
+.bar:hover { opacity: 0.8; }
+
+/* Activity feed */
+.activity-item {
+  display: flex; gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+}
+.activity-text { font-size: 13px; line-height: 1.5; }
+.activity-text strong { color: var(--text); font-weight: 500; }
+.activity-time { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+/* Pipeline kanban */
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.pipeline-col {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.pipeline-hdr {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.pipeline-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.pipeline-name { font-size: 12px; font-weight: 600; }
+.pipeline-count {
+  margin-left: auto;
+  background: var(--bg3);
+  font-size: 10px; font-weight: 700;
+  padding: 1px 7px; border-radius: 10px;
+  color: var(--text2);
+}
+.pipeline-total { font-size: 11px; color: var(--text3); padding: 6px 14px; border-bottom: 1px solid var(--border); }
+.deal-card {
+  margin: 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.deal-card:hover { border-color: var(--border2); transform: translateY(-1px); }
+.deal-company { font-size: 12px; font-weight: 600; margin-bottom: 3px; }
+.deal-value { font-size: 13px; font-weight: 700; color: var(--teal); margin-bottom: 6px; }
+.deal-meta { display: flex; justify-content: space-between; align-items: center; }
+.deal-avatar { width: 20px; height: 20px; border-radius: 50%; font-size: 9px; font-weight: 700; color: #fff; display: flex; align-items: center; justify-content: center; }
+.deal-days { font-size: 10px; color: var(--text3); }
+
+/* Stats row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.stat-mini {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+}
+.stat-mini-val { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.stat-mini-lbl { font-size: 11px; color: var(--text3); }
+
+/* Form / Modal */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 100;
+  align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  width: 600px; max-width: 95vw;
+  max-height: 85vh; overflow: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.modal-hdr {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+}
+.modal-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; }
+.modal-close {
+  margin-left: auto; cursor: pointer;
+  color: var(--text3); font-size: 20px;
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px; transition: all .15s;
+}
+.modal-close:hover { background: var(--bg3); color: var(--text); }
+.modal-body { padding: 20px 24px; }
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: flex-end; gap: 10px;
+}
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-label { font-size: 12px; font-weight: 500; color: var(--text2); }
+.form-input, .form-select, .form-textarea {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; color: var(--text);
+  outline: none; transition: border-color .15s;
+  width: 100%;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--blue); }
+.form-textarea { resize: vertical; min-height: 80px; }
+.form-select option { background: var(--bg3); }
+
+/* Profile panel */
+.profile-panel {
+  display: none;
+  position: fixed; right: 0; top: 0; bottom: 0;
+  width: 420px;
+  background: var(--bg2);
+  border-left: 1px solid var(--border);
+  z-index: 50;
+  flex-direction: column;
+  overflow: hidden;
+}
+.profile-panel.open { display: flex; }
+.profile-hdr {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+}
+.profile-avatar-lg {
+  width: 52px; height: 52px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700; color: #fff;
+}
+.profile-name { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; }
+.profile-role { font-size: 12px; color: var(--text3); margin-top: 2px; }
+.profile-close { margin-left: auto; cursor: pointer; color: var(--text3); font-size: 20px; }
+.profile-body { flex: 1; overflow: auto; padding: 20px; }
+.profile-section { margin-bottom: 20px; }
+.profile-section-title { font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+.info-row { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.info-row:last-child { border-bottom: none; }
+.info-label { font-size: 12px; color: var(--text3); width: 110px; flex-shrink: 0; }
+.info-value { font-size: 13px; color: var(--text); }
+.timeline-item { display: flex; gap: 12px; margin-bottom: 14px; }
+.timeline-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-top: 5px; }
+.timeline-content { font-size: 12.5px; line-height: 1.5; }
+.timeline-time { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+/* Page views */
+.page { display: none; }
+.page.active { display: block; }
+
+/* Responsive trick */
+.scroll-x { overflow-x: auto; }
+
+/* Settings */
+.settings-grid { display: grid; grid-template-columns: 220px 1fr; gap: 20px; }
+.settings-nav .nav-item { margin: 1px 0; }
+.settings-panel { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+.settings-section { margin-bottom: 28px; }
+.settings-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.settings-desc { font-size: 12px; color: var(--text3); margin-bottom: 16px; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.toggle-row:last-child { border-bottom: none; }
+.toggle-info { }
+.toggle-name { font-size: 13px; font-weight: 500; }
+.toggle-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.toggle {
+  width: 40px; height: 22px; background: var(--bg4);
+  border-radius: 11px; cursor: pointer; position: relative;
+  border: 1px solid var(--border2); flex-shrink: 0; transition: background .2s;
+}
+.toggle.on { background: var(--blue); }
+.toggle::after {
+  content: ''; position: absolute;
+  width: 16px; height: 16px; background: #fff; border-radius: 50%;
+  top: 2px; left: 2px; transition: left .2s;
+}
+.toggle.on::after { left: 20px; }
+
+/* Reports */
+.report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.chart-box {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px;
+}
+.chart-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.chart-sub { font-size: 12px; color: var(--text3); margin-bottom: 16px; }
+.donut-wrap { display: flex; align-items: center; gap: 20px; }
+.donut-svg { flex-shrink: 0; }
+.donut-legend { display: flex; flex-direction: column; gap: 8px; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.bar-chart { display: flex; flex-direction: column; gap: 8px; }
+.bar-row { display: flex; align-items: center; gap: 10px; }
+.bar-label { font-size: 12px; color: var(--text2); width: 80px; flex-shrink: 0; text-align: right; }
+.bar-track { flex: 1; height: 8px; background: var(--bg4); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; }
+.bar-val { font-size: 12px; font-weight: 600; width: 40px; }
+
+/* Empty state */
+.empty { text-align: center; padding: 60px 20px; color: var(--text3); }
+.empty-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.4; }
+.empty-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+.empty-text { font-size: 13px; line-height: 1.6; }
+
+/* Tooltip */
+.tooltip { position: relative; }
+.tooltip:hover::after {
+  content: attr(data-tip);
+  position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+  background: var(--bg4); color: var(--text);
+  font-size: 11px; padding: 4px 8px; border-radius: 5px;
+  white-space: nowrap; border: 1px solid var(--border);
+  pointer-events: none; z-index: 20;
+}
+
+/* Welcome banner */
+.welcome-banner {
+  background: linear-gradient(135deg, rgba(59,110,245,0.15) 0%, rgba(155,109,245,0.1) 100%);
+  border: 1px solid rgba(59,110,245,0.25);
+  border-radius: 12px; padding: 20px 24px;
+  display: flex; align-items: center; gap: 20px;
+  margin-bottom: 24px;
+}
+.welcome-text h2 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.welcome-text p { font-size: 13px; color: var(--text2); }
+.welcome-actions { margin-left: auto; display: flex; gap: 8px; flex-shrink: 0; }
+
+/* Pagination */
+.pagination {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  font-size: 12px; color: var(--text2);
+}
+.page-btns { display: flex; gap: 4px; }
+.page-btn {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--bg3); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 12px; color: var(--text2);
+  transition: all .15s;
+}
+.page-btn:hover, .page-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════ SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">C</div>
+    <div class="logo-text">Civic<span>AI</span> CRM</div>
+    <div class="logo-badge">PRO</div>
+  </div>
+
+  <div class="sidebar-section">Principal</div>
+  <div class="nav-item active" onclick="showPage('dashboard')">
+    <span class="nav-icon">⊞</span> Tableau de bord
+  </div>
+  <div class="nav-item" onclick="showPage('contacts')">
+    <span class="nav-icon">👥</span> Contacts
+    <span class="nav-badge green">1 284</span>
+  </div>
+  <div class="nav-item" onclick="showPage('entreprises')">
+    <span class="nav-icon">🏢</span> Entreprises
+  </div>
+  <div class="nav-item" onclick="showPage('pipeline')">
+    <span class="nav-icon">📊</span> Pipeline ventes
+    <span class="nav-badge amber">18</span>
+  </div>
+  <div class="nav-item" onclick="showPage('opportunites')">
+    <span class="nav-icon">💡</span> Opportunités
+  </div>
+
+  <div class="sidebar-section">Activités</div>
+  <div class="nav-item" onclick="showPage('taches')">
+    <span class="nav-icon">✓</span> Tâches
+    <span class="nav-badge">7</span>
+  </div>
+  <div class="nav-item" onclick="showPage('calendrier')">
+    <span class="nav-icon">📅</span> Calendrier
+  </div>
+  <div class="nav-item" onclick="showPage('emails')">
+    <span class="nav-icon">✉</span> Courriels
+    <span class="nav-badge">3</span>
+  </div>
+  <div class="nav-item" onclick="showPage('appels')">
+    <span class="nav-icon">📞</span> Appels & SMS
+  </div>
+
+  <div class="sidebar-section">Commerce</div>
+  <div class="nav-item" onclick="showPage('devis')">
+    <span class="nav-icon">📄</span> Devis & Propositions
+  </div>
+  <div class="nav-item" onclick="showPage('factures')">
+    <span class="nav-icon">💰</span> Facturation
+  </div>
+  <div class="nav-item" onclick="showPage('produits')">
+    <span class="nav-icon">📦</span> Produits & Services
+  </div>
+
+  <div class="sidebar-section">Analyse</div>
+  <div class="nav-item" onclick="showPage('rapports')">
+    <span class="nav-icon">📈</span> Rapports
+  </div>
+  <div class="nav-item" onclick="showPage('objectifs')">
+    <span class="nav-icon">🎯</span> Objectifs & KPIs
+  </div>
+  <div class="nav-item" onclick="showPage('marketing')">
+    <span class="nav-icon">📢</span> Marketing
+  </div>
+
+  <div class="sidebar-section">Système</div>
+  <div class="nav-item" onclick="showPage('automatisations')">
+    <span class="nav-icon">⚡</span> Automatisations
+  </div>
+  <div class="nav-item" onclick="showPage('parametres')">
+    <span class="nav-icon">⚙</span> Paramètres
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="user-card" onclick="showPage('parametres')">
+      <div class="user-avatar">AG</div>
+      <div>
+        <div class="user-name">Ayaovi Edem</div>
+        <div class="user-role">Fondateur & CEO</div>
+      </div>
+      <div class="user-more">⋯</div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════ MAIN -->
+<div class="main">
+
+  <!-- HEADER -->
+  <div class="header" id="mainHeader">
+    <div>
+      <div class="header-title" id="pageTitle">Tableau de bord</div>
+      <div class="header-subtitle" id="pageSubtitle">Bonjour Ayaovi — voici votre journée</div>
+    </div>
+    <div class="header-search">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Rechercher contacts, deals, tâches...">
+    </div>
+    <div class="header-actions">
+      <div class="notif-btn tooltip" data-tip="Notifications">
+        🔔
+        <div class="notif-dot"></div>
+      </div>
+      <button class="btn btn-primary" id="mainAddBtn" onclick="openModal()">+ Ajouter</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ═══ PAGE: DASHBOARD ═══ -->
+    <div class="page active" id="page-dashboard">
+
+      <div class="welcome-banner">
+        <div>
+          <div style="font-size: 22px; margin-bottom: 6px;">👋</div>
+        </div>
+        <div class="welcome-text">
+          <h2>Bienvenue, Ayaovi!</h2>
+          <p>Vous avez <strong style="color:var(--amber)">7 tâches</strong> en attente et <strong style="color:var(--blue2)">3 réunions</strong> aujourd'hui.</p>
+        </div>
+        <div class="welcome-actions">
+          <button class="btn btn-ghost" onclick="showPage('taches')">Voir les tâches</button>
+          <button class="btn btn-primary" onclick="showPage('pipeline')">Pipeline →</button>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi" style="--kc:var(--blue)">
+          <div class="kpi-icon">👥</div>
+          <div class="kpi-label">Contacts totaux</div>
+          <div class="kpi-value">1 284</div>
+          <div class="kpi-change up">▲ +12.4% ce mois</div>
+        </div>
+        <div class="kpi" style="--kc:var(--teal)">
+          <div class="kpi-icon">💰</div>
+          <div class="kpi-label">Valeur pipeline</div>
+          <div class="kpi-value" style="color:var(--teal)">842K$</div>
+          <div class="kpi-change up">▲ +8.1% vs mois dernier</div>
+        </div>
+        <div class="kpi" style="--kc:var(--amber)">
+          <div class="kpi-icon">🎯</div>
+          <div class="kpi-label">Taux de conversion</div>
+          <div class="kpi-value" style="color:var(--amber)">28.4%</div>
+          <div class="kpi-change down">▼ -2.1% ce mois</div>
+        </div>
+        <div class="kpi" style="--kc:var(--purple)">
+          <div class="kpi-icon">📈</div>
+          <div class="kpi-label">Revenus ce mois</div>
+          <div class="kpi-value" style="color:var(--purple)">124K$</div>
+          <div class="kpi-change up">▲ +19.7% vs objectif</div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-mini"><div class="stat-mini-val" style="color:var(--blue2)">38</div><div class="stat-mini-lbl">Deals actifs</div></div>
+        <div class="stat-mini"><div class="stat-mini-val" style="color:var(--teal)">94%</div><div class="stat-mini-lbl">Satisfaction client</div></div>
+        <div class="stat-mini"><div class="stat-mini-val" style="color:var(--amber)">7</div><div class="stat-mini-lbl">Tâches urgentes</div></div>
+        <div class="stat-mini"><div class="stat-mini-val" style="color:var(--green)">12</div><div class="stat-mini-lbl">Nouveaux leads</div></div>
+        <div class="stat-mini"><div class="stat-mini-val" style="color:var(--purple)">3</div><div class="stat-mini-lbl">Réunions auj.</div></div>
+        <div class="stat-mini"><div class="stat-mini-val" style="color:var(--red)">5</div><div class="stat-mini-lbl">Suivis en retard</div></div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="panel">
+          <div class="panel-hdr">
+            <div class="panel-title">Revenus mensuels</div>
+            <div style="margin-left:auto;font-size:12px;color:var(--teal)">▲ +24% vs an dernier</div>
+          </div>
+          <div class="panel-body">
+            <div class="mini-chart" style="height:100px;align-items:flex-end;gap:6px">
+              <div class="bar" style="height:55%;background:var(--bg4)"></div>
+              <div class="bar" style="height:65%;background:var(--bg4)"></div>
+              <div class="bar" style="height:48%;background:var(--bg4)"></div>
+              <div class="bar" style="height:70%;background:var(--bg4)"></div>
+              <div class="bar" style="height:60%;background:var(--bg4)"></div>
+              <div class="bar" style="height:80%;background:var(--bg4)"></div>
+              <div class="bar" style="height:72%;background:var(--blue);opacity:0.5"></div>
+              <div class="bar" style="height:88%;background:var(--blue);opacity:0.6"></div>
+              <div class="bar" style="height:95%;background:var(--blue);opacity:0.7"></div>
+              <div class="bar" style="height:85%;background:var(--blue);opacity:0.8"></div>
+              <div class="bar" style="height:100%;background:var(--blue)"></div>
+              <div class="bar" style="height:82%;background:var(--bg4)"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:8px">
+              <span>Jan</span><span>Fév</span><span>Mar</span><span>Avr</span><span>Mai</span><span>Juin</span><span>Jul</span><span>Aoû</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Déc</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-hdr">
+            <div class="panel-title">Activité récente</div>
+          </div>
+          <div class="panel-body" style="padding: 8px 16px;">
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--teal)"></div>
+              <div>
+                <div class="activity-text"><strong>Groupe LSC</strong> — Deal de 45 000$ conclu</div>
+                <div class="activity-time">il y a 32 min</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--blue)"></div>
+              <div>
+                <div class="activity-text"><strong>Immo 3R</strong> — Proposition envoyée</div>
+                <div class="activity-time">il y a 1h 15</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--amber)"></div>
+              <div>
+                <div class="activity-text"><strong>Marie Côté</strong> ajoutée comme contact</div>
+                <div class="activity-time">il y a 2h</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--purple)"></div>
+              <div>
+                <div class="activity-text">Tâche <strong>Appel de suivi Constructions Roy</strong> complétée</div>
+                <div class="activity-time">il y a 3h</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--red)"></div>
+              <div>
+                <div class="activity-text"><strong>Tech Innov Inc.</strong> — Deal perdu (budget)</div>
+                <div class="activity-time">hier, 16h42</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tâches urgentes -->
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">Tâches prioritaires aujourd'hui</div>
+          <div class="table-count">7</div>
+          <button class="btn btn-ghost" style="margin-left:auto;font-size:12px" onclick="showPage('taches')">Voir tout</button>
+        </div>
+        <table>
+          <thead><tr>
+            <th>Tâche</th><th>Contact</th><th>Type</th><th>Échéance</th><th>Priorité</th><th>Statut</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><div style="font-size:13px;font-weight:500">Appel de suivi — Démo ERP</div></td><td><div class="avatar-cell"><div class="avatar" style="background:var(--blue)">GL</div><div><div class="cell-name">Groupe LSC</div><div class="cell-sub">Anthony Martin</div></div></div></td><td><span class="badge badge-blue">📞 Appel</span></td><td style="color:var(--amber)">Aujourd'hui 14h</td><td><span class="badge badge-red">Urgent</span></td><td><span class="badge badge-amber">En attente</span></td></tr>
+            <tr><td><div style="font-size:13px;font-weight:500">Envoyer proposition AttenteZéro</div></td><td><div class="avatar-cell"><div class="avatar" style="background:var(--teal)">VM</div><div><div class="cell-name">Ville de Shawinigan</div><div class="cell-sub">Jean Tremblay</div></div></div></td><td><span class="badge badge-amber">📄 Email</span></td><td>Aujourd'hui 17h</td><td><span class="badge badge-red">Urgent</span></td><td><span class="badge badge-blue">En cours</span></td></tr>
+            <tr><td><div style="font-size:13px;font-weight:500">Relance — Devis site web</div></td><td><div class="avatar-cell"><div class="avatar" style="background:var(--purple)">BC</div><div><div class="cell-name">Boutique Chez Marie</div><div class="cell-sub">Marie Côté</div></div></div></td><td><span class="badge badge-amber">✉ Email</span></td><td>Demain 10h</td><td><span class="badge badge-amber">Normal</span></td><td><span class="badge badge-amber">En attente</span></td></tr>
+            <tr><td><div style="font-size:13px;font-weight:500">Démo ERP — Construction Beaulieu</div></td><td><div class="avatar-cell"><div class="avatar" style="background:var(--amber)">CB</div><div><div class="cell-name">Construction Beaulieu</div><div class="cell-sub">Luc Beaulieu</div></div></div></td><td><span class="badge badge-purple">🎥 Réunion</span></td><td>Demain 13h30</td><td><span class="badge badge-amber">Normal</span></td><td><span class="badge badge-green">Confirmé</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ PAGE: CONTACTS ═══ -->
+    <div class="page" id="page-contacts">
+      <div class="filter-row" style="margin-bottom:16px;padding:0;border:none">
+        <div class="filter-chip active">Tous (1 284)</div>
+        <div class="filter-chip">Clients (342)</div>
+        <div class="filter-chip">Prospects (618)</div>
+        <div class="filter-chip">Leads (198)</div>
+        <div class="filter-chip">Inactifs (126)</div>
+        <button class="btn btn-ghost" style="margin-left:auto">🔽 Filtres</button>
+        <button class="btn btn-ghost">📤 Export</button>
+        <button class="btn btn-primary" onclick="openModal('contact')">+ Nouveau contact</button>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">Contacts</div>
+          <div class="table-count">1 284</div>
+        </div>
+        <div class="scroll-x">
+        <table>
+          <thead><tr>
+            <th><input type="checkbox" style="accent-color:var(--blue)"></th>
+            <th>Contact ▼</th><th>Entreprise</th><th>Statut</th>
+            <th>Score</th><th>Source</th><th>Dernier contact</th>
+            <th>Valeur ($)</th><th>Actions</th>
+          </tr></thead>
+          <tbody id="contactsTable">
+            <tr onclick="openProfile('Sophie Larivière')">
+              <td><input type="checkbox" style="accent-color:var(--blue)"></td>
+              <td><div class="avatar-cell"><div class="avatar" style="background:linear-gradient(135deg,#3B6EF5,#9B6DF5)">SL</div><div><div class="cell-name">Sophie Larivière</div><div class="cell-sub">sophie@constructions-lr.ca</div></div></div></td>
+              <td><div class="cell-name">Constructions L&R</div><div class="cell-sub">Construction</div></td>
+              <td><span class="badge badge-green">Client actif</span></td>
+              <td><div style="display:flex;align-items:center;gap:8px"><div class="progress-bar"><div class="progress-fill" style="width:88%;background:var(--teal)"></div></div><span style="font-size:11px;color:var(--text2)">88</span></div></td>
+              <td><span class="badge badge-blue">LinkedIn</span></td>
+              <td style="color:var(--text2);font-size:12px">Il y a 2j</td>
+              <td style="color:var(--teal);font-weight:600">42 000$</td>
+              <td><div style="display:flex;gap:4px">
+                <button class="btn btn-ghost btn-icon tooltip" data-tip="Appeler" style="font-size:12px;padding:5px 8px">📞</button>
+                <button class="btn btn-ghost btn-icon tooltip" data-tip="Email" style="font-size:12px;padding:5px 8px">✉</button>
+                <button class="btn btn-ghost btn-icon tooltip" data-tip="Modifier" style="font-size:12px;padding:5px 8px">✏</button>
+              </div></td>
+            </tr>
+            <tr onclick="openProfile('Marc Tremblay')">
+              <td><input type="checkbox" style="accent-color:var(--blue)"></td>
+              <td><div class="avatar-cell"><div class="avatar" style="background:linear-gradient(135deg,#0FD4A0,#38C9F5)">MT</div><div><div class="cell-name">Marc Tremblay</div><div class="cell-sub">marc.tremblay@immo3r.com</div></div></div></td>
+              <td><div class="cell-name">Immo 3R</div><div class="cell-sub">Immobilier</div></td>
+              <td><span class="badge badge-amber">Prospect chaud</span></td>
+              <td><div style="display:flex;align-items:center;gap:8px"><div class="progress-bar"><div class="progress-fill" style="width:72%;background:var(--amber)"></div></div><span style="font-size:11px;color:var(--text2)">72</span></div></td>
+              <td><span class="badge badge-amber">Référence</span></td>
+              <td style="color:var(--text2);font-size:12px">Aujourd'hui</td>
+              <td style="color:var(--amber);font-weight:600">28 500$</td>
+              <td><div style="display:flex;gap:4px">
+                <button class="btn btn-ghost btn-icon" style="font-size:12px;padding:5px 8px">📞</button>
+                <button class="btn btn-ghost btn-icon" style="font-size:12px;padding:5px 8px">✉</button>
+                <button class="btn btn-ghost btn-icon" style="font-size:12px;padding:5px 8px">✏</button>
+              </div></td>
+            </tr>
+            <tr onclick="openProfile('Lucie Bergeron')">
+              <td><input type="checkbox" style="accent-color:var(--blue)"></td>
+              <td><div class="avatar-cell"><div class="avatar" style="background:linear-gradient(135deg,#F5A623,#F55656)">LB</div><div><div class="cell-name">Lucie Bergeron</div><div class="cell-sub">lbergeron@cliniquesante.ca</div></div></div></td>
+              <td><div class="cell-name">Clinique Santé Plus</div><div class="cell-sub">Santé</div></td>
+              <td><span class="badge badge-blue">Prospect</span></td>
+              <td><div style="display:flex;align-items:center;gap:8px"><div class="progress-bar"><div class="progress-fill" style="width:54%;background:var(--blue)"></div></div><span style="font-size:11px;color:var(--text2)">54</span></div></td>
+              <td><span class="badge badge-purple">Google Ads</span></td>
+              <td style="color:var(--text2);font-size:12px">Il y a 5j</td>
+              <td style="color:var(--text2);font-weight:600">—</td>
+              <td><div style="display:flex;gap:4px">
+                <button class="btn btn-ghost btn-icon" style="font-size:12px;padding:5px 8px">📞</button>
+                <button class="btn btn-ghost btn-icon" style="font-size:12px;padding:5px 8px">✉</button>
+                <button class="btn btn-ghost btn-icon" style="font-size:12px;padding:5px 8px">✏</button>
+              </div></td>
+            </tr>
+            <tr onclick="openProfile('Jean-François Roy')">
+              <td><input type="checkbox" style="accent-color:var(--blue)"></td>
+              <td><div class="avatar-cell"><div class="avatar" style="background:linear-gradient(135deg,#9B6DF5,#F56DB0)">JR</div><div><div class="cell-name">Jean-François Roy</div><div class="cell-sub">jfroy@constructions-roy.com</div></div></div></td>
+              <td><div class="cell-name">Constructions Roy</div><div class="cell-sub">Construction</div></td>
+              <td><span class="badge badge-green">Client actif</span></td>
+              <td><div style="display:flex;align-items:center;gap:8px"><div class="progress-bar"><div class="progress-fill" style="width:95%;background:var(--teal)"></div></div><span style="font-size:11px;color:var(--text2)">95</span></div></td>
+              <td><span class="badge badge-cyan">LinkedIn</span></td>
+              <td style="color:var(--text2);font-size:12px">Il y a 1j</td>
+              <td style="color:var(--teal);font-weight:600">89 200$</td>
+              <td><div style="display:flex;gap:4px">
+                <button class="btn btn-ghost btn-icon" style="font-size:12px;padding:5px 8px">📞</button>
+                <button class="btn btn-ghost btn-icon" style="font-size:12px;padding:5px 8px">✉</button>
+                <button class="btn btn-ghost btn-icon" style="font-size:12px;padding:5px 8px">✏</button>
+              </div></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" style="accent-color:var(--blue)"></td>
+              <td><div class="avatar-cell"><div class="avatar" style="background:linear-gradient(135deg,#38C9F5,#0FD4A0)">AC</div><div><div class="cell-name">André Champagne</div><div class="cell-sub">achampagne@mvmuni.ca</div></div></div></td>
+              <td><div class="cell-name">Ville de Victoriaville</div><div class="cell-sub">Municipalité</div></td>
+              <td><span class="badge badge-amber">Négociation</span></td>
+              <td><div style="display:flex;align-items:center;gap:8px"><div class="progress-bar"><div class="progress-fill" style="width:81%;background:var(--amber)"></div></div><span style="font-size:11px;color:var(--text2)">81</span></div></td>
+              <td><span class="badge badge-blue">Événement ACQ</span></td>
+              <td style="color:var(--text2);font-size:12px">Il y a 3j</td>
+              <td style="color:var(--amber);font-weight:600">145 000$</td>
+              <td><div style="display:flex;gap:4px">
+                <button class="btn btn-ghost btn-icon" style="font-size:12px;padding:5px 8px">📞</button>
+                <button class="btn btn-ghost btn-icon" style="font-size:12px;padding:5px 8px">✉</button>
+                <button class="btn btn-ghost btn-icon" style="font-size:12px;padding:5px 8px">✏</button>
+              </div></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="pagination">
+          <span>Affichage de 1–5 sur 1 284 contacts</span>
+          <div class="page-btns">
+            <div class="page-btn">‹</div>
+            <div class="page-btn active">1</div>
+            <div class="page-btn">2</div>
+            <div class="page-btn">3</div>
+            <div class="page-btn">…</div>
+            <div class="page-btn">257</div>
+            <div class="page-btn">›</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PAGE: PIPELINE ═══ -->
+    <div class="page" id="page-pipeline">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <div class="filter-chip active">Tous les deals</div>
+        <div class="filter-chip">Ce mois</div>
+        <div class="filter-chip">Ce trimestre</div>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <button class="btn btn-ghost">Vue liste</button>
+          <button class="btn btn-primary" onclick="openModal('deal')">+ Nouveau deal</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <div style="flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--blue2)">842K$</div>
+          <div style="font-size:11px;color:var(--text3)">Valeur totale pipeline</div>
+        </div>
+        <div style="flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--teal)">28.4%</div>
+          <div style="font-size:11px;color:var(--text3)">Taux de conversion</div>
+        </div>
+        <div style="flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--amber)">42j</div>
+          <div style="font-size:11px;color:var(--text3)">Cycle de vente moyen</div>
+        </div>
+        <div style="flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--purple)">38</div>
+          <div style="font-size:11px;color:var(--text3)">Deals actifs</div>
+        </div>
+        <div style="flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--green)">124K$</div>
+          <div style="font-size:11px;color:var(--text3)">Gagnés ce mois</div>
+        </div>
+      </div>
+
+      <div class="pipeline">
+        <!-- Qualification -->
+        <div class="pipeline-col">
+          <div class="pipeline-hdr">
+            <div class="pipeline-dot" style="background:var(--text3)"></div>
+            <div class="pipeline-name">Qualification</div>
+            <div class="pipeline-count">8</div>
+          </div>
+          <div class="pipeline-total">Total: 183 000$</div>
+          <div class="deal-card">
+            <div class="deal-company">Clinique Santé Plus</div>
+            <div class="deal-value">28 000$</div>
+            <div class="deal-meta">
+              <div class="deal-avatar" style="background:var(--blue)">LB</div>
+              <span class="badge badge-blue" style="font-size:10px">AttenteZéro</span>
+              <div class="deal-days" style="color:var(--amber)">3j</div>
+            </div>
+          </div>
+          <div class="deal-card">
+            <div class="deal-company">CÉGEP Trois-Rivières</div>
+            <div class="deal-value">45 000$</div>
+            <div class="deal-meta">
+              <div class="deal-avatar" style="background:var(--teal)">CT</div>
+              <span class="badge badge-purple" style="font-size:10px">ERP</span>
+              <div class="deal-days">12j</div>
+            </div>
+          </div>
+          <div class="deal-card">
+            <div class="deal-company">Resto La Belle Époque</div>
+            <div class="deal-value">8 500$</div>
+            <div class="deal-meta">
+              <div class="deal-avatar" style="background:var(--amber)">RE</div>
+              <span class="badge badge-amber" style="font-size:10px">Site web</span>
+              <div class="deal-days">1j</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Proposition -->
+        <div class="pipeline-col">
+          <div class="pipeline-hdr">
+            <div class="pipeline-dot" style="background:var(--blue)"></div>
+            <div class="pipeline-name">Proposition</div>
+            <div class="pipeline-count">9</div>
+          </div>
+          <div class="pipeline-total">Total: 248 500$</div>
+          <div class="deal-card">
+            <div class="deal-company">Immo 3R</div>
+            <div class="deal-value">65 000$</div>
+            <div class="deal-meta">
+              <div class="deal-avatar" style="background:var(--teal)">MT</div>
+              <span class="badge badge-blue" style="font-size:10px">ERP Pro</span>
+              <div class="deal-days" style="color:var(--amber)">8j</div>
+            </div>
+          </div>
+          <div class="deal-card">
+            <div class="deal-company">Ville de Victoriaville</div>
+            <div class="deal-value">145 000$</div>
+            <div class="deal-meta">
+              <div class="deal-avatar" style="background:var(--cyan)">VV</div>
+              <span class="badge badge-cyan" style="font-size:10px">AttenteZéro</span>
+              <div class="deal-days">21j</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Négociation -->
+        <div class="pipeline-col">
+          <div class="pipeline-hdr">
+            <div class="pipeline-dot" style="background:var(--amber)"></div>
+            <div class="pipeline-name">Négociation</div>
+            <div class="pipeline-count">6</div>
+          </div>
+          <div class="pipeline-total">Total: 221 000$</div>
+          <div class="deal-card">
+            <div class="deal-company">Constructions Roy</div>
+            <div class="deal-value">89 200$</div>
+            <div class="deal-meta">
+              <div class="deal-avatar" style="background:var(--purple)">CR</div>
+              <span class="badge badge-purple" style="font-size:10px">ERP Ent.</span>
+              <div class="deal-days" style="color:var(--red)">35j</div>
+            </div>
+          </div>
+          <div class="deal-card">
+            <div class="deal-company">Groupe LSC</div>
+            <div class="deal-value">52 000$</div>
+            <div class="deal-meta">
+              <div class="deal-avatar" style="background:var(--blue)">GL</div>
+              <span class="badge badge-blue" style="font-size:10px">ERP Pro</span>
+              <div class="deal-days">18j</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contrat -->
+        <div class="pipeline-col">
+          <div class="pipeline-hdr">
+            <div class="pipeline-dot" style="background:var(--purple)"></div>
+            <div class="pipeline-name">Contrat</div>
+            <div class="pipeline-count">4</div>
+          </div>
+          <div class="pipeline-total">Total: 128 000$</div>
+          <div class="deal-card">
+            <div class="deal-company">Transport Mauricie</div>
+            <div class="deal-value">38 000$</div>
+            <div class="deal-meta">
+              <div class="deal-avatar" style="background:var(--red)">TM</div>
+              <span class="badge badge-purple" style="font-size:10px">ERP</span>
+              <div class="deal-days" style="color:var(--amber)">42j</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gagné -->
+        <div class="pipeline-col">
+          <div class="pipeline-hdr">
+            <div class="pipeline-dot" style="background:var(--teal)"></div>
+            <div class="pipeline-name">Gagné</div>
+            <div class="pipeline-count">11</div>
+          </div>
+          <div class="pipeline-total" style="color:var(--teal)">Ce mois: 124K$</div>
+          <div class="deal-card" style="border-color:rgba(15,212,160,0.3)">
+            <div class="deal-company">Constructions L&R</div>
+            <div class="deal-value">42 000$</div>
+            <div class="deal-meta">
+              <div class="deal-avatar" style="background:var(--teal)">SL</div>
+              <span class="badge badge-green" style="font-size:10px">Conclu ✓</span>
+              <div class="deal-days">il y a 2j</div>
+            </div>
+          </div>
+          <div class="deal-card" style="border-color:rgba(15,212,160,0.3)">
+            <div class="deal-company">Tech Solutions QC</div>
+            <div class="deal-value">18 500$</div>
+            <div class="deal-meta">
+              <div class="deal-avatar" style="background:var(--blue)">TS</div>
+              <span class="badge badge-green" style="font-size:10px">Conclu ✓</span>
+              <div class="deal-days">il y a 5j</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PAGE: TÂCHES ═══ -->
+    <div class="page" id="page-taches">
+      <div style="display:flex;gap:12px;margin-bottom:16px">
+        <div class="filter-chip active">Toutes (24)</div>
+        <div class="filter-chip">Aujourd'hui (7)</div>
+        <div class="filter-chip">Cette semaine (12)</div>
+        <div class="filter-chip">En retard (5)</div>
+        <div class="filter-chip">Complétées (84)</div>
+        <button class="btn btn-primary" style="margin-left:auto" onclick="openModal('tache')">+ Nouvelle tâche</button>
+      </div>
+      <div class="table-card">
+        <table>
+          <thead><tr><th></th><th>Tâche</th><th>Contact / Entreprise</th><th>Type</th><th>Assigné à</th><th>Échéance</th><th>Priorité</th><th>Statut</th></tr></thead>
+          <tbody>
+            <tr><td><input type="checkbox" style="accent-color:var(--blue)"></td><td><span style="font-weight:500">Appel de suivi — Démo ERP</span></td><td><div class="avatar-cell"><div class="avatar" style="background:var(--blue);width:24px;height:24px;font-size:10px">GL</div><span style="font-size:12px">Groupe LSC</span></div></td><td><span class="badge badge-blue">📞 Appel</span></td><td>Ayaovi</td><td style="color:var(--amber);font-size:12px">Auj. 14h</td><td><span class="badge badge-red">Urgent</span></td><td><span class="badge badge-amber">En attente</span></td></tr>
+            <tr><td><input type="checkbox" style="accent-color:var(--blue)"></td><td><span style="font-weight:500">Envoyer proposition AttenteZéro</span></td><td><div class="avatar-cell"><div class="avatar" style="background:var(--teal);width:24px;height:24px;font-size:10px">VS</div><span style="font-size:12px">Ville de Shawinigan</span></div></td><td><span class="badge badge-amber">📄 Proposition</span></td><td>Ayaovi</td><td style="color:var(--amber);font-size:12px">Auj. 17h</td><td><span class="badge badge-red">Urgent</span></td><td><span class="badge badge-blue">En cours</span></td></tr>
+            <tr><td><input type="checkbox" style="accent-color:var(--blue)"></td><td><span style="font-weight:500">Relance courriel — Devis site web</span></td><td><div class="avatar-cell"><div class="avatar" style="background:var(--purple);width:24px;height:24px;font-size:10px">MC</div><span style="font-size:12px">Boutique Chez Marie</span></div></td><td><span class="badge badge-amber">✉ Email</span></td><td>Ayaovi</td><td style="font-size:12px">Demain 10h</td><td><span class="badge badge-amber">Normal</span></td><td><span class="badge badge-amber">En attente</span></td></tr>
+            <tr><td><input type="checkbox" style="accent-color:var(--blue)"></td><td><span style="font-weight:500">Démo ERP — Construction Beaulieu</span></td><td><div class="avatar-cell"><div class="avatar" style="background:var(--amber);width:24px;height:24px;font-size:10px">CB</div><span style="font-size:12px">Construction Beaulieu</span></div></td><td><span class="badge badge-purple">🎥 Réunion</span></td><td>Ayaovi</td><td style="font-size:12px">Dem. 13h30</td><td><span class="badge badge-amber">Normal</span></td><td><span class="badge badge-green">Confirmé</span></td></tr>
+            <tr><td><input type="checkbox" style="accent-color:var(--blue)"></td><td><span style="font-weight:500;text-decoration:line-through;color:var(--text3)">Appel Constructions Roy</span></td><td><div class="avatar-cell"><div class="avatar" style="background:var(--purple);width:24px;height:24px;font-size:10px">CR</div><span style="font-size:12px;color:var(--text3)">Constructions Roy</span></div></td><td><span class="badge badge-gray">📞 Appel</span></td><td>Ayaovi</td><td style="font-size:12px;color:var(--text3)">Hier 15h</td><td><span class="badge badge-gray">Faible</span></td><td><span class="badge badge-green">✓ Complété</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ PAGE: RAPPORTS ═══ -->
+    <div class="page" id="page-rapports">
+      <div class="kpi-grid" style="margin-bottom:20px">
+        <div class="kpi" style="--kc:var(--teal)"><div class="kpi-label">Revenus ce mois</div><div class="kpi-value" style="color:var(--teal)">124K$</div><div class="kpi-change up">▲ +19.7%</div></div>
+        <div class="kpi" style="--kc:var(--blue)"><div class="kpi-label">Deals conclus</div><div class="kpi-value">11</div><div class="kpi-change up">▲ +3 vs mois passé</div></div>
+        <div class="kpi" style="--kc:var(--amber)"><div class="kpi-label">Taux conversion</div><div class="kpi-value" style="color:var(--amber)">28.4%</div><div class="kpi-change down">▼ -2.1%</div></div>
+        <div class="kpi" style="--kc:var(--purple)"><div class="kpi-label">Valeur moy. deal</div><div class="kpi-value" style="color:var(--purple)">22K$</div><div class="kpi-change up">▲ +8.3%</div></div>
+      </div>
+
+      <div class="report-grid">
+        <div class="chart-box">
+          <div class="chart-title">Revenus par service</div>
+          <div class="chart-sub">Distribution des ventes ce trimestre</div>
+          <div class="donut-wrap">
+            <svg class="donut-svg" width="110" height="110" viewBox="0 0 42 42">
+              <circle cx="21" cy="21" r="15.91549" fill="transparent" stroke="#3B6EF5" stroke-width="8" stroke-dasharray="40 60" stroke-dashoffset="25"></circle>
+              <circle cx="21" cy="21" r="15.91549" fill="transparent" stroke="#0FD4A0" stroke-width="8" stroke-dasharray="28 72" stroke-dashoffset="-15"></circle>
+              <circle cx="21" cy="21" r="15.91549" fill="transparent" stroke="#F5A623" stroke-width="8" stroke-dasharray="18 82" stroke-dashoffset="-43"></circle>
+              <circle cx="21" cy="21" r="15.91549" fill="transparent" stroke="#9B6DF5" stroke-width="8" stroke-dasharray="14 86" stroke-dashoffset="-61"></circle>
+              <text x="21" y="24" text-anchor="middle" font-size="5" fill="#E8EAF0" font-family="sans-serif">100%</text>
+            </svg>
+            <div class="donut-legend">
+              <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>ERP &amp; Gestion — 40%</div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>AttenteZéro — 28%</div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div>Web &amp; Mobile — 18%</div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Automatisation — 14%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-title">Leads par source</div>
+          <div class="chart-sub">Provenance des nouveaux contacts</div>
+          <div class="bar-chart">
+            <div class="bar-row"><div class="bar-label">LinkedIn</div><div class="bar-track"><div class="bar-fill" style="width:78%;background:var(--blue)"></div></div><div class="bar-val" style="color:var(--blue)">78%</div></div>
+            <div class="bar-row"><div class="bar-label">Référence</div><div class="bar-track"><div class="bar-fill" style="width:62%;background:var(--teal)"></div></div><div class="bar-val" style="color:var(--teal)">62%</div></div>
+            <div class="bar-row"><div class="bar-label">Google Ads</div><div class="bar-track"><div class="bar-fill" style="width:48%;background:var(--amber)"></div></div><div class="bar-val" style="color:var(--amber)">48%</div></div>
+            <div class="bar-row"><div class="bar-label">Événements</div><div class="bar-track"><div class="bar-fill" style="width:35%;background:var(--purple)"></div></div><div class="bar-val" style="color:var(--purple)">35%</div></div>
+            <div class="bar-row"><div class="bar-label">Site web</div><div class="bar-track"><div class="bar-fill" style="width:24%;background:var(--cyan)"></div></div><div class="bar-val" style="color:var(--cyan)">24%</div></div>
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-title">Secteurs clients</div>
+          <div class="chart-sub">Répartition par industrie</div>
+          <div class="bar-chart">
+            <div class="bar-row"><div class="bar-label">Construction</div><div class="bar-track"><div class="bar-fill" style="width:85%;background:var(--blue)"></div></div><div class="bar-val" style="color:var(--blue)">85</div></div>
+            <div class="bar-row"><div class="bar-label">Immobilier</div><div class="bar-track"><div class="bar-fill" style="width:60%;background:var(--teal)"></div></div><div class="bar-val" style="color:var(--teal)">60</div></div>
+            <div class="bar-row"><div class="bar-label">Santé</div><div class="bar-track"><div class="bar-fill" style="width:45%;background:var(--amber)"></div></div><div class="bar-val" style="color:var(--amber)">45</div></div>
+            <div class="bar-row"><div class="bar-label">Commerce</div><div class="bar-track"><div class="bar-fill" style="width:38%;background:var(--purple)"></div></div><div class="bar-val" style="color:var(--purple)">38</div></div>
+            <div class="bar-row"><div class="bar-label">Municipal</div><div class="bar-track"><div class="bar-fill" style="width:28%;background:var(--pink)"></div></div><div class="bar-val" style="color:var(--pink)">28</div></div>
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-title">Performance équipe</div>
+          <div class="chart-sub">Deals conclus par commercial</div>
+          <div class="bar-chart">
+            <div class="bar-row"><div class="bar-label">Ayaovi</div><div class="bar-track"><div class="bar-fill" style="width:92%;background:var(--teal)"></div></div><div class="bar-val" style="color:var(--teal)">11</div></div>
+            <div class="bar-row"><div class="bar-label">Sarah L.</div><div class="bar-track"><div class="bar-fill" style="width:67%;background:var(--blue)"></div></div><div class="bar-val" style="color:var(--blue)">8</div></div>
+            <div class="bar-row"><div class="bar-label">Marc B.</div><div class="bar-track"><div class="bar-fill" style="width:50%;background:var(--amber)"></div></div><div class="bar-val" style="color:var(--amber)">6</div></div>
+            <div class="bar-row"><div class="bar-label">Julie T.</div><div class="bar-track"><div class="bar-fill" style="width:33%;background:var(--purple)"></div></div><div class="bar-val" style="color:var(--purple)">4</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PAGE: PARAMÈTRES ═══ -->
+    <div class="page" id="page-parametres">
+      <div class="settings-grid">
+        <div class="settings-nav">
+          <div class="nav-item active">👤 Profil</div>
+          <div class="nav-item">🏢 Entreprise</div>
+          <div class="nav-item">👥 Équipe & accès</div>
+          <div class="nav-item">🔔 Notifications</div>
+          <div class="nav-item">🔗 Intégrations</div>
+          <div class="nav-item">📧 Courriels</div>
+          <div class="nav-item">🔒 Sécurité</div>
+          <div class="nav-item">💳 Facturation</div>
+          <div class="nav-item">🎨 Apparence</div>
+          <div class="nav-item">📤 Import / Export</div>
+        </div>
+        <div class="settings-panel">
+          <div class="settings-section">
+            <div class="settings-title">Informations du profil</div>
+            <div class="settings-desc">Vos informations personnelles et de contact</div>
+            <div class="form-grid">
+              <div class="form-group"><div class="form-label">Prénom</div><input class="form-input" value="Ayaovi Edem"></div>
+              <div class="form-group"><div class="form-label">Nom de famille</div><input class="form-input" value="Gnagblodjro"></div>
+              <div class="form-group"><div class="form-label">Courriel</div><input class="form-input" value="civicai@attentezero.ca"></div>
+              <div class="form-group"><div class="form-label">Téléphone</div><input class="form-input" value="905 809-7798"></div>
+              <div class="form-group full"><div class="form-label">Titre / Poste</div><input class="form-input" value="Fondateur & CEO — CivicAI"></div>
+            </div>
+            <button class="btn btn-primary">Enregistrer les modifications</button>
+          </div>
+
+          <div class="settings-section" style="margin-top:28px">
+            <div class="settings-title">Notifications</div>
+            <div class="settings-desc">Choisissez quand et comment être notifié</div>
+            <div class="toggle-row"><div class="toggle-info"><div class="toggle-name">Nouvelles activités</div><div class="toggle-sub">Email + notification push</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-row"><div class="toggle-info"><div class="toggle-name">Rappels de tâches</div><div class="toggle-sub">30 min avant l'échéance</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-row"><div class="toggle-info"><div class="toggle-name">Nouveaux leads</div><div class="toggle-sub">Notification instantanée</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-row"><div class="toggle-info"><div class="toggle-name">Rapport hebdomadaire</div><div class="toggle-sub">Tous les lundis à 8h</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-row"><div class="toggle-info"><div class="toggle-name">Deals gagnés / perdus</div><div class="toggle-sub">Notification en temps réel</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PAGES AUTRES (placeholder) ═══ -->
+    <div class="page" id="page-entreprises">
+      <div class="empty"><div class="empty-icon">🏢</div><div class="empty-title">Entreprises — 286 enregistrées</div><div class="empty-text">Cliquez sur + Ajouter pour créer une fiche entreprise.<br>Associez des contacts, des deals et des notes à chaque organisation.</div><br><button class="btn btn-primary" style="margin:0 auto" onclick="openModal()">+ Nouvelle entreprise</button></div>
+    </div>
+    <div class="page" id="page-opportunites">
+      <div class="empty"><div class="empty-icon">💡</div><div class="empty-title">Opportunités — 42 ouvertes</div><div class="empty-text">Suivez toutes vos opportunités de vente depuis leur détection jusqu'à la conclusion.</div></div>
+    </div>
+    <div class="page" id="page-calendrier">
+      <div class="empty"><div class="empty-icon">📅</div><div class="empty-title">Calendrier — 3 réunions aujourd'hui</div><div class="empty-text">Planifiez vos appels, réunions et démos directement dans le CRM. Synchronisation Google Calendar et Outlook disponible.</div></div>
+    </div>
+    <div class="page" id="page-emails">
+      <div class="empty"><div class="empty-icon">✉</div><div class="empty-title">Courriels intégrés</div><div class="empty-text">Envoyez et recevez des courriels directement dans le CRM. Toutes les conversations sont liées aux contacts automatiquement.<br><br>Connectez votre compte Gmail ou Outlook pour commencer.</div><br><button class="btn btn-primary" style="margin:0 auto">Connecter un compte courriel</button></div>
+    </div>
+    <div class="page" id="page-appels">
+      <div class="empty"><div class="empty-icon">📞</div><div class="empty-title">Appels & SMS</div><div class="empty-text">Passez des appels et envoyez des SMS directement depuis le CRM. Enregistrement automatique dans l'historique du contact.</div></div>
+    </div>
+    <div class="page" id="page-devis">
+      <div class="empty"><div class="empty-icon">📄</div><div class="empty-title">Devis & Propositions — 18 actifs</div><div class="empty-text">Créez des devis professionnels en quelques clics, envoyez-les par courriel et suivez leur statut en temps réel.</div><br><button class="btn btn-primary" style="margin:0 auto" onclick="openModal('devis')">+ Nouveau devis</button></div>
+    </div>
+    <div class="page" id="page-factures">
+      <div class="empty"><div class="empty-icon">💰</div><div class="empty-title">Facturation — 8 factures impayées</div><div class="empty-text">Gérez vos factures, suivez les paiements et envoyez des rappels automatiques aux clients en retard.</div></div>
+    </div>
+    <div class="page" id="page-produits">
+      <div class="empty"><div class="empty-icon">📦</div><div class="empty-title">Produits & Services — 24 articles</div><div class="empty-text">Créez votre catalogue de produits et services. Utilisez-les directement dans vos devis et factures.</div></div>
+    </div>
+    <div class="page" id="page-objectifs">
+      <div class="empty"><div class="empty-icon">🎯</div><div class="empty-title">Objectifs & KPIs</div><div class="empty-text">Définissez des objectifs mensuels et trimestriels pour votre équipe. Suivez la progression en temps réel.</div></div>
+    </div>
+    <div class="page" id="page-marketing">
+      <div class="empty"><div class="empty-icon">📢</div><div class="empty-title">Marketing — Campagnes & Séquences</div><div class="empty-text">Créez des campagnes courriel, des séquences de nurturing et des automatisations marketing pour convertir vos leads.</div></div>
+    </div>
+    <div class="page" id="page-automatisations">
+      <div class="empty"><div class="empty-icon">⚡</div><div class="empty-title">Automatisations — 12 actives</div><div class="empty-text">Créez des workflows automatiques: relances, notifications, assignations, mises à jour de statut. Travaillez intelligemment.</div></div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ══════ MODAL AJOUT ══════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div style="width:34px;height:34px;background:rgba(59,110,245,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px">➕</div>
+      <div class="modal-title" id="modalTitle">Nouveau contact</div>
+      <div class="modal-close" onclick="closeModal()">✕</div>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><div class="form-label">Prénom *</div><input class="form-input" placeholder="Jean"></div>
+        <div class="form-group"><div class="form-label">Nom *</div><input class="form-input" placeholder="Tremblay"></div>
+        <div class="form-group"><div class="form-label">Courriel *</div><input class="form-input" type="email" placeholder="jean@exemple.ca"></div>
+        <div class="form-group"><div class="form-label">Téléphone</div><input class="form-input" placeholder="418 555-0000"></div>
+        <div class="form-group"><div class="form-label">Entreprise</div><input class="form-input" placeholder="Nom de l'entreprise"></div>
+        <div class="form-group"><div class="form-label">Titre / Poste</div><input class="form-input" placeholder="Directeur général"></div>
+        <div class="form-group"><div class="form-label">Statut</div>
+          <select class="form-select">
+            <option>Lead</option><option>Prospect</option><option>Prospect chaud</option>
+            <option>En négociation</option><option>Client actif</option><option>Client inactif</option>
+          </select>
+        </div>
+        <div class="form-group"><div class="form-label">Source</div>
+          <select class="form-select">
+            <option>LinkedIn</option><option>Google Ads</option><option>Référence</option>
+            <option>Site web</option><option>Événement</option><option>Appel entrant</option><option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group"><div class="form-label">Secteur</div>
+          <select class="form-select">
+            <option>Construction</option><option>Immobilier</option><option>Santé</option>
+            <option>Commerce</option><option>Municipalité</option><option>Organisme</option>
+            <option>Transport</option><option>Éducation</option><option>Services professionnels</option><option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group"><div class="form-label">Assigné à</div>
+          <select class="form-select"><option>Ayaovi Edem</option><option>Sarah Lapointe</option><option>Marc Beaumont</option></select>
+        </div>
+        <div class="form-group full"><div class="form-label">Notes</div><textarea class="form-textarea" placeholder="Informations complémentaires, contexte de la rencontre..."></textarea></div>
+        <div class="form-group full"><div class="form-label">Tags</div><input class="form-input" placeholder="ERP, AttenteZéro, prioritaire..."></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-ghost">Enregistrer & créer un deal</button>
+      <button class="btn btn-primary" onclick="closeModal()">Enregistrer le contact</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ PROFILE PANEL ══════ -->
+<div class="profile-panel" id="profilePanel">
+  <div class="profile-hdr">
+    <div class="profile-avatar-lg" style="background:linear-gradient(135deg,#3B6EF5,#9B6DF5)" id="profileAvatar">SL</div>
+    <div>
+      <div class="profile-name" id="profileName">Sophie Larivière</div>
+      <div class="profile-role">Directrice des opérations — Constructions L&R</div>
+    </div>
+    <div class="profile-close" onclick="closeProfile()">✕</div>
+  </div>
+  <div class="profile-body">
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <button class="btn btn-primary" style="flex:1;justify-content:center">✉ Email</button>
+      <button class="btn btn-ghost" style="flex:1;justify-content:center">📞 Appeler</button>
+      <button class="btn btn-ghost" style="justify-content:center">⋯</button>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:20px">
+      <div style="flex:1;background:rgba(15,212,160,0.1);border:1px solid rgba(15,212,160,0.2);border-radius:8px;padding:10px;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--teal)">42K$</div><div style="font-size:10px;color:var(--text3)">Valeur totale</div></div>
+      <div style="flex:1;background:rgba(59,110,245,0.1);border:1px solid rgba(59,110,245,0.2);border-radius:8px;padding:10px;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--blue2)">3</div><div style="font-size:10px;color:var(--text3)">Deals actifs</div></div>
+      <div style="flex:1;background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.2);border-radius:8px;padding:10px;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--amber)">88</div><div style="font-size:10px;color:var(--text3)">Score</div></div>
+    </div>
+
+    <div class="profile-section">
+      <div class="profile-section-title">Informations</div>
+      <div class="info-row"><div class="info-label">Courriel</div><div class="info-value" style="color:var(--blue2)">sophie@constructions-lr.ca</div></div>
+      <div class="info-row"><div class="info-label">Téléphone</div><div class="info-value">819 555-0142</div></div>
+      <div class="info-row"><div class="info-label">Entreprise</div><div class="info-value">Constructions L&R</div></div>
+      <div class="info-row"><div class="info-label">Secteur</div><div class="info-value">Construction</div></div>
+      <div class="info-row"><div class="info-label">Source</div><div class="info-value">LinkedIn</div></div>
+      <div class="info-row"><div class="info-label">Statut</div><div class="info-value"><span class="badge badge-green">Client actif</span></div></div>
+      <div class="info-row"><div class="info-label">Assigné à</div><div class="info-value">Ayaovi Edem</div></div>
+      <div class="info-row"><div class="info-label">Créé le</div><div class="info-value">15 janvier 2025</div></div>
+    </div>
+
+    <div class="profile-section">
+      <div class="profile-section-title">Activité récente</div>
+      <div class="timeline-item"><div class="timeline-dot" style="background:var(--teal)"></div><div><div class="timeline-content">Deal <strong>ERP Professionnel 42 000$</strong> conclu</div><div class="timeline-time">Il y a 2 jours</div></div></div>
+      <div class="timeline-item"><div class="timeline-dot" style="background:var(--blue)"></div><div><div class="timeline-content">Proposition envoyée par courriel</div><div class="timeline-time">Il y a 5 jours</div></div></div>
+      <div class="timeline-item"><div class="timeline-dot" style="background:var(--amber)"></div><div><div class="timeline-content">Appel de démo ERP — 45 min</div><div class="timeline-time">Il y a 8 jours</div></div></div>
+      <div class="timeline-item"><div class="timeline-dot" style="background:var(--purple)"></div><div><div class="timeline-content">Contact créé via LinkedIn</div><div class="timeline-time">15 janv. 2025</div></div></div>
+    </div>
+
+    <div class="profile-section">
+      <div class="profile-section-title">Notes</div>
+      <div style="background:var(--bg3);border-radius:8px;padding:12px;font-size:12.5px;line-height:1.6;color:var(--text2)">Directrice des opérations très impliquée. Intéressée principalement par les modules feuilles de temps CCQ et rapports chantier. Budget approuvé. Décision finale attendue fin du mois.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  const titles = {
+    dashboard: ['Tableau de bord', 'Bonjour Ayaovi — voici votre journée'],
+    contacts: ['Contacts', '1 284 contacts dans votre CRM'],
+    entreprises: ['Entreprises', '286 organisations enregistrées'],
+    pipeline: ['Pipeline de ventes', '842 000$ — 38 deals actifs'],
+    opportunites: ['Opportunités', '42 opportunités ouvertes'],
+    taches: ['Tâches', '7 tâches prioritaires aujourd\'hui'],
+    calendrier: ['Calendrier', '3 réunions aujourd\'hui'],
+    emails: ['Courriels', 'Messagerie intégrée'],
+    appels: ['Appels & SMS', 'Historique des communications'],
+    devis: ['Devis & Propositions', '18 propositions actives'],
+    factures: ['Facturation', '8 factures en attente de paiement'],
+    produits: ['Produits & Services', '24 articles dans le catalogue'],
+    rapports: ['Rapports & Analytics', 'Performance du mois de novembre'],
+    objectifs: ['Objectifs & KPIs', 'Suivi des objectifs trimestriels'],
+    marketing: ['Marketing', 'Campagnes et séquences automatisées'],
+    automatisations: ['Automatisations', '12 workflows actifs'],
+    parametres: ['Paramètres', 'Configuration de votre compte CivicAI CRM'],
+  };
+  if (titles[id]) {
+    document.getElementById('pageTitle').textContent = titles[id][0];
+    document.getElementById('pageSubtitle').textContent = titles[id][1];
+  }
+  event.currentTarget && event.currentTarget.classList.add('active');
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(n => {
+    if (n.textContent.trim().toLowerCase().includes(id.replace('-', ' ').substring(0,6))) {
+      n.classList.add('active');
+    }
+  });
+}
+
+function openModal(type) {
+  const titles = {
+    contact: 'Nouveau contact',
+    deal: 'Nouveau deal',
+    tache: 'Nouvelle tâche',
+    devis: 'Nouveau devis',
+  };
+  document.getElementById('modalTitle').textContent = titles[type] || 'Nouveau contact';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function openProfile(name) {
+  const initials = name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  document.getElementById('profileAvatar').textContent = initials;
+  document.getElementById('profileName').textContent = name;
+  document.getElementById('profilePanel').classList.add('open');
+}
+function closeProfile() {
+  document.getElementById('profilePanel').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeProfile(); }
+});
+
+document.querySelectorAll('.toggle').forEach(t => {
+  t.addEventListener('click', () => t.classList.toggle('on'));
+});
+</script>
+</body>
+</html>
