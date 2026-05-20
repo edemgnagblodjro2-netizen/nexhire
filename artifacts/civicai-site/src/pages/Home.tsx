@@ -606,6 +606,72 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FACEBOOK PUBLICATION */}
+      <section className="py-20 px-6 bg-white border-t border-slate-100">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={stagger}
+            className="mb-12 text-center"
+          >
+            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wide px-4 py-2 rounded-full mb-5">
+              <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+              {lang === "fr" ? "NOS PUBLICATIONS" : "OUR POSTS"}
+            </motion.div>
+            <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-black text-slate-900 mb-3 tracking-tight">
+              {lang === "fr" ? "Suivez-nous sur Facebook" : "Follow us on Facebook"}
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-slate-500 text-base max-w-xl mx-auto">
+              {lang === "fr"
+                ? "Restez informé de nos actualités, événements et sessions de travail en direct."
+                : "Stay informed about our news, events and live working sessions."}
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55 }}
+            className="flex justify-center"
+          >
+            <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-white" style={{ maxWidth: 500, width: "100%" }}>
+              <iframe
+                src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02qTRCSX9NjUEmYup5mHu69XNZEamyotNX7m23HbiA5i4RJR3qcG7ZVpTYV6jmz2xvl%26id%3D61585764277723&show_text=true&width=500"
+                width="500"
+                height="442"
+                style={{ border: "none", overflow: "hidden", display: "block", width: "100%" }}
+                scrolling="no"
+                frameBorder="0"
+                allowFullScreen
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                title="Publication CivicAI sur Facebook"
+              />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.4 }}
+            className="mt-8 text-center"
+          >
+            <a
+              href="https://www.facebook.com/profile.php?id=61585764277723"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-blue-700 font-bold hover:text-blue-800 transition-colors text-sm"
+            >
+              {lang === "fr" ? "Voir notre page Facebook" : "View our Facebook page"}
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA BANNER */}
       <section className="py-20 px-6 bg-gradient-to-br from-blue-700 via-blue-800 to-blue-900 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
