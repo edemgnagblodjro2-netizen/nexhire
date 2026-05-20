@@ -106,6 +106,18 @@ function detectLang(acceptLanguage: string | undefined): "fr" | "en" {
 
 const router = Router();
 
+// GET /blog — listing page (no SSR injection needed, just serve the shell)
+router.get("/blog", async (_req, res) => {
+  const html = await readBlogHtml();
+  if (!html) {
+    res.status(503).send("Blog template unavailable");
+    return;
+  }
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  res.setHeader("Cache-Control", "public, max-age=300, stale-while-revalidate=3600");
+  res.send(html);
+});
+
 router.get("/blog/:slug", async (req, res) => {
   const { slug } = req.params;
   const article = findArticle(slug);

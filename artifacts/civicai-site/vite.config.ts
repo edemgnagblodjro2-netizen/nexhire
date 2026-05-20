@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
+import fs from "fs";
 
 const rawPort = process.env.PORT;
 const isBuild = process.argv.some((a) => a === "build");
@@ -46,16 +47,25 @@ function resolveHtmlFile(pathname: string): string | undefined {
 function routeToHtmlMiddleware() {
   return {
     name: "route-to-html",
-    configureServer(server: { middlewares: { use: (fn: (req: { url?: string }, res: unknown, next: () => void) => void) => void } }) {
-      server.middlewares.use((req, _res, next) => {
-        if (req.url) {
-          const pathname = req.url.split("?")[0].replace(/\/$/, "") || "/";
-          const htmlFile = resolveHtmlFile(pathname);
-          if (htmlFile) {
-            req.url = htmlFile + (req.url.includes("?") ? "?" + req.url.split("?")[1] : "");
-          }
+    configureServer(server: {
+      transformIndexHtml: (url: string, html: string) => Promise<string>;
+      middlewares: { use: (fn: (req: { url?: string }, res: { setHeader: (k: string, v: string) => void; end: (data: string) => void; statusCode?: number }, next: () => void) => void) => void };
+    }) {
+      server.middlewares.use(async (req, res, next) => {
+        if (!req.url) { next(); return; }
+        const pathname = req.url.split("?")[0].replace(/\/$/, "") || "/";
+        const htmlFile = resolveHtmlFile(pathname);
+        if (!htmlFile) { next(); return; }
+        const filePath = path.resolve(ROOT, htmlFile.replace(/^\//, ""));
+        if (!fs.existsSync(filePath)) { next(); return; }
+        try {
+          const raw = fs.readFileSync(filePath, "utf-8");
+          const html = await server.transformIndexHtml(htmlFile, raw);
+          res.setHeader("Content-Type", "text/html; charset=utf-8");
+          res.end(html);
+        } catch {
+          next();
         }
-        next();
       });
     },
     configurePreviewServer(server: { middlewares: { use: (fn: (req: { url?: string }, res: unknown, next: () => void) => void) => void } }) {
