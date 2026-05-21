@@ -21,7 +21,7 @@ A mobile application connecting vulnerable individuals with community and social
 - App Store Connect : Apple ID **6766750916**, bundle `com.attentezero.app`, langue fr-CA, SKU `attentezero-ios`.
 - Secrets Replit : `APP_STORE_CONNECT_KEY_ID`, `APP_STORE_CONNECT_ISSUER_ID`, `APP_STORE_CONNECT_PRIVATE_KEY`, `APPLE_TEAM_ID`.
 - ⚠️ Clé .p8 à révoquer/régénérer post-launch (leakée 1× dans logs bash).
-- Version actuelle : **v1.1.19 build107** — en review Apple (fix 3.1.1 + 5.1.1).
+- Version actuelle : **v1.1.20 build108** — soumis TestFlight le 21 mai 2026 (Expo submission `690cb52c`, statut FINISHED ✅). En traitement Apple.
 - Android : **vc80** ✅ approuvé sur Play Store.
 - Détails des builds dans `CHANGELOG.md`.
 
