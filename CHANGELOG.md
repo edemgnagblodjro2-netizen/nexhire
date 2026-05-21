@@ -8,7 +8,7 @@ Historique des releases mobile. Les notes de la release **en cours** restent dan
 - **Fix bannière rappel** : La bannière "limite quotidienne" (mentionnant "20 $ à vie") est également masquée sur iOS.
 - **Fix badges account** : Les chips "Abonnement / Avancé / Soutenir" étaient hardcodés pour tous les utilisateurs. Remplacés par des chips dynamiques : "Premium + Soutien" si `user.isPremium`, sinon "Gratuit".
 - **Sur iOS, l'onglet Plus ne contient plus aucune mention de prix** : seules les fonctionnalités gratuites sont présentées.
-- EAS Build ID : en cours (buildNumber 114, version 1.1.21).
+- EAS Build ID : `c20d96c6-c765-43bf-acf5-1f1668b8b6f1`, buildNumber **115** (auto-incrémenté par EAS depuis 114).
 - Réponse envoyée à Apple via Resolution Center (21 mai 2026).
 
 ## v1.1.20 build108 — Soumis TestFlight (21 mai 2026)
