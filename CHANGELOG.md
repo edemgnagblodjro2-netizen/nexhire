@@ -9,6 +9,7 @@ Historique des releases mobile. Les notes de la release **en cours** restent dan
 - **Fix badges account** : Les chips "Abonnement / Avancé / Soutenir" étaient hardcodés pour tous les utilisateurs. Remplacés par des chips dynamiques : "Premium + Soutien" si `user.isPremium`, sinon "Gratuit".
 - **Sur iOS, l'onglet Plus ne contient plus aucune mention de prix** : seules les fonctionnalités gratuites sont présentées.
 - EAS Build ID : `c20d96c6-c765-43bf-acf5-1f1668b8b6f1`, buildNumber **115** (auto-incrémenté par EAS depuis 114).
+- Soumis à Apple : Expo submission `78969e81-fb89-48a3-9849-278360b2cc16` — statut `FINISHED` ✅ (21 mai 2026).
 - Réponse envoyée à Apple via Resolution Center (21 mai 2026).
 
 ## v1.1.20 build108 — Soumis TestFlight (21 mai 2026)
