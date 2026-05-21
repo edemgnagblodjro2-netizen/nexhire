@@ -2,6 +2,15 @@
 
 Historique des releases mobile. Les notes de la release **en cours** restent dans `replit.md` ; tout le reste est ici.
 
+## v1.1.21 build114 — Fix Apple 2.1(b) — card Premium masquée iOS (21 mai 2026)
+- **Refus Apple 2.1(b) Information Needed** : Apple demandait une clarification sur le modèle de revenus — la card "20 $ à vie" de l'onglet Plus était visible sur iOS, ce qui laissait croire à du contenu payant hors IAP.
+- **Fix `more.tsx`** : Card "20 $ à vie" enveloppée dans `{Platform.OS !== "ios" && ...}` → invisible sur iOS. Identique à ce qui était déjà fait dans `premium.tsx` depuis v1.1.18.
+- **Fix bannière rappel** : La bannière "limite quotidienne" (mentionnant "20 $ à vie") est également masquée sur iOS.
+- **Fix badges account** : Les chips "Abonnement / Avancé / Soutenir" étaient hardcodés pour tous les utilisateurs. Remplacés par des chips dynamiques : "Premium + Soutien" si `user.isPremium`, sinon "Gratuit".
+- **Sur iOS, l'onglet Plus ne contient plus aucune mention de prix** : seules les fonctionnalités gratuites sont présentées.
+- EAS Build ID : en cours (buildNumber 114, version 1.1.21).
+- Réponse envoyée à Apple via Resolution Center (21 mai 2026).
+
 ## v1.1.20 build108 — Soumis TestFlight (21 mai 2026)
 - **EAS Build iOS** : Build ID `c22060d1-f8fd-4a4e-a20b-19e3115464c5`, buildNumber **108**, version **1.1.20**.
 - **Soumission TestFlight** : Submission Expo `690cb52c-ce44-4a93-89ad-c295eaaadff8` — statut `FINISHED` ✅ (21 mai 2026).

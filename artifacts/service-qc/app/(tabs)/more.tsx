@@ -215,18 +215,23 @@ export default function MoreScreen() {
                     : isFr ? "Toucher pour vous connecter" : "Tap to sign in"}
                 </Text>
                 <View style={styles.accountChips}>
-                  <View style={styles.accountChip}>
-                    <Feather name="credit-card" size={9} color="#fff" />
-                    <Text style={styles.accountChipText}>{isFr ? "Abonnement" : "Subscription"}</Text>
-                  </View>
-                  <View style={styles.accountChip}>
-                    <Feather name="star" size={9} color="#fff" />
-                    <Text style={styles.accountChipText}>{isFr ? "Avancé" : "Advanced"}</Text>
-                  </View>
-                  <View style={styles.accountChip}>
-                    <Feather name="heart" size={9} color="#fff" />
-                    <Text style={styles.accountChipText}>{isFr ? "Soutenir" : "Support"}</Text>
-                  </View>
+                  {user?.isPremium ? (
+                    <>
+                      <View style={styles.accountChip}>
+                        <Feather name="star" size={9} color="#fff" />
+                        <Text style={styles.accountChipText}>{isFr ? "Premium" : "Premium"}</Text>
+                      </View>
+                      <View style={styles.accountChip}>
+                        <Feather name="heart" size={9} color="#fff" />
+                        <Text style={styles.accountChipText}>{isFr ? "Soutien" : "Supporter"}</Text>
+                      </View>
+                    </>
+                  ) : (
+                    <View style={styles.accountChip}>
+                      <Feather name="check-circle" size={9} color="#fff" />
+                      <Text style={styles.accountChipText}>{isFr ? "Gratuit" : "Free"}</Text>
+                    </View>
+                  )}
                 </View>
               </View>
               <Feather name="chevron-right" size={22} color="rgba(255,255,255,0.85)" />
@@ -234,7 +239,7 @@ export default function MoreScreen() {
           </Pressable>
 
           {/* ── Persistent reminder banner (shown after 3 uses today) ── */}
-          {isGated && (
+          {Platform.OS !== "ios" && isGated && (
             <Pressable
               onPress={() => {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -266,7 +271,8 @@ export default function MoreScreen() {
             </Pressable>
           )}
 
-          {/* ── Premium card ── */}
+          {/* ── Premium card (Android / web only — hidden on iOS per rule 3.1.1) ── */}
+          {Platform.OS !== "ios" && (
           <Pressable
             onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -322,6 +328,7 @@ export default function MoreScreen() {
               <View style={styles.premiumOrb2} />
             </LinearGradient>
           </Pressable>
+          )}
 
           {/* ── Invite a friend / family member ── */}
           <Pressable
