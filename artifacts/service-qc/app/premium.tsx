@@ -22,6 +22,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
 import { useAuth } from "@/lib/auth";
 import { getApiBaseUrl } from "@/lib/apiBase";
+import { useSubscription } from "@/lib/revenuecat";
 
 const CONTACT_EMAIL = "contact@attentezero.ca";
 
@@ -137,9 +138,38 @@ const TIERS: Tier[] = [
   },
 ];
 
-// On iOS we show zero paid tiers — Apple rule 3.1.1 forbids any purchasing
-// mechanism (including email CTAs for paid plans) that bypasses IAP.
-const IOS_VISIBLE_TIERS = TIERS.filter((t) => t.ctaKind === "free");
+function RestorePurchasesButton() {
+  const colors = useColors();
+  const { restore, isRestoring } = useSubscription();
+
+  async function handleRestore() {
+    try {
+      await restore();
+      Alert.alert("Achats restaurés", "Vos achats ont été restaurés avec succès.");
+    } catch {
+      Alert.alert("Échec", "Impossible de restaurer les achats. Réessayez plus tard.");
+    }
+  }
+
+  return (
+    <Pressable
+      onPress={handleRestore}
+      disabled={isRestoring}
+      style={({ pressed }) => ({
+        alignSelf: "center",
+        marginTop: 4,
+        marginBottom: 8,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        opacity: pressed || isRestoring ? 0.6 : 1,
+      })}
+    >
+      <Text style={{ fontSize: 13, color: colors.mutedForeground, textDecorationLine: "underline" }}>
+        {isRestoring ? "Restauration…" : "Restaurer mes achats"}
+      </Text>
+    </Pressable>
+  );
+}
 
 export default function PremiumScreen() {
   const colors = useColors();
@@ -147,8 +177,10 @@ export default function PremiumScreen() {
   const router = useRouter();
   const { user, isAuthenticated, refreshUser } = useAuth();
   const [loadingTier, setLoadingTier] = useState<string | null>(null);
+  const { offerings, purchase, isSubscribed } = useSubscription();
 
-  const visibleTiers = Platform.OS === "ios" ? IOS_VISIBLE_TIERS : TIERS;
+  // On iOS: show premium tier so user can buy via IAP
+  const visibleTiers = TIERS;
 
   // Stagger entry animations — one Animated.Value per visible tier card
   const cardAnims = useRef(visibleTiers.map(() => new Animated.Value(0))).current;
@@ -167,15 +199,35 @@ export default function PremiumScreen() {
     ).start();
   }, [cardAnims]);
 
-  async function handleUserPremium() {
-    if (Platform.OS === "ios") {
+  async function handleUserPremiumIOS() {
+    if (isSubscribed) {
       Alert.alert(
-        "Gratuit sur iOS",
-        "Toutes les fonctionnalités Premium sont gratuites sur iOS. Profitez-en sans restriction !",
-        [{ text: "Super, merci !", style: "default" }]
+        "Déjà Premium ✅",
+        "Vous avez déjà accès à toutes les fonctionnalités Premium.",
+        [{ text: "Super !", style: "default" }]
       );
       return;
     }
+    const pkg = offerings?.current?.availablePackages?.[0];
+    if (!pkg) {
+      Alert.alert("Indisponible", "Les achats ne sont pas disponibles pour le moment. Réessayez plus tard.");
+      return;
+    }
+    try {
+      setLoadingTier("user-premium");
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      await purchase(pkg);
+    } catch (err: any) {
+      // USER_CANCELLED is not an error — don't show alert
+      if (err?.userCancelled) return;
+      const msg = err?.message ?? "Erreur inconnue";
+      Alert.alert("Paiement impossible", msg);
+    } finally {
+      setLoadingTier(null);
+    }
+  }
+
+  async function handleUserPremiumAndroid() {
     if (!isAuthenticated) {
       Alert.alert(
         "Connexion requise",
@@ -193,16 +245,11 @@ export default function PremiumScreen() {
       const res = await fetch(`${getApiBaseUrl()}/api/stripe/create-user-premium-session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: user?.email,
-          userId: user?.id,
-        }),
+        body: JSON.stringify({ email: user?.email, userId: user?.id }),
       });
       const data = await res.json();
       if (!res.ok || !data.url) throw new Error(data.error || "Erreur de paiement");
       await WebBrowser.openBrowserAsync(data.url);
-      // Poll user state after browser closes — Stripe webhook may take a few
-      // seconds to flip isPremium / plan in the DB. Try up to 6 times over ~12s.
       for (let i = 0; i < 6; i++) {
         await refreshUser();
         await new Promise((r) => setTimeout(r, 2000));
@@ -213,6 +260,13 @@ export default function PremiumScreen() {
     } finally {
       setLoadingTier(null);
     }
+  }
+
+  function handleUserPremium() {
+    if (Platform.OS === "ios") {
+      return handleUserPremiumIOS();
+    }
+    return handleUserPremiumAndroid();
   }
 
   function handleTierCta(tier: Tier, _idx: number) {
@@ -302,12 +356,12 @@ export default function PremiumScreen() {
           </View>
         </View>
 
-        {/* iOS-specific callout: all features free */}
-        {Platform.OS === "ios" && (
+        {/* iOS-specific callout: IAP available */}
+        {Platform.OS === "ios" && isSubscribed && (
           <View style={[styles.iosFreeCard, { backgroundColor: "#0e7e6e15", borderColor: "#0e7e6e40" }]}>
-            <Feather name="gift" size={18} color="#0e7e6e" />
+            <Feather name="check-circle" size={18} color="#0e7e6e" />
             <Text style={[styles.iosFreeText, { color: colors.foreground }]}>
-              Sur iOS, toutes les fonctionnalités de l'app sont gratuites et sans restriction. Aucun achat requis.
+              Vous êtes Premium ✅ — Chat IA illimité et favoris à vie activés.
             </Text>
           </View>
         )}
@@ -378,12 +432,12 @@ export default function PremiumScreen() {
                 <View style={styles.priceRow}>
                   <Text style={styles.priceText} numberOfLines={1} adjustsFontSizeToFit>
                     {Platform.OS === "ios" && tier.ctaKind === "premium"
-                      ? "Gratuit"
+                      ? (offerings?.current?.availablePackages?.[0]?.product?.priceString ?? tier.priceLabel)
                       : Platform.OS === "ios" && tier.ctaKind === "contact"
                       ? "Sur demande"
                       : tier.priceLabel}
                   </Text>
-                  {tier.priceUnit && Platform.OS !== "ios" && (
+                  {tier.priceUnit && (Platform.OS !== "ios" || tier.ctaKind !== "premium") && (
                     <Text style={styles.priceUnit} numberOfLines={1}>{tier.priceUnit}</Text>
                   )}
                 </View>
@@ -433,7 +487,9 @@ export default function PremiumScreen() {
                       />
                       <Text style={styles.ctaBtnText} numberOfLines={1} adjustsFontSizeToFit>
                         {Platform.OS === "ios" && tier.ctaKind === "premium"
-                          ? "Profiter du Premium — Gratuit"
+                          ? isSubscribed
+                            ? "Déjà Premium ✅"
+                            : `Acheter — ${offerings?.current?.availablePackages?.[0]?.product?.priceString ?? tier.priceLabel}`
                           : tier.ctaLabel}
                       </Text>
                     </>
@@ -470,6 +526,11 @@ export default function PremiumScreen() {
             </React.Fragment>
           );
         })}
+
+        {/* ─── Restore purchases (iOS only) ─── */}
+        {Platform.OS === "ios" && (
+          <RestorePurchasesButton />
+        )}
 
         {/* ─── Contact CTA ─── */}
         <Pressable

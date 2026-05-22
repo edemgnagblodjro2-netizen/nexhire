@@ -20,9 +20,11 @@
     "backup-tenants": "node ../node_modules/tsx/dist/cli.mjs ./src/backup-tenants.ts",
     "restore-prod": "node ../node_modules/tsx/dist/cli.mjs ./src/restore-prod.ts",
     "test-isolation": "node ../node_modules/tsx/dist/cli.mjs ./src/test-tenant-isolation.ts",
+    "seed-revenuecat": "node ../node_modules/tsx/dist/cli.mjs ./src/seedRevenueCat.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@replit/connectors-sdk": "^0.4.1",
     "@workspace/db": "workspace:*",
     "dotenv": "^16.4.7"
   },

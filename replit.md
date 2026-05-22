@@ -21,9 +21,11 @@ A mobile application connecting vulnerable individuals with community and social
 - App Store Connect : Apple ID **6766750916**, bundle `com.attentezero.app`, langue fr-CA, SKU `attentezero-ios`.
 - Secrets Replit : `APP_STORE_CONNECT_KEY_ID`, `APP_STORE_CONNECT_ISSUER_ID`, `APP_STORE_CONNECT_PRIVATE_KEY`, `APPLE_TEAM_ID`.
 - ⚠️ Clé .p8 à révoquer/régénérer post-launch (leakée 1× dans logs bash).
-- Version actuelle : **v1.1.21 build115** — soumis à Apple le 21 mai 2026 (submission `78969e81` ✅). Fix Apple 2.1(b) : card Premium masquée sur iOS, badges account dynamiques. En traitement Apple.
+- Version actuelle : **v1.1.21 build115** — refusé Apple 3.1.1 (achat Stripe hors IAP). Fix en cours → v1.1.22.
+- **v1.1.22 en préparation** : RevenueCat IAP intégré. Avant EAS build : 1) syncer produits RevenueCat → App Store Connect via Publishing pane Replit, 2) s'inscrire Apple Small Business Program (15% au lieu de 30%), 3) EAS build + submit.
 - Android : **vc80** ✅ approuvé sur Play Store.
 - Détails des builds dans `CHANGELOG.md`.
+- **RevenueCat** : Projet `projf0ea81f2`, entitlement `premium`, clés dans env vars `EXPO_PUBLIC_REVENUECAT_*`.
 
 ## Run & Operate
 - `pnpm --filter @workspace/service-qc run start`: Runs the Expo mobile app.

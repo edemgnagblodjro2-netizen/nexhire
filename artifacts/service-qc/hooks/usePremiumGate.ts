@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
 import { useAuth } from "@/lib/auth";
+import { useSubscription } from "@/lib/revenuecat";
 
 const STORAGE_KEY = "premium_gate_attempts";
 const STORAGE_DAY_KEY = "premium_gate_day";
@@ -14,9 +15,10 @@ function todayKey(): string {
 
 export function usePremiumGate() {
   const { user } = useAuth();
-  // Sur iOS, toutes les fonctionnalités sont gratuites (Apple interdit Stripe pour
-  // les achats numériques in-app — règle 3.1.1 App Store).
-  const isPremium = Platform.OS === "ios" || !!user?.isPremium;
+  const { isSubscribed } = useSubscription();
+  // Sur iOS : vérifié via RevenueCat IAP (entitlement "premium")
+  // Sur Android/Web : vérifié via le champ isPremium de la base de données (Stripe)
+  const isPremium = Platform.OS === "ios" ? isSubscribed : !!user?.isPremium;
 
   const [attempts, setAttempts] = useState(0);
   const [showGate, setShowGate] = useState(false);

@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { Alert, View, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -23,6 +23,7 @@ import {
   trackScreenView,
 } from "@/lib/analytics";
 
+import { initializeRevenueCat, SubscriptionProvider } from "@/lib/revenuecat";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AppSplashScreen } from "@/components/AppSplashScreen";
 import { OfflineBanner } from "@/components/OfflineBanner";
@@ -37,6 +38,12 @@ import {
 } from "@/contexts/UserProvinceContext";
 import { useInactivityTimer } from "@/hooks/useInactivityTimer";
 import { hasSeenOnboarding } from "@/lib/onboarding";
+
+try {
+  initializeRevenueCat();
+} catch (err: any) {
+  Alert.alert("RevenueCat Unavailable", err?.message ?? "Unknown error");
+}
 
 const domain = process.env.EXPO_PUBLIC_DOMAIN;
 const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "https://quebec-aid-finder.replit.app";
@@ -190,21 +197,23 @@ export default function RootLayout() {
       <ErrorBoundary>
         <AuthProvider>
           <QueryClientProvider client={queryClient}>
-            <GestureHandlerRootView>
-              <KeyboardProvider>
-                <LanguageProvider>
-                  <LocationProvider>
-                    <UserProvinceProvider>
-                      <ServicesProvider>
-                        <SeniorModeProvider>
-                          <AppContent fontsReady={fontsReady} />
-                        </SeniorModeProvider>
-                      </ServicesProvider>
-                    </UserProvinceProvider>
-                  </LocationProvider>
-                </LanguageProvider>
-              </KeyboardProvider>
-            </GestureHandlerRootView>
+            <SubscriptionProvider>
+              <GestureHandlerRootView>
+                <KeyboardProvider>
+                  <LanguageProvider>
+                    <LocationProvider>
+                      <UserProvinceProvider>
+                        <ServicesProvider>
+                          <SeniorModeProvider>
+                            <AppContent fontsReady={fontsReady} />
+                          </SeniorModeProvider>
+                        </ServicesProvider>
+                      </UserProvinceProvider>
+                    </LocationProvider>
+                  </LanguageProvider>
+                </KeyboardProvider>
+              </GestureHandlerRootView>
+            </SubscriptionProvider>
           </QueryClientProvider>
         </AuthProvider>
       </ErrorBoundary>

@@ -2,6 +2,16 @@
 
 Historique des releases mobile. Les notes de la release **en cours** restent dans `replit.md` ; tout le reste est ici.
 
+## v1.1.22 (à soumettre) — RevenueCat IAP intégré — fix Apple 3.1.1 (22 mai 2026)
+- **Refus Apple 3.1.1** : Apple refuse car l'achat Premium 20$ (Stripe web) donnait accès à du contenu digital dans l'app iOS sans passer par IAP.
+- **Intégration RevenueCat** : SDK `react-native-purchases` installé. Projet RevenueCat "AttenteZéro" créé (ID `projf0ea81f2`), apps iOS/Android/TestStore configurées, entitlement `premium`, offering `default`, package `$rc_lifetime`.
+- **`lib/revenuecat.tsx`** : nouveau fichier — `initializeRevenueCat`, `SubscriptionProvider`, `useSubscription`.
+- **`_layout.tsx`** : `initializeRevenueCat()` appelé au démarrage + `SubscriptionProvider` wrappant l'app.
+- **`premium.tsx`** : sur iOS → appel `Purchases.purchasePackage()` (RevenueCat IAP) au lieu de Stripe. Prix IAP dynamique depuis `offerings.current`. Bouton "Restaurer mes achats" ajouté (Apple exige).
+- **`usePremiumGate.ts`** : `isPremium` sur iOS = `isSubscribed` (RevenueCat entitlement), sur Android = `user.isPremium` (Stripe DB).
+- **Scripts** : `scripts/src/seedRevenueCat.ts` + `revenueCatClient.ts` (seed idempotent).
+- **Prochaine étape** : syncroniser les produits RevenueCat → App Store Connect via Publishing pane Replit, puis EAS build + submit.
+
 ## v1.1.21 build114 — Fix Apple 2.1(b) — card Premium masquée iOS (21 mai 2026)
 - **Refus Apple 2.1(b) Information Needed** : Apple demandait une clarification sur le modèle de revenus — la card "20 $ à vie" de l'onglet Plus était visible sur iOS, ce qui laissait croire à du contenu payant hors IAP.
 - **Fix `more.tsx`** : Card "20 $ à vie" enveloppée dans `{Platform.OS !== "ios" && ...}` → invisible sur iOS. Identique à ce qui était déjà fait dans `premium.tsx` depuis v1.1.18.

@@ -1,32 +1,26 @@
 import { ReplitConnectors } from "@replit/connectors-sdk";
-import { createClient } from "@replit/revenuecat-sdk/client";
 
-export async function getUncachableRevenueCatClient() {
-  const connectors = new ReplitConnectors();
+const connectors = new ReplitConnectors();
 
-  const tokenResponse = await connectors.proxy("revenuecat", "/v2/projects", {
-    method: "GET",
-  });
+export async function rcGet<T>(path: string): Promise<T> {
+  const resp = await connectors.proxy("revenuecat", path, { method: "GET" });
+  return (resp as unknown as Response).json() as Promise<T>;
+}
 
-  const authHeader = (tokenResponse as any)?.request?.headers?.Authorization as string | undefined;
+export async function rcPost<T>(path: string, body: unknown): Promise<T> {
+  const resp = await connectors.proxy("revenuecat", path, {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" },
+  } as RequestInit);
+  return (resp as unknown as Response).json() as Promise<T>;
+}
 
-  const baseUrl = "https://api.revenuecat.com";
-
-  const client = createClient({
-    baseUrl,
-    headers: {
-      Authorization: authHeader ?? "",
-    },
-    fetch: async (url: string, init?: RequestInit) => {
-      const path = url.replace(baseUrl, "");
-      const resp = await connectors.proxy("revenuecat", path, {
-        method: (init?.method ?? "GET") as string,
-        headers: init?.headers as Record<string, string> | undefined,
-        body: init?.body as string | undefined,
-      });
-      return resp as unknown as Response;
-    },
-  });
-
-  return client;
+export async function rcPatch<T>(path: string, body: unknown): Promise<T> {
+  const resp = await connectors.proxy("revenuecat", path, {
+    method: "PATCH",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" },
+  } as RequestInit);
+  return (resp as unknown as Response).json() as Promise<T>;
 }
