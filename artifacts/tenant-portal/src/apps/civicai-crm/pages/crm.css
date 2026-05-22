@@ -4,24 +4,24 @@
 ══════════════════════════════════════════════════════════════ */
 
 .crm-root {
-  --crm-bg:      #0A0C14;
-  --crm-bg2:     #0F1220;
-  --crm-bg3:     #141828;
-  --crm-bg4:     #1A2035;
-  --crm-border:  rgba(255,255,255,0.07);
-  --crm-border2: rgba(255,255,255,0.12);
-  --crm-blue:    #3B6EF5;
-  --crm-blue2:   #5885F7;
-  --crm-teal:    #0FD4A0;
-  --crm-amber:   #F5A623;
-  --crm-red:     #F55656;
-  --crm-purple:  #9B6DF5;
-  --crm-pink:    #F56DB0;
-  --crm-cyan:    #38C9F5;
-  --crm-text:    #E8EAF0;
-  --crm-text2:   #8B90A8;
-  --crm-text3:   #5A5F75;
-  --crm-green:   #22C87A;
+  --crm-bg:      #FFFFFF;
+  --crm-bg2:     #F4F6FB;
+  --crm-bg3:     #ECEEF5;
+  --crm-bg4:     #E2E5EF;
+  --crm-border:  rgba(0,0,0,0.08);
+  --crm-border2: rgba(0,0,0,0.14);
+  --crm-blue:    #2D5EE0;
+  --crm-blue2:   #3B6EF5;
+  --crm-teal:    #0BA880;
+  --crm-amber:   #D4820A;
+  --crm-red:     #D93636;
+  --crm-purple:  #7C52E0;
+  --crm-pink:    #D44E96;
+  --crm-cyan:    #0AACD4;
+  --crm-text:    #1A1D2E;
+  --crm-text2:   #4A4F6A;
+  --crm-text3:   #8B90A8;
+  --crm-green:   #0EA860;
 
   display: flex;
   width: 100%;
