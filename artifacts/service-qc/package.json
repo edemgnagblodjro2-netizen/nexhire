@@ -62,6 +62,7 @@
     "expo-crypto": "~15.0.8",
     "expo-notifications": "^55.0.20",
     "expo-secure-store": "~15.0.8",
-    "expo-speech": "^55.0.13"
+    "expo-speech": "^55.0.13",
+    "react-native-purchases": "^10.1.2"
   }
 }
