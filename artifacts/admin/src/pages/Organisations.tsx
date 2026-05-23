@@ -1,9 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   adminListOrganisations,
   adminToggleOrgBadge,
   type AdminOrgRow,
 } from "@/lib/orgApi";
+
+const ORG_LAST_SEEN_KEY = "az_admin_orgs_last_seen";
+const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 
 const KIND_TABS = [
   { key: "all", label: "Tous" },
@@ -40,6 +43,20 @@ export default function Organisations({ adminKey }: { adminKey: string }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [actionId, setActionId] = useState<string | null>(null);
+  const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
+
+  // Snapshot the last-seen timestamp from before this page visit (Layout's
+  // useEffect updates it after the first render, so we read it once here).
+  const lastSeenTsRef = useRef<string>(
+    localStorage.getItem(ORG_LAST_SEEN_KEY) ?? new Date(0).toISOString()
+  );
+
+  function isNewOrg(createdAt: string | null | undefined): boolean {
+    if (!createdAt) return false;
+    const ts = new Date(createdAt).getTime();
+    const sevenDaysAgo = Date.now() - SEVEN_DAYS_MS;
+    return ts > new Date(lastSeenTsRef.current).getTime() && ts > sevenDaysAgo;
+  }
 
   async function reload() {
     setLoading(true);
@@ -72,6 +89,8 @@ export default function Organisations({ adminKey }: { adminKey: string }) {
     )
       return;
     setActionId(row.org.id);
+    // Dismiss the "new" highlight on interaction
+    setDismissedIds((prev) => new Set([...prev, row.org.id]));
     try {
       const updated = await adminToggleOrgBadge(adminKey, row.org.id, next);
       setRows((prev) =>
@@ -170,6 +189,7 @@ export default function Organisations({ adminKey }: { adminKey: string }) {
           const r = row.org;
           const u = row.user;
           const verified = !!r.badgeVerified;
+          const showNew = !dismissedIds.has(r.id) && isNewOrg(r.createdAt ?? u?.createdAt);
           const kindLabel =
             r.kind === "partenaire" ? "Partenaire" : r.kind === "intervenant" ? "Intervenant" : "Organisme";
           const kindColor =
@@ -182,7 +202,11 @@ export default function Organisations({ adminKey }: { adminKey: string }) {
           return (
             <div
               key={r.id}
-              className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5"
+              className={`rounded-2xl border shadow-sm p-5 transition-colors ${
+                showNew
+                  ? "bg-amber-50 border-amber-200"
+                  : "bg-white border-gray-100"
+              }`}
             >
               <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                 <div className="min-w-0">
@@ -191,6 +215,11 @@ export default function Organisations({ adminKey }: { adminKey: string }) {
                     <span className={`text-[11px] px-2 py-0.5 rounded-full font-semibold ${kindColor}`}>
                       {kindLabel}
                     </span>
+                    {showNew && (
+                      <span className="text-[11px] px-2 py-0.5 rounded-full font-semibold bg-amber-400 text-amber-900">
+                        ✦ Nouveau
+                      </span>
+                    )}
                     {verified && (
                       <span className="text-[11px] px-2 py-0.5 rounded-full font-semibold bg-emerald-100 text-emerald-700">
                         ✓ Badge vérifié
