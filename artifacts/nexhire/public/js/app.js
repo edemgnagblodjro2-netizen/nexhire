@@ -1865,9 +1865,76 @@ const SKILL_GROUPS = [
   ]},
 ];
 
+// Maps each skill group label to its filterable sector ID
+const SECTOR_MAP = {
+  'Frontend':                    'tech-dev',
+  'Backend':                     'tech-dev',
+  'Auth & Security':             'tech-dev',
+  'Mobile':                      'tech-dev',
+  'DevOps / Cloud':              'tech-devops',
+  'IT Support & Infrastructure': 'tech-infra',
+  'Networking':                  'tech-infra',
+  'Cybersecurity':               'tech-cyber',
+  'QA & Testing':                'tech-qa',
+  'Database / DBA':              'tech-data',
+  'AI / ML & Data':              'tech-data',
+  'ERP & CRM Solutions':         'tech-erp',
+  'IT Leadership & Architecture':'tech-arch',
+  'Design & Creative':           'design',
+  'Marketing & Growth':          'marketing',
+  'Finance & Accounting':        'finance',
+  'Sales & Business Dev':        'sales',
+  'Product Management':          'product',
+  'HR & Talent':                 'hr',
+  'Project & Operations':        'ops',
+  'Healthcare':                  'health',
+  'Legal & Compliance':          'legal',
+  'Education & Training':        'edu',
+  'Soft Skills':                 'soft',
+};
+
+const SKILL_SECTORS = [
+  { id: 'all',       label: 'All fields',   icon: 'ti-grid-dots' },
+  { id: 'tech',      label: 'Technology',   icon: 'ti-cpu' },
+  { id: 'design',    label: 'Design',       icon: 'ti-palette' },
+  { id: 'marketing', label: 'Marketing',    icon: 'ti-speakerphone' },
+  { id: 'finance',   label: 'Finance',      icon: 'ti-receipt' },
+  { id: 'sales',     label: 'Sales',        icon: 'ti-chart-bar' },
+  { id: 'product',   label: 'Product',      icon: 'ti-box' },
+  { id: 'hr',        label: 'HR & Talent',  icon: 'ti-users' },
+  { id: 'ops',       label: 'Operations',   icon: 'ti-clipboard-list' },
+  { id: 'health',    label: 'Healthcare',   icon: 'ti-heart-rate-monitor' },
+  { id: 'legal',     label: 'Legal',        icon: 'ti-scale' },
+  { id: 'edu',       label: 'Education',    icon: 'ti-school' },
+];
+
+const TECH_SUBS = [
+  { id: 'tech',       label: 'All Tech',       icon: 'ti-cpu' },
+  { id: 'tech-dev',   label: 'Development',    icon: 'ti-code' },
+  { id: 'tech-devops',label: 'DevOps / Cloud', icon: 'ti-cloud' },
+  { id: 'tech-infra', label: 'IT Support',     icon: 'ti-tool' },
+  { id: 'tech-cyber', label: 'Cybersecurity',  icon: 'ti-shield-lock' },
+  { id: 'tech-data',  label: 'Data & AI',      icon: 'ti-brain' },
+  { id: 'tech-qa',    label: 'QA & Testing',   icon: 'ti-bug' },
+  { id: 'tech-erp',   label: 'ERP & CRM',      icon: 'ti-building-cog' },
+  { id: 'tech-arch',  label: 'IT Architecture',icon: 'ti-topology-star' },
+];
+
+let _activeSector = 'all';
+
 function renderSkillPicker(selected = []) {
   const sel = new Set(selected.map(s => s.toLowerCase()));
+
+  const mainBar = `<div class="sp-sector-bar" id="sp-sector-bar">
+    ${SKILL_SECTORS.map(s => `<button class="sp-sector-btn${s.id==='all'?' active':''}" data-sid="${s.id}" onclick="selectSkillSector('${s.id}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
+  </div>`;
+
+  const subBar = `<div class="sp-sector-bar sp-subsector-bar" id="sp-subsector-bar" style="display:none">
+    ${TECH_SUBS.map(s => `<button class="sp-sector-btn${s.id==='tech'?' active':''}" data-sid="${s.id}" onclick="selectSkillSector('${s.id}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
+  </div>`;
+
   const groups = SKILL_GROUPS.map(g => {
+    const sec = SECTOR_MAP[g.label] || 'all';
     const chips = g.skills.map(sk => {
       const active = sel.has(sk.name.toLowerCase()) ? ' active' : '';
       const img = sk.logo
@@ -1875,18 +1942,58 @@ function renderSkillPicker(selected = []) {
         : `<span class="sp-badge" style="background:${sk.badge.bg};color:${sk.badge.color}">${sk.badge.text}</span>`;
       return `<span class="sp-chip${active}" data-skill="${esc(sk.name)}" onclick="toggleSkill(this)">${img}${esc(sk.name)}</span>`;
     }).join('');
-    return `<div class="sp-group">
+    return `<div class="sp-group" data-sector="${sec}">
       <div class="sp-group-label"><i class="ti ${g.icon}"></i>${g.label}</div>
       <div class="sp-chips">${chips}</div>
     </div>`;
   }).join('');
-  return `<div class="skill-picker" id="skill-picker">${groups}
+
+  return `<div class="skill-picker" id="skill-picker">
+    ${mainBar}${subBar}
+    <div id="sp-groups">${groups}</div>
     <div class="sp-custom-wrap">
       <i class="ti ti-plus sp-custom-icon"></i>
       <input type="text" id="sp-custom" class="sp-custom-input" placeholder="Add a custom skill (press Enter)…" onkeydown="addCustomSkill(event)">
     </div>
     <div id="sp-custom-chips" class="sp-chips" style="margin-top:6px"></div>
   </div>`;
+}
+
+function selectSkillSector(sectorId) {
+  _activeSector = sectorId;
+  const isTechSub = sectorId.startsWith('tech-');
+  const isMainTech = sectorId === 'tech';
+  const isTechContext = isMainTech || isTechSub;
+
+  // Main bar active state
+  document.querySelectorAll('#sp-sector-bar .sp-sector-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.sid === (isTechContext ? 'tech' : sectorId));
+  });
+
+  // Tech sub-bar visibility + active state
+  const subBar = document.getElementById('sp-subsector-bar');
+  if (subBar) {
+    subBar.style.display = isTechContext ? 'flex' : 'none';
+    subBar.querySelectorAll('.sp-sector-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.sid === sectorId || (isMainTech && btn.dataset.sid === 'tech'));
+    });
+  }
+
+  // Show/hide skill groups
+  document.querySelectorAll('#sp-groups .sp-group').forEach(g => {
+    const gs = g.dataset.sector;
+    let visible;
+    if (sectorId === 'all') {
+      visible = true;
+    } else if (isTechSub) {
+      visible = gs === sectorId || gs === 'soft';
+    } else if (isMainTech) {
+      visible = gs.startsWith('tech-') || gs === 'soft';
+    } else {
+      visible = gs === sectorId || gs === 'soft';
+    }
+    g.style.display = visible ? '' : 'none';
+  });
 }
 
 function toggleSkill(el) {
