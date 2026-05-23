@@ -105,7 +105,7 @@ router.post('/', requireAuth, requireCompanyAccess, async (req, res) => {
     return res.status(403).json({ success: false, error: `Job slot limit reached (${company.active_job_slots}). Upgrade to post more.` });
   }
 
-  const { title_fr, title_en, description_fr, description_en, requirements_fr, requirements_en, benefits_fr, benefits_en, job_type, work_mode, city, province, country, salary_min, salary_max, salary_currency, experience_years, languages_required, skills_required } = req.body;
+  const { title_fr, title_en, description_fr, description_en, requirements_fr, requirements_en, benefits_fr, benefits_en, job_type, work_mode, city, address, province, country, salary_min, salary_max, salary_currency, salary_period, experience_years, languages_required, skills_required } = req.body;
   if (!title_fr || !description_fr) return res.status(400).json({ success: false, error: 'title_fr and description_fr required' });
 
   const id = uuidv4().replace(/-/g, '');
@@ -114,13 +114,13 @@ router.post('/', requireAuth, requireCompanyAccess, async (req, res) => {
   const skills = Array.isArray(skills_required) ? JSON.stringify(skills_required) : (skills_required || '[]');
   const langs = Array.isArray(languages_required) ? JSON.stringify(languages_required) : (languages_required || '[]');
 
-  await db.run(`INSERT INTO nh_jobs (id, company_id, posted_by, title_fr, title_en, slug, description_fr, description_en, requirements_fr, requirements_en, benefits_fr, benefits_en, job_type, work_mode, city, province, country, salary_min, salary_max, salary_currency, experience_years, languages_required, skills_required)
-    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23)`,
+  await db.run(`INSERT INTO nh_jobs (id, company_id, posted_by, title_fr, title_en, slug, description_fr, description_en, requirements_fr, requirements_en, benefits_fr, benefits_en, job_type, work_mode, city, address, province, country, salary_min, salary_max, salary_currency, salary_period, experience_years, languages_required, skills_required)
+    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25)`,
     [id, company_id, req.session.user.id, title_fr, title_en || null, slug, description_fr, description_en || null,
      requirements_fr || null, requirements_en || null, benefits_fr || null, benefits_en || null,
-     job_type || null, work_mode || null, city || null, province || null, country || 'Canada',
+     job_type || null, work_mode || null, city || null, address || null, province || null, country || 'Canada',
      salary_min ? parseInt(salary_min) : null, salary_max ? parseInt(salary_max) : null,
-     salary_currency || 'CAD', experience_years || null, langs, skills]);
+     salary_currency || 'CAD', salary_period || 'year', experience_years || null, langs, skills]);
 
   const job = await db.get('SELECT * FROM nh_jobs WHERE id = $1', [id]);
   res.status(201).json({ success: true, job });
@@ -130,7 +130,7 @@ router.put('/:id', requireAuth, requireCompanyAccess, async (req, res) => {
   const job = await db.get('SELECT * FROM nh_jobs WHERE id = $1 AND company_id = $2', [req.params.id, req.session.user.company_id]);
   if (!job) return res.status(404).json({ success: false, error: 'Job not found' });
 
-  const allowed = ['title_fr','title_en','description_fr','description_en','requirements_fr','requirements_en','job_type','work_mode','city','province','country','salary_min','salary_max','status'];
+  const allowed = ['title_fr','title_en','description_fr','description_en','requirements_fr','requirements_en','benefits_fr','benefits_en','job_type','work_mode','city','address','province','country','salary_min','salary_max','salary_currency','salary_period','experience_years','status'];
   const sets = []; const vals = []; let p = 1;
   allowed.forEach(f => { if (req.body[f] !== undefined) { sets.push(`${f} = $${p}`); vals.push(req.body[f]); p++; } });
   if (!sets.length) return res.status(400).json({ success: false, error: 'Nothing to update' });

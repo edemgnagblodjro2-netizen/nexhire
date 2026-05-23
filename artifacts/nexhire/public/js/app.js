@@ -139,7 +139,6 @@ function fmtLocation(j) {
 }
 
 function fmtLocationDetail(j) {
-  // Detail panel format: "Montréal, QC · Remote · Full-time" (like Indeed job detail header)
   const parts = [];
   if (j.city) parts.push(`<span style="font-weight:500">${esc(j.city)}</span>`);
   if (j.province && j.province !== 'REMOTE') parts.push(`<strong>${esc(j.province)}</strong>`);
@@ -147,11 +146,16 @@ function fmtLocationDetail(j) {
   const chips = [];
   if (j.work_mode) chips.push(`<span class="job-tag ${j.work_mode}" style="font-size:12px">${j.work_mode}</span>`);
   if (j.job_type) chips.push(`<span class="job-tag" style="font-size:12px">${j.job_type}</span>`);
-  return `<div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+  const addrLine = j.address
+    ? `<div style="font-size:12px;color:var(--muted);margin-top:3px;margin-bottom:10px"><i class="ti ti-map-pin-filled" style="font-size:11px"></i> ${esc(j.address)}${loc ? ', ' + loc.replace(/<[^>]*>/g,'') : ''}</div>`
+    : '';
+  return `<div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:${addrLine ? '0' : '12px'}">
     ${loc ? `<span class="detail-location-text"><i class="ti ti-map-pin" style="font-size:13px;color:var(--muted)"></i> ${loc}</span>` : ''}
     ${chips.join('')}
-  </div>`;
+  </div>${addrLine}`;
 }
+
+function fmtPeriod(p) { return {year:'/yr', month:'/mo', hour:'/hr'}[p] || '/yr'; }
 
 function provinceSelectHtml(id, selectedCode = '') {
   return `<select id="${id}" onchange="updateCitiesForProvince('${id}')">
@@ -819,10 +823,10 @@ async function openJobDetail(jobId) {
     <div class="job-location-detail">${fmtLocationDetail(j)}</div>
     <div class="job-meta" style="margin-bottom:16px">
       ${j.job_type ? `<span class="job-tag">${j.job_type}</span>` : ''}
-      ${j.salary_min ? `<span class="job-tag salary-tag">${fmtSalary(j.salary_min)}${j.salary_max ? '–'+fmtSalary(j.salary_max) : ''} ${j.salary_currency||'CAD'}/yr</span>` : ''}
-      ${j.experience_years ? `<span class="job-tag"><i class="ti ti-briefcase" style="font-size:11px"></i>${j.experience_years} yrs exp</span>` : ''}
+      ${j.salary_min ? `<span class="job-tag salary-tag">${fmtSalary(j.salary_min)}${j.salary_max ? '–'+fmtSalary(j.salary_max) : ''} ${j.salary_currency||'CAD'}${fmtPeriod(j.salary_period)}</span>` : ''}
+      ${j.experience_years ? `<span class="job-tag"><i class="ti ti-briefcase" style="font-size:11px"></i>${j.experience_years} exp</span>` : ''}
     </div>
-    ${skills.length ? `<div class="skills-chips" style="margin-bottom:16px">${skills.slice(0,8).map(s => `<span class="skill-chip">${esc(s)}</span>`).join('')}</div>` : ''}
+    ${skills.length ? `<div class="skills-chips" style="margin-bottom:16px">${skills.slice(0,10).map(s => `<span class="skill-chip">${esc(s)}</span>`).join('')}</div>` : ''}
     <div class="detail-apply-row">
       ${state.user?.role === 'candidate' ? `<button class="btn-primary" style="flex:1" data-apply-id="${j.id}" data-apply-title="${esc(title)}"><i class="ti ti-send"></i> Apply Now</button>` : !state.user ? `<button class="btn-primary" style="flex:1" data-modal="modal-login"><i class="ti ti-send"></i> Sign in to Apply</button>` : ''}
       <div class="job-stats-mini">
@@ -832,6 +836,8 @@ async function openJobDetail(jobId) {
     </div>
     <div class="job-section"><h4>About the role</h4><div class="job-desc">${esc(desc || '')}</div></div>
     ${req ? `<div class="job-section"><h4>Requirements</h4><div class="job-desc">${esc(req)}</div></div>` : ''}
+    ${(j.benefits_en || j.benefits_fr) ? `<div class="job-section"><h4><i class="ti ti-gift" style="color:var(--green)"></i> Benefits & Perks</h4><div class="job-desc">${esc(state.lang==='fr'?(j.benefits_fr||j.benefits_en):(j.benefits_en||j.benefits_fr))}</div></div>` : ''}
+    ${(j.company_desc_en || j.company_desc_fr) ? `<div class="job-section job-section-company"><h4><i class="ti ti-building"></i> About ${esc(j.company_name||'the company')}</h4><div class="job-desc">${esc(state.lang==='fr'?(j.company_desc_fr||j.company_desc_en):(j.company_desc_en||j.company_desc_fr))}</div>${j.company_website?`<a href="${esc(j.company_website)}" target="_blank" rel="noopener" class="btn-ghost" style="font-size:12px;margin-top:10px;display:inline-flex;align-items:center;gap:4px"><i class="ti ti-external-link"></i>${esc(j.company_website)}</a>`:''}</div>` : ''}
     ${totalReviews ? `<div class="job-section"><h4><i class="ti ti-star"></i> Company Reviews</h4>${renderReviews(rev.reviews?.slice(0,3) || [])}</div>` : ''}
     ${state.user?.role === 'candidate' && j.company_id ? `<div style="margin-top:8px"><button class="btn-ghost" style="font-size:13px;width:100%" data-review-company-id="${j.company_id}" data-review-company-name="${esc(j.company_name || '')}"><i class="ti ti-pencil"></i> Write a review</button></div>` : ''}
   `;
@@ -1922,15 +1928,15 @@ const TECH_SUBS = [
 
 let _activeSector = 'all';
 
-function renderSkillPicker(selected = []) {
+function renderSkillPicker(selected = [], idPrefix = 'sp') {
   const sel = new Set(selected.map(s => s.toLowerCase()));
 
-  const mainBar = `<div class="sp-sector-bar" id="sp-sector-bar">
-    ${SKILL_SECTORS.map(s => `<button class="sp-sector-btn${s.id==='all'?' active':''}" data-sid="${s.id}" onclick="selectSkillSector('${s.id}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
+  const mainBar = `<div class="sp-sector-bar" id="${idPrefix}-sector-bar">
+    ${SKILL_SECTORS.map(s => `<button class="sp-sector-btn${s.id==='all'?' active':''}" data-sid="${s.id}" onclick="selectSkillSector('${s.id}','${idPrefix}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
   </div>`;
 
-  const subBar = `<div class="sp-sector-bar sp-subsector-bar" id="sp-subsector-bar" style="display:none">
-    ${TECH_SUBS.map(s => `<button class="sp-sector-btn${s.id==='tech'?' active':''}" data-sid="${s.id}" onclick="selectSkillSector('${s.id}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
+  const subBar = `<div class="sp-sector-bar sp-subsector-bar" id="${idPrefix}-subsector-bar" style="display:none">
+    ${TECH_SUBS.map(s => `<button class="sp-sector-btn${s.id==='tech'?' active':''}" data-sid="${s.id}" onclick="selectSkillSector('${s.id}','${idPrefix}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
   </div>`;
 
   const groups = SKILL_GROUPS.map(g => {
@@ -1948,30 +1954,28 @@ function renderSkillPicker(selected = []) {
     </div>`;
   }).join('');
 
-  return `<div class="skill-picker" id="skill-picker">
+  return `<div class="skill-picker" id="${idPrefix}-picker">
     ${mainBar}${subBar}
-    <div id="sp-groups">${groups}</div>
+    <div id="${idPrefix}-groups">${groups}</div>
     <div class="sp-custom-wrap">
       <i class="ti ti-plus sp-custom-icon"></i>
-      <input type="text" id="sp-custom" class="sp-custom-input" placeholder="Add a custom skill (press Enter)…" onkeydown="addCustomSkill(event)">
+      <input type="text" id="${idPrefix}-custom" class="sp-custom-input" placeholder="Add a custom skill (press Enter)…" onkeydown="addCustomSkill(event,'${idPrefix}')">
     </div>
-    <div id="sp-custom-chips" class="sp-chips" style="margin-top:6px"></div>
+    <div id="${idPrefix}-custom-chips" class="sp-chips" style="margin-top:6px"></div>
   </div>`;
 }
 
-function selectSkillSector(sectorId) {
+function selectSkillSector(sectorId, idPrefix = 'sp') {
   _activeSector = sectorId;
   const isTechSub = sectorId.startsWith('tech-');
   const isMainTech = sectorId === 'tech';
   const isTechContext = isMainTech || isTechSub;
 
-  // Main bar active state
-  document.querySelectorAll('#sp-sector-bar .sp-sector-btn').forEach(btn => {
+  document.querySelectorAll(`#${idPrefix}-sector-bar .sp-sector-btn`).forEach(btn => {
     btn.classList.toggle('active', btn.dataset.sid === (isTechContext ? 'tech' : sectorId));
   });
 
-  // Tech sub-bar visibility + active state
-  const subBar = document.getElementById('sp-subsector-bar');
+  const subBar = document.getElementById(`${idPrefix}-subsector-bar`);
   if (subBar) {
     subBar.style.display = isTechContext ? 'flex' : 'none';
     subBar.querySelectorAll('.sp-sector-btn').forEach(btn => {
@@ -1979,8 +1983,7 @@ function selectSkillSector(sectorId) {
     });
   }
 
-  // Show/hide skill groups
-  document.querySelectorAll('#sp-groups .sp-group').forEach(g => {
+  document.querySelectorAll(`#${idPrefix}-groups .sp-group`).forEach(g => {
     const gs = g.dataset.sector;
     let visible;
     if (sectorId === 'all') {
@@ -2000,26 +2003,29 @@ function toggleSkill(el) {
   el.classList.toggle('active');
 }
 
-function addCustomSkill(e) {
+function addCustomSkill(e, idPrefix = 'sp') {
   if (e.key !== 'Enter') return;
   e.preventDefault();
-  const inp = document.getElementById('sp-custom');
-  const val = inp.value.trim();
+  const inp = document.getElementById(`${idPrefix}-custom`);
+  const val = inp?.value.trim();
   if (!val) return;
-  const container = document.getElementById('sp-custom-chips');
-  const exists = [...document.querySelectorAll('.sp-chip[data-skill]')].some(c => c.dataset.skill.toLowerCase() === val.toLowerCase());
-  if (!exists) {
+  const container = document.getElementById(`${idPrefix}-custom-chips`);
+  const picker = document.getElementById(`${idPrefix}-picker`);
+  const exists = picker && [...picker.querySelectorAll('.sp-chip[data-skill]')].some(c => c.dataset.skill.toLowerCase() === val.toLowerCase());
+  if (!exists && container) {
     const chip = document.createElement('span');
     chip.className = 'sp-chip active sp-custom-chip';
     chip.dataset.skill = val;
     chip.innerHTML = `${esc(val)} <span onclick="this.parentElement.remove()" style="margin-left:4px;opacity:.6;cursor:pointer">✕</span>`;
     container.appendChild(chip);
   }
-  inp.value = '';
+  if (inp) inp.value = '';
 }
 
-function getPickedSkills() {
-  return [...document.querySelectorAll('.sp-chip.active[data-skill]')].map(c => c.dataset.skill);
+function getPickedSkills(idPrefix = 'sp') {
+  const picker = document.getElementById(`${idPrefix}-picker`);
+  if (!picker) return [];
+  return [...picker.querySelectorAll('.sp-chip.active[data-skill]')].map(c => c.dataset.skill);
 }
 
 async function loadProfileForm() {
@@ -2500,6 +2506,10 @@ function initPostJobForm() {
           <input type="text" id="jf-city" placeholder="e.g. Montréal, Paris, Dubai...">
         </div>
       </div>
+      <div class="form-group">
+        <label>Street address <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+        <input type="text" id="jf-address" placeholder="e.g. 1600 Cyrille-Duquet Rue">
+      </div>
     </div>
 
     <div id="jf-remote-block" style="display:none">
@@ -2508,12 +2518,15 @@ function initPostJobForm() {
     </div>
 
     <div class="form-row">
-      <div class="form-group"><label>Min salary (annual CAD)</label><input type="number" id="jf-sal-min" placeholder="60000"></div>
+      <div class="form-group"><label>Min salary</label><input type="number" id="jf-sal-min" placeholder="60000"></div>
       <div class="form-group"><label>Max salary</label><input type="number" id="jf-sal-max" placeholder="90000"></div>
     </div>
-    <div class="form-group"><label>Currency</label><select id="jf-currency"><option value="CAD">CAD — Canadian Dollar</option><option value="USD">USD — US Dollar</option><option value="EUR">EUR — Euro</option><option value="GBP">GBP — British Pound</option></select></div>
+    <div class="form-row">
+      <div class="form-group"><label>Currency</label><select id="jf-currency"><option value="CAD">CAD — Canadian Dollar</option><option value="USD">USD — US Dollar</option><option value="EUR">EUR — Euro</option><option value="GBP">GBP — British Pound</option></select></div>
+      <div class="form-group"><label>Pay period</label><select id="jf-sal-period"><option value="year">Per year (annual)</option><option value="month">Per month</option><option value="hour">Per hour</option></select></div>
+    </div>
     <div class="form-group"><label>Required experience</label><select id="jf-exp"><option value="">Not specified</option><option value="0-1">0-1 years (Junior)</option><option value="1-3">1-3 years (Intermediate)</option><option value="3-5">3-5 years (Senior)</option><option value="5+">5+ years (Lead / Expert)</option></select></div>
-    <div class="form-group"><label>Skills required <span style="color:var(--muted);font-weight:400">(comma-separated)</span></label><input type="text" id="jf-skills" placeholder="React, Node.js, TypeScript, Python"></div>
+    <div class="form-group"><label>Skills required</label>${renderSkillPicker([], 'jf')}</div>
     <div class="form-group"><label>Languages required</label>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
         <label class="check-label"><input type="checkbox" id="jf-lang-en" value="English" checked> English</label>
@@ -2578,13 +2591,15 @@ async function postJob(e) {
     work_mode: normalizedMode,
     job_type: document.getElementById('jf-type')?.value,
     city: city || null,
+    address: document.getElementById('jf-address')?.value.trim() || null,
     province: (mode === 'remote' || mode === 'remote-intl') ? null : province,
     country: jobCountry,
     salary_min: parseInt(document.getElementById('jf-sal-min')?.value) || null,
     salary_max: parseInt(document.getElementById('jf-sal-max')?.value) || null,
     salary_currency: document.getElementById('jf-currency')?.value || 'CAD',
+    salary_period: document.getElementById('jf-sal-period')?.value || 'year',
     experience_years: document.getElementById('jf-exp')?.value || null,
-    skills_required: document.getElementById('jf-skills')?.value.split(',').map(s => s.trim()).filter(Boolean),
+    skills_required: getPickedSkills('jf'),
     languages_required: langs,
   };
   if (!body.title_en || !body.description_en) { showErr(errEl, 'Title (EN) and description required'); return; }
