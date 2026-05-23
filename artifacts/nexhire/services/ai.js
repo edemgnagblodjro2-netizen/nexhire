@@ -50,10 +50,24 @@ async function generateCoverLetter(candidateProfile, job, lang = 'fr') {
   return await callClaude([{ role: 'user', content: userMsg }], system, 1000);
 }
 
+async function detectAiContent(text) {
+  const system = `You are an AI content detection expert. Analyze the provided text and determine how likely it is to be AI-generated (vs human-written).
+Return ONLY valid JSON: {"score": <0-100>, "label": "<Likely Human|Uncertain|Likely AI>", "signals": ["<signal1>", "<signal2>"]}
+Score guide: 0-35 = Likely Human, 36-65 = Uncertain, 66-100 = Likely AI.`;
+
+  const raw = await callClaude([{
+    role: 'user',
+    content: `Analyze this text for AI generation probability:\n\n${text.slice(0, 1500)}`
+  }], system, 400);
+
+  const result = JSON.parse(raw.replace(/```json|```/g, '').trim());
+  return result;
+}
+
 function safeArr(v) {
   if (Array.isArray(v)) return v;
   if (!v) return [];
   try { return JSON.parse(v); } catch { return []; }
 }
 
-module.exports = { callClaude, matchCandidateToJob, generateCoverLetter };
+module.exports = { callClaude, matchCandidateToJob, generateCoverLetter, detectAiContent };

@@ -600,10 +600,34 @@ function renderReviews(reviews) {
 // ── Quick Apply modal ──────────────────────────────────────
 function openQuickApply(jobId, jobTitle) {
   state.currentJobForApply = jobId;
+  state.aiCvConsent = null;
   safeSet('quick-apply-title', jobTitle);
   document.getElementById('qa-cover').value = '';
   document.getElementById('qa-error').style.display = 'none';
+  // Reset consent buttons
+  ['qa-consent-yes','qa-consent-no'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) { btn.style.background = 'white'; btn.style.borderColor = '#c7d4f5'; btn.style.color = '#374151'; }
+  });
+  const note = document.getElementById('qa-consent-note');
+  if (note) note.style.display = 'none';
   showModal('modal-quick-apply');
+}
+
+function setAiConsent(value) {
+  state.aiCvConsent = value;
+  const yesBtn = document.getElementById('qa-consent-yes');
+  const noBtn = document.getElementById('qa-consent-no');
+  const note = document.getElementById('qa-consent-note');
+  if (value) {
+    if (yesBtn) { yesBtn.style.background = '#ede9fe'; yesBtn.style.borderColor = '#6d28d9'; yesBtn.style.color = '#5b21b6'; }
+    if (noBtn)  { noBtn.style.background = 'white'; noBtn.style.borderColor = '#c7d4f5'; noBtn.style.color = '#374151'; }
+    if (note)   { note.textContent = '✓ The employer will see an AI probability score for your cover letter.'; note.style.display = 'block'; }
+  } else {
+    if (noBtn)  { noBtn.style.background = '#f3f4f6'; noBtn.style.borderColor = '#9ca3af'; noBtn.style.color = '#374151'; }
+    if (yesBtn) { yesBtn.style.background = 'white'; yesBtn.style.borderColor = '#c7d4f5'; yesBtn.style.color = '#374151'; }
+    if (note)   { note.textContent = '✓ No AI analysis will be shared with the employer.'; note.style.display = 'block'; }
+  }
 }
 
 async function generateAiCoverLetter() {
@@ -619,7 +643,20 @@ async function submitQuickApply() {
   const cover_letter = document.getElementById('qa-cover')?.value.trim();
   const errEl = document.getElementById('qa-error');
   errEl.style.display = 'none';
-  const d = await api('POST', `${BASE}/api/applications`, { job_id: state.currentJobForApply, cover_letter });
+
+  const payload = {
+    job_id: state.currentJobForApply,
+    cover_letter,
+    ai_cv_consent: state.aiCvConsent === true,
+  };
+
+  const submitBtn = document.querySelector('#modal-quick-apply .btn-primary');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<i class="ti ti-loader" style="animation:spin 1s linear infinite"></i> Submitting...'; }
+
+  const d = await api('POST', `${BASE}/api/applications`, payload);
+
+  if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = '<i class="ti ti-send"></i> Submit application'; }
+
   if (d.success) {
     hideModal('modal-quick-apply');
     toast(state.lang === 'fr' ? 'Candidature envoyée !' : 'Application submitted!', 'success');
@@ -1421,11 +1458,24 @@ async function refreshKanban() {
   }).join('');
 }
 
+function aiCvBadge(a) {
+  if (!a.ai_cv_consent || a.ai_cv_score === null || a.ai_cv_score === undefined) return '';
+  const score = parseInt(a.ai_cv_score);
+  const isNaN_ = isNaN(score);
+  if (isNaN_) return '';
+  const label = score <= 35 ? 'Likely Human' : score <= 65 ? 'Uncertain' : 'Likely AI';
+  const bg    = score <= 35 ? '#D1FAE5' : score <= 65 ? '#FEF3C7' : '#FEE2E2';
+  const color = score <= 35 ? '#065F46' : score <= 65 ? '#92400E' : '#991B1B';
+  const icon  = score <= 35 ? 'ti-user-check' : score <= 65 ? 'ti-help-circle' : 'ti-robot';
+  return `<div title="AI CV detection: ${score}% probability AI-generated" style="display:inline-flex;align-items:center;gap:4px;background:${bg};color:${color};border-radius:6px;padding:3px 8px;font-size:11px;font-weight:600;margin-bottom:4px"><i class="ti ${icon}"></i> ${label} (${score}%)</div>`;
+}
+
 function kanbanCard(a, col) {
   const skills = safeJsonArr(a.skills);
   return `<div class="kanban-card">
     <div class="kanban-card-name">${esc(a.first_name||'')} ${esc(a.last_name||'')}</div>
     <div style="font-size:12px;color:var(--muted);margin-bottom:6px">${a.experience_years || 0} yrs exp${a.headline_en ? ' · '+esc(a.headline_en) : ''}</div>
+    ${aiCvBadge(a)}
     ${a.ai_score ? `<div class="ai-score-badge" style="background:${a.ai_score>=80?'#D1FAE5':a.ai_score>=60?'#FEF3C7':'#FEE2E2'};color:${a.ai_score>=80?'#065F46':a.ai_score>=60?'#92400E':'#991B1B'}"><i class="ti ti-robot"></i> AI ${a.ai_score}%</div>` : ''}
     ${skills.length ? `<div style="margin:6px 0">${skills.slice(0,3).map(s=>`<span class="skill-chip" style="font-size:10px">${esc(s)}</span>`).join('')}</div>` : ''}
     <div style="font-size:11px;color:var(--muted);margin-bottom:8px">${daysAgo(a.created_at)}</div>

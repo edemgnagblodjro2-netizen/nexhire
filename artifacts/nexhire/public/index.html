@@ -824,8 +824,27 @@
           <label>Cover letter <span style="color:var(--muted);font-weight:400">(optional but recommended)</span></label>
           <button id="qa-ai-btn" class="btn-ghost" style="font-size:12px;padding:4px 10px" onclick="generateAiCoverLetter()"><i class="ti ti-robot"></i> AI generate</button>
         </div>
-        <textarea id="qa-cover" placeholder="Briefly explain why you're a great fit for this role..." style="min-height:180px"></textarea>
+        <textarea id="qa-cover" placeholder="Briefly explain why you're a great fit for this role..." style="min-height:160px"></textarea>
       </div>
+
+      <!-- AI CV Detection consent -->
+      <div style="background:#f0f4ff;border:1.5px solid #c7d4f5;border-radius:10px;padding:14px 16px;margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <i class="ti ti-robot" style="color:#4f46e5;font-size:18px"></i>
+          <span style="font-weight:600;font-size:14px;color:#1e1b4b">AI content analysis</span>
+        </div>
+        <p style="font-size:13px;color:#4b5563;margin:0 0 10px">Nexhire can detect AI-generated content in your cover letter. Would you like to allow the employer to see this analysis?</p>
+        <div style="display:flex;gap:8px">
+          <button id="qa-consent-yes" onclick="setAiConsent(true)" style="flex:1;padding:7px 0;border-radius:8px;border:1.5px solid #c7d4f5;background:white;font-size:13px;cursor:pointer;font-family:var(--b);color:#374151;transition:.15s">
+            <i class="ti ti-check" style="color:#10b981"></i> Yes, share analysis
+          </button>
+          <button id="qa-consent-no" onclick="setAiConsent(false)" style="flex:1;padding:7px 0;border-radius:8px;border:1.5px solid #c7d4f5;background:white;font-size:13px;cursor:pointer;font-family:var(--b);color:#374151;transition:.15s">
+            <i class="ti ti-x" style="color:#6b7280"></i> No thanks
+          </button>
+        </div>
+        <div id="qa-consent-note" style="font-size:11px;color:#6b7280;margin-top:8px;display:none"></div>
+      </div>
+
       <div class="form-error" id="qa-error"></div>
       <button class="btn-primary btn-full" onclick="submitQuickApply()"><i class="ti ti-send"></i> Submit application</button>
       <div style="text-align:center;margin-top:10px;font-size:12px;color:var(--muted)">Your profile info will be shared with the employer</div>

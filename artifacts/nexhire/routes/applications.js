@@ -2,10 +2,11 @@ const router = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
 const db = require('../models/db');
 const { requireAuth, requireCompanyAccess } = require('../middleware/auth');
+const aiService = require('../services/ai');
 
 router.post('/', requireAuth, async (req, res) => {
   if (req.session.user.role !== 'candidate') return res.status(403).json({ success: false, error: 'Candidates only' });
-  const { job_id, cover_letter, cv_url } = req.body;
+  const { job_id, cover_letter, cv_url, ai_cv_consent } = req.body;
   if (!job_id) return res.status(400).json({ success: false, error: 'job_id required' });
 
   const job = await db.get("SELECT id FROM nh_jobs WHERE id = $1 AND status = 'active'", [job_id]);
@@ -17,9 +18,21 @@ router.post('/', requireAuth, async (req, res) => {
   const existing = await db.get('SELECT id FROM nh_applications WHERE job_id = $1 AND candidate_id = $2', [job_id, profile.id]);
   if (existing) return res.status(409).json({ success: false, error: 'Already applied to this job' });
 
+  // Run AI detection if candidate consented and there's text to analyze
+  let aiCvScore = null;
+  const consentBool = ai_cv_consent === true || ai_cv_consent === 'true';
+  if (consentBool && cover_letter && cover_letter.trim().length > 50) {
+    try {
+      const detection = await aiService.detectAiContent(cover_letter);
+      aiCvScore = detection.score;
+    } catch (_) { /* non-blocking */ }
+  }
+
   const id = uuidv4().replace(/-/g, '');
-  await db.run('INSERT INTO nh_applications (id, job_id, candidate_id, user_id, cover_letter, cv_url) VALUES ($1,$2,$3,$4,$5,$6)',
-    [id, job_id, profile.id, req.session.user.id, cover_letter || null, cv_url || null]);
+  await db.run(
+    'INSERT INTO nh_applications (id, job_id, candidate_id, user_id, cover_letter, cv_url, ai_cv_consent, ai_cv_score) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)',
+    [id, job_id, profile.id, req.session.user.id, cover_letter || null, cv_url || null, consentBool, aiCvScore]
+  );
   await db.run('UPDATE nh_jobs SET applications_count = applications_count + 1 WHERE id = $1', [job_id]);
 
   const app = await db.get('SELECT * FROM nh_applications WHERE id = $1', [id]);
