@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
     where.push(`j.published_at >= NOW() - INTERVAL '${parseInt(days_ago)} days'`);
   }
   if (lang_filter) {
-    where.push(`j.languages_required ILIKE $${i}`);
+    where.push(`j.languages_required::text ILIKE $${i}`);
     params.push(`%${lang_filter}%`); i++;
   }
 
