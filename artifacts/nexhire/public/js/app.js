@@ -1606,14 +1606,15 @@ async function loadDashboard() {
 
 // ── Profile completeness ───────────────────────────────────
 function computeCompleteness(p, user) {
+  const isFr = state.lang === 'fr';
   const fields = [
-    { key: 'headline_en', label: 'Add a headline', val: p.headline_en || p.headline_fr },
-    { key: 'bio_en', label: 'Write a bio', val: p.bio_en || p.bio_fr },
-    { key: 'skills', label: 'Add skills', val: safeJsonArr(p.skills).length > 0 },
-    { key: 'city', label: 'Add your city', val: p.city },
-    { key: 'linkedin_url', label: 'Link your LinkedIn', val: p.linkedin_url },
-    { key: 'experience_years', label: 'Add experience years', val: p.experience_years > 0 },
-    { key: 'phone', label: 'Add phone number', val: user?.phone },
+    { key: 'headline_en', label: isFr ? 'Ajouter un titre' : 'Add a headline', val: p.headline_en || p.headline_fr },
+    { key: 'bio_en', label: isFr ? 'Rédiger une bio' : 'Write a bio', val: p.bio_en || p.bio_fr },
+    { key: 'skills', label: isFr ? 'Ajouter des compétences' : 'Add skills', val: safeJsonArr(p.skills).length > 0 },
+    { key: 'city', label: isFr ? 'Ajouter votre ville' : 'Add your city', val: p.city },
+    { key: 'linkedin_url', label: isFr ? 'Lier votre LinkedIn' : 'Link your LinkedIn', val: p.linkedin_url },
+    { key: 'experience_years', label: isFr ? 'Années d\'expérience' : 'Add experience years', val: p.experience_years > 0 },
+    { key: 'phone', label: isFr ? 'Numéro de téléphone' : 'Add phone number', val: user?.phone },
   ];
   const done = fields.filter(f => f.val);
   const pct = Math.round((done.length / fields.length) * 100);
@@ -1761,10 +1762,10 @@ function renderTalentPassport(p, user, pct) {
       </div>
     </div>
     <div class="passport-stats">
-      <div class="passport-stat"><i class="ti ti-code"></i><strong>${skills.length}</strong><span>Skills</span></div>
-      <div class="passport-stat"><i class="ti ti-calendar"></i><strong>${exp}y</strong><span>Exp</span></div>
-      <div class="passport-stat"><i class="ti ti-world-check"></i><strong>Global</strong><span>Ready</span></div>
-      <div class="passport-stat"><i class="ti ti-chart-pie"></i><strong>${pct}%</strong><span>Profile</span></div>
+      <div class="passport-stat"><i class="ti ti-code"></i><strong>${skills.length}</strong><span>${isFr ? 'Compét.' : 'Skills'}</span></div>
+      <div class="passport-stat"><i class="ti ti-calendar"></i><strong>${exp}${isFr ? 'a' : 'y'}</strong><span>${isFr ? 'Exp' : 'Exp'}</span></div>
+      <div class="passport-stat"><i class="ti ti-world-check"></i><strong>Global</strong><span>${isFr ? 'Prêt' : 'Ready'}</span></div>
+      <div class="passport-stat"><i class="ti ti-chart-pie"></i><strong>${pct}%</strong><span>${isFr ? 'Profil' : 'Profile'}</span></div>
     </div>
     <div id="passport-badges-row" class="passport-badges-row" style="display:none"></div>
   </div>`;
