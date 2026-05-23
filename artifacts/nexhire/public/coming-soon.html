@@ -176,9 +176,11 @@
     .feat-card{
       background:rgba(255,255,255,.03);border:1px solid var(--border);
       border-radius:16px;padding:24px;text-align:left;
-      transition:all .2s;
+      transition:all .2s;text-decoration:none;display:block;color:inherit;
     }
     .feat-card:hover{background:rgba(99,102,241,.06);border-color:rgba(99,102,241,.25);transform:translateY(-2px)}
+    .feat-link{display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--indigo2);margin-top:14px;opacity:0;transition:opacity .2s}
+    .feat-card:hover .feat-link{opacity:1}
     .feat-icon{
       width:44px;height:44px;border-radius:12px;
       display:flex;align-items:center;justify-content:center;
@@ -237,9 +239,14 @@
       <img src="/nexhire/img/logo-mark.svg" alt="Nexhire">
       <span class="nav-brand-word">Nex<span>hire</span></span>
     </a>
-    <div class="nav-pill">
-      <span class="pulse-dot"></span>
-      Launching June 2026
+    <div style="display:flex;align-items:center;gap:24px">
+      <a href="/nexhire/#jobs" style="font-size:14px;color:#94A3B8;text-decoration:none;font-weight:500;transition:color .15s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94A3B8'">Browse Jobs</a>
+      <a href="/nexhire/#employer" style="font-size:14px;color:#94A3B8;text-decoration:none;font-weight:500;transition:color .15s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94A3B8'">For Employers</a>
+      <a href="/nexhire/#pricing" style="font-size:14px;color:#94A3B8;text-decoration:none;font-weight:500;transition:color .15s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94A3B8'">Pricing</a>
+      <div class="nav-pill">
+        <span class="pulse-dot"></span>
+        Launching June 2026
+      </div>
     </div>
   </nav>
 
@@ -299,36 +306,52 @@
 
     <!-- Feature teasers -->
     <div class="features">
-      <div class="feat-card">
+      <a class="feat-card" href="/nexhire/#jobs">
         <div class="feat-icon" style="background:rgba(99,102,241,.15);color:#818CF8"><i class="ti ti-cpu"></i></div>
         <div class="feat-title">AI Job Matching</div>
         <div class="feat-desc">GPT-4o matches your profile to the right opportunities in seconds. No more scrolling through irrelevant listings.</div>
-      </div>
-      <div class="feat-card">
+        <div class="feat-link">Browse jobs <i class="ti ti-arrow-right"></i></div>
+      </a>
+      <a class="feat-card" href="/nexhire/#jobs">
         <div class="feat-icon" style="background:rgba(16,185,129,.12);color:#34D399"><i class="ti ti-world"></i></div>
         <div class="feat-title">Truly Global</div>
         <div class="feat-desc">Jobs in 130+ countries across every continent. Canada, Europe, UAE, Asia-Pacific — one platform, no borders.</div>
-      </div>
-      <div class="feat-card">
+        <div class="feat-link">Explore worldwide jobs <i class="ti ti-arrow-right"></i></div>
+      </a>
+      <a class="feat-card" href="/nexhire/#jobs">
         <div class="feat-icon" style="background:rgba(251,191,36,.1);color:#FBBF24"><i class="ti ti-bolt"></i></div>
         <div class="feat-title">Apply in 60 seconds</div>
         <div class="feat-desc">AI-generated cover letters, one-click profile, and instant application tracking. Average response time: 48h.</div>
-      </div>
-      <div class="feat-card">
+        <div class="feat-link">Find your next role <i class="ti ti-arrow-right"></i></div>
+      </a>
+      <a class="feat-card" href="/nexhire/#employer">
         <div class="feat-icon" style="background:rgba(239,68,68,.1);color:#F87171"><i class="ti ti-building"></i></div>
         <div class="feat-title">For Employers Too</div>
         <div class="feat-desc">Sponsored CPC listings, Kanban ATS pipeline, AI candidate ranking. Only pay when candidates click — from $0.50/click.</div>
-      </div>
-      <div class="feat-card">
+        <div class="feat-link">Post a job <i class="ti ti-arrow-right"></i></div>
+      </a>
+      <a class="feat-card" href="/nexhire/#pricing">
         <div class="feat-icon" style="background:rgba(168,85,247,.12);color:#C084FC"><i class="ti ti-layout-kanban"></i></div>
         <div class="feat-title">Application Tracker</div>
         <div class="feat-desc">Kanban board to track every application: Applied → Interview → Offer. Never lose track of an opportunity again.</div>
-      </div>
-      <div class="feat-card">
+        <div class="feat-link">See pricing <i class="ti ti-arrow-right"></i></div>
+      </a>
+      <a class="feat-card" href="/nexhire/#privacy">
         <div class="feat-icon" style="background:rgba(20,184,166,.1);color:#2DD4BF"><i class="ti ti-shield-check"></i></div>
         <div class="feat-title">Privacy by Design</div>
         <div class="feat-desc">Your data stays yours. No data selling, no tracking pixels. PIPEDA & GDPR compliant from day one.</div>
-      </div>
+        <div class="feat-link">Privacy policy <i class="ti ti-arrow-right"></i></div>
+      </a>
+    </div>
+
+    <!-- Quick nav links -->
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:48px;justify-content:center;animation:fadeUp .6s .6s ease both">
+      <a href="/nexhire/#jobs" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:10px 20px;font-size:13px;font-weight:600;color:#CBD5E1;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='rgba(99,102,241,.4)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='#CBD5E1'"><i class="ti ti-search"></i> Browse Jobs</a>
+      <a href="/nexhire/#employer" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:10px 20px;font-size:13px;font-weight:600;color:#CBD5E1;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='rgba(99,102,241,.4)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='#CBD5E1'"><i class="ti ti-building"></i> For Employers</a>
+      <a href="/nexhire/#pricing" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:10px 20px;font-size:13px;font-weight:600;color:#CBD5E1;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='rgba(99,102,241,.4)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='#CBD5E1'"><i class="ti ti-tag"></i> Pricing</a>
+      <a href="/nexhire/#terms" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:10px 20px;font-size:13px;font-weight:600;color:#CBD5E1;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='rgba(99,102,241,.4)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='#CBD5E1'"><i class="ti ti-file-text"></i> Terms</a>
+      <a href="/nexhire/#privacy" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:10px 20px;font-size:13px;font-weight:600;color:#CBD5E1;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='rgba(99,102,241,.4)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='#CBD5E1'"><i class="ti ti-shield"></i> Privacy</a>
+      <a href="/nexhire/#help" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:10px 20px;font-size:13px;font-weight:600;color:#CBD5E1;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='rgba(99,102,241,.4)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='#CBD5E1'"><i class="ti ti-help-circle"></i> Help</a>
     </div>
 
     <!-- Bilingual note -->
