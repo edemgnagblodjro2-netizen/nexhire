@@ -161,11 +161,13 @@ export default function Layout({
 
   const { prefs, setPrefs, setEventPref, toggleBrowserPref, browserPermission, promptShown, resetPromptShown } = useNotifications(counts);
 
+  const pendingVerifCount = verificationStats?.pendingCount ?? 0;
+
   useEffect(() => {
     const base = role === "b2g" ? "AttenteZéro — B2G" : "AttenteZéro — Admin";
-    const totalCount = unreadCount + newOrgCount;
+    const totalCount = unreadCount + newOrgCount + pendingVerifCount;
     document.title = totalCount > 0 ? `(${totalCount}) ${base}` : base;
-  }, [unreadCount, newOrgCount, role]);
+  }, [unreadCount, newOrgCount, pendingVerifCount, role]);
 
   const anyNotifOn = prefs.sound || prefs.browser;
   const anyEventOn = Object.values(prefs.events).some(Boolean);
