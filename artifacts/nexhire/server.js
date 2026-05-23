@@ -219,6 +219,25 @@ async function runMigrations() {
       )
     `);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_appnotes_app ON nh_application_notes(application_id, created_at)`);
+    // Messaging
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_messages (
+        id TEXT PRIMARY KEY,
+        application_id TEXT NOT NULL REFERENCES nh_applications(id) ON DELETE CASCADE,
+        sender_id TEXT NOT NULL REFERENCES nh_users(id) ON DELETE CASCADE,
+        body TEXT NOT NULL,
+        read_at TIMESTAMPTZ,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_messages_app ON nh_messages(application_id, created_at)`);
+    // Add missing columns safe migrations
+    await pool.query(`ALTER TABLE nh_company_reviews ADD COLUMN IF NOT EXISTS body TEXT`);
+    await pool.query(`ALTER TABLE nh_company_reviews ADD COLUMN IF NOT EXISTS position TEXT`);
+    await pool.query(`ALTER TABLE nh_company_reviews ADD COLUMN IF NOT EXISTS employment_type TEXT`);
+    await pool.query(`ALTER TABLE nh_notifications ADD COLUMN IF NOT EXISTS link_url TEXT`);
+    await pool.query(`ALTER TABLE nh_applications ADD COLUMN IF NOT EXISTS source TEXT`);
+    await pool.query(`ALTER TABLE nh_candidate_profiles ADD COLUMN IF NOT EXISTS cv_text TEXT`);
     // Work Team
     await pool.query(`
       CREATE TABLE IF NOT EXISTS nh_team_members (
@@ -354,6 +373,8 @@ app.use(apiBase + '/candidates',    require('./routes/candidates'));
 app.use(apiBase + '/ai',            require('./routes/ai'));
 app.use(apiBase + '/payments',      require('./routes/payments'));
 app.use(apiBase + '/notifications', require('./routes/notifications'));
+app.use(apiBase + '/messages',      require('./routes/messages'));
+app.use(apiBase + '/analytics',     require('./routes/analytics'));
 app.use(apiBase + '/admin',         require('./routes/admin'));
 app.use(apiBase + '/saved-jobs',    require('./routes/saved-jobs'));
 app.use(apiBase + '/reviews',       require('./routes/reviews'));

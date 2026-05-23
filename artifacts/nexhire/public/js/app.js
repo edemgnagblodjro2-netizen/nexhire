@@ -410,7 +410,7 @@ const T = {
     'cand.ai.greeting':"Hi! I'm your Nexhire AI Career Agent. How can I help accelerate your career today?",'cand.ai.ph':'Ask me about your career...',
     'agent.qa.jobs':'Find matching jobs','agent.qa.profile':'Optimize profile',
     'agent.qa.interview':'Interview prep','agent.qa.salary':'Salary advice',
-    'emp.role':'Employer','emp.nav.jobs':'My Jobs','emp.nav.post':'Post a Job','emp.nav.company':'Company','emp.nav.team':'Work Team','emp.nav.billing':'Billing',
+    'emp.role':'Employer','emp.nav.jobs':'My Jobs','emp.nav.post':'Post a Job','emp.nav.company':'Company','emp.nav.team':'Work Team','emp.nav.analytics':'Analytics','emp.nav.billing':'Billing',
     'emp.tab.jobs':'My Job Listings','emp.tab.post':'Post a New Job','emp.tab.company':'Company Profile','emp.tab.team':'Work Team','emp.tab.billing':'Billing & Plan',
     'team.invite.title':'Invite a team member','team.invite.ph':'colleague@company.com','team.invite.btn':'Send invitation',
     'team.role.recruiter':'Recruiter','team.role.admin':'Administrator',
@@ -613,7 +613,7 @@ const T = {
     'cand.ai.greeting':"Bonjour ! Je suis votre Agent Carrière IA Nexhire. Comment puis-je accélérer votre carrière aujourd'hui ?",'cand.ai.ph':"Posez-moi une question...",
     'agent.qa.jobs':'Emplois correspondants','agent.qa.profile':'Optimiser le profil',
     'agent.qa.interview':'Préparation entrevue','agent.qa.salary':'Conseils salaire',
-    'emp.role':'Employeur','emp.nav.jobs':'Mes offres','emp.nav.post':'Publier une offre','emp.nav.company':'Entreprise','emp.nav.team':"Équipe","emp.nav.billing":'Facturation',
+    'emp.role':'Employeur','emp.nav.jobs':'Mes offres','emp.nav.post':'Publier une offre','emp.nav.company':'Entreprise','emp.nav.team':"Équipe",'emp.nav.analytics':'Analytique','emp.nav.billing':'Facturation',
     'emp.tab.jobs':"Mes offres d'emploi",'emp.tab.post':'Publier une nouvelle offre','emp.tab.company':"Profil d'entreprise",'emp.tab.team':"Mon équipe",'emp.tab.billing':'Facturation & Plan',
     'team.invite.title':'Inviter un membre','team.invite.ph':'collègue@entreprise.com','team.invite.btn':'Envoyer l\'invitation',
     'team.role.recruiter':'Recruteur','team.role.admin':'Administrateur',
@@ -1238,7 +1238,7 @@ async function login() {
   const d = await api('POST', `${BASE}/api/auth/login`, { email, password: pw });
   if (d.success) {
     state.user = d.user; state.lang = d.user.preferred_lang || state.lang;
-    setLangUI(state.lang); hideModal('modal-login'); showUserNav();
+    setLangUI(state.lang); hideModal('modal-login'); showUserNav(); startSSE();
     toast(`Welcome back, ${d.user.first_name}!`, 'success');
     if (d.user.role === 'candidate') { loadSavedJobIds(); goto('candidate-dash'); }
     else goto('employer-dash');
@@ -1260,7 +1260,7 @@ async function register() {
   if (!body.first_name || !body.last_name || !body.email || !body.password) { showErr(errEl, 'All fields required'); return; }
   const d = await api('POST', `${BASE}/api/auth/register`, body);
   if (d.success) {
-    state.user = d.user; hideModal('modal-register'); showUserNav();
+    state.user = d.user; hideModal('modal-register'); showUserNav(); startSSE();
     toast(`Welcome to Nexhire, ${d.user.first_name}!`, 'success');
     if (d.user.role === 'candidate') { loadSavedJobIds(); goto('candidate-dash'); }
     else goto('employer-dash');
@@ -1550,7 +1550,7 @@ function showMyRevTab(tabId, el) {
 async function logout() {
   await api('POST', `${BASE}/api/auth/logout`);
   state.user = null; state.savedJobIds = new Set();
-  showGuestNav(); goto('home'); toast('Signed out', 'success');
+  stopSSE(); showGuestNav(); goto('home'); toast('Signed out', 'success');
 }
 
 function setRegRole(role, btn) {
@@ -2399,8 +2399,8 @@ async function loadProfileForm() {
       <div style="font-weight:600;font-size:15px;margin-bottom:12px"><i class="ti ti-file-cv" style="color:var(--indigo)"></i> ${L.cvTitle}</div>
       ${p.cv_url ? `<div style="margin-bottom:12px"><a href="${esc(p.cv_url)}" target="_blank" class="btn-ghost" style="font-size:13px"><i class="ti ti-download"></i> ${L.cvView}</a></div>` : ''}
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <input type="file" id="cv-file" accept=".pdf,.doc,.docx" style="display:none" onchange="uploadCV()">
-        <button type="button" class="btn-ghost" onclick="document.getElementById('cv-file').click()"><i class="ti ti-upload"></i> ${L.cvUpload}</button>
+        <input type="file" id="cv-file" accept=".pdf,.doc,.docx" style="display:none" onchange="uploadAndParseCV()">
+        <button type="button" class="btn-primary" onclick="document.getElementById('cv-file').click()" style="font-size:13px;padding:9px 16px"><i class="ti ti-sparkles"></i> ${isFr ? 'Importer & analyser CV (IA)' : 'Import & parse CV (AI)'}</button>
         <span style="font-size:12px;color:var(--muted)">${L.cvHint}</span>
       </div>
       <div id="cv-upload-status" style="display:none;font-size:13px;margin-top:8px;color:var(--muted)"></div>
@@ -3486,6 +3486,454 @@ function showEmpTab(tabId, navEl) {
   document.getElementById(tabId)?.classList.add('active');
   if (navEl) navEl.classList.add('active');
   if (tabId === 'etab-team') loadTeam();
+  if (tabId === 'etab-analytics') loadEmployerAnalytics();
+}
+
+// ── Employer Analytics ────────────────────────────────────
+async function loadEmployerAnalytics() {
+  const container = document.getElementById('employer-analytics-container');
+  if (!container) return;
+  const isFr = state.lang === 'fr';
+  container.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px;color:var(--indigo)"></i></div>`;
+  const d = await api('GET', `${BASE}/api/analytics/employer`);
+  if (!d.success) { container.innerHTML = `<div class="empty-state"><i class="ti ti-chart-off"></i><p>${d.error}</p></div>`; return; }
+  const { totals, jobStats, appTrend, stageFunnel } = d;
+  const stageMap = { new: isFr ? 'Nouveau' : 'New', reviewed: isFr ? 'Examiné' : 'Reviewed', shortlisted: isFr ? 'Présélectionné' : 'Shortlisted', interview: isFr ? 'Entretien' : 'Interview', offer: isFr ? 'Offre' : 'Offer', rejected: isFr ? 'Rejeté' : 'Rejected' };
+  const stageColors = { new: '#6366F1', reviewed: '#8b5cf6', shortlisted: '#3b82f6', interview: '#f59e0b', offer: '#22c55e', rejected: '#ef4444' };
+  const totalApps = (stageFunnel||[]).reduce((s,r) => s + parseInt(r.n||0), 0) || 1;
+  const funnelBars = (stageFunnel||[]).map(r => {
+    const pct = Math.round(parseInt(r.n||0) / totalApps * 100);
+    const color = stageColors[r.status] || '#6366F1';
+    return `<div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
+        <span style="color:var(--dark);font-weight:500">${stageMap[r.status]||r.status}</span>
+        <span style="color:var(--muted)">${r.n} (${pct}%)</span>
+      </div>
+      <div style="background:var(--border);border-radius:4px;height:8px"><div style="background:${color};width:${pct}%;height:8px;border-radius:4px;transition:width .5s"></div></div>
+    </div>`;
+  }).join('');
+
+  const jobRows = (jobStats||[]).slice(0,10).map(j => {
+    const title = isFr ? (j.title_fr||j.title_en) : (j.title_en||j.title_fr);
+    const conv = j.applications > 0 ? Math.round(parseInt(j.shortlisted||0) / parseInt(j.applications) * 100) : 0;
+    return `<tr style="border-bottom:1px solid var(--border)">
+      <td style="padding:10px 8px;font-size:13px;font-weight:500;color:var(--dark)">${esc(title)}</td>
+      <td style="padding:10px 8px;font-size:13px;text-align:center"><span class="job-tag ${j.status}">${j.status}</span></td>
+      <td style="padding:10px 8px;font-size:13px;text-align:center;font-weight:600;color:var(--indigo)">${j.applications||0}</td>
+      <td style="padding:10px 8px;font-size:13px;text-align:center">${j.shortlisted||0}</td>
+      <td style="padding:10px 8px;font-size:13px;text-align:center">${j.interviews||0}</td>
+      <td style="padding:10px 8px;font-size:13px;text-align:center;color:${conv>=20?'var(--green)':conv>=10?'var(--warning)':'var(--danger)'}">${conv}%</td>
+    </tr>`;
+  }).join('');
+
+  container.innerHTML = `
+    <div style="margin-bottom:24px">
+      <h2 style="margin:0 0 4px;color:var(--dark)">${isFr ? 'Analytique Recrutement' : 'Recruitment Analytics'}</h2>
+      <p style="margin:0;font-size:13px;color:var(--muted)">${isFr ? 'Performance de vos offres et pipeline candidats' : 'Job performance and candidate pipeline'}</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:28px">
+      ${[
+        { icon:'ti-briefcase', label: isFr?'Offres publiées':'Active jobs', val: totals.total_jobs, color:'#6366F1' },
+        { icon:'ti-file-text', label: isFr?'Candidatures':'Applications', val: totals.total_apps, color:'#3b82f6' },
+        { icon:'ti-users', label: isFr?'Présélectionnés':'Shortlisted', val: totals.total_shortlisted, color:'#f59e0b' },
+        { icon:'ti-star', label: isFr?'Offres faites':'Offers made', val: totals.total_offers, color:'#22c55e' },
+        { icon:'ti-clock', label: isFr?'Jours moy. décision':'Avg days to decide', val: totals.avg_days || '—', color:'#8b5cf6' },
+      ].map(m => `<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px">
+        <div style="color:${m.color};font-size:22px;margin-bottom:6px"><i class="ti ${m.icon}"></i></div>
+        <div style="font-size:26px;font-weight:800;color:var(--dark)">${m.val}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">${m.label}</div>
+      </div>`).join('')}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
+        <h4 style="margin:0 0 16px;color:var(--dark);font-size:14px">${isFr ? 'Entonnoir candidatures' : 'Application funnel'}</h4>
+        ${funnelBars || `<p style="color:var(--muted);font-size:13px">${isFr?'Aucune donnée':'No data yet'}</p>`}
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
+        <h4 style="margin:0 0 16px;color:var(--dark);font-size:14px">${isFr ? 'Candidatures sur 30 jours' : 'Applications last 30 days'}</h4>
+        ${(appTrend||[]).length ? renderSparkline(appTrend.map(r => parseInt(r.n)), appTrend.map(r => r.day)) : `<p style="color:var(--muted);font-size:13px">${isFr?'Aucune candidature ce mois':'No applications this month'}</p>`}
+      </div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--border)">
+        <h4 style="margin:0;color:var(--dark);font-size:14px">${isFr ? 'Performance par offre' : 'Performance by job'}</h4>
+      </div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse">
+          <thead><tr style="background:var(--background)">
+            <th style="padding:10px 8px;font-size:12px;color:var(--muted);text-align:left">${isFr?'Titre':'Title'}</th>
+            <th style="padding:10px 8px;font-size:12px;color:var(--muted);text-align:center">Status</th>
+            <th style="padding:10px 8px;font-size:12px;color:var(--muted);text-align:center">${isFr?'Candidatures':'Apps'}</th>
+            <th style="padding:10px 8px;font-size:12px;color:var(--muted);text-align:center">${isFr?'Présélect.':'Shortlisted'}</th>
+            <th style="padding:10px 8px;font-size:12px;color:var(--muted);text-align:center">${isFr?'Entretiens':'Interviews'}</th>
+            <th style="padding:10px 8px;font-size:12px;color:var(--muted);text-align:center">${isFr?'Taux conv.':'Conv. rate'}</th>
+          </tr></thead>
+          <tbody>${jobRows || `<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--muted);font-size:13px">${isFr?'Aucune offre publiée':'No jobs posted yet'}</td></tr>`}</tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function renderSparkline(vals, labels) {
+  if (!vals.length) return '';
+  const max = Math.max(...vals, 1);
+  const W = 280, H = 80, pad = 4;
+  const pts = vals.map((v, i) => {
+    const x = pad + (i / Math.max(vals.length - 1, 1)) * (W - pad * 2);
+    const y = H - pad - (v / max) * (H - pad * 2);
+    return `${x},${y}`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:${H}px">
+    <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#6366F1" stop-opacity="0"/>
+    </linearGradient></defs>
+    <polyline points="${pts.join(' ')}" fill="none" stroke="#6366F1" stroke-width="2" stroke-linejoin="round"/>
+    ${vals.map((v,i) => {
+      const [x,y] = pts[i].split(',');
+      return `<circle cx="${x}" cy="${y}" r="3" fill="#6366F1"/>`;
+    }).join('')}
+    <text x="${pad}" y="${H-2}" font-size="10" fill="var(--muted)">${labels[0]||''}</text>
+    <text x="${W-pad}" y="${H-2}" font-size="10" fill="var(--muted)" text-anchor="end">${labels[labels.length-1]||''}</text>
+  </svg>`;
+}
+
+// ── Messagerie ────────────────────────────────────────────
+let _currentThreadApp = null;
+
+async function loadMessagesTab() {
+  const container = document.getElementById('tab-messages') || document.getElementById('tab-applications');
+  if (!container) return;
+  const isFr = state.lang === 'fr';
+  // Inject messages panel into applications tab if not standalone
+  let msgContainer = document.getElementById('messages-panel');
+  if (!msgContainer) return openMessagesPage();
+}
+
+async function openMessagesPage(appId) {
+  const isFr = state.lang === 'fr';
+  const d = await api('GET', `${BASE}/api/messages/threads`);
+  const threads = d.threads || [];
+  const threadList = threads.length
+    ? threads.map(t => {
+        const title = isFr ? (t.title_fr||t.title_en) : (t.title_en||t.title_fr);
+        const logo = t.logo_url ? `<img src="${esc(t.logo_url)}" style="width:36px;height:36px;border-radius:8px;object-fit:contain">` : `<div class="company-logo" style="background:${companyColor(t.company_name||'')};width:36px;height:36px;border-radius:8px;font-size:11px">${(t.company_name||'?').slice(0,2).toUpperCase()}</div>`;
+        const unread = parseInt(t.unread||0);
+        return `<div class="job-list-item" style="cursor:pointer;${appId===t.application_id?'background:var(--indigo)10;border-color:var(--indigo)':''}" onclick="openThread('${t.application_id}')">
+          ${logo}
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:600;font-size:13px;color:var(--dark)">${esc(title)}</div>
+            <div style="font-size:12px;color:var(--muted)">${esc(t.company_name||'')} · ${esc(t.cand_first||'')} ${esc(t.cand_last||'')}</div>
+            ${t.last_message ? `<div style="font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(t.last_message)}</div>` : ''}
+          </div>
+          ${unread ? `<span style="background:var(--indigo);color:#fff;border-radius:99px;font-size:11px;font-weight:700;padding:2px 7px;min-width:20px;text-align:center">${unread}</span>` : ''}
+        </div>`;
+      }).join('')
+    : `<div class="empty-state" style="padding:32px 0"><i class="ti ti-messages"></i><p style="font-size:13px">${isFr?'Aucune conversation.':'No conversations yet.'}</p></div>`;
+
+  const panel = document.getElementById('messages-panel-wrap');
+  if (panel) {
+    panel.innerHTML = threadList;
+    if (appId) openThread(appId);
+    return;
+  }
+  // Show as modal overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'messages-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9000;display:flex;align-items:center;justify-content:center;padding:16px';
+  overlay.innerHTML = `<div style="background:var(--surface);border-radius:16px;width:100%;max-width:860px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)">
+      <h3 style="margin:0;color:var(--dark)">${isFr?'Messages':'Messages'}</h3>
+      <button class="btn-ghost" style="padding:4px 10px" onclick="document.getElementById('messages-overlay')?.remove()"><i class="ti ti-x"></i></button>
+    </div>
+    <div style="display:flex;flex:1;overflow:hidden;min-height:0">
+      <div id="messages-panel-wrap" style="width:280px;border-right:1px solid var(--border);overflow-y:auto;padding:8px">${threadList}</div>
+      <div id="messages-thread" style="flex:1;display:flex;flex-direction:column;padding:16px;overflow:hidden">
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px">${isFr?'Sélectionnez une conversation':'Select a conversation'}</div>
+      </div>
+    </div>
+  </div>`;
+  document.body.appendChild(overlay);
+  if (appId) openThread(appId);
+}
+
+async function openThread(appId) {
+  _currentThreadApp = appId;
+  const isFr = state.lang === 'fr';
+  const threadEl = document.getElementById('messages-thread');
+  if (!threadEl) return;
+  threadEl.innerHTML = `<div style="flex:1;display:flex;align-items:center;justify-content:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;color:var(--indigo)"></i></div>`;
+  const d = await api('GET', `${BASE}/api/messages/${appId}`);
+  const msgs = d.messages || [];
+  const bubbles = msgs.map(m => {
+    const mine = m.sender_id === state.user?.id;
+    const name = `${m.first_name||''} ${m.last_name||''}`.trim();
+    const time = new Date(m.created_at).toLocaleTimeString(isFr?'fr-CA':'en-CA', { hour:'2-digit', minute:'2-digit' });
+    return `<div style="display:flex;flex-direction:${mine?'row-reverse':'row'};gap:8px;margin-bottom:12px;align-items:flex-end">
+      <div style="max-width:70%">
+        ${!mine?`<div style="font-size:11px;color:var(--muted);margin-bottom:3px">${esc(name)}</div>`:''}
+        <div style="background:${mine?'var(--indigo)':'var(--background)'};color:${mine?'#fff':'var(--dark)'};padding:10px 14px;border-radius:${mine?'14px 14px 4px 14px':'14px 14px 14px 4px'};font-size:13px;line-height:1.5">${esc(m.body)}</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:3px;text-align:${mine?'right':'left'}">${time}</div>
+      </div>
+    </div>`;
+  }).join('');
+  threadEl.innerHTML = `
+    <div id="msg-bubbles" style="flex:1;overflow-y:auto;padding:8px 0">${bubbles||`<div style="text-align:center;color:var(--muted);font-size:13px;padding:32px">${isFr?'Commencez la conversation':'Start the conversation'}</div>`}</div>
+    <div style="display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+      <input type="text" id="msg-input" placeholder="${isFr?'Votre message…':'Your message…'}" style="flex:1;font-size:13px" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}">
+      <button class="btn-primary" style="padding:10px 16px;font-size:13px" onclick="sendMessage()"><i class="ti ti-send"></i></button>
+    </div>`;
+  const bubblesEl = document.getElementById('msg-bubbles');
+  if (bubblesEl) bubblesEl.scrollTop = bubblesEl.scrollHeight;
+}
+
+async function sendMessage() {
+  const input = document.getElementById('msg-input');
+  const body = input?.value.trim();
+  if (!body || !_currentThreadApp) return;
+  input.value = '';
+  const d = await api('POST', `${BASE}/api/messages/${_currentThreadApp}`, { body });
+  if (d.success) openThread(_currentThreadApp);
+  else toast(d.error || 'Error', 'error');
+}
+
+// ── Pages entreprise publiques ────────────────────────────
+async function loadCompanyPage(slug) {
+  const isFr = state.lang === 'fr';
+  let overlay = document.getElementById('company-page-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'company-page-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:var(--background);z-index:8000;overflow-y:auto;padding:0';
+    document.body.appendChild(overlay);
+  }
+  overlay.innerHTML = `<div style="max-width:900px;margin:0 auto;padding:24px 16px"><div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:32px;color:var(--indigo)"></i></div></div>`;
+
+  const d = await api('GET', `${BASE}/api/companies/${slug}`);
+  if (!d.success) { overlay.remove(); toast('Company not found', 'error'); return; }
+  const { company: c, jobs, reviews, ratingDist } = d;
+  const title = isFr ? (c.description_fr||c.description_en) : (c.description_en||c.description_fr);
+  const stars = n => '★'.repeat(Math.round(n||0)) + '☆'.repeat(5-Math.round(n||0));
+  const ratingBar = n => {
+    const total = (ratingDist||[]).reduce((s,r)=>s+parseInt(r.n),0)||1;
+    return (ratingDist||[]).map(r => {
+      const pct = Math.round(parseInt(r.n)/total*100);
+      return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:12px">
+        <span style="color:var(--muted);width:16px;text-align:right">${r.rating}</span>
+        <div style="flex:1;background:var(--border);height:6px;border-radius:3px"><div style="background:#f59e0b;width:${pct}%;height:6px;border-radius:3px"></div></div>
+        <span style="color:var(--muted);width:24px">${r.n}</span>
+      </div>`;
+    }).join('');
+  };
+  const jobCards = (jobs||[]).map(j => {
+    const jTitle = isFr ? (j.title_fr||j.title_en) : (j.title_en||j.title_fr);
+    return `<div style="padding:14px;border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px">
+      <div>
+        <div style="font-weight:600;color:var(--dark);font-size:14px">${esc(jTitle)}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:3px">${[j.city, j.province].filter(Boolean).join(', ')||''} · <span class="job-tag ${j.work_mode||''}" style="font-size:11px;padding:2px 6px">${j.work_mode||'onsite'}</span></div>
+      </div>
+      <button class="btn-ghost" style="font-size:12px;flex-shrink:0" onclick="document.getElementById('company-page-overlay')?.remove();goto('jobs')"><i class="ti ti-arrow-right"></i> ${isFr?'Voir':'Apply'}</button>
+    </div>`;
+  }).join('');
+  const reviewCards = (reviews||[]).map(r => `
+    <div style="padding:16px;border:1px solid var(--border);border-radius:10px;margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="color:#f59e0b;font-size:14px">${stars(r.rating)}</div>
+        <div style="font-size:11px;color:var(--muted)">${new Date(r.created_at).toLocaleDateString(isFr?'fr-CA':'en-CA',{year:'numeric',month:'short'})}</div>
+      </div>
+      ${r.title?`<div style="font-weight:600;color:var(--dark);font-size:13px;margin-bottom:6px">${esc(r.title)}</div>`:''}
+      ${r.pros?`<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--green);font-weight:600">✓</span> ${esc(r.pros)}</div>`:''}
+      ${r.cons?`<div style="font-size:12px"><span style="color:var(--danger);font-weight:600">✗</span> ${esc(r.cons)}</div>`:''}
+    </div>`).join('');
+
+  overlay.innerHTML = `
+    <div style="background:var(--dark);padding:24px 0;margin-bottom:0">
+      <div style="max-width:900px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between">
+        <button class="btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.3);font-size:13px" onclick="document.getElementById('company-page-overlay')?.remove()"><i class="ti ti-arrow-left"></i> ${isFr?'Retour':'Back'}</button>
+        <div style="font-size:13px;color:rgba(255,255,255,.5)">nexhire.ca</div>
+      </div>
+    </div>
+    <div style="max-width:900px;margin:0 auto;padding:32px 16px">
+      <div style="display:flex;align-items:flex-start;gap:20px;margin-bottom:28px;flex-wrap:wrap">
+        ${c.logo_url ? `<img src="${esc(c.logo_url)}" style="width:80px;height:80px;border-radius:16px;object-fit:contain;border:1px solid var(--border)">` : `<div class="company-logo" style="background:${companyColor(c.name||'')};width:80px;height:80px;border-radius:16px;font-size:26px">${(c.name||'?').slice(0,2).toUpperCase()}</div>`}
+        <div style="flex:1;min-width:200px">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <h1 style="margin:0;font-size:26px;color:var(--dark)">${esc(c.name)}</h1>
+            ${c.verified?`<span style="background:#dcfce7;color:#15803d;font-size:11px;font-weight:700;padding:3px 8px;border-radius:99px">✓ ${isFr?'Vérifié':'Verified'}</span>`:''}
+          </div>
+          <div style="font-size:14px;color:var(--muted);margin-top:6px">${[c.industry, c.size, c.city, c.country].filter(Boolean).join(' · ')}</div>
+          <div style="margin-top:8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            ${c.avg_rating ? `<span style="color:#f59e0b;font-size:14px">${stars(c.avg_rating)} <strong style="color:var(--dark)">${parseFloat(c.avg_rating).toFixed(1)}</strong> <span style="color:var(--muted);font-size:12px">(${c.review_count} ${isFr?'avis':'reviews'})</span></span>` : ''}
+            ${c.website ? `<a href="${esc(c.website)}" target="_blank" rel="noopener" style="font-size:13px;color:var(--indigo);text-decoration:none"><i class="ti ti-external-link"></i> ${esc(c.website.replace(/^https?:\/\//,''))}</a>` : ''}
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:24px;align-items:start">
+        <div>
+          ${title?`<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px">
+            <h3 style="margin:0 0 12px;color:var(--dark);font-size:15px">${isFr?'À propos':'About'}</h3>
+            <p style="margin:0;color:var(--text);line-height:1.6;font-size:14px">${esc(title)}</p>
+          </div>`:''}
+          <h3 style="color:var(--dark);font-size:15px;margin:0 0 12px">${isFr?'Offres actives':'Active jobs'} (${(jobs||[]).length})</h3>
+          ${jobCards||`<p style="color:var(--muted);font-size:13px">${isFr?'Aucune offre active.':'No active jobs.'}</p>`}
+          <h3 style="color:var(--dark);font-size:15px;margin:24px 0 12px">${isFr?'Avis salariés':'Employee reviews'} (${(reviews||[]).length})</h3>
+          ${reviewCards||`<p style="color:var(--muted);font-size:13px">${isFr?'Aucun avis.':'No reviews yet.'}</p>`}
+          <div style="border:2px dashed var(--border);border-radius:12px;padding:20px;margin-top:16px">
+            <h4 style="margin:0 0 12px;color:var(--dark);font-size:14px">${isFr?'Laisser un avis':'Leave a review'}</h4>
+            <div style="display:flex;gap:4px;margin-bottom:12px">${[1,2,3,4,5].map(n=>`<button onclick="setReviewRating(${n},this)" data-rating="${n}" style="font-size:22px;background:none;border:none;cursor:pointer;color:#d1d5db">★</button>`).join('')}</div>
+            <input type="hidden" id="review-rating" value="">
+            <input type="text" id="review-title" placeholder="${isFr?'Titre de l\'avis':'Review title'}" style="width:100%;margin-bottom:8px;font-size:13px">
+            <div class="form-row" style="gap:8px">
+              <div class="form-group"><label style="font-size:12px">✓ ${isFr?'Points positifs':'Pros'}</label><textarea id="review-pros" style="font-size:12px;min-height:60px"></textarea></div>
+              <div class="form-group"><label style="font-size:12px">✗ ${isFr?'Points négatifs':'Cons'}</label><textarea id="review-cons" style="font-size:12px;min-height:60px"></textarea></div>
+            </div>
+            <button class="btn-primary" style="font-size:13px;padding:8px 18px;margin-top:4px" onclick="submitReview('${esc(c.slug)}')"><i class="ti ti-send"></i> ${isFr?'Publier':'Submit'}</button>
+          </div>
+        </div>
+        <div>
+          ${c.avg_rating ? `<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px">
+            <div style="font-size:40px;font-weight:900;color:var(--dark);text-align:center">${parseFloat(c.avg_rating).toFixed(1)}</div>
+            <div style="color:#f59e0b;font-size:20px;text-align:center;margin-bottom:8px">${stars(c.avg_rating)}</div>
+            ${ratingBar()}
+          </div>` : ''}
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px">
+            <div style="font-size:13px;color:var(--muted);margin-bottom:8px">${isFr?'Informations':'Company info'}</div>
+            ${[
+              c.industry && ['<i class="ti ti-building-factory-2"></i>', c.industry],
+              c.size && ['<i class="ti ti-users"></i>', c.size],
+              c.city && ['<i class="ti ti-map-pin"></i>', [c.city,c.country].filter(Boolean).join(', ')],
+            ].filter(Boolean).map(([icon,val])=>`<div style="display:flex;gap:8px;font-size:13px;color:var(--dark);padding:6px 0;border-bottom:1px solid var(--border)">${icon} ${esc(val)}</div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function setReviewRating(n, btn) {
+  document.getElementById('review-rating').value = n;
+  btn.closest('div').querySelectorAll('button').forEach((b,i) => {
+    b.style.color = i < n ? '#f59e0b' : '#d1d5db';
+  });
+}
+
+async function submitReview(slug) {
+  const rating = document.getElementById('review-rating')?.value;
+  const title  = document.getElementById('review-title')?.value.trim();
+  const pros   = document.getElementById('review-pros')?.value.trim();
+  const cons   = document.getElementById('review-cons')?.value.trim();
+  const isFr   = state.lang === 'fr';
+  if (!rating) { toast(isFr?'Choisissez une note':'Please select a rating', 'error'); return; }
+  const d = await api('POST', `${BASE}/api/companies/${slug}/reviews`, { rating, title, pros, cons });
+  if (d.success) { toast(isFr?'Merci pour votre avis !':'Review submitted!', 'success'); loadCompanyPage(slug); }
+  else toast(d.error || 'Error', 'error');
+}
+
+// ── CV parsing IA ─────────────────────────────────────────
+async function uploadAndParseCV() {
+  const input = document.getElementById('cv-file-parse') || document.getElementById('cv-file');
+  if (!input?.files?.length) return;
+  const isFr = state.lang === 'fr';
+  const statusEl = document.getElementById('cv-upload-status');
+  const file = input.files[0];
+  const formData = new FormData();
+  formData.append('cv', file);
+  if (statusEl) { statusEl.style.display = 'block'; statusEl.innerHTML = `<i class="ti ti-loader" style="animation:spin .8s linear infinite"></i> ${isFr?'Analyse IA en cours…':'Parsing with AI…'}`; }
+  try {
+    const resp = await fetch(`${BASE}/api/candidates/profile/cv/parse`, {
+      method: 'POST', body: formData, credentials: 'include',
+    });
+    const d = await resp.json();
+    if (!d.success) throw new Error(d.error);
+    if (d.parsed) {
+      const p = d.parsed;
+      const apply = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
+      apply('pf-head-en', p.headline_en);
+      apply('pf-head-fr', p.headline_fr);
+      apply('pf-bio-en', p.bio_en);
+      apply('pf-exp', p.experience_years);
+      apply('pf-city', p.city);
+      if (p.province) { const sel = document.getElementById('pf-province'); if (sel) sel.value = p.province; }
+      if (p.skills?.length) {
+        p.skills.forEach(s => {
+          const chip = document.querySelector(`.skill-chip[data-skill="${CSS.escape(s)}"]`);
+          if (chip) chip.classList.add('selected');
+        });
+      }
+      if (statusEl) statusEl.innerHTML = `<span style="color:var(--green)">✓ ${isFr?`Profil pré-rempli depuis le CV (${p.skills?.length||0} compétences détectées)`:`Profile pre-filled from CV (${p.skills?.length||0} skills detected)`}</span>`;
+    } else {
+      if (statusEl) statusEl.innerHTML = `<span style="color:var(--green)">✓ ${isFr?'CV sauvegardé.':'CV saved.'} ${d.message||''}</span>`;
+    }
+  } catch (e) {
+    if (statusEl) statusEl.innerHTML = `<span style="color:var(--danger)">✗ ${e.message}</span>`;
+  }
+}
+
+// ── SSE Notifications temps réel ─────────────────────────
+let _sseSource = null;
+
+function startSSE() {
+  if (_sseSource) return;
+  if (!state.user) return;
+  _sseSource = new EventSource(`${BASE}/api/notifications/stream`, { withCredentials: true });
+  _sseSource.onmessage = (e) => {
+    try {
+      const payload = JSON.parse(e.data);
+      if (payload.type === 'notification') {
+        showInAppNotification(payload);
+        updateNotifBadge(1);
+      }
+    } catch {}
+  };
+  _sseSource.onerror = () => {
+    _sseSource?.close();
+    _sseSource = null;
+    setTimeout(() => { if (state.user) startSSE(); }, 10000);
+  };
+}
+
+function stopSSE() {
+  _sseSource?.close();
+  _sseSource = null;
+}
+
+function showInAppNotification(n) {
+  const isFr = state.lang === 'fr';
+  const toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;bottom:80px;right:20px;background:var(--dark);color:#fff;border-radius:12px;padding:14px 18px;font-size:13px;max-width:320px;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:9999;display:flex;align-items:flex-start;gap:10px;cursor:pointer;animation:slideIn .3s ease';
+  toast.innerHTML = `<i class="ti ti-bell" style="color:var(--indigo-light,#818cf8);font-size:18px;flex-shrink:0;margin-top:1px"></i>
+    <div><div style="font-weight:600;margin-bottom:2px">${esc(n.title||isFr?'Notification':'Notification')}</div><div style="color:rgba(255,255,255,.7);font-size:12px">${esc(n.message||n.body||'')}</div></div>`;
+  if (n.link_url) toast.onclick = () => { toast.remove(); location.hash = n.link_url; };
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 6000);
+}
+
+function updateNotifBadge(delta) {
+  const badge = document.getElementById('notif-badge');
+  if (!badge) return;
+  const cur = parseInt(badge.textContent || '0');
+  const next = cur + delta;
+  badge.textContent = next > 0 ? next : '';
+  badge.style.display = next > 0 ? 'flex' : 'none';
+}
+
+// ── PWA Install prompt ────────────────────────────────────
+let _pwaPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _pwaPrompt = e;
+  const banner = document.getElementById('pwa-banner');
+  if (banner) banner.style.display = 'flex';
+});
+
+function installPWA() {
+  if (!_pwaPrompt) return;
+  _pwaPrompt.prompt();
+  _pwaPrompt.userChoice.then(r => {
+    _pwaPrompt = null;
+    const banner = document.getElementById('pwa-banner');
+    if (banner) banner.style.display = 'none';
+  });
 }
 
 // ── Modal helpers ──────────────────────────────────────────

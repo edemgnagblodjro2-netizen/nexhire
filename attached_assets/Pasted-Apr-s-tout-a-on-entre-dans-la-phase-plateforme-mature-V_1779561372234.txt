@@ -1,0 +1,37 @@
+Après tout ça, on entre dans la phase plateforme mature. Voici ce qui distingue un bon produit d'un produit qui domine son marché :
+
+Phase 3 — Rétention & monétisation 
+
+Système de crédits IA Limiter les features IA gratuites (ex: 3 lettres de motivation/mois, 5 analyses de CV) et vendre des packs de crédits. C'est le levier de monétisation le plus naturel après les abonnements.
+
+Tableau de bord IA pour candidats Score de profil, suggestions concrètes ("Ajoutez 3 compétences pour augmenter votre visibilité de 40%"), comparaison avec les candidats retenus pour des postes similaires.
+
+Tests de compétences vérifiables Candidat complète un quiz React, Python, Excel → badge vérifié sur son profil. Les employeurs filtrent par compétences validées. Grosse valeur ajoutée vs LinkedIn.
+
+Système de référencement "Invitez un employeur → obtenez 1 mois Pro gratuit". Boucle de croissance virale B2B.
+
+Saved searches avec alertes instantanées En plus du daily/weekly — une offre est publiée → le candidat reçoit un push/email dans les minutes qui suivent si elle correspond parfaitement.
+
+Phase 4 — Expansion 
+
+API publique Permettre aux cabinets RH et ATS externes (Workday, BambooHR) de pousser leurs offres directement sur Nexhire via API. Ouvre un canal B2B enterprise.
+
+Agrégateur d'offres Scraper/importer automatiquement les offres de LinkedIn, Indeed, Jobillico pour grossir le catalogue rapidement. Les candidats viennent pour le volume, restent pour l'IA.
+
+Nexhire Recruiter Network Recruteurs freelance peuvent rejoindre la plateforme, être mis en relation avec des entreprises qui cherchent à déléguer, toucher une commission. Nouveau segment de revenus.
+
+Vérification d'entreprise avancée Badge "Employeur vérifié" avec vérification du NEQ, avis Google, Glassdoor score intégré. Réduit la méfiance des candidats.
+
+Multilingue au-delà de FR/EN Espagnol, portugais, mandarin — pour cibler les communautés immigrantes au Canada qui sont sous-servies par les plateformes actuelles. Gros différenciateur.
+
+Phase 5 — Écosystème 
+
+Nexhire Learn Cours courts liés aux offres d'emploi — "Ce poste requiert Tableau → voici 3 cours recommandés". Partenariat avec Udemy/Coursera ou contenu propriétaire. Monétisation par affiliation.
+
+Salaire market data Agrégation anonymisée des salaires déclarés → outil public "Quel est le salaire moyen d'un dev React à Montréal ?". Trafic SEO massif, crédibilité plateforme.
+
+Nexhire for Agencies Version white-label pour les agences de recrutement. Elles gèrent leurs clients sur une instance Nexhire brandée à leur nom. Revenu récurrent B2B élevé.
+
+Programme d'ambassadeurs campus Partenariats avec les universités québécoises (Polytechnique, HEC, UQAM) — Nexhire devient la plateforme officielle de placement étudiant. Acquisition massive de candidats 18–25 ans.
+
+Entretiens vidéo asynchrones intégrés Le recruteur envoie 3 questions → le candidat répond en vidéo → l'IA transcrit et score les réponses. Élimine les premières entrevues téléphoniques. Feature premium.

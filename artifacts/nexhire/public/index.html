@@ -10,6 +10,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <link rel="stylesheet" href="/nexhire/css/main.css?v=20260523aa">
 <link rel="icon" type="image/svg+xml" href="/nexhire/img/favicon.svg">
+<link rel="manifest" href="/nexhire/manifest.json">
+<meta name="theme-color" content="#023448">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Nexhire">
+<link rel="apple-touch-icon" href="/nexhire/img/icon-192.png">
 </head>
 <body>
 
@@ -598,6 +605,7 @@
         <a class="dash-nav-item" data-emptab="etab-post"><i class="ti ti-plus"></i> <span data-i18n="emp.nav.post">Post a Job</span></a>
         <a class="dash-nav-item" data-emptab="etab-company"><i class="ti ti-building"></i> <span data-i18n="emp.nav.company">Company</span></a>
         <a class="dash-nav-item" data-emptab="etab-team"><i class="ti ti-users"></i> <span data-i18n="emp.nav.team">Work Team</span></a>
+        <a class="dash-nav-item" data-emptab="etab-analytics"><i class="ti ti-chart-bar"></i> <span data-i18n="emp.nav.analytics">Analytics</span></a>
         <a class="dash-nav-item" data-emptab="etab-billing"><i class="ti ti-credit-card"></i> <span data-i18n="emp.nav.billing">Billing</span></a>
       </nav>
     </div>
@@ -620,6 +628,9 @@
       <div id="etab-team" class="dash-tab">
         <h2 data-i18n="emp.tab.team">Work Team</h2>
         <div id="team-container"></div>
+      </div>
+      <div id="etab-analytics" class="dash-tab">
+        <div id="employer-analytics-container"></div>
       </div>
       <div id="etab-billing" class="dash-tab">
         <h2 data-i18n="emp.tab.billing">Billing & Plan</h2>
@@ -987,6 +998,28 @@
 </div>
 
 <div id="toasts" class="toast-container"></div>
-<script src="/nexhire/js/app.js?v=20260523ag"></script>
+
+<div id="pwa-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#023448;color:#fff;padding:12px 20px;z-index:7000;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;box-shadow:0 -4px 20px rgba(0,0,0,.3)">
+  <div style="display:flex;align-items:center;gap:12px">
+    <img src="/nexhire/favicon.svg" style="width:36px;height:36px;border-radius:8px">
+    <div>
+      <div style="font-weight:700;font-size:14px">Install Nexhire</div>
+      <div style="font-size:12px;opacity:.7">Add to home screen for faster access</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px">
+    <button onclick="installPWA()" style="background:#6366F1;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:600;cursor:pointer;font-size:13px">Install</button>
+    <button onclick="document.getElementById('pwa-banner').style.display='none'" style="background:rgba(255,255,255,.15);color:#fff;border:none;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px">Not now</button>
+  </div>
+</div>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/nexhire/sw.js', { scope: '/nexhire/' })
+    .then(r => console.log('[SW] registered', r.scope))
+    .catch(e => console.warn('[SW] failed', e));
+}
+</script>
+<script src="/nexhire/js/app.js?v=20260523ah"></script>
 </body>
 </html>

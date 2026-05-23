@@ -1,0 +1,39 @@
+{
+  "name": "Nexhire — Global AI Employment",
+  "short_name": "Nexhire",
+  "description": "Find your next opportunity anywhere in the world. AI-powered job matching.",
+  "start_url": "/nexhire/",
+  "display": "standalone",
+  "background_color": "#023448",
+  "theme_color": "#023448",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/nexhire/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/nexhire/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "en",
+  "dir": "ltr",
+  "shortcuts": [
+    {
+      "name": "Browse Jobs",
+      "url": "/nexhire/#jobs",
+      "description": "Search for jobs"
+    },
+    {
+      "name": "My Dashboard",
+      "url": "/nexhire/#candidate-dash",
+      "description": "View your candidate dashboard"
+    }
+  ]
+}

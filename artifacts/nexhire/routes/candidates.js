@@ -71,6 +71,44 @@ router.put('/profile', requireAuth, async (req, res) => {
   res.json({ success: true, profile });
 });
 
+router.post('/profile/cv/parse', requireAuth, cvUpload.single('cv'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ success: false, error: 'No file uploaded' });
+    let text = '';
+    if (req.file.mimetype === 'application/pdf') {
+      const pdfParse = require('pdf-parse');
+      const buf = require('fs').readFileSync(req.file.path);
+      const result = await pdfParse(buf);
+      text = result.text;
+    }
+    if (!text.trim()) {
+      return res.json({ success: true, cv_url: `/nexhire/uploads/${req.file.filename}`, parsed: null, message: 'File saved — text extraction not available for this format' });
+    }
+    const openai = new (require('openai'))({ apiKey: process.env.OPENAI_API_KEY });
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      response_format: { type: 'json_object' },
+      messages: [{
+        role: 'system',
+        content: 'Extract structured data from this CV/resume text. Return JSON: { headline_en, headline_fr, bio_en, bio_fr, skills (array of strings, max 15), experience_years (number), city, province (2-letter CA code if applicable) }. Only return fields you can confidently extract. Return null for unknown fields.'
+      }, {
+        role: 'user', content: text.slice(0, 6000)
+      }],
+      max_tokens: 800,
+    });
+    let parsed = {};
+    try { parsed = JSON.parse(completion.choices[0].message.content); } catch {}
+    const cvUrl = `/nexhire/uploads/${req.file.filename}`;
+    await db.run(
+      'UPDATE nh_candidate_profiles SET cv_url = $1, cv_text = $2 WHERE user_id = $3',
+      [cvUrl, text.slice(0, 10000), req.session.user.id]
+    );
+    res.json({ success: true, cv_url: cvUrl, parsed });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
 router.post('/profile/cv', requireAuth, cvUpload.single('cv'), async (req, res) => {
   if (req.session.user.role !== 'candidate') return res.status(403).json({ success: false, error: 'Candidates only' });
   if (!req.file) return res.status(400).json({ success: false, error: 'No file uploaded' });
