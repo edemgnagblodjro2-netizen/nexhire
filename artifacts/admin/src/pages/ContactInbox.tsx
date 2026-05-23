@@ -317,13 +317,26 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
           <button
             key={chip.key}
             onClick={() => setFilter(chip.key)}
-            className={`px-3 py-1.5 text-sm rounded-full border transition ${
+            className={`px-3 py-1.5 text-sm rounded-full border transition flex items-center gap-1.5 ${
               filter === chip.key
                 ? "bg-teal-600 text-white border-teal-600"
                 : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
             }`}
           >
-            {chip.label} <span className="opacity-70">({chip.count})</span>
+            {chip.label}
+            {chip.key === "archived" && chip.count > 0 ? (
+              <span
+                className={`inline-flex items-center justify-center min-w-[1.25rem] px-1.5 py-0.5 rounded-full text-xs font-semibold leading-none ${
+                  filter === chip.key
+                    ? "bg-white/25 text-white"
+                    : "bg-slate-100 text-slate-600 border border-slate-200"
+                }`}
+              >
+                {chip.count}
+              </span>
+            ) : (
+              <span className="opacity-70">({chip.count})</span>
+            )}
           </button>
         ))}
       </div>
