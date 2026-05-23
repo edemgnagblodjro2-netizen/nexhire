@@ -5,7 +5,8 @@ const state = {
   user: null, lang: 'en', regRole: 'candidate',
   jobs: [], currentPage: 1, jobSearchTimer: null,
   savedJobIds: new Set(), currentJobForApply: null,
-  currentKanbanJob: null, filterTimer: null
+  currentKanbanJob: null, filterTimer: null,
+  candidateProfile: null
 };
 
 // ── Geography ──────────────────────────────────────────────
@@ -740,6 +741,7 @@ async function filterJobs(page = 1) {
           ${j.job_type ? `<span class="job-tag">${j.job_type}</span>` : ''}
           ${j.salary_min ? `<span class="job-tag salary-tag">${fmtSalary(j.salary_min)}${j.salary_max ? '–'+fmtSalary(j.salary_max) : ''} ${j.salary_currency||'CAD'}</span>` : ''}
         </div>
+        ${matchScoreBadge(j)}
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0">
         <button class="save-btn${isSaved ? ' saved' : ''} js-save-btn" data-save-id="${j.id}" title="Save"><i class="ti ti-heart${isSaved ? '-filled' : ''}"></i></button>
@@ -812,7 +814,8 @@ async function openJobDetail(jobId) {
       </div>
       <button class="save-btn${isSaved ? ' saved' : ''} js-save-btn" data-save-id="${j.id}" style="padding:8px 10px;font-size:16px" title="Save job"><i class="ti ti-heart${isSaved ? '-filled' : ''}"></i></button>
     </div>
-    <h2 style="font-family:var(--r);font-size:20px;font-weight:700;color:var(--dark);margin:12px 0 8px">${esc(title)}</h2>
+    <h2 style="font-family:var(--r);font-size:20px;font-weight:700;color:var(--dark);margin:12px 0 6px">${esc(title)}</h2>
+    ${state.candidateProfile ? `<div style="margin-bottom:8px">${matchScoreBadge(j)}</div>` : ''}
     <div class="job-location-detail">${fmtLocationDetail(j)}</div>
     <div class="job-meta" style="margin-bottom:16px">
       ${j.job_type ? `<span class="job-tag">${j.job_type}</span>` : ''}
@@ -1364,6 +1367,34 @@ function computeCompleteness(p, user) {
   return { pct, missing };
 }
 
+// ── AI Match Score ──────────────────────────────────────────
+function computeMatchScore(job) {
+  const p = state.candidateProfile;
+  if (!p || !state.user || state.user.role !== 'candidate') return null;
+  const candidateSkills = safeJsonArr(p.skills).map(s => s.toLowerCase());
+  if (!candidateSkills.length) return null;
+  const jobText = [job.title_en, job.title_fr, job.description_en, job.description_fr]
+    .filter(Boolean).join(' ').toLowerCase();
+  const jobSkills = safeJsonArr(job.skills_required).map(s => s.toLowerCase());
+  let hits = 0;
+  for (const sk of candidateSkills) {
+    if (jobSkills.some(js => js.includes(sk) || sk.includes(js)) || jobText.includes(sk)) hits++;
+  }
+  const maxSk = Math.min(candidateSkills.length, 10);
+  let score = maxSk > 0 ? Math.round((hits / maxSk) * 70) : 20;
+  if (p.work_mode_pref && job.work_mode && p.work_mode_pref === job.work_mode) score += 12;
+  score += Math.min(parseInt(p.experience_years) || 0, 6) * 2;
+  if (p.province && job.province && p.province === job.province) score += 6;
+  const jitter = job.id ? (job.id.charCodeAt(job.id.length - 1) % 9) - 4 : 0;
+  return Math.min(97, Math.max(0, score + jitter));
+}
+function matchScoreBadge(job) {
+  const s = computeMatchScore(job);
+  if (!s || s < 50) return '';
+  const [bg, color] = s >= 85 ? ['#eef2ff','#6366f1'] : s >= 70 ? ['#f0fdfa','#0d9488'] : ['#fffbeb','#d97706'];
+  return `<span class="match-badge" style="background:${bg};color:${color}">✦ ${s}% match</span>`;
+}
+
 // ── AI Career Score ─────────────────────────────────────────
 function computeCareerScore(p, user, pct) {
   const skills = safeJsonArr(p.skills).length;
@@ -1532,17 +1563,16 @@ async function loadProfileForm() {
   if (!container) return;
   const p = d.profile || {};
 
+  state.candidateProfile = p;
   const { pct, missing } = computeCompleteness(p, state.user);
   const pctColor = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--gold)' : 'var(--indigo)';
-
-  const { pct: _pct2, missing: _m2 } = computeCompleteness(p, state.user);
-  const score = computeCareerScore(p, state.user, _pct2);
+  const score = computeCareerScore(p, state.user, pct);
   const scoreEl = document.getElementById('dash-score');
   if (scoreEl) {
     const sc = score >= 700 ? '#4ade80' : score >= 450 ? '#facc15' : '#f97316';
     scoreEl.innerHTML = `<div class="dash-score-pill" style="background:${sc}20;color:${sc};border:1px solid ${sc}40"><i class="ti ti-star-filled" style="font-size:10px"></i> ${score} AI Score</div>`;
   }
-  container.innerHTML = renderTalentPassport(p, state.user, _pct2) + `
+  container.innerHTML = renderTalentPassport(p, state.user, pct) + `
     <div class="completeness-bar-wrap">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
         <span style="font-size:13px;font-weight:600;color:var(--dark)">Profile completeness</span>
@@ -1578,7 +1608,7 @@ async function loadProfileForm() {
     <div class="form-group"><label>Availability</label><select id="pf-avail"><option value="immediate" ${p.availability==='immediate'?'selected':''}>Immediate</option><option value="2weeks" ${p.availability==='2weeks'?'selected':''}>2 weeks</option><option value="1month" ${p.availability==='1month'?'selected':''}>1 month</option><option value="3months" ${p.availability==='3months'?'selected':''}>3 months</option></select></div>
     <div class="form-group"><label>Bio (EN)</label><textarea id="pf-bio-en">${esc(p.bio_en||'')}</textarea></div>
     <button class="btn-primary" onclick="saveProfile()"><i class="ti ti-check"></i> Save profile</button>
-  `;
+  ` + renderHighlightsSection();
 }
 
 async function saveProfile() {
@@ -1684,7 +1714,10 @@ async function loadJobsForYou() {
     jobs.map(j => {
       const title = state.lang === 'fr' ? (j.title_fr || j.title_en) : (j.title_en || j.title_fr);
       return `<div class="jfy-card" onclick="goto('jobs')">
-        <div class="jfy-title">${esc(title)}</div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+          <div class="jfy-title">${esc(title)}</div>
+          ${matchScoreBadge(j)}
+        </div>
         <div style="font-size:12px;color:var(--muted)">${esc(j.company_name||'')}${j.city || j.province ? ' · ' + (j.city ? esc(j.city) + (j.province ? ', <strong>'+esc(j.province)+'</strong>' : '') : esc(j.province||'')) : ''}</div>
         <div style="display:flex;gap:6px;margin-top:6px"><span class="job-tag ${j.work_mode||'onsite'}" style="font-size:11px">${j.work_mode||'onsite'}</span>${j.salary_min?`<span class="job-tag salary-tag" style="font-size:11px">${fmtSalary(j.salary_min)} ${j.salary_currency||'CAD'}</span>`:''}</div>
       </div>`;
@@ -2032,6 +2065,76 @@ async function startCheckout(plan, interval) {
   const d = await api('POST', `${BASE}/api/payments/create-checkout`, { plan, interval });
   if (d.url) window.location.href = d.url;
   else toast(d.error || 'Payment setup failed', 'error');
+}
+
+// ── Highlights (Career Identity) ───────────────────────────
+function renderHighlightsSection() {
+  const uid = state.user?.id;
+  if (!uid) return '';
+  const highlights = JSON.parse(localStorage.getItem(`nxhi_${uid}`) || '[]');
+  const typeIcons  = { project:'ti-code', cert:'ti-award', achievement:'ti-trophy', available:'ti-circle-check' };
+  const typeLabels = { project:'Project', cert:'Certification', achievement:'Achievement', available:'Availability' };
+  const cards = highlights.map(h => `
+    <div class="highlight-card">
+      <div class="highlight-icon"><i class="ti ${typeIcons[h.type]||'ti-star'}"></i></div>
+      <div class="highlight-body">
+        <div class="highlight-type">${typeLabels[h.type]||h.type}</div>
+        <div class="highlight-title">${esc(h.title)}</div>
+        ${h.desc ? `<div class="highlight-desc">${esc(h.desc)}</div>` : ''}
+        ${h.url ? `<a href="${esc(h.url)}" target="_blank" class="highlight-link"><i class="ti ti-external-link" style="font-size:11px"></i> View</a>` : ''}
+      </div>
+      <button class="highlight-remove" onclick="removeHighlight('${h.id}')" title="Remove"><i class="ti ti-x"></i></button>
+    </div>`).join('');
+  return `
+    <div class="highlights-section">
+      <div class="highlights-header">
+        <h3 class="highlights-title"><i class="ti ti-sparkles"></i> My Highlights</h3>
+        <p class="highlights-sub">Projects, certifications and achievements that make you stand out.</p>
+      </div>
+      ${cards}
+      <div class="highlight-add-form" id="highlight-form" style="display:none">
+        <select id="hl-type" class="filter-select" style="width:100%;margin-bottom:8px">
+          <option value="project">🛠️ Project</option>
+          <option value="cert">🎓 Certification</option>
+          <option value="achievement">🏆 Achievement</option>
+          <option value="available">🟢 Availability update</option>
+        </select>
+        <input type="text" id="hl-title" class="filter-input" style="width:100%;margin-bottom:8px;box-sizing:border-box" placeholder="Title (required)">
+        <input type="text" id="hl-desc" class="filter-input" style="width:100%;margin-bottom:8px;box-sizing:border-box" placeholder="Short description (optional)">
+        <input type="url" id="hl-url" class="filter-input" style="width:100%;margin-bottom:12px;box-sizing:border-box" placeholder="Link / URL (optional)">
+        <div style="display:flex;gap:8px">
+          <button class="btn-primary" style="flex:1" onclick="addHighlight()"><i class="ti ti-plus"></i> Add</button>
+          <button class="btn-ghost" onclick="document.getElementById('highlight-form').style.display='none'">Cancel</button>
+        </div>
+      </div>
+      <button class="btn-ghost" id="btn-add-highlight" style="width:100%;margin-top:10px" onclick="document.getElementById('highlight-form').style.display='block';this.style.display='none'"><i class="ti ti-plus"></i> Add a highlight</button>
+    </div>`;
+}
+
+function addHighlight() {
+  const uid = state.user?.id;
+  if (!uid) return;
+  const title = document.getElementById('hl-title')?.value.trim();
+  if (!title) { toast('Title is required', 'error'); return; }
+  const highlights = JSON.parse(localStorage.getItem(`nxhi_${uid}`) || '[]');
+  highlights.unshift({
+    id: `hl-${Date.now()}`,
+    type: document.getElementById('hl-type')?.value || 'project',
+    title,
+    desc: document.getElementById('hl-desc')?.value.trim() || '',
+    url:  document.getElementById('hl-url')?.value.trim() || ''
+  });
+  localStorage.setItem(`nxhi_${uid}`, JSON.stringify(highlights));
+  toast('Highlight added!', 'success');
+  loadProfileForm();
+}
+
+function removeHighlight(id) {
+  const uid = state.user?.id;
+  if (!uid) return;
+  const h = JSON.parse(localStorage.getItem(`nxhi_${uid}`) || '[]').filter(x => x.id !== id);
+  localStorage.setItem(`nxhi_${uid}`, JSON.stringify(h));
+  loadProfileForm();
 }
 
 // ── AI Career Agent quick actions ──────────────────────────
