@@ -6,6 +6,7 @@ export interface NotifEventPrefs {
   messages: boolean;
   verifications: boolean;
   bugReports: boolean;
+  organisations: boolean;
 }
 
 export interface NotifPrefs {
@@ -17,7 +18,7 @@ export interface NotifPrefs {
 const DEFAULT_PREFS: NotifPrefs = {
   sound: true,
   browser: false,
-  events: { messages: true, verifications: true, bugReports: true },
+  events: { messages: true, verifications: true, bugReports: true, organisations: true },
 };
 
 function loadPrefs(): NotifPrefs {
@@ -92,18 +93,21 @@ export interface EventCounts {
   messages: number;
   verifications: number;
   bugReports: number;
+  organisations: number;
 }
 
 const EVENT_LABELS: Record<keyof EventCounts, (delta: number) => string> = {
   messages: (n) => n === 1 ? "1 nouveau message reçu" : `${n} nouveaux messages reçus`,
   verifications: (n) => n === 1 ? "1 nouvelle demande de vérification" : `${n} nouvelles demandes de vérification`,
   bugReports: (n) => n === 1 ? "1 nouveau signalement reçu" : `${n} nouveaux signalements reçus`,
+  organisations: (n) => n === 1 ? "1 nouvel organisme inscrit" : `${n} nouveaux organismes inscrits`,
 };
 
 const EVENT_TAGS: Record<keyof EventCounts, string> = {
   messages: "az-contact-msg",
   verifications: "az-verification",
   bugReports: "az-bug-report",
+  organisations: "az-organisation",
 };
 
 export function useNotifications(counts: EventCounts) {
@@ -196,7 +200,7 @@ export function useNotifications(counts: EventCounts) {
         showBrowserNotification(body, tag);
       }
     }
-  }, [counts.messages, counts.verifications, counts.bugReports, prefs.sound, prefs.browser, prefs.events]);
+  }, [counts.messages, counts.verifications, counts.bugReports, counts.organisations, prefs.sound, prefs.browser, prefs.events]);
 
   return { prefs, setPrefs, setEventPref, toggleBrowserPref, browserPermission };
 }

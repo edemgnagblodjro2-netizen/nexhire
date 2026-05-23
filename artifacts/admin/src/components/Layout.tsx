@@ -28,6 +28,7 @@ const EVENT_LABELS: { key: keyof NotifEventPrefs; label: string; icon: string }[
   { key: "messages", label: "Messages", icon: "✉️" },
   { key: "verifications", label: "Vérifications", icon: "🛡️" },
   { key: "bugReports", label: "Signalements", icon: "🐛" },
+  { key: "organisations", label: "Organismes", icon: "🏢" },
 ];
 
 function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
@@ -120,7 +121,8 @@ export default function Layout({
     messages: contactStats?.newCount ?? 0,
     verifications: verificationStats?.pendingCount ?? 0,
     bugReports: bugReportStats?.newCount ?? 0,
-  }), [contactStats?.newCount, verificationStats?.pendingCount, bugReportStats?.newCount]);
+    organisations: orgStats?.newCount ?? 0,
+  }), [contactStats?.newCount, verificationStats?.pendingCount, bugReportStats?.newCount, orgStats?.newCount]);
 
   const { prefs, setPrefs, setEventPref, toggleBrowserPref, browserPermission } = useNotifications(counts);
 
