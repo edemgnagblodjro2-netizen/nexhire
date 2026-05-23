@@ -297,9 +297,9 @@ function jobCardHtml(j, demo = false) {
   const color = companyColor(j.company_name);
   const initials = (j.company_name || 'N').slice(0, 2).toUpperCase();
   const isSaved = state.savedJobIds.has(j.id);
-  return `<div class="job-card${j.featured ? ' featured' : ''}" onclick="${demo ? '' : `openJobDetail('${j.id}')`}">
+  return `<div class="job-card${j.featured ? ' featured' : ''}${demo ? '' : ' js-job-card'}" ${demo ? '' : `data-job-id="${j.id}"`} style="cursor:${demo ? 'default' : 'pointer'}">
     ${j.featured ? '<div class="job-featured-badge">⭐ Featured</div>' : ''}
-    ${!demo ? `<button class="save-btn${isSaved ? ' saved' : ''}" data-id="${j.id}" onclick="toggleSave('${j.id}',event)" title="Save job"><i class="ti ti-heart${isSaved ? '-filled' : ''}"></i></button>` : ''}
+    ${!demo ? `<button class="save-btn${isSaved ? ' saved' : ''} js-save-btn" data-save-id="${j.id}" title="Save job"><i class="ti ti-heart${isSaved ? '-filled' : ''}"></i></button>` : ''}
     <div class="job-company-row">
       ${j.company_logo ? `<img src="${j.company_logo}" style="width:36px;height:36px;border-radius:8px;object-fit:contain">` : `<div class="company-logo" style="background:${color}">${initials}</div>`}
       <div class="company-name">${esc(j.company_name || '')}</div>
@@ -470,7 +470,7 @@ async function filterJobs(page = 1) {
     const initials = (j.company_name || 'N').slice(0, 2).toUpperCase();
     const isSaved = state.savedJobIds.has(j.id);
     const timeAgo = daysAgo(j.published_at);
-    return `<div class="job-list-item" onclick="openJobDetail('${j.id}')" id="jli-${j.id}">
+    return `<div class="job-list-item js-job-card" data-job-id="${j.id}" id="jli-${j.id}" style="cursor:pointer">
       ${j.company_logo ? `<img src="${j.company_logo}" style="width:44px;height:44px;border-radius:10px;flex-shrink:0;object-fit:contain">` : `<div class="company-logo" style="background:${color};width:44px;height:44px;border-radius:10px;flex-shrink:0;font-size:14px">${initials}</div>`}
       <div style="flex:1;min-width:0">
         <div style="font-family:var(--r);font-weight:600;color:var(--dark);font-size:15px">${esc(title)}</div>
@@ -482,7 +482,7 @@ async function filterJobs(page = 1) {
         </div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0">
-        <button class="save-btn${isSaved ? ' saved' : ''}" data-id="${j.id}" onclick="toggleSave('${j.id}',event)" title="Save"><i class="ti ti-heart${isSaved ? '-filled' : ''}"></i></button>
+        <button class="save-btn${isSaved ? ' saved' : ''} js-save-btn" data-save-id="${j.id}" title="Save"><i class="ti ti-heart${isSaved ? '-filled' : ''}"></i></button>
         <span style="font-size:11px;color:var(--muted)">${timeAgo}</span>
       </div>
     </div>`;
@@ -492,7 +492,7 @@ async function filterJobs(page = 1) {
   const pgEl = document.getElementById('jobs-pagination');
   if (pgEl && pages > 1) {
     pgEl.innerHTML = Array.from({ length: Math.min(pages, 10) }, (_, i) => i + 1).map(p =>
-      `<button onclick="filterJobs(${p})" class="${p === page ? 'btn-primary' : 'btn-ghost'}" style="margin:0 3px;padding:6px 14px;font-size:13px">${p}</button>`
+      `<button data-page="${p}" class="${p === page ? 'btn-primary' : 'btn-ghost'}" style="margin:0 3px;padding:6px 14px;font-size:13px">${p}</button>`
     ).join('');
   } else if (pgEl) pgEl.innerHTML = '';
 }
@@ -542,7 +542,7 @@ async function openJobDetail(jobId) {
   const stars = avgRating ? starsHtml(avgRating) : '';
 
   panel.innerHTML = `
-    ${isNarrow ? `<button onclick="closeJobDetail()" style="display:flex;margin-bottom:16px;background:none;border:none;cursor:pointer;color:var(--muted);font-size:14px;font-family:var(--b);padding:0;align-items:center;gap:6px"><i class="ti ti-arrow-left"></i> Back to jobs</button>` : ''}
+    ${isNarrow ? `<button data-action="close-job-detail" style="display:flex;margin-bottom:16px;background:none;border:none;cursor:pointer;color:var(--muted);font-size:14px;font-family:var(--b);padding:0;align-items:center;gap:6px"><i class="ti ti-arrow-left"></i> Back to jobs</button>` : ''}
     <div class="job-detail-header">
       ${j.company_logo ? `<img src="${j.company_logo}" style="width:56px;height:56px;border-radius:12px;object-fit:contain">` : `<div class="company-logo" style="background:${color};width:56px;height:56px;border-radius:12px;font-size:18px">${initials}</div>`}
       <div style="flex:1;min-width:0">
@@ -550,7 +550,7 @@ async function openJobDetail(jobId) {
         ${j.company_website ? `<a href="${esc(j.company_website)}" target="_blank" style="font-size:12px;color:var(--indigo)">${esc(j.company_website)}</a>` : ''}
         ${stars ? `<div style="display:flex;align-items:center;gap:6px;margin-top:4px">${stars}<span style="font-size:12px;color:var(--muted)">${avgRating.toFixed(1)} (${totalReviews} review${totalReviews !== 1 ? 's' : ''})</span></div>` : ''}
       </div>
-      <button class="save-btn${isSaved ? ' saved' : ''}" data-id="${j.id}" onclick="toggleSave('${j.id}',event)" style="padding:8px 10px;font-size:16px" title="Save job"><i class="ti ti-heart${isSaved ? '-filled' : ''}"></i></button>
+      <button class="save-btn${isSaved ? ' saved' : ''} js-save-btn" data-save-id="${j.id}" style="padding:8px 10px;font-size:16px" title="Save job"><i class="ti ti-heart${isSaved ? '-filled' : ''}"></i></button>
     </div>
     <h2 style="font-family:var(--r);font-size:20px;font-weight:700;color:var(--dark);margin:12px 0 8px">${esc(title)}</h2>
     <div class="job-location-detail">${fmtLocationDetail(j)}</div>
@@ -561,7 +561,7 @@ async function openJobDetail(jobId) {
     </div>
     ${skills.length ? `<div class="skills-chips" style="margin-bottom:16px">${skills.slice(0,8).map(s => `<span class="skill-chip">${esc(s)}</span>`).join('')}</div>` : ''}
     <div class="detail-apply-row">
-      ${state.user?.role === 'candidate' ? `<button class="btn-primary" style="flex:1" onclick="openQuickApply('${j.id}','${esc(title)}')"><i class="ti ti-send"></i> Apply Now</button>` : !state.user ? `<button class="btn-primary" style="flex:1" onclick="showModal('modal-login')"><i class="ti ti-send"></i> Sign in to Apply</button>` : ''}
+      ${state.user?.role === 'candidate' ? `<button class="btn-primary" style="flex:1" data-apply-id="${j.id}" data-apply-title="${esc(title)}"><i class="ti ti-send"></i> Apply Now</button>` : !state.user ? `<button class="btn-primary" style="flex:1" data-modal="modal-login"><i class="ti ti-send"></i> Sign in to Apply</button>` : ''}
       <div class="job-stats-mini">
         <span><i class="ti ti-eye"></i>${j.views || 0}</span>
         <span><i class="ti ti-users"></i>${j.applications_count || 0}</span>
@@ -570,7 +570,7 @@ async function openJobDetail(jobId) {
     <div class="job-section"><h4>About the role</h4><div class="job-desc">${esc(desc || '')}</div></div>
     ${req ? `<div class="job-section"><h4>Requirements</h4><div class="job-desc">${esc(req)}</div></div>` : ''}
     ${totalReviews ? `<div class="job-section"><h4><i class="ti ti-star"></i> Company Reviews</h4>${renderReviews(rev.reviews?.slice(0,3) || [])}</div>` : ''}
-    ${state.user?.role === 'candidate' && j.company_id ? `<div style="margin-top:8px"><button class="btn-ghost" style="font-size:13px;width:100%" onclick="openReviewModal('${j.company_id}','${esc(j.company_name || '')}')"><i class="ti ti-pencil"></i> Write a review</button></div>` : ''}
+    ${state.user?.role === 'candidate' && j.company_id ? `<div style="margin-top:8px"><button class="btn-ghost" style="font-size:13px;width:100%" data-review-company-id="${j.company_id}" data-review-company-name="${esc(j.company_name || '')}"><i class="ti ti-pencil"></i> Write a review</button></div>` : ''}
   `;
 }
 
@@ -1792,6 +1792,42 @@ function toast(msg, type = 'success') {
 // data-* attribute. Inline onclick are unreliable in iframes.
 // ═══════════════════════════════════════════════════════════
 document.addEventListener('click', e => {
+  // ── Save button — must run BEFORE job-card check ─────────
+  const saveBtn = e.target.closest('[data-save-id]');
+  if (saveBtn) {
+    e.stopPropagation();
+    toggleSave(saveBtn.dataset.saveId, e);
+    return;
+  }
+
+  // ── Job card / list-item click → open detail ─────────────
+  const jobCard = e.target.closest('[data-job-id]');
+  if (jobCard) {
+    openJobDetail(jobCard.dataset.jobId);
+    return;
+  }
+
+  // ── Pagination ───────────────────────────────────────────
+  const pageBtn = e.target.closest('[data-page]');
+  if (pageBtn) {
+    filterJobs(parseInt(pageBtn.dataset.page, 10));
+    return;
+  }
+
+  // ── Apply button in detail panel ─────────────────────────
+  const applyBtn = e.target.closest('[data-apply-id]');
+  if (applyBtn) {
+    openQuickApply(applyBtn.dataset.applyId, applyBtn.dataset.applyTitle || '');
+    return;
+  }
+
+  // ── Write review button in detail panel ──────────────────
+  const revBtn = e.target.closest('[data-review-company-id]');
+  if (revBtn) {
+    openReviewModal(revBtn.dataset.reviewCompanyId, revBtn.dataset.reviewCompanyName || '');
+    return;
+  }
+
   const el = e.target.closest(
     '[data-goto],[data-modal],[data-hide-modal],[data-search],' +
     '[data-action],[data-lang],[data-checkout],[data-tab],' +
@@ -1891,6 +1927,7 @@ document.addEventListener('click', e => {
       case 'submit-apply':      submitQuickApply();                       break;
       case 'submit-review':     submitReview();                           break;
       case 'close-kanban':      closeKanban();                            break;
+      case 'close-job-detail':  closeJobDetail();                         break;
       case 'show-forgot':       e.preventDefault(); showForgot();         break;
       case 'switch-to-register':
         hideModal('modal-login'); showModal('modal-register');             break;
