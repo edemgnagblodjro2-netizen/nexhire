@@ -1986,3 +1986,40 @@ document.getElementById('btn-post-job-header')?.addEventListener('click', () => 
 
 // ── Restore page from URL hash on initial load ───────────────
 restoreFromHash();
+
+// ═══════════════════════════════════════════════════════════
+// NEXHIRE SLIDER — auto-rotate, arrows, dots
+// ═══════════════════════════════════════════════════════════
+(function initNhSlider() {
+  const TOTAL = 3;
+  let current = 0;
+  let timer = null;
+
+  function goTo(n) {
+    const prev = document.getElementById(`nhslide-${current}`);
+    current = (n + TOTAL) % TOTAL;
+    const next = document.getElementById(`nhslide-${current}`);
+    if (prev) prev.classList.remove('active');
+    if (next) next.classList.add('active');
+    document.querySelectorAll('.nh-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 5000);
+  }
+
+  document.getElementById('nh-prev')?.addEventListener('click', () => { goTo(current - 1); startTimer(); });
+  document.getElementById('nh-next')?.addEventListener('click', () => { goTo(current + 1); startTimer(); });
+
+  document.querySelectorAll('.nh-dot').forEach(dot => {
+    dot.addEventListener('click', () => { goTo(parseInt(dot.dataset.nhslide, 10)); startTimer(); });
+  });
+
+  // Pause on hover
+  const slider = document.getElementById('nh-slider');
+  slider?.addEventListener('mouseenter', () => clearInterval(timer));
+  slider?.addEventListener('mouseleave', startTimer);
+
+  startTimer();
+})();
