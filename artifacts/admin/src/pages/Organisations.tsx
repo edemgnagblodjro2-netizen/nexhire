@@ -115,8 +115,11 @@ export default function Organisations({ adminKey }: { adminKey: string }) {
     return [...filtered].sort((a, b) => {
       const aNew = isNewOrg(a.org.createdAt) && !dismissedIds.has(a.org.id);
       const bNew = isNewOrg(b.org.createdAt) && !dismissedIds.has(b.org.id);
-      if (aNew === bNew) return 0;
-      return aNew ? -1 : 1;
+      if (aNew !== bNew) return aNew ? -1 : 1;
+      if (aNew && bNew) {
+        return new Date(b.org.createdAt).getTime() - new Date(a.org.createdAt).getTime();
+      }
+      return 0;
     });
   }, [rows, search, dismissedIds]);
 
