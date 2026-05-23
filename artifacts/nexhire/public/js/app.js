@@ -1988,7 +1988,7 @@ document.getElementById('btn-post-job-header')?.addEventListener('click', () => 
 restoreFromHash();
 
 // ═══════════════════════════════════════════════════════════
-// NEXHIRE SLIDER — auto-rotate, arrows, dots
+// PHOTO BANNER SLIDER — auto-rotate, arrows, dots
 // ═══════════════════════════════════════════════════════════
 (function initNhSlider() {
   const TOTAL = 3;
@@ -1996,30 +1996,28 @@ restoreFromHash();
   let timer = null;
 
   function goTo(n) {
-    const prev = document.getElementById(`nhslide-${current}`);
+    document.getElementById(`nhs-${current}`)?.classList.remove('nhs-on');
+    document.querySelector(`.nhs-dot[data-nhs="${current}"]`)?.classList.remove('nhs-on');
     current = (n + TOTAL) % TOTAL;
-    const next = document.getElementById(`nhslide-${current}`);
-    if (prev) prev.classList.remove('active');
-    if (next) next.classList.add('active');
-    document.querySelectorAll('.nh-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    document.getElementById(`nhs-${current}`)?.classList.add('nhs-on');
+    document.querySelector(`.nhs-dot[data-nhs="${current}"]`)?.classList.add('nhs-on');
   }
 
   function startTimer() {
     clearInterval(timer);
-    timer = setInterval(() => goTo(current + 1), 5000);
+    timer = setInterval(() => goTo(current + 1), 5500);
   }
 
-  document.getElementById('nh-prev')?.addEventListener('click', () => { goTo(current - 1); startTimer(); });
-  document.getElementById('nh-next')?.addEventListener('click', () => { goTo(current + 1); startTimer(); });
+  document.getElementById('nhs-prev')?.addEventListener('click', () => { goTo(current - 1); startTimer(); });
+  document.getElementById('nhs-next')?.addEventListener('click', () => { goTo(current + 1); startTimer(); });
 
-  document.querySelectorAll('.nh-dot').forEach(dot => {
-    dot.addEventListener('click', () => { goTo(parseInt(dot.dataset.nhslide, 10)); startTimer(); });
+  document.querySelectorAll('.nhs-dot').forEach(dot => {
+    dot.addEventListener('click', () => { goTo(parseInt(dot.dataset.nhs, 10)); startTimer(); });
   });
 
-  // Pause on hover
-  const slider = document.getElementById('nh-slider');
-  slider?.addEventListener('mouseenter', () => clearInterval(timer));
-  slider?.addEventListener('mouseleave', startTimer);
+  const wrap = document.getElementById('nhs');
+  wrap?.addEventListener('mouseenter', () => clearInterval(timer));
+  wrap?.addEventListener('mouseleave', startTimer);
 
   startTimer();
 })();
