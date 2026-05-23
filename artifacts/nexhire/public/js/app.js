@@ -8,7 +8,7 @@ const state = {
   currentKanbanJob: null, filterTimer: null
 };
 
-// ── Canadian Geography ─────────────────────────────────────
+// ── Geography ──────────────────────────────────────────────
 const CA_PROVINCES = [
   { code: 'AB', name: 'Alberta' },
   { code: 'BC', name: 'British Columbia / Colombie-Britannique' },
@@ -24,6 +24,62 @@ const CA_PROVINCES = [
   { code: 'SK', name: 'Saskatchewan' },
   { code: 'YT', name: 'Yukon' },
 ];
+
+// World countries — value format: "c:CountryName"
+const WORLD_REGIONS = [
+  { region: '🌎 North America', countries: [
+    'United States','Mexico','Cuba','Dominican Republic','Haiti','Jamaica','Costa Rica','Guatemala','Honduras','Panama','El Salvador','Nicaragua','Trinidad and Tobago',
+  ]},
+  { region: '🌎 South America', countries: [
+    'Brazil','Argentina','Colombia','Chile','Peru','Venezuela','Ecuador','Bolivia','Paraguay','Uruguay','Guyana','Suriname',
+  ]},
+  { region: '🌍 Western Europe', countries: [
+    'France','Germany','United Kingdom','Italy','Spain','Netherlands','Belgium','Switzerland','Austria','Sweden','Norway','Denmark','Finland','Portugal','Ireland','Luxembourg','Iceland','Greece','Cyprus','Malta',
+  ]},
+  { region: '🌍 Central & Eastern Europe', countries: [
+    'Poland','Ukraine','Czech Republic','Romania','Hungary','Slovakia','Bulgaria','Croatia','Serbia','Slovenia','Lithuania','Latvia','Estonia','Belarus','Moldova','Albania','North Macedonia','Bosnia and Herzegovina','Kosovo','Montenegro',
+  ]},
+  { region: '🌍 Middle East', countries: [
+    'United Arab Emirates','Saudi Arabia','Qatar','Kuwait','Bahrain','Oman','Israel','Jordan','Lebanon','Turkey','Egypt','Iraq','Iran',
+  ]},
+  { region: '🌍 Africa', countries: [
+    'South Africa','Nigeria','Kenya','Ethiopia','Ghana','Morocco','Tunisia','Algeria','Tanzania','Uganda','Rwanda','Senegal','Ivory Coast','Cameroon','Mozambique','Zimbabwe','Zambia','Angola','Namibia',
+  ]},
+  { region: '🌏 South Asia', countries: [
+    'India','Pakistan','Bangladesh','Sri Lanka','Nepal','Afghanistan','Maldives',
+  ]},
+  { region: '🌏 East & Southeast Asia', countries: [
+    'China','Japan','South Korea','Singapore','Vietnam','Thailand','Malaysia','Indonesia','Philippines','Hong Kong','Taiwan','Myanmar','Cambodia','Laos','Brunei',
+  ]},
+  { region: '🌏 Oceania', countries: [
+    'Australia','New Zealand','Papua New Guinea','Fiji','Samoa',
+  ]},
+  { region: '🌍 Central Asia & Caucasus', countries: [
+    'Kazakhstan','Uzbekistan','Georgia','Armenia','Azerbaijan','Kyrgyzstan','Tajikistan','Turkmenistan',
+  ]},
+];
+
+// Build <option> HTML for world countries — FLAT (value = "c:CountryName")
+function buildLocationOptions(selectedVal = '') {
+  const caOpts = CA_PROVINCES.map(p => {
+    const sel = p.code === selectedVal ? ' selected' : '';
+    return `<option value="${p.code}"${sel}>${p.code} — ${p.name.split(' /')[0]}</option>`;
+  }).join('');
+  const worldOpts = WORLD_REGIONS.map(({ region, countries }) => {
+    const opts = countries.map(c => {
+      const val = `c:${c}`;
+      const sel = val === selectedVal ? ' selected' : '';
+      return `<option value="${val}"${sel}>${c}</option>`;
+    }).join('');
+    return `<optgroup label="${region}">${opts}</optgroup>`;
+  }).join('');
+  return `
+    <option value=""${!selectedVal ? ' selected' : ''}>🌐 All locations</option>
+    <optgroup label="🍁 Canada — Provinces &amp; Territories">${caOpts}</optgroup>
+    <option value="REMOTE"${'REMOTE' === selectedVal ? ' selected' : ''}>🌐 Remote / International</option>
+    ${worldOpts}
+  `;
+}
 
 const CA_CITIES = {
   AB: ['Calgary','Edmonton','Red Deer','Lethbridge','St. Albert','Medicine Hat','Grande Prairie','Airdrie','Spruce Grove','Leduc'],
@@ -109,6 +165,7 @@ function updateCitiesForProvince(provinceSelectId, citySelectId) {
     if (d.success && d.user) { state.user = d.user; state.lang = d.user.preferred_lang || 'en'; showUserNav(); }
   } catch (e) {}
   setLangUI(state.lang);
+  initLocationSelects();
   loadStats();
   renderRecentSearches();
   loadFeaturedJobs();
@@ -140,6 +197,7 @@ function goto(page) {
   if (page === 'settings') renderSettings();
   if (page === 'help') renderHelp();
   if (page === 'privacy') renderPrivacy();
+  // terms page is static — no render needed
 }
 
 // ── Lang ───────────────────────────────────────────────────
@@ -320,6 +378,14 @@ function syncHeroProvince() {
   const fprov = document.getElementById('fprov');
   if (fprov && v !== undefined) fprov.value = v;
 }
+
+function initLocationSelects() {
+  const heroSel = document.getElementById('hero-province');
+  const fprov = document.getElementById('fprov');
+  const opts = buildLocationOptions();
+  if (heroSel) heroSel.innerHTML = opts;
+  if (fprov) fprov.innerHTML = opts;
+}
 function quickSearch(q) { document.getElementById('q').value = q; searchJobs(); }
 
 async function loadJobs() { await filterJobs(); }
@@ -345,7 +411,7 @@ async function filterJobs(page = 1) {
   const work_mode = document.getElementById('fwork')?.value || document.getElementById('mode-filter')?.value || '';
   const job_type = document.getElementById('ftype')?.value || '';
   const sal_min = document.getElementById('fsal')?.value || '';
-  const province = document.getElementById('fprov')?.value || '';
+  const locVal = document.getElementById('fprov')?.value || '';
   const fdate = document.getElementById('fdate')?.value || '';
   const flang = document.getElementById('flang')?.value || '';
   const isUnseenFilter = fdate === 'unseen';
@@ -355,8 +421,10 @@ async function filterJobs(page = 1) {
   if (work_mode) params.set('work_mode', work_mode);
   if (job_type) params.set('job_type', job_type);
   if (sal_min) params.set('salary_min', sal_min);
-  if (province && province !== 'REMOTE') params.set('province', province);
-  if (province === 'REMOTE') params.set('work_mode', 'remote');
+  // Location: province code, "REMOTE", or "c:CountryName"
+  if (locVal === 'REMOTE') { params.set('work_mode', 'remote'); }
+  else if (locVal.startsWith('c:')) { params.set('country', locVal.slice(2)); }
+  else if (locVal) { params.set('province', locVal); }
   if (fdate && !isUnseenFilter) params.set('days_ago', fdate);
   if (flang) params.set('lang_filter', flang);
 
@@ -1076,11 +1144,7 @@ async function loadProfileForm() {
     <div class="form-row">
       <div class="form-group">
         <label>Province / Territory</label>
-        <select id="pf-province">
-          <option value="">— Select province —</option>
-          ${CA_PROVINCES.map(pr => `<option value="${pr.code}"${(p.province||'')=== pr.code?' selected':''}>${pr.code} — ${pr.name.split(' /')[0]}</option>`).join('')}
-          <option value="INTL"${p.province==='INTL'?' selected':''}>🌐 Outside Canada</option>
-        </select>
+        <select id="pf-province">${buildLocationOptions(p.province||'')}</select>
       </div>
       <div class="form-group"><label>City</label><input type="text" id="pf-city" value="${esc(p.city||'')}" placeholder="e.g. Montréal, Toronto..."></div>
     </div>
@@ -1340,43 +1404,35 @@ async function moveCandidate(appId, status) {
 function initPostJobForm() {
   const form = document.getElementById('post-job-form');
   if (!form) return;
-  const provOptions = CA_PROVINCES.map(p => `<option value="${p.code}">${p.code} — ${p.name.split(' /')[0]}</option>`).join('');
   form.innerHTML = `
     <div class="form-row">
       <div class="form-group"><label>Job Title (EN) *</label><input type="text" id="jf-title-en" placeholder="e.g. Senior Full-Stack Developer" required></div>
       <div class="form-group"><label>Titre du poste (FR)</label><input type="text" id="jf-title-fr" placeholder="ex: Développeur Full-Stack Senior"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>Work mode</label><select id="jf-mode" onchange="toggleLocationByMode()"><option value="onsite">On-site</option><option value="hybrid">Hybrid</option><option value="remote">Remote (Canada)</option><option value="remote-intl">Remote (International)</option></select></div>
-      <div class="form-group"><label>Job type</label><select id="jf-type"><option value="full-time">Full-time</option><option value="part-time">Part-time</option><option value="contract">Contract</option><option value="internship">Internship</option></select></div>
+      <div class="form-group"><label>Work mode</label><select id="jf-mode" onchange="toggleLocationByMode()"><option value="onsite">On-site</option><option value="hybrid">Hybrid</option><option value="remote">Remote</option><option value="remote-intl">Fully Remote (International)</option></select></div>
+      <div class="form-group"><label>Job type</label><select id="jf-type"><option value="full-time">Full-time</option><option value="part-time">Part-time</option><option value="contract">Contract</option><option value="internship">Internship</option><option value="temporary">Temporary</option><option value="permanent">Permanent</option></select></div>
     </div>
 
     <div id="jf-location-block">
       <div class="location-geo-label"><i class="ti ti-map-pin" style="color:var(--indigo)"></i> Job location</div>
       <div class="form-row">
         <div class="form-group">
-          <label>Province / Territory *</label>
-          <select id="jf-province" onchange="updateCitiesForProvince('jf-province','jf-city-select')">
-            <option value="">— Select province —</option>
-            ${provOptions}
+          <label>Location (Province or Country) *</label>
+          <select id="jf-province">
+            ${buildLocationOptions('')}
           </select>
         </div>
         <div class="form-group" id="jf-city-group">
           <label>City</label>
-          <select id="jf-city-select" onchange="syncCityInput()">
-            <option value="">— Select province first —</option>
-          </select>
+          <input type="text" id="jf-city" placeholder="e.g. Montréal, Paris, Dubai...">
         </div>
-      </div>
-      <div class="form-group" id="jf-city-manual-group" style="display:none">
-        <label>City <span style="color:var(--muted);font-weight:400">(enter manually)</span></label>
-        <input type="text" id="jf-city" placeholder="City name...">
       </div>
     </div>
 
     <div id="jf-remote-block" style="display:none">
-      <div class="info-box"><i class="ti ti-world"></i> Fully remote — candidates from all provinces/regions can apply. You can still specify a preferred timezone below.</div>
-      <div class="form-group"><label>Preferred timezone <span style="color:var(--muted);font-weight:400">(optional)</span></label><select id="jf-tz"><option value="">Any timezone</option><option>ET (Eastern — Toronto, Montréal, Ottawa)</option><option>CT (Central — Winnipeg)</option><option>MT (Mountain — Calgary, Edmonton)</option><option>PT (Pacific — Vancouver, Victoria)</option><option>AT (Atlantic — Halifax, Moncton)</option><option>NT (Newfoundland — St. John's)</option></select></div>
+      <div class="info-box"><i class="ti ti-world"></i> Fully remote — open to candidates worldwide. You can specify a preferred timezone below.</div>
+      <div class="form-group"><label>Preferred timezone <span style="color:var(--muted);font-weight:400">(optional)</span></label><select id="jf-tz"><option value="">Any timezone</option><option>UTC-12 to UTC-10 (Pacific Islands)</option><option>UTC-8 / PT (Vancouver, Los Angeles, Seattle)</option><option>UTC-7 / MT (Calgary, Denver, Phoenix)</option><option>UTC-6 / CT (Winnipeg, Chicago, Mexico City)</option><option>UTC-5 / ET (Toronto, Montréal, New York, Miami)</option><option>UTC-4 / AT (Halifax, Moncton, Caracas)</option><option>UTC-3 / NT + BRT (St. John's, São Paulo, Buenos Aires)</option><option>UTC+0 / GMT (London, Lisbon, Accra)</option><option>UTC+1 / CET (Paris, Berlin, Rome, Madrid)</option><option>UTC+2 / EET (Helsinki, Athens, Cairo, Johannesburg)</option><option>UTC+3 / MSK + EAT (Moscow, Nairobi, Riyadh)</option><option>UTC+4 / GST (Dubai, Abu Dhabi, Tbilisi)</option><option>UTC+5:30 / IST (India)</option><option>UTC+7 / ICT (Bangkok, Jakarta, Hanoi)</option><option>UTC+8 / CST + SGT (Singapore, Hong Kong, Beijing)</option><option>UTC+9 / JST + KST (Tokyo, Seoul)</option><option>UTC+10 / AEST (Sydney, Melbourne, Brisbane)</option><option>UTC+12 / NZST (Auckland, Wellington)</option></select></div>
     </div>
 
     <div class="form-row">
@@ -1413,18 +1469,6 @@ function toggleLocationByMode() {
   remBlock.style.display = isRemote ? 'block' : 'none';
 }
 
-function syncCityInput() {
-  const sel = document.getElementById('jf-city-select')?.value;
-  const manualGroup = document.getElementById('jf-city-manual-group');
-  const cityInput = document.getElementById('jf-city');
-  if (sel === '__other__') {
-    if (manualGroup) manualGroup.style.display = 'block';
-    if (cityInput) cityInput.value = '';
-  } else {
-    if (manualGroup) manualGroup.style.display = 'none';
-    if (cityInput) cityInput.value = sel || '';
-  }
-}
 
 async function postJob(e) {
   e.preventDefault();
@@ -1433,11 +1477,21 @@ async function postJob(e) {
 
   const mode = document.getElementById('jf-mode')?.value || 'onsite';
   const normalizedMode = (mode === 'remote-intl') ? 'remote' : mode;
-  const province = document.getElementById('jf-province')?.value || null;
-  // City: manual input wins over select if "other" chosen
-  const cityFromSelect = document.getElementById('jf-city-select')?.value;
-  const cityFromInput = document.getElementById('jf-city')?.value.trim();
-  const city = (cityFromSelect === '__other__' || !cityFromSelect) ? cityFromInput : (cityFromSelect || cityFromInput);
+  const locVal = document.getElementById('jf-province')?.value || '';
+  const city = document.getElementById('jf-city')?.value.trim() || null;
+
+  // Parse location: "c:CountryName" = international, province code = Canada
+  let province = null;
+  let jobCountry = 'Canada';
+  if (mode === 'remote-intl') {
+    jobCountry = 'International';
+  } else if (locVal.startsWith('c:')) {
+    jobCountry = locVal.slice(2);
+    province = null;
+  } else if (locVal && locVal !== 'REMOTE') {
+    province = locVal;
+    jobCountry = 'Canada';
+  }
 
   const langs = [];
   ['en','fr','bi','es'].forEach(l => { const el = document.getElementById(`jf-lang-${l}`); if (el?.checked) langs.push(el.value); });
@@ -1452,8 +1506,8 @@ async function postJob(e) {
     work_mode: normalizedMode,
     job_type: document.getElementById('jf-type')?.value,
     city: city || null,
-    province: (mode === 'remote' || mode === 'remote-intl') ? null : (province || null),
-    country: 'Canada',
+    province: (mode === 'remote' || mode === 'remote-intl') ? null : province,
+    country: jobCountry,
     salary_min: parseInt(document.getElementById('jf-sal-min')?.value) || null,
     salary_max: parseInt(document.getElementById('jf-sal-max')?.value) || null,
     salary_currency: document.getElementById('jf-currency')?.value || 'CAD',

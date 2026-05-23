@@ -75,21 +75,7 @@
         <div class="search-field search-loc">
           <i class="ti ti-map-pin"></i>
           <select id="hero-province" onchange="syncHeroProvince()" style="border:none;background:transparent;font-size:15px;color:#334155;outline:none;width:100%;cursor:pointer;font-family:inherit">
-            <option value="">All provinces / Canada</option>
-            <option value="AB">AB — Alberta</option>
-            <option value="BC">BC — British Columbia</option>
-            <option value="MB">MB — Manitoba</option>
-            <option value="NB">NB — New Brunswick</option>
-            <option value="NL">NL — Newfoundland</option>
-            <option value="NS">NS — Nova Scotia</option>
-            <option value="NT">NT — Northwest Territories</option>
-            <option value="NU">NU — Nunavut</option>
-            <option value="ON">ON — Ontario</option>
-            <option value="PE">PE — Prince Edward Island</option>
-            <option value="QC">QC — Québec</option>
-            <option value="SK">SK — Saskatchewan</option>
-            <option value="YT">YT — Yukon</option>
-            <option value="REMOTE">🌐 Remote / International</option>
+            <option value="">🌐 All locations</option>
           </select>
         </div>
         <div class="search-field search-mode"><i class="ti ti-device-laptop"></i><select id="mode-filter" onchange="searchJobs()"><option value="">All modes</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select></div>
@@ -261,21 +247,7 @@
       <div class="filters-bar">
         <input type="text" id="fq" placeholder="Search title, skill, company..." oninput="debounceFilterSearch()" class="filter-input">
         <select id="fprov" onchange="filterJobs()" class="filter-select filter-select-province">
-          <option value="">🍁 All provinces</option>
-          <option value="AB">AB — Alberta</option>
-          <option value="BC">BC — British Columbia</option>
-          <option value="MB">MB — Manitoba</option>
-          <option value="NB">NB — New Brunswick</option>
-          <option value="NL">NL — Newfoundland</option>
-          <option value="NS">NS — Nova Scotia</option>
-          <option value="NT">NT — Northwest Territories</option>
-          <option value="NU">NU — Nunavut</option>
-          <option value="ON">ON — Ontario</option>
-          <option value="PE">PE — P.E. Island</option>
-          <option value="QC">QC — Québec</option>
-          <option value="SK">SK — Saskatchewan</option>
-          <option value="YT">YT — Yukon</option>
-          <option value="REMOTE">🌐 Remote / Intl</option>
+          <option value="">🌐 All locations</option>
         </select>
         <select id="fwork" onchange="filterJobs()" class="filter-select"><option value="">All modes</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select>
         <select id="ftype" onchange="filterJobs()" class="filter-select">
@@ -583,6 +555,66 @@
   </div>
 </div>
 
+<!-- TERMS OF SERVICE ────────────────────────────────────── -->
+<div id="pg-terms" class="page">
+  <div class="privacy-hero">
+    <h1>Terms of Service</h1>
+    <p>Last updated: May 2026</p>
+  </div>
+  <div class="section-inner" style="max-width:900px;padding-top:48px;padding-bottom:64px">
+    <p class="privacy-lead">These Terms of Service govern your use of the Nexhire platform, operated by CivicAI Inc. (NEQ 2280791601). By creating an account or using our services, you agree to these terms.</p>
+
+    <h2>1. Eligibility</h2>
+    <p>You must be at least 16 years old to use Nexhire. By registering, you confirm that the information you provide is accurate and complete.</p>
+
+    <h2>2. Candidate Accounts</h2>
+    <ul>
+      <li>You may create one account per person. Creating multiple accounts is prohibited.</li>
+      <li>You are responsible for keeping your password confidential.</li>
+      <li>Profile information you submit (skills, experience, bio) will be shared with employers when you apply to a job.</li>
+      <li>You must not misrepresent your qualifications, experience, or identity.</li>
+    </ul>
+
+    <h2>3. Employer Accounts</h2>
+    <ul>
+      <li>Job postings must represent real, legitimate positions.</li>
+      <li>You must not post discriminatory, misleading, or illegal job listings.</li>
+      <li>Candidate data accessed through Nexhire must only be used for legitimate hiring purposes.</li>
+      <li>Subscription fees (Pro plan) are billed monthly or annually via Stripe and are non-refundable after 7 days.</li>
+    </ul>
+
+    <h2>4. AI Features</h2>
+    <p>Nexhire uses AI (GPT-4o) for job matching, cover letter generation, and career coaching. AI outputs are not guaranteed to be accurate — always review before submitting applications. The free plan includes a 3-day trial with 15 AI messages/day.</p>
+
+    <h2>5. Company Reviews</h2>
+    <p>Reviews must be honest, first-hand accounts of your experience. Fake, defamatory, or paid reviews are strictly prohibited and will result in account termination. Nexhire reserves the right to remove reviews that violate these guidelines.</p>
+
+    <h2>6. Prohibited Conduct</h2>
+    <ul>
+      <li>Scraping, crawling, or automated data collection from the platform</li>
+      <li>Spam, phishing, or harassment of other users</li>
+      <li>Posting malicious code or attempting to compromise platform security</li>
+      <li>Using Nexhire to solicit users for external platforms</li>
+    </ul>
+
+    <h2>7. Intellectual Property</h2>
+    <p>The Nexhire brand, logo, and platform design are the property of CivicAI Inc. User-submitted content (resumes, cover letters, reviews) remains yours — you grant Nexhire a limited license to display it within the platform.</p>
+
+    <h2>8. Limitation of Liability</h2>
+    <p>Nexhire is a marketplace connecting job seekers and employers — we do not guarantee employment outcomes. We are not liable for the accuracy of job postings, hiring decisions, or salary information provided by third parties.</p>
+
+    <h2>9. Termination</h2>
+    <p>We reserve the right to suspend or terminate accounts that violate these terms. You may close your account at any time via Settings → Account settings.</p>
+
+    <h2>10. Changes to Terms</h2>
+    <p>We may update these terms periodically. Continued use of Nexhire after changes constitutes acceptance of the updated terms.</p>
+
+    <h2>11. Contact</h2>
+    <p>Questions about these terms: <a href="mailto:legal@nexhire.ca" style="color:var(--indigo)">legal@nexhire.ca</a></p>
+    <p style="margin-top:32px;font-size:13px;color:var(--muted)">Nexhire — CivicAI Inc., NEQ 2280791601 · <a href="mailto:legal@nexhire.ca" style="color:var(--indigo)">legal@nexhire.ca</a></p>
+  </div>
+</div>
+
 </main>
 
 <!-- KANBAN OVERLAY ──────────────────────────────────────── -->
@@ -686,7 +718,7 @@
       <div class="form-group" id="reg-company-field" style="display:none"><label>Company name</label><input type="text" id="reg-company" placeholder="Acme Inc."></div>
       <div class="form-error" id="reg-error"></div>
       <button class="btn-primary btn-full" onclick="register()">Create account</button>
-      <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:12px">By creating an account you agree to our <a href="#" style="color:var(--indigo)">Terms of Service</a></div>
+      <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:12px">By creating an account you agree to our <a href="#" onclick="hideModal('modal-register');goto('terms');return false" style="color:var(--indigo)">Terms of Service</a></div>
     </div>
   </div>
 </div>

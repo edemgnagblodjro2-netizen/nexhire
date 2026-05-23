@@ -4,7 +4,7 @@ const db = require('../models/db');
 const { requireAuth, requireCompanyAccess } = require('../middleware/auth');
 
 router.get('/', async (req, res) => {
-  const { q, city, province, work_mode, job_type, salary_min, featured, days_ago, lang_filter, page = 1, limit = 20 } = req.query;
+  const { q, city, province, country, work_mode, job_type, salary_min, featured, days_ago, lang_filter, page = 1, limit = 20 } = req.query;
   const offset = (parseInt(page) - 1) * parseInt(limit);
   const params = [];
   const where = ["j.status = 'active'"];
@@ -15,6 +15,7 @@ router.get('/', async (req, res) => {
     params.push(`%${q}%`); i++;
   }
   if (province) { where.push(`j.province = $${i}`); params.push(province); i++; }
+  if (country) { where.push(`j.country ILIKE $${i}`); params.push(`%${country}%`); i++; }
   if (city) { where.push(`j.city ILIKE $${i}`); params.push(`%${city}%`); i++; }
   if (work_mode) { where.push(`j.work_mode = $${i}`); params.push(work_mode); i++; }
   if (job_type) { where.push(`j.job_type = $${i}`); params.push(job_type); i++; }
