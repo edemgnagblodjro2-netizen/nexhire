@@ -6,6 +6,7 @@ import {
 } from "@/lib/orgApi";
 
 const ORG_LAST_SEEN_KEY = "az_admin_orgs_last_seen";
+const ORG_DISMISSED_KEY = "az_admin_orgs_dismissed_ids";
 
 const KIND_TABS = [
   { key: "all", label: "Tous" },
@@ -42,7 +43,14 @@ export default function Organisations({ adminKey }: { adminKey: string }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [actionId, setActionId] = useState<string | null>(null);
-  const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
+  const [dismissedIds, setDismissedIds] = useState<Set<string>>(() => {
+    try {
+      const stored = localStorage.getItem(ORG_DISMISSED_KEY);
+      return stored ? new Set<string>(JSON.parse(stored)) : new Set<string>();
+    } catch {
+      return new Set<string>();
+    }
+  });
 
   // Snapshot the last-seen timestamp from before this page visit (Layout's
   // useEffect updates it after the first render, so we read it once here).
@@ -86,8 +94,14 @@ export default function Organisations({ adminKey }: { adminKey: string }) {
     )
       return;
     setActionId(row.org.id);
-    // Dismiss the "new" highlight on interaction
-    setDismissedIds((prev) => new Set([...prev, row.org.id]));
+    // Dismiss the "new" highlight on interaction and persist across sessions
+    setDismissedIds((prev) => {
+      const next = new Set([...prev, row.org.id]);
+      try {
+        localStorage.setItem(ORG_DISMISSED_KEY, JSON.stringify([...next]));
+      } catch {}
+      return next;
+    });
     try {
       const updated = await adminToggleOrgBadge(adminKey, row.org.id, next);
       setRows((prev) =>
