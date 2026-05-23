@@ -5,6 +5,7 @@ import {
   fetchMyStats,
   openBillingPortal,
   startCheckout,
+  updateMyOrganisation,
   type Organisation,
   type Subscription,
   type StatsResponse,
@@ -101,6 +102,11 @@ export default function OrgDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
+  const [showEditProfile, setShowEditProfile] = useState(false);
+  const [editForm, setEditForm] = useState({ name: "", contactName: "", phone: "", website: "", description: "" });
+  const [editSaving, setEditSaving] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
+  const [editSuccess, setEditSuccess] = useState(false);
   const [verif, setVerif] = useState<VerificationStatus | null>(null);
   const [showVerifForm, setShowVerifForm] = useState(false);
   const [verifSubmitting, setVerifSubmitting] = useState(false);
@@ -114,6 +120,43 @@ export default function OrgDashboard() {
     website: "",
     mission: "",
   });
+
+  function openEditProfile() {
+    if (!org) return;
+    setEditForm({
+      name: org.name || "",
+      contactName: org.contactName || "",
+      phone: org.phone || "",
+      website: org.website || "",
+      description: org.description || "",
+    });
+    setEditError(null);
+    setEditSuccess(false);
+    setShowEditProfile(true);
+  }
+
+  async function handleEditSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setEditError(null);
+    setEditSuccess(false);
+    setEditSaving(true);
+    try {
+      const payload: Record<string, string> = {};
+      if (editForm.name.trim()) payload.name = editForm.name.trim();
+      if (editForm.contactName.trim()) payload.contactName = editForm.contactName.trim();
+      payload.phone = editForm.phone.trim();
+      payload.website = editForm.website.trim();
+      payload.description = editForm.description.trim();
+      const result = await updateMyOrganisation(payload);
+      setOrg(result.organisation);
+      setEditSuccess(true);
+      setShowEditProfile(false);
+    } catch (err: any) {
+      setEditError(err.message || "Erreur lors de la sauvegarde.");
+    } finally {
+      setEditSaving(false);
+    }
+  }
 
   async function reloadVerif() {
     try {
@@ -549,22 +592,113 @@ export default function OrgDashboard() {
           )}
         </div>
 
-        {/* Org info */}
+        {/* Org info + edit */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Coordonnées de l'organisme</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-            <InfoRow label="Nom" value={org.name} />
-            <InfoRow label="Personne contact" value={org.contactName} />
-            <InfoRow label="Courriel" value={org.email} />
-            <InfoRow label="Téléphone" value={org.phone} />
-            <InfoRow label="Site web" value={org.website} />
-            <InfoRow label="Ville" value={org.city} />
-            <InfoRow label="Adresse" value={org.address} />
-            <InfoRow label="Service lié" value={org.serviceId ? `#${org.serviceId.slice(0, 8)}…` : "À assigner par un administrateur"} />
+          <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+            <h3 className="text-lg font-semibold text-gray-900">Profil de l'organisme</h3>
+            {!showEditProfile && (
+              <button
+                onClick={openEditProfile}
+                className="text-sm font-semibold text-blue-600 hover:text-blue-800 px-4 py-2 rounded-xl border border-blue-200 hover:bg-blue-50 transition"
+              >
+                ✏️ Éditer le profil
+              </button>
+            )}
           </div>
-          <p className="text-xs text-gray-400 mt-4">
-            Pour modifier vos coordonnées, contactez l'équipe AttenteZéro à <a href="mailto:contact@attentezero.ca" className="text-blue-600">contact@attentezero.ca</a>.
-          </p>
+
+          {editSuccess && (
+            <div className="mb-4 rounded-xl bg-emerald-50 border border-emerald-200 p-3 text-sm text-emerald-800 font-medium">
+              ✓ Profil mis à jour avec succès.
+            </div>
+          )}
+
+          {showEditProfile ? (
+            <form onSubmit={handleEditSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Field label="Nom de l'organisme *">
+                  <input
+                    required
+                    value={editForm.name}
+                    onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"
+                  />
+                </Field>
+                <Field label="Personne contact">
+                  <input
+                    value={editForm.contactName}
+                    onChange={(e) => setEditForm({ ...editForm, contactName: e.target.value })}
+                    placeholder="Prénom Nom"
+                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"
+                  />
+                </Field>
+                <Field label="Téléphone">
+                  <input
+                    value={editForm.phone}
+                    onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
+                    placeholder="514 555-1234"
+                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"
+                  />
+                </Field>
+                <Field label="Site web">
+                  <input
+                    type="url"
+                    value={editForm.website}
+                    onChange={(e) => setEditForm({ ...editForm, website: e.target.value })}
+                    placeholder="https://"
+                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"
+                  />
+                </Field>
+              </div>
+              <Field label="Description" hint="Max. 2000 caractères">
+                <textarea
+                  rows={4}
+                  value={editForm.description}
+                  onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                  maxLength={2000}
+                  placeholder="Décrivez brièvement la mission et les services de votre organisme…"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm resize-none"
+                />
+              </Field>
+              {editError && (
+                <div className="rounded-xl bg-red-50 border border-red-200 p-3 text-sm text-red-700">{editError}</div>
+              )}
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="submit"
+                  disabled={editSaving}
+                  className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold rounded-xl text-sm transition"
+                >
+                  {editSaving ? "Sauvegarde…" : "Sauvegarder"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setShowEditProfile(false); setEditError(null); }}
+                  className="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl text-sm transition"
+                >
+                  Annuler
+                </button>
+              </div>
+            </form>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                <InfoRow label="Nom" value={org.name} />
+                <InfoRow label="Personne contact" value={org.contactName} />
+                <InfoRow label="Courriel" value={org.email} />
+                <InfoRow label="Téléphone" value={org.phone} />
+                <InfoRow label="Site web" value={org.website} />
+                <InfoRow label="Ville" value={org.city} />
+                <InfoRow label="Adresse" value={org.address} />
+                <InfoRow label="Service lié" value={org.serviceId ? `#${org.serviceId.slice(0, 8)}…` : "À assigner par un administrateur"} />
+              </div>
+              {org.description && (
+                <div className="mt-4">
+                  <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-1">Description</p>
+                  <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">{org.description}</p>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </main>
     </div>

@@ -86,6 +86,7 @@ export async function fetchMyStats(days = 30): Promise<StatsResponse> {
 }
 
 export async function updateMyOrganisation(data: {
+  name?: string;
   contactName?: string;
   phone?: string;
   website?: string;

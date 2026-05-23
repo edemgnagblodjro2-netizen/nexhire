@@ -103,9 +103,10 @@ router.get("/organisations/me/stats", async (req, res) => {
 
 // PATCH /api/organisations/me — limited fields update (contact info only — service info is read-only)
 const UpdateOrgBody = z.object({
-  contactName: z.string().min(1).optional(),
-  phone: z.string().optional(),
-  website: z.string().optional(),
+  name: z.string().min(1).max(200).optional(),
+  contactName: z.string().min(1).max(200).optional(),
+  phone: z.string().max(50).optional(),
+  website: z.string().max(500).optional(),
   description: z.string().max(2000).optional(),
 });
 
