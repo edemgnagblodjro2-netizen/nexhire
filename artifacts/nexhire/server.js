@@ -161,10 +161,46 @@ async function runMigrations() {
         created_at TIMESTAMPTZ DEFAULT NOW()
       )
     `);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_saved_jobs (
+        user_id TEXT NOT NULL REFERENCES nh_users(id) ON DELETE CASCADE,
+        job_id TEXT NOT NULL REFERENCES nh_jobs(id) ON DELETE CASCADE,
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        PRIMARY KEY (user_id, job_id)
+      )
+    `);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_company_reviews (
+        id TEXT PRIMARY KEY,
+        company_id TEXT NOT NULL REFERENCES nh_companies(id) ON DELETE CASCADE,
+        user_id TEXT NOT NULL REFERENCES nh_users(id) ON DELETE CASCADE,
+        rating INTEGER NOT NULL CHECK(rating BETWEEN 1 AND 5),
+        title TEXT,
+        pros TEXT,
+        cons TEXT,
+        interview_difficulty TEXT,
+        recommend BOOLEAN DEFAULT TRUE,
+        anonymous BOOLEAN DEFAULT TRUE,
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(company_id, user_id)
+      )
+    `);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_job_alerts (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL REFERENCES nh_users(id) ON DELETE CASCADE,
+        keywords TEXT,
+        city TEXT,
+        work_mode TEXT,
+        job_type TEXT,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_jobs_status ON nh_jobs(status)`);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_jobs_featured ON nh_jobs(featured, status)`);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_jobs_published ON nh_jobs(published_at DESC)`);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_notifs_user ON nh_notifications(user_id, read_at)`);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_saved_jobs_user ON nh_saved_jobs(user_id)`);
     console.log('[Nexhire] ✅ DB ready');
   } catch (err) {
     console.error('[Nexhire] Migration error:', err.message);
@@ -219,6 +255,8 @@ app.use(apiBase + '/ai',            require('./routes/ai'));
 app.use(apiBase + '/payments',      require('./routes/payments'));
 app.use(apiBase + '/notifications', require('./routes/notifications'));
 app.use(apiBase + '/admin',         require('./routes/admin'));
+app.use(apiBase + '/saved-jobs',    require('./routes/saved-jobs'));
+app.use(apiBase + '/reviews',       require('./routes/reviews'));
 
 // ── Health check ───────────────────────────────────────────
 app.get(BASE_PATH + '/healthz', (req, res) => res.json({ status: 'ok', service: 'nexhire' }));
