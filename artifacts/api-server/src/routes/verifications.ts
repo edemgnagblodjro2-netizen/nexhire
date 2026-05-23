@@ -12,12 +12,13 @@ import { z } from "zod";
 import { logger } from "../lib/logger";
 import { sendEmailTo } from "../lib/notify";
 
-function getAdminVerificationsUrl(): string | null {
+function getAdminVerificationsUrl(orgId?: string): string | null {
   const base = process.env.ADMIN_BASE_URL?.replace(/\/$/, "")
     ?? (process.env.REPLIT_DOMAINS?.split(",")[0]?.trim()
         ? `https://${process.env.REPLIT_DOMAINS.split(",")[0].trim()}`
         : null);
-  return base ? `${base}/admin/verifications` : null;
+  if (!base) return null;
+  return orgId ? `${base}/admin/verifications?id=${encodeURIComponent(orgId)}` : `${base}/admin/verifications`;
 }
 
 function getOrgDashboardUrl(): string {
@@ -570,6 +571,54 @@ router.post("/admin/verification/:id/reject", async (req, res) => {
         if (!r.sent) logger.warn({ orgId: request.organisationId, reason: r.reason }, "Verification rejected email not sent");
       })
       .catch((err) => logger.warn({ err, orgId: request.organisationId }, "Verification rejected email exception"));
+  }
+
+  // Best-effort admin notification email with deep-link to the rejected entry.
+  {
+    const DEST = process.env.CIVICAI_CONTACT_EMAIL ?? "info@attentezero.ca";
+    const orgName = org?.name ?? "(sans nom)";
+    const deepLink = getAdminVerificationsUrl(request.organisationId);
+    const safeOrgName = escapeHtml(orgName);
+    const safeReason = escapeHtml(reason);
+    const alertText = [
+      `Demande de vérification refusée`,
+      "",
+      `Organisme : ${orgName}`,
+      `Motif : ${reason}`,
+      "",
+      deepLink ? `Voir la fiche dans le panneau admin : ${deepLink}` : null,
+    ]
+      .filter((l) => l !== null)
+      .join("\n");
+    const alertHtml = `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#1e293b">
+        <div style="background:#7f1d1d;padding:24px 32px;border-radius:12px 12px 0 0">
+          <h2 style="color:#fff;margin:0;font-size:18px">
+            Demande de vérification refusée — AttenteZéro
+          </h2>
+        </div>
+        <div style="background:#f8fafc;padding:24px 32px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 12px 12px">
+          <table style="width:100%;border-collapse:collapse">
+            <tr><td style="padding:6px 0;color:#64748b;width:160px">Organisme</td><td style="padding:6px 0;font-weight:600">${safeOrgName}</td></tr>
+            <tr><td style="padding:6px 0;color:#64748b">Motif du refus</td><td style="padding:6px 0">${safeReason}</td></tr>
+          </table>
+          ${deepLink ? `
+          <div style="margin-top:24px;text-align:center">
+            <a href="${deepLink}" style="display:inline-block;background:#7f1d1d;color:#fff;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600">
+              Voir la fiche dans le panneau admin →
+            </a>
+          </div>` : ""}
+        </div>
+        <p style="color:#94a3b8;font-size:11px;margin-top:12px;text-align:center">CivicAI — NEQ 2280791601 — Québec, Canada</p>
+      </div>
+    `;
+    sendEmailTo(DEST, {
+      subject: `[AttenteZéro] Vérification refusée — ${orgName}`,
+      text: alertText,
+      html: alertHtml,
+    }).then(({ sent, reason: r }) => {
+      if (!sent) logger.warn({ r, orgId: request.organisationId }, "verifications: admin reject alert email not sent");
+    }).catch((err) => logger.warn({ err, orgId: request.organisationId }, "verifications: admin reject alert email failed"));
   }
 
   logger.info({ requestId: id, reason }, "Verification rejected by admin");
