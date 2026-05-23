@@ -1787,13 +1787,43 @@ function toast(msg, type = 'success') {
   setTimeout(() => t.remove(), 4000);
 }
 
-// ── Bind modal buttons via addEventListener (inline onclick unreliable in iframes) ──
+// ── Bind ALL interactive elements via addEventListener (inline onclick unreliable in iframes) ──
+
+// Auth modals
 document.getElementById('btn-login-submit')?.addEventListener('click', login);
 document.getElementById('btn-register-submit')?.addEventListener('click', register);
 document.getElementById('login-pw')?.addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
 document.getElementById('reg-pw')?.addEventListener('keydown', e => { if (e.key === 'Enter') register(); });
 document.getElementById('btn-toggle-login-pw')?.addEventListener('click', () => togglePw('login-pw'));
 document.getElementById('btn-toggle-reg-pw')?.addEventListener('click', () => togglePw('reg-pw'));
+
+// Navbar — user menu toggle
+document.getElementById('nav-user-menu')?.addEventListener('click', e => {
+  e.stopPropagation();
+  toggleUserMenu();
+});
+
+// Navbar — notif bell
+document.getElementById('nav-notif-bell')?.addEventListener('click', () => goto('candidate-dash'));
+
+// Navbar — dropdown items with data-goto
+document.getElementById('user-dropdown')?.addEventListener('click', e => {
+  const item = e.target.closest('[data-goto]');
+  if (item) { toggleUserMenu(); goto(item.dataset.goto); return; }
+  const logout_btn = e.target.closest('#dd-logout');
+  if (logout_btn) { toggleUserMenu(); logout(); return; }
+  const reviews_btn = e.target.closest('#dd-my-reviews');
+  if (reviews_btn) { toggleUserMenu(); goto('candidate-dash'); showTab('tab-my-reviews', document.querySelector('[data-tab=tab-my-reviews]')); }
+});
+
+// Employer dashboard sidebar nav
+document.getElementById('emp-dash-nav')?.addEventListener('click', e => {
+  const item = e.target.closest('[data-emptab]');
+  if (item) showEmpTab(item.dataset.emptab);
+});
+
+// Employer dashboard "Post job" header button
+document.getElementById('btn-post-job-header')?.addEventListener('click', () => showEmpTab('etab-post'));
 
 // ── Restore page from URL hash on initial load ──────────────
 restoreFromHash();

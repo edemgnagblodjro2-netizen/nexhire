@@ -35,24 +35,24 @@
         <button class="btn-primary" onclick="showModal('modal-register')">Get started</button>
       </div>
       <div id="nav-auth-user" style="display:none;align-items:center;gap:8px">
-        <div class="notif-bell" onclick="goto('candidate-dash')" title="Notifications">
+        <div class="notif-bell" id="nav-notif-bell" title="Notifications">
           <i class="ti ti-bell"></i>
           <span id="notif-badge" class="notif-badge" style="display:none">0</span>
         </div>
-        <div class="user-menu" onclick="toggleUserMenu()">
+        <div class="user-menu" id="nav-user-menu">
           <div class="user-avatar" id="nav-avatar">--</div>
           <i class="ti ti-chevron-down" style="font-size:12px;color:#94A3B8"></i>
           <div class="user-dropdown" id="user-dropdown">
             <div class="dropdown-email" id="dropdown-email">—</div>
-            <div class="dropdown-item" onclick="goto('candidate-dash')"><i class="ti ti-user"></i> Profile</div>
-            <div class="dropdown-item" onclick="goto('candidate-dash');showTab('tab-my-reviews',document.querySelector('[data-tab=tab-my-reviews]'))"><i class="ti ti-star"></i> My reviews</div>
-            <div class="dropdown-item" onclick="goto('settings')"><i class="ti ti-settings"></i> Settings</div>
+            <div class="dropdown-item" data-goto="candidate-dash"><i class="ti ti-user"></i> Profile</div>
+            <div class="dropdown-item" id="dd-my-reviews"><i class="ti ti-star"></i> My reviews</div>
+            <div class="dropdown-item" data-goto="settings"><i class="ti ti-settings"></i> Settings</div>
             <div class="dropdown-divider"></div>
-            <div class="dropdown-item" onclick="goto('help')"><i class="ti ti-help-circle"></i> Help Centre</div>
-            <div class="dropdown-item" onclick="goto('privacy')"><i class="ti ti-shield"></i> Privacy Centre</div>
+            <div class="dropdown-item" data-goto="help"><i class="ti ti-help-circle"></i> Help Centre</div>
+            <div class="dropdown-item" data-goto="privacy"><i class="ti ti-shield"></i> Privacy Centre</div>
             <div class="dropdown-divider"></div>
-            <div class="dropdown-item" id="dd-employer" onclick="goto('employer-dash')" style="display:none"><i class="ti ti-layout-dashboard"></i> Employer Dashboard</div>
-            <div class="dropdown-item danger" onclick="logout()"><i class="ti ti-logout"></i> Sign out</div>
+            <div class="dropdown-item" id="dd-employer" data-goto="employer-dash" style="display:none"><i class="ti ti-layout-dashboard"></i> Employer Dashboard</div>
+            <div class="dropdown-item danger" id="dd-logout"><i class="ti ti-logout"></i> Sign out</div>
           </div>
         </div>
       </div>
@@ -564,18 +564,18 @@
       <div class="dash-avatar" id="emp-dash-avatar"></div>
       <div class="dash-name" id="emp-dash-name"></div>
       <div class="dash-role">Employer</div>
-      <nav class="dash-nav">
-        <a class="dash-nav-item active" onclick="showEmpTab('etab-jobs')"><i class="ti ti-briefcase"></i> My Jobs</a>
-        <a class="dash-nav-item" onclick="showEmpTab('etab-post')"><i class="ti ti-plus"></i> Post a Job</a>
-        <a class="dash-nav-item" onclick="showEmpTab('etab-company')"><i class="ti ti-building"></i> Company</a>
-        <a class="dash-nav-item" onclick="showEmpTab('etab-billing')"><i class="ti ti-credit-card"></i> Billing</a>
+      <nav class="dash-nav" id="emp-dash-nav">
+        <a class="dash-nav-item active" data-emptab="etab-jobs"><i class="ti ti-briefcase"></i> My Jobs</a>
+        <a class="dash-nav-item" data-emptab="etab-post"><i class="ti ti-plus"></i> Post a Job</a>
+        <a class="dash-nav-item" data-emptab="etab-company"><i class="ti ti-building"></i> Company</a>
+        <a class="dash-nav-item" data-emptab="etab-billing"><i class="ti ti-credit-card"></i> Billing</a>
       </nav>
     </div>
     <div class="dash-content">
       <div id="etab-jobs" class="dash-tab active">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
           <h2 style="margin:0">My Job Listings</h2>
-          <button class="btn-primary" onclick="showEmpTab('etab-post')"><i class="ti ti-plus"></i> Post job</button>
+          <button class="btn-primary" id="btn-post-job-header"><i class="ti ti-plus"></i> Post job</button>
         </div>
         <div id="employer-jobs-list"></div>
       </div>
@@ -925,6 +925,6 @@
 </div>
 
 <div id="toasts" class="toast-container"></div>
-<script src="/nexhire/js/app.js?v=20260523c"></script>
+<script src="/nexhire/js/app.js?v=20260523d"></script>
 </body>
 </html>
