@@ -188,6 +188,19 @@ const captchaLimiter = rateLimit({
 });
 app.use("/api/captcha/challenge", captchaLimiter);
 
+// Nexhire domain redirect: nexhire.ca/* → /nexhire/coming-soon.html
+// When the custom domain nexhire.ca is configured, all traffic arrives here.
+// Redirect root and any non-nexhire path to the coming soon page.
+app.use((req, res, next) => {
+  const host = (req.headers.host ?? "").split(":")[0].toLowerCase();
+  if (host === "nexhire.ca" || host === "www.nexhire.ca") {
+    if (!req.path.startsWith("/nexhire/")) {
+      return res.redirect(301, "/nexhire/coming-soon.html");
+    }
+  }
+  return next();
+});
+
 // publicLinks routes (/.well-known/* + /s/:id) are mounted at ROOT, not under /api,
 // because mobile share links and Apple/Google App Site Association files MUST be at root
 // (e.g. https://attentezero.ca/s/<id>, https://attentezero.ca/.well-known/apple-app-site-association).
