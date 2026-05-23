@@ -262,6 +262,15 @@ export async function fetchBugReportStats(adminKey: string): Promise<{ newCount:
   return res.json();
 }
 
+export async function fetchOrgStats(adminKey: string, since: string): Promise<{ newCount: number }> {
+  const res = await fetch(
+    `${API_BASE}/api/admin/organisations/stats?since=${encodeURIComponent(since)}`,
+    { headers: headers(adminKey) },
+  );
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
 export async function verifyService(
   adminKey: string,
   id: string,

@@ -7,7 +7,7 @@ import {
   verificationRequestsTable,
   usersTable,
 } from "@workspace/db";
-import { and, desc, eq, or, inArray, sql } from "drizzle-orm";
+import { and, desc, eq, gte, or, inArray, sql } from "drizzle-orm";
 import { z } from "zod";
 import { logger } from "../lib/logger";
 import { sendEmailTo } from "../lib/notify";
@@ -531,6 +531,28 @@ router.post("/admin/verification/:id/reject", async (req, res) => {
 // partner contact, the admin can flip the verified badge directly without
 // requiring them to submit a formal verification request.
 // ──────────────────────────────────────────────────────────────────────────
+
+// GET /api/admin/organisations/stats?since=<ISO timestamp>
+// Returns count of new organismes/partenaires created after the given timestamp.
+router.get("/admin/organisations/stats", async (req, res) => {
+  if (!checkAdminKey(req, res)) return;
+  const sinceParam = String(req.query.since ?? "");
+  const since = sinceParam ? new Date(sinceParam) : new Date(0);
+  if (isNaN(since.getTime())) {
+    res.status(400).json({ error: "Paramètre « since » invalide." });
+    return;
+  }
+  const [row] = await db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(organisationsTable)
+    .where(
+      and(
+        inArray(organisationsTable.kind, ["organisme", "partenaire"]),
+        gte(organisationsTable.createdAt, since),
+      ),
+    );
+  res.json({ newCount: row?.count ?? 0 });
+});
 
 // GET /api/admin/organisations?kind=organisme|partenaire|all&q=search
 router.get("/admin/organisations", async (req, res) => {

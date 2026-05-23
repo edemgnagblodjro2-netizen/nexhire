@@ -1,9 +1,11 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { Link, useLocation } from "wouter";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { type AdminRole } from "@/lib/auth";
-import { fetchContactStats, fetchVerificationStats, fetchBugReportStats } from "@/lib/api";
+import { fetchContactStats, fetchVerificationStats, fetchBugReportStats, fetchOrgStats } from "@/lib/api";
 import { useNotifications, type NotifEventPrefs } from "@/hooks/useNotifications";
+
+const ORG_LAST_SEEN_KEY = "az_admin_orgs_last_seen";
 
 const SUPERADMIN_NAV = [
   { href: "/", icon: "📊", label: "Tableau de bord" },
@@ -59,9 +61,15 @@ export default function Layout({
   adminKey?: string;
 }) {
   const [location] = useLocation();
+  const queryClient = useQueryClient();
   const NAV = role === "b2g" ? B2G_NAV : SUPERADMIN_NAV;
 
   const enabled = !!adminKey && role !== "b2g";
+
+  // Stable ref for the org last-seen timestamp so the query key doesn't change on re-renders
+  const orgLastSeenRef = useRef<string>(
+    localStorage.getItem(ORG_LAST_SEEN_KEY) ?? new Date(0).toISOString()
+  );
 
   const { data: contactStats } = useQuery({
     queryKey: ["contact-stats", adminKey],
@@ -87,7 +95,26 @@ export default function Layout({
     refetchInterval: 60_000,
   });
 
+  const { data: orgStats } = useQuery({
+    queryKey: ["org-stats", adminKey, orgLastSeenRef.current],
+    queryFn: () => fetchOrgStats(adminKey!, orgLastSeenRef.current),
+    enabled,
+    staleTime: 60_000,
+    refetchInterval: 60_000,
+  });
+
+  // When admin navigates to /organisations, mark all current orgs as seen
+  useEffect(() => {
+    if (location === "/organisations" || location.startsWith("/organisations/")) {
+      const now = new Date().toISOString();
+      localStorage.setItem(ORG_LAST_SEEN_KEY, now);
+      orgLastSeenRef.current = now;
+      queryClient.invalidateQueries({ queryKey: ["org-stats", adminKey] });
+    }
+  }, [location, adminKey, queryClient]);
+
   const unreadCount = contactStats?.newCount ?? 0;
+  const newOrgCount = orgStats?.newCount ?? 0;
 
   const counts = useMemo(() => ({
     messages: contactStats?.newCount ?? 0,
@@ -128,7 +155,10 @@ export default function Layout({
               item.href === "/"
                 ? location === "/" || location === ""
                 : location.startsWith(item.href);
-            const showBadge = item.href === "/contact" && unreadCount > 0;
+            const badgeCount =
+              item.href === "/contact" && unreadCount > 0 ? unreadCount
+              : item.href === "/organisations" && newOrgCount > 0 ? newOrgCount
+              : 0;
             return (
               <Link key={item.href} href={item.href}>
                 <a
@@ -140,9 +170,9 @@ export default function Layout({
                 >
                   <span className="text-base">{item.icon}</span>
                   <span className="flex-1">{item.label}</span>
-                  {showBadge && (
+                  {badgeCount > 0 && (
                     <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-red-500 text-white text-[10px] font-bold leading-none">
-                      {unreadCount > 99 ? "99+" : unreadCount}
+                      {badgeCount > 99 ? "99+" : badgeCount}
                     </span>
                   )}
                 </a>
