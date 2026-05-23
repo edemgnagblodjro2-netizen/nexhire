@@ -1,0 +1,59 @@
+10 Problems
+Category	Host	Result	
+Status Problem	http	nexhire.ca	The remote name could not be resolved: 'nexhire.ca' (http://nexhire.ca)	information More Info
+Status Problem	dns	nexhire.ca	DNS Record not found	information More Info
+Status Problem	dmarc	nexhire.ca	No DMARC Record found	information More Info
+Status Problem	mx	nexhire.ca	DNS Record not found	information More Info
+Status Problem	mx	nexhire.ca	[SUPPLEMENTAL]No DMARC Record found	information More Info
+Status Problem	mx	nexhire.ca	[SUPPLEMENTAL]It is recommended to use a quarantine or reject policy. To enable BIMI, it is required to have one of these at 100%.	information More Info
+Status Problem	spf	nexhire.ca	No SPF Record found	information More Info
+Status Problem	spf	nexhire.ca	[SUPPLEMENTAL]No DMARC Record found	information More Info
+Status Problem	spf	nexhire.ca	[SUPPLEMENTAL]It is recommended to use a quarantine or reject policy. To enable BIMI, it is required to have one of these at 100%.	information More Info
+Status Warning	mx	nexhire.ca	[SUPPLEMENTAL]Brand Logo not appearing in inboxes	information More Info
+Blacklists
+blacklist:nexhire.ca
+Category	Host	Result	
+Status Ok	blacklist	nexhire.ca	ivmURI	information More Info
+Status Ok	blacklist	nexhire.ca	Nordspam DBL	information More Info
+Status Ok	blacklist	nexhire.ca	SEM FRESH	information More Info
+Status Ok	blacklist	nexhire.ca	SEM URI	information More Info
+Status Ok	blacklist	nexhire.ca	SEM URIRED	information More Info
+Status Ok	blacklist	nexhire.ca	SORBS RHSBL BADCONF	information More Info
+Status Ok	blacklist	nexhire.ca	SORBS RHSBL NOMAIL	information More Info
+Status Ok	blacklist	nexhire.ca	Spamhaus DBL	information More Info
+Status Ok	blacklist	nexhire.ca	SURBL multi	information More Info
+Mail Server
+mx:nexhire.ca - 3 Tests Failed
+Pref	Hostname	IP Address	TTL
+dmarc:nexhire.ca - 1 Tests Failed
+Category	Host	Result	
+Status Problem	dmarc	nexhire.ca	No DMARC Record found	information More Info
+spf:nexhire.ca - 3 Tests Failed
+Category	Host	Result	
+Status Problem	spf	nexhire.ca	No SPF Record found	information More Info
+Status Problem	spf	nexhire.ca	[SUPPLEMENTAL]No DMARC Record found	information More Info
+Status Problem	spf	nexhire.ca	[SUPPLEMENTAL]It is recommended to use a quarantine or reject policy. To enable BIMI, it is required to have one of these at 100%.	information More Info
+Type	Domain Name	TTL	Record	Prefix	Value	PrefixDesc	Description
+Web Server
+http:nexhire.ca - 1 Tests Failed
+Category	Host	Result	
+Status Problem	http	nexhire.ca	The remote name could not be resolved: 'nexhire.ca' (http://nexhire.ca)	information More Info
+Dns Server
+dns:nexhire.ca - 1 Tests Failed
+Category	Host	Result	
+Status Problem	dns	nexhire.ca	DNS Record not found	information More Info
+DNS
+Type	Domain Name	IP Address	TTL	Time (ms)	Status	Auth	Parent	Local
+Session Transcript:
+TimeStamp:
+
+- LookupServer [dns:nexhire.ca] 16ms
+
+Depth: 1
+ServerName: any.ca-servers.ca
+ServerIP: 199.4.144.2
+Authoritative: AUTH
+ElapsedTime: 15 ms
+Result: Received 1 Referrals , rcode=NAME_ERROR
+Question:
+Answers: ca. 3600 IN SOA mname=prd-czp-05.corp.cira.ca rname=admin-dns.cira.ca serial=2605231200,
