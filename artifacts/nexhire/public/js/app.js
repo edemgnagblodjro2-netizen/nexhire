@@ -2503,21 +2503,22 @@ async function loadEmployerDash() {
 }
 
 // ── Work Team ──────────────────────────────────────────────
+function _tt(k) { return (T[state.lang] && T[state.lang][k]) || k; }
+
 async function loadTeam() {
   const container = document.getElementById('team-container');
   if (!container) return;
-  const t = k => i18n(k);
   container.innerHTML = `
     <div class="team-invite-card" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px">
-      <div style="font-weight:600;font-size:15px;margin-bottom:12px"><i class="ti ti-user-plus" style="color:var(--indigo)"></i> ${t('team.invite.title')}</div>
+      <div style="font-weight:600;font-size:15px;margin-bottom:12px"><i class="ti ti-user-plus" style="color:var(--indigo)"></i> ${_tt('team.invite.title')}</div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <input type="email" id="team-invite-email" style="flex:1;min-width:200px" placeholder="${t('team.invite.ph')}">
+        <input type="email" id="team-invite-email" style="flex:1;min-width:200px" placeholder="${_tt('team.invite.ph')}">
         <select id="team-invite-role" style="width:160px">
-          <option value="recruiter">${t('team.role.recruiter')}</option>
-          <option value="admin">${t('team.role.admin')}</option>
+          <option value="recruiter">${_tt('team.role.recruiter')}</option>
+          <option value="admin">${_tt('team.role.admin')}</option>
         </select>
         <button class="btn-primary" type="button" onclick="inviteTeamMember()" style="white-space:nowrap">
-          <i class="ti ti-send"></i> ${t('team.invite.btn')}
+          <i class="ti ti-send"></i> ${_tt('team.invite.btn')}
         </button>
       </div>
       <div id="team-invite-err" class="form-error" style="display:none"></div>
@@ -2532,17 +2533,15 @@ async function refreshTeamList() {
   if (!list) return;
   const d = await api('GET', `${BASE}/api/team`);
   const members = d.members || [];
-  const t = k => i18n(k);
   if (!members.length) {
-    list.innerHTML = `<div class="empty-state" style="padding:32px 16px"><i class="ti ti-users" style="font-size:36px;color:var(--muted)"></i><p style="color:var(--muted)">${t('team.empty')}</p></div>`;
+    list.innerHTML = `<div class="empty-state" style="padding:32px 16px"><i class="ti ti-users" style="font-size:36px;color:var(--muted)"></i><p style="color:var(--muted)">${_tt('team.empty')}</p></div>`;
     return;
   }
   const isFr = state.lang === 'fr';
   list.innerHTML = members.map(m => {
     const name = (m.first_name || m.last_name) ? `${m.first_name||''} ${m.last_name||''}`.trim() : m.email;
     const initials = name.split(' ').map(w=>w[0]||'').join('').slice(0,2).toUpperCase() || '?';
-    const roleLabel = m.role === 'admin' ? t('team.role.admin') : t('team.role.recruiter');
-    const statusLabel = m.status === 'active' ? t('team.status.active') : t('team.status.pending');
+    const statusLabel = m.status === 'active' ? _tt('team.status.active') : _tt('team.status.pending');
     const statusColor = m.status === 'active' ? 'var(--green,#22c55e)' : 'var(--gold,#f59e0b)';
     const inviterName = m.inviter_first ? `${m.inviter_first} ${m.inviter_last||''}`.trim() : '';
     const invitedDate = m.invited_at ? new Date(m.invited_at).toLocaleDateString(isFr ? 'fr-CA' : 'en-CA', {month:'short',day:'numeric',year:'numeric'}) : '';
@@ -2556,13 +2555,13 @@ async function refreshTeamList() {
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
         <span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;background:${statusColor}20;color:${statusColor}">${statusLabel}</span>
         <select onchange="changeTeamRole('${m.id}',this.value)" style="font-size:12px;padding:2px 6px;border-radius:6px">
-          <option value="recruiter"${m.role==='recruiter'?' selected':''}>${t('team.role.recruiter')}</option>
-          <option value="admin"${m.role==='admin'?' selected':''}>${t('team.role.admin')}</option>
+          <option value="recruiter"${m.role==='recruiter'?' selected':''}>${_tt('team.role.recruiter')}</option>
+          <option value="admin"${m.role==='admin'?' selected':''}>${_tt('team.role.admin')}</option>
         </select>
       </div>
       <div style="display:flex;flex-direction:column;gap:6px;margin-left:4px">
-        ${m.status==='pending' ? `<button type="button" class="btn-ghost" style="font-size:12px;padding:4px 8px" onclick="resendTeamInvite('${m.id}')">${t('team.resend')}</button>` : ''}
-        <button type="button" class="btn-ghost" style="font-size:12px;padding:4px 8px;color:var(--danger,#ef4444)" onclick="removeTeamMember('${m.id}','${esc(name)}')">${t('team.remove')}</button>
+        ${m.status==='pending' ? `<button type="button" class="btn-ghost" style="font-size:12px;padding:4px 8px" onclick="resendTeamInvite('${m.id}')">${_tt('team.resend')}</button>` : ''}
+        <button type="button" class="btn-ghost" style="font-size:12px;padding:4px 8px;color:var(--danger,#ef4444)" onclick="removeTeamMember('${m.id}','${esc(name)}')">${_tt('team.remove')}</button>
       </div>
     </div>`;
   }).join('');
@@ -2576,7 +2575,7 @@ async function inviteTeamMember() {
   if (!email) { showErr(errEl, 'Email required'); return; }
   const d = await api('POST', `${BASE}/api/team/invite`, { email, role });
   if (d.success) {
-    toast(i18n('team.status.pending') + ' ✓', 'success');
+    toast(_tt('team.status.pending') + ' ✓', 'success');
     document.getElementById('team-invite-email').value = '';
     await refreshTeamList();
   } else {
@@ -2590,7 +2589,7 @@ async function changeTeamRole(memberId, role) {
 }
 
 async function removeTeamMember(memberId, name) {
-  if (!confirm(`${i18n('team.remove')} ${name} ?`)) return;
+  if (!confirm(`${_tt('team.remove')} ${name} ?`)) return;
   const d = await api('DELETE', `${BASE}/api/team/${memberId}`);
   if (d.success) { toast('✓', 'success'); await refreshTeamList(); }
   else toast(d.error || 'Error', 'error');
@@ -2598,7 +2597,7 @@ async function removeTeamMember(memberId, name) {
 
 async function resendTeamInvite(memberId) {
   const d = await api('POST', `${BASE}/api/team/resend/${memberId}`);
-  if (d.success) toast(i18n('team.resend') + ' ✓', 'success');
+  if (d.success) toast(_tt('team.resend') + ' ✓', 'success');
   else toast(d.error || 'Error', 'error');
 }
 
@@ -3314,11 +3313,12 @@ function showTab(tabId, el) {
   if (tabId === 'tab-for-you') loadJobsForYou();
 }
 
-function showEmpTab(tabId) {
+function showEmpTab(tabId, navEl) {
   document.querySelectorAll('#pg-employer-dash .dash-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('#pg-employer-dash .dash-nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById(tabId)?.classList.add('active');
-  event?.currentTarget?.classList.add('active');
+  if (navEl) navEl.classList.add('active');
+  if (tabId === 'etab-team') loadTeam();
 }
 
 // ── Modal helpers ──────────────────────────────────────────
@@ -3561,7 +3561,7 @@ document.getElementById('user-dropdown')?.addEventListener('click', e => {
 // ── Employer dashboard sidebar nav ───────────────────────────
 document.getElementById('emp-dash-nav')?.addEventListener('click', e => {
   const item = e.target.closest('[data-emptab]');
-  if (item) showEmpTab(item.dataset.emptab);
+  if (item) showEmpTab(item.dataset.emptab, item);
 });
 
 // ── Employer dashboard "Post job" header button ──────────────
