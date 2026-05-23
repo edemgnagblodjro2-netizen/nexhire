@@ -212,6 +212,14 @@ export default function Layout({
                       <span className="block h-3 w-3 rounded-full bg-white shadow translate-x-0" />
                     </div>
                   </div>
+                ) : browserPermission === "default" ? (
+                  <button
+                    type="button"
+                    onClick={toggleBrowserPref}
+                    className="mt-0.5 w-full text-left text-xs text-indigo-600 hover:text-indigo-800 underline underline-offset-2 transition-colors select-none"
+                  >
+                    🖥️ Activer les notifications navigateur
+                  </button>
                 ) : (
                   <label className="flex items-center justify-between gap-2 cursor-pointer group">
                     <span className="text-xs text-gray-600 group-hover:text-gray-900 transition-colors select-none">
