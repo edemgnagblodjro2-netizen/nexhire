@@ -1,0 +1,81 @@
+const router = require('express').Router();
+const { v4: uuidv4 } = require('uuid');
+const db = require('../models/db');
+const { requireAuth, requireCompanyAccess } = require('../middleware/auth');
+
+router.post('/', requireAuth, async (req, res) => {
+  if (req.session.user.role !== 'candidate') return res.status(403).json({ success: false, error: 'Candidates only' });
+  const { job_id, cover_letter, cv_url } = req.body;
+  if (!job_id) return res.status(400).json({ success: false, error: 'job_id required' });
+
+  const job = await db.get("SELECT id FROM nh_jobs WHERE id = $1 AND status = 'active'", [job_id]);
+  if (!job) return res.status(404).json({ success: false, error: 'Job not found or closed' });
+
+  const profile = await db.get('SELECT id FROM nh_candidate_profiles WHERE user_id = $1', [req.session.user.id]);
+  if (!profile) return res.status(400).json({ success: false, error: 'Please complete your profile first' });
+
+  const existing = await db.get('SELECT id FROM nh_applications WHERE job_id = $1 AND candidate_id = $2', [job_id, profile.id]);
+  if (existing) return res.status(409).json({ success: false, error: 'Already applied to this job' });
+
+  const id = uuidv4().replace(/-/g, '');
+  await db.run('INSERT INTO nh_applications (id, job_id, candidate_id, user_id, cover_letter, cv_url) VALUES ($1,$2,$3,$4,$5,$6)',
+    [id, job_id, profile.id, req.session.user.id, cover_letter || null, cv_url || null]);
+  await db.run('UPDATE nh_jobs SET applications_count = applications_count + 1 WHERE id = $1', [job_id]);
+
+  const app = await db.get('SELECT * FROM nh_applications WHERE id = $1', [id]);
+  res.status(201).json({ success: true, application: app });
+});
+
+router.get('/mine', requireAuth, async (req, res) => {
+  if (req.session.user.role !== 'candidate') return res.status(403).json({ success: false, error: 'Candidates only' });
+  const apps = await db.all(`
+    SELECT a.*, j.title_fr, j.title_en, j.work_mode, j.city, c.name as company_name, c.logo_url as company_logo
+    FROM nh_applications a
+    JOIN nh_jobs j ON a.job_id = j.id
+    JOIN nh_companies c ON j.company_id = c.id
+    WHERE a.user_id = $1 ORDER BY a.created_at DESC
+  `, [req.session.user.id]);
+  res.json({ success: true, applications: apps });
+});
+
+router.get('/job/:jobId', requireAuth, requireCompanyAccess, async (req, res) => {
+  const job = await db.get('SELECT company_id FROM nh_jobs WHERE id = $1', [req.params.jobId]);
+  if (!job || job.company_id !== req.session.user.company_id) return res.status(403).json({ success: false, error: 'Access denied' });
+
+  const apps = await db.all(`
+    SELECT a.*, u.first_name, u.last_name, u.email,
+           cp.headline_fr, cp.headline_en, cp.skills, cp.experience_years, cp.cv_url as profile_cv
+    FROM nh_applications a
+    JOIN nh_users u ON a.user_id = u.id
+    JOIN nh_candidate_profiles cp ON a.candidate_id = cp.id
+    WHERE a.job_id = $1 ORDER BY a.ai_score DESC NULLS LAST, a.created_at DESC
+  `, [req.params.jobId]);
+  res.json({ success: true, applications: apps });
+});
+
+router.put('/:id/status', requireAuth, requireCompanyAccess, async (req, res) => {
+  const { status } = req.body;
+  const validStatuses = ['reviewed','shortlisted','interview','offer','rejected'];
+  if (!validStatuses.includes(status)) return res.status(400).json({ success: false, error: 'Invalid status' });
+
+  const app = await db.get('SELECT a.*, j.company_id FROM nh_applications a JOIN nh_jobs j ON a.job_id = j.id WHERE a.id = $1', [req.params.id]);
+  if (!app || app.company_id !== req.session.user.company_id) return res.status(403).json({ success: false, error: 'Access denied' });
+
+  await db.run('UPDATE nh_applications SET status = $1, updated_at = NOW() WHERE id = $2', [status, req.params.id]);
+
+  const notifId = uuidv4().replace(/-/g, '');
+  const labels = { reviewed: 'en cours d\'examen', shortlisted: 'présélectionnée', interview: 'sélectionnée pour un entretien', offer: 'offre en cours', rejected: 'non retenue' };
+  await db.run('INSERT INTO nh_notifications (id, user_id, type, title, link) VALUES ($1,$2,$3,$4,$5)',
+    [notifId, app.user_id, 'status_update', `Candidature ${labels[status] || status}`, `/nexhire/applications/${req.params.id}`]);
+
+  res.json({ success: true });
+});
+
+router.post('/:id/withdraw', requireAuth, async (req, res) => {
+  const app = await db.get('SELECT * FROM nh_applications WHERE id = $1 AND user_id = $2', [req.params.id, req.session.user.id]);
+  if (!app) return res.status(403).json({ success: false, error: 'Access denied' });
+  await db.run("UPDATE nh_applications SET status = 'withdrawn' WHERE id = $1", [req.params.id]);
+  res.json({ success: true });
+});
+
+module.exports = router;

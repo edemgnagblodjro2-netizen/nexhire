@@ -1,0 +1,22 @@
+kind = "web"
+previewPath = "/nexhire/"
+title = "Nexhire — Global AI Employment Platform"
+version = "1.0.0"
+id = "artifacts/nexhire"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/nexhire/" ]
+localPort = 23748
+
+[services.development]
+run = "pnpm --filter @workspace/nexhire run dev"
+
+[services.env]
+PORT = "23748"
+BASE_PATH = "/nexhire/"
