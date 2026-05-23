@@ -218,6 +218,23 @@ async function runMigrations() {
       )
     `);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_appnotes_app ON nh_application_notes(application_id, created_at)`);
+    // Work Team
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_team_members (
+        id TEXT PRIMARY KEY,
+        company_id TEXT NOT NULL REFERENCES nh_companies(id) ON DELETE CASCADE,
+        user_id TEXT REFERENCES nh_users(id) ON DELETE SET NULL,
+        email TEXT NOT NULL,
+        role TEXT NOT NULL DEFAULT 'recruiter',
+        status TEXT NOT NULL DEFAULT 'pending',
+        token TEXT,
+        invited_by TEXT REFERENCES nh_users(id) ON DELETE SET NULL,
+        invited_at TIMESTAMPTZ DEFAULT NOW(),
+        accepted_at TIMESTAMPTZ,
+        UNIQUE(company_id, email)
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_team_company ON nh_team_members(company_id)`);
     console.log('[Nexhire] ✅ DB ready');
   } catch (err) {
     console.error('[Nexhire] Migration error:', err.message);
@@ -276,6 +293,7 @@ app.use(apiBase + '/notifications', require('./routes/notifications'));
 app.use(apiBase + '/admin',         require('./routes/admin'));
 app.use(apiBase + '/saved-jobs',    require('./routes/saved-jobs'));
 app.use(apiBase + '/reviews',       require('./routes/reviews'));
+app.use(apiBase + '/team',          require('./routes/team'));
 
 // ── Health check ───────────────────────────────────────────
 app.get(BASE_PATH + '/healthz', (req, res) => res.json({ status: 'ok', service: 'nexhire' }));
