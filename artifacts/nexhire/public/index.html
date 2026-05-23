@@ -9,13 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <link rel="stylesheet" href="/nexhire/css/main.css">
+<link rel="icon" type="image/svg+xml" href="/nexhire/img/favicon.svg">
 </head>
 <body>
 
 <!-- NAV -->
 <nav class="nav" id="main-nav">
   <div class="nav-inner">
-    <a href="/nexhire/" class="logo" onclick="goto('home');return false">Nex<span>hire</span></a>
+    <a href="/nexhire/" class="logo" onclick="goto('home');return false">
+      <img src="/nexhire/img/logo-mark.svg" class="logo-mark" alt="">
+      <span class="logo-word">Nex<em>hire</em></span>
+    </a>
     <div class="nav-links" id="nav-links">
       <a class="nav-link" onclick="goto('jobs')" href="#">Jobs</a>
       <a class="nav-link" onclick="goto('employer')" href="#">For Employers</a>
@@ -117,13 +121,13 @@
     </div>
   </section>
 
-  <section class="categories-section">
+  <section class="categories-section reveal">
     <div class="section-inner">
       <div class="section-header">
         <h2>Browse by category</h2>
         <button class="btn-link" onclick="goto('jobs')">See all jobs <i class="ti ti-arrow-right"></i></button>
       </div>
-      <div class="categories-grid">
+      <div class="categories-grid reveal-stagger">
         <div class="cat-card" onclick="quickSearch('Software Developer')">
           <div class="cat-icon" style="background:#EEF2FF;color:#6366F1"><i class="ti ti-code"></i></div>
           <div class="cat-info"><div class="cat-name">Software Development</div><div class="cat-sub">Developer · Engineer · Architect</div></div>
@@ -208,7 +212,7 @@
     </div>
   </section>
 
-  <section class="featured-section">
+  <section class="featured-section reveal">
     <div class="section-inner">
       <div class="section-header">
         <h2>Featured Opportunities</h2>
@@ -218,9 +222,9 @@
     </div>
   </section>
 
-  <section class="features-section">
+  <section class="features-section reveal">
     <div class="section-inner">
-      <div class="features-grid">
+      <div class="features-grid reveal-stagger">
         <div class="feature-card"><div class="feature-icon"><i class="ti ti-robot"></i></div><h3>AI Job Matching</h3><p>Our AI analyzes your profile and matches you to roles where you're most likely to succeed — faster than traditional search.</p></div>
         <div class="feature-card"><div class="feature-icon"><i class="ti ti-layout-kanban"></i></div><h3>ATS Pipeline</h3><p>Employers get a full Kanban ATS to manage applications from New to Offer — with AI candidate scoring built in.</p></div>
         <div class="feature-card"><div class="feature-icon"><i class="ti ti-file-text"></i></div><h3>AI Cover Letters</h3><p>Generate personalized, compelling cover letters in seconds. One click — tailored to each job.</p></div>
@@ -229,7 +233,7 @@
     </div>
   </section>
 
-  <section class="employer-cta">
+  <section class="employer-cta reveal">
     <div class="section-inner">
       <div class="cta-card">
         <div class="cta-text">

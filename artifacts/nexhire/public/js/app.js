@@ -569,6 +569,32 @@ function showGuestNav() {
 function toggleUserMenu() { document.getElementById('user-dropdown').classList.toggle('open'); }
 document.addEventListener('click', e => { if (!e.target.closest('.user-menu')) document.getElementById('user-dropdown')?.classList.remove('open'); });
 
+// ── Scroll Reveal ────────────────────────────────────────────
+(function initScrollReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  function observeAll() {
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
+      if (!el.classList.contains('visible')) observer.observe(el);
+    });
+  }
+
+  observeAll();
+  // Re-run after page navigation (SPA goto)
+  const _origGoto = window.goto;
+  window.goto = function(page) {
+    _origGoto && _origGoto(page);
+    requestAnimationFrame(() => requestAnimationFrame(observeAll));
+  };
+})();
+
 async function login() {
   const email = document.getElementById('login-email').value.trim();
   const pw = document.getElementById('login-pw').value;
