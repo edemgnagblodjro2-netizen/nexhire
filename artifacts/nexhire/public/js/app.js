@@ -373,6 +373,7 @@ const T = {
     'dash.empty.skills':'Add skills to your profile to get job recommendations.',
     'dash.empty.nomatch':'No matches found yet — more jobs coming!',
     'dash.empty.jobs':'No jobs posted yet.',
+    'jobs.noresult':'No jobs found. Try different filters.',
     'status.applied':'Applied','status.reviewed':'Reviewed','status.shortlisted':'Shortlisted',
     'status.interview':'Interview','status.offer':'Offer','status.rejected':'Not selected','status.withdrawn':'Withdrawn',
     'cta.title':'Hire the best talent globally',
@@ -570,6 +571,7 @@ const T = {
     'dash.empty.skills':'Ajoutez des compétences à votre profil pour obtenir des recommandations.',
     'dash.empty.nomatch':'Aucune correspondance pour l\'instant — plus d\'offres arrivent !',
     'dash.empty.jobs':'Aucune offre publiée pour l\'instant.',
+    'jobs.noresult':'Aucune offre trouvée. Essayez d\'autres filtres.',
     'status.applied':'Candidaté','status.reviewed':'Examiné','status.shortlisted':'Présélectionné',
     'status.interview':'Entretien','status.offer':'Offre','status.rejected':'Non retenu','status.withdrawn':'Retiré',
     'cta.title':"Recrutez les meilleurs talents à l'échelle mondiale",
@@ -733,8 +735,9 @@ async function toggleSave(jobId, e) {
 }
 
 // ── Featured jobs ──────────────────────────────────────────
-async function loadFeaturedJobs() {
-  const d = await api('GET', `${BASE}/api/jobs?featured=true&limit=6`);
+async function loadFeaturedJobs(province = '') {
+  const qs = province ? `featured=true&limit=6&province=${encodeURIComponent(province)}` : 'featured=true&limit=6';
+  const d = await api('GET', `${BASE}/api/jobs?${qs}`);
   const container = document.getElementById('featured-jobs');
   if (!container) return;
   const jobs = d.jobs || [];
@@ -843,12 +846,12 @@ function searchJobs() {
   renderRecentSearches();
 
   goto('jobs');
-  setTimeout(filterJobs, 100);
 }
 function syncHeroProvince() {
   const v = document.getElementById('hero-province')?.value;
   const fprov = document.getElementById('fprov');
   if (fprov && v !== undefined) fprov.value = v;
+  loadFeaturedJobs(v || '');
 }
 
 function initLocationSelects() {
@@ -921,7 +924,7 @@ async function filterJobs(page = 1) {
     jobs = jobs.filter(j => !viewed.has(j.id));
   }
 
-  if (!jobs.length) { list.innerHTML = '<div class="empty-state"><i class="ti ti-search-off"></i><p>No jobs found. Try different filters.</p></div>'; return; }
+  if (!jobs.length) { const t = T[state.lang]; list.innerHTML = `<div class="empty-state"><i class="ti ti-search-off"></i><p>${t['jobs.noresult']}</p></div>`; return; }
 
   list.innerHTML = jobs.map(j => {
     const title = state.lang === 'fr' ? (j.title_fr || j.title_en) : (j.title_en || j.title_fr);
