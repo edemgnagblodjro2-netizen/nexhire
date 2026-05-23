@@ -205,7 +205,6 @@ function updateCitiesForProvince(provinceSelectId, citySelectId) {
     window.history.replaceState({}, '', window.location.pathname);
     await handleAcceptInvite(inviteToken);
   }
-  restoreFromHash();
 })();
 
 // ── API ────────────────────────────────────────────────────
