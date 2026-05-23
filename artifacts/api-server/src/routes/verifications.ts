@@ -451,6 +451,23 @@ router.get("/org/verification/status", async (req, res) => {
   });
 });
 
+// ── GET /api/org/verification/history — all requests for the org ─────────
+router.get("/org/verification/history", async (req, res) => {
+  if (!requireAuth(req, res)) return;
+  const userId = req.user!.id;
+  const org = await getOrgForUser(userId);
+  if (!org) {
+    res.status(404).json({ error: "Aucun organisme associé." });
+    return;
+  }
+  const requests = await db
+    .select()
+    .from(verificationRequestsTable)
+    .where(eq(verificationRequestsTable.organisationId, org.id))
+    .orderBy(desc(verificationRequestsTable.createdAt));
+  res.json({ requests });
+});
+
 // ── GET /api/admin/verification/requests?status=pending ──────────────────
 router.get("/admin/verification/stats", async (req, res) => {
   if (!checkAdminKey(req, res)) return;

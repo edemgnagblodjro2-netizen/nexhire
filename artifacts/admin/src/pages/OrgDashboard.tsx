@@ -13,8 +13,10 @@ import {
 import { clearOrgToken } from "@/lib/orgAuth";
 import {
   fetchVerificationStatus,
+  fetchVerificationHistory,
   submitVerificationRequest,
   type VerificationStatus,
+  type VerificationRequest,
 } from "@/lib/orgApi";
 
 const PLAN_LABELS: Record<string, { label: string; price: string; color: string }> = {
@@ -108,6 +110,8 @@ export default function OrgDashboard() {
   const [editError, setEditError] = useState<string | null>(null);
   const [editSuccess, setEditSuccess] = useState(false);
   const [verif, setVerif] = useState<VerificationStatus | null>(null);
+  const [verifHistory, setVerifHistory] = useState<VerificationRequest[]>([]);
+  const [showHistory, setShowHistory] = useState(false);
   const [showVerifForm, setShowVerifForm] = useState(false);
   const [verifSubmitting, setVerifSubmitting] = useState(false);
   const [verifError, setVerifError] = useState<string | null>(null);
@@ -160,8 +164,12 @@ export default function OrgDashboard() {
 
   async function reloadVerif() {
     try {
-      const v = await fetchVerificationStatus();
+      const [v, h] = await Promise.all([
+        fetchVerificationStatus(),
+        fetchVerificationHistory(),
+      ]);
       setVerif(v);
+      setVerifHistory(h.requests);
     } catch {
       /* silent */
     }
@@ -208,10 +216,16 @@ export default function OrgDashboard() {
         setOrg(orgData.organisation);
         setSub(orgData.subscription);
         setStats(statsData);
-        // Fetch verification status (best-effort)
+        // Fetch verification status + history (best-effort)
         try {
-          const v = await fetchVerificationStatus();
-          if (!cancelled) setVerif(v);
+          const [v, h] = await Promise.all([
+            fetchVerificationStatus(),
+            fetchVerificationHistory(),
+          ]);
+          if (!cancelled) {
+            setVerif(v);
+            setVerifHistory(h.requests);
+          }
         } catch { /* silent */ }
       } catch (err: any) {
         if (cancelled) return;
@@ -435,6 +449,54 @@ export default function OrgDashboard() {
           {verif?.isVerified && verif.latestRequest?.expiresAt && (
             <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-4 text-sm text-emerald-800">
               ✓ Badge actif jusqu'au <strong>{formatDate(verif.latestRequest.expiresAt)}</strong> — un rappel vous sera envoyé avant l'expiration.
+            </div>
+          )}
+
+          {verifHistory.length > 0 && (
+            <div className="mt-4 border-t border-gray-100 pt-4">
+              <button
+                type="button"
+                onClick={() => setShowHistory((v) => !v)}
+                className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-800 transition"
+              >
+                <span className={`transition-transform ${showHistory ? "rotate-90" : ""}`}>▶</span>
+                Historique des demandes ({verifHistory.length})
+              </button>
+              {showHistory && (
+                <ol className="mt-3 space-y-2">
+                  {verifHistory.map((req, idx) => {
+                    const isLatest = idx === 0;
+                    const statusConfig: Record<string, { label: string; color: string }> = {
+                      pending: { label: "En attente", color: "bg-blue-100 text-blue-700" },
+                      approved: { label: "Approuvée", color: "bg-emerald-100 text-emerald-700" },
+                      auto_approved: { label: "Approuvée auto.", color: "bg-emerald-100 text-emerald-700" },
+                      rejected: { label: "Refusée", color: "bg-red-100 text-red-700" },
+                    };
+                    const sc = statusConfig[req.status] ?? { label: req.status, color: "bg-gray-100 text-gray-600" };
+                    return (
+                      <li key={req.id} className="rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 text-sm">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <div className="flex items-center gap-2">
+                            <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${sc.color}`}>{sc.label}</span>
+                            {isLatest && (
+                              <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-200 text-gray-600">Dernière</span>
+                            )}
+                          </div>
+                          <span className="text-xs text-gray-400">Soumise le {formatDate(req.createdAt)}</span>
+                        </div>
+                        {req.rejectionReason && (
+                          <div className="mt-2 text-red-700 bg-red-50 border border-red-100 rounded-lg px-3 py-2 text-xs">
+                            <span className="font-semibold">Motif&nbsp;:</span> {req.rejectionReason}
+                          </div>
+                        )}
+                        {(req.status === "approved" || req.status === "auto_approved") && req.reviewedAt && (
+                          <div className="mt-1.5 text-xs text-gray-400">Approuvée le {formatDate(req.reviewedAt)}</div>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ol>
+              )}
             </div>
           )}
 

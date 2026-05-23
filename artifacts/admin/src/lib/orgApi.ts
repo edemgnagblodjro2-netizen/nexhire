@@ -148,6 +148,12 @@ export async function fetchVerificationStatus(): Promise<VerificationStatus> {
   return res.json();
 }
 
+export async function fetchVerificationHistory(): Promise<{ requests: VerificationRequest[] }> {
+  const res = await fetch("/api/org/verification/history", { headers: authHeaders() });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
 export async function submitVerificationRequest(payload: {
   neq: string;
   arcCharityNumber?: string;
