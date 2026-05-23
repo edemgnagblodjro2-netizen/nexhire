@@ -482,7 +482,7 @@ const T = {
     'bento.cand.desc':"Des milliers d'offres au Canada et à l'international. L'IA Nexhire trouve votre meilleur match en quelques secondes.",
     'bento.cand.btn':'Parcourir les offres',
     'bento.emp.label':'Pour les employeurs',
-    'bento.emp.title':'Recrutez les meilleurs talents, à l'échelle mondiale.',
+    'bento.emp.title':"Recrutez les meilleurs talents, à l'échelle mondiale.",
     'bento.emp.desc':'Publiez des offres, classez les candidats par IA, gérez votre pipeline Kanban. 2 à 5 postes gratuits pour démarrer.',
     'bento.emp.btn':'Commencer gratuitement',
     'bento.ai.label':"Propulsé par l'IA",
