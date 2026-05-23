@@ -247,6 +247,17 @@ window.addEventListener('hashchange', restoreFromHash);
 // ── Lang ───────────────────────────────────────────────────
 async function setLang(lang) {
   state.lang = lang; setLangUI(lang);
+  // Re-render active Phase 3 tab so content switches language immediately
+  const phase3Reload = {
+    'tab-score':    () => loadProfileScore(),
+    'tab-skills':   () => { if (currentTest) renderSkillTestUI(); else loadSkillTests(); },
+    'tab-referrals':() => loadReferrals(),
+    'tab-salary':   () => loadSalaryPage(),
+    'tab-credits':  () => loadCredits(),
+  };
+  for (const [id, fn] of Object.entries(phase3Reload)) {
+    if (document.getElementById(id)?.classList.contains('active')) { fn(); break; }
+  }
   if (state.user) await api('POST', `${BASE}/api/auth/set-lang`, { lang });
 }
 const T = {
@@ -4164,17 +4175,28 @@ document.getElementById('nav-user-menu')?.addEventListener('click', e => {
 });
 
 // ── Navbar — notif bell ──────────────────────────────────────
-document.getElementById('nav-notif-bell')?.addEventListener('click', () => goto('candidate-dash'));
+document.getElementById('nav-notif-bell')?.addEventListener('click', () => {
+  if (state.user?.role === 'employer') goto('employer-dash');
+  else goto('candidate-dash');
+});
 
 // ── Navbar — dropdown items ──────────────────────────────────
 document.getElementById('user-dropdown')?.addEventListener('click', e => {
   const item = e.target.closest('[data-goto]');
-  if (item) { toggleUserMenu(); goto(item.dataset.goto); return; }
+  if (item) {
+    toggleUserMenu();
+    let dest = item.dataset.goto;
+    // "Profil" link routes to the correct dashboard based on role
+    if (dest === 'candidate-dash' && state.user?.role === 'employer') dest = 'employer-dash';
+    goto(dest);
+    return;
+  }
   const logout_btn = e.target.closest('#dd-logout');
   if (logout_btn) { toggleUserMenu(); logout(); return; }
   const reviews_btn = e.target.closest('#dd-my-reviews');
   if (reviews_btn) {
     toggleUserMenu();
+    if (state.user?.role === 'employer') { goto('employer-dash'); return; }
     goto('candidate-dash');
     showTab('tab-my-reviews', document.querySelector('[data-tab="tab-my-reviews"]'));
   }
