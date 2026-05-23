@@ -255,6 +255,7 @@ app.use(apiBase + '/auth',          require('./routes/auth'));
 app.use(apiBase + '/jobs',          require('./routes/jobs'));
 app.use(apiBase + '/companies',     require('./routes/companies'));
 app.use(apiBase + '/applications',  require('./routes/applications'));
+app.use(apiBase,                    require('./routes/endorsements'));
 app.use(apiBase + '/candidates',    require('./routes/candidates'));
 app.use(apiBase + '/ai',            require('./routes/ai'));
 app.use(apiBase + '/payments',      require('./routes/payments'));

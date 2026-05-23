@@ -949,7 +949,18 @@
   </div>
 </div>
 
+<!-- ENDORSE MODAL ───────────────────────────────────────── -->
+<div id="modal-endorse" class="modal-overlay" style="display:none" onclick="if(this===event.target)this.style.display='none'">
+  <div class="modal-card" style="max-width:500px;width:100%">
+    <div class="modal-header">
+      <h3 class="modal-title"><i class="ti ti-thumb-up"></i> Endorse <span id="endorse-modal-name"></span></h3>
+      <button class="modal-close" onclick="document.getElementById('modal-endorse').style.display='none'"><i class="ti ti-x"></i></button>
+    </div>
+    <div id="endorse-modal-body" style="padding:0 24px 24px"></div>
+  </div>
+</div>
+
 <div id="toasts" class="toast-container"></div>
-<script src="/nexhire/js/app.js?v=20260523n"></script>
+<script src="/nexhire/js/app.js?v=20260523o"></script>
 </body>
 </html>

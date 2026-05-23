@@ -548,6 +548,10 @@ a{text-decoration:none;color:inherit}
 .endorse-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 /* Passport endorsement pill */
 .passport-endorse-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;color:#fff;margin-top:10px;cursor:default}
+/* Kanban endorsement row */
+.kanban-endorse-row{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.kanban-endorse-pill{display:inline-flex;align-items:center;gap:4px;background:#eef2ff;color:#6366f1;border-radius:20px;padding:3px 9px;font-size:11px;font-weight:700}
+.kanban-endorse-btn{font-size:11px;padding:4px 10px;color:var(--indigo);border-color:var(--indigo)20;flex-shrink:0}
 /* ── MATCH SCORE BADGE ───────────────────────────────────── */
 .match-badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.3px;white-space:nowrap}
 /* ── HIGHLIGHTS ──────────────────────────────────────────── */

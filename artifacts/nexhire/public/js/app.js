@@ -1902,6 +1902,8 @@ async function refreshKanban() {
       </div>
     </div>`;
   }).join('');
+
+  loadKanbanEndorsementBadges(apps);
 }
 
 function aiCvBadge(a) {
@@ -1918,7 +1920,9 @@ function aiCvBadge(a) {
 
 function kanbanCard(a, col) {
   const skills = safeJsonArr(a.skills);
-  return `<div class="kanban-card">
+  const cuid = a.user_id || '';
+  const cname = `${a.first_name||''} ${a.last_name||''}`.trim();
+  return `<div class="kanban-card" data-cuid="${cuid}">
     <div class="kanban-card-name">${esc(a.first_name||'')} ${esc(a.last_name||'')}</div>
     <div style="font-size:12px;color:var(--muted);margin-bottom:6px">${a.experience_years || 0} yrs exp${a.headline_en ? ' · '+esc(a.headline_en) : ''}</div>
     ${aiCvBadge(a)}
@@ -1932,7 +1936,41 @@ function kanbanCard(a, col) {
       <button class="btn-ghost" style="font-size:11px;padding:4px 8px;color:var(--red);border-color:var(--red)" onclick="moveCandidate('${a.id}','rejected')">Reject</button>
     </div>
     ${a.profile_cv || a.cv_url ? `<a href="${a.profile_cv || a.cv_url}" target="_blank" style="font-size:11px;color:var(--indigo);display:block;margin-top:4px"><i class="ti ti-file-cv"></i> View CV</a>` : ''}
+    ${cuid ? `<div class="kanban-endorse-row">
+      <span id="ke-${cuid}" class="kanban-endorse-pill" style="display:none"></span>
+      <button class="btn-ghost kanban-endorse-btn" onclick="openEndorseModal('${cuid}','${esc(cname)}')"><i class="ti ti-thumb-up"></i> Endorse</button>
+    </div>` : ''}
   </div>`;
+}
+
+async function loadKanbanEndorsementBadges(apps) {
+  const seen = new Set();
+  for (const a of apps) {
+    if (!a.user_id || seen.has(a.user_id)) continue;
+    seen.add(a.user_id);
+    loadEndorsements(a.user_id).then(data => {
+      const el = document.getElementById(`ke-${a.user_id}`);
+      if (!el) return;
+      if (data.total > 0) {
+        el.innerHTML = `<i class="ti ti-thumb-up"></i> ${data.total}`;
+        el.style.display = 'inline-flex';
+      }
+    });
+  }
+}
+
+async function openEndorseModal(userId, name) {
+  if (!state.user) { showModal('modal-login'); return; }
+  const modal = document.getElementById('modal-endorse');
+  const nameEl = document.getElementById('endorse-modal-name');
+  const body = document.getElementById('endorse-modal-body');
+  if (!modal || !body) return;
+  nameEl.textContent = name;
+  body.innerHTML = `<div style="text-align:center;padding:24px;color:var(--muted)"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:22px"></i></div>`;
+  modal.style.display = 'flex';
+  const data = await loadEndorsements(userId);
+  body.innerHTML = renderEndorsementSection(data, userId, false);
+  modal.dataset.candidateId = userId;
 }
 
 async function moveCandidate(appId, status) {
