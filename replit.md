@@ -11,6 +11,10 @@ A mobile application connecting vulnerable individuals with community and social
 - **TODO post-launch — site vitrine `attentezero.ca`** : créer un nouvel artifact `marketing-site` dans le monorepo Replit (React/Vite, one-pager : hero + boutons App Store/Play Store + 3 blocs features + stats + footer mentions légales). Pointer le domaine `attentezero.ca` via Cloudflare.
 - Mentions à jour à pousser progressivement : footer admin, page « À propos » mobile, App Store/Play Store « Développeur », signatures emails transactionnels.
 
+## Nexhire — Brand colors (confirmés mai 2026)
+- **`#023448`** — bleu marine profond (navbar, hero, footer, variables CSS `--dark` / `--brand-dark`)
+- **`#1b485a`** — sarcelle moyen (dégradés, accents, variable `--mid` / `--brand-teal`)
+
 ## Sécurité — décisions prises (mai 2026)
 - **Audit pré-launch effectué** : reset password (5 essais max sur 6 chiffres), quota IA 15/jour côté serveur, signature webhook Stripe vérifiée → 3 points critiques OK 🟢.
 - **MFA / SMS / SSO** : explicitement écarté pour le launch. Public cible vulnérable → MFA obligatoire exclurait les utilisateurs à protéger. À reconsidérer post-launch si retour terrain le justifie (privilégier biométrie optionnelle, pas SMS).
