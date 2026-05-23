@@ -185,7 +185,14 @@ function updateCitiesForProvince(provinceSelectId, citySelectId) {
 (async () => {
   try {
     const d = await api('GET', `${BASE}/api/auth/me`);
-    if (d.success && d.user) { state.user = d.user; state.lang = d.user.preferred_lang || 'en'; showUserNav(); }
+    if (d.success && d.user) {
+      state.user = d.user;
+      state.lang = d.user.preferred_lang || 'en';
+      showUserNav();
+      // Close login modal if it was opened before auth resolved (race condition)
+      hideModal('modal-login');
+      hideModal('modal-register');
+    }
   } catch (e) {}
   setLangUI(state.lang);
   initLocationSelects();
@@ -198,6 +205,18 @@ function updateCitiesForProvince(provinceSelectId, citySelectId) {
     loadDashboard();
     if (state.user.role === 'candidate') loadSavedJobIds();
     loadNotifBadge();
+    startSSE();
+    // Restore hash-based page — but if already authed, skip #login/#register
+    const hash = window.location.hash.replace('#', '');
+    if (hash === 'login' || hash === 'register') {
+      // Clear stale auth-gate hash and go to dashboard
+      history.replaceState(null, '', window.location.pathname);
+      goto(state.user.role === 'employer' ? 'employer-dash' : 'candidate-dash');
+    } else {
+      restoreFromHash();
+    }
+  } else {
+    restoreFromHash();
   }
   // Handle team invite acceptance via URL param ?accept-invite=TOKEN
   const inviteToken = new URLSearchParams(window.location.search).get('accept-invite');
