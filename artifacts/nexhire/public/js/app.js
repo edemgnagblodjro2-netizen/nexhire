@@ -2146,11 +2146,11 @@ function renderSkillPicker(selected = [], idPrefix = 'sp') {
   const sel = new Set(selected.map(s => s.toLowerCase()));
 
   const mainBar = `<div class="sp-sector-bar" id="${idPrefix}-sector-bar">
-    ${SKILL_SECTORS.map(s => `<button class="sp-sector-btn${s.id==='all'?' active':''}" data-sid="${s.id}" onclick="selectSkillSector('${s.id}','${idPrefix}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
+    ${SKILL_SECTORS.map(s => `<button type="button" class="sp-sector-btn${s.id==='all'?' active':''}" data-sid="${s.id}" onclick="selectSkillSector('${s.id}','${idPrefix}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
   </div>`;
 
   const subBar = `<div class="sp-sector-bar sp-subsector-bar" id="${idPrefix}-subsector-bar" style="display:none">
-    ${TECH_SUBS.map(s => `<button class="sp-sector-btn${s.id==='tech'?' active':''}" data-sid="${s.id}" onclick="selectSkillSector('${s.id}','${idPrefix}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
+    ${TECH_SUBS.map(s => `<button type="button" class="sp-sector-btn${s.id==='tech'?' active':''}" data-sid="${s.id}" onclick="selectSkillSector('${s.id}','${idPrefix}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
   </div>`;
 
   const groups = SKILL_GROUPS.map(g => {
@@ -2240,6 +2240,58 @@ function getPickedSkills(idPrefix = 'sp') {
   const picker = document.getElementById(`${idPrefix}-picker`);
   if (!picker) return [];
   return [...picker.querySelectorAll('.sp-chip.active[data-skill]')].map(c => c.dataset.skill);
+}
+
+const JOB_SKILL_QUICK = [
+  'Python','JavaScript','TypeScript','Java','SQL','React','Node.js','AWS','Excel','Git',
+  'Agile / Scrum','Project Management','Communication','Leadership','French (bilingual)',
+  'Customer Service','Sales','Financial Analysis','Marketing','AutoCAD','SAP','Salesforce','Figma'
+];
+
+function renderJobSkillInput(skills = []) {
+  const initialChips = skills.map(s =>
+    `<span class="sp-chip active sp-custom-chip" data-skill="${esc(s)}">${esc(s)} <span onclick="this.parentElement.remove()" style="margin-left:4px;opacity:.6;cursor:pointer">✕</span></span>`
+  ).join('');
+  const suggestions = JOB_SKILL_QUICK.map(s =>
+    `<span class="sp-chip" style="cursor:pointer" onclick="addJobSkillTag('${esc(s)}')">${esc(s)}</span>`
+  ).join('');
+  return `<div id="jf-skill-wrap">
+    <div id="jf-skill-chips" class="sp-chips" style="min-height:32px;margin-bottom:8px">${initialChips}</div>
+    <input type="text" id="jf-skill-text" class="sp-custom-input" style="width:100%;box-sizing:border-box"
+      placeholder="Type a skill and press Enter…"
+      onkeydown="addJobSkill(event)">
+    <div style="margin-top:12px;font-size:12px;color:var(--muted);margin-bottom:6px">Common skills — click to add:</div>
+    <div class="sp-chips">${suggestions}</div>
+  </div>`;
+}
+
+function addJobSkill(e) {
+  if (e.key !== 'Enter') return;
+  e.preventDefault();
+  const inp = document.getElementById('jf-skill-text');
+  const val = inp?.value.trim();
+  if (!val) return;
+  addJobSkillTag(val);
+  if (inp) inp.value = '';
+}
+
+function addJobSkillTag(tag) {
+  const container = document.getElementById('jf-skill-chips');
+  if (!container) return;
+  const already = [...container.querySelectorAll('[data-skill]')]
+    .some(c => c.dataset.skill.toLowerCase() === tag.toLowerCase());
+  if (already) return;
+  const chip = document.createElement('span');
+  chip.className = 'sp-chip active sp-custom-chip';
+  chip.dataset.skill = tag;
+  chip.innerHTML = `${esc(tag)} <span onclick="this.parentElement.remove()" style="margin-left:4px;opacity:.6;cursor:pointer">✕</span>`;
+  container.appendChild(chip);
+}
+
+function getJobSkills() {
+  const container = document.getElementById('jf-skill-chips');
+  if (!container) return [];
+  return [...container.querySelectorAll('[data-skill]')].map(c => c.dataset.skill);
 }
 
 async function loadProfileForm() {
@@ -2743,7 +2795,7 @@ function initPostJobForm() {
       <div class="form-group"><label>Pay period</label><select id="jf-sal-period"><option value="year">Per year (annual)</option><option value="month">Per month</option><option value="hour">Per hour</option></select></div>
     </div>
     <div class="form-group"><label>Required experience</label><select id="jf-exp"><option value="">Not specified</option><option value="0-1">0-1 years (Junior)</option><option value="1-3">1-3 years (Intermediate)</option><option value="3-5">3-5 years (Senior)</option><option value="5+">5+ years (Lead / Expert)</option></select></div>
-    <div class="form-group"><label>Skills required</label>${renderSkillPicker([], 'jf')}</div>
+    <div class="form-group"><label>Skills required</label>${renderJobSkillInput()}</div>
     <div class="form-group"><label>Languages required</label>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
         <label class="check-label"><input type="checkbox" id="jf-lang-en" value="English" checked> English</label>
@@ -2816,7 +2868,7 @@ async function postJob(e) {
     salary_currency: document.getElementById('jf-currency')?.value || 'CAD',
     salary_period: document.getElementById('jf-sal-period')?.value || 'year',
     experience_years: document.getElementById('jf-exp')?.value || null,
-    skills_required: getPickedSkills('jf'),
+    skills_required: getJobSkills(),
     languages_required: langs,
   };
   if (!body.title_en || !body.description_en) { showErr(errEl, 'Title (EN) and description required'); return; }
