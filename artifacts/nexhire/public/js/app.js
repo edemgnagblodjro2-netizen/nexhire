@@ -1681,9 +1681,14 @@ async function loadProfileForm() {
     <div class="form-group"><label>Availability</label><select id="pf-avail"><option value="immediate" ${p.availability==='immediate'?'selected':''}>Immediate</option><option value="2weeks" ${p.availability==='2weeks'?'selected':''}>2 weeks</option><option value="1month" ${p.availability==='1month'?'selected':''}>1 month</option><option value="3months" ${p.availability==='3months'?'selected':''}>3 months</option></select></div>
     <div class="form-group"><label>Bio (EN)</label><textarea id="pf-bio-en">${esc(p.bio_en||'')}</textarea></div>
     <button class="btn-primary" onclick="saveProfile()"><i class="ti ti-check"></i> Save profile</button>` +
-    renderHighlightsSection();
+    renderHighlightsSection() +
+    `<div id="my-endorsements-container" class="endorsements-section-placeholder"></div>`;
   updatePassportBadgesRow(getAvailBadges(_uid));
   updateSidebarOpenToWork(getAvailBadges(_uid));
+  loadEndorsements(state.user.id).then(data => {
+    const el = document.getElementById('my-endorsements-container');
+    if (el) el.outerHTML = renderEndorsementSection(data, state.user.id, true);
+  });
 }
 
 async function saveProfile() {
@@ -2140,6 +2145,103 @@ async function startCheckout(plan, interval) {
   const d = await api('POST', `${BASE}/api/payments/create-checkout`, { plan, interval });
   if (d.url) window.location.href = d.url;
   else toast(d.error || 'Payment setup failed', 'error');
+}
+
+// ── Endorsements ("Recommandé par") ────────────────────────
+const ENDORSE_QUALITIES = [
+  { id:'skills',        en:'Skills',         fr:'Compétences',   icon:'ti-code',         color:'#6366f1', bg:'#eef2ff' },
+  { id:'serious',       en:'Seriousness',    fr:'Sérieux',        icon:'ti-shield-check', color:'#0d9488', bg:'#f0fdfa' },
+  { id:'punctual',      en:'Punctuality',    fr:'Ponctualité',    icon:'ti-clock',        color:'#2563eb', bg:'#eff6ff' },
+  { id:'expertise',     en:'Expertise',      fr:'Expertise',      icon:'ti-award',        color:'#7c3aed', bg:'#f5f3ff' },
+  { id:'communication', en:'Communication',  fr:'Communication',  icon:'ti-message',      color:'#d97706', bg:'#fffbeb' },
+  { id:'leadership',    en:'Leadership',     fr:'Leadership',     icon:'ti-crown',        color:'#dc2626', bg:'#fef2f2' },
+];
+
+async function loadEndorsements(candidateId) {
+  const d = await api('GET', `${BASE}/api/endorsements/${candidateId}`);
+  return d;
+}
+
+async function endorseUser(candidateId, quality) {
+  const d = await api('POST', `${BASE}/api/endorsements`, { candidateId, quality });
+  if (d.error) { toast(d.error, 'error'); return null; }
+  toast(T[state.lang]?.endorseThank || 'Endorsement sent! 🙌', 'success');
+  return d;
+}
+
+async function removeEndorsement(candidateId, quality) {
+  return await api('DELETE', `${BASE}/api/endorsements/${candidateId}/${quality}`);
+}
+
+function renderEndorsementSection(data, candidateId, isOwn) {
+  const lang = state.lang || 'en';
+  const { total = 0, byQuality = {}, endorsersByQuality = {}, myEndorsements = [] } = data || {};
+
+  const totalStr = total === 0
+    ? (lang === 'fr' ? 'Aucune recommandation encore' : 'No endorsements yet')
+    : total === 1
+      ? (lang === 'fr' ? 'Recommandé par 1 professionnel' : 'Endorsed by 1 professional')
+      : (lang === 'fr' ? `Recommandé par ${total} professionnels` : `Endorsed by ${total} professionals`);
+
+  const cards = ENDORSE_QUALITIES.map(q => {
+    const count = byQuality[q.id] || 0;
+    const endorsers = endorsersByQuality[q.id] || [];
+    const iMine = myEndorsements.includes(q.id);
+    const label = lang === 'fr' ? q.fr : q.en;
+    const endorserNames = endorsers.slice(0, 3).map(e => e.name).join(', ');
+    const moreCount = (byQuality[q.id] || 0) - 3;
+
+    return `<div class="endorse-card ${count > 0 ? 'has-endorsements' : ''}">
+      <div class="endorse-icon" style="background:${q.bg};color:${q.color}"><i class="ti ${q.icon}"></i></div>
+      <div class="endorse-body">
+        <div class="endorse-label">${label}</div>
+        ${count > 0 ? `<div class="endorse-names">${endorserNames}${moreCount > 0 ? ` +${moreCount}` : ''}</div>` : ''}
+      </div>
+      <div class="endorse-count-wrap">
+        ${count > 0 ? `<span class="endorse-count" style="color:${q.color}">${count}</span>` : ''}
+        ${!isOwn ? `<button class="endorse-btn ${iMine ? 'endorsed' : ''}"
+          style="--ec:${q.color}"
+          data-endorse-candidate="${candidateId}" data-endorse-q="${q.id}"
+          onclick="handleEndorseClick(this,'${candidateId}','${q.id}')">
+          <i class="ti ${iMine ? 'ti-check' : 'ti-thumb-up'}"></i>
+        </button>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div class="endorsements-section">
+    <div class="endorse-header">
+      <div>
+        <h3 class="endorse-title"><i class="ti ti-thumb-up"></i> ${lang === 'fr' ? 'Recommandations' : 'Endorsements'}</h3>
+        <p class="endorse-sub ${total > 0 ? 'has-total' : ''}">${totalStr}</p>
+      </div>
+    </div>
+    <div class="endorse-grid">${cards}</div>
+  </div>`;
+}
+
+async function handleEndorseClick(btn, candidateId, quality) {
+  if (!state.user) { showModal('modal-login'); return; }
+  const isMine = btn.classList.contains('endorsed');
+  btn.disabled = true;
+  if (isMine) {
+    await removeEndorsement(candidateId, quality);
+    btn.classList.remove('endorsed');
+    btn.innerHTML = '<i class="ti ti-thumb-up"></i>';
+  } else {
+    const r = await endorseUser(candidateId, quality);
+    if (r) {
+      btn.classList.add('endorsed');
+      btn.innerHTML = '<i class="ti ti-check"></i>';
+    }
+  }
+  btn.disabled = false;
+  const section = btn.closest('.endorsements-section');
+  if (section) {
+    const data = await loadEndorsements(candidateId);
+    const isOwn = candidateId === state.user?.id;
+    section.outerHTML = renderEndorsementSection(data, candidateId, isOwn);
+  }
 }
 
 // ── Highlights (Career Identity) ───────────────────────────

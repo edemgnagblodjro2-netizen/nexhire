@@ -16,3 +16,4 @@ export * from "./referralClaims";
 export * from "./aiTrials";
 export * from "./contactSubmissions";
 export * from "./queue";
+export * from "./endorsements";

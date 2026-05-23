@@ -526,6 +526,28 @@ a{text-decoration:none;color:inherit}
   .privacy-tab{white-space:nowrap;font-size:13px;padding:8px 12px}
 }
 
+/* ── ENDORSEMENTS ────────────────────────────────────────── */
+.endorsements-section{border-top:1px solid var(--border);margin-top:28px;padding-top:24px}
+.endorsements-section-placeholder{margin-top:28px;height:4px}
+.endorse-header{margin-bottom:16px}
+.endorse-title{font-family:var(--r);font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;display:flex;align-items:center;gap:7px}
+.endorse-sub{font-size:13px;color:var(--muted);margin:0}
+.endorse-sub.has-total{color:var(--indigo);font-weight:600}
+.endorse-grid{display:flex;flex-direction:column;gap:8px}
+.endorse-card{display:flex;align-items:center;gap:12px;background:#f9fafb;border:1px solid var(--border);border-radius:10px;padding:12px 14px;transition:box-shadow .15s}
+.endorse-card.has-endorsements{background:#fff;border-color:var(--border);box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.endorse-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.endorse-body{flex:1;min-width:0}
+.endorse-label{font-weight:600;color:var(--dark);font-size:13px}
+.endorse-names{font-size:12px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.endorse-count-wrap{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.endorse-count{font-size:18px;font-weight:800;min-width:24px;text-align:right}
+.endorse-btn{width:32px;height:32px;border-radius:50%;border:2px solid var(--ec,#6366f1);background:transparent;color:var(--ec,#6366f1);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .18s;flex-shrink:0}
+.endorse-btn:hover{background:var(--ec,#6366f1);color:#fff;transform:scale(1.1)}
+.endorse-btn.endorsed{background:var(--ec,#6366f1);color:#fff;border-color:var(--ec,#6366f1)}
+.endorse-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+/* Passport endorsement pill */
+.passport-endorse-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;color:#fff;margin-top:10px;cursor:default}
 /* ── MATCH SCORE BADGE ───────────────────────────────────── */
 .match-badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.3px;white-space:nowrap}
 /* ── HIGHLIGHTS ──────────────────────────────────────────── */
