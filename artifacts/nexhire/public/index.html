@@ -524,6 +524,7 @@
     <div class="dash-sidebar">
       <div class="dash-avatar" id="dash-avatar"></div>
       <div class="dash-name" id="dash-name"></div>
+      <div id="dash-score"></div>
       <div class="dash-role" data-i18n="cand.role">Candidate</div>
       <nav class="dash-nav" id="cand-dash-nav">
         <a class="dash-nav-item active" data-tab="tab-profile"><i class="ti ti-user"></i> <span data-i18n="cand.nav.profile">My Profile</span></a>
@@ -555,10 +556,21 @@
         <div id="my-reviews-container"></div>
       </div>
       <div id="tab-ai-chat" class="dash-tab">
-        <h2><i class="ti ti-robot" style="color:var(--indigo)"></i> <span data-i18n="cand.ai.title">AI Career Coach</span></h2>
-        <p style="font-size:14px;color:var(--muted);margin-bottom:16px" data-i18n="cand.ai.sub">Ask anything — resume tips, interview prep, salary negotiation, career advice.</p>
+        <div class="agent-banner">
+          <div class="agent-avatar"><i class="ti ti-robot"></i></div>
+          <div>
+            <div class="agent-name" data-i18n="cand.ai.title">AI Career Agent</div>
+            <div class="agent-status"><i class="ti ti-circle-filled" style="color:#4ade80;font-size:9px"></i> <span data-i18n="cand.ai.online">Online · Ready to help</span></div>
+          </div>
+        </div>
+        <div class="agent-quick-actions">
+          <button class="agent-qa" onclick="agentQuickAction('find-jobs')"><i class="ti ti-sparkles"></i> <span data-i18n="agent.qa.jobs">Find matching jobs</span></button>
+          <button class="agent-qa" onclick="agentQuickAction('optimize-profile')"><i class="ti ti-user-check"></i> <span data-i18n="agent.qa.profile">Optimize profile</span></button>
+          <button class="agent-qa" onclick="agentQuickAction('interview-prep')"><i class="ti ti-microphone"></i> <span data-i18n="agent.qa.interview">Interview prep</span></button>
+          <button class="agent-qa" onclick="agentQuickAction('salary-advice')"><i class="ti ti-cash"></i> <span data-i18n="agent.qa.salary">Salary advice</span></button>
+        </div>
         <div class="ai-chat-box" id="ai-messages">
-          <div class="ai-msg ai-msg-bot" data-i18n="cand.ai.greeting">Hi! I'm your Nexhire AI coach. How can I help with your job search today?</div>
+          <div class="ai-msg ai-msg-bot" id="ai-greeting-msg">Hi! I'm your Nexhire AI Career Agent. How can I help accelerate your career today?</div>
         </div>
         <div class="ai-chat-input">
           <input type="text" id="ai-input" placeholder="Ask me about your job search..." data-i18n-ph="cand.ai.ph">
@@ -937,6 +949,6 @@
 </div>
 
 <div id="toasts" class="toast-container"></div>
-<script src="/nexhire/js/app.js?v=20260523j"></script>
+<script src="/nexhire/js/app.js?v=20260523k"></script>
 </body>
 </html>

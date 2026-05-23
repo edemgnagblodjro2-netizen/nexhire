@@ -526,6 +526,35 @@ a{text-decoration:none;color:inherit}
   .privacy-tab{white-space:nowrap;font-size:13px;padding:8px 12px}
 }
 
+/* ── TALENT PASSPORT ─────────────────────────────────────── */
+.talent-passport{background:linear-gradient(135deg,#0d1526 0%,#1b485a 100%);border-radius:16px;color:#fff;padding:24px;margin-bottom:28px;box-shadow:0 8px 32px rgba(27,72,90,.28)}
+.passport-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px}
+.passport-avatar-lg{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;flex-shrink:0;letter-spacing:-1px}
+.passport-info{flex:1;min-width:0}
+.passport-name{font-size:18px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.passport-headline{font-size:13px;opacity:.72;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.passport-meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:12px;opacity:.8}
+.passport-meta span{display:flex;align-items:center;gap:4px}
+.passport-score-wrap{position:relative;width:80px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.score-ring-svg{width:80px;height:80px}
+.score-overlay{position:absolute;text-align:center}
+.score-num{font-size:17px;font-weight:800;line-height:1}
+.score-lbl{font-size:9px;opacity:.65;letter-spacing:.5px;text-transform:uppercase;margin-top:2px}
+.passport-stats{display:flex;gap:8px;border-top:1px solid rgba(255,255,255,.12);padding-top:16px}
+.passport-stat{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;opacity:.82}
+.passport-stat i{font-size:16px;opacity:.65}
+.passport-stat strong{font-size:15px;font-weight:700}
+/* Sidebar score pill */
+.dash-score-pill{display:inline-flex;align-items:center;gap:5px;border-radius:20px;padding:4px 11px;font-size:12px;font-weight:700;margin-top:4px;margin-bottom:2px}
+/* ── AI CAREER AGENT ─────────────────────────────────────── */
+.agent-banner{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#0d1526,#1b485a);color:#fff;border-radius:14px;padding:16px 20px;margin-bottom:16px}
+.agent-avatar{width:44px;height:44px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.agent-name{font-weight:700;font-size:15px}
+.agent-status{font-size:12px;opacity:.72;display:flex;align-items:center;gap:5px;margin-top:3px}
+.agent-quick-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.agent-qa{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1.5px solid var(--border);background:#fff;border-radius:24px;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;color:var(--dark);font-family:var(--b)}
+.agent-qa:hover{border-color:var(--indigo);background:var(--indigo3);color:var(--indigo)}
+
 /* ── SITE FOOTER ──────────────────────────────────────────── */
 .site-footer{background:linear-gradient(180deg,#0d1526 0%,#070d18 100%);color:#94A3B8;margin-top:0;border-top:1px solid rgba(255,255,255,.06)}
 .footer-inner{max-width:1100px;margin:0 auto;padding:56px 24px 40px;display:grid;grid-template-columns:260px 1fr;gap:64px}

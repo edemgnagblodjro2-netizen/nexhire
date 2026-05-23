@@ -297,8 +297,11 @@ const T = {
     'cand.role':'Candidate','cand.nav.profile':'My Profile','cand.nav.foryou':'Jobs for You',
     'cand.nav.saved':'Saved Jobs','cand.nav.apps':'Applications','cand.nav.reviews':'My Reviews','cand.nav.ai':'AI Coach',
     'cand.tab.profile':'My Profile','cand.tab.foryou':'Jobs for You','cand.tab.saved':'Saved Jobs','cand.tab.apps':'My Applications',
-    'cand.ai.title':'AI Career Coach','cand.ai.sub':'Ask anything — resume tips, interview prep, salary negotiation, career advice.',
-    'cand.ai.greeting':"Hi! I'm your Nexhire AI coach. How can I help with your job search today?",'cand.ai.ph':'Ask me about your job search...',
+    'cand.ai.title':'AI Career Agent','cand.ai.sub':'Ask anything — resume tips, interview prep, salary negotiation, career advice.',
+    'cand.ai.online':'Online · Ready to help',
+    'cand.ai.greeting':"Hi! I'm your Nexhire AI Career Agent. How can I help accelerate your career today?",'cand.ai.ph':'Ask me about your career...',
+    'agent.qa.jobs':'Find matching jobs','agent.qa.profile':'Optimize profile',
+    'agent.qa.interview':'Interview prep','agent.qa.salary':'Salary advice',
     'emp.role':'Employer','emp.nav.jobs':'My Jobs','emp.nav.post':'Post a Job','emp.nav.company':'Company','emp.nav.billing':'Billing',
     'emp.tab.jobs':'My Job Listings','emp.tab.post':'Post a New Job','emp.tab.company':'Company Profile','emp.tab.billing':'Billing & Plan',
     'settings.title':'Settings',
@@ -395,8 +398,11 @@ const T = {
     'cand.role':'Candidat','cand.nav.profile':'Mon profil','cand.nav.foryou':'Emplois pour vous',
     'cand.nav.saved':'Offres sauvegardées','cand.nav.apps':'Candidatures','cand.nav.reviews':'Mes avis','cand.nav.ai':'Coach IA',
     'cand.tab.profile':'Mon profil','cand.tab.foryou':'Emplois pour vous','cand.tab.saved':'Offres sauvegardées','cand.tab.apps':'Mes candidatures',
-    'cand.ai.title':'Coach Carrière IA','cand.ai.sub':"Posez n'importe quelle question — conseils CV, préparation entretien, négociation salariale, orientation carrière.",
-    'cand.ai.greeting':"Bonjour ! Je suis votre coach IA Nexhire. Comment puis-je vous aider dans votre recherche d'emploi ?",'cand.ai.ph':"Posez-moi une question...",
+    'cand.ai.title':'Agent Carrière IA','cand.ai.sub':"Posez n'importe quelle question — conseils CV, préparation entretien, négociation salariale, orientation carrière.",
+    'cand.ai.online':'En ligne · Prêt à vous aider',
+    'cand.ai.greeting':"Bonjour ! Je suis votre Agent Carrière IA Nexhire. Comment puis-je accélérer votre carrière aujourd'hui ?",'cand.ai.ph':"Posez-moi une question...",
+    'agent.qa.jobs':'Emplois correspondants','agent.qa.profile':'Optimiser le profil',
+    'agent.qa.interview':'Préparation entrevue','agent.qa.salary':'Conseils salaire',
     'emp.role':'Employeur','emp.nav.jobs':'Mes offres','emp.nav.post':'Publier une offre','emp.nav.company':'Entreprise','emp.nav.billing':'Facturation',
     'emp.tab.jobs':"Mes offres d'emploi",'emp.tab.post':'Publier une nouvelle offre','emp.tab.company':"Profil d'entreprise",'emp.tab.billing':'Facturation & Plan',
     'settings.title':'Paramètres',
@@ -1328,6 +1334,13 @@ async function loadDashboard() {
   const initials = `${(u.first_name||'')[0]||''}${(u.last_name||'')[0]||''}`.toUpperCase() || 'U';
   safeSet('dash-avatar', initials);
   safeSet('dash-name', `${u.first_name} ${u.last_name}`);
+  const greetEl = document.getElementById('ai-greeting-msg');
+  if (greetEl && u.first_name) {
+    const lang = state.lang || 'en';
+    greetEl.textContent = lang === 'fr'
+      ? `Bonjour ${u.first_name} ! Je suis votre Agent Carrière IA Nexhire. Comment puis-je accélérer votre carrière aujourd'hui ?`
+      : `Hi ${u.first_name}! I'm your Nexhire AI Career Agent. How can I help accelerate your career today?`;
+  }
   await loadProfileForm();
   loadMyApplications();
   loadSavedJobsTab();
@@ -1349,6 +1362,63 @@ function computeCompleteness(p, user) {
   const pct = Math.round((done.length / fields.length) * 100);
   const missing = fields.filter(f => !f.val).slice(0, 3);
   return { pct, missing };
+}
+
+// ── AI Career Score ─────────────────────────────────────────
+function computeCareerScore(p, user, pct) {
+  const skills = safeJsonArr(p.skills).length;
+  const exp = parseInt(p.experience_years) || 0;
+  let score = Math.round(pct * 5.5);
+  score += Math.min(skills * 18, 200);
+  score += Math.min(exp * 12, 120);
+  if (p.linkedin_url) score += 40;
+  if (p.github_url)   score += 30;
+  return Math.max(100, Math.min(score, 950));
+}
+
+function renderTalentPassport(p, user, pct) {
+  const score = computeCareerScore(p, user, pct);
+  const scoreColor = score >= 700 ? '#4ade80' : score >= 450 ? '#facc15' : '#f97316';
+  const circumference = 213.6;
+  const filled = Math.round((score / 950) * circumference);
+  const skills = safeJsonArr(p.skills);
+  const exp = parseInt(p.experience_years) || 0;
+  const headline = p.headline_en || p.headline_fr || '';
+  const loc = [p.city, p.province].filter(Boolean).join(', ') || '';
+  const availMap = { immediate: '🟢 Available now', '2weeks': '🟡 2 weeks notice', '1month': '🟠 1 month', '3months': '⚪ 3 months' };
+  const availLabel = availMap[p.availability] || '⚪ Status unknown';
+  const name = `${user?.first_name||''} ${user?.last_name||''}`.trim();
+  const initials = name.split(' ').map(w => w[0]||'').join('').toUpperCase() || 'U';
+  return `<div class="talent-passport">
+    <div class="passport-header">
+      <div class="passport-avatar-lg">${initials}</div>
+      <div class="passport-info">
+        <div class="passport-name">${esc(name)}</div>
+        ${headline ? `<div class="passport-headline">${esc(headline)}</div>` : ''}
+        <div class="passport-meta">
+          ${loc ? `<span><i class="ti ti-map-pin"></i>${esc(loc)}</span>` : ''}
+          <span>${availLabel}</span>
+        </div>
+      </div>
+      <div class="passport-score-wrap">
+        <svg class="score-ring-svg" viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="7"/>
+          <circle cx="40" cy="40" r="34" fill="none" stroke="${scoreColor}" stroke-width="7"
+                  stroke-dasharray="${filled} ${circumference}" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+        </svg>
+        <div class="score-overlay">
+          <div class="score-num">${score}</div>
+          <div class="score-lbl">AI Score</div>
+        </div>
+      </div>
+    </div>
+    <div class="passport-stats">
+      <div class="passport-stat"><i class="ti ti-code"></i><strong>${skills.length}</strong><span>Skills</span></div>
+      <div class="passport-stat"><i class="ti ti-calendar"></i><strong>${exp}y</strong><span>Exp</span></div>
+      <div class="passport-stat"><i class="ti ti-world-check"></i><strong>Global</strong><span>Ready</span></div>
+      <div class="passport-stat"><i class="ti ti-chart-pie"></i><strong>${pct}%</strong><span>Profile</span></div>
+    </div>
+  </div>`;
 }
 
 // ── Skill Picker ────────────────────────────────────────────
@@ -1465,7 +1535,14 @@ async function loadProfileForm() {
   const { pct, missing } = computeCompleteness(p, state.user);
   const pctColor = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--gold)' : 'var(--indigo)';
 
-  container.innerHTML = `
+  const { pct: _pct2, missing: _m2 } = computeCompleteness(p, state.user);
+  const score = computeCareerScore(p, state.user, _pct2);
+  const scoreEl = document.getElementById('dash-score');
+  if (scoreEl) {
+    const sc = score >= 700 ? '#4ade80' : score >= 450 ? '#facc15' : '#f97316';
+    scoreEl.innerHTML = `<div class="dash-score-pill" style="background:${sc}20;color:${sc};border:1px solid ${sc}40"><i class="ti ti-star-filled" style="font-size:10px"></i> ${score} AI Score</div>`;
+  }
+  container.innerHTML = renderTalentPassport(p, state.user, _pct2) + `
     <div class="completeness-bar-wrap">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
         <span style="font-size:13px;font-weight:600;color:var(--dark)">Profile completeness</span>
@@ -1955,6 +2032,32 @@ async function startCheckout(plan, interval) {
   const d = await api('POST', `${BASE}/api/payments/create-checkout`, { plan, interval });
   if (d.url) window.location.href = d.url;
   else toast(d.error || 'Payment setup failed', 'error');
+}
+
+// ── AI Career Agent quick actions ──────────────────────────
+function agentQuickAction(key) {
+  const lang = state.lang || 'en';
+  const msgs = {
+    'find-jobs': {
+      en: 'Find me jobs that match my profile skills and experience. Be specific.',
+      fr: 'Trouve-moi des emplois qui correspondent à mes compétences et expérience. Sois précis.'
+    },
+    'optimize-profile': {
+      en: 'How can I improve my profile to get more interview invitations? Give me actionable steps.',
+      fr: "Comment améliorer mon profil pour obtenir plus d'invitations aux entrevues ? Donne-moi des étapes concrètes."
+    },
+    'interview-prep': {
+      en: 'Help me prepare for a technical job interview. What questions should I expect and how do I answer them well?',
+      fr: 'Aide-moi à préparer une entrevue d\'emploi technique. Quelles questions devrais-je attendre et comment y répondre ?'
+    },
+    'salary-advice': {
+      en: 'What salary should I negotiate based on my skills and experience in the current job market?',
+      fr: 'Quel salaire devrais-je négocier en fonction de mes compétences et expérience sur le marché actuel ?'
+    }
+  };
+  const msg = (msgs[key]||{})[lang] || (msgs[key]||{}).en || key;
+  const input = document.getElementById('ai-input');
+  if (input) { input.value = msg; sendAiMsg(); }
 }
 
 // ── AI Chat ────────────────────────────────────────────────
