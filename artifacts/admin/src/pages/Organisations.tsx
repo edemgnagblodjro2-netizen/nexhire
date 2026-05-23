@@ -109,12 +109,19 @@ export default function Organisations({ adminKey }: { adminKey: string }) {
 
   const filteredRows = useMemo(() => {
     const q = search.trim().toLowerCase();
-    if (!q) return rows;
-    return rows.filter((r) => {
-      const hay = `${r.org.name ?? ""} ${r.org.email ?? ""} ${r.user?.email ?? ""} ${r.org.city ?? ""}`.toLowerCase();
-      return hay.includes(q);
+    const filtered = q
+      ? rows.filter((r) => {
+          const hay = `${r.org.name ?? ""} ${r.org.email ?? ""} ${r.user?.email ?? ""} ${r.org.city ?? ""}`.toLowerCase();
+          return hay.includes(q);
+        })
+      : rows;
+    return [...filtered].sort((a, b) => {
+      const aNew = isNewOrg(a.org.createdAt) && !dismissedIds.has(a.org.id);
+      const bNew = isNewOrg(b.org.createdAt) && !dismissedIds.has(b.org.id);
+      if (aNew === bNew) return 0;
+      return aNew ? -1 : 1;
     });
-  }, [rows, search]);
+  }, [rows, search, dismissedIds]);
 
   const stats = useMemo(() => {
     const total = filteredRows.length;
