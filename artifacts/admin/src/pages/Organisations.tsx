@@ -6,7 +6,6 @@ import {
 } from "@/lib/orgApi";
 
 const ORG_LAST_SEEN_KEY = "az_admin_orgs_last_seen";
-const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 
 const KIND_TABS = [
   { key: "all", label: "Tous" },
@@ -53,9 +52,7 @@ export default function Organisations({ adminKey }: { adminKey: string }) {
 
   function isNewOrg(createdAt: string | null | undefined): boolean {
     if (!createdAt) return false;
-    const ts = new Date(createdAt).getTime();
-    const sevenDaysAgo = Date.now() - SEVEN_DAYS_MS;
-    return ts > new Date(lastSeenTsRef.current).getTime() && ts > sevenDaysAgo;
+    return new Date(createdAt).getTime() > new Date(lastSeenTsRef.current).getTime();
   }
 
   async function reload() {
