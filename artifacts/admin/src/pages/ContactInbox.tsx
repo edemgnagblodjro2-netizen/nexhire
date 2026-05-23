@@ -63,8 +63,10 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
   const [dateRange, setDateRange] = useState<DateRange>("all");
   const [markingAllRead, setMarkingAllRead] = useState(false);
   const [archivingAllRead, setArchivingAllRead] = useState(false);
+  const [unarchivingAll, setUnarchivingAll] = useState(false);
   const [showArchiveConfirm, setShowArchiveConfirm] = useState(false);
   const [showMarkReadConfirm, setShowMarkReadConfirm] = useState(false);
+  const [showUnarchiveConfirm, setShowUnarchiveConfirm] = useState(false);
 
   async function load() {
     setLoading(true);
@@ -125,6 +127,24 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
       alert(`Échec : ${(err as Error).message}`);
     } finally {
       setArchivingAllRead(false);
+    }
+  }
+
+  async function unarchiveAll() {
+    setUnarchivingAll(true);
+    try {
+      const res = await fetch("/api/contact/unarchive-all", {
+        method: "PATCH",
+        headers: { "x-admin-key": adminKey },
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setSubmissions((prev) =>
+        prev.map((s) => (s.status === "archived" ? { ...s, status: "read" } : s)),
+      );
+    } catch (err) {
+      alert(`Échec : ${(err as Error).message}`);
+    } finally {
+      setUnarchivingAll(false);
     }
   }
 
@@ -211,6 +231,15 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          {filter === "archived" && counts.archived > 0 && (
+            <button
+              onClick={() => setShowUnarchiveConfirm(true)}
+              disabled={unarchivingAll}
+              className="px-3 py-2 text-sm rounded-lg bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 transition disabled:opacity-50"
+            >
+              {unarchivingAll ? "En cours…" : `Désarchiver tout (${counts.archived})`}
+            </button>
+          )}
           {counts.read > 0 && (
             <button
               onClick={() => setShowArchiveConfirm(true)}
@@ -481,6 +510,38 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
                   markAllAsRead();
                 }}
                 className="px-4 py-2 text-sm rounded-lg bg-orange-600 text-white hover:bg-orange-700 transition"
+              >
+                Confirmer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showUnarchiveConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full mx-4">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">
+              Désarchiver tous les messages ?
+            </h2>
+            <p className="text-sm text-gray-600 mb-6">
+              Cette action va restaurer{" "}
+              <span className="font-semibold text-gray-900">{counts.archived}</span>{" "}
+              message{counts.archived !== 1 ? "s" : ""} archivé{counts.archived !== 1 ? "s" : ""} vers l'état <strong>Lu</strong>.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowUnarchiveConfirm(false)}
+                className="px-4 py-2 text-sm rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition"
+              >
+                Annuler
+              </button>
+              <button
+                onClick={() => {
+                  setShowUnarchiveConfirm(false);
+                  unarchiveAll();
+                }}
+                className="px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
               >
                 Confirmer
               </button>
