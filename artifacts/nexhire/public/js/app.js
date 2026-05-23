@@ -1787,9 +1787,127 @@ function toast(msg, type = 'success') {
   setTimeout(() => t.remove(), 4000);
 }
 
-// ── Bind ALL interactive elements via addEventListener (inline onclick unreliable in iframes) ──
+// ═══════════════════════════════════════════════════════════
+// GLOBAL CLICK DISPATCHER — single listener handles every
+// data-* attribute. Inline onclick are unreliable in iframes.
+// ═══════════════════════════════════════════════════════════
+document.addEventListener('click', e => {
+  const el = e.target.closest(
+    '[data-goto],[data-modal],[data-hide-modal],[data-search],' +
+    '[data-action],[data-lang],[data-checkout],[data-tab],' +
+    '[data-setting],[data-privacy-tab],[data-stars],[data-consent],' +
+    '[data-role],[data-self-close]'
+  );
+  if (!el) return;
 
-// Auth modals
+  // ── Backdrop self-close ──────────────────────────────────
+  if (el.dataset.selfClose && el === e.target) {
+    hideModal(el.dataset.selfClose);
+    return;
+  }
+
+  // ── Navigation ───────────────────────────────────────────
+  if (el.dataset.goto) {
+    e.preventDefault();
+    goto(el.dataset.goto);
+    return;
+  }
+
+  // ── Open modal ───────────────────────────────────────────
+  if (el.dataset.modal) {
+    showModal(el.dataset.modal);
+    return;
+  }
+
+  // ── Close modal ──────────────────────────────────────────
+  if (el.dataset.hideModal) {
+    hideModal(el.dataset.hideModal);
+    return;
+  }
+
+  // ── Quick-search (tags / cat-cards) ──────────────────────
+  if (el.dataset.search !== undefined) {
+    quickSearch(el.dataset.search);
+    return;
+  }
+
+  // ── Language toggle ──────────────────────────────────────
+  if (el.dataset.lang) {
+    setLang(el.dataset.lang);
+    return;
+  }
+
+  // ── Stripe checkout ──────────────────────────────────────
+  if (el.dataset.checkout) {
+    e.preventDefault();
+    const [plan, period] = el.dataset.checkout.split(',');
+    startCheckout(plan, period);
+    return;
+  }
+
+  // ── Candidate dashboard tabs ─────────────────────────────
+  if (el.dataset.tab && el.closest('#cand-dash-nav')) {
+    showTab(el.dataset.tab, el);
+    if (el.dataset.tabExtra === 'loadMyReviews') loadMyReviews();
+    return;
+  }
+
+  // ── Settings nav ─────────────────────────────────────────
+  if (el.dataset.setting) {
+    showSettingsSection(el.dataset.setting, el);
+    return;
+  }
+
+  // ── Privacy tabs ─────────────────────────────────────────
+  if (el.dataset.privacyTab) {
+    showPrivacyTab(el.dataset.privacyTab, el);
+    return;
+  }
+
+  // ── Review star picker ───────────────────────────────────
+  if (el.dataset.stars) {
+    setRevStars(parseInt(el.dataset.stars, 10));
+    return;
+  }
+
+  // ── AI consent buttons ───────────────────────────────────
+  if (el.dataset.consent !== undefined) {
+    setAiConsent(el.dataset.consent === 'true');
+    return;
+  }
+
+  // ── Register role tabs ───────────────────────────────────
+  if (el.dataset.role) {
+    setRegRole(el.dataset.role, el);
+    return;
+  }
+
+  // ── Named actions ────────────────────────────────────────
+  if (el.dataset.action) {
+    switch (el.dataset.action) {
+      case 'search-jobs':       searchJobs();                             break;
+      case 'send-ai-msg':       sendAiMsg();                              break;
+      case 'ai-cover-letter':   generateAiCoverLetter();                  break;
+      case 'submit-apply':      submitQuickApply();                       break;
+      case 'submit-review':     submitReview();                           break;
+      case 'close-kanban':      closeKanban();                            break;
+      case 'show-forgot':       e.preventDefault(); showForgot();         break;
+      case 'switch-to-register':
+        hideModal('modal-login'); showModal('modal-register');             break;
+      case 'terms-from-register':
+        e.preventDefault(); hideModal('modal-register'); goto('terms');   break;
+    }
+    return;
+  }
+});
+
+// ── AI input — Enter key ─────────────────────────────────────
+document.getElementById('ai-input')?.addEventListener('keydown', e => {
+  if (e.key === 'Enter') sendAiMsg();
+});
+document.getElementById('btn-ai-send')?.addEventListener('click', sendAiMsg);
+
+// ── Auth modals ──────────────────────────────────────────────
 document.getElementById('btn-login-submit')?.addEventListener('click', login);
 document.getElementById('btn-register-submit')?.addEventListener('click', register);
 document.getElementById('login-pw')?.addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
@@ -1797,33 +1915,37 @@ document.getElementById('reg-pw')?.addEventListener('keydown', e => { if (e.key 
 document.getElementById('btn-toggle-login-pw')?.addEventListener('click', () => togglePw('login-pw'));
 document.getElementById('btn-toggle-reg-pw')?.addEventListener('click', () => togglePw('reg-pw'));
 
-// Navbar — user menu toggle
+// ── Navbar — user menu toggle ────────────────────────────────
 document.getElementById('nav-user-menu')?.addEventListener('click', e => {
   e.stopPropagation();
   toggleUserMenu();
 });
 
-// Navbar — notif bell
+// ── Navbar — notif bell ──────────────────────────────────────
 document.getElementById('nav-notif-bell')?.addEventListener('click', () => goto('candidate-dash'));
 
-// Navbar — dropdown items with data-goto
+// ── Navbar — dropdown items ──────────────────────────────────
 document.getElementById('user-dropdown')?.addEventListener('click', e => {
   const item = e.target.closest('[data-goto]');
   if (item) { toggleUserMenu(); goto(item.dataset.goto); return; }
   const logout_btn = e.target.closest('#dd-logout');
   if (logout_btn) { toggleUserMenu(); logout(); return; }
   const reviews_btn = e.target.closest('#dd-my-reviews');
-  if (reviews_btn) { toggleUserMenu(); goto('candidate-dash'); showTab('tab-my-reviews', document.querySelector('[data-tab=tab-my-reviews]')); }
+  if (reviews_btn) {
+    toggleUserMenu();
+    goto('candidate-dash');
+    showTab('tab-my-reviews', document.querySelector('[data-tab="tab-my-reviews"]'));
+  }
 });
 
-// Employer dashboard sidebar nav
+// ── Employer dashboard sidebar nav ───────────────────────────
 document.getElementById('emp-dash-nav')?.addEventListener('click', e => {
   const item = e.target.closest('[data-emptab]');
   if (item) showEmpTab(item.dataset.emptab);
 });
 
-// Employer dashboard "Post job" header button
+// ── Employer dashboard "Post job" header button ──────────────
 document.getElementById('btn-post-job-header')?.addEventListener('click', () => showEmpTab('etab-post'));
 
-// ── Restore page from URL hash on initial load ──────────────
+// ── Restore page from URL hash on initial load ───────────────
 restoreFromHash();

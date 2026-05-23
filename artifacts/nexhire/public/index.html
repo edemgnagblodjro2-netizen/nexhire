@@ -16,23 +16,23 @@
 <!-- NAV -->
 <nav class="nav" id="main-nav">
   <div class="nav-inner">
-    <a href="/nexhire/" class="logo" onclick="goto('home');return false">
+    <a href="/nexhire/" class="logo" data-goto="home">
       <img src="/nexhire/img/logo-mark.svg" class="logo-mark" alt="">
       <span class="logo-word">Nex<em>hire</em></span>
     </a>
     <div class="nav-links" id="nav-links">
-      <a class="nav-link" onclick="goto('jobs')" href="#">Jobs</a>
-      <a class="nav-link" onclick="goto('employer')" href="#">For Employers</a>
-      <a class="nav-link" onclick="goto('pricing')" href="#">Pricing</a>
+      <a class="nav-link" data-goto="jobs" href="#">Jobs</a>
+      <a class="nav-link" data-goto="employer" href="#">For Employers</a>
+      <a class="nav-link" data-goto="pricing" href="#">Pricing</a>
     </div>
     <div class="nav-actions">
       <div class="lang-toggle">
-        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">FR</button>
+        <button class="lang-btn active" id="btn-en" data-lang="en">EN</button>
+        <button class="lang-btn" id="btn-fr" data-lang="fr">FR</button>
       </div>
       <div id="nav-auth-guest" style="display:flex;gap:8px">
         <a href="#login" class="btn-ghost" style="text-decoration:none">Sign in</a>
-        <button class="btn-primary" onclick="showModal('modal-register')">Get started</button>
+        <button class="btn-primary" data-modal="modal-register">Get started</button>
       </div>
       <div id="nav-auth-user" style="display:none;align-items:center;gap:8px">
         <div class="notif-bell" id="nav-notif-bell" title="Notifications">
@@ -79,17 +79,17 @@
           </select>
         </div>
         <div class="search-field search-mode"><i class="ti ti-device-laptop"></i><select id="mode-filter" onchange="searchJobs()"><option value="">All modes</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select></div>
-        <button class="btn-primary search-btn" onclick="searchJobs()"><i class="ti ti-search"></i> Search</button>
+        <button class="btn-primary search-btn" data-action="search-jobs"><i class="ti ti-search"></i> Search</button>
       </div>
       <div class="quick-tags">
-        <span class="qtag" onclick="quickSearch('Developer')"><i class="ti ti-code"></i> Developer</span>
-        <span class="qtag" onclick="quickSearch('Marketing')"><i class="ti ti-speakerphone"></i> Marketing</span>
-        <span class="qtag" onclick="quickSearch('Design')"><i class="ti ti-palette"></i> Design</span>
-        <span class="qtag" onclick="quickSearch('Finance')"><i class="ti ti-coin"></i> Finance</span>
-        <span class="qtag" onclick="quickSearch('AI')"><i class="ti ti-cpu"></i> AI / ML</span>
-        <span class="qtag" onclick="quickSearch('Product')"><i class="ti ti-package"></i> Product</span>
-        <span class="qtag" onclick="quickSearch('Sales')"><i class="ti ti-trending-up"></i> Sales</span>
-        <span class="qtag" onclick="quickSearch('Remote')"><i class="ti ti-world"></i> Remote</span>
+        <span class="qtag" data-search="Developer"><i class="ti ti-code"></i> Developer</span>
+        <span class="qtag" data-search="Marketing"><i class="ti ti-speakerphone"></i> Marketing</span>
+        <span class="qtag" data-search="Design"><i class="ti ti-palette"></i> Design</span>
+        <span class="qtag" data-search="Finance"><i class="ti ti-coin"></i> Finance</span>
+        <span class="qtag" data-search="AI"><i class="ti ti-cpu"></i> AI / ML</span>
+        <span class="qtag" data-search="Product"><i class="ti ti-package"></i> Product</span>
+        <span class="qtag" data-search="Sales"><i class="ti ti-trending-up"></i> Sales</span>
+        <span class="qtag" data-search="Remote"><i class="ti ti-world"></i> Remote</span>
       </div>
       <div id="recent-searches-section" style="display:none;max-width:860px;margin:0 auto;padding:0 20px 16px">
         <div class="recent-searches-title">Your recent searches</div>
@@ -111,85 +111,85 @@
     <div class="section-inner">
       <div class="section-header">
         <h2>Browse by category</h2>
-        <button class="btn-link" onclick="goto('jobs')">See all jobs <i class="ti ti-arrow-right"></i></button>
+        <button class="btn-link" data-goto="jobs">See all jobs <i class="ti ti-arrow-right"></i></button>
       </div>
       <div class="categories-grid reveal-stagger">
-        <div class="cat-card" onclick="quickSearch('Software Developer')">
+        <div class="cat-card" data-search="Software Developer">
           <div class="cat-icon" style="background:#EEF2FF;color:#6366F1"><i class="ti ti-code"></i></div>
           <div class="cat-info"><div class="cat-name">Software Development</div><div class="cat-sub">Developer · Engineer · Architect</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Data Science AI')">
+        <div class="cat-card" data-search="Data Science AI">
           <div class="cat-icon" style="background:#F0FDF4;color:#16A34A"><i class="ti ti-cpu"></i></div>
           <div class="cat-info"><div class="cat-name">AI / Data Science</div><div class="cat-sub">ML · Data Analyst · LLM</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Design UX UI')">
+        <div class="cat-card" data-search="Design UX UI">
           <div class="cat-icon" style="background:#FFF7ED;color:#EA580C"><i class="ti ti-palette"></i></div>
           <div class="cat-info"><div class="cat-name">Design & Creative</div><div class="cat-sub">UX/UI · Graphic · Motion</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Marketing')">
+        <div class="cat-card" data-search="Marketing">
           <div class="cat-icon" style="background:#FFF1F2;color:#E11D48"><i class="ti ti-speakerphone"></i></div>
           <div class="cat-info"><div class="cat-name">Marketing & Communications</div><div class="cat-sub">SEO · Content · Brand · Growth</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Finance Accounting')">
+        <div class="cat-card" data-search="Finance Accounting">
           <div class="cat-icon" style="background:#FFFBEB;color:#D97706"><i class="ti ti-coin"></i></div>
           <div class="cat-info"><div class="cat-name">Finance & Accounting</div><div class="cat-sub">CPA · Analyst · Controller</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Product Manager')">
+        <div class="cat-card" data-search="Product Manager">
           <div class="cat-icon" style="background:#F5F3FF;color:#7C3AED"><i class="ti ti-package"></i></div>
           <div class="cat-info"><div class="cat-name">Product Management</div><div class="cat-sub">PM · PO · Strategy · Roadmap</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Sales Business Development')">
+        <div class="cat-card" data-search="Sales Business Development">
           <div class="cat-icon" style="background:#ECFDF5;color:#059669"><i class="ti ti-trending-up"></i></div>
           <div class="cat-info"><div class="cat-name">Sales & Business Dev</div><div class="cat-sub">Account Exec · SDR · BDM</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Healthcare Nurse')">
+        <div class="cat-card" data-search="Healthcare Nurse">
           <div class="cat-icon" style="background:#FFF0F6;color:#C2185B"><i class="ti ti-stethoscope"></i></div>
           <div class="cat-info"><div class="cat-name">Healthcare & Medical</div><div class="cat-sub">Nurse · Doctor · Therapist</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Engineering')">
+        <div class="cat-card" data-search="Engineering">
           <div class="cat-icon" style="background:#E0F2FE;color:#0284C7"><i class="ti ti-settings-cog"></i></div>
           <div class="cat-info"><div class="cat-name">Engineering</div><div class="cat-sub">Civil · Mechanical · Electrical</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Customer Service Support')">
+        <div class="cat-card" data-search="Customer Service Support">
           <div class="cat-icon" style="background:#F0FDF4;color:#15803D"><i class="ti ti-headset"></i></div>
           <div class="cat-info"><div class="cat-name">Customer Service</div><div class="cat-sub">Support · CX · Agent · Rep</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Human Resources HR')">
+        <div class="cat-card" data-search="Human Resources HR">
           <div class="cat-icon" style="background:#FDF4FF;color:#A21CAF"><i class="ti ti-users"></i></div>
           <div class="cat-info"><div class="cat-name">Human Resources</div><div class="cat-sub">Recruiter · HRBP · Talent</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Education Teacher')">
+        <div class="cat-card" data-search="Education Teacher">
           <div class="cat-icon" style="background:#FFFBEB;color:#B45309"><i class="ti ti-school"></i></div>
           <div class="cat-info"><div class="cat-name">Education & Training</div><div class="cat-sub">Teacher · Instructor · Coach</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Legal Law')">
+        <div class="cat-card" data-search="Legal Law">
           <div class="cat-icon" style="background:#F1F5F9;color:#475569"><i class="ti ti-scale"></i></div>
           <div class="cat-info"><div class="cat-name">Legal & Compliance</div><div class="cat-sub">Lawyer · Paralegal · Notary</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Operations Logistics')">
+        <div class="cat-card" data-search="Operations Logistics">
           <div class="cat-icon" style="background:#FFF7ED;color:#C2410C"><i class="ti ti-truck"></i></div>
           <div class="cat-info"><div class="cat-name">Operations & Logistics</div><div class="cat-sub">Supply Chain · Warehouse · Ops</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Construction Trades')">
+        <div class="cat-card" data-search="Construction Trades">
           <div class="cat-icon" style="background:#FEF9C3;color:#A16207"><i class="ti ti-building-skyscraper"></i></div>
           <div class="cat-info"><div class="cat-name">Construction & Trades</div><div class="cat-sub">Carpenter · Electrician · Plumber</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
-        <div class="cat-card" onclick="quickSearch('Remote')">
+        <div class="cat-card" data-search="Remote">
           <div class="cat-icon" style="background:#EEF2FF;color:#4F46E5"><i class="ti ti-world"></i></div>
           <div class="cat-info"><div class="cat-name">Remote / International</div><div class="cat-sub">Work from anywhere</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
@@ -202,7 +202,7 @@
     <div class="section-inner">
       <div class="section-header">
         <h2>Featured Opportunities</h2>
-        <button class="btn-link" onclick="goto('jobs')">View all <i class="ti ti-arrow-right"></i></button>
+        <button class="btn-link" data-goto="jobs">View all <i class="ti ti-arrow-right"></i></button>
       </div>
       <div id="featured-jobs" class="jobs-grid"></div>
     </div>
@@ -225,7 +225,7 @@
         <div class="cta-text">
           <h2>Hire the best talent globally</h2>
           <p>Post jobs, review AI-ranked applications, manage your pipeline with Kanban, and message candidates directly. Start with 2 free job slots.</p>
-          <button class="btn-primary btn-lg" onclick="showModal('modal-register')">Start hiring free</button>
+          <button class="btn-primary btn-lg" data-modal="modal-register">Start hiring free</button>
         </div>
         <div class="cta-visual">
           <div class="cta-stats">
@@ -298,8 +298,8 @@
       <h1 class="hero-title">Hire globally with <em>AI precision</em></h1>
       <p class="hero-sub">Post jobs, get AI-ranked candidates, manage your pipeline with Kanban, and build your global team — all in one platform.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <button class="btn-primary btn-lg" onclick="showModal('modal-register')">Start free — 2 job slots</button>
-        <button class="btn-ghost btn-lg" onclick="goto('pricing')">See pricing</button>
+        <button class="btn-primary btn-lg" data-modal="modal-register">Start free — 2 job slots</button>
+        <button class="btn-ghost btn-lg" data-goto="pricing">See pricing</button>
       </div>
     </div>
   </div>
@@ -332,7 +332,7 @@
   <div style="background:#F8FAFC;border-bottom:1px solid var(--border);padding:28px 24px">
     <div style="max-width:800px;margin:0 auto;display:flex;align-items:flex-start;gap:16px">
       <i class="ti ti-info-circle" style="font-size:20px;color:var(--indigo);flex-shrink:0;margin-top:2px"></i>
-      <p style="font-size:14px;color:var(--text);margin:0;line-height:1.7"><strong>How pricing works:</strong> Nexhire recommends a budget based on your job title, location, and market demand. You set a daily or total budget cap — charged only when a verified candidate clicks your sponsored listing. Standard jobs are always free with organic visibility. <a href="#" onclick="goto('help');return false" style="color:var(--indigo)">Learn more →</a></p>
+      <p style="font-size:14px;color:var(--text);margin:0;line-height:1.7"><strong>How pricing works:</strong> Nexhire recommends a budget based on your job title, location, and market demand. You set a daily or total budget cap — charged only when a verified candidate clicks your sponsored listing. Standard jobs are always free with organic visibility. <a href="#" data-goto="help" style="color:var(--indigo)">Learn more →</a></p>
     </div>
   </div>
 
@@ -361,7 +361,7 @@
           <li><i class="ti ti-x muted"></i> Branded jobs</li>
           <li><i class="ti ti-x muted"></i> Analytics dashboard</li>
         </ul>
-        <button class="btn-ghost btn-full" onclick="showModal('modal-register')">Post a job</button>
+        <button class="btn-ghost btn-full" data-modal="modal-register">Post a job</button>
       </div>
 
       <!-- Sponsored CPC -->
@@ -385,7 +385,7 @@
           <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> Priority search placement</li>
           <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> Verified employer badge</li>
         </ul>
-        <button class="btn-primary btn-full" style="background:#6366F1;border-color:#6366F1" onclick="startCheckout('pro','month')">Sponsor a job</button>
+        <button class="btn-primary btn-full" style="background:#6366F1;border-color:#6366F1" data-checkout="pro,month">Sponsor a job</button>
         <div style="text-align:center;margin-top:10px;font-size:12px;color:#64748B">No subscription · Pay as you go</div>
       </div>
 
@@ -409,8 +409,8 @@
           <li><i class="ti ti-check"></i> Priority support</li>
           <li><i class="ti ti-check"></i> Team seats (3 users)</li>
         </ul>
-        <button class="btn-primary btn-full" onclick="startCheckout('pro','month')">Start free trial</button>
-        <div style="text-align:center;margin-top:10px"><a href="#" onclick="startCheckout('pro','year');return false" style="font-size:12px;color:var(--indigo)">Annual $1 990/yr — save $398 (17%)</a></div>
+        <button class="btn-primary btn-full" data-checkout="pro,month">Start free trial</button>
+        <div style="text-align:center;margin-top:10px"><a href="#" data-checkout="pro,year" style="font-size:12px;color:var(--indigo)">Annual $1 990/yr — save $398 (17%)</a></div>
       </div>
     </div>
 
@@ -422,7 +422,7 @@
         <p style="font-size:14px;color:#94A3B8;margin:0;max-width:500px">Dedicated account manager · Custom integrations · SLA 99.9% · SSO · Unlimited team seats · White-label options</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;text-align:right">
-        <button class="btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.2);padding:12px 28px;white-space:nowrap" onclick="window.location.href='mailto:hello@nexhire.ca'">Contact sales →</button>
+        <a href="mailto:hello@nexhire.ca" class="btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.2);padding:12px 28px;white-space:nowrap;text-decoration:none">Contact sales →</a>
         <span style="font-size:12px;color:#475569">hello@nexhire.ca</span>
       </div>
     </div>
@@ -513,13 +513,13 @@
       <div class="dash-avatar" id="dash-avatar"></div>
       <div class="dash-name" id="dash-name"></div>
       <div class="dash-role">Candidate</div>
-      <nav class="dash-nav">
-        <a class="dash-nav-item active" onclick="showTab('tab-profile',this)"><i class="ti ti-user"></i> My Profile</a>
-        <a class="dash-nav-item" onclick="showTab('tab-for-you',this)"><i class="ti ti-sparkles"></i> Jobs for You</a>
-        <a class="dash-nav-item" onclick="showTab('tab-saved',this)"><i class="ti ti-heart"></i> Saved Jobs</a>
-        <a class="dash-nav-item" onclick="showTab('tab-applications',this)"><i class="ti ti-file-text"></i> Applications</a>
-        <a class="dash-nav-item" data-tab="tab-my-reviews" onclick="showTab('tab-my-reviews',this);loadMyReviews()"><i class="ti ti-star"></i> My Reviews</a>
-        <a class="dash-nav-item" onclick="showTab('tab-ai-chat',this)"><i class="ti ti-robot"></i> AI Coach</a>
+      <nav class="dash-nav" id="cand-dash-nav">
+        <a class="dash-nav-item active" data-tab="tab-profile"><i class="ti ti-user"></i> My Profile</a>
+        <a class="dash-nav-item" data-tab="tab-for-you"><i class="ti ti-sparkles"></i> Jobs for You</a>
+        <a class="dash-nav-item" data-tab="tab-saved"><i class="ti ti-heart"></i> Saved Jobs</a>
+        <a class="dash-nav-item" data-tab="tab-applications"><i class="ti ti-file-text"></i> Applications</a>
+        <a class="dash-nav-item" data-tab="tab-my-reviews" data-tab-extra="loadMyReviews"><i class="ti ti-star"></i> My Reviews</a>
+        <a class="dash-nav-item" data-tab="tab-ai-chat"><i class="ti ti-robot"></i> AI Coach</a>
       </nav>
     </div>
     <div class="dash-content">
@@ -549,8 +549,8 @@
           <div class="ai-msg ai-msg-bot">Hi! I'm your Nexhire AI coach. How can I help with your job search today?</div>
         </div>
         <div class="ai-chat-input">
-          <input type="text" id="ai-input" placeholder="Ask me about your job search..." onkeydown="if(event.key==='Enter')sendAiMsg()">
-          <button class="btn-primary" onclick="sendAiMsg()"><i class="ti ti-send"></i></button>
+          <input type="text" id="ai-input" placeholder="Ask me about your job search...">
+          <button class="btn-primary" id="btn-ai-send"><i class="ti ti-send"></i></button>
         </div>
       </div>
     </div>
@@ -600,11 +600,11 @@
   <div class="settings-layout">
     <aside class="settings-sidebar">
       <h2 class="settings-title">Settings</h2>
-      <nav class="settings-nav">
-        <a class="settings-nav-item active" onclick="showSettingsSection('s-account',this)"><i class="ti ti-user-circle"></i><div><div class="sn-label">Account settings</div><div class="sn-sub">Your contact information</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
-        <a class="settings-nav-item" onclick="showSettingsSection('s-security',this)"><i class="ti ti-lock"></i><div><div class="sn-label">Security settings <span class="badge-new">New</span></div><div class="sn-sub">Manage your account security</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
-        <a class="settings-nav-item" onclick="showSettingsSection('s-notifications',this)"><i class="ti ti-mail"></i><div><div class="sn-label">Communications settings</div><div class="sn-sub">Manage notifications and messages</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
-        <a class="settings-nav-item" onclick="showSettingsSection('s-privacy',this)"><i class="ti ti-shield-lock"></i><div><div class="sn-label">Privacy settings</div><div class="sn-sub">Information about your privacy</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
+      <nav class="settings-nav" id="settings-nav">
+        <a class="settings-nav-item active" data-setting="s-account"><i class="ti ti-user-circle"></i><div><div class="sn-label">Account settings</div><div class="sn-sub">Your contact information</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
+        <a class="settings-nav-item" data-setting="s-security"><i class="ti ti-lock"></i><div><div class="sn-label">Security settings <span class="badge-new">New</span></div><div class="sn-sub">Manage your account security</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
+        <a class="settings-nav-item" data-setting="s-notifications"><i class="ti ti-mail"></i><div><div class="sn-label">Communications settings</div><div class="sn-sub">Manage notifications and messages</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
+        <a class="settings-nav-item" data-setting="s-privacy"><i class="ti ti-shield-lock"></i><div><div class="sn-label">Privacy settings</div><div class="sn-sub">Information about your privacy</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
       </nav>
     </aside>
     <div class="settings-content" id="settings-content"></div>
@@ -623,14 +623,14 @@
         <h3>Help for job seekers</h3>
         <p>Got a question or need help using Nexhire? Whether it's setting up your account, using AI matching, or applying — we've got you covered.</p>
         <div class="help-faqs" id="help-faqs-candidate"></div>
-        <a class="help-link" onclick="goto('help')">Job Seeker Help Centre →</a>
+        <a class="help-link" data-goto="help">Job Seeker Help Centre →</a>
       </div>
       <div class="help-card">
         <div class="help-card-icon employer"><i class="ti ti-building"></i></div>
         <h3>Help for employers</h3>
         <p>Looking to hire? Our Employer Help Centre covers posting jobs, managing the ATS pipeline, billing, and finding the best candidates faster.</p>
         <div class="help-faqs" id="help-faqs-employer"></div>
-        <a class="help-link" onclick="goto('help')">Employer Help Centre →</a>
+        <a class="help-link" data-goto="help">Employer Help Centre →</a>
       </div>
     </div>
     <div class="help-footer-cta">
@@ -653,10 +653,10 @@
     <p>We take your personal data seriously.</p>
   </div>
   <div class="section-inner" style="max-width:900px;padding-top:48px;padding-bottom:64px">
-    <div class="privacy-tabs">
-      <button class="privacy-tab active" onclick="showPrivacyTab('pt-policy',this)">Privacy Policy</button>
-      <button class="privacy-tab" onclick="showPrivacyTab('pt-cookies',this)">Cookie Policy</button>
-      <button class="privacy-tab" onclick="showPrivacyTab('pt-rights',this)">Your rights</button>
+    <div class="privacy-tabs" id="privacy-tabs">
+      <button class="privacy-tab active" data-privacy-tab="pt-policy">Privacy Policy</button>
+      <button class="privacy-tab" data-privacy-tab="pt-cookies">Cookie Policy</button>
+      <button class="privacy-tab" data-privacy-tab="pt-rights">Your rights</button>
     </div>
     <div id="pt-policy" class="privacy-section active">
       <h2>Privacy Policy</h2>
@@ -766,18 +766,18 @@
     <div class="footer-links-grid">
       <div class="footer-col">
         <div class="footer-col-title">Platform</div>
-        <a class="footer-link" onclick="goto('jobs')">Browse jobs</a>
-        <a class="footer-link" onclick="goto('employer')">For employers</a>
-        <a class="footer-link" onclick="goto('pricing')">Pricing</a>
-        <a class="footer-link" onclick="showModal('modal-register')">Get started free</a>
+        <a class="footer-link" data-goto="jobs">Browse jobs</a>
+        <a class="footer-link" data-goto="employer">For employers</a>
+        <a class="footer-link" data-goto="pricing">Pricing</a>
+        <a class="footer-link" data-modal="modal-register">Get started free</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Company</div>
         <a class="footer-link" href="https://civicai.ca" target="_blank" rel="noopener">CivicAI Inc.</a>
         <a class="footer-link" href="https://attentezero.ca" target="_blank" rel="noopener">AttenteZéro</a>
-        <a class="footer-link" onclick="goto('help')">Help Centre</a>
-        <a class="footer-link" onclick="goto('privacy')">Privacy Centre</a>
-        <a class="footer-link" onclick="goto('terms')">Terms of Service</a>
+        <a class="footer-link" data-goto="help">Help Centre</a>
+        <a class="footer-link" data-goto="privacy">Privacy Centre</a>
+        <a class="footer-link" data-goto="terms">Terms of Service</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Contact</div>
@@ -791,8 +791,8 @@
   <div class="footer-bottom">
     <span>© 2026 CivicAI Inc. All rights reserved.</span>
     <span class="footer-bottom-links">
-      <a onclick="goto('privacy')" class="footer-link-sm">Privacy</a>
-      <a onclick="goto('terms')" class="footer-link-sm">Terms</a>
+      <a data-goto="privacy" class="footer-link-sm">Privacy</a>
+      <a data-goto="terms" class="footer-link-sm">Terms</a>
       <a href="mailto:legal@nexhire.ca" class="footer-link-sm">Legal</a>
     </span>
     <span class="footer-made">🍁 Made in Québec · CivicAI 2026</span>
@@ -806,23 +806,23 @@
       <div style="font-size:12px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">ATS Pipeline</div>
       <h2 style="color:#fff;font-family:var(--r);margin:0;font-size:20px" id="kanban-title"></h2>
     </div>
-    <button onclick="closeKanban()" class="btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.2)"><i class="ti ti-x"></i> Close</button>
+    <button data-action="close-kanban" class="btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.2)"><i class="ti ti-x"></i> Close</button>
   </div>
   <div id="kanban-board" class="kanban-board"></div>
 </div>
 
 <!-- QUICK APPLY MODAL ───────────────────────────────────── -->
-<div class="modal-overlay" id="modal-quick-apply" onclick="if(event.target===this)hideModal('modal-quick-apply')">
+<div class="modal-overlay" id="modal-quick-apply" data-self-close="modal-quick-apply">
   <div class="modal" style="max-width:560px">
     <div class="modal-header">
       <div><div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Apply for</div><h3 id="quick-apply-title" style="margin-top:2px"></h3></div>
-      <button class="modal-close" onclick="hideModal('modal-quick-apply')"><i class="ti ti-x"></i></button>
+      <button class="modal-close" data-hide-modal="modal-quick-apply"><i class="ti ti-x"></i></button>
     </div>
     <div class="modal-body">
       <div class="form-group">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
           <label>Cover letter <span style="color:var(--muted);font-weight:400">(optional but recommended)</span></label>
-          <button id="qa-ai-btn" class="btn-ghost" style="font-size:12px;padding:4px 10px" onclick="generateAiCoverLetter()"><i class="ti ti-robot"></i> AI generate</button>
+          <button id="qa-ai-btn" class="btn-ghost" style="font-size:12px;padding:4px 10px" data-action="ai-cover-letter"><i class="ti ti-robot"></i> AI generate</button>
         </div>
         <textarea id="qa-cover" placeholder="Briefly explain why you're a great fit for this role..." style="min-height:160px"></textarea>
       </div>
@@ -835,10 +835,10 @@
         </div>
         <p style="font-size:13px;color:#4b5563;margin:0 0 10px">Nexhire can detect AI-generated content in your cover letter. Would you like to allow the employer to see this analysis?</p>
         <div style="display:flex;gap:8px">
-          <button id="qa-consent-yes" onclick="setAiConsent(true)" style="flex:1;padding:7px 0;border-radius:8px;border:1.5px solid #c7d4f5;background:white;font-size:13px;cursor:pointer;font-family:var(--b);color:#374151;transition:.15s">
+          <button id="qa-consent-yes" data-consent="true" style="flex:1;padding:7px 0;border-radius:8px;border:1.5px solid #c7d4f5;background:white;font-size:13px;cursor:pointer;font-family:var(--b);color:#374151;transition:.15s">
             <i class="ti ti-check" style="color:#10b981"></i> Yes, share analysis
           </button>
-          <button id="qa-consent-no" onclick="setAiConsent(false)" style="flex:1;padding:7px 0;border-radius:8px;border:1.5px solid #c7d4f5;background:white;font-size:13px;cursor:pointer;font-family:var(--b);color:#374151;transition:.15s">
+          <button id="qa-consent-no" data-consent="false" style="flex:1;padding:7px 0;border-radius:8px;border:1.5px solid #c7d4f5;background:white;font-size:13px;cursor:pointer;font-family:var(--b);color:#374151;transition:.15s">
             <i class="ti ti-x" style="color:#6b7280"></i> No thanks
           </button>
         </div>
@@ -846,28 +846,28 @@
       </div>
 
       <div class="form-error" id="qa-error"></div>
-      <button class="btn-primary btn-full" onclick="submitQuickApply()"><i class="ti ti-send"></i> Submit application</button>
+      <button class="btn-primary btn-full" data-action="submit-apply"><i class="ti ti-send"></i> Submit application</button>
       <div style="text-align:center;margin-top:10px;font-size:12px;color:var(--muted)">Your profile info will be shared with the employer</div>
     </div>
   </div>
 </div>
 
 <!-- REVIEW MODAL ────────────────────────────────────────── -->
-<div class="modal-overlay" id="modal-review" onclick="if(event.target===this)hideModal('modal-review')">
+<div class="modal-overlay" id="modal-review" data-self-close="modal-review">
   <div class="modal" style="max-width:520px">
     <div class="modal-header">
       <div><div style="font-size:12px;color:var(--muted);margin-bottom:2px">Review</div><h3 id="review-company-name"></h3></div>
-      <button class="modal-close" onclick="hideModal('modal-review')"><i class="ti ti-x"></i></button>
+      <button class="modal-close" data-hide-modal="modal-review"><i class="ti ti-x"></i></button>
     </div>
     <div class="modal-body">
       <div class="form-group">
         <label>Overall rating *</label>
-        <div class="star-picker">
-          <button class="rev-star" onclick="setRevStars(1)"><i class="ti ti-star-filled"></i></button>
-          <button class="rev-star" onclick="setRevStars(2)"><i class="ti ti-star-filled"></i></button>
-          <button class="rev-star" onclick="setRevStars(3)"><i class="ti ti-star-filled"></i></button>
-          <button class="rev-star" onclick="setRevStars(4)"><i class="ti ti-star-filled"></i></button>
-          <button class="rev-star active" onclick="setRevStars(5)"><i class="ti ti-star-filled"></i></button>
+        <div class="star-picker" id="star-picker">
+          <button class="rev-star" data-stars="1"><i class="ti ti-star-filled"></i></button>
+          <button class="rev-star" data-stars="2"><i class="ti ti-star-filled"></i></button>
+          <button class="rev-star" data-stars="3"><i class="ti ti-star-filled"></i></button>
+          <button class="rev-star" data-stars="4"><i class="ti ti-star-filled"></i></button>
+          <button class="rev-star active" data-stars="5"><i class="ti ti-star-filled"></i></button>
         </div>
         <input type="hidden" id="rev-rating" value="4">
       </div>
@@ -880,35 +880,35 @@
       </div>
       <div class="form-group" style="display:flex;align-items:center;gap:10px"><input type="checkbox" id="rev-anon" checked style="width:auto;margin:0"><label for="rev-anon" style="display:inline;font-weight:400">Post anonymously</label></div>
       <div class="form-error" id="rev-error"></div>
-      <button class="btn-primary btn-full" onclick="submitReview()"><i class="ti ti-star"></i> Submit review</button>
+      <button class="btn-primary btn-full" data-action="submit-review"><i class="ti ti-star"></i> Submit review</button>
     </div>
   </div>
 </div>
 
 <!-- LOGIN MODAL ─────────────────────────────────────────── -->
-<div class="modal-overlay" id="modal-login" onclick="if(event.target===this)hideModal('modal-login')">
+<div class="modal-overlay" id="modal-login" data-self-close="modal-login">
   <div class="modal">
-    <div class="modal-header"><h3>Sign in to Nexhire</h3><button class="modal-close" onclick="hideModal('modal-login')"><i class="ti ti-x"></i></button></div>
+    <div class="modal-header"><h3>Sign in to Nexhire</h3><button class="modal-close" data-hide-modal="modal-login"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
       <div class="form-group"><label>Email</label><input type="email" id="login-email" placeholder="you@example.com" autocomplete="email"></div>
       <div class="form-group"><label>Password</label><div class="pw-wrap"><input type="password" id="login-pw" placeholder="••••••••" autocomplete="current-password"><button class="pw-toggle" id="btn-toggle-login-pw"><i class="ti ti-eye"></i></button></div></div>
       <div class="form-error" id="login-error"></div>
       <button class="btn-primary btn-full" id="btn-login-submit">Sign in</button>
       <div class="modal-divider"><span>or</span></div>
-      <button class="btn-ghost btn-full" onclick="hideModal('modal-login');showModal('modal-register')">Create an account</button>
-      <div style="text-align:center;margin-top:12px"><a href="#" onclick="showForgot();return false" class="link-sm">Forgot password?</a></div>
+      <button class="btn-ghost btn-full" data-action="switch-to-register">Create an account</button>
+      <div style="text-align:center;margin-top:12px"><a href="#" data-action="show-forgot" class="link-sm">Forgot password?</a></div>
     </div>
   </div>
 </div>
 
 <!-- REGISTER MODAL ──────────────────────────────────────── -->
-<div class="modal-overlay" id="modal-register" onclick="if(event.target===this)hideModal('modal-register')">
+<div class="modal-overlay" id="modal-register" data-self-close="modal-register">
   <div class="modal">
-    <div class="modal-header"><h3>Create your account</h3><button class="modal-close" onclick="hideModal('modal-register')"><i class="ti ti-x"></i></button></div>
+    <div class="modal-header"><h3>Create your account</h3><button class="modal-close" data-hide-modal="modal-register"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="role-tabs">
-        <button class="role-tab active" onclick="setRegRole('candidate',this)"><i class="ti ti-user"></i> Candidate</button>
-        <button class="role-tab" onclick="setRegRole('employer',this)"><i class="ti ti-building"></i> Employer</button>
+      <div class="role-tabs" id="role-tabs">
+        <button class="role-tab active" data-role="candidate"><i class="ti ti-user"></i> Candidate</button>
+        <button class="role-tab" data-role="employer"><i class="ti ti-building"></i> Employer</button>
       </div>
       <div class="form-row">
         <div class="form-group"><label>First name</label><input type="text" id="reg-first" placeholder="Jane" autocomplete="given-name"></div>
@@ -919,12 +919,12 @@
       <div class="form-group" id="reg-company-field" style="display:none"><label>Company name</label><input type="text" id="reg-company" placeholder="Acme Inc."></div>
       <div class="form-error" id="reg-error"></div>
       <button class="btn-primary btn-full" id="btn-register-submit">Create account</button>
-      <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:12px">By creating an account you agree to our <a href="#" onclick="hideModal('modal-register');goto('terms');return false" style="color:var(--indigo)">Terms of Service</a></div>
+      <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:12px">By creating an account you agree to our <a href="#" data-action="terms-from-register" style="color:var(--indigo)">Terms of Service</a></div>
     </div>
   </div>
 </div>
 
 <div id="toasts" class="toast-container"></div>
-<script src="/nexhire/js/app.js?v=20260523d"></script>
+<script src="/nexhire/js/app.js?v=20260523e"></script>
 </body>
 </html>
