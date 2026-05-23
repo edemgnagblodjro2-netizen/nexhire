@@ -1,0 +1,101 @@
+Achats intégrés
+AttenteZéro Premium — Accès à vie
+Enregistrer
+Votre premier achat intégré doit être soumis avec une nouvelle version de l’app. Créez votre achat intégré, puis sélectionnez‑le dans la section Achats intégrés et abonnements de l’app sur la page de la version, avant de soumettre la version à l’équipe de vérification des apps.
+
+Une fois votre binaire chargé et votre premier achat intégré soumis pour vérification, vous pourrez soumettre d’autres achats intégrés depuis la section Achats intégrés. En savoir plus
+
+État
+Métadonnées manquantes
+
+Identifiant de produit?
+attentezero_premium_onetime
+
+Nom de référence?
+AttenteZéro Premium — Accès à vie
+31
+
+Identifiant Apple?
+6772361720
+
+Partage familial?
+Autorisez les membres d’une même famille à partager cet achat intégré sans qu’ils aient à utiliser le compte d’un des autres membres.
+
+Activer
+
+Disponibilité
+
+2 sur une sélection de 175 pays ou régions.Modifier
+
+
+Retirer de la vente
+
+Calendrier tarifaire
+Prix et devises
+
+Vous trouverez ci‑dessous un récapitulatif de la tarification actuelle et des changements à venir.
+
+
+Tarification des achats intégrés
+Pays ou région de base
+Apple pourra de temps à autre ajuster automatiquement le prix pour chaque pays ou région, à l’exception de votre pays ou région de base, pour tenir compte de l’évolution des taux de change ou des taxes applicables.
+
+Canada (CAD)Modifier
+Changements à venir
+Télécharger
+Dates
+Pays ou régions
+Ajustement de prix
+28 mai 2026
+1 pays ou région
+Ajustement relatif aux taux de change ou taxes applicables
+Prix
+Télécharger
+Dates
+Pays ou régions
+Ajustement de prix
+Prix actuel
+174 pays ou régions
+Ajustement automatique possible
+Prix prenant fin le 28 mai 2026
+1 pays ou région
+Ajustement automatique possible
+Codes d’offre
+Vous pouvez créer des codes promotionnels afin de proposer des offres gratuites ou à prix réduit pour les achats intégrés dans vos apps iOS, macOS et visionOS. Vous pouvez générer et télécharger des codes à usage unique dans App Store Connect, ou définir vos propres codes personnalisés faciles à mémoriser, qui pourront être utilisés par plusieurs clients. Des codes Sandbox à usage unique sont également disponibles à des fins de test. Les clients peuvent utiliser des codes via un lien, sur l’App Store ou dans votre app si vous avez installé l’API StoreKit requise. Vous pouvez créer des codes promotionnels pour un maximum de 10 offres actives à la fois. En savoir plus
+
+Créer une offre
+Langue dans l’App Store
+
+Le nom d’affichage traduit de votre achat intégré apparaîtra dans l’App Store. La description traduite apparaîtra dans l’App Store si vous rendez votre achat intégré disponible pour une promotion. En savoir plus
+
+Langues
+Nom d’affichage
+Description
+État
+?
+Anglais (Canada)
+Premium — Accès à vie
+AttenteZéro. Achat unique, valable à vie.
+Finaliser avant soumission
+
+Français (Canada)
+Premium — Accès à vie
+AttenteZéro. Achat unique, valable à vie.
+Finaliser avant soumission
+
+Image (facultatif)
+Ajoutez une image de 1 024 × 1 024 pixels pour illustrer au mieux cet achat intégré. Celle‑ci s’affichera lors de l’utilisation du code d’offre. Si vous activez la promotion dans l’App Store pour cet achat intégré, l’image s’affichera également sur la page produit de votre app. En savoir plus
+
+No file chosen
+Choisir un fichier
+Catégorie d’imposition?Modifier
+Vous êtes responsable de la sélection et du maintien de catégories d’imposition exactes et de tous les attributs applicables. Cet achat intégré utilisera la catégorie d’imposition de l’app, sauf si vous en sélectionnez une autre. Le changement de catégorie d’imposition pour cet achat intégré n’aura pas d’incidence sur la catégorie d’imposition de votre app, ou de tout autre achat intégré ou abonnement. Tout changement ne s’appliquera qu’aux ventes futures. En savoir plus
+
+Catégorie
+Faire correspondre à l’app parente
+
+Informations destinées à l’équipe de vérification
+Capture d’écran?
+No file chosen
+Choisir un fichier
+Remarques destinées à l’équipe de vérification (facultatif)?
