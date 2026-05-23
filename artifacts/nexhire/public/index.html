@@ -315,57 +315,96 @@
 
 <!-- PRICING ─────────────────────────────────────────────── -->
 <div id="pg-pricing" class="page">
-  <div class="section-inner" style="padding:64px 24px;max-width:960px;margin:0 auto">
-    <div style="text-align:center;margin-bottom:48px">
-      <h1 class="hero-title" style="font-size:40px;color:var(--dark)">Simple, transparent pricing</h1>
-      <p class="hero-sub" style="color:var(--muted)">Start free, upgrade when you need more.</p>
+
+  <!-- Hero -->
+  <div style="background:#fff;border-bottom:1px solid var(--border);padding:64px 24px 48px;text-align:center">
+    <h1 style="font-family:var(--r);font-size:36px;font-weight:800;color:var(--dark);margin-bottom:16px">Sponsored Job pricing</h1>
+    <p style="font-size:18px;color:#334155;max-width:560px;margin:0 auto 8px">No long-term contracts. Start and stop sponsoring<br>your job posts at any time with a flexible budget.</p>
+    <div style="width:64px;height:3px;background:var(--indigo);border-radius:2px;margin:24px auto 0"></div>
+  </div>
+
+  <!-- How pricing works -->
+  <div style="background:#F8FAFC;border-bottom:1px solid var(--border);padding:32px 24px">
+    <div style="max-width:760px;margin:0 auto">
+      <p style="font-size:15px;color:var(--dark)"><strong>How pricing works:</strong> Nexhire provides a recommended budget based on the criteria you provided, such as job title, location, and job description. You set your daily or total budget — you only pay when qualified candidates click on your sponsored job. <a href="#" onclick="goto('help');return false" style="color:var(--indigo);text-decoration:none">Learn more →</a></p>
     </div>
-    <div class="pricing-grid">
-      <div class="pricing-card">
-        <div class="pricing-name">Starter</div>
-        <div class="pricing-price">Free</div>
-        <div class="pricing-period">forever</div>
-        <ul class="pricing-features">
-          <li><i class="ti ti-check"></i> 2 active job posts</li>
-          <li><i class="ti ti-check"></i> Basic candidate search</li>
+  </div>
+
+  <!-- Plans -->
+  <div style="max-width:1000px;margin:0 auto;padding:56px 24px 80px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:48px">
+
+      <!-- Standard -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:40px 36px">
+        <div style="font-family:var(--r);font-size:22px;font-weight:700;color:var(--dark);margin-bottom:16px">Standard</div>
+        <p style="font-size:15px;color:#475569;line-height:1.6;margin-bottom:28px;min-height:48px">Hire quickly with increased visibility in search results and get your job in front of more active job seekers.</p>
+        <div style="width:48px;height:2px;background:var(--border);border-radius:2px;margin-bottom:28px"></div>
+        <div style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px">Included features</div>
+        <ul class="pricing-features" style="margin-bottom:36px">
+          <li><i class="ti ti-check"></i> Search results visibility</li>
+          <li><i class="ti ti-check"></i> Automated candidate messages</li>
           <li><i class="ti ti-check"></i> Kanban ATS pipeline</li>
-          <li><i class="ti ti-check"></i> Direct messaging</li>
-          <li><i class="ti ti-x muted"></i> AI candidate ranking</li>
-          <li><i class="ti ti-x muted"></i> Featured listings</li>
-          <li><i class="ti ti-x muted"></i> Analytics dashboard</li>
-        </ul>
-        <button class="btn-ghost btn-full" onclick="showModal('modal-register')">Get started</button>
-      </div>
-      <div class="pricing-card pricing-card-pro">
-        <div class="pricing-badge">Most popular</div>
-        <div class="pricing-name">Pro</div>
-        <div class="pricing-price">$99</div>
-        <div class="pricing-period">/ month · 14-day free trial</div>
-        <ul class="pricing-features">
-          <li><i class="ti ti-check"></i> 10 active job posts</li>
-          <li><i class="ti ti-check"></i> AI candidate ranking</li>
-          <li><i class="ti ti-check"></i> 3 featured listings</li>
-          <li><i class="ti ti-check"></i> Advanced analytics</li>
-          <li><i class="ti ti-check"></i> Priority support</li>
-          <li><i class="ti ti-check"></i> Verified company badge</li>
-          <li><i class="ti ti-check"></i> Bulk candidate actions</li>
-        </ul>
-        <button class="btn-primary btn-full" onclick="startCheckout('pro','month')">Start free trial</button>
-        <div style="text-align:center;margin-top:10px"><a href="#" onclick="startCheckout('pro','year');return false" style="font-size:13px;color:var(--indigo)">Annual — $990/yr (save $198)</a></div>
-      </div>
-      <div class="pricing-card">
-        <div class="pricing-name">Enterprise</div>
-        <div class="pricing-price">Custom</div>
-        <div class="pricing-period">contact us</div>
-        <ul class="pricing-features">
           <li><i class="ti ti-check"></i> Unlimited job posts</li>
-          <li><i class="ti ti-check"></i> Dedicated account manager</li>
-          <li><i class="ti ti-check"></i> Custom integrations</li>
-          <li><i class="ti ti-check"></i> SLA guarantee</li>
-          <li><i class="ti ti-check"></i> White-label options</li>
-          <li><i class="ti ti-check"></i> SSO & team seats</li>
+          <li><i class="ti ti-check"></i> Direct messaging with candidates</li>
+          <li><i class="ti ti-x muted"></i> AI-matched candidates</li>
+          <li><i class="ti ti-x muted"></i> Urgently hiring badge</li>
+          <li><i class="ti ti-x muted"></i> Branded company jobs</li>
         </ul>
-        <button class="btn-ghost btn-full" onclick="window.location.href='mailto:hello@nexhire.ca'">Contact sales</button>
+        <button class="btn-ghost btn-full" style="font-size:15px;padding:14px" onclick="showModal('modal-register')">Post a job</button>
+        <div style="text-align:center;margin-top:12px;font-size:13px;color:var(--muted)">Free · No credit card required</div>
+      </div>
+
+      <!-- Premium -->
+      <div style="background:#1E293B;border:2px solid #6366F1;border-radius:16px;padding:40px 36px;position:relative">
+        <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#6366F1;color:#fff;font-size:12px;font-weight:700;padding:5px 20px;border-radius:100px;white-space:nowrap;display:flex;align-items:center;gap:6px"><i class="ti ti-star-filled" style="font-size:11px;color:#FBBF24"></i> Premium</div>
+        <div style="font-family:var(--r);font-size:22px;font-weight:700;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:10px"><i class="ti ti-star-filled" style="color:#FBBF24;font-size:20px"></i> Premium</div>
+        <p style="font-size:15px;color:#CBD5E1;line-height:1.6;margin-bottom:28px;min-height:48px">Reach top talent who meet your hiring needs with AI-powered candidate matching and priority placement.</p>
+        <div style="width:48px;height:2px;background:rgba(255,255,255,.15);border-radius:2px;margin-bottom:28px"></div>
+        <div style="font-size:13px;font-weight:600;color:#94A3B8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px">Everything in Standard, plus</div>
+        <ul class="pricing-features" style="margin-bottom:36px">
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> AI-matched candidates</li>
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> Time-saving AI features</li>
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> <strong style="color:#FBBF24">Urgently hiring</strong> label</li>
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> Branded company jobs</li>
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> Priority search placement</li>
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> Advanced analytics dashboard</li>
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> Verified employer badge</li>
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> Bulk candidate actions</li>
+        </ul>
+        <button class="btn-primary btn-full" style="font-size:15px;padding:14px;background:#6366F1;border-color:#6366F1" onclick="startCheckout('pro','month')">Post a job</button>
+        <div style="text-align:center;margin-top:12px;font-size:13px;color:#94A3B8">$99/mo · 14-day free trial · <a href="#" onclick="startCheckout('pro','year');return false" style="color:#818CF8">Save 20% annually</a></div>
+      </div>
+    </div>
+
+    <!-- Enterprise banner -->
+    <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px">
+      <div>
+        <div style="font-family:var(--r);font-size:20px;font-weight:700;color:var(--dark);margin-bottom:8px">Enterprise</div>
+        <p style="font-size:15px;color:#475569;margin:0;max-width:560px">Volume pricing for large teams. Dedicated account manager, custom integrations, SLA guarantee, SSO, team seats, and white-label options.</p>
+      </div>
+      <button class="btn-ghost" style="white-space:nowrap;padding:12px 28px;font-size:15px" onclick="window.location.href='mailto:hello@nexhire.ca'">Contact sales →</button>
+    </div>
+
+    <!-- FAQ / How it works -->
+    <div style="margin-top:64px">
+      <h2 style="font-family:var(--r);font-size:24px;font-weight:700;color:var(--dark);margin-bottom:32px;text-align:center">Frequently asked questions</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px">
+          <div style="font-weight:700;color:var(--dark);margin-bottom:8px">When do I get charged?</div>
+          <p style="font-size:14px;color:#475569;margin:0;line-height:1.7">Only when a qualified candidate clicks on your sponsored job posting. Standard posts are always free. Premium sponsoring is pay-per-click with a budget you set.</p>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px">
+          <div style="font-weight:700;color:var(--dark);margin-bottom:8px">Can I pause or cancel anytime?</div>
+          <p style="font-size:14px;color:#475569;margin:0;line-height:1.7">Yes. No long-term contracts. Pause or cancel your sponsoring at any time from your employer dashboard. Your jobs remain visible in Standard mode.</p>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px">
+          <div style="font-weight:700;color:var(--dark);margin-bottom:8px">What is AI candidate matching?</div>
+          <p style="font-size:14px;color:#475569;margin:0;line-height:1.7">Premium uses GPT-4o to rank applicants by fit score based on your job description vs. their resume and skills. You see the best candidates first, saving hours of screening.</p>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px">
+          <div style="font-weight:700;color:var(--dark);margin-bottom:8px">What is the Urgently Hiring badge?</div>
+          <p style="font-size:14px;color:#475569;margin:0;line-height:1.7">Premium jobs display a highlighted <strong style="color:#D97706">Urgently hiring</strong> label in search results, significantly increasing click-through rates for time-sensitive roles.</p>
+        </div>
       </div>
     </div>
   </div>
