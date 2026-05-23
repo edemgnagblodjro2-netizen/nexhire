@@ -206,5 +206,10 @@ export function useNotifications(counts: EventCounts) {
     }
   }, [counts.messages, counts.verifications, counts.bugReports, counts.organisations, prefs.sound, prefs.browser, prefs.events]);
 
-  return { prefs, setPrefs, setEventPref, toggleBrowserPref, browserPermission, promptShown };
+  const resetPromptShown = () => {
+    localStorage.removeItem(PROMPT_SHOWN_KEY);
+    setPromptShown(false);
+  };
+
+  return { prefs, setPrefs, setEventPref, toggleBrowserPref, browserPermission, promptShown, resetPromptShown };
 }

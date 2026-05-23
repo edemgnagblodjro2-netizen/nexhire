@@ -159,7 +159,7 @@ export default function Layout({
     organisations: orgStats?.newCount ?? 0,
   }), [contactStats?.newCount, verificationStats?.pendingCount, bugReportStats?.newCount, orgStats?.newCount]);
 
-  const { prefs, setPrefs, setEventPref, toggleBrowserPref, browserPermission, promptShown } = useNotifications(counts);
+  const { prefs, setPrefs, setEventPref, toggleBrowserPref, browserPermission, promptShown, resetPromptShown } = useNotifications(counts);
 
   useEffect(() => {
     const base = role === "b2g" ? "AttenteZéro — B2G" : "AttenteZéro — Admin";
@@ -257,6 +257,14 @@ export default function Layout({
                     className="mt-0.5 w-full text-left text-xs text-indigo-600 hover:text-indigo-800 underline underline-offset-2 transition-colors select-none"
                   >
                     🖥️ Activer les notifications navigateur
+                  </button>
+                ) : browserPermission === "default" && promptShown ? (
+                  <button
+                    type="button"
+                    onClick={resetPromptShown}
+                    className="mt-0.5 w-full text-left text-xs text-gray-400 hover:text-indigo-600 underline underline-offset-2 transition-colors select-none"
+                  >
+                    🖥️ Réactiver les notifications ?
                   </button>
                 ) : (
                   <label className="flex items-center justify-between gap-2 cursor-pointer group">
