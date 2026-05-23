@@ -252,41 +252,46 @@
     <div class="section-inner">
       <h1 class="page-title" data-i18n="jobs.title">Job listings</h1>
       <div class="filters-bar">
-        <input type="text" id="fq" placeholder="Search title, skill, company..." data-i18n-ph="jobs.filter.ph" oninput="debounceFilterSearch()" class="filter-input">
-        <select id="fprov" onchange="filterJobs()" class="filter-select filter-select-province">
-          <option value="">🌐 All locations</option>
-        </select>
-        <select id="fwork" onchange="filterJobs()" class="filter-select"><option value="">All modes</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select>
-        <select id="ftype" onchange="filterJobs()" class="filter-select">
-          <option value="">All types</option>
-          <option value="full-time">Full time</option>
-          <option value="permanent">Permanent</option>
-          <option value="part-time">Part time</option>
-          <option value="contract">Contract</option>
-          <option value="temporary">Temporary</option>
-          <option value="casual">Casual</option>
-        </select>
-        <select id="fsal" onchange="filterJobs()" class="filter-select">
-          <option value="">All Pay</option>
-          <option value="40000">$40,000+</option>
-          <option value="60000">$60,000+</option>
-          <option value="80000">$80,000+</option>
-          <option value="100000">$100,000+</option>
-          <option value="120000">$120,000+</option>
-        </select>
-        <select id="fdate" onchange="filterJobs()" class="filter-select">
-          <option value="">All Dates</option>
-          <option value="unseen">Jobs you haven't seen</option>
-          <option value="1">Last 24 hours</option>
-          <option value="3">Last 3 days</option>
-          <option value="7">Last 7 days</option>
-          <option value="14">Last 14 days</option>
-        </select>
-        <select id="flang" onchange="filterJobs()" class="filter-select">
-          <option value="">Job language</option>
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-        </select>
+        <div class="filters-search-row">
+          <input type="text" id="fq" placeholder="Search title, skill, company..." data-i18n-ph="jobs.filter.ph" oninput="debounceFilterSearch()" onkeydown="if(event.key==='Enter')filterJobs()" class="filter-input">
+          <select id="fprov" onchange="filterJobs()" class="filter-select filter-select-province">
+            <option value="">🌐 All locations</option>
+          </select>
+          <button class="btn-primary filters-search-btn" onclick="filterJobs()"><i class="ti ti-search"></i> <span data-i18n="jobs.search.btn">Find jobs</span></button>
+        </div>
+        <div class="filters-row">
+          <select id="fwork" onchange="filterJobs()" class="filter-select"><option value="">All modes</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select>
+          <select id="ftype" onchange="filterJobs()" class="filter-select">
+            <option value="">All types</option>
+            <option value="full-time">Full time</option>
+            <option value="permanent">Permanent</option>
+            <option value="part-time">Part time</option>
+            <option value="contract">Contract</option>
+            <option value="temporary">Temporary</option>
+            <option value="casual">Casual</option>
+          </select>
+          <select id="fsal" onchange="filterJobs()" class="filter-select">
+            <option value="">All Pay</option>
+            <option value="40000">$40,000+</option>
+            <option value="60000">$60,000+</option>
+            <option value="80000">$80,000+</option>
+            <option value="100000">$100,000+</option>
+            <option value="120000">$120,000+</option>
+          </select>
+          <select id="fdate" onchange="filterJobs()" class="filter-select">
+            <option value="">All Dates</option>
+            <option value="unseen">Jobs you haven't seen</option>
+            <option value="1">Last 24 hours</option>
+            <option value="3">Last 3 days</option>
+            <option value="7">Last 7 days</option>
+            <option value="14">Last 14 days</option>
+          </select>
+          <select id="flang" onchange="filterJobs()" class="filter-select">
+            <option value="">Job language</option>
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
@@ -932,6 +937,6 @@
 </div>
 
 <div id="toasts" class="toast-container"></div>
-<script src="/nexhire/js/app.js?v=20260523i"></script>
+<script src="/nexhire/js/app.js?v=20260523j"></script>
 </body>
 </html>

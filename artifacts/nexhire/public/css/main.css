@@ -223,8 +223,11 @@ a{text-decoration:none;color:inherit}
 /* ── JOBS PAGE ────────────────────────────────────────────── */
 .page-header-bar{background:#fff;border-bottom:1px solid var(--border);padding:24px 0}
 .page-title{font-family:var(--r);font-size:28px;font-weight:700;color:var(--dark);margin-bottom:16px}
-.filters-bar{display:flex;gap:10px;flex-wrap:wrap}
-.filter-input{padding:8px 14px;border:1px solid var(--border);border-radius:8px;font-family:var(--b);font-size:14px;outline:none;background:#fff;min-width:240px;transition:border .15s}
+.filters-bar{display:flex;flex-direction:column;gap:10px}
+.filters-search-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.filters-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filters-search-btn{white-space:nowrap;padding:9px 20px;font-size:14px}
+.filter-input{padding:8px 14px;border:1px solid var(--border);border-radius:8px;font-family:var(--b);font-size:14px;outline:none;background:#fff;min-width:240px;flex:1;transition:border .15s}
 .filter-input:focus{border-color:var(--indigo)}
 .filter-select{padding:8px 14px;border:1px solid var(--border);border-radius:8px;font-family:var(--b);font-size:14px;outline:none;background:#fff;cursor:pointer;transition:border .15s}
 .filter-select:focus{border-color:var(--indigo)}
