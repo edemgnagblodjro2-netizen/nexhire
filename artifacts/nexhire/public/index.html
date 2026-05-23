@@ -362,13 +362,202 @@
       </div>
     </div>
   </div>
-  <div class="section-inner" style="padding:64px 24px;background:#f4f6f8">
-    <div class="features-grid">
-      <div class="feature-card"><div class="feature-icon"><i class="ti ti-bolt"></i></div><h3 data-i18n="emp.f1.title">Post in minutes</h3><p data-i18n="emp.f1.desc">Create bilingual job postings with AI-assisted descriptions. Go live in under 5 minutes.</p></div>
-      <div class="feature-card"><div class="feature-icon"><i class="ti ti-chart-bar"></i></div><h3 data-i18n="emp.f2.title">AI candidate ranking</h3><p data-i18n="emp.f2.desc">Every application gets an AI match score so you focus on the best candidates first.</p></div>
-      <div class="feature-card"><div class="feature-icon"><i class="ti ti-layout-kanban"></i></div><h3 data-i18n="emp.f3.title">Kanban ATS pipeline</h3><p data-i18n="emp.f3.desc">Visual pipeline: New → Reviewed → Shortlisted → Interview → Offer. Move candidates with one click.</p></div>
-      <div class="feature-card"><div class="feature-icon"><i class="ti ti-chart-line"></i></div><h3 data-i18n="emp.f4.title">Job analytics</h3><p data-i18n="emp.f4.desc">Track views, applications, and conversion rate per listing. Know which jobs perform best.</p></div>
+  <!-- ── Employer Features Showcase ─────────────────────── -->
+  <div class="emp-features">
+
+    <!-- Header -->
+    <div class="emp-feat-header">
+      <div class="emp-feat-eyebrow"><i class="ti ti-sparkles"></i> <span data-i18n="emp.feat.eyebrow">Platform features</span></div>
+      <h2 data-i18n="emp.feat.title">Everything you need to hire smarter</h2>
+      <p data-i18n="emp.feat.sub">One platform. From posting to offer letter.</p>
     </div>
+
+    <!-- F1 — Post in minutes -->
+    <div class="emp-feat-row">
+      <div class="emp-feat-text">
+        <div class="emp-feat-badge" style="background:#EEF2FF;color:#6366F1"><i class="ti ti-bolt"></i></div>
+        <h3 data-i18n="emp.f1.title">Post in minutes</h3>
+        <p data-i18n="emp.f1.desc">Create bilingual job postings with AI-assisted descriptions. Go live in under 5 minutes.</p>
+        <ul class="emp-feat-checks">
+          <li><i class="ti ti-check"></i> <span data-i18n="emp.f1.c1">AI-generated FR &amp; EN description</span></li>
+          <li><i class="ti ti-check"></i> <span data-i18n="emp.f1.c2">Salary range recommendations</span></li>
+          <li><i class="ti ti-check"></i> <span data-i18n="emp.f1.c3">One-click publish to Nexhire network</span></li>
+        </ul>
+      </div>
+      <div class="emp-feat-visual">
+        <!-- Mockup: Job post form -->
+        <div class="fmk fmk-post">
+          <div class="fmk-header"><span class="fmk-dot red"></span><span class="fmk-dot yellow"></span><span class="fmk-dot green"></span><span style="font-size:11px;color:#94A3B8;margin-left:8px" data-i18n="emp.mock.newjob">New Job Posting</span></div>
+          <div class="fmk-body">
+            <div class="fmk-label" data-i18n="emp.mock.jobtitle">Job title</div>
+            <div class="fmk-input"><span>Senior React Developer</span><span class="fmk-cursor"></span></div>
+            <div class="fmk-label" data-i18n="emp.mock.desc">Description</div>
+            <div class="fmk-textarea">We are looking for a passionate Senior React Developer to join our growing team…</div>
+            <div class="fmk-ai-row">
+              <button class="fmk-ai-btn"><i class="ti ti-sparkles"></i> <span data-i18n="emp.mock.aigen">Generate with AI</span></button>
+              <span class="fmk-ai-tag">FR + EN</span>
+            </div>
+            <div class="fmk-tags-row">
+              <span class="fmk-tag">React</span><span class="fmk-tag">TypeScript</span><span class="fmk-tag">Node.js</span><span class="fmk-tag">+</span>
+            </div>
+            <div class="fmk-footer-row">
+              <div>
+                <div class="fmk-label" data-i18n="emp.mock.salary">Salary</div>
+                <div class="fmk-salary">$95k – $130k <span class="fmk-currency">CAD</span></div>
+              </div>
+              <button class="fmk-publish-btn"><i class="ti ti-send"></i> <span data-i18n="emp.mock.publish">Publish</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- F2 — AI Ranking (reversed) -->
+    <div class="emp-feat-row emp-feat-row-rev emp-feat-row-alt">
+      <div class="emp-feat-text">
+        <div class="emp-feat-badge" style="background:#F0FDF4;color:#16A34A"><i class="ti ti-chart-bar"></i></div>
+        <h3 data-i18n="emp.f2.title">AI candidate ranking</h3>
+        <p data-i18n="emp.f2.desc">Every application gets an AI match score so you focus on the best candidates first.</p>
+        <ul class="emp-feat-checks">
+          <li><i class="ti ti-check"></i> <span data-i18n="emp.f2.c1">Skills, experience &amp; salary alignment</span></li>
+          <li><i class="ti ti-check"></i> <span data-i18n="emp.f2.c2">Verified skill badges boost ranking</span></li>
+          <li><i class="ti ti-check"></i> <span data-i18n="emp.f2.c3">Sorted by match % automatically</span></li>
+        </ul>
+      </div>
+      <div class="emp-feat-visual">
+        <!-- Mockup: Candidate ranking list -->
+        <div class="fmk fmk-ranking">
+          <div class="fmk-header"><i class="ti ti-users" style="color:#6366F1;font-size:13px"></i><span style="font-size:12px;font-weight:600;color:#1E293B;margin-left:6px" data-i18n="emp.mock.applicants">Applicants — Senior React Dev</span></div>
+          <div class="fmk-body" style="padding:12px 0 4px">
+            <div class="fmk-cand fmk-cand-top">
+              <div class="fmk-avatar" style="background:#6366F1">SM</div>
+              <div class="fmk-cand-info"><div class="fmk-cand-name">Sarah M.</div><div class="fmk-cand-sub">React · TypeScript · 5 yrs</div></div>
+              <div class="fmk-score fmk-score-hi">96%</div>
+            </div>
+            <div class="fmk-match-bar"><div class="fmk-match-fill" style="width:96%;background:linear-gradient(90deg,#4ade80,#22c55e)"></div></div>
+            <div class="fmk-cand">
+              <div class="fmk-avatar" style="background:#8B5CF6">JL</div>
+              <div class="fmk-cand-info"><div class="fmk-cand-name">Jean L.</div><div class="fmk-cand-sub">React · Vue · 4 yrs</div></div>
+              <div class="fmk-score fmk-score-mid">81%</div>
+            </div>
+            <div class="fmk-match-bar"><div class="fmk-match-fill" style="width:81%;background:linear-gradient(90deg,#facc15,#f59e0b)"></div></div>
+            <div class="fmk-cand">
+              <div class="fmk-avatar" style="background:#0891B2">MA</div>
+              <div class="fmk-cand-info"><div class="fmk-cand-name">Marie A.</div><div class="fmk-cand-sub">React · 3 yrs</div></div>
+              <div class="fmk-score fmk-score-mid">74%</div>
+            </div>
+            <div class="fmk-match-bar"><div class="fmk-match-fill" style="width:74%;background:linear-gradient(90deg,#facc15,#f59e0b)"></div></div>
+            <div class="fmk-cand">
+              <div class="fmk-avatar" style="background:#D97706">PB</div>
+              <div class="fmk-cand-info"><div class="fmk-cand-name">Pierre B.</div><div class="fmk-cand-sub">Angular · 6 yrs</div></div>
+              <div class="fmk-score fmk-score-lo">52%</div>
+            </div>
+            <div class="fmk-match-bar"><div class="fmk-match-fill" style="width:52%;background:linear-gradient(90deg,#f87171,#ef4444)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- F3 — Kanban -->
+    <div class="emp-feat-row">
+      <div class="emp-feat-text">
+        <div class="emp-feat-badge" style="background:#FFF7ED;color:#D97706"><i class="ti ti-layout-kanban"></i></div>
+        <h3 data-i18n="emp.f3.title">Kanban ATS pipeline</h3>
+        <p data-i18n="emp.f3.desc">Visual pipeline: New → Reviewed → Shortlisted → Interview → Offer. Move candidates with one click.</p>
+        <ul class="emp-feat-checks">
+          <li><i class="ti ti-check"></i> <span data-i18n="emp.f3.c1">Drag &amp; drop between stages</span></li>
+          <li><i class="ti ti-check"></i> <span data-i18n="emp.f3.c2">Internal notes &amp; comments per candidate</span></li>
+          <li><i class="ti ti-check"></i> <span data-i18n="emp.f3.c3">Auto-notifications on status change</span></li>
+        </ul>
+      </div>
+      <div class="emp-feat-visual">
+        <!-- Mockup: Kanban columns -->
+        <div class="fmk fmk-kanban">
+          <div class="fmk-header"><i class="ti ti-layout-kanban" style="color:#D97706;font-size:13px"></i><span style="font-size:12px;font-weight:600;color:#1E293B;margin-left:6px" data-i18n="emp.mock.pipeline">Recruitment Pipeline</span></div>
+          <div class="fmk-body fmk-kanban-body">
+            <div class="fmk-col">
+              <div class="fmk-col-hd" style="color:#6366F1;background:#EEF2FF" data-i18n="emp.k.new">New <span class="fmk-col-n">3</span></div>
+              <div class="fmk-kcard"><div class="fmk-kavatar" style="background:#6366F1">SM</div><div><div class="fmk-kname">Sarah M.</div><div class="fmk-ksub">96% match</div></div></div>
+              <div class="fmk-kcard"><div class="fmk-kavatar" style="background:#8B5CF6">JL</div><div><div class="fmk-kname">Jean L.</div><div class="fmk-ksub">81% match</div></div></div>
+            </div>
+            <div class="fmk-col">
+              <div class="fmk-col-hd" style="color:#0891B2;background:#E0F7FA" data-i18n="emp.k.reviewed">Reviewed <span class="fmk-col-n">2</span></div>
+              <div class="fmk-kcard"><div class="fmk-kavatar" style="background:#0891B2">MA</div><div><div class="fmk-kname">Marie A.</div><div class="fmk-ksub">74% match</div></div></div>
+            </div>
+            <div class="fmk-col">
+              <div class="fmk-col-hd" style="color:#D97706;background:#FFF7ED" data-i18n="emp.k.short">Shortlisted <span class="fmk-col-n">1</span></div>
+              <div class="fmk-kcard fmk-kcard-sel"><div class="fmk-kavatar" style="background:#D97706">PB</div><div><div class="fmk-kname">Pierre B.</div><div class="fmk-ksub">⭐ Top pick</div></div></div>
+            </div>
+            <div class="fmk-col">
+              <div class="fmk-col-hd" style="color:#16A34A;background:#F0FDF4" data-i18n="emp.k.offer">Offer <span class="fmk-col-n">1</span></div>
+              <div class="fmk-kcard fmk-kcard-offer"><div class="fmk-kavatar" style="background:#16A34A">AL</div><div><div class="fmk-kname">Ana L.</div><div class="fmk-ksub">✓ Accepted</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- F4 — Analytics (reversed) -->
+    <div class="emp-feat-row emp-feat-row-rev emp-feat-row-alt">
+      <div class="emp-feat-text">
+        <div class="emp-feat-badge" style="background:#FDF4FF;color:#9333EA"><i class="ti ti-chart-line"></i></div>
+        <h3 data-i18n="emp.f4.title">Job analytics</h3>
+        <p data-i18n="emp.f4.desc">Track views, applications, and conversion rate per listing. Know which jobs perform best.</p>
+        <ul class="emp-feat-checks">
+          <li><i class="ti ti-check"></i> <span data-i18n="emp.f4.c1">Views, clicks &amp; apply-rate per job</span></li>
+          <li><i class="ti ti-check"></i> <span data-i18n="emp.f4.c2">Daily trends over 30 days</span></li>
+          <li><i class="ti ti-check"></i> <span data-i18n="emp.f4.c3">Compare performance across listings</span></li>
+        </ul>
+      </div>
+      <div class="emp-feat-visual">
+        <!-- Mockup: Analytics dashboard -->
+        <div class="fmk fmk-analytics">
+          <div class="fmk-header"><i class="ti ti-chart-line" style="color:#9333EA;font-size:13px"></i><span style="font-size:12px;font-weight:600;color:#1E293B;margin-left:6px" data-i18n="emp.mock.analytics">Job Analytics — Last 30 days</span></div>
+          <div class="fmk-body">
+            <div class="fmk-metrics-row">
+              <div class="fmk-metric"><div class="fmk-metric-n" style="color:#6366F1">847</div><div class="fmk-metric-l" data-i18n="emp.mock.views">Views</div></div>
+              <div class="fmk-metric"><div class="fmk-metric-n" style="color:#16A34A">124</div><div class="fmk-metric-l" data-i18n="emp.mock.apps">Applications</div></div>
+              <div class="fmk-metric"><div class="fmk-metric-n" style="color:#D97706">14.6%</div><div class="fmk-metric-l" data-i18n="emp.mock.conv">Conv. rate</div></div>
+              <div class="fmk-metric"><div class="fmk-metric-n" style="color:#9333EA">3.2d</div><div class="fmk-metric-l" data-i18n="emp.mock.resp">Avg resp.</div></div>
+            </div>
+            <!-- Bar chart -->
+            <div class="fmk-chart">
+              <div class="fmk-bars">
+                <div class="fmk-bar-wrap"><div class="fmk-bar" style="height:42%;background:#6366F120"></div></div>
+                <div class="fmk-bar-wrap"><div class="fmk-bar" style="height:55%;background:#6366F130"></div></div>
+                <div class="fmk-bar-wrap"><div class="fmk-bar" style="height:38%;background:#6366F120"></div></div>
+                <div class="fmk-bar-wrap"><div class="fmk-bar" style="height:70%;background:#6366F140"></div></div>
+                <div class="fmk-bar-wrap"><div class="fmk-bar" style="height:62%;background:#6366F140"></div></div>
+                <div class="fmk-bar-wrap"><div class="fmk-bar" style="height:88%;background:#6366F1"></div></div>
+                <div class="fmk-bar-wrap"><div class="fmk-bar" style="height:75%;background:#6366F180"></div></div>
+                <div class="fmk-bar-wrap"><div class="fmk-bar" style="height:90%;background:#6366F1"></div></div>
+                <div class="fmk-bar-wrap"><div class="fmk-bar" style="height:65%;background:#6366F150"></div></div>
+                <div class="fmk-bar-wrap"><div class="fmk-bar" style="height:80%;background:#6366F170"></div></div>
+                <div class="fmk-bar-wrap"><div class="fmk-bar" style="height:95%;background:#6366F1"></div></div>
+                <div class="fmk-bar-wrap"><div class="fmk-bar" style="height:72%;background:#6366F160"></div></div>
+              </div>
+              <div class="fmk-chart-labels">
+                <span>May 1</span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span>May 30</span>
+              </div>
+            </div>
+            <!-- Top jobs -->
+            <div class="fmk-top-jobs">
+              <div class="fmk-tj-row"><span>Senior React Dev</span><div class="fmk-tj-bar"><div style="width:95%;background:#6366F1"></div></div><span class="fmk-tj-n">124</span></div>
+              <div class="fmk-tj-row"><span>Product Manager</span><div class="fmk-tj-bar"><div style="width:68%;background:#8B5CF6"></div></div><span class="fmk-tj-n">84</span></div>
+              <div class="fmk-tj-row"><span>Data Analyst</span><div class="fmk-tj-bar"><div style="width:45%;background:#A78BFA"></div></div><span class="fmk-tj-n">56</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="emp-feat-cta">
+      <h3 data-i18n="emp.feat.cta.title">Ready to hire smarter?</h3>
+      <p data-i18n="emp.feat.cta.sub">2–5 free job slots. No credit card required.</p>
+      <button class="btn-primary btn-lg" data-modal="modal-register" data-i18n="emp.cta">Start free — 2-5 job slots</button>
+    </div>
+
   </div>
 </div>
 
@@ -1068,6 +1257,6 @@ if ('serviceWorker' in navigator) {
     .catch(e => console.warn('[SW] failed', e));
 }
 </script>
-<script src="/nexhire/js/app.js?v=20260523am"></script>
+<script src="/nexhire/js/app.js?v=20260523b"></script>
 </body>
 </html>
