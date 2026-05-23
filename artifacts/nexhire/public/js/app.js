@@ -4231,8 +4231,7 @@ document.getElementById('emp-dash-nav')?.addEventListener('click', e => {
 // ── Employer dashboard "Post job" header button ──────────────
 document.getElementById('btn-post-job-header')?.addEventListener('click', () => showEmpTab('etab-post'));
 
-// ── Restore page from URL hash on initial load ───────────────
-restoreFromHash();
+// restoreFromHash() is now called inside the async init IIFE (after auth/me resolves)
 
 // ═══════════════════════════════════════════════════════════
 // PHASE 3 — PROFILE SCORE
