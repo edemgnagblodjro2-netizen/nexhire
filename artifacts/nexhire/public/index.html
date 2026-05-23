@@ -218,29 +218,52 @@
   <section class="features-section reveal">
     <div class="section-inner">
       <div class="features-grid reveal-stagger">
-        <div class="feature-card"><div class="feature-icon"><i class="ti ti-robot"></i></div><h3 data-i18n="feat.ai.title">AI Job Matching</h3><p data-i18n="feat.ai.desc">Our AI analyzes your profile and matches you to roles where you're most likely to succeed — faster than traditional search.</p></div>
-        <div class="feature-card"><div class="feature-icon"><i class="ti ti-layout-kanban"></i></div><h3 data-i18n="feat.ats.title">ATS Pipeline</h3><p data-i18n="feat.ats.desc">Employers get a full Kanban ATS to manage applications from New to Offer — with AI candidate scoring built in.</p></div>
-        <div class="feature-card"><div class="feature-icon"><i class="ti ti-file-text"></i></div><h3 data-i18n="feat.cover.title">AI Cover Letters</h3><p data-i18n="feat.cover.desc">Generate personalized, compelling cover letters in seconds. One click — tailored to each job.</p></div>
-        <div class="feature-card"><div class="feature-icon"><i class="ti ti-star"></i></div><h3 data-i18n="feat.reviews.title">Company Reviews</h3><p data-i18n="feat.reviews.desc">Transparent ratings from real candidates. Know what it's really like before you apply.</p></div>
+        <div class="feature-card">
+          <div class="feature-icon-sm"><i class="ti ti-robot"></i></div>
+          <h3 data-i18n="feat.ai.title">Matching IA</h3>
+          <p data-i18n="feat.ai.desc">Notre IA analyse votre profil et vous associe aux postes où vous avez le plus de chances de réussir — plus vite que la recherche traditionnelle.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon-sm"><i class="ti ti-layout-kanban"></i></div>
+          <h3 data-i18n="feat.ats.title">Pipeline ATS</h3>
+          <p data-i18n="feat.ats.desc">Les employeurs disposent d'un ATS Kanban complet pour gérer les candidatures de Nouveau à Offre — avec scoring IA intégré.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon-sm"><i class="ti ti-file-text"></i></div>
+          <h3 data-i18n="feat.cover.title">Lettres de motivation IA</h3>
+          <p data-i18n="feat.cover.desc">Générez des lettres de motivation personnalisées en quelques secondes. Un clic — adaptées à chaque poste.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon-sm"><i class="ti ti-star"></i></div>
+          <h3 data-i18n="feat.reviews.title">Avis d'entreprises</h3>
+          <p data-i18n="feat.reviews.desc">Évaluations transparentes de vrais candidats. Sachez vraiment à quoi vous attendre avant de postuler.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="employer-cta reveal">
-    <div class="section-inner">
-      <div class="cta-card">
-        <div class="cta-text">
-          <h2 data-i18n="cta.title">Hire the best talent globally</h2>
-          <p data-i18n="cta.desc">Post jobs, review AI-ranked applications, manage your pipeline with Kanban, and message candidates directly. Start with 2 free job slots.</p>
-          <button class="btn-primary btn-lg" data-modal="modal-register" data-i18n="cta.btn">Start hiring free</button>
-        </div>
-        <div class="cta-visual">
-          <div class="cta-stats">
-            <div class="cta-stat"><div class="cta-stat-n">14 days</div><div class="cta-stat-l" data-i18n="cta.trial">Free trial</div></div>
-            <div class="cta-stat"><div class="cta-stat-n">AI-ranked</div><div class="cta-stat-l" data-i18n="cta.apps">Applications</div></div>
-            <div class="cta-stat"><div class="cta-stat-n">Kanban</div><div class="cta-stat-l" data-i18n="cta.ats">ATS pipeline</div></div>
-          </div>
-        </div>
+  <section class="bento-section reveal">
+    <div class="bento-grid">
+      <div class="bento-cell bento-dark">
+        <span class="bento-label">Pour les candidats</span>
+        <h2 class="bento-heading">Trouvez votre prochaine opportunité,<br>partout dans le monde.</h2>
+        <p class="bento-desc">Des milliers d'offres au Canada et à l'international. L'IA Nexhire trouve votre meilleur match en quelques secondes.</p>
+        <button class="btn-bento" onclick="goto('jobs')">Parcourir les offres <i class="ti ti-arrow-right"></i></button>
+      </div>
+      <div class="bento-cell bento-photo">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80&auto=format&fit=crop" alt="Professional team" loading="lazy">
+      </div>
+      <div class="bento-cell bento-light">
+        <span class="bento-label bento-label-accent">Pour les employeurs</span>
+        <h2 class="bento-heading bento-heading-dark">Recrutez les meilleurs talents, à l'échelle mondiale.</h2>
+        <p class="bento-desc bento-desc-dark">Publiez des offres, classez les candidats par IA, gérez votre pipeline Kanban. 2 postes gratuits pour démarrer.</p>
+        <button class="btn-bento btn-bento-dark" onclick="goto('employers')">Commencer gratuitement <i class="ti ti-arrow-right"></i></button>
+      </div>
+      <div class="bento-cell bento-teal">
+        <span class="bento-label">Propulsé par l'IA</span>
+        <h2 class="bento-heading">Lettres de motivation, matching &amp; ATS — une seule plateforme.</h2>
+        <p class="bento-desc">Tout ce dont vous avez besoin pour décrocher ou combler un poste, réuni en un seul endroit.</p>
+        <button class="btn-bento" onclick="document.getElementById('modal-register').style.display='flex'">Explorer les fonctions <i class="ti ti-arrow-right"></i></button>
       </div>
     </div>
   </section>
@@ -984,6 +1007,6 @@
 </div>
 
 <div id="toasts" class="toast-container"></div>
-<script src="/nexhire/js/app.js?v=20260523v"></script>
+<script src="/nexhire/js/app.js?v=20260523w"></script>
 </body>
 </html>
