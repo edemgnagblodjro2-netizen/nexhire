@@ -3,6 +3,18 @@ const { v4: uuidv4 } = require('uuid');
 const db = require('../models/db');
 const { requireAuth } = require('../middleware/auth');
 
+router.get('/mine', requireAuth, async (req, res) => {
+  const reviews = await db.all(`
+    SELECT r.id, r.rating, r.title, r.pros, r.cons, r.interview_difficulty, r.recommend, r.anonymous, r.created_at,
+           c.name as company_name
+    FROM nh_company_reviews r
+    JOIN nh_companies c ON r.company_id = c.id
+    WHERE r.user_id = $1
+    ORDER BY r.created_at DESC
+  `, [req.session.user.id]);
+  res.json({ success: true, reviews });
+});
+
 router.get('/company/:companyId', async (req, res) => {
   const reviews = await db.all(`
     SELECT r.id, r.rating, r.title, r.pros, r.cons, r.interview_difficulty, r.recommend,

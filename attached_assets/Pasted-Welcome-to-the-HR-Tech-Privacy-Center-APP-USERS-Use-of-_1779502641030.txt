@@ -1,0 +1,141 @@
+Welcome to the HR Tech Privacy Center
+APP USERS: Use of our app is subject to the Terms and Privacy Policy for that app and website. For privacy information about the app you are using, please review the Privacy Policy for its website. For example, the use of the Indeed app is subject to the Indeed Terms and Privacy Policy. 
+
+Introduction
+We take your personal data seriously 
+Welcome to the HR Tech Privacy Center – a website detailing how multiple online job search and recruitment platforms share data and protect privacy. The Indeed Platform includes the Indeed sites, and the Glassdoor Platform includes the Glassdoor sites (together, the “Platforms”). For more details about the appropriate data controller for each platform, please check Indeed Privacy Policy and Glassdoor Privacy Policy. 
+
+Our core mission is to help people get jobs and help employers find great candidates. We developed this website to help you learn more about our Privacy Values, how your data is shared between these platforms, and why it’s important for us to share it.  
+
+Sharing data between the Platforms allows us to:
+
+Help connect job seekers with more job listings and employers
+Improve and customize services for our users
+Enhance security for our users
+You can find out about how we share data between the Platforms below or find answers to some frequently asked questions.
+
+The information provided here doesn’t change how each of the Indeed sites and the Glassdoor sites collects, uses, or shares personal data. The Privacy and Cookie policies for each site clearly explain how we collect and use personal and non-personal data.
+
+If you have specific questions about a particular platform, we encourage you to visit that Platform’s Privacy Policy or the Contact Us page for further information.
+
+Our privacy values
+Prioritizing your trust
+Whether we’re helping you find jobs or great candidates, we value the trust you place in us. To maintain that trust, we make significant investments to protect your personal data. These efforts are guided by our privacy values:
+
+We treat all users equally by providing a broad suite of global privacy rights. Any user can request the following:
+access to and portability of their personal data
+rectification or deletion of their personal data
+restriction of or objection to certain processing of their personal data
+We adhere to principles of privacy by design, which informs how we build and operate our services.
+We’re transparent about what personal data we collect and how it’s processed.
+We want to ensure the personal data we gather will be used for the purposes of helping our job seekers find jobs, our employers find great candidates, and improving the services we provide to you. 
+We limit our collection and storage of personal data to what’s adequate, relevant, and necessary.
+We strive to keep your personal data accurate and up to date, where appropriate.
+We want to process your personal data using appropriate security measures to protect personal data.
+We demonstrate accountability and responsibility under applicable privacy laws.
+The benefits of data sharing
+Why do you need my data anyway?
+Data sharing not only provides a range of benefits to job seekers and employers, but it also enables us to improve our services. 
+
+Data sharing means more employers, more job listings, and more job seekers
+
+Data sharing between the Platforms allows job seekers to access a broader database of job listings and employers. It also helps employers access more job seekers. For example, one platform may be able to recommend jobs or employers on another platform. It can also help applications, resumes, or job listings work across the Platforms.  The personal data shared depends on your interaction with the platforms in the course of your job search and application activities.
+
+The Platforms can also share employer data, such as account information and behavioral information, to provide a better experience to those employers.
+
+Data sharing improves our services
+
+Data sharing allows our Platforms to provide personalized and improved content, performance, features, and services. 
+
+For example, our Platforms may use and share your previous search or browsing history (e.g. the jobs you click on) and your profile data, including resume to determine relevant search results and job alerts. Data sharing may also help provide career insights such as company reviews, job listing salary data, interview tips, and more. 
+
+This sharing also helps improve data analysis, testing, research, and service improvement across our Platforms.
+
+Data sharing facilitates better security
+
+Sharing data allows our Platforms to better protect our users. In particular, it allows affiliated Platforms to improve user security and internal operations. It also facilitates troubleshooting and detection, and prevention of fraud and spam.
+
+Platform activity recording
+What we do with the data
+We process your activity on the Platforms to help us better understand how you use them. This helps us improve and inform the products and services we offer. All of which allows us to help you find jobs. 
+
+It’s important to note that our Platforms may not work as intended without certain data collection and sharing. This includes processing, collecting, analyzing, storing, and sharing personal data across the Platforms or with third-party service providers, including in real-time. 
+
+Data collected can include any and all interactions and communications you have on our Platforms. It may also include without limitation the areas of the Platforms you visit and where you click, scroll, hover, mouseover, or otherwise interact with our Platforms. It may also include when and for how long each activity occurs. 
+
+For more information, please see the Privacy and Cookie policies for each Platform.
+
+We consider this processing to be critical to the way our Platforms operate, and, at this time, without transferring certain data to Indeed’s affiliates, we are not able to provide our core products and services to you. Please, check our FAQ to understand how you can stop this sharing. 
+
+Frequently Asked Questions
+Personal data sharing
+What personal data is shared between the Platforms?
+What personal data is shared is determined by the Privacy and Cookie policies of the Platforms you use. 
+
+The personal data shared depends on your interaction with the Platforms in the course of your job search and application activities. It may include your first and last name, user name, email address, telephone number, profile data, including resume , IP address, advertiser ID, answers to any employer screener questions, job listings, job notifications, application progress, and users’ search, click and session activity on the Platforms.
+
+Why is my personal data shared in this way?
+Your personal data is shared for a few reasons, including to: 
+
+Connect more job seekers with more job listings and employers
+Improve our services
+Facilitate better security for users
+More details on the benefits of data sharing are available to you.
+
+When is data shared and how does sharing take place?
+When and how your personal data is shared depends on the individual Platform, the type of data being shared, and the actions you take on the Platforms.
+
+For example, our Platforms may use and share your previous search or browsing history (e.g. the jobs you click on) and your profile data, including resume to determine relevant search results and job alerts. Specific actions may also automatically initiate sharing, such as opening an account on one of our Platforms.
+
+How do I stop my personal data from being shared in this way?
+Indeed values your privacy and tries to facilitate your preferences. If you do not wish your information to be shared in this way, depending on the site, you can request the deletion of your account, request the deletion of your personal data, or request that your data not be shared this way while maintaining an account. These options can be requested by following the instructions in the Privacy Policy of the sites you have used.
+
+HR Tech Privacy Center and the Platforms
+Does the information in the HR Tech Privacy Center change how my personal data will be used?
+No, the information set out in our FAQs and Privacy Center is designed to provide you with more transparency about how we use data.
+
+Does this mean that all my data is shared by the Platforms without restriction?
+No, the sharing of your personal data is governed by the provisions of the privacy and cookie policies of the Platforms you have used. We encourage you to refer to those provisions, so you have a clear understanding.
+
+How do the Platforms manage the transfer of my personal data among the affiliated Platforms?
+We use various mandated legal methods to ensure that adequate protections are applied to the transfer of data. That may include one or a combination of measures. This may include standard contractual clauses or other mechanisms as we determine to be appropriate to adequately protect transfers of your personal data.  
+
+Who is the data controller of my personal data?
+The data controller of your personal data should be specified in the Privacy Policy of the Platform you used.  
+
+How do the Platforms view privacy?
+The HR Tech Platforms take the privacy of their users very seriously. We invest significant resources as part of our efforts to protect your personal data and endeavor to adhere to applicable privacy rules. We very much value the trust that our job seekers place in us to help them find jobs, and our employers place in us to help them find great candidates. Please consult our Privacy Values for more information. 
+
+In what language does each Platform provide its privacy or cookie policy?
+A Platform’s Privacy and Cookie policy is available in the local languages of the markets targeted by that Platform. If a particular Platform does not have its privacy or cookie policy in a specific language, it is because the Platform does not yet target users in markets where that language applies.
+
+Your privacy rights
+What privacy rights are available to me on the Platforms?
+We endeavor to treat all our users equally by providing a broad suite of privacy rights to all our users globally. That means that any user of the Platform, irrespective of their location, can contact a Platform to get:
+
+Access to their personal data
+Deletion of personal data
+Their personal data rectified
+A portable version of their personal data
+Restriction of or objection to certain processing of their personal data
+How can I exercise my privacy rights?
+You can exercise your privacy rights by consulting the Privacy Policy of the Platform you used and following the instructions specified there.
+
+What security measures are adopted by the Platforms?
+We take the security of your personal data very seriously and have devoted significant resources to that end. We employ various practices with the goal of preventing unauthorized access, disclosure, destruction, or accidental loss. These practices will vary depending on the nature of the data, the context of the processing, the risks involved, and the technology available. 
+
+We use a range of security measures to protect your personal data, adopting a risk-based approach, including where applicable:
+
+Selective pseudonymisation and encryption of personal data
+Designing internal systems to protect the confidentiality, integrity, availability, and resilience of our processing systems and services
+Using systems and processes designed to give us the ability to restore the availability and access to personal data kept by us in a timely manner in the event of a physical or technical incident
+Regularly testing, assessing, and evaluating the effectiveness of the Platforms’ security measures
+What can I do as an employer to help keep my account secure?
+To learn more about how to best keep your employer account secure, please refer to the security page of the Platform you are using. 
+
+About HR Tech
+Indeed Sites
+Glassdoor Sites
+Privacy Policy
+Cookies Policy
+Ad Choices

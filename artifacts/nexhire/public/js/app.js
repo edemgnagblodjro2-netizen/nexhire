@@ -136,6 +136,9 @@ function goto(page) {
   if (page === 'jobs') loadJobs();
   if (page === 'candidate-dash' && state.user) { loadDashboard(); showTab('tab-profile', null); }
   if (page === 'employer-dash' && state.user) loadEmployerDash();
+  if (page === 'settings') renderSettings();
+  if (page === 'help') renderHelp();
+  if (page === 'privacy') renderPrivacy();
 }
 
 // ── Lang ───────────────────────────────────────────────────
@@ -461,6 +464,10 @@ function showUserNav() {
   const u = state.user;
   const initials = `${(u.first_name||'')[0]||''}${(u.last_name||'')[0]||''}`.toUpperCase() || 'U';
   document.getElementById('nav-avatar').textContent = initials;
+  const emailEl = document.getElementById('dropdown-email');
+  if (emailEl) emailEl.textContent = state.user.email || '';
+  const ddEmp = document.getElementById('dd-employer');
+  if (ddEmp) ddEmp.style.display = state.user.company_id ? 'flex' : 'none';
 }
 function showGuestNav() {
   document.getElementById('nav-auth-guest').style.display = 'flex';
@@ -505,6 +512,269 @@ async function register() {
     if (d.user.role === 'candidate') { loadSavedJobIds(); goto('candidate-dash'); }
     else goto('employer-dash');
   } else showErr(errEl, d.error || 'Registration failed');
+}
+
+// ── Settings page ──────────────────────────────────────────
+function renderSettings() {
+  if (!state.user) { goto('home'); return; }
+  showSettingsSection('s-account', document.querySelector('.settings-nav-item.active'));
+}
+
+function showSettingsSection(section, el) {
+  if (el) {
+    document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+  }
+  const u = state.user || {};
+  const content = document.getElementById('settings-content');
+  if (!content) return;
+
+  if (section === 's-account') {
+    content.innerHTML = `
+      <h2 class="settings-section-title">Account settings</h2>
+      <div class="settings-rows">
+        <div class="settings-row">
+          <div><div class="settings-row-label">Account type</div><div class="settings-row-value">${u.role === 'employer' ? 'Employer' : 'Job seeker'}</div></div>
+          <button class="btn-ghost btn-sm">Change account type</button>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Email</div><div class="settings-row-value">${esc(u.email||'')}</div></div>
+          <button class="btn-ghost btn-sm" onclick="openChangeEmail()">Change email</button>
+        </div>
+        <div class="settings-row" id="change-email-form" style="display:none">
+          <div style="flex:1">
+            <div class="form-group"><label>New email</label><input type="email" id="new-email" placeholder="new@example.com"></div>
+            <div class="form-group"><label>Current password</label><input type="password" id="change-email-pw" placeholder="••••••••"></div>
+            <div class="form-error" id="change-email-error"></div>
+            <button class="btn-primary btn-sm" onclick="saveEmailChange()">Save new email</button>
+            <button class="btn-ghost btn-sm" onclick="document.getElementById('change-email-form').style.display='none'" style="margin-left:8px">Cancel</button>
+          </div>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Name</div><div class="settings-row-value">${esc(u.first_name||'')} ${esc(u.last_name||'')}</div></div>
+          <button class="btn-ghost btn-sm" onclick="goto('candidate-dash')">Edit profile</button>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Member since</div><div class="settings-row-value">${u.created_at ? new Date(u.created_at).toLocaleDateString('en-CA',{year:'numeric',month:'long'}) : '—'}</div></div>
+          <span></span>
+        </div>
+      </div>
+      <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border)">
+        <button class="btn-ghost" style="color:var(--red);border-color:var(--red)" onclick="confirmCloseAccount()">
+          <i class="ti ti-trash"></i> Close my account
+        </button>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px">This will permanently delete your account and all associated data.</p>
+      </div>
+    `;
+  } else if (section === 's-security') {
+    content.innerHTML = `
+      <h2 class="settings-section-title">Security settings</h2>
+      <div class="settings-rows">
+        <div class="settings-row">
+          <div><div class="settings-row-label">Password</div><div class="settings-row-value">Last changed: unknown</div></div>
+          <button class="btn-ghost btn-sm" onclick="openChangePassword()">Change password</button>
+        </div>
+        <div class="settings-row" id="change-pw-form" style="display:none">
+          <div style="flex:1">
+            <div class="form-group"><label>Current password</label><input type="password" id="cur-pw" placeholder="Current password"></div>
+            <div class="form-group"><label>New password</label><input type="password" id="new-pw" placeholder="8+ characters"></div>
+            <div class="form-group"><label>Confirm new password</label><input type="password" id="confirm-pw" placeholder="Repeat new password"></div>
+            <div class="form-error" id="change-pw-error"></div>
+            <button class="btn-primary btn-sm" onclick="savePasswordChange()">Save new password</button>
+            <button class="btn-ghost btn-sm" onclick="document.getElementById('change-pw-form').style.display='none'" style="margin-left:8px">Cancel</button>
+          </div>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Passkey</div><div class="settings-row-value settings-muted">Not configured — passwordless login (coming soon)</div></div>
+          <button class="btn-ghost btn-sm" disabled style="opacity:.5">Create passkey</button>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Active sessions</div><div class="settings-row-value settings-muted">1 active session (this device)</div></div>
+          <button class="btn-ghost btn-sm" onclick="logout()">Sign out all</button>
+        </div>
+      </div>
+    `;
+  } else if (section === 's-notifications') {
+    content.innerHTML = `
+      <h2 class="settings-section-title">Communications settings</h2>
+      <div class="settings-rows">
+        <div class="settings-row">
+          <div><div class="settings-row-label">Job alerts</div><div class="settings-row-value settings-muted">Receive emails when new jobs match your profile</div></div>
+          <label class="toggle-switch"><input type="checkbox" id="notif-jobs" checked onchange="saveNotifPref('job_alerts',this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Application updates</div><div class="settings-row-value settings-muted">Emails when employers update your application status</div></div>
+          <label class="toggle-switch"><input type="checkbox" id="notif-apps" checked onchange="saveNotifPref('app_updates',this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Nexhire news</div><div class="settings-row-value settings-muted">Product updates, new features, tips</div></div>
+          <label class="toggle-switch"><input type="checkbox" id="notif-news" onchange="saveNotifPref('news',this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Platform language</div><div class="settings-row-value">Currently: ${state.lang === 'fr' ? 'French / Français' : 'English'}</div></div>
+          <div style="display:flex;gap:8px"><button class="btn-ghost btn-sm ${state.lang==='en'?'btn-active':''}" onclick="setLang('en')">EN</button><button class="btn-ghost btn-sm ${state.lang==='fr'?'btn-active':''}" onclick="setLang('fr')">FR</button></div>
+        </div>
+      </div>
+    `;
+  } else if (section === 's-privacy') {
+    content.innerHTML = `
+      <h2 class="settings-section-title">Privacy settings</h2>
+      <div class="settings-rows">
+        <div class="settings-row">
+          <div><div class="settings-row-label">Profile visibility</div><div class="settings-row-value settings-muted">Employers can find your profile when you apply</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Anonymous reviews</div><div class="settings-row-value settings-muted">Your name is never shown on company reviews</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">AI matching</div><div class="settings-row-value settings-muted">Use your profile and activity to suggest relevant jobs</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Your data</div><div class="settings-row-value settings-muted">Request a copy or deletion of your personal data</div></div>
+          <div style="display:flex;gap:8px"><button class="btn-ghost btn-sm" onclick="toast('Data export coming soon','info')"><i class="ti ti-download"></i> Export</button><button class="btn-ghost btn-sm" style="color:var(--red)" onclick="confirmCloseAccount()"><i class="ti ti-trash"></i> Delete</button></div>
+        </div>
+      </div>
+      <div style="margin-top:24px"><a class="help-link" onclick="goto('privacy')">Read our full Privacy Centre →</a></div>
+    `;
+  }
+}
+
+function openChangeEmail() {
+  const form = document.getElementById('change-email-form');
+  if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+function openChangePassword() {
+  const form = document.getElementById('change-pw-form');
+  if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+async function saveEmailChange() {
+  const email = document.getElementById('new-email')?.value.trim();
+  const password = document.getElementById('change-email-pw')?.value;
+  const errEl = document.getElementById('change-email-error');
+  if (!email || !password) { showErr(errEl, 'Email and current password required'); return; }
+  const d = await api('PUT', `${BASE}/api/auth/update-profile`, { email, current_password: password });
+  if (d.success) { state.user.email = email; toast('Email updated!', 'success'); document.getElementById('change-email-form').style.display='none'; renderSettings(); }
+  else showErr(errEl, d.error || 'Failed to update email');
+}
+
+async function savePasswordChange() {
+  const cur = document.getElementById('cur-pw')?.value;
+  const nw = document.getElementById('new-pw')?.value;
+  const conf = document.getElementById('confirm-pw')?.value;
+  const errEl = document.getElementById('change-pw-error');
+  if (!cur || !nw || !conf) { showErr(errEl, 'All fields required'); return; }
+  if (nw !== conf) { showErr(errEl, 'New passwords do not match'); return; }
+  if (nw.length < 8) { showErr(errEl, 'Password must be at least 8 characters'); return; }
+  const d = await api('PUT', `${BASE}/api/auth/update-profile`, { current_password: cur, new_password: nw });
+  if (d.success) { toast('Password updated!', 'success'); document.getElementById('change-pw-form').style.display='none'; }
+  else showErr(errEl, d.error || 'Failed to update password');
+}
+
+function confirmCloseAccount() {
+  if (confirm('This will permanently delete your account and all your data. This cannot be undone. Continue?')) {
+    api('DELETE', `${BASE}/api/auth/account`).then(() => { toast('Account deleted', 'info'); logout(); });
+  }
+}
+
+function saveNotifPref(key, val) {
+  toast(`Preference saved: ${key} ${val ? 'on' : 'off'}`, 'success');
+}
+
+// ── Help page ──────────────────────────────────────────────
+function renderHelp() {
+  const candidateFaqs = [
+    { q: 'How do I create an account?', a: 'Click "Get started" in the top right corner and select "Candidate". Fill in your details and you\'re done.' },
+    { q: 'How does AI job matching work?', a: 'Our AI analyzes your profile skills, experience, and preferences to recommend the most relevant jobs. Complete your profile for better matches.' },
+    { q: 'How do I apply for a job?', a: 'Click on any job, then "Apply Now". You can write a custom cover letter or generate one with AI in seconds.' },
+    { q: 'Can I save jobs to review later?', a: 'Yes — click the ❤️ heart icon on any job card to save it. Find all saved jobs in your dashboard under "Saved Jobs".' },
+    { q: 'How do I delete my account?', a: 'Go to Settings → Account settings → "Close my account". This permanently deletes all your data.' },
+  ];
+  const employerFaqs = [
+    { q: 'How do I post a job?', a: 'Register as an employer, create your company profile, then go to "Post a Job" in your employer dashboard.' },
+    { q: 'How many jobs can I post for free?', a: 'The Starter plan (free) includes 2 active job slots. Upgrade to Pro for 10 slots and featured listings.' },
+    { q: 'What is the ATS Kanban pipeline?', a: 'It\'s a visual board to manage candidates across stages: New → Reviewed → Shortlisted → Interview → Offer → Rejected.' },
+    { q: 'How do I see analytics for my job postings?', a: 'In your employer dashboard, each job card shows views, applications, and conversion rate in real-time.' },
+    { q: 'How do I upgrade to Pro?', a: 'Go to your employer dashboard → Billing tab → "Upgrade to Pro".' },
+  ];
+  const faqHtml = (faqs) => faqs.map(f => `
+    <details class="help-faq-item">
+      <summary>${esc(f.q)}</summary>
+      <p>${esc(f.a)}</p>
+    </details>
+  `).join('');
+  const el1 = document.getElementById('help-faqs-candidate');
+  const el2 = document.getElementById('help-faqs-employer');
+  if (el1) el1.innerHTML = faqHtml(candidateFaqs);
+  if (el2) el2.innerHTML = faqHtml(employerFaqs);
+}
+
+// ── Privacy page ───────────────────────────────────────────
+function renderPrivacy() {}
+function showPrivacyTab(tabId, el) {
+  document.querySelectorAll('.privacy-section').forEach(s => s.style.display = 'none');
+  document.querySelectorAll('.privacy-tab').forEach(t => t.classList.remove('active'));
+  const section = document.getElementById(tabId);
+  if (section) section.style.display = 'block';
+  if (el) el.classList.add('active');
+}
+
+// ── My Reviews ─────────────────────────────────────────────
+async function loadMyReviews() {
+  const container = document.getElementById('my-reviews-container');
+  if (!container) return;
+  container.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+      <div>
+        <h2>My contributions</h2>
+        <p style="font-size:14px;color:var(--muted);margin-top:4px">Your reviews are not associated with your name, resume, or job applications.</p>
+      </div>
+    </div>
+    <div class="my-reviews-tabs">
+      <button class="my-rev-tab active" onclick="showMyRevTab('mrt-reviews',this)">Reviews <span class="rev-count" id="mrt-count">0</span></button>
+    </div>
+    <div id="mrt-reviews">
+      <div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>
+    </div>
+  `;
+  const d = await api('GET', `${BASE}/api/reviews/mine`);
+  const countEl = document.getElementById('mrt-count');
+  const listEl = document.getElementById('mrt-reviews');
+  if (!listEl) return;
+  const reviews = d.reviews || [];
+  if (countEl) countEl.textContent = reviews.length;
+  if (!reviews.length) {
+    listEl.innerHTML = `
+      <div class="my-reviews-empty">
+        <div class="my-reviews-lock"><i class="ti ti-lock"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i></div>
+        <h3>Unlock all reviews</h3>
+        <p>Access all company reviews by writing yours</p>
+        <button class="btn-primary" onclick="goto('jobs')"><i class="ti ti-star"></i> Write a review →</button>
+      </div>
+    `;
+    return;
+  }
+  listEl.innerHTML = reviews.map(r => `
+    <div class="my-review-card">
+      <div class="my-review-top">
+        <div>
+          <div class="my-review-company">${esc(r.company_name || 'Company')}</div>
+          <div>${starsHtml(r.rating)}</div>
+          ${r.title ? `<div class="my-review-title">"${esc(r.title)}"</div>` : ''}
+        </div>
+        <span style="font-size:12px;color:var(--muted)">${daysAgo(r.created_at)}</span>
+      </div>
+      ${r.pros ? `<div style="margin-top:8px"><span style="color:var(--green);font-weight:600;font-size:12px">Pros</span><p style="font-size:13px;margin-top:4px">${esc(r.pros)}</p></div>` : ''}
+      ${r.cons ? `<div style="margin-top:8px"><span style="color:var(--red);font-weight:600;font-size:12px">Cons</span><p style="font-size:13px;margin-top:4px">${esc(r.cons)}</p></div>` : ''}
+    </div>
+  `).join('');
+}
+function showMyRevTab(tabId, el) {
+  document.querySelectorAll('.my-rev-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
 }
 
 async function logout() {

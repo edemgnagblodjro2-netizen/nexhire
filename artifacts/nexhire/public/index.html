@@ -39,10 +39,16 @@
           <div class="user-avatar" id="nav-avatar">--</div>
           <i class="ti ti-chevron-down" style="font-size:12px;color:#94A3B8"></i>
           <div class="user-dropdown" id="user-dropdown">
-            <div class="dropdown-item" onclick="goto('candidate-dash')"><i class="ti ti-user"></i> My Profile</div>
-            <div class="dropdown-item" onclick="goto('employer-dash')"><i class="ti ti-layout-dashboard"></i> Employer Dashboard</div>
+            <div class="dropdown-email" id="dropdown-email">—</div>
+            <div class="dropdown-item" onclick="goto('candidate-dash')"><i class="ti ti-user"></i> Profile</div>
+            <div class="dropdown-item" onclick="goto('candidate-dash');showTab('tab-my-reviews',document.querySelector('[data-tab=tab-my-reviews]'))"><i class="ti ti-star"></i> My reviews</div>
+            <div class="dropdown-item" onclick="goto('settings')"><i class="ti ti-settings"></i> Settings</div>
             <div class="dropdown-divider"></div>
-            <div class="dropdown-item" onclick="logout()"><i class="ti ti-logout"></i> Sign out</div>
+            <div class="dropdown-item" onclick="goto('help')"><i class="ti ti-help-circle"></i> Help Centre</div>
+            <div class="dropdown-item" onclick="goto('privacy')"><i class="ti ti-shield"></i> Privacy Centre</div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item" id="dd-employer" onclick="goto('employer-dash')" style="display:none"><i class="ti ti-layout-dashboard"></i> Employer Dashboard</div>
+            <div class="dropdown-item danger" onclick="logout()"><i class="ti ti-logout"></i> Sign out</div>
           </div>
         </div>
       </div>
@@ -277,6 +283,7 @@
         <a class="dash-nav-item" onclick="showTab('tab-for-you',this)"><i class="ti ti-sparkles"></i> Jobs for You</a>
         <a class="dash-nav-item" onclick="showTab('tab-saved',this)"><i class="ti ti-heart"></i> Saved Jobs</a>
         <a class="dash-nav-item" onclick="showTab('tab-applications',this)"><i class="ti ti-file-text"></i> Applications</a>
+        <a class="dash-nav-item" data-tab="tab-my-reviews" onclick="showTab('tab-my-reviews',this);loadMyReviews()"><i class="ti ti-star"></i> My Reviews</a>
         <a class="dash-nav-item" onclick="showTab('tab-ai-chat',this)"><i class="ti ti-robot"></i> AI Coach</a>
       </nav>
     </div>
@@ -296,6 +303,9 @@
       <div id="tab-applications" class="dash-tab">
         <h2>My Applications</h2>
         <div id="applications-list"></div>
+      </div>
+      <div id="tab-my-reviews" class="dash-tab">
+        <div id="my-reviews-container"></div>
       </div>
       <div id="tab-ai-chat" class="dash-tab">
         <h2><i class="ti ti-robot" style="color:var(--indigo)"></i> AI Career Coach</h2>
@@ -346,6 +356,101 @@
         <h2>Billing & Plan</h2>
         <div id="billing-info"></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS PAGE ───────────────────────────────────────── -->
+<div id="pg-settings" class="page">
+  <div class="settings-layout">
+    <aside class="settings-sidebar">
+      <h2 class="settings-title">Settings</h2>
+      <nav class="settings-nav">
+        <a class="settings-nav-item active" onclick="showSettingsSection('s-account',this)"><i class="ti ti-user-circle"></i><div><div class="sn-label">Account settings</div><div class="sn-sub">Your contact information</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
+        <a class="settings-nav-item" onclick="showSettingsSection('s-security',this)"><i class="ti ti-lock"></i><div><div class="sn-label">Security settings <span class="badge-new">New</span></div><div class="sn-sub">Manage your account security</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
+        <a class="settings-nav-item" onclick="showSettingsSection('s-notifications',this)"><i class="ti ti-mail"></i><div><div class="sn-label">Communications settings</div><div class="sn-sub">Manage notifications and messages</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
+        <a class="settings-nav-item" onclick="showSettingsSection('s-privacy',this)"><i class="ti ti-shield-lock"></i><div><div class="sn-label">Privacy settings</div><div class="sn-sub">Information about your privacy</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
+      </nav>
+    </aside>
+    <div class="settings-content" id="settings-content"></div>
+  </div>
+</div>
+
+<!-- HELP PAGE ────────────────────────────────────────────── -->
+<div id="pg-help" class="page">
+  <div class="help-hero">
+    <h1 class="help-hero-title">If you're looking for help, you're in the right place</h1>
+  </div>
+  <div class="section-inner" style="max-width:900px;padding-top:48px;padding-bottom:64px">
+    <div class="help-cards">
+      <div class="help-card">
+        <div class="help-card-icon"><i class="ti ti-search"></i></div>
+        <h3>Help for job seekers</h3>
+        <p>Got a question or need help using Nexhire? Whether it's setting up your account, using AI matching, or applying — we've got you covered.</p>
+        <div class="help-faqs" id="help-faqs-candidate"></div>
+        <a class="help-link" onclick="goto('help')">Job Seeker Help Centre →</a>
+      </div>
+      <div class="help-card">
+        <div class="help-card-icon employer"><i class="ti ti-building"></i></div>
+        <h3>Help for employers</h3>
+        <p>Looking to hire? Our Employer Help Centre covers posting jobs, managing the ATS pipeline, billing, and finding the best candidates faster.</p>
+        <div class="help-faqs" id="help-faqs-employer"></div>
+        <a class="help-link" onclick="goto('help')">Employer Help Centre →</a>
+      </div>
+    </div>
+    <div class="help-footer-cta">
+      <div>
+        <h3>We're here to help</h3>
+        <p>Visit our Help Centre for answers to common questions or contact us directly.</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="mailto:support@nexhire.ca" class="btn-ghost"><i class="ti ti-mail"></i> Contact support</a>
+        <a href="mailto:legal@nexhire.ca" class="btn-ghost"><i class="ti ti-file-text"></i> Legal / Privacy</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRIVACY PAGE ─────────────────────────────────────────── -->
+<div id="pg-privacy" class="page">
+  <div class="privacy-hero">
+    <h1>Nexhire Privacy Centre</h1>
+    <p>We take your personal data seriously.</p>
+  </div>
+  <div class="section-inner" style="max-width:900px;padding-top:48px;padding-bottom:64px">
+    <div class="privacy-tabs">
+      <button class="privacy-tab active" onclick="showPrivacyTab('pt-policy',this)">Privacy Policy</button>
+      <button class="privacy-tab" onclick="showPrivacyTab('pt-cookies',this)">Cookie Policy</button>
+      <button class="privacy-tab" onclick="showPrivacyTab('pt-rights',this)">Your rights</button>
+    </div>
+    <div id="pt-policy" class="privacy-section active">
+      <h2>Privacy Policy</h2>
+      <p class="privacy-lead">Nexhire is a product of CivicAI (NEQ 2280791601). We are committed to protecting your privacy and being transparent about how we collect and use your data.</p>
+      <h3>What data we collect</h3>
+      <ul><li>Account information: name, email address, password (hashed)</li><li>Profile data: headline, skills, city, province, experience, languages, LinkedIn/GitHub URLs</li><li>Job applications: cover letters, application status</li><li>Job search activity: searches, job views, clicks (for AI matching)</li><li>Company reviews (anonymized if requested)</li><li>Device/session data: IP hash (never raw IP), browser type, language preference</li></ul>
+      <h3>How we use your data</h3>
+      <ul><li>To connect job seekers with relevant employers</li><li>To power AI job matching and cover letter generation</li><li>To send job alerts and platform notifications (opt-out available)</li><li>To improve our platform and detect fraud</li><li>Aggregated and anonymized analytics only — never sold to third parties</li></ul>
+      <h3>Data retention</h3>
+      <p>Your data is retained while your account is active. You can request deletion at any time via Settings → Account settings → Close my account.</p>
+      <h3>Contact</h3>
+      <p>For privacy questions: <a href="mailto:privacy@nexhire.ca" style="color:var(--indigo)">privacy@nexhire.ca</a></p>
+    </div>
+    <div id="pt-cookies" class="privacy-section" style="display:none">
+      <h2>Cookie Policy</h2>
+      <p class="privacy-lead">Nexhire uses minimal cookies, strictly limited to what's necessary to operate the platform.</p>
+      <h3>Strictly necessary cookies</h3>
+      <ul><li><strong>Session cookie</strong> — keeps you signed in across page loads. Expires when you close the browser or after 7 days of inactivity. HttpOnly, Secure.</li><li><strong>Language preference</strong> — stores your EN/FR preference. Not linked to your account.</li></ul>
+      <h3>No tracking cookies</h3>
+      <p>We do not use advertising cookies, third-party trackers, or sell your browsing data. No Google Analytics, no Meta Pixel.</p>
+    </div>
+    <div id="pt-rights" class="privacy-section" style="display:none">
+      <h2>Your privacy rights</h2>
+      <p class="privacy-lead">We treat all users equally by providing a broad suite of global privacy rights, regardless of location.</p>
+      <h3>You can request:</h3>
+      <ul><li><strong>Access</strong> — a copy of all personal data we hold about you</li><li><strong>Deletion</strong> — permanent removal of your account and all associated data</li><li><strong>Rectification</strong> — correction of inaccurate personal data</li><li><strong>Portability</strong> — your data in a structured, machine-readable format</li><li><strong>Objection</strong> — to certain types of processing (e.g. AI-based matching)</li></ul>
+      <h3>How to exercise your rights</h3>
+      <p>Go to <strong>Settings → Account settings</strong> to update or delete your account, or email <a href="mailto:privacy@nexhire.ca" style="color:var(--indigo)">privacy@nexhire.ca</a>.</p>
+      <p style="margin-top:32px;font-size:13px;color:var(--muted)">Nexhire — CivicAI Inc., NEQ 2280791601 · <a href="mailto:legal@nexhire.ca" style="color:var(--indigo)">legal@nexhire.ca</a> · Last updated: May 2026</p>
     </div>
   </div>
 </div>

@@ -107,6 +107,52 @@ router.post('/reset-password', async (req, res) => {
   res.json({ success: true });
 });
 
+router.put('/update-profile', async (req, res) => {
+  if (!req.session?.user) return res.status(401).json({ success: false, error: 'Not authenticated' });
+  const { email, current_password, new_password } = req.body;
+  const userId = req.session.user.id;
+
+  const user = await db.get('SELECT * FROM nh_users WHERE id = $1', [userId]);
+  if (!user) return res.status(404).json({ success: false, error: 'User not found' });
+
+  if (current_password) {
+    const valid = await bcrypt.compare(current_password, user.password_hash);
+    if (!valid) return res.status(401).json({ success: false, error: 'Current password is incorrect' });
+  }
+
+  if (email && email !== user.email) {
+    if (!current_password) return res.status(400).json({ success: false, error: 'Current password required to change email' });
+    const taken = await db.get('SELECT id FROM nh_users WHERE email = $1 AND id != $2', [email.toLowerCase(), userId]);
+    if (taken) return res.status(409).json({ success: false, error: 'Email already in use' });
+    await db.run('UPDATE nh_users SET email = $1 WHERE id = $2', [email.toLowerCase(), userId]);
+    req.session.user.email = email.toLowerCase();
+  }
+
+  if (new_password) {
+    if (!current_password) return res.status(400).json({ success: false, error: 'Current password required to change password' });
+    if (new_password.length < 8) return res.status(400).json({ success: false, error: 'New password must be at least 8 characters' });
+    const hash = await bcrypt.hash(new_password, 12);
+    await db.run('UPDATE nh_users SET password_hash = $1 WHERE id = $2', [hash, userId]);
+  }
+
+  res.json({ success: true, user: req.session.user });
+});
+
+router.delete('/account', async (req, res) => {
+  if (!req.session?.user) return res.status(401).json({ success: false, error: 'Not authenticated' });
+  const userId = req.session.user.id;
+  try {
+    await db.run('DELETE FROM nh_applications WHERE user_id = $1', [userId]);
+    await db.run('DELETE FROM nh_saved_jobs WHERE user_id = $1', [userId]);
+    await db.run('DELETE FROM nh_company_reviews WHERE user_id = $1', [userId]);
+    await db.run('DELETE FROM nh_candidate_profiles WHERE user_id = $1', [userId]);
+    await db.run('DELETE FROM nh_users WHERE id = $1', [userId]);
+    req.session.destroy(() => res.json({ success: true }));
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 router.post('/set-lang', (req, res) => {
   const { lang } = req.body;
   if (!['fr', 'en'].includes(lang)) return res.status(400).json({ success: false, error: 'Invalid language' });

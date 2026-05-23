@@ -337,6 +337,95 @@ a{text-decoration:none;color:inherit}
 .empty-state p{font-size:14px;line-height:1.6}
 .loading-state{display:flex;align-items:center;justify-content:center;padding:48px}
 
+/* ── DROPDOWN IMPROVEMENTS ────────────────────────────────── */
+.dropdown-email{padding:10px 16px 8px;font-size:13px;font-weight:600;color:var(--dark);border-bottom:1px solid var(--border);margin-bottom:4px;word-break:break-all}
+.dropdown-item.danger{color:var(--red)}
+.dropdown-item.danger:hover{background:#FEF2F2;color:var(--red)}
+.dropdown-item.btn-active{background:var(--indigo3);color:var(--indigo)}
+
+/* ── SETTINGS PAGE ────────────────────────────────────────── */
+.settings-layout{display:flex;min-height:calc(100vh - 64px);max-width:1100px;margin:0 auto;padding:0 24px}
+.settings-sidebar{width:280px;flex-shrink:0;padding:40px 0 40px 0;border-right:1px solid var(--border)}
+.settings-title{font-family:var(--r);font-size:24px;font-weight:700;color:var(--dark);margin-bottom:24px;padding-left:4px}
+.settings-nav{display:flex;flex-direction:column;gap:2px}
+.settings-nav-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:var(--radius-sm);cursor:pointer;text-decoration:none;color:var(--text);transition:all .15s;border-left:3px solid transparent}
+.settings-nav-item:hover{background:var(--bg)}
+.settings-nav-item.active{background:var(--indigo3);border-left-color:var(--indigo);color:var(--indigo)}
+.settings-nav-item i:first-child{font-size:18px;flex-shrink:0;color:var(--muted)}
+.settings-nav-item.active i:first-child{color:var(--indigo)}
+.sn-label{font-size:14px;font-weight:500;line-height:1.3}
+.sn-sub{font-size:12px;color:var(--muted);margin-top:1px}
+.settings-nav-item.active .sn-sub{color:var(--indigo);opacity:.7}
+.sn-arrow{margin-left:auto;font-size:14px;color:var(--muted)}
+.badge-new{background:var(--indigo);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;vertical-align:middle;margin-left:4px}
+.settings-content{flex:1;padding:40px 40px}
+.settings-section-title{font-family:var(--r);font-size:22px;font-weight:700;color:var(--dark);margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.settings-rows{display:flex;flex-direction:column}
+.settings-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--border);gap:16px}
+.settings-row:last-child{border-bottom:none}
+.settings-row-label{font-size:14px;font-weight:500;color:var(--dark)}
+.settings-row-value{font-size:14px;color:var(--text);margin-top:2px}
+.settings-muted{color:var(--muted) !important;font-size:13px !important}
+.btn-sm{padding:6px 14px;font-size:13px}
+.btn-active{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+
+/* ── TOGGLE SWITCH ────────────────────────────────────────── */
+.toggle-switch{position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:var(--border);border-radius:24px;transition:.3s}
+.toggle-slider:before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;box-shadow:var(--shadow)}
+.toggle-switch input:checked + .toggle-slider{background:var(--indigo)}
+.toggle-switch input:checked + .toggle-slider:before{transform:translateX(20px)}
+
+/* ── HELP PAGE ────────────────────────────────────────────── */
+.help-hero{background:linear-gradient(135deg,#1E293B 0%,#0F172A 100%);padding:64px 32px;text-align:center}
+.help-hero-title{font-family:var(--r);font-size:clamp(22px,4vw,36px);font-weight:700;color:#fff;max-width:700px;margin:0 auto;line-height:1.3}
+.help-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:48px}
+.help-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:32px;display:flex;flex-direction:column;gap:12px}
+.help-card-icon{width:48px;height:48px;border-radius:12px;background:var(--indigo3);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--indigo);margin-bottom:8px}
+.help-card-icon.employer{background:#FEF3C7;color:var(--gold)}
+.help-card h3{font-family:var(--r);font-size:18px;font-weight:700;color:var(--dark)}
+.help-card p{font-size:14px;color:var(--text);line-height:1.6}
+.help-faqs{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+.help-faq-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
+.help-faq-item summary{padding:12px 16px;font-size:13px;font-weight:500;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;color:var(--dark)}
+.help-faq-item summary::-webkit-details-marker{display:none}
+.help-faq-item summary::after{content:'›';font-size:18px;color:var(--muted);transition:transform .2s}
+.help-faq-item[open] summary::after{transform:rotate(90deg)}
+.help-faq-item p{padding:0 16px 14px;font-size:13px;color:var(--text);line-height:1.6;border-top:1px solid var(--border);padding-top:12px;margin:0}
+.help-link{font-size:14px;font-weight:600;color:var(--indigo);cursor:pointer;margin-top:auto}
+.help-link:hover{text-decoration:underline}
+.help-footer-cta{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.help-footer-cta h3{font-family:var(--r);font-size:18px;font-weight:700;color:var(--dark)}
+.help-footer-cta p{font-size:14px;color:var(--muted);margin-top:4px}
+
+/* ── PRIVACY PAGE ─────────────────────────────────────────── */
+.privacy-hero{background:var(--dark);padding:48px 32px;text-align:center}
+.privacy-hero h1{font-family:var(--r);font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}
+.privacy-hero p{color:rgba(255,255,255,.6);font-size:16px}
+.privacy-tabs{display:flex;gap:4px;border-bottom:2px solid var(--border);margin-bottom:32px}
+.privacy-tab{padding:10px 20px;background:none;border:none;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.privacy-tab.active{color:var(--indigo);border-bottom-color:var(--indigo)}
+.privacy-section h2{font-family:var(--r);font-size:22px;font-weight:700;color:var(--dark);margin-bottom:12px}
+.privacy-section h3{font-size:16px;font-weight:600;color:var(--dark);margin:24px 0 8px}
+.privacy-section p,.privacy-section li{font-size:14px;color:var(--text);line-height:1.7}
+.privacy-section ul{padding-left:20px;display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.privacy-lead{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+
+/* ── MY REVIEWS ───────────────────────────────────────────── */
+.my-reviews-tabs{display:flex;gap:4px;border-bottom:2px solid var(--border);margin-bottom:24px}
+.my-rev-tab{padding:10px 20px;background:none;border:none;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;display:flex;align-items:center;gap:6px}
+.my-rev-tab.active{color:var(--indigo);border-bottom-color:var(--indigo)}
+.rev-count{background:var(--bg);border:1px solid var(--border);border-radius:10px;font-size:11px;padding:1px 7px;color:var(--muted)}
+.my-reviews-empty{text-align:center;padding:64px 32px}
+.my-reviews-lock{font-size:40px;margin-bottom:16px;color:var(--indigo);opacity:.4;display:flex;align-items:center;justify-content:center;gap:6px}
+.my-reviews-empty h3{font-family:var(--r);font-size:20px;font-weight:700;color:var(--dark);margin-bottom:8px}
+.my-reviews-empty p{font-size:14px;color:var(--muted);margin-bottom:24px}
+.my-review-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px}
+.my-review-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.my-review-company{font-size:15px;font-weight:600;color:var(--dark);margin-bottom:4px}
+.my-review-title{font-size:13px;color:var(--muted);font-style:italic;margin-top:4px}
+
 /* ── RESPONSIVE ───────────────────────────────────────────── */
 @media(max-width:1024px){.job-detail-panel{width:380px}}
 @media(max-width:900px){
@@ -359,4 +448,13 @@ a{text-decoration:none;color:inherit}
   .app-progress{display:none}
   .emp-job-stats{flex-wrap:wrap}
   .kanban-col{min-width:180px}
+  .help-cards{grid-template-columns:1fr}
+  .help-footer-cta{flex-direction:column;gap:16px}
+  .settings-layout{flex-direction:column;padding:0 16px}
+  .settings-sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);padding:24px 0 16px}
+  .settings-title{font-size:20px;margin-bottom:12px}
+  .settings-content{padding:24px 0}
+  .settings-row{flex-direction:column;align-items:flex-start;gap:10px}
+  .privacy-tabs{overflow-x:auto;gap:0}
+  .privacy-tab{white-space:nowrap;font-size:13px;padding:8px 12px}
 }
