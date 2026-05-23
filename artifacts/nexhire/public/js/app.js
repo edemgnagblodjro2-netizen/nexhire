@@ -198,7 +198,20 @@ function goto(page) {
   if (page === 'help') renderHelp();
   if (page === 'privacy') renderPrivacy();
   // terms page is static — no render needed
+  // update URL hash for direct linking
+  const publicPages = ['home','jobs','employer','pricing','privacy','terms','help'];
+  if (publicPages.includes(page)) {
+    history.replaceState(null, '', page === 'home' ? window.location.pathname : '#' + page);
+  }
 }
+
+// restore page from URL hash on load / back-forward
+function restoreFromHash() {
+  const hash = window.location.hash.replace('#', '');
+  const valid = ['jobs','employer','pricing','privacy','terms','help'];
+  if (hash && valid.includes(hash)) goto(hash);
+}
+window.addEventListener('hashchange', restoreFromHash);
 
 // ── Lang ───────────────────────────────────────────────────
 async function setLang(lang) {
@@ -1689,3 +1702,6 @@ function toast(msg, type = 'success') {
   c.appendChild(t);
   setTimeout(() => t.remove(), 4000);
 }
+
+// ── Restore page from URL hash on initial load ──────────────
+restoreFromHash();
