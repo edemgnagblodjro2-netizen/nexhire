@@ -100,6 +100,10 @@
         <span class="qtag" onclick="quickSearch('AI')">AI / ML</span>
         <span class="qtag" onclick="quickSearch('Product')">Product</span>
       </div>
+      <div id="recent-searches-section" style="display:none;max-width:860px;margin:0 auto;padding:0 20px 16px">
+        <div class="recent-searches-title">Your recent searches</div>
+        <div class="recent-searches-list" id="recent-searches-list"></div>
+      </div>
       <div class="hero-stats">
         <div class="hstat"><div class="hstat-n" id="stat-jobs">—</div><div class="hstat-l">Active jobs</div></div>
         <div class="hstat-div"></div>
@@ -178,7 +182,15 @@
           <option value="REMOTE">🌐 Remote / Intl</option>
         </select>
         <select id="fwork" onchange="filterJobs()" class="filter-select"><option value="">All modes</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select>
-        <select id="ftype" onchange="filterJobs()" class="filter-select"><option value="">All types</option><option value="full-time">Full-time</option><option value="part-time">Part-time</option><option value="contract">Contract</option><option value="internship">Internship</option></select>
+        <select id="ftype" onchange="filterJobs()" class="filter-select">
+          <option value="">All types</option>
+          <option value="full-time">Full time</option>
+          <option value="permanent">Permanent</option>
+          <option value="part-time">Part time</option>
+          <option value="contract">Contract</option>
+          <option value="temporary">Temporary</option>
+          <option value="casual">Casual</option>
+        </select>
         <select id="fsal" onchange="filterJobs()" class="filter-select"><option value="">Any salary</option><option value="40000">$40k+</option><option value="60000">$60k+</option><option value="80000">$80k+</option><option value="100000">$100k+</option><option value="130000">$130k+</option></select>
       </div>
     </div>

@@ -110,6 +110,7 @@ function updateCitiesForProvince(provinceSelectId, citySelectId) {
   } catch (e) {}
   setLangUI(state.lang);
   loadStats();
+  renderRecentSearches();
   loadFeaturedJobs();
   initPostJobForm();
   initCompanyForm();
@@ -243,11 +244,74 @@ function jobCardHtml(j, demo = false) {
 // ── Jobs page ──────────────────────────────────────────────
 function debounceFilterSearch() { clearTimeout(state.filterTimer); state.filterTimer = setTimeout(filterJobs, 350); }
 function debounceSearch() { clearTimeout(state.jobSearchTimer); state.jobSearchTimer = setTimeout(() => { if (document.getElementById('pg-jobs')?.classList.contains('active')) filterJobs(); }, 350); }
+// ── Recent searches (localStorage) ────────────────────────
+const RECENT_KEY = 'nh_recent_searches';
+const RECENT_MAX = 6;
+
+function saveRecentSearch(q, province, count) {
+  if (!q && !province) return;
+  let searches = getRecentSearches();
+  const entry = { q: q || '', province: province || '', count: count || 0, ts: Date.now() };
+  searches = searches.filter(s => !(s.q === entry.q && s.province === entry.province));
+  searches.unshift(entry);
+  searches = searches.slice(0, RECENT_MAX);
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(searches)); } catch {}
+}
+
+function getRecentSearches() {
+  try { return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch { return []; }
+}
+
+function renderRecentSearches() {
+  const searches = getRecentSearches();
+  const section = document.getElementById('recent-searches-section');
+  const list = document.getElementById('recent-searches-list');
+  if (!section || !list) return;
+  if (!searches.length) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  list.innerHTML = searches.map((s, i) => {
+    const label = s.q || (s.province ? provinceLabel(s.province) : 'All jobs');
+    const sub = s.province && s.q ? provinceLabel(s.province) : '';
+    return `<button class="recent-search-chip" onclick="replaySearch(${i})">
+      <i class="ti ti-history"></i>
+      <div class="rsc-text">
+        <span class="rsc-label">${esc(label)}</span>
+        ${sub ? `<span class="rsc-sub">${esc(sub)}</span>` : ''}
+      </div>
+      ${s.count > 0 ? `<span class="rsc-badge">${s.count} jobs</span>` : ''}
+    </button>`;
+  }).join('');
+}
+
+function provinceLabel(code) {
+  const map = { QC:'Québec', ON:'Ontario', BC:'Colombie-Britannique', AB:'Alberta', MB:'Manitoba', SK:'Saskatchewan', NS:'Nouvelle-Écosse', NB:'Nouveau-Brunswick', NL:'Terre-Neuve', PE:'Î.-P.-É.', NT:'T.N.-O.', NU:'Nunavut', YT:'Yukon', REMOTE:'Remote' };
+  return map[code] || code;
+}
+
+function replaySearch(index) {
+  const searches = getRecentSearches();
+  const s = searches[index];
+  if (!s) return;
+  if (s.q) document.getElementById('q').value = s.q;
+  if (s.province) {
+    const heroProv = document.getElementById('hero-province');
+    if (heroProv) heroProv.value = s.province;
+  }
+  searchJobs();
+}
+
 function searchJobs() {
   // Sync hero province → jobs page province filter
   const heroProv = document.getElementById('hero-province')?.value;
   const fprov = document.getElementById('fprov');
   if (fprov && heroProv !== undefined) fprov.value = heroProv;
+
+  // Save search before navigating
+  const q = document.getElementById('q')?.value?.trim() || '';
+  const province = heroProv || '';
+  saveRecentSearch(q, province, 0);
+  renderRecentSearches();
+
   goto('jobs');
   setTimeout(filterJobs, 100);
 }
