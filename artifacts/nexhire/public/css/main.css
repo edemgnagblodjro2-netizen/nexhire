@@ -103,11 +103,11 @@ a{text-decoration:none;color:inherit}
 .hero-title{font-family:var(--r);font-size:clamp(36px,6vw,64px);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-1px;margin-bottom:20px}
 .hero-title em{font-style:normal;color:var(--indigo2)}
 .hero-sub{font-size:18px;color:#94A3B8;margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto}
-.search-bar{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:8px;display:flex;gap:4px;max-width:780px;margin:0 auto 20px;backdrop-filter:blur(8px)}
-.search-field{flex:1;display:flex;align-items:center;gap:8px;padding:8px 14px;background:rgba(255,255,255,.08);border-radius:10px;min-width:0}
-.search-field i{color:#94A3B8;font-size:16px;flex-shrink:0}
+.search-bar{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:14px;padding:8px;display:flex;gap:4px;max-width:780px;margin:0 auto 20px;backdrop-filter:blur(8px)}
+.search-field{flex:1;display:flex;align-items:center;gap:8px;padding:8px 14px;background:rgba(255,255,255,.15);border-radius:10px;min-width:0}
+.search-field i{color:rgba(255,255,255,.7);font-size:16px;flex-shrink:0}
 .search-field input,.search-field select{background:none;border:none;outline:none;color:#fff;font-family:var(--b);font-size:14px;width:100%;min-width:0}
-.search-field input::placeholder{color:#64748B}
+.search-field input::placeholder{color:rgba(255,255,255,.55)}
 .search-field select{color:#fff;cursor:pointer}
 .search-field select option{background:var(--mid);color:#fff}
 .search-loc{flex:.8}
