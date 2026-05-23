@@ -643,7 +643,7 @@ Courriel    : ${email}${cityLine ? `\n${cityLine}` : ""}
 
 Statut      : en attente de vérification
 
-→ Panneau admin : ${process.env.ADMIN_URL ?? "https://attentezero.ca/admin/"}
+→ Vérifier : ${(process.env.ADMIN_URL ?? "https://attentezero.ca/admin/").replace(/\/$/, "")}/verifications?id=${organisationId}
 
 — AttenteZéro / CivicAI`;
 
@@ -652,7 +652,8 @@ Statut      : en attente de vérification
         const safeAdminContact = `${firstName} ${lastName}`.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         const safeAdminEmail = email.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         const safeAdminCity = (organisationCity ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        const adminPanelUrl = process.env.ADMIN_URL ?? "https://attentezero.ca/admin/";
+        const adminPanelBase = (process.env.ADMIN_URL ?? "https://attentezero.ca/admin/").replace(/\/$/, "");
+        const adminPanelUrl = `${adminPanelBase}/verifications?id=${organisationId}`;
 
         const adminHtml = `
 <div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:600px;margin:0 auto;color:#1e293b">
@@ -690,7 +691,7 @@ Statut      : en attente de vérification
       </table>
     </div>
     <a href="${adminPanelUrl}" style="display:inline-block;background:#0e7e6e;color:#ffffff;text-decoration:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600">
-      Ouvrir le panneau admin →
+      Vérifier cet organisme →
     </a>
   </div>
   <p style="color:#94a3b8;font-size:11px;margin-top:12px;text-align:center">
