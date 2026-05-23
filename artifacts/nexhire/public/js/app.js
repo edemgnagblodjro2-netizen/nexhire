@@ -399,7 +399,13 @@ function initLocationSelects() {
   if (heroSel) heroSel.innerHTML = opts;
   if (fprov) fprov.innerHTML = opts;
 }
-function quickSearch(q) { document.getElementById('q').value = q; searchJobs(); }
+function quickSearch(q) {
+  const heroInput = document.getElementById('q');
+  const jobsInput = document.getElementById('fq');
+  if (heroInput) heroInput.value = q;
+  if (jobsInput) jobsInput.value = q;
+  searchJobs();
+}
 
 async function loadJobs() { await filterJobs(); }
 
@@ -491,6 +497,13 @@ async function filterJobs(page = 1) {
 
 // ── Job detail panel ───────────────────────────────────────
 async function openJobDetail(jobId) {
+  // Navigate to jobs page first if not already there
+  const jobsPage = document.getElementById('pg-jobs');
+  if (!jobsPage?.classList.contains('active')) {
+    goto('jobs');
+    await new Promise(r => setTimeout(r, 200));
+  }
+
   markJobViewed(jobId);
   const d = await api('GET', `${BASE}/api/jobs/by-id/${jobId}`);
   if (!d.success) return;
