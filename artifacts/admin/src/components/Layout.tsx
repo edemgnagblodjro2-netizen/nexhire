@@ -7,6 +7,7 @@ import { useNotifications, type NotifEventPrefs } from "@/hooks/useNotifications
 
 const ORG_LAST_SEEN_KEY = "az_admin_orgs_last_seen";
 const VERIF_LAST_SEEN_KEY = "az_admin_verif_last_seen";
+const BUGREPORTS_LAST_SEEN_KEY = "az_admin_bugreports_last_seen";
 
 const SUPERADMIN_NAV = [
   { href: "/", icon: "📊", label: "Tableau de bord" },
@@ -79,6 +80,11 @@ export default function Layout({
     () => localStorage.getItem(VERIF_LAST_SEEN_KEY) ?? new Date(0).toISOString()
   );
 
+  // Same pattern for bug reports.
+  const [bugReportsLastSeen, setBugReportsLastSeen] = React.useState<string>(
+    () => localStorage.getItem(BUGREPORTS_LAST_SEEN_KEY) ?? new Date(0).toISOString()
+  );
+
   const { data: contactStats } = useQuery({
     queryKey: ["contact-stats", adminKey],
     queryFn: () => fetchContactStats(adminKey!),
@@ -96,8 +102,8 @@ export default function Layout({
   });
 
   const { data: bugReportStats } = useQuery({
-    queryKey: ["bug-report-stats", adminKey],
-    queryFn: () => fetchBugReportStats(adminKey!),
+    queryKey: ["bug-report-stats", adminKey, bugReportsLastSeen],
+    queryFn: () => fetchBugReportStats(adminKey!, bugReportsLastSeen),
     enabled,
     staleTime: 60_000,
     refetchInterval: 60_000,
@@ -130,6 +136,16 @@ export default function Layout({
       localStorage.setItem(VERIF_LAST_SEEN_KEY, now);
       setVerifLastSeen(now);
       queryClient.setQueryData(["verification-stats", adminKey, now], { pendingCount: 0 });
+    }
+  }, [location, adminKey, queryClient]);
+
+  // When admin navigates to /bug-reports, mark all current reports as seen so the badge clears.
+  useEffect(() => {
+    if (location === "/bug-reports" || location.startsWith("/bug-reports/")) {
+      const now = new Date().toISOString();
+      localStorage.setItem(BUGREPORTS_LAST_SEEN_KEY, now);
+      setBugReportsLastSeen(now);
+      queryClient.setQueryData(["bug-report-stats", adminKey, now], { newCount: 0 });
     }
   }, [location, adminKey, queryClient]);
 

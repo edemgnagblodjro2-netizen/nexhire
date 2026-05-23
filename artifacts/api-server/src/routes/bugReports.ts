@@ -117,10 +117,18 @@ router.get("/bug-reports/stats", async (req, res) => {
     res.status(401).json({ error: "Unauthorized" });
     return;
   }
+  const sinceRaw = req.query.since;
+  const sinceDate = typeof sinceRaw === "string" ? new Date(sinceRaw) : null;
+  const sinceValid = sinceDate && !isNaN(sinceDate.getTime()) ? sinceDate : null;
+
+  const condition = sinceValid
+    ? and(eq(bugReportsTable.status, "new"), gte(bugReportsTable.createdAt, sinceValid))
+    : eq(bugReportsTable.status, "new");
+
   const [row] = await db
     .select({ count: sql<number>`count(*)::int` })
     .from(bugReportsTable)
-    .where(eq(bugReportsTable.status, "new"));
+    .where(condition);
   res.json({ newCount: Number(row?.count ?? 0) });
 });
 

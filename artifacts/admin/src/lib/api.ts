@@ -255,10 +255,11 @@ export async function fetchVerificationStats(adminKey: string, since?: string): 
   return res.json();
 }
 
-export async function fetchBugReportStats(adminKey: string): Promise<{ newCount: number }> {
-  const res = await fetch(`${API_BASE}/api/bug-reports/stats`, {
-    headers: headers(adminKey),
-  });
+export async function fetchBugReportStats(adminKey: string, since?: string): Promise<{ newCount: number }> {
+  const url = since
+    ? `${API_BASE}/api/bug-reports/stats?since=${encodeURIComponent(since)}`
+    : `${API_BASE}/api/bug-reports/stats`;
+  const res = await fetch(url, { headers: headers(adminKey) });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
