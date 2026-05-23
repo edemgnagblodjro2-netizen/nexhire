@@ -9,6 +9,7 @@ const fs = require('fs');
 const rateLimit = require('express-rate-limit');
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 19235;
 const BASE_PATH = (process.env.BASE_PATH || '/nexhire/').replace(/\/$/, '');
 
