@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
-const BASE_URL = process.env.BASE_URL || 'https://nexhire.com';
-const FROM = process.env.EMAIL_FROM || 'Nexhire <noreply@nexhire.com>';
+const BASE_URL = process.env.BASE_URL || 'https://nexhire.ca';
+const FROM = process.env.EMAIL_FROM || 'Nexhire <noreply@nexhire.ca>';
 
 function getTransport() {
   if (!process.env.SMTP_HOST) return null;

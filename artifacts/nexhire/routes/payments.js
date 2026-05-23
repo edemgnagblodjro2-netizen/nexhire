@@ -22,7 +22,7 @@ router.post('/create-checkout', requireAuth, requireCompanyAccess, async (req, r
     const priceId = interval === 'year' ? process.env.NEXHIRE_STRIPE_PRICE_PRO_YEARLY : process.env.NEXHIRE_STRIPE_PRICE_PRO_MONTHLY;
     if (!priceId) return res.status(400).json({ success: false, error: 'Pricing not configured yet. Contact sales.' });
 
-    const BASE_URL = process.env.BASE_URL || 'https://nexhire.com';
+    const BASE_URL = process.env.BASE_URL || 'https://nexhire.ca';
     const session = await stripe.checkout.sessions.create({
       customer: customer_id, payment_method_types: ['card'],
       line_items: [{ price: priceId, quantity: 1 }], mode: 'subscription',
