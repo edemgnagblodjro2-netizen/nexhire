@@ -919,6 +919,111 @@ function computeCompleteness(p, user) {
   return { pct, missing };
 }
 
+// ── Skill Picker ────────────────────────────────────────────
+const SKILL_GROUPS = [
+  { label: 'Frontend', icon: 'ti-layout', skills: [
+    { name: 'HTML5',        logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
+    { name: 'CSS3',         logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+    { name: 'JavaScript',   logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+    { name: 'TypeScript',   logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
+    { name: 'React',        logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+    { name: 'Next.js',      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
+    { name: 'Vue.js',       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
+    { name: 'Tailwind CSS', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' },
+    { name: 'Redux',        logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg' },
+    { name: 'Sass/SCSS',    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg' },
+  ]},
+  { label: 'Backend', icon: 'ti-server', skills: [
+    { name: 'Node.js',      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+    { name: 'Python',       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+    { name: 'Express.js',   logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg' },
+    { name: 'GraphQL',      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg' },
+    { name: 'PostgreSQL',   logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+    { name: 'MongoDB',      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
+    { name: 'Redis',        logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg' },
+    { name: 'Prisma',       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg' },
+    { name: 'Docker',       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+    { name: 'AWS',          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg' },
+  ]},
+  { label: 'Auth & Security', icon: 'ti-lock', skills: [
+    { name: 'Clerk',       badge: { bg: '#6C47FF', color: '#fff', text: 'CL' } },
+    { name: 'Auth0',       badge: { bg: '#EB5424', color: '#fff', text: 'A0' } },
+    { name: 'JWT / OAuth', badge: { bg: '#1F2937', color: '#fff', text: 'JWT' } },
+    { name: 'Supabase',    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg' },
+    { name: 'Firebase',    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg' },
+  ]},
+  { label: 'Mobile', icon: 'ti-device-mobile', skills: [
+    { name: 'React Native', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+    { name: 'Expo',         badge: { bg: '#000', color: '#fff', text: 'EX' } },
+    { name: 'Flutter',      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg' },
+    { name: 'Swift',        logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg' },
+    { name: 'Kotlin',       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg' },
+  ]},
+  { label: 'Animations & 3D', icon: 'ti-ripple', skills: [
+    { name: 'Framer Motion', badge: { bg: '#0055FF', color: '#fff', text: 'FM' } },
+    { name: 'GSAP',          badge: { bg: '#88CE02', color: '#0d1117', text: 'GS' } },
+    { name: 'Three.js',      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg', invert: true },
+    { name: 'CSS Animations', badge: { bg: '#264DE4', color: '#fff', text: 'CSS' } },
+  ]},
+  { label: 'DevOps / Cloud', icon: 'ti-cloud', skills: [
+    { name: 'GitHub Actions', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg', invert: true },
+    { name: 'Kubernetes',     logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-original.svg' },
+    { name: 'Terraform',      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg' },
+    { name: 'GCP',            logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg' },
+    { name: 'Azure',          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg' },
+  ]},
+];
+
+function renderSkillPicker(selected = []) {
+  const sel = new Set(selected.map(s => s.toLowerCase()));
+  const groups = SKILL_GROUPS.map(g => {
+    const chips = g.skills.map(sk => {
+      const active = sel.has(sk.name.toLowerCase()) ? ' active' : '';
+      const img = sk.logo
+        ? `<img src="${sk.logo}" class="sp-logo"${sk.invert ? ' style="filter:invert(1)"' : ''}>`
+        : `<span class="sp-badge" style="background:${sk.badge.bg};color:${sk.badge.color}">${sk.badge.text}</span>`;
+      return `<span class="sp-chip${active}" data-skill="${esc(sk.name)}" onclick="toggleSkill(this)">${img}${esc(sk.name)}</span>`;
+    }).join('');
+    return `<div class="sp-group">
+      <div class="sp-group-label"><i class="ti ${g.icon}"></i>${g.label}</div>
+      <div class="sp-chips">${chips}</div>
+    </div>`;
+  }).join('');
+  return `<div class="skill-picker" id="skill-picker">${groups}
+    <div class="sp-custom-wrap">
+      <i class="ti ti-plus sp-custom-icon"></i>
+      <input type="text" id="sp-custom" class="sp-custom-input" placeholder="Add a custom skill (press Enter)…" onkeydown="addCustomSkill(event)">
+    </div>
+    <div id="sp-custom-chips" class="sp-chips" style="margin-top:6px"></div>
+  </div>`;
+}
+
+function toggleSkill(el) {
+  el.classList.toggle('active');
+}
+
+function addCustomSkill(e) {
+  if (e.key !== 'Enter') return;
+  e.preventDefault();
+  const inp = document.getElementById('sp-custom');
+  const val = inp.value.trim();
+  if (!val) return;
+  const container = document.getElementById('sp-custom-chips');
+  const exists = [...document.querySelectorAll('.sp-chip[data-skill]')].some(c => c.dataset.skill.toLowerCase() === val.toLowerCase());
+  if (!exists) {
+    const chip = document.createElement('span');
+    chip.className = 'sp-chip active sp-custom-chip';
+    chip.dataset.skill = val;
+    chip.innerHTML = `${esc(val)} <span onclick="this.parentElement.remove()" style="margin-left:4px;opacity:.6;cursor:pointer">✕</span>`;
+    container.appendChild(chip);
+  }
+  inp.value = '';
+}
+
+function getPickedSkills() {
+  return [...document.querySelectorAll('.sp-chip.active[data-skill]')].map(c => c.dataset.skill);
+}
+
 async function loadProfileForm() {
   const d = await api('GET', `${BASE}/api/candidates/profile`);
   const container = document.getElementById('profile-form');

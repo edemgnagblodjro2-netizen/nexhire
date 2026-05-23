@@ -113,18 +113,23 @@ a{text-decoration:none;color:inherit}
 .cat-arrow{font-size:16px;color:var(--muted);flex-shrink:0;transition:transform .18s}
 .cat-card:hover .cat-arrow{transform:translateX(3px);color:var(--indigo)}
 
-/* ── TECH STACK SECTION ───────────────────────────────────── */
-.techstack-section{padding:56px 0;background:#F8FAFC;border-top:1px solid var(--border)}
-.ts-subtitle{font-size:13px;color:var(--muted);font-weight:400}
-.ts-groups{display:flex;flex-direction:column;gap:28px;margin-top:8px}
-.ts-group{}
-.ts-group-label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.ts-group-label i{font-size:14px}
-.ts-tags{display:flex;flex-wrap:wrap;gap:8px}
-.ts-tag{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;background:#fff;border:1.5px solid var(--border);font-size:13px;font-weight:500;color:var(--dark);cursor:pointer;transition:all .18s;line-height:1}
-.ts-tag:hover{border-color:var(--indigo);box-shadow:0 2px 12px rgba(99,102,241,.15);transform:translateY(-1px);color:var(--indigo)}
-.ts-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0}
-.ts-logo-text{width:22px;height:22px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;letter-spacing:-.3px;flex-shrink:0}
+/* ── SKILL PICKER (profile) ───────────────────────────────── */
+.skill-picker{display:flex;flex-direction:column;gap:20px;padding:18px;background:#F8FAFC;border:1.5px solid var(--border);border-radius:14px;margin-top:6px}
+.sp-group{}
+.sp-group-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.sp-group-label i{font-size:13px}
+.sp-chips{display:flex;flex-wrap:wrap;gap:7px}
+.sp-chip{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:8px;background:#fff;border:1.5px solid var(--border);font-size:12px;font-weight:500;color:#475569;cursor:pointer;transition:all .15s;user-select:none}
+.sp-chip:hover{border-color:#A5B4FC;color:var(--indigo)}
+.sp-chip.active{background:#EEF2FF;border-color:var(--indigo);color:var(--indigo);font-weight:600}
+.sp-logo{width:16px;height:16px;object-fit:contain;flex-shrink:0}
+.sp-badge{width:22px;height:18px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;letter-spacing:-.2px;flex-shrink:0}
+.sp-custom-wrap{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#fff;border:1.5px dashed var(--border);border-radius:8px;margin-top:4px}
+.sp-custom-icon{color:var(--muted);font-size:15px}
+.sp-custom-input{flex:1;border:none;outline:none;font-size:12px;font-family:inherit;color:var(--dark);background:transparent}
+.sp-custom-input::placeholder{color:#94A3B8}
+.sp-custom-chip{background:#F0FDF4;border-color:#86EFAC;color:#15803D}
+.sp-custom-chip.active{background:#F0FDF4;border-color:#86EFAC;color:#15803D}
 .hero-stats{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap}
 .hstat{padding:0 32px;text-align:center}
 .hstat-n{font-family:var(--r);font-size:28px;font-weight:700;color:#fff;letter-spacing:-.5px}
