@@ -1,0 +1,250 @@
+Développement & Programmation
+Software Developer / Software Engineer
+Missions souvent demandées
+Développer des applications web/mobile
+Corriger les bugs
+Concevoir des APIs
+Participer aux tests et au déploiement
+Collaborer avec les équipes produit
+Technologies souvent demandées
+JavaScript
+Python
+Java
+C#
+React
+Node.js
+SQL
+Git
+Front-End Developer
+Job Description
+Développer l’interface utilisateur
+Optimiser l’expérience utilisateur (UX/UI)
+Intégrer les maquettes
+Assurer la compatibilité mobile
+Compétences
+HTML
+CSS
+JavaScript
+React
+Vue.js
+TailwindCSS
+Back-End Developer
+Job Description
+Développer la logique serveur
+Gérer les bases de données
+Construire des APIs sécurisées
+Optimiser les performances
+Compétences
+Node.js
+Python
+PHP
+Java
+PostgreSQL
+MongoDB
+Full Stack Developer
+Job Description
+Développer le front-end et le back-end
+Gérer les bases de données
+Déployer les applications
+Participer à l’architecture technique
+Compétences
+React
+Node.js
+SQL
+APIs REST
+Cloud
+Support Informatique & Infrastructure
+IT Support Specialist
+Job Description
+Assister les utilisateurs
+Résoudre les problèmes matériels et logiciels
+Configurer les postes de travail
+Gérer Microsoft 365
+Compétences
+Windows
+Active Directory
+Microsoft 365
+Réseau
+Ticketing
+Help Desk Technician
+Job Description
+Répondre aux tickets
+Diagnostiquer les incidents
+Support à distance
+Documentation technique
+Compétences
+ServiceNow
+Windows
+Office 365
+Support client
+System Administrator
+Job Description
+Administrer les serveurs
+Gérer les accès utilisateurs
+Sauvegardes et sécurité
+Surveillance des systèmes
+Compétences
+Linux
+Windows Server
+VMware
+PowerShell
+Active Directory
+Network Administrator
+Job Description
+Configurer les équipements réseau
+Gérer la connectivité
+Diagnostiquer les problèmes réseau
+Sécuriser l’infrastructure
+Compétences
+Cisco
+TCP/IP
+VPN
+Firewall
+Routing & Switching
+Cloud & DevOps
+Cloud Engineer
+Job Description
+Déployer des infrastructures cloud
+Gérer AWS/Azure/GCP
+Automatiser les déploiements
+Optimiser les coûts cloud
+Compétences
+AWS
+Azure
+Terraform
+Docker
+Kubernetes
+DevOps Engineer
+Job Description
+Automatiser les pipelines CI/CD
+Déployer les applications
+Monitoring des systèmes
+Collaboration Dev + Ops
+Compétences
+Jenkins
+Docker
+Kubernetes
+GitHub Actions
+Linux
+Cybersécurité
+Cybersecurity Analyst
+Job Description
+Surveiller les menaces
+Réaliser des audits sécurité
+Répondre aux incidents
+Mettre en place des politiques sécurité
+Compétences
+SIEM
+Firewall
+SOC
+PenTesting
+Compliance
+SOC Analyst
+Job Description
+Surveiller les alertes sécurité
+Analyser les incidents
+Escalader les menaces
+Produire des rapports
+Compétences
+Splunk
+Sentinel
+Cyber Threat Analysis
+Données & Intelligence Artificielle
+Data Analyst
+Job Description
+Analyser les données
+Créer des tableaux de bord
+Produire des rapports
+Identifier les tendances
+Compétences
+SQL
+Excel
+Power BI
+Tableau
+Python
+Data Scientist
+Job Description
+Construire des modèles IA
+Analyser des données complexes
+Machine Learning
+Automatisation prédictive
+Compétences
+Python
+TensorFlow
+Machine Learning
+Statistics
+AI Engineer
+Job Description
+Développer des solutions IA
+Intégrer des modèles LLM
+Optimiser les modèles
+Automatiser les processus intelligents
+Compétences
+Python
+OpenAI API
+LangChain
+PyTorch
+Gestion & Produit
+IT Project Manager
+Job Description
+Gérer les projets IT
+Coordonner les équipes
+Suivre les budgets
+Respecter les délais
+Compétences
+Agile
+Scrum
+Jira
+Leadership
+Product Manager
+Job Description
+Définir les besoins produit
+Prioriser les fonctionnalités
+Collaborer avec les développeurs
+Analyser le marché
+Compétences
+UX
+Agile
+Product Strategy
+Analytics
+QA & Tests
+QA Tester
+Job Description
+Tester les applications
+Identifier les bugs
+Vérifier les performances
+Produire des rapports QA
+Compétences
+Selenium
+Manual Testing
+Automation Testing
+Jira
+Design & UX
+UI/UX Designer
+Job Description
+Concevoir des interfaces
+Créer des wireframes
+Améliorer l’expérience utilisateur
+Réaliser des prototypes
+Compétences
+Figma
+Adobe XD
+UX Research
+Prototyping
+Autres postes très populaires
+Business Analyst
+Database Administrator (DBA)
+ERP Consultant
+SAP Consultant
+Salesforce Developer
+Mobile Developer
+Game Developer
+Blockchain Developer
+Site Reliability Engineer (SRE)
+Solutions Architect
+Technical Support Engineer
+IT Consultant
+Scrum Master
+Machine Learning Engineer
+ERP Project Manager
+CRM Administrator
