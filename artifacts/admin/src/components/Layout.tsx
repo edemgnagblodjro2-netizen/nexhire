@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Link, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { type AdminRole } from "@/lib/auth";
-import { fetchContactStats } from "@/lib/api";
-import { useNotifications } from "@/hooks/useNotifications";
+import { fetchContactStats, fetchVerificationStats, fetchBugReportStats } from "@/lib/api";
+import { useNotifications, type NotifEventPrefs } from "@/hooks/useNotifications";
 
 const SUPERADMIN_NAV = [
   { href: "/", icon: "📊", label: "Tableau de bord" },
@@ -22,6 +22,31 @@ const B2G_NAV = [
   { href: "/", icon: "🏛️", label: "B2G — Régions" },
 ];
 
+const EVENT_LABELS: { key: keyof NotifEventPrefs; label: string; icon: string }[] = [
+  { key: "messages", label: "Messages", icon: "✉️" },
+  { key: "verifications", label: "Vérifications", icon: "🛡️" },
+  { key: "bugReports", label: "Signalements", icon: "🐛" },
+];
+
+function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
+  return (
+    <button
+      role="switch"
+      aria-checked={on}
+      onClick={onToggle}
+      className={`relative inline-flex h-4 w-7 shrink-0 rounded-full border-2 transition-colors ${
+        on ? "bg-teal-500 border-teal-500" : "bg-gray-200 border-gray-200"
+      }`}
+    >
+      <span
+        className={`block h-3 w-3 rounded-full bg-white shadow transition-transform ${
+          on ? "translate-x-3" : "translate-x-0"
+        }`}
+      />
+    </button>
+  );
+}
+
 export default function Layout({
   children,
   onLogout,
@@ -36,17 +61,41 @@ export default function Layout({
   const [location] = useLocation();
   const NAV = role === "b2g" ? B2G_NAV : SUPERADMIN_NAV;
 
+  const enabled = !!adminKey && role !== "b2g";
+
   const { data: contactStats } = useQuery({
     queryKey: ["contact-stats", adminKey],
     queryFn: () => fetchContactStats(adminKey!),
-    enabled: !!adminKey && role !== "b2g",
+    enabled,
+    staleTime: 60_000,
+    refetchInterval: 60_000,
+  });
+
+  const { data: verificationStats } = useQuery({
+    queryKey: ["verification-stats", adminKey],
+    queryFn: () => fetchVerificationStats(adminKey!),
+    enabled,
+    staleTime: 60_000,
+    refetchInterval: 60_000,
+  });
+
+  const { data: bugReportStats } = useQuery({
+    queryKey: ["bug-report-stats", adminKey],
+    queryFn: () => fetchBugReportStats(adminKey!),
+    enabled,
     staleTime: 60_000,
     refetchInterval: 60_000,
   });
 
   const unreadCount = contactStats?.newCount ?? 0;
 
-  const { prefs, setPrefs } = useNotifications(unreadCount);
+  const counts = useMemo(() => ({
+    messages: contactStats?.newCount ?? 0,
+    verifications: verificationStats?.pendingCount ?? 0,
+    bugReports: bugReportStats?.newCount ?? 0,
+  }), [contactStats?.newCount, verificationStats?.pendingCount, bugReportStats?.newCount]);
+
+  const { prefs, setPrefs, setEventPref } = useNotifications(counts);
 
   useEffect(() => {
     const base = role === "b2g" ? "AttenteZéro — B2G" : "AttenteZéro — Admin";
@@ -54,6 +103,7 @@ export default function Layout({
   }, [unreadCount, role]);
 
   const anyNotifOn = prefs.sound || prefs.browser;
+  const anyEventOn = Object.values(prefs.events).some(Boolean);
 
   return (
     <div className="min-h-screen flex bg-gray-50">
@@ -105,55 +155,50 @@ export default function Layout({
           {role !== "b2g" && (
             <div className="px-3 py-2 rounded-xl bg-gray-50 border border-gray-100">
               <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide mb-1.5">
-                Alertes messages
+                Alertes
               </p>
-              <div className="flex flex-col gap-1">
+
+              {/* Sound / browser toggles */}
+              <div className="flex flex-col gap-1 mb-2">
                 <label className="flex items-center justify-between gap-2 cursor-pointer group">
                   <span className="text-xs text-gray-600 group-hover:text-gray-900 transition-colors select-none">
                     🔔 Son
                   </span>
-                  <button
-                    role="switch"
-                    aria-checked={prefs.sound}
-                    onClick={() => setPrefs({ sound: !prefs.sound })}
-                    className={`relative inline-flex h-4 w-7 shrink-0 rounded-full border-2 transition-colors ${
-                      prefs.sound
-                        ? "bg-teal-500 border-teal-500"
-                        : "bg-gray-200 border-gray-200"
-                    }`}
-                  >
-                    <span
-                      className={`block h-3 w-3 rounded-full bg-white shadow transition-transform ${
-                        prefs.sound ? "translate-x-3" : "translate-x-0"
-                      }`}
-                    />
-                  </button>
+                  <Toggle on={prefs.sound} onToggle={() => setPrefs({ sound: !prefs.sound })} />
                 </label>
                 <label className="flex items-center justify-between gap-2 cursor-pointer group">
                   <span className="text-xs text-gray-600 group-hover:text-gray-900 transition-colors select-none">
                     🖥️ Notification
                   </span>
-                  <button
-                    role="switch"
-                    aria-checked={prefs.browser}
-                    onClick={() => setPrefs({ browser: !prefs.browser })}
-                    className={`relative inline-flex h-4 w-7 shrink-0 rounded-full border-2 transition-colors ${
-                      prefs.browser
-                        ? "bg-teal-500 border-teal-500"
-                        : "bg-gray-200 border-gray-200"
-                    }`}
-                  >
-                    <span
-                      className={`block h-3 w-3 rounded-full bg-white shadow transition-transform ${
-                        prefs.browser ? "translate-x-3" : "translate-x-0"
-                      }`}
-                    />
-                  </button>
+                  <Toggle on={prefs.browser} onToggle={() => setPrefs({ browser: !prefs.browser })} />
                 </label>
               </div>
-              {!anyNotifOn && (
+
+              {/* Per-event toggles */}
+              {anyNotifOn && (
+                <>
+                  <p className="text-[10px] font-semibold text-gray-300 uppercase tracking-wide mb-1">
+                    Événements
+                  </p>
+                  <div className="flex flex-col gap-1">
+                    {EVENT_LABELS.map(({ key, label, icon }) => (
+                      <label key={key} className="flex items-center justify-between gap-2 cursor-pointer group">
+                        <span className="text-xs text-gray-500 group-hover:text-gray-900 transition-colors select-none">
+                          {icon} {label}
+                        </span>
+                        <Toggle
+                          on={prefs.events[key]}
+                          onToggle={() => setEventPref(key, !prefs.events[key])}
+                        />
+                      </label>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {(!anyNotifOn || !anyEventOn) && (
                 <p className="text-[10px] text-gray-400 mt-1.5 italic">
-                  Alertes désactivées
+                  {!anyNotifOn ? "Alertes désactivées" : "Aucun événement sélectionné"}
                 </p>
               )}
             </div>

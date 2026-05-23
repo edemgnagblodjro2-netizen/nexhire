@@ -1,7 +1,7 @@
 import { Router, type Request } from "express";
 import { createHash } from "node:crypto";
 import { z } from "zod";
-import { and, desc, eq, gte } from "drizzle-orm";
+import { and, desc, eq, gte, sql } from "drizzle-orm";
 import { db, bugReportsTable } from "@workspace/db";
 import { sendOwnerEmail } from "../lib/notify";
 
@@ -111,6 +111,18 @@ function requireAdmin(req: Request): boolean {
   const got = req.header("x-admin-key");
   return typeof got === "string" && got === expected;
 }
+
+router.get("/bug-reports/stats", async (req, res) => {
+  if (!requireAdmin(req)) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+  const [row] = await db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(bugReportsTable)
+    .where(eq(bugReportsTable.status, "new"));
+  res.json({ newCount: Number(row?.count ?? 0) });
+});
 
 router.get("/bug-reports", async (req, res) => {
   if (!requireAdmin(req)) {

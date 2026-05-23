@@ -2,17 +2,37 @@ import { useEffect, useRef, useState } from "react";
 
 const STORAGE_KEY = "az_admin_notifications";
 
-interface NotifPrefs {
+export interface NotifEventPrefs {
+  messages: boolean;
+  verifications: boolean;
+  bugReports: boolean;
+}
+
+export interface NotifPrefs {
   sound: boolean;
   browser: boolean;
+  events: NotifEventPrefs;
 }
+
+const DEFAULT_PREFS: NotifPrefs = {
+  sound: true,
+  browser: true,
+  events: { messages: true, verifications: true, bugReports: true },
+};
 
 function loadPrefs(): NotifPrefs {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return { sound: true, browser: true, ...JSON.parse(raw) };
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return {
+        ...DEFAULT_PREFS,
+        ...parsed,
+        events: { ...DEFAULT_PREFS.events, ...(parsed.events ?? {}) },
+      };
+    }
   } catch {}
-  return { sound: true, browser: true };
+  return DEFAULT_PREFS;
 }
 
 function savePrefs(prefs: NotifPrefs) {
@@ -66,23 +86,44 @@ async function requestNotifPermission(): Promise<NotificationPermission> {
   return Notification.requestPermission();
 }
 
-function showBrowserNotification(count: number) {
+function showBrowserNotification(body: string, tag: string) {
   if (!notificationsSupported() || Notification.permission !== "granted") return;
-  new Notification("AttenteZéro — Admin", {
-    body: count === 1
-      ? "1 nouveau message reçu"
-      : `${count} nouveaux messages reçus`,
-    tag: "az-contact-msg",
-  });
+  new Notification("AttenteZéro — Admin", { body, tag });
 }
 
-export function useNotifications(unreadCount: number) {
-  const [prefs, setPrefsState] = useState<NotifPrefs>(loadPrefs);
-  const prevCount = useRef<number | null>(null);
+export interface EventCounts {
+  messages: number;
+  verifications: number;
+  bugReports: number;
+}
 
-  const setPrefs = (next: Partial<NotifPrefs>) => {
+const EVENT_LABELS: Record<keyof EventCounts, (delta: number) => string> = {
+  messages: (n) => n === 1 ? "1 nouveau message reçu" : `${n} nouveaux messages reçus`,
+  verifications: (n) => n === 1 ? "1 nouvelle demande de vérification" : `${n} nouvelles demandes de vérification`,
+  bugReports: (n) => n === 1 ? "1 nouveau signalement reçu" : `${n} nouveaux signalements reçus`,
+};
+
+const EVENT_TAGS: Record<keyof EventCounts, string> = {
+  messages: "az-contact-msg",
+  verifications: "az-verification",
+  bugReports: "az-bug-report",
+};
+
+export function useNotifications(counts: EventCounts) {
+  const [prefs, setPrefsState] = useState<NotifPrefs>(loadPrefs);
+  const prevCounts = useRef<EventCounts | null>(null);
+
+  const setPrefs = (next: Partial<Omit<NotifPrefs, "events">>) => {
     setPrefsState((cur) => {
       const updated = { ...cur, ...next };
+      savePrefs(updated);
+      return updated;
+    });
+  };
+
+  const setEventPref = (event: keyof NotifEventPrefs, value: boolean) => {
+    setPrefsState((cur) => {
+      const updated = { ...cur, events: { ...cur.events, [event]: value } };
       savePrefs(updated);
       return updated;
     });
@@ -93,32 +134,42 @@ export function useNotifications(unreadCount: number) {
   }, []);
 
   useEffect(() => {
-    if (prevCount.current === null) {
-      prevCount.current = unreadCount;
+    if (prevCounts.current === null) {
+      prevCounts.current = counts;
       return;
     }
-    const prev = prevCount.current;
-    prevCount.current = unreadCount;
 
-    if (unreadCount <= prev) return;
+    const prev = prevCounts.current;
+    prevCounts.current = counts;
 
-    const delta = unreadCount - prev;
+    const eventKeys = Object.keys(counts) as (keyof EventCounts)[];
+    let fired = false;
 
-    if (prefs.sound) {
-      playNotificationSound();
-    }
+    for (const key of eventKeys) {
+      if (!prefs.events[key]) continue;
+      if (counts[key] <= prev[key]) continue;
 
-    if (prefs.browser) {
-      if (!notificationsSupported()) return;
-      if (Notification.permission !== "granted") {
-        requestNotifPermission().then((perm) => {
-          if (perm === "granted") showBrowserNotification(delta);
-        });
-      } else {
-        showBrowserNotification(delta);
+      const delta = counts[key] - prev[key];
+
+      if (!fired && prefs.sound) {
+        playNotificationSound();
+        fired = true;
+      }
+
+      if (prefs.browser) {
+        const body = EVENT_LABELS[key](delta);
+        const tag = EVENT_TAGS[key];
+        if (!notificationsSupported()) continue;
+        if (Notification.permission !== "granted") {
+          requestNotifPermission().then((perm) => {
+            if (perm === "granted") showBrowserNotification(body, tag);
+          });
+        } else {
+          showBrowserNotification(body, tag);
+        }
       }
     }
-  }, [unreadCount, prefs.sound, prefs.browser]);
+  }, [counts.messages, counts.verifications, counts.bugReports, prefs.sound, prefs.browser, prefs.events]);
 
-  return { prefs, setPrefs };
+  return { prefs, setPrefs, setEventPref };
 }

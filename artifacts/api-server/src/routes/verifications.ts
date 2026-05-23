@@ -7,7 +7,7 @@ import {
   verificationRequestsTable,
   usersTable,
 } from "@workspace/db";
-import { and, desc, eq, or, inArray } from "drizzle-orm";
+import { and, desc, eq, or, inArray, sql } from "drizzle-orm";
 import { z } from "zod";
 import { logger } from "../lib/logger";
 import { sendEmailTo } from "../lib/notify";
@@ -416,6 +416,15 @@ router.get("/org/verification/status", async (req, res) => {
 });
 
 // ── GET /api/admin/verification/requests?status=pending ──────────────────
+router.get("/admin/verification/stats", async (req, res) => {
+  if (!checkAdminKey(req, res)) return;
+  const [row] = await db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(verificationRequestsTable)
+    .where(eq(verificationRequestsTable.status, "pending"));
+  res.json({ pendingCount: Number(row?.count ?? 0) });
+});
+
 router.get("/admin/verification/requests", async (req, res) => {
   if (!checkAdminKey(req, res)) return;
   const status = (req.query.status as string) || "pending";

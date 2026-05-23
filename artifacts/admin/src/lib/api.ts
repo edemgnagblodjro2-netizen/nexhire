@@ -246,6 +246,22 @@ export async function fetchContactStats(adminKey: string): Promise<{ newCount: n
   return res.json();
 }
 
+export async function fetchVerificationStats(adminKey: string): Promise<{ pendingCount: number }> {
+  const res = await fetch(`${API_BASE}/api/admin/verification/stats`, {
+    headers: headers(adminKey),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+export async function fetchBugReportStats(adminKey: string): Promise<{ newCount: number }> {
+  const res = await fetch(`${API_BASE}/api/bug-reports/stats`, {
+    headers: headers(adminKey),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
 export async function verifyService(
   adminKey: string,
   id: string,
