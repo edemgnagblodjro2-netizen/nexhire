@@ -62,6 +62,7 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
   const [search, setSearch] = useState("");
   const [dateRange, setDateRange] = useState<DateRange>("all");
   const [markingAllRead, setMarkingAllRead] = useState(false);
+  const [archivingAllRead, setArchivingAllRead] = useState(false);
 
   async function load() {
     setLoading(true);
@@ -104,6 +105,24 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
       }
     } catch (err) {
       alert(`Échec : ${(err as Error).message}`);
+    }
+  }
+
+  async function archiveAllRead() {
+    setArchivingAllRead(true);
+    try {
+      const res = await fetch("/api/contact/mark-all-archived", {
+        method: "PATCH",
+        headers: { "x-admin-key": adminKey },
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setSubmissions((prev) =>
+        prev.map((s) => (s.status === "read" ? { ...s, status: "archived" } : s)),
+      );
+    } catch (err) {
+      alert(`Échec : ${(err as Error).message}`);
+    } finally {
+      setArchivingAllRead(false);
     }
   }
 
@@ -190,6 +209,15 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          {counts.read > 0 && (
+            <button
+              onClick={archiveAllRead}
+              disabled={archivingAllRead}
+              className="px-3 py-2 text-sm rounded-lg bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 transition disabled:opacity-50"
+            >
+              {archivingAllRead ? "En cours…" : `Tout archiver les messages lus (${counts.read})`}
+            </button>
+          )}
           {counts.new > 0 && (
             <button
               onClick={markAllAsRead}

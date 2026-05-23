@@ -350,6 +350,20 @@ router.patch("/contact/mark-all-read", async (req, res) => {
   res.json({ updated: result.length });
 });
 
+// ── Admin: archive all read messages ─────────────────────────────────────────
+router.patch("/contact/mark-all-archived", async (req, res) => {
+  if (!requireAdmin(req)) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+  const result = await db
+    .update(contactSubmissionsTable)
+    .set({ status: "archived" })
+    .where(eq(contactSubmissionsTable.status, "read"))
+    .returning({ id: contactSubmissionsTable.id });
+  res.json({ updated: result.length });
+});
+
 // ── Admin: update status ─────────────────────────────────────────────────────
 const PatchBody = z.object({
   status: z.enum(["new", "read", "archived"]),
