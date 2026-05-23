@@ -16,7 +16,7 @@ export interface NotifPrefs {
 
 const DEFAULT_PREFS: NotifPrefs = {
   sound: true,
-  browser: true,
+  browser: false,
   events: { messages: true, verifications: true, bugReports: true },
 };
 
@@ -78,12 +78,9 @@ function notificationsSupported(): boolean {
   return "Notification" in window;
 }
 
-async function requestNotifPermission(): Promise<NotificationPermission> {
+function getCurrentPermission(): NotificationPermission {
   if (!notificationsSupported()) return "denied";
-  if (Notification.permission === "granted" || Notification.permission === "denied") {
-    return Notification.permission;
-  }
-  return Notification.requestPermission();
+  return Notification.permission;
 }
 
 function showBrowserNotification(body: string, tag: string) {
@@ -111,6 +108,7 @@ const EVENT_TAGS: Record<keyof EventCounts, string> = {
 
 export function useNotifications(counts: EventCounts) {
   const [prefs, setPrefsState] = useState<NotifPrefs>(loadPrefs);
+  const [browserPermission, setBrowserPermission] = useState<NotificationPermission>(getCurrentPermission);
   const prevCounts = useRef<EventCounts | null>(null);
 
   const setPrefs = (next: Partial<Omit<NotifPrefs, "events">>) => {
@@ -129,8 +127,44 @@ export function useNotifications(counts: EventCounts) {
     });
   };
 
+  const toggleBrowserPref = async () => {
+    if (prefs.browser) {
+      setPrefs({ browser: false });
+      return;
+    }
+
+    const current = getCurrentPermission();
+
+    if (current === "denied") {
+      setBrowserPermission("denied");
+      return;
+    }
+
+    if (current === "granted") {
+      setPrefs({ browser: true });
+      return;
+    }
+
+    const result = await Notification.requestPermission();
+    setBrowserPermission(result);
+    if (result === "granted") {
+      setPrefs({ browser: true });
+    } else {
+      setPrefs({ browser: false });
+    }
+  };
+
   useEffect(() => {
-    requestNotifPermission();
+    const permission = getCurrentPermission();
+    setBrowserPermission(permission);
+
+    if (permission !== "granted" && prefs.browser) {
+      setPrefsState((cur) => {
+        const updated = { ...cur, browser: false };
+        savePrefs(updated);
+        return updated;
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -156,20 +190,13 @@ export function useNotifications(counts: EventCounts) {
         fired = true;
       }
 
-      if (prefs.browser) {
+      if (prefs.browser && Notification.permission === "granted") {
         const body = EVENT_LABELS[key](delta);
         const tag = EVENT_TAGS[key];
-        if (!notificationsSupported()) continue;
-        if (Notification.permission !== "granted") {
-          requestNotifPermission().then((perm) => {
-            if (perm === "granted") showBrowserNotification(body, tag);
-          });
-        } else {
-          showBrowserNotification(body, tag);
-        }
+        showBrowserNotification(body, tag);
       }
     }
   }, [counts.messages, counts.verifications, counts.bugReports, prefs.sound, prefs.browser, prefs.events]);
 
-  return { prefs, setPrefs, setEventPref };
+  return { prefs, setPrefs, setEventPref, toggleBrowserPref, browserPermission };
 }

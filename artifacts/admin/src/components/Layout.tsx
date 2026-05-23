@@ -95,7 +95,7 @@ export default function Layout({
     bugReports: bugReportStats?.newCount ?? 0,
   }), [contactStats?.newCount, verificationStats?.pendingCount, bugReportStats?.newCount]);
 
-  const { prefs, setPrefs, setEventPref } = useNotifications(counts);
+  const { prefs, setPrefs, setEventPref, toggleBrowserPref, browserPermission } = useNotifications(counts);
 
   useEffect(() => {
     const base = role === "b2g" ? "AttenteZéro — B2G" : "AttenteZéro — Admin";
@@ -166,12 +166,26 @@ export default function Layout({
                   </span>
                   <Toggle on={prefs.sound} onToggle={() => setPrefs({ sound: !prefs.sound })} />
                 </label>
-                <label className="flex items-center justify-between gap-2 cursor-pointer group">
-                  <span className="text-xs text-gray-600 group-hover:text-gray-900 transition-colors select-none">
-                    🖥️ Notification
-                  </span>
-                  <Toggle on={prefs.browser} onToggle={() => setPrefs({ browser: !prefs.browser })} />
-                </label>
+                {browserPermission === "denied" ? (
+                  <div
+                    className="flex items-center justify-between gap-2 cursor-not-allowed"
+                    title="Notifications bloquées par le navigateur. Allez dans les réglages du navigateur pour les réactiver."
+                  >
+                    <span className="text-xs text-gray-400 select-none">
+                      🖥️ Notification
+                    </span>
+                    <div className="relative inline-flex h-4 w-7 shrink-0 rounded-full border-2 bg-gray-100 border-gray-100 opacity-50">
+                      <span className="block h-3 w-3 rounded-full bg-white shadow translate-x-0" />
+                    </div>
+                  </div>
+                ) : (
+                  <label className="flex items-center justify-between gap-2 cursor-pointer group">
+                    <span className="text-xs text-gray-600 group-hover:text-gray-900 transition-colors select-none">
+                      🖥️ Notification
+                    </span>
+                    <Toggle on={prefs.browser} onToggle={toggleBrowserPref} />
+                  </label>
+                )}
               </div>
 
               {/* Per-event toggles */}
