@@ -1,8 +1,8 @@
-const CACHE = 'nexhire-v1';
+const CACHE = 'nexhire-v3';
 const PRECACHE = [
   '/nexhire/',
   '/nexhire/css/style.css',
-  '/nexhire/js/app.js',
+  '/nexhire/js/app.js?v=20260523al',
   '/nexhire/favicon.svg',
 ];
 
@@ -24,6 +24,7 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   const url = new URL(e.request.url);
   if (url.pathname.startsWith('/nexhire/api/')) return;
+  // Network-first: always try network, only fall back to cache
   e.respondWith(
     fetch(e.request)
       .then(r => {
