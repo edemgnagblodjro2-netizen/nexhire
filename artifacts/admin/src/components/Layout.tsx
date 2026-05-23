@@ -163,8 +163,9 @@ export default function Layout({
 
   useEffect(() => {
     const base = role === "b2g" ? "AttenteZéro — B2G" : "AttenteZéro — Admin";
-    document.title = unreadCount > 0 ? `(${unreadCount}) ${base}` : base;
-  }, [unreadCount, role]);
+    const totalCount = unreadCount + newOrgCount;
+    document.title = totalCount > 0 ? `(${totalCount}) ${base}` : base;
+  }, [unreadCount, newOrgCount, role]);
 
   const anyNotifOn = prefs.sound || prefs.browser;
   const anyEventOn = Object.values(prefs.events).some(Boolean);
