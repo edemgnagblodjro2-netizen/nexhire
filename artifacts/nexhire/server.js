@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
-const MemoryStore = require('memorystore')(session);
+const pgSession = require('connect-pg-simple')(session);
 const helmet = require('helmet');
 const cors = require('cors');
 const path = require('path');
@@ -262,7 +262,11 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // ── Sessions (memory store — safe for single-instance) ──
 app.use(session({
-  store: new MemoryStore({ checkPeriod: 86400000 }),
+  store: new pgSession({
+    conString: process.env.DATABASE_URL,
+    tableName: 'nh_sessions',
+    createTableIfMissing: true,
+  }),
   secret: process.env.NEXHIRE_SESSION_SECRET || process.env.SESSION_SECRET || 'nexhire-dev-secret-2026',
   resave: false,
   saveUninitialized: false,
