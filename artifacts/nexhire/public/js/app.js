@@ -403,7 +403,7 @@ const T = {
     'emp.f3.title':'Kanban ATS pipeline','emp.f3.desc':'Visual pipeline: New → Reviewed → Shortlisted → Interview → Offer. Move candidates with one click.',
     'emp.f4.title':'Job analytics','emp.f4.desc':'Track views, applications, and conversion rate per listing. Know which jobs perform best.',
     'cand.role':'Candidate','cand.nav.profile':'My Profile','cand.nav.foryou':'Jobs for You',
-    'cand.nav.saved':'Saved Jobs','cand.nav.apps':'Applications','cand.nav.reviews':'My Reviews','cand.nav.ai':'AI Coach',
+    'cand.nav.saved':'Saved Jobs','cand.nav.apps':'Applications','cand.nav.reviews':'My Reviews','cand.nav.alerts':'Job Alerts','cand.nav.ai':'AI Coach',
     'cand.tab.profile':'My Profile','cand.tab.foryou':'Jobs for You','cand.tab.saved':'Saved Jobs','cand.tab.apps':'My Applications',
     'cand.ai.title':'AI Career Agent','cand.ai.sub':'Ask anything — resume tips, interview prep, salary negotiation, career advice.',
     'cand.ai.online':'Online · Ready to help',
@@ -606,7 +606,7 @@ const T = {
     'emp.f3.title':'Pipeline ATS Kanban','emp.f3.desc':'Pipeline visuel : Nouveau → Examiné → Présélectionné → Entretien → Offre. Déplacez les candidats en un clic.',
     'emp.f4.title':'Analytique des offres','emp.f4.desc':'Suivez les vues, candidatures et taux de conversion par offre. Identifiez vos meilleures annonces.',
     'cand.role':'Candidat','cand.nav.profile':'Mon profil','cand.nav.foryou':'Emplois pour vous',
-    'cand.nav.saved':'Offres sauvegardées','cand.nav.apps':'Candidatures','cand.nav.reviews':'Mes avis','cand.nav.ai':'Coach IA',
+    'cand.nav.saved':'Offres sauvegardées','cand.nav.apps':'Candidatures','cand.nav.reviews':'Mes avis','cand.nav.alerts':'Alertes emploi','cand.nav.ai':'Coach IA',
     'cand.tab.profile':'Mon profil','cand.tab.foryou':'Emplois pour vous','cand.tab.saved':'Offres sauvegardées','cand.tab.apps':'Mes candidatures',
     'cand.ai.title':'Agent Carrière IA','cand.ai.sub':"Posez n'importe quelle question — conseils CV, préparation entretien, négociation salariale, orientation carrière.",
     'cand.ai.online':'En ligne · Prêt à vous aider',
@@ -2527,6 +2527,109 @@ async function loadSavedJobsTab() {
   }).join('');
 }
 
+// ── Job Alerts ────────────────────────────────────────────
+async function loadAlerts() {
+  const container = document.getElementById('tab-alerts');
+  if (!container) return;
+  const isFr = state.lang === 'fr';
+  container.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px;color:var(--indigo)"></i></div>`;
+  const d = await api('GET', `${BASE}/api/candidates/alerts`);
+  const alerts = d.alerts || [];
+  const workModes = [
+    { value: '', label: isFr ? 'Tous modes' : 'All modes' },
+    { value: 'remote', label: 'Remote' },
+    { value: 'hybrid', label: 'Hybrid' },
+    { value: 'onsite', label: 'On-site' },
+  ];
+  const provincesOpts = [{ code: '', name: isFr ? 'Toutes provinces' : 'All provinces' }, ...CA_PROVINCES]
+    .map(p => `<option value="${p.code}">${p.name || p.code}</option>`).join('');
+
+  const alertCards = alerts.length
+    ? alerts.map(a => {
+        const chips = [
+          a.keywords && `<span class="job-tag">${esc(a.keywords)}</span>`,
+          a.province && `<span class="job-tag">${esc(a.province)}</span>`,
+          a.city && `<span class="job-tag">${esc(a.city)}</span>`,
+          a.work_mode && `<span class="job-tag ${a.work_mode}">${a.work_mode}</span>`,
+          a.job_type && `<span class="job-tag">${esc(a.job_type)}</span>`,
+        ].filter(Boolean).join('');
+        return `<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;background:var(--surface)">
+          <i class="ti ti-bell" style="color:var(--indigo);font-size:20px;flex-shrink:0"></i>
+          <div style="flex:1;min-width:0">
+            <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">${chips || `<span style="color:var(--muted);font-size:13px">${isFr ? 'Toutes offres' : 'All jobs'}</span>`}</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:4px">${isFr ? 'Créée le' : 'Created'} ${new Date(a.created_at).toLocaleDateString(isFr ? 'fr-CA' : 'en-CA', { month: 'short', day: 'numeric' })}</div>
+          </div>
+          <button class="btn-ghost" style="color:var(--danger);border-color:var(--danger);font-size:12px;padding:6px 12px" onclick="deleteAlert('${a.id}')"><i class="ti ti-trash"></i></button>
+        </div>`;
+      }).join('')
+    : `<div class="empty-state" style="padding:40px 0"><i class="ti ti-bell-off"></i><p>${isFr ? 'Aucune alerte configurée.' : 'No alerts configured yet.'}</p></div>`;
+
+  container.innerHTML = `
+    <div style="max-width:680px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+        <div>
+          <h3 style="margin:0;color:var(--dark)">${isFr ? 'Alertes emploi' : 'Job Alerts'}</h3>
+          <p style="margin:4px 0 0;font-size:13px;color:var(--muted)">${isFr ? 'Recevez un email quand de nouvelles offres correspondent à vos critères.' : 'Get an email when new jobs match your criteria.'} (${alerts.length}/5)</p>
+        </div>
+      </div>
+
+      ${alertCards}
+
+      ${alerts.length < 5 ? `
+      <div style="border:2px dashed var(--border);border-radius:12px;padding:24px;margin-top:16px">
+        <h4 style="margin:0 0 16px;color:var(--dark);font-size:14px"><i class="ti ti-plus" style="color:var(--indigo)"></i> ${isFr ? 'Créer une alerte' : 'Create an alert'}</h4>
+        <div class="form-row" style="gap:10px">
+          <div class="form-group" style="flex:2">
+            <label style="font-size:12px">${isFr ? 'Mots-clés (titre, compétence…)' : 'Keywords (title, skill…)'}</label>
+            <input type="text" id="al-keywords" placeholder="${isFr ? 'ex. développeur React' : 'e.g. React developer'}" style="font-size:13px">
+          </div>
+          <div class="form-group" style="flex:1">
+            <label style="font-size:12px">${isFr ? 'Mode de travail' : 'Work mode'}</label>
+            <select id="al-mode" style="font-size:13px">${workModes.map(m => `<option value="${m.value}">${m.label}</option>`).join('')}</select>
+          </div>
+        </div>
+        <div class="form-row" style="gap:10px">
+          <div class="form-group">
+            <label style="font-size:12px">Province</label>
+            <select id="al-province" style="font-size:13px">${provincesOpts}</select>
+          </div>
+          <div class="form-group">
+            <label style="font-size:12px">${isFr ? 'Ville' : 'City'}</label>
+            <input type="text" id="al-city" placeholder="${isFr ? 'ex. Montréal' : 'e.g. Toronto'}" style="font-size:13px">
+          </div>
+        </div>
+        <button class="btn-primary" style="font-size:13px;padding:9px 20px" onclick="createAlert()"><i class="ti ti-bell-plus"></i> ${isFr ? 'Créer l\'alerte' : 'Create alert'}</button>
+      </div>` : `<p style="font-size:13px;color:var(--muted);text-align:center;margin-top:12px">${isFr ? 'Maximum 5 alertes atteint.' : 'Maximum of 5 alerts reached.'}</p>`}
+    </div>`;
+}
+
+async function createAlert() {
+  const keywords = document.getElementById('al-keywords')?.value.trim();
+  const work_mode = document.getElementById('al-mode')?.value;
+  const province  = document.getElementById('al-province')?.value;
+  const city      = document.getElementById('al-city')?.value.trim();
+  const isFr = state.lang === 'fr';
+  if (!keywords && !work_mode && !province && !city) {
+    toast(isFr ? 'Précisez au moins un critère.' : 'Please set at least one criterion.', 'error');
+    return;
+  }
+  const d = await api('POST', `${BASE}/api/candidates/alerts`, { keywords, work_mode, province, city });
+  if (d.success) {
+    toast(isFr ? 'Alerte créée !' : 'Alert created!', 'success');
+    loadAlerts();
+  } else {
+    toast(d.error || 'Error', 'error');
+  }
+}
+
+async function deleteAlert(id) {
+  const d = await api('DELETE', `${BASE}/api/candidates/alerts/${id}`);
+  if (d.success) {
+    toast(state.lang === 'fr' ? 'Alerte supprimée.' : 'Alert deleted.', 'success');
+    loadAlerts();
+  }
+}
+
 // ── Jobs for You ──────────────────────────────────────────
 async function loadJobsForYou() {
   const container = document.getElementById('jobs-for-you');
@@ -3374,6 +3477,7 @@ function showTab(tabId, el) {
   if (tabId === 'tab-saved') loadSavedJobsTab();
   if (tabId === 'tab-applications') loadMyApplications();
   if (tabId === 'tab-for-you') loadJobsForYou();
+  if (tabId === 'tab-alerts') loadAlerts();
 }
 
 function showEmpTab(tabId, navEl) {

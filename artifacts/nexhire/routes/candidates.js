@@ -97,4 +97,54 @@ router.post('/ai/cover-letter', requireAuth, async (req, res) => {
   }
 });
 
+// ── Job Alerts ─────────────────────────────────────────────
+router.get('/alerts', requireAuth, async (req, res) => {
+  try {
+    const alerts = await db.all(
+      'SELECT * FROM nh_job_alerts WHERE user_id = $1 ORDER BY created_at DESC',
+      [req.session.user.id]
+    );
+    res.json({ success: true, alerts });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
+router.post('/alerts', requireAuth, async (req, res) => {
+  try {
+    const { keywords, city, province, work_mode, job_type } = req.body;
+    const existing = await db.all(
+      'SELECT id FROM nh_job_alerts WHERE user_id = $1',
+      [req.session.user.id]
+    );
+    if (existing.length >= 5) {
+      return res.status(400).json({ success: false, error: 'Maximum 5 alerts allowed' });
+    }
+    const id = require('crypto').randomUUID();
+    await db.run(
+      `INSERT INTO nh_job_alerts (id, user_id, keywords, city, province, work_mode, job_type)
+       VALUES ($1,$2,$3,$4,$5,$6,$7)`,
+      [id, req.session.user.id, keywords || null, city || null, province || null, work_mode || null, job_type || null]
+    );
+    const alert = await db.get('SELECT * FROM nh_job_alerts WHERE id = $1', [id]);
+    res.json({ success: true, alert });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
+router.delete('/alerts/:id', requireAuth, async (req, res) => {
+  try {
+    const alert = await db.get(
+      'SELECT id FROM nh_job_alerts WHERE id = $1 AND user_id = $2',
+      [req.params.id, req.session.user.id]
+    );
+    if (!alert) return res.status(404).json({ success: false, error: 'Alert not found' });
+    await db.run('DELETE FROM nh_job_alerts WHERE id = $1', [req.params.id]);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
 module.exports = router;
