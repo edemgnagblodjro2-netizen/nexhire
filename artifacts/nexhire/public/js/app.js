@@ -957,7 +957,10 @@ async function loadProfileForm() {
       <div class="form-group"><label>Work preference</label><select id="pf-mode"><option value="">Any</option><option value="remote" ${p.work_mode_pref==='remote'?'selected':''}>Remote</option><option value="hybrid" ${p.work_mode_pref==='hybrid'?'selected':''}>Hybrid</option><option value="onsite" ${p.work_mode_pref==='onsite'?'selected':''}>On-site</option></select></div>
       <div class="form-group"><label>Years of experience</label><input type="number" id="pf-exp" value="${p.experience_years||0}" min="0" max="50"></div>
     </div>
-    <div class="form-group"><label>Skills <span style="color:var(--muted);font-weight:400">(comma-separated)</span></label><input type="text" id="pf-skills" value="${safeJsonArr(p.skills).join(', ')}" placeholder="React, Node.js, TypeScript, Python"></div>
+    <div class="form-group skill-picker-wrap">
+      <label>Skills <span style="color:var(--muted);font-weight:400">— select all that apply</span></label>
+      ${renderSkillPicker(safeJsonArr(p.skills))}
+    </div>
     <div class="form-row">
       <div class="form-group"><label>LinkedIn URL</label><input type="url" id="pf-linkedin" value="${esc(p.linkedin_url||'')}" placeholder="https://linkedin.com/in/..."></div>
       <div class="form-group"><label>GitHub URL</label><input type="url" id="pf-github" value="${esc(p.github_url||'')}"></div>
@@ -977,7 +980,7 @@ async function saveProfile() {
     city: document.getElementById('pf-city')?.value.trim(),
     province: document.getElementById('pf-province')?.value || null,
     country: 'Canada',
-    skills: document.getElementById('pf-skills')?.value.split(',').map(s => s.trim()).filter(Boolean),
+    skills: getPickedSkills(),
     experience_years: parseInt(document.getElementById('pf-exp')?.value) || 0,
     linkedin_url: document.getElementById('pf-linkedin')?.value.trim(),
     github_url: document.getElementById('pf-github')?.value.trim(),
