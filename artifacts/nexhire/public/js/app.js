@@ -238,14 +238,248 @@ async function setLang(lang) {
   state.lang = lang; setLangUI(lang);
   if (state.user) await api('POST', `${BASE}/api/auth/set-lang`, { lang });
 }
+const T = {
+  en: {
+    'nav.jobs':'Jobs','nav.employers':'For Employers','nav.pricing':'Pricing',
+    'nav.signin':'Sign in','nav.getstarted':'Get started',
+    'nav.dd.profile':'Profile','nav.dd.reviews':'My reviews','nav.dd.settings':'Settings',
+    'nav.dd.help':'Help Centre','nav.dd.privacy':'Privacy Centre',
+    'nav.dd.employer':'Employer Dashboard','nav.dd.signout':'Sign out',
+    'hero.eyebrow':'AI-Powered Global Job Matching',
+    'hero.title':'Find your next <em>opportunity</em> anywhere in the world',
+    'hero.sub':'Thousands of jobs worldwide. Remote, hybrid, or on-site. AI matching to find your perfect role faster than ever.',
+    'hero.search.ph':'Title, skill, company...','hero.search.btn':'Search',
+    'hero.mode.all':'All modes','hero.mode.remote':'Remote','hero.mode.hybrid':'Hybrid','hero.mode.onsite':'On-site',
+    'hero.recent':'Your recent searches',
+    'hero.stat.jobs':'Active jobs','hero.stat.companies':'Companies','hero.stat.match':'AI match rate','hero.stat.resp':'Avg response',
+    'cat.title':'Browse by category','cat.all':'See all jobs',
+    'cat.software':'Software Development','cat.software.sub':'Developer · Engineer · Architect',
+    'cat.ai':'AI / Data Science','cat.ai.sub':'ML · Data Analyst · LLM',
+    'cat.design':'Design & Creative','cat.design.sub':'UX/UI · Graphic · Motion',
+    'cat.marketing':'Marketing & Communications','cat.marketing.sub':'SEO · Content · Brand · Growth',
+    'cat.finance':'Finance & Accounting','cat.finance.sub':'CPA · Analyst · Controller',
+    'cat.product':'Product Management','cat.product.sub':'PM · PO · Strategy · Roadmap',
+    'cat.sales':'Sales & Business Dev','cat.sales.sub':'Account Exec · SDR · BDM',
+    'cat.health':'Healthcare & Medical','cat.health.sub':'Nurse · Doctor · Therapist',
+    'cat.eng':'Engineering','cat.eng.sub':'Civil · Mechanical · Electrical',
+    'cat.cs':'Customer Service','cat.cs.sub':'Support · CX · Agent · Rep',
+    'cat.hr':'Human Resources','cat.hr.sub':'Recruiter · HRBP · Talent',
+    'cat.edu':'Education & Training','cat.edu.sub':'Teacher · Instructor · Coach',
+    'cat.legal':'Legal & Compliance','cat.legal.sub':'Lawyer · Paralegal · Notary',
+    'cat.ops':'Operations & Logistics','cat.ops.sub':'Supply Chain · Warehouse · Ops',
+    'cat.construction':'Construction & Trades','cat.construction.sub':'Carpenter · Electrician · Plumber',
+    'cat.remote':'Remote / International','cat.remote.sub':'Work from anywhere',
+    'featured.title':'Featured Opportunities','featured.all':'View all',
+    'feat.ai.title':'AI Job Matching','feat.ai.desc':"Our AI analyzes your profile and matches you to roles where you're most likely to succeed — faster than traditional search.",
+    'feat.ats.title':'ATS Pipeline','feat.ats.desc':'Employers get a full Kanban ATS to manage applications from New to Offer — with AI candidate scoring built in.',
+    'feat.cover.title':'AI Cover Letters','feat.cover.desc':'Generate personalized, compelling cover letters in seconds. One click — tailored to each job.',
+    'feat.reviews.title':'Company Reviews','feat.reviews.desc':"Transparent ratings from real candidates. Know what it's really like before you apply.",
+    'cta.title':'Hire the best talent globally',
+    'cta.desc':'Post jobs, review AI-ranked applications, manage your pipeline with Kanban, and message candidates directly. Start with 2 free job slots.',
+    'cta.btn':'Start hiring free','cta.trial':'Free trial','cta.apps':'Applications','cta.ats':'ATS pipeline',
+    'jobs.title':'Job listings','jobs.filter.ph':'Search title, skill, company...',
+    'jobs.filter.modes.all':'All modes','jobs.filter.types.all':'All types',
+    'jobs.filter.types.ft':'Full time','jobs.filter.types.perm':'Permanent','jobs.filter.types.pt':'Part time',
+    'jobs.filter.types.contract':'Contract','jobs.filter.types.temp':'Temporary','jobs.filter.types.casual':'Casual',
+    'jobs.filter.pay.all':'All Pay',
+    'jobs.filter.dates.all':'All Dates','jobs.filter.dates.unseen':"Jobs you haven't seen",
+    'jobs.filter.dates.1d':'Last 24 hours','jobs.filter.dates.3d':'Last 3 days',
+    'jobs.filter.dates.7d':'Last 7 days','jobs.filter.dates.14d':'Last 14 days',
+    'jobs.filter.lang':'Job language',
+    'emp.eyebrow':'For Employers','emp.title':'Hire globally with <em>AI precision</em>',
+    'emp.sub':'Post jobs, get AI-ranked candidates, manage your pipeline with Kanban, and build your global team — all in one platform.',
+    'emp.cta':'Start free — 2 job slots','emp.pricing':'See pricing',
+    'emp.f1.title':'Post in minutes','emp.f1.desc':'Create bilingual job postings with AI-assisted descriptions. Go live in under 5 minutes.',
+    'emp.f2.title':'AI candidate ranking','emp.f2.desc':'Every application gets an AI match score so you focus on the best candidates first.',
+    'emp.f3.title':'Kanban ATS pipeline','emp.f3.desc':'Visual pipeline: New → Reviewed → Shortlisted → Interview → Offer. Move candidates with one click.',
+    'emp.f4.title':'Job analytics','emp.f4.desc':'Track views, applications, and conversion rate per listing. Know which jobs perform best.',
+    'cand.role':'Candidate','cand.nav.profile':'My Profile','cand.nav.foryou':'Jobs for You',
+    'cand.nav.saved':'Saved Jobs','cand.nav.apps':'Applications','cand.nav.reviews':'My Reviews','cand.nav.ai':'AI Coach',
+    'cand.tab.profile':'My Profile','cand.tab.foryou':'Jobs for You','cand.tab.saved':'Saved Jobs','cand.tab.apps':'My Applications',
+    'cand.ai.title':'AI Career Coach','cand.ai.sub':'Ask anything — resume tips, interview prep, salary negotiation, career advice.',
+    'cand.ai.greeting':"Hi! I'm your Nexhire AI coach. How can I help with your job search today?",'cand.ai.ph':'Ask me about your job search...',
+    'emp.role':'Employer','emp.nav.jobs':'My Jobs','emp.nav.post':'Post a Job','emp.nav.company':'Company','emp.nav.billing':'Billing',
+    'emp.tab.jobs':'My Job Listings','emp.tab.post':'Post a New Job','emp.tab.company':'Company Profile','emp.tab.billing':'Billing & Plan',
+    'settings.title':'Settings',
+    'settings.account.label':'Account settings','settings.account.sub':'Your contact information',
+    'settings.security.label':'Security settings','settings.security.sub':'Manage your account security',
+    'settings.notif.label':'Communications settings','settings.notif.sub':'Manage notifications and messages',
+    'settings.privacy.label':'Privacy settings','settings.privacy.sub':'Information about your privacy',
+    'help.title':"If you're looking for help, you're in the right place",
+    'help.seekers.title':'Help for job seekers',
+    'help.seekers.desc':"Got a question or need help using Nexhire? Whether it's setting up your account, using AI matching, or applying — we've got you covered.",
+    'help.seekers.link':'Job Seeker Help Centre →',
+    'help.employers.title':'Help for employers',
+    'help.employers.desc':"Looking to hire? Our Employer Help Centre covers posting jobs, managing the ATS pipeline, billing, and finding the best candidates faster.",
+    'help.employers.link':'Employer Help Centre →',
+    'help.cta.title':"We're here to help",'help.cta.desc':'Visit our Help Centre for answers to common questions or contact us directly.',
+    'help.contact':'Contact support','help.legal':'Legal / Privacy',
+    'footer.tagline':'Global AI Employment Platform','footer.platform':'Platform',
+    'footer.browse':'Browse jobs','footer.employers':'For employers','footer.pricing':'Pricing','footer.getstarted':'Get started free',
+    'footer.company':'Company','footer.help':'Help Centre','footer.privacy':'Privacy Centre','footer.terms':'Terms of Service','footer.contact':'Contact',
+    'footer.copy':'© 2026 CivicAI Inc. All rights reserved.',
+    'footer.privacy.sm':'Privacy','footer.terms.sm':'Terms','footer.legal.sm':'Legal','footer.made':'🍁 Made in Québec · CivicAI 2026',
+    'modal.apply.cover':'Cover letter','modal.apply.cover.opt':'(optional but recommended)',
+    'modal.apply.ai.title':'AI content analysis',
+    'modal.apply.ai.desc':"Nexhire can detect AI-generated content in your cover letter. Would you like to allow the employer to see this analysis?",
+    'modal.apply.yes':'Yes, share analysis','modal.apply.no':'No thanks',
+    'modal.apply.submit':'Submit application','modal.apply.note':'Your profile info will be shared with the employer',
+    'modal.apply.ph':"Briefly explain why you're a great fit for this role...",
+    'modal.login.title':'Sign in to Nexhire','modal.login.email':'Email','modal.login.pw':'Password',
+    'modal.login.btn':'Sign in','modal.login.create':'Create an account','modal.login.forgot':'Forgot password?',
+    'modal.reg.title':'Create your account','modal.reg.candidate':'Candidate','modal.reg.employer':'Employer',
+    'modal.reg.first':'First name','modal.reg.last':'Last name','modal.reg.email':'Email','modal.reg.pw':'Password',
+    'modal.reg.company':'Company name','modal.reg.btn':'Create account',
+    'modal.reg.terms':'By creating an account you agree to our','modal.reg.terms.link':'Terms of Service',
+    'modal.rev.rating':'Overall rating *','modal.rev.title.label':'Review title',
+    'modal.rev.pros':'Pros','modal.rev.cons':'Cons','modal.rev.diff':'Interview difficulty',
+    'modal.rev.recommend':'Would recommend','modal.rev.anon':'Post anonymously','modal.rev.submit':'Submit review',
+    'kanban.close':'Close',
+  },
+  fr: {
+    'nav.jobs':'Emplois','nav.employers':'Pour les employeurs','nav.pricing':'Tarifs',
+    'nav.signin':'Connexion','nav.getstarted':'Commencer',
+    'nav.dd.profile':'Profil','nav.dd.reviews':'Mes avis','nav.dd.settings':'Paramètres',
+    'nav.dd.help':"Centre d'aide",'nav.dd.privacy':'Confidentialité',
+    'nav.dd.employer':'Tableau de bord employeur','nav.dd.signout':'Déconnexion',
+    'hero.eyebrow':'Matching IA — Emplois Mondiaux',
+    'hero.title':'Trouvez votre prochaine <em>opportunité</em> partout dans le monde',
+    'hero.sub':"Des milliers d'emplois mondiaux. Télétravail, hybride ou présentiel. Matching IA pour trouver votre poste idéal.",
+    'hero.search.ph':'Titre, compétence, entreprise...','hero.search.btn':'Rechercher',
+    'hero.mode.all':'Tous les modes','hero.mode.remote':'Télétravail','hero.mode.hybrid':'Hybride','hero.mode.onsite':'Présentiel',
+    'hero.recent':'Vos recherches récentes',
+    'hero.stat.jobs':'Offres actives','hero.stat.companies':'Entreprises','hero.stat.match':'Taux matching IA','hero.stat.resp':'Délai réponse moyen',
+    'cat.title':'Parcourir par catégorie','cat.all':'Voir toutes les offres',
+    'cat.software':'Développement logiciel','cat.software.sub':'Développeur · Ingénieur · Architecte',
+    'cat.ai':'IA / Science des données','cat.ai.sub':'ML · Analyste données · LLM',
+    'cat.design':'Design & Créatif','cat.design.sub':'UX/UI · Graphiste · Motion',
+    'cat.marketing':'Marketing & Communications','cat.marketing.sub':'SEO · Contenu · Marque · Croissance',
+    'cat.finance':'Finance & Comptabilité','cat.finance.sub':'CPA · Analyste · Contrôleur',
+    'cat.product':'Gestion de produit','cat.product.sub':'PM · PO · Stratégie · Roadmap',
+    'cat.sales':'Ventes & Développement des affaires','cat.sales.sub':'Directeur de compte · SDR · BDM',
+    'cat.health':'Santé & Médecine','cat.health.sub':'Infirmier · Médecin · Thérapeute',
+    'cat.eng':'Génie','cat.eng.sub':'Civil · Mécanique · Électrique',
+    'cat.cs':'Service à la clientèle','cat.cs.sub':'Support · CX · Agent · Représentant',
+    'cat.hr':'Ressources humaines','cat.hr.sub':'Recruteur · RHBP · Talents',
+    'cat.edu':'Éducation & Formation','cat.edu.sub':'Enseignant · Instructeur · Formateur',
+    'cat.legal':'Juridique & Conformité','cat.legal.sub':'Avocat · Parajuriste · Notaire',
+    'cat.ops':'Opérations & Logistique','cat.ops.sub':"Chaîne d'approvisionnement · Entrepôt · Ops",
+    'cat.construction':'Construction & Métiers','cat.construction.sub':'Charpentier · Électricien · Plombier',
+    'cat.remote':'Télétravail / International','cat.remote.sub':"Travailler de n'importe où",
+    'featured.title':'Opportunités en vedette','featured.all':'Voir tout',
+    'feat.ai.title':'Matching IA','feat.ai.desc':"Notre IA analyse votre profil et vous associe aux postes où vous avez le plus de chances de réussir — plus vite que la recherche traditionnelle.",
+    'feat.ats.title':'Pipeline ATS','feat.ats.desc':"Les employeurs disposent d'un ATS Kanban complet pour gérer les candidatures de Nouveau à Offre — avec scoring IA intégré.",
+    'feat.cover.title':'Lettres de motivation IA','feat.cover.desc':'Générez des lettres de motivation personnalisées en quelques secondes. Un clic — adaptées à chaque poste.',
+    'feat.reviews.title':"Avis d'entreprises",'feat.reviews.desc':"Évaluations transparentes de vrais candidats. Sachez vraiment à quoi vous attendre avant de postuler.",
+    'cta.title':"Recrutez les meilleurs talents à l'échelle mondiale",
+    'cta.desc':'Publiez des offres, examinez les candidatures classées par IA, gérez votre pipeline Kanban et contactez directement les candidats. Commencez avec 2 postes gratuits.',
+    'cta.btn':'Commencer gratuitement','cta.trial':'Essai gratuit','cta.apps':'Candidatures','cta.ats':'Pipeline ATS',
+    'jobs.title':"Offres d'emploi",'jobs.filter.ph':'Titre, compétence, entreprise...',
+    'jobs.filter.modes.all':'Tous les modes','jobs.filter.types.all':'Tous les types',
+    'jobs.filter.types.ft':'Temps plein','jobs.filter.types.perm':'Permanent','jobs.filter.types.pt':'Temps partiel',
+    'jobs.filter.types.contract':'Contrat','jobs.filter.types.temp':'Temporaire','jobs.filter.types.casual':'Occasionnel',
+    'jobs.filter.pay.all':'Tous les salaires',
+    'jobs.filter.dates.all':'Toutes les dates','jobs.filter.dates.unseen':'Offres non consultées',
+    'jobs.filter.dates.1d':'Dernières 24 h','jobs.filter.dates.3d':'Derniers 3 jours',
+    'jobs.filter.dates.7d':'Derniers 7 jours','jobs.filter.dates.14d':'Derniers 14 jours',
+    'jobs.filter.lang':"Langue de l'offre",
+    'emp.eyebrow':'Pour les employeurs','emp.title':'Recrutez mondialement avec <em>précision IA</em>',
+    'emp.sub':'Publiez des offres, recevez des candidats classés par IA, gérez votre pipeline Kanban et construisez votre équipe mondiale — tout en un.',
+    'emp.cta':'Commencer gratuitement — 2 postes','emp.pricing':'Voir les tarifs',
+    'emp.f1.title':'Publiez en quelques minutes','emp.f1.desc':"Créez des offres bilingues avec des descriptions assistées par IA. Mise en ligne en moins de 5 minutes.",
+    'emp.f2.title':'Classement IA des candidats','emp.f2.desc':'Chaque candidature reçoit un score de correspondance IA pour que vous vous concentriez sur les meilleurs candidats en premier.',
+    'emp.f3.title':'Pipeline ATS Kanban','emp.f3.desc':'Pipeline visuel : Nouveau → Examiné → Présélectionné → Entretien → Offre. Déplacez les candidats en un clic.',
+    'emp.f4.title':'Analytique des offres','emp.f4.desc':'Suivez les vues, candidatures et taux de conversion par offre. Identifiez vos meilleures annonces.',
+    'cand.role':'Candidat','cand.nav.profile':'Mon profil','cand.nav.foryou':'Emplois pour vous',
+    'cand.nav.saved':'Offres sauvegardées','cand.nav.apps':'Candidatures','cand.nav.reviews':'Mes avis','cand.nav.ai':'Coach IA',
+    'cand.tab.profile':'Mon profil','cand.tab.foryou':'Emplois pour vous','cand.tab.saved':'Offres sauvegardées','cand.tab.apps':'Mes candidatures',
+    'cand.ai.title':'Coach Carrière IA','cand.ai.sub':"Posez n'importe quelle question — conseils CV, préparation entretien, négociation salariale, orientation carrière.",
+    'cand.ai.greeting':"Bonjour ! Je suis votre coach IA Nexhire. Comment puis-je vous aider dans votre recherche d'emploi ?",'cand.ai.ph':"Posez-moi une question...",
+    'emp.role':'Employeur','emp.nav.jobs':'Mes offres','emp.nav.post':'Publier une offre','emp.nav.company':'Entreprise','emp.nav.billing':'Facturation',
+    'emp.tab.jobs':"Mes offres d'emploi",'emp.tab.post':'Publier une nouvelle offre','emp.tab.company':"Profil d'entreprise",'emp.tab.billing':'Facturation & Plan',
+    'settings.title':'Paramètres',
+    'settings.account.label':'Paramètres du compte','settings.account.sub':'Vos coordonnées',
+    'settings.security.label':'Paramètres de sécurité','settings.security.sub':'Gérez la sécurité de votre compte',
+    'settings.notif.label':'Communications','settings.notif.sub':'Gérez vos notifications et messages',
+    'settings.privacy.label':'Confidentialité','settings.privacy.sub':'Informations sur votre vie privée',
+    'help.title':"Si vous cherchez de l'aide, vous êtes au bon endroit",
+    'help.seekers.title':'Aide pour les chercheurs d\'emploi',
+    'help.seekers.desc':"Une question ou besoin d'aide avec Nexhire ? Que ce soit pour créer votre compte, utiliser le matching IA ou postuler — nous sommes là.",
+    'help.seekers.link':"Centre d'aide candidats →",
+    'help.employers.title':'Aide pour les employeurs',
+    'help.employers.desc':"Vous cherchez à embaucher ? Notre centre d'aide employeurs couvre la publication d'offres, la gestion du pipeline ATS, la facturation et la recherche des meilleurs candidats.",
+    'help.employers.link':"Centre d'aide employeurs →",
+    'help.cta.title':'Nous sommes là pour vous aider','help.cta.desc':"Consultez notre centre d'aide ou contactez-nous directement.",
+    'help.contact':'Contacter le support','help.legal':'Juridique / Confidentialité',
+    'footer.tagline':"Plateforme d'emploi IA mondiale",'footer.platform':'Plateforme',
+    'footer.browse':'Parcourir les offres','footer.employers':'Pour les employeurs','footer.pricing':'Tarifs','footer.getstarted':'Commencer gratuitement',
+    'footer.company':'Entreprise','footer.help':"Centre d'aide",'footer.privacy':'Confidentialité','footer.terms':"Conditions d'utilisation",'footer.contact':'Contact',
+    'footer.copy':'© 2026 CivicAI Inc. Tous droits réservés.',
+    'footer.privacy.sm':'Confidentialité','footer.terms.sm':'Conditions','footer.legal.sm':'Juridique','footer.made':'🍁 Fait au Québec · CivicAI 2026',
+    'modal.apply.cover':'Lettre de motivation','modal.apply.cover.opt':'(optionnel mais recommandé)',
+    'modal.apply.ai.title':'Analyse de contenu IA',
+    'modal.apply.ai.desc':"Nexhire peut détecter le contenu généré par IA dans votre lettre de motivation. Souhaitez-vous permettre à l'employeur de voir cette analyse ?",
+    'modal.apply.yes':"Oui, partager l'analyse",'modal.apply.no':'Non merci',
+    'modal.apply.submit':'Soumettre ma candidature','modal.apply.note':"Votre profil sera partagé avec l'employeur",
+    'modal.apply.ph':"Expliquez brièvement pourquoi vous êtes le candidat idéal pour ce poste...",
+    'modal.login.title':'Connexion à Nexhire','modal.login.email':'Courriel','modal.login.pw':'Mot de passe',
+    'modal.login.btn':'Connexion','modal.login.create':'Créer un compte','modal.login.forgot':'Mot de passe oublié ?',
+    'modal.reg.title':'Créer votre compte','modal.reg.candidate':'Candidat','modal.reg.employer':'Employeur',
+    'modal.reg.first':'Prénom','modal.reg.last':'Nom de famille','modal.reg.email':'Courriel','modal.reg.pw':'Mot de passe',
+    'modal.reg.company':"Nom de l'entreprise",'modal.reg.btn':'Créer le compte',
+    'modal.reg.terms':'En créant un compte vous acceptez nos','modal.reg.terms.link':"Conditions d'utilisation",
+    'modal.rev.rating':'Note globale *','modal.rev.title.label':'Titre de l\'avis',
+    'modal.rev.pros':'Points positifs','modal.rev.cons':'Points à améliorer','modal.rev.diff':"Difficulté de l'entretien",
+    'modal.rev.recommend':'Recommanderait','modal.rev.anon':'Publier anonymement','modal.rev.submit':"Soumettre l'avis",
+    'kanban.close':'Fermer',
+  }
+};
 function setLangUI(lang) {
   document.getElementById('btn-en')?.classList.toggle('active', lang === 'en');
   document.getElementById('btn-fr')?.classList.toggle('active', lang === 'fr');
   document.documentElement.lang = lang;
-  const t = lang === 'fr';
-  safeSet('h-eyebrow', t ? 'Matching IA — Emplois Mondiaux' : 'AI-Powered Global Job Matching');
-  safeSet('h-title', t ? 'Trouvez votre prochaine <em>opportunité</em> partout dans le monde' : 'Find your next <em>opportunity</em> anywhere in the world');
-  safeSet('h-sub', t ? 'Des milliers d\'emplois mondiaux. Télétravail, hybride ou présentiel. Matching IA pour trouver votre poste idéal.' : 'Thousands of jobs worldwide. Remote, hybrid, or on-site. AI matching to find your perfect role faster than ever.');
+  const t = T[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = t[el.dataset.i18n]; if (v !== undefined) el.textContent = v;
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const v = t[el.dataset.i18nHtml]; if (v !== undefined) el.innerHTML = v;
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const v = t[el.dataset.i18nPh]; if (v !== undefined) el.placeholder = v;
+  });
+  safeRebuildSelect('mode-filter', [
+    ['', t['hero.mode.all']], ['remote', t['hero.mode.remote']],
+    ['hybrid', t['hero.mode.hybrid']], ['onsite', t['hero.mode.onsite']]
+  ]);
+  safeRebuildSelect('fwork', [
+    ['', t['jobs.filter.modes.all']], ['remote', t['hero.mode.remote']],
+    ['hybrid', t['hero.mode.hybrid']], ['onsite', t['hero.mode.onsite']]
+  ]);
+  safeRebuildSelect('ftype', [
+    ['', t['jobs.filter.types.all']], ['full-time', t['jobs.filter.types.ft']],
+    ['permanent', t['jobs.filter.types.perm']], ['part-time', t['jobs.filter.types.pt']],
+    ['contract', t['jobs.filter.types.contract']], ['temporary', t['jobs.filter.types.temp']],
+    ['casual', t['jobs.filter.types.casual']]
+  ]);
+  safeRebuildSelect('fsal', [
+    ['', t['jobs.filter.pay.all']], ['40000', '$40,000+'], ['60000', '$60,000+'],
+    ['80000', '$80,000+'], ['100000', '$100,000+'], ['120000', '$120,000+']
+  ]);
+  safeRebuildSelect('fdate', [
+    ['', t['jobs.filter.dates.all']], ['unseen', t['jobs.filter.dates.unseen']],
+    ['1', t['jobs.filter.dates.1d']], ['3', t['jobs.filter.dates.3d']],
+    ['7', t['jobs.filter.dates.7d']], ['14', t['jobs.filter.dates.14d']]
+  ]);
+  safeRebuildSelect('flang', [
+    ['', t['jobs.filter.lang']], ['en', 'English'], ['fr', 'Français']
+  ]);
+}
+function safeRebuildSelect(id, options) {
+  const el = document.getElementById(id); if (!el) return;
+  const cur = el.value;
+  el.innerHTML = options.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
+  el.value = cur;
 }
 function safeSet(id, html) { const el = document.getElementById(id); if (el) el.innerHTML = html; }
 

@@ -21,9 +21,9 @@
       <span class="logo-word">Nex<em>hire</em></span>
     </a>
     <div class="nav-links" id="nav-links">
-      <a class="nav-link" data-goto="jobs" href="#">Jobs</a>
-      <a class="nav-link" data-goto="employer" href="#">For Employers</a>
-      <a class="nav-link" data-goto="pricing" href="#">Pricing</a>
+      <a class="nav-link" data-goto="jobs" href="#" data-i18n="nav.jobs">Jobs</a>
+      <a class="nav-link" data-goto="employer" href="#" data-i18n="nav.employers">For Employers</a>
+      <a class="nav-link" data-goto="pricing" href="#" data-i18n="nav.pricing">Pricing</a>
     </div>
     <div class="nav-actions">
       <div class="lang-toggle">
@@ -31,8 +31,8 @@
         <button class="lang-btn" id="btn-fr" data-lang="fr">FR</button>
       </div>
       <div id="nav-auth-guest" style="display:flex;gap:8px">
-        <a href="#login" class="btn-ghost" style="text-decoration:none">Sign in</a>
-        <button class="btn-primary" data-modal="modal-register">Get started</button>
+        <a href="#login" class="btn-ghost" style="text-decoration:none" data-i18n="nav.signin">Sign in</a>
+        <button class="btn-primary" data-modal="modal-register" data-i18n="nav.getstarted">Get started</button>
       </div>
       <div id="nav-auth-user" style="display:none;align-items:center;gap:8px">
         <div class="notif-bell" id="nav-notif-bell" title="Notifications">
@@ -44,15 +44,15 @@
           <i class="ti ti-chevron-down" style="font-size:12px;color:#94A3B8"></i>
           <div class="user-dropdown" id="user-dropdown">
             <div class="dropdown-email" id="dropdown-email">—</div>
-            <div class="dropdown-item" data-goto="candidate-dash"><i class="ti ti-user"></i> Profile</div>
-            <div class="dropdown-item" id="dd-my-reviews"><i class="ti ti-star"></i> My reviews</div>
-            <div class="dropdown-item" data-goto="settings"><i class="ti ti-settings"></i> Settings</div>
+            <div class="dropdown-item" data-goto="candidate-dash"><i class="ti ti-user"></i> <span data-i18n="nav.dd.profile">Profile</span></div>
+            <div class="dropdown-item" id="dd-my-reviews"><i class="ti ti-star"></i> <span data-i18n="nav.dd.reviews">My reviews</span></div>
+            <div class="dropdown-item" data-goto="settings"><i class="ti ti-settings"></i> <span data-i18n="nav.dd.settings">Settings</span></div>
             <div class="dropdown-divider"></div>
-            <div class="dropdown-item" data-goto="help"><i class="ti ti-help-circle"></i> Help Centre</div>
-            <div class="dropdown-item" data-goto="privacy"><i class="ti ti-shield"></i> Privacy Centre</div>
+            <div class="dropdown-item" data-goto="help"><i class="ti ti-help-circle"></i> <span data-i18n="nav.dd.help">Help Centre</span></div>
+            <div class="dropdown-item" data-goto="privacy"><i class="ti ti-shield"></i> <span data-i18n="nav.dd.privacy">Privacy Centre</span></div>
             <div class="dropdown-divider"></div>
-            <div class="dropdown-item" id="dd-employer" data-goto="employer-dash" style="display:none"><i class="ti ti-layout-dashboard"></i> Employer Dashboard</div>
-            <div class="dropdown-item danger" id="dd-logout"><i class="ti ti-logout"></i> Sign out</div>
+            <div class="dropdown-item" id="dd-employer" data-goto="employer-dash" style="display:none"><i class="ti ti-layout-dashboard"></i> <span data-i18n="nav.dd.employer">Employer Dashboard</span></div>
+            <div class="dropdown-item danger" id="dd-logout"><i class="ti ti-logout"></i> <span data-i18n="nav.dd.signout">Sign out</span></div>
           </div>
         </div>
       </div>
@@ -73,11 +73,11 @@
       <div class="hbg-overlay"></div>
     </div>
     <div class="hero-inner">
-      <div class="hero-badge"><span class="badge-dot"></span><span id="h-eyebrow">AI-Powered Global Job Matching</span></div>
-      <h1 class="hero-title" id="h-title">Find your next <em>opportunity</em> anywhere in the world</h1>
-      <p class="hero-sub" id="h-sub">Thousands of jobs worldwide. Remote, hybrid, or on-site. AI matching to find your perfect role faster than ever.</p>
+      <div class="hero-badge"><span class="badge-dot"></span><span id="h-eyebrow" data-i18n="hero.eyebrow">AI-Powered Global Job Matching</span></div>
+      <h1 class="hero-title" id="h-title" data-i18n-html="hero.title">Find your next <em>opportunity</em> anywhere in the world</h1>
+      <p class="hero-sub" id="h-sub" data-i18n="hero.sub">Thousands of jobs worldwide. Remote, hybrid, or on-site. AI matching to find your perfect role faster than ever.</p>
       <div class="search-bar">
-        <div class="search-field"><i class="ti ti-search"></i><input type="text" id="q" placeholder="Title, skill, company..." oninput="debounceSearch()"></div>
+        <div class="search-field"><i class="ti ti-search"></i><input type="text" id="q" placeholder="Title, skill, company..." data-i18n-ph="hero.search.ph" oninput="debounceSearch()"></div>
         <div class="search-field search-loc">
           <i class="ti ti-map-pin"></i>
           <select id="hero-province" onchange="syncHeroProvince()" style="border:none;background:transparent;font-size:15px;color:#334155;outline:none;width:100%;cursor:pointer;font-family:inherit">
@@ -85,7 +85,7 @@
           </select>
         </div>
         <div class="search-field search-mode"><i class="ti ti-device-laptop"></i><select id="mode-filter" onchange="searchJobs()"><option value="">All modes</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select></div>
-        <button class="btn-primary search-btn" data-action="search-jobs"><i class="ti ti-search"></i> Search</button>
+        <button class="btn-primary search-btn" data-action="search-jobs"><i class="ti ti-search"></i> <span data-i18n="hero.search.btn">Search</span></button>
       </div>
       <div class="quick-tags">
         <span class="qtag" data-search="Developer"><i class="ti ti-code"></i> Developer</span>
@@ -98,17 +98,17 @@
         <span class="qtag" data-search="Remote"><i class="ti ti-world"></i> Remote</span>
       </div>
       <div id="recent-searches-section" style="display:none;max-width:860px;margin:0 auto;padding:0 20px 16px">
-        <div class="recent-searches-title">Your recent searches</div>
+        <div class="recent-searches-title" data-i18n="hero.recent">Your recent searches</div>
         <div class="recent-searches-list" id="recent-searches-list"></div>
       </div>
       <div class="hero-stats">
-        <div class="hstat"><div class="hstat-n" id="stat-jobs">—</div><div class="hstat-l">Active jobs</div></div>
+        <div class="hstat"><div class="hstat-n" id="stat-jobs">—</div><div class="hstat-l" data-i18n="hero.stat.jobs">Active jobs</div></div>
         <div class="hstat-div"></div>
-        <div class="hstat"><div class="hstat-n" id="stat-cos">—</div><div class="hstat-l">Companies</div></div>
+        <div class="hstat"><div class="hstat-n" id="stat-cos">—</div><div class="hstat-l" data-i18n="hero.stat.companies">Companies</div></div>
         <div class="hstat-div"></div>
-        <div class="hstat"><div class="hstat-n">94%</div><div class="hstat-l">AI match rate</div></div>
+        <div class="hstat"><div class="hstat-n">94%</div><div class="hstat-l" data-i18n="hero.stat.match">AI match rate</div></div>
         <div class="hstat-div"></div>
-        <div class="hstat"><div class="hstat-n">48h</div><div class="hstat-l">Avg response</div></div>
+        <div class="hstat"><div class="hstat-n">48h</div><div class="hstat-l" data-i18n="hero.stat.resp">Avg response</div></div>
       </div>
     </div>
   </section>
@@ -117,88 +117,88 @@
   <section class="categories-section reveal">
     <div class="section-inner">
       <div class="section-header">
-        <h2>Browse by category</h2>
-        <button class="btn-link" data-goto="jobs">See all jobs <i class="ti ti-arrow-right"></i></button>
+        <h2 data-i18n="cat.title">Browse by category</h2>
+        <button class="btn-link" data-goto="jobs"><span data-i18n="cat.all">See all jobs</span> <i class="ti ti-arrow-right"></i></button>
       </div>
       <div class="categories-grid reveal-stagger">
         <div class="cat-card" data-search="Software Developer">
           <div class="cat-icon" style="background:#EEF2FF;color:#6366F1"><i class="ti ti-code"></i></div>
-          <div class="cat-info"><div class="cat-name">Software Development</div><div class="cat-sub">Developer · Engineer · Architect</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.software">Software Development</div><div class="cat-sub" data-i18n="cat.software.sub">Developer · Engineer · Architect</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Data Science AI">
           <div class="cat-icon" style="background:#F0FDF4;color:#16A34A"><i class="ti ti-cpu"></i></div>
-          <div class="cat-info"><div class="cat-name">AI / Data Science</div><div class="cat-sub">ML · Data Analyst · LLM</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.ai">AI / Data Science</div><div class="cat-sub" data-i18n="cat.ai.sub">ML · Data Analyst · LLM</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Design UX UI">
           <div class="cat-icon" style="background:#FFF7ED;color:#EA580C"><i class="ti ti-palette"></i></div>
-          <div class="cat-info"><div class="cat-name">Design & Creative</div><div class="cat-sub">UX/UI · Graphic · Motion</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.design">Design & Creative</div><div class="cat-sub" data-i18n="cat.design.sub">UX/UI · Graphic · Motion</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Marketing">
           <div class="cat-icon" style="background:#FFF1F2;color:#E11D48"><i class="ti ti-speakerphone"></i></div>
-          <div class="cat-info"><div class="cat-name">Marketing & Communications</div><div class="cat-sub">SEO · Content · Brand · Growth</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.marketing">Marketing & Communications</div><div class="cat-sub" data-i18n="cat.marketing.sub">SEO · Content · Brand · Growth</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Finance Accounting">
           <div class="cat-icon" style="background:#FFFBEB;color:#D97706"><i class="ti ti-coin"></i></div>
-          <div class="cat-info"><div class="cat-name">Finance & Accounting</div><div class="cat-sub">CPA · Analyst · Controller</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.finance">Finance & Accounting</div><div class="cat-sub" data-i18n="cat.finance.sub">CPA · Analyst · Controller</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Product Manager">
           <div class="cat-icon" style="background:#F5F3FF;color:#7C3AED"><i class="ti ti-package"></i></div>
-          <div class="cat-info"><div class="cat-name">Product Management</div><div class="cat-sub">PM · PO · Strategy · Roadmap</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.product">Product Management</div><div class="cat-sub" data-i18n="cat.product.sub">PM · PO · Strategy · Roadmap</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Sales Business Development">
           <div class="cat-icon" style="background:#ECFDF5;color:#059669"><i class="ti ti-trending-up"></i></div>
-          <div class="cat-info"><div class="cat-name">Sales & Business Dev</div><div class="cat-sub">Account Exec · SDR · BDM</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.sales">Sales & Business Dev</div><div class="cat-sub" data-i18n="cat.sales.sub">Account Exec · SDR · BDM</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Healthcare Nurse">
           <div class="cat-icon" style="background:#FFF0F6;color:#C2185B"><i class="ti ti-stethoscope"></i></div>
-          <div class="cat-info"><div class="cat-name">Healthcare & Medical</div><div class="cat-sub">Nurse · Doctor · Therapist</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.health">Healthcare & Medical</div><div class="cat-sub" data-i18n="cat.health.sub">Nurse · Doctor · Therapist</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Engineering">
           <div class="cat-icon" style="background:#E0F2FE;color:#0284C7"><i class="ti ti-settings-cog"></i></div>
-          <div class="cat-info"><div class="cat-name">Engineering</div><div class="cat-sub">Civil · Mechanical · Electrical</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.eng">Engineering</div><div class="cat-sub" data-i18n="cat.eng.sub">Civil · Mechanical · Electrical</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Customer Service Support">
           <div class="cat-icon" style="background:#F0FDF4;color:#15803D"><i class="ti ti-headset"></i></div>
-          <div class="cat-info"><div class="cat-name">Customer Service</div><div class="cat-sub">Support · CX · Agent · Rep</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.cs">Customer Service</div><div class="cat-sub" data-i18n="cat.cs.sub">Support · CX · Agent · Rep</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Human Resources HR">
           <div class="cat-icon" style="background:#FDF4FF;color:#A21CAF"><i class="ti ti-users"></i></div>
-          <div class="cat-info"><div class="cat-name">Human Resources</div><div class="cat-sub">Recruiter · HRBP · Talent</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.hr">Human Resources</div><div class="cat-sub" data-i18n="cat.hr.sub">Recruiter · HRBP · Talent</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Education Teacher">
           <div class="cat-icon" style="background:#FFFBEB;color:#B45309"><i class="ti ti-school"></i></div>
-          <div class="cat-info"><div class="cat-name">Education & Training</div><div class="cat-sub">Teacher · Instructor · Coach</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.edu">Education & Training</div><div class="cat-sub" data-i18n="cat.edu.sub">Teacher · Instructor · Coach</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Legal Law">
           <div class="cat-icon" style="background:#F1F5F9;color:#475569"><i class="ti ti-scale"></i></div>
-          <div class="cat-info"><div class="cat-name">Legal & Compliance</div><div class="cat-sub">Lawyer · Paralegal · Notary</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.legal">Legal & Compliance</div><div class="cat-sub" data-i18n="cat.legal.sub">Lawyer · Paralegal · Notary</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Operations Logistics">
           <div class="cat-icon" style="background:#FFF7ED;color:#C2410C"><i class="ti ti-truck"></i></div>
-          <div class="cat-info"><div class="cat-name">Operations & Logistics</div><div class="cat-sub">Supply Chain · Warehouse · Ops</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.ops">Operations & Logistics</div><div class="cat-sub" data-i18n="cat.ops.sub">Supply Chain · Warehouse · Ops</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Construction Trades">
           <div class="cat-icon" style="background:#FEF9C3;color:#A16207"><i class="ti ti-building-skyscraper"></i></div>
-          <div class="cat-info"><div class="cat-name">Construction & Trades</div><div class="cat-sub">Carpenter · Electrician · Plumber</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.construction">Construction & Trades</div><div class="cat-sub" data-i18n="cat.construction.sub">Carpenter · Electrician · Plumber</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
         <div class="cat-card" data-search="Remote">
           <div class="cat-icon" style="background:#EEF2FF;color:#4F46E5"><i class="ti ti-world"></i></div>
-          <div class="cat-info"><div class="cat-name">Remote / International</div><div class="cat-sub">Work from anywhere</div></div>
+          <div class="cat-info"><div class="cat-name" data-i18n="cat.remote">Remote / International</div><div class="cat-sub" data-i18n="cat.remote.sub">Work from anywhere</div></div>
           <i class="ti ti-chevron-right cat-arrow"></i>
         </div>
       </div>
@@ -208,8 +208,8 @@
   <section class="featured-section reveal">
     <div class="section-inner">
       <div class="section-header">
-        <h2>Featured Opportunities</h2>
-        <button class="btn-link" data-goto="jobs">View all <i class="ti ti-arrow-right"></i></button>
+        <h2 data-i18n="featured.title">Featured Opportunities</h2>
+        <button class="btn-link" data-goto="jobs"><span data-i18n="featured.all">View all</span> <i class="ti ti-arrow-right"></i></button>
       </div>
       <div id="featured-jobs" class="jobs-grid"></div>
     </div>
@@ -218,10 +218,10 @@
   <section class="features-section reveal">
     <div class="section-inner">
       <div class="features-grid reveal-stagger">
-        <div class="feature-card"><div class="feature-icon"><i class="ti ti-robot"></i></div><h3>AI Job Matching</h3><p>Our AI analyzes your profile and matches you to roles where you're most likely to succeed — faster than traditional search.</p></div>
-        <div class="feature-card"><div class="feature-icon"><i class="ti ti-layout-kanban"></i></div><h3>ATS Pipeline</h3><p>Employers get a full Kanban ATS to manage applications from New to Offer — with AI candidate scoring built in.</p></div>
-        <div class="feature-card"><div class="feature-icon"><i class="ti ti-file-text"></i></div><h3>AI Cover Letters</h3><p>Generate personalized, compelling cover letters in seconds. One click — tailored to each job.</p></div>
-        <div class="feature-card"><div class="feature-icon"><i class="ti ti-star"></i></div><h3>Company Reviews</h3><p>Transparent ratings from real candidates. Know what it's really like before you apply.</p></div>
+        <div class="feature-card"><div class="feature-icon"><i class="ti ti-robot"></i></div><h3 data-i18n="feat.ai.title">AI Job Matching</h3><p data-i18n="feat.ai.desc">Our AI analyzes your profile and matches you to roles where you're most likely to succeed — faster than traditional search.</p></div>
+        <div class="feature-card"><div class="feature-icon"><i class="ti ti-layout-kanban"></i></div><h3 data-i18n="feat.ats.title">ATS Pipeline</h3><p data-i18n="feat.ats.desc">Employers get a full Kanban ATS to manage applications from New to Offer — with AI candidate scoring built in.</p></div>
+        <div class="feature-card"><div class="feature-icon"><i class="ti ti-file-text"></i></div><h3 data-i18n="feat.cover.title">AI Cover Letters</h3><p data-i18n="feat.cover.desc">Generate personalized, compelling cover letters in seconds. One click — tailored to each job.</p></div>
+        <div class="feature-card"><div class="feature-icon"><i class="ti ti-star"></i></div><h3 data-i18n="feat.reviews.title">Company Reviews</h3><p data-i18n="feat.reviews.desc">Transparent ratings from real candidates. Know what it's really like before you apply.</p></div>
       </div>
     </div>
   </section>
@@ -230,15 +230,15 @@
     <div class="section-inner">
       <div class="cta-card">
         <div class="cta-text">
-          <h2>Hire the best talent globally</h2>
-          <p>Post jobs, review AI-ranked applications, manage your pipeline with Kanban, and message candidates directly. Start with 2 free job slots.</p>
-          <button class="btn-primary btn-lg" data-modal="modal-register">Start hiring free</button>
+          <h2 data-i18n="cta.title">Hire the best talent globally</h2>
+          <p data-i18n="cta.desc">Post jobs, review AI-ranked applications, manage your pipeline with Kanban, and message candidates directly. Start with 2 free job slots.</p>
+          <button class="btn-primary btn-lg" data-modal="modal-register" data-i18n="cta.btn">Start hiring free</button>
         </div>
         <div class="cta-visual">
           <div class="cta-stats">
-            <div class="cta-stat"><div class="cta-stat-n">14 days</div><div class="cta-stat-l">Free trial</div></div>
-            <div class="cta-stat"><div class="cta-stat-n">AI-ranked</div><div class="cta-stat-l">Applications</div></div>
-            <div class="cta-stat"><div class="cta-stat-n">Kanban</div><div class="cta-stat-l">ATS pipeline</div></div>
+            <div class="cta-stat"><div class="cta-stat-n">14 days</div><div class="cta-stat-l" data-i18n="cta.trial">Free trial</div></div>
+            <div class="cta-stat"><div class="cta-stat-n">AI-ranked</div><div class="cta-stat-l" data-i18n="cta.apps">Applications</div></div>
+            <div class="cta-stat"><div class="cta-stat-n">Kanban</div><div class="cta-stat-l" data-i18n="cta.ats">ATS pipeline</div></div>
           </div>
         </div>
       </div>
@@ -250,9 +250,9 @@
 <div id="pg-jobs" class="page">
   <div class="page-header-bar">
     <div class="section-inner">
-      <h1 class="page-title">Job listings</h1>
+      <h1 class="page-title" data-i18n="jobs.title">Job listings</h1>
       <div class="filters-bar">
-        <input type="text" id="fq" placeholder="Search title, skill, company..." oninput="debounceFilterSearch()" class="filter-input">
+        <input type="text" id="fq" placeholder="Search title, skill, company..." data-i18n-ph="jobs.filter.ph" oninput="debounceFilterSearch()" class="filter-input">
         <select id="fprov" onchange="filterJobs()" class="filter-select filter-select-province">
           <option value="">🌐 All locations</option>
         </select>
@@ -301,21 +301,21 @@
 <div id="pg-employer" class="page">
   <div class="hero employer-hero">
     <div class="hero-inner">
-      <div class="hero-badge"><span class="badge-dot"></span>For Employers</div>
-      <h1 class="hero-title">Hire globally with <em>AI precision</em></h1>
-      <p class="hero-sub">Post jobs, get AI-ranked candidates, manage your pipeline with Kanban, and build your global team — all in one platform.</p>
+      <div class="hero-badge"><span class="badge-dot"></span><span data-i18n="emp.eyebrow">For Employers</span></div>
+      <h1 class="hero-title" data-i18n-html="emp.title">Hire globally with <em>AI precision</em></h1>
+      <p class="hero-sub" data-i18n="emp.sub">Post jobs, get AI-ranked candidates, manage your pipeline with Kanban, and build your global team — all in one platform.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <button class="btn-primary btn-lg" data-modal="modal-register">Start free — 2 job slots</button>
-        <button class="btn-ghost btn-lg" data-goto="pricing">See pricing</button>
+        <button class="btn-primary btn-lg" data-modal="modal-register" data-i18n="emp.cta">Start free — 2 job slots</button>
+        <button class="btn-ghost btn-lg" data-goto="pricing" data-i18n="emp.pricing">See pricing</button>
       </div>
     </div>
   </div>
   <div class="section-inner" style="padding:64px 24px">
     <div class="features-grid">
-      <div class="feature-card"><div class="feature-icon"><i class="ti ti-bolt"></i></div><h3>Post in minutes</h3><p>Create bilingual job postings with AI-assisted descriptions. Go live in under 5 minutes.</p></div>
-      <div class="feature-card"><div class="feature-icon"><i class="ti ti-chart-bar"></i></div><h3>AI candidate ranking</h3><p>Every application gets an AI match score so you focus on the best candidates first.</p></div>
-      <div class="feature-card"><div class="feature-icon"><i class="ti ti-layout-kanban"></i></div><h3>Kanban ATS pipeline</h3><p>Visual pipeline: New → Reviewed → Shortlisted → Interview → Offer. Move candidates with one click.</p></div>
-      <div class="feature-card"><div class="feature-icon"><i class="ti ti-chart-line"></i></div><h3>Job analytics</h3><p>Track views, applications, and conversion rate per listing. Know which jobs perform best.</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="ti ti-bolt"></i></div><h3 data-i18n="emp.f1.title">Post in minutes</h3><p data-i18n="emp.f1.desc">Create bilingual job postings with AI-assisted descriptions. Go live in under 5 minutes.</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="ti ti-chart-bar"></i></div><h3 data-i18n="emp.f2.title">AI candidate ranking</h3><p data-i18n="emp.f2.desc">Every application gets an AI match score so you focus on the best candidates first.</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="ti ti-layout-kanban"></i></div><h3 data-i18n="emp.f3.title">Kanban ATS pipeline</h3><p data-i18n="emp.f3.desc">Visual pipeline: New → Reviewed → Shortlisted → Interview → Offer. Move candidates with one click.</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="ti ti-chart-line"></i></div><h3 data-i18n="emp.f4.title">Job analytics</h3><p data-i18n="emp.f4.desc">Track views, applications, and conversion rate per listing. Know which jobs perform best.</p></div>
     </div>
   </div>
 </div>
@@ -519,44 +519,44 @@
     <div class="dash-sidebar">
       <div class="dash-avatar" id="dash-avatar"></div>
       <div class="dash-name" id="dash-name"></div>
-      <div class="dash-role">Candidate</div>
+      <div class="dash-role" data-i18n="cand.role">Candidate</div>
       <nav class="dash-nav" id="cand-dash-nav">
-        <a class="dash-nav-item active" data-tab="tab-profile"><i class="ti ti-user"></i> My Profile</a>
-        <a class="dash-nav-item" data-tab="tab-for-you"><i class="ti ti-sparkles"></i> Jobs for You</a>
-        <a class="dash-nav-item" data-tab="tab-saved"><i class="ti ti-heart"></i> Saved Jobs</a>
-        <a class="dash-nav-item" data-tab="tab-applications"><i class="ti ti-file-text"></i> Applications</a>
-        <a class="dash-nav-item" data-tab="tab-my-reviews" data-tab-extra="loadMyReviews"><i class="ti ti-star"></i> My Reviews</a>
-        <a class="dash-nav-item" data-tab="tab-ai-chat"><i class="ti ti-robot"></i> AI Coach</a>
+        <a class="dash-nav-item active" data-tab="tab-profile"><i class="ti ti-user"></i> <span data-i18n="cand.nav.profile">My Profile</span></a>
+        <a class="dash-nav-item" data-tab="tab-for-you"><i class="ti ti-sparkles"></i> <span data-i18n="cand.nav.foryou">Jobs for You</span></a>
+        <a class="dash-nav-item" data-tab="tab-saved"><i class="ti ti-heart"></i> <span data-i18n="cand.nav.saved">Saved Jobs</span></a>
+        <a class="dash-nav-item" data-tab="tab-applications"><i class="ti ti-file-text"></i> <span data-i18n="cand.nav.apps">Applications</span></a>
+        <a class="dash-nav-item" data-tab="tab-my-reviews" data-tab-extra="loadMyReviews"><i class="ti ti-star"></i> <span data-i18n="cand.nav.reviews">My Reviews</span></a>
+        <a class="dash-nav-item" data-tab="tab-ai-chat"><i class="ti ti-robot"></i> <span data-i18n="cand.nav.ai">AI Coach</span></a>
       </nav>
     </div>
     <div class="dash-content">
       <div id="tab-profile" class="dash-tab active">
-        <h2>My Profile</h2>
+        <h2 data-i18n="cand.tab.profile">My Profile</h2>
         <div class="profile-form" id="profile-form"><div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div></div>
       </div>
       <div id="tab-for-you" class="dash-tab">
-        <h2><i class="ti ti-sparkles" style="color:var(--indigo)"></i> Jobs for You</h2>
+        <h2><i class="ti ti-sparkles" style="color:var(--indigo)"></i> <span data-i18n="cand.tab.foryou">Jobs for You</span></h2>
         <div id="jobs-for-you"><div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div></div>
       </div>
       <div id="tab-saved" class="dash-tab">
-        <h2><i class="ti ti-heart" style="color:var(--red)"></i> Saved Jobs</h2>
+        <h2><i class="ti ti-heart" style="color:var(--red)"></i> <span data-i18n="cand.tab.saved">Saved Jobs</span></h2>
         <div id="saved-jobs-list"></div>
       </div>
       <div id="tab-applications" class="dash-tab">
-        <h2>My Applications</h2>
+        <h2 data-i18n="cand.tab.apps">My Applications</h2>
         <div id="applications-list"></div>
       </div>
       <div id="tab-my-reviews" class="dash-tab">
         <div id="my-reviews-container"></div>
       </div>
       <div id="tab-ai-chat" class="dash-tab">
-        <h2><i class="ti ti-robot" style="color:var(--indigo)"></i> AI Career Coach</h2>
-        <p style="font-size:14px;color:var(--muted);margin-bottom:16px">Ask anything — resume tips, interview prep, salary negotiation, career advice.</p>
+        <h2><i class="ti ti-robot" style="color:var(--indigo)"></i> <span data-i18n="cand.ai.title">AI Career Coach</span></h2>
+        <p style="font-size:14px;color:var(--muted);margin-bottom:16px" data-i18n="cand.ai.sub">Ask anything — resume tips, interview prep, salary negotiation, career advice.</p>
         <div class="ai-chat-box" id="ai-messages">
-          <div class="ai-msg ai-msg-bot">Hi! I'm your Nexhire AI coach. How can I help with your job search today?</div>
+          <div class="ai-msg ai-msg-bot" data-i18n="cand.ai.greeting">Hi! I'm your Nexhire AI coach. How can I help with your job search today?</div>
         </div>
         <div class="ai-chat-input">
-          <input type="text" id="ai-input" placeholder="Ask me about your job search...">
+          <input type="text" id="ai-input" placeholder="Ask me about your job search..." data-i18n-ph="cand.ai.ph">
           <button class="btn-primary" id="btn-ai-send"><i class="ti ti-send"></i></button>
         </div>
       </div>
@@ -570,32 +570,32 @@
     <div class="dash-sidebar">
       <div class="dash-avatar" id="emp-dash-avatar"></div>
       <div class="dash-name" id="emp-dash-name"></div>
-      <div class="dash-role">Employer</div>
+      <div class="dash-role" data-i18n="emp.role">Employer</div>
       <nav class="dash-nav" id="emp-dash-nav">
-        <a class="dash-nav-item active" data-emptab="etab-jobs"><i class="ti ti-briefcase"></i> My Jobs</a>
-        <a class="dash-nav-item" data-emptab="etab-post"><i class="ti ti-plus"></i> Post a Job</a>
-        <a class="dash-nav-item" data-emptab="etab-company"><i class="ti ti-building"></i> Company</a>
-        <a class="dash-nav-item" data-emptab="etab-billing"><i class="ti ti-credit-card"></i> Billing</a>
+        <a class="dash-nav-item active" data-emptab="etab-jobs"><i class="ti ti-briefcase"></i> <span data-i18n="emp.nav.jobs">My Jobs</span></a>
+        <a class="dash-nav-item" data-emptab="etab-post"><i class="ti ti-plus"></i> <span data-i18n="emp.nav.post">Post a Job</span></a>
+        <a class="dash-nav-item" data-emptab="etab-company"><i class="ti ti-building"></i> <span data-i18n="emp.nav.company">Company</span></a>
+        <a class="dash-nav-item" data-emptab="etab-billing"><i class="ti ti-credit-card"></i> <span data-i18n="emp.nav.billing">Billing</span></a>
       </nav>
     </div>
     <div class="dash-content">
       <div id="etab-jobs" class="dash-tab active">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
-          <h2 style="margin:0">My Job Listings</h2>
-          <button class="btn-primary" id="btn-post-job-header"><i class="ti ti-plus"></i> Post job</button>
+          <h2 style="margin:0" data-i18n="emp.tab.jobs">My Job Listings</h2>
+          <button class="btn-primary" id="btn-post-job-header"><i class="ti ti-plus"></i> <span data-i18n="emp.nav.post">Post a Job</span></button>
         </div>
         <div id="employer-jobs-list"></div>
       </div>
       <div id="etab-post" class="dash-tab">
-        <h2>Post a New Job</h2>
+        <h2 data-i18n="emp.tab.post">Post a New Job</h2>
         <form id="post-job-form" class="job-form" onsubmit="postJob(event)"></form>
       </div>
       <div id="etab-company" class="dash-tab">
-        <h2>Company Profile</h2>
+        <h2 data-i18n="emp.tab.company">Company Profile</h2>
         <form id="company-form" class="job-form" onsubmit="saveCompany(event)"></form>
       </div>
       <div id="etab-billing" class="dash-tab">
-        <h2>Billing & Plan</h2>
+        <h2 data-i18n="emp.tab.billing">Billing & Plan</h2>
         <div id="billing-info"></div>
       </div>
     </div>
@@ -606,12 +606,12 @@
 <div id="pg-settings" class="page">
   <div class="settings-layout">
     <aside class="settings-sidebar">
-      <h2 class="settings-title">Settings</h2>
+      <h2 class="settings-title" data-i18n="settings.title">Settings</h2>
       <nav class="settings-nav" id="settings-nav">
-        <a class="settings-nav-item active" data-setting="s-account"><i class="ti ti-user-circle"></i><div><div class="sn-label">Account settings</div><div class="sn-sub">Your contact information</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
-        <a class="settings-nav-item" data-setting="s-security"><i class="ti ti-lock"></i><div><div class="sn-label">Security settings <span class="badge-new">New</span></div><div class="sn-sub">Manage your account security</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
-        <a class="settings-nav-item" data-setting="s-notifications"><i class="ti ti-mail"></i><div><div class="sn-label">Communications settings</div><div class="sn-sub">Manage notifications and messages</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
-        <a class="settings-nav-item" data-setting="s-privacy"><i class="ti ti-shield-lock"></i><div><div class="sn-label">Privacy settings</div><div class="sn-sub">Information about your privacy</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
+        <a class="settings-nav-item active" data-setting="s-account"><i class="ti ti-user-circle"></i><div><div class="sn-label" data-i18n="settings.account.label">Account settings</div><div class="sn-sub" data-i18n="settings.account.sub">Your contact information</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
+        <a class="settings-nav-item" data-setting="s-security"><i class="ti ti-lock"></i><div><div class="sn-label"><span data-i18n="settings.security.label">Security settings</span> <span class="badge-new">New</span></div><div class="sn-sub" data-i18n="settings.security.sub">Manage your account security</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
+        <a class="settings-nav-item" data-setting="s-notifications"><i class="ti ti-mail"></i><div><div class="sn-label" data-i18n="settings.notif.label">Communications settings</div><div class="sn-sub" data-i18n="settings.notif.sub">Manage notifications and messages</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
+        <a class="settings-nav-item" data-setting="s-privacy"><i class="ti ti-shield-lock"></i><div><div class="sn-label" data-i18n="settings.privacy.label">Privacy settings</div><div class="sn-sub" data-i18n="settings.privacy.sub">Information about your privacy</div></div><i class="ti ti-chevron-right sn-arrow"></i></a>
       </nav>
     </aside>
     <div class="settings-content" id="settings-content"></div>
@@ -621,33 +621,33 @@
 <!-- HELP PAGE ────────────────────────────────────────────── -->
 <div id="pg-help" class="page">
   <div class="help-hero">
-    <h1 class="help-hero-title">If you're looking for help, you're in the right place</h1>
+    <h1 class="help-hero-title" data-i18n="help.title">If you're looking for help, you're in the right place</h1>
   </div>
   <div class="section-inner" style="max-width:900px;padding-top:48px;padding-bottom:64px">
     <div class="help-cards">
       <div class="help-card">
         <div class="help-card-icon"><i class="ti ti-search"></i></div>
-        <h3>Help for job seekers</h3>
-        <p>Got a question or need help using Nexhire? Whether it's setting up your account, using AI matching, or applying — we've got you covered.</p>
+        <h3 data-i18n="help.seekers.title">Help for job seekers</h3>
+        <p data-i18n="help.seekers.desc">Got a question or need help using Nexhire? Whether it's setting up your account, using AI matching, or applying — we've got you covered.</p>
         <div class="help-faqs" id="help-faqs-candidate"></div>
-        <a class="help-link" data-goto="help">Job Seeker Help Centre →</a>
+        <a class="help-link" data-goto="help" data-i18n="help.seekers.link">Job Seeker Help Centre →</a>
       </div>
       <div class="help-card">
         <div class="help-card-icon employer"><i class="ti ti-building"></i></div>
-        <h3>Help for employers</h3>
-        <p>Looking to hire? Our Employer Help Centre covers posting jobs, managing the ATS pipeline, billing, and finding the best candidates faster.</p>
+        <h3 data-i18n="help.employers.title">Help for employers</h3>
+        <p data-i18n="help.employers.desc">Looking to hire? Our Employer Help Centre covers posting jobs, managing the ATS pipeline, billing, and finding the best candidates faster.</p>
         <div class="help-faqs" id="help-faqs-employer"></div>
-        <a class="help-link" data-goto="help">Employer Help Centre →</a>
+        <a class="help-link" data-goto="help" data-i18n="help.employers.link">Employer Help Centre →</a>
       </div>
     </div>
     <div class="help-footer-cta">
       <div>
-        <h3>We're here to help</h3>
-        <p>Visit our Help Centre for answers to common questions or contact us directly.</p>
+        <h3 data-i18n="help.cta.title">We're here to help</h3>
+        <p data-i18n="help.cta.desc">Visit our Help Centre for answers to common questions or contact us directly.</p>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a href="mailto:support@nexhire.ca" class="btn-ghost"><i class="ti ti-mail"></i> Contact support</a>
-        <a href="mailto:legal@nexhire.ca" class="btn-ghost"><i class="ti ti-file-text"></i> Legal / Privacy</a>
+        <a href="mailto:support@nexhire.ca" class="btn-ghost"><i class="ti ti-mail"></i> <span data-i18n="help.contact">Contact support</span></a>
+        <a href="mailto:legal@nexhire.ca" class="btn-ghost"><i class="ti ti-file-text"></i> <span data-i18n="help.legal">Legal / Privacy</span></a>
       </div>
     </div>
   </div>
@@ -767,27 +767,27 @@
         <img src="/nexhire/img/logo-mark.svg" class="logo-mark" alt="Nexhire" style="width:28px;height:28px">
         <span class="logo-word" style="font-size:18px">Nexhire</span>
       </div>
-      <p class="footer-tagline">Global AI Employment Platform</p>
+      <p class="footer-tagline" data-i18n="footer.tagline">Global AI Employment Platform</p>
       <p class="footer-civicai">A product of <a href="https://attentezero.ca" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px">CivicAI Inc.</a><br><span style="font-size:11px;opacity:.6">NEQ 2280791601 · Montréal, Québec</span></p>
     </div>
     <div class="footer-links-grid">
       <div class="footer-col">
-        <div class="footer-col-title">Platform</div>
-        <a class="footer-link" data-goto="jobs">Browse jobs</a>
-        <a class="footer-link" data-goto="employer">For employers</a>
-        <a class="footer-link" data-goto="pricing">Pricing</a>
-        <a class="footer-link" data-modal="modal-register">Get started free</a>
+        <div class="footer-col-title" data-i18n="footer.platform">Platform</div>
+        <a class="footer-link" data-goto="jobs" data-i18n="footer.browse">Browse jobs</a>
+        <a class="footer-link" data-goto="employer" data-i18n="footer.employers">For employers</a>
+        <a class="footer-link" data-goto="pricing" data-i18n="footer.pricing">Pricing</a>
+        <a class="footer-link" data-modal="modal-register" data-i18n="footer.getstarted">Get started free</a>
       </div>
       <div class="footer-col">
-        <div class="footer-col-title">Company</div>
+        <div class="footer-col-title" data-i18n="footer.company">Company</div>
         <a class="footer-link" href="https://civicai.ca" target="_blank" rel="noopener">CivicAI Inc.</a>
         <a class="footer-link" href="https://attentezero.ca" target="_blank" rel="noopener">AttenteZéro</a>
-        <a class="footer-link" data-goto="help">Help Centre</a>
-        <a class="footer-link" data-goto="privacy">Privacy Centre</a>
-        <a class="footer-link" data-goto="terms">Terms of Service</a>
+        <a class="footer-link" data-goto="help" data-i18n="footer.help">Help Centre</a>
+        <a class="footer-link" data-goto="privacy" data-i18n="footer.privacy">Privacy Centre</a>
+        <a class="footer-link" data-goto="terms" data-i18n="footer.terms">Terms of Service</a>
       </div>
       <div class="footer-col">
-        <div class="footer-col-title">Contact</div>
+        <div class="footer-col-title" data-i18n="footer.contact">Contact</div>
         <a class="footer-link" href="mailto:hello@nexhire.ca">hello@nexhire.ca</a>
         <a class="footer-link" href="mailto:contact@nexhire.ca">contact@nexhire.ca</a>
         <a class="footer-link" href="mailto:legal@nexhire.ca">legal@nexhire.ca</a>
@@ -796,13 +796,13 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 CivicAI Inc. All rights reserved.</span>
+    <span data-i18n="footer.copy">© 2026 CivicAI Inc. All rights reserved.</span>
     <span class="footer-bottom-links">
-      <a data-goto="privacy" class="footer-link-sm">Privacy</a>
-      <a data-goto="terms" class="footer-link-sm">Terms</a>
-      <a href="mailto:legal@nexhire.ca" class="footer-link-sm">Legal</a>
+      <a data-goto="privacy" class="footer-link-sm" data-i18n="footer.privacy.sm">Privacy</a>
+      <a data-goto="terms" class="footer-link-sm" data-i18n="footer.terms.sm">Terms</a>
+      <a href="mailto:legal@nexhire.ca" class="footer-link-sm" data-i18n="footer.legal.sm">Legal</a>
     </span>
-    <span class="footer-made">🍁 Made in Québec · CivicAI 2026</span>
+    <span class="footer-made" data-i18n="footer.made">🍁 Made in Québec · CivicAI 2026</span>
   </div>
 </footer>
 
@@ -813,7 +813,7 @@
       <div style="font-size:12px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">ATS Pipeline</div>
       <h2 style="color:#fff;font-family:var(--r);margin:0;font-size:20px" id="kanban-title"></h2>
     </div>
-    <button data-action="close-kanban" class="btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.2)"><i class="ti ti-x"></i> Close</button>
+    <button data-action="close-kanban" class="btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.2)"><i class="ti ti-x"></i> <span data-i18n="kanban.close">Close</span></button>
   </div>
   <div id="kanban-board" class="kanban-board"></div>
 </div>
@@ -828,33 +828,33 @@
     <div class="modal-body">
       <div class="form-group">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-          <label>Cover letter <span style="color:var(--muted);font-weight:400">(optional but recommended)</span></label>
+          <label><span data-i18n="modal.apply.cover">Cover letter</span> <span style="color:var(--muted);font-weight:400" data-i18n="modal.apply.cover.opt">(optional but recommended)</span></label>
           <button id="qa-ai-btn" class="btn-ghost" style="font-size:12px;padding:4px 10px" data-action="ai-cover-letter"><i class="ti ti-robot"></i> AI generate</button>
         </div>
-        <textarea id="qa-cover" placeholder="Briefly explain why you're a great fit for this role..." style="min-height:160px"></textarea>
+        <textarea id="qa-cover" placeholder="Briefly explain why you're a great fit for this role..." data-i18n-ph="modal.apply.ph" style="min-height:160px"></textarea>
       </div>
 
       <!-- AI CV Detection consent -->
       <div style="background:#f0f4ff;border:1.5px solid #c7d4f5;border-radius:10px;padding:14px 16px;margin-bottom:14px">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
           <i class="ti ti-robot" style="color:#4f46e5;font-size:18px"></i>
-          <span style="font-weight:600;font-size:14px;color:#1e1b4b">AI content analysis</span>
+          <span style="font-weight:600;font-size:14px;color:#1e1b4b" data-i18n="modal.apply.ai.title">AI content analysis</span>
         </div>
-        <p style="font-size:13px;color:#4b5563;margin:0 0 10px">Nexhire can detect AI-generated content in your cover letter. Would you like to allow the employer to see this analysis?</p>
+        <p style="font-size:13px;color:#4b5563;margin:0 0 10px" data-i18n="modal.apply.ai.desc">Nexhire can detect AI-generated content in your cover letter. Would you like to allow the employer to see this analysis?</p>
         <div style="display:flex;gap:8px">
           <button id="qa-consent-yes" data-consent="true" style="flex:1;padding:7px 0;border-radius:8px;border:1.5px solid #c7d4f5;background:white;font-size:13px;cursor:pointer;font-family:var(--b);color:#374151;transition:.15s">
-            <i class="ti ti-check" style="color:#10b981"></i> Yes, share analysis
+            <i class="ti ti-check" style="color:#10b981"></i> <span data-i18n="modal.apply.yes">Yes, share analysis</span>
           </button>
           <button id="qa-consent-no" data-consent="false" style="flex:1;padding:7px 0;border-radius:8px;border:1.5px solid #c7d4f5;background:white;font-size:13px;cursor:pointer;font-family:var(--b);color:#374151;transition:.15s">
-            <i class="ti ti-x" style="color:#6b7280"></i> No thanks
+            <i class="ti ti-x" style="color:#6b7280"></i> <span data-i18n="modal.apply.no">No thanks</span>
           </button>
         </div>
         <div id="qa-consent-note" style="font-size:11px;color:#6b7280;margin-top:8px;display:none"></div>
       </div>
 
       <div class="form-error" id="qa-error"></div>
-      <button class="btn-primary btn-full" data-action="submit-apply"><i class="ti ti-send"></i> Submit application</button>
-      <div style="text-align:center;margin-top:10px;font-size:12px;color:var(--muted)">Your profile info will be shared with the employer</div>
+      <button class="btn-primary btn-full" data-action="submit-apply"><i class="ti ti-send"></i> <span data-i18n="modal.apply.submit">Submit application</span></button>
+      <div style="text-align:center;margin-top:10px;font-size:12px;color:var(--muted)" data-i18n="modal.apply.note">Your profile info will be shared with the employer</div>
     </div>
   </div>
 </div>
@@ -868,7 +868,7 @@
     </div>
     <div class="modal-body">
       <div class="form-group">
-        <label>Overall rating *</label>
+        <label data-i18n="modal.rev.rating">Overall rating *</label>
         <div class="star-picker" id="star-picker">
           <button class="rev-star" data-stars="1"><i class="ti ti-star-filled"></i></button>
           <button class="rev-star" data-stars="2"><i class="ti ti-star-filled"></i></button>
@@ -878,16 +878,16 @@
         </div>
         <input type="hidden" id="rev-rating" value="4">
       </div>
-      <div class="form-group"><label>Review title</label><input type="text" id="rev-title" placeholder="e.g. Great work culture, challenging projects"></div>
-      <div class="form-group"><label><span style="color:var(--green)">Pros</span></label><textarea id="rev-pros" placeholder="What did you like about this company?" style="min-height:80px"></textarea></div>
-      <div class="form-group"><label><span style="color:var(--red)">Cons</span></label><textarea id="rev-cons" placeholder="What could be improved?" style="min-height:80px"></textarea></div>
+      <div class="form-group"><label data-i18n="modal.rev.title.label">Review title</label><input type="text" id="rev-title" placeholder="e.g. Great work culture, challenging projects"></div>
+      <div class="form-group"><label><span style="color:var(--green)" data-i18n="modal.rev.pros">Pros</span></label><textarea id="rev-pros" placeholder="What did you like about this company?" style="min-height:80px"></textarea></div>
+      <div class="form-group"><label><span style="color:var(--red)" data-i18n="modal.rev.cons">Cons</span></label><textarea id="rev-cons" placeholder="What could be improved?" style="min-height:80px"></textarea></div>
       <div class="form-row">
-        <div class="form-group"><label>Interview difficulty</label><select id="rev-diff"><option value="">Not rated</option><option>Easy</option><option>Medium</option><option>Hard</option><option>Very Hard</option></select></div>
-        <div class="form-group" style="display:flex;align-items:center;gap:10px;padding-top:24px"><input type="checkbox" id="rev-recommend" checked style="width:auto;margin:0"><label for="rev-recommend" style="display:inline;font-weight:400">Would recommend</label></div>
+        <div class="form-group"><label data-i18n="modal.rev.diff">Interview difficulty</label><select id="rev-diff"><option value="">Not rated</option><option>Easy</option><option>Medium</option><option>Hard</option><option>Very Hard</option></select></div>
+        <div class="form-group" style="display:flex;align-items:center;gap:10px;padding-top:24px"><input type="checkbox" id="rev-recommend" checked style="width:auto;margin:0"><label for="rev-recommend" style="display:inline;font-weight:400" data-i18n="modal.rev.recommend">Would recommend</label></div>
       </div>
-      <div class="form-group" style="display:flex;align-items:center;gap:10px"><input type="checkbox" id="rev-anon" checked style="width:auto;margin:0"><label for="rev-anon" style="display:inline;font-weight:400">Post anonymously</label></div>
+      <div class="form-group" style="display:flex;align-items:center;gap:10px"><input type="checkbox" id="rev-anon" checked style="width:auto;margin:0"><label for="rev-anon" style="display:inline;font-weight:400" data-i18n="modal.rev.anon">Post anonymously</label></div>
       <div class="form-error" id="rev-error"></div>
-      <button class="btn-primary btn-full" data-action="submit-review"><i class="ti ti-star"></i> Submit review</button>
+      <button class="btn-primary btn-full" data-action="submit-review"><i class="ti ti-star"></i> <span data-i18n="modal.rev.submit">Submit review</span></button>
     </div>
   </div>
 </div>
@@ -895,15 +895,15 @@
 <!-- LOGIN MODAL ─────────────────────────────────────────── -->
 <div class="modal-overlay" id="modal-login" data-self-close="modal-login">
   <div class="modal">
-    <div class="modal-header"><h3>Sign in to Nexhire</h3><button class="modal-close" data-hide-modal="modal-login"><i class="ti ti-x"></i></button></div>
+    <div class="modal-header"><h3 data-i18n="modal.login.title">Sign in to Nexhire</h3><button class="modal-close" data-hide-modal="modal-login"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-group"><label>Email</label><input type="email" id="login-email" placeholder="you@example.com" autocomplete="email"></div>
-      <div class="form-group"><label>Password</label><div class="pw-wrap"><input type="password" id="login-pw" placeholder="••••••••" autocomplete="current-password"><button class="pw-toggle" id="btn-toggle-login-pw"><i class="ti ti-eye"></i></button></div></div>
+      <div class="form-group"><label data-i18n="modal.login.email">Email</label><input type="email" id="login-email" placeholder="you@example.com" autocomplete="email"></div>
+      <div class="form-group"><label data-i18n="modal.login.pw">Password</label><div class="pw-wrap"><input type="password" id="login-pw" placeholder="••••••••" autocomplete="current-password"><button class="pw-toggle" id="btn-toggle-login-pw"><i class="ti ti-eye"></i></button></div></div>
       <div class="form-error" id="login-error"></div>
-      <button class="btn-primary btn-full" id="btn-login-submit">Sign in</button>
+      <button class="btn-primary btn-full" id="btn-login-submit" data-i18n="modal.login.btn">Sign in</button>
       <div class="modal-divider"><span>or</span></div>
-      <button class="btn-ghost btn-full" data-action="switch-to-register">Create an account</button>
-      <div style="text-align:center;margin-top:12px"><a href="#" data-action="show-forgot" class="link-sm">Forgot password?</a></div>
+      <button class="btn-ghost btn-full" data-action="switch-to-register" data-i18n="modal.login.create">Create an account</button>
+      <div style="text-align:center;margin-top:12px"><a href="#" data-action="show-forgot" class="link-sm" data-i18n="modal.login.forgot">Forgot password?</a></div>
     </div>
   </div>
 </div>
@@ -911,27 +911,27 @@
 <!-- REGISTER MODAL ──────────────────────────────────────── -->
 <div class="modal-overlay" id="modal-register" data-self-close="modal-register">
   <div class="modal">
-    <div class="modal-header"><h3>Create your account</h3><button class="modal-close" data-hide-modal="modal-register"><i class="ti ti-x"></i></button></div>
+    <div class="modal-header"><h3 data-i18n="modal.reg.title">Create your account</h3><button class="modal-close" data-hide-modal="modal-register"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
       <div class="role-tabs" id="role-tabs">
-        <button class="role-tab active" data-role="candidate"><i class="ti ti-user"></i> Candidate</button>
-        <button class="role-tab" data-role="employer"><i class="ti ti-building"></i> Employer</button>
+        <button class="role-tab active" data-role="candidate"><i class="ti ti-user"></i> <span data-i18n="modal.reg.candidate">Candidate</span></button>
+        <button class="role-tab" data-role="employer"><i class="ti ti-building"></i> <span data-i18n="modal.reg.employer">Employer</span></button>
       </div>
       <div class="form-row">
-        <div class="form-group"><label>First name</label><input type="text" id="reg-first" placeholder="Jane" autocomplete="given-name"></div>
-        <div class="form-group"><label>Last name</label><input type="text" id="reg-last" placeholder="Doe" autocomplete="family-name"></div>
+        <div class="form-group"><label data-i18n="modal.reg.first">First name</label><input type="text" id="reg-first" placeholder="Jane" autocomplete="given-name"></div>
+        <div class="form-group"><label data-i18n="modal.reg.last">Last name</label><input type="text" id="reg-last" placeholder="Doe" autocomplete="family-name"></div>
       </div>
-      <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email"></div>
-      <div class="form-group"><label>Password</label><div class="pw-wrap"><input type="password" id="reg-pw" placeholder="8+ characters" autocomplete="new-password"><button class="pw-toggle" id="btn-toggle-reg-pw"><i class="ti ti-eye"></i></button></div></div>
-      <div class="form-group" id="reg-company-field" style="display:none"><label>Company name</label><input type="text" id="reg-company" placeholder="Acme Inc."></div>
+      <div class="form-group"><label data-i18n="modal.reg.email">Email</label><input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email"></div>
+      <div class="form-group"><label data-i18n="modal.reg.pw">Password</label><div class="pw-wrap"><input type="password" id="reg-pw" placeholder="8+ characters" autocomplete="new-password"><button class="pw-toggle" id="btn-toggle-reg-pw"><i class="ti ti-eye"></i></button></div></div>
+      <div class="form-group" id="reg-company-field" style="display:none"><label data-i18n="modal.reg.company">Company name</label><input type="text" id="reg-company" placeholder="Acme Inc."></div>
       <div class="form-error" id="reg-error"></div>
-      <button class="btn-primary btn-full" id="btn-register-submit">Create account</button>
-      <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:12px">By creating an account you agree to our <a href="#" data-action="terms-from-register" style="color:var(--indigo)">Terms of Service</a></div>
+      <button class="btn-primary btn-full" id="btn-register-submit" data-i18n="modal.reg.btn">Create account</button>
+      <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:12px"><span data-i18n="modal.reg.terms">By creating an account you agree to our</span> <a href="#" data-action="terms-from-register" style="color:var(--indigo)" data-i18n="modal.reg.terms.link">Terms of Service</a></div>
     </div>
   </div>
 </div>
 
 <div id="toasts" class="toast-container"></div>
-<script src="/nexhire/js/app.js?v=20260523h"></script>
+<script src="/nexhire/js/app.js?v=20260523i"></script>
 </body>
 </html>
