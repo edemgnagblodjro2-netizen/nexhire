@@ -25,37 +25,55 @@ const CA_PROVINCES = [
   { code: 'YT', name: 'Yukon' },
 ];
 
-// World countries — value format: "c:CountryName"
+// World countries — value format: "c:CountryName" — 194 countries (Canada handled via provinces)
 const WORLD_REGIONS = [
-  { region: '🌎 North America', countries: [
-    'United States','Mexico','Cuba','Dominican Republic','Haiti','Jamaica','Costa Rica','Guatemala','Honduras','Panama','El Salvador','Nicaragua','Trinidad and Tobago',
+  { region: '🌍 Africa', countries: [
+    'Algeria','Angola','Benin','Botswana','Burkina Faso','Burundi','Cameroon','Cape Verde',
+    'Central African Republic','Chad','Comoros','Democratic Republic of the Congo','Republic of the Congo',
+    'Djibouti','Egypt','Equatorial Guinea','Eritrea','Eswatini','Ethiopia','Gabon','Gambia','Ghana',
+    'Guinea','Guinea-Bissau','Ivory Coast','Kenya','Lesotho','Liberia','Libya','Madagascar','Malawi',
+    'Mali','Mauritania','Mauritius','Morocco','Mozambique','Namibia','Niger','Nigeria','Rwanda',
+    'Sao Tome and Principe','Senegal','Seychelles','Sierra Leone','Somalia','South Africa','South Sudan',
+    'Sudan','Tanzania','Togo','Tunisia','Uganda','Zambia','Zimbabwe',
+  ]},
+  { region: '🌎 North America & Caribbean', countries: [
+    'United States','Mexico','Antigua and Barbuda','Bahamas','Barbados','Belize','Costa Rica','Cuba',
+    'Dominica','Dominican Republic','El Salvador','Grenada','Guatemala','Haiti','Honduras','Jamaica',
+    'Nicaragua','Panama','Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines',
+    'Trinidad and Tobago',
   ]},
   { region: '🌎 South America', countries: [
-    'Brazil','Argentina','Colombia','Chile','Peru','Venezuela','Ecuador','Bolivia','Paraguay','Uruguay','Guyana','Suriname',
+    'Argentina','Bolivia','Brazil','Chile','Colombia','Ecuador','Guyana','Paraguay','Peru',
+    'Suriname','Uruguay','Venezuela',
   ]},
   { region: '🌍 Western Europe', countries: [
-    'France','Germany','United Kingdom','Italy','Spain','Netherlands','Belgium','Switzerland','Austria','Sweden','Norway','Denmark','Finland','Portugal','Ireland','Luxembourg','Iceland','Greece','Cyprus','Malta',
+    'Andorra','Austria','Belgium','Cyprus','Denmark','Finland','France','Germany','Greece','Iceland',
+    'Ireland','Italy','Liechtenstein','Luxembourg','Malta','Monaco','Netherlands','Norway','Portugal',
+    'San Marino','Spain','Sweden','Switzerland','United Kingdom',
   ]},
   { region: '🌍 Central & Eastern Europe', countries: [
-    'Poland','Ukraine','Czech Republic','Romania','Hungary','Slovakia','Bulgaria','Croatia','Serbia','Slovenia','Lithuania','Latvia','Estonia','Belarus','Moldova','Albania','North Macedonia','Bosnia and Herzegovina','Kosovo','Montenegro',
+    'Albania','Armenia','Azerbaijan','Belarus','Bosnia and Herzegovina','Bulgaria','Croatia',
+    'Czech Republic','Estonia','Georgia','Hungary','Kosovo','Latvia','Lithuania','Moldova',
+    'Montenegro','North Macedonia','Poland','Romania','Russia','Serbia','Slovakia','Slovenia',
+    'Ukraine',
   ]},
   { region: '🌍 Middle East', countries: [
-    'United Arab Emirates','Saudi Arabia','Qatar','Kuwait','Bahrain','Oman','Israel','Jordan','Lebanon','Turkey','Egypt','Iraq','Iran',
-  ]},
-  { region: '🌍 Africa', countries: [
-    'South Africa','Nigeria','Kenya','Ethiopia','Ghana','Morocco','Tunisia','Algeria','Tanzania','Uganda','Rwanda','Senegal','Ivory Coast','Cameroon','Mozambique','Zimbabwe','Zambia','Angola','Namibia',
+    'Bahrain','Iran','Iraq','Israel','Jordan','Kuwait','Lebanon','Oman','Qatar',
+    'Saudi Arabia','Syria','Turkey','United Arab Emirates','Yemen',
   ]},
   { region: '🌏 South Asia', countries: [
-    'India','Pakistan','Bangladesh','Sri Lanka','Nepal','Afghanistan','Maldives',
+    'Afghanistan','Bangladesh','Bhutan','India','Maldives','Nepal','Pakistan','Sri Lanka',
   ]},
   { region: '🌏 East & Southeast Asia', countries: [
-    'China','Japan','South Korea','Singapore','Vietnam','Thailand','Malaysia','Indonesia','Philippines','Hong Kong','Taiwan','Myanmar','Cambodia','Laos','Brunei',
+    'Brunei','Cambodia','China','Indonesia','Japan','Laos','Malaysia','Mongolia','Myanmar',
+    'North Korea','Philippines','Singapore','South Korea','Taiwan','Thailand','Timor-Leste','Vietnam',
+  ]},
+  { region: '🌏 Central Asia & Caucasus', countries: [
+    'Kazakhstan','Kyrgyzstan','Tajikistan','Turkmenistan','Uzbekistan',
   ]},
   { region: '🌏 Oceania', countries: [
-    'Australia','New Zealand','Papua New Guinea','Fiji','Samoa',
-  ]},
-  { region: '🌍 Central Asia & Caucasus', countries: [
-    'Kazakhstan','Uzbekistan','Georgia','Armenia','Azerbaijan','Kyrgyzstan','Tajikistan','Turkmenistan',
+    'Australia','Fiji','Kiribati','Marshall Islands','Micronesia','Nauru','New Zealand',
+    'Palau','Papua New Guinea','Samoa','Solomon Islands','Tonga','Tuvalu','Vanuatu',
   ]},
 ];
 
