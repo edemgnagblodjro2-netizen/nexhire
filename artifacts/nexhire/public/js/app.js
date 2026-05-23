@@ -510,7 +510,17 @@ async function openJobDetail(jobId) {
   const j = d.job;
   const panel = document.getElementById('job-detail-panel');
   if (!panel) return;
-  panel.style.display = 'block';
+
+  // On narrow viewports: hide list, show panel full-width with back button
+  const jobsList = document.getElementById('jobs-list');
+  const isNarrow = window.innerWidth <= 900;
+  if (isNarrow && jobsList) {
+    jobsList.style.display = 'none';
+    panel.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    panel.style.display = 'block';
+  }
 
   document.querySelectorAll('.job-list-item').forEach(el => el.classList.remove('selected'));
   document.getElementById(`jli-${jobId}`)?.classList.add('selected');
@@ -530,6 +540,7 @@ async function openJobDetail(jobId) {
   const stars = avgRating ? starsHtml(avgRating) : '';
 
   panel.innerHTML = `
+    ${isNarrow ? `<button onclick="closeJobDetail()" style="display:flex;margin-bottom:16px;background:none;border:none;cursor:pointer;color:var(--muted);font-size:14px;font-family:var(--b);padding:0;align-items:center;gap:6px"><i class="ti ti-arrow-left"></i> Back to jobs</button>` : ''}
     <div class="job-detail-header">
       ${j.company_logo ? `<img src="${j.company_logo}" style="width:56px;height:56px;border-radius:12px;object-fit:contain">` : `<div class="company-logo" style="background:${color};width:56px;height:56px;border-radius:12px;font-size:18px">${initials}</div>`}
       <div style="flex:1;min-width:0">
@@ -559,6 +570,14 @@ async function openJobDetail(jobId) {
     ${totalReviews ? `<div class="job-section"><h4><i class="ti ti-star"></i> Company Reviews</h4>${renderReviews(rev.reviews?.slice(0,3) || [])}</div>` : ''}
     ${state.user?.role === 'candidate' && j.company_id ? `<div style="margin-top:8px"><button class="btn-ghost" style="font-size:13px;width:100%" onclick="openReviewModal('${j.company_id}','${esc(j.company_name || '')}')"><i class="ti ti-pencil"></i> Write a review</button></div>` : ''}
   `;
+}
+
+function closeJobDetail() {
+  const panel = document.getElementById('job-detail-panel');
+  const jobsList = document.getElementById('jobs-list');
+  if (panel) panel.style.display = 'none';
+  if (jobsList) jobsList.style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function renderReviews(reviews) {
