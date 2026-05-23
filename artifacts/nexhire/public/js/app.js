@@ -1337,6 +1337,11 @@ async function loadDashboard() {
   const initials = `${(u.first_name||'')[0]||''}${(u.last_name||'')[0]||''}`.toUpperCase() || 'U';
   safeSet('dash-avatar', initials);
   safeSet('dash-name', `${u.first_name} ${u.last_name}`);
+  const _otwEl = document.getElementById('sidebar-otw');
+  if (_otwEl) {
+    const _otwSet = getAvailBadges(u.id);
+    _otwEl.style.display = _otwSet.has('immediate') ? 'flex' : 'none';
+  }
   const greetEl = document.getElementById('ai-greeting-msg');
   if (greetEl && u.first_name) {
     const lang = state.lang || 'en';
@@ -1365,6 +1370,70 @@ function computeCompleteness(p, user) {
   const pct = Math.round((done.length / fields.length) * 100);
   const missing = fields.filter(f => !f.val).slice(0, 3);
   return { pct, missing };
+}
+
+// ── Availability Badges ─────────────────────────────────────
+const AVAIL_BADGES = [
+  { id:'immediate', en:'Available now',        fr:'Disponible maintenant',    color:'#16a34a', bg:'#f0fdf4', icon:'ti-circle-filled' },
+  { id:'remote',    en:'Remote',               fr:'Télétravail',              color:'#6366f1', bg:'#eef2ff', icon:'ti-home' },
+  { id:'hybrid',    en:'Hybrid',               fr:'Hybride',                  color:'#0d9488', bg:'#f0fdfa', icon:'ti-building' },
+  { id:'contract',  en:'Contract',             fr:'Contrat',                  color:'#d97706', bg:'#fffbeb', icon:'ti-file-text' },
+  { id:'fulltime',  en:'Full-time',            fr:'Temps plein',              color:'#2563eb', bg:'#eff6ff', icon:'ti-briefcase' },
+  { id:'immigration',en:'Immigration friendly',fr:'Immigration bienvenue',    color:'#7c3aed', bg:'#f5f3ff', icon:'ti-plane' },
+  { id:'canada',    en:'Open to Canada',       fr:'Ouvert au Canada entier',  color:'#dc2626', bg:'#fef2f2', icon:'ti-map-2' },
+];
+function getAvailBadges(uid) {
+  try { return new Set(JSON.parse(localStorage.getItem(`nxab_${uid}`) || '[]')); } catch { return new Set(); }
+}
+function saveAvailBadges(uid, set) {
+  localStorage.setItem(`nxab_${uid}`, JSON.stringify([...set]));
+}
+function toggleAvailBadge(id) {
+  const uid = state.user?.id;
+  if (!uid) return;
+  const set = getAvailBadges(uid);
+  if (set.has(id)) set.delete(id); else set.add(id);
+  saveAvailBadges(uid, set);
+  document.querySelectorAll('.avail-chip').forEach(el => {
+    const badge = AVAIL_BADGES.find(b => b.id === el.dataset.bid);
+    if (!badge) return;
+    const active = set.has(badge.id);
+    el.style.background = active ? badge.color : badge.bg;
+    el.style.color      = active ? '#fff'       : badge.color;
+    el.style.borderColor = active ? badge.color : badge.color + '40';
+    el.style.fontWeight  = active ? '700' : '500';
+  });
+  updatePassportBadgesRow(set);
+  updateSidebarOpenToWork(set);
+}
+function updatePassportBadgesRow(set) {
+  const el = document.getElementById('passport-badges-row');
+  if (!el) return;
+  const lang = state.lang || 'en';
+  const active = AVAIL_BADGES.filter(b => set.has(b.id));
+  if (!active.length) { el.style.display = 'none'; return; }
+  el.style.display = 'flex';
+  el.innerHTML = active.map(b => `<span class="passport-badge-chip" style="background:${b.color}20;color:${b.color};border:1px solid ${b.color}40"><i class="ti ${b.icon}"></i> ${lang==='fr'?b.fr:b.en}</span>`).join('');
+}
+function updateSidebarOpenToWork(set) {
+  const el = document.getElementById('sidebar-otw');
+  if (!el) return;
+  el.style.display = set.has('immediate') ? 'flex' : 'none';
+}
+function renderAvailSection(uid) {
+  const set = getAvailBadges(uid);
+  const lang = state.lang || 'en';
+  const chips = AVAIL_BADGES.map(b => {
+    const on = set.has(b.id);
+    return `<span class="avail-chip" data-bid="${b.id}" onclick="toggleAvailBadge('${b.id}')"
+      style="background:${on?b.color:b.bg};color:${on?'#fff':b.color};border:1.5px solid ${on?b.color:b.color+'40'};font-weight:${on?700:500}">
+      <i class="ti ${b.icon}"></i> ${lang==='fr'?b.fr:b.en}
+    </span>`;
+  }).join('');
+  return `<div class="avail-section">
+    <div class="avail-label"><i class="ti ti-antenna-bars-5" style="color:#16a34a"></i> Open to opportunities — select all that apply</div>
+    <div class="avail-chips">${chips}</div>
+  </div>`;
 }
 
 // ── AI Match Score ──────────────────────────────────────────
@@ -1449,6 +1518,7 @@ function renderTalentPassport(p, user, pct) {
       <div class="passport-stat"><i class="ti ti-world-check"></i><strong>Global</strong><span>Ready</span></div>
       <div class="passport-stat"><i class="ti ti-chart-pie"></i><strong>${pct}%</strong><span>Profile</span></div>
     </div>
+    <div id="passport-badges-row" class="passport-badges-row" style="display:none"></div>
   </div>`;
 }
 
@@ -1572,8 +1642,11 @@ async function loadProfileForm() {
     const sc = score >= 700 ? '#4ade80' : score >= 450 ? '#facc15' : '#f97316';
     scoreEl.innerHTML = `<div class="dash-score-pill" style="background:${sc}20;color:${sc};border:1px solid ${sc}40"><i class="ti ti-star-filled" style="font-size:10px"></i> ${score} AI Score</div>`;
   }
-  container.innerHTML = renderTalentPassport(p, state.user, pct) + `
-    <div class="completeness-bar-wrap">
+  const _uid = state.user?.id;
+  container.innerHTML =
+    renderTalentPassport(p, state.user, pct) +
+    renderAvailSection(_uid) +
+    `<div class="completeness-bar-wrap">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
         <span style="font-size:13px;font-weight:600;color:var(--dark)">Profile completeness</span>
         <span style="font-size:13px;font-weight:700;color:${pctColor}">${pct}%</span>
@@ -1607,8 +1680,10 @@ async function loadProfileForm() {
     </div>
     <div class="form-group"><label>Availability</label><select id="pf-avail"><option value="immediate" ${p.availability==='immediate'?'selected':''}>Immediate</option><option value="2weeks" ${p.availability==='2weeks'?'selected':''}>2 weeks</option><option value="1month" ${p.availability==='1month'?'selected':''}>1 month</option><option value="3months" ${p.availability==='3months'?'selected':''}>3 months</option></select></div>
     <div class="form-group"><label>Bio (EN)</label><textarea id="pf-bio-en">${esc(p.bio_en||'')}</textarea></div>
-    <button class="btn-primary" onclick="saveProfile()"><i class="ti ti-check"></i> Save profile</button>
-  ` + renderHighlightsSection();
+    <button class="btn-primary" onclick="saveProfile()"><i class="ti ti-check"></i> Save profile</button>` +
+    renderHighlightsSection();
+  updatePassportBadgesRow(getAvailBadges(_uid));
+  updateSidebarOpenToWork(getAvailBadges(_uid));
 }
 
 async function saveProfile() {
