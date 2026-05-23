@@ -1374,13 +1374,12 @@ function computeCompleteness(p, user) {
 
 // ── Availability Badges ─────────────────────────────────────
 const AVAIL_BADGES = [
-  { id:'immediate', en:'Available now',        fr:'Disponible maintenant',    color:'#16a34a', bg:'#f0fdf4', icon:'ti-circle-filled' },
-  { id:'remote',    en:'Remote',               fr:'Télétravail',              color:'#6366f1', bg:'#eef2ff', icon:'ti-home' },
-  { id:'hybrid',    en:'Hybrid',               fr:'Hybride',                  color:'#0d9488', bg:'#f0fdfa', icon:'ti-building' },
-  { id:'contract',  en:'Contract',             fr:'Contrat',                  color:'#d97706', bg:'#fffbeb', icon:'ti-file-text' },
-  { id:'fulltime',  en:'Full-time',            fr:'Temps plein',              color:'#2563eb', bg:'#eff6ff', icon:'ti-briefcase' },
-  { id:'immigration',en:'Immigration friendly',fr:'Immigration bienvenue',    color:'#7c3aed', bg:'#f5f3ff', icon:'ti-plane' },
-  { id:'canada',    en:'Open to Canada',       fr:'Ouvert au Canada entier',  color:'#dc2626', bg:'#fef2f2', icon:'ti-map-2' },
+  { id:'worldwide',    en:'Open Worldwide',            fr:'Ouvert(e) au monde entier',     color:'#0ea5e9', bg:'#f0f9ff', icon:'ti-world' },
+  { id:'intl-opps',   en:'International Opportunities',fr:'Opportunités internationales',  color:'#6366f1', bg:'#eef2ff', icon:'ti-planet' },
+  { id:'relocation',  en:'Open to Relocation',         fr:'Mobilité géographique',         color:'#d97706', bg:'#fffbeb', icon:'ti-plane-departure' },
+  { id:'global-mob',  en:'Global Mobility',            fr:'Mobilité globale',              color:'#0d9488', bg:'#f0fdfa', icon:'ti-arrows-transfer-up' },
+  { id:'visa-sponsor',en:'Visa Sponsorship',           fr:'Parrainage de visa',            color:'#7c3aed', bg:'#f5f3ff', icon:'ti-id-badge' },
+  { id:'avail-intl',  en:'Available Internationally',  fr:'Disponible à l\'international', color:'#16a34a', bg:'#f0fdf4', icon:'ti-map-pin-filled' },
 ];
 function getAvailBadges(uid) {
   try { return new Set(JSON.parse(localStorage.getItem(`nxab_${uid}`) || '[]')); } catch { return new Set(); }
@@ -1418,7 +1417,7 @@ function updatePassportBadgesRow(set) {
 function updateSidebarOpenToWork(set) {
   const el = document.getElementById('sidebar-otw');
   if (!el) return;
-  el.style.display = set.has('immediate') ? 'flex' : 'none';
+  el.style.display = set.size > 0 ? 'flex' : 'none';
 }
 function renderAvailSection(uid) {
   const set = getAvailBadges(uid);
