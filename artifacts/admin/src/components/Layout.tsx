@@ -159,7 +159,7 @@ export default function Layout({
     organisations: orgStats?.newCount ?? 0,
   }), [contactStats?.newCount, verificationStats?.pendingCount, bugReportStats?.newCount, orgStats?.newCount]);
 
-  const { prefs, setPrefs, setEventPref, toggleBrowserPref, browserPermission } = useNotifications(counts);
+  const { prefs, setPrefs, setEventPref, toggleBrowserPref, browserPermission, promptShown } = useNotifications(counts);
 
   useEffect(() => {
     const base = role === "b2g" ? "AttenteZéro — B2G" : "AttenteZéro — Admin";
@@ -249,7 +249,7 @@ export default function Layout({
                       <span className="block h-3 w-3 rounded-full bg-white shadow translate-x-0" />
                     </div>
                   </div>
-                ) : browserPermission === "default" ? (
+                ) : browserPermission === "default" && !promptShown ? (
                   <button
                     type="button"
                     onClick={toggleBrowserPref}

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const STORAGE_KEY = "az_admin_notifications";
+const PROMPT_SHOWN_KEY = "az_admin_notif_prompt_shown";
 
 export interface NotifEventPrefs {
   messages: boolean;
@@ -113,6 +114,7 @@ const EVENT_TAGS: Record<keyof EventCounts, string> = {
 export function useNotifications(counts: EventCounts) {
   const [prefs, setPrefsState] = useState<NotifPrefs>(loadPrefs);
   const [browserPermission, setBrowserPermission] = useState<NotificationPermission>(getCurrentPermission);
+  const [promptShown, setPromptShown] = useState<boolean>(() => !!localStorage.getItem(PROMPT_SHOWN_KEY));
   const prevCounts = useRef<EventCounts | null>(null);
 
   const setPrefs = (next: Partial<Omit<NotifPrefs, "events">>) => {
@@ -149,6 +151,8 @@ export function useNotifications(counts: EventCounts) {
       return;
     }
 
+    localStorage.setItem(PROMPT_SHOWN_KEY, "1");
+    setPromptShown(true);
     const result = await Notification.requestPermission();
     setBrowserPermission(result);
     if (result === "granted") {
@@ -202,5 +206,5 @@ export function useNotifications(counts: EventCounts) {
     }
   }, [counts.messages, counts.verifications, counts.bugReports, counts.organisations, prefs.sound, prefs.browser, prefs.events]);
 
-  return { prefs, setPrefs, setEventPref, toggleBrowserPref, browserPermission };
+  return { prefs, setPrefs, setEventPref, toggleBrowserPref, browserPermission, promptShown };
 }
