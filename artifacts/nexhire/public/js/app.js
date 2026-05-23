@@ -279,6 +279,102 @@ const T = {
     'feat.ats.title':'ATS Pipeline','feat.ats.desc':'Employers get a full Kanban ATS to manage applications from New to Offer — with AI candidate scoring built in.',
     'feat.cover.title':'AI Cover Letters','feat.cover.desc':'Generate personalized, compelling cover letters in seconds. One click — tailored to each job.',
     'feat.reviews.title':'Company Reviews','feat.reviews.desc':"Transparent ratings from real candidates. Know what it's really like before you apply.",
+    'bento.cand.label':'For candidates',
+    'bento.cand.title':'Find your next opportunity,<br>anywhere in the world.',
+    'bento.cand.desc':'Thousands of jobs in Canada and internationally. Nexhire AI finds your best match in seconds.',
+    'bento.cand.btn':'Browse jobs',
+    'bento.emp.label':'For employers',
+    'bento.emp.title':'Hire the best talent, on a global scale.',
+    'bento.emp.desc':'Post jobs, rank candidates with AI, manage your Kanban pipeline. 2-5 free job slots to start.',
+    'bento.emp.btn':'Start free',
+    'bento.ai.label':'AI-Powered',
+    'bento.ai.title':'Cover letters, matching & ATS — one platform.',
+    'bento.ai.desc':'Everything you need to land or fill a role, all in one place.',
+    'bento.ai.btn':'Explore features',
+    'pricing.eyebrow':'Competitive AI-first pricing',
+    'pricing.title':'Sponsored Job pricing',
+    'pricing.sub':'No long-term contracts. Start and stop sponsoring your job posts at any time with a flexible budget. You only pay when candidates click.',
+    'pricing.badge':'Free to post · Pay only per qualified click on sponsored jobs',
+    'pricing.how':'<strong>How pricing works:</strong> Nexhire recommends a budget based on your job title, location, and market demand. You set a daily or total budget cap — charged only when a verified candidate clicks your sponsored listing. Standard jobs are always free with organic visibility. <a href="#" data-goto="help" style="color:var(--indigo)">Learn more →</a>',
+    'pricing.std.desc':'Hire with organic visibility in search results and get your job in front of active seekers.',
+    'pricing.std.incl':'Included',
+    'pricing.std.btn':'Post a job',
+    'pricing.std.f1':'<i class="ti ti-check"></i> Search results visibility',
+    'pricing.std.f2':'<i class="ti ti-check"></i> Automated candidate messages',
+    'pricing.std.f3':'<i class="ti ti-check"></i> Kanban ATS pipeline',
+    'pricing.std.f4':'<i class="ti ti-check"></i> Unlimited job posts',
+    'pricing.std.f5':'<i class="ti ti-check"></i> Direct messaging',
+    'pricing.std.f6':'<i class="ti ti-x muted"></i> AI-matched candidates',
+    'pricing.std.f7':'<i class="ti ti-x muted"></i> Urgently hiring badge',
+    'pricing.std.f8':'<i class="ti ti-x muted"></i> Branded jobs',
+    'pricing.std.f9':'<i class="ti ti-x muted"></i> Analytics dashboard',
+    'pricing.spo.popular':'⭐ Most popular',
+    'pricing.spo.per.click':'per qualified click · flexible budget',
+    'pricing.spo.desc':'Reach top talent with priority placement. AI-matched candidates sent directly to you. Pay only per click.',
+    'pricing.spo.budget':'<strong>Recommended budget:</strong> ~$5–15/day · min. $3/day<br><span style="font-size:12px;opacity:.8">Avg CPC: $0.50–$2.00 depending on industry</span>',
+    'pricing.spo.std.plus':'Everything in Standard, plus',
+    'pricing.spo.btn':'Sponsor a job',
+    'pricing.spo.nosub':'No subscription · Pay as you go',
+    'pricing.spo.f1':'<i class="ti ti-check" style="color:#34D399"></i> AI-matched candidates',
+    'pricing.spo.f2':'<i class="ti ti-check" style="color:#34D399"></i> Time-saving AI features',
+    'pricing.spo.f3':'<i class="ti ti-check" style="color:#34D399"></i> <span style="color:#FBBF24;font-weight:600">Urgently hiring</span> label',
+    'pricing.spo.f4':'<i class="ti ti-check" style="color:#34D399"></i> Branded company jobs',
+    'pricing.spo.f5':'<i class="ti ti-check" style="color:#34D399"></i> Priority search placement',
+    'pricing.spo.f6':'<i class="ti ti-check" style="color:#34D399"></i> Verified employer badge',
+    'pricing.pro.mo':'/ month · 14-day free trial',
+    'pricing.pro.desc':'For hiring teams. Unlimited sponsoring, advanced analytics, candidate database access, and bulk hiring tools.',
+    'pricing.pro.spo.plus':'Everything in Sponsored, plus',
+    'pricing.pro.btn':'Start free trial',
+    'pricing.pro.annual':'Annual $1,990/yr — save $398 (17%)',
+    'pricing.pro.f1':'<i class="ti ti-check"></i> Unlimited sponsored slots',
+    'pricing.pro.f2':'<i class="ti ti-check"></i> Candidate database access',
+    'pricing.pro.f3':'<i class="ti ti-check"></i> Advanced analytics dashboard',
+    'pricing.pro.f4':'<i class="ti ti-check"></i> Bulk candidate actions',
+    'pricing.pro.f5':'<i class="ti ti-check"></i> Priority support',
+    'pricing.pro.f6':'<i class="ti ti-check"></i> Team seats (3 users)',
+    'pricing.ent.title':'Volume pricing & custom integrations',
+    'pricing.ent.sub':'Dedicated account manager · Custom integrations · SLA 99.9% · SSO · Unlimited team seats · White-label options',
+    'pricing.ent.btn':'Contact sales →',
+    'pricing.why.title':'Why Nexhire?',
+    'pricing.why.sub':"AI-powered matching at a fraction of LinkedIn's price",
+    'pricing.tbl.platform':'Platform','pricing.tbl.model':'Model','pricing.tbl.cpc':'CPC price','pricing.tbl.sub':'Subscription','pricing.tbl.ai':'AI matching',
+    'pricing.faq.title':'Frequently asked questions',
+    'pricing.faq1.q':'When do I get charged?',
+    'pricing.faq1.a':'Only when a verified candidate clicks your sponsored job. Standard posts are always free. Set a daily cap and never go over budget.',
+    'pricing.faq2.q':'Can I pause or cancel anytime?',
+    'pricing.faq2.a':'Yes. No long-term contracts. Pause or cancel from your employer dashboard instantly. Your jobs stay visible in Standard mode for free.',
+    'pricing.faq3.q':'What is AI candidate matching?',
+    'pricing.faq3.a':'Sponsored jobs use GPT-4o to rank applicants by fit score — job description vs. resume & skills. You see the best candidates first, saving hours of manual screening.',
+    'pricing.faq4.q':'What is the Urgently Hiring badge?',
+    'pricing.faq4.a':'Sponsored jobs get a highlighted Urgently hiring label in search results, boosting click-through for time-sensitive roles by 2–3×.',
+    'settings.account.title':'Account settings','settings.type':'Account type','settings.employer':'Employer','settings.jobseeker':'Job seeker',
+    'settings.change.type':'Change account type','settings.email':'Email','settings.change.email':'Change email',
+    'settings.new.email':'New email','settings.cur.pw':'Current password','settings.save.email':'Save new email','settings.cancel':'Cancel',
+    'settings.name':'Name','settings.edit.profile':'Edit profile','settings.member.since':'Member since',
+    'settings.close.account':'Close my account','settings.close.desc':'This will permanently delete your account and all associated data.',
+    'settings.security.title':'Security settings','settings.password':'Password','settings.last.changed':'Last changed: unknown',
+    'settings.change.pw':'Change password','settings.new.pw':'New password','settings.chars':'8+ characters',
+    'settings.confirm.pw':'Confirm new password','settings.repeat.pw':'Repeat new password','settings.save.pw':'Save new password',
+    'settings.passkey':'Passkey','settings.passkey.val':'Not configured — passwordless login (coming soon)',
+    'settings.create.passkey':'Create passkey','settings.sessions':'Active sessions','settings.sessions.val':'1 active session (this device)',
+    'settings.signout.all':'Sign out all','settings.notif.title':'Communications settings',
+    'settings.job.alerts':'Job alerts','settings.job.alerts.val':'Receive emails when new jobs match your profile',
+    'settings.app.updates':'Application updates','settings.app.updates.val':'Emails when employers update your application status',
+    'settings.news':'Nexhire news','settings.news.val':'Product updates, new features, tips',
+    'settings.lang':'Platform language','settings.lang.val.en':'Currently: English','settings.lang.val.fr':'Currently: French / Français',
+    'settings.privacy.title':'Privacy settings','settings.profile.vis':'Profile visibility',
+    'settings.profile.vis.val':'Employers can find your profile when you apply',
+    'settings.anon.rev':'Anonymous reviews','settings.anon.rev.val':'Your name is never shown on company reviews',
+    'settings.ai.match':'AI matching','settings.ai.match.val':'Use your profile and activity to suggest relevant jobs',
+    'settings.your.data':'Your data','settings.your.data.val':'Request a copy or deletion of your personal data',
+    'settings.privacy.link':'Read our full Privacy Centre →',
+    'dash.empty.apps':'No applications yet.<br>Browse jobs and start applying!',
+    'dash.empty.browse':'Browse jobs','dash.empty.saved':'No saved jobs yet.<br>Click the ♥ on any job to save it.',
+    'dash.empty.skills':'Add skills to your profile to get job recommendations.',
+    'dash.empty.nomatch':'No matches found yet — more jobs coming!',
+    'dash.empty.jobs':'No jobs posted yet.',
+    'status.applied':'Applied','status.reviewed':'Reviewed','status.shortlisted':'Shortlisted',
+    'status.interview':'Interview','status.offer':'Offer','status.rejected':'Not selected','status.withdrawn':'Withdrawn',
     'cta.title':'Hire the best talent globally',
     'cta.desc':'Post jobs, review AI-ranked applications, manage your pipeline with Kanban, and message candidates directly. Start with 2-5 free job slots.',
     'cta.btn':'Start hiring free','cta.trial':'Free trial','cta.apps':'Applications','cta.ats':'ATS pipeline',
@@ -380,6 +476,102 @@ const T = {
     'feat.ats.title':'Pipeline ATS','feat.ats.desc':"Les employeurs disposent d'un ATS Kanban complet pour gérer les candidatures de Nouveau à Offre — avec scoring IA intégré.",
     'feat.cover.title':'Lettres de motivation IA','feat.cover.desc':'Générez des lettres de motivation personnalisées en quelques secondes. Un clic — adaptées à chaque poste.',
     'feat.reviews.title':"Avis d'entreprises",'feat.reviews.desc':"Évaluations transparentes de vrais candidats. Sachez vraiment à quoi vous attendre avant de postuler.",
+    'bento.cand.label':'Pour les candidats',
+    'bento.cand.title':'Trouvez votre prochaine opportunité,<br>partout dans le monde.',
+    'bento.cand.desc':"Des milliers d'offres au Canada et à l'international. L'IA Nexhire trouve votre meilleur match en quelques secondes.",
+    'bento.cand.btn':'Parcourir les offres',
+    'bento.emp.label':'Pour les employeurs',
+    'bento.emp.title':'Recrutez les meilleurs talents, à l'échelle mondiale.',
+    'bento.emp.desc':'Publiez des offres, classez les candidats par IA, gérez votre pipeline Kanban. 2 à 5 postes gratuits pour démarrer.',
+    'bento.emp.btn':'Commencer gratuitement',
+    'bento.ai.label':"Propulsé par l'IA",
+    'bento.ai.title':'Lettres de motivation, matching & ATS — une seule plateforme.',
+    'bento.ai.desc':'Tout ce dont vous avez besoin pour décrocher ou combler un poste, réuni en un seul endroit.',
+    'bento.ai.btn':'Explorer les fonctions',
+    'pricing.eyebrow':'Tarification compétitive axée sur l\'IA',
+    'pricing.title':'Tarification des offres sponsorisées',
+    'pricing.sub':'Sans engagement à long terme. Démarrez et arrêtez la sponsorisation de vos offres à tout moment avec un budget flexible. Vous ne payez que lorsque des candidats cliquent.',
+    'pricing.badge':'Gratuit pour publier · Payez uniquement par clic qualifié sur les offres sponsorisées',
+    'pricing.how':'<strong>Comment fonctionne la tarification :</strong> Nexhire recommande un budget selon le titre du poste, la localisation et la demande du marché. Vous fixez un plafond quotidien ou total — facturé uniquement lorsqu\'un candidat vérifié clique sur votre offre sponsorisée. Les offres Standard sont toujours gratuites. <a href="#" data-goto="help" style="color:var(--indigo)">En savoir plus →</a>',
+    'pricing.std.desc':'Recrutez avec une visibilité organique dans les résultats et exposez votre offre aux candidats actifs.',
+    'pricing.std.incl':'Inclus',
+    'pricing.std.btn':'Publier une offre',
+    'pricing.std.f1':'<i class="ti ti-check"></i> Visibilité dans les résultats',
+    'pricing.std.f2':'<i class="ti ti-check"></i> Messages automatisés aux candidats',
+    'pricing.std.f3':'<i class="ti ti-check"></i> Pipeline ATS Kanban',
+    'pricing.std.f4':'<i class="ti ti-check"></i> Offres illimitées',
+    'pricing.std.f5':'<i class="ti ti-check"></i> Messagerie directe',
+    'pricing.std.f6':'<i class="ti ti-x muted"></i> Candidats matchés par IA',
+    'pricing.std.f7':'<i class="ti ti-x muted"></i> Badge embauche urgente',
+    'pricing.std.f8':'<i class="ti ti-x muted"></i> Offres brandées',
+    'pricing.std.f9':'<i class="ti ti-x muted"></i> Tableau de bord analytique',
+    'pricing.spo.popular':'⭐ Le plus populaire',
+    'pricing.spo.per.click':'par clic qualifié · budget flexible',
+    'pricing.spo.desc':'Atteignez les meilleurs talents avec un placement prioritaire. Candidats matchés par IA envoyés directement. Payez uniquement par clic.',
+    'pricing.spo.budget':'<strong>Budget recommandé :</strong> ~5–15 $/jour · min. 3 $/jour<br><span style="font-size:12px;opacity:.8">CPC moyen : 0,50–2,00 $ selon le secteur</span>',
+    'pricing.spo.std.plus':'Tout ce qui est dans Standard, plus',
+    'pricing.spo.btn':'Sponsoriser une offre',
+    'pricing.spo.nosub':'Sans abonnement · Paiement à l\'utilisation',
+    'pricing.spo.f1':'<i class="ti ti-check" style="color:#34D399"></i> Candidats matchés par IA',
+    'pricing.spo.f2':'<i class="ti ti-check" style="color:#34D399"></i> Fonctions IA gain de temps',
+    'pricing.spo.f3':'<i class="ti ti-check" style="color:#34D399"></i> Label <span style="color:#FBBF24;font-weight:600">Embauche urgente</span>',
+    'pricing.spo.f4':'<i class="ti ti-check" style="color:#34D399"></i> Offres d\'entreprise brandées',
+    'pricing.spo.f5':'<i class="ti ti-check" style="color:#34D399"></i> Placement prioritaire',
+    'pricing.spo.f6':'<i class="ti ti-check" style="color:#34D399"></i> Badge employeur vérifié',
+    'pricing.pro.mo':'/ mois · 14 jours d\'essai gratuit',
+    'pricing.pro.desc':'Pour les équipes de recrutement. Sponsorisation illimitée, analytique avancée, accès à la base de candidats et outils d\'embauche en masse.',
+    'pricing.pro.spo.plus':'Tout ce qui est dans Sponsorisé, plus',
+    'pricing.pro.btn':'Démarrer l\'essai gratuit',
+    'pricing.pro.annual':'Annuel 1 990 $/an — économisez 398 $ (17 %)',
+    'pricing.pro.f1':'<i class="ti ti-check"></i> Slots sponsorisés illimités',
+    'pricing.pro.f2':'<i class="ti ti-check"></i> Accès à la base de candidats',
+    'pricing.pro.f3':'<i class="ti ti-check"></i> Tableau de bord analytique avancé',
+    'pricing.pro.f4':'<i class="ti ti-check"></i> Actions en masse sur candidats',
+    'pricing.pro.f5':'<i class="ti ti-check"></i> Support prioritaire',
+    'pricing.pro.f6':'<i class="ti ti-check"></i> Sièges d\'équipe (3 utilisateurs)',
+    'pricing.ent.title':'Tarification sur volume & intégrations personnalisées',
+    'pricing.ent.sub':'Gestionnaire de compte dédié · Intégrations personnalisées · SLA 99,9 % · SSO · Équipe illimitée · Options marque blanche',
+    'pricing.ent.btn':'Contacter les ventes →',
+    'pricing.why.title':'Pourquoi Nexhire ?',
+    'pricing.why.sub':'Matching propulsé par l\'IA à une fraction du prix de LinkedIn',
+    'pricing.tbl.platform':'Plateforme','pricing.tbl.model':'Modèle','pricing.tbl.cpc':'Prix CPC','pricing.tbl.sub':'Abonnement','pricing.tbl.ai':'IA matching',
+    'pricing.faq.title':'Questions fréquentes',
+    'pricing.faq1.q':'Quand suis-je facturé(e) ?',
+    'pricing.faq1.a':'Uniquement lorsqu\'un candidat vérifié clique sur votre offre sponsorisée. Les offres Standard sont toujours gratuites. Fixez un plafond quotidien et ne dépassez jamais votre budget.',
+    'pricing.faq2.q':'Puis-je mettre en pause ou annuler à tout moment ?',
+    'pricing.faq2.a':'Oui. Sans engagement à long terme. Mettez en pause ou annulez depuis votre tableau de bord employeur instantanément. Vos offres restent visibles en mode Standard gratuitement.',
+    'pricing.faq3.q':'Qu\'est-ce que le matching IA des candidats ?',
+    'pricing.faq3.a':'Les offres sponsorisées utilisent GPT-4o pour classer les candidats par score de correspondance — description du poste vs. CV & compétences. Vous voyez les meilleurs candidats en premier.',
+    'pricing.faq4.q':'Qu\'est-ce que le badge « Embauche urgente » ?',
+    'pricing.faq4.a':'Les offres sponsorisées obtiennent un label « Embauche urgente » mis en évidence dans les résultats, augmentant le taux de clics pour les postes urgents de 2 à 3×.',
+    'settings.account.title':'Paramètres du compte','settings.type':'Type de compte','settings.employer':'Employeur','settings.jobseeker':'Chercheur d\'emploi',
+    'settings.change.type':'Changer de type de compte','settings.email':'Courriel','settings.change.email':'Changer de courriel',
+    'settings.new.email':'Nouveau courriel','settings.cur.pw':'Mot de passe actuel','settings.save.email':'Enregistrer le nouveau courriel','settings.cancel':'Annuler',
+    'settings.name':'Nom','settings.edit.profile':'Modifier le profil','settings.member.since':'Membre depuis',
+    'settings.close.account':'Fermer mon compte','settings.close.desc':'Cela supprimera définitivement votre compte et toutes les données associées.',
+    'settings.security.title':'Paramètres de sécurité','settings.password':'Mot de passe','settings.last.changed':'Dernier changement : inconnu',
+    'settings.change.pw':'Changer le mot de passe','settings.new.pw':'Nouveau mot de passe','settings.chars':'8+ caractères',
+    'settings.confirm.pw':'Confirmer le nouveau mot de passe','settings.repeat.pw':'Répéter le nouveau mot de passe','settings.save.pw':'Enregistrer le nouveau mot de passe',
+    'settings.passkey':'Clé d\'accès','settings.passkey.val':'Non configuré — connexion sans mot de passe (bientôt disponible)',
+    'settings.create.passkey':'Créer une clé d\'accès','settings.sessions':'Sessions actives','settings.sessions.val':'1 session active (cet appareil)',
+    'settings.signout.all':'Déconnecter tout','settings.notif.title':'Paramètres de communication',
+    'settings.job.alerts':'Alertes emploi','settings.job.alerts.val':'Recevoir des courriels lorsque de nouvelles offres correspondent à votre profil',
+    'settings.app.updates':'Mises à jour des candidatures','settings.app.updates.val':'Courriels lorsque les employeurs mettent à jour le statut de votre candidature',
+    'settings.news':'Actualités Nexhire','settings.news.val':'Mises à jour du produit, nouvelles fonctions, conseils',
+    'settings.lang':'Langue de la plateforme','settings.lang.val.en':'Actuellement : English','settings.lang.val.fr':'Actuellement : Français',
+    'settings.privacy.title':'Paramètres de confidentialité','settings.profile.vis':'Visibilité du profil',
+    'settings.profile.vis.val':'Les employeurs peuvent trouver votre profil lorsque vous postulez',
+    'settings.anon.rev':'Avis anonymes','settings.anon.rev.val':'Votre nom n\'apparaît jamais sur les avis d\'entreprise',
+    'settings.ai.match':'Matching IA','settings.ai.match.val':'Utiliser votre profil et activité pour suggérer des offres pertinentes',
+    'settings.your.data':'Vos données','settings.your.data.val':'Demander une copie ou la suppression de vos données personnelles',
+    'settings.privacy.link':'Lire notre Centre de confidentialité complet →',
+    'dash.empty.apps':'Aucune candidature pour l\'instant.<br>Parcourez les offres et commencez à postuler !',
+    'dash.empty.browse':'Parcourir les offres','dash.empty.saved':'Aucune offre sauvegardée.<br>Cliquez sur le ♥ pour en sauvegarder une.',
+    'dash.empty.skills':'Ajoutez des compétences à votre profil pour obtenir des recommandations.',
+    'dash.empty.nomatch':'Aucune correspondance pour l\'instant — plus d\'offres arrivent !',
+    'dash.empty.jobs':'Aucune offre publiée pour l\'instant.',
+    'status.applied':'Candidaté','status.reviewed':'Examiné','status.shortlisted':'Présélectionné',
+    'status.interview':'Entretien','status.offer':'Offre','status.rejected':'Non retenu','status.withdrawn':'Retiré',
     'cta.title':"Recrutez les meilleurs talents à l'échelle mondiale",
     'cta.desc':'Publiez des offres, examinez les candidatures classées par IA, gérez votre pipeline Kanban et contactez directement les candidats. Commencez avec 2 à 5 postes gratuits.',
     'cta.btn':'Commencer gratuitement','cta.trial':'Essai gratuit','cta.apps':'Candidatures','cta.ats':'Pipeline ATS',
@@ -1071,115 +1263,116 @@ function showSettingsSection(section, el) {
   const content = document.getElementById('settings-content');
   if (!content) return;
 
+  const t = T[state.lang];
   if (section === 's-account') {
     content.innerHTML = `
-      <h2 class="settings-section-title">Account settings</h2>
+      <h2 class="settings-section-title">${t['settings.account.title']}</h2>
       <div class="settings-rows">
         <div class="settings-row">
-          <div><div class="settings-row-label">Account type</div><div class="settings-row-value">${u.role === 'employer' ? 'Employer' : 'Job seeker'}</div></div>
-          <button class="btn-ghost btn-sm">Change account type</button>
+          <div><div class="settings-row-label">${t['settings.type']}</div><div class="settings-row-value">${u.role === 'employer' ? t['settings.employer'] : t['settings.jobseeker']}</div></div>
+          <button class="btn-ghost btn-sm">${t['settings.change.type']}</button>
         </div>
         <div class="settings-row">
-          <div><div class="settings-row-label">Email</div><div class="settings-row-value">${esc(u.email||'')}</div></div>
-          <button class="btn-ghost btn-sm" onclick="openChangeEmail()">Change email</button>
+          <div><div class="settings-row-label">${t['settings.email']}</div><div class="settings-row-value">${esc(u.email||'')}</div></div>
+          <button class="btn-ghost btn-sm" onclick="openChangeEmail()">${t['settings.change.email']}</button>
         </div>
         <div class="settings-row" id="change-email-form" style="display:none">
           <div style="flex:1">
-            <div class="form-group"><label>New email</label><input type="email" id="new-email" placeholder="new@example.com"></div>
-            <div class="form-group"><label>Current password</label><input type="password" id="change-email-pw" placeholder="••••••••"></div>
+            <div class="form-group"><label>${t['settings.new.email']}</label><input type="email" id="new-email" placeholder="new@example.com"></div>
+            <div class="form-group"><label>${t['settings.cur.pw']}</label><input type="password" id="change-email-pw" placeholder="••••••••"></div>
             <div class="form-error" id="change-email-error"></div>
-            <button class="btn-primary btn-sm" onclick="saveEmailChange()">Save new email</button>
-            <button class="btn-ghost btn-sm" onclick="document.getElementById('change-email-form').style.display='none'" style="margin-left:8px">Cancel</button>
+            <button class="btn-primary btn-sm" onclick="saveEmailChange()">${t['settings.save.email']}</button>
+            <button class="btn-ghost btn-sm" onclick="document.getElementById('change-email-form').style.display='none'" style="margin-left:8px">${t['settings.cancel']}</button>
           </div>
         </div>
         <div class="settings-row">
-          <div><div class="settings-row-label">Name</div><div class="settings-row-value">${esc(u.first_name||'')} ${esc(u.last_name||'')}</div></div>
-          <button class="btn-ghost btn-sm" onclick="goto('candidate-dash')">Edit profile</button>
+          <div><div class="settings-row-label">${t['settings.name']}</div><div class="settings-row-value">${esc(u.first_name||'')} ${esc(u.last_name||'')}</div></div>
+          <button class="btn-ghost btn-sm" onclick="goto('candidate-dash')">${t['settings.edit.profile']}</button>
         </div>
         <div class="settings-row">
-          <div><div class="settings-row-label">Member since</div><div class="settings-row-value">${u.created_at ? new Date(u.created_at).toLocaleDateString('en-CA',{year:'numeric',month:'long'}) : '—'}</div></div>
+          <div><div class="settings-row-label">${t['settings.member.since']}</div><div class="settings-row-value">${u.created_at ? new Date(u.created_at).toLocaleDateString(state.lang === 'fr' ? 'fr-CA' : 'en-CA',{year:'numeric',month:'long'}) : '—'}</div></div>
           <span></span>
         </div>
       </div>
       <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border)">
         <button class="btn-ghost" style="color:var(--red);border-color:var(--red)" onclick="confirmCloseAccount()">
-          <i class="ti ti-trash"></i> Close my account
+          <i class="ti ti-trash"></i> ${t['settings.close.account']}
         </button>
-        <p style="font-size:12px;color:var(--muted);margin-top:8px">This will permanently delete your account and all associated data.</p>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px">${t['settings.close.desc']}</p>
       </div>
     `;
   } else if (section === 's-security') {
     content.innerHTML = `
-      <h2 class="settings-section-title">Security settings</h2>
+      <h2 class="settings-section-title">${t['settings.security.title']}</h2>
       <div class="settings-rows">
         <div class="settings-row">
-          <div><div class="settings-row-label">Password</div><div class="settings-row-value">Last changed: unknown</div></div>
-          <button class="btn-ghost btn-sm" onclick="openChangePassword()">Change password</button>
+          <div><div class="settings-row-label">${t['settings.password']}</div><div class="settings-row-value">${t['settings.last.changed']}</div></div>
+          <button class="btn-ghost btn-sm" onclick="openChangePassword()">${t['settings.change.pw']}</button>
         </div>
         <div class="settings-row" id="change-pw-form" style="display:none">
           <div style="flex:1">
-            <div class="form-group"><label>Current password</label><input type="password" id="cur-pw" placeholder="Current password"></div>
-            <div class="form-group"><label>New password</label><input type="password" id="new-pw" placeholder="8+ characters"></div>
-            <div class="form-group"><label>Confirm new password</label><input type="password" id="confirm-pw" placeholder="Repeat new password"></div>
+            <div class="form-group"><label>${t['settings.cur.pw']}</label><input type="password" id="cur-pw" placeholder="${t['settings.cur.pw']}"></div>
+            <div class="form-group"><label>${t['settings.new.pw']}</label><input type="password" id="new-pw" placeholder="${t['settings.chars']}"></div>
+            <div class="form-group"><label>${t['settings.confirm.pw']}</label><input type="password" id="confirm-pw" placeholder="${t['settings.repeat.pw']}"></div>
             <div class="form-error" id="change-pw-error"></div>
-            <button class="btn-primary btn-sm" onclick="savePasswordChange()">Save new password</button>
-            <button class="btn-ghost btn-sm" onclick="document.getElementById('change-pw-form').style.display='none'" style="margin-left:8px">Cancel</button>
+            <button class="btn-primary btn-sm" onclick="savePasswordChange()">${t['settings.save.pw']}</button>
+            <button class="btn-ghost btn-sm" onclick="document.getElementById('change-pw-form').style.display='none'" style="margin-left:8px">${t['settings.cancel']}</button>
           </div>
         </div>
         <div class="settings-row">
-          <div><div class="settings-row-label">Passkey</div><div class="settings-row-value settings-muted">Not configured — passwordless login (coming soon)</div></div>
-          <button class="btn-ghost btn-sm" disabled style="opacity:.5">Create passkey</button>
+          <div><div class="settings-row-label">${t['settings.passkey']}</div><div class="settings-row-value settings-muted">${t['settings.passkey.val']}</div></div>
+          <button class="btn-ghost btn-sm" disabled style="opacity:.5">${t['settings.create.passkey']}</button>
         </div>
         <div class="settings-row">
-          <div><div class="settings-row-label">Active sessions</div><div class="settings-row-value settings-muted">1 active session (this device)</div></div>
-          <button class="btn-ghost btn-sm" onclick="logout()">Sign out all</button>
+          <div><div class="settings-row-label">${t['settings.sessions']}</div><div class="settings-row-value settings-muted">${t['settings.sessions.val']}</div></div>
+          <button class="btn-ghost btn-sm" onclick="logout()">${t['settings.signout.all']}</button>
         </div>
       </div>
     `;
   } else if (section === 's-notifications') {
     content.innerHTML = `
-      <h2 class="settings-section-title">Communications settings</h2>
+      <h2 class="settings-section-title">${t['settings.notif.title']}</h2>
       <div class="settings-rows">
         <div class="settings-row">
-          <div><div class="settings-row-label">Job alerts</div><div class="settings-row-value settings-muted">Receive emails when new jobs match your profile</div></div>
+          <div><div class="settings-row-label">${t['settings.job.alerts']}</div><div class="settings-row-value settings-muted">${t['settings.job.alerts.val']}</div></div>
           <label class="toggle-switch"><input type="checkbox" id="notif-jobs" checked onchange="saveNotifPref('job_alerts',this.checked)"><span class="toggle-slider"></span></label>
         </div>
         <div class="settings-row">
-          <div><div class="settings-row-label">Application updates</div><div class="settings-row-value settings-muted">Emails when employers update your application status</div></div>
+          <div><div class="settings-row-label">${t['settings.app.updates']}</div><div class="settings-row-value settings-muted">${t['settings.app.updates.val']}</div></div>
           <label class="toggle-switch"><input type="checkbox" id="notif-apps" checked onchange="saveNotifPref('app_updates',this.checked)"><span class="toggle-slider"></span></label>
         </div>
         <div class="settings-row">
-          <div><div class="settings-row-label">Nexhire news</div><div class="settings-row-value settings-muted">Product updates, new features, tips</div></div>
+          <div><div class="settings-row-label">${t['settings.news']}</div><div class="settings-row-value settings-muted">${t['settings.news.val']}</div></div>
           <label class="toggle-switch"><input type="checkbox" id="notif-news" onchange="saveNotifPref('news',this.checked)"><span class="toggle-slider"></span></label>
         </div>
         <div class="settings-row">
-          <div><div class="settings-row-label">Platform language</div><div class="settings-row-value">Currently: ${state.lang === 'fr' ? 'French / Français' : 'English'}</div></div>
+          <div><div class="settings-row-label">${t['settings.lang']}</div><div class="settings-row-value">${state.lang === 'fr' ? t['settings.lang.val.fr'] : t['settings.lang.val.en']}</div></div>
           <div style="display:flex;gap:8px"><button class="btn-ghost btn-sm ${state.lang==='en'?'btn-active':''}" onclick="setLang('en')">EN</button><button class="btn-ghost btn-sm ${state.lang==='fr'?'btn-active':''}" onclick="setLang('fr')">FR</button></div>
         </div>
       </div>
     `;
   } else if (section === 's-privacy') {
     content.innerHTML = `
-      <h2 class="settings-section-title">Privacy settings</h2>
+      <h2 class="settings-section-title">${t['settings.privacy.title']}</h2>
       <div class="settings-rows">
         <div class="settings-row">
-          <div><div class="settings-row-label">Profile visibility</div><div class="settings-row-value settings-muted">Employers can find your profile when you apply</div></div>
+          <div><div class="settings-row-label">${t['settings.profile.vis']}</div><div class="settings-row-value settings-muted">${t['settings.profile.vis.val']}</div></div>
           <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
         </div>
         <div class="settings-row">
-          <div><div class="settings-row-label">Anonymous reviews</div><div class="settings-row-value settings-muted">Your name is never shown on company reviews</div></div>
+          <div><div class="settings-row-label">${t['settings.anon.rev']}</div><div class="settings-row-value settings-muted">${t['settings.anon.rev.val']}</div></div>
           <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
         </div>
         <div class="settings-row">
-          <div><div class="settings-row-label">AI matching</div><div class="settings-row-value settings-muted">Use your profile and activity to suggest relevant jobs</div></div>
+          <div><div class="settings-row-label">${t['settings.ai.match']}</div><div class="settings-row-value settings-muted">${t['settings.ai.match.val']}</div></div>
           <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
         </div>
         <div class="settings-row">
-          <div><div class="settings-row-label">Your data</div><div class="settings-row-value settings-muted">Request a copy or deletion of your personal data</div></div>
-          <div style="display:flex;gap:8px"><button class="btn-ghost btn-sm" onclick="toast('Data export coming soon','info')"><i class="ti ti-download"></i> Export</button><button class="btn-ghost btn-sm" style="color:var(--red)" onclick="confirmCloseAccount()"><i class="ti ti-trash"></i> Delete</button></div>
+          <div><div class="settings-row-label">${t['settings.your.data']}</div><div class="settings-row-value settings-muted">${t['settings.your.data.val']}</div></div>
+          <div style="display:flex;gap:8px"><button class="btn-ghost btn-sm" onclick="toast('${state.lang==='fr'?'Export de données bientôt disponible':'Data export coming soon'}','info')"><i class="ti ti-download"></i> Export</button><button class="btn-ghost btn-sm" style="color:var(--red)" onclick="confirmCloseAccount()"><i class="ti ti-trash"></i> Delete</button></div>
         </div>
       </div>
-      <div style="margin-top:24px"><a class="help-link" onclick="goto('privacy')">Read our full Privacy Centre →</a></div>
+      <div style="margin-top:24px"><a class="help-link" onclick="goto('privacy')">${t['settings.privacy.link']}</a></div>
     `;
   }
 }
@@ -1228,20 +1421,36 @@ function saveNotifPref(key, val) {
 
 // ── Help page ──────────────────────────────────────────────
 function renderHelp() {
-  const candidateFaqs = [
+  const candidateFaqsEn = [
     { q: 'How do I create an account?', a: 'Click "Get started" in the top right corner and select "Candidate". Fill in your details and you\'re done.' },
     { q: 'How does AI job matching work?', a: 'Our AI analyzes your profile skills, experience, and preferences to recommend the most relevant jobs. Complete your profile for better matches.' },
     { q: 'How do I apply for a job?', a: 'Click on any job, then "Apply Now". You can write a custom cover letter or generate one with AI in seconds.' },
     { q: 'Can I save jobs to review later?', a: 'Yes — click the ❤️ heart icon on any job card to save it. Find all saved jobs in your dashboard under "Saved Jobs".' },
     { q: 'How do I delete my account?', a: 'Go to Settings → Account settings → "Close my account". This permanently deletes all your data.' },
   ];
-  const employerFaqs = [
+  const candidateFaqsFr = [
+    { q: 'Comment créer un compte ?', a: 'Cliquez sur « Commencer » en haut à droite et sélectionnez « Candidat ». Remplissez vos informations et c\'est fait.' },
+    { q: 'Comment fonctionne le matching IA ?', a: 'Notre IA analyse vos compétences, expériences et préférences pour vous recommander les offres les plus pertinentes. Complétez votre profil pour de meilleurs résultats.' },
+    { q: 'Comment postuler à une offre ?', a: 'Cliquez sur une offre, puis sur « Postuler ». Vous pouvez rédiger une lettre de motivation personnalisée ou en générer une par IA en quelques secondes.' },
+    { q: 'Puis-je sauvegarder des offres pour plus tard ?', a: 'Oui — cliquez sur le ❤️ sur n\'importe quelle offre. Retrouvez toutes vos offres sauvegardées dans votre tableau de bord.' },
+    { q: 'Comment supprimer mon compte ?', a: 'Allez dans Paramètres → Paramètres du compte → « Fermer mon compte ». Cela supprime définitivement toutes vos données.' },
+  ];
+  const employerFaqsEn = [
     { q: 'How do I post a job?', a: 'Register as an employer, create your company profile, then go to "Post a Job" in your employer dashboard.' },
     { q: 'How many jobs can I post for free?', a: 'The Starter plan (free) includes 2 to 5 active job slots. Upgrade to Pro for 10 slots and featured listings.' },
     { q: 'What is the ATS Kanban pipeline?', a: 'It\'s a visual board to manage candidates across stages: New → Reviewed → Shortlisted → Interview → Offer → Rejected.' },
     { q: 'How do I see analytics for my job postings?', a: 'In your employer dashboard, each job card shows views, applications, and conversion rate in real-time.' },
     { q: 'How do I upgrade to Pro?', a: 'Go to your employer dashboard → Billing tab → "Upgrade to Pro".' },
   ];
+  const employerFaqsFr = [
+    { q: 'Comment publier une offre ?', a: 'Inscrivez-vous en tant qu\'employeur, créez votre profil d\'entreprise, puis allez dans « Publier une offre » de votre tableau de bord.' },
+    { q: 'Combien d\'offres puis-je publier gratuitement ?', a: 'Le plan Starter (gratuit) inclut 2 à 5 postes actifs. Passez au Pro pour 10 slots et des annonces mises en avant.' },
+    { q: 'Qu\'est-ce que le pipeline ATS Kanban ?', a: 'C\'est un tableau visuel pour gérer les candidats : Nouveau → Examiné → Présélectionné → Entretien → Offre → Refusé.' },
+    { q: 'Comment voir les analytiques de mes offres ?', a: 'Dans votre tableau de bord employeur, chaque offre affiche les vues, candidatures et taux de conversion en temps réel.' },
+    { q: 'Comment passer au plan Pro ?', a: 'Allez dans votre tableau de bord employeur → onglet Facturation → « Passer au Pro ».' },
+  ];
+  const candidateFaqs = state.lang === 'fr' ? candidateFaqsFr : candidateFaqsEn;
+  const employerFaqs = state.lang === 'fr' ? employerFaqsFr : employerFaqsEn;
   const faqHtml = (faqs) => faqs.map(f => `
     <details class="help-faq-item">
       <summary>${esc(f.q)}</summary>
@@ -2122,10 +2331,13 @@ async function loadMyApplications() {
   const container = document.getElementById('applications-list');
   if (!container) return;
   const apps = d.applications || [];
-  if (!apps.length) { container.innerHTML = '<div class="empty-state"><i class="ti ti-file-off"></i><p>No applications yet.<br>Browse jobs and start applying!</p><button class="btn-primary" onclick="goto(\'jobs\')" style="margin-top:16px">Browse jobs</button></div>'; return; }
+  const t = T[state.lang];
+  if (!apps.length) { container.innerHTML = `<div class="empty-state"><i class="ti ti-file-off"></i><p>${t['dash.empty.apps']}</p><button class="btn-primary" onclick="goto('jobs')" style="margin-top:16px">${t['dash.empty.browse']}</button></div>`; return; }
 
   const statuses = ['new','reviewed','shortlisted','interview','offer','rejected'];
-  const statusLabel = { new:'Applied', reviewed:'Reviewed', shortlisted:'Shortlisted', interview:'Interview', offer:'Offer', rejected:'Not selected', withdrawn:'Withdrawn' };
+  const statusLabel = state.lang === 'fr'
+    ? { new:t['status.applied'], reviewed:t['status.reviewed'], shortlisted:t['status.shortlisted'], interview:t['status.interview'], offer:t['status.offer'], rejected:t['status.rejected'], withdrawn:t['status.withdrawn'] }
+    : { new:'Applied', reviewed:'Reviewed', shortlisted:'Shortlisted', interview:'Interview', offer:'Offer', rejected:'Not selected', withdrawn:'Withdrawn' };
 
   container.innerHTML = apps.map(a => {
     const title = state.lang === 'fr' ? (a.title_fr || a.title_en) : (a.title_en || a.title_fr);
@@ -2164,7 +2376,7 @@ async function loadSavedJobsTab() {
   container.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px;color:var(--indigo)"></i></div>`;
   const d = await api('GET', `${BASE}/api/saved-jobs`);
   const jobs = d.jobs || [];
-  if (!jobs.length) { container.innerHTML = '<div class="empty-state"><i class="ti ti-heart"></i><p>No saved jobs yet.<br>Click the <i class="ti ti-heart"></i> on any job to save it.</p></div>'; return; }
+  if (!jobs.length) { const te=T[state.lang]; container.innerHTML = `<div class="empty-state"><i class="ti ti-heart"></i><p>${te['dash.empty.saved']}</p></div>`; return; }
   container.innerHTML = jobs.map(j => {
     const title = state.lang === 'fr' ? (j.title_fr || j.title_en) : (j.title_en || j.title_fr);
     const color = companyColor(j.company_name);
@@ -2187,7 +2399,7 @@ async function loadJobsForYou() {
   if (!container) return;
   const profileD = await api('GET', `${BASE}/api/candidates/profile`);
   const skills = safeJsonArr(profileD.profile?.skills);
-  if (!skills.length) { container.innerHTML = '<div class="empty-state" style="padding:24px"><i class="ti ti-sparkles"></i><p>Add skills to your profile to get job recommendations.</p></div>'; return; }
+  if (!skills.length) { container.innerHTML = `<div class="empty-state" style="padding:24px"><i class="ti ti-sparkles"></i><p>${T[state.lang]['dash.empty.skills']}</p></div>`; return; }
 
   const q = skills.slice(0, 3).join(' ');
   const d = await api('GET', `${BASE}/api/jobs?q=${encodeURIComponent(q)}&limit=5`);

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="stylesheet" href="/nexhire/css/main.css?v=20260523y">
+<link rel="stylesheet" href="/nexhire/css/main.css?v=20260523z">
 <link rel="icon" type="image/svg+xml" href="/nexhire/img/favicon.svg">
 </head>
 <body>
@@ -218,25 +218,25 @@
   <section class="bento-section reveal">
     <div class="bento-grid">
       <div class="bento-cell bento-dark">
-        <span class="bento-label">Pour les candidats</span>
-        <h2 class="bento-heading">Trouvez votre prochaine opportunité,<br>partout dans le monde.</h2>
-        <p class="bento-desc">Des milliers d'offres au Canada et à l'international. L'IA Nexhire trouve votre meilleur match en quelques secondes.</p>
-        <button class="btn-bento" onclick="goto('jobs')">Parcourir les offres <i class="ti ti-arrow-right"></i></button>
+        <span class="bento-label" data-i18n="bento.cand.label">Pour les candidats</span>
+        <h2 class="bento-heading" data-i18n-html="bento.cand.title">Trouvez votre prochaine opportunité,<br>partout dans le monde.</h2>
+        <p class="bento-desc" data-i18n="bento.cand.desc">Des milliers d'offres au Canada et à l'international. L'IA Nexhire trouve votre meilleur match en quelques secondes.</p>
+        <button class="btn-bento" onclick="goto('jobs')"><span data-i18n="bento.cand.btn">Parcourir les offres</span> <i class="ti ti-arrow-right"></i></button>
       </div>
       <div class="bento-cell bento-photo">
         <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80&auto=format&fit=crop" alt="Professional team" loading="lazy">
       </div>
       <div class="bento-cell bento-light">
-        <span class="bento-label bento-label-accent">Pour les employeurs</span>
-        <h2 class="bento-heading bento-heading-dark">Recrutez les meilleurs talents, à l'échelle mondiale.</h2>
-        <p class="bento-desc bento-desc-dark">Publiez des offres, classez les candidats par IA, gérez votre pipeline Kanban. 2 à 5 postes gratuits pour démarrer.</p>
-        <button class="btn-bento btn-bento-dark" onclick="goto('employers')">Commencer gratuitement <i class="ti ti-arrow-right"></i></button>
+        <span class="bento-label bento-label-accent" data-i18n="bento.emp.label">Pour les employeurs</span>
+        <h2 class="bento-heading bento-heading-dark" data-i18n="bento.emp.title">Recrutez les meilleurs talents, à l'échelle mondiale.</h2>
+        <p class="bento-desc bento-desc-dark" data-i18n="bento.emp.desc">Publiez des offres, classez les candidats par IA, gérez votre pipeline Kanban. 2 à 5 postes gratuits pour démarrer.</p>
+        <button class="btn-bento btn-bento-dark" onclick="goto('employers')"><span data-i18n="bento.emp.btn">Commencer gratuitement</span> <i class="ti ti-arrow-right"></i></button>
       </div>
       <div class="bento-cell bento-teal">
-        <span class="bento-label">Propulsé par l'IA</span>
-        <h2 class="bento-heading">Lettres de motivation, matching &amp; ATS — une seule plateforme.</h2>
-        <p class="bento-desc">Tout ce dont vous avez besoin pour décrocher ou combler un poste, réuni en un seul endroit.</p>
-        <button class="btn-bento" onclick="document.getElementById('modal-register').style.display='flex'">Explorer les fonctions <i class="ti ti-arrow-right"></i></button>
+        <span class="bento-label" data-i18n="bento.ai.label">Propulsé par l'IA</span>
+        <h2 class="bento-heading" data-i18n="bento.ai.title">Lettres de motivation, matching &amp; ATS — une seule plateforme.</h2>
+        <p class="bento-desc" data-i18n="bento.ai.desc">Tout ce dont vous avez besoin pour décrocher ou combler un poste, réuni en un seul endroit.</p>
+        <button class="btn-bento" onclick="document.getElementById('modal-register').style.display='flex'"><span data-i18n="bento.ai.btn">Explorer les fonctions</span> <i class="ti ti-arrow-right"></i></button>
       </div>
     </div>
   </section>
@@ -333,12 +333,12 @@
   <!-- Hero -->
   <div style="background:#fff;border-bottom:1px solid var(--border);padding:64px 24px 48px;text-align:center">
     <div style="display:inline-flex;align-items:center;gap:8px;background:var(--indigo3);color:var(--indigo);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:20px">
-      <i class="ti ti-sparkles"></i> Competitive AI-first pricing
+      <i class="ti ti-sparkles"></i> <span data-i18n="pricing.eyebrow">Competitive AI-first pricing</span>
     </div>
-    <h1 style="font-family:var(--r);font-size:38px;font-weight:800;color:var(--dark);margin-bottom:16px">Sponsored Job pricing</h1>
-    <p style="font-size:17px;color:#475569;max-width:580px;margin:0 auto 24px;line-height:1.7">No long-term contracts. Start and stop sponsoring your job posts at any time with a flexible budget. You only pay when candidates click.</p>
+    <h1 style="font-family:var(--r);font-size:38px;font-weight:800;color:var(--dark);margin-bottom:16px" data-i18n="pricing.title">Sponsored Job pricing</h1>
+    <p style="font-size:17px;color:#475569;max-width:580px;margin:0 auto 24px;line-height:1.7" data-i18n="pricing.sub">No long-term contracts. Start and stop sponsoring your job posts at any time with a flexible budget. You only pay when candidates click.</p>
     <div style="display:inline-flex;align-items:center;gap:8px;background:#F0FDF4;color:#16A34A;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:500">
-      <i class="ti ti-check"></i> Free to post · Pay only per qualified click on sponsored jobs
+      <i class="ti ti-check"></i> <span data-i18n="pricing.badge">Free to post · Pay only per qualified click on sponsored jobs</span>
     </div>
   </div>
 
@@ -346,7 +346,7 @@
   <div style="background:#F8FAFC;border-bottom:1px solid var(--border);padding:28px 24px">
     <div style="max-width:800px;margin:0 auto;display:flex;align-items:flex-start;gap:16px">
       <i class="ti ti-info-circle" style="font-size:20px;color:var(--indigo);flex-shrink:0;margin-top:2px"></i>
-      <p style="font-size:14px;color:var(--text);margin:0;line-height:1.7"><strong>How pricing works:</strong> Nexhire recommends a budget based on your job title, location, and market demand. You set a daily or total budget cap — charged only when a verified candidate clicks your sponsored listing. Standard jobs are always free with organic visibility. <a href="#" data-goto="help" style="color:var(--indigo)">Learn more →</a></p>
+      <p style="font-size:14px;color:var(--text);margin:0;line-height:1.7" data-i18n-html="pricing.how"><strong>How pricing works:</strong> Nexhire recommends a budget based on your job title, location, and market demand. You set a daily or total budget cap — charged only when a verified candidate clicks your sponsored listing. Standard jobs are always free with organic visibility. <a href="#" data-goto="help" style="color:var(--indigo)">Learn more →</a></p>
     </div>
   </div>
 
@@ -361,70 +361,70 @@
         <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:12px">Standard</div>
         <div style="font-family:var(--r);font-size:36px;font-weight:800;color:var(--dark);line-height:1">Free</div>
         <div style="font-size:13px;color:var(--muted);margin:6px 0 20px">forever · no credit card</div>
-        <p style="font-size:14px;color:#475569;line-height:1.6;margin-bottom:24px">Hire with organic visibility in search results and get your job in front of active seekers.</p>
+        <p style="font-size:14px;color:#475569;line-height:1.6;margin-bottom:24px" data-i18n="pricing.std.desc">Hire with organic visibility in search results and get your job in front of active seekers.</p>
         <div style="width:100%;height:1px;background:var(--border);margin-bottom:20px"></div>
-        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px">Included</div>
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px" data-i18n="pricing.std.incl">Included</div>
         <ul class="pricing-features" style="margin-bottom:28px">
-          <li><i class="ti ti-check"></i> Search results visibility</li>
-          <li><i class="ti ti-check"></i> Automated candidate messages</li>
-          <li><i class="ti ti-check"></i> Kanban ATS pipeline</li>
-          <li><i class="ti ti-check"></i> Unlimited job posts</li>
-          <li><i class="ti ti-check"></i> Direct messaging</li>
-          <li><i class="ti ti-x muted"></i> AI-matched candidates</li>
-          <li><i class="ti ti-x muted"></i> Urgently hiring badge</li>
-          <li><i class="ti ti-x muted"></i> Branded jobs</li>
-          <li><i class="ti ti-x muted"></i> Analytics dashboard</li>
+          <li data-i18n-html="pricing.std.f1"><i class="ti ti-check"></i> Search results visibility</li>
+          <li data-i18n-html="pricing.std.f2"><i class="ti ti-check"></i> Automated candidate messages</li>
+          <li data-i18n-html="pricing.std.f3"><i class="ti ti-check"></i> Kanban ATS pipeline</li>
+          <li data-i18n-html="pricing.std.f4"><i class="ti ti-check"></i> Unlimited job posts</li>
+          <li data-i18n-html="pricing.std.f5"><i class="ti ti-check"></i> Direct messaging</li>
+          <li data-i18n-html="pricing.std.f6"><i class="ti ti-x muted"></i> AI-matched candidates</li>
+          <li data-i18n-html="pricing.std.f7"><i class="ti ti-x muted"></i> Urgently hiring badge</li>
+          <li data-i18n-html="pricing.std.f8"><i class="ti ti-x muted"></i> Branded jobs</li>
+          <li data-i18n-html="pricing.std.f9"><i class="ti ti-x muted"></i> Analytics dashboard</li>
         </ul>
-        <button class="btn-ghost btn-full" data-modal="modal-register">Post a job</button>
+        <button class="btn-ghost btn-full" data-modal="modal-register" data-i18n="pricing.std.btn">Post a job</button>
       </div>
 
       <!-- Sponsored CPC -->
       <div style="background:#1E293B;border:2px solid #6366F1;border-radius:16px;padding:36px 28px;position:relative">
-        <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#6366F1;color:#fff;font-size:11px;font-weight:700;padding:4px 18px;border-radius:100px;white-space:nowrap">⭐ Most popular</div>
+        <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#6366F1;color:#fff;font-size:11px;font-weight:700;padding:4px 18px;border-radius:100px;white-space:nowrap" data-i18n="pricing.spo.popular">⭐ Most popular</div>
         <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#818CF8;margin-bottom:12px">Sponsored · CPC</div>
         <div style="font-family:var(--r);font-size:36px;font-weight:800;color:#fff;line-height:1">$0.50</div>
-        <div style="font-size:13px;color:#94A3B8;margin:6px 0 20px">par clic qualifié · budget flexible</div>
-        <p style="font-size:14px;color:#CBD5E1;line-height:1.6;margin-bottom:24px">Reach top talent with priority placement. AI-matched candidates sent directly to you. Pay only per click.</p>
-        <div style="background:rgba(99,102,241,.15);border-radius:8px;padding:12px 14px;margin-bottom:20px;font-size:13px;color:#A5B4FC">
-          <strong>Budget recommandé :</strong> ~$5–15/jour · min. $3/jour<br>
-          <span style="font-size:12px;opacity:.8">CPC moyen : $0.50–$2.00 selon secteur</span>
+        <div style="font-size:13px;color:#94A3B8;margin:6px 0 20px" data-i18n="pricing.spo.per.click">per qualified click · flexible budget</div>
+        <p style="font-size:14px;color:#CBD5E1;line-height:1.6;margin-bottom:24px" data-i18n="pricing.spo.desc">Reach top talent with priority placement. AI-matched candidates sent directly to you. Pay only per click.</p>
+        <div style="background:rgba(99,102,241,.15);border-radius:8px;padding:12px 14px;margin-bottom:20px;font-size:13px;color:#A5B4FC" data-i18n-html="pricing.spo.budget">
+          <strong>Recommended budget:</strong> ~$5–15/day · min. $3/day<br>
+          <span style="font-size:12px;opacity:.8">Avg CPC: $0.50–$2.00 depending on industry</span>
         </div>
         <div style="width:100%;height:1px;background:rgba(255,255,255,.08);margin-bottom:20px"></div>
-        <div style="font-size:11px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px">Everything in Standard, plus</div>
+        <div style="font-size:11px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px" data-i18n="pricing.spo.std.plus">Everything in Standard, plus</div>
         <ul class="pricing-features" style="margin-bottom:28px">
-          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> AI-matched candidates</li>
-          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> Time-saving AI features</li>
-          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> <span style="color:#FBBF24;font-weight:600">Urgently hiring</span> label</li>
-          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> Branded company jobs</li>
-          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> Priority search placement</li>
-          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0"><i class="ti ti-check" style="color:#34D399"></i> Verified employer badge</li>
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0" data-i18n-html="pricing.spo.f1"><i class="ti ti-check" style="color:#34D399"></i> AI-matched candidates</li>
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0" data-i18n-html="pricing.spo.f2"><i class="ti ti-check" style="color:#34D399"></i> Time-saving AI features</li>
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0" data-i18n-html="pricing.spo.f3"><i class="ti ti-check" style="color:#34D399"></i> <span style="color:#FBBF24;font-weight:600">Urgently hiring</span> label</li>
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0" data-i18n-html="pricing.spo.f4"><i class="ti ti-check" style="color:#34D399"></i> Branded company jobs</li>
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0" data-i18n-html="pricing.spo.f5"><i class="ti ti-check" style="color:#34D399"></i> Priority search placement</li>
+          <li style="border-color:rgba(255,255,255,.08);color:#E2E8F0" data-i18n-html="pricing.spo.f6"><i class="ti ti-check" style="color:#34D399"></i> Verified employer badge</li>
         </ul>
-        <button class="btn-primary btn-full" style="background:#6366F1;border-color:#6366F1" data-checkout="pro,month">Sponsor a job</button>
-        <div style="text-align:center;margin-top:10px;font-size:12px;color:#64748B">No subscription · Pay as you go</div>
+        <button class="btn-primary btn-full" style="background:#6366F1;border-color:#6366F1" data-checkout="pro,month" data-i18n="pricing.spo.btn">Sponsor a job</button>
+        <div style="text-align:center;margin-top:10px;font-size:12px;color:#64748B" data-i18n="pricing.spo.nosub">No subscription · Pay as you go</div>
       </div>
 
       <!-- Pro subscription -->
       <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:36px 28px">
         <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:12px">Pro · Abonnement</div>
         <div style="font-family:var(--r);font-size:36px;font-weight:800;color:var(--dark);line-height:1">$199</div>
-        <div style="font-size:13px;color:var(--muted);margin:6px 0 20px">/ mois · 14 jours d'essai gratuit</div>
-        <p style="font-size:14px;color:#475569;line-height:1.6;margin-bottom:24px">For hiring teams. Unlimited sponsoring, advanced analytics, candidate database access, and bulk hiring tools.</p>
+        <div style="font-size:13px;color:var(--muted);margin:6px 0 20px" data-i18n="pricing.pro.mo">/ month · 14-day free trial</div>
+        <p style="font-size:14px;color:#475569;line-height:1.6;margin-bottom:24px" data-i18n="pricing.pro.desc">For hiring teams. Unlimited sponsoring, advanced analytics, candidate database access, and bulk hiring tools.</p>
         <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:12px 14px;margin-bottom:20px;font-size:13px;color:#92400E">
-          <strong>vs ZipRecruiter</strong> $299–899/mois<br>
-          <span style="font-size:12px">vs LinkedIn Recruiter $8 000–12 000/an</span>
+          <strong>vs ZipRecruiter</strong> $299–899/mo<br>
+          <span style="font-size:12px">vs LinkedIn Recruiter $8,000–12,000/yr</span>
         </div>
         <div style="width:100%;height:1px;background:var(--border);margin-bottom:20px"></div>
-        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px">Everything in Sponsored, plus</div>
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px" data-i18n="pricing.pro.spo.plus">Everything in Sponsored, plus</div>
         <ul class="pricing-features" style="margin-bottom:28px">
-          <li><i class="ti ti-check"></i> Unlimited sponsored slots</li>
-          <li><i class="ti ti-check"></i> Candidate database access</li>
-          <li><i class="ti ti-check"></i> Advanced analytics dashboard</li>
-          <li><i class="ti ti-check"></i> Bulk candidate actions</li>
-          <li><i class="ti ti-check"></i> Priority support</li>
-          <li><i class="ti ti-check"></i> Team seats (3 users)</li>
+          <li data-i18n-html="pricing.pro.f1"><i class="ti ti-check"></i> Unlimited sponsored slots</li>
+          <li data-i18n-html="pricing.pro.f2"><i class="ti ti-check"></i> Candidate database access</li>
+          <li data-i18n-html="pricing.pro.f3"><i class="ti ti-check"></i> Advanced analytics dashboard</li>
+          <li data-i18n-html="pricing.pro.f4"><i class="ti ti-check"></i> Bulk candidate actions</li>
+          <li data-i18n-html="pricing.pro.f5"><i class="ti ti-check"></i> Priority support</li>
+          <li data-i18n-html="pricing.pro.f6"><i class="ti ti-check"></i> Team seats (3 users)</li>
         </ul>
-        <button class="btn-primary btn-full" data-checkout="pro,month">Start free trial</button>
-        <div style="text-align:center;margin-top:10px"><a href="#" data-checkout="pro,year" style="font-size:12px;color:var(--indigo)">Annual $1 990/yr — save $398 (17%)</a></div>
+        <button class="btn-primary btn-full" data-checkout="pro,month" data-i18n="pricing.pro.btn">Start free trial</button>
+        <div style="text-align:center;margin-top:10px"><a href="#" data-checkout="pro,year" style="font-size:12px;color:var(--indigo)" data-i18n="pricing.pro.annual">Annual $1,990/yr — save $398 (17%)</a></div>
       </div>
     </div>
 
@@ -432,28 +432,28 @@
     <div style="background:linear-gradient(135deg,#0F172A 0%,#1E293B 100%);border-radius:16px;padding:36px 44px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:64px">
       <div>
         <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#818CF8;margin-bottom:10px">Enterprise</div>
-        <div style="font-family:var(--r);font-size:22px;font-weight:700;color:#fff;margin-bottom:8px">Volume pricing & custom integrations</div>
-        <p style="font-size:14px;color:#94A3B8;margin:0;max-width:500px">Dedicated account manager · Custom integrations · SLA 99.9% · SSO · Unlimited team seats · White-label options</p>
+        <div style="font-family:var(--r);font-size:22px;font-weight:700;color:#fff;margin-bottom:8px" data-i18n="pricing.ent.title">Volume pricing & custom integrations</div>
+        <p style="font-size:14px;color:#94A3B8;margin:0;max-width:500px" data-i18n="pricing.ent.sub">Dedicated account manager · Custom integrations · SLA 99.9% · SSO · Unlimited team seats · White-label options</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;text-align:right">
-        <a href="mailto:hello@nexhire.ca" class="btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.2);padding:12px 28px;white-space:nowrap;text-decoration:none">Contact sales →</a>
+        <a href="mailto:hello@nexhire.ca" class="btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.2);padding:12px 28px;white-space:nowrap;text-decoration:none" data-i18n="pricing.ent.btn">Contact sales →</a>
         <span style="font-size:12px;color:#475569">hello@nexhire.ca</span>
       </div>
     </div>
 
     <!-- Competitor comparison table -->
     <div style="margin-bottom:64px">
-      <h2 style="font-family:var(--r);font-size:24px;font-weight:700;color:var(--dark);margin-bottom:8px;text-align:center">Why Nexhire?</h2>
-      <p style="text-align:center;color:var(--muted);margin-bottom:32px;font-size:14px">AI-powered matching at a fraction of LinkedIn's price</p>
+      <h2 style="font-family:var(--r);font-size:24px;font-weight:700;color:var(--dark);margin-bottom:8px;text-align:center" data-i18n="pricing.why.title">Why Nexhire?</h2>
+      <p style="text-align:center;color:var(--muted);margin-bottom:32px;font-size:14px" data-i18n="pricing.why.sub">AI-powered matching at a fraction of LinkedIn's price</p>
       <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border)">
         <table style="width:100%;border-collapse:collapse;font-size:14px;background:#fff">
           <thead>
             <tr style="background:#F8FAFC;border-bottom:2px solid var(--border)">
-              <th style="text-align:left;padding:16px 20px;font-weight:700;color:var(--dark);width:30%">Plateforme</th>
-              <th style="text-align:left;padding:16px 12px;font-weight:600;color:var(--muted)">Modèle</th>
-              <th style="text-align:left;padding:16px 12px;font-weight:600;color:var(--muted)">Prix CPC</th>
-              <th style="text-align:left;padding:16px 12px;font-weight:600;color:var(--muted)">Abonnement</th>
-              <th style="text-align:left;padding:16px 12px;font-weight:600;color:var(--muted)">IA matching</th>
+              <th style="text-align:left;padding:16px 20px;font-weight:700;color:var(--dark);width:30%" data-i18n="pricing.tbl.platform">Platform</th>
+              <th style="text-align:left;padding:16px 12px;font-weight:600;color:var(--muted)" data-i18n="pricing.tbl.model">Model</th>
+              <th style="text-align:left;padding:16px 12px;font-weight:600;color:var(--muted)" data-i18n="pricing.tbl.cpc">CPC price</th>
+              <th style="text-align:left;padding:16px 12px;font-weight:600;color:var(--muted)" data-i18n="pricing.tbl.sub">Subscription</th>
+              <th style="text-align:left;padding:16px 12px;font-weight:600;color:var(--muted)" data-i18n="pricing.tbl.ai">AI matching</th>
             </tr>
           </thead>
           <tbody>
@@ -498,23 +498,23 @@
     </div>
 
     <!-- FAQ -->
-    <h2 style="font-family:var(--r);font-size:24px;font-weight:700;color:var(--dark);margin-bottom:32px;text-align:center">Questions fréquentes</h2>
+    <h2 style="font-family:var(--r);font-size:24px;font-weight:700;color:var(--dark);margin-bottom:32px;text-align:center" data-i18n="pricing.faq.title">Frequently asked questions</h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
       <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px">
-        <div style="font-weight:700;color:var(--dark);margin-bottom:8px;display:flex;align-items:center;gap:8px"><i class="ti ti-credit-card" style="color:var(--indigo)"></i> When do I get charged?</div>
-        <p style="font-size:14px;color:#475569;margin:0;line-height:1.7">Only when a verified candidate clicks your sponsored job. Standard posts are always free. Set a daily cap and never go over budget.</p>
+        <div style="font-weight:700;color:var(--dark);margin-bottom:8px;display:flex;align-items:center;gap:8px"><i class="ti ti-credit-card" style="color:var(--indigo)"></i> <span data-i18n="pricing.faq1.q">When do I get charged?</span></div>
+        <p style="font-size:14px;color:#475569;margin:0;line-height:1.7" data-i18n="pricing.faq1.a">Only when a verified candidate clicks your sponsored job. Standard posts are always free. Set a daily cap and never go over budget.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px">
-        <div style="font-weight:700;color:var(--dark);margin-bottom:8px;display:flex;align-items:center;gap:8px"><i class="ti ti-player-pause" style="color:var(--indigo)"></i> Can I pause or cancel anytime?</div>
-        <p style="font-size:14px;color:#475569;margin:0;line-height:1.7">Yes. No long-term contracts. Pause or cancel from your employer dashboard instantly. Your jobs stay visible in Standard mode for free.</p>
+        <div style="font-weight:700;color:var(--dark);margin-bottom:8px;display:flex;align-items:center;gap:8px"><i class="ti ti-player-pause" style="color:var(--indigo)"></i> <span data-i18n="pricing.faq2.q">Can I pause or cancel anytime?</span></div>
+        <p style="font-size:14px;color:#475569;margin:0;line-height:1.7" data-i18n="pricing.faq2.a">Yes. No long-term contracts. Pause or cancel from your employer dashboard instantly. Your jobs stay visible in Standard mode for free.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px">
-        <div style="font-weight:700;color:var(--dark);margin-bottom:8px;display:flex;align-items:center;gap:8px"><i class="ti ti-robot" style="color:var(--indigo)"></i> What is AI candidate matching?</div>
-        <p style="font-size:14px;color:#475569;margin:0;line-height:1.7">Sponsored jobs use GPT-4o to rank applicants by fit score — job description vs. resume & skills. You see the best candidates first, saving hours of manual screening.</p>
+        <div style="font-weight:700;color:var(--dark);margin-bottom:8px;display:flex;align-items:center;gap:8px"><i class="ti ti-robot" style="color:var(--indigo)"></i> <span data-i18n="pricing.faq3.q">What is AI candidate matching?</span></div>
+        <p style="font-size:14px;color:#475569;margin:0;line-height:1.7" data-i18n="pricing.faq3.a">Sponsored jobs use GPT-4o to rank applicants by fit score — job description vs. resume & skills. You see the best candidates first, saving hours of manual screening.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px">
-        <div style="font-weight:700;color:var(--dark);margin-bottom:8px;display:flex;align-items:center;gap:8px"><i class="ti ti-bolt" style="color:#D97706"></i> What is the Urgently Hiring badge?</div>
-        <p style="font-size:14px;color:#475569;margin:0;line-height:1.7">Sponsored jobs get a highlighted <strong style="color:#D97706">Urgently hiring</strong> label in search results, boosting click-through for time-sensitive roles by 2–3×.</p>
+        <div style="font-weight:700;color:var(--dark);margin-bottom:8px;display:flex;align-items:center;gap:8px"><i class="ti ti-bolt" style="color:#D97706"></i> <span data-i18n="pricing.faq4.q">What is the Urgently Hiring badge?</span></div>
+        <p style="font-size:14px;color:#475569;margin:0;line-height:1.7" data-i18n="pricing.faq4.a">Sponsored jobs get a highlighted Urgently hiring label in search results, boosting click-through for time-sensitive roles by 2–3×.</p>
       </div>
     </div>
   </div>
@@ -980,6 +980,6 @@
 </div>
 
 <div id="toasts" class="toast-container"></div>
-<script src="/nexhire/js/app.js?v=20260523y"></script>
+<script src="/nexhire/js/app.js?v=20260523z"></script>
 </body>
 </html>
