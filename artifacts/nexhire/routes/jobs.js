@@ -3,8 +3,25 @@ const { v4: uuidv4 } = require('uuid');
 const db = require('../models/db');
 const { requireAuth, requireCompanyAccess } = require('../middleware/auth');
 
+// Province → known cities mapping for robust location filtering
+const CA_CITIES_BY_PROV = {
+  AB: ['Calgary','Edmonton','Red Deer','Lethbridge','St. Albert','Medicine Hat','Grande Prairie','Airdrie','Spruce Grove','Leduc'],
+  BC: ['Vancouver','Surrey','Burnaby','Richmond','Kelowna','Abbotsford','Coquitlam','Langley','Victoria','Nanaimo','Kamloops','Prince George','Chilliwack','Delta','North Vancouver'],
+  MB: ['Winnipeg','Brandon','Steinbach','Thompson','Portage la Prairie','Winkler','Morden','Selkirk'],
+  NB: ['Moncton','Saint John','Fredericton','Dieppe','Riverview','Bathurst','Miramichi','Edmundston'],
+  NL: ["St. John's",'Mount Pearl','Corner Brook','Conception Bay South','Grand Falls-Windsor','Paradise'],
+  NS: ['Halifax','Cape Breton / Sydney','Truro','New Glasgow','Dartmouth','Bedford','Lunenburg'],
+  NT: ['Yellowknife','Hay River','Inuvik','Fort Smith'],
+  NU: ['Iqaluit','Rankin Inlet','Arviat','Baker Lake'],
+  ON: ['Toronto','Ottawa','Mississauga','Brampton','Hamilton','London','Markham','Vaughan','Kitchener','Windsor','Richmond Hill','Oakville','Burlington','Oshawa','Barrie','St. Catharines','Cambridge','Kingston','Guelph','Whitby','Sudbury','Peterborough','Thunder Bay','Waterloo'],
+  PE: ['Charlottetown','Summerside','Stratford'],
+  QC: ['Montréal','Québec City','Laval','Gatineau','Longueuil','Sherbrooke','Saguenay','Lévis','Trois-Rivières','Terrebonne','Saint-Jean-sur-Richelieu','Repentigny','Brossard','Drummondville','Saint-Jérôme','Rimouski','Joliette','Rouyn-Noranda',"Val-d'Or"],
+  SK: ['Saskatoon','Regina','Prince Albert','Moose Jaw','Swift Current','Yorkton','North Battleford'],
+  YT: ['Whitehorse','Dawson City','Watson Lake'],
+};
+
 router.get('/', async (req, res) => {
-  const { q, city, province, country, work_mode, job_type, salary_min, featured, days_ago, lang_filter, page = 1, limit = 20 } = req.query;
+  const { q, city, province, country, work_mode, job_type, salary_min, featured, days_ago, lang_filter, sort, page = 1, limit = 20 } = req.query;
   const offset = (parseInt(page) - 1) * parseInt(limit);
   const params = [];
   const where = ["j.status = 'active'"];
@@ -14,7 +31,19 @@ router.get('/', async (req, res) => {
     where.push(`(j.title_fr ILIKE $${i} OR j.title_en ILIKE $${i} OR c.name ILIKE $${i} OR j.city ILIKE $${i} OR j.province ILIKE $${i})`);
     params.push(`%${q}%`); i++;
   }
-  if (province) { where.push(`j.province = $${i}`); params.push(province); i++; }
+  if (province) {
+    // Match by province code OR by known cities in that province (fallback for jobs missing province)
+    const knownCities = CA_CITIES_BY_PROV[province] || [];
+    if (knownCities.length) {
+      const cityPh = knownCities.map((_, idx) => `$${i + 1 + idx}`).join(',');
+      where.push(`(j.province = $${i} OR (j.province IS NULL AND j.city IN (${cityPh})))`);
+      params.push(province, ...knownCities);
+      i += 1 + knownCities.length;
+    } else {
+      where.push(`j.province = $${i}`);
+      params.push(province); i++;
+    }
+  }
   if (country) { where.push(`j.country ILIKE $${i}`); params.push(`%${country}%`); i++; }
   if (city) { where.push(`j.city ILIKE $${i}`); params.push(`%${city}%`); i++; }
   if (work_mode) { where.push(`j.work_mode = $${i}`); params.push(work_mode); i++; }
@@ -31,15 +60,20 @@ router.get('/', async (req, res) => {
 
   const whereClause = 'WHERE ' + where.join(' AND ');
 
+  const orderBy = sort === 'salary_desc' ? 'j.salary_max DESC NULLS LAST, j.featured DESC'
+    : sort === 'salary_asc'  ? 'j.salary_min ASC NULLS LAST, j.featured DESC'
+    : sort === 'date_asc'    ? 'j.published_at ASC'
+    : /* default recent */     'j.featured DESC, j.published_at DESC';
+
   const jobs = await db.all(`
     SELECT j.id, j.title_fr, j.title_en, j.slug, j.work_mode, j.job_type,
            j.city, j.province, j.country, j.salary_min, j.salary_max, j.salary_currency,
-           j.skills_required, j.featured, j.views, j.applications_count, j.published_at,
+           j.salary_period, j.skills_required, j.featured, j.views, j.applications_count, j.published_at,
            c.id as company_id, c.name as company_name, c.slug as company_slug,
            c.logo_url as company_logo, c.industry
     FROM nh_jobs j JOIN nh_companies c ON j.company_id = c.id
     ${whereClause}
-    ORDER BY j.featured DESC, j.published_at DESC
+    ORDER BY ${orderBy}
     LIMIT $${i} OFFSET $${i+1}
   `, [...params, parseInt(limit), offset]);
 

@@ -700,6 +700,7 @@ async function filterJobs(page = 1) {
   const locVal = document.getElementById('fprov')?.value || '';
   const fdate = document.getElementById('fdate')?.value || '';
   const flang = document.getElementById('flang')?.value || '';
+  const fsort = document.getElementById('fsort')?.value || '';
   const isUnseenFilter = fdate === 'unseen';
 
   const params = new URLSearchParams({ page, limit: isUnseenFilter ? 50 : 15 });
@@ -713,6 +714,7 @@ async function filterJobs(page = 1) {
   else if (locVal) { params.set('province', locVal); }
   if (fdate && !isUnseenFilter) params.set('days_ago', fdate);
   if (flang) params.set('lang_filter', flang);
+  if (fsort) params.set('sort', fsort);
 
   const list = document.getElementById('jobs-list');
   if (list) list.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>`;

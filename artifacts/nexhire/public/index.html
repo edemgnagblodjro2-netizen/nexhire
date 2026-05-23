@@ -291,6 +291,12 @@
             <option value="en">English</option>
             <option value="fr">Français</option>
           </select>
+          <select id="fsort" onchange="filterJobs()" class="filter-select">
+            <option value="">Most Recent</option>
+            <option value="salary_desc">Salary ↓ High to Low</option>
+            <option value="salary_asc">Salary ↑ Low to High</option>
+            <option value="date_asc">Oldest First</option>
+          </select>
         </div>
       </div>
     </div>
@@ -978,6 +984,6 @@
 </div>
 
 <div id="toasts" class="toast-container"></div>
-<script src="/nexhire/js/app.js?v=20260523u"></script>
+<script src="/nexhire/js/app.js?v=20260523v"></script>
 </body>
 </html>
