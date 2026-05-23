@@ -1,7 +1,27 @@
 const router = require('express').Router();
+const path = require('path');
+const multer = require('multer');
 const db = require('../models/db');
 const { requireAuth } = require('../middleware/auth');
 const aiService = require('../services/ai');
+
+const uploadDir = path.join(__dirname, '..', 'uploads');
+const cvStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, uploadDir),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    cb(null, `cv-${req.session.user.id}-${Date.now()}${ext}`);
+  },
+});
+const cvUpload = multer({
+  storage: cvStorage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (['.pdf', '.doc', '.docx'].includes(ext)) cb(null, true);
+    else cb(new Error('Only PDF, DOC, DOCX allowed'));
+  },
+});
 
 router.get('/profile', requireAuth, async (req, res) => {
   if (req.session.user.role !== 'candidate') return res.status(403).json({ success: false, error: 'Candidates only' });
@@ -13,7 +33,7 @@ router.get('/profile', requireAuth, async (req, res) => {
 router.put('/profile', requireAuth, async (req, res) => {
   if (req.session.user.role !== 'candidate') return res.status(403).json({ success: false, error: 'Candidates only' });
 
-  const allowed = ['headline_fr','headline_en','bio_fr','bio_en','city','country','work_mode_pref','job_type_pref','experience_years','education_level','github_url','linkedin_url','portfolio_url','availability','desired_salary_min','desired_salary_max','open_to_relocation'];
+  const allowed = ['headline_fr','headline_en','bio_fr','bio_en','city','province','country','work_mode_pref','job_type_pref','experience_years','education_level','github_url','linkedin_url','portfolio_url','availability','desired_salary_min','desired_salary_max','open_to_relocation'];
   const sets = []; const vals = []; let p = 1;
 
   allowed.forEach(f => {
@@ -49,6 +69,15 @@ router.put('/profile', requireAuth, async (req, res) => {
   await db.run(`UPDATE nh_candidate_profiles SET ${sets.join(', ')} WHERE user_id = $${p}`, vals);
   const profile = await db.get('SELECT * FROM nh_candidate_profiles WHERE user_id = $1', [req.session.user.id]);
   res.json({ success: true, profile });
+});
+
+router.post('/profile/cv', requireAuth, cvUpload.single('cv'), async (req, res) => {
+  if (req.session.user.role !== 'candidate') return res.status(403).json({ success: false, error: 'Candidates only' });
+  if (!req.file) return res.status(400).json({ success: false, error: 'No file uploaded' });
+  const basePath = (process.env.BASE_PATH || '/nexhire/').replace(/\/$/, '');
+  const cvUrl = `${basePath}/uploads/${req.file.filename}`;
+  await db.run('UPDATE nh_candidate_profiles SET cv_url = $1, updated_at = NOW() WHERE user_id = $2', [cvUrl, req.session.user.id]);
+  res.json({ success: true, cv_url: cvUrl });
 });
 
 router.post('/ai/cover-letter', requireAuth, async (req, res) => {

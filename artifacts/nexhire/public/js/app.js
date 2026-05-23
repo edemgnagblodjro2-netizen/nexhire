@@ -2326,44 +2326,85 @@ async function loadProfileForm() {
     scoreEl.innerHTML = `<div class="dash-score-pill" style="background:${sc}20;color:${sc};border:1px solid ${sc}40"><i class="ti ti-star-filled" style="font-size:10px"></i> ${score} AI Score</div>`;
   }
   const _uid = state.user?.id;
+  const isFr = state.lang === 'fr';
+  const L = {
+    completeness: isFr ? 'Complétude du profil' : 'Profile completeness',
+    toComplete:   isFr ? 'À compléter :' : 'To complete:',
+    complete:     isFr ? '✓ Profil complet !' : '✓ Profile complete!',
+    firstName:    isFr ? 'Prénom' : 'First name',
+    lastName:     isFr ? 'Nom de famille' : 'Last name',
+    headlineEn:   'Headline (EN)',
+    headlineFr:   'Titre (FR)',
+    province:     isFr ? 'Province / Territoire' : 'Province / Territory',
+    city:         isFr ? 'Ville' : 'City',
+    cityPh:       isFr ? 'ex. Montréal, Toronto…' : 'e.g. Montréal, Toronto…',
+    workPref:     isFr ? 'Préférence de travail' : 'Work preference',
+    workAny:      isFr ? 'Peu importe' : 'Any',
+    workRemote:   'Remote', workHybrid: 'Hybrid', workOnsite: 'On-site',
+    expYears:     isFr ? 'Années d\'expérience' : 'Years of experience',
+    skills:       isFr ? 'Compétences' : 'Skills',
+    skillsSub:    isFr ? '— sélectionnez tout ce qui s\'applique' : '— select all that apply',
+    avail:        isFr ? 'Disponibilité' : 'Availability',
+    availImm:     isFr ? 'Immédiate' : 'Immediate',
+    avail2w:      isFr ? '2 semaines' : '2 weeks',
+    avail1m:      isFr ? '1 mois' : '1 month',
+    avail3m:      isFr ? '3 mois' : '3 months',
+    bioEn:        'Bio (EN)',
+    save:         isFr ? 'Sauvegarder' : 'Save profile',
+    cvTitle:      isFr ? 'CV / Curriculum vitae' : 'CV / Resume',
+    cvView:       isFr ? 'Voir mon CV actuel' : 'View current CV',
+    cvUpload:     isFr ? (p.cv_url ? 'Remplacer le CV' : 'Téléverser un CV') : (p.cv_url ? 'Replace CV' : 'Upload CV'),
+    cvHint:       'PDF, DOC, DOCX — max 5 MB',
+  };
+
   container.innerHTML =
     renderTalentPassport(p, state.user, pct) +
     renderAvailSection(_uid) +
     `<div class="completeness-bar-wrap">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <span style="font-size:13px;font-weight:600;color:var(--dark)">Profile completeness</span>
+        <span style="font-size:13px;font-weight:600;color:var(--dark)">${L.completeness}</span>
         <span style="font-size:13px;font-weight:700;color:${pctColor}">${pct}%</span>
       </div>
       <div class="completeness-track"><div class="completeness-fill" style="width:${pct}%;background:${pctColor}"></div></div>
-      ${missing.length ? `<div style="margin-top:8px;font-size:12px;color:var(--muted)">To complete: ${missing.map(m => `<span class="missing-chip">${m.label}</span>`).join('')}</div>` : '<div style="margin-top:8px;font-size:12px;color:var(--green)">✓ Profile complete!</div>'}
+      ${missing.length ? `<div style="margin-top:8px;font-size:12px;color:var(--muted)">${L.toComplete} ${missing.map(m => `<span class="missing-chip">${m.label}</span>`).join('')}</div>` : `<div style="margin-top:8px;font-size:12px;color:var(--green)">${L.complete}</div>`}
     </div>
-    <div class="form-row"><div class="form-group"><label>First name</label><input type="text" id="pf-first" value="${esc(state.user?.first_name||'')}"></div><div class="form-group"><label>Last name</label><input type="text" id="pf-last" value="${esc(state.user?.last_name||'')}"></div></div>
+    <div class="form-row"><div class="form-group"><label>${L.firstName}</label><input type="text" id="pf-first" value="${esc(state.user?.first_name||'')}"></div><div class="form-group"><label>${L.lastName}</label><input type="text" id="pf-last" value="${esc(state.user?.last_name||'')}"></div></div>
     <div class="form-row">
-      <div class="form-group"><label>Headline (EN)</label><input type="text" id="pf-head-en" value="${esc(p.headline_en||'')}" placeholder="Senior Full-Stack Developer"></div>
-      <div class="form-group"><label>Titre (FR)</label><input type="text" id="pf-head-fr" value="${esc(p.headline_fr||'')}" placeholder="Développeur Full-Stack Senior"></div>
+      <div class="form-group"><label>${L.headlineEn}</label><input type="text" id="pf-head-en" value="${esc(p.headline_en||'')}" placeholder="Senior Full-Stack Developer"></div>
+      <div class="form-group"><label>${L.headlineFr}</label><input type="text" id="pf-head-fr" value="${esc(p.headline_fr||'')}" placeholder="Développeur Full-Stack Senior"></div>
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label>Province / Territory</label>
+        <label>${L.province}</label>
         <select id="pf-province">${buildLocationOptions(p.province||'')}</select>
       </div>
-      <div class="form-group"><label>City</label><input type="text" id="pf-city" value="${esc(p.city||'')}" placeholder="e.g. Montréal, Toronto..."></div>
+      <div class="form-group"><label>${L.city}</label><input type="text" id="pf-city" value="${esc(p.city||'')}" placeholder="${L.cityPh}"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>Work preference</label><select id="pf-mode"><option value="">Any</option><option value="remote" ${p.work_mode_pref==='remote'?'selected':''}>Remote</option><option value="hybrid" ${p.work_mode_pref==='hybrid'?'selected':''}>Hybrid</option><option value="onsite" ${p.work_mode_pref==='onsite'?'selected':''}>On-site</option></select></div>
-      <div class="form-group"><label>Years of experience</label><input type="number" id="pf-exp" value="${p.experience_years||0}" min="0" max="50"></div>
+      <div class="form-group"><label>${L.workPref}</label><select id="pf-mode"><option value="">${L.workAny}</option><option value="remote" ${p.work_mode_pref==='remote'?'selected':''}>${L.workRemote}</option><option value="hybrid" ${p.work_mode_pref==='hybrid'?'selected':''}>${L.workHybrid}</option><option value="onsite" ${p.work_mode_pref==='onsite'?'selected':''}>${L.workOnsite}</option></select></div>
+      <div class="form-group"><label>${L.expYears}</label><input type="number" id="pf-exp" value="${p.experience_years||0}" min="0" max="50"></div>
     </div>
     <div class="form-group skill-picker-wrap">
-      <label>Skills <span style="color:var(--muted);font-weight:400">— select all that apply</span></label>
+      <label>${L.skills} <span style="color:var(--muted);font-weight:400">${L.skillsSub}</span></label>
       ${renderSkillPicker(safeJsonArr(p.skills))}
     </div>
     <div class="form-row">
       <div class="form-group"><label>LinkedIn URL</label><input type="url" id="pf-linkedin" value="${esc(p.linkedin_url||'')}" placeholder="https://linkedin.com/in/..."></div>
       <div class="form-group"><label>GitHub URL</label><input type="url" id="pf-github" value="${esc(p.github_url||'')}"></div>
     </div>
-    <div class="form-group"><label>Availability</label><select id="pf-avail"><option value="immediate" ${p.availability==='immediate'?'selected':''}>Immediate</option><option value="2weeks" ${p.availability==='2weeks'?'selected':''}>2 weeks</option><option value="1month" ${p.availability==='1month'?'selected':''}>1 month</option><option value="3months" ${p.availability==='3months'?'selected':''}>3 months</option></select></div>
-    <div class="form-group"><label>Bio (EN)</label><textarea id="pf-bio-en">${esc(p.bio_en||'')}</textarea></div>
-    <button class="btn-primary" onclick="saveProfile()"><i class="ti ti-check"></i> Save profile</button>` +
+    <div class="form-group"><label>${L.avail}</label><select id="pf-avail"><option value="immediate" ${p.availability==='immediate'?'selected':''}>${L.availImm}</option><option value="2weeks" ${p.availability==='2weeks'?'selected':''}>${L.avail2w}</option><option value="1month" ${p.availability==='1month'?'selected':''}>${L.avail1m}</option><option value="3months" ${p.availability==='3months'?'selected':''}>${L.avail3m}</option></select></div>
+    <div class="form-group"><label>${L.bioEn}</label><textarea id="pf-bio-en">${esc(p.bio_en||'')}</textarea></div>
+    <button class="btn-primary" onclick="saveProfile()"><i class="ti ti-check"></i> ${L.save}</button>
+    <div style="margin-top:24px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px">
+      <div style="font-weight:600;font-size:15px;margin-bottom:12px"><i class="ti ti-file-cv" style="color:var(--indigo)"></i> ${L.cvTitle}</div>
+      ${p.cv_url ? `<div style="margin-bottom:12px"><a href="${esc(p.cv_url)}" target="_blank" class="btn-ghost" style="font-size:13px"><i class="ti ti-download"></i> ${L.cvView}</a></div>` : ''}
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <input type="file" id="cv-file" accept=".pdf,.doc,.docx" style="display:none" onchange="uploadCV()">
+        <button type="button" class="btn-ghost" onclick="document.getElementById('cv-file').click()"><i class="ti ti-upload"></i> ${L.cvUpload}</button>
+        <span style="font-size:12px;color:var(--muted)">${L.cvHint}</span>
+      </div>
+      <div id="cv-upload-status" style="display:none;font-size:13px;margin-top:8px;color:var(--muted)"></div>
+    </div>` +
     renderHighlightsSection() +
     `<div id="my-endorsements-container" class="endorsements-section-placeholder"></div>`;
   updatePassportBadgesRow(getAvailBadges(_uid));
@@ -2372,6 +2413,28 @@ async function loadProfileForm() {
     const el = document.getElementById('my-endorsements-container');
     if (el) el.outerHTML = renderEndorsementSection(data, state.user.id, true);
   });
+}
+
+async function uploadCV() {
+  const file = document.getElementById('cv-file')?.files?.[0];
+  if (!file) return;
+  const status = document.getElementById('cv-upload-status');
+  if (status) { status.style.display = 'block'; status.textContent = state.lang === 'fr' ? '⏳ Téléversement…' : '⏳ Uploading…'; }
+  const fd = new FormData();
+  fd.append('cv', file);
+  try {
+    const res = await fetch(`${BASE}/api/candidates/profile/cv`, { method: 'POST', credentials: 'include', body: fd });
+    const d = await res.json();
+    if (d.success) {
+      toast(state.lang === 'fr' ? 'CV téléversé !' : 'CV uploaded!', 'success');
+      if (status) status.style.display = 'none';
+      loadProfileForm();
+    } else {
+      if (status) status.textContent = '❌ ' + (d.error || 'Upload failed');
+    }
+  } catch {
+    if (status) status.textContent = '❌ ' + (state.lang === 'fr' ? 'Erreur réseau' : 'Network error');
+  }
 }
 
 async function saveProfile() {
