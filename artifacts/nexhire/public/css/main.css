@@ -675,3 +675,15 @@ a{text-decoration:none;color:inherit}
   .footer-made{display:none}
 }
 
+
+/* ── TRUST BAND / MARQUEE ─────────────────────────────────── */
+.trust-band{background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 0;overflow:hidden}
+.trust-label{text-align:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:14px}
+.marquee-wrap{overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%)}
+.marquee-track{display:flex;width:max-content;animation:marquee-scroll 32s linear infinite;gap:0}
+.marquee-track:hover{animation-play-state:paused}
+@keyframes marquee-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee-item{display:flex;align-items:center;gap:9px;padding:0 28px;white-space:nowrap;border-right:1px solid var(--border)}
+.mq-logo{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;font-size:11px;font-weight:800;flex-shrink:0;letter-spacing:.5px}
+.mq-name{font-size:14px;font-weight:600;color:var(--dark)}
+@media(max-width:640px){.mq-name{font-size:13px}.mq-logo{width:30px;height:30px;font-size:10px}}

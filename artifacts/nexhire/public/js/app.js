@@ -281,6 +281,7 @@ async function setLang(lang) {
 }
 const T = {
   en: {
+    'trust.label':'Trusted by leading companies & organizations',
     'nav.jobs':'Jobs','nav.employers':'For Employers','nav.pricing':'Pricing',
     'nav.signin':'Sign in','nav.getstarted':'Get started',
     'nav.dd.profile':'Profile','nav.dd.reviews':'My reviews','nav.dd.settings':'Settings',
@@ -485,6 +486,7 @@ const T = {
     'kanban.close':'Close',
   },
   fr: {
+    'trust.label':'Reconnu par les meilleures entreprises & organisations',
     'nav.jobs':'Emplois','nav.employers':'Pour les employeurs','nav.pricing':'Tarifs',
     'nav.signin':'Connexion','nav.getstarted':'Commencer',
     'nav.dd.profile':'Profil','nav.dd.reviews':'Mes avis','nav.dd.settings':'Paramètres',
