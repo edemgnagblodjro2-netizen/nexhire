@@ -1787,5 +1787,13 @@ function toast(msg, type = 'success') {
   setTimeout(() => t.remove(), 4000);
 }
 
+// ── Bind modal buttons via addEventListener (inline onclick unreliable in iframes) ──
+document.getElementById('btn-login-submit')?.addEventListener('click', login);
+document.getElementById('btn-register-submit')?.addEventListener('click', register);
+document.getElementById('login-pw')?.addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+document.getElementById('reg-pw')?.addEventListener('keydown', e => { if (e.key === 'Enter') register(); });
+document.getElementById('btn-toggle-login-pw')?.addEventListener('click', () => togglePw('login-pw'));
+document.getElementById('btn-toggle-reg-pw')?.addEventListener('click', () => togglePw('reg-pw'));
+
 // ── Restore page from URL hash on initial load ──────────────
 restoreFromHash();
