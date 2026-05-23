@@ -208,6 +208,8 @@ function goto(page) {
 // restore page from URL hash on load / back-forward
 function restoreFromHash() {
   const hash = window.location.hash.replace('#', '');
+  if (hash === 'login') { showModal('modal-login'); return; }
+  if (hash === 'register') { showModal('modal-register'); return; }
   const valid = ['jobs','employer','pricing','privacy','terms','help'];
   if (hash && valid.includes(hash)) goto(hash);
 }
