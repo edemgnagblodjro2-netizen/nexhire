@@ -155,9 +155,13 @@ export default function Layout({
               item.href === "/"
                 ? location === "/" || location === ""
                 : location.startsWith(item.href);
+            const pendingVerifCount = verificationStats?.pendingCount ?? 0;
+            const newBugCount = bugReportStats?.newCount ?? 0;
             const badgeCount =
               item.href === "/contact" && unreadCount > 0 ? unreadCount
               : item.href === "/organisations" && newOrgCount > 0 ? newOrgCount
+              : item.href === "/verifications" && pendingVerifCount > 0 ? pendingVerifCount
+              : item.href === "/bug-reports" && newBugCount > 0 ? newBugCount
               : 0;
             return (
               <Link key={item.href} href={item.href}>
