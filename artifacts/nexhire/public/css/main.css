@@ -692,7 +692,7 @@ a{text-decoration:none;color:inherit}
 .emp-bento{overflow:hidden}
 .emp-bento-grid{
   display:grid;
-  grid-template-columns:58fr 42fr;
+  grid-template-columns:1fr 1fr;
   grid-template-rows:auto auto;
   gap:0;
 }
@@ -707,16 +707,15 @@ a{text-decoration:none;color:inherit}
   box-sizing:border-box;
 }
 .eb-label{
-  font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
-  opacity:.65;margin-bottom:2px;
+  font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  opacity:.75;margin-bottom:2px;
 }
 .eb-cell h3{
-  font-family:var(--r);font-size:22px;font-weight:800;line-height:1.2;
+  font-family:var(--r);font-size:24px;font-weight:800;line-height:1.2;
   color:#fff;margin:0;
 }
 .eb-cell>p{
-  font-size:14px;line-height:1.6;color:rgba(255,255,255,.72);margin:0;
-  max-width:320px;
+  font-size:14.5px;line-height:1.65;color:rgba(255,255,255,.82);margin:0;
 }
 
 /* Colors */
@@ -778,19 +777,19 @@ a{text-decoration:none;color:inherit}
 .eb-stats{display:flex;align-items:center;gap:0;margin-top:4px}
 .eb-stat{text-align:center;padding:0 16px}
 .eb-stat:first-child{padding-left:0}
-.eb-stat-n{font-family:var(--r);font-size:20px;font-weight:800;color:#fff;line-height:1}
-.eb-stat-l{font-size:10px;color:rgba(255,255,255,.45);margin-top:3px;text-transform:uppercase;letter-spacing:.05em}
+.eb-stat-n{font-family:var(--r);font-size:22px;font-weight:800;color:#fff;line-height:1}
+.eb-stat-l{font-size:10.5px;color:rgba(255,255,255,.55);margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
 .eb-stat-sep{width:1px;height:28px;background:rgba(255,255,255,.1)}
 .eb-chart{
-  display:flex;align-items:flex-end;gap:3px;height:36px;
-  padding:0 2px;margin-top:6px;
+  display:flex;align-items:flex-end;gap:4px;height:52px;
+  padding:0 2px;margin-top:8px;
 }
 .eb-bar{
-  flex:1;border-radius:3px 3px 0 0;
-  background:rgba(99,140,255,.45);
-  min-height:4px;
+  flex:1;border-radius:4px 4px 0 0;
+  background:rgba(99,140,255,.35);
+  min-height:4px;transition:height .3s;
 }
-.eb-bar:nth-child(6),.eb-bar:nth-child(10){background:#6384FF}
+.eb-bar:nth-child(6),.eb-bar:nth-child(10){background:rgba(150,175,255,.85)}
 
 /* Buttons */
 .eb-btn{
