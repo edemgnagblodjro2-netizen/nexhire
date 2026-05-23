@@ -404,6 +404,7 @@ const T = {
     'emp.f4.title':'Job analytics','emp.f4.desc':'Track views, applications, and conversion rate per listing. Know which jobs perform best.',
     'cand.role':'Candidate','cand.nav.profile':'My Profile','cand.nav.foryou':'Jobs for You',
     'cand.nav.saved':'Saved Jobs','cand.nav.apps':'Applications','cand.nav.reviews':'My Reviews','cand.nav.alerts':'Job Alerts','cand.nav.ai':'AI Coach',
+    'cand.nav.score':'Profile Score','cand.nav.skills':'Skill Tests','cand.nav.referrals':'Referrals','cand.nav.salary':'Salary Data','cand.nav.credits':'AI Credits',
     'cand.tab.profile':'My Profile','cand.tab.foryou':'Jobs for You','cand.tab.saved':'Saved Jobs','cand.tab.apps':'My Applications',
     'cand.ai.title':'AI Career Agent','cand.ai.sub':'Ask anything — resume tips, interview prep, salary negotiation, career advice.',
     'cand.ai.online':'Online · Ready to help',
@@ -607,6 +608,7 @@ const T = {
     'emp.f4.title':'Analytique des offres','emp.f4.desc':'Suivez les vues, candidatures et taux de conversion par offre. Identifiez vos meilleures annonces.',
     'cand.role':'Candidat','cand.nav.profile':'Mon profil','cand.nav.foryou':'Emplois pour vous',
     'cand.nav.saved':'Offres sauvegardées','cand.nav.apps':'Candidatures','cand.nav.reviews':'Mes avis','cand.nav.alerts':'Alertes emploi','cand.nav.ai':'Coach IA',
+    'cand.nav.score':'Score profil','cand.nav.skills':'Tests de compétences','cand.nav.referrals':'Référencement','cand.nav.salary':'Données salariales','cand.nav.credits':'Crédits IA',
     'cand.tab.profile':'Mon profil','cand.tab.foryou':'Emplois pour vous','cand.tab.saved':'Offres sauvegardées','cand.tab.apps':'Mes candidatures',
     'cand.ai.title':'Agent Carrière IA','cand.ai.sub':"Posez n'importe quelle question — conseils CV, préparation entretien, négociation salariale, orientation carrière.",
     'cand.ai.online':'En ligne · Prêt à vous aider',
@@ -3478,6 +3480,11 @@ function showTab(tabId, el) {
   if (tabId === 'tab-applications') loadMyApplications();
   if (tabId === 'tab-for-you') loadJobsForYou();
   if (tabId === 'tab-alerts') loadAlerts();
+  if (tabId === 'tab-score') loadProfileScore();
+  if (tabId === 'tab-skills') loadSkillTests();
+  if (tabId === 'tab-referrals') loadReferrals();
+  if (tabId === 'tab-salary') loadSalaryPage();
+  if (tabId === 'tab-credits') loadCredits();
 }
 
 function showEmpTab(tabId, navEl) {
@@ -4184,6 +4191,481 @@ document.getElementById('btn-post-job-header')?.addEventListener('click', () => 
 
 // ── Restore page from URL hash on initial load ───────────────
 restoreFromHash();
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 3 — PROFILE SCORE
+// ═══════════════════════════════════════════════════════════
+async function loadProfileScore() {
+  const el = document.getElementById('tab-score');
+  if (!el) return;
+  const isFr = state.lang === 'fr';
+  el.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>`;
+  const d = await api('GET', `${BASE}/api/profile-score`);
+  if (!d.success) { el.innerHTML = `<div class="empty-state"><i class="ti ti-alert-circle"></i><p>${d.error}</p></div>`; return; }
+  const { score, checks, suggestions, peer_avg, badges, applications } = d;
+  const color = score >= 80 ? '#4ade80' : score >= 50 ? '#facc15' : '#f87171';
+  const circumference = 2 * Math.PI * 54;
+  const offset = circumference - (score / 100) * circumference;
+  const suggs = isFr ? suggestions.fr : suggestions.en;
+  el.innerHTML = `
+    <h2><i class="ti ti-chart-line" style="color:var(--indigo)"></i> ${isFr ? 'Score de profil' : 'Profile Score'}</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center">
+        <svg viewBox="0 0 120 120" width="140" height="140" style="display:block;margin:0 auto 12px">
+          <circle cx="60" cy="60" r="54" fill="none" stroke="var(--border)" stroke-width="10"/>
+          <circle cx="60" cy="60" r="54" fill="none" stroke="${color}" stroke-width="10"
+            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"
+            stroke-linecap="round" transform="rotate(-90 60 60)" style="transition:stroke-dashoffset 1s ease"/>
+          <text x="60" y="64" text-anchor="middle" font-size="28" font-weight="700" fill="${color}">${score}</text>
+          <text x="60" y="80" text-anchor="middle" font-size="11" fill="var(--muted)">/ 100</text>
+        </svg>
+        <div style="font-size:22px;font-weight:700;color:${color}">${score >= 80 ? (isFr ? 'Excellent' : 'Excellent') : score >= 60 ? (isFr ? 'Bon' : 'Good') : score >= 40 ? (isFr ? 'Moyen' : 'Fair') : (isFr ? 'Faible' : 'Weak')}</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:6px">${isFr ? `Moyenne candidats : ${peer_avg}` : `Peer average: ${peer_avg}`}</div>
+        <div style="display:flex;gap:16px;justify-content:center;margin-top:16px">
+          <div style="text-align:center"><div style="font-size:20px;font-weight:700;color:var(--indigo)">${badges}</div><div style="font-size:11px;color:var(--muted)">${isFr ? 'Badges' : 'Badges'}</div></div>
+          <div style="text-align:center"><div style="font-size:20px;font-weight:700;color:var(--indigo)">${applications}</div><div style="font-size:11px;color:var(--muted)">${isFr ? 'Candidatures' : 'Applications'}</div></div>
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px">
+        <div style="font-weight:700;font-size:15px;margin-bottom:16px">${isFr ? '✅ Ce qui compte' : '✅ What counts'}</div>
+        ${checks.map(c => `
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <i class="ti ti-${c.done ? 'circle-check' : 'circle-x'}" style="color:${c.done ? '#4ade80' : '#f87171'};font-size:18px;flex-shrink:0"></i>
+            <span style="font-size:13px;color:${c.done ? 'var(--text)' : 'var(--muted)'}">${c.label}</span>
+            <span style="margin-left:auto;font-size:11px;font-weight:600;color:var(--indigo)">+${c.points}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    ${suggs.length ? `
+    <div style="background:linear-gradient(135deg,#6366F1 0%,#8b5cf6 100%);border-radius:16px;padding:24px;color:#fff">
+      <div style="font-weight:700;font-size:16px;margin-bottom:16px">💡 ${isFr ? 'Suggestions pour augmenter votre score' : 'Suggestions to boost your score'}</div>
+      ${suggs.map(s => `
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.1);border-radius:10px;padding:12px 16px;margin-bottom:8px">
+          <i class="ti ti-arrow-up" style="font-size:18px;flex-shrink:0"></i>
+          <span style="font-size:14px">${s.text}</span>
+          <span style="margin-left:auto;font-size:12px;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:12px">+${s.points} pts</span>
+        </div>
+      `).join('')}
+      <button class="btn-white" style="margin-top:12px;font-size:13px" onclick="showTab('tab-skills', document.querySelector('[data-tab=tab-skills]'))">
+        <i class="ti ti-certificate"></i> ${isFr ? 'Passer des tests de compétences' : 'Take skill tests'}
+      </button>
+    </div>
+    ` : `<div style="background:#4ade8022;border:1px solid #4ade80;border-radius:12px;padding:20px;text-align:center;color:#4ade80;font-weight:600">🎉 ${isFr ? 'Profil complet ! Continuez ainsi.' : 'Profile complete! Keep it up.'}</div>`}
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 3 — SKILL TESTS & BADGES
+// ═══════════════════════════════════════════════════════════
+let currentTest = null;
+let currentAnswers = [];
+
+async function loadSkillTests() {
+  const el = document.getElementById('tab-skills');
+  if (!el) return;
+  const isFr = state.lang === 'fr';
+  el.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>`;
+  const d = await api('GET', `${BASE}/api/skills/tests`);
+  if (!d.success) { el.innerHTML = `<div class="empty-state"><i class="ti ti-alert-circle"></i><p>${d.error || 'Error'}</p></div>`; return; }
+  const { tests } = d;
+  const categories = [...new Set(tests.map(t => t.category))];
+  const diffColor = { beginner: '#4ade80', intermediate: '#facc15', advanced: '#f87171' };
+  el.innerHTML = `
+    <h2><i class="ti ti-certificate" style="color:var(--indigo)"></i> ${isFr ? 'Tests de compétences vérifiables' : 'Verified Skill Tests'}</h2>
+    <p style="color:var(--muted);margin-bottom:24px">${isFr ? 'Obtenez des badges vérifiés sur votre profil. Les employeurs peuvent filtrer par compétences validées.' : 'Earn verified badges on your profile. Employers can filter by validated skills.'}</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px">
+      ${categories.map(cat => `
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer" onclick="filterSkillTests('${cat}')">${cat}</div>
+      `).join('')}
+    </div>
+    <div id="skill-tests-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
+      ${tests.map(t => {
+        const passed = t.passed;
+        const attempted = t.score !== null && t.score !== undefined;
+        return `
+        <div class="skill-test-card" style="background:var(--surface);border:1px solid ${passed ? '#4ade8055' : 'var(--border)'};border-radius:16px;padding:20px;position:relative${passed ? ';box-shadow:0 0 0 2px #4ade8033' : ''}">
+          ${passed ? `<div style="position:absolute;top:12px;right:12px;background:#4ade80;color:#000;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px">✓ ${isFr ? 'Réussi' : 'Passed'}</div>` : ''}
+          <div style="font-size:12px;color:${diffColor[t.difficulty] || '#facc15'};font-weight:600;margin-bottom:6px;text-transform:uppercase">${t.difficulty}</div>
+          <div style="font-weight:700;font-size:16px;margin-bottom:4px">${isFr ? t.title_fr : t.title_en}</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px">${t.category} · ${t.question_count} ${isFr ? 'questions' : 'questions'} · ${isFr ? 'Score min' : 'Pass score'}: ${t.pass_score}%</div>
+          ${attempted ? `<div style="font-size:13px;margin-bottom:12px;color:${passed ? '#4ade80' : 'var(--muted)'}">${isFr ? 'Votre score' : 'Your score'}: <strong>${t.score}%</strong></div>` : ''}
+          <button class="btn-primary" style="width:100%;font-size:13px;padding:9px" onclick="startSkillTest('${t.slug}', '${isFr ? t.title_fr : t.title_en}')">
+            <i class="ti ti-${passed ? 'refresh' : 'pencil'}"></i> ${passed ? (isFr ? 'Repasser' : 'Retake') : (isFr ? 'Commencer le test' : 'Start Test')}
+          </button>
+        </div>
+      `}).join('')}
+    </div>
+  `;
+}
+
+function filterSkillTests(cat) {
+  document.querySelectorAll('.skill-test-card').forEach(c => {
+    const title = c.querySelector('[style*="font-size:16px"]')?.textContent || '';
+    c.style.display = title ? '' : 'none';
+  });
+}
+
+async function startSkillTest(slug, title) {
+  const isFr = state.lang === 'fr';
+  const el = document.getElementById('tab-skills');
+  el.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>`;
+  const d = await api('GET', `${BASE}/api/skills/tests/${slug}`);
+  if (!d.success) { toast(d.error || 'Error loading test', 'error'); loadSkillTests(); return; }
+  currentTest = d.test;
+  currentAnswers = new Array(d.test.questions.length).fill(null);
+  renderSkillTestUI();
+}
+
+function renderSkillTestUI() {
+  const el = document.getElementById('tab-skills');
+  if (!el || !currentTest) return;
+  const isFr = state.lang === 'fr';
+  const t = currentTest;
+  el.innerHTML = `
+    <div style="max-width:680px;margin:0 auto">
+      <button class="btn-ghost" style="margin-bottom:16px" onclick="loadSkillTests()"><i class="ti ti-arrow-left"></i> ${isFr ? 'Retour' : 'Back'}</button>
+      <h2>${isFr ? t.title_fr || t.title_en : t.title_en}</h2>
+      <p style="color:var(--muted);margin-bottom:24px">${t.questions.length} ${isFr ? 'questions · Score minimum' : 'questions · Pass score'}: ${t.pass_score}%</p>
+      <div id="test-questions">
+        ${t.questions.map((q, i) => `
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px">
+            <div style="font-weight:600;margin-bottom:14px">${i + 1}. ${q.q}</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="q-opts-${i}">
+              ${q.opts.map((opt, j) => `
+                <button onclick="selectAnswer(${i},${j})" id="q-opt-${i}-${j}"
+                  style="padding:10px 14px;background:var(--bg);border:2px solid var(--border);border-radius:10px;text-align:left;cursor:pointer;font-size:13px;transition:all .2s">
+                  <span style="font-weight:700;margin-right:8px">${String.fromCharCode(65+j)}.</span>${opt}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div id="test-submit-row" style="display:flex;justify-content:center;margin-top:24px">
+        <button class="btn-primary" style="padding:12px 32px;font-size:15px" onclick="submitSkillTest()"><i class="ti ti-send"></i> ${isFr ? 'Soumettre le test' : 'Submit Test'}</button>
+      </div>
+    </div>
+  `;
+}
+
+function selectAnswer(qIdx, optIdx) {
+  currentAnswers[qIdx] = optIdx;
+  const container = document.getElementById(`q-opts-${qIdx}`);
+  if (!container) return;
+  container.querySelectorAll('button').forEach((btn, j) => {
+    btn.style.borderColor = j === optIdx ? 'var(--indigo)' : 'var(--border)';
+    btn.style.background = j === optIdx ? '#6366F115' : 'var(--bg)';
+    btn.style.color = j === optIdx ? 'var(--indigo)' : '';
+    btn.style.fontWeight = j === optIdx ? '600' : '';
+  });
+}
+
+async function submitSkillTest() {
+  if (!currentTest) return;
+  const isFr = state.lang === 'fr';
+  if (currentAnswers.some(a => a === null)) {
+    toast(isFr ? 'Répondez à toutes les questions' : 'Please answer all questions', 'error'); return;
+  }
+  const d = await api('POST', `${BASE}/api/skills/tests/${currentTest.slug}/submit`, { answers: currentAnswers });
+  if (!d.success) { toast(d.error || 'Error', 'error'); return; }
+  const { score, passed, correct, total, feedback } = d;
+  const el = document.getElementById('tab-skills');
+  const color = passed ? '#4ade80' : '#f87171';
+  el.innerHTML = `
+    <div style="max-width:680px;margin:0 auto">
+      <div style="text-align:center;padding:32px 24px;background:var(--surface);border:2px solid ${color}33;border-radius:20px;margin-bottom:24px">
+        <div style="font-size:64px;margin-bottom:8px">${passed ? '🏅' : '💪'}</div>
+        <div style="font-size:36px;font-weight:800;color:${color}">${score}%</div>
+        <div style="font-size:18px;font-weight:600;margin:8px 0">${passed ? (isFr ? 'Badge obtenu !' : 'Badge Earned!') : (isFr ? 'Pas encore...' : 'Not yet...')}</div>
+        <div style="font-size:14px;color:var(--muted)">${correct}/${total} ${isFr ? 'bonnes réponses' : 'correct answers'} · ${isFr ? 'Score minimum' : 'Pass score'}: ${currentTest.pass_score}%</div>
+        ${passed ? `<div style="margin-top:12px;background:#4ade8022;border-radius:10px;padding:10px;font-size:13px;color:#4ade80">${isFr ? 'Badge ajouté à votre profil !' : 'Badge added to your profile!'}</div>` : ''}
+      </div>
+      <div style="margin-bottom:24px">
+        <div style="font-weight:700;font-size:15px;margin-bottom:12px">${isFr ? 'Vos réponses' : 'Your Answers'}</div>
+        ${feedback.map((f, i) => `
+          <div style="background:var(--surface);border:1px solid ${f.correct ? '#4ade8033' : '#f8717133'};border-radius:12px;padding:14px 16px;margin-bottom:8px">
+            <div style="font-weight:600;margin-bottom:6px">${i+1}. ${f.q}</div>
+            <div style="font-size:13px;color:${f.correct ? '#4ade80' : '#f87171'}">${f.correct ? '✓' : '✗'} ${isFr ? 'Votre réponse' : 'Your answer'}: <strong>${f.your_answer}</strong></div>
+            ${!f.correct ? `<div style="font-size:13px;color:var(--muted)">${isFr ? 'Bonne réponse' : 'Correct'}: <strong>${f.correct_answer}</strong></div>` : ''}
+          </div>
+        `).join('')}
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center">
+        <button class="btn-primary" onclick="startSkillTest('${currentTest.slug}', '')"><i class="ti ti-refresh"></i> ${isFr ? 'Réessayer' : 'Try Again'}</button>
+        <button class="btn-ghost" onclick="loadSkillTests()"><i class="ti ti-arrow-left"></i> ${isFr ? 'Tous les tests' : 'All Tests'}</button>
+      </div>
+    </div>
+  `;
+  currentTest = null;
+  currentAnswers = [];
+}
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 3 — REFERRALS
+// ═══════════════════════════════════════════════════════════
+async function loadReferrals() {
+  const el = document.getElementById('tab-referrals');
+  if (!el) return;
+  const isFr = state.lang === 'fr';
+  el.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>`;
+  const d = await api('GET', `${BASE}/api/referrals/my`);
+  if (!d.success) { el.innerHTML = `<div class="empty-state"><i class="ti ti-alert-circle"></i><p>${d.error || 'Error'}</p></div>`; return; }
+  const { code, referral_url, referrals, total, rewarded, reward_description_en, reward_description_fr } = d;
+  el.innerHTML = `
+    <h2><i class="ti ti-gift" style="color:var(--indigo)"></i> ${isFr ? 'Programme de référencement' : 'Referral Program'}</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+      <div style="background:linear-gradient(135deg,#6366F1,#8b5cf6);border-radius:16px;padding:24px;color:#fff">
+        <div style="font-size:13px;opacity:.8;margin-bottom:8px">${isFr ? 'Votre lien de référencement' : 'Your referral link'}</div>
+        <div style="font-family:monospace;font-size:14px;background:rgba(0,0,0,.2);border-radius:8px;padding:10px;word-break:break-all;margin-bottom:14px">${referral_url}</div>
+        <button onclick="navigator.clipboard.writeText('${referral_url}').then(()=>toast('${isFr ? 'Lien copié !' : 'Link copied!'}', 'success'))"
+          style="background:rgba(255,255,255,.2);border:none;color:#fff;padding:8px 18px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600">
+          <i class="ti ti-copy"></i> ${isFr ? 'Copier le lien' : 'Copy Link'}
+        </button>
+        <div style="margin-top:12px;font-size:12px;opacity:.7">${isFr ? reward_description_fr : reward_description_en}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center">
+          <div style="font-size:32px;font-weight:800;color:var(--indigo)">${total}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">${isFr ? 'Total référés' : 'Total referrals'}</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center">
+          <div style="font-size:32px;font-weight:800;color:#4ade80">${rewarded}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">${isFr ? 'Récompenses gagnées' : 'Rewards earned'}</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;grid-column:1/-1">
+          <div style="font-size:13px;color:var(--muted);margin-bottom:6px">${isFr ? 'Votre code' : 'Your code'}</div>
+          <div style="font-size:24px;font-weight:800;font-family:monospace;letter-spacing:4px;color:var(--indigo)">${code}</div>
+        </div>
+      </div>
+    </div>
+    ${referrals.length ? `
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+        <div style="padding:16px 20px;font-weight:700;font-size:15px;border-bottom:1px solid var(--border)">${isFr ? 'Mes référés' : 'My Referrals'}</div>
+        ${referrals.map(r => `
+          <div style="display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border)">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--indigo);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px">${(r.first_name||'?')[0]}</div>
+            <div style="flex:1">
+              <div style="font-weight:600">${r.first_name} ${r.last_name}</div>
+              <div style="font-size:12px;color:var(--muted)">${new Date(r.created_at).toLocaleDateString(isFr ? 'fr-CA' : 'en-CA')}</div>
+            </div>
+            ${r.reward_granted ? `<span style="background:#4ade8022;color:#4ade80;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600">+20 crédits</span>` : ''}
+          </div>
+        `).join('')}
+      </div>
+    ` : `<div class="empty-state"><i class="ti ti-users"></i><p>${isFr ? 'Aucun référé encore. Partagez votre lien !' : 'No referrals yet. Share your link!'}</p></div>`}
+    <div style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px">
+      <div style="font-weight:700;margin-bottom:12px">${isFr ? 'Comment ça marche' : 'How it works'}</div>
+      ${[
+        [isFr ? '1. Copiez votre lien' : '1. Copy your link', isFr ? 'Partagez-le avec vos collègues employeurs.' : 'Share it with employer colleagues.'],
+        [isFr ? '2. Ils s\'inscrivent' : '2. They sign up', isFr ? 'Ils créent un compte via votre lien.' : 'They create an account via your link.'],
+        [isFr ? '3. Vous gagnez 20 crédits IA' : '3. You earn 20 AI credits', isFr ? 'Automatiquement ajoutés à votre compte.' : 'Automatically added to your account.'],
+      ].map(([title, desc]) => `
+        <div style="display:flex;gap:12px;margin-bottom:12px">
+          <i class="ti ti-check" style="color:#4ade80;font-size:18px;flex-shrink:0;margin-top:2px"></i>
+          <div><strong>${title}</strong> — <span style="color:var(--muted)">${desc}</span></div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 3 — SALARY MARKET DATA (public SEO page + tab)
+// ═══════════════════════════════════════════════════════════
+async function loadSalaryPage() {
+  const el = document.getElementById('tab-salary');
+  if (!el) return;
+  const isFr = state.lang === 'fr';
+  el.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>`;
+  const [trending, provinces] = await Promise.all([
+    api('GET', `${BASE}/api/salary/trending`),
+    api('GET', `${BASE}/api/salary/provinces`),
+  ]);
+  el.innerHTML = `
+    <h2><i class="ti ti-cash" style="color:var(--indigo)"></i> ${isFr ? 'Données salariales du marché' : 'Salary Market Data'}</h2>
+    <p style="color:var(--muted);margin-bottom:24px">${isFr ? 'Données agrégées et anonymisées de milliers d\'offres actives au Canada.' : 'Aggregated and anonymized data from thousands of active postings across Canada.'}</p>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:24px">
+      <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px">
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">${isFr ? 'Titre du poste' : 'Job Title'}</label>
+          <input id="sal-title" type="text" placeholder="${isFr ? 'Ex: Développeur React' : 'e.g. React Developer'}" class="field" style="width:100%">
+        </div>
+        <div style="width:120px">
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">${isFr ? 'Province' : 'Province'}</label>
+          <select id="sal-province" class="field" style="width:100%">
+            <option value="">${isFr ? 'Toutes' : 'All'}</option>
+            <option>QC</option><option>ON</option><option>BC</option><option>AB</option><option>MB</option><option>SK</option><option>NS</option><option>NB</option>
+          </select>
+        </div>
+        <button class="btn-primary" style="padding:10px 20px" onclick="searchSalary()"><i class="ti ti-search"></i> ${isFr ? 'Rechercher' : 'Search'}</button>
+      </div>
+      <div id="sal-result" style="margin-top:16px"></div>
+    </div>
+
+    ${trending.success && trending.roles.length ? `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:24px">
+      <div style="padding:16px 20px;font-weight:700;font-size:15px;border-bottom:1px solid var(--border)"><i class="ti ti-trending-up"></i> ${isFr ? 'Postes les mieux rémunérés' : 'Top Paying Roles'}</div>
+      ${trending.roles.map((r, i) => {
+        const pct = Math.round((r.avg_salary / trending.roles[0].avg_salary) * 100);
+        return `
+          <div style="padding:14px 20px;border-bottom:1px solid var(--border)">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+              <span style="font-weight:600;font-size:14px">${r.title_en}</span>
+              <span style="font-weight:700;color:var(--indigo)">${isFr ? formatSalaryFr(r.avg_salary) : formatSalary(r.avg_salary)} ${isFr ? '/ an' : '/ yr'}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="flex:1;background:var(--border);border-radius:4px;height:6px">
+                <div style="width:${pct}%;background:var(--indigo);border-radius:4px;height:6px"></div>
+              </div>
+              <span style="font-size:11px;color:var(--muted)">${r.count} ${isFr ? 'offres' : 'jobs'}</span>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+    ` : ''}
+
+    ${provinces.success && provinces.provinces.length ? `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+      <div style="padding:16px 20px;font-weight:700;font-size:15px;border-bottom:1px solid var(--border)"><i class="ti ti-map"></i> ${isFr ? 'Salaire moyen par province' : 'Average Salary by Province'}</div>
+      <div style="padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px">
+        ${provinces.provinces.map(p => `
+          <div style="background:var(--bg);border-radius:12px;padding:16px;text-align:center">
+            <div style="font-size:20px;font-weight:800;color:var(--indigo)">${p.province}</div>
+            <div style="font-size:15px;font-weight:700;margin:4px 0">${isFr ? formatSalaryFr(p.avg_salary) : formatSalary(p.avg_salary)}</div>
+            <div style="font-size:11px;color:var(--muted)">${p.job_count} ${isFr ? 'offres' : 'jobs'}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    ` : ''}
+  `;
+}
+
+function formatSalary(n) {
+  if (!n) return 'N/A';
+  return n >= 1000 ? `$${Math.round(n / 1000)}k` : `$${n}`;
+}
+function formatSalaryFr(n) {
+  if (!n) return 'N/A';
+  return n >= 1000 ? `${Math.round(n / 1000)} k$` : `${n} $`;
+}
+
+async function searchSalary() {
+  const title = document.getElementById('sal-title')?.value.trim();
+  const province = document.getElementById('sal-province')?.value;
+  const isFr = state.lang === 'fr';
+  const result = document.getElementById('sal-result');
+  if (!result) return;
+  result.innerHTML = `<div style="text-align:center;padding:16px"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:20px;color:var(--indigo)"></i></div>`;
+  const params = new URLSearchParams();
+  if (title) params.set('title', title);
+  if (province) params.set('province', province);
+  const d = await api('GET', `${BASE}/api/salary/stats?${params}`);
+  if (!d.success || !d.stats) { result.innerHTML = `<div style="color:var(--muted);text-align:center;padding:16px">${isFr ? 'Aucune donnée pour ces critères.' : 'No data for these filters.'}</div>`; return; }
+  const { stats } = d;
+  result.innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
+      ${[
+        [isFr ? 'Médiane' : 'Median', formatSalary(stats.median), '#6366F1'],
+        [isFr ? 'Moyenne' : 'Average', formatSalary(stats.avg), '#8b5cf6'],
+        [isFr ? 'P25' : 'P25', formatSalary(stats.p25), '#4ade80'],
+        [isFr ? 'P75' : 'P75', formatSalary(stats.p75), '#facc15'],
+      ].map(([label, val, color]) => `
+        <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center">
+          <div style="font-size:18px;font-weight:800;color:${color}">${val}</div>
+          <div style="font-size:11px;color:var(--muted)">${label}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div style="font-size:12px;color:var(--muted);text-align:center">${isFr ? 'Basé sur' : 'Based on'} ${stats.count} ${isFr ? 'offres actives' : 'active job postings'}</div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 3 — AI CREDITS
+// ═══════════════════════════════════════════════════════════
+async function loadCredits() {
+  const el = document.getElementById('tab-credits');
+  if (!el) return;
+  const isFr = state.lang === 'fr';
+  el.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>`;
+  const [balance, packs, history] = await Promise.all([
+    api('GET', `${BASE}/api/credits/balance`),
+    api('GET', `${BASE}/api/credits/packs`),
+    api('GET', `${BASE}/api/credits/history`),
+  ]);
+  const total = balance.total || 0;
+  const free = balance.free || 0;
+  const paid = balance.paid || 0;
+  el.innerHTML = `
+    <h2><i class="ti ti-coin" style="color:var(--indigo)"></i> ${isFr ? 'Crédits IA' : 'AI Credits'}</h2>
+    <p style="color:var(--muted);margin-bottom:24px">${isFr ? 'Utilisez des crédits pour les fonctionnalités IA premium : lettres de motivation, analyse CV, préparation entretien.' : 'Use credits for premium AI features: cover letters, CV analysis, interview prep.'}</p>
+
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:20px;margin-bottom:28px">
+      <div style="background:linear-gradient(135deg,#6366F1,#8b5cf6);border-radius:16px;padding:28px;color:#fff;text-align:center">
+        <div style="font-size:13px;opacity:.8;margin-bottom:8px">${isFr ? 'Solde total' : 'Total Balance'}</div>
+        <div style="font-size:56px;font-weight:800;line-height:1">${total}</div>
+        <div style="font-size:13px;opacity:.7;margin-top:8px">${isFr ? `${free} gratuits · ${paid} achetés` : `${free} free · ${paid} purchased`}</div>
+        <div style="margin-top:16px;background:rgba(255,255,255,.15);border-radius:8px;padding:8px;font-size:12px">${isFr ? 'Les crédits gratuits sont utilisés en dernier' : 'Free credits used last'}</div>
+      </div>
+
+      <div>
+        <div style="font-weight:700;font-size:15px;margin-bottom:14px">${isFr ? 'Acheter des crédits' : 'Buy Credits'}</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+          ${(packs.packs || []).map(p => `
+            <div style="background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:20px;text-align:center;cursor:pointer;transition:all .2s"
+              onmouseover="this.style.borderColor='var(--indigo)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="font-size:32px;font-weight:800;color:var(--indigo)">${p.credits}</div>
+              <div style="font-size:13px;color:var(--muted);margin:4px 0">${isFr ? 'crédits IA' : 'AI credits'}</div>
+              <div style="font-size:20px;font-weight:700;margin:8px 0">${isFr ? (p.price/100).toFixed(2)+' $' : '$'+(p.price/100).toFixed(2)}</div>
+              <div style="font-size:11px;color:var(--muted);margin-bottom:12px">${isFr ? (p.price/p.credits/100*100).toFixed(1)+'¢/crédit' : (p.price/p.credits/100*100).toFixed(1)+'¢/credit'}</div>
+              <button class="btn-primary" style="width:100%;font-size:13px;padding:9px" onclick="buyCredits('${p.id}')">
+                <i class="ti ti-shopping-cart"></i> ${isFr ? 'Acheter' : 'Buy'}
+              </button>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    ${history.transactions?.length ? `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+      <div style="padding:16px 20px;font-weight:700;font-size:15px;border-bottom:1px solid var(--border)">${isFr ? 'Historique' : 'Transaction History'}</div>
+      ${history.transactions.slice(0, 15).map(tx => `
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--border)">
+          <div style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:${tx.amount > 0 ? '#4ade8022' : '#f8717122'}">
+            <i class="ti ti-${tx.amount > 0 ? 'plus' : 'minus'}" style="color:${tx.amount > 0 ? '#4ade80' : '#f87171'};font-size:16px"></i>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:600">${tx.description}</div>
+            <div style="font-size:11px;color:var(--muted)">${new Date(tx.created_at).toLocaleDateString(isFr ? 'fr-CA' : 'en-CA')}</div>
+          </div>
+          <div style="font-weight:700;color:${tx.amount > 0 ? '#4ade80' : '#f87171'}">${tx.amount > 0 ? '+' : ''}${tx.amount}</div>
+        </div>
+      `).join('')}
+    </div>
+    ` : `<div class="empty-state"><i class="ti ti-coin"></i><p>${isFr ? 'Aucune transaction encore.' : 'No transactions yet.'}</p></div>`}
+  `;
+}
+
+async function buyCredits(packId) {
+  const isFr = state.lang === 'fr';
+  const d = await api('POST', `${BASE}/api/credits/checkout`, { pack_id: packId });
+  if (d.success && d.url) { window.location.href = d.url; }
+  else toast(d.error || (isFr ? 'Erreur lors du paiement' : 'Payment error'), 'error');
+}
+
+// Handle ?credits_success=1 on load
+(function checkCreditsPurchase() {
+  const p = new URLSearchParams(location.search);
+  if (p.get('credits_success') === '1') {
+    history.replaceState(null, '', location.pathname + location.hash);
+    setTimeout(() => toast('✅ AI Credits purchased successfully!', 'success'), 1000);
+  }
+})();
 
 // ═══════════════════════════════════════════════════════════
 // HERO BACKGROUND PHOTO SLIDER — silent cross-fade

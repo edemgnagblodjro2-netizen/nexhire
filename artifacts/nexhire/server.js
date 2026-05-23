@@ -265,10 +265,155 @@ async function runMigrations() {
     await pool.query(`CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON nh_sessions (expire)`);
     await pool.query(`ALTER TABLE nh_jobs ADD COLUMN IF NOT EXISTS province TEXT`);
     await pool.query(`ALTER TABLE nh_candidate_profiles ADD COLUMN IF NOT EXISTS province TEXT`);
+
+    // ── Phase 3 migrations ─────────────────────────────────────
+    // AI Credits
+    await pool.query(`ALTER TABLE nh_users ADD COLUMN IF NOT EXISTS ai_credits INTEGER DEFAULT 0`);
+    await pool.query(`ALTER TABLE nh_users ADD COLUMN IF NOT EXISTS ai_credits_paid INTEGER DEFAULT 0`);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_credit_transactions (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL REFERENCES nh_users(id) ON DELETE CASCADE,
+        amount INTEGER NOT NULL,
+        type TEXT NOT NULL,
+        description TEXT,
+        stripe_payment_id TEXT,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    // Referrals
+    await pool.query(`ALTER TABLE nh_users ADD COLUMN IF NOT EXISTS referral_code TEXT UNIQUE`);
+    await pool.query(`ALTER TABLE nh_users ADD COLUMN IF NOT EXISTS referred_by TEXT REFERENCES nh_users(id) ON DELETE SET NULL`);
+    await pool.query(`ALTER TABLE nh_users ADD COLUMN IF NOT EXISTS referral_reward_given BOOLEAN DEFAULT FALSE`);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_referrals (
+        id TEXT PRIMARY KEY,
+        referrer_id TEXT NOT NULL REFERENCES nh_users(id) ON DELETE CASCADE,
+        referee_id TEXT NOT NULL REFERENCES nh_users(id) ON DELETE CASCADE,
+        reward_granted BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(referee_id)
+      )
+    `);
+    // Skill Tests
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_skill_tests (
+        id TEXT PRIMARY KEY,
+        slug TEXT UNIQUE NOT NULL,
+        title_fr TEXT NOT NULL,
+        title_en TEXT NOT NULL,
+        category TEXT NOT NULL,
+        difficulty TEXT DEFAULT 'intermediate',
+        questions JSONB NOT NULL,
+        pass_score INTEGER DEFAULT 70,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_skill_results (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL REFERENCES nh_users(id) ON DELETE CASCADE,
+        test_id TEXT NOT NULL REFERENCES nh_skill_tests(id) ON DELETE CASCADE,
+        score INTEGER NOT NULL,
+        passed BOOLEAN NOT NULL,
+        answers JSONB,
+        completed_at TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(user_id, test_id)
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_skill_results_user ON nh_skill_results(user_id)`);
+    // Profile score cache
+    await pool.query(`ALTER TABLE nh_candidate_profiles ADD COLUMN IF NOT EXISTS profile_score INTEGER DEFAULT 0`);
+    await pool.query(`ALTER TABLE nh_candidate_profiles ADD COLUMN IF NOT EXISTS profile_score_updated TIMESTAMPTZ`);
+    // Salary market data table (aggregated from jobs)
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_salary_data (
+        id TEXT PRIMARY KEY,
+        title_normalized TEXT NOT NULL,
+        province TEXT,
+        city TEXT,
+        salary_min INTEGER,
+        salary_max INTEGER,
+        salary_avg INTEGER,
+        sample_count INTEGER DEFAULT 1,
+        updated_at TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(title_normalized, province)
+      )
+    `);
+    // Instant job alerts — add min_salary filter
+    await pool.query(`ALTER TABLE nh_job_alerts ADD COLUMN IF NOT EXISTS salary_min INTEGER`);
+    await pool.query(`ALTER TABLE nh_job_alerts ADD COLUMN IF NOT EXISTS skills TEXT`);
+    await pool.query(`ALTER TABLE nh_job_alerts ADD COLUMN IF NOT EXISTS instant_notify BOOLEAN DEFAULT TRUE`);
+    // Seed skill tests if empty
+    await seedSkillTests(pool);
     console.log('[Nexhire] ✅ DB ready');
   } catch (err) {
     console.error('[Nexhire] Migration error:', err.message);
   }
+}
+
+// ── Skill tests seed ──────────────────────────────────────────
+async function seedSkillTests(pool) {
+  const { rows } = await pool.query('SELECT COUNT(*) as n FROM nh_skill_tests');
+  if (parseInt(rows[0].n) > 0) return;
+  const crypto = require('crypto');
+  const tests = [
+    { slug:'javascript-fundamentals', title_fr:'JavaScript — Fondamentaux', title_en:'JavaScript — Fundamentals', category:'Developer', difficulty:'beginner', pass_score:70,
+      questions:[
+        {q:'What does `typeof null` return?', opts:['null','object','undefined','boolean'], answer:1},
+        {q:'Which method adds an element to the end of an array?', opts:['push','pop','shift','splice'], answer:0},
+        {q:'What is the output of `0 == false`?', opts:['true','false','TypeError','undefined'], answer:0},
+        {q:'Which keyword declares a block-scoped variable?', opts:['var','let','function','global'], answer:1},
+        {q:'What does `Array.isArray([])` return?', opts:['false','true','undefined','TypeError'], answer:1},
+      ]},
+    { slug:'react-intermediate', title_fr:'React — Niveau intermédiaire', title_en:'React — Intermediate', category:'Developer', difficulty:'intermediate', pass_score:70,
+      questions:[
+        {q:'What hook replaces `componentDidMount` in functional components?', opts:['useState','useEffect','useRef','useMemo'], answer:1},
+        {q:'What does the `key` prop help React do?', opts:['Style elements','Identify list items','Pass data to children','Trigger re-renders'], answer:1},
+        {q:'When does `useEffect` with an empty dependency array run?', opts:['Every render','Never','Once after mount','On unmount only'], answer:2},
+        {q:'What is `useState` used for?', opts:['Routing','Local component state','Global state','API calls'], answer:1},
+        {q:'What is the virtual DOM?', opts:['A browser API','A lightweight copy of the real DOM','A CSS framework','A JavaScript engine'], answer:1},
+      ]},
+    { slug:'python-basics', title_fr:'Python — Bases', title_en:'Python — Basics', category:'Developer', difficulty:'beginner', pass_score:70,
+      questions:[
+        {q:'What is the output of `len("hello")`?', opts:['4','5','6','Error'], answer:1},
+        {q:'Which is used to define a function in Python?', opts:['function','def','fun','func'], answer:1},
+        {q:'What does `//` do in Python?', opts:['Comment','Float division','Integer division','Power'], answer:2},
+        {q:'What type is `[1, 2, 3]` in Python?', opts:['tuple','dict','list','set'], answer:2},
+        {q:'How do you start a comment in Python?', opts:['//','/*','#','--'], answer:2},
+      ]},
+    { slug:'sql-fundamentals', title_fr:'SQL — Fondamentaux', title_en:'SQL — Fundamentals', category:'Data', difficulty:'beginner', pass_score:70,
+      questions:[
+        {q:'Which SQL statement retrieves data?', opts:['INSERT','UPDATE','SELECT','DELETE'], answer:2},
+        {q:'What does `WHERE` do?', opts:['Sorts results','Filters rows','Groups data','Joins tables'], answer:1},
+        {q:'Which clause is used with aggregate functions to filter groups?', opts:['WHERE','HAVING','ORDER BY','GROUP BY'], answer:1},
+        {q:'What does `JOIN` do?', opts:['Deletes duplicate rows','Combines rows from multiple tables','Filters null values','Sorts data'], answer:1},
+        {q:'What does `COUNT(*)` return?', opts:['Sum of values','Number of rows','Max value','Average'], answer:1},
+      ]},
+    { slug:'excel-advanced', title_fr:'Excel — Avancé', title_en:'Excel — Advanced', category:'Finance', difficulty:'intermediate', pass_score:70,
+      questions:[
+        {q:'What function looks up a value in the first column of a range?', opts:['HLOOKUP','INDEX','VLOOKUP','MATCH'], answer:2},
+        {q:'What does `$A$1` mean in a formula?', opts:['Relative reference','Absolute reference','Named range','Error value'], answer:1},
+        {q:'Which function counts cells that meet a condition?', opts:['COUNT','COUNTA','COUNTIF','SUMIF'], answer:2},
+        {q:'What is a Pivot Table used for?', opts:['Formatting data','Summarizing large datasets','Creating charts only','Writing macros'], answer:1},
+        {q:'What keyboard shortcut inserts the current date?', opts:['Ctrl+D','Ctrl+;','Ctrl+T','Alt+D'], answer:1},
+      ]},
+    { slug:'marketing-digital', title_fr:'Marketing digital — Fondamentaux', title_en:'Digital Marketing — Fundamentals', category:'Marketing', difficulty:'beginner', pass_score:70,
+      questions:[
+        {q:'What does SEO stand for?', opts:['Social Engagement Optimization','Search Engine Optimization','Site Evaluation Output','Structured Email Outreach'], answer:1},
+        {q:'What is a conversion rate?', opts:['Bounce rate','% of visitors who complete a goal','Email open rate','CPM'], answer:1},
+        {q:'What is A/B testing?', opts:['Comparing two versions to see which performs better','Testing on two browsers','A/B stands for Audit/Budget','Running ads on two platforms'], answer:0},
+        {q:'What does CTR stand for?', opts:['Click-Through Rate','Content Transfer Rate','Cost To Reach','Customer Tracking Record'], answer:0},
+        {q:'Which metric measures ad cost per 1000 impressions?', opts:['CPC','CPM','CTR','ROAS'], answer:1},
+      ]},
+  ];
+  for (const t of tests) {
+    await pool.query(
+      `INSERT INTO nh_skill_tests (id,slug,title_fr,title_en,category,difficulty,questions,pass_score) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) ON CONFLICT (slug) DO NOTHING`,
+      [crypto.randomUUID(), t.slug, t.title_fr, t.title_en, t.category, t.difficulty, JSON.stringify(t.questions), t.pass_score]
+    );
+  }
+  console.log('[Nexhire] ✅ Skill tests seeded');
 }
 
 // ── Demo seed (runs once if no jobs exist) ──────────────────
@@ -379,6 +524,11 @@ app.use(apiBase + '/admin',         require('./routes/admin'));
 app.use(apiBase + '/saved-jobs',    require('./routes/saved-jobs'));
 app.use(apiBase + '/reviews',       require('./routes/reviews'));
 app.use(apiBase + '/team',          require('./routes/team'));
+app.use(apiBase + '/credits',       require('./routes/credits'));
+app.use(apiBase + '/referrals',     require('./routes/referrals'));
+app.use(apiBase + '/skills',        require('./routes/skills'));
+app.use(apiBase + '/profile-score', require('./routes/profile-score'));
+app.use(apiBase + '/salary',        require('./routes/salary'));
 
 // ── Health check ───────────────────────────────────────────
 app.get(BASE_PATH + '/healthz', (req, res) => res.json({ status: 'ok', service: 'nexhire' }));
