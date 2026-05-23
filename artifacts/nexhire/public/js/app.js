@@ -49,6 +49,35 @@ const INTL_CITIES = {
   'Switzerland': ['Geneva','Zurich','Lausanne','Basel'],
 };
 
+// ── Location formatting (Indeed-style) ────────────────────
+function fmtLocation(j) {
+  // Card format: "Montréal, QC · Remote" or "Ontario" or "Remote"
+  const parts = [];
+  if (j.city) parts.push(esc(j.city));
+  if (j.province && j.province !== 'REMOTE') {
+    parts.push(`<strong>${esc(j.province)}</strong>`);
+  }
+  const loc = parts.join(', ');
+  const mode = j.work_mode === 'remote' ? ' · <span class="loc-remote">Remote</span>' : j.work_mode === 'hybrid' ? ' · <span class="loc-hybrid">Hybrid</span>' : '';
+  if (!loc && j.work_mode === 'remote') return `<span class="loc-remote">🌐 Remote</span>`;
+  return loc ? `<i class="ti ti-map-pin" style="font-size:11px;color:var(--muted);margin-right:3px"></i>${loc}${mode}` : '';
+}
+
+function fmtLocationDetail(j) {
+  // Detail panel format: "Montréal, QC · Remote · Full-time" (like Indeed job detail header)
+  const parts = [];
+  if (j.city) parts.push(`<span style="font-weight:500">${esc(j.city)}</span>`);
+  if (j.province && j.province !== 'REMOTE') parts.push(`<strong>${esc(j.province)}</strong>`);
+  const loc = parts.join(', ');
+  const chips = [];
+  if (j.work_mode) chips.push(`<span class="job-tag ${j.work_mode}" style="font-size:12px">${j.work_mode}</span>`);
+  if (j.job_type) chips.push(`<span class="job-tag" style="font-size:12px">${j.job_type}</span>`);
+  return `<div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+    ${loc ? `<span class="detail-location-text"><i class="ti ti-map-pin" style="font-size:13px;color:var(--muted)"></i> ${loc}</span>` : ''}
+    ${chips.join('')}
+  </div>`;
+}
+
 function provinceSelectHtml(id, selectedCode = '') {
   return `<select id="${id}" onchange="updateCitiesForProvince('${id}')">
     <option value="">— Select province/territory —</option>
@@ -199,10 +228,9 @@ function jobCardHtml(j, demo = false) {
       <div class="company-name">${esc(j.company_name || '')}</div>
     </div>
     <div class="job-title">${esc(title)}</div>
+    <div class="job-location-line">${fmtLocation(j)}</div>
     <div class="job-meta">
       <span class="job-tag ${j.work_mode || 'onsite'}">${j.work_mode || 'onsite'}</span>
-      ${j.province ? `<span class="province-badge">${esc(j.province)}</span>` : ''}
-      ${j.city ? `<span class="job-tag"><i class="ti ti-map-pin" style="font-size:11px"></i>${esc(j.city)}</span>` : (!j.province && !j.city && j.work_mode !== 'remote' ? '' : '')}
       ${j.job_type ? `<span class="job-tag">${j.job_type}</span>` : ''}
     </div>
     ${salary ? `<div class="job-salary">${salary}</div>` : ''}
@@ -262,7 +290,7 @@ async function filterJobs(page = 1) {
       ${j.company_logo ? `<img src="${j.company_logo}" style="width:44px;height:44px;border-radius:10px;flex-shrink:0;object-fit:contain">` : `<div class="company-logo" style="background:${color};width:44px;height:44px;border-radius:10px;flex-shrink:0;font-size:14px">${initials}</div>`}
       <div style="flex:1;min-width:0">
         <div style="font-family:var(--r);font-weight:600;color:var(--dark);font-size:15px">${esc(title)}</div>
-        <div style="font-size:13px;color:var(--muted);margin-top:2px">${esc(j.company_name || '')}${j.city ? ' · ' + esc(j.city) : ''}</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:2px">${esc(j.company_name || '')}${j.city || j.province ? ' · ' + (j.city ? esc(j.city) + (j.province ? ', <strong>'+esc(j.province)+'</strong>' : '') : esc(j.province||'')) : ''}</div>
         <div class="job-meta" style="margin-top:8px">
           <span class="job-tag ${j.work_mode || 'onsite'}">${j.work_mode || 'onsite'}</span>
           ${j.job_type ? `<span class="job-tag">${j.job_type}</span>` : ''}
@@ -322,10 +350,8 @@ async function openJobDetail(jobId) {
       <button class="save-btn${isSaved ? ' saved' : ''}" data-id="${j.id}" onclick="toggleSave('${j.id}',event)" style="padding:8px 10px;font-size:16px" title="Save job"><i class="ti ti-heart${isSaved ? '-filled' : ''}"></i></button>
     </div>
     <h2 style="font-family:var(--r);font-size:20px;font-weight:700;color:var(--dark);margin:12px 0 8px">${esc(title)}</h2>
+    <div class="job-location-detail">${fmtLocationDetail(j)}</div>
     <div class="job-meta" style="margin-bottom:16px">
-      <span class="job-tag ${j.work_mode || 'onsite'}">${j.work_mode || 'onsite'}</span>
-      ${j.province ? `<span class="province-badge">${esc(j.province)}</span>` : ''}
-      ${j.city ? `<span class="job-tag"><i class="ti ti-map-pin" style="font-size:11px"></i>${esc(j.city)}</span>` : ''}
       ${j.job_type ? `<span class="job-tag">${j.job_type}</span>` : ''}
       ${j.salary_min ? `<span class="job-tag salary-tag">${fmtSalary(j.salary_min)}${j.salary_max ? '–'+fmtSalary(j.salary_max) : ''} ${j.salary_currency||'CAD'}/yr</span>` : ''}
       ${j.experience_years ? `<span class="job-tag"><i class="ti ti-briefcase" style="font-size:11px"></i>${j.experience_years} yrs exp</span>` : ''}
@@ -626,7 +652,7 @@ async function loadMyApplications() {
         ${logo ? `<img src="${logo}" style="width:40px;height:40px;border-radius:8px;object-fit:contain;flex-shrink:0">` : `<div class="company-logo" style="background:${color};width:40px;height:40px;border-radius:8px;flex-shrink:0;font-size:13px">${initials}</div>`}
         <div style="flex:1;min-width:0">
           <div style="font-family:var(--r);font-weight:600;color:var(--dark);font-size:15px">${esc(title)}</div>
-          <div style="font-size:13px;color:var(--muted)">${esc(a.company_name||'')}${a.city ? ' · '+esc(a.city) : ''}</div>
+          <div style="font-size:13px;color:var(--muted)">${esc(a.company_name||'')}${a.city || a.province ? ' · ' + (a.city ? esc(a.city) + (a.province ? ', <strong>'+esc(a.province)+'</strong>' : '') : esc(a.province||'')) : ''}</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
           <span class="app-status ${a.status}">${statusLabel[a.status] || a.status}</span>
@@ -658,7 +684,7 @@ async function loadSavedJobsTab() {
       ${j.company_logo ? `<img src="${j.company_logo}" style="width:40px;height:40px;border-radius:8px;flex-shrink:0;object-fit:contain">` : `<div class="company-logo" style="background:${color};width:40px;height:40px;border-radius:8px;flex-shrink:0;font-size:13px">${initials}</div>`}
       <div style="flex:1;min-width:0">
         <div style="font-family:var(--r);font-weight:600;color:var(--dark)">${esc(title)}</div>
-        <div style="font-size:13px;color:var(--muted)">${esc(j.company_name||'')}${j.city ? ' · '+esc(j.city) : ''}</div>
+        <div style="font-size:13px;color:var(--muted)">${esc(j.company_name||'')}${j.city || j.province ? ' · ' + (j.city ? esc(j.city) + (j.province ? ', <strong>'+esc(j.province)+'</strong>' : '') : esc(j.province||'')) : ''}</div>
         <div class="job-meta" style="margin-top:6px"><span class="job-tag ${j.work_mode||'onsite'}">${j.work_mode||'onsite'}</span>${j.salary_min ? `<span class="job-tag salary-tag">${fmtSalary(j.salary_min)} ${j.salary_currency||'CAD'}</span>` : ''}</div>
       </div>
       <button class="save-btn saved" data-id="${j.id}" onclick="toggleSave('${j.id}',event);this.closest('.job-list-item').remove()" title="Remove"><i class="ti ti-heart-filled"></i></button>
@@ -683,7 +709,7 @@ async function loadJobsForYou() {
       const title = state.lang === 'fr' ? (j.title_fr || j.title_en) : (j.title_en || j.title_fr);
       return `<div class="jfy-card" onclick="goto('jobs')">
         <div class="jfy-title">${esc(title)}</div>
-        <div style="font-size:12px;color:var(--muted)">${esc(j.company_name||'')}${j.city ? ' · '+esc(j.city) : ''}</div>
+        <div style="font-size:12px;color:var(--muted)">${esc(j.company_name||'')}${j.city || j.province ? ' · ' + (j.city ? esc(j.city) + (j.province ? ', <strong>'+esc(j.province)+'</strong>' : '') : esc(j.province||'')) : ''}</div>
         <div style="display:flex;gap:6px;margin-top:6px"><span class="job-tag ${j.work_mode||'onsite'}" style="font-size:11px">${j.work_mode||'onsite'}</span>${j.salary_min?`<span class="job-tag salary-tag" style="font-size:11px">${fmtSalary(j.salary_min)} ${j.salary_currency||'CAD'}</span>`:''}</div>
       </div>`;
     }).join('');
@@ -719,8 +745,7 @@ async function loadEmployerJobs() {
           <div class="emp-job-title">${esc(title)}</div>
           <div class="emp-job-meta">
             <span class="job-tag ${j.work_mode||'onsite'}" style="font-size:11px">${j.work_mode||'onsite'}</span>
-            ${j.province ? `<span class="province-badge" style="font-size:10px">${esc(j.province)}</span>` : ''}
-            ${j.city ? `<span class="job-tag" style="font-size:11px"><i class="ti ti-map-pin" style="font-size:10px"></i>${esc(j.city)}</span>` : ''}
+            ${j.city || j.province ? `<span style="font-size:11px;color:var(--muted)"><i class="ti ti-map-pin" style="font-size:10px"></i> ${j.city ? esc(j.city)+', ' : ''}<strong>${esc(j.province||'')}</strong></span>` : ''}
             ${exp !== null ? `<span class="job-tag" style="font-size:11px;color:${exp < 5 ? 'var(--red)' : 'var(--muted)'}"><i class="ti ti-clock" style="font-size:10px"></i>${exp > 0 ? `${exp}d left` : 'Expired'}</span>` : ''}
           </div>
         </div>

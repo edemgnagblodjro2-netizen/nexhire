@@ -23,6 +23,13 @@ body{font-family:var(--b);background:var(--bg);color:var(--text);line-height:1.6
 .check-label input[type=checkbox]{accent-color:var(--indigo);width:14px;height:14px}
 .filter-select-province{font-weight:500;min-width:160px}
 .province-badge{display:inline-flex;align-items:center;gap:4px;background:var(--indigo3);color:var(--indigo);border-radius:20px;padding:2px 10px;font-size:11px;font-weight:600;letter-spacing:.3px}
+.job-location-line{font-size:13px;color:var(--muted);margin:3px 0 6px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.job-location-line strong{color:var(--text);font-weight:600}
+.job-location-detail{margin-bottom:4px}
+.detail-location-text{font-size:14px;color:var(--muted);display:inline-flex;align-items:center;gap:5px}
+.detail-location-text strong{color:var(--text);font-weight:600}
+.loc-remote{color:#059669;font-weight:500}
+.loc-hybrid{color:var(--gold);font-weight:500}
 a{text-decoration:none;color:inherit}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
