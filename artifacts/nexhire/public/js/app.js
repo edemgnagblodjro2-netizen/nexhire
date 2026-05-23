@@ -324,6 +324,21 @@ function quickSearch(q) { document.getElementById('q').value = q; searchJobs(); 
 
 async function loadJobs() { await filterJobs(); }
 
+// ── Viewed jobs tracking ───────────────────────────────────
+const VIEWED_KEY = 'nh_viewed_jobs';
+function markJobViewed(id) {
+  try {
+    const s = new Set(JSON.parse(localStorage.getItem(VIEWED_KEY) || '[]'));
+    s.add(id);
+    // Keep only last 500 to avoid bloat
+    const arr = [...s].slice(-500);
+    localStorage.setItem(VIEWED_KEY, JSON.stringify(arr));
+  } catch {}
+}
+function getViewedJobIds() {
+  try { return new Set(JSON.parse(localStorage.getItem(VIEWED_KEY) || '[]')); } catch { return new Set(); }
+}
+
 async function filterJobs(page = 1) {
   state.currentPage = page;
   const q = document.getElementById('fq')?.value || document.getElementById('q')?.value || '';
@@ -331,20 +346,33 @@ async function filterJobs(page = 1) {
   const job_type = document.getElementById('ftype')?.value || '';
   const sal_min = document.getElementById('fsal')?.value || '';
   const province = document.getElementById('fprov')?.value || '';
-  const params = new URLSearchParams({ page, limit: 15 });
+  const fdate = document.getElementById('fdate')?.value || '';
+  const flang = document.getElementById('flang')?.value || '';
+  const isUnseenFilter = fdate === 'unseen';
+
+  const params = new URLSearchParams({ page, limit: isUnseenFilter ? 50 : 15 });
   if (q) params.set('q', q);
   if (work_mode) params.set('work_mode', work_mode);
   if (job_type) params.set('job_type', job_type);
   if (sal_min) params.set('salary_min', sal_min);
   if (province && province !== 'REMOTE') params.set('province', province);
   if (province === 'REMOTE') params.set('work_mode', 'remote');
+  if (fdate && !isUnseenFilter) params.set('days_ago', fdate);
+  if (flang) params.set('lang_filter', flang);
 
   const list = document.getElementById('jobs-list');
   if (list) list.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>`;
 
   const d = await api('GET', `${BASE}/api/jobs?${params}`);
   if (!list) return;
-  const jobs = d.jobs || [];
+  let jobs = d.jobs || [];
+
+  // Client-side filter: "Jobs you haven't seen"
+  if (isUnseenFilter) {
+    const viewed = getViewedJobIds();
+    jobs = jobs.filter(j => !viewed.has(j.id));
+  }
+
   if (!jobs.length) { list.innerHTML = '<div class="empty-state"><i class="ti ti-search-off"></i><p>No jobs found. Try different filters.</p></div>'; return; }
 
   list.innerHTML = jobs.map(j => {
@@ -382,6 +410,7 @@ async function filterJobs(page = 1) {
 
 // ── Job detail panel ───────────────────────────────────────
 async function openJobDetail(jobId) {
+  markJobViewed(jobId);
   const d = await api('GET', `${BASE}/api/jobs/by-id/${jobId}`);
   if (!d.success) return;
   const j = d.job;

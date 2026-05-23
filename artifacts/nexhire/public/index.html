@@ -191,7 +191,27 @@
           <option value="temporary">Temporary</option>
           <option value="casual">Casual</option>
         </select>
-        <select id="fsal" onchange="filterJobs()" class="filter-select"><option value="">Any salary</option><option value="40000">$40k+</option><option value="60000">$60k+</option><option value="80000">$80k+</option><option value="100000">$100k+</option><option value="130000">$130k+</option></select>
+        <select id="fsal" onchange="filterJobs()" class="filter-select">
+          <option value="">All Pay</option>
+          <option value="40000">$40,000+</option>
+          <option value="60000">$60,000+</option>
+          <option value="80000">$80,000+</option>
+          <option value="100000">$100,000+</option>
+          <option value="120000">$120,000+</option>
+        </select>
+        <select id="fdate" onchange="filterJobs()" class="filter-select">
+          <option value="">All Dates</option>
+          <option value="unseen">Jobs you haven't seen</option>
+          <option value="1">Last 24 hours</option>
+          <option value="3">Last 3 days</option>
+          <option value="7">Last 7 days</option>
+          <option value="14">Last 14 days</option>
+        </select>
+        <select id="flang" onchange="filterJobs()" class="filter-select">
+          <option value="">Job language</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+        </select>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@ const db = require('../models/db');
 const { requireAuth, requireCompanyAccess } = require('../middleware/auth');
 
 router.get('/', async (req, res) => {
-  const { q, city, province, work_mode, job_type, salary_min, featured, page = 1, limit = 20 } = req.query;
+  const { q, city, province, work_mode, job_type, salary_min, featured, days_ago, lang_filter, page = 1, limit = 20 } = req.query;
   const offset = (parseInt(page) - 1) * parseInt(limit);
   const params = [];
   const where = ["j.status = 'active'"];
@@ -20,6 +20,13 @@ router.get('/', async (req, res) => {
   if (job_type) { where.push(`j.job_type = $${i}`); params.push(job_type); i++; }
   if (salary_min) { where.push(`(j.salary_max >= $${i} OR j.salary_min >= $${i})`); params.push(parseInt(salary_min)); i++; }
   if (featured === 'true') { where.push(`j.featured = TRUE`); }
+  if (days_ago && !isNaN(parseInt(days_ago))) {
+    where.push(`j.published_at >= NOW() - INTERVAL '${parseInt(days_ago)} days'`);
+  }
+  if (lang_filter) {
+    where.push(`j.languages_required ILIKE $${i}`);
+    params.push(`%${lang_filter}%`); i++;
+  }
 
   const whereClause = 'WHERE ' + where.join(' AND ');
 
