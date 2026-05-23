@@ -17,6 +17,9 @@ localPort = 23748
 [services.development]
 run = "pnpm --filter @workspace/nexhire run dev"
 
+[services.production]
+run = "pnpm --filter @workspace/nexhire run start"
+
 [services.env]
 PORT = "23748"
 BASE_PATH = "/nexhire/"
