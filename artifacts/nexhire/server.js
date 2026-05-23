@@ -235,6 +235,14 @@ async function runMigrations() {
       )
     `);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_team_company ON nh_team_members(company_id)`);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_sessions (
+        sid VARCHAR NOT NULL COLLATE "default" PRIMARY KEY,
+        sess JSON NOT NULL,
+        expire TIMESTAMP(6) NOT NULL
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON nh_sessions (expire)`);
     console.log('[Nexhire] ✅ DB ready');
   } catch (err) {
     console.error('[Nexhire] Migration error:', err.message);
@@ -265,7 +273,7 @@ app.use(session({
   store: new pgSession({
     conString: process.env.DATABASE_URL,
     tableName: 'nh_sessions',
-    createTableIfMissing: true,
+    createTableIfMissing: false,
   }),
   secret: process.env.NEXHIRE_SESSION_SECRET || process.env.SESSION_SECRET || 'nexhire-dev-secret-2026',
   resave: false,
