@@ -1988,36 +1988,18 @@ document.getElementById('btn-post-job-header')?.addEventListener('click', () => 
 restoreFromHash();
 
 // ═══════════════════════════════════════════════════════════
-// PHOTO BANNER SLIDER — auto-rotate, arrows, dots
+// HERO BACKGROUND PHOTO SLIDER — silent cross-fade
 // ═══════════════════════════════════════════════════════════
-(function initNhSlider() {
-  const TOTAL = 3;
+(function initHeroBgSlider() {
+  const slides = document.querySelectorAll('.hbg-slide');
+  if (!slides.length) return;
   let current = 0;
-  let timer = null;
 
   function goTo(n) {
-    document.getElementById(`nhs-${current}`)?.classList.remove('nhs-on');
-    document.querySelector(`.nhs-dot[data-nhs="${current}"]`)?.classList.remove('nhs-on');
-    current = (n + TOTAL) % TOTAL;
-    document.getElementById(`nhs-${current}`)?.classList.add('nhs-on');
-    document.querySelector(`.nhs-dot[data-nhs="${current}"]`)?.classList.add('nhs-on');
+    slides[current].classList.remove('hbg-on');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('hbg-on');
   }
 
-  function startTimer() {
-    clearInterval(timer);
-    timer = setInterval(() => goTo(current + 1), 5500);
-  }
-
-  document.getElementById('nhs-prev')?.addEventListener('click', () => { goTo(current - 1); startTimer(); });
-  document.getElementById('nhs-next')?.addEventListener('click', () => { goTo(current + 1); startTimer(); });
-
-  document.querySelectorAll('.nhs-dot').forEach(dot => {
-    dot.addEventListener('click', () => { goTo(parseInt(dot.dataset.nhs, 10)); startTimer(); });
-  });
-
-  const wrap = document.getElementById('nhs');
-  wrap?.addEventListener('mouseenter', () => clearInterval(timer));
-  wrap?.addEventListener('mouseleave', startTimer);
-
-  startTimer();
+  setInterval(() => goTo(current + 1), 6000);
 })();

@@ -65,7 +65,13 @@
 <!-- HOME ────────────────────────────────────────────────── -->
 <div id="pg-home" class="page active">
   <section class="hero">
-    <div class="hero-bg"></div>
+    <!-- Rotating photo background -->
+    <div class="hero-bg">
+      <div class="hbg-slide hbg-on" style="background-image:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?fit=crop&w=1920&q=80')"></div>
+      <div class="hbg-slide" style="background-image:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?fit=crop&w=1920&q=80')"></div>
+      <div class="hbg-slide" style="background-image:url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?fit=crop&w=1920&q=80')"></div>
+      <div class="hbg-overlay"></div>
+    </div>
     <div class="hero-inner">
       <div class="hero-badge"><span class="badge-dot"></span><span id="h-eyebrow">AI-Powered Global Job Matching</span></div>
       <h1 class="hero-title" id="h-title">Find your next <em>opportunity</em> anywhere in the world</h1>
@@ -107,62 +113,6 @@
     </div>
   </section>
 
-  <!-- ── PHOTO BANNER SLIDER (Ecobank style) ─────────────── -->
-  <section class="nhs" id="nhs">
-
-    <!-- SLIDE 1 — Job seekers -->
-    <div class="nhs-slide nhs-on" id="nhs-0">
-      <div class="nhs-photo" style="background-image:url('https://images.unsplash.com/photo-1573497620053-ea5300f94f21?fit=crop&w=1920&q=80')"></div>
-      <div class="nhs-overlay"></div>
-      <div class="nhs-body">
-        <div class="nhs-text">
-          <p class="nhs-eyebrow">For job seekers</p>
-          <h2 class="nhs-title">Find your<br>next role with<br><em>AI precision</em></h2>
-          <p class="nhs-sub">Our AI matches you to roles where you'll thrive — ranked by fit, not by date posted.</p>
-          <button class="nhs-btn" data-modal="modal-register">Get started free</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- SLIDE 2 — Global reach -->
-    <div class="nhs-slide" id="nhs-1">
-      <div class="nhs-photo" style="background-image:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?fit=crop&w=1920&q=80')"></div>
-      <div class="nhs-overlay"></div>
-      <div class="nhs-body">
-        <div class="nhs-text">
-          <p class="nhs-eyebrow">Global reach</p>
-          <h2 class="nhs-title">Work from<br>anywhere<br><em>in the world</em></h2>
-          <p class="nhs-sub">Remote, hybrid, or on-site — jobs across Canada, Europe and beyond. Bilingual EN / FR.</p>
-          <button class="nhs-btn nhs-btn-green" data-goto="jobs">Browse all jobs</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- SLIDE 3 — Employers -->
-    <div class="nhs-slide" id="nhs-2">
-      <div class="nhs-photo" style="background-image:url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?fit=crop&w=1920&q=80')"></div>
-      <div class="nhs-overlay"></div>
-      <div class="nhs-body">
-        <div class="nhs-text">
-          <p class="nhs-eyebrow">For employers</p>
-          <h2 class="nhs-title">Build your<br>dream team<br><em>faster with AI</em></h2>
-          <p class="nhs-sub">Post in minutes, get AI-ranked candidates, manage your full pipeline from application to offer.</p>
-          <button class="nhs-btn" data-goto="employer">Start hiring today</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Arrows -->
-    <button class="nhs-arrow nhs-prev" id="nhs-prev" aria-label="Previous"><i class="ti ti-chevron-left"></i></button>
-    <button class="nhs-arrow nhs-next" id="nhs-next" aria-label="Next"><i class="ti ti-chevron-right"></i></button>
-
-    <!-- Dots -->
-    <div class="nhs-dots">
-      <button class="nhs-dot nhs-on" data-nhs="0"></button>
-      <button class="nhs-dot" data-nhs="1"></button>
-      <button class="nhs-dot" data-nhs="2"></button>
-    </div>
-  </section>
 
   <section class="categories-section reveal">
     <div class="section-inner">
