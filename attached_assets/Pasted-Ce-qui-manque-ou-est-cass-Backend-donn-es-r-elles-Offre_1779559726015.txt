@@ -1,0 +1,54 @@
+Ce qui manque ou est cassé ❌
+Backend / données réelles
+
+Offres d'emploi : la grille "Featured Opportunities" est vide — aucune offre chargée
+Stats héro : Active jobs et Companies affichent — — pas connecté à une DB
+Recherche non fonctionnelle : aucun résultat ne s'affiche
+"Your recent searches" : affiche — — pas de persistance session
+Authentification : login/register sont des modales UI seulement — aucune session réelle
+
+Fonctionnalités manquantes
+
+Import / upload CV : pas de formulaire visible dans le dashboard candidat
+Parsing CV IA : mentionné dans les features mais absent
+Cover letter IA : bouton "AI generate" existe dans la modale candidature mais probablement non branché
+AI Career Agent : le chat est présent visuellement mais les réponses IA ne fonctionnent probablement pas (pas de clé API visible)
+Pipeline Kanban ATS : décrit dans le marketing mais pas implémenté dans le dashboard employeur
+Analytics employeur : onglet "My Jobs" vide
+Sponsored job CPC : système de paiement à la performance non implémenté (Stripe absent)
+Alertes emploi : pas de formulaire pour s'abonner à des alertes
+Company reviews : modale présente mais sans backend
+Suivi RH : section en bas de page avec juste "Ajouter" — incomplet
+"Endorse" : visible dans le HTML mais sans contenu
+
+Design / UX
+
+Logo SVG : /nexhire/img/logo-mark.svg — à vérifier s'il se charge correctement
+Image hero candidat : chargée depuis Unsplash — à remplacer par une image propriétaire en prod
+Page "Jobs listing" apparaît deux fois dans la structure (hero + section séparée) — doublon de recherche à unifier
+Compteur notifications : affiche 0 en dur dans la nav — non branché
+
+Contenu
+
+"Browse by category" → "See all jobs" : les catégories sont cliquables mais ne filtrent rien
+Texte mixte FR/EN : certaines sections sont en français, d'autres en anglais — le toggle de langue ne semble pas tout traduire
+Section "Pour les candidats / Pour les employeurs" en français dans une page par défaut EN — incohérence
+Pricing : mentionne GPT-4o dans les CGU mais le produit utilise Claude selon notre architecture — à aligner
+
+Légal / production
+
+Email hello@nexhire.ca et support@nexhire.ca — à vérifier qu'ils sont actifs
+Domaine nexhire.ca — à confirmer que l'achat est fait avant le lancement
+
+
+Priorités pour la prochaine session
+
+Connecter la DB — afficher les offres seed dans la grille et les stats héro
+Auth fonctionnelle — sessions réelles pour login/register
+Recherche + filtres — brancher sur l'API /api/jobs
+Upload CV + parsing IA — dans le dashboard candidat
+AI Career Agent — brancher sur api.anthropic.com
+Kanban ATS — dans le dashboard employeur
+Unifier le bilinguisme — tout traduire via le toggle FR/EN
+
+La base visuelle et la structure sont solides. C'est essentiellement du backend et des connexions API qui restent à faire.
