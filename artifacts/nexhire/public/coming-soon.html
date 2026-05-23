@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexhire — Coming Soon · The Global AI Hiring Platform</title>
+  <meta name="description" content="Nexhire is the new AI-powered global recruitment platform. Connect with top talent worldwide. Launching June 2026.">
+  <meta property="og:title" content="Nexhire — The Global AI Hiring Platform · Coming Soon">
+  <meta property="og:description" content="Find your next opportunity anywhere in the world. AI-powered matching. Remote, hybrid, on-site. Launching June 2026.">
+  <meta property="og:image" content="/nexhire/img/og-coming-soon.png">
+  <link rel="icon" href="/nexhire/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --indigo:#6366F1;--indigo2:#818CF8;--indigo3:#EEF2FF;
+      --dark:#0F172A;--mid:#1E293B;--muted:#64748B;
+      --border:rgba(255,255,255,.08);--green:#10B981;
+      --r:'Space Grotesk',sans-serif;--b:'Inter',sans-serif;
+    }
+    html{scroll-behavior:smooth}
+    body{
+      font-family:var(--b);background:var(--dark);color:#E2E8F0;
+      min-height:100vh;overflow-x:hidden;
+    }
+
+    /* ── Background ── */
+    .bg-glow{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+    .bg-glow::before{
+      content:'';position:absolute;top:-20%;left:30%;
+      width:800px;height:800px;
+      background:radial-gradient(circle,rgba(99,102,241,.18) 0%,transparent 70%);
+      animation:pulse 8s ease-in-out infinite;
+    }
+    .bg-glow::after{
+      content:'';position:absolute;bottom:-10%;right:10%;
+      width:600px;height:600px;
+      background:radial-gradient(circle,rgba(16,185,129,.1) 0%,transparent 70%);
+      animation:pulse 10s ease-in-out infinite reverse;
+    }
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.15);opacity:1}}
+
+    /* ── Grid lines ── */
+    .grid-bg{
+      position:fixed;inset:0;pointer-events:none;z-index:0;
+      background-image:
+        linear-gradient(rgba(99,102,241,.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(99,102,241,.04) 1px,transparent 1px);
+      background-size:60px 60px;
+    }
+
+    /* ── Layout ── */
+    .wrap{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+
+    /* ── Nav ── */
+    nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:20px 40px;border-bottom:1px solid var(--border);
+      background:rgba(15,23,42,.8);backdrop-filter:blur(12px);
+      position:sticky;top:0;z-index:100;
+    }
+    .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .nav-brand img{width:32px;height:32px}
+    .nav-brand-word{font-family:var(--r);font-size:20px;font-weight:700;color:#fff;letter-spacing:-.3px}
+    .nav-brand-word span{color:var(--indigo2)}
+    .nav-pill{
+      background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);
+      color:var(--indigo2);border-radius:100px;padding:6px 16px;
+      font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+      display:flex;align-items:center;gap:6px;
+    }
+    .pulse-dot{
+      width:7px;height:7px;border-radius:50%;background:#34D399;
+      box-shadow:0 0 0 0 rgba(52,211,153,.4);
+      animation:ping 2s cubic-bezier(0,0,.2,1) infinite;
+    }
+    @keyframes ping{0%{box-shadow:0 0 0 0 rgba(52,211,153,.4)}70%{box-shadow:0 0 0 8px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+
+    /* ── Hero ── */
+    .hero{
+      flex:1;display:flex;flex-direction:column;align-items:center;
+      justify-content:center;text-align:center;
+      padding:80px 24px 60px;
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.25);
+      border-radius:100px;padding:8px 20px;
+      font-size:13px;color:var(--indigo2);font-weight:600;
+      margin-bottom:32px;
+      animation:fadeUp .6s ease both;
+    }
+    .hero-title{
+      font-family:var(--r);font-size:clamp(40px,7vw,80px);font-weight:800;
+      color:#fff;line-height:1.05;letter-spacing:-2px;
+      margin-bottom:24px;max-width:860px;
+      animation:fadeUp .6s .1s ease both;
+    }
+    .hero-title em{
+      font-style:normal;
+      background:linear-gradient(135deg,var(--indigo2),#A78BFA,#34D399);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .hero-sub{
+      font-size:clamp(16px,2.5vw,20px);color:#94A3B8;
+      max-width:560px;line-height:1.7;margin-bottom:48px;
+      animation:fadeUp .6s .2s ease both;
+    }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── Countdown ── */
+    .countdown{
+      display:flex;gap:12px;margin-bottom:48px;
+      animation:fadeUp .6s .3s ease both;
+    }
+    .cd-block{
+      background:rgba(255,255,255,.04);border:1px solid var(--border);
+      border-radius:16px;padding:20px 24px;min-width:80px;text-align:center;
+      backdrop-filter:blur(8px);
+    }
+    .cd-num{
+      font-family:var(--r);font-size:40px;font-weight:800;color:#fff;
+      line-height:1;display:block;transition:all .3s;
+    }
+    .cd-label{font-size:11px;color:#475569;font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-top:6px;display:block}
+    .cd-sep{font-family:var(--r);font-size:36px;font-weight:300;color:#334155;align-self:center;margin-bottom:16px}
+
+    /* ── Waitlist form ── */
+    .waitlist{
+      width:100%;max-width:480px;margin-bottom:48px;
+      animation:fadeUp .6s .4s ease both;
+    }
+    .waitlist-form{display:flex;gap:8px;position:relative}
+    .waitlist-input{
+      flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+      border-radius:12px;padding:14px 20px;font-size:15px;color:#fff;
+      font-family:var(--b);outline:none;transition:all .2s;
+    }
+    .waitlist-input::placeholder{color:#475569}
+    .waitlist-input:focus{border-color:rgba(99,102,241,.5);background:rgba(99,102,241,.08);box-shadow:0 0 0 3px rgba(99,102,241,.15)}
+    .waitlist-btn{
+      background:var(--indigo);color:#fff;border:none;
+      border-radius:12px;padding:14px 24px;font-size:14px;font-weight:700;
+      cursor:pointer;white-space:nowrap;font-family:var(--b);
+      transition:all .2s;display:flex;align-items:center;gap:6px;
+    }
+    .waitlist-btn:hover{background:#4F46E5;transform:translateY(-1px);box-shadow:0 4px 12px rgba(99,102,241,.4)}
+    .waitlist-btn:active{transform:translateY(0)}
+    .waitlist-note{font-size:12px;color:#475569;text-align:center;margin-top:10px}
+
+    /* ── Counter ── */
+    .signed-up{
+      display:inline-flex;align-items:center;gap:10px;
+      background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);
+      border-radius:100px;padding:8px 20px;font-size:13px;color:#34D399;
+      margin-bottom:64px;
+      animation:fadeUp .6s .5s ease both;
+    }
+    .avatars{display:flex}
+    .avatar-ring{
+      width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#6366F1,#A78BFA);
+      border:2px solid var(--dark);margin-left:-6px;font-size:10px;font-weight:700;
+      display:flex;align-items:center;justify-content:center;color:#fff;
+    }
+    .avatar-ring:first-child{margin-left:0}
+
+    /* ── Features ── */
+    .features{
+      width:100%;max-width:900px;
+      display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+      margin-bottom:64px;
+      animation:fadeUp .6s .5s ease both;
+    }
+    .feat-card{
+      background:rgba(255,255,255,.03);border:1px solid var(--border);
+      border-radius:16px;padding:24px;text-align:left;
+      transition:all .2s;
+    }
+    .feat-card:hover{background:rgba(99,102,241,.06);border-color:rgba(99,102,241,.25);transform:translateY(-2px)}
+    .feat-icon{
+      width:44px;height:44px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:20px;margin-bottom:16px;
+    }
+    .feat-title{font-family:var(--r);font-size:15px;font-weight:700;color:#fff;margin-bottom:8px}
+    .feat-desc{font-size:13px;color:#64748B;line-height:1.6}
+
+    /* ── Bottom strip ── */
+    .bottom-strip{
+      border-top:1px solid var(--border);padding:24px 40px;
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:16px;font-size:13px;color:#475569;
+      background:rgba(15,23,42,.6);backdrop-filter:blur(12px);
+    }
+    .bottom-left{display:flex;align-items:center;gap:8px}
+    .bottom-links{display:flex;gap:24px}
+    .bottom-link{color:#475569;text-decoration:none;transition:color .15s}
+    .bottom-link:hover{color:#94A3B8}
+
+    /* ── Success state ── */
+    .success-msg{
+      display:none;align-items:center;gap:10px;justify-content:center;
+      background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);
+      border-radius:12px;padding:14px 24px;color:#34D399;font-size:15px;font-weight:600;
+      margin-top:8px;
+    }
+
+    /* ── Responsive ── */
+    @media(max-width:768px){
+      nav{padding:16px 20px}
+      .hero{padding:60px 20px 40px}
+      .countdown{gap:8px}
+      .cd-block{padding:16px 14px;min-width:64px}
+      .cd-num{font-size:28px}
+      .features{grid-template-columns:1fr;max-width:100%}
+      .waitlist-form{flex-direction:column}
+      .waitlist-btn{width:100%;justify-content:center}
+      .bottom-strip{flex-direction:column;align-items:flex-start;padding:20px 24px}
+    }
+    @media(max-width:480px){
+      .cd-sep{display:none}
+      .hero-title{letter-spacing:-1px}
+    }
+  </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="grid-bg"></div>
+
+<div class="wrap">
+
+  <!-- Nav -->
+  <nav>
+    <a class="nav-brand" href="/nexhire/">
+      <img src="/nexhire/img/logo-mark.svg" alt="Nexhire">
+      <span class="nav-brand-word">Nex<span>hire</span></span>
+    </a>
+    <div class="nav-pill">
+      <span class="pulse-dot"></span>
+      Launching June 2026
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <main class="hero">
+
+    <div class="hero-badge">
+      <i class="ti ti-sparkles"></i>
+      AI-Powered Global Recruitment · CivicAI 2026
+    </div>
+
+    <h1 class="hero-title">
+      The new platform<br>for <em>global hiring</em><br>is coming.
+    </h1>
+
+    <p class="hero-sub" id="hero-sub">
+      AI job matching, international reach, real-time applications.
+      Remote, hybrid, on-site — anywhere in the world.<br>
+      <strong style="color:#CBD5E1">Be first to know when we go live.</strong>
+    </p>
+
+    <!-- Countdown -->
+    <div class="countdown" id="countdown">
+      <div class="cd-block"><span class="cd-num" id="cd-days">—</span><span class="cd-label">Days</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-block"><span class="cd-num" id="cd-hours">—</span><span class="cd-label">Hours</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-block"><span class="cd-num" id="cd-mins">—</span><span class="cd-label">Minutes</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-block"><span class="cd-num" id="cd-secs">—</span><span class="cd-label">Seconds</span></div>
+    </div>
+
+    <!-- Waitlist -->
+    <div class="waitlist">
+      <div class="waitlist-form">
+        <input class="waitlist-input" id="email-input" type="email" placeholder="Enter your email — get early access" autocomplete="email">
+        <button class="waitlist-btn" onclick="joinWaitlist()">
+          <i class="ti ti-bell"></i> Notify me
+        </button>
+      </div>
+      <div class="success-msg" id="success-msg">
+        <i class="ti ti-check"></i> You're on the list! We'll email you the day we launch.
+      </div>
+      <p class="waitlist-note">No spam. One launch email. Unsubscribe anytime.</p>
+    </div>
+
+    <!-- Social proof -->
+    <div class="signed-up">
+      <div class="avatars">
+        <div class="avatar-ring">A</div>
+        <div class="avatar-ring">M</div>
+        <div class="avatar-ring">S</div>
+        <div class="avatar-ring">K</div>
+      </div>
+      <span><strong id="waitlist-count" style="color:#fff">240+</strong> professionals already on the waitlist</span>
+    </div>
+
+    <!-- Feature teasers -->
+    <div class="features">
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(99,102,241,.15);color:#818CF8"><i class="ti ti-cpu"></i></div>
+        <div class="feat-title">AI Job Matching</div>
+        <div class="feat-desc">GPT-4o matches your profile to the right opportunities in seconds. No more scrolling through irrelevant listings.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(16,185,129,.12);color:#34D399"><i class="ti ti-world"></i></div>
+        <div class="feat-title">Truly Global</div>
+        <div class="feat-desc">Jobs in 130+ countries across every continent. Canada, Europe, UAE, Asia-Pacific — one platform, no borders.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(251,191,36,.1);color:#FBBF24"><i class="ti ti-bolt"></i></div>
+        <div class="feat-title">Apply in 60 seconds</div>
+        <div class="feat-desc">AI-generated cover letters, one-click profile, and instant application tracking. Average response time: 48h.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(239,68,68,.1);color:#F87171"><i class="ti ti-building"></i></div>
+        <div class="feat-title">For Employers Too</div>
+        <div class="feat-desc">Sponsored CPC listings, Kanban ATS pipeline, AI candidate ranking. Only pay when candidates click — from $0.50/click.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(168,85,247,.12);color:#C084FC"><i class="ti ti-layout-kanban"></i></div>
+        <div class="feat-title">Application Tracker</div>
+        <div class="feat-desc">Kanban board to track every application: Applied → Interview → Offer. Never lose track of an opportunity again.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(20,184,166,.1);color:#2DD4BF"><i class="ti ti-shield-check"></i></div>
+        <div class="feat-title">Privacy by Design</div>
+        <div class="feat-desc">Your data stays yours. No data selling, no tracking pixels. PIPEDA & GDPR compliant from day one.</div>
+      </div>
+    </div>
+
+    <!-- Bilingual note -->
+    <div style="font-size:13px;color:#334155;display:flex;align-items:center;gap:8px;margin-bottom:16px">
+      <i class="ti ti-language" style="color:#475569"></i>
+      Disponible en français · English · Español · العربية
+    </div>
+
+  </main>
+
+  <!-- Bottom strip -->
+  <footer class="bottom-strip">
+    <div class="bottom-left">
+      <img src="/nexhire/img/logo-mark.svg" style="width:18px;height:18px;opacity:.5" alt="">
+      <span>A product of <strong style="color:#64748B">CivicAI Inc.</strong> · NEQ 2280791601 · Montréal, Québec · © 2026</span>
+    </div>
+    <div class="bottom-links">
+      <a class="bottom-link" href="mailto:hello@nexhire.ca"><i class="ti ti-mail" style="font-size:13px"></i> hello@nexhire.ca</a>
+      <a class="bottom-link" href="https://linkedin.com/company/civicai" target="_blank" rel="noopener"><i class="ti ti-brand-linkedin" style="font-size:13px"></i> LinkedIn</a>
+      <a class="bottom-link" href="/nexhire/"><i class="ti ti-arrow-right" style="font-size:13px"></i> Preview app</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+// ── Countdown to June 1, 2026 ──
+const LAUNCH = new Date('2026-06-01T00:00:00-04:00').getTime();
+
+function pad(n){ return String(n).padStart(2,'0'); }
+
+function updateCountdown(){
+  const now = Date.now();
+  const diff = LAUNCH - now;
+  if(diff <= 0){
+    document.getElementById('countdown').innerHTML = '<div style="font-family:var(--r);font-size:28px;font-weight:700;color:#34D399;padding:16px"><i class="ti ti-rocket"></i> We\'re live!</div>';
+    return;
+  }
+  const days  = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins  = Math.floor((diff % 3600000)  / 60000);
+  const secs  = Math.floor((diff % 60000)    / 1000);
+  document.getElementById('cd-days').textContent  = pad(days);
+  document.getElementById('cd-hours').textContent = pad(hours);
+  document.getElementById('cd-mins').textContent  = pad(mins);
+  document.getElementById('cd-secs').textContent  = pad(secs);
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ── Waitlist signup ──
+const WAITLIST_KEY = 'nh_waitlist_joined';
+
+function joinWaitlist(){
+  const input = document.getElementById('email-input');
+  const email = input.value.trim();
+  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    input.style.borderColor = '#EF4444';
+    input.style.boxShadow   = '0 0 0 3px rgba(239,68,68,.15)';
+    setTimeout(() => {
+      input.style.borderColor = '';
+      input.style.boxShadow   = '';
+    }, 2000);
+    return;
+  }
+
+  // Store locally
+  const list = JSON.parse(localStorage.getItem(WAITLIST_KEY) || '[]');
+  if(!list.includes(email)) list.push(email);
+  localStorage.setItem(WAITLIST_KEY, JSON.stringify(list));
+
+  // Update count display
+  const countEl = document.getElementById('waitlist-count');
+  const current = parseInt(countEl.textContent) || 240;
+  countEl.textContent = (current + 1) + '+';
+
+  // Show success
+  document.querySelector('.waitlist-form').style.display = 'none';
+  const msg = document.getElementById('success-msg');
+  msg.style.display = 'flex';
+
+  // Send to mailto as fallback
+  window.open('mailto:hello@nexhire.ca?subject=Waitlist%3A%20' + encodeURIComponent(email) + '&body=Please%20add%20me%20to%20the%20Nexhire%20waitlist.%20Email%3A%20' + encodeURIComponent(email), '_blank');
+}
+
+// Enter key on input
+document.getElementById('email-input').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') joinWaitlist();
+});
+
+// Check if already joined
+(function(){
+  const joined = JSON.parse(localStorage.getItem(WAITLIST_KEY) || '[]');
+  if(joined.length > 0){
+    document.querySelector('.waitlist-form').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'flex';
+  }
+})();
+
+// ── Random waitlist count bump (social proof animation) ──
+setTimeout(() => {
+  const el = document.getElementById('waitlist-count');
+  const base = 240 + Math.floor(Math.random() * 60);
+  el.textContent = base + '+';
+}, 800);
+</script>
+</body>
+</html>
