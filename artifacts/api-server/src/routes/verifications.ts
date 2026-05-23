@@ -37,6 +37,41 @@ function escapeHtml(str: string): string {
     .replace(/'/g, "&#39;");
 }
 
+function buildVerificationRejectedEmail(orgName: string, reason: string): { subject: string; text: string; html: string } {
+  const dashboardUrl = getOrgDashboardUrl();
+  const safeOrgName = escapeHtml(orgName);
+  const safeReason = escapeHtml(reason);
+  const subject = "Mise à jour de votre demande de vérification AttenteZéro";
+  const text = `Bonjour,
+
+Nous avons examiné la demande de vérification de votre organisme « ${orgName} » et nous ne sommes malheureusement pas en mesure de l'approuver pour le moment.
+
+Motif : ${reason}
+
+Vous pouvez corriger les informations manquantes ou inexactes et soumettre une nouvelle demande depuis votre tableau de bord :
+${dashboardUrl}
+
+Si vous avez des questions, répondez simplement à ce courriel.
+
+— L'équipe AttenteZéro`;
+  const html =
+`<div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:520px;margin:0 auto;padding:24px;color:#0f172a">
+  <h2 style="color:#b91c1c;margin:0 0 16px">Demande de vérification non approuvée</h2>
+  <p style="font-size:15px;line-height:1.5">Bonjour,<br>Nous avons examiné la demande de vérification de votre organisme <strong>${safeOrgName}</strong> et nous ne sommes malheureusement pas en mesure de l'approuver pour le moment.</p>
+  <div style="background:#fef2f2;border:2px solid #b91c1c;border-radius:12px;padding:18px;margin:20px 0">
+    <div style="font-size:13px;font-weight:600;color:#b91c1c;margin-bottom:6px">Motif du refus</div>
+    <div style="font-size:14px;color:#334155;line-height:1.5">${safeReason}</div>
+  </div>
+  <p style="font-size:14px;line-height:1.6;color:#334155">Vous pouvez corriger les informations manquantes ou inexactes et soumettre une nouvelle demande depuis votre tableau de bord :</p>
+  <p style="text-align:center;margin:20px 0">
+    <a href="${dashboardUrl}" style="display:inline-block;background:#0e7e6e;color:#fff;text-decoration:none;padding:12px 24px;border-radius:10px;font-weight:600;font-size:15px">Accéder au tableau de bord</a>
+  </p>
+  <p style="font-size:13px;color:#64748b;line-height:1.5;margin-top:24px">Si vous avez des questions, répondez simplement à ce courriel.</p>
+  <p style="font-size:12px;color:#94a3b8;margin-top:24px;border-top:1px solid #e2e8f0;padding-top:12px">— L'équipe AttenteZéro</p>
+</div>`;
+  return { subject, text, html };
+}
+
 function buildVerificationApprovedEmail(orgName: string): { subject: string; text: string; html: string } {
   const dashboardUrl = getOrgDashboardUrl();
   const safeOrgName = escapeHtml(orgName);
@@ -521,6 +556,22 @@ router.post("/admin/verification/:id/reject", async (req, res) => {
       reviewedAt: new Date(),
     })
     .where(eq(verificationRequestsTable.id, id));
+
+  // Best-effort rejection email to the organisation.
+  const [org] = await db
+    .select({ email: organisationsTable.email, name: organisationsTable.name })
+    .from(organisationsTable)
+    .where(eq(organisationsTable.id, request.organisationId))
+    .limit(1);
+  if (org?.email) {
+    const mail = buildVerificationRejectedEmail(org.name, reason);
+    sendEmailTo(org.email, mail)
+      .then((r) => {
+        if (!r.sent) logger.warn({ orgId: request.organisationId, reason: r.reason }, "Verification rejected email not sent");
+      })
+      .catch((err) => logger.warn({ err, orgId: request.organisationId }, "Verification rejected email exception"));
+  }
+
   logger.info({ requestId: id, reason }, "Verification rejected by admin");
   res.json({ success: true });
 });
