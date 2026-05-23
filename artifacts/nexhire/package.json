@@ -4,7 +4,7 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "fuser -k $PORT/tcp 2>/dev/null; sleep 0.3; node server.js",
     "start": "node server.js"
   },
   "dependencies": {
