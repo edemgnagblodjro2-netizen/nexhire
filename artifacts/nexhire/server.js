@@ -206,6 +206,17 @@ async function runMigrations() {
     await pool.query(`ALTER TABLE nh_jobs ADD COLUMN IF NOT EXISTS province TEXT`);
     await pool.query(`ALTER TABLE nh_candidate_profiles ADD COLUMN IF NOT EXISTS province TEXT`);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_jobs_province ON nh_jobs(province)`);
+    // Team notes per application
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_application_notes (
+        id TEXT PRIMARY KEY,
+        application_id TEXT NOT NULL REFERENCES nh_applications(id) ON DELETE CASCADE,
+        author_id TEXT NOT NULL REFERENCES nh_users(id) ON DELETE CASCADE,
+        content TEXT NOT NULL,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_appnotes_app ON nh_application_notes(application_id, created_at)`);
     console.log('[Nexhire] ✅ DB ready');
   } catch (err) {
     console.error('[Nexhire] Migration error:', err.message);
@@ -256,6 +267,7 @@ app.use(apiBase + '/jobs',          require('./routes/jobs'));
 app.use(apiBase + '/companies',     require('./routes/companies'));
 app.use(apiBase + '/applications',  require('./routes/applications'));
 app.use(apiBase,                    require('./routes/endorsements'));
+app.use(apiBase,                    require('./routes/notes'));
 app.use(apiBase + '/candidates',    require('./routes/candidates'));
 app.use(apiBase + '/ai',            require('./routes/ai'));
 app.use(apiBase + '/payments',      require('./routes/payments'));

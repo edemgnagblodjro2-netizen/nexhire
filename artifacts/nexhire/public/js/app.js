@@ -1904,6 +1904,7 @@ async function refreshKanban() {
   }).join('');
 
   loadKanbanEndorsementBadges(apps);
+  loadNotesBadges(apps);
 }
 
 function aiCvBadge(a) {
@@ -1940,6 +1941,11 @@ function kanbanCard(a, col) {
       <span id="ke-${cuid}" class="kanban-endorse-pill" style="display:none"></span>
       <button class="btn-ghost kanban-endorse-btn" onclick="openEndorseModal('${cuid}','${esc(cname)}')"><i class="ti ti-thumb-up"></i> Endorse</button>
     </div>` : ''}
+    <div class="kanban-notes-row">
+      <button class="btn-ghost kanban-notes-btn" onclick="openNotesModal('${a.id}','${esc(cname)}')">
+        <i class="ti ti-message-circle-2"></i> Suivi RH<span id="kn-${a.id}" class="kanban-notes-badge" style="display:none"></span>
+      </button>
+    </div>
   </div>`;
 }
 
@@ -1959,6 +1965,98 @@ async function loadKanbanEndorsementBadges(apps) {
   }
 }
 
+// ── TEAM NOTES ───────────────────────────────────────────
+
+function fmtNoteDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('fr-CA', { day: 'numeric', month: 'short', year: 'numeric' })
+    + ' · ' + d.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+}
+
+async function loadNotesBadges(apps) {
+  for (const a of apps) {
+    if (!a.id) continue;
+    api('GET', `${BASE}/api/notes/${a.id}`).then(data => {
+      const el = document.getElementById(`kn-${a.id}`);
+      if (!el) return;
+      const count = (data.notes || []).length;
+      if (count > 0) {
+        el.textContent = count;
+        el.style.display = 'inline-flex';
+      }
+    }).catch(() => {});
+  }
+}
+
+async function openNotesModal(appId, candidateName) {
+  if (!state.user) { showModal('modal-login'); return; }
+  const modal = document.getElementById('modal-notes');
+  if (!modal) return;
+  document.getElementById('notes-modal-name').textContent = candidateName;
+  const thread = document.getElementById('notes-thread');
+  thread.innerHTML = `<div style="text-align:center;padding:32px;color:var(--muted)"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:22px"></i></div>`;
+  document.getElementById('note-input').value = '';
+  modal.dataset.appId = appId;
+  modal.style.display = 'flex';
+  await refreshNotes(appId);
+}
+
+async function refreshNotes(appId) {
+  const data = await api('GET', `${BASE}/api/notes/${appId}`);
+  const thread = document.getElementById('notes-thread');
+  if (!thread) return;
+  const notes = data.notes || [];
+  if (!notes.length) {
+    thread.innerHTML = `<div class="notes-empty"><i class="ti ti-pencil-plus" style="font-size:28px;margin-bottom:8px;opacity:.4"></i><p>Aucune note pour l'instant.<br>Ajoutez la première note de suivi ci-dessous.</p></div>`;
+  } else {
+    thread.innerHTML = notes.map(n => `
+      <div class="note-item" id="note-${n.id}">
+        <div class="note-header">
+          <span class="note-author"><i class="ti ti-user-circle"></i> ${esc(n.author_name || 'RH')}</span>
+          <span class="note-date">${fmtNoteDate(n.created_at)}</span>
+          ${n.author_id === state.user?.id ? `<button class="note-del-btn" title="Supprimer" onclick="deleteNote('${n.id}','${appId}')"><i class="ti ti-trash"></i></button>` : ''}
+        </div>
+        <div class="note-body">${esc(n.content)}</div>
+      </div>
+    `).join('');
+    thread.scrollTop = thread.scrollHeight;
+  }
+  // Update badge
+  const badge = document.getElementById(`kn-${appId}`);
+  if (badge) {
+    if (notes.length > 0) { badge.textContent = notes.length; badge.style.display = 'inline-flex'; }
+    else { badge.style.display = 'none'; }
+  }
+}
+
+async function submitNote() {
+  const modal = document.getElementById('modal-notes');
+  const appId = modal?.dataset.appId;
+  const input = document.getElementById('note-input');
+  const content = input?.value.trim();
+  if (!content || !appId) return;
+  const btn = modal.querySelector('.notes-compose .btn-primary');
+  if (btn) btn.disabled = true;
+  input.disabled = true;
+  try {
+    await api('POST', `${BASE}/api/notes`, { appId, content });
+    input.value = '';
+    await refreshNotes(appId);
+  } finally {
+    input.disabled = false;
+    if (btn) btn.disabled = false;
+    input.focus();
+  }
+}
+
+async function deleteNote(noteId, appId) {
+  if (!confirm('Supprimer cette note ?')) return;
+  await api('DELETE', `${BASE}/api/notes/${noteId}`);
+  await refreshNotes(appId);
+}
+
+// ─────────────────────────────────────────────────────────
 async function openEndorseModal(userId, name) {
   if (!state.user) { showModal('modal-login'); return; }
   const modal = document.getElementById('modal-endorse');
