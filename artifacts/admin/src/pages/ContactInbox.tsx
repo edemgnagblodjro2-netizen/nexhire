@@ -63,6 +63,7 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
   const [dateRange, setDateRange] = useState<DateRange>("all");
   const [markingAllRead, setMarkingAllRead] = useState(false);
   const [archivingAllRead, setArchivingAllRead] = useState(false);
+  const [showArchiveConfirm, setShowArchiveConfirm] = useState(false);
 
   async function load() {
     setLoading(true);
@@ -211,7 +212,7 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
         <div className="flex items-center gap-2">
           {counts.read > 0 && (
             <button
-              onClick={archiveAllRead}
+              onClick={() => setShowArchiveConfirm(true)}
               disabled={archivingAllRead}
               className="px-3 py-2 text-sm rounded-lg bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 transition disabled:opacity-50"
             >
@@ -420,6 +421,38 @@ export default function ContactInbox({ adminKey }: { adminKey: string }) {
               </div>
             );
           })}
+        </div>
+      )}
+
+      {showArchiveConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full mx-4">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">
+              Archiver les messages lus ?
+            </h2>
+            <p className="text-sm text-gray-600 mb-6">
+              Cette action va archiver{" "}
+              <span className="font-semibold text-gray-900">{counts.read}</span>{" "}
+              message{counts.read !== 1 ? "s" : ""} lu{counts.read !== 1 ? "s" : ""}. Elle ne peut pas être annulée.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowArchiveConfirm(false)}
+                className="px-4 py-2 text-sm rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition"
+              >
+                Annuler
+              </button>
+              <button
+                onClick={() => {
+                  setShowArchiveConfirm(false);
+                  archiveAllRead();
+                }}
+                className="px-4 py-2 text-sm rounded-lg bg-gray-800 text-white hover:bg-gray-900 transition"
+              >
+                Confirmer
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
