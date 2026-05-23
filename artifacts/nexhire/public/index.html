@@ -342,6 +342,14 @@
       </div>
     </div>
   </div>
+  <div class="section-inner" style="padding-top:16px;padding-bottom:0">
+    <div id="jobs-results-bar" class="jobs-results-bar" style="display:none">
+      <span id="jobs-count-label" class="jobs-count-label"></span>
+      <button id="jobs-clear-btn" class="jobs-clear-btn" onclick="clearFilters()" style="display:none">
+        <i class="ti ti-x"></i> <span data-i18n="jobs.clear">Clear filters</span>
+      </button>
+    </div>
+  </div>
   <div class="section-inner jobs-page-layout">
     <div id="jobs-list" class="jobs-list-col"></div>
     <div id="job-detail-panel" class="job-detail-panel" style="display:none"></div>
@@ -1147,6 +1155,6 @@ if ('serviceWorker' in navigator) {
     .catch(e => console.warn('[SW] failed', e));
 }
 </script>
-<script src="/nexhire/js/app.js?v=20260523c"></script>
+<script src="/nexhire/js/app.js?v=20260523d"></script>
 </body>
 </html>

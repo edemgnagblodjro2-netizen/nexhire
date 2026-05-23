@@ -410,7 +410,8 @@ const T = {
     'dash.empty.skills':'Add skills to your profile to get job recommendations.',
     'dash.empty.nomatch':'No matches found yet — more jobs coming!',
     'dash.empty.jobs':'No jobs posted yet.',
-    'jobs.noresult':'No jobs found. Try different filters.',
+    'jobs.noresult':'No jobs found. Try different filters.','jobs.noresult.short':'0 results',
+    'jobs.clear':'Clear filters','jobs.new':'New',
     'status.applied':'Applied','status.reviewed':'Reviewed','status.shortlisted':'Shortlisted',
     'status.interview':'Interview','status.offer':'Offer','status.rejected':'Not selected','status.withdrawn':'Withdrawn',
     'cta.title':'Hire the best talent globally',
@@ -628,7 +629,8 @@ const T = {
     'dash.empty.skills':'Ajoutez des compétences à votre profil pour obtenir des recommandations.',
     'dash.empty.nomatch':'Aucune correspondance pour l\'instant — plus d\'offres arrivent !',
     'dash.empty.jobs':'Aucune offre publiée pour l\'instant.',
-    'jobs.noresult':'Aucune offre trouvée. Essayez d\'autres filtres.',
+    'jobs.noresult':'Aucune offre trouvée. Essayez d\'autres filtres.','jobs.noresult.short':'0 résultat',
+    'jobs.clear':'Effacer les filtres','jobs.new':'Nouveau',
     'status.applied':'Candidaté','status.reviewed':'Examiné','status.shortlisted':'Présélectionné',
     'status.interview':'Entretien','status.offer':'Offre','status.rejected':'Non retenu','status.withdrawn':'Retiré',
     'cta.title':"Recrutez les meilleurs talents à l'échelle mondiale",
@@ -1000,7 +1002,28 @@ async function filterJobs(page = 1) {
     jobs = jobs.filter(j => !viewed.has(j.id));
   }
 
-  if (!jobs.length) { const t = T[state.lang]; list.innerHTML = `<div class="empty-state"><i class="ti ti-search-off"></i><p>${t['jobs.noresult']}</p></div>`; return; }
+  // ── Results bar ────────────────────────────────────────────
+  const resultsBar = document.getElementById('jobs-results-bar');
+  const countLabel = document.getElementById('jobs-count-label');
+  const clearBtn = document.getElementById('jobs-clear-btn');
+  const hasActiveFilters = !!(q || work_mode || job_type || sal_min || locVal || fdate || flang || (fsort && fsort !== ''));
+  if (resultsBar) resultsBar.style.display = 'flex';
+  if (clearBtn) clearBtn.style.display = hasActiveFilters ? 'inline-flex' : 'none';
+
+  if (!jobs.length) {
+    const t = T[state.lang];
+    if (countLabel) countLabel.textContent = t['jobs.noresult.short'] || '0 résultats';
+    list.innerHTML = `<div class="empty-state"><i class="ti ti-search-off"></i><p>${t['jobs.noresult']}</p>${hasActiveFilters ? `<button class="btn-ghost" onclick="clearFilters()" style="margin-top:12px;font-size:13px"><i class="ti ti-x"></i> ${t['jobs.clear']}</button>` : ''}</div>`;
+    return;
+  }
+
+  const total = d.total || jobs.length;
+  if (countLabel) {
+    const t = T[state.lang];
+    countLabel.textContent = state.lang === 'fr'
+      ? `${total.toLocaleString('fr-CA')} offre${total > 1 ? 's' : ''} trouvée${total > 1 ? 's' : ''}`
+      : `${total.toLocaleString('en-CA')} job${total !== 1 ? 's' : ''} found`;
+  }
 
   list.innerHTML = jobs.map(j => {
     const title = state.lang === 'fr' ? (j.title_fr || j.title_en) : (j.title_en || j.title_fr);
@@ -1008,10 +1031,15 @@ async function filterJobs(page = 1) {
     const initials = (j.company_name || 'N').slice(0, 2).toUpperCase();
     const isSaved = state.savedJobIds.has(j.id);
     const timeAgo = daysAgo(j.published_at);
+    const isNew = j.published_at && (Date.now() - new Date(j.published_at).getTime()) < 48 * 3600 * 1000;
+    const newBadge = isNew ? `<span class="job-new-badge">${state.lang === 'fr' ? 'Nouveau' : 'New'}</span>` : '';
     return `<div class="job-list-item js-job-card" data-job-id="${j.id}" id="jli-${j.id}" style="cursor:pointer">
       ${j.company_logo ? `<img src="${j.company_logo}" style="width:44px;height:44px;border-radius:10px;flex-shrink:0;object-fit:contain">` : `<div class="company-logo" style="background:${color};width:44px;height:44px;border-radius:10px;flex-shrink:0;font-size:14px">${initials}</div>`}
       <div style="flex:1;min-width:0">
-        <div style="font-family:var(--r);font-weight:600;color:var(--dark);font-size:15px">${esc(title)}</div>
+        <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+          <span style="font-family:var(--r);font-weight:600;color:var(--dark);font-size:15px">${esc(title)}</span>
+          ${newBadge}
+        </div>
         <div style="font-size:13px;color:var(--muted);margin-top:2px">${esc(j.company_name || '')}${j.city || j.province ? ' · ' + (j.city ? esc(j.city) + (j.province ? ', <strong>'+esc(j.province)+'</strong>' : '') : esc(j.province||'')) : ''}</div>
         <div class="job-meta" style="margin-top:8px">
           <span class="job-tag ${j.work_mode || 'onsite'}">${j.work_mode || 'onsite'}</span>
@@ -1030,10 +1058,21 @@ async function filterJobs(page = 1) {
   const pages = d.pages || 1;
   const pgEl = document.getElementById('jobs-pagination');
   if (pgEl && pages > 1) {
+    const t = T[state.lang];
+    const pageInfo = `<span style="font-size:13px;color:var(--muted);margin:0 10px">${state.lang==='fr'?`Page ${page} sur ${pages}`:`Page ${page} of ${pages}`}</span>`;
     pgEl.innerHTML = Array.from({ length: Math.min(pages, 10) }, (_, i) => i + 1).map(p =>
       `<button data-page="${p}" class="${p === page ? 'btn-primary' : 'btn-ghost'}" style="margin:0 3px;padding:6px 14px;font-size:13px">${p}</button>`
-    ).join('');
+    ).join('') + (pages > 1 ? pageInfo : '');
   } else if (pgEl) pgEl.innerHTML = '';
+}
+
+function clearFilters() {
+  const ids = ['fq','fwork','ftype','fsal','fdate','flang','fsort'];
+  ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  // Reset province to "All locations"
+  const fprov = document.getElementById('fprov');
+  if (fprov) fprov.value = '';
+  filterJobs();
 }
 
 // ── Job detail panel ───────────────────────────────────────
