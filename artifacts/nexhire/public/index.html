@@ -62,7 +62,26 @@
       <p class="hero-sub" id="h-sub">Thousands of jobs worldwide. Remote, hybrid, or on-site. AI matching to find your perfect role faster than ever.</p>
       <div class="search-bar">
         <div class="search-field"><i class="ti ti-search"></i><input type="text" id="q" placeholder="Title, skill, company..." oninput="debounceSearch()"></div>
-        <div class="search-field search-loc"><i class="ti ti-map-pin"></i><input type="text" id="loc-q" placeholder="City or country..." oninput="debounceSearch()"></div>
+        <div class="search-field search-loc">
+          <i class="ti ti-map-pin"></i>
+          <select id="hero-province" onchange="syncHeroProvince()" style="border:none;background:transparent;font-size:15px;color:#334155;outline:none;width:100%;cursor:pointer;font-family:inherit">
+            <option value="">All provinces / Canada</option>
+            <option value="AB">AB — Alberta</option>
+            <option value="BC">BC — British Columbia</option>
+            <option value="MB">MB — Manitoba</option>
+            <option value="NB">NB — New Brunswick</option>
+            <option value="NL">NL — Newfoundland</option>
+            <option value="NS">NS — Nova Scotia</option>
+            <option value="NT">NT — Northwest Territories</option>
+            <option value="NU">NU — Nunavut</option>
+            <option value="ON">ON — Ontario</option>
+            <option value="PE">PE — Prince Edward Island</option>
+            <option value="QC">QC — Québec</option>
+            <option value="SK">SK — Saskatchewan</option>
+            <option value="YT">YT — Yukon</option>
+            <option value="REMOTE">🌐 Remote / International</option>
+          </select>
+        </div>
         <div class="search-field search-mode"><i class="ti ti-device-laptop"></i><select id="mode-filter" onchange="searchJobs()"><option value="">All modes</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select></div>
         <button class="btn-primary search-btn" onclick="searchJobs()"><i class="ti ti-search"></i> Search</button>
       </div>
@@ -135,6 +154,23 @@
       <h1 class="page-title">Job listings</h1>
       <div class="filters-bar">
         <input type="text" id="fq" placeholder="Search title, skill, company..." oninput="debounceFilterSearch()" class="filter-input">
+        <select id="fprov" onchange="filterJobs()" class="filter-select filter-select-province">
+          <option value="">🍁 All provinces</option>
+          <option value="AB">AB — Alberta</option>
+          <option value="BC">BC — British Columbia</option>
+          <option value="MB">MB — Manitoba</option>
+          <option value="NB">NB — New Brunswick</option>
+          <option value="NL">NL — Newfoundland</option>
+          <option value="NS">NS — Nova Scotia</option>
+          <option value="NT">NT — Northwest Territories</option>
+          <option value="NU">NU — Nunavut</option>
+          <option value="ON">ON — Ontario</option>
+          <option value="PE">PE — P.E. Island</option>
+          <option value="QC">QC — Québec</option>
+          <option value="SK">SK — Saskatchewan</option>
+          <option value="YT">YT — Yukon</option>
+          <option value="REMOTE">🌐 Remote / Intl</option>
+        </select>
         <select id="fwork" onchange="filterJobs()" class="filter-select"><option value="">All modes</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select>
         <select id="ftype" onchange="filterJobs()" class="filter-select"><option value="">All types</option><option value="full-time">Full-time</option><option value="part-time">Part-time</option><option value="contract">Contract</option><option value="internship">Internship</option></select>
         <select id="fsal" onchange="filterJobs()" class="filter-select"><option value="">Any salary</option><option value="40000">$40k+</option><option value="60000">$60k+</option><option value="80000">$80k+</option><option value="100000">$100k+</option><option value="130000">$130k+</option></select>

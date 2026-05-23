@@ -8,6 +8,71 @@ const state = {
   currentKanbanJob: null, filterTimer: null
 };
 
+// ── Canadian Geography ─────────────────────────────────────
+const CA_PROVINCES = [
+  { code: 'AB', name: 'Alberta' },
+  { code: 'BC', name: 'British Columbia / Colombie-Britannique' },
+  { code: 'MB', name: 'Manitoba' },
+  { code: 'NB', name: 'New Brunswick / Nouveau-Brunswick' },
+  { code: 'NL', name: 'Newfoundland and Labrador / T.-N.-L.' },
+  { code: 'NS', name: 'Nova Scotia / Nouvelle-Écosse' },
+  { code: 'NT', name: 'Northwest Territories / T.N.-O.' },
+  { code: 'NU', name: 'Nunavut' },
+  { code: 'ON', name: 'Ontario' },
+  { code: 'PE', name: 'Prince Edward Island / Î.-P.-É.' },
+  { code: 'QC', name: 'Québec' },
+  { code: 'SK', name: 'Saskatchewan' },
+  { code: 'YT', name: 'Yukon' },
+];
+
+const CA_CITIES = {
+  AB: ['Calgary','Edmonton','Red Deer','Lethbridge','St. Albert','Medicine Hat','Grande Prairie','Airdrie','Spruce Grove','Leduc'],
+  BC: ['Vancouver','Surrey','Burnaby','Richmond','Kelowna','Abbotsford','Coquitlam','Langley','Victoria','Nanaimo','Kamloops','Prince George','Chilliwack','Delta','North Vancouver'],
+  MB: ['Winnipeg','Brandon','Steinbach','Thompson','Portage la Prairie','Winkler','Morden','Selkirk'],
+  NB: ['Moncton','Saint John','Fredericton','Dieppe','Riverview','Bathurst','Miramichi','Edmundston'],
+  NL: ['St. John\'s','Mount Pearl','Corner Brook','Conception Bay South','Grand Falls-Windsor','Paradise'],
+  NS: ['Halifax','Cape Breton / Sydney','Truro','New Glasgow','Dartmouth','Bedford','Lunenburg'],
+  NT: ['Yellowknife','Hay River','Inuvik','Fort Smith'],
+  NU: ['Iqaluit','Rankin Inlet','Arviat','Baker Lake'],
+  ON: ['Toronto','Ottawa','Mississauga','Brampton','Hamilton','London','Markham','Vaughan','Kitchener','Windsor','Richmond Hill','Oakville','Burlington','Oshawa','Barrie','St. Catharines','Cambridge','Kingston','Guelph','Whitby','Sudbury','Peterborough','Thunder Bay','Waterloo'],
+  PE: ['Charlottetown','Summerside','Stratford'],
+  QC: ['Montréal','Québec City','Laval','Gatineau','Longueuil','Sherbrooke','Saguenay','Lévis','Trois-Rivières','Terrebonne','Saint-Jean-sur-Richelieu','Repentigny','Brossard','Drummondville','Saint-Jérôme','Rimouski','Joliette','Rouyn-Noranda','Val-d\'Or'],
+  SK: ['Saskatoon','Regina','Prince Albert','Moose Jaw','Swift Current','Yorkton','North Battleford'],
+  YT: ['Whitehorse','Dawson City','Watson Lake'],
+};
+
+const INTL_CITIES = {
+  'France': ['Paris','Lyon','Marseille','Toulouse','Bordeaux','Lille','Nice','Strasbourg','Nantes','Rennes'],
+  'USA': ['New York','San Francisco','Los Angeles','Chicago','Boston','Seattle','Austin','Miami','Denver','Atlanta'],
+  'UK': ['London','Manchester','Birmingham','Edinburgh','Bristol','Leeds','Glasgow'],
+  'Belgium': ['Brussels','Antwerp','Liège','Ghent'],
+  'Switzerland': ['Geneva','Zurich','Lausanne','Basel'],
+};
+
+function provinceSelectHtml(id, selectedCode = '') {
+  return `<select id="${id}" onchange="updateCitiesForProvince('${id}')">
+    <option value="">— Select province/territory —</option>
+    ${CA_PROVINCES.map(p => `<option value="${p.code}"${p.code === selectedCode ? ' selected' : ''}>${p.code} — ${p.name.split(' /')[0]}</option>`).join('')}
+    <option value="INTL" disabled>──────────</option>
+    <option value="REMOTE" ${selectedCode === 'REMOTE' ? 'selected' : ''}>🌐 Remote / International</option>
+  </select>`;
+}
+
+function updateCitiesForProvince(provinceSelectId, citySelectId) {
+  const prov = document.getElementById(provinceSelectId)?.value;
+  const cityId = citySelectId || provinceSelectId.replace('province', 'city').replace('fprov', 'fcity');
+  const cityEl = document.getElementById(cityId);
+  if (!cityEl) return;
+  const cities = CA_CITIES[prov] || [];
+  if (!cities.length) {
+    cityEl.innerHTML = '<option value="">Enter city manually</option>';
+    cityEl.parentElement.style.display = prov ? 'block' : 'none';
+    return;
+  }
+  cityEl.parentElement.style.display = 'block';
+  cityEl.innerHTML = `<option value="">— Select city —</option>${cities.map(c => `<option value="${c}">${c}</option>`).join('')}<option value="__other__">Other (type below)</option>`;
+}
+
 // ── Init ───────────────────────────────────────────────────
 (async () => {
   try {
@@ -136,7 +201,8 @@ function jobCardHtml(j, demo = false) {
     <div class="job-title">${esc(title)}</div>
     <div class="job-meta">
       <span class="job-tag ${j.work_mode || 'onsite'}">${j.work_mode || 'onsite'}</span>
-      ${j.city ? `<span class="job-tag"><i class="ti ti-map-pin" style="font-size:11px"></i>${esc(j.city)}</span>` : ''}
+      ${j.province ? `<span class="province-badge">${esc(j.province)}</span>` : ''}
+      ${j.city ? `<span class="job-tag"><i class="ti ti-map-pin" style="font-size:11px"></i>${esc(j.city)}</span>` : (!j.province && !j.city && j.work_mode !== 'remote' ? '' : '')}
       ${j.job_type ? `<span class="job-tag">${j.job_type}</span>` : ''}
     </div>
     ${salary ? `<div class="job-salary">${salary}</div>` : ''}
@@ -146,7 +212,19 @@ function jobCardHtml(j, demo = false) {
 // ── Jobs page ──────────────────────────────────────────────
 function debounceFilterSearch() { clearTimeout(state.filterTimer); state.filterTimer = setTimeout(filterJobs, 350); }
 function debounceSearch() { clearTimeout(state.jobSearchTimer); state.jobSearchTimer = setTimeout(() => { if (document.getElementById('pg-jobs')?.classList.contains('active')) filterJobs(); }, 350); }
-function searchJobs() { goto('jobs'); setTimeout(filterJobs, 100); }
+function searchJobs() {
+  // Sync hero province → jobs page province filter
+  const heroProv = document.getElementById('hero-province')?.value;
+  const fprov = document.getElementById('fprov');
+  if (fprov && heroProv !== undefined) fprov.value = heroProv;
+  goto('jobs');
+  setTimeout(filterJobs, 100);
+}
+function syncHeroProvince() {
+  const v = document.getElementById('hero-province')?.value;
+  const fprov = document.getElementById('fprov');
+  if (fprov && v !== undefined) fprov.value = v;
+}
 function quickSearch(q) { document.getElementById('q').value = q; searchJobs(); }
 
 async function loadJobs() { await filterJobs(); }
@@ -157,11 +235,14 @@ async function filterJobs(page = 1) {
   const work_mode = document.getElementById('fwork')?.value || document.getElementById('mode-filter')?.value || '';
   const job_type = document.getElementById('ftype')?.value || '';
   const sal_min = document.getElementById('fsal')?.value || '';
+  const province = document.getElementById('fprov')?.value || '';
   const params = new URLSearchParams({ page, limit: 15 });
   if (q) params.set('q', q);
   if (work_mode) params.set('work_mode', work_mode);
   if (job_type) params.set('job_type', job_type);
   if (sal_min) params.set('salary_min', sal_min);
+  if (province && province !== 'REMOTE') params.set('province', province);
+  if (province === 'REMOTE') params.set('work_mode', 'remote');
 
   const list = document.getElementById('jobs-list');
   if (list) list.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>`;
@@ -243,6 +324,7 @@ async function openJobDetail(jobId) {
     <h2 style="font-family:var(--r);font-size:20px;font-weight:700;color:var(--dark);margin:12px 0 8px">${esc(title)}</h2>
     <div class="job-meta" style="margin-bottom:16px">
       <span class="job-tag ${j.work_mode || 'onsite'}">${j.work_mode || 'onsite'}</span>
+      ${j.province ? `<span class="province-badge">${esc(j.province)}</span>` : ''}
       ${j.city ? `<span class="job-tag"><i class="ti ti-map-pin" style="font-size:11px"></i>${esc(j.city)}</span>` : ''}
       ${j.job_type ? `<span class="job-tag">${j.job_type}</span>` : ''}
       ${j.salary_min ? `<span class="job-tag salary-tag">${fmtSalary(j.salary_min)}${j.salary_max ? '–'+fmtSalary(j.salary_max) : ''} ${j.salary_currency||'CAD'}/yr</span>` : ''}
@@ -472,8 +554,15 @@ async function loadProfileForm() {
       <div class="form-group"><label>Titre (FR)</label><input type="text" id="pf-head-fr" value="${esc(p.headline_fr||'')}" placeholder="Développeur Full-Stack Senior"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>City</label><input type="text" id="pf-city" value="${esc(p.city||'')}"></div>
-      <div class="form-group"><label>Country</label><input type="text" id="pf-country" value="${esc(p.country||'Canada')}"></div>
+      <div class="form-group">
+        <label>Province / Territory</label>
+        <select id="pf-province">
+          <option value="">— Select province —</option>
+          ${CA_PROVINCES.map(pr => `<option value="${pr.code}"${(p.province||'')=== pr.code?' selected':''}>${pr.code} — ${pr.name.split(' /')[0]}</option>`).join('')}
+          <option value="INTL"${p.province==='INTL'?' selected':''}>🌐 Outside Canada</option>
+        </select>
+      </div>
+      <div class="form-group"><label>City</label><input type="text" id="pf-city" value="${esc(p.city||'')}" placeholder="e.g. Montréal, Toronto..."></div>
     </div>
     <div class="form-row">
       <div class="form-group"><label>Work preference</label><select id="pf-mode"><option value="">Any</option><option value="remote" ${p.work_mode_pref==='remote'?'selected':''}>Remote</option><option value="hybrid" ${p.work_mode_pref==='hybrid'?'selected':''}>Hybrid</option><option value="onsite" ${p.work_mode_pref==='onsite'?'selected':''}>On-site</option></select></div>
@@ -497,7 +586,8 @@ async function saveProfile() {
     headline_en: document.getElementById('pf-head-en')?.value.trim(),
     headline_fr: document.getElementById('pf-head-fr')?.value.trim(),
     city: document.getElementById('pf-city')?.value.trim(),
-    country: document.getElementById('pf-country')?.value.trim(),
+    province: document.getElementById('pf-province')?.value || null,
+    country: 'Canada',
     skills: document.getElementById('pf-skills')?.value.split(',').map(s => s.trim()).filter(Boolean),
     experience_years: parseInt(document.getElementById('pf-exp')?.value) || 0,
     linkedin_url: document.getElementById('pf-linkedin')?.value.trim(),
@@ -629,6 +719,7 @@ async function loadEmployerJobs() {
           <div class="emp-job-title">${esc(title)}</div>
           <div class="emp-job-meta">
             <span class="job-tag ${j.work_mode||'onsite'}" style="font-size:11px">${j.work_mode||'onsite'}</span>
+            ${j.province ? `<span class="province-badge" style="font-size:10px">${esc(j.province)}</span>` : ''}
             ${j.city ? `<span class="job-tag" style="font-size:11px"><i class="ti ti-map-pin" style="font-size:10px"></i>${esc(j.city)}</span>` : ''}
             ${exp !== null ? `<span class="job-tag" style="font-size:11px;color:${exp < 5 ? 'var(--red)' : 'var(--muted)'}"><i class="ti ti-clock" style="font-size:10px"></i>${exp > 0 ? `${exp}d left` : 'Expired'}</span>` : ''}
           </div>
@@ -727,57 +818,130 @@ async function moveCandidate(appId, status) {
 function initPostJobForm() {
   const form = document.getElementById('post-job-form');
   if (!form) return;
+  const provOptions = CA_PROVINCES.map(p => `<option value="${p.code}">${p.code} — ${p.name.split(' /')[0]}</option>`).join('');
   form.innerHTML = `
     <div class="form-row">
       <div class="form-group"><label>Job Title (EN) *</label><input type="text" id="jf-title-en" placeholder="e.g. Senior Full-Stack Developer" required></div>
-      <div class="form-group"><label>Titre (FR)</label><input type="text" id="jf-title-fr" placeholder="ex: Développeur Full-Stack Senior"></div>
+      <div class="form-group"><label>Titre du poste (FR)</label><input type="text" id="jf-title-fr" placeholder="ex: Développeur Full-Stack Senior"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>Work mode</label><select id="jf-mode"><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select></div>
+      <div class="form-group"><label>Work mode</label><select id="jf-mode" onchange="toggleLocationByMode()"><option value="onsite">On-site</option><option value="hybrid">Hybrid</option><option value="remote">Remote (Canada)</option><option value="remote-intl">Remote (International)</option></select></div>
       <div class="form-group"><label>Job type</label><select id="jf-type"><option value="full-time">Full-time</option><option value="part-time">Part-time</option><option value="contract">Contract</option><option value="internship">Internship</option></select></div>
     </div>
-    <div class="form-row">
-      <div class="form-group"><label>City</label><input type="text" id="jf-city" placeholder="Toronto, Paris..."></div>
-      <div class="form-group"><label>Country</label><input type="text" id="jf-country" value="Canada"></div>
+
+    <div id="jf-location-block">
+      <div class="location-geo-label"><i class="ti ti-map-pin" style="color:var(--indigo)"></i> Job location</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Province / Territory *</label>
+          <select id="jf-province" onchange="updateCitiesForProvince('jf-province','jf-city-select')">
+            <option value="">— Select province —</option>
+            ${provOptions}
+          </select>
+        </div>
+        <div class="form-group" id="jf-city-group">
+          <label>City</label>
+          <select id="jf-city-select" onchange="syncCityInput()">
+            <option value="">— Select province first —</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" id="jf-city-manual-group" style="display:none">
+        <label>City <span style="color:var(--muted);font-weight:400">(enter manually)</span></label>
+        <input type="text" id="jf-city" placeholder="City name...">
+      </div>
     </div>
+
+    <div id="jf-remote-block" style="display:none">
+      <div class="info-box"><i class="ti ti-world"></i> Fully remote — candidates from all provinces/regions can apply. You can still specify a preferred timezone below.</div>
+      <div class="form-group"><label>Preferred timezone <span style="color:var(--muted);font-weight:400">(optional)</span></label><select id="jf-tz"><option value="">Any timezone</option><option>ET (Eastern — Toronto, Montréal, Ottawa)</option><option>CT (Central — Winnipeg)</option><option>MT (Mountain — Calgary, Edmonton)</option><option>PT (Pacific — Vancouver, Victoria)</option><option>AT (Atlantic — Halifax, Moncton)</option><option>NT (Newfoundland — St. John's)</option></select></div>
+    </div>
+
     <div class="form-row">
       <div class="form-group"><label>Min salary (annual CAD)</label><input type="number" id="jf-sal-min" placeholder="60000"></div>
       <div class="form-group"><label>Max salary</label><input type="number" id="jf-sal-max" placeholder="90000"></div>
     </div>
-    <div class="form-group"><label>Required experience</label><select id="jf-exp"><option value="">Not specified</option><option value="0-1">0-1 years</option><option value="1-3">1-3 years</option><option value="3-5">3-5 years</option><option value="5+">5+ years</option></select></div>
-    <div class="form-group"><label>Skills required <span style="color:var(--muted);font-weight:400">(comma-separated)</span></label><input type="text" id="jf-skills" placeholder="React, Node.js, TypeScript"></div>
-    <div class="form-group"><label>Description (EN) *</label><textarea id="jf-desc-en" placeholder="Describe the role, responsibilities..." required></textarea></div>
-    <div class="form-group"><label>Description (FR)</label><textarea id="jf-desc-fr" placeholder="Décrivez le poste..."></textarea></div>
-    <div class="form-group"><label>Requirements (EN)</label><textarea id="jf-req-en" placeholder="List requirements..."></textarea></div>
-    <div class="form-group"><label>Benefits (EN)</label><textarea id="jf-ben-en" placeholder="Health insurance, 4 weeks PTO..."></textarea></div>
+    <div class="form-group"><label>Currency</label><select id="jf-currency"><option value="CAD">CAD — Canadian Dollar</option><option value="USD">USD — US Dollar</option><option value="EUR">EUR — Euro</option><option value="GBP">GBP — British Pound</option></select></div>
+    <div class="form-group"><label>Required experience</label><select id="jf-exp"><option value="">Not specified</option><option value="0-1">0-1 years (Junior)</option><option value="1-3">1-3 years (Intermediate)</option><option value="3-5">3-5 years (Senior)</option><option value="5+">5+ years (Lead / Expert)</option></select></div>
+    <div class="form-group"><label>Skills required <span style="color:var(--muted);font-weight:400">(comma-separated)</span></label><input type="text" id="jf-skills" placeholder="React, Node.js, TypeScript, Python"></div>
+    <div class="form-group"><label>Languages required</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+        <label class="check-label"><input type="checkbox" id="jf-lang-en" value="English" checked> English</label>
+        <label class="check-label"><input type="checkbox" id="jf-lang-fr" value="French"> French / Français</label>
+        <label class="check-label"><input type="checkbox" id="jf-lang-bi" value="Bilingual"> Bilingual (EN+FR)</label>
+        <label class="check-label"><input type="checkbox" id="jf-lang-es" value="Spanish"> Spanish</label>
+      </div>
+    </div>
+    <div class="form-group"><label>Description (EN) *</label><textarea id="jf-desc-en" placeholder="Describe the role, responsibilities, and team..." required></textarea></div>
+    <div class="form-group"><label>Description (FR)</label><textarea id="jf-desc-fr" placeholder="Décrivez le poste, les responsabilités et l'équipe..."></textarea></div>
+    <div class="form-group"><label>Requirements (EN)</label><textarea id="jf-req-en" placeholder="Must-have qualifications, technical skills..."></textarea></div>
+    <div class="form-group"><label>Benefits & Perks (EN)</label><textarea id="jf-ben-en" placeholder="Health insurance, 4 weeks PTO, remote work stipend..."></textarea></div>
     <div class="form-error" id="jf-error"></div>
     <button class="btn-primary" type="submit"><i class="ti ti-briefcase"></i> Post job</button>
   `;
+}
+
+function toggleLocationByMode() {
+  const mode = document.getElementById('jf-mode')?.value;
+  const locBlock = document.getElementById('jf-location-block');
+  const remBlock = document.getElementById('jf-remote-block');
+  if (!locBlock || !remBlock) return;
+  const isRemote = mode === 'remote' || mode === 'remote-intl';
+  locBlock.style.display = isRemote ? 'none' : 'block';
+  remBlock.style.display = isRemote ? 'block' : 'none';
+}
+
+function syncCityInput() {
+  const sel = document.getElementById('jf-city-select')?.value;
+  const manualGroup = document.getElementById('jf-city-manual-group');
+  const cityInput = document.getElementById('jf-city');
+  if (sel === '__other__') {
+    if (manualGroup) manualGroup.style.display = 'block';
+    if (cityInput) cityInput.value = '';
+  } else {
+    if (manualGroup) manualGroup.style.display = 'none';
+    if (cityInput) cityInput.value = sel || '';
+  }
 }
 
 async function postJob(e) {
   e.preventDefault();
   const errEl = document.getElementById('jf-error');
   errEl.style.display = 'none';
+
+  const mode = document.getElementById('jf-mode')?.value || 'onsite';
+  const normalizedMode = (mode === 'remote-intl') ? 'remote' : mode;
+  const province = document.getElementById('jf-province')?.value || null;
+  // City: manual input wins over select if "other" chosen
+  const cityFromSelect = document.getElementById('jf-city-select')?.value;
+  const cityFromInput = document.getElementById('jf-city')?.value.trim();
+  const city = (cityFromSelect === '__other__' || !cityFromSelect) ? cityFromInput : (cityFromSelect || cityFromInput);
+
+  const langs = [];
+  ['en','fr','bi','es'].forEach(l => { const el = document.getElementById(`jf-lang-${l}`); if (el?.checked) langs.push(el.value); });
+
   const body = {
-    title_en: document.getElementById('jf-title-en').value.trim(),
-    title_fr: document.getElementById('jf-title-fr').value.trim() || document.getElementById('jf-title-en').value.trim(),
-    description_en: document.getElementById('jf-desc-en').value.trim(),
-    description_fr: document.getElementById('jf-desc-fr').value.trim() || document.getElementById('jf-desc-en').value.trim(),
-    requirements_en: document.getElementById('jf-req-en').value.trim(),
-    benefits_en: document.getElementById('jf-ben-en').value.trim(),
-    work_mode: document.getElementById('jf-mode').value,
-    job_type: document.getElementById('jf-type').value,
-    city: document.getElementById('jf-city').value.trim(),
-    country: document.getElementById('jf-country').value.trim() || 'Canada',
-    salary_min: parseInt(document.getElementById('jf-sal-min').value) || null,
-    salary_max: parseInt(document.getElementById('jf-sal-max').value) || null,
-    experience_years: document.getElementById('jf-exp').value,
-    skills_required: document.getElementById('jf-skills').value.split(',').map(s => s.trim()).filter(Boolean),
+    title_en: document.getElementById('jf-title-en')?.value.trim(),
+    title_fr: document.getElementById('jf-title-fr')?.value.trim() || document.getElementById('jf-title-en')?.value.trim(),
+    description_en: document.getElementById('jf-desc-en')?.value.trim(),
+    description_fr: document.getElementById('jf-desc-fr')?.value.trim() || document.getElementById('jf-desc-en')?.value.trim(),
+    requirements_en: document.getElementById('jf-req-en')?.value.trim(),
+    benefits_en: document.getElementById('jf-ben-en')?.value.trim(),
+    work_mode: normalizedMode,
+    job_type: document.getElementById('jf-type')?.value,
+    city: city || null,
+    province: (mode === 'remote' || mode === 'remote-intl') ? null : (province || null),
+    country: 'Canada',
+    salary_min: parseInt(document.getElementById('jf-sal-min')?.value) || null,
+    salary_max: parseInt(document.getElementById('jf-sal-max')?.value) || null,
+    salary_currency: document.getElementById('jf-currency')?.value || 'CAD',
+    experience_years: document.getElementById('jf-exp')?.value || null,
+    skills_required: document.getElementById('jf-skills')?.value.split(',').map(s => s.trim()).filter(Boolean),
+    languages_required: langs,
   };
   if (!body.title_en || !body.description_en) { showErr(errEl, 'Title (EN) and description required'); return; }
   const d = await api('POST', `${BASE}/api/jobs`, body);
-  if (d.success) { toast('Job posted!', 'success'); showEmpTab('etab-jobs'); loadEmployerJobs(); }
+  if (d.success) { toast('Job posted successfully!', 'success'); showEmpTab('etab-jobs'); loadEmployerJobs(); }
   else showErr(errEl, d.error || 'Failed to post job');
 }
 
