@@ -454,10 +454,21 @@ router.get("/org/verification/status", async (req, res) => {
 // ── GET /api/admin/verification/requests?status=pending ──────────────────
 router.get("/admin/verification/stats", async (req, res) => {
   if (!checkAdminKey(req, res)) return;
+  const sinceParam = String(req.query.since ?? "");
+  const since = sinceParam ? new Date(sinceParam) : new Date(0);
+  if (isNaN(since.getTime())) {
+    res.status(400).json({ error: "Paramètre « since » invalide." });
+    return;
+  }
   const [row] = await db
     .select({ count: sql<number>`count(*)::int` })
     .from(verificationRequestsTable)
-    .where(eq(verificationRequestsTable.status, "pending"));
+    .where(
+      and(
+        eq(verificationRequestsTable.status, "pending"),
+        gte(verificationRequestsTable.createdAt, since),
+      )
+    );
   res.json({ pendingCount: Number(row?.count ?? 0) });
 });
 

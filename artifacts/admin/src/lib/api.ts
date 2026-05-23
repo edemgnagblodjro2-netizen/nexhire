@@ -246,10 +246,11 @@ export async function fetchContactStats(adminKey: string): Promise<{ newCount: n
   return res.json();
 }
 
-export async function fetchVerificationStats(adminKey: string): Promise<{ pendingCount: number }> {
-  const res = await fetch(`${API_BASE}/api/admin/verification/stats`, {
-    headers: headers(adminKey),
-  });
+export async function fetchVerificationStats(adminKey: string, since?: string): Promise<{ pendingCount: number }> {
+  const url = since
+    ? `${API_BASE}/api/admin/verification/stats?since=${encodeURIComponent(since)}`
+    : `${API_BASE}/api/admin/verification/stats`;
+  const res = await fetch(url, { headers: headers(adminKey) });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }

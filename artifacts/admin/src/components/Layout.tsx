@@ -6,6 +6,7 @@ import { fetchContactStats, fetchVerificationStats, fetchBugReportStats, fetchOr
 import { useNotifications, type NotifEventPrefs } from "@/hooks/useNotifications";
 
 const ORG_LAST_SEEN_KEY = "az_admin_orgs_last_seen";
+const VERIF_LAST_SEEN_KEY = "az_admin_verif_last_seen";
 
 const SUPERADMIN_NAV = [
   { href: "/", icon: "📊", label: "Tableau de bord" },
@@ -72,6 +73,12 @@ export default function Layout({
     localStorage.getItem(ORG_LAST_SEEN_KEY) ?? new Date(0).toISOString()
   );
 
+  // State for the verif last-seen timestamp — must be state (not ref) so the
+  // query key re-renders synchronously and the badge clears without a network round-trip.
+  const [verifLastSeen, setVerifLastSeen] = React.useState<string>(
+    () => localStorage.getItem(VERIF_LAST_SEEN_KEY) ?? new Date(0).toISOString()
+  );
+
   const { data: contactStats } = useQuery({
     queryKey: ["contact-stats", adminKey],
     queryFn: () => fetchContactStats(adminKey!),
@@ -81,8 +88,8 @@ export default function Layout({
   });
 
   const { data: verificationStats } = useQuery({
-    queryKey: ["verification-stats", adminKey],
-    queryFn: () => fetchVerificationStats(adminKey!),
+    queryKey: ["verification-stats", adminKey, verifLastSeen],
+    queryFn: () => fetchVerificationStats(adminKey!, verifLastSeen),
     enabled,
     staleTime: 60_000,
     refetchInterval: 60_000,
@@ -111,6 +118,18 @@ export default function Layout({
       localStorage.setItem(ORG_LAST_SEEN_KEY, now);
       orgLastSeenRef.current = now;
       queryClient.invalidateQueries({ queryKey: ["org-stats", adminKey] });
+    }
+  }, [location, adminKey, queryClient]);
+
+  // When admin navigates to /verifications, mark all current pending verifications as seen.
+  // Using setState (not ref) ensures the query key changes synchronously on the next render.
+  // setQueryData with the new key optimistically shows 0 before the network round-trip.
+  useEffect(() => {
+    if (location === "/verifications" || location.startsWith("/verifications/")) {
+      const now = new Date().toISOString();
+      localStorage.setItem(VERIF_LAST_SEEN_KEY, now);
+      setVerifLastSeen(now);
+      queryClient.setQueryData(["verification-stats", adminKey, now], { pendingCount: 0 });
     }
   }, [location, adminKey, queryClient]);
 
