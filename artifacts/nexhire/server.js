@@ -260,7 +260,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// ── Sessions (memory store — safe for single-instance) ──
+// ── Sessions (PostgreSQL-backed — survives server restarts) ──
 app.use(session({
   store: new pgSession({
     conString: process.env.DATABASE_URL,
