@@ -2588,8 +2588,11 @@ async function loadProfileForm() {
       <div class="form-group"><label>${L.city}</label><input type="text" id="pf-city" value="${esc(p.city||'')}" placeholder="${L.cityPh}"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>${L.workPref}</label><select id="pf-mode"><option value="">${L.workAny}</option><option value="remote" ${p.work_mode_pref==='remote'?'selected':''}>${L.workRemote}</option><option value="hybrid" ${p.work_mode_pref==='hybrid'?'selected':''}>${L.workHybrid}</option><option value="onsite" ${p.work_mode_pref==='onsite'?'selected':''}>${L.workOnsite}</option></select></div>
+      <div class="form-group"><label>${isFr ? 'Téléphone' : 'Phone'}</label><input type="tel" id="pf-phone" value="${esc(p.phone||'')}" placeholder="+1 514 000-0000"></div>
       <div class="form-group"><label>${L.expYears}</label><input type="number" id="pf-exp" value="${p.experience_years||0}" min="0" max="50"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>${L.workPref}</label><select id="pf-mode"><option value="">${L.workAny}</option><option value="remote" ${p.work_mode_pref==='remote'?'selected':''}>${L.workRemote}</option><option value="hybrid" ${p.work_mode_pref==='hybrid'?'selected':''}>${L.workHybrid}</option><option value="onsite" ${p.work_mode_pref==='onsite'?'selected':''}>${L.workOnsite}</option></select></div>
     </div>
     <div class="form-group">
       <label>${L.skills}</label>
@@ -2658,6 +2661,7 @@ async function saveProfile() {
     city: document.getElementById('pf-city')?.value.trim(),
     province: document.getElementById('pf-province')?.value || null,
     country: 'Canada',
+    phone: document.getElementById('pf-phone')?.value.trim(),
     skills: getProfileSkills(),
     experience_years: parseInt(document.getElementById('pf-exp')?.value) || 0,
     linkedin_url: document.getElementById('pf-linkedin')?.value.trim(),
