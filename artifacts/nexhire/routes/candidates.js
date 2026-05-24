@@ -179,6 +179,9 @@ router.post('/profile/cv/parse', requireAuth, cvUpload.single('cv'), async (req,
     }
     res.json({ success: true, cv_url: cvUrl, parsed });
   } catch (e) {
+    if (e?.status === 429 || e?.message?.includes('429') || e?.message?.includes('quota')) {
+      return res.status(200).json({ success: true, cv_url: req.file ? `/nexhire/uploads/${req.file.filename}` : null, parsed: null, message: 'CV sauvegardé — quota OpenAI dépassé, rechargez votre compte sur platform.openai.com/settings/billing' });
+    }
     res.status(500).json({ success: false, error: e.message });
   }
 });
