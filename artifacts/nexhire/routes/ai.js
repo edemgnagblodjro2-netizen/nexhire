@@ -3,6 +3,66 @@ const { requireAuth, requireCompanyAccess } = require('../middleware/auth');
 const db = require('../models/db');
 const aiService = require('../services/ai');
 
+/* ── Jobbot rate limiter (30 msgs/IP/hour, public endpoint) ── */
+const _jbrl = new Map();
+function _jbCheck(ip) {
+  const now = Date.now();
+  let e = _jbrl.get(ip) || { n: 0, r: now + 3_600_000 };
+  if (now > e.r) { e.n = 0; e.r = now + 3_600_000; }
+  if (e.n >= 30) return false;
+  e.n++; _jbrl.set(ip, e); return true;
+}
+
+router.post('/jobbot', async (req, res) => {
+  if (!_jbCheck(req.ip || 'x')) return res.status(429).json({ success: false, error: 'Rate limit' });
+  const { messages = [], lang = 'fr' } = req.body;
+  if (!Array.isArray(messages) || messages.length > 20) return res.status(400).json({ success: false });
+
+  const valid = messages.slice(-10).filter(m =>
+    m && ['user','assistant'].includes(m.role) &&
+    typeof m.content === 'string' && m.content.length < 800
+  );
+
+  const isFr = lang === 'fr';
+  const system = isFr
+    ? `Tu es Nex, l'assistant emploi IA de Nexhire. Tu aides les candidats à trouver leur prochain poste.
+
+DÉROULEMENT:
+1. Accueille chaleureusement. Demande quel type de poste ils recherchent.
+2. Pose 1 question de suivi (préférence télétravail/présentiel, province/région, salaire attendu).
+3. Après 2+ échanges, génère les paramètres de recherche.
+
+RÈGLE ABSOLUE: Réponds UNIQUEMENT en JSON valide, rien d'autre:
+{"reply":"ton message","search_params":null,"show_profile_cta":false}
+
+Quand tu as assez d'info, "search_params":{"q":"titre poste","work_mode":"remote|hybrid|onsite|","province":"QC|ON|BC|AB|MB|SK|NS|NB|NL|PE|","salary_min":null}
+"show_profile_cta":true quand l'utilisateur veut postuler.
+Sois chaleureux, 1-3 phrases. Extrais le titre et mots-clés principaux pour "q".`
+    : `You are Nex, Nexhire's AI career assistant. You help candidates find their next job.
+
+FLOW:
+1. Greet warmly. Ask what type of role they're looking for.
+2. Ask 1 follow-up question (remote/on-site preference, province/region, expected salary).
+3. After 2+ exchanges, generate search parameters.
+
+ABSOLUTE RULE: Reply ONLY in valid JSON, nothing else:
+{"reply":"your message","search_params":null,"show_profile_cta":false}
+
+When you have enough info, "search_params":{"q":"job title","work_mode":"remote|hybrid|onsite|","province":"QC|ON|BC|AB|MB|SK|NS|NB|NL|PE|","salary_min":null}
+"show_profile_cta":true when user wants to apply.
+Be warm, 1-3 sentences. Extract main title + keywords for "q".`;
+
+  try {
+    const raw = await aiService.callClaude(valid, system, 400);
+    let parsed;
+    try { parsed = JSON.parse(raw.replace(/```json|```/g,'').trim()); }
+    catch { parsed = { reply: raw, search_params: null, show_profile_cta: false }; }
+    res.json({ success: true, reply: parsed.reply || '', search_params: parsed.search_params || null, show_profile_cta: !!parsed.show_profile_cta });
+  } catch (err) {
+    res.status(500).json({ success: false, error: isFr ? 'Assistant temporairement indisponible.' : 'Assistant temporarily unavailable.' });
+  }
+});
+
 router.post('/chat', requireAuth, async (req, res) => {
   const { message, context = 'general' } = req.body;
   if (!message) return res.status(400).json({ success: false, error: 'Message required' });

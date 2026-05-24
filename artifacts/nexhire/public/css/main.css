@@ -960,3 +960,157 @@ a{text-decoration:none;color:inherit}
   .hiw-header h2{font-size:28px}
   .hiw-num{font-size:72px}
 }
+
+/* ── NEX CHATBOT WIDGET ────────────────────────────────────── */
+#nex-bot-widget{position:fixed;bottom:28px;right:28px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+
+/* trigger bubble */
+.nex-bot-trigger{
+  width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#4F52D3,#6366F1);
+  color:#fff;font-size:24px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(99,102,241,.45);
+  transition:transform .2s,box-shadow .2s;position:relative;
+}
+.nex-bot-trigger:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(99,102,241,.6)}
+.nex-bot-badge{
+  position:absolute;top:0;right:0;
+  background:#EF4444;color:#fff;border-radius:50%;
+  width:18px;height:18px;font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid #fff;
+}
+
+/* window */
+.nex-bot-window{
+  width:360px;
+  background:#fff;
+  border-radius:20px;
+  box-shadow:0 24px 80px rgba(0,0,0,.18),0 4px 20px rgba(0,0,0,.08);
+  overflow:hidden;display:flex;flex-direction:column;
+  animation:nexBotSlide .2s ease;
+  border:1px solid var(--border);
+  max-height:min(580px,80vh);
+}
+@keyframes nexBotSlide{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+
+/* header */
+.nex-bot-header{
+  background:linear-gradient(135deg,#07111C,#0D1F2E);
+  padding:14px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0;
+}
+.nex-bot-avatar{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,#4F52D3,#818CF8);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:#fff;
+}
+.nex-bot-name{font-family:var(--r);font-size:13.5px;font-weight:700;color:#fff}
+.nex-bot-status{font-size:11px;color:#34D399;margin-top:1px;display:flex;align-items:center;gap:4px}
+.nex-bot-status::before{content:'●';font-size:8px}
+.nex-bot-close{
+  margin-left:auto;background:rgba(255,255,255,.12);border:none;
+  color:#fff;border-radius:8px;width:30px;height:30px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+  transition:background .15s;flex-shrink:0;
+}
+.nex-bot-close:hover{background:rgba(255,255,255,.22)}
+
+/* messages */
+.nex-bot-messages{
+  flex:1;overflow-y:auto;padding:16px;
+  display:flex;flex-direction:column;gap:10px;
+  scroll-behavior:smooth;
+}
+.nex-bot-messages::-webkit-scrollbar{width:4px}
+.nex-bot-messages::-webkit-scrollbar-track{background:transparent}
+.nex-bot-messages::-webkit-scrollbar-thumb{background:#E2E8F0;border-radius:4px}
+
+/* bubbles */
+.nex-msg{display:flex;gap:8px;align-items:flex-end;max-width:100%}
+.nex-msg.user{flex-direction:row-reverse}
+.nex-msg-avatar{
+  width:26px;height:26px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,#4F52D3,#818CF8);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:#fff;
+}
+.nex-msg-bubble{
+  background:#F1F5F9;border-radius:16px 16px 16px 4px;
+  padding:10px 14px;font-size:13.5px;line-height:1.55;color:var(--dark);
+  max-width:82%;
+}
+.nex-msg.user .nex-msg-bubble{
+  background:linear-gradient(135deg,#4F52D3,#6366F1);
+  color:#fff;border-radius:16px 16px 4px 16px;
+}
+
+/* typing indicator */
+.nex-typing{display:flex;gap:4px;padding:10px 14px;background:#F1F5F9;border-radius:16px 16px 16px 4px;width:fit-content}
+.nex-dot{width:6px;height:6px;border-radius:50%;background:#94A3B8;animation:nexPulse 1.2s infinite}
+.nex-dot:nth-child(2){animation-delay:.2s}
+.nex-dot:nth-child(3){animation-delay:.4s}
+@keyframes nexPulse{0%,80%,100%{transform:scale(.8);opacity:.5}40%{transform:scale(1);opacity:1}}
+
+/* inline job cards */
+.nex-job-card{
+  background:#fff;border:1px solid var(--border);border-radius:12px;
+  padding:12px 14px;cursor:pointer;transition:border-color .15s,box-shadow .15s;
+  margin-top:4px;
+}
+.nex-job-card:hover{border-color:var(--indigo4);box-shadow:0 2px 12px rgba(99,102,241,.1)}
+.nex-job-card-title{font-family:var(--r);font-weight:600;color:var(--dark);font-size:13px;margin-bottom:3px}
+.nex-job-card-co{font-size:12px;color:var(--muted)}
+.nex-job-card-tags{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.nex-job-card-tag{background:#F1F5F9;border-radius:6px;padding:2px 8px;font-size:11px;color:#64748B;font-weight:500}
+.nex-job-card-tag.new{background:#DCFCE7;color:#15803D}
+
+/* CTA card */
+.nex-cta-card{
+  background:linear-gradient(135deg,#EEF2FF,#F5F3FF);
+  border:1px solid rgba(99,102,241,.2);border-radius:12px;
+  padding:14px 16px;margin-top:4px;text-align:center;
+}
+.nex-cta-card p{font-size:13px;color:var(--dark);margin:0 0 10px;line-height:1.5}
+.nex-cta-card .btn-primary{font-size:13px;padding:8px 20px;width:100%}
+
+/* chips */
+.nex-bot-chips{
+  padding:0 12px 8px;display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0;
+}
+.nex-chip{
+  background:#F1F5F9;border:1px solid var(--border);border-radius:100px;
+  padding:6px 14px;font-size:12.5px;font-weight:500;color:#475569;
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.nex-chip:hover{background:#EEF2FF;border-color:var(--indigo4);color:var(--indigo)}
+
+/* input row */
+.nex-bot-input-row{
+  display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--border);
+  background:#FAFAFA;flex-shrink:0;
+}
+#nex-bot-input{
+  flex:1;border:1px solid var(--border);border-radius:12px;
+  padding:9px 14px;font-size:13.5px;font-family:var(--b);
+  outline:none;color:var(--dark);background:#fff;
+  transition:border-color .15s;
+}
+#nex-bot-input:focus{border-color:var(--indigo4)}
+.nex-bot-send{
+  width:38px;height:38px;border-radius:12px;border:none;
+  background:linear-gradient(135deg,#4F52D3,#6366F1);
+  color:#fff;cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:opacity .15s;
+}
+.nex-bot-send:hover{opacity:.88}
+
+/* no-result card */
+.nex-noresult{font-size:13px;color:var(--muted);text-align:center;padding:12px 0;font-style:italic}
+
+@media(max-width:480px){
+  #nex-bot-widget{bottom:16px;right:16px}
+  .nex-bot-window{width:calc(100vw - 32px)}
+}
