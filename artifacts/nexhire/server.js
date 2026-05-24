@@ -392,6 +392,24 @@ async function runMigrations() {
     `);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_pskills_user ON nh_profile_skills(user_id)`);
     await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_recommendations (
+        id                  TEXT PRIMARY KEY,
+        candidate_id        TEXT NOT NULL REFERENCES nh_users(id) ON DELETE CASCADE,
+        recommender_name    TEXT NOT NULL,
+        recommender_title   TEXT NOT NULL DEFAULT '',
+        recommender_company TEXT NOT NULL DEFAULT '',
+        recommender_photo   TEXT NOT NULL DEFAULT '',
+        body                TEXT NOT NULL,
+        rating              INTEGER NOT NULL DEFAULT 5,
+        source              TEXT NOT NULL DEFAULT 'external',
+        token               TEXT UNIQUE,
+        status              TEXT NOT NULL DEFAULT 'approved',
+        created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_rec_candidate ON nh_recommendations(candidate_id)`);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_rec_token     ON nh_recommendations(token)`);
+    await pool.query(`
       CREATE TABLE IF NOT EXISTS nh_video_interviews (
         id                TEXT PRIMARY KEY,
         company_id        TEXT NOT NULL REFERENCES nh_companies(id) ON DELETE CASCADE,
@@ -940,6 +958,7 @@ app.use(apiBase + '/profile-score', require('./routes/profile-score'));
 app.use(apiBase + '/salary',        require('./routes/salary'));
 app.use(apiBase + '/highlights',       require('./routes/highlights'));
 app.use(apiBase + '/profile-skills',   require('./routes/profile-skills'));
+app.use(apiBase + '/recommendations',  require('./routes/recommendations'));
 app.use(apiBase + '/video-interviews', require('./routes/video-interviews'));
 app.use(apiBase + '/moderation',       require('./routes/moderation'));
 // Serve uploaded interview videos
