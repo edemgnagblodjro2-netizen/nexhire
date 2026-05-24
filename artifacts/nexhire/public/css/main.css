@@ -600,16 +600,51 @@ a{text-decoration:none;color:inherit}
 .highlights-header{margin-bottom:16px}
 .highlights-title{font-family:var(--r);font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;display:flex;align-items:center;gap:7px}
 .highlights-sub{font-size:13px;color:var(--muted);margin:0}
-.highlight-card{display:flex;align-items:flex-start;gap:12px;background:#f9fafb;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px}
-.highlight-icon{width:36px;height:36px;border-radius:8px;background:var(--indigo3);color:var(--indigo);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.highlight-body{flex:1;min-width:0}
-.highlight-type{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.highlight-title{font-weight:600;color:var(--dark);font-size:14px;margin-top:2px}
-.highlight-desc{font-size:13px;color:var(--muted);margin-top:3px}
-.highlight-link{font-size:13px;color:var(--indigo);text-decoration:none;margin-top:4px;display:inline-flex;align-items:center;gap:4px}
-.highlight-remove{background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;border-radius:6px;flex-shrink:0;transition:all .15s}
-.highlight-remove:hover{color:var(--red);background:#fef2f2}
-.highlight-add-form{background:#f9fafb;border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:8px}
+/* grid cards */
+.hl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:12px}
+.hl-grid-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 14px 14px;position:relative;transition:transform .2s,box-shadow .2s}
+.hl-grid-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.09)}
+.hl-grid-icon{font-size:2rem;margin-bottom:8px;line-height:1}
+.hl-grid-title{font-weight:700;font-size:.88rem;color:var(--dark)}
+.hl-grid-desc{font-size:.75rem;color:var(--muted);margin-top:4px;line-height:1.4}
+.hl-grid-link{display:inline-block;margin-top:6px;font-size:.75rem;color:var(--indigo);text-decoration:none;font-weight:600}
+.hl-grid-remove{position:absolute;top:7px;right:7px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:.75rem;opacity:0;transition:opacity .15s;padding:2px 5px;border-radius:6px;line-height:1}
+.hl-grid-card:hover .hl-grid-remove{opacity:1}
+.hl-grid-remove:hover{color:#ef4444;background:#fef2f2}
+/* modal */
+.hl-modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:800;display:flex;align-items:center;justify-content:center;padding:16px}
+.hl-modal-backdrop.hidden{display:none}
+.hl-modal-box{background:#fff;border-radius:16px;padding:24px;width:100%;max-width:380px;box-shadow:0 16px 48px rgba(0,0,0,.18)}
+/* icon picker */
+.hl-icon-picker{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.hl-icon-opt{font-size:1.4rem;cursor:pointer;padding:5px 7px;border-radius:8px;border:2px solid transparent;transition:border-color .15s,background .15s;line-height:1}
+.hl-icon-opt:hover{background:#f1f5f9}
+.hl-icon-opt.selected{border-color:var(--indigo);background:var(--indigo3)}
+/* ── PROFILE SKILLS ──────────────────────────────────────── */
+.ps-section{border-top:1px solid var(--border);margin-top:28px;padding-top:24px}
+.ps-section-header{margin-bottom:16px}
+.ps-category{margin-bottom:20px}
+.ps-cat-title{font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:0 0 10px}
+.ps-empty{font-size:13px;color:var(--muted);margin:0 0 10px}
+.ps-add-btn{font-size:13px;padding:7px 14px;margin-top:4px}
+/* hard skill bars */
+.ps-bar-wrap{position:relative;margin-bottom:14px;padding-right:28px}
+.ps-bar-header{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:5px}
+.ps-bar-name{font-weight:600;color:var(--dark)}
+.ps-level-label{font-size:.72rem;color:var(--muted);font-weight:600}
+.ps-bar-track{height:6px;background:var(--border);border-radius:999px;overflow:hidden}
+.ps-bar-fill{height:100%;background:linear-gradient(90deg,var(--indigo),#818cf8);border-radius:999px;transition:width .6s cubic-bezier(.23,1,.32,1)}
+.ps-remove{position:absolute;right:0;top:0;background:none;border:none;color:var(--muted);cursor:pointer;font-size:.75rem;opacity:0;transition:opacity .15s;padding:2px 4px;border-radius:4px}
+.ps-bar-wrap:hover .ps-remove{opacity:1}
+.ps-remove:hover{color:#ef4444;background:#fef2f2}
+/* soft skill tags */
+.ps-soft-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.ps-tag{display:flex;align-items:center;gap:6px;background:var(--indigo3);color:var(--indigo);border:1px solid #c7d2fe;padding:5px 12px;border-radius:999px;font-size:.8rem;font-weight:500}
+.ps-tag-rm{cursor:pointer;opacity:.55;font-size:.7rem;transition:opacity .15s;line-height:1}
+.ps-tag-rm:hover{opacity:1}
+/* skills modal */
+.ps-modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:800;display:flex;align-items:center;justify-content:center;padding:16px}
+.ps-modal-backdrop.hidden{display:none}
 /* ── TALENT PASSPORT ─────────────────────────────────────── */
 .talent-passport{background:linear-gradient(135deg,#0d1526 0%,#1b485a 100%);border-radius:16px;color:#fff;padding:24px;margin-bottom:28px;box-shadow:0 8px 32px rgba(27,72,90,.28)}
 .passport-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px}

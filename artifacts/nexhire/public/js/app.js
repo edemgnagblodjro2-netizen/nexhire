@@ -2612,10 +2612,12 @@ async function loadProfileForm() {
       </div>
       <div id="cv-upload-status" style="display:none;font-size:13px;margin-top:8px;color:var(--muted)"></div>
     </div>` +
+    `<div id="profile-skills-container"></div>` +
     `<div id="highlights-container"></div>` +
     `<div id="my-endorsements-container" class="endorsements-section-placeholder"></div>`;
   updatePassportBadgesRow(getAvailBadges(_uid));
   updateSidebarOpenToWork(getAvailBadges(_uid));
+  loadProfileSkillsSection();
   loadHighlightsIntoContainer();
   loadEndorsements(state.user.id).then(data => {
     const el = document.getElementById('my-endorsements-container');
@@ -3590,10 +3592,12 @@ async function handleEndorseClick(btn, candidateId, quality) {
 }
 
 /* ── Highlights — DB-backed ─────────────────────────────── */
+let _hlSelectedIcon = '⭐';
+const HL_ICONS = ['🏆','🚀','📜','⭐','🎯','💡','🔬','🌍','🎓','🛠️','💼','🤝','🏅','🔑','✅'];
+
 async function loadHighlightsIntoContainer() {
   const el = document.getElementById('highlights-container');
   if (!el) return;
-  const isFr = state.lang === 'fr';
   el.innerHTML = `<div style="padding:24px 0;text-align:center"><div class="spinner"></div></div>`;
   const d = await api('GET', `${BASE}/api/highlights`);
   const highlights = d.highlights || [];
@@ -3602,71 +3606,59 @@ async function loadHighlightsIntoContainer() {
 
 function renderHighlightsSection(highlights = []) {
   const isFr = state.lang === 'fr';
-  const typeIcons  = { project:'ti-code', cert:'ti-award', achievement:'ti-trophy', available:'ti-circle-check' };
-  const typeLabels = {
-    project:     isFr ? 'Projet'          : 'Project',
-    cert:        isFr ? 'Certification'   : 'Certification',
-    achievement: isFr ? 'Réalisation'     : 'Achievement',
-    available:   isFr ? 'Disponibilité'   : 'Availability',
-  };
-  const title  = isFr ? 'Mes points forts' : 'My Highlights';
-  const sub    = isFr ? 'Projets, certifications et réalisations qui vous démarquent.' : 'Projects, certifications and achievements that make you stand out.';
-  const addLbl = isFr ? 'Ajouter un point fort' : 'Add a highlight';
+  const title  = isFr ? 'Points forts' : 'Highlights';
+  const sub    = isFr ? 'Certifications, réalisations et projets qui vous démarquent.' : 'Certifications, achievements and projects that make you stand out.';
+  const addLbl = isFr ? '+ Ajouter un point fort' : '+ Add a highlight';
   const cards = highlights.map(h => `
-    <div class="highlight-card">
-      <div class="highlight-icon"><i class="ti ${typeIcons[h.type]||'ti-star'}"></i></div>
-      <div class="highlight-body">
-        <div class="highlight-type">${typeLabels[h.type] || h.type}</div>
-        <div class="highlight-title">${esc(h.title)}</div>
-        ${h.description ? `<div class="highlight-desc">${esc(h.description)}</div>` : ''}
-        ${h.url ? `<a href="${esc(h.url)}" target="_blank" class="highlight-link"><i class="ti ti-external-link" style="font-size:11px"></i> ${isFr ? 'Voir' : 'View'}</a>` : ''}
-      </div>
-      <button class="highlight-remove" onclick="removeHighlight('${esc(h.id)}')" title="${isFr ? 'Supprimer' : 'Remove'}"><i class="ti ti-x"></i></button>
+    <div class="hl-grid-card">
+      <button class="hl-grid-remove" data-action="remove-highlight" data-id="${esc(h.id)}" title="${isFr ? 'Supprimer' : 'Remove'}">✕</button>
+      <div class="hl-grid-icon">${h.icon || '⭐'}</div>
+      <div class="hl-grid-title">${esc(h.title)}</div>
+      ${h.description ? `<div class="hl-grid-desc">${esc(h.description)}</div>` : ''}
+      ${h.url ? `<a href="${esc(h.url)}" target="_blank" class="hl-grid-link">${isFr ? 'Voir →' : 'View →'}</a>` : ''}
     </div>`).join('');
+  const iconPicker = HL_ICONS.map(ic =>
+    `<span class="hl-icon-opt${ic === _hlSelectedIcon ? ' selected' : ''}" data-action="select-hl-icon" data-icon="${ic}">${ic}</span>`
+  ).join('');
   return `
     <div class="highlights-section">
       <div class="highlights-header">
-        <h3 class="highlights-title"><i class="ti ti-sparkles"></i> ${title}</h3>
-        <p class="highlights-sub">${sub}</p>
-      </div>
-      <div id="highlights-cards">${cards}</div>
-      <div class="highlight-add-form" id="highlight-form" style="display:none">
-        <select id="hl-type" class="filter-select" style="width:100%;margin-bottom:8px">
-          <option value="project">🛠️ ${isFr ? 'Projet' : 'Project'}</option>
-          <option value="cert">🎓 ${isFr ? 'Certification' : 'Certification'}</option>
-          <option value="achievement">🏆 ${isFr ? 'Réalisation' : 'Achievement'}</option>
-          <option value="available">🟢 ${isFr ? 'Mise à jour disponibilité' : 'Availability update'}</option>
-        </select>
-        <input type="text" id="hl-title" class="filter-input" style="width:100%;margin-bottom:8px;box-sizing:border-box" placeholder="${isFr ? 'Titre (requis)' : 'Title (required)'}">
-        <input type="text" id="hl-desc" class="filter-input" style="width:100%;margin-bottom:8px;box-sizing:border-box" placeholder="${isFr ? 'Description courte (optionnel)' : 'Short description (optional)'}">
-        <input type="url" id="hl-url" class="filter-input" style="width:100%;margin-bottom:12px;box-sizing:border-box" placeholder="Link / URL (${isFr ? 'optionnel' : 'optional'})">
-        <div style="display:flex;gap:8px">
-          <button class="btn-primary" style="flex:1" onclick="addHighlight()"><i class="ti ti-plus"></i> ${isFr ? 'Ajouter' : 'Add'}</button>
-          <button class="btn-ghost" onclick="document.getElementById('highlight-form').style.display='none';document.getElementById('btn-add-highlight').style.display=''">
-            ${isFr ? 'Annuler' : 'Cancel'}
-          </button>
+        <div>
+          <h3 class="highlights-title"><i class="ti ti-sparkles"></i> ${title}</h3>
+          <p class="highlights-sub">${sub}</p>
         </div>
       </div>
-      <button class="btn-ghost" id="btn-add-highlight" style="width:100%;margin-top:10px"
-        onclick="document.getElementById('highlight-form').style.display='block';this.style.display='none'">
+      <div class="hl-grid" id="highlights-cards">${cards}</div>
+      <div class="hl-modal-backdrop hidden" id="hl-modal-backdrop" data-action="close-hl-modal">
+        <div class="hl-modal-box" onclick="event.stopPropagation()">
+          <h4 style="margin:0 0 14px;font-size:15px;font-weight:700">${isFr ? 'Nouveau point fort' : 'New highlight'}</h4>
+          <div class="hl-icon-picker" id="hl-icon-picker">${iconPicker}</div>
+          <input type="text" id="hl-title" class="filter-input" style="width:100%;box-sizing:border-box;margin-bottom:8px" maxlength="50" placeholder="${isFr ? 'Titre (ex : Certifié PMP)' : 'Title (e.g. PMP Certified)'}">
+          <input type="text" id="hl-desc" class="filter-input" style="width:100%;box-sizing:border-box;margin-bottom:8px" maxlength="100" placeholder="${isFr ? 'Description courte' : 'Short description'}">
+          <input type="url" id="hl-link" class="filter-input" style="width:100%;box-sizing:border-box;margin-bottom:14px" placeholder="Link / URL (${isFr ? 'optionnel' : 'optional'})">
+          <div style="display:flex;gap:8px">
+            <button class="btn-primary" style="flex:1" data-action="save-highlight"><i class="ti ti-plus"></i> ${isFr ? 'Ajouter' : 'Add'}</button>
+            <button class="btn-ghost" data-action="close-hl-modal">${isFr ? 'Annuler' : 'Cancel'}</button>
+          </div>
+        </div>
+      </div>
+      <button class="btn-ghost" style="width:100%;margin-top:10px" data-action="open-hl-modal">
         <i class="ti ti-plus"></i> ${addLbl}
       </button>
     </div>`;
 }
 
-async function addHighlight() {
+async function saveNewHighlight() {
   const title = document.getElementById('hl-title')?.value.trim();
   if (!title) { toast(state.lang === 'fr' ? 'Le titre est requis' : 'Title is required', 'error'); return; }
-  const btn = document.querySelector('#highlight-form .btn-primary');
-  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2"></i>'; }
   const d = await api('POST', `${BASE}/api/highlights`, {
-    type:        document.getElementById('hl-type')?.value || 'project',
+    icon:        _hlSelectedIcon,
     title,
     description: document.getElementById('hl-desc')?.value.trim() || '',
-    url:         document.getElementById('hl-url')?.value.trim() || '',
+    url:         document.getElementById('hl-link')?.value.trim() || '',
   });
-  if (btn) { btn.disabled = false; btn.innerHTML = `<i class="ti ti-plus"></i> ${state.lang === 'fr' ? 'Ajouter' : 'Add'}`; }
   if (d.success) {
+    document.getElementById('hl-modal-backdrop')?.classList.add('hidden');
     toast(state.lang === 'fr' ? 'Point fort ajouté !' : 'Highlight added!', 'success');
     loadHighlightsIntoContainer();
   } else {
@@ -3677,9 +3669,115 @@ async function addHighlight() {
 async function removeHighlight(id) {
   const d = await api('DELETE', `${BASE}/api/highlights/${id}`);
   if (d.success) {
-    const card = document.querySelector(`.highlight-card button[onclick="removeHighlight('${id}')"]`)?.closest('.highlight-card');
-    if (card) card.remove();
-    else loadHighlightsIntoContainer();
+    document.querySelector(`.hl-grid-card [data-id="${id}"]`)?.closest('.hl-grid-card')?.remove();
+  } else {
+    toast(d.error || 'Error', 'error');
+  }
+}
+
+/* ── Profile Skills — hard bars + soft tags ──────────────── */
+let _skillModalType = 'hard';
+
+async function loadProfileSkillsSection() {
+  const el = document.getElementById('profile-skills-container');
+  if (!el) return;
+  el.innerHTML = `<div style="padding:24px 0;text-align:center"><div class="spinner"></div></div>`;
+  const d = await api('GET', `${BASE}/api/profile-skills`);
+  const skills = d.skills || [];
+  el.innerHTML = renderProfileSkillsSection(skills);
+}
+
+function renderProfileSkillsSection(skills = []) {
+  const isFr = state.lang === 'fr';
+  const hard = skills.filter(s => s.type === 'hard');
+  const soft = skills.filter(s => s.type === 'soft');
+
+  const levelLabel = (lv) => {
+    if (lv >= 85) return isFr ? 'Expert' : 'Expert';
+    if (lv >= 65) return isFr ? 'Avancé' : 'Advanced';
+    if (lv >= 40) return isFr ? 'Intermédiaire' : 'Intermediate';
+    return isFr ? 'Débutant' : 'Beginner';
+  };
+
+  const hardBars = hard.map(s => `
+    <div class="ps-bar-wrap">
+      <div class="ps-bar-header">
+        <span class="ps-bar-name">${esc(s.name)}</span>
+        <span class="ps-level-label">${levelLabel(s.level)} · ${s.level}%</span>
+      </div>
+      <div class="ps-bar-track">
+        <div class="ps-bar-fill" style="width:${s.level}%"></div>
+      </div>
+      <button class="ps-remove" data-action="remove-profile-skill" data-id="${esc(s.id)}" title="${isFr ? 'Supprimer' : 'Remove'}">✕</button>
+    </div>`).join('');
+
+  const softTags = soft.map(s => `
+    <div class="ps-tag">
+      ${esc(s.name)}
+      <span class="ps-tag-rm" data-action="remove-profile-skill" data-id="${esc(s.id)}">✕</span>
+    </div>`).join('');
+
+  const skillModalHard = isFr ? 'Compétence technique' : 'Technical skill';
+  const skillModalSoft = isFr ? 'Soft skill' : 'Soft skill';
+  const levelLbl = isFr ? 'Niveau' : 'Level';
+
+  return `
+    <div class="ps-section">
+      <div class="ps-section-header">
+        <h3 class="highlights-title"><i class="ti ti-bolt"></i> ${isFr ? 'Compétences' : 'Skills'}</h3>
+      </div>
+
+      <div class="ps-category">
+        <h4 class="ps-cat-title">Hard Skills</h4>
+        <div id="ps-hard-list">${hardBars || `<p class="ps-empty">${isFr ? 'Aucune compétence technique' : 'No technical skills yet'}</p>`}</div>
+        <button class="btn-ghost ps-add-btn" data-action="open-skill-modal" data-skill-type="hard">
+          <i class="ti ti-plus"></i> ${isFr ? '+ Compétence technique' : '+ Technical skill'}
+        </button>
+      </div>
+
+      <div class="ps-category">
+        <h4 class="ps-cat-title">Soft Skills</h4>
+        <div class="ps-soft-wrap" id="ps-soft-list">${softTags || `<p class="ps-empty">${isFr ? 'Aucun soft skill' : 'No soft skills yet'}</p>`}</div>
+        <button class="btn-ghost ps-add-btn" data-action="open-skill-modal" data-skill-type="soft">
+          <i class="ti ti-plus"></i> ${isFr ? '+ Soft skill' : '+ Soft skill'}
+        </button>
+      </div>
+
+      <div class="ps-modal-backdrop hidden" id="ps-modal-backdrop" data-action="close-skill-modal">
+        <div class="hl-modal-box" onclick="event.stopPropagation()">
+          <h4 id="ps-modal-title" style="margin:0 0 14px;font-size:15px;font-weight:700">${skillModalHard}</h4>
+          <input type="text" id="ps-skill-name" class="filter-input" style="width:100%;box-sizing:border-box;margin-bottom:10px" maxlength="80" placeholder="${isFr ? 'Nom de la compétence' : 'Skill name'}">
+          <div id="ps-level-wrap">
+            <label style="font-size:13px;color:var(--muted)">${levelLbl} : <strong id="ps-level-val">75</strong>%</label>
+            <input type="range" id="ps-skill-level" min="0" max="100" value="75" style="width:100%;margin:6px 0 14px" oninput="document.getElementById('ps-level-val').textContent=this.value">
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-primary" style="flex:1" data-action="save-profile-skill"><i class="ti ti-plus"></i> ${isFr ? 'Ajouter' : 'Add'}</button>
+            <button class="btn-ghost" data-action="close-skill-modal">${isFr ? 'Annuler' : 'Cancel'}</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+async function saveNewProfileSkill() {
+  const name = document.getElementById('ps-skill-name')?.value.trim();
+  if (!name) { toast(state.lang === 'fr' ? 'Nom requis' : 'Name required', 'error'); return; }
+  const level = parseInt(document.getElementById('ps-skill-level')?.value) || 75;
+  const d = await api('POST', `${BASE}/api/profile-skills`, { name, level, type: _skillModalType });
+  if (d.success) {
+    document.getElementById('ps-modal-backdrop')?.classList.add('hidden');
+    toast(state.lang === 'fr' ? 'Compétence ajoutée !' : 'Skill added!', 'success');
+    loadProfileSkillsSection();
+  } else {
+    toast(d.error || 'Error', 'error');
+  }
+}
+
+async function removeProfileSkill(id) {
+  const d = await api('DELETE', `${BASE}/api/profile-skills/${id}`);
+  if (d.success) {
+    document.querySelector(`[data-action="remove-profile-skill"][data-id="${id}"]`)?.closest('.ps-bar-wrap, .ps-tag')?.remove();
   } else {
     toast(d.error || 'Error', 'error');
   }
@@ -4399,6 +4497,40 @@ document.addEventListener('click', e => {
         hideModal('modal-login'); showModal('modal-register');             break;
       case 'terms-from-register':
         e.preventDefault(); hideModal('modal-register'); goto('terms');   break;
+      // ── Highlights ──────────────────────────────────────
+      case 'open-hl-modal':
+        _hlSelectedIcon = '⭐';
+        document.getElementById('hl-modal-backdrop')?.classList.remove('hidden');
+        break;
+      case 'close-hl-modal':
+        document.getElementById('hl-modal-backdrop')?.classList.add('hidden');
+        break;
+      case 'select-hl-icon':
+        _hlSelectedIcon = el.dataset.icon || '⭐';
+        document.querySelectorAll('.hl-icon-opt').forEach(o => o.classList.toggle('selected', o.dataset.icon === _hlSelectedIcon));
+        break;
+      case 'save-highlight':    saveNewHighlight();                       break;
+      case 'remove-highlight':  removeHighlight(el.dataset.id);           break;
+      // ── Profile skills ──────────────────────────────────
+      case 'open-skill-modal': {
+        _skillModalType = el.dataset.skillType || 'hard';
+        const isFr2 = state.lang === 'fr';
+        const titleEl = document.getElementById('ps-modal-title');
+        const levelWrap = document.getElementById('ps-level-wrap');
+        if (titleEl) titleEl.textContent = _skillModalType === 'hard' ? (isFr2 ? 'Compétence technique' : 'Technical skill') : 'Soft skill';
+        if (levelWrap) levelWrap.style.display = _skillModalType === 'hard' ? '' : 'none';
+        const nameEl = document.getElementById('ps-skill-name');
+        if (nameEl) { nameEl.value = ''; nameEl.focus(); }
+        if (document.getElementById('ps-skill-level')) document.getElementById('ps-skill-level').value = 75;
+        if (document.getElementById('ps-level-val')) document.getElementById('ps-level-val').textContent = '75';
+        document.getElementById('ps-modal-backdrop')?.classList.remove('hidden');
+        break;
+      }
+      case 'close-skill-modal':
+        document.getElementById('ps-modal-backdrop')?.classList.add('hidden');
+        break;
+      case 'save-profile-skill':  saveNewProfileSkill();                  break;
+      case 'remove-profile-skill': removeProfileSkill(el.dataset.id);     break;
     }
     return;
   }

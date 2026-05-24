@@ -31,15 +31,15 @@ router.get('/public/:userId', async (req, res) => {
 
 /* POST — add */
 router.post('/', requireAuth, async (req, res) => {
-  const { type, title, description = '', url = '' } = req.body;
+  const { type, icon = '⭐', title, description = '', url = '' } = req.body;
   if (!title || !title.trim()) return res.status(400).json({ success: false, error: 'Title is required' });
   const safeType = VALID_TYPES.includes(type) ? type : 'project';
+  const safeIcon = typeof icon === 'string' && icon.trim() ? icon.trim().slice(0, 10) : '⭐';
   try {
-    const { nanoid } = await import('nanoid').catch(() => ({ nanoid: () => Math.random().toString(36).slice(2, 10) }));
     const id = `hl_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
     await db.run(
-      'INSERT INTO nh_highlights (id, user_id, type, title, description, url) VALUES ($1,$2,$3,$4,$5,$6)',
-      [id, req.session.user.id, safeType, title.trim().slice(0, 200), description.trim().slice(0, 500), url.trim().slice(0, 500)]
+      'INSERT INTO nh_highlights (id, user_id, type, icon, title, description, url) VALUES ($1,$2,$3,$4,$5,$6,$7)',
+      [id, req.session.user.id, safeType, safeIcon, title.trim().slice(0, 200), description.trim().slice(0, 500), url.trim().slice(0, 500)]
     );
     const row = await db.get('SELECT * FROM nh_highlights WHERE id = $1', [id]);
     res.json({ success: true, highlight: row });

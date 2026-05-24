@@ -1,0 +1,281 @@
+SECTION 1 — POINTS FORTS
+Remplacer le bouton "Ajouter un point fort" par :
+
+HTML :
+<div id="highlights-grid" class="highlights-grid"></div>
+<button id="btn-add-highlight" class="btn-add-highlight">
+  + Ajouter un point fort
+</button>
+
+<!-- Modal ajout -->
+<div id="modal-highlight" class="modal-highlight hidden">
+  <div class="modal-box">
+    <h3>Nouveau point fort</h3>
+    
+    <!-- Choix icône -->
+    <div class="icon-picker">
+      <span class="icon-opt" data-icon="🏆">🏆</span>
+      <span class="icon-opt" data-icon="🚀">🚀</span>
+      <span class="icon-opt" data-icon="📜">📜</span>
+      <span class="icon-opt" data-icon="⭐">⭐</span>
+      <span class="icon-opt" data-icon="🎯">🎯</span>
+      <span class="icon-opt" data-icon="💡">💡</span>
+      <span class="icon-opt" data-icon="🔬">🔬</span>
+      <span class="icon-opt" data-icon="🌍">🌍</span>
+    </div>
+    
+    <input type="text" id="hl-title" 
+           placeholder="Titre (ex: Certifié PMP)" maxlength="50">
+    <input type="text" id="hl-desc" 
+           placeholder="Description courte" maxlength="100">
+    <input type="url" id="hl-link" 
+           placeholder="Lien (optionnel)">
+    
+    <button onclick="saveHighlight()">Ajouter</button>
+    <button onclick="closeModal('modal-highlight')">Annuler</button>
+  </div>
+</div>
+
+CSS :
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.highlight-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.highlight-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.highlight-icon { font-size: 2rem; margin-bottom: 8px; }
+.highlight-title { font-weight: 700; font-size: 0.9rem; }
+.highlight-desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+.highlight-remove {
+  position: absolute; top: 8px; right: 8px;
+  background: none; border: none;
+  color: var(--text-muted); cursor: pointer;
+  opacity: 0; transition: opacity 0.2s;
+}
+.highlight-card:hover .highlight-remove { opacity: 1; }
+
+JS :
+let highlights = []
+
+async function loadHighlights() {
+  const res = await fetch('/api/profile/highlights')
+  highlights = await res.json()
+  renderHighlights()
+}
+
+function renderHighlights() {
+  const grid = document.getElementById('highlights-grid')
+  grid.innerHTML = highlights.map((h, i) => `
+    <div class="highlight-card">
+      <button class="highlight-remove" 
+              data-action="remove-highlight" 
+              data-id="${h.id}">✕</button>
+      <div class="highlight-icon">${h.icon}</div>
+      <div class="highlight-title">${h.title}</div>
+      <div class="highlight-desc">${h.description}</div>
+      ${h.link ? `<a href="${h.link}" target="_blank" 
+                    class="highlight-link">Voir →</a>` : ''}
+    </div>
+  `).join('')
+}
+
+async function saveHighlight() {
+  const highlight = {
+    icon: selectedIcon || '⭐',
+    title: document.getElementById('hl-title').value.trim(),
+    description: document.getElementById('hl-desc').value.trim(),
+    link: document.getElementById('hl-link').value.trim()
+  }
+  if (!highlight.title) return
+
+  await fetch('/api/profile/highlights', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(highlight)
+  })
+  
+  closeModal('modal-highlight')
+  loadHighlights()
+}
+
+─────────────────────────────────────────────
+
+SECTION 2 — COMPÉTENCES
+
+HTML :
+<div class="skills-section">
+  
+  <div class="skills-category">
+    <h4>Hard Skills</h4>
+    <div id="hard-skills-list"></div>
+    <button data-action="add-skill" data-type="hard">
+      + Ajouter une compétence technique
+    </button>
+  </div>
+
+  <div class="skills-category">
+    <h4>Soft Skills</h4>
+    <div id="soft-skills-list"></div>
+    <button data-action="add-skill" data-type="soft">
+      + Ajouter un soft skill
+    </button>
+  </div>
+
+</div>
+
+<!-- Modal skill -->
+<div id="modal-skill" class="hidden">
+  <input type="text" id="skill-name" placeholder="Nom de la compétence">
+  
+  <!-- Hard skill uniquement -->
+  <div id="skill-level-wrap">
+    <label>Niveau : <span id="skill-level-val">75</span>%</label>
+    <input type="range" id="skill-level" 
+           min="0" max="100" value="75"
+           oninput="document.getElementById('skill-level-val')
+                    .textContent = this.value">
+  </div>
+  
+  <button onclick="saveSkill()">Ajouter</button>
+</div>
+
+CSS :
+/* Hard skills avec barre */
+.skill-bar-wrap { margin-bottom: 14px; }
+.skill-bar-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+.skill-bar-track {
+  height: 6px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.skill-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(.23,1,.32,1);
+}
+.skill-level-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Soft skills tags */
+.soft-skills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.skill-tag {
+  background: var(--primary-subtle);
+  color: var(--primary);
+  border: 1px solid var(--primary-light);
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.skill-tag .remove-skill {
+  cursor: pointer;
+  opacity: 0.5;
+  font-size: 0.7rem;
+  transition: opacity 0.2s;
+}
+.skill-tag .remove-skill:hover { opacity: 1; }
+
+JS :
+function renderSkills(skills) {
+  // Hard skills
+  const hardWrap = document.getElementById('hard-skills-list')
+  const hard = skills.filter(s => s.type === 'hard')
+  hardWrap.innerHTML = hard.map(s => `
+    <div class="skill-bar-wrap">
+      <div class="skill-bar-header">
+        <span>${s.name}</span>
+        <span class="skill-level-label">
+          ${s.level >= 85 ? 'Expert' : 
+            s.level >= 65 ? 'Avancé' : 
+            s.level >= 40 ? 'Intermédiaire' : 'Débutant'}
+          · ${s.level}%
+        </span>
+      </div>
+      <div class="skill-bar-track">
+        <div class="skill-bar-fill" style="width: ${s.level}%"></div>
+      </div>
+    </div>
+  `).join('')
+
+  // Soft skills
+  const softWrap = document.getElementById('soft-skills-list')
+  softWrap.innerHTML = `<div class="soft-skills-wrap">` +
+    skills.filter(s => s.type === 'soft').map(s => `
+      <div class="skill-tag">
+        ${s.name}
+        <span class="remove-skill" 
+              data-action="remove-skill" 
+              data-id="${s.id}">✕</span>
+      </div>
+    `).join('') + `</div>`
+}
+
+─────────────────────────────────────────────
+
+SECTION 3 — ROUTES API à créer dans server.js
+
+// Points forts
+GET    /api/profile/highlights     → retourne tous les highlights du user
+POST   /api/profile/highlights     → ajoute un highlight
+DELETE /api/profile/highlights/:id → supprime un highlight
+
+// Compétences  
+GET    /api/profile/skills         → retourne toutes les skills
+POST   /api/profile/skills         → ajoute une skill {name, level, type}
+DELETE /api/profile/skills/:id     → supprime une skill
+PUT    /api/profile/skills/:id     → update le niveau
+
+// Tables DB à créer :
+CREATE TABLE IF NOT EXISTS highlights (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  icon TEXT DEFAULT '⭐',
+  title TEXT NOT NULL,
+  description TEXT,
+  link TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+)
+
+CREATE TABLE IF NOT EXISTS skills (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  name TEXT NOT NULL,
+  level INTEGER DEFAULT 75,
+  type TEXT DEFAULT 'hard',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+)
+
+🎯 Une phrase pour Replit
+
+"Remplacer les sections Points Forts, Compétences et Recommandations par des composants visuels : cards avec icônes pour les points forts, barres de progression pour les hard skills et tags colorés pour les soft skills. Créer les tables highlights et skills en DB avec les routes CRUD correspondantes. Tout doit utiliser la délégation d'événements sur document pour éviter les problèmes CSP."

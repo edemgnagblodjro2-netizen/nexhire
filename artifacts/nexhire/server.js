@@ -379,6 +379,18 @@ async function runMigrations() {
       )
     `);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_highlights_user ON nh_highlights(user_id)`);
+    await pool.query(`ALTER TABLE nh_highlights ADD COLUMN IF NOT EXISTS icon TEXT DEFAULT '⭐'`);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_profile_skills (
+        id          TEXT PRIMARY KEY,
+        user_id     TEXT NOT NULL REFERENCES nh_users(id) ON DELETE CASCADE,
+        name        TEXT NOT NULL,
+        level       INTEGER NOT NULL DEFAULT 75,
+        type        TEXT NOT NULL DEFAULT 'hard',
+        created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_pskills_user ON nh_profile_skills(user_id)`);
     await pool.query(`
       CREATE TABLE IF NOT EXISTS nh_video_interviews (
         id                TEXT PRIMARY KEY,
@@ -927,6 +939,7 @@ app.use(apiBase + '/skills',        require('./routes/skills'));
 app.use(apiBase + '/profile-score', require('./routes/profile-score'));
 app.use(apiBase + '/salary',        require('./routes/salary'));
 app.use(apiBase + '/highlights',       require('./routes/highlights'));
+app.use(apiBase + '/profile-skills',   require('./routes/profile-skills'));
 app.use(apiBase + '/video-interviews', require('./routes/video-interviews'));
 app.use(apiBase + '/moderation',       require('./routes/moderation'));
 // Serve uploaded interview videos
