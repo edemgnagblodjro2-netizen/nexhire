@@ -705,53 +705,161 @@ async function seedSkillTests(pool) {
   console.log(`[Nexhire] ✅ Skill tests seeded (${added} new, ${tests.length - added} updated)`);
 }
 
-// ── Demo seed (runs once if no jobs exist) ──────────────────
+// ── Demo seed (force-upsert — runs on every restart, safe) ──
 async function seedDemoData() {
   const { pool } = require('./models/db');
-  const { rows } = await pool.query('SELECT COUNT(*) as n FROM nh_jobs');
-  if (parseInt(rows[0].n) > 0) return;
+  const crypto = require('crypto');
 
-  const SYS_USER_ID = '00000000-0000-0000-0000-000000000001';
-  const SYS_CO_ID   = '00000000-0000-0000-0000-000000000002';
+  // ── 3 system users (one per company) ─────────────────────
+  const USERS = [
+    { id: '00000000-0000-0000-0000-000000000001', email: 'demo@nexhire.ca',      first: 'Nexhire',   last: 'Demo' },
+    { id: '00000000-0000-0000-0000-000000000011', email: 'demo@shopify-hire.ca', first: 'Shopify',   last: 'Recrutement' },
+    { id: '00000000-0000-0000-0000-000000000021', email: 'demo@desjardins.ca',   first: 'Desjardins',last: 'Talents' },
+  ];
+  for (const u of USERS) {
+    await pool.query(`
+      INSERT INTO nh_users (id, email, password_hash, role, first_name, last_name, email_verified)
+      VALUES ($1,$2,'','employer',$3,$4,true)
+      ON CONFLICT (id) DO UPDATE SET email=EXCLUDED.email
+    `, [u.id, u.email, u.first, u.last]);
+  }
 
-  await pool.query(`
-    INSERT INTO nh_users (id, email, password_hash, role, first_name, last_name, email_verified)
-    VALUES ($1, 'demo@nexhire.ca', '', 'employer', 'Nexhire', 'Demo', true)
-    ON CONFLICT (id) DO NOTHING
-  `, [SYS_USER_ID]);
+  // ── 3 companies ───────────────────────────────────────────
+  const COMPANIES = [
+    { id:'00000000-0000-0000-0000-000000000002', owner:'00000000-0000-0000-0000-000000000001',
+      name:'Nexhire Tech', slug:'nexhire-tech', industry:'Technology', city:'Montréal',
+      en:'AI-powered global hiring platform connecting top talent with leading companies.',
+      fr:'Plateforme mondiale de recrutement IA connectant les talents avec les meilleures entreprises.' },
+    { id:'00000000-0000-0000-0000-000000000012', owner:'00000000-0000-0000-0000-000000000011',
+      name:'Shopify Canada', slug:'shopify-canada', industry:'E-commerce / Technology', city:'Ottawa',
+      en:'Global commerce platform empowering entrepreneurs worldwide.',
+      fr:'Plateforme de commerce mondial permettant aux entrepreneurs de prospérer partout.' },
+    { id:'00000000-0000-0000-0000-000000000022', owner:'00000000-0000-0000-0000-000000000021',
+      name:'Desjardins Groupe', slug:'desjardins-groupe', industry:'Finance / Coopérative', city:'Lévis',
+      en:'Canada\'s largest cooperative financial group, serving 7 million members.',
+      fr:'Le plus grand groupe financier coopératif du Canada, au service de 7 millions de membres.' },
+  ];
+  for (const c of COMPANIES) {
+    await pool.query(`
+      INSERT INTO nh_companies (id, owner_id, name, slug, description_en, description_fr, industry, city, country, verified)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'Canada',true)
+      ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name, verified=true
+    `, [c.id, c.owner, c.name, c.slug, c.en, c.fr, c.industry, c.city]);
+    await pool.query(`UPDATE nh_users SET company_id=$1 WHERE id=$2`, [c.id, c.owner]);
+  }
 
-  await pool.query(`
-    INSERT INTO nh_companies (id, owner_id, name, slug, description_en, description_fr, industry, city, country, verified)
-    VALUES ($1, $2, 'Nexhire Tech', 'nexhire-tech',
-      'AI-powered global hiring platform.',
-      'Plateforme mondiale de recrutement propulsée par l''IA.',
-      'Technology', 'Montreal', 'Canada', true)
-    ON CONFLICT (id) DO NOTHING
-  `, [SYS_CO_ID, SYS_USER_ID]);
-
-  await pool.query(`UPDATE nh_users SET company_id = $1 WHERE id = $2`, [SYS_CO_ID, SYS_USER_ID]);
-
-  const jobs = [
-    { en:'Senior Full-Stack Developer', fr:'Développeur Full-Stack Senior', desc_en:'Build next-gen hiring tools with React, Node.js and AI.', desc_fr:'Construisez des outils de recrutement IA avec React et Node.js.', mode:'hybrid', prov:'QC', city:'Montréal', min:95000, max:130000, featured:true,  slug:'senior-full-stack-developer-nexhire' },
-    { en:'AI / ML Engineer',            fr:'Ingénieur IA / ML',             desc_en:'Design ML models for candidate matching at scale.',        desc_fr:'Concevez des modèles ML pour le matching candidat à grande échelle.', mode:'remote', prov:'ON', city:'Toronto',  min:110000,max:150000,featured:true,  slug:'ai-ml-engineer-nexhire' },
-    { en:'UX / UI Designer',            fr:'Designer UX / UI',              desc_en:'Shape the future of recruiting UX on web and mobile.',      desc_fr:'Façonnez l\'expérience utilisateur du recrutement web et mobile.', mode:'hybrid', prov:'QC', city:'Montréal', min:75000, max:105000,featured:true,  slug:'ux-ui-designer-nexhire' },
-    { en:'Product Manager',             fr:'Chef de produit',               desc_en:'Drive the roadmap for our AI hiring platform.',             desc_fr:'Pilotez la feuille de route de notre plateforme de recrutement IA.', mode:'onsite', prov:'ON', city:'Toronto',  min:100000,max:140000,featured:true,  slug:'product-manager-nexhire' },
-    { en:'DevOps / Cloud Engineer',     fr:'Ingénieur DevOps / Cloud',      desc_en:'Scale our AWS infrastructure with Kubernetes and Terraform.',desc_fr:'Scalez notre infrastructure AWS avec Kubernetes et Terraform.', mode:'remote', prov:'BC', city:'Vancouver', min:105000,max:145000,featured:false, slug:'devops-cloud-engineer-nexhire' },
-    { en:'Customer Success Manager',    fr:'Gestionnaire succès client',    desc_en:'Onboard and retain enterprise customers across Canada.',    desc_fr:'Accompagnez et fidélisez nos clients entreprise au Canada.', mode:'hybrid', prov:'AB', city:'Calgary',   min:70000, max:95000, featured:false, slug:'customer-success-manager-nexhire' },
+  // ── 15 jobs across 3 companies ────────────────────────────
+  const JOBS = [
+    // Nexhire Tech
+    { co:'00000000-0000-0000-0000-000000000002', by:'00000000-0000-0000-0000-000000000001',
+      en:'Senior Full-Stack Developer', fr:'Développeur Full-Stack Senior',
+      desc_en:'Build next-gen AI hiring tools with React, Node.js and PostgreSQL. Work directly with the founding team.',
+      desc_fr:'Construisez des outils de recrutement IA de nouvelle génération avec React, Node.js et PostgreSQL.',
+      mode:'hybrid', prov:'QC', city:'Montréal', min:95000, max:130000, featured:true, type:'full-time',
+      skills:'["React","Node.js","TypeScript","PostgreSQL"]', slug:'senior-full-stack-nexhire' },
+    { co:'00000000-0000-0000-0000-000000000002', by:'00000000-0000-0000-0000-000000000001',
+      en:'AI / ML Engineer', fr:'Ingénieur IA / ML',
+      desc_en:'Design and deploy ML models for candidate-job matching at scale using Claude and GPT-4o.',
+      desc_fr:'Concevez et déployez des modèles ML pour le matching candidat-emploi à grande échelle.',
+      mode:'remote', prov:'ON', city:'Toronto', min:115000, max:155000, featured:true, type:'full-time',
+      skills:'["Python","Machine Learning","LLMs","PyTorch"]', slug:'ai-ml-engineer-nexhire' },
+    { co:'00000000-0000-0000-0000-000000000002', by:'00000000-0000-0000-0000-000000000001',
+      en:'Senior UX / UI Designer', fr:'Designer UX / UI Senior',
+      desc_en:'Shape the future of recruiting UX on web and mobile. Own the design system end-to-end.',
+      desc_fr:'Façonnez l\'expérience utilisateur du recrutement web et mobile. Possédez le design system.',
+      mode:'hybrid', prov:'QC', city:'Montréal', min:80000, max:110000, featured:true, type:'full-time',
+      skills:'["Figma","UX Research","Design Systems","Prototyping"]', slug:'ux-ui-designer-nexhire' },
+    { co:'00000000-0000-0000-0000-000000000002', by:'00000000-0000-0000-0000-000000000001',
+      en:'Product Manager — AI Features', fr:'Chef de produit — Fonctionnalités IA',
+      desc_en:'Drive the AI roadmap: matching, scoring, cover letters. Work with engineers and data scientists.',
+      desc_fr:'Pilotez la feuille de route IA : matching, scoring, lettres de motivation.',
+      mode:'onsite', prov:'ON', city:'Toronto', min:105000, max:140000, featured:false, type:'full-time',
+      skills:'["Product Management","Agile","AI/ML","Roadmapping"]', slug:'product-manager-nexhire' },
+    { co:'00000000-0000-0000-0000-000000000002', by:'00000000-0000-0000-0000-000000000001',
+      en:'DevOps / Cloud Engineer', fr:'Ingénieur DevOps / Cloud',
+      desc_en:'Scale AWS infrastructure with Kubernetes and Terraform. Own CI/CD and observability.',
+      desc_fr:'Scalez l\'infrastructure AWS avec Kubernetes et Terraform. CI/CD et observabilité.',
+      mode:'remote', prov:'BC', city:'Vancouver', min:108000, max:148000, featured:false, type:'full-time',
+      skills:'["AWS","Kubernetes","Terraform","Docker"]', slug:'devops-cloud-nexhire' },
+    // Shopify Canada
+    { co:'00000000-0000-0000-0000-000000000012', by:'00000000-0000-0000-0000-000000000011',
+      en:'Backend Engineer — Payments', fr:'Ingénieur backend — Paiements',
+      desc_en:'Build and scale Shopify\'s payments infrastructure handling billions in merchant volume.',
+      desc_fr:'Construisez et scalez l\'infrastructure de paiements de Shopify traitant des milliards de transactions.',
+      mode:'hybrid', prov:'ON', city:'Ottawa', min:130000, max:180000, featured:true, type:'full-time',
+      skills:'["Ruby on Rails","Go","Distributed Systems","Payments"]', slug:'backend-engineer-payments-shopify' },
+    { co:'00000000-0000-0000-0000-000000000012', by:'00000000-0000-0000-0000-000000000011',
+      en:'Data Engineer — Analytics', fr:'Ingénieur données — Analytique',
+      desc_en:'Design data pipelines powering merchant analytics across millions of Shopify stores.',
+      desc_fr:'Concevez des pipelines de données alimentant l\'analytique marchande sur des millions de boutiques.',
+      mode:'remote', prov:'ON', city:'Toronto', min:120000, max:165000, featured:false, type:'full-time',
+      skills:'["Spark","dbt","BigQuery","Python"]', slug:'data-engineer-shopify' },
+    { co:'00000000-0000-0000-0000-000000000012', by:'00000000-0000-0000-0000-000000000011',
+      en:'iOS Engineer — Commerce', fr:'Ingénieur iOS — Commerce',
+      desc_en:'Build world-class iOS experiences for merchants and buyers on Shopify Mobile and Shop app.',
+      desc_fr:'Construisez des expériences iOS de classe mondiale pour les marchands et acheteurs Shopify.',
+      mode:'hybrid', prov:'BC', city:'Vancouver', min:125000, max:170000, featured:false, type:'full-time',
+      skills:'["Swift","SwiftUI","iOS","Xcode"]', slug:'ios-engineer-shopify' },
+    { co:'00000000-0000-0000-0000-000000000012', by:'00000000-0000-0000-0000-000000000011',
+      en:'Senior Product Designer', fr:'Designer produit senior',
+      desc_en:'Define the future of commerce design at Shopify — from merchant dashboards to buyer checkout.',
+      desc_fr:'Définissez l\'avenir du design commerce chez Shopify — des tableaux de bord marchands au paiement.',
+      mode:'hybrid', prov:'ON', city:'Ottawa', min:115000, max:155000, featured:false, type:'full-time',
+      skills:'["Figma","Design Systems","User Research","Prototyping"]', slug:'senior-product-designer-shopify' },
+    { co:'00000000-0000-0000-0000-000000000012', by:'00000000-0000-0000-0000-000000000011',
+      en:'Security Engineer', fr:'Ingénieur sécurité',
+      desc_en:'Protect billions in merchant transactions. Own application security, pen testing, and incident response.',
+      desc_fr:'Protégez des milliards de transactions. Sécurité applicative, tests d\'intrusion, réponse aux incidents.',
+      mode:'remote', prov:'ON', city:'Toronto', min:135000, max:185000, featured:false, type:'full-time',
+      skills:'["Security","Pen Testing","SIEM","Incident Response"]', slug:'security-engineer-shopify' },
+    // Desjardins
+    { co:'00000000-0000-0000-0000-000000000022', by:'00000000-0000-0000-0000-000000000021',
+      en:'Analyste développeur — FinTech', fr:'Analyste développeur — FinTech',
+      desc_en:'Develop financial products for 7 million members. Java / Spring Boot microservices environment.',
+      desc_fr:'Développez des produits financiers pour 7 millions de membres. Environnement Java / Spring Boot.',
+      mode:'hybrid', prov:'QC', city:'Lévis', min:85000, max:120000, featured:true, type:'full-time',
+      skills:'["Java","Spring Boot","Microservices","SQL"]', slug:'analyste-dev-desjardins' },
+    { co:'00000000-0000-0000-0000-000000000022', by:'00000000-0000-0000-0000-000000000021',
+      en:'Architecte de solutions — Cloud', fr:'Architecte de solutions — Cloud',
+      desc_en:'Lead cloud migration initiatives across Desjardins\' digital banking platforms. Azure + GCP.',
+      desc_fr:'Pilotez les migrations cloud sur les plateformes bancaires numériques de Desjardins.',
+      mode:'hybrid', prov:'QC', city:'Montréal', min:115000, max:155000, featured:false, type:'full-time',
+      skills:'["Azure","GCP","Solution Architecture","Enterprise IT"]', slug:'architecte-cloud-desjardins' },
+    { co:'00000000-0000-0000-0000-000000000022', by:'00000000-0000-0000-0000-000000000021',
+      en:'Conseiller en cybersécurité', fr:'Conseiller en cybersécurité',
+      desc_en:'Ensure the cybersecurity posture of Canada\'s largest cooperative. Bilingual role (FR/EN).',
+      desc_fr:'Assurez la posture de cybersécurité du plus grand groupe coopératif du Canada.',
+      mode:'onsite', prov:'QC', city:'Lévis', min:95000, max:130000, featured:false, type:'full-time',
+      skills:'["Cybersecurity","SIEM","Risk Management","French"]', slug:'conseiller-cybersecurite-desjardins' },
+    { co:'00000000-0000-0000-0000-000000000022', by:'00000000-0000-0000-0000-000000000021',
+      en:'Analyste en intelligence artificielle', fr:'Analyste en intelligence artificielle',
+      desc_en:'Apply AI and ML to credit scoring, fraud detection, and personalized member experiences.',
+      desc_fr:'Appliquez l\'IA et le ML au scoring de crédit, à la détection de fraude et aux expériences personnalisées.',
+      mode:'hybrid', prov:'QC', city:'Montréal', min:90000, max:125000, featured:false, type:'full-time',
+      skills:'["Python","ML","Data Science","French"]', slug:'analyste-ia-desjardins' },
+    { co:'00000000-0000-0000-0000-000000000022', by:'00000000-0000-0000-0000-000000000021',
+      en:'Customer Success Manager — Enterprise', fr:'Gestionnaire succès client — Entreprise',
+      desc_en:'Support Desjardins\' enterprise clients across Québec. Bilingual, relationship-driven role.',
+      desc_fr:'Accompagnez les clients entreprise de Desjardins au Québec. Rôle bilingue et axé sur les relations.',
+      mode:'hybrid', prov:'QC', city:'Québec', min:72000, max:98000, featured:false, type:'full-time',
+      skills:'["Account Management","CRM","Bilingual","Finance"]', slug:'customer-success-desjardins' },
   ];
 
-  for (const j of jobs) {
-    const id = require('crypto').randomUUID();
+  for (const j of JOBS) {
+    const id = crypto.randomUUID();
     await pool.query(`
       INSERT INTO nh_jobs (id, company_id, posted_by, title_en, title_fr, slug, description_en, description_fr,
         work_mode, province, city, country, salary_min, salary_max, salary_currency, salary_period,
-        job_type, status, featured)
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,'Canada',$12,$13,'CAD','year','full-time','active',$14)
-      ON CONFLICT (slug) DO NOTHING
-    `, [id, SYS_CO_ID, SYS_USER_ID, j.en, j.fr, j.slug, j.desc_en, j.desc_fr,
-        j.mode, j.prov, j.city, j.min, j.max, j.featured]);
+        job_type, status, featured, skills_required, published_at)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,'Canada',$12,$13,'CAD','year',$14,'active',$15,$16::jsonb,NOW())
+      ON CONFLICT (slug) DO UPDATE SET
+        title_en=EXCLUDED.title_en, title_fr=EXCLUDED.title_fr,
+        description_en=EXCLUDED.description_en, description_fr=EXCLUDED.description_fr,
+        featured=EXCLUDED.featured, status='active', published_at=COALESCE(nh_jobs.published_at,NOW())
+    `, [id, j.co, j.by, j.en, j.fr, j.slug, j.desc_en, j.desc_fr,
+        j.mode, j.prov, j.city, j.min, j.max, j.type, j.featured, j.skills]);
   }
-  console.log('[Nexhire] ✅ Demo jobs seeded');
+  console.log('[Nexhire] ✅ Demo data seeded (3 companies, 15 jobs)');
 }
 
 // ── Security ──────────────────────────────────────────────
