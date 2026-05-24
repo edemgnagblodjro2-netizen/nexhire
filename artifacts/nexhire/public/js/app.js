@@ -4411,7 +4411,7 @@ async function uploadAndParseCV() {
       if (statusEl) statusEl.innerHTML = `<span style="color:var(--green)">✓ ${isFr?'Profil pré-rempli depuis le CV':'Profile pre-filled from CV'}${parts.length ? ` — ${parts.join(', ')}` : ''}</span>`;
       // reload sections so new data appears immediately
       if (hardCount || softCount) loadProfileSkillsSection();
-      if (hlCount) loadHighlightsSection();
+      if (hlCount) loadHighlightsIntoContainer();
     } else {
       if (statusEl) statusEl.innerHTML = `<span style="color:var(--green)">✓ ${isFr?'CV sauvegardé.':'CV saved.'} ${d.message||''}</span>`;
     }
