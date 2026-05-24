@@ -344,6 +344,18 @@ async function runMigrations() {
     await pool.query(`ALTER TABLE nh_job_alerts ADD COLUMN IF NOT EXISTS salary_min INTEGER`);
     await pool.query(`ALTER TABLE nh_job_alerts ADD COLUMN IF NOT EXISTS skills TEXT`);
     await pool.query(`ALTER TABLE nh_job_alerts ADD COLUMN IF NOT EXISTS instant_notify BOOLEAN DEFAULT TRUE`);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_highlights (
+        id          TEXT PRIMARY KEY,
+        user_id     TEXT NOT NULL REFERENCES nh_users(id) ON DELETE CASCADE,
+        type        TEXT NOT NULL DEFAULT 'project',
+        title       TEXT NOT NULL,
+        description TEXT NOT NULL DEFAULT '',
+        url         TEXT NOT NULL DEFAULT '',
+        created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_highlights_user ON nh_highlights(user_id)`);
     // Seed skill tests if empty
     await seedSkillTests(pool);
     console.log('[Nexhire] ✅ DB ready');
@@ -529,6 +541,7 @@ app.use(apiBase + '/referrals',     require('./routes/referrals'));
 app.use(apiBase + '/skills',        require('./routes/skills'));
 app.use(apiBase + '/profile-score', require('./routes/profile-score'));
 app.use(apiBase + '/salary',        require('./routes/salary'));
+app.use(apiBase + '/highlights',    require('./routes/highlights'));
 
 // ── Health check ───────────────────────────────────────────
 app.get(BASE_PATH + '/healthz', (req, res) => res.json({ status: 'ok', service: 'nexhire' }));

@@ -2602,10 +2602,11 @@ async function loadProfileForm() {
       </div>
       <div id="cv-upload-status" style="display:none;font-size:13px;margin-top:8px;color:var(--muted)"></div>
     </div>` +
-    renderHighlightsSection() +
+    `<div id="highlights-container"></div>` +
     `<div id="my-endorsements-container" class="endorsements-section-placeholder"></div>`;
   updatePassportBadgesRow(getAvailBadges(_uid));
   updateSidebarOpenToWork(getAvailBadges(_uid));
+  loadHighlightsIntoContainer();
   loadEndorsements(state.user.id).then(data => {
     const el = document.getElementById('my-endorsements-container');
     if (el) el.outerHTML = renderEndorsementSection(data, state.user.id, true);
@@ -3552,74 +3553,100 @@ async function handleEndorseClick(btn, candidateId, quality) {
   }
 }
 
-// ── Highlights (Career Identity) ───────────────────────────
-function renderHighlightsSection() {
-  const uid = state.user?.id;
-  if (!uid) return '';
-  const highlights = JSON.parse(localStorage.getItem(`nxhi_${uid}`) || '[]');
+/* ── Highlights — DB-backed ─────────────────────────────── */
+async function loadHighlightsIntoContainer() {
+  const el = document.getElementById('highlights-container');
+  if (!el) return;
+  const isFr = state.lang === 'fr';
+  el.innerHTML = `<div style="padding:24px 0;text-align:center"><div class="spinner"></div></div>`;
+  const d = await api('GET', `${BASE}/api/highlights`);
+  const highlights = d.highlights || [];
+  el.innerHTML = renderHighlightsSection(highlights);
+}
+
+function renderHighlightsSection(highlights = []) {
+  const isFr = state.lang === 'fr';
   const typeIcons  = { project:'ti-code', cert:'ti-award', achievement:'ti-trophy', available:'ti-circle-check' };
-  const typeLabels = { project:'Project', cert:'Certification', achievement:'Achievement', available:'Availability' };
+  const typeLabels = {
+    project:     isFr ? 'Projet'          : 'Project',
+    cert:        isFr ? 'Certification'   : 'Certification',
+    achievement: isFr ? 'Réalisation'     : 'Achievement',
+    available:   isFr ? 'Disponibilité'   : 'Availability',
+  };
+  const title  = isFr ? 'Mes points forts' : 'My Highlights';
+  const sub    = isFr ? 'Projets, certifications et réalisations qui vous démarquent.' : 'Projects, certifications and achievements that make you stand out.';
+  const addLbl = isFr ? 'Ajouter un point fort' : 'Add a highlight';
   const cards = highlights.map(h => `
     <div class="highlight-card">
       <div class="highlight-icon"><i class="ti ${typeIcons[h.type]||'ti-star'}"></i></div>
       <div class="highlight-body">
-        <div class="highlight-type">${typeLabels[h.type]||h.type}</div>
+        <div class="highlight-type">${typeLabels[h.type] || h.type}</div>
         <div class="highlight-title">${esc(h.title)}</div>
-        ${h.desc ? `<div class="highlight-desc">${esc(h.desc)}</div>` : ''}
-        ${h.url ? `<a href="${esc(h.url)}" target="_blank" class="highlight-link"><i class="ti ti-external-link" style="font-size:11px"></i> View</a>` : ''}
+        ${h.description ? `<div class="highlight-desc">${esc(h.description)}</div>` : ''}
+        ${h.url ? `<a href="${esc(h.url)}" target="_blank" class="highlight-link"><i class="ti ti-external-link" style="font-size:11px"></i> ${isFr ? 'Voir' : 'View'}</a>` : ''}
       </div>
-      <button class="highlight-remove" onclick="removeHighlight('${h.id}')" title="Remove"><i class="ti ti-x"></i></button>
+      <button class="highlight-remove" onclick="removeHighlight('${esc(h.id)}')" title="${isFr ? 'Supprimer' : 'Remove'}"><i class="ti ti-x"></i></button>
     </div>`).join('');
   return `
     <div class="highlights-section">
       <div class="highlights-header">
-        <h3 class="highlights-title"><i class="ti ti-sparkles"></i> My Highlights</h3>
-        <p class="highlights-sub">Projects, certifications and achievements that make you stand out.</p>
+        <h3 class="highlights-title"><i class="ti ti-sparkles"></i> ${title}</h3>
+        <p class="highlights-sub">${sub}</p>
       </div>
-      ${cards}
+      <div id="highlights-cards">${cards}</div>
       <div class="highlight-add-form" id="highlight-form" style="display:none">
         <select id="hl-type" class="filter-select" style="width:100%;margin-bottom:8px">
-          <option value="project">🛠️ Project</option>
-          <option value="cert">🎓 Certification</option>
-          <option value="achievement">🏆 Achievement</option>
-          <option value="available">🟢 Availability update</option>
+          <option value="project">🛠️ ${isFr ? 'Projet' : 'Project'}</option>
+          <option value="cert">🎓 ${isFr ? 'Certification' : 'Certification'}</option>
+          <option value="achievement">🏆 ${isFr ? 'Réalisation' : 'Achievement'}</option>
+          <option value="available">🟢 ${isFr ? 'Mise à jour disponibilité' : 'Availability update'}</option>
         </select>
-        <input type="text" id="hl-title" class="filter-input" style="width:100%;margin-bottom:8px;box-sizing:border-box" placeholder="Title (required)">
-        <input type="text" id="hl-desc" class="filter-input" style="width:100%;margin-bottom:8px;box-sizing:border-box" placeholder="Short description (optional)">
-        <input type="url" id="hl-url" class="filter-input" style="width:100%;margin-bottom:12px;box-sizing:border-box" placeholder="Link / URL (optional)">
+        <input type="text" id="hl-title" class="filter-input" style="width:100%;margin-bottom:8px;box-sizing:border-box" placeholder="${isFr ? 'Titre (requis)' : 'Title (required)'}">
+        <input type="text" id="hl-desc" class="filter-input" style="width:100%;margin-bottom:8px;box-sizing:border-box" placeholder="${isFr ? 'Description courte (optionnel)' : 'Short description (optional)'}">
+        <input type="url" id="hl-url" class="filter-input" style="width:100%;margin-bottom:12px;box-sizing:border-box" placeholder="Link / URL (${isFr ? 'optionnel' : 'optional'})">
         <div style="display:flex;gap:8px">
-          <button class="btn-primary" style="flex:1" onclick="addHighlight()"><i class="ti ti-plus"></i> Add</button>
-          <button class="btn-ghost" onclick="document.getElementById('highlight-form').style.display='none'">Cancel</button>
+          <button class="btn-primary" style="flex:1" onclick="addHighlight()"><i class="ti ti-plus"></i> ${isFr ? 'Ajouter' : 'Add'}</button>
+          <button class="btn-ghost" onclick="document.getElementById('highlight-form').style.display='none';document.getElementById('btn-add-highlight').style.display=''">
+            ${isFr ? 'Annuler' : 'Cancel'}
+          </button>
         </div>
       </div>
-      <button class="btn-ghost" id="btn-add-highlight" style="width:100%;margin-top:10px" onclick="document.getElementById('highlight-form').style.display='block';this.style.display='none'"><i class="ti ti-plus"></i> Add a highlight</button>
+      <button class="btn-ghost" id="btn-add-highlight" style="width:100%;margin-top:10px"
+        onclick="document.getElementById('highlight-form').style.display='block';this.style.display='none'">
+        <i class="ti ti-plus"></i> ${addLbl}
+      </button>
     </div>`;
 }
 
-function addHighlight() {
-  const uid = state.user?.id;
-  if (!uid) return;
+async function addHighlight() {
   const title = document.getElementById('hl-title')?.value.trim();
-  if (!title) { toast('Title is required', 'error'); return; }
-  const highlights = JSON.parse(localStorage.getItem(`nxhi_${uid}`) || '[]');
-  highlights.unshift({
-    id: `hl-${Date.now()}`,
-    type: document.getElementById('hl-type')?.value || 'project',
+  if (!title) { toast(state.lang === 'fr' ? 'Le titre est requis' : 'Title is required', 'error'); return; }
+  const btn = document.querySelector('#highlight-form .btn-primary');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2"></i>'; }
+  const d = await api('POST', `${BASE}/api/highlights`, {
+    type:        document.getElementById('hl-type')?.value || 'project',
     title,
-    desc: document.getElementById('hl-desc')?.value.trim() || '',
-    url:  document.getElementById('hl-url')?.value.trim() || ''
+    description: document.getElementById('hl-desc')?.value.trim() || '',
+    url:         document.getElementById('hl-url')?.value.trim() || '',
   });
-  localStorage.setItem(`nxhi_${uid}`, JSON.stringify(highlights));
-  toast('Highlight added!', 'success');
-  loadProfileForm();
+  if (btn) { btn.disabled = false; btn.innerHTML = `<i class="ti ti-plus"></i> ${state.lang === 'fr' ? 'Ajouter' : 'Add'}`; }
+  if (d.success) {
+    toast(state.lang === 'fr' ? 'Point fort ajouté !' : 'Highlight added!', 'success');
+    loadHighlightsIntoContainer();
+  } else {
+    toast(d.error || 'Error', 'error');
+  }
 }
 
-function removeHighlight(id) {
-  const uid = state.user?.id;
-  if (!uid) return;
-  const h = JSON.parse(localStorage.getItem(`nxhi_${uid}`) || '[]').filter(x => x.id !== id);
-  localStorage.setItem(`nxhi_${uid}`, JSON.stringify(h));
-  loadProfileForm();
+async function removeHighlight(id) {
+  const d = await api('DELETE', `${BASE}/api/highlights/${id}`);
+  if (d.success) {
+    const card = document.querySelector(`.highlight-card button[onclick="removeHighlight('${id}')"]`)?.closest('.highlight-card');
+    if (card) card.remove();
+    else loadHighlightsIntoContainer();
+  } else {
+    toast(d.error || 'Error', 'error');
+  }
 }
 
 // ── AI Career Agent quick actions ──────────────────────────
