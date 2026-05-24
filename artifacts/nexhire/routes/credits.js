@@ -3,7 +3,10 @@ const router = express.Router();
 const db = require('../models/db');
 const { requireAuth } = require('../middleware/auth');
 const crypto = require('crypto');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) throw new Error('Stripe non configuré — ajoutez STRIPE_SECRET_KEY dans les secrets Replit.');
+  return require('stripe')(process.env.STRIPE_SECRET_KEY);
+}
 
 const CREDIT_PACKS = [
   { id: 'pack_10',  credits: 10,  price: 499,  label_en: '10 AI Credits',  label_fr: '10 crédits IA',  priceId: null },
@@ -55,7 +58,7 @@ router.post('/checkout', requireAuth, async (req, res) => {
     const BASE = (process.env.BASE_PATH || '/nexhire').replace(/\/$/, '');
     const HOST = `${req.protocol}://${req.get('host')}`;
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
       customer_email: rows[0].email,
@@ -83,7 +86,7 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
   const sig = req.headers['stripe-signature'];
   let event;
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_CREDITS_WEBHOOK_SECRET || process.env.STRIPE_WEBHOOK_SECRET || '');
+    event = getStripe().webhooks.constructEvent(req.body, sig, process.env.STRIPE_CREDITS_WEBHOOK_SECRET || process.env.STRIPE_WEBHOOK_SECRET || '');
   } catch (e) {
     return res.status(400).send(`Webhook Error: ${e.message}`);
   }
