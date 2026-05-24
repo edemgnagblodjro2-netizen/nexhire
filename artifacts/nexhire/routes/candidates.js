@@ -115,19 +115,68 @@ router.post('/profile/cv/parse', requireAuth, cvUpload.single('cv'), async (req,
       response_format: { type: 'json_object' },
       messages: [{
         role: 'system',
-        content: 'Extract structured data from this CV/resume text. Return JSON: { headline_en, headline_fr, bio_en, bio_fr, skills (array of strings, max 15), experience_years (number), city, province (2-letter CA code if applicable) }. Only return fields you can confidently extract. Return null for unknown fields.'
+        content: `Extract structured data from this CV/resume text. Return JSON with these fields (omit or set null for fields you cannot confidently extract):
+{
+  "headline_en": string,
+  "headline_fr": string,
+  "bio_en": string (2-3 sentences),
+  "bio_fr": string (2-3 sentences),
+  "experience_years": number,
+  "city": string,
+  "province": string (2-letter CA code if applicable),
+  "hard_skills": string[] (technical/hard skills only, max 12, e.g. "JavaScript", "SQL", "Figma"),
+  "soft_skills": string[] (interpersonal/soft skills only, max 8, e.g. "Leadership", "Communication"),
+  "highlights": [{ "title": string, "description": string, "type": "cert"|"achievement"|"project" }] (certifications, awards, notable projects, max 6)
+}`
       }, {
         role: 'user', content: text.slice(0, 6000)
       }],
-      max_tokens: 800,
+      max_tokens: 1200,
     });
     let parsed = {};
     try { parsed = JSON.parse(completion.choices[0].message.content); } catch {}
     const cvUrl = `/nexhire/uploads/${req.file.filename}`;
+    const userId = req.session.user.id;
     await db.run(
       'UPDATE nh_candidate_profiles SET cv_url = $1, cv_text = $2 WHERE user_id = $3',
-      [cvUrl, text.slice(0, 10000), req.session.user.id]
+      [cvUrl, text.slice(0, 10000), userId]
     );
+    // Auto-insert hard skills
+    if (Array.isArray(parsed.hard_skills)) {
+      const existing = await db.all('SELECT name FROM nh_profile_skills WHERE user_id = $1 AND type = $2', [userId, 'hard']);
+      const existingNames = new Set(existing.map(r => r.name.toLowerCase()));
+      for (const skill of parsed.hard_skills.slice(0, 12)) {
+        if (!skill || existingNames.has(skill.toLowerCase())) continue;
+        const id = `ps_${Date.now()}_${Math.random().toString(36).slice(2,7)}`;
+        await db.run('INSERT INTO nh_profile_skills (id, user_id, name, level, type) VALUES ($1,$2,$3,$4,$5)',
+          [id, userId, skill.trim().slice(0, 80), 75, 'hard']);
+      }
+    }
+    // Auto-insert soft skills
+    if (Array.isArray(parsed.soft_skills)) {
+      const existing = await db.all('SELECT name FROM nh_profile_skills WHERE user_id = $1 AND type = $2', [userId, 'soft']);
+      const existingNames = new Set(existing.map(r => r.name.toLowerCase()));
+      for (const skill of parsed.soft_skills.slice(0, 8)) {
+        if (!skill || existingNames.has(skill.toLowerCase())) continue;
+        const id = `ps_${Date.now()}_${Math.random().toString(36).slice(2,7)}`;
+        await db.run('INSERT INTO nh_profile_skills (id, user_id, name, level, type) VALUES ($1,$2,$3,$4,$5)',
+          [id, userId, skill.trim().slice(0, 80), 75, 'soft']);
+      }
+    }
+    // Auto-insert highlights (certifications / achievements / projects)
+    if (Array.isArray(parsed.highlights)) {
+      const VALID_TYPES = ['cert', 'achievement', 'project'];
+      const iconMap = { cert: '🏆', achievement: '⭐', project: '🚀' };
+      for (const h of parsed.highlights.slice(0, 6)) {
+        if (!h?.title) continue;
+        const safeType = VALID_TYPES.includes(h.type) ? h.type : 'achievement';
+        const id = `hl_${Date.now()}_${Math.random().toString(36).slice(2,7)}`;
+        await db.run(
+          'INSERT INTO nh_highlights (id, user_id, type, icon, title, description, url) VALUES ($1,$2,$3,$4,$5,$6,$7)',
+          [id, userId, safeType, iconMap[safeType], (h.title||'').trim().slice(0,200), (h.description||'').trim().slice(0,500), '']
+        );
+      }
+    }
     res.json({ success: true, cv_url: cvUrl, parsed });
   } catch (e) {
     res.status(500).json({ success: false, error: e.message });

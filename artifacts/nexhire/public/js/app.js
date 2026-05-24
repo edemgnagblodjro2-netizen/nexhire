@@ -4393,13 +4393,25 @@ async function uploadAndParseCV() {
       apply('pf-exp', p.experience_years);
       apply('pf-city', p.city);
       if (p.province) { const sel = document.getElementById('pf-province'); if (sel) sel.value = p.province; }
-      if (p.skills?.length) {
-        p.skills.forEach(s => {
+      // legacy skill chips
+      const legacySkills = p.skills || [...(p.hard_skills||[]), ...(p.soft_skills||[])];
+      if (legacySkills.length) {
+        legacySkills.forEach(s => {
           const chip = document.querySelector(`.skill-chip[data-skill="${CSS.escape(s)}"]`);
           if (chip) chip.classList.add('selected');
         });
       }
-      if (statusEl) statusEl.innerHTML = `<span style="color:var(--green)">✓ ${isFr?`Profil pré-rempli depuis le CV (${p.skills?.length||0} compétences détectées)`:`Profile pre-filled from CV (${p.skills?.length||0} skills detected)`}</span>`;
+      const hardCount = (p.hard_skills||[]).length;
+      const softCount = (p.soft_skills||[]).length;
+      const hlCount   = (p.highlights||[]).length;
+      const parts = [];
+      if (hardCount) parts.push(isFr ? `${hardCount} compétences techniques` : `${hardCount} hard skills`);
+      if (softCount) parts.push(isFr ? `${softCount} soft skills` : `${softCount} soft skills`);
+      if (hlCount)   parts.push(isFr ? `${hlCount} points forts` : `${hlCount} highlights`);
+      if (statusEl) statusEl.innerHTML = `<span style="color:var(--green)">✓ ${isFr?'Profil pré-rempli depuis le CV':'Profile pre-filled from CV'}${parts.length ? ` — ${parts.join(', ')}` : ''}</span>`;
+      // reload sections so new data appears immediately
+      if (hardCount || softCount) loadProfileSkillsSection();
+      if (hlCount) loadHighlightsSection();
     } else {
       if (statusEl) statusEl.innerHTML = `<span style="color:var(--green)">✓ ${isFr?'CV sauvegardé.':'CV saved.'} ${d.message||''}</span>`;
     }
