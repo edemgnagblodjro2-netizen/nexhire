@@ -1,20 +1,22 @@
-const Anthropic = require('@anthropic-ai/sdk');
+const OpenAI = require('openai');
 
 function getClient() {
-  const key = process.env.ANTHROPIC_API_KEY || process.env.NEXHIRE_ANTHROPIC_API_KEY;
-  if (!key) throw new Error('ANTHROPIC_API_KEY not set');
-  return new Anthropic({ apiKey: key });
+  const key = process.env.OPENAI_API_KEY;
+  if (!key) throw new Error('OPENAI_API_KEY not set');
+  return new OpenAI({ apiKey: key });
 }
 
 async function callClaude(messages, system, maxTokens = 800) {
   const client = getClient();
-  const msg = await client.messages.create({
-    model: 'claude-3-haiku-20240307',
+  const completion = await client.chat.completions.create({
+    model: 'gpt-4o-mini',
     max_tokens: maxTokens,
-    system,
-    messages,
+    messages: [
+      { role: 'system', content: system },
+      ...messages,
+    ],
   });
-  return msg.content[0].text;
+  return completion.choices[0].message.content;
 }
 
 async function matchCandidateToJob(applicationId, profile, job) {
@@ -70,7 +72,6 @@ function safeArr(v) {
   try { return JSON.parse(v); } catch { return []; }
 }
 
-// ── AI Job Moderation ──────────────────────────────────────
 async function moderateJob({ title_fr, title_en, description_fr, description_en, requirements_fr, requirements_en, salary_min, salary_max, company_name }) {
   const title = title_fr || title_en || '';
   const desc  = description_fr || description_en || '';
@@ -100,7 +101,6 @@ Thresholds enforced server-side: >=75 auto_approved, 40-74 pending_review, <40 a
     const verdict = score >= 75 ? 'auto_approved' : score >= 40 ? 'pending_review' : 'auto_rejected';
     return { score, verdict, flags: Array.isArray(result.flags) ? result.flags : [], reason: result.reason || '' };
   } catch (e) {
-    console.error('[Moderation] Claude error:', e.message);
     return { score: 60, verdict: 'pending_review', flags: ['moderation_error'], reason: '' };
   }
 }
