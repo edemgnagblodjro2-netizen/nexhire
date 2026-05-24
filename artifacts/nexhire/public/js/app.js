@@ -1730,7 +1730,7 @@ function computeCompleteness(p, user) {
     { key: 'city', label: isFr ? 'Ajouter votre ville' : 'Add your city', val: p.city },
     { key: 'linkedin_url', label: isFr ? 'Lier votre LinkedIn' : 'Link your LinkedIn', val: p.linkedin_url },
     { key: 'experience_years', label: isFr ? 'Années d\'expérience' : 'Add experience years', val: p.experience_years > 0 },
-    { key: 'phone', label: isFr ? 'Numéro de téléphone' : 'Add phone number', val: user?.phone },
+    { key: 'phone', label: isFr ? 'Numéro de téléphone' : 'Add phone number', val: p.phone || user?.phone },
   ];
   const done = fields.filter(f => f.val);
   const pct = Math.round((done.length / fields.length) * 100);
@@ -2689,8 +2689,13 @@ async function saveProfile() {
     availability: document.getElementById('pf-avail')?.value,
   };
   const d = await api('PUT', `${BASE}/api/candidates/profile`, body);
-  if (d.success) { toast('Profile saved!', 'success'); loadProfileForm(); }
-  else toast(d.error || 'Failed to save', 'error');
+  if (d.success) {
+    if (body.phone) state.user.phone = body.phone;
+    if (body.first_name) state.user.first_name = body.first_name;
+    if (body.last_name)  state.user.last_name  = body.last_name;
+    toast('Profile saved!', 'success');
+    loadProfileForm();
+  } else toast(d.error || 'Failed to save', 'error');
 }
 
 // ── Applications (candidate) ───────────────────────────────
