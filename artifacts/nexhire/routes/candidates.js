@@ -1,9 +1,28 @@
 const router = require('express').Router();
 const path = require('path');
+const fs = require('fs');
 const multer = require('multer');
+const pdfParse = require('pdf-parse');
+const mammoth = require('mammoth');
 const db = require('../models/db');
 const { requireAuth } = require('../middleware/auth');
 const aiService = require('../services/ai');
+
+async function extractTextFromCV(filePath) {
+  if (!fs.existsSync(filePath)) throw new Error('Fichier introuvable : ' + filePath);
+  const ext = path.extname(filePath).toLowerCase();
+  if (ext === '.pdf') {
+    const buf = fs.readFileSync(filePath);
+    const data = await pdfParse(buf);
+    return data.text || '';
+  } else if (ext === '.docx') {
+    const result = await mammoth.extractRawText({ path: filePath });
+    return result.value || '';
+  } else if (ext === '.doc') {
+    return '';
+  }
+  throw new Error('Format non supporté. Utiliser PDF ou DOCX.');
+}
 
 const uploadDir = path.join(__dirname, '..', 'uploads');
 const cvStorage = multer.diskStorage({
@@ -75,11 +94,10 @@ router.post('/profile/cv/parse', requireAuth, cvUpload.single('cv'), async (req,
   try {
     if (!req.file) return res.status(400).json({ success: false, error: 'No file uploaded' });
     let text = '';
-    if (req.file.mimetype === 'application/pdf') {
-      const pdfParse = require('pdf-parse');
-      const buf = require('fs').readFileSync(req.file.path);
-      const result = await pdfParse(buf);
-      text = result.text;
+    try {
+      text = await extractTextFromCV(req.file.path);
+    } catch (parseErr) {
+      return res.json({ success: true, cv_url: `/nexhire/uploads/${req.file.filename}`, parsed: null, message: parseErr.message });
     }
     if (!text.trim()) {
       return res.json({ success: true, cv_url: `/nexhire/uploads/${req.file.filename}`, parsed: null, message: 'File saved — text extraction not available for this format' });

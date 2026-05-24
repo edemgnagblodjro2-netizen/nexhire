@@ -1,0 +1,88 @@
+🛠️ Fix complet — Remplacer la fonction de parsing CV
+javascript// Chercher dans server.js la fonction qui traite le CV uploadé
+// et remplacer par ceci :
+
+const fs = require('fs')
+const pdfParse = require('pdf-parse')
+
+async function extractTextFromCV(filePath) {
+  try {
+    // Vérifier que le fichier existe
+    if (!fs.existsSync(filePath)) {
+      throw new Error('Fichier introuvable : ' + filePath)
+    }
+
+    const fileBuffer = fs.readFileSync(filePath)
+    const extension = filePath.split('.').pop().toLowerCase()
+
+    if (extension === 'pdf') {
+      // ✅ Fix : appel correct de pdf-parse
+      const data = await pdfParse(fileBuffer)
+      return data.text
+
+    } else if (extension === 'docx') {
+      // Pour les .docx utiliser mammoth
+      const mammoth = require('mammoth')
+      const result = await mammoth.extractRawText({ path: filePath })
+      return result.value
+
+    } else {
+      throw new Error('Format non supporté. Utiliser PDF ou DOCX.')
+    }
+
+  } catch (err) {
+    console.error('Erreur extraction CV:', err.message)
+    throw err
+  }
+}
+
+🛠️ Vérifier que pdf-parse est bien installé
+bash# Dans le Shell Replit, taper :
+npm list pdf-parse
+
+# Si "empty" ou erreur → installer :
+npm install pdf-parse
+
+# Vérifier aussi mammoth pour les .docx :
+npm install mammoth
+
+# Puis redémarrer :
+node server.js
+
+🛠️ Vérifier le require au bon endroit
+javascript// En haut de server.js, vérifier que la ligne existe :
+const pdfParse = require('pdf-parse')
+
+// PAS dans une fonction, PAS dans un if
+// Doit être au niveau global du fichier
+
+// Tester immédiatement dans le Shell Replit :
+node -e "const p = require('pdf-parse'); console.log(typeof p)"
+// Doit afficher : function
+// Si affiche : undefined ou object → problème d'import
+
+🛠️ Si ça ne marche toujours pas — Alternative robuste
+javascript// pdf-parse a parfois des bugs avec certaines versions
+// Alternative : utiliser pdf2json
+
+npm install pdf2json
+
+// Dans server.js :
+const PDFParser = require('pdf2json')
+
+async function extractTextFromPDF(filePath) {
+  return new Promise((resolve, reject) => {
+    const pdfParser = new PDFParser()
+    
+    pdfParser.on('pdfParser_dataReady', (pdfData) => {
+      const text = pdfParser.getRawTextContent()
+      resolve(text)
+    })
+    
+    pdfParser.on('pdfParser_dataError', (err) => {
+      reject(err)
+    })
+    
+    pdfParser.loadPDF(filePath)
+  })
+}
