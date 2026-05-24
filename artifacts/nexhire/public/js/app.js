@@ -1855,9 +1855,17 @@ function renderTalentPassport(p, user, pct) {
   const availLabel = availMap[p.availability] || '⚪ Status unknown';
   const name = `${user?.first_name||''} ${user?.last_name||''}`.trim();
   const initials = name.split(' ').map(w => w[0]||'').join('').toUpperCase() || 'U';
+  const avatarUrl = p.avatar_url || user?.avatar_url || '';
+  const avatarInner = avatarUrl
+    ? `<img src="${esc(avatarUrl)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="">`
+    : initials;
   return `<div class="talent-passport">
     <div class="passport-header">
-      <div class="passport-avatar-lg">${initials}</div>
+      <div class="passport-avatar-lg passport-avatar-upload" onclick="document.getElementById('pf-avatar-file').click()" title="${isFr?'Changer la photo':'Change photo'}" style="cursor:pointer;position:relative;overflow:hidden">
+        ${avatarInner}
+        <div class="passport-avatar-cam"><i class="ti ti-camera" style="font-size:16px"></i></div>
+        <input type="file" id="pf-avatar-file" accept="image/*" style="display:none" onchange="uploadProfilePhoto(this)">
+      </div>
       <div class="passport-info">
         <div class="passport-name">${esc(name)}</div>
         ${headline ? `<div class="passport-headline">${esc(headline)}</div>` : ''}
