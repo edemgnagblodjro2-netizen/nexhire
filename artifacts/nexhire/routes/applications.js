@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const db = require('../models/db');
 const { requireAuth, requireCompanyAccess } = require('../middleware/auth');
 const aiService = require('../services/ai');
+const { sendApplicationNotification } = require('../services/email');
 
 router.post('/', requireAuth, async (req, res) => {
   if (req.session.user.role !== 'candidate') return res.status(403).json({ success: false, error: 'Candidates only' });
@@ -36,6 +37,23 @@ router.post('/', requireAuth, async (req, res) => {
   await db.run('UPDATE nh_jobs SET applications_count = applications_count + 1 WHERE id = $1', [job_id]);
 
   const app = await db.get('SELECT * FROM nh_applications WHERE id = $1', [id]);
+
+  // Notify employer by email (non-blocking)
+  try {
+    const jobInfo = await db.get(`
+      SELECT j.title_fr, j.title_en, u.email as employer_email, u.first_name as employer_name
+      FROM nh_jobs j
+      JOIN nh_companies c ON j.company_id = c.id
+      JOIN nh_users u ON c.owner_id = u.id
+      WHERE j.id = $1
+    `, [job_id]);
+    if (jobInfo?.employer_email) {
+      const candidateName = `${req.session.user.first_name || ''} ${req.session.user.last_name || ''}`.trim() || 'Un candidat';
+      const jobTitle = jobInfo.title_fr || jobInfo.title_en || 'votre offre';
+      sendApplicationNotification(jobInfo.employer_email, candidateName, jobTitle, id).catch(() => {});
+    }
+  } catch (_) { /* non-blocking */ }
+
   res.status(201).json({ success: true, application: app });
 });
 

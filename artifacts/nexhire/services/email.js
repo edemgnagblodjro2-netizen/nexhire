@@ -83,10 +83,21 @@ async function sendPasswordResetEmail(email, token, firstName, lang = 'fr') {
 }
 
 async function sendApplicationNotification(employerEmail, candidateName, jobTitle, applicationId) {
-  const link = `${BASE_URL}/nexhire`;
-  const subject = `New application — ${jobTitle}`;
-  const body = `<p>Hello,</p><p><strong>${candidateName}</strong> applied for <strong>${jobTitle}</strong> on Nexhire.</p><a href="${link}" class="btn">View in dashboard</a>`;
-  await send(employerEmail, subject, emailTemplate('New Application Received', body));
+  const link = `${BASE_URL}/nexhire/?tab=jobs`;
+  const subject = `Nouvelle candidature — ${jobTitle}`;
+  const body = `
+    <p>Bonjour,</p>
+    <p><strong>${candidateName}</strong> vient de postuler à votre offre <strong>${jobTitle}</strong> sur Nexhire.</p>
+    <p style="background:#F0F4FF;border-radius:8px;padding:14px;margin:16px 0">
+      <strong>Ce que vous pouvez faire :</strong><br>
+      → Consulter son profil et son CV<br>
+      → Le déplacer dans votre pipeline Kanban<br>
+      → Lancer un entretien vidéo IA (plan Pro)
+    </p>
+    <a href="${link}" class="btn">Voir dans le tableau de bord →</a>
+    <p style="color:#9CA3AF;font-size:12px;margin-top:24px">Allez dans <em>Mes offres → Pipeline</em> pour gérer toutes vos candidatures.</p>
+  `;
+  await send(employerEmail, subject, emailTemplate('Nouvelle candidature reçue', body));
 }
 
 async function sendJobAlertEmail(email, firstName, jobs, lang = 'en') {
