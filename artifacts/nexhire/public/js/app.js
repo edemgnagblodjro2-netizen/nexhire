@@ -5958,6 +5958,27 @@ async function submitViCreate() {
     const link = `${location.origin}/nexhire/interview/${d.token}`;
     showViLinkModal(title, link, cemail);
     loadVideoInterviews();
+  } else if (d.upgrade) {
+    // Show upgrade prompt instead of generic toast
+    const isFr2 = state.lang === 'fr';
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px';
+    overlay.innerHTML = `
+      <div style="background:var(--surface);border-radius:20px;padding:32px;max-width:440px;width:100%;text-align:center;box-shadow:0 24px 64px #0002">
+        <div style="font-size:48px;margin-bottom:12px">🎬</div>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:8px">${isFr2 ? 'Fonctionnalité Pro' : 'Pro Feature'}</h3>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:20px;line-height:1.6">
+          ${isFr2 ? 'Les entretiens vidéo asynchrones sont disponibles à partir du plan <strong>Pro</strong>. Passez à Pro pour déverrouiller cette fonctionnalité et bien d\'autres.' : 'Async video interviews are available on the <strong>Pro</strong> plan. Upgrade to unlock this feature and many more.'}
+        </p>
+        <div style="display:flex;gap:10px;justify-content:center">
+          <button class="btn-primary" onclick="this.closest('[style*=fixed]').remove();showEmpTab('etab-billing',document.querySelector('[data-emptab=etab-billing]'))">
+            <i class="ti ti-crown"></i> ${isFr2 ? 'Voir les plans' : 'View Plans'}
+          </button>
+          <button class="btn-ghost" onclick="this.closest('[style*=fixed]').remove()">${isFr2 ? 'Plus tard' : 'Later'}</button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
   } else {
     toast(d.error || 'Error', 'error');
   }
