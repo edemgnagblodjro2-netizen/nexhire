@@ -3609,7 +3609,7 @@ async function loadBillingInfo() {
         <div style="font-size:14px;color:var(--text);margin-bottom:12px">Upgrade to <strong>Pro</strong> — 10 job slots, AI ranking, featured listings</div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <button class="btn-primary" onclick="startCheckout('pro','month')"><i class="ti ti-crown"></i> Pro — $99/mo</button>
-          <button class="btn-ghost" onclick="startCheckout('pro','year')"><i class="ti ti-crown"></i> Pro — $990/yr <span style="background:var(--green);color:#fff;padding:2px 8px;border-radius:100px;font-size:10px;margin-left:4px">-16%</span></button>
+          <button class="btn-primary" onclick="startCheckout('pro','year')" style="background:var(--green);border-color:var(--green)"><i class="ti ti-crown"></i> Pro — $990/yr <span style="background:rgba(255,255,255,0.25);color:#fff;padding:2px 8px;border-radius:100px;font-size:10px;margin-left:4px">-16%</span></button>
         </div>
       </div>` : `<button class="btn-ghost" onclick="openBillingPortal()"><i class="ti ti-credit-card"></i> Manage billing</button>`}
     </div>
