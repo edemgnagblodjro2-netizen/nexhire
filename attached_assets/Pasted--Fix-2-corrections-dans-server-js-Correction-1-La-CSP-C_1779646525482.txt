@@ -1,0 +1,80 @@
+
+🛠️ Fix — 2 corrections dans server.js
+Correction 1 — La CSP (CRITIQUE, à faire en premier)
+javascript// ❌ ACTUEL — trop restrictif
+"script-src-attr 'none'"
+"connect-src 'self' https://api.stripe.com"
+
+// ✅ REMPLACER la config helmet/CSP par ceci :
+
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    
+    scriptSrc: [
+      "'self'",
+      "'unsafe-inline'",    // ← autorise les onclick= dans le HTML
+      "'unsafe-eval'",      // ← autorise eval() si utilisé
+      "https://js.stripe.com",
+      "https://cdn.jsdelivr.net"
+    ],
+    
+    scriptSrcAttr: ["'unsafe-inline'"],  // ← CRITIQUE : autorise onclick=
+    
+    styleSrc: [
+      "'self'",
+      "'unsafe-inline'",
+      "https://cdn.jsdelivr.net",
+      "https://fonts.googleapis.com"
+    ],
+    
+    fontSrc: [
+      "'self'",
+      "https://cdn.jsdelivr.net",
+      "https://fonts.gstatic.com"
+    ],
+    
+    connectSrc: [
+      "'self'",
+      "https://api.stripe.com",
+      "https://cdn.jsdelivr.net",  // ← autorise les .map files Tabler
+      "https://api.openai.com"     // ← pour GPT-4o
+    ],
+    
+    imgSrc: [
+      "'self'",
+      "data:",
+      "blob:",
+      "https://images.unsplash.com",
+      "https://cdn.jsdelivr.net"
+    ],
+    
+    frameSrc: [
+      "https://js.stripe.com"
+    ],
+    
+    workerSrc: [
+      "'self'",
+      "blob:"
+    ]
+  }
+}))
+
+Correction 2 — Supprimer les onclick= inline (solution propre)
+En parallèle, remplacer tous les onclick="maFonction()" dans le HTML
+par des data-attributes, et gérer via délégation dans le JS.
+
+C'est la vraie bonne pratique — mais c'est du travail.
+Pour l'instant, 'unsafe-inline' dans scriptSrcAttr débloque tout 
+immédiatement.
+
+Faire le refactor propre APRÈS que tout fonctionne.
+
+Correction 3 — Icône PWA manquante
+Créer ou placer une image PNG valide à ce chemin :
+/nexhire/img/icon-192.png  (192×192 pixels)
+/nexhire/img/icon-512.png  (512×512 pixels)
+
+Si pas d'icône pour l'instant, retirer ces lignes du manifest.json :
+  "icons": [...]
+Pour éviter l'erreur au chargement.

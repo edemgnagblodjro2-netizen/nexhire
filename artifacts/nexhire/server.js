@@ -863,17 +863,17 @@ async function seedDemoData() {
 }
 
 // ── Security ──────────────────────────────────────────────
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://js.stripe.com", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdn.jsdelivr.net"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdn.jsdelivr.net"],
-      imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'", "https://api.stripe.com"],
-      frameSrc: ["https://js.stripe.com"],
-    },
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc:    ["'self'"],
+    scriptSrc:     ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://js.stripe.com", "https://cdn.jsdelivr.net"],
+    scriptSrcAttr: ["'unsafe-inline'"],
+    styleSrc:      ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com"],
+    fontSrc:       ["'self'", "https://cdn.jsdelivr.net", "https://fonts.gstatic.com"],
+    imgSrc:        ["'self'", "data:", "blob:", "https://images.unsplash.com", "https://cdn.jsdelivr.net", "https:"],
+    connectSrc:    ["'self'", "https://api.stripe.com", "https://api.openai.com"],
+    frameSrc:      ["https://js.stripe.com"],
+    workerSrc:     ["'self'", "blob:"],
   },
 }));
 
