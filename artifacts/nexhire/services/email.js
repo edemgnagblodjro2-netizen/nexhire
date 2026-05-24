@@ -100,6 +100,39 @@ async function sendApplicationNotification(employerEmail, candidateName, jobTitl
   await send(employerEmail, subject, emailTemplate('Nouvelle candidature reçue', body));
 }
 
+async function sendStatusUpdateEmail(candidateEmail, firstName, jobTitle, companyName, status, labelFr) {
+  const BASE = process.env.BASE_URL || 'https://nexhire.ca';
+  const link = `${BASE}/nexhire/`;
+
+  const statusConfig = {
+    reviewed:    { icon: '🔍', color: '#6366F1', title: 'Votre candidature est en cours d\'examen' },
+    shortlisted: { icon: '⭐', color: '#F59E0B', title: 'Bonne nouvelle — vous êtes présélectionné(e) !' },
+    interview:   { icon: '🎯', color: '#10B981', title: 'Vous êtes invité(e) à un entretien !' },
+    offer:       { icon: '🎉', color: '#22C55E', title: 'Une offre vous est proposée !' },
+    rejected:    { icon: '📋', color: '#6B7280', title: 'Candidature — mise à jour de statut' },
+  };
+  const cfg = statusConfig[status] || { icon: '📋', color: '#6366F1', title: 'Mise à jour de votre candidature' };
+  const subject = `${cfg.icon} ${cfg.title} — ${jobTitle}`;
+
+  const messages = {
+    reviewed:    `Votre candidature pour le poste <strong>${jobTitle}</strong> chez <strong>${companyName}</strong> est actuellement <strong>en cours d'examen</strong> par l'équipe de recrutement. Nous vous tiendrons informé(e) des prochaines étapes.`,
+    shortlisted: `Excellente nouvelle ! Vous avez été <strong>présélectionné(e)</strong> pour le poste <strong>${jobTitle}</strong> chez <strong>${companyName}</strong>. L'équipe de recrutement vous contactera prochainement pour la suite du processus.`,
+    interview:   `Félicitations ! Vous êtes <strong>sélectionné(e) pour un entretien</strong> pour le poste <strong>${jobTitle}</strong> chez <strong>${companyName}</strong>. Consultez votre tableau de bord pour les détails.`,
+    offer:       `Nous sommes ravis de vous informer qu'une <strong>offre d'emploi</strong> vous est proposée pour le poste <strong>${jobTitle}</strong> chez <strong>${companyName}</strong>. Connectez-vous à Nexhire pour consulter les détails.`,
+    rejected:    `Merci pour votre intérêt pour le poste <strong>${jobTitle}</strong> chez <strong>${companyName}</strong>. Après examen de votre candidature, celle-ci n'a pas été retenue cette fois. Nous vous encourageons à postuler à d'autres opportunités sur Nexhire.`,
+  };
+
+  const body = `
+    <p>Bonjour ${firstName},</p>
+    <div style="border-left:4px solid ${cfg.color};padding:12px 16px;background:#F9FAFB;border-radius:0 8px 8px 0;margin:16px 0">
+      <p style="margin:0;font-size:15px">${messages[status] || `Votre candidature pour <strong>${jobTitle}</strong> a été mise à jour : <strong>${labelFr}</strong>.`}</p>
+    </div>
+    ${status !== 'rejected' ? `<a href="${link}" class="btn">Voir mon tableau de bord →</a>` : `<a href="${link}" class="btn" style="background:#6B7280">Parcourir d'autres offres →</a>`}
+    <p style="color:#9CA3AF;font-size:12px;margin-top:24px">Connectez-vous à Nexhire pour suivre l'avancement de toutes vos candidatures.</p>
+  `;
+  await send(candidateEmail, subject, emailTemplate(cfg.title, body));
+}
+
 async function sendJobAlertEmail(email, firstName, jobs, lang = 'en') {
   const isFr = lang === 'fr';
   const subject = isFr ? `${jobs.length} nouvelle(s) offre(s) correspondent à votre alerte — Nexhire` : `${jobs.length} new job(s) match your alert — Nexhire`;
@@ -119,4 +152,4 @@ async function sendJobAlertEmail(email, firstName, jobs, lang = 'en') {
   await send(email, subject, emailTemplate(isFr ? 'Nouvelles offres pour vous' : 'New jobs for you', body));
 }
 
-module.exports = { send, sendVerificationEmail, sendPasswordResetEmail, sendApplicationNotification, sendJobAlertEmail };
+module.exports = { send, sendVerificationEmail, sendPasswordResetEmail, sendApplicationNotification, sendStatusUpdateEmail, sendJobAlertEmail };

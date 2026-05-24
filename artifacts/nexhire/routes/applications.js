@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const db = require('../models/db');
 const { requireAuth, requireCompanyAccess } = require('../middleware/auth');
 const aiService = require('../services/ai');
-const { sendApplicationNotification } = require('../services/email');
+const { sendApplicationNotification, sendStatusUpdateEmail } = require('../services/email');
 
 router.post('/', requireAuth, async (req, res) => {
   if (req.session.user.role !== 'candidate') return res.status(403).json({ success: false, error: 'Candidates only' });
@@ -89,15 +89,40 @@ router.put('/:id/status', requireAuth, requireCompanyAccess, async (req, res) =>
   const validStatuses = ['reviewed','shortlisted','interview','offer','rejected'];
   if (!validStatuses.includes(status)) return res.status(400).json({ success: false, error: 'Invalid status' });
 
-  const app = await db.get('SELECT a.*, j.company_id FROM nh_applications a JOIN nh_jobs j ON a.job_id = j.id WHERE a.id = $1', [req.params.id]);
+  const app = await db.get(`
+    SELECT a.*, j.company_id, j.title_fr, j.title_en,
+           u.email as candidate_email, u.first_name as candidate_first, u.last_name as candidate_last,
+           c.name as company_name
+    FROM nh_applications a
+    JOIN nh_jobs j ON a.job_id = j.id
+    JOIN nh_companies c ON j.company_id = c.id
+    JOIN nh_users u ON a.user_id = u.id
+    WHERE a.id = $1
+  `, [req.params.id]);
   if (!app || app.company_id !== req.session.user.company_id) return res.status(403).json({ success: false, error: 'Access denied' });
 
   await db.run('UPDATE nh_applications SET status = $1, updated_at = NOW() WHERE id = $2', [status, req.params.id]);
 
+  const labels = {
+    reviewed:    "en cours d'examen",
+    shortlisted: 'présélectionnée',
+    interview:   'sélectionnée pour un entretien',
+    offer:       'offre en cours',
+    rejected:    'non retenue'
+  };
+
+  // In-app notification for candidate
   const notifId = uuidv4().replace(/-/g, '');
-  const labels = { reviewed: 'en cours d\'examen', shortlisted: 'présélectionnée', interview: 'sélectionnée pour un entretien', offer: 'offre en cours', rejected: 'non retenue' };
   await db.run('INSERT INTO nh_notifications (id, user_id, type, title, link) VALUES ($1,$2,$3,$4,$5)',
-    [notifId, app.user_id, 'status_update', `Candidature ${labels[status] || status}`, `/nexhire/applications/${req.params.id}`]);
+    [notifId, app.user_id, 'status_update', `Candidature ${labels[status] || status}`, `/nexhire/`]);
+
+  // Email notification to candidate (non-blocking)
+  if (app.candidate_email) {
+    const jobTitle = app.title_fr || app.title_en || 'votre offre';
+    const candidateName = `${app.candidate_first || ''}`.trim() || 'Bonjour';
+    const companyName = app.company_name || 'L\'employeur';
+    sendStatusUpdateEmail(app.candidate_email, candidateName, jobTitle, companyName, status, labels[status]).catch(() => {});
+  }
 
   res.json({ success: true });
 });
