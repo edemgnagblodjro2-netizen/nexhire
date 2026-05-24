@@ -2371,6 +2371,90 @@ function getPickedSkills(idPrefix = 'sp') {
   return [...picker.querySelectorAll('.sp-chip.active[data-skill]')].map(c => c.dataset.skill);
 }
 
+/* ── Profile skill editor (compact — replaces full picker in profile) ── */
+let _pfSkillList = null;
+function _getPfSkillList() {
+  if (_pfSkillList) return _pfSkillList;
+  _pfSkillList = SKILL_GROUPS.flatMap(g => g.skills.map(s => s.name));
+  return _pfSkillList;
+}
+
+function renderProfileSkillEditor(selected = []) {
+  const isFr = state.lang === 'fr';
+  const chips = selected.map(s =>
+    `<span class="pf-skill-tag" data-skill="${esc(s)}">${esc(s)}<button type="button" class="pf-skill-rm" onclick="removePfSkill(this)" aria-label="Remove">&times;</button></span>`
+  ).join('');
+  const ph = isFr ? 'Tapez une compétence + Entrée…' : 'Type a skill + Enter…';
+  const empty = isFr ? 'Aucune compétence — ajoutez-en ci-dessous' : 'No skills yet — add some below';
+  return `<div id="pf-skill-editor">
+    <div id="pf-skill-tags" class="pf-skill-tags-row">${chips || `<span class="pf-skill-empty">${empty}</span>`}</div>
+    <div class="pf-skill-input-wrap">
+      <input type="text" id="pf-skill-input" class="pf-skill-input" placeholder="${ph}"
+        autocomplete="off"
+        oninput="updatePfSkillSug(this.value)"
+        onkeydown="handlePfSkillKey(event)"
+        onblur="setTimeout(hidePfSkillSug,160)">
+      <div id="pf-skill-sug" class="pf-skill-sug-box" style="display:none"></div>
+    </div>
+  </div>`;
+}
+
+function removePfSkill(btn) {
+  btn.closest('.pf-skill-tag').remove();
+  const row = document.getElementById('pf-skill-tags');
+  if (row && !row.querySelector('.pf-skill-tag')) {
+    const isFr = state.lang === 'fr';
+    row.innerHTML = `<span class="pf-skill-empty">${isFr ? 'Aucune compétence' : 'No skills yet'}</span>`;
+  }
+}
+
+function addPfSkill(name) {
+  const clean = (name || '').trim();
+  if (!clean) return;
+  const row = document.getElementById('pf-skill-tags');
+  if (!row) return;
+  const existing = [...row.querySelectorAll('.pf-skill-tag')].map(t => t.dataset.skill?.toLowerCase());
+  if (existing.includes(clean.toLowerCase())) { hidePfSkillSug(); return; }
+  row.querySelector('.pf-skill-empty')?.remove();
+  const tag = document.createElement('span');
+  tag.className = 'pf-skill-tag';
+  tag.dataset.skill = clean;
+  tag.innerHTML = `${esc(clean)}<button type="button" class="pf-skill-rm" onclick="removePfSkill(this)" aria-label="Remove">&times;</button>`;
+  row.appendChild(tag);
+  const inp = document.getElementById('pf-skill-input');
+  if (inp) inp.value = '';
+  hidePfSkillSug();
+}
+
+function handlePfSkillKey(e) {
+  if (e.key === 'Enter') { e.preventDefault(); addPfSkill(e.target.value); }
+  else if (e.key === 'Escape') hidePfSkillSug();
+}
+
+function updatePfSkillSug(val) {
+  const box = document.getElementById('pf-skill-sug');
+  if (!box) return;
+  if (!val) { box.style.display = 'none'; return; }
+  const q = val.toLowerCase();
+  const row = document.getElementById('pf-skill-tags');
+  const picked = new Set([...(row?.querySelectorAll('.pf-skill-tag') || [])].map(t => t.dataset.skill?.toLowerCase()));
+  const hits = _getPfSkillList().filter(s => s.toLowerCase().includes(q) && !picked.has(s.toLowerCase())).slice(0, 7);
+  if (!hits.length) { box.style.display = 'none'; return; }
+  box.innerHTML = hits.map(h => `<div class="pf-skill-sug-item" onmousedown="addPfSkill('${esc(h)}')">${esc(h)}</div>`).join('');
+  box.style.display = 'block';
+}
+
+function hidePfSkillSug() {
+  const box = document.getElementById('pf-skill-sug');
+  if (box) box.style.display = 'none';
+}
+
+function getProfileSkills() {
+  const row = document.getElementById('pf-skill-tags');
+  if (!row) return [];
+  return [...row.querySelectorAll('.pf-skill-tag[data-skill]')].map(t => t.dataset.skill);
+}
+
 const JOB_SKILL_QUICK = [
   'Python','JavaScript','TypeScript','Java','SQL','React','Node.js','AWS','Excel','Git',
   'Agile / Scrum','Project Management','Communication','Leadership','French (bilingual)',
@@ -2497,9 +2581,9 @@ async function loadProfileForm() {
       <div class="form-group"><label>${L.workPref}</label><select id="pf-mode"><option value="">${L.workAny}</option><option value="remote" ${p.work_mode_pref==='remote'?'selected':''}>${L.workRemote}</option><option value="hybrid" ${p.work_mode_pref==='hybrid'?'selected':''}>${L.workHybrid}</option><option value="onsite" ${p.work_mode_pref==='onsite'?'selected':''}>${L.workOnsite}</option></select></div>
       <div class="form-group"><label>${L.expYears}</label><input type="number" id="pf-exp" value="${p.experience_years||0}" min="0" max="50"></div>
     </div>
-    <div class="form-group skill-picker-wrap">
-      <label>${L.skills} <span style="color:var(--muted);font-weight:400">${L.skillsSub}</span></label>
-      ${renderSkillPicker(safeJsonArr(p.skills))}
+    <div class="form-group">
+      <label>${L.skills}</label>
+      ${renderProfileSkillEditor(safeJsonArr(p.skills))}
     </div>
     <div class="form-row">
       <div class="form-group"><label>LinkedIn URL</label><input type="url" id="pf-linkedin" value="${esc(p.linkedin_url||'')}" placeholder="https://linkedin.com/in/..."></div>
@@ -2559,7 +2643,7 @@ async function saveProfile() {
     city: document.getElementById('pf-city')?.value.trim(),
     province: document.getElementById('pf-province')?.value || null,
     country: 'Canada',
-    skills: getPickedSkills(),
+    skills: getProfileSkills(),
     experience_years: parseInt(document.getElementById('pf-exp')?.value) || 0,
     linkedin_url: document.getElementById('pf-linkedin')?.value.trim(),
     github_url: document.getElementById('pf-github')?.value.trim(),
