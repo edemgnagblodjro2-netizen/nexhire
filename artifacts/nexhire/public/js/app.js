@@ -1824,6 +1824,7 @@ function computeCareerScore(p, user, pct) {
 }
 
 function renderTalentPassport(p, user, pct) {
+  const isFr = state.lang === 'fr';
   const score = computeCareerScore(p, user, pct);
   const scoreColor = score >= 700 ? '#4ade80' : score >= 450 ? '#facc15' : '#f97316';
   const circumference = 213.6;
