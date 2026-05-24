@@ -908,6 +908,13 @@ app.use(helmet.contentSecurityPolicy({
 }));
 
 app.use(cors({ origin: true, credentials: true }));
+
+// Stripe webhook must receive raw body — register BEFORE express.json()
+app.post(BASE_PATH + '/api/payments/webhook',
+  express.raw({ type: 'application/json' }),
+  require('./routes/payments').webhook
+);
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
