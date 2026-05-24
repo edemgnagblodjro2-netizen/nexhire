@@ -4720,6 +4720,9 @@ document.addEventListener('click', e => {
         break;
       case 'save-profile-skill':  saveNewProfileSkill();                  break;
       case 'remove-profile-skill': removeProfileSkill(el.dataset.id);     break;
+      case 'go-skill-tests':
+        showTab('tab-skills', document.querySelector('[data-tab="tab-skills"]'));
+        break;
       // ── Recommendations ─────────────────────────────────
       case 'open-rec-ext':
         document.getElementById('rec-ext-modal')?.classList.remove('hidden');
@@ -4871,7 +4874,7 @@ async function loadProfileScore() {
           <span style="margin-left:auto;font-size:12px;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:12px">+${s.points} pts</span>
         </div>
       `).join('')}
-      <button class="btn-white" style="margin-top:12px;font-size:13px" onclick="showTab('tab-skills', document.querySelector('[data-tab=tab-skills]'))">
+      <button class="btn-white" style="margin-top:12px;font-size:13px" data-action="go-skill-tests">
         <i class="ti ti-certificate"></i> ${isFr ? 'Passer des tests de compétences' : 'Take skill tests'}
       </button>
     </div>
