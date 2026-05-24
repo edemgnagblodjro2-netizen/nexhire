@@ -1,0 +1,68 @@
+🏆 Points Forts — Badges visuels avec icônes
+AU LIEU DE : texte brut "Ajouter un point fort"
+
+IMPLÉMENTER : Cards cliquables avec icône + titre + description courte
+
+Exemples visuels :
+┌─────────────────────┐  ┌─────────────────────┐
+│ 🏆  Certifié PMP    │  │ 🚀  Projet lancé    │
+│ Project Management  │  │ App mobile 10k users│
+│ Professional 2024   │  │ React Native · 2025 │
+└─────────────────────┘  └─────────────────────┘
+
+┌─────────────────────┐  ┌─────────────────────┐  
+│ 📜  Formation       │  │ ⭐  Réalisation     │
+│ MBA Finance         │  │ +40% revenus Q3     │
+│ HEC Montréal · 2023 │  │ Stratégie marketing │
+└─────────────────────┘  └─────────────────────┘
+
+Chaque card a :
+- Une icône choisie par l'utilisateur (🏆 📜 🚀 ⭐ 🎯 💡)
+- Un titre court (ex: "Certifié PMP")
+- Une description (ex: "Project Management Professional 2024")
+- Un lien optionnel (vers certificat, projet GitHub, etc.)
+- Un bouton ✕ pour supprimer
+
+⭐ Compétences — Barres de niveau + Tags visuels
+AU LIEU DE : liste de mots "Sérieux, Ponctualité, Expertise..."
+
+IMPLÉMENTER : Deux catégories séparées
+
+─── HARD SKILLS (avec niveau) ───────────────────
+
+JavaScript    ████████░░  80%  [Avancé]
+Python        ██████░░░░  60%  [Intermédiaire]  
+SQL           █████████░  90%  [Expert]
+
+─── SOFT SKILLS (tags colorés) ──────────────────
+
+[🎯 Leadership] [💬 Communication] [⏰ Ponctualité]
+[🤝 Travail équipe] [🔍 Sérieux] [💡 Créativité]
+
+Interaction :
+- Clic sur "+" → modal pour ajouter skill + choisir niveau
+- Drag pour réordonner
+- Clic sur ✕ pour supprimer
+- Hard skills : slider 0-100% pour le niveau
+- Soft skills : simple tag coloré, pas de niveau
+
+👥 Recommandations — Cards avec photo + citation
+AU LIEU DE : "Aucune recommandation encore"
+
+IMPLÉMENTER :
+
+┌────────────────────────────────────────────┐
+│ ❝ Kofi est un développeur exceptionnel.   │
+│   Son sens du détail et sa capacité à     │
+│   livrer dans les délais sont remarquables │
+│                                            │
+│ [Photo] Marie Dupont                       │
+│         Directrice Tech · Startup Lomé     │
+│         ⭐⭐⭐⭐⭐  · Mai 2026            │
+└────────────────────────────────────────────┘
+
+Deux modes :
+1. Recommandation externe : l'utilisateur copie-colle un texte
+   reçu par email/LinkedIn + nom + poste de la personne
+2. Recommandation interne : envoyer un lien à un contact
+   → il remplit un formulaire → apparaît sur le profil
