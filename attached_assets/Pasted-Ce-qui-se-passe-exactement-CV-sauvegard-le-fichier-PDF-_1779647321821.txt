@@ -1,0 +1,92 @@
+Ce qui se passe exactement
+✓ CV sauvegardé     → le fichier PDF est bien uploadé sur le serveur
+✗ pdfParse is not a function → l'extraction du texte plante
+                              mais l'erreur est avalée silencieusement
+                              et le succès est quand même affiché
+
+Résultat : le fichier existe mais son CONTENU est vide en DB
+→ L'IA matching ne peut pas lire le CV
+→ Le profil candidat n'a pas de skills extraits
+→ La génération de lettre de motivation ne fonctionnera pas
+
+🛠️ Fix — Trouver le bloc try/catch qui cache l'erreur
+javascript// Chercher dans server.js quelque chose comme :
+
+try {
+  const text = await pdfParse(buffer)  // ← plante ici
+  await db.run('UPDATE users SET cv_text = ?', [text])
+} catch (err) {
+  console.error('pdfParse error:', err) // ← log mais continue
+}
+
+// Le catch laisse passer et renvoie ✓ CV sauvegardé quand même
+// Il faut SÉPARER les deux opérations :
+javascript// ✅ CORRECTION — Route upload CV complète
+
+app.post('/api/profile/cv', requireAuth, upload.single('cv'), async (req, res) => {
+  
+  // ÉTAPE 1 — Sauvegarder le fichier (déjà OK)
+  if (!req.file) {
+    return res.status(400).json({ error: 'Aucun fichier reçu' })
+  }
+  
+  const filePath = req.file.path
+  const userId = req.session.userId
+
+  // Sauvegarder le chemin du fichier en DB
+  await db.run(
+    'UPDATE users SET cv_path = ? WHERE id = ?',
+    [filePath, userId]
+  )
+
+  // ÉTAPE 2 — Parser le texte SÉPARÉMENT
+  let cvText = ''
+  let parseSuccess = false
+
+  try {
+    const buffer = require('fs').readFileSync(filePath)
+    
+    // ✅ Import correct — mettre EN HAUT du fichier server.js
+    // const pdfParse = require('pdf-parse')
+    
+    const parsed = await pdfParse(buffer)
+    cvText = parsed.text
+    parseSuccess = true
+
+    // Sauvegarder le texte extrait
+    await db.run(
+      'UPDATE users SET cv_text = ? WHERE id = ?',
+      [cvText, userId]
+    )
+
+  } catch (parseErr) {
+    console.error('❌ Erreur parsing CV:', parseErr.message)
+    // Ne pas bloquer — le fichier est sauvé, juste pas parsé
+  }
+
+  // Réponse claire selon ce qui a marché
+  res.json({
+    success: true,
+    message: parseSuccess 
+      ? '✓ CV sauvegardé et analysé avec succès'
+      : '✓ CV sauvegardé — analyse du texte échouée (voir logs)',
+    textExtracted: parseSuccess,
+    preview: cvText.substring(0, 200) // aperçu des 200 premiers caractères
+  })
+})
+
+🛠️ Fix de l'import — À mettre tout en haut de server.js
+javascript// LIGNE 1-20 de server.js — vérifier que c'est bien là :
+
+const express = require('express')
+const helmet = require('helmet')
+const session = require('express-session')
+
+// ✅ PDF parsing — DOIT être ici, pas dans une fonction
+let pdfParse
+try {
+  pdfParse = require('pdf-parse')
+  console.log('✓ pdf-parse chargé:', typeof pdfParse) // doit dire "function"
+} catch (e) {
+  console.error('❌ pdf-parse non disponible:', e.message)
+}
