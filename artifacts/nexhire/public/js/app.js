@@ -1687,6 +1687,9 @@ async function loadDashboard() {
   // Show admin nav item for admin users
   const adminNav = document.getElementById('nav-admin-tests');
   if (adminNav) adminNav.style.display = u.role === 'admin' ? '' : 'none';
+  const modNav = document.getElementById('nav-admin-moderation');
+  if (modNav) modNav.style.display = u.role === 'admin' ? '' : 'none';
+  if (u.role === 'admin') refreshModerationBadge();
   const _otwEl = document.getElementById('sidebar-otw');
   if (_otwEl) {
     const _otwSet = getAvailBadges(u.id);
@@ -3369,9 +3372,35 @@ async function postJob(e) {
     languages_required: langs,
   };
   if (!body.title_en || !body.description_en) { showErr(errEl, 'Title (EN) and description required'); return; }
+
+  const submitBtn = document.querySelector('#post-job-form [type=submit]') || document.querySelector('#post-job-form button[class*=primary]');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<i class="ti ti-loader-2" style="animation:spin .7s linear infinite"></i> Analyse IA en cours…'; }
+
   const d = await api('POST', `${BASE}/api/jobs`, body);
-  if (d.success) { toast('Job posted successfully!', 'success'); showEmpTab('etab-jobs'); loadEmployerJobs(); }
-  else showErr(errEl, d.error || 'Failed to post job');
+
+  if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = '<i class="ti ti-send"></i> Publish Job'; }
+
+  if (d.success) {
+    const mod = d.moderation;
+    if (mod?.verdict === 'pending_review') {
+      showModerationFeedback('pending', '🕐 Offre soumise — en cours de vérification', mod.message || 'Votre offre sera examinée sous 24–48 h.');
+    } else {
+      toast('✅ Offre publiée immédiatement !', 'success');
+    }
+    showEmpTab('etab-jobs', document.querySelector('[data-emptab=etab-jobs]'));
+    loadEmployerJobs();
+  } else if (d.moderated) {
+    // Auto-rejected by AI
+    const flagLabels = { spam:'Spam', scam:'Arnaque', illegal:'Contenu illégal', adult_content:'Contenu adulte', gibberish:'Contenu incompréhensible', salary_unrealistic:'Salaire irréaliste', too_short:'Trop court', contact_info_in_description:'Contact dans la description' };
+    const flagsHtml = (d.flags||[]).map(f => `<span style="background:#fee2e2;color:#b91c1c;padding:2px 8px;border-radius:4px;font-size:12px">${flagLabels[f]||f}</span>`).join(' ');
+    showErr(errEl, `<div style="line-height:1.7">
+      <strong>⚠️ Offre refusée par le filtre IA</strong><br>
+      ${d.reason || 'Votre offre ne respecte pas les critères de publication.'}<br>
+      ${flagsHtml ? `<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">${flagsHtml}</div>` : ''}
+    </div>`);
+  } else {
+    showErr(errEl, d.error || 'Failed to post job');
+  }
 }
 
 // ── Company form ───────────────────────────────────────────
@@ -3710,7 +3739,8 @@ function showTab(tabId, el) {
   if (tabId === 'tab-referrals') loadReferrals();
   if (tabId === 'tab-salary') loadSalaryPage();
   if (tabId === 'tab-credits') loadCredits();
-  if (tabId === 'tab-admin-tests') loadAdminSkillTests();
+  if (tabId === 'tab-admin-tests')      loadAdminSkillTests();
+  if (tabId === 'tab-admin-moderation') loadAdminModeration();
 }
 
 function showEmpTab(tabId, navEl) {
@@ -4906,6 +4936,202 @@ async function buyCredits(packId) {
 
 // ═══════════════════════════════════════════════════════════
 // HERO BACKGROUND PHOTO SLIDER — silent cross-fade
+/* ── Admin Moderation ──────────────────────────────────────────────────── */
+function showModerationFeedback(type, title, msg) {
+  const toast = document.createElement('div');
+  const bg = type === 'pending' ? '#fef3c7' : type === 'success' ? '#dcfce7' : '#fee2e2';
+  const color = type === 'pending' ? '#92400e' : type === 'success' ? '#15803d' : '#b91c1c';
+  toast.style.cssText = `position:fixed;top:80px;right:20px;z-index:9999;background:${bg};border:1px solid ${color}33;color:${color};border-radius:14px;padding:16px 20px;max-width:340px;box-shadow:0 8px 24px #0002;font-size:14px;line-height:1.5`;
+  toast.innerHTML = `<div style="font-weight:700;margin-bottom:4px">${title}</div><div>${msg}</div>`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 8000);
+}
+
+async function refreshModerationBadge() {
+  try {
+    const d = await api('GET', `${BASE}/api/moderation/stats`);
+    if (!d.success) return;
+    const n = parseInt(d.stats?.pending || 0);
+    const badge = document.getElementById('mod-badge');
+    if (badge) { badge.textContent = n; badge.style.display = n > 0 ? '' : 'none'; }
+  } catch {}
+}
+
+let modCurrentStatus = 'pending';
+let modCurrentPage   = 1;
+
+async function loadAdminModeration() {
+  const el = document.getElementById('tab-admin-moderation');
+  if (!el) return;
+
+  const statsD = await api('GET', `${BASE}/api/moderation/stats`);
+  const stats  = statsD.stats || {};
+
+  el.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+      <div>
+        <h2 style="margin:0"><i class="ti ti-shield-check" style="color:var(--indigo)"></i> Modération des offres</h2>
+        <p style="color:var(--muted);font-size:13px;margin-top:4px">Filtre IA automatique · Les offres claires passent sans action. Seuls les cas ambigus arrivent ici.</p>
+      </div>
+      <button class="btn-ghost" style="font-size:13px" onclick="loadAdminModeration()"><i class="ti ti-refresh"></i> Actualiser</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:24px">
+      ${[
+        { label:'En attente',      val: stats.pending      || 0, color:'#f59e0b', icon:'ti-clock',        status:'pending'  },
+        { label:'Auto-approuvées', val: stats.auto_approved|| 0, color:'#22c55e', icon:'ti-robot',        status:'active'   },
+        { label:'Refusées IA',     val: stats.rejected     || 0, color:'#ef4444', icon:'ti-ban',          status:'rejected' },
+        { label:'Total actives',   val: stats.total_active || 0, color:'#6366f1', icon:'ti-briefcase',    status:'active'   },
+      ].map(s => `
+        <div onclick="modFilterStatus('${s.status}')" style="background:var(--surface);border:2px solid ${modCurrentStatus===s.status ? s.color : 'var(--border)'};border-radius:14px;padding:16px;text-align:center;cursor:pointer;transition:all .2s">
+          <i class="ti ${s.icon}" style="color:${s.color};font-size:24px;display:block;margin-bottom:6px"></i>
+          <div style="font-weight:800;font-size:22px;color:${s.color}">${s.val}</div>
+          <div style="font-size:11px;color:var(--muted)">${s.label}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div style="margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap">
+      ${['pending','active','rejected'].map(s => `
+        <button onclick="modFilterStatus('${s}')" class="btn-ghost" style="font-size:13px;${modCurrentStatus===s?'background:var(--indigo);color:#fff;border-color:var(--indigo)':''}">
+          ${{pending:'⏳ En attente',active:'✅ Approuvées',rejected:'❌ Refusées'}[s]}
+          ${s==='pending' && stats.pending > 0 ? `<span style="background:#ef4444;color:#fff;border-radius:99px;font-size:10px;padding:1px 6px;margin-left:4px">${stats.pending}</span>` : ''}
+        </button>
+      `).join('')}
+    </div>
+
+    <div id="mod-jobs-list"><div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div></div>
+    <div id="mod-pagination" style="display:flex;gap:8px;justify-content:center;margin-top:20px"></div>
+  `;
+
+  loadModJobs();
+}
+
+function modFilterStatus(status) {
+  modCurrentStatus = status;
+  modCurrentPage   = 1;
+  loadAdminModeration();
+}
+
+async function loadModJobs() {
+  const listEl = document.getElementById('mod-jobs-list');
+  if (!listEl) return;
+
+  const d = await api('GET', `${BASE}/api/moderation/jobs?status=${modCurrentStatus}&page=${modCurrentPage}`);
+  if (!d.success) { listEl.innerHTML = `<div class="empty-state"><p>${d.error}</p></div>`; return; }
+
+  const { jobs, total, limit } = d;
+  const totalPages = Math.ceil(total / limit);
+
+  if (!jobs.length) {
+    listEl.innerHTML = `
+      <div class="empty-state">
+        <i class="ti ti-circle-check" style="font-size:40px;color:#22c55e;display:block;margin-bottom:12px"></i>
+        <p>${modCurrentStatus === 'pending' ? '🎉 Aucune offre en attente — le filtre IA a tout traité !' : 'Aucune offre dans cette catégorie.'}</p>
+      </div>`;
+    return;
+  }
+
+  const flagLabels = { spam:'Spam', scam:'Arnaque', illegal:'Illégal', adult_content:'Adulte', gibberish:'Incohérent', salary_unrealistic:'Salaire irréaliste', too_short:'Trop court', contact_info_in_description:'Contact interdit', moderation_error:'Erreur IA' };
+  const scoreColor = s => s == null ? '#94a3b8' : s >= 75 ? '#22c55e' : s >= 40 ? '#f59e0b' : '#ef4444';
+
+  listEl.innerHTML = jobs.map(j => {
+    const flags = Array.isArray(j.ai_moderation_flags) ? j.ai_moderation_flags : (j.ai_moderation_flags ? JSON.parse(j.ai_moderation_flags) : []);
+    const score = j.ai_moderation_score;
+    const title = j.title_fr || j.title_en || '(sans titre)';
+    const desc  = (j.description_fr || j.description_en || '').slice(0, 220);
+    const date  = new Date(j.created_at).toLocaleDateString('fr-CA');
+
+    return `
+    <div id="mod-card-${esc(j.id)}" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:14px">
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:12px">
+        <div style="flex:1">
+          <div style="font-weight:700;font-size:15px;margin-bottom:4px">${esc(title)}</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:6px">
+            <i class="ti ti-building" style="font-size:11px"></i> ${esc(j.company_name)} ·
+            <i class="ti ti-map-pin" style="font-size:11px"></i> ${esc(j.city || j.country || '—')} ·
+            <i class="ti ti-user" style="font-size:11px"></i> ${esc(j.posted_by_email)} ·
+            ${date}
+          </div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5">${esc(desc)}${desc.length >= 220 ? '…' : ''}</div>
+        </div>
+        <div style="text-align:center;flex-shrink:0">
+          <div style="font-size:22px;font-weight:800;color:${scoreColor(score)}">${score != null ? score : '—'}</div>
+          <div style="font-size:10px;color:var(--muted)">Score IA</div>
+        </div>
+      </div>
+
+      ${flags.length ? `
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+          ${flags.map(f => `<span style="background:#fff7ed;color:#c2410c;border:1px solid #fdba74;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">${flagLabels[f]||f}</span>`).join('')}
+        </div>` : ''}
+      ${j.moderation_reason ? `<div style="font-size:12px;color:var(--muted);background:var(--bg);border-radius:8px;padding:8px 10px;margin-bottom:12px;font-style:italic">💬 ${esc(j.moderation_reason)}</div>` : ''}
+
+      ${modCurrentStatus === 'pending' ? `
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn-ghost" style="font-size:13px;color:#16a34a;border-color:#86efac" onclick="adminApproveJob('${esc(j.id)}')">
+            <i class="ti ti-circle-check"></i> Approuver
+          </button>
+          <button class="btn-ghost" style="font-size:13px;color:#dc2626;border-color:#fca5a5" onclick="adminRejectJob('${esc(j.id)}', '${esc(title)}')">
+            <i class="ti ti-x"></i> Refuser
+          </button>
+          <a href="${BASE}/jobs/${j.id}" target="_blank" class="btn-ghost" style="font-size:13px">
+            <i class="ti ti-external-link"></i> Voir l'offre
+          </a>
+        </div>
+      ` : `
+        <div style="font-size:12px;color:var(--muted)">
+          <i class="ti ti-${modCurrentStatus === 'active' ? 'circle-check' : 'ban'}" style="color:${modCurrentStatus === 'active' ? '#22c55e' : '#ef4444'}"></i>
+          ${modCurrentStatus === 'active' ? 'Publiée' : 'Refusée'} · verdict IA : ${j.ai_moderation_verdict || '—'}
+          ${j.moderation_note ? ' · Note: ' + esc(j.moderation_note) : ''}
+        </div>
+      `}
+    </div>
+  `}).join('');
+
+  // Pagination
+  const pagEl = document.getElementById('mod-pagination');
+  if (pagEl && totalPages > 1) {
+    pagEl.innerHTML = Array.from({ length: totalPages }, (_, i) => `
+      <button class="btn-ghost" style="font-size:13px;${i+1===modCurrentPage?'background:var(--indigo);color:#fff;border-color:var(--indigo)':''}" onclick="modGoPage(${i+1})">${i+1}</button>
+    `).join('');
+  }
+}
+
+function modGoPage(p) { modCurrentPage = p; loadModJobs(); }
+
+async function adminApproveJob(id) {
+  const card = document.getElementById(`mod-card-${id}`);
+  if (card) { card.style.opacity = '.5'; card.style.pointerEvents = 'none'; }
+  const d = await api('POST', `${BASE}/api/moderation/jobs/${id}/approve`, {});
+  if (d.success) {
+    toast('✅ Offre approuvée et publiée', 'success');
+    if (card) card.remove();
+    refreshModerationBadge();
+    const statsD = await api('GET', `${BASE}/api/moderation/stats`);
+    if (statsD.stats?.pending === 0) loadAdminModeration();
+  } else {
+    if (card) { card.style.opacity = '1'; card.style.pointerEvents = ''; }
+    toast(d.error || 'Erreur', 'error');
+  }
+}
+
+async function adminRejectJob(id, title) {
+  const reason = prompt(`Raison du refus pour "${title}" (visible pour l'employeur) :`);
+  if (reason === null) return;
+  const card = document.getElementById(`mod-card-${id}`);
+  if (card) { card.style.opacity = '.5'; card.style.pointerEvents = 'none'; }
+  const d = await api('POST', `${BASE}/api/moderation/jobs/${id}/reject`, { reason: reason || 'Non-conformité aux règles de publication.' });
+  if (d.success) {
+    toast('Offre refusée', 'info');
+    if (card) card.remove();
+    refreshModerationBadge();
+  } else {
+    if (card) { card.style.opacity = '1'; card.style.pointerEvents = ''; }
+    toast(d.error || 'Erreur', 'error');
+  }
+}
+
 /* ── Video Interviews — Employer UI ────────────────────────────────────── */
 let viCreating = false;
 let viQuestions = [''];

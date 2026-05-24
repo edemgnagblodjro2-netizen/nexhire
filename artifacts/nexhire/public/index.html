@@ -709,6 +709,7 @@
         <a class="dash-nav-item" data-tab="tab-salary"><i class="ti ti-cash"></i> <span data-i18n="cand.nav.salary">Salary Data</span></a>
         <a class="dash-nav-item" data-tab="tab-credits"><i class="ti ti-coin"></i> <span data-i18n="cand.nav.credits">AI Credits</span></a>
         <a class="dash-nav-item" id="nav-admin-tests" data-tab="tab-admin-tests" style="display:none"><i class="ti ti-settings"></i> <span>Admin Tests</span></a>
+        <a class="dash-nav-item" id="nav-admin-moderation" data-tab="tab-admin-moderation" style="display:none"><i class="ti ti-shield-check"></i> <span>Modération <span id="mod-badge" style="display:none;background:#ef4444;color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:4px">0</span></span></a>
       </nav>
     </div>
     <div class="dash-content">
@@ -738,6 +739,7 @@
       <div id="tab-salary" class="dash-tab"></div>
       <div id="tab-credits" class="dash-tab"></div>
       <div id="tab-admin-tests" class="dash-tab"></div>
+      <div id="tab-admin-moderation" class="dash-tab"></div>
       <div id="tab-ai-chat" class="dash-tab">
         <div class="agent-banner">
           <div class="agent-avatar"><i class="ti ti-robot"></i></div>
@@ -1193,7 +1195,7 @@ if ('serviceWorker' in navigator) {
     .catch(e => console.warn('[SW] failed', e));
 }
 </script>
-<script src="/nexhire/js/app.js?v=20260524f"></script>
+<script src="/nexhire/js/app.js?v=20260524g"></script>
 <script>window.__nexBase='/nexhire';</script>
 <script src="/nexhire/js/chatbot.js?v=20260524a"></script>
 </body>

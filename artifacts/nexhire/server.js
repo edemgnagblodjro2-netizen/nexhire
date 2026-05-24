@@ -205,6 +205,13 @@ async function runMigrations() {
     // Add province column if missing (safe migration)
     await pool.query(`ALTER TABLE nh_jobs ADD COLUMN IF NOT EXISTS province TEXT`);
     await pool.query(`ALTER TABLE nh_jobs ADD COLUMN IF NOT EXISTS address TEXT`);
+    await pool.query(`ALTER TABLE nh_jobs ADD COLUMN IF NOT EXISTS ai_moderation_score  INTEGER`);
+    await pool.query(`ALTER TABLE nh_jobs ADD COLUMN IF NOT EXISTS ai_moderation_flags  JSONB`);
+    await pool.query(`ALTER TABLE nh_jobs ADD COLUMN IF NOT EXISTS ai_moderation_verdict TEXT`);
+    await pool.query(`ALTER TABLE nh_jobs ADD COLUMN IF NOT EXISTS moderation_reason    TEXT`);
+    await pool.query(`ALTER TABLE nh_jobs ADD COLUMN IF NOT EXISTS moderation_note      TEXT`);
+    await pool.query(`ALTER TABLE nh_jobs ADD COLUMN IF NOT EXISTS moderated_at         TIMESTAMPTZ`);
+    await pool.query(`ALTER TABLE nh_jobs ADD COLUMN IF NOT EXISTS moderated_by         TEXT`);
     await pool.query(`ALTER TABLE nh_candidate_profiles ADD COLUMN IF NOT EXISTS province TEXT`);
     await pool.query(`ALTER TABLE nh_job_alerts ADD COLUMN IF NOT EXISTS province TEXT`);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_jobs_province ON nh_jobs(province)`);
@@ -797,6 +804,7 @@ app.use(apiBase + '/profile-score', require('./routes/profile-score'));
 app.use(apiBase + '/salary',        require('./routes/salary'));
 app.use(apiBase + '/highlights',       require('./routes/highlights'));
 app.use(apiBase + '/video-interviews', require('./routes/video-interviews'));
+app.use(apiBase + '/moderation',       require('./routes/moderation'));
 // Serve uploaded interview videos
 app.use(BASE_PATH + '/uploads/interviews', express.static(path.join(__dirname, 'uploads', 'interviews')));
 // Candidate public recording page

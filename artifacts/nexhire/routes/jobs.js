@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
 const db = require('../models/db');
 const { requireAuth, requireCompanyAccess } = require('../middleware/auth');
+const { moderateJob } = require('../services/ai');
 
 // Province → known cities mapping for robust location filtering
 const CA_CITIES_BY_PROV = {
@@ -148,16 +149,50 @@ router.post('/', requireAuth, requireCompanyAccess, async (req, res) => {
   const skills = Array.isArray(skills_required) ? JSON.stringify(skills_required) : (skills_required || '[]');
   const langs = Array.isArray(languages_required) ? JSON.stringify(languages_required) : (languages_required || '[]');
 
-  await db.run(`INSERT INTO nh_jobs (id, company_id, posted_by, title_fr, title_en, slug, description_fr, description_en, requirements_fr, requirements_en, benefits_fr, benefits_en, job_type, work_mode, city, address, province, country, salary_min, salary_max, salary_currency, salary_period, experience_years, languages_required, skills_required)
-    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25)`,
+  // ── AI Moderation ──────────────────────────────────────
+  const modResult = await moderateJob({
+    title_fr, title_en, description_fr, description_en,
+    requirements_fr, requirements_en, salary_min, salary_max,
+    company_name: company.name,
+  });
+
+  const jobStatus = modResult.verdict === 'auto_approved'  ? 'active'
+                  : modResult.verdict === 'auto_rejected'  ? 'rejected'
+                  : 'pending'; // pending_review → uses existing 'pending' value
+
+  await db.run(`INSERT INTO nh_jobs (id, company_id, posted_by, title_fr, title_en, slug, description_fr, description_en, requirements_fr, requirements_en, benefits_fr, benefits_en, job_type, work_mode, city, address, province, country, salary_min, salary_max, salary_currency, salary_period, experience_years, languages_required, skills_required, status, ai_moderation_score, ai_moderation_flags, ai_moderation_verdict, moderation_reason)
+    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30)`,
     [id, company_id, req.session.user.id, title_fr, title_en || null, slug, description_fr, description_en || null,
      requirements_fr || null, requirements_en || null, benefits_fr || null, benefits_en || null,
      job_type || null, work_mode || null, city || null, address || null, province || null, country || 'Canada',
      salary_min ? parseInt(salary_min) : null, salary_max ? parseInt(salary_max) : null,
-     salary_currency || 'CAD', salary_period || 'year', experience_years || null, langs, skills]);
+     salary_currency || 'CAD', salary_period || 'year', experience_years || null, langs, skills,
+     jobStatus, modResult.score, JSON.stringify(modResult.flags), modResult.verdict, modResult.reason]);
 
   const job = await db.get('SELECT * FROM nh_jobs WHERE id = $1', [id]);
-  res.status(201).json({ success: true, job });
+
+  if (modResult.verdict === 'auto_rejected') {
+    return res.status(422).json({
+      success: false,
+      moderated: true,
+      verdict: 'rejected',
+      score: modResult.score,
+      flags: modResult.flags,
+      reason: modResult.reason || 'Votre offre ne respecte pas les critères de publication.',
+    });
+  }
+
+  res.status(201).json({
+    success: true,
+    job,
+    moderation: {
+      verdict: modResult.verdict,
+      score:   modResult.score,
+      message: modResult.verdict === 'auto_approved'
+        ? 'Votre offre est publiée immédiatement.'
+        : 'Votre offre est en cours de vérification (24–48 h).',
+    },
+  });
 });
 
 router.put('/:id', requireAuth, requireCompanyAccess, async (req, res) => {
