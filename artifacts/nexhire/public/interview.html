@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entretien vidéo — Nexhire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --dark: #023448; --indigo: #6366f1; --surface: #fff; --bg: #f8fafc;
+    --border: #e2e8f0; --text: #0f172a; --muted: #64748b;
+    --green: #22c55e; --red: #ef4444; --amber: #f59e0b;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  .top-bar { background: var(--dark); color: #fff; padding: 14px 24px; display: flex; align-items: center; gap: 12px; }
+  .top-bar .logo { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; }
+  .top-bar .logo span { color: #6ee7f7; }
+  .container { max-width: 780px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 28px; margin-bottom: 20px; }
+  .company-row { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+  .company-logo { width: 52px; height: 52px; border-radius: 12px; background: var(--indigo); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 18px; flex-shrink: 0; overflow: hidden; }
+  .company-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+  .company-name { font-weight: 700; font-size: 16px; }
+  .interview-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+  .interview-meta { color: var(--muted); font-size: 13px; }
+
+  .progress-bar { background: var(--border); border-radius: 99px; height: 6px; margin: 20px 0; }
+  .progress-fill { background: var(--indigo); border-radius: 99px; height: 6px; transition: width .4s ease; }
+
+  .question-card { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; margin-bottom: 20px; }
+  .q-num { font-size: 11px; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .q-text { font-size: 17px; font-weight: 600; line-height: 1.5; }
+
+  .rec-area { text-align: center; }
+  .preview-video { width: 100%; max-height: 260px; border-radius: 14px; background: #000; display: block; margin-bottom: 16px; }
+  .rec-status { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; padding: 8px 16px; border-radius: 99px; margin-bottom: 16px; }
+  .rec-status.idle { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+  .rec-status.recording { background: #fee2e2; color: var(--red); }
+  .rec-status.done { background: #dcfce7; color: #16a34a; }
+  .rec-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: blink 1s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  .rec-timer { font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--red); margin-bottom: 12px; display: none; }
+  .max-hint { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+
+  .btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all .2s; white-space: nowrap; }
+  .btn-primary { background: var(--indigo); color: #fff; }
+  .btn-primary:hover { background: #4f46e5; }
+  .btn-danger  { background: var(--red); color: #fff; }
+  .btn-danger:hover  { background: #dc2626; }
+  .btn-ghost   { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-ghost:hover   { background: var(--bg); }
+  .btn-success { background: var(--green); color: #fff; }
+  .btn-success:hover { background: #16a34a; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+
+  .upload-progress { background: var(--border); border-radius: 99px; height: 8px; margin: 12px 0; display: none; }
+  .upload-fill { background: var(--indigo); border-radius: 99px; height: 8px; transition: width .3s ease; }
+
+  .tip-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 14px 16px; font-size: 13px; color: #1e40af; margin-bottom: 20px; }
+  .tip-box i { margin-right: 6px; }
+
+  .answered-badge { display: inline-flex; align-items: center; gap: 6px; background: #dcfce7; color: #16a34a; border-radius: 99px; padding: 6px 14px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+
+  .complete-screen { text-align: center; padding: 40px 24px; }
+  .complete-screen .emoji { font-size: 72px; display: block; margin-bottom: 16px; }
+  .complete-screen h2 { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+  .complete-screen p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+  .error-screen { text-align: center; padding: 60px 24px; }
+  .error-screen i { font-size: 56px; color: var(--red); display: block; margin-bottom: 16px; }
+  .error-screen h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .error-screen p { color: var(--muted); }
+
+  .spinner { display: inline-block; width: 28px; height: 28px; border: 3px solid var(--border); border-top-color: var(--indigo); border-radius: 50%; animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  #permission-error { display: none; background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px; padding: 14px 16px; color: var(--red); font-size: 13px; margin-bottom: 16px; }
+
+  @media(max-width:520px) {
+    .container { padding: 20px 14px 60px; }
+    .card { padding: 20px 16px; }
+    .interview-title { font-size: 18px; }
+    .q-text { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo">Nex<span>hire</span></div>
+  <span style="color:#94a3b8;font-size:13px">· Entretien vidéo asynchrone</span>
+</div>
+
+<div class="container" id="app">
+  <div style="text-align:center;padding:60px 0"><div class="spinner"></div></div>
+</div>
+
+<script>
+const BASE = '/nexhire';
+const token = location.pathname.split('/interview/')[1]?.split('/')[0] || '';
+let interview = null;
+let answered  = [];
+let currentQ  = 0;
+let mediaRecorder = null;
+let chunks    = [];
+let timerInterval = null;
+let elapsed   = 0;
+const MAX_DURATION = 180; // 3 minutes max per question
+
+async function apiFetch(method, url, body) {
+  const opts = { method, credentials: 'include', headers: {} };
+  if (body && !(body instanceof FormData)) { opts.headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(body); }
+  else if (body) opts.body = body;
+  const r = await fetch(url, opts);
+  return r.json();
+}
+
+async function init() {
+  if (!token) { showError('Lien invalide.', 'Ce lien d\'entretien est invalide ou mal formé.'); return; }
+  const d = await apiFetch('GET', `${BASE}/api/video-interviews/respond/${token}`);
+  if (!d.success) { showError('Lien expiré ou introuvable', d.error || 'Ce lien n\'est plus valide.'); return; }
+
+  interview = d.interview;
+  answered  = d.answered || [];
+
+  if (d.already_completed) { showComplete(); return; }
+
+  const questions = typeof interview.questions === 'string' ? JSON.parse(interview.questions) : interview.questions;
+  interview.questions = questions;
+
+  // Find first unanswered
+  currentQ = 0;
+  while (currentQ < questions.length && answered.includes(currentQ)) currentQ++;
+  if (currentQ >= questions.length) { showComplete(); return; }
+
+  renderInterview();
+}
+
+function showError(title, msg) {
+  document.getElementById('app').innerHTML = `
+    <div class="card error-screen">
+      <i class="ti ti-link-off"></i>
+      <h2>${title}</h2>
+      <p>${msg}</p>
+    </div>`;
+}
+
+function showComplete() {
+  document.getElementById('app').innerHTML = `
+    <div class="card complete-screen">
+      <span class="emoji">🎉</span>
+      <h2>Entretien complété !</h2>
+      <p>Merci ${interview?.candidate_name ? interview.candidate_name.split(' ')[0] + ' !' : '!'}<br>
+      Vos réponses ont été transmises à l'équipe de recrutement.<br>
+      Vous serez contacté(e) par courriel pour la suite du processus.</p>
+    </div>`;
+}
+
+function renderInterview() {
+  const qs = interview.questions;
+  const total = qs.length;
+  const progress = Math.round((answered.length / total) * 100);
+  const company = interview.company_name || 'Nexhire';
+  const logo = interview.company_logo;
+  const initials = company.slice(0, 2).toUpperCase();
+
+  document.getElementById('app').innerHTML = `
+    <div class="card">
+      <div class="company-row">
+        <div class="company-logo">${logo ? `<img src="${logo}" alt="">` : initials}</div>
+        <div>
+          <div class="company-name">${company}</div>
+          ${interview.job_title ? `<div style="font-size:13px;color:var(--muted)">${interview.job_title}</div>` : ''}
+        </div>
+      </div>
+      <div class="interview-title">${interview.title}</div>
+      <div class="interview-meta">${answered.length}/${total} réponse${answered.length !== 1 ? 's' : ''} complétée${answered.length !== 1 ? 's' : ''}</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+    </div>
+
+    <div class="tip-box">
+      <i class="ti ti-bulb"></i>
+      <strong>Conseils :</strong> Trouvez un endroit calme et bien éclairé. Parlez clairement. Vous avez jusqu'à 3 minutes par question.
+    </div>
+
+    <div id="question-area"></div>
+    <div id="nav-row" style="display:flex;gap:10px;justify-content:center;margin-top:8px"></div>
+  `;
+
+  renderQuestionNav();
+  renderQuestion(currentQ);
+}
+
+function renderQuestionNav() {
+  const qs = interview.questions;
+  const nav = document.getElementById('nav-row');
+  if (!nav) return;
+  nav.innerHTML = qs.map((_, i) => `
+    <button onclick="goToQuestion(${i})" style="width:36px;height:36px;border-radius:50%;border:2px solid ${answered.includes(i) ? 'var(--green)' : i === currentQ ? 'var(--indigo)' : 'var(--border)'};background:${answered.includes(i) ? '#dcfce7' : i === currentQ ? '#eff6ff' : 'var(--surface)'};color:${answered.includes(i) ? 'var(--green)' : i === currentQ ? 'var(--indigo)' : 'var(--muted)'};font-weight:700;cursor:pointer;font-size:13px">
+      ${answered.includes(i) ? '<i class="ti ti-check" style="font-size:14px"></i>' : i + 1}
+    </button>
+  `).join('');
+}
+
+function goToQuestion(idx) {
+  if (answered.includes(idx) && idx !== currentQ) return; // can't re-do answered
+  currentQ = idx;
+  stopRecording(false);
+  renderQuestion(idx);
+  renderQuestionNav();
+}
+
+function renderQuestion(idx) {
+  const q = interview.questions[idx];
+  const isAnswered = answered.includes(idx);
+  const area = document.getElementById('question-area');
+  if (!area) return;
+
+  area.innerHTML = `
+    <div class="card">
+      <div class="q-num">Question ${idx + 1} sur ${interview.questions.length}</div>
+      <div class="q-text">${q}</div>
+    </div>
+    <div class="card rec-area" id="rec-card">
+      ${isAnswered ? `
+        <div class="answered-badge"><i class="ti ti-circle-check"></i> Réponse enregistrée</div>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:16px">Cette question a déjà été répondue.</p>
+        ${idx + 1 < interview.questions.length ? `<button class="btn btn-primary" onclick="goToQuestion(${idx + 1})"><i class="ti ti-arrow-right"></i> Question suivante</button>` : '<button class="btn btn-success" onclick="showComplete()"><i class="ti ti-check"></i> Terminer</button>'}
+      ` : `
+        <video id="preview" class="preview-video" autoplay muted playsinline style="display:none"></video>
+        <div id="permission-error"><i class="ti ti-microphone-off"></i> Accès au micro refusé. Veuillez autoriser le microphone dans votre navigateur.</div>
+        <div class="rec-status idle" id="rec-status"><i class="ti ti-microphone"></i> Prêt à enregistrer</div>
+        <div class="rec-timer" id="rec-timer">0:00</div>
+        <div class="max-hint">Durée max : 3 minutes</div>
+        <div class="upload-progress" id="upload-bar"><div class="upload-fill" id="upload-fill" style="width:0%"></div></div>
+        <div id="upload-status" style="font-size:13px;color:var(--muted);margin-bottom:12px;display:none"></div>
+        <div class="btn-row" id="btn-row">
+          <button class="btn btn-primary" id="btn-start" onclick="startRecording()"><i class="ti ti-player-record"></i> Commencer l'enregistrement</button>
+        </div>
+      `}
+    </div>
+  `;
+}
+
+async function startRecording() {
+  const permErr = document.getElementById('permission-error');
+  if (permErr) permErr.style.display = 'none';
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+    const preview = document.getElementById('preview');
+    if (preview) { preview.srcObject = stream; preview.style.display = 'none'; }
+
+    chunks = [];
+    const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus'
+                   : MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm'
+                   : 'audio/ogg';
+    mediaRecorder = new MediaRecorder(stream, { mimeType });
+    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      stream.getTracks().forEach(t => t.stop());
+      uploadRecording();
+    };
+    mediaRecorder.start(1000);
+
+    elapsed = 0;
+    updateTimer();
+    timerInterval = setInterval(() => {
+      elapsed++;
+      updateTimer();
+      if (elapsed >= MAX_DURATION) stopRecording(true);
+    }, 1000);
+
+    const status = document.getElementById('rec-status');
+    if (status) { status.className = 'rec-status recording'; status.innerHTML = '<div class="rec-dot"></div> Enregistrement en cours…'; }
+    const timer = document.getElementById('rec-timer');
+    if (timer) timer.style.display = 'block';
+    const btnRow = document.getElementById('btn-row');
+    if (btnRow) btnRow.innerHTML = `<button class="btn btn-danger" onclick="stopRecording(true)"><i class="ti ti-player-stop-filled"></i> Arrêter et soumettre</button>`;
+  } catch (err) {
+    const permErr2 = document.getElementById('permission-error');
+    if (permErr2) permErr2.style.display = 'block';
+    console.error('Mic error:', err);
+  }
+}
+
+function updateTimer() {
+  const el = document.getElementById('rec-timer');
+  if (!el) return;
+  const m = Math.floor(elapsed / 60);
+  const s = elapsed % 60;
+  el.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+  el.style.color = elapsed > 150 ? 'var(--amber)' : 'var(--red)';
+}
+
+function stopRecording(andSubmit) {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    if (andSubmit) mediaRecorder.stop();
+    else { mediaRecorder.stream?.getTracks().forEach(t => t.stop()); mediaRecorder = null; chunks = []; }
+  }
+}
+
+async function uploadRecording() {
+  const status = document.getElementById('rec-status');
+  const timer  = document.getElementById('rec-timer');
+  const uploadStatus = document.getElementById('upload-status');
+  const uploadBar    = document.getElementById('upload-bar');
+  const uploadFill   = document.getElementById('upload-fill');
+  const btnRow = document.getElementById('btn-row');
+
+  if (status) { status.className = 'rec-status done'; status.innerHTML = '<i class="ti ti-circle-check"></i> Enregistrement terminé'; }
+  if (timer) timer.style.display = 'none';
+  if (btnRow) btnRow.innerHTML = '';
+  if (uploadStatus) { uploadStatus.style.display = 'block'; uploadStatus.textContent = '⏳ Envoi en cours…'; }
+  if (uploadBar) uploadBar.style.display = 'block';
+
+  // Simulate progress
+  let prog = 0;
+  const progInterval = setInterval(() => {
+    prog = Math.min(prog + 5, 85);
+    if (uploadFill) uploadFill.style.width = prog + '%';
+  }, 200);
+
+  try {
+    const blob = new Blob(chunks, { type: chunks[0]?.type || 'audio/webm' });
+    const fd = new FormData();
+    fd.append('video', blob, `response-q${currentQ}.webm`);
+    fd.append('question_index', currentQ);
+    fd.append('duration_seconds', elapsed);
+
+    const d = await apiFetch('POST', `${BASE}/api/video-interviews/respond/${token}/upload`, fd);
+    clearInterval(progInterval);
+    if (uploadFill) uploadFill.style.width = '100%';
+
+    if (d.success) {
+      answered.push(currentQ);
+      if (uploadStatus) uploadStatus.textContent = '✅ Réponse enregistrée ! L\'IA analyse votre réponse en arrière-plan.';
+      setTimeout(() => {
+        const next = interview.questions.findIndex((_, i) => !answered.includes(i));
+        if (next !== -1) { currentQ = next; renderQuestion(next); renderQuestionNav(); }
+        else showComplete();
+      }, 2000);
+    } else {
+      if (uploadStatus) uploadStatus.textContent = '❌ Erreur : ' + (d.error || 'Veuillez réessayer.');
+      if (btnRow) btnRow.innerHTML = `<button class="btn btn-primary" onclick="location.reload()"><i class="ti ti-refresh"></i> Réessayer</button>`;
+    }
+  } catch (err) {
+    clearInterval(progInterval);
+    if (uploadStatus) uploadStatus.textContent = '❌ Erreur réseau. Vérifiez votre connexion.';
+    if (btnRow) btnRow.innerHTML = `<button class="btn btn-primary" onclick="location.reload()"><i class="ti ti-refresh"></i> Réessayer</button>`;
+  }
+}
+
+init();
+</script>
+</body>
+</html>

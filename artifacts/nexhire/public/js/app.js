@@ -3720,6 +3720,7 @@ function showEmpTab(tabId, navEl) {
   if (navEl) navEl.classList.add('active');
   if (tabId === 'etab-team') loadTeam();
   if (tabId === 'etab-analytics') loadEmployerAnalytics();
+  if (tabId === 'etab-interviews') loadVideoInterviews();
 }
 
 // ── Employer Analytics ────────────────────────────────────
@@ -4905,6 +4906,332 @@ async function buyCredits(packId) {
 
 // ═══════════════════════════════════════════════════════════
 // HERO BACKGROUND PHOTO SLIDER — silent cross-fade
+/* ── Video Interviews — Employer UI ────────────────────────────────────── */
+let viCreating = false;
+let viQuestions = [''];
+
+async function loadVideoInterviews() {
+  const el = document.getElementById('etab-interviews');
+  if (!el) return;
+  const isFr = state.lang === 'fr';
+  el.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>`;
+  const d = await api('GET', `${BASE}/api/video-interviews`);
+  if (!d.success) {
+    if (d.upgrade) {
+      el.innerHTML = `
+        <div style="text-align:center;padding:48px 24px;max-width:520px;margin:0 auto">
+          <div style="font-size:52px;margin-bottom:16px">🎬</div>
+          <h2 style="font-size:22px;font-weight:800;margin-bottom:10px">${isFr ? 'Entretiens vidéo asynchrones' : 'Async Video Interviews'}</h2>
+          <p style="color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:24px">${isFr ? 'Envoyez des questions aux candidats, ils répondent en vidéo à leur rythme. L\'IA transcrit et score chaque réponse. Disponible en plan Pro.' : 'Send questions to candidates, they respond in video at their own pace. AI transcribes and scores every response. Available on Pro plan.'}</p>
+          <button class="btn-primary" onclick="showEmpTab('etab-billing', document.querySelector('[data-emptab=etab-billing]'))"><i class="ti ti-crown"></i> ${isFr ? 'Passer au plan Pro' : 'Upgrade to Pro'}</button>
+        </div>`;
+      return;
+    }
+    el.innerHTML = `<div class="empty-state"><i class="ti ti-alert-circle"></i><p>${d.error}</p></div>`;
+    return;
+  }
+
+  const { interviews } = d;
+  const statusColor = { pending:'#94a3b8', in_progress:'#f59e0b', completed:'#22c55e', expired:'#ef4444' };
+  const statusLabel = { pending: isFr ? 'En attente' : 'Pending', in_progress: isFr ? 'En cours' : 'In Progress', completed: isFr ? 'Complété' : 'Completed', expired: isFr ? 'Expiré' : 'Expired' };
+
+  el.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+      <div>
+        <h2 style="margin:0"><i class="ti ti-video" style="color:var(--indigo)"></i> ${isFr ? 'Entretiens vidéo' : 'Video Interviews'}</h2>
+        <p style="color:var(--muted);font-size:13px;margin-top:4px">${isFr ? 'Le candidat répond en audio à son rythme — l\'IA transcrit et score.' : 'Candidates respond in audio at their own pace — AI transcribes and scores.'}</p>
+      </div>
+      <button class="btn-primary" onclick="openViCreateForm()"><i class="ti ti-plus"></i> ${isFr ? 'Créer un entretien' : 'New Interview'}</button>
+    </div>
+
+    <div id="vi-create-form" style="display:none;background:var(--surface);border:2px solid var(--indigo);border-radius:18px;padding:24px;margin-bottom:24px"></div>
+    <div id="vi-detail-panel" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px;margin-bottom:24px"></div>
+
+    ${!interviews.length ? `
+      <div class="empty-state">
+        <i class="ti ti-video-off" style="font-size:40px;color:var(--muted);display:block;margin-bottom:12px"></i>
+        <p>${isFr ? 'Aucun entretien créé. Commencez par en créer un !' : 'No interviews yet. Create your first one!'}</p>
+      </div>
+    ` : `
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">
+        ${interviews.map(iv => {
+          const st = iv.status;
+          const exp = new Date(iv.token_expires_at);
+          const isExp = exp < new Date();
+          const effectiveSt = isExp && st !== 'completed' ? 'expired' : st;
+          return `
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px">
+              <div style="font-weight:700;font-size:15px;line-height:1.4">${esc(iv.title)}</div>
+              <span style="background:${statusColor[effectiveSt]}22;color:${statusColor[effectiveSt]};padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap">${statusLabel[effectiveSt] || effectiveSt}</span>
+            </div>
+            ${iv.candidate_name ? `<div style="font-size:13px;color:var(--muted);margin-bottom:4px"><i class="ti ti-user" style="font-size:12px"></i> ${esc(iv.candidate_name)}</div>` : ''}
+            ${iv.job_title ? `<div style="font-size:13px;color:var(--muted);margin-bottom:4px"><i class="ti ti-briefcase" style="font-size:12px"></i> ${esc(iv.job_title)}</div>` : ''}
+            <div style="font-size:12px;color:var(--muted);margin-bottom:14px">
+              ${iv.question_count} Q · ${iv.responses_count}/${iv.question_count} ${isFr ? 'rép.' : 'resp.'}
+              ${iv.avg_score ? ` · Score moy: <strong>${iv.avg_score}%</strong>` : ''}
+              · ${isFr ? 'Exp.' : 'Exp.'} ${exp.toLocaleDateString()}
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn-ghost" style="flex:1;font-size:13px" onclick="viewViDetail('${esc(iv.id)}')">
+                <i class="ti ti-eye"></i> ${isFr ? 'Voir' : 'View'}
+              </button>
+              <button class="btn-ghost" style="font-size:13px" onclick="copyViLink('${esc(iv.id)}','${esc(iv.title)}')" title="${isFr ? 'Copier le lien candidat' : 'Copy candidate link'}">
+                <i class="ti ti-link"></i>
+              </button>
+              <button class="btn-ghost" style="color:#f87171;border-color:#f8717144;font-size:13px" onclick="deleteVi('${esc(iv.id)}','${esc(iv.title)}')">
+                <i class="ti ti-trash"></i>
+              </button>
+            </div>
+          </div>
+        `}).join('')}
+      </div>
+    `}
+  `;
+}
+
+function openViCreateForm() {
+  const el = document.getElementById('vi-create-form');
+  if (!el) return;
+  const isFr = state.lang === 'fr';
+  viQuestions = [''];
+  el.style.display = 'block';
+  renderViCreateForm();
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderViCreateForm() {
+  const el = document.getElementById('vi-create-form');
+  if (!el) return;
+  const isFr = state.lang === 'fr';
+  el.innerHTML = `
+    <h3 style="margin:0 0 20px"><i class="ti ti-plus" style="color:var(--indigo)"></i> ${isFr ? 'Créer un entretien vidéo' : 'Create Video Interview'}</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div style="grid-column:1/-1">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">${isFr ? 'Titre de l\'entretien' : 'Interview Title'} <span style="color:#f87171">*</span></label>
+        <input id="vi-title" class="filter-input" style="width:100%;box-sizing:border-box" placeholder="${isFr ? 'ex: Entretien Développeur Full-Stack' : 'e.g. Full-Stack Developer Interview'}">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">${isFr ? 'Nom du candidat' : 'Candidate Name'}</label>
+        <input id="vi-cname" class="filter-input" style="width:100%;box-sizing:border-box" placeholder="${isFr ? 'Prénom Nom' : 'First Last'}">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">${isFr ? 'Courriel candidat' : 'Candidate Email'}</label>
+        <input id="vi-cemail" type="email" class="filter-input" style="width:100%;box-sizing:border-box" placeholder="email@example.com">
+      </div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <label style="font-size:12px;font-weight:600;display:block;margin-bottom:8px">${isFr ? 'Questions (1–5)' : 'Questions (1–5)'} <span style="color:#f87171">*</span></label>
+      <div id="vi-questions-list"></div>
+      <button class="btn-ghost" id="btn-add-q" style="margin-top:8px;font-size:13px" onclick="addViQuestion()">
+        <i class="ti ti-plus"></i> ${isFr ? 'Ajouter une question' : 'Add Question'}
+      </button>
+    </div>
+
+    <div style="background:#eff6ff;border-radius:10px;padding:12px 14px;font-size:12px;color:#1e40af;margin-bottom:16px">
+      <i class="ti ti-bulb"></i> ${isFr ? 'Le candidat enregistre ses réponses en audio (max 3 min/question). L\'IA transcrit et score automatiquement.' : 'Candidate records audio responses (max 3 min/question). AI auto-transcribes and scores.'}
+    </div>
+
+    <div style="display:flex;gap:10px">
+      <button class="btn-primary" style="flex:1" onclick="submitViCreate()"><i class="ti ti-send"></i> ${isFr ? 'Créer & obtenir le lien' : 'Create & get link'}</button>
+      <button class="btn-ghost" onclick="document.getElementById('vi-create-form').style.display='none'">Cancel</button>
+    </div>
+  `;
+  renderViQuestionsList();
+}
+
+function renderViQuestionsList() {
+  const el = document.getElementById('vi-questions-list');
+  if (!el) return;
+  const isFr = state.lang === 'fr';
+  el.innerHTML = viQuestions.map((q, i) => `
+    <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center">
+      <span style="width:24px;height:24px;background:var(--indigo);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">${i+1}</span>
+      <input type="text" class="filter-input" style="flex:1;box-sizing:border-box" placeholder="${isFr ? `Question ${i+1}…` : `Question ${i+1}…`}" value="${esc(q)}" oninput="viQuestions[${i}]=this.value">
+      ${viQuestions.length > 1 ? `<button class="btn-ghost" style="padding:6px 10px;color:#94a3b8" onclick="removeViQuestion(${i})"><i class="ti ti-x"></i></button>` : ''}
+    </div>
+  `).join('');
+  const addBtn = document.getElementById('btn-add-q');
+  if (addBtn) addBtn.style.display = viQuestions.length >= 5 ? 'none' : '';
+}
+
+function addViQuestion() {
+  if (viQuestions.length >= 5) return;
+  viQuestions.push('');
+  renderViQuestionsList();
+}
+
+function removeViQuestion(i) {
+  viQuestions.splice(i, 1);
+  renderViQuestionsList();
+}
+
+async function submitViCreate() {
+  const isFr = state.lang === 'fr';
+  const title  = document.getElementById('vi-title')?.value.trim();
+  const cname  = document.getElementById('vi-cname')?.value.trim();
+  const cemail = document.getElementById('vi-cemail')?.value.trim();
+  const qs = viQuestions.map(q => q.trim()).filter(Boolean);
+
+  if (!title) { toast(isFr ? 'Titre requis' : 'Title required', 'error'); return; }
+  if (!qs.length) { toast(isFr ? 'Ajoutez au moins 1 question' : 'Add at least 1 question', 'error'); return; }
+
+  const btn = document.querySelector('#vi-create-form .btn-primary');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2"></i>'; }
+
+  const d = await api('POST', `${BASE}/api/video-interviews`, { title, candidate_name: cname || undefined, candidate_email: cemail || undefined, questions: qs });
+
+  if (btn) { btn.disabled = false; btn.innerHTML = `<i class="ti ti-send"></i> ${isFr ? 'Créer & obtenir le lien' : 'Create & get link'}`; }
+
+  if (d.success) {
+    document.getElementById('vi-create-form').style.display = 'none';
+    const link = `${location.origin}/nexhire/interview/${d.token}`;
+    showViLinkModal(title, link, cemail);
+    loadVideoInterviews();
+  } else {
+    toast(d.error || 'Error', 'error');
+  }
+}
+
+function showViLinkModal(title, link, email) {
+  const isFr = state.lang === 'fr';
+  const modal = document.createElement('div');
+  modal.style.cssText = 'position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px';
+  modal.innerHTML = `
+    <div style="background:var(--surface);border-radius:20px;padding:32px;max-width:500px;width:100%;box-shadow:0 24px 64px #0002">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:48px;margin-bottom:8px">🔗</div>
+        <h3 style="font-size:20px;font-weight:800">${isFr ? 'Lien candidat créé !' : 'Candidate Link Created!'}</h3>
+        <p style="color:var(--muted);font-size:14px;margin-top:6px">${isFr ? 'Partagez ce lien avec' : 'Share this link with'} ${email || isFr ? 'le candidat' : 'the candidate'}</p>
+      </div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:16px;word-break:break-all;font-size:13px;font-family:monospace;color:var(--muted)">${link}</div>
+      <div style="display:flex;gap:10px">
+        <button class="btn-primary" style="flex:1" onclick="navigator.clipboard.writeText('${link}').then(()=>toast('${isFr ? 'Lien copié !' : 'Link copied!'}','success'))">
+          <i class="ti ti-copy"></i> ${isFr ? 'Copier le lien' : 'Copy Link'}
+        </button>
+        ${email ? `<button class="btn-ghost" style="flex:1" onclick="window.open('mailto:${email}?subject=${encodeURIComponent(isFr ? 'Invitation entretien vidéo — '+title : 'Video Interview Invitation — '+title)}&body=${encodeURIComponent((isFr ? 'Bonjour,\n\nNous vous invitons à répondre à notre entretien vidéo asynchrone.\n\nLien : ' : 'Hello,\n\nWe invite you to complete our async video interview.\n\nLink: ')+link)}','_blank')">
+          <i class="ti ti-mail"></i> ${isFr ? 'Envoyer par email' : 'Email'}
+        </button>` : ''}
+        <button class="btn-ghost" onclick="this.closest('[style*=fixed]').remove()">${isFr ? 'Fermer' : 'Close'}</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
+function copyViLink(interviewId, title) {
+  toast('Chargement…', 'info');
+  api('GET', `${BASE}/api/video-interviews/${interviewId}`).then(d => {
+    if (!d.success) return;
+    const iv = d.interview;
+    const link = `${location.origin}/nexhire/interview/${iv.token}`;
+    navigator.clipboard.writeText(link).then(() => toast('Lien copié !', 'success'));
+  });
+}
+
+async function viewViDetail(id) {
+  const panel = document.getElementById('vi-detail-panel');
+  if (!panel) return;
+  const isFr = state.lang === 'fr';
+  panel.style.display = 'block';
+  panel.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px;color:var(--indigo)"></i></div>`;
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const d = await api('GET', `${BASE}/api/video-interviews/${id}`);
+  if (!d.success) { panel.innerHTML = `<p style="color:#f87171">${d.error}</p>`; return; }
+
+  const { interview: iv, responses } = d;
+  const questions = typeof iv.questions === 'string' ? JSON.parse(iv.questions) : iv.questions;
+  const link = `${location.origin}/nexhire/interview/${iv.token}`;
+
+  const scoreColor = s => s >= 80 ? '#22c55e' : s >= 60 ? '#f59e0b' : '#ef4444';
+
+  panel.innerHTML = `
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+      <div>
+        <h3 style="margin:0 0 4px;font-size:18px;font-weight:800">${esc(iv.title)}</h3>
+        ${iv.candidate_name ? `<div style="color:var(--muted);font-size:13px"><i class="ti ti-user" style="font-size:12px"></i> ${esc(iv.candidate_name)} ${iv.candidate_email ? '· '+esc(iv.candidate_email) : ''}</div>` : ''}
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-ghost" style="font-size:13px" onclick="navigator.clipboard.writeText('${link}').then(()=>toast('Lien copié !','success'))"><i class="ti ti-link"></i> ${isFr ? 'Copier lien' : 'Copy link'}</button>
+        <button class="btn-ghost" style="font-size:13px" onclick="document.getElementById('vi-detail-panel').style.display='none'"><i class="ti ti-x"></i></button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:24px">
+      ${[
+        { label: isFr ? 'Questions' : 'Questions', val: questions.length, icon: 'ti-help' },
+        { label: isFr ? 'Réponses' : 'Responses', val: responses.length, icon: 'ti-microphone' },
+        { label: isFr ? 'Score moyen IA' : 'Avg AI Score', val: responses.filter(r=>r.ai_score).length ? Math.round(responses.reduce((a,r)=>a+(r.ai_score||0),0)/responses.filter(r=>r.ai_score).length)+'%' : '—', icon: 'ti-brain' },
+        { label: 'Statut', val: iv.status, icon: 'ti-circle' },
+      ].map(m => `
+        <div style="background:var(--bg);border-radius:12px;padding:14px;text-align:center">
+          <i class="ti ${m.icon}" style="color:var(--indigo);font-size:20px;display:block;margin-bottom:4px"></i>
+          <div style="font-weight:800;font-size:18px">${m.val}</div>
+          <div style="font-size:11px;color:var(--muted)">${m.label}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div>
+      ${questions.map((q, i) => {
+        const resp = responses.find(r => r.question_index === i);
+        const fb   = resp?.ai_feedback ? (typeof resp.ai_feedback === 'string' ? JSON.parse(resp.ai_feedback) : resp.ai_feedback) : null;
+        return `
+        <div style="border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:16px">
+          <div style="background:var(--bg);padding:14px 18px;display:flex;align-items:center;gap:10px">
+            <span style="background:var(--indigo);color:#fff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">${i+1}</span>
+            <div style="font-weight:600;font-size:14px;flex:1">${esc(q)}</div>
+            ${resp?.ai_score != null ? `<span style="font-size:18px;font-weight:800;color:${scoreColor(resp.ai_score)}">${resp.ai_score}%</span>` : '<span style="font-size:12px;color:var(--muted)">'+(resp ? '⏳ '+(isFr?'Analyse…':'Analysing…') : isFr?'En attente':'Pending')+'</span>'}
+          </div>
+          ${resp ? `
+            <div style="padding:16px 18px">
+              ${resp.transcript ? `
+                <div style="margin-bottom:14px">
+                  <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">${isFr ? 'Transcription' : 'Transcript'}</div>
+                  <div style="font-size:13px;line-height:1.7;background:var(--bg);border-radius:10px;padding:12px 14px;color:var(--text)">"${esc(resp.transcript)}"</div>
+                </div>
+              ` : '<div style="font-size:13px;color:var(--muted);margin-bottom:12px">⏳ '+(isFr?'Transcription en cours…':'Transcribing…')+'</div>'}
+              ${fb ? `
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+                  ${fb.strengths?.length ? `
+                    <div style="background:#f0fdf4;border-radius:10px;padding:12px">
+                      <div style="font-size:11px;font-weight:700;color:#16a34a;margin-bottom:6px">✓ ${isFr?'Points forts':'Strengths'}</div>
+                      ${fb.strengths.map(s => `<div style="font-size:12px;color:#15803d;margin-bottom:3px">• ${esc(s)}</div>`).join('')}
+                    </div>
+                  ` : ''}
+                  ${fb.improvements?.length ? `
+                    <div style="background:#fff7ed;border-radius:10px;padding:12px">
+                      <div style="font-size:11px;font-weight:700;color:#ea580c;margin-bottom:6px">↑ ${isFr?'À améliorer':'To improve'}</div>
+                      ${fb.improvements.map(s => `<div style="font-size:12px;color:#c2410c;margin-bottom:3px">• ${esc(s)}</div>`).join('')}
+                    </div>
+                  ` : ''}
+                </div>
+                ${fb.summary ? `<div style="font-size:13px;color:var(--muted);font-style:italic;line-height:1.6">${esc(fb.summary)}</div>` : ''}
+                ${fb.keywords?.length ? `<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px">${fb.keywords.map(k=>`<span style="background:var(--indigo)15;color:var(--indigo);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600">${esc(k)}</span>`).join('')}</div>` : ''}
+              ` : ''}
+            </div>
+          ` : `<div style="padding:14px 18px;font-size:13px;color:var(--muted)"><i class="ti ti-clock"></i> ${isFr?'Réponse non encore enregistrée':'Response not yet recorded'}</div>`}
+        </div>
+      `}).join('')}
+    </div>
+
+    ${responses.some(r => !r.ai_score && r.video_path) ? `
+      <button class="btn-ghost" style="margin-top:8px;font-size:13px" onclick="viewViDetail('${id}')"><i class="ti ti-refresh"></i> ${isFr ? 'Actualiser l\'analyse IA' : 'Refresh AI analysis'}</button>
+    ` : ''}
+  `;
+}
+
+async function deleteVi(id, title) {
+  const isFr = state.lang === 'fr';
+  if (!confirm(`${isFr ? 'Supprimer l\'entretien' : 'Delete interview'} "${title}" ?`)) return;
+  const d = await api('DELETE', `${BASE}/api/video-interviews/${id}`);
+  if (d.success) { toast(isFr ? 'Entretien supprimé' : 'Interview deleted', 'success'); loadVideoInterviews(); }
+  else toast(d.error || 'Error', 'error');
+}
+
 /* ── Admin — Skill Tests Manager ───────────────────────────────────────── */
 let adminEditingTestId = null;
 

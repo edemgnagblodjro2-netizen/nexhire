@@ -356,6 +356,39 @@ async function runMigrations() {
       )
     `);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_highlights_user ON nh_highlights(user_id)`);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_video_interviews (
+        id                TEXT PRIMARY KEY,
+        company_id        TEXT NOT NULL REFERENCES nh_companies(id) ON DELETE CASCADE,
+        created_by        TEXT NOT NULL REFERENCES nh_users(id),
+        job_id            TEXT REFERENCES nh_jobs(id) ON DELETE SET NULL,
+        candidate_name    TEXT,
+        candidate_email   TEXT,
+        title             TEXT NOT NULL,
+        questions         JSONB NOT NULL DEFAULT '[]',
+        token             TEXT UNIQUE NOT NULL,
+        token_expires_at  TIMESTAMPTZ NOT NULL,
+        status            TEXT NOT NULL DEFAULT 'pending',
+        created_at        TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_video_responses (
+        id               TEXT PRIMARY KEY,
+        interview_id     TEXT NOT NULL REFERENCES nh_video_interviews(id) ON DELETE CASCADE,
+        question_index   INTEGER NOT NULL,
+        video_path       TEXT,
+        transcript       TEXT,
+        ai_score         INTEGER,
+        ai_feedback      JSONB,
+        ai_keywords      JSONB,
+        duration_seconds INTEGER,
+        recorded_at      TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(interview_id, question_index)
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_vi_company ON nh_video_interviews(company_id)`);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_vr_interview ON nh_video_responses(interview_id)`);
     // Seed skill tests if empty
     await seedSkillTests(pool);
     console.log('[Nexhire] ✅ DB ready');
@@ -762,7 +795,12 @@ app.use(apiBase + '/referrals',     require('./routes/referrals'));
 app.use(apiBase + '/skills',        require('./routes/skills'));
 app.use(apiBase + '/profile-score', require('./routes/profile-score'));
 app.use(apiBase + '/salary',        require('./routes/salary'));
-app.use(apiBase + '/highlights',    require('./routes/highlights'));
+app.use(apiBase + '/highlights',       require('./routes/highlights'));
+app.use(apiBase + '/video-interviews', require('./routes/video-interviews'));
+// Serve uploaded interview videos
+app.use(BASE_PATH + '/uploads/interviews', express.static(path.join(__dirname, 'uploads', 'interviews')));
+// Candidate public recording page
+app.get(BASE_PATH + '/interview/:token', (req, res) => res.sendFile(path.join(__dirname, 'public', 'interview.html')));
 
 // ── Health check ───────────────────────────────────────────
 app.get(BASE_PATH + '/healthz', (req, res) => res.json({ status: 'ok', service: 'nexhire' }));

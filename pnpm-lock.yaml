@@ -799,6 +799,9 @@ importers:
       nodemailer:
         specifier: ^6.9.7
         version: 6.10.1
+      openai:
+        specifier: ^6.34.0
+        version: 6.34.0(ws@8.20.0)(zod@4.3.6)
       pdf-parse:
         specifier: ^2.4.5
         version: 2.4.5
