@@ -189,6 +189,7 @@ function updateCitiesForProvince(provinceSelectId, citySelectId) {
       state.user = d.user;
       state.lang = d.user.preferred_lang || 'en';
       showUserNav();
+      loadVerifiedSkills();
       // Close login modal if it was opened before auth resolved (race condition)
       hideModal('modal-login');
       hideModal('modal-register');
@@ -1351,6 +1352,7 @@ async function login() {
     state.user = d.user; state.lang = d.user.preferred_lang || state.lang;
     setLangUI(state.lang); hideModal('modal-login'); showUserNav(); startSSE();
     toast(`Welcome back, ${d.user.first_name}!`, 'success');
+    loadVerifiedSkills();
     if (d.user.role === 'candidate') { loadSavedJobIds(); goto('candidate-dash'); }
     else goto('employer-dash');
     loadNotifBadge();
@@ -1373,6 +1375,7 @@ async function register() {
   if (d.success) {
     state.user = d.user; hideModal('modal-register'); showUserNav(); startSSE();
     toast(`Welcome to Nexhire, ${d.user.first_name}!`, 'success');
+    loadVerifiedSkills();
     if (d.user.role === 'candidate') { loadSavedJobIds(); goto('candidate-dash'); }
     else goto('employer-dash');
   } else showErr(errEl, d.error || 'Registration failed');
@@ -2295,7 +2298,8 @@ function renderSkillPicker(selected = [], idPrefix = 'sp') {
       const img = sk.logo
         ? `<img src="${sk.logo}" class="sp-logo"${sk.invert ? ' style="filter:invert(1)"' : ''}>`
         : `<span class="sp-badge" style="background:${sk.badge.bg};color:${sk.badge.color}">${sk.badge.text}</span>`;
-      return `<span class="sp-chip${active}" data-skill="${esc(sk.name)}" onclick="toggleSkill(this)">${img}${esc(sk.name)}</span>`;
+      const isVerified = state.verifiedSkillNames?.has(sk.name);
+      return `<span class="sp-chip${active}" data-skill="${esc(sk.name)}" onclick="toggleSkill(this)">${img}${esc(sk.name)}${isVerified ? '<span style="color:#4ade80;font-size:10px;font-weight:800;margin-left:3px" title="Verified by skill test">✓</span>' : ''}</span>`;
     }).join('');
     return `<div class="sp-group" data-sector="${sec}">
       <div class="sp-group-label"><i class="ti ${g.icon}"></i>${g.label}</div>
@@ -4536,14 +4540,20 @@ async function loadSkillTests() {
   const d = await api('GET', `${BASE}/api/skills/tests`);
   if (!d.success) { el.innerHTML = `<div class="empty-state"><i class="ti ti-alert-circle"></i><p>${d.error || 'Error'}</p></div>`; return; }
   const { tests } = d;
-  const categories = [...new Set(tests.map(t => t.category))];
+  const categories = ['All', ...[...new Set(tests.map(t => t.category))]];
   const diffColor = { beginner: '#4ade80', intermediate: '#facc15', advanced: '#f87171' };
+  const verified = state.verifiedSkillNames || new Set();
+
   el.innerHTML = `
     <h2><i class="ti ti-certificate" style="color:var(--indigo)"></i> ${isFr ? 'Tests de compétences vérifiables' : 'Verified Skill Tests'}</h2>
-    <p style="color:var(--muted);margin-bottom:24px">${isFr ? 'Obtenez des badges vérifiés sur votre profil. Les employeurs peuvent filtrer par compétences validées.' : 'Earn verified badges on your profile. Employers can filter by validated skills.'}</p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px">
-      ${categories.map(cat => `
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer" onclick="filterSkillTests('${cat}')">${cat}</div>
+    <p style="color:var(--muted);margin-bottom:16px">${isFr ? 'Réussissez un test → badge ✓ vérifié ajouté à votre profil. Les employeurs peuvent filtrer par compétences validées.' : 'Pass a test → verified ✓ badge added to your profile. Employers can filter by validated skills.'}</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px" id="skill-filter-pills">
+      ${categories.map((cat, i) => `
+        <button class="skill-filter-pill" data-cat="${cat}"
+          onclick="filterSkillTests('${cat}')"
+          style="background:${i===0?'var(--indigo)':'var(--surface)'};color:${i===0?'#fff':''};border:1px solid ${i===0?'var(--indigo)':'var(--border)'};border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s">
+          ${cat}
+        </button>
       `).join('')}
     </div>
     <div id="skill-tests-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
@@ -4551,11 +4561,11 @@ async function loadSkillTests() {
         const passed = t.passed;
         const attempted = t.score !== null && t.score !== undefined;
         return `
-        <div class="skill-test-card" style="background:var(--surface);border:1px solid ${passed ? '#4ade8055' : 'var(--border)'};border-radius:16px;padding:20px;position:relative${passed ? ';box-shadow:0 0 0 2px #4ade8033' : ''}">
+        <div class="skill-test-card" data-category="${t.category}" style="background:var(--surface);border:1px solid ${passed ? '#4ade8055' : 'var(--border)'};border-radius:16px;padding:20px;position:relative${passed ? ';box-shadow:0 0 0 2px #4ade8033' : ''}">
           ${passed ? `<div style="position:absolute;top:12px;right:12px;background:#4ade80;color:#000;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px">✓ ${isFr ? 'Réussi' : 'Passed'}</div>` : ''}
-          <div style="font-size:12px;color:${diffColor[t.difficulty] || '#facc15'};font-weight:600;margin-bottom:6px;text-transform:uppercase">${t.difficulty}</div>
+          <div style="font-size:12px;color:${diffColor[t.difficulty] || '#facc15'};font-weight:600;margin-bottom:6px;text-transform:uppercase">${t.difficulty} · ${t.category}</div>
           <div style="font-weight:700;font-size:16px;margin-bottom:4px">${isFr ? t.title_fr : t.title_en}</div>
-          <div style="font-size:12px;color:var(--muted);margin-bottom:14px">${t.category} · ${t.question_count} ${isFr ? 'questions' : 'questions'} · ${isFr ? 'Score min' : 'Pass score'}: ${t.pass_score}%</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px">${t.question_count} ${isFr ? 'questions' : 'questions'} · ${isFr ? 'Score min' : 'Pass score'}: ${t.pass_score}%</div>
           ${attempted ? `<div style="font-size:13px;margin-bottom:12px;color:${passed ? '#4ade80' : 'var(--muted)'}">${isFr ? 'Votre score' : 'Your score'}: <strong>${t.score}%</strong></div>` : ''}
           <button class="btn-primary" style="width:100%;font-size:13px;padding:9px" onclick="startSkillTest('${t.slug}', '${isFr ? t.title_fr : t.title_en}')">
             <i class="ti ti-${passed ? 'refresh' : 'pencil'}"></i> ${passed ? (isFr ? 'Repasser' : 'Retake') : (isFr ? 'Commencer le test' : 'Start Test')}
@@ -4567,9 +4577,16 @@ async function loadSkillTests() {
 }
 
 function filterSkillTests(cat) {
+  // Update pill active state
+  document.querySelectorAll('.skill-filter-pill').forEach(p => {
+    const active = p.dataset.cat === cat;
+    p.style.background    = active ? 'var(--indigo)' : 'var(--surface)';
+    p.style.color         = active ? '#fff' : '';
+    p.style.borderColor   = active ? 'var(--indigo)' : 'var(--border)';
+  });
+  // Filter cards
   document.querySelectorAll('.skill-test-card').forEach(c => {
-    const title = c.querySelector('[style*="font-size:16px"]')?.textContent || '';
-    c.style.display = title ? '' : 'none';
+    c.style.display = (cat === 'All' || c.dataset.category === cat) ? '' : 'none';
   });
 }
 
@@ -4646,7 +4663,7 @@ async function submitSkillTest() {
         <div style="font-size:36px;font-weight:800;color:${color}">${score}%</div>
         <div style="font-size:18px;font-weight:600;margin:8px 0">${passed ? (isFr ? 'Badge obtenu !' : 'Badge Earned!') : (isFr ? 'Pas encore...' : 'Not yet...')}</div>
         <div style="font-size:14px;color:var(--muted)">${correct}/${total} ${isFr ? 'bonnes réponses' : 'correct answers'} · ${isFr ? 'Score minimum' : 'Pass score'}: ${currentTest.pass_score}%</div>
-        ${passed ? `<div style="margin-top:12px;background:#4ade8022;border-radius:10px;padding:10px;font-size:13px;color:#4ade80">${isFr ? 'Badge ajouté à votre profil !' : 'Badge added to your profile!'}</div>` : ''}
+        ${passed && d.added_skills?.length ? `<div style="margin-top:12px;background:#4ade8022;border-radius:10px;padding:10px;font-size:13px;color:#4ade80"><i class="ti ti-check"></i> ${isFr ? 'Compétences ajoutées à votre profil' : 'Skills added to your profile'} : <strong>${d.added_skills.join(', ')}</strong></div>` : passed ? `<div style="margin-top:12px;background:#4ade8022;border-radius:10px;padding:10px;font-size:13px;color:#4ade80"><i class="ti ti-check"></i> ${isFr ? 'Badge ajouté à votre profil !' : 'Badge added to your profile!'}</div>` : ''}
       </div>
       <div style="margin-bottom:24px">
         <div style="font-weight:700;font-size:15px;margin-bottom:12px">${isFr ? 'Vos réponses' : 'Your Answers'}</div>
@@ -4666,6 +4683,8 @@ async function submitSkillTest() {
   `;
   currentTest = null;
   currentAnswers = [];
+  // Refresh verified skills so picker shows ✓ immediately
+  if (passed) loadVerifiedSkills();
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -4883,6 +4902,13 @@ async function submitMySalary() {
   } else {
     toast(d.error || (isFr ? 'Erreur' : 'Error'), 'error');
   }
+}
+
+// ── Verified skills — load once after login, store in state ──
+async function loadVerifiedSkills() {
+  if (!state.user) return;
+  const d = await api('GET', `${BASE}/api/skills/verified`);
+  if (d.success) state.verifiedSkillNames = new Set(d.skills);
 }
 
 function formatSalary(n) {
