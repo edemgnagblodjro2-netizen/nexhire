@@ -1679,11 +1679,14 @@ function showForgot() {
 
 // ── Candidate Dashboard ────────────────────────────────────
 async function loadDashboard() {
-  if (!state.user || state.user.role !== 'candidate') return;
+  if (!state.user || !['candidate','admin'].includes(state.user.role)) return;
   const u = state.user;
   const initials = `${(u.first_name||'')[0]||''}${(u.last_name||'')[0]||''}`.toUpperCase() || 'U';
   safeSet('dash-avatar', initials);
   safeSet('dash-name', `${u.first_name} ${u.last_name}`);
+  // Show admin nav item for admin users
+  const adminNav = document.getElementById('nav-admin-tests');
+  if (adminNav) adminNav.style.display = u.role === 'admin' ? '' : 'none';
   const _otwEl = document.getElementById('sidebar-otw');
   if (_otwEl) {
     const _otwSet = getAvailBadges(u.id);
@@ -3707,6 +3710,7 @@ function showTab(tabId, el) {
   if (tabId === 'tab-referrals') loadReferrals();
   if (tabId === 'tab-salary') loadSalaryPage();
   if (tabId === 'tab-credits') loadCredits();
+  if (tabId === 'tab-admin-tests') loadAdminSkillTests();
 }
 
 function showEmpTab(tabId, navEl) {
@@ -4901,6 +4905,196 @@ async function buyCredits(packId) {
 
 // ═══════════════════════════════════════════════════════════
 // HERO BACKGROUND PHOTO SLIDER — silent cross-fade
+/* ── Admin — Skill Tests Manager ───────────────────────────────────────── */
+let adminEditingTestId = null;
+
+async function loadAdminSkillTests() {
+  const el = document.getElementById('tab-admin-tests');
+  if (!el) return;
+  const isFr = state.lang === 'fr';
+  el.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>`;
+  const d = await api('GET', `${BASE}/api/admin/skill-tests`);
+  if (!d.success) {
+    el.innerHTML = `<div class="empty-state"><i class="ti ti-lock"></i><p>${d.error || 'Access denied'}</p></div>`;
+    return;
+  }
+  const { tests } = d;
+  const catColors = { Developer:'#6366f1', Data:'#0ea5e9', Finance:'#f59e0b', Marketing:'#ec4899', Management:'#8b5cf6', Design:'#14b8a6', 'Soft Skills':'#22c55e', DevOps:'#f97316' };
+  const diffBadge = { beginner:'#4ade80', intermediate:'#facc15', advanced:'#f87171' };
+  el.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+      <div>
+        <h2 style="margin:0"><i class="ti ti-settings" style="color:var(--indigo)"></i> Admin — Skill Tests</h2>
+        <p style="color:var(--muted);margin:4px 0 0">${tests.length} test${tests.length !== 1 ? 's' : ''} · ${tests.reduce((a,t) => a + parseInt(t.question_count||0), 0)} questions pool</p>
+      </div>
+      <button class="btn-primary" onclick="openAdminTestForm()"><i class="ti ti-plus"></i> New Test</button>
+    </div>
+
+    <div id="admin-test-form-wrapper" style="display:none;background:var(--surface);border:1px solid var(--indigo);border-radius:16px;padding:24px;margin-bottom:24px"></div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px" id="admin-tests-grid">
+      ${tests.map(t => `
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;position:relative">
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px">
+            <span style="background:${catColors[t.category]||'#6366f1'}22;color:${catColors[t.category]||'#6366f1'};padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">${t.category}</span>
+            <span style="background:${diffBadge[t.difficulty]||'#facc15'}33;color:${diffBadge[t.difficulty]||'#facc15'};padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">${t.difficulty}</span>
+          </div>
+          <div style="font-weight:700;font-size:15px;margin-bottom:4px">${esc(t.title_en)}</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:4px">${esc(t.title_fr)}</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px">
+            <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:11px">${esc(t.slug)}</code>
+            · ${t.question_count} Qs · Pass: ${t.pass_score}% · ${t.attempts} attempt${t.attempts !== '1' ? 's' : ''}
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-ghost" style="flex:1;font-size:13px" onclick="editAdminTest('${esc(t.id)}')"><i class="ti ti-pencil"></i> Edit</button>
+            <button class="btn-ghost" style="color:#f87171;border-color:#f8717144;font-size:13px" onclick="deleteAdminTest('${esc(t.id)}','${esc(t.title_en)}')"><i class="ti ti-trash"></i></button>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function openAdminTestForm(prefill = null) {
+  const wrapper = document.getElementById('admin-test-form-wrapper');
+  if (!wrapper) return;
+  adminEditingTestId = prefill?.id || null;
+  wrapper.style.display = 'block';
+  wrapper.innerHTML = `
+    <h3 style="margin:0 0 16px"><i class="ti ti-${adminEditingTestId ? 'pencil' : 'plus'}"></i> ${adminEditingTestId ? 'Edit Test' : 'New Test'}</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+      <div>
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Slug <span style="color:#f87171">*</span></label>
+        <input id="at-slug" class="filter-input" style="width:100%;box-sizing:border-box" placeholder="javascript-fundamentals" value="${esc(prefill?.slug||'')}">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Category <span style="color:#f87171">*</span></label>
+        <select id="at-cat" class="filter-select" style="width:100%">
+          ${['Developer','Data','Finance','Marketing','Management','Design','Soft Skills','DevOps'].map(c => `<option value="${c}"${prefill?.category===c?' selected':''}>${c}</option>`).join('')}
+        </select>
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Title (EN) <span style="color:#f87171">*</span></label>
+        <input id="at-title-en" class="filter-input" style="width:100%;box-sizing:border-box" placeholder="JavaScript — Fundamentals" value="${esc(prefill?.title_en||'')}">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Titre (FR)</label>
+        <input id="at-title-fr" class="filter-input" style="width:100%;box-sizing:border-box" placeholder="JavaScript — Fondamentaux" value="${esc(prefill?.title_fr||'')}">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Difficulty</label>
+        <select id="at-diff" class="filter-select" style="width:100%">
+          <option value="beginner"${prefill?.difficulty==='beginner'?' selected':''}>Beginner</option>
+          <option value="intermediate"${prefill?.difficulty==='intermediate'?' selected':''}>Intermediate</option>
+          <option value="advanced"${prefill?.difficulty==='advanced'?' selected':''}>Advanced</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Pass Score (%)</label>
+        <input id="at-pass" type="number" class="filter-input" style="width:100%;box-sizing:border-box" min="50" max="100" value="${prefill?.pass_score||70}">
+      </div>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <label style="font-size:12px;font-weight:600">Questions JSON <span style="color:#f87171">*</span> <span style="color:var(--muted);font-weight:400">(min 5, idéalement 15)</span></label>
+        <button class="btn-ghost" style="font-size:11px;padding:4px 10px" onclick="insertAdminTestTemplate()"><i class="ti ti-template"></i> Template</button>
+      </div>
+      <textarea id="at-questions" style="width:100%;box-sizing:border-box;height:220px;font-family:monospace;font-size:12px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);resize:vertical" placeholder='[{"q":"Question text?","opts":["A","B","C","D"],"answer":0},...]'>${prefill?.questions ? JSON.stringify(prefill.questions, null, 2) : ''}</textarea>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">Format: <code>[{"q":"...", "opts":["A","B","C","D"], "answer": 0}]</code> — answer = index de la bonne réponse</div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-primary" style="flex:1" onclick="saveAdminTest()"><i class="ti ti-device-floppy"></i> ${adminEditingTestId ? 'Update Test' : 'Create Test'}</button>
+      <button class="btn-ghost" onclick="closeAdminTestForm()">Cancel</button>
+    </div>
+  `;
+  wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function insertAdminTestTemplate() {
+  const ta = document.getElementById('at-questions');
+  if (!ta || ta.value.trim()) return;
+  ta.value = JSON.stringify([
+    {"q":"Question 1?","opts":["Option A","Option B","Option C","Option D"],"answer":0},
+    {"q":"Question 2?","opts":["Option A","Option B","Option C","Option D"],"answer":1},
+    {"q":"Question 3?","opts":["Option A","Option B","Option C","Option D"],"answer":2},
+    {"q":"Question 4?","opts":["Option A","Option B","Option C","Option D"],"answer":3},
+    {"q":"Question 5?","opts":["Option A","Option B","Option C","Option D"],"answer":0},
+  ], null, 2);
+}
+
+function closeAdminTestForm() {
+  const wrapper = document.getElementById('admin-test-form-wrapper');
+  if (wrapper) { wrapper.style.display = 'none'; wrapper.innerHTML = ''; }
+  adminEditingTestId = null;
+}
+
+async function saveAdminTest() {
+  const slug     = document.getElementById('at-slug')?.value.trim();
+  const title_en = document.getElementById('at-title-en')?.value.trim();
+  const title_fr = document.getElementById('at-title-fr')?.value.trim();
+  const category = document.getElementById('at-cat')?.value;
+  const difficulty = document.getElementById('at-diff')?.value;
+  const pass_score = parseInt(document.getElementById('at-pass')?.value || '70');
+  const qRaw = document.getElementById('at-questions')?.value.trim();
+
+  if (!title_en || !category || (!adminEditingTestId && !slug)) {
+    toast('Titre EN, catégorie et slug sont requis', 'error'); return;
+  }
+
+  let questions;
+  if (qRaw) {
+    try {
+      questions = JSON.parse(qRaw);
+      if (!Array.isArray(questions)) throw new Error('Must be array');
+      if (questions.length < 5) { toast('Minimum 5 questions', 'error'); return; }
+      for (const q of questions) {
+        if (!q.q || !Array.isArray(q.opts) || q.opts.length < 2 || typeof q.answer !== 'number') {
+          throw new Error('Each question needs q, opts (array), answer (number)');
+        }
+      }
+    } catch (e) {
+      toast(`JSON invalide: ${e.message}`, 'error'); return;
+    }
+  }
+
+  const btn = document.querySelector('#admin-test-form-wrapper .btn-primary');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2"></i> Saving…'; }
+
+  const payload = { title_en, title_fr: title_fr || title_en, category, difficulty, pass_score };
+  if (!adminEditingTestId) payload.slug = slug;
+  if (questions) payload.questions = questions;
+
+  const d = adminEditingTestId
+    ? await api('PUT', `${BASE}/api/admin/skill-tests/${adminEditingTestId}`, payload)
+    : await api('POST', `${BASE}/api/admin/skill-tests`, payload);
+
+  if (d.success) {
+    toast(adminEditingTestId ? 'Test mis à jour !' : 'Test créé !', 'success');
+    closeAdminTestForm();
+    loadAdminSkillTests();
+  } else {
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="ti ti-device-floppy"></i> Save'; }
+    toast(d.error || 'Error', 'error');
+  }
+}
+
+async function editAdminTest(id) {
+  const d = await api('GET', `${BASE}/api/admin/skill-tests/${id}`);
+  if (!d.success) { toast('Error loading test', 'error'); return; }
+  openAdminTestForm(d.test);
+}
+
+async function deleteAdminTest(id, title) {
+  if (!confirm(`Supprimer le test "${title}" ? Cette action est irréversible.`)) return;
+  const d = await api('DELETE', `${BASE}/api/admin/skill-tests/${id}`);
+  if (d.success) {
+    toast('Test supprimé', 'success');
+    loadAdminSkillTests();
+  } else {
+    toast(d.error || 'Error', 'error');
+  }
+}
+
 // ═══════════════════════════════════════════════════════════
 (function initHeroBgSlider() {
   const slides = document.querySelectorAll('.hbg-slide');

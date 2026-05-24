@@ -22,14 +22,24 @@ router.get('/tests', requireAuth, async (req, res) => {
   }
 });
 
-// GET /api/skills/tests/:slug — get test questions (without answers)
+// GET /api/skills/tests/:slug — get test questions (without answers, randomized pool)
 router.get('/tests/:slug', requireAuth, async (req, res) => {
   try {
     const { rows } = await db.query('SELECT * FROM nh_skill_tests WHERE slug=$1', [req.params.slug]);
     if (!rows.length) return res.status(404).json({ success: false, error: 'Test not found' });
     const t = rows[0];
-    // Strip answer indices before sending
-    const questions = t.questions.map((q, i) => ({ id: i, q: q.q, opts: q.opts }));
+    // Randomize: shuffle pool, pick up to 10 questions, store mapping in session
+    const pool = t.questions.map((q, i) => ({ ...q, _poolIdx: i }));
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    const selected = pool.slice(0, Math.min(10, pool.length));
+    // Store the pool indices in session so submit can verify answers
+    req.session.skillTestMap = req.session.skillTestMap || {};
+    req.session.skillTestMap[t.slug] = selected.map(q => q._poolIdx);
+    // Strip answers before sending
+    const questions = selected.map((q, i) => ({ id: i, q: q.q, opts: q.opts }));
     res.json({ success: true, test: { id: t.id, slug: t.slug, title_fr: t.title_fr, title_en: t.title_en, category: t.category, difficulty: t.difficulty, pass_score: t.pass_score, questions } });
   } catch (e) {
     res.status(500).json({ success: false, error: e.message });
@@ -45,15 +55,21 @@ router.post('/tests/:slug/submit', requireAuth, async (req, res) => {
     if (!rows.length) return res.status(404).json({ success: false, error: 'Test not found' });
     const t = rows[0];
 
-    if (!Array.isArray(answers) || answers.length !== t.questions.length) {
+    // Resolve which pool questions were shown (from session map)
+    const poolMap = req.session.skillTestMap?.[req.params.slug];
+    const selectedQuestions = poolMap
+      ? poolMap.map(idx => t.questions[idx])
+      : t.questions.slice(0, 10);
+
+    if (!Array.isArray(answers) || answers.length !== selectedQuestions.length) {
       return res.status(400).json({ success: false, error: 'Invalid answers' });
     }
 
     let correct = 0;
-    const feedback = t.questions.map((q, i) => {
+    const feedback = selectedQuestions.map((q, i) => {
       const isCorrect = answers[i] === q.answer;
       if (isCorrect) correct++;
-      return { q: q.q, your_answer: q.opts[answers[i]], correct_answer: q.opts[q.answer], correct: isCorrect };
+      return { q: q.q, your_answer: q.opts[answers[i]] ?? '—', correct_answer: q.opts[q.answer], correct: isCorrect };
     });
 
     const score = Math.round((correct / t.questions.length) * 100);

@@ -366,10 +366,9 @@ async function runMigrations() {
 
 // ── Skill tests seed ──────────────────────────────────────────
 async function seedSkillTests(pool) {
-  const { rows } = await pool.query('SELECT COUNT(*) as n FROM nh_skill_tests');
-  if (parseInt(rows[0].n) > 0) return;
   const crypto = require('crypto');
   const tests = [
+    // ── Developer ──────────────────────────────────────────────────────────
     { slug:'javascript-fundamentals', title_fr:'JavaScript — Fondamentaux', title_en:'JavaScript — Fundamentals', category:'Developer', difficulty:'beginner', pass_score:70,
       questions:[
         {q:'What does `typeof null` return?', opts:['null','object','undefined','boolean'], answer:1},
@@ -377,6 +376,34 @@ async function seedSkillTests(pool) {
         {q:'What is the output of `0 == false`?', opts:['true','false','TypeError','undefined'], answer:0},
         {q:'Which keyword declares a block-scoped variable?', opts:['var','let','function','global'], answer:1},
         {q:'What does `Array.isArray([])` return?', opts:['false','true','undefined','TypeError'], answer:1},
+        {q:'Which method removes and returns the last element of an array?', opts:['shift','pop','splice','slice'], answer:1},
+        {q:'What does `===` check in JavaScript?', opts:['Value only','Type only','Value and type','Reference equality'], answer:2},
+        {q:'What is a closure?', opts:['A loop construct','A function with access to its outer scope','A class method','An async pattern'], answer:1},
+        {q:'Which built-in method converts JSON string to object?', opts:['JSON.encode','JSON.parse','JSON.stringify','JSON.convert'], answer:1},
+        {q:'What does `Promise.all([])` return when array is empty?', opts:['null','undefined','Rejected promise','Resolved promise with []'], answer:3},
+        {q:'What is the output of `!!0`?', opts:['0','1','true','false'], answer:3},
+        {q:'Which event fires when the DOM is fully loaded?', opts:['onload','DOMContentLoaded','DOMReady','pageload'], answer:1},
+        {q:'What does `Array.prototype.map` return?', opts:['The original array','undefined','A new array','A boolean'], answer:2},
+        {q:'Which keyword is used to handle a rejected promise?', opts:['then','catch','finally','reject'], answer:1},
+        {q:'What is `NaN === NaN`?', opts:['true','false','TypeError','undefined'], answer:1},
+      ]},
+    { slug:'typescript-fundamentals', title_fr:'TypeScript — Fondamentaux', title_en:'TypeScript — Fundamentals', category:'Developer', difficulty:'intermediate', pass_score:70,
+      questions:[
+        {q:'What is TypeScript?', opts:['A CSS preprocessor','A JavaScript superset with static typing','A Node.js framework','A build tool'], answer:1},
+        {q:'Which keyword defines a TypeScript interface?', opts:['type','class','interface','struct'], answer:2},
+        {q:'What does the `?` after a property name mean in an interface?', opts:['Required property','Optional property','Readonly property','Nullable type'], answer:1},
+        {q:'What is the `unknown` type?', opts:['Same as any','A type-safe alternative to any','A runtime error type','An undefined alias'], answer:1},
+        {q:'What does `readonly` do to a property?', opts:['Makes it private','Prevents reassignment after initialization','Makes it optional','Adds runtime check'], answer:1},
+        {q:'What is a Union type in TypeScript?', opts:['A type that must match all listed types','A type that can be one of several types','A generic constraint','An imported type'], answer:1},
+        {q:'What does `as const` do?', opts:['Casts to a constant','Makes all properties readonly and narrows literal types','Disables type checking','Freezes the object at runtime'], answer:1},
+        {q:'What is a Generic in TypeScript?', opts:['A base class','A reusable type parameter','A default export','A mixin'], answer:1},
+        {q:'What does `keyof T` produce?', opts:['The values of T','A union of keys of T','An array of T','A mapped type'], answer:1},
+        {q:'What is the purpose of `tsconfig.json`?', opts:['Configure npm scripts','Configure TypeScript compiler options','Define package dependencies','Set up linting rules'], answer:1},
+        {q:'What does `Partial<T>` do?', opts:['Makes all properties required','Makes all properties optional','Removes all properties','Picks some properties'], answer:1},
+        {q:'Which TypeScript utility makes all properties required?', opts:['Partial','Required','Readonly','Record'], answer:1},
+        {q:'What is a type assertion?', opts:['Runtime type check','Telling TypeScript to treat a value as a specific type','Converting a type at runtime','Adding a type guard'], answer:1},
+        {q:'What does `never` represent?', opts:['A null value','A type that never occurs (exhaustive checks, throw)','An empty object','An unresolved generic'], answer:1},
+        {q:'What is the difference between `type` and `interface`?', opts:['No difference','Interfaces can be merged/extended, types are more flexible for unions','Types are faster','Interfaces support generics, types do not'], answer:1},
       ]},
     { slug:'react-intermediate', title_fr:'React — Niveau intermédiaire', title_en:'React — Intermediate', category:'Developer', difficulty:'intermediate', pass_score:70,
       questions:[
@@ -385,6 +412,34 @@ async function seedSkillTests(pool) {
         {q:'When does `useEffect` with an empty dependency array run?', opts:['Every render','Never','Once after mount','On unmount only'], answer:2},
         {q:'What is `useState` used for?', opts:['Routing','Local component state','Global state','API calls'], answer:1},
         {q:'What is the virtual DOM?', opts:['A browser API','A lightweight copy of the real DOM','A CSS framework','A JavaScript engine'], answer:1},
+        {q:'What does `useCallback` do?', opts:['Memoizes a value','Memoizes a function reference','Creates a ref','Runs a side effect'], answer:1},
+        {q:'What is React Context used for?', opts:['Local state','HTTP requests','Sharing state without prop drilling','CSS-in-JS'], answer:2},
+        {q:'What does `useMemo` optimize?', opts:['Network calls','Expensive computed values','DOM mutations','Event listeners'], answer:1},
+        {q:'What is the purpose of `React.StrictMode`?', opts:['Enforces TypeScript','Highlights potential problems in development','Enables server-side rendering','Disables concurrent mode'], answer:1},
+        {q:'What does lifting state up mean?', opts:['Using global state','Moving state to a common ancestor','Using Redux','Storing state in localStorage'], answer:1},
+        {q:'What is a controlled component?', opts:['A component controlled by a parent','A form element whose value is controlled by React state','A class component','A memoized component'], answer:1},
+        {q:'When should you use `useRef`?', opts:['For API calls','To access DOM nodes or persist values without re-render','For routing','For context'], answer:1},
+        {q:'What does `React.memo` do?', opts:['Memoizes async operations','Prevents re-render if props haven\'t changed','Creates a new context','Wraps a hook'], answer:1},
+        {q:'What is reconciliation in React?', opts:['Managing API state','The process of updating the DOM to match the virtual DOM','Routing between pages','Handling forms'], answer:1},
+        {q:'What hook lets you run cleanup on component unmount?', opts:['useState','useCallback','useEffect (return a cleanup function)','useRef'], answer:2},
+      ]},
+    { slug:'nodejs-fundamentals', title_fr:'Node.js — Fondamentaux', title_en:'Node.js — Fundamentals', category:'Developer', difficulty:'intermediate', pass_score:70,
+      questions:[
+        {q:'What is Node.js?', opts:['A browser runtime','A JavaScript runtime built on V8','A CSS framework','A database'], answer:1},
+        {q:'What does `require()` do in Node.js?', opts:['Imports an HTTP module only','Loads a module synchronously','Loads a module asynchronously','Defines a module'], answer:1},
+        {q:'What is the event loop in Node.js?', opts:['A for loop for events','The mechanism that handles async operations non-blockingly','A worker thread pool','A queue for HTTP requests'], answer:1},
+        {q:'Which module is used to create an HTTP server?', opts:['fs','path','http','net'], answer:2},
+        {q:'What does `process.env` give access to?', opts:['Command line args','Environment variables','Installed packages','File system'], answer:1},
+        {q:'What is `package.json` used for?', opts:['Storing database configs','Defining project metadata and dependencies','Running SQL migrations','Configuring TypeScript'], answer:1},
+        {q:'What is middleware in Express.js?', opts:['A database layer','A function that processes requests before they reach route handlers','A caching layer','A template engine'], answer:1},
+        {q:'What does `async/await` simplify?', opts:['Synchronous code','Working with Promises','Module imports','Event emitters'], answer:1},
+        {q:'What does `fs.readFile` do?', opts:['Reads a file synchronously','Reads a file asynchronously','Writes a file','Watches a file for changes'], answer:1},
+        {q:'What is npm?', opts:['A JavaScript runtime','Node Package Manager','A build tool','A testing framework'], answer:1},
+        {q:'What does `res.json()` do in Express?', opts:['Sends an HTML response','Sends a JSON response with Content-Type header','Redirects the request','Parses incoming JSON'], answer:1},
+        {q:'What is a Buffer in Node.js?', opts:['A caching mechanism','A fixed-size raw binary data container','An event queue','A stream transformer'], answer:1},
+        {q:'What does `app.use()` do in Express?', opts:['Defines a GET route','Mounts middleware or sub-routers','Sets a port','Reads request body'], answer:1},
+        {q:'Which flag runs Node.js with ES modules?', opts:['--esm','--module','--type=module (in package.json)','--ecma'], answer:2},
+        {q:'What is the purpose of `cors` middleware?', opts:['Compression','Cross-origin request handling','Cookie parsing','Session management'], answer:1},
       ]},
     { slug:'python-basics', title_fr:'Python — Bases', title_en:'Python — Basics', category:'Developer', difficulty:'beginner', pass_score:70,
       questions:[
@@ -393,7 +448,54 @@ async function seedSkillTests(pool) {
         {q:'What does `//` do in Python?', opts:['Comment','Float division','Integer division','Power'], answer:2},
         {q:'What type is `[1, 2, 3]` in Python?', opts:['tuple','dict','list','set'], answer:2},
         {q:'How do you start a comment in Python?', opts:['//','/*','#','--'], answer:2},
+        {q:'What is the output of `type(3.14)`?', opts:['int','float','double','number'], answer:1},
+        {q:'Which keyword is used for loops in Python?', opts:['loop','repeat','for','iterate'], answer:2},
+        {q:'What does `range(5)` produce?', opts:['[1,2,3,4,5]','[0,1,2,3,4]','[0,1,2,3,4,5]','(0,5)'], answer:1},
+        {q:'How do you access the last element of a list `lst`?', opts:['lst[last]','lst[-1]','lst[end]','lst[len]'], answer:1},
+        {q:'What is a dictionary in Python?', opts:['An ordered list','A key-value pair data structure','A set of unique values','A tuple'], answer:1},
+        {q:'What does `str.split(",")` return?', opts:['A string','A list split by commas','A tuple','A generator'], answer:1},
+        {q:'Which operator is used for exponentiation in Python?', opts:['^','**','^^','exp()'], answer:1},
+        {q:'What is a virtual environment used for?', opts:['Running GUI apps','Isolating project dependencies','Speeding up Python','Managing files'], answer:1},
+        {q:'What does `append()` do to a list?', opts:['Removes last element','Adds element to the end','Sorts the list','Inserts at index 0'], answer:1},
+        {q:'What is PEP 8?', opts:['A Python version','Python\'s style guide for code formatting','A package manager','A testing library'], answer:1},
       ]},
+    { slug:'git-version-control', title_fr:'Git — Contrôle de version', title_en:'Git — Version Control', category:'Developer', difficulty:'beginner', pass_score:70,
+      questions:[
+        {q:'What does `git init` do?', opts:['Clones a repo','Initializes a new Git repository','Commits changes','Pushes to remote'], answer:1},
+        {q:'What does `git clone` do?', opts:['Creates a branch','Copies a remote repository locally','Merges branches','Tags a commit'], answer:1},
+        {q:'What is a commit in Git?', opts:['A branch name','A snapshot of staged changes','A merge request','A remote branch'], answer:1},
+        {q:'What does `git status` show?', opts:['Commit history','Current branch and file changes','Remote branches','Stashed changes'], answer:1},
+        {q:'What does `git pull` do?', opts:['Pushes to remote','Fetches and merges changes from remote','Creates a new branch','Stashes changes'], answer:1},
+        {q:'What is the staging area?', opts:['A backup copy','Where files are prepared before committing','A remote branch','A merge conflict area'], answer:1},
+        {q:'What does `git branch -d` do?', opts:['Creates a branch','Lists branches','Deletes a branch','Renames a branch'], answer:2},
+        {q:'What is a merge conflict?', opts:['A failed push','Conflicting changes in the same file from different branches','A missing commit','A corrupted repo'], answer:1},
+        {q:'What does `git stash` do?', opts:['Deletes uncommitted changes','Temporarily saves uncommitted changes','Commits to a temp branch','Resets HEAD'], answer:1},
+        {q:'What is `origin` in Git?', opts:['The first commit','The default name for the remote repository','The main branch','A tag'], answer:1},
+        {q:'What does `git rebase` do?', opts:['Merges two branches with a merge commit','Re-applies commits on top of another branch','Reverts a commit','Deletes a branch'], answer:1},
+        {q:'What is a Pull Request (PR)?', opts:['A git command','A request to merge changes into another branch for review','An automatic merge','A remote branch push'], answer:1},
+        {q:'What does `git log` show?', opts:['File differences','Commit history','Remote branches','Current status'], answer:1},
+        {q:'What does `.gitignore` do?', opts:['Ignores all git commands','Lists files Git should not track','Hides the .git folder','Deletes ignored files'], answer:1},
+        {q:'What does `git reset --hard HEAD` do?', opts:['Creates a new branch at HEAD','Discards all uncommitted changes and resets to last commit','Merges HEAD','Tags the HEAD commit'], answer:1},
+      ]},
+    { slug:'docker-devops', title_fr:'Docker & DevOps — Bases', title_en:'Docker & DevOps — Basics', category:'DevOps', difficulty:'intermediate', pass_score:70,
+      questions:[
+        {q:'What is Docker?', opts:['A programming language','A platform for containerizing applications','A cloud provider','A CI/CD tool'], answer:1},
+        {q:'What is a Docker image?', opts:['A running container','A template for creating containers','A Dockerfile command','A registry'], answer:1},
+        {q:'What is a Docker container?', opts:['A static image snapshot','A running instance of a Docker image','A volume','A network'], answer:1},
+        {q:'What does `docker build` do?', opts:['Runs a container','Creates an image from a Dockerfile','Pulls an image from registry','Lists containers'], answer:1},
+        {q:'What does `docker-compose up` do?', opts:['Builds images only','Starts services defined in docker-compose.yml','Stops all containers','Pushes to registry'], answer:1},
+        {q:'What is a Dockerfile?', opts:['A YAML configuration file','A script with instructions to build a Docker image','A container runtime config','A registry manifest'], answer:1},
+        {q:'What does `EXPOSE` in a Dockerfile do?', opts:['Opens a port on the host','Documents the port the container listens on','Binds a volume','Sets an env var'], answer:1},
+        {q:'What is CI/CD?', opts:['Container Infrastructure / Container Deployment','Continuous Integration / Continuous Delivery','Code Inspection / Code Deployment','Cloud Integration / Cloud Delivery'], answer:1},
+        {q:'What is Kubernetes used for?', opts:['Building Docker images','Orchestrating and managing containers at scale','Writing Dockerfiles','Storing Docker images'], answer:1},
+        {q:'What does `ENV` in a Dockerfile do?', opts:['Runs a command','Sets an environment variable inside the image','Copies files','Exposes a port'], answer:1},
+        {q:'What is the purpose of a `.dockerignore` file?', opts:['Ignores Docker commands','Excludes files from the build context','Hides the Dockerfile','Disables caching'], answer:1},
+        {q:'What does `docker ps` show?', opts:['All images','Running containers','Stopped containers only','Disk usage'], answer:1},
+        {q:'What is a Docker volume?', opts:['A RAM disk','Persistent storage that survives container restarts','A container network','A cached layer'], answer:1},
+        {q:'What does `RUN` do in a Dockerfile?', opts:['Runs the container','Executes a command during image build','Starts a service','Sets the entry point'], answer:1},
+        {q:'What is a container registry?', opts:['A runtime for containers','A service for storing and distributing Docker images','A container orchestrator','A CI/CD pipeline'], answer:1},
+      ]},
+    // ── Data ────────────────────────────────────────────────────────────────
     { slug:'sql-fundamentals', title_fr:'SQL — Fondamentaux', title_en:'SQL — Fundamentals', category:'Data', difficulty:'beginner', pass_score:70,
       questions:[
         {q:'Which SQL statement retrieves data?', opts:['INSERT','UPDATE','SELECT','DELETE'], answer:2},
@@ -401,7 +503,18 @@ async function seedSkillTests(pool) {
         {q:'Which clause is used with aggregate functions to filter groups?', opts:['WHERE','HAVING','ORDER BY','GROUP BY'], answer:1},
         {q:'What does `JOIN` do?', opts:['Deletes duplicate rows','Combines rows from multiple tables','Filters null values','Sorts data'], answer:1},
         {q:'What does `COUNT(*)` return?', opts:['Sum of values','Number of rows','Max value','Average'], answer:1},
+        {q:'What does `DISTINCT` do in a SELECT?', opts:['Sorts results','Removes duplicate values','Filters nulls','Groups rows'], answer:1},
+        {q:'What is a PRIMARY KEY?', opts:['A foreign reference','A unique identifier for each row','An index on all columns','A constraint preventing joins'], answer:1},
+        {q:'What is a FOREIGN KEY?', opts:['A key from another database','A column referencing the primary key of another table','A unique index','A composite key'], answer:1},
+        {q:'What does `ORDER BY ... DESC` do?', opts:['Sorts ascending','Sorts descending','Groups results','Limits results'], answer:1},
+        {q:'What does `LIMIT 10` do?', opts:['Skips 10 rows','Returns at most 10 rows','Groups 10 rows','Sums 10 rows'], answer:1},
+        {q:'What does `NULL` represent in SQL?', opts:['Zero','Empty string','Unknown or missing value','False'], answer:2},
+        {q:'What does `GROUP BY` do?', opts:['Sorts results','Aggregates rows with the same values in specified columns','Joins tables','Filters rows'], answer:1},
+        {q:'What is the difference between `INNER JOIN` and `LEFT JOIN`?', opts:['No difference','INNER returns only matching rows; LEFT returns all left rows + matches','LEFT is faster','INNER includes NULLs'], answer:1},
+        {q:'What does `SUM()` do?', opts:['Counts rows','Calculates the sum of a numeric column','Returns the max value','Returns the average'], answer:1},
+        {q:'What does `LIKE \'%word%\'` do?', opts:['Exact match','Matches rows containing "word" anywhere in the value','Matches rows starting with "word"','Case-sensitive match only'], answer:1},
       ]},
+    // ── Finance ─────────────────────────────────────────────────────────────
     { slug:'excel-advanced', title_fr:'Excel — Avancé', title_en:'Excel — Advanced', category:'Finance', difficulty:'intermediate', pass_score:70,
       questions:[
         {q:'What function looks up a value in the first column of a range?', opts:['HLOOKUP','INDEX','VLOOKUP','MATCH'], answer:2},
@@ -409,7 +522,36 @@ async function seedSkillTests(pool) {
         {q:'Which function counts cells that meet a condition?', opts:['COUNT','COUNTA','COUNTIF','SUMIF'], answer:2},
         {q:'What is a Pivot Table used for?', opts:['Formatting data','Summarizing large datasets','Creating charts only','Writing macros'], answer:1},
         {q:'What keyboard shortcut inserts the current date?', opts:['Ctrl+D','Ctrl+;','Ctrl+T','Alt+D'], answer:1},
+        {q:'What does `IFERROR(value, value_if_error)` do?', opts:['Ignores all errors','Returns a fallback value if an error occurs','Converts errors to 0','Checks if a cell is empty'], answer:1},
+        {q:'What is the purpose of `INDEX/MATCH` vs `VLOOKUP`?', opts:['No difference','INDEX/MATCH can look up in any column direction','VLOOKUP is faster','INDEX/MATCH only works with numbers'], answer:1},
+        {q:'What does `SUMIFS` do differently from `SUMIF`?', opts:['Nothing different','SUMIFS supports multiple criteria','SUMIF is deprecated','SUMIFS only works with dates'], answer:1},
+        {q:'What does `CONCATENATE` (or `&`) do?', opts:['Multiplies text','Joins text strings together','Splits text','Converts text to number'], answer:1},
+        {q:'What is a named range in Excel?', opts:['A formatted range','A cell range given a descriptive name for use in formulas','A range with conditional formatting','A dynamic chart range'], answer:1},
+        {q:'What does `XLOOKUP` improve over `VLOOKUP`?', opts:['Speed','Can search any column, return arrays, and handle errors natively','Works with macros only','Has no improvement'], answer:1},
+        {q:'What is the purpose of data validation in Excel?', opts:['Formatting cells','Restricting what data users can enter in a cell','Auto-calculating totals','Sorting data automatically'], answer:1},
+        {q:'What does `TEXT(value, format)` do?', opts:['Converts text to number','Formats a number as text with a specified format','Removes spaces from text','Counts characters'], answer:1},
+        {q:'What is conditional formatting?', opts:['A formula type','Applying formatting based on cell values or rules','A chart type','A keyboard shortcut'], answer:1},
+        {q:'What does `LEN()` return?', opts:['The left characters of a string','The number of characters in a string','The first word','The length of a range'], answer:1},
       ]},
+    { slug:'accounting-basics', title_fr:'Comptabilité — Bases', title_en:'Accounting — Basics', category:'Finance', difficulty:'beginner', pass_score:70,
+      questions:[
+        {q:'What is the accounting equation?', opts:['Revenue = Expenses + Profit','Assets = Liabilities + Equity','Profit = Revenue - Costs','Assets = Revenue - Liabilities'], answer:1},
+        {q:'What is a balance sheet?', opts:['A list of revenues','A snapshot of assets, liabilities, and equity at a point in time','A cash flow statement','A profit and loss report'], answer:1},
+        {q:'What does "debit" mean in double-entry accounting?', opts:['Always increases an account','Always decreases an account','Increases assets or expenses; decreases liabilities or equity','A bank withdrawal'], answer:2},
+        {q:'What is EBITDA?', opts:['Total revenue','Earnings Before Interest, Taxes, Depreciation, and Amortization','Net profit','Cash from operations'], answer:1},
+        {q:'What is an income statement?', opts:['A list of assets','A report showing revenues, expenses, and net profit over a period','A budget plan','A balance sheet alternative'], answer:1},
+        {q:'What is depreciation?', opts:['A tax benefit','The gradual reduction in value of a tangible asset over time','An increase in asset value','A revenue category'], answer:1},
+        {q:'What is accounts receivable?', opts:['Money owed by the company','Money owed to the company by customers','Bank loans','Inventory value'], answer:1},
+        {q:'What is cash flow?', opts:['Net income','The movement of money into and out of a business','Total assets','Profit after tax'], answer:1},
+        {q:'What is gross profit?', opts:['Revenue minus all expenses','Revenue minus cost of goods sold','Net income after tax','Operating income'], answer:1},
+        {q:'What is a liability?', opts:['Company owned asset','An obligation or debt the company owes','Shareholder equity','Net profit'], answer:1},
+        {q:'What is working capital?', opts:['Total assets','Current assets minus current liabilities','Long-term debt','Net income'], answer:1},
+        {q:'What does ROI stand for?', opts:['Rate of Income','Return on Investment','Revenue Over Investments','Return of Interest'], answer:1},
+        {q:'What is an audit?', opts:['A tax payment','An independent examination of financial records','A budget review','A financial forecast'], answer:1},
+        {q:'What is the difference between revenue and profit?', opts:['They are the same','Revenue is total income; profit is income after expenses','Profit includes taxes; revenue does not','Revenue is monthly; profit is annual'], answer:1},
+        {q:'What is a journal entry?', opts:['A company diary','A record of a financial transaction in double-entry accounting','A monthly report','A bank statement'], answer:1},
+      ]},
+    // ── Marketing ────────────────────────────────────────────────────────────
     { slug:'marketing-digital', title_fr:'Marketing digital — Fondamentaux', title_en:'Digital Marketing — Fundamentals', category:'Marketing', difficulty:'beginner', pass_score:70,
       questions:[
         {q:'What does SEO stand for?', opts:['Social Engagement Optimization','Search Engine Optimization','Site Evaluation Output','Structured Email Outreach'], answer:1},
@@ -417,15 +559,94 @@ async function seedSkillTests(pool) {
         {q:'What is A/B testing?', opts:['Comparing two versions to see which performs better','Testing on two browsers','A/B stands for Audit/Budget','Running ads on two platforms'], answer:0},
         {q:'What does CTR stand for?', opts:['Click-Through Rate','Content Transfer Rate','Cost To Reach','Customer Tracking Record'], answer:0},
         {q:'Which metric measures ad cost per 1000 impressions?', opts:['CPC','CPM','CTR','ROAS'], answer:1},
+        {q:'What is a landing page?', opts:['The homepage of a website','A dedicated page designed to convert visitors for a specific goal','A product catalog page','A contact page'], answer:1},
+        {q:'What does CPC mean?', opts:['Cost Per Customer','Cost Per Click','Click Per Campaign','Customer Payment Conversion'], answer:1},
+        {q:'What is email marketing?', opts:['Spam emails','Sending targeted commercial messages to a subscriber list','Cold calling via email','Email account management'], answer:1},
+        {q:'What is a buyer persona?', opts:['A real customer profile','A fictional ideal customer profile based on research','A paid ad audience','A social media follower'], answer:1},
+        {q:'What does ROAS stand for?', opts:['Rate of Ad Spending','Return On Ad Spend','Reach Of Ad Set','Real-time Online Ad Stats'], answer:1},
+        {q:'What is content marketing?', opts:['Paying for ads','Creating valuable content to attract and engage an audience','Managing social media accounts','Email automation'], answer:1},
+        {q:'What is a sales funnel?', opts:['A customer support tool','The journey from awareness to purchase','A CRM system','An email workflow'], answer:1},
+        {q:'What does SEM stand for?', opts:['Social Email Marketing','Search Engine Marketing','Site Engagement Metrics','Structured Email Messages'], answer:1},
+        {q:'What is retargeting?', opts:['Re-sending emails','Showing ads to users who previously visited your site','Updating ad creative','Changing target audience'], answer:1},
+        {q:'What is the main goal of SEO?', opts:['Increase paid traffic','Improve organic search rankings','Boost email open rates','Run social media ads'], answer:1},
+      ]},
+    // ── Management ───────────────────────────────────────────────────────────
+    { slug:'project-management', title_fr:'Gestion de projet — Fondamentaux', title_en:'Project Management — Fundamentals', category:'Management', difficulty:'beginner', pass_score:70,
+      questions:[
+        {q:'What is the triple constraint in project management?', opts:['Cost, Time, Resources','Scope, Time, Cost','People, Process, Technology','Risk, Quality, Budget'], answer:1},
+        {q:'What is a Gantt chart?', opts:['A risk matrix','A bar chart visualizing project schedule and tasks over time','A budget breakdown','A team org chart'], answer:1},
+        {q:'What does Agile methodology emphasize?', opts:['Strict upfront planning','Iterative development and flexible response to change','Long release cycles','Waterfall phases'], answer:1},
+        {q:'What is a sprint in Scrum?', opts:['A project phase','A fixed-length iteration (typically 2 weeks) for delivering work','A team meeting','A backlog review'], answer:1},
+        {q:'What is a stakeholder?', opts:['A shareholder','Anyone with an interest in or impacted by the project','A project manager only','A budget holder'], answer:1},
+        {q:'What is a project charter?', opts:['A legal contract','A document that formally authorizes a project and defines its scope','A budget spreadsheet','A team agreement'], answer:1},
+        {q:'What is risk management?', opts:['Avoiding all risks','Identifying, assessing, and mitigating potential project threats','Insuring the project','Reporting risks to clients'], answer:1},
+        {q:'What is the critical path?', opts:['The shortest task sequence','The longest sequence of dependent tasks determining project duration','The most expensive tasks','Tasks done by the PM'], answer:1},
+        {q:'What is a KPI?', opts:['Key Project Initiative','Key Performance Indicator','Knowledge Process Integration','Key Planning Input'], answer:1},
+        {q:'What is scope creep?', opts:['Reducing project scope','Uncontrolled expansion of project scope without proper change management','Completing scope early','Redefining project goals'], answer:1},
+        {q:'What does a Product Owner do in Scrum?', opts:['Manages the dev team daily','Defines and prioritizes the product backlog','Runs sprint retrospectives','Writes code'], answer:1},
+        {q:'What is a retrospective in Agile?', opts:['A planning session','A meeting at the end of a sprint to reflect and improve processes','A code review','A stakeholder demo'], answer:1},
+        {q:'What is a WBS (Work Breakdown Structure)?', opts:['A team hierarchy','A hierarchical decomposition of all project deliverables and tasks','A risk log','A project budget'], answer:1},
+        {q:'What is the purpose of a project milestone?', opts:['A billing checkpoint','A significant event marking a major achievement in the project','A team celebration','A budget review point'], answer:1},
+        {q:'What is the difference between Agile and Waterfall?', opts:['No difference','Waterfall is linear/sequential; Agile is iterative and adaptive','Agile is only for software','Waterfall is faster'], answer:1},
+      ]},
+    // ── Design ────────────────────────────────────────────────────────────────
+    { slug:'ux-design', title_fr:'Design UX — Fondamentaux', title_en:'UX Design — Fundamentals', category:'Design', difficulty:'beginner', pass_score:70,
+      questions:[
+        {q:'What does UX stand for?', opts:['User eXperience','Universal eXchange','UI eXtension','Unified eXecution'], answer:0},
+        {q:'What is a wireframe?', opts:['A finished design mockup','A low-fidelity layout sketch of a screen or page','A brand style guide','A prototype with interactions'], answer:1},
+        {q:'What is user research?', opts:['Analyzing competitor products','Gathering insights about users\' needs, behaviors, and motivations','Writing user stories','Defining visual design'], answer:1},
+        {q:'What is a persona in UX?', opts:['A real user account','A fictional representation of a target user based on research','A brand mascot','A test account'], answer:1},
+        {q:'What is usability?', opts:['Visual aesthetics','How easily users can learn and use a product effectively','Accessibility compliance','Performance speed'], answer:1},
+        {q:'What is the purpose of a usability test?', opts:['Testing code bugs','Observing real users interacting with a product to find usability issues','Checking visual design quality','Testing performance'], answer:1},
+        {q:'What is information architecture?', opts:['Database design','Organizing and structuring content so users can find it easily','Visual hierarchy in UI','Server architecture'], answer:1},
+        {q:'What is a prototype?', opts:['A finished product','An interactive simulation of a design for testing before development','A user story','A design spec'], answer:1},
+        {q:'What does "affordance" mean in UX?', opts:['Visual color choice','A design quality that suggests how something should be used','Animation style','Page loading speed'], answer:1},
+        {q:'What is the difference between UX and UI?', opts:['They are the same','UX focuses on the overall experience and flow; UI focuses on visual design and interactions','UX is for mobile; UI is for web','UI comes before UX'], answer:1},
+        {q:'What is a user flow?', opts:['A user support ticket','A diagram showing the steps a user takes to complete a task','A page layout','A navigation menu'], answer:1},
+        {q:'What is accessibility (a11y) in design?', opts:['Fast loading times','Designing so people with disabilities can use the product','Color contrast only','Mobile responsiveness'], answer:1},
+        {q:'What is card sorting used for?', opts:['Organizing design files','Understanding how users categorize and organize information','Ranking design options','Sorting user feedback'], answer:1},
+        {q:'What is a design system?', opts:['A project management tool','A collection of reusable components and guidelines for consistent design','A prototyping tool','A color palette only'], answer:1},
+        {q:'What is the "5-second test"?', opts:['A performance test','Testing whether users understand a design\'s purpose within 5 seconds of viewing it','A load time benchmark','A usability scoring method'], answer:1},
+      ]},
+    // ── Soft Skills ───────────────────────────────────────────────────────────
+    { slug:'communication-skills', title_fr:'Communication professionnelle', title_en:'Professional Communication', category:'Soft Skills', difficulty:'beginner', pass_score:70,
+      questions:[
+        {q:'What is active listening?', opts:['Waiting for your turn to speak','Fully concentrating and responding thoughtfully to what is being said','Nodding without paying attention','Taking notes only'], answer:1},
+        {q:'What is non-verbal communication?', opts:['Written messages','Body language, facial expressions, tone, and gestures','Email communication','Silent reading'], answer:1},
+        {q:'What is the STAR method?', opts:['A presentation format','A structured way to answer behavioral interview questions (Situation, Task, Action, Result)','A decision-making model','A conflict resolution method'], answer:1},
+        {q:'What does assertive communication mean?', opts:['Being aggressive to get your way','Expressing your needs and opinions clearly and respectfully','Being passive to avoid conflict','Avoiding difficult topics'], answer:1},
+        {q:'What is emotional intelligence (EQ)?', opts:['Your IQ score','The ability to recognize, understand, and manage your own and others\' emotions','Being friendly at work','Avoiding emotional reactions'], answer:1},
+        {q:'What is the best practice for giving constructive feedback?', opts:['Focus only on negatives','Be specific, focus on behavior not the person, and offer suggestions for improvement','Wait until the annual review','Give feedback only in writing'], answer:1},
+        {q:'What is empathy in the workplace?', opts:['Agreeing with everyone','Understanding and sharing the feelings of a colleague\'s perspective','Avoiding personal conversations','Being overly friendly'], answer:1},
+        {q:'What is a key characteristic of effective written communication?', opts:['Using jargon and acronyms','Being clear, concise, and adapted to the audience','Writing long detailed paragraphs','Using formal language only'], answer:1},
+        {q:'What is the purpose of an agenda in a meeting?', opts:['Attendance tracking','Providing structure and topics to keep the meeting focused and efficient','A legal requirement','A social formality'], answer:1},
+        {q:'What does "conflict of interest" mean?', opts:['A disagreement between coworkers','A situation where personal interests could improperly influence professional decisions','A legal dispute','A budget disagreement'], answer:1},
+        {q:'What is professional networking?', opts:['Using social media for personal use','Building and maintaining relationships that can provide mutual career support','Attending company parties','Collecting business cards'], answer:1},
+        {q:'What is the most important factor in a professional email?', opts:['Length','Clear subject line, polite tone, and direct purpose','Number of recipients','Use of formal titles'], answer:1},
+        {q:'What does "deadline management" involve?', opts:['Working overtime always','Prioritizing tasks and planning to complete work on time','Delegating all work','Reporting delays after they happen'], answer:1},
+        {q:'What is a growth mindset?', opts:['Believing talent is fixed','Believing abilities can be developed through effort and learning','Focusing only on strengths','Avoiding challenges'], answer:1},
+        {q:'What is the best approach when you disagree with a colleague?', opts:['Ignore the issue','Raise your concern professionally and seek a constructive resolution','Escalate immediately to management','Complain to other colleagues'], answer:1},
       ]},
   ];
+  const { rows } = await pool.query('SELECT slug FROM nh_skill_tests');
+  const existingSlugs = new Set(rows.map(r => r.slug));
+  let added = 0;
   for (const t of tests) {
-    await pool.query(
-      `INSERT INTO nh_skill_tests (id,slug,title_fr,title_en,category,difficulty,questions,pass_score) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) ON CONFLICT (slug) DO NOTHING`,
-      [crypto.randomUUID(), t.slug, t.title_fr, t.title_en, t.category, t.difficulty, JSON.stringify(t.questions), t.pass_score]
-    );
+    if (existingSlugs.has(t.slug)) {
+      // Update questions pool if test already exists (to expand pools)
+      await pool.query(
+        `UPDATE nh_skill_tests SET questions=$1, title_fr=$2, title_en=$3, category=$4, difficulty=$5, pass_score=$6 WHERE slug=$7`,
+        [JSON.stringify(t.questions), t.title_fr, t.title_en, t.category, t.difficulty, t.pass_score, t.slug]
+      );
+    } else {
+      await pool.query(
+        `INSERT INTO nh_skill_tests (id,slug,title_fr,title_en,category,difficulty,questions,pass_score) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
+        [crypto.randomUUID(), t.slug, t.title_fr, t.title_en, t.category, t.difficulty, JSON.stringify(t.questions), t.pass_score]
+      );
+      added++;
+    }
   }
-  console.log('[Nexhire] ✅ Skill tests seeded');
+  console.log(`[Nexhire] ✅ Skill tests seeded (${added} new, ${tests.length - added} updated)`);
 }
 
 // ── Demo seed (runs once if no jobs exist) ──────────────────
