@@ -1250,12 +1250,40 @@ function setAiConsent(value) {
 }
 
 async function generateAiCoverLetter() {
+  const isFr = state.lang === 'fr';
   const btn = document.getElementById('qa-ai-btn');
-  btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader" style="animation:spin 1s linear infinite"></i> Generating...';
+  btn.disabled = true; btn.innerHTML = `<i class="ti ti-loader" style="animation:spin 1s linear infinite"></i> ${isFr ? 'Génération...' : 'Generating...'}`;
   const d = await api('POST', `${BASE}/api/candidates/ai/cover-letter`, { job_id: state.currentJobForApply, lang: state.lang });
-  if (d.success) document.getElementById('qa-cover').value = d.cover_letter;
-  else toast(d.error || 'AI unavailable', 'error');
-  btn.disabled = false; btn.innerHTML = '<i class="ti ti-robot"></i> AI generate';
+  if (d.success) {
+    document.getElementById('qa-cover').value = d.cover_letter;
+    toast(isFr ? '✅ Lettre générée — 1 crédit IA utilisé' : '✅ Letter generated — 1 AI credit used', 'success');
+  } else if (d.error === 'no_credits') {
+    showNoCreditsBanner();
+  } else {
+    toast(d.error || (isFr ? 'IA indisponible' : 'AI unavailable'), 'error');
+  }
+  btn.disabled = false; btn.innerHTML = `<i class="ti ti-robot"></i> ${isFr ? 'Générer avec IA' : 'AI generate'}`;
+}
+
+function showNoCreditsBanner() {
+  const isFr = state.lang === 'fr';
+  const existing = document.getElementById('no-credits-banner');
+  if (existing) return;
+  const banner = document.createElement('div');
+  banner.id = 'no-credits-banner';
+  banner.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6366F1,#8b5cf6);color:#fff;border-radius:16px;padding:20px 28px;display:flex;align-items:center;gap:16px;z-index:9999;box-shadow:0 8px 32px rgba(99,102,241,.4);max-width:480px;width:calc(100% - 48px)';
+  banner.innerHTML = `
+    <i class="ti ti-coin" style="font-size:28px;flex-shrink:0"></i>
+    <div style="flex:1">
+      <div style="font-weight:700;font-size:15px;margin-bottom:4px">${isFr ? 'Plus de crédits IA' : 'No AI credits left'}</div>
+      <div style="font-size:13px;opacity:.85">${isFr ? 'Achetez des crédits pour continuer à utiliser les fonctionnalités IA.' : 'Buy credits to keep using AI-powered features.'}</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0">
+      <button onclick="document.getElementById('no-credits-banner').remove();showCandTab('tab-credits',null)" style="background:#fff;color:#6366F1;border:none;border-radius:8px;padding:8px 16px;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap">${isFr ? 'Acheter des crédits' : 'Buy Credits'}</button>
+      <button onclick="document.getElementById('no-credits-banner').remove()" style="background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:8px;padding:6px 16px;font-size:12px;cursor:pointer">${isFr ? 'Plus tard' : 'Later'}</button>
+    </div>`;
+  document.body.appendChild(banner);
+  setTimeout(() => { if (banner.parentNode) banner.remove(); }, 8000);
 }
 
 async function submitQuickApply() {

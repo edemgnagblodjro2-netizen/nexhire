@@ -32,6 +32,13 @@ router.post('/register', async (req, res) => {
   } else if (role === 'candidate') {
     const profileId = uuidv4().replace(/-/g, '');
     await db.run('INSERT INTO nh_candidate_profiles (id, user_id) VALUES ($1,$2)', [profileId, id]);
+    // 5 free starter credits for every new candidate
+    const FREE_STARTER = 5;
+    await db.run('UPDATE nh_users SET ai_credits = $1 WHERE id = $2', [FREE_STARTER, id]);
+    await db.run(
+      `INSERT INTO nh_credit_transactions (id, user_id, amount, type, description) VALUES ($1,$2,$3,$4,$5)`,
+      [uuidv4().replace(/-/g,''), id, FREE_STARTER, 'bonus', lang === 'fr' ? 'Crédits de bienvenue offerts' : 'Welcome bonus credits']
+    );
   }
 
   try { await emailService.sendVerificationEmail(email, email_token, first_name, lang); } catch (e) {}

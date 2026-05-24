@@ -229,12 +229,31 @@ router.post('/ai/cover-letter', requireAuth, async (req, res) => {
   const { job_id, lang = 'fr' } = req.body;
   if (!job_id) return res.status(400).json({ success: false, error: 'job_id required' });
 
-  const profile = await db.get('SELECT * FROM nh_candidate_profiles WHERE user_id = $1', [req.session.user.id]);
+  // Check credits before spending any compute
+  const uid = req.session.user.id;
+  const creditRow = await db.get('SELECT ai_credits, ai_credits_paid FROM nh_users WHERE id=$1', [uid]);
+  const totalCredits = (creditRow?.ai_credits_paid || 0) + (creditRow?.ai_credits || 0);
+  if (totalCredits < 1) {
+    return res.status(402).json({ success: false, error: 'no_credits' });
+  }
+
+  const profile = await db.get('SELECT * FROM nh_candidate_profiles WHERE user_id = $1', [uid]);
   const job = await db.get('SELECT j.*, c.name as company_name FROM nh_jobs j JOIN nh_companies c ON j.company_id = c.id WHERE j.id = $1', [job_id]);
   if (!profile || !job) return res.status(404).json({ success: false, error: 'Profile or job not found' });
 
   try {
     const letter = await aiService.generateCoverLetter(profile, job, lang);
+    // Deduct 1 credit — paid first, free last
+    const crypto = require('crypto');
+    if ((creditRow.ai_credits_paid || 0) > 0) {
+      await db.run('UPDATE nh_users SET ai_credits_paid = ai_credits_paid - 1 WHERE id=$1', [uid]);
+    } else {
+      await db.run('UPDATE nh_users SET ai_credits = ai_credits - 1 WHERE id=$1', [uid]);
+    }
+    await db.run(
+      `INSERT INTO nh_credit_transactions (id,user_id,amount,type,description) VALUES ($1,$2,$3,$4,$5)`,
+      [crypto.randomUUID(), uid, -1, 'spend', lang === 'fr' ? 'Lettre de motivation générée par IA' : 'AI cover letter generated']
+    );
     res.json({ success: true, cover_letter: letter });
   } catch (err) {
     res.status(500).json({ success: false, error: 'AI service unavailable' });
