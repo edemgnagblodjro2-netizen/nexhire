@@ -1138,9 +1138,9 @@ async function loadJobBankSection(q = '', prov = '') {
   }
 
   section.style.display = 'block';
-  if (titleEl) titleEl.textContent = isFr ? 'Aussi sur Guichet-Emplois Canada 🇨🇦' : 'Also on Job Bank Canada 🇨🇦';
+  if (titleEl) titleEl.textContent = isFr ? 'Offres supplémentaires via Adzuna 🌐' : 'More jobs via Adzuna 🌐';
   if (countEl) countEl.textContent = '';
-  listEl.innerHTML = `<div style="display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;padding:16px 0"><i class="ti ti-loader" style="animation:spin 1s linear infinite"></i> ${isFr ? 'Chargement depuis Guichet-Emplois...' : 'Loading from Job Bank...'}</div>`;
+  listEl.innerHTML = `<div style="display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;padding:16px 0"><i class="ti ti-loader" style="animation:spin 1s linear infinite"></i> ${isFr ? 'Chargement depuis Adzuna...' : 'Loading from Adzuna...'}</div>`;
 
   const params = new URLSearchParams({ lang: state.lang });
   if (q) params.set('q', q);
@@ -1167,7 +1167,7 @@ async function loadJobBankSection(q = '', prov = '') {
         <div style="display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap">
           ${j.salary ? `<span class="job-tag salary-tag" style="font-size:11px">${esc(j.salary)}</span>` : ''}
           ${j.date ? `<span style="font-size:11px;color:var(--muted)">${esc(j.date)}</span>` : ''}
-          <span style="font-size:10px;background:#e8f4fd;color:#1a5276;border-radius:4px;padding:2px 6px;font-weight:600">🇨🇦 ${isFr ? 'Guichet-Emplois' : 'Job Bank'}</span>
+          <span style="font-size:10px;background:#e8f4fd;color:#1a5276;border-radius:4px;padding:2px 6px;font-weight:600">🌐 Adzuna</span>
         </div>
       </div>
       <a href="${j.url}" target="_blank" rel="noopener noreferrer"
@@ -1177,8 +1177,8 @@ async function loadJobBankSection(q = '', prov = '') {
     </div>`).join('');
 
   if (discEl) discEl.innerHTML = isFr
-    ? `Ces offres proviennent de <a href="https://www.jobbank.gc.ca" target="_blank" rel="noopener" style="color:var(--indigo)">Guichet-Emplois Canada</a>. Vous serez redirigé vers le site gouvernemental pour postuler. Nexhire n'est pas affilié à ce service.`
-    : `These postings are sourced from <a href="https://www.jobbank.gc.ca" target="_blank" rel="noopener" style="color:var(--indigo)">Job Bank Canada</a>. You'll be redirected to the government site to apply. Nexhire is not affiliated with this service.`;
+    ? `Ces offres supplémentaires proviennent d'<a href="https://www.adzuna.ca" target="_blank" rel="noopener" style="color:var(--indigo)">Adzuna</a>, un agrégateur d'emploi canadien. Vous serez redirigé vers le site de l'employeur pour postuler.`
+    : `These additional postings are sourced from <a href="https://www.adzuna.ca" target="_blank" rel="noopener" style="color:var(--indigo)">Adzuna</a>, a Canadian job aggregator. You'll be redirected to the employer's site to apply.`;
 }
 
 // ── Job detail panel ───────────────────────────────────────
