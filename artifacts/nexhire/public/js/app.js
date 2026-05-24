@@ -183,6 +183,15 @@ function updateCitiesForProvince(provinceSelectId, citySelectId) {
 
 // ── Init ───────────────────────────────────────────────────
 (async () => {
+  // Capture ?ref= from URL and persist across the session
+  const _urlRef = new URLSearchParams(window.location.search).get('ref');
+  if (_urlRef) {
+    sessionStorage.setItem('nh_ref_code', _urlRef.toUpperCase());
+    // Clean the URL without reloading
+    const clean = window.location.pathname + window.location.hash;
+    history.replaceState(null, '', clean);
+  }
+
   try {
     const d = await api('GET', `${BASE}/api/auth/me`);
     if (d.success && d.user) {
@@ -1395,6 +1404,12 @@ async function register() {
     state.user = d.user; hideModal('modal-register'); showUserNav(); startSSE();
     toast(`Welcome to Nexhire, ${d.user.first_name}!`, 'success');
     loadVerifiedSkills();
+    // Apply referral code if present
+    const refCode = sessionStorage.getItem('nh_ref_code');
+    if (refCode) {
+      sessionStorage.removeItem('nh_ref_code');
+      api('POST', `${BASE}/api/referrals/register`, { referee_id: d.user.id, ref_code: refCode }).catch(() => {});
+    }
     if (d.user.role === 'candidate') { loadSavedJobIds(); goto('candidate-dash'); }
     else goto('employer-dash');
   } else showErr(errEl, d.error || 'Registration failed');
@@ -4572,7 +4587,22 @@ function installPWA() {
 }
 
 // ── Modal helpers ──────────────────────────────────────────
-function showModal(id) { document.getElementById(id)?.classList.add('open'); }
+function showModal(id) {
+  document.getElementById(id)?.classList.add('open');
+  if (id === 'modal-register') {
+    const refCode = sessionStorage.getItem('nh_ref_code');
+    const banner = document.getElementById('reg-referral-banner');
+    if (banner) {
+      if (refCode) {
+        const isFr = state.lang === 'fr';
+        banner.innerHTML = `<div style="background:#6366F115;border:1px solid #6366F140;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:var(--indigo);display:flex;align-items:center;gap:8px"><i class="ti ti-gift"></i> ${isFr ? `Vous avez été invité(e) — code <strong>${refCode}</strong>` : `You were referred — code <strong>${refCode}</strong>`}</div>`;
+        banner.style.display = 'block';
+      } else {
+        banner.style.display = 'none';
+      }
+    }
+  }
+}
 function hideModal(id) { document.getElementById(id)?.classList.remove('open'); }
 
 // ── Utilities ──────────────────────────────────────────────
