@@ -4,7 +4,7 @@ const BASE = '/nexhire';
 const state = {
   user: null, lang: 'en', regRole: 'candidate',
   jobs: [], currentPage: 1, jobSearchTimer: null,
-  savedJobIds: new Set(), currentJobForApply: null,
+  savedJobIds: new Set(), appliedJobIds: new Set(), currentJobForApply: null,
   currentKanbanJob: null, filterTimer: null,
   candidateProfile: null
 };
@@ -1172,7 +1172,11 @@ async function openJobDetail(jobId) {
     </div>
     ${skills.length ? `<div class="skills-chips" style="margin-bottom:16px">${skills.slice(0,10).map(s => `<span class="skill-chip">${esc(s)}</span>`).join('')}</div>` : ''}
     <div class="detail-apply-row">
-      ${state.user?.role === 'candidate' ? `<button class="btn-primary" style="flex:1" data-apply-id="${j.id}" data-apply-title="${esc(title)}"><i class="ti ti-send"></i> Apply Now</button>` : !state.user ? `<button class="btn-primary" style="flex:1" data-modal="modal-login"><i class="ti ti-send"></i> Sign in to Apply</button>` : ''}
+      ${state.user?.role === 'candidate'
+        ? state.appliedJobIds.has(j.id)
+          ? `<button class="btn-primary" style="flex:1;opacity:.7;cursor:default;background:var(--green)" disabled><i class="ti ti-circle-check"></i> ${state.lang==='fr'?'Candidature envoyée':'Already Applied'}</button>`
+          : `<button class="btn-primary" style="flex:1" data-apply-id="${j.id}" data-apply-title="${esc(title)}"><i class="ti ti-send"></i> Apply Now</button>`
+        : !state.user ? `<button class="btn-primary" style="flex:1" data-modal="modal-login"><i class="ti ti-send"></i> Sign in to Apply</button>` : ''}
       <div class="job-stats-mini">
         <span><i class="ti ti-eye"></i>${j.views || 0}</span>
         <span><i class="ti ti-users"></i>${j.applications_count || 0}</span>
@@ -1275,9 +1279,23 @@ async function submitQuickApply() {
   if (d.success) {
     hideModal('modal-quick-apply');
     toast(state.lang === 'fr' ? 'Candidature envoyée !' : 'Application submitted!', 'success');
+    // Mark as applied immediately — button updates on next render
+    state.appliedJobIds.add(state.currentJobForApply);
+    // Swap the Apply button live in the detail panel
+    const applyBtn = document.querySelector(`[data-apply-id="${state.currentJobForApply}"]`);
+    if (applyBtn) {
+      applyBtn.disabled = true;
+      applyBtn.style.opacity = '0.7';
+      applyBtn.style.cursor = 'default';
+      applyBtn.style.background = 'var(--green)';
+      applyBtn.innerHTML = `<i class="ti ti-circle-check"></i> ${state.lang === 'fr' ? 'Candidature envoyée' : 'Already Applied'}`;
+      applyBtn.removeAttribute('data-apply-id');
+    }
     if (state.user?.role === 'candidate') loadMyApplications();
   } else {
-    errEl.textContent = d.error || 'Could not apply';
+    errEl.textContent = d.error === 'Already applied to this job'
+      ? (state.lang === 'fr' ? 'Vous avez déjà postulé à cette offre.' : 'You already applied to this job.')
+      : (d.error || 'Could not apply');
     errEl.style.display = 'block';
   }
 }
@@ -2739,8 +2757,10 @@ async function saveProfile() {
 async function loadMyApplications() {
   const d = await api('GET', `${BASE}/api/applications/mine`);
   const container = document.getElementById('applications-list');
-  if (!container) return;
   const apps = d.applications || [];
+  // Keep appliedJobIds in sync so Apply buttons reflect reality
+  state.appliedJobIds = new Set(apps.map(a => a.job_id));
+  if (!container) return;
   const t = T[state.lang];
   if (!apps.length) { container.innerHTML = `<div class="empty-state"><i class="ti ti-file-off"></i><p>${t['dash.empty.apps']}</p><button class="btn-primary" onclick="goto('jobs')" style="margin-top:16px">${t['dash.empty.browse']}</button></div>`; return; }
 
