@@ -347,6 +347,22 @@ async function runMigrations() {
         UNIQUE(title_normalized, province)
       )
     `);
+    await pool.query(`ALTER TABLE nh_salary_data ADD COLUMN IF NOT EXISTS source TEXT DEFAULT 'benchmark'`);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_salary_submissions (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL REFERENCES nh_users(id) ON DELETE CASCADE,
+        title_normalized TEXT NOT NULL,
+        province TEXT NOT NULL,
+        city TEXT,
+        salary INTEGER NOT NULL,
+        work_mode TEXT,
+        years_exp INTEGER,
+        submitted_at TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(user_id)
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_salary_sub_title ON nh_salary_submissions(title_normalized)`);
     // Instant job alerts — add min_salary filter
     await pool.query(`ALTER TABLE nh_job_alerts ADD COLUMN IF NOT EXISTS salary_min INTEGER`);
     await pool.query(`ALTER TABLE nh_job_alerts ADD COLUMN IF NOT EXISTS skills TEXT`);
@@ -821,7 +837,7 @@ app.get(BASE_PATH + '/*', (req, res) => {
 app.get('/', (req, res) => res.redirect(BASE_PATH + '/'));
 
 // ── Start ──────────────────────────────────────────────────
-runMigrations().then(() => seedDemoData()).then(() => {
+runMigrations().then(() => require('./routes/salary').seedBenchmarks()).then(() => seedDemoData()).then(() => {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`[Nexhire] Server on port ${PORT} | base: ${BASE_PATH}`);
   });

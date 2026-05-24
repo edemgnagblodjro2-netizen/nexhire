@@ -4745,48 +4745,69 @@ async function loadSalaryPage() {
   if (!el) return;
   const isFr = state.lang === 'fr';
   el.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>`;
-  const [trending, provinces] = await Promise.all([
+  const [trending, provinces, mySub] = await Promise.all([
     api('GET', `${BASE}/api/salary/trending`),
     api('GET', `${BASE}/api/salary/provinces`),
+    state.user ? api('GET', `${BASE}/api/salary/my-submission`) : Promise.resolve({ success: false }),
   ]);
+  const sub = mySub.success ? mySub.submission : null;
+  const totalSubs = mySub.total || 0;
+
   el.innerHTML = `
     <h2><i class="ti ti-cash" style="color:var(--indigo)"></i> ${isFr ? 'Données salariales du marché' : 'Salary Market Data'}</h2>
-    <p style="color:var(--muted);margin-bottom:24px">${isFr ? 'Données agrégées et anonymisées de milliers d\'offres actives au Canada.' : 'Aggregated and anonymized data from thousands of active postings across Canada.'}</p>
+    <p style="color:var(--muted);margin-bottom:24px">${isFr ? 'Trois sources combinées : offres d\'emploi actives, benchmarks marché Canada, et témoignages anonymes de professionnels.' : 'Three combined sources: active job postings, Canadian market benchmarks, and anonymous professional submissions.'}</p>
 
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:24px">
-      <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
-        <div style="flex:1;min-width:200px">
-          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">${isFr ? 'Titre du poste' : 'Job Title'}</label>
-          <input id="sal-title" type="text" placeholder="${isFr ? 'Ex: Développeur React' : 'e.g. React Developer'}" class="field" style="width:100%">
-        </div>
-        <div style="width:120px">
-          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">${isFr ? 'Province' : 'Province'}</label>
-          <select id="sal-province" class="field" style="width:100%">
-            <option value="">${isFr ? 'Toutes' : 'All'}</option>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px">
+        <div style="font-weight:700;font-size:15px;margin-bottom:14px"><i class="ti ti-search" style="color:var(--indigo)"></i> ${isFr ? 'Recherche salariale' : 'Salary Search'}</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <input id="sal-title" type="text" placeholder="${isFr ? 'Titre du poste (ex: DevOps Engineer)' : 'Job title (e.g. DevOps Engineer)'}" class="field">
+          <select id="sal-province" class="field">
+            <option value="">${isFr ? 'Toutes les provinces' : 'All provinces'}</option>
             <option>QC</option><option>ON</option><option>BC</option><option>AB</option><option>MB</option><option>SK</option><option>NS</option><option>NB</option>
           </select>
+          <button class="btn-primary" style="padding:10px" onclick="searchSalary()"><i class="ti ti-search"></i> ${isFr ? 'Rechercher' : 'Search'}</button>
         </div>
-        <button class="btn-primary" style="padding:10px 20px" onclick="searchSalary()"><i class="ti ti-search"></i> ${isFr ? 'Rechercher' : 'Search'}</button>
+        <div id="sal-result" style="margin-top:14px"></div>
       </div>
-      <div id="sal-result" style="margin-top:16px"></div>
+
+      <div style="background:linear-gradient(135deg,#6366F1,#8b5cf6);border-radius:14px;padding:20px;color:#fff">
+        <div style="font-weight:700;font-size:15px;margin-bottom:6px"><i class="ti ti-users"></i> ${isFr ? 'Partagez votre salaire' : 'Share Your Salary'}</div>
+        <div style="font-size:12px;opacity:.8;margin-bottom:14px">${isFr ? `${totalSubs.toLocaleString()} professionnels ont déjà contribué — 100% anonyme.` : `${totalSubs.toLocaleString()} professionals have contributed — 100% anonymous.`}</div>
+        ${sub ? `
+          <div style="background:rgba(255,255,255,.15);border-radius:10px;padding:12px;font-size:13px;margin-bottom:12px">
+            <div style="font-weight:600">${isFr ? 'Votre contribution' : 'Your contribution'}</div>
+            <div style="opacity:.85;margin-top:4px">${sub.title_normalized} · ${sub.province} · ${isFr ? formatSalaryFr(sub.salary) : formatSalary(sub.salary)}${isFr ? '/an' : '/yr'}</div>
+          </div>
+          <button onclick="showSalarySubmitForm(true)" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;width:100%">
+            <i class="ti ti-edit"></i> ${isFr ? 'Modifier' : 'Update'}
+          </button>
+        ` : `
+          <button onclick="showSalarySubmitForm(false)" style="background:#fff;border:none;color:#6366F1;padding:10px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;width:100%">
+            <i class="ti ti-plus"></i> ${isFr ? 'Contribuer mes données' : 'Contribute My Data'}
+          </button>
+        `}
+        <div id="sal-submit-form" style="display:none;margin-top:14px"></div>
+      </div>
     </div>
 
     ${trending.success && trending.roles.length ? `
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:24px">
-      <div style="padding:16px 20px;font-weight:700;font-size:15px;border-bottom:1px solid var(--border)"><i class="ti ti-trending-up"></i> ${isFr ? 'Postes les mieux rémunérés' : 'Top Paying Roles'}</div>
-      ${trending.roles.map((r, i) => {
+      <div style="padding:16px 20px;font-weight:700;font-size:15px;border-bottom:1px solid var(--border)"><i class="ti ti-trending-up"></i> ${isFr ? 'Postes les mieux rémunérés au Canada' : 'Top Paying Roles in Canada'}</div>
+      ${trending.roles.map((r) => {
         const pct = Math.round((r.avg_salary / trending.roles[0].avg_salary) * 100);
+        const title = r.norm_title || r.title_en || '';
         return `
-          <div style="padding:14px 20px;border-bottom:1px solid var(--border)">
-            <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-              <span style="font-weight:600;font-size:14px">${r.title_en}</span>
-              <span style="font-weight:700;color:var(--indigo)">${isFr ? formatSalaryFr(r.avg_salary) : formatSalary(r.avg_salary)} ${isFr ? '/ an' : '/ yr'}</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <div style="flex:1;background:var(--border);border-radius:4px;height:6px">
-                <div style="width:${pct}%;background:var(--indigo);border-radius:4px;height:6px"></div>
+          <div style="padding:12px 20px;border-bottom:1px solid var(--border)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-weight:600;font-size:14px;text-transform:capitalize">${title}</span>
+              <div style="display:flex;align-items:center;gap:8px">
+                ${r.is_benchmark ? `<span style="font-size:10px;background:#6366F115;color:var(--indigo);padding:2px 7px;border-radius:10px">${isFr ? 'benchmark' : 'benchmark'}</span>` : `<span style="font-size:11px;color:var(--muted)">${r.count} ${isFr ? 'offres' : 'jobs'}</span>`}
+                <span style="font-weight:700;color:var(--indigo)">${isFr ? formatSalaryFr(r.avg_salary) : formatSalary(r.avg_salary)}</span>
               </div>
-              <span style="font-size:11px;color:var(--muted)">${r.count} ${isFr ? 'offres' : 'jobs'}</span>
+            </div>
+            <div style="background:var(--border);border-radius:4px;height:5px">
+              <div style="width:${pct}%;background:var(--indigo);border-radius:4px;height:5px"></div>
             </div>
           </div>
         `;
@@ -4797,18 +4818,71 @@ async function loadSalaryPage() {
     ${provinces.success && provinces.provinces.length ? `
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
       <div style="padding:16px 20px;font-weight:700;font-size:15px;border-bottom:1px solid var(--border)"><i class="ti ti-map"></i> ${isFr ? 'Salaire moyen par province' : 'Average Salary by Province'}</div>
-      <div style="padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px">
+      <div style="padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px">
         ${provinces.provinces.map(p => `
           <div style="background:var(--bg);border-radius:12px;padding:16px;text-align:center">
             <div style="font-size:20px;font-weight:800;color:var(--indigo)">${p.province}</div>
             <div style="font-size:15px;font-weight:700;margin:4px 0">${isFr ? formatSalaryFr(p.avg_salary) : formatSalary(p.avg_salary)}</div>
-            <div style="font-size:11px;color:var(--muted)">${p.job_count} ${isFr ? 'offres' : 'jobs'}</div>
+            <div style="font-size:11px;color:var(--muted)">${p.job_count} ${isFr ? (p.is_benchmark ? 'benchmarks' : 'offres') : (p.is_benchmark ? 'benchmarks' : 'jobs')}</div>
           </div>
         `).join('')}
       </div>
     </div>
     ` : ''}
   `;
+}
+
+function showSalarySubmitForm(isUpdate) {
+  const isFr = state.lang === 'fr';
+  const container = document.getElementById('sal-submit-form');
+  if (!container) return;
+  container.style.display = '';
+  container.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <input id="ssf-title" type="text" placeholder="${isFr ? 'Votre titre de poste actuel' : 'Your current job title'}"
+        style="padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-size:13px;outline:none" class="ssf-input">
+      <select id="ssf-province" style="padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-size:13px" class="ssf-input">
+        <option value="">${isFr ? 'Province' : 'Province'}</option>
+        <option>QC</option><option>ON</option><option>BC</option><option>AB</option><option>MB</option><option>SK</option><option>NS</option><option>NB</option>
+      </select>
+      <input id="ssf-salary" type="number" min="20000" max="1000000" placeholder="${isFr ? 'Salaire annuel (CAD)' : 'Annual salary (CAD)'}"
+        style="padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-size:13px;outline:none" class="ssf-input">
+      <select id="ssf-exp" style="padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-size:13px" class="ssf-input">
+        <option value="">${isFr ? 'Années d\'expérience (optionnel)' : 'Years of experience (optional)'}</option>
+        <option value="1">${isFr ? '0–2 ans' : '0–2 yrs'}</option>
+        <option value="4">${isFr ? '3–5 ans' : '3–5 yrs'}</option>
+        <option value="8">${isFr ? '6–10 ans' : '6–10 yrs'}</option>
+        <option value="15">${isFr ? '10+ ans' : '10+ yrs'}</option>
+      </select>
+      <div style="display:flex;gap:8px">
+        <button onclick="submitMySalary()" style="flex:1;background:#fff;border:none;color:#6366F1;padding:9px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700">
+          <i class="ti ti-check"></i> ${isUpdate ? (isFr ? 'Mettre à jour' : 'Update') : (isFr ? 'Soumettre' : 'Submit')}
+        </button>
+        <button onclick="document.getElementById('sal-submit-form').style.display='none'" style="background:rgba(255,255,255,.1);border:none;color:#fff;padding:9px 14px;border-radius:8px;cursor:pointer;font-size:13px">
+          ${isFr ? 'Annuler' : 'Cancel'}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+async function submitMySalary() {
+  const isFr = state.lang === 'fr';
+  const title    = document.getElementById('ssf-title')?.value.trim();
+  const province = document.getElementById('ssf-province')?.value;
+  const salary   = document.getElementById('ssf-salary')?.value;
+  const years_exp= document.getElementById('ssf-exp')?.value;
+  if (!title || !province || !salary) {
+    toast(isFr ? 'Remplissez le titre, la province et le salaire.' : 'Fill in title, province and salary.', 'error');
+    return;
+  }
+  const d = await api('POST', `${BASE}/api/salary/submit`, { title, province, salary, years_exp });
+  if (d.success) {
+    toast(isFr ? `✅ Merci ! Vous rejoignez ${d.total.toLocaleString()} professionnels.` : `✅ Thank you! You've joined ${d.total.toLocaleString()} professionals.`, 'success');
+    loadSalaryPage();
+  } else {
+    toast(d.error || (isFr ? 'Erreur' : 'Error'), 'error');
+  }
 }
 
 function formatSalary(n) {
@@ -4826,28 +4900,42 @@ async function searchSalary() {
   const isFr = state.lang === 'fr';
   const result = document.getElementById('sal-result');
   if (!result) return;
+  if (!title && !province) {
+    result.innerHTML = `<div style="color:var(--muted);font-size:13px;text-align:center;padding:8px">${isFr ? 'Entrez un titre ou choisissez une province.' : 'Enter a title or choose a province.'}</div>`;
+    return;
+  }
   result.innerHTML = `<div style="text-align:center;padding:16px"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:20px;color:var(--indigo)"></i></div>`;
   const params = new URLSearchParams();
   if (title) params.set('title', title);
   if (province) params.set('province', province);
   const d = await api('GET', `${BASE}/api/salary/stats?${params}`);
-  if (!d.success || !d.stats) { result.innerHTML = `<div style="color:var(--muted);text-align:center;padding:16px">${isFr ? 'Aucune donnée pour ces critères.' : 'No data for these filters.'}</div>`; return; }
-  const { stats } = d;
+  if (!d.success || !d.stats) {
+    result.innerHTML = `<div style="color:var(--muted);text-align:center;font-size:13px;padding:8px">${isFr ? 'Aucune donnée pour ces critères.' : 'No data for these filters.'}</div>`;
+    return;
+  }
+  const { stats, sources, low_data } = d;
+  const srcParts = [];
+  if (sources.jobs > 0)        srcParts.push(`${sources.jobs} ${isFr ? 'offres' : 'jobs'}`);
+  if (sources.submissions > 0) srcParts.push(`${sources.submissions} ${isFr ? 'témoignages' : 'submissions'}`);
+  if (sources.benchmarks > 0)  srcParts.push(`${sources.benchmarks} ${isFr ? 'benchmarks' : 'benchmarks'}`);
   result.innerHTML = `
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
+    ${low_data ? `<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin-bottom:10px"><i class="ti ti-info-circle"></i> ${isFr ? 'Données limitées — résultats indicatifs.' : 'Limited data — indicative results.'}</div>` : ''}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
       ${[
-        [isFr ? 'Médiane' : 'Median', formatSalary(stats.median), '#6366F1'],
-        [isFr ? 'Moyenne' : 'Average', formatSalary(stats.avg), '#8b5cf6'],
-        [isFr ? 'P25' : 'P25', formatSalary(stats.p25), '#4ade80'],
-        [isFr ? 'P75' : 'P75', formatSalary(stats.p75), '#facc15'],
+        [isFr ? 'Médiane' : 'Median', isFr ? formatSalaryFr(stats.median) : formatSalary(stats.median), '#6366F1'],
+        [isFr ? 'Moyenne' : 'Average', isFr ? formatSalaryFr(stats.avg) : formatSalary(stats.avg), '#8b5cf6'],
+        ['P25', isFr ? formatSalaryFr(stats.p25) : formatSalary(stats.p25), '#4ade80'],
+        ['P75', isFr ? formatSalaryFr(stats.p75) : formatSalary(stats.p75), '#facc15'],
       ].map(([label, val, color]) => `
-        <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center">
-          <div style="font-size:18px;font-weight:800;color:${color}">${val}</div>
-          <div style="font-size:11px;color:var(--muted)">${label}</div>
+        <div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center">
+          <div style="font-size:16px;font-weight:800;color:${color}">${val}</div>
+          <div style="font-size:10px;color:var(--muted)">${label}</div>
         </div>
       `).join('')}
     </div>
-    <div style="font-size:12px;color:var(--muted);text-align:center">${isFr ? 'Basé sur' : 'Based on'} ${stats.count} ${isFr ? 'offres actives' : 'active job postings'}</div>
+    <div style="font-size:11px;color:var(--muted);text-align:center">
+      ${isFr ? 'Sources' : 'Sources'}: ${srcParts.join(' · ')}
+    </div>
   `;
 }
 
