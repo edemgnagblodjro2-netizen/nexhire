@@ -645,6 +645,24 @@ a{text-decoration:none;color:inherit}
 /* skills modal */
 .ps-modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:800;display:flex;align-items:center;justify-content:center;padding:16px}
 .ps-modal-backdrop.hidden{display:none}
+/* ── RECOMMENDATIONS ─────────────────────────────────────── */
+.rec-section{border-top:1px solid var(--border);margin-top:28px;padding-top:24px}
+.rec-grid{display:flex;flex-direction:column;gap:14px;margin-bottom:8px}
+.rec-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;position:relative;transition:box-shadow .2s}
+.rec-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.rec-remove{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:.75rem;opacity:0;transition:opacity .15s;padding:3px 6px;border-radius:6px}
+.rec-card:hover .rec-remove{opacity:1}
+.rec-remove:hover{color:#ef4444;background:#fef2f2}
+.rec-quote{font-size:.9rem;color:var(--dark);line-height:1.65;margin-bottom:16px;font-style:italic}
+.rec-author{display:flex;align-items:center;gap:12px}
+.rec-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0;overflow:hidden}
+.rec-author-name{font-weight:700;font-size:.88rem;color:var(--dark)}
+.rec-author-meta{font-size:.78rem;color:var(--muted);margin-top:2px}
+.rec-stars{margin-top:3px}
+/* star picker in modal */
+.rec-star-picker{display:flex;gap:4px;margin-bottom:2px}
+.rec-star-opt{font-size:22px;cursor:pointer;color:#cbd5e1;transition:color .12s;line-height:1}
+.rec-star-opt.active{color:#f59e0b}
 /* ── TALENT PASSPORT ─────────────────────────────────────── */
 .talent-passport{background:linear-gradient(135deg,#0d1526 0%,#1b485a 100%);border-radius:16px;color:#fff;padding:24px;margin-bottom:28px;box-shadow:0 8px 32px rgba(27,72,90,.28)}
 .passport-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px}

@@ -2614,11 +2614,13 @@ async function loadProfileForm() {
     </div>` +
     `<div id="profile-skills-container"></div>` +
     `<div id="highlights-container"></div>` +
+    `<div id="recommendations-container"></div>` +
     `<div id="my-endorsements-container" class="endorsements-section-placeholder"></div>`;
   updatePassportBadgesRow(getAvailBadges(_uid));
   updateSidebarOpenToWork(getAvailBadges(_uid));
   loadProfileSkillsSection();
   loadHighlightsIntoContainer();
+  loadRecommendationsSection();
   loadEndorsements(state.user.id).then(data => {
     const el = document.getElementById('my-endorsements-container');
     if (el) el.outerHTML = renderEndorsementSection(data, state.user.id, true);
@@ -3783,6 +3785,177 @@ async function removeProfileSkill(id) {
   }
 }
 
+// ── Recommendations ────────────────────────────────────────
+async function loadRecommendationsSection() {
+  const el = document.getElementById('recommendations-container');
+  if (!el) return;
+  el.innerHTML = `<div style="padding:24px 0;text-align:center"><div class="spinner"></div></div>`;
+  const d = await api('GET', `${BASE}/api/recommendations`);
+  const recs = d.recommendations || [];
+  el.innerHTML = renderRecommendationsSection(recs);
+}
+
+function renderRecommendationsSection(recs = []) {
+  const isFr = state.lang === 'fr';
+  const title = isFr ? 'Recommandations' : 'Recommendations';
+  const sub   = isFr ? 'Témoignages de collègues, managers ou clients.' : 'Testimonials from colleagues, managers or clients.';
+
+  function stars(n) {
+    return Array.from({length:5}, (_,i) => `<span style="color:${i<n?'#f59e0b':'#cbd5e1'};font-size:14px">★</span>`).join('');
+  }
+  function initials(name) {
+    return (name||'?').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase() || '?';
+  }
+  function colorFor(name) {
+    const cols = ['#0ea5e9','#8b5cf6','#10b981','#f59e0b','#ef4444','#6366f1','#14b8a6','#f97316'];
+    let h = 0; for (const c of name||'') h = (h*31 + c.charCodeAt(0)) & 0xffffffff;
+    return cols[Math.abs(h) % cols.length];
+  }
+
+  const cards = recs.map(r => `
+    <div class="rec-card">
+      <button class="rec-remove" data-action="remove-rec" data-id="${esc(r.id)}" title="${isFr?'Supprimer':'Remove'}">✕</button>
+      <div class="rec-quote"><i class="ti ti-quote" style="color:var(--indigo);opacity:.35;font-size:22px;margin-bottom:6px;display:block"></i>
+        ${esc(r.body)}
+      </div>
+      <div class="rec-author">
+        <div class="rec-avatar" style="background:${colorFor(r.recommender_name)}">
+          ${r.recommender_photo ? `<img src="${esc(r.recommender_photo)}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">` : initials(r.recommender_name)}
+        </div>
+        <div class="rec-author-info">
+          <div class="rec-author-name">${esc(r.recommender_name)}</div>
+          ${r.recommender_title||r.recommender_company ? `<div class="rec-author-meta">${[r.recommender_title,r.recommender_company].filter(Boolean).map(esc).join(' · ')}</div>` : ''}
+          <div class="rec-stars">${stars(r.rating||5)}</div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  const emptyBlock = recs.length === 0
+    ? `<p class="ps-empty" style="margin-bottom:12px">${isFr ? 'Aucune recommandation encore.' : 'No recommendations yet.'}</p>`
+    : '';
+
+  const addExtLbl  = isFr ? '+ Recommandation externe' : '+ External recommendation';
+  const addInvLbl  = isFr ? '+ Inviter quelqu\'un' : '+ Invite someone';
+
+  return `
+    <div class="rec-section">
+      <div class="highlights-header">
+        <h3 class="highlights-title"><i class="ti ti-message-star"></i> ${title}</h3>
+        <p class="highlights-sub">${sub}</p>
+      </div>
+      <div class="rec-grid" id="rec-cards">${emptyBlock}${cards}</div>
+
+      <!-- Backdrop external -->
+      <div class="hl-modal-backdrop hidden" id="rec-ext-modal" data-action="close-rec-ext">
+        <div class="hl-modal-box" onclick="event.stopPropagation()" style="max-width:440px">
+          <h4 style="margin:0 0 4px;font-size:15px;font-weight:700">${isFr ? 'Recommandation externe' : 'External recommendation'}</h4>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:14px">${isFr ? 'Copiez-collez un témoignage reçu par email ou LinkedIn.' : 'Copy-paste a testimonial received by email or LinkedIn.'}</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+            <div>
+              <label style="font-size:12px;font-weight:600;color:var(--muted)">${isFr ? 'Nom *' : 'Name *'}</label>
+              <input type="text" id="rec-ext-name" class="filter-input" style="width:100%;box-sizing:border-box;margin-top:3px" maxlength="100" placeholder="Marie Dupont">
+            </div>
+            <div>
+              <label style="font-size:12px;font-weight:600;color:var(--muted)">${isFr ? 'Poste' : 'Title'}</label>
+              <input type="text" id="rec-ext-title" class="filter-input" style="width:100%;box-sizing:border-box;margin-top:3px" maxlength="100" placeholder="Directrice Tech">
+            </div>
+          </div>
+          <input type="text" id="rec-ext-company" class="filter-input" style="width:100%;box-sizing:border-box;margin-bottom:8px" maxlength="100" placeholder="${isFr ? 'Entreprise (optionnel)' : 'Company (optional)'}">
+          <textarea id="rec-ext-body" class="filter-input" style="width:100%;box-sizing:border-box;min-height:100px;resize:vertical;margin-bottom:10px" maxlength="2000" placeholder="${isFr ? 'Texte de la recommandation…' : 'Recommendation text…'}"></textarea>
+          <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px">${isFr ? 'Note' : 'Rating'}</label>
+          <div class="rec-star-picker" id="rec-ext-stars" data-rating="5">
+            ${[1,2,3,4,5].map(n=>`<span class="rec-star-opt active" data-action="set-rec-star" data-v="${n}">★</span>`).join('')}
+          </div>
+          <div style="display:flex;gap:8px;margin-top:14px">
+            <button class="btn-primary" style="flex:1" data-action="save-rec-ext"><i class="ti ti-plus"></i> ${isFr ? 'Ajouter' : 'Add'}</button>
+            <button class="btn-ghost" data-action="close-rec-ext">${isFr ? 'Annuler' : 'Cancel'}</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Backdrop invite -->
+      <div class="hl-modal-backdrop hidden" id="rec-inv-modal" data-action="close-rec-inv">
+        <div class="hl-modal-box" onclick="event.stopPropagation()" style="max-width:400px">
+          <h4 style="margin:0 0 4px;font-size:15px;font-weight:700">${isFr ? 'Inviter quelqu\'un à vous recommander' : 'Invite someone to recommend you'}</h4>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:14px">${isFr ? 'Un lien unique sera généré — envoyez-le à votre contact.' : 'A unique link will be generated — send it to your contact.'}</p>
+          <div id="rec-inv-form">
+            <input type="text" id="rec-inv-name" class="filter-input" style="width:100%;box-sizing:border-box;margin-bottom:8px" maxlength="100" placeholder="${isFr ? 'Nom du contact *' : 'Contact name *'}">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+              <input type="text" id="rec-inv-title" class="filter-input" style="width:100%;box-sizing:border-box" maxlength="100" placeholder="${isFr ? 'Poste' : 'Title'}">
+              <input type="text" id="rec-inv-company" class="filter-input" style="width:100%;box-sizing:border-box" maxlength="100" placeholder="${isFr ? 'Entreprise' : 'Company'}">
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn-primary" style="flex:1" data-action="gen-rec-inv"><i class="ti ti-link"></i> ${isFr ? 'Générer le lien' : 'Generate link'}</button>
+              <button class="btn-ghost" data-action="close-rec-inv">${isFr ? 'Annuler' : 'Cancel'}</button>
+            </div>
+          </div>
+          <div id="rec-inv-result" style="display:none">
+            <p style="font-size:13px;color:var(--muted);margin-bottom:8px">${isFr ? 'Copiez ce lien et envoyez-le à votre contact :' : 'Copy this link and send it to your contact:'}</p>
+            <div style="display:flex;gap:8px;align-items:center">
+              <input type="text" id="rec-inv-link" class="filter-input" style="flex:1;font-size:12px;box-sizing:border-box" readonly>
+              <button class="btn-ghost" style="white-space:nowrap" data-action="copy-rec-link"><i class="ti ti-copy"></i></button>
+            </div>
+            <button class="btn-ghost" style="width:100%;margin-top:12px" data-action="close-rec-inv">${isFr ? 'Fermer' : 'Close'}</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button class="btn-ghost ps-add-btn" data-action="open-rec-ext"><i class="ti ti-plus"></i> ${addExtLbl}</button>
+        <button class="btn-ghost ps-add-btn" data-action="open-rec-inv"><i class="ti ti-send"></i> ${addInvLbl}</button>
+      </div>
+    </div>`;
+}
+
+async function saveExternalRec() {
+  const name = document.getElementById('rec-ext-name')?.value.trim();
+  const body = document.getElementById('rec-ext-body')?.value.trim();
+  if (!name) { toast(state.lang==='fr'?'Nom requis':'Name required','error'); return; }
+  if (!body||body.length<10) { toast(state.lang==='fr'?'Texte trop court':'Text too short','error'); return; }
+  const rating = parseInt(document.getElementById('rec-ext-stars')?.dataset.rating||'5');
+  const d = await api('POST', `${BASE}/api/recommendations`, {
+    recommender_name:    name,
+    recommender_title:   document.getElementById('rec-ext-title')?.value.trim()||'',
+    recommender_company: document.getElementById('rec-ext-company')?.value.trim()||'',
+    body, rating,
+  });
+  if (d.success) {
+    document.getElementById('rec-ext-modal')?.classList.add('hidden');
+    toast(state.lang==='fr'?'Recommandation ajoutée !':'Recommendation added!','success');
+    loadRecommendationsSection();
+  } else {
+    toast(d.error||'Error','error');
+  }
+}
+
+async function generateRecInvite() {
+  const name = document.getElementById('rec-inv-name')?.value.trim();
+  if (!name) { toast(state.lang==='fr'?'Nom requis':'Name required','error'); return; }
+  const d = await api('POST', `${BASE}/api/recommendations/invite`, {
+    recommender_name:    name,
+    recommender_title:   document.getElementById('rec-inv-title')?.value.trim()||'',
+    recommender_company: document.getElementById('rec-inv-company')?.value.trim()||'',
+  });
+  if (d.success) {
+    const link = `${window.location.origin}${BASE}/recommend/${d.token}`;
+    document.getElementById('rec-inv-form').style.display = 'none';
+    document.getElementById('rec-inv-result').style.display = '';
+    const inp = document.getElementById('rec-inv-link');
+    if (inp) inp.value = link;
+  } else {
+    toast(d.error||'Error','error');
+  }
+}
+
+async function removeRecommendation(id) {
+  const d = await api('DELETE', `${BASE}/api/recommendations/${id}`);
+  if (d.success) {
+    document.querySelector(`[data-action="remove-rec"][data-id="${id}"]`)?.closest('.rec-card')?.remove();
+  } else {
+    toast(d.error||'Error','error');
+  }
+}
+
 // ── AI Career Agent quick actions ──────────────────────────
 function agentQuickAction(key) {
   const lang = state.lang || 'en';
@@ -4531,6 +4704,38 @@ document.addEventListener('click', e => {
         break;
       case 'save-profile-skill':  saveNewProfileSkill();                  break;
       case 'remove-profile-skill': removeProfileSkill(el.dataset.id);     break;
+      // ── Recommendations ─────────────────────────────────
+      case 'open-rec-ext':
+        document.getElementById('rec-ext-modal')?.classList.remove('hidden');
+        break;
+      case 'close-rec-ext':
+        document.getElementById('rec-ext-modal')?.classList.add('hidden');
+        break;
+      case 'open-rec-inv':
+        document.getElementById('rec-inv-form').style.display = '';
+        document.getElementById('rec-inv-result').style.display = 'none';
+        document.getElementById('rec-inv-modal')?.classList.remove('hidden');
+        break;
+      case 'close-rec-inv':
+        document.getElementById('rec-inv-modal')?.classList.add('hidden');
+        break;
+      case 'save-rec-ext':    saveExternalRec();                          break;
+      case 'gen-rec-inv':     generateRecInvite();                        break;
+      case 'remove-rec':      removeRecommendation(el.dataset.id);        break;
+      case 'copy-rec-link': {
+        const inp = document.getElementById('rec-inv-link');
+        if (inp) { inp.select(); navigator.clipboard?.writeText(inp.value).catch(()=>{}); toast(state.lang==='fr'?'Lien copié !':'Link copied!','success'); }
+        break;
+      }
+      case 'set-rec-star': {
+        const v = parseInt(el.dataset.v||'5');
+        const picker = el.closest('[id="rec-ext-stars"]');
+        if (picker) {
+          picker.dataset.rating = v;
+          picker.querySelectorAll('.rec-star-opt').forEach(s => s.classList.toggle('active', parseInt(s.dataset.v) <= v));
+        }
+        break;
+      }
     }
     return;
   }

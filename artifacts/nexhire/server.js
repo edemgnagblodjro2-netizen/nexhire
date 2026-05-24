@@ -965,6 +965,8 @@ app.use(apiBase + '/moderation',       require('./routes/moderation'));
 app.use(BASE_PATH + '/uploads/interviews', express.static(path.join(__dirname, 'uploads', 'interviews')));
 // Candidate public recording page
 app.get(BASE_PATH + '/interview/:token', (req, res) => res.sendFile(path.join(__dirname, 'public', 'interview.html')));
+// Public recommendation form
+app.get(BASE_PATH + '/recommend/:token', (req, res) => res.sendFile(path.join(__dirname, 'public', 'recommend.html')));
 
 // ── Health check ───────────────────────────────────────────
 app.get(BASE_PATH + '/healthz', (req, res) => res.json({ status: 'ok', service: 'nexhire' }));
