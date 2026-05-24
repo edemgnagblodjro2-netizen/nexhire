@@ -960,7 +960,17 @@ function quickSearch(q) {
   searchJobs();
 }
 
-async function loadJobs() { await filterJobs(); }
+async function loadJobs() {
+  // Pre-fill salary filter from candidate profile (only if filter not already set by user)
+  const fsalEl = document.getElementById('fsal');
+  if (fsalEl && !fsalEl.value && state.user?.role === 'candidate' && state.candidateProfile?.desired_salary_min) {
+    const min = state.candidateProfile.desired_salary_min;
+    const options = [120000, 100000, 80000, 60000, 40000];
+    const match = options.find(o => min >= o);
+    if (match) fsalEl.value = String(match);
+  }
+  await filterJobs();
+}
 
 // ── Viewed jobs tracking ───────────────────────────────────
 const VIEWED_KEY = 'nh_viewed_jobs';
@@ -2610,6 +2620,16 @@ async function loadProfileForm() {
       <div class="form-group"><label>${L.expYears}</label><input type="number" id="pf-exp" value="${p.experience_years||0}" min="0" max="50"></div>
     </div>
     <div class="form-row">
+      <div class="form-group">
+        <label>${isFr ? 'Salaire min. souhaité (CAD/an)' : 'Desired min. salary (CAD/yr)'}</label>
+        <input type="number" id="pf-sal-min" value="${p.desired_salary_min||''}" min="0" max="500000" step="5000" placeholder="60000">
+      </div>
+      <div class="form-group">
+        <label>${isFr ? 'Salaire max. souhaité (CAD/an)' : 'Desired max. salary (CAD/yr)'}</label>
+        <input type="number" id="pf-sal-max" value="${p.desired_salary_max||''}" min="0" max="500000" step="5000" placeholder="90000">
+      </div>
+    </div>
+    <div class="form-row">
       <div class="form-group"><label>${L.workPref}</label><select id="pf-mode"><option value="">${L.workAny}</option><option value="remote" ${p.work_mode_pref==='remote'?'selected':''}>${L.workRemote}</option><option value="hybrid" ${p.work_mode_pref==='hybrid'?'selected':''}>${L.workHybrid}</option><option value="onsite" ${p.work_mode_pref==='onsite'?'selected':''}>${L.workOnsite}</option></select></div>
     </div>
     <div class="form-group">
@@ -2680,6 +2700,8 @@ async function saveProfile() {
     province: document.getElementById('pf-province')?.value || null,
     country: 'Canada',
     phone: document.getElementById('pf-phone')?.value.trim(),
+    desired_salary_min: parseInt(document.getElementById('pf-sal-min')?.value) || null,
+    desired_salary_max: parseInt(document.getElementById('pf-sal-max')?.value) || null,
     skills: getProfileSkills(),
     experience_years: parseInt(document.getElementById('pf-exp')?.value) || 0,
     linkedin_url: document.getElementById('pf-linkedin')?.value.trim(),

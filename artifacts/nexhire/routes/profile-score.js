@@ -76,7 +76,7 @@ router.get('/', requireAuth, async (req, res) => {
     const uid = req.session.user.id;
 
     const [profileRes, badgesRes, appsRes] = await Promise.all([
-      db.query('SELECT * FROM nh_candidate_profiles WHERE user_id=$1', [uid]),
+      db.query(`SELECT cp.*, u.avatar_url FROM nh_candidate_profiles cp LEFT JOIN nh_users u ON u.id=cp.user_id WHERE cp.user_id=$1`, [uid]),
       db.query('SELECT COUNT(*) as n FROM nh_skill_results WHERE user_id=$1 AND passed=true', [uid]),
       db.query('SELECT COUNT(*) as n FROM nh_applications WHERE user_id=$1', [uid]),
     ]);
