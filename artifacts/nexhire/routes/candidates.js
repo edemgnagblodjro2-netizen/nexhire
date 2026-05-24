@@ -102,6 +102,13 @@ router.post('/profile/cv/parse', requireAuth, cvUpload.single('cv'), async (req,
     if (!text.trim()) {
       return res.json({ success: true, cv_url: `/nexhire/uploads/${req.file.filename}`, parsed: null, message: 'File saved — text extraction not available for this format' });
     }
+    if (!process.env.OPENAI_API_KEY) {
+      await db.run(
+        'UPDATE nh_candidate_profiles SET cv_url = $1, cv_text = $2 WHERE user_id = $3',
+        [`/nexhire/uploads/${req.file.filename}`, text.slice(0, 10000), req.session.user.id]
+      );
+      return res.json({ success: true, cv_url: `/nexhire/uploads/${req.file.filename}`, parsed: null, message: 'CV saved — AI parsing unavailable (no API key)' });
+    }
     const openai = new (require('openai'))({ apiKey: process.env.OPENAI_API_KEY });
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
