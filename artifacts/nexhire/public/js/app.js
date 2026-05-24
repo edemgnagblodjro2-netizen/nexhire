@@ -2573,7 +2573,6 @@ async function loadProfileForm() {
     cvHint:       'PDF, DOC, DOCX — max 5 MB',
   };
 
-  const isFr = state.lang === 'fr';
   const avatarUrl = p.avatar_url || state.user?.avatar_url || '';
   const initials2 = `${(state.user?.first_name||'')[0]||''}${(state.user?.last_name||'')[0]||''}`.toUpperCase() || 'U';
 
