@@ -1302,7 +1302,16 @@ function showUserNav() {
   document.getElementById('nav-auth-user').style.display = 'flex';
   const u = state.user;
   const initials = `${(u.first_name||'')[0]||''}${(u.last_name||'')[0]||''}`.toUpperCase() || 'U';
-  document.getElementById('nav-avatar').textContent = initials;
+  const navAv = document.getElementById('nav-avatar');
+  if (navAv) {
+    if (u.avatar_url) {
+      navAv.innerHTML = `<img src="${esc(u.avatar_url)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="">`;
+      navAv.style.padding = '0';
+    } else {
+      navAv.textContent = initials;
+      navAv.style.padding = '';
+    }
+  }
   const emailEl = document.getElementById('dropdown-email');
   if (emailEl) emailEl.textContent = state.user.email || '';
   const ddEmp = document.getElementById('dd-employer');
@@ -2564,6 +2573,10 @@ async function loadProfileForm() {
     cvHint:       'PDF, DOC, DOCX — max 5 MB',
   };
 
+  const isFr = state.lang === 'fr';
+  const avatarUrl = p.avatar_url || state.user?.avatar_url || '';
+  const initials2 = `${(state.user?.first_name||'')[0]||''}${(state.user?.last_name||'')[0]||''}`.toUpperCase() || 'U';
+
   container.innerHTML =
     renderTalentPassport(p, state.user, pct) +
     renderAvailSection(_uid) +
@@ -2574,6 +2587,18 @@ async function loadProfileForm() {
       </div>
       <div class="completeness-track"><div class="completeness-fill" style="width:${pct}%;background:${pctColor}"></div></div>
       ${missing.length ? `<div style="margin-top:8px;font-size:12px;color:var(--muted)">${L.toComplete} ${missing.map(m => `<span class="missing-chip">${m.label}</span>`).join('')}</div>` : `<div style="margin-top:8px;font-size:12px;color:var(--green)">${L.complete}</div>`}
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+      <div id="pf-avatar-preview" style="width:72px;height:72px;border-radius:50%;background:var(--indigo);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;color:#fff;overflow:hidden;flex-shrink:0;cursor:pointer;border:3px solid var(--border)" onclick="document.getElementById('pf-avatar-file').click()" title="${isFr?'Changer la photo':'Change photo'}">
+        ${avatarUrl ? `<img src="${esc(avatarUrl)}" style="width:100%;height:100%;object-fit:cover" alt="">` : initials2}
+      </div>
+      <div>
+        <div style="font-weight:600;font-size:14px;margin-bottom:4px">${isFr?'Photo de profil':'Profile photo'}</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px">JPG, PNG, WebP — max 3 MB</div>
+        <input type="file" id="pf-avatar-file" accept="image/*" style="display:none" onchange="uploadProfilePhoto(this)">
+        <button type="button" class="btn-ghost" style="font-size:12px;padding:6px 12px" onclick="document.getElementById('pf-avatar-file').click()"><i class="ti ti-camera"></i> ${isFr?'Choisir une photo':'Choose photo'}</button>
+        <span id="pf-avatar-status" style="font-size:12px;color:var(--muted);margin-left:8px"></span>
+      </div>
     </div>
     <div class="form-row"><div class="form-group"><label>${L.firstName}</label><input type="text" id="pf-first" value="${esc(state.user?.first_name||'')}"></div><div class="form-group"><label>${L.lastName}</label><input type="text" id="pf-last" value="${esc(state.user?.last_name||'')}"></div></div>
     <div class="form-row">
@@ -3957,6 +3982,41 @@ async function removeRecommendation(id) {
     document.querySelector(`[data-action="remove-rec"][data-id="${id}"]`)?.closest('.rec-card')?.remove();
   } else {
     toast(d.error||'Error','error');
+  }
+}
+
+// ── Profile photo upload ────────────────────────────────────
+async function uploadProfilePhoto(input) {
+  if (!input?.files?.length) return;
+  const isFr = state.lang === 'fr';
+  const statusEl = document.getElementById('pf-avatar-status');
+  if (statusEl) statusEl.textContent = isFr ? '⏳ Envoi…' : '⏳ Uploading…';
+  const fd = new FormData();
+  fd.append('avatar', input.files[0]);
+  try {
+    const resp = await fetch(`${BASE}/api/candidates/profile/avatar`, { method: 'POST', body: fd, credentials: 'include' });
+    const d = await resp.json();
+    if (!d.success) throw new Error(d.error);
+    state.user.avatar_url = d.avatar_url;
+    // Update preview circle
+    const preview = document.getElementById('pf-avatar-preview');
+    if (preview) preview.innerHTML = `<img src="${esc(d.avatar_url)}" style="width:100%;height:100%;object-fit:cover" alt="">`;
+    // Update navbar avatar
+    const navAv = document.getElementById('nav-avatar');
+    if (navAv) {
+      navAv.innerHTML = `<img src="${esc(d.avatar_url)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="">`;
+      navAv.style.padding = '0';
+    }
+    // Update dashboard avatar
+    const dashAv = document.getElementById('dash-avatar');
+    if (dashAv) {
+      dashAv.innerHTML = `<img src="${esc(d.avatar_url)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="">`;
+      dashAv.style.padding = '0';
+    }
+    if (statusEl) statusEl.innerHTML = `<span style="color:var(--green)">✓ ${isFr?'Photo mise à jour !':'Photo updated!'}</span>`;
+    toast(isFr ? 'Photo de profil mise à jour !' : 'Profile photo updated!', 'success');
+  } catch (e) {
+    if (statusEl) statusEl.innerHTML = `<span style="color:var(--danger)">✗ ${e.message}</span>`;
   }
 }
 

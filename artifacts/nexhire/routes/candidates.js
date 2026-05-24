@@ -42,6 +42,35 @@ const cvUpload = multer({
   },
 });
 
+const avatarStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, uploadDir),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
+    cb(null, `avatar-${req.session.user.id}-${Date.now()}${ext}`);
+  },
+});
+const avatarUpload = multer({
+  storage: avatarStorage,
+  limits: { fileSize: 3 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) cb(null, true);
+    else cb(new Error('Images only (JPG, PNG, WebP)'));
+  },
+});
+
+router.post('/profile/avatar', requireAuth, avatarUpload.single('avatar'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ success: false, error: 'No file uploaded' });
+    const basePath = (process.env.BASE_PATH || '/nexhire/').replace(/\/$/, '');
+    const avatarUrl = `${basePath}/uploads/${req.file.filename}`;
+    await db.run('UPDATE nh_users SET avatar_url = $1 WHERE id = $2', [avatarUrl, req.session.user.id]);
+    req.session.user.avatar_url = avatarUrl;
+    res.json({ success: true, avatar_url: avatarUrl });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
 router.get('/profile', requireAuth, async (req, res) => {
   if (req.session.user.role !== 'candidate') return res.status(403).json({ success: false, error: 'Candidates only' });
   const profile = await db.get(`SELECT cp.*, u.first_name, u.last_name, u.email, u.phone, u.avatar_url FROM nh_candidate_profiles cp JOIN nh_users u ON cp.user_id = u.id WHERE cp.user_id = $1`, [req.session.user.id]);
