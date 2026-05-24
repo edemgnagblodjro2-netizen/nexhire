@@ -53,7 +53,7 @@ When you have enough info, "search_params":{"q":"job title","work_mode":"remote|
 Be warm, 1-3 sentences. Extract main title + keywords for "q".`;
 
   try {
-    const raw = await aiService.callClaude(valid, system, 400);
+    const raw = await aiService.callClaude(valid, system, 400, { json: true });
     let parsed;
     try { parsed = JSON.parse(raw.replace(/```json|```/g,'').trim()); }
     catch { parsed = { reply: raw, search_params: null, show_profile_cta: false }; }

@@ -6,16 +6,18 @@ function getClient() {
   return new OpenAI({ apiKey: key });
 }
 
-async function callClaude(messages, system, maxTokens = 800) {
+async function callClaude(messages, system, maxTokens = 800, opts = {}) {
   const client = getClient();
-  const completion = await client.chat.completions.create({
+  const params = {
     model: 'gpt-4o-mini',
     max_tokens: maxTokens,
     messages: [
       { role: 'system', content: system },
       ...messages,
     ],
-  });
+  };
+  if (opts.json) params.response_format = { type: 'json_object' };
+  const completion = await client.chat.completions.create(params);
   return completion.choices[0].message.content;
 }
 
