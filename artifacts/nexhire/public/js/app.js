@@ -2910,17 +2910,60 @@ async function deleteAlert(id) {
 async function loadJobsForYou() {
   const container = document.getElementById('jobs-for-you');
   if (!container) return;
-  const profileD = await api('GET', `${BASE}/api/candidates/profile`);
-  const skills = safeJsonArr(profileD.profile?.skills);
-  if (!skills.length) { container.innerHTML = `<div class="empty-state" style="padding:24px"><i class="ti ti-sparkles"></i><p>${T[state.lang]['dash.empty.skills']}</p></div>`; return; }
+  const isFr = state.lang === 'fr';
 
-  const q = skills.slice(0, 3).join(' ');
-  const d = await api('GET', `${BASE}/api/jobs?q=${encodeURIComponent(q)}&limit=5`);
-  const jobs = d.jobs || [];
-  if (!jobs.length) { container.innerHTML = '<div class="empty-state" style="padding:24px"><i class="ti ti-sparkles"></i><p>No matches found yet — more jobs coming!</p></div>'; return; }
-  container.innerHTML = `<p style="font-size:12px;color:var(--muted);margin-bottom:12px">Based on: ${skills.slice(0,3).map(s=>`<span class="skill-chip">${esc(s)}</span>`).join(' ')}</p>` +
+  const profileD = await api('GET', `${BASE}/api/candidates/profile`);
+  const p = profileD.profile || {};
+  const skills = safeJsonArr(p.skills);
+
+  if (!skills.length) {
+    container.innerHTML = `<div class="empty-state" style="padding:24px"><i class="ti ti-sparkles"></i><p>${T[state.lang]['dash.empty.skills']}</p></div>`;
+    return;
+  }
+
+  // Build extra filters from profile
+  const modeParam = p.work_mode_pref ? `&work_mode=${p.work_mode_pref}` : '';
+  const provParam = p.province      ? `&province=${encodeURIComponent(p.province)}` : '';
+
+  // Try progressively broader searches until we get results
+  let jobs = [];
+  let usedSkills = [];
+
+  // Round 1 — top 3 skills combined + profile filters
+  const r1 = await api('GET', `${BASE}/api/jobs?q=${encodeURIComponent(skills.slice(0,3).join(' '))}&limit=6${modeParam}${provParam}`);
+  jobs = r1.jobs || [];
+  usedSkills = skills.slice(0, 3);
+
+  // Round 2 — each skill individually, merge unique results
+  if (!jobs.length) {
+    const searches = await Promise.all(
+      skills.slice(0, 5).map(s => api('GET', `${BASE}/api/jobs?q=${encodeURIComponent(s)}&limit=4${modeParam}${provParam}`))
+    );
+    const seen = new Set();
+    for (const r of searches) {
+      for (const j of (r.jobs || [])) {
+        if (!seen.has(j.id)) { seen.add(j.id); jobs.push(j); }
+      }
+    }
+    jobs = jobs.slice(0, 6);
+  }
+
+  // Round 3 — broadest: headline keyword, no mode/province filter
+  if (!jobs.length && (p.headline_en || p.headline_fr)) {
+    const keyword = (p.headline_en || p.headline_fr || '').split(/\s+/).slice(0, 2).join(' ');
+    const r3 = await api('GET', `${BASE}/api/jobs?q=${encodeURIComponent(keyword)}&limit=6`);
+    jobs = r3.jobs || [];
+  }
+
+  if (!jobs.length) {
+    container.innerHTML = `<div class="empty-state" style="padding:24px"><i class="ti ti-sparkles"></i><p>${isFr ? 'Aucun emploi correspondant pour l\'instant — ajoutez plus de compétences à votre profil.' : 'No matches yet — add more skills to your profile to improve matching.'}</p></div>`;
+    return;
+  }
+
+  container.innerHTML =
+    `<p style="font-size:12px;color:var(--muted);margin-bottom:12px">${isFr ? 'Basé sur' : 'Based on'}: ${usedSkills.slice(0,3).map(s=>`<span class="skill-chip">${esc(s)}</span>`).join(' ')}</p>` +
     jobs.map(j => {
-      const title = state.lang === 'fr' ? (j.title_fr || j.title_en) : (j.title_en || j.title_fr);
+      const title = isFr ? (j.title_fr || j.title_en) : (j.title_en || j.title_fr);
       return `<div class="jfy-card" onclick="goto('jobs')">
         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
           <div class="jfy-title">${esc(title)}</div>
