@@ -9,6 +9,54 @@ function getStripe() {
   return require('stripe')(key);
 }
 
+// GET /api/payments/setup-stripe-products (one-time admin setup)
+router.get('/setup-stripe-products', async (req, res) => {
+  const adminKey = req.headers['x-admin-key'];
+  if (adminKey !== (process.env.NEXHIRE_ADMIN_KEY || 'nexhire-setup-2026')) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+  try {
+    const stripe = getStripe();
+
+    // Check if prices already exist
+    if (process.env.NEXHIRE_STRIPE_PRICE_PRO_MONTHLY && process.env.NEXHIRE_STRIPE_PRICE_PRO_YEARLY) {
+      return res.json({ success: true, message: 'Already configured', monthly: process.env.NEXHIRE_STRIPE_PRICE_PRO_MONTHLY, yearly: process.env.NEXHIRE_STRIPE_PRICE_PRO_YEARLY });
+    }
+
+    const product = await stripe.products.create({
+      name: 'Nexhire Pro',
+      description: 'Accès complet aux fonctionnalités employeur Nexhire : 10 offres actives, 3 offres vedettes, entretiens vidéo IA illimités',
+      metadata: { product: 'nexhire' }
+    });
+
+    const monthly = await stripe.prices.create({
+      product: product.id,
+      unit_amount: 9900,
+      currency: 'cad',
+      recurring: { interval: 'month' },
+      nickname: 'Nexhire Pro - Mensuel 99$/mois'
+    });
+
+    const yearly = await stripe.prices.create({
+      product: product.id,
+      unit_amount: 99000,
+      currency: 'cad',
+      recurring: { interval: 'year' },
+      nickname: 'Nexhire Pro - Annuel 990$/an'
+    });
+
+    res.json({
+      success: true,
+      product_id: product.id,
+      monthly_price_id: monthly.id,
+      yearly_price_id: yearly.id,
+      instructions: 'Add these to Replit Secrets: NEXHIRE_STRIPE_PRICE_PRO_MONTHLY and NEXHIRE_STRIPE_PRICE_PRO_YEARLY'
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // POST /api/payments/create-checkout
 router.post('/create-checkout', requireAuth, requireCompanyAccess, async (req, res) => {
   const { plan = 'pro', interval = 'month' } = req.body;
