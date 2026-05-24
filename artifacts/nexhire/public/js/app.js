@@ -3128,12 +3128,13 @@ async function loadEmployerJobs() {
   if (!jobs.length) { container.innerHTML = '<div class="empty-state"><i class="ti ti-briefcase"></i><p>No jobs posted yet.</p><button class="btn-primary" onclick="showEmpTab(\'etab-post\')" style="margin-top:16px"><i class="ti ti-plus"></i> Post your first job</button></div>'; return; }
 
   container.innerHTML = jobs.map(j => {
-    const title = state.lang === 'fr' ? (j.title_fr || j.title_en) : (j.title_en || j.title_fr);
+    const isFr = state.lang === 'fr';
+    const title = isFr ? (j.title_fr || j.title_en) : (j.title_en || j.title_fr);
     const apps = parseInt(j.apps || 0);
     const views = parseInt(j.views || 0);
     const conv = views > 0 ? ((apps / views) * 100).toFixed(1) : 0;
     const exp = j.expires_at ? daysUntil(j.expires_at) : null;
-    return `<div class="emp-job-card-v2">
+    return `<div class="emp-job-card-v2" id="job-card-${j.id}">
       <div class="emp-job-top">
         <div>
           <div class="emp-job-title">${esc(title)}</div>
@@ -3146,16 +3147,84 @@ async function loadEmployerJobs() {
         <span class="app-status ${j.status}" style="font-size:11px;flex-shrink:0">${j.status}</span>
       </div>
       <div class="emp-job-stats">
-        <div class="emp-stat"><i class="ti ti-eye"></i><span>${views}</span><small>Views</small></div>
-        <div class="emp-stat"><i class="ti ti-users"></i><span>${apps}</span><small>Applicants</small></div>
-        <div class="emp-stat"><i class="ti ti-percentage"></i><span>${conv}%</span><small>Conversion</small></div>
+        <div class="emp-stat"><i class="ti ti-eye"></i><span>${views}</span><small>${isFr?'Vues':'Views'}</small></div>
+        <div class="emp-stat"><i class="ti ti-users"></i><span>${apps}</span><small>${isFr?'Candidats':'Applicants'}</small></div>
+        <div class="emp-stat"><i class="ti ti-percentage"></i><span>${conv}%</span><small>${isFr?'Conversion':'Conversion'}</small></div>
       </div>
       <div class="emp-job-actions">
-        <button class="btn-ghost" style="font-size:13px;padding:6px 14px" onclick="openKanban('${j.id}','${esc(title)}')"><i class="ti ti-layout-kanban"></i> Pipeline (${apps})</button>
-        <button class="btn-ghost" style="font-size:13px;padding:6px 14px" onclick="closeJob('${j.id}')"><i class="ti ti-x"></i> Close</button>
+        <button class="btn-ghost" style="font-size:13px;padding:6px 14px" onclick="openKanban('${j.id}','${esc(title)}')"><i class="ti ti-layout-kanban"></i> Kanban</button>
+        <button class="btn-ghost" style="font-size:13px;padding:6px 14px" onclick="closeJob('${j.id}')"><i class="ti ti-x"></i> ${isFr?'Fermer':'Close'}</button>
+      </div>
+      ${apps > 0 ? `
+      <div class="inline-candidates" id="icands-${j.id}">
+        <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;padding-top:12px;border-top:1px solid var(--border)">
+          <i class="ti ti-users"></i> ${isFr?'Candidatures reçues':'Applications received'} (${apps})
+        </div>
+        <div id="icands-list-${j.id}" style="display:flex;flex-direction:column;gap:8px">
+          <div style="color:var(--muted);font-size:13px"><i class="ti ti-loader" style="animation:spin 1s linear infinite"></i> ${isFr?'Chargement...':'Loading...'}</div>
+        </div>
+      </div>` : ''}
+    </div>`;
+  }).join('');
+
+  // Load candidates inline for each job that has applications
+  for (const j of jobs) {
+    if (parseInt(j.apps || 0) > 0) loadInlineCandidates(j.id);
+  }
+}
+
+async function loadInlineCandidates(jobId) {
+  const container = document.getElementById(`icands-list-${jobId}`);
+  if (!container) return;
+  const isFr = state.lang === 'fr';
+  const d = await api('GET', `${BASE}/api/applications/job/${jobId}`);
+  const apps = d.applications || [];
+  if (!apps.length) { container.innerHTML = `<div style="color:var(--muted);font-size:13px">${isFr?'Aucun candidat':'No applicants'}</div>`; return; }
+
+  const statusColors = { new:'#6366F1', reviewed:'#8B5CF6', shortlisted:'#F59E0B', interview:'#10B981', offer:'#22C55E', rejected:'#EF4444', withdrawn:'#9CA3AF' };
+  const statusLabels = isFr
+    ? { new:'Nouveau', reviewed:'En examen', shortlisted:'Présélectionné', interview:'Entretien', offer:'Offre', rejected:'Refusé', withdrawn:'Retiré' }
+    : { new:'New', reviewed:'Reviewing', shortlisted:'Shortlisted', interview:'Interview', offer:'Offer', rejected:'Rejected', withdrawn:'Withdrawn' };
+  const nextSteps = isFr
+    ? [{ key:'reviewed', label:'En examen' }, { key:'shortlisted', label:'Présélectionner' }, { key:'interview', label:'Inviter entretien' }, { key:'offer', label:'Faire une offre' }, { key:'rejected', label:'Refuser' }]
+    : [{ key:'reviewed', label:'Review' }, { key:'shortlisted', label:'Shortlist' }, { key:'interview', label:'Invite interview' }, { key:'offer', label:'Make offer' }, { key:'rejected', label:'Reject' }];
+
+  container.innerHTML = apps.map(a => {
+    const name = `${a.first_name||''} ${a.last_name||''}`.trim() || (isFr?'Candidat':'Candidate');
+    const cvLink = a.profile_cv || a.cv_url;
+    const status = a.status || 'new';
+    const color = statusColors[status] || '#6366F1';
+    const label = statusLabels[status] || status;
+    const availableSteps = nextSteps.filter(s => s.key !== status);
+    return `<div style="background:var(--surface,#f8f9fa);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px;min-width:200px">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">${(a.first_name||'?')[0].toUpperCase()}</div>
+        <div>
+          <div style="font-weight:600;font-size:14px;color:var(--text)">${esc(name)}</div>
+          <div style="font-size:12px;color:var(--muted)">${a.experience_years||0} ${isFr?'ans exp':'yrs exp'}${a.headline_fr||a.headline_en ? ' · '+esc(isFr?a.headline_fr||a.headline_en:a.headline_en||a.headline_fr) : ''}</div>
+          ${cvLink ? `<a href="${esc(cvLink)}" target="_blank" style="font-size:11px;color:var(--indigo);text-decoration:none;font-weight:600"><i class="ti ti-file-cv"></i> ${isFr?'Voir CV':'View CV'}</a>` : ''}
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="background:${color}22;color:${color};border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700">${label}</span>
+        ${status !== 'rejected' && status !== 'withdrawn' ? availableSteps.slice(0,3).map(s =>
+          `<button onclick="updateCandidateStatus('${a.id}','${s.key}','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;color:var(--text);white-space:nowrap" title="${s.label}">${s.label}</button>`
+        ).join('') : ''}
       </div>
     </div>`;
   }).join('');
+}
+
+async function updateCandidateStatus(appId, newStatus, jobId) {
+  const isFr = state.lang === 'fr';
+  const d = await api('PUT', `${BASE}/api/applications/${appId}/status`, { status: newStatus });
+  if (d.success) {
+    const labels = { reviewed: isFr?'En examen':'Reviewing', shortlisted: isFr?'Présélectionné':'Shortlisted', interview: isFr?'Entretien':'Interview', offer: isFr?'Offre':'Offer', rejected: isFr?'Refusé':'Rejected' };
+    toast(`✓ ${labels[newStatus] || newStatus}${isFr?' — email envoyé au candidat':' — candidate notified by email'}`, 'success');
+    loadInlineCandidates(jobId);
+  } else {
+    toast(d.error || 'Error', 'error');
+  }
 }
 
 async function closeJob(jobId) {
