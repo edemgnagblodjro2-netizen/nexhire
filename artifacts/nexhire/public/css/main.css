@@ -1598,3 +1598,78 @@ a{text-decoration:none;color:inherit}
 .notif-item-msg{font-size:12px;color:#64748b;margin-top:2px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .notif-item-time{font-size:11px;color:#94a3b8;margin-top:4px}
 .notif-unread-dot{width:8px;height:8px;border-radius:50%;background:#6366f1;flex-shrink:0;margin-top:4px}
+
+/* ── Compose modal — thème sombre (fond navy + texte blanc) ──── */
+#compose-modal .modal-box {
+  background: #111827;
+  color: #fff;
+  color-scheme: dark;
+  border: 1px solid rgba(255,255,255,.08);
+}
+#compose-modal .modal-header {
+  border-bottom-color: rgba(255,255,255,.08);
+}
+#compose-modal .modal-header h3 {
+  color: #fff;
+}
+#compose-modal .modal-close {
+  color: rgba(255,255,255,.55);
+}
+#compose-modal .modal-close:hover {
+  color: #fff;
+  background: rgba(255,255,255,.08);
+}
+#compose-modal .compose-tabs {
+  border-bottom-color: rgba(255,255,255,.08);
+}
+#compose-modal .compose-tab {
+  color: rgba(255,255,255,.5);
+}
+#compose-modal .compose-tab:hover {
+  color: rgba(255,255,255,.85);
+}
+#compose-modal .compose-tab.active {
+  color: #818cf8;
+  border-bottom-color: #818cf8;
+}
+#compose-modal textarea,
+#compose-modal input[type="text"],
+#compose-modal input[type="url"],
+#compose-modal input[type="email"],
+#compose-modal input[type="search"],
+#compose-modal select {
+  background: rgba(255,255,255,.07) !important;
+  color: #fff !important;
+  border-color: rgba(255,255,255,.14) !important;
+}
+#compose-modal textarea::placeholder,
+#compose-modal input::placeholder {
+  color: rgba(255,255,255,.32) !important;
+}
+#compose-modal .modal-body {
+  color: #fff;
+}
+#compose-modal .modal-footer {
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+#compose-modal .modal-footer .btn-ghost {
+  color: rgba(255,255,255,.65);
+  border-color: rgba(255,255,255,.18);
+}
+#compose-modal .modal-footer .btn-ghost:hover {
+  background: rgba(255,255,255,.08);
+  color: #fff;
+}
+#compose-modal #compose-image-label {
+  color: rgba(255,255,255,.45) !important;
+  border-color: rgba(255,255,255,.18) !important;
+}
+#compose-modal #compose-image-label span {
+  color: rgba(255,255,255,.45) !important;
+}
+#compose-modal #compose-image-label.success-label {
+  color: #4ade80 !important;
+}
+#compose-modal #compose-image-label.success-label span {
+  color: #4ade80 !important;
+}
