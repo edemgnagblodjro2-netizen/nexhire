@@ -74,8 +74,9 @@ router.get('/job/:jobId', requireAuth, requireCompanyAccess, async (req, res) =>
   if (!job || job.company_id !== req.session.user.company_id) return res.status(403).json({ success: false, error: 'Access denied' });
 
   const apps = await db.all(`
-    SELECT a.*, u.first_name, u.last_name, u.email,
-           cp.headline_fr, cp.headline_en, cp.skills, cp.experience_years, cp.cv_url as profile_cv
+    SELECT a.*, u.first_name, u.last_name, u.email, u.avatar_url,
+           cp.headline_fr, cp.headline_en, cp.skills, cp.experience_years,
+           cp.cv_url as profile_cv, cp.open_to_work
     FROM nh_applications a
     JOIN nh_users u ON a.user_id = u.id
     JOIN nh_candidate_profiles cp ON a.candidate_id = cp.id

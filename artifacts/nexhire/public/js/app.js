@@ -3440,11 +3440,19 @@ async function loadInlineCandidates(jobId) {
     const isActive = status !== 'rejected' && status !== 'withdrawn';
     const availableProgress = progressSteps.filter(s => s.key !== status);
     const rejectLabel = isFr ? 'Rejeter' : 'Reject';
+    const initials = (a.first_name||'?')[0].toUpperCase();
+    const otwRingStyle = a.open_to_work ? 'outline:3px solid #16a34a;outline-offset:2px;' : '';
+    const avatarHtml = a.avatar_url
+      ? `<img src="${esc(a.avatar_url)}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0;${otwRingStyle}" alt="">`
+      : `<div style="width:36px;height:36px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;${otwRingStyle}">${initials}</div>`;
     return `<div style="background:var(--surface,#f8f9fa);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
       <div style="display:flex;align-items:center;gap:10px;min-width:200px">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">${(a.first_name||'?')[0].toUpperCase()}</div>
+        <div style="flex-shrink:0">${avatarHtml}</div>
         <div>
-          <div style="font-weight:600;font-size:14px;color:var(--text)">${esc(name)}</div>
+          <div style="font-weight:600;font-size:14px;color:var(--text);display:flex;align-items:center;gap:6px">
+            ${esc(name)}
+            ${a.open_to_work ? `<span style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;border-radius:99px;font-size:10px;font-weight:700;padding:2px 7px;white-space:nowrap"><i class="ti ti-circle-filled" style="font-size:7px"></i> ${isFr?'Ouvert':'Open to Work'}</span>` : ''}
+          </div>
           <div style="font-size:12px;color:var(--muted)">${a.experience_years||0} ${isFr?'ans exp':'yrs exp'}${a.headline_fr||a.headline_en ? ' · '+esc(isFr?a.headline_fr||a.headline_en:a.headline_en||a.headline_fr) : ''}</div>
           ${cvLink ? `<a href="${esc(cvLink)}" target="_blank" style="font-size:11px;color:var(--indigo);text-decoration:none;font-weight:600"><i class="ti ti-file-cv"></i> ${isFr?'Voir CV':'View CV'}</a>` : ''}
         </div>
