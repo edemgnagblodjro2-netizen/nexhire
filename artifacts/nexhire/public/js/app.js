@@ -5106,6 +5106,11 @@ async function loadMsgUnreadBadge() {
 }
 
 // In-tab two-pane view (candidate Messages tab / employer Messages tab)
+function msgBackToList(containerId) {
+  const outer = document.getElementById(containerId)?.querySelector('.msg-layout-outer');
+  if (outer) outer.classList.remove('msg-conv-open');
+}
+
 async function openMessagesInTab(containerId, preselectedAppId) {
   const isFr = state.lang === 'fr';
   const container = document.getElementById(containerId);
@@ -5121,15 +5126,15 @@ async function openMessagesInTab(containerId, preselectedAppId) {
     : (isFr ? 'Mes candidatures' : 'My applications');
 
   container.innerHTML = `
-    <div style="display:flex;border:1px solid var(--border);border-radius:12px;overflow:hidden;height:calc(100vh - 210px);min-height:480px;box-shadow:0 1px 6px rgba(0,0,0,.06)">
-      <div id="${containerId}-threads" style="width:300px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;background:#fafbfc">
-        <div style="padding:12px 16px;border-bottom:1px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:space-between">
+    <div class="msg-layout-outer">
+      <div id="${containerId}-threads" class="msg-threads-panel">
+        <div class="msg-threads-header">
           <span style="font-weight:700;font-size:14px;color:var(--dark)">${isFr?'Conversations':'Conversations'}</span>
-          <button onclick="${newConvAction}" title="${newConvLabel}" style="font-size:11px;padding:4px 10px;border-radius:6px;background:#6366f1;color:#fff;border:none;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:4px"><i class="ti ti-plus" style="font-size:12px"></i> ${newConvLabel}</button>
+          <button onclick="${newConvAction}" title="${newConvLabel}" class="msg-new-conv-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> ${newConvLabel}</button>
         </div>
         <div style="padding:32px;text-align:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:22px;color:#6366f1"></i></div>
       </div>
-      <div id="${containerId}-thread" style="flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff">
+      <div id="${containerId}-thread" class="msg-thread-panel">
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted)">
           <div style="width:64px;height:64px;border-radius:50%;background:#f0f0ff;display:flex;align-items:center;justify-content:center"><i class="ti ti-message-circle-2" style="font-size:28px;color:#6366f1;opacity:.6"></i></div>
           <p style="font-size:14px;margin:0;font-weight:500">${isFr?'Sélectionnez une conversation':'Select a conversation'}</p>
@@ -5228,7 +5233,20 @@ async function openThreadInContainer(containerId, appId, navEl) {
 
   const threadEl = document.getElementById(`${containerId}-thread`);
   if (!threadEl) return;
+
+  // Mobile: switch to conversation panel
+  const outer = threadEl.closest('.msg-layout-outer');
+  const isMobile = window.innerWidth <= 640;
+  if (outer && isMobile) outer.classList.add('msg-conv-open');
+
+  const mobileBackBtn = isMobile ? `
+    <div class="msg-mobile-back" onclick="msgBackToList('${containerId}')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      ${isFr ? 'Conversations' : 'Back'}
+    </div>` : '';
+
   threadEl.innerHTML = `
+    ${mobileBackBtn}
     ${headerPrimary ? `<div style="display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border);background:#fff;flex-shrink:0">
       ${headerAvatar}
       <div>
