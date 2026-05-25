@@ -3264,8 +3264,10 @@ async function loadEmployerJobs() {
         <div class="emp-stat"><i class="ti ti-percentage"></i><span>${conv}%</span><small>${isFr?'Conversion':'Conversion'}</small></div>
       </div>
       <div class="emp-job-actions">
-        <button class="btn-ghost" style="font-size:13px;padding:6px 14px" onclick="openKanban('${j.id}','${esc(title)}')"><i class="ti ti-layout-kanban"></i> Kanban</button>
-        <button class="btn-ghost" style="font-size:13px;padding:6px 14px" onclick="closeJob('${j.id}')"><i class="ti ti-x"></i> ${isFr?'Fermer':'Close'}</button>
+        ${j.status !== 'rejected' ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px" onclick="openKanban('${j.id}','${esc(title)}')"><i class="ti ti-layout-kanban"></i> Kanban</button>` : ''}
+        ${j.status === 'rejected'
+          ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px;color:#dc2626;border-color:#fca5a5" onclick="deleteRejectedJob('${j.id}')"><i class="ti ti-trash"></i> ${isFr?'Supprimer':'Delete'}</button>`
+          : `<button class="btn-ghost" style="font-size:13px;padding:6px 14px" onclick="closeJob('${j.id}')"><i class="ti ti-x"></i> ${isFr?'Fermer':'Close'}</button>`}
       </div>
       ${apps > 0 ? `
       <div class="inline-candidates" id="icands-${j.id}">
@@ -3387,6 +3389,18 @@ async function deleteRejectedApplication(appId, jobId) {
   if (d.success) {
     toast(isFr ? 'Candidature supprimée' : 'Application deleted', 'success');
     loadInlineCandidates(jobId);
+  } else {
+    toast(d.error || 'Error', 'error');
+  }
+}
+
+async function deleteRejectedJob(jobId) {
+  const isFr = state.lang === 'fr';
+  if (!confirm(isFr ? 'Supprimer définitivement cette offre refusée ?' : 'Permanently delete this rejected job listing?')) return;
+  const d = await api('DELETE', `${BASE}/api/jobs/${jobId}`);
+  if (d.success) {
+    toast(isFr ? 'Offre supprimée' : 'Job deleted', 'success');
+    document.getElementById(`job-card-${jobId}`)?.remove();
   } else {
     toast(d.error || 'Error', 'error');
   }

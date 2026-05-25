@@ -210,9 +210,13 @@ router.put('/:id', requireAuth, requireCompanyAccess, async (req, res) => {
 });
 
 router.delete('/:id', requireAuth, requireCompanyAccess, async (req, res) => {
-  const job = await db.get('SELECT id FROM nh_jobs WHERE id = $1 AND company_id = $2', [req.params.id, req.session.user.company_id]);
+  const job = await db.get('SELECT id, status FROM nh_jobs WHERE id = $1 AND company_id = $2', [req.params.id, req.session.user.company_id]);
   if (!job) return res.status(404).json({ success: false, error: 'Job not found' });
-  await db.run("UPDATE nh_jobs SET status = 'closed' WHERE id = $1", [req.params.id]);
+  if (job.status === 'rejected') {
+    await db.run('DELETE FROM nh_jobs WHERE id = $1', [req.params.id]);
+  } else {
+    await db.run("UPDATE nh_jobs SET status = 'closed' WHERE id = $1", [req.params.id]);
+  }
   res.json({ success: true });
 });
 
