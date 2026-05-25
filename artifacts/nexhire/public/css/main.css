@@ -68,6 +68,7 @@ a{text-decoration:none;color:inherit}
 .notif-bell{position:relative;width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:rgba(255,255,255,.7);transition:all .15s}
 .notif-bell:hover{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.3)}
 .notif-badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:100px;align-items:center;justify-content:center;padding:0 4px}
+.notif-badge:empty{display:none!important}
 
 /* ── BUTTONS ──────────────────────────────────────────────── */
 .btn-ghost{padding:8px 18px;border-radius:8px;font-size:14px;cursor:pointer;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;font-family:var(--b);font-weight:500;transition:all .15s;display:inline-flex;align-items:center;gap:6px}

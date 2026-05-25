@@ -1460,6 +1460,12 @@ function showUserNav() {
   if (emailEl) emailEl.textContent = state.user.email || '';
   const ddEmp = document.getElementById('dd-employer');
   if (ddEmp) ddEmp.style.display = state.user.company_id ? 'flex' : 'none';
+  // Always hide admin-only tabs for non-admin users
+  const isAdmin = u.role === 'admin';
+  const adminNav = document.getElementById('nav-admin-tests');
+  if (adminNav) adminNav.style.display = isAdmin ? '' : 'none';
+  const modNav = document.getElementById('nav-admin-moderation');
+  if (modNav) modNav.style.display = isAdmin ? '' : 'none';
 }
 function showGuestNav() {
   document.getElementById('nav-auth-guest').style.display = 'flex';
@@ -4872,9 +4878,9 @@ function showInAppNotification(n) {
 function updateNotifBadge(delta) {
   const badge = document.getElementById('notif-badge');
   if (!badge) return;
-  const cur = parseInt(badge.textContent || '0');
-  const next = cur + delta;
-  badge.textContent = next > 0 ? next : '';
+  const cur = parseInt(badge.textContent) || 0;
+  const next = Math.max(0, cur + delta);
+  badge.textContent = next > 9 ? '9+' : next > 0 ? String(next) : '';
   badge.style.display = next > 0 ? 'flex' : 'none';
 }
 
