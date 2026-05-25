@@ -87,7 +87,33 @@ async function webhookHandler(req, res) {
     return res.status(400).json({ error: `Webhook error: ${err.message}` });
   }
 
-  if (event.type === 'checkout.session.completed' || event.type === 'invoice.payment_succeeded') {
+  if (event.type === 'checkout.session.completed') {
+    const obj = event.data.object;
+    if (obj.metadata?.product === 'nexhire_boost') {
+      const { job_id, days } = obj.metadata;
+      if (job_id) {
+        const d = parseInt(days) || 14;
+        const until = new Date();
+        until.setDate(until.getDate() + d);
+        await db.run(
+          'UPDATE nh_jobs SET is_sponsored = true, sponsored_until = $1 WHERE id = $2',
+          [until.toISOString(), job_id]
+        );
+      }
+    } else {
+      const company_id = obj.metadata?.company_id;
+      if (company_id) {
+        const expiresAt = new Date();
+        expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+        await db.run(
+          `UPDATE nh_companies SET plan = 'pro', active_job_slots = 10, featured_job_slots = 3, plan_expires_at = $1 WHERE id = $2`,
+          [expiresAt.toISOString(), company_id]
+        );
+      }
+    }
+  }
+
+  if (event.type === 'invoice.payment_succeeded') {
     const obj = event.data.object;
     const company_id = obj.metadata?.company_id || obj.subscription_details?.metadata?.company_id;
     if (company_id) {

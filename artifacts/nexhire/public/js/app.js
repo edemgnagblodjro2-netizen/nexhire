@@ -2814,6 +2814,17 @@ async function loadProfileForm() {
       <div class="form-group"><label>GitHub URL</label><input type="url" id="pf-github" value="${esc(p.github_url||'')}"></div>
     </div>
     <div class="form-group"><label>${L.avail}</label><select id="pf-avail"><option value="immediate" ${p.availability==='immediate'?'selected':''}>${L.availImm}</option><option value="2weeks" ${p.availability==='2weeks'?'selected':''}>${L.avail2w}</option><option value="1month" ${p.availability==='1month'?'selected':''}>${L.avail1m}</option><option value="3months" ${p.availability==='3months'?'selected':''}>${L.avail3m}</option></select></div>
+    <div class="form-group" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:${p.open_to_work?'rgba(16,185,129,.06)':'var(--surface)'};border:1px solid ${p.open_to_work?'rgba(16,185,129,.25)':'var(--border)'};border-radius:12px;transition:all .2s">
+      <label class="otw-toggle" style="flex-shrink:0;position:relative;display:inline-block;width:44px;height:24px;cursor:pointer">
+        <input type="checkbox" id="pf-otw" ${p.open_to_work?'checked':''} style="opacity:0;width:0;height:0;position:absolute" onchange="saveOpenToWork(this.checked)">
+        <span style="position:absolute;inset:0;background:${p.open_to_work?'#10B981':'#D1D5DB'};border-radius:12px;transition:background .2s;"></span>
+        <span style="position:absolute;top:2px;left:${p.open_to_work?'22px':'2px'};width:20px;height:20px;background:#fff;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></span>
+      </label>
+      <div>
+        <div style="font-weight:600;font-size:14px;color:var(--dark)">${isFr?'🟢 Ouvert aux opportunités':'🟢 Open to Work'}</div>
+        <div style="font-size:12px;color:var(--muted)">${isFr?'Badge vert visible sur votre profil — les employeurs peuvent vous contacter directement.':'Green badge visible on your profile — employers can reach out directly.'}</div>
+      </div>
+    </div>
     <div class="form-group"><label>${L.bioEn}</label><textarea id="pf-bio-en">${esc(p.bio_en||'')}</textarea></div>
     <button class="btn-primary" onclick="saveProfile()"><i class="ti ti-check"></i> ${L.save}</button>
     <div style="margin-top:24px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px">
@@ -2826,6 +2837,10 @@ async function loadProfileForm() {
       </div>
       <div id="cv-upload-status" style="display:none;font-size:13px;margin-top:8px;color:var(--muted)"></div>
     </div>` +
+    (p.cv_summary ? `<div style="margin-top:12px;padding:14px 16px;background:linear-gradient(135deg,rgba(99,102,241,.07),rgba(99,102,241,.03));border:1px solid rgba(99,102,241,.2);border-radius:12px">
+      <div style="font-size:11px;font-weight:700;color:var(--indigo);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px"><i class="ti ti-robot"></i> ${isFr?'Résumé IA — généré depuis votre CV':'AI Summary — from your CV'}</div>
+      <div style="font-size:13px;color:var(--dark);line-height:1.65">${esc(p.cv_summary)}</div>
+    </div>` : '') +
     `<div id="profile-skills-container"></div>` +
     `<div id="highlights-container"></div>` +
     `<div id="recommendations-container"></div>` +
@@ -2882,6 +2897,7 @@ async function saveProfile() {
     bio_en: document.getElementById('pf-bio-en')?.value.trim(),
     work_mode_pref: document.getElementById('pf-mode')?.value,
     availability: document.getElementById('pf-avail')?.value,
+    open_to_work: document.getElementById('pf-otw')?.checked ?? false,
   };
   const d = await api('PUT', `${BASE}/api/candidates/profile`, body);
   if (d.success) {
@@ -2895,9 +2911,13 @@ async function saveProfile() {
 
 // ── Applications (candidate) ───────────────────────────────
 async function loadMyApplications() {
-  const d = await api('GET', `${BASE}/api/applications/mine`);
+  const [d, slotsD] = await Promise.all([
+    api('GET', `${BASE}/api/applications/mine`),
+    api('GET', `${BASE}/api/interview-slots/mine/pending`),
+  ]);
   const container = document.getElementById('applications-list');
   const apps = d.applications || [];
+  const pendingSlots = new Map((slotsD.slots || []).map(s => [s.application_id, s]));
   // Keep appliedJobIds in sync so Apply buttons reflect reality
   state.appliedJobIds = new Set(apps.map(a => a.job_id));
   if (!container) return;
@@ -2941,6 +2961,22 @@ async function loadMyApplications() {
         <div style="font-size:13px;color:#374151">${esc(a.rejection_reason)}</div>
       </div>` : ''}
       ${a.work_mode ? `<div style="margin-top:8px"><span class="job-tag ${a.work_mode}">${a.work_mode}</span></div>` : ''}
+      ${(() => {
+        const slot = pendingSlots.get(a.id);
+        if (!slot) return '';
+        const isFr = state.lang === 'fr';
+        const slots = [slot.slot1, slot.slot2, slot.slot3].filter(Boolean);
+        const fmtSlot = s => new Date(s).toLocaleString(isFr?'fr-CA':'en-CA',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+        return `<div style="margin-top:12px;padding:14px 16px;background:rgba(16,185,129,.05);border:1.5px solid #6ee7b7;border-radius:12px">
+          <div style="font-size:12px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px"><i class="ti ti-calendar-event"></i> ${isFr?'Invitation à un entretien':'Interview invitation'}</div>
+          ${slot.notes ? `<div style="font-size:12px;color:var(--muted);margin-bottom:10px;font-style:italic">"${esc(slot.notes)}"</div>` : ''}
+          ${slot.location ? `<div style="font-size:12px;color:var(--muted);margin-bottom:8px"><i class="ti ti-map-pin"></i> ${esc(slot.location)}</div>` : ''}
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
+            ${slots.map(s => `<button class="btn-ghost" style="font-size:12px;padding:7px 12px;justify-content:flex-start;text-align:left" onclick="confirmSlot('${slot.id}','${s}')"><i class="ti ti-check" style="color:#10b981"></i> ${isFr?'Confirmer :':'Confirm:'} ${fmtSlot(s)}</button>`).join('')}
+          </div>
+          <button class="btn-ghost" style="font-size:11px;color:#ef4444;border-color:#fca5a5;padding:5px 12px" onclick="declineSlots('${slot.id}')"><i class="ti ti-x"></i> ${isFr?'Décliner':'Decline'}</button>
+        </div>`;
+      })()}
     </div>`;
   }).join('');
 }
@@ -3300,6 +3336,12 @@ async function loadEmployerJobs() {
       </div>
       <div class="emp-job-actions">
         ${j.status !== 'rejected' ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px" onclick="openKanban('${j.id}','${esc(title)}')"><i class="ti ti-layout-kanban"></i> Kanban</button>` : ''}
+        ${j.status === 'active' && !(j.is_sponsored && j.sponsored_until && new Date(j.sponsored_until) > new Date())
+          ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px;color:#d97706;border-color:#fde68a" onclick="openBoostModal('${j.id}','${esc(title)}')"><i class="ti ti-rocket"></i> ${isFr?'Booster':'Boost'}</button>`
+          : ''}
+        ${j.is_sponsored && j.sponsored_until && new Date(j.sponsored_until) > new Date()
+          ? `<span style="font-size:11px;font-weight:700;color:#d97706;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:3px 10px;display:inline-flex;align-items:center;gap:4px"><i class="ti ti-star-filled"></i> ${isFr?'Sponsorisé':'Sponsored'} · ${isFr?'jusqu\'au':'until'} ${new Date(j.sponsored_until).toLocaleDateString(isFr?'fr-CA':'en-CA',{month:'short',day:'numeric'})}</span>`
+          : ''}
         ${j.status === 'rejected'
           ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px;color:#dc2626;border-color:#fca5a5" onclick="deleteRejectedJob('${j.id}')"><i class="ti ti-trash"></i> ${isFr?'Supprimer':'Delete'}</button>`
           : `<button class="btn-ghost" style="font-size:13px;padding:6px 14px" onclick="closeJob('${j.id}')"><i class="ti ti-x"></i> ${isFr?'Fermer':'Close'}</button>`}
@@ -3533,6 +3575,9 @@ function kanbanCard(a, col) {
     <div class="kanban-notes-row">
       <button class="btn-ghost kanban-notes-btn" onclick="openNotesModal('${a.id}','${esc(cname)}')">
         <i class="ti ti-message-circle-2"></i> Suivi RH<span id="kn-${a.id}" class="kanban-notes-badge" style="display:none"></span>
+      </button>
+      <button class="btn-ghost" style="font-size:11px;padding:4px 8px;color:#10b981;border-color:#6ee7b7;margin-top:4px;width:100%;justify-content:center" onclick="proposeSlots('${a.id}','${esc(cname)}')">
+        <i class="ti ti-calendar-event"></i> ${state.lang==='fr'?'Proposer créneaux':'Propose slots'}
       </button>
     </div>
   </div>`;
@@ -5134,6 +5179,7 @@ async function uploadAndParseCV() {
       // reload sections so new data appears immediately
       if (hardCount || softCount) loadProfileSkillsSection();
       if (hlCount) loadHighlightsIntoContainer();
+      loadProfileForm();
     } else {
       if (statusEl) statusEl.innerHTML = `<span style="color:var(--green)">✓ ${isFr?'CV sauvegardé.':'CV saved.'} ${d.message||''}</span>`;
     }
@@ -7005,3 +7051,187 @@ openQuickApply = function(jobId, jobTitle) {
     if (av) av.textContent = initials;
   }
 };
+
+// ── Open to Work — quick toggle ──────────────────────────────
+async function saveOpenToWork(checked) {
+  const isFr = state.lang === 'fr';
+  const d = await api('PUT', `${BASE}/api/candidates/profile`, { open_to_work: checked });
+  if (d.success) {
+    toast(checked
+      ? (isFr ? '🟢 Vous êtes maintenant visible pour les employeurs !' : '🟢 You are now Open to Work!')
+      : (isFr ? 'Badge retiré — vous n\'apparaissez plus dans les recherches actives' : 'Badge removed — no longer showing in active searches'),
+      'success');
+    const toggle = document.getElementById('pf-otw');
+    const spans = toggle?.parentElement?.querySelectorAll('span');
+    if (spans?.[0]) spans[0].style.background = checked ? '#10B981' : '#D1D5DB';
+    if (spans?.[1]) spans[1].style.left = checked ? '22px' : '2px';
+    const wrap = toggle?.closest('.form-group');
+    if (wrap) {
+      wrap.style.background = checked ? 'rgba(16,185,129,.06)' : 'var(--surface)';
+      wrap.style.borderColor = checked ? 'rgba(16,185,129,.25)' : 'var(--border)';
+    }
+    if (state.candidateProfile) state.candidateProfile.open_to_work = checked;
+  } else {
+    toast(d.error || 'Failed', 'error');
+    const toggle = document.getElementById('pf-otw');
+    if (toggle) toggle.checked = !checked;
+  }
+}
+
+// ── Job Boost modal (employer) ────────────────────────────────
+let _boostJobId = null;
+function openBoostModal(jobId, title) {
+  _boostJobId = jobId;
+  const isFr = state.lang === 'fr';
+  const overlay = document.createElement('div');
+  overlay.id = 'boost-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  const plans = [
+    { days: 7,  price: '49 $',  label: isFr ? '7 jours'  : '7 days',  desc: isFr ? 'Idéal pour un besoin urgent' : 'Ideal for urgent needs' },
+    { days: 14, price: '89 $',  label: isFr ? '14 jours' : '14 days', desc: isFr ? 'Notre option la plus populaire' : 'Our most popular option', popular: true },
+    { days: 30, price: '179 $', label: isFr ? '30 jours' : '30 days', desc: isFr ? 'Pour un recrutement complexe' : 'For complex searches' },
+  ];
+  overlay.innerHTML = `
+    <div style="background:#fff;border-radius:20px;padding:32px;max-width:440px;width:100%;box-shadow:0 25px 50px rgba(0,0,0,.2)">
+      <div style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:4px">
+        <i class="ti ti-rocket" style="color:#f59e0b"></i> ${isFr ? 'Booster cette offre' : 'Boost this listing'}
+      </div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:24px;font-style:italic">${esc(title)}</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px">
+        ${plans.map(p => `
+          <label style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:2px solid ${p.popular ? '#f59e0b' : 'var(--border)'};border-radius:12px;cursor:pointer;position:relative;transition:border-color .15s">
+            <input type="radio" name="boost-days" value="${p.days}" ${p.popular ? 'checked' : ''} style="accent-color:#f59e0b;flex-shrink:0">
+            <div style="flex:1">
+              <div style="font-weight:700;color:var(--dark)">${p.label}</div>
+              <div style="font-size:12px;color:var(--muted)">${p.desc}</div>
+            </div>
+            <div style="font-weight:800;font-size:18px;color:#d97706">${p.price}</div>
+            ${p.popular ? `<div style="position:absolute;top:-10px;right:12px;background:#f59e0b;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;text-transform:uppercase">${isFr ? 'Populaire' : 'Popular'}</div>` : ''}
+          </label>`).join('')}
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:18px;text-align:center">
+        <i class="ti ti-lock"></i> ${isFr ? 'Paiement sécurisé via Stripe — CAD' : 'Secure payment via Stripe — CAD'}
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn-ghost" style="flex:1" onclick="document.getElementById('boost-overlay').remove()">
+          <i class="ti ti-x"></i> ${isFr ? 'Annuler' : 'Cancel'}
+        </button>
+        <button class="btn-primary" style="flex:2;background:#f59e0b;border-color:#f59e0b;color:#fff" onclick="submitBoost()">
+          <i class="ti ti-rocket"></i> ${isFr ? 'Booster maintenant →' : 'Boost now →'}
+        </button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+}
+
+async function submitBoost() {
+  const days = parseInt(document.querySelector('input[name="boost-days"]:checked')?.value) || 14;
+  const btn = document.querySelector('#boost-overlay .btn-primary');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader" style="animation:spin 1s linear infinite"></i> …'; }
+  const d = await api('POST', `${BASE}/api/jobs/${_boostJobId}/sponsor`, { days });
+  if (d.success && d.url) {
+    window.location.href = d.url;
+  } else {
+    if (btn) { btn.disabled = false; btn.innerHTML = `<i class="ti ti-rocket"></i> Boost`; }
+    toast(d.error || (state.lang === 'fr' ? 'Erreur Stripe' : 'Stripe error'), 'error');
+  }
+}
+
+// ── Interview slot modal (employer → propose) ─────────────────
+let _slotAppId = null;
+function proposeSlots(appId, candidateName) {
+  _slotAppId = appId;
+  const isFr = state.lang === 'fr';
+  const pad = n => String(n).padStart(2, '0');
+  const defVal = offsetDays => {
+    const dt = new Date();
+    dt.setDate(dt.getDate() + offsetDays + 2);
+    dt.setHours(10, 0, 0, 0);
+    return `${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())}T10:00`;
+  };
+  const overlay = document.createElement('div');
+  overlay.id = 'slots-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  overlay.innerHTML = `
+    <div style="background:#fff;border-radius:20px;padding:32px;max-width:480px;width:100%;box-shadow:0 25px 50px rgba(0,0,0,.2);max-height:90vh;overflow-y:auto">
+      <div style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:4px">
+        <i class="ti ti-calendar-event" style="color:#10b981"></i> ${isFr ? 'Proposer un entretien' : 'Propose an interview'}
+      </div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:22px">${esc(candidateName)}</div>
+      ${[1, 2, 3].map(n => `
+        <div class="form-group" style="margin-bottom:14px">
+          <label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">
+            ${isFr ? `Créneau ${n}` : `Slot ${n}`}
+            <span style="color:var(--muted);font-weight:400">${n === 1 ? (isFr ? ' (requis)' : ' (required)') : (isFr ? ' (optionnel)' : ' (optional)')}</span>
+          </label>
+          <input type="datetime-local" id="slot-dt-${n}" value="${defVal(n - 1)}"
+            style="width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:14px;box-sizing:border-box;outline:none">
+        </div>`).join('')}
+      <div class="form-group" style="margin-bottom:14px">
+        <label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">${isFr ? 'Lieu / lien (optionnel)' : 'Location / link (optional)'}</label>
+        <input type="text" id="slot-location" placeholder="${isFr ? 'Ex : Google Meet, 123 rue Principale…' : 'e.g. Google Meet, 123 Main St…'}"
+          style="width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:14px;box-sizing:border-box">
+      </div>
+      <div class="form-group" style="margin-bottom:22px">
+        <label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">${isFr ? 'Note pour le candidat (optionnel)' : 'Note to candidate (optional)'}</label>
+        <textarea id="slot-notes" rows="2" placeholder="${isFr ? 'Ex : Entretien de 30 min avec notre DRH…' : 'e.g. 30-min call with our HR Director…'}"
+          style="width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn-ghost" style="flex:1" onclick="document.getElementById('slots-overlay').remove()">
+          <i class="ti ti-x"></i> ${isFr ? 'Annuler' : 'Cancel'}
+        </button>
+        <button class="btn-primary" style="flex:2;background:#10b981;border-color:#10b981" onclick="submitSlots()">
+          <i class="ti ti-send"></i> ${isFr ? 'Envoyer l\'invitation' : 'Send invitation'}
+        </button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+}
+
+async function submitSlots() {
+  const isFr = state.lang === 'fr';
+  const v1 = document.getElementById('slot-dt-1')?.value;
+  if (!v1) { toast(isFr ? 'Le créneau 1 est requis' : 'Slot 1 is required', 'error'); return; }
+  const v2 = document.getElementById('slot-dt-2')?.value;
+  const v3 = document.getElementById('slot-dt-3')?.value;
+  const body = {
+    application_id: _slotAppId,
+    slot1: new Date(v1).toISOString(),
+    slot2: v2 ? new Date(v2).toISOString() : null,
+    slot3: v3 ? new Date(v3).toISOString() : null,
+    location: document.getElementById('slot-location')?.value.trim() || '',
+    notes:    document.getElementById('slot-notes')?.value.trim() || '',
+  };
+  const btn = document.querySelector('#slots-overlay .btn-primary');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader" style="animation:spin 1s linear infinite"></i> …'; }
+  const d = await api('POST', `${BASE}/api/interview-slots`, body);
+  if (d.success) {
+    document.getElementById('slots-overlay')?.remove();
+    toast(isFr ? '📅 Invitation envoyée au candidat !' : '📅 Invitation sent to candidate!', 'success');
+  } else {
+    if (btn) { btn.disabled = false; btn.innerHTML = `<i class="ti ti-send"></i> ${isFr ? 'Envoyer' : 'Send'}`; }
+    toast(d.error || 'Failed', 'error');
+  }
+}
+
+// ── Interview slot confirm / decline (candidate) ──────────────
+async function confirmSlot(slotId, selectedSlot) {
+  const isFr = state.lang === 'fr';
+  const d = await api('PATCH', `${BASE}/api/interview-slots/${slotId}/confirm`, { selected_slot: selectedSlot });
+  if (d.success) {
+    toast(isFr ? '✅ Créneau confirmé ! L\'employeur a été notifié.' : '✅ Slot confirmed! Employer has been notified.', 'success');
+    loadMyApplications();
+  } else toast(d.error || 'Failed', 'error');
+}
+
+async function declineSlots(slotId) {
+  const isFr = state.lang === 'fr';
+  const d = await api('PATCH', `${BASE}/api/interview-slots/${slotId}/decline`, {});
+  if (d.success) {
+    toast(isFr ? 'Créneaux déclinés.' : 'Slots declined.', 'info');
+    loadMyApplications();
+  } else toast(d.error || 'Failed', 'error');
+}

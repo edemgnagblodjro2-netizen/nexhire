@@ -445,6 +445,30 @@ async function runMigrations() {
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_vr_interview ON nh_video_responses(interview_id)`);
     // Seed skill tests if empty
     await seedSkillTests(pool);
+    // ── Feature migrations ─────────────────────────────────────
+    await pool.query(`ALTER TABLE nh_candidate_profiles ADD COLUMN IF NOT EXISTS open_to_work BOOLEAN DEFAULT FALSE`);
+    await pool.query(`ALTER TABLE nh_candidate_profiles ADD COLUMN IF NOT EXISTS cv_summary TEXT`);
+    await pool.query(`ALTER TABLE nh_jobs ADD COLUMN IF NOT EXISTS is_sponsored BOOLEAN DEFAULT FALSE`);
+    await pool.query(`ALTER TABLE nh_jobs ADD COLUMN IF NOT EXISTS sponsored_until TIMESTAMPTZ`);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_interview_slots (
+        id             TEXT PRIMARY KEY,
+        application_id TEXT NOT NULL REFERENCES nh_applications(id) ON DELETE CASCADE,
+        company_id     TEXT NOT NULL REFERENCES nh_companies(id)    ON DELETE CASCADE,
+        job_id         TEXT,
+        slot1          TIMESTAMPTZ NOT NULL,
+        slot2          TIMESTAMPTZ,
+        slot3          TIMESTAMPTZ,
+        selected_slot  TIMESTAMPTZ,
+        location       TEXT DEFAULT '',
+        notes          TEXT DEFAULT '',
+        status         TEXT NOT NULL DEFAULT 'pending',
+        created_at     TIMESTAMPTZ DEFAULT NOW(),
+        updated_at     TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_islots_app ON nh_interview_slots(application_id)`);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_islots_company ON nh_interview_slots(company_id)`);
     console.log('[Nexhire] ✅ DB ready');
   } catch (err) {
     console.error('[Nexhire] Migration error:', err.message);
@@ -970,6 +994,7 @@ app.use(apiBase + '/profile-skills',   require('./routes/profile-skills'));
 app.use(apiBase + '/recommendations',  require('./routes/recommendations'));
 app.use(apiBase + '/video-interviews', require('./routes/video-interviews'));
 app.use(apiBase + '/moderation',       require('./routes/moderation'));
+app.use(apiBase + '/interview-slots',  require('./routes/interview-slots'));
 // Serve uploaded interview videos
 app.use(BASE_PATH + '/uploads/interviews', express.static(path.join(__dirname, 'uploads', 'interviews')));
 // Candidate public recording page

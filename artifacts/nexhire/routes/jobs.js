@@ -4,6 +4,12 @@ const db = require('../models/db');
 const { requireAuth, requireCompanyAccess } = require('../middleware/auth');
 const { moderateJob } = require('../services/ai');
 
+function getStripe() {
+  const key = process.env.NEXHIRE_STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error('Stripe not configured — add NEXHIRE_STRIPE_SECRET_KEY');
+  return require('stripe')(key);
+}
+
 // Province → known cities mapping for robust location filtering
 const CA_CITIES_BY_PROV = {
   AB: ['Calgary','Edmonton','Red Deer','Lethbridge','St. Albert','Medicine Hat','Grande Prairie','Airdrie','Spruce Grove','Leduc'],
@@ -207,6 +213,48 @@ router.put('/:id', requireAuth, requireCompanyAccess, async (req, res) => {
   vals.push(req.params.id);
   await db.run(`UPDATE nh_jobs SET ${sets.join(', ')} WHERE id = $${p}`, vals);
   res.json({ success: true, job: await db.get('SELECT * FROM nh_jobs WHERE id = $1', [req.params.id]) });
+});
+
+// POST /api/jobs/:id/sponsor  — create Stripe checkout to boost a job listing
+router.post('/:id/sponsor', requireAuth, requireCompanyAccess, async (req, res) => {
+  try {
+    const { days = 14 } = req.body;
+    const job = await db.get('SELECT * FROM nh_jobs WHERE id = $1 AND company_id = $2', [req.params.id, req.session.user.company_id]);
+    if (!job) return res.status(404).json({ success: false, error: 'Job not found' });
+
+    const options = { 7: 4900, 14: 8900, 30: 17900 };
+    const amount = options[parseInt(days)];
+    if (!amount) return res.status(400).json({ success: false, error: 'Invalid duration — choose 7, 14 or 30 days' });
+
+    const stripe = getStripe();
+    const title  = job.title_fr || job.title_en || 'Job listing';
+
+    const DEPLOY_URL = (process.env.REPLIT_DOMAINS || '').split(',')[0];
+    const BASE_URL   = DEPLOY_URL ? `https://${DEPLOY_URL}` : 'https://nexhire.ca';
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [{
+        price_data: {
+          currency: 'cad',
+          product_data: {
+            name: `Nexhire Boost — "${title}" (${days} jours)`,
+            description: 'Votre offre apparaît en tête des résultats pendant la durée choisie.',
+          },
+          unit_amount: amount,
+        },
+        quantity: 1,
+      }],
+      mode: 'payment',
+      success_url: `${BASE_URL}/nexhire/?tab=jobs&boost_ok=1&job=${req.params.id}`,
+      cancel_url:  `${BASE_URL}/nexhire/?tab=jobs`,
+      metadata: { job_id: req.params.id, days: String(days), company_id: req.session.user.company_id, product: 'nexhire_boost' },
+    });
+
+    res.json({ success: true, url: session.url });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 router.delete('/:id', requireAuth, requireCompanyAccess, async (req, res) => {

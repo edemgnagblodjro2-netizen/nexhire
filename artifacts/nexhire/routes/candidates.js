@@ -81,7 +81,7 @@ router.get('/profile', requireAuth, async (req, res) => {
 router.put('/profile', requireAuth, async (req, res) => {
   if (req.session.user.role !== 'candidate') return res.status(403).json({ success: false, error: 'Candidates only' });
 
-  const allowed = ['headline_fr','headline_en','bio_fr','bio_en','city','province','country','work_mode_pref','job_type_pref','experience_years','education_level','github_url','linkedin_url','portfolio_url','availability','desired_salary_min','desired_salary_max','open_to_relocation'];
+  const allowed = ['headline_fr','headline_en','bio_fr','bio_en','city','province','country','work_mode_pref','job_type_pref','experience_years','education_level','github_url','linkedin_url','portfolio_url','availability','desired_salary_min','desired_salary_max','open_to_relocation','open_to_work'];
   const sets = []; const vals = []; let p = 1;
 
   allowed.forEach(f => {
@@ -166,10 +166,31 @@ router.post('/profile/cv/parse', requireAuth, cvUpload.single('cv'), async (req,
     try { parsed = JSON.parse(completion.choices[0].message.content); } catch {}
     const cvUrl = `/nexhire/uploads/${req.file.filename}`;
     const userId = req.session.user.id;
+    // Generate a concise cv_summary pitch from the parsed data
+    let cvSummary = null;
+    if (parsed.bio_en) {
+      cvSummary = parsed.bio_en;
+    }
     await db.run(
-      'UPDATE nh_candidate_profiles SET cv_url = $1, cv_text = $2 WHERE user_id = $3',
-      [cvUrl, text.slice(0, 10000), userId]
+      'UPDATE nh_candidate_profiles SET cv_url = $1, cv_text = $2, cv_summary = $3, updated_at = NOW() WHERE user_id = $4',
+      [cvUrl, text.slice(0, 10000), cvSummary, userId]
     );
+    // Auto-fill headline & bio if not already set
+    const existingProfile = await db.get('SELECT headline_en, bio_en, city, province, experience_years FROM nh_candidate_profiles WHERE user_id = $1', [userId]);
+    const profileUpdates = [];
+    const profileVals = [];
+    let pp = 1;
+    if (!existingProfile?.headline_en && parsed.headline_en) { profileUpdates.push(`headline_en = $${pp}`); profileVals.push(parsed.headline_en); pp++; }
+    if (!existingProfile?.headline_en && parsed.headline_fr) { profileUpdates.push(`headline_fr = $${pp}`); profileVals.push(parsed.headline_fr); pp++; }
+    if (!existingProfile?.bio_en && parsed.bio_en) { profileUpdates.push(`bio_en = $${pp}`); profileVals.push(parsed.bio_en); pp++; }
+    if (!existingProfile?.bio_en && parsed.bio_fr) { profileUpdates.push(`bio_fr = $${pp}`); profileVals.push(parsed.bio_fr); pp++; }
+    if (!existingProfile?.city && parsed.city) { profileUpdates.push(`city = $${pp}`); profileVals.push(parsed.city); pp++; }
+    if (!existingProfile?.province && parsed.province) { profileUpdates.push(`province = $${pp}`); profileVals.push(parsed.province); pp++; }
+    if ((!existingProfile?.experience_years || existingProfile.experience_years === 0) && parsed.experience_years) { profileUpdates.push(`experience_years = $${pp}`); profileVals.push(parsed.experience_years); pp++; }
+    if (profileUpdates.length) {
+      profileVals.push(userId);
+      await db.run(`UPDATE nh_candidate_profiles SET ${profileUpdates.join(', ')} WHERE user_id = $${pp}`, profileVals);
+    }
     // Auto-insert hard skills
     if (Array.isArray(parsed.hard_skills)) {
       const existing = await db.all('SELECT name FROM nh_profile_skills WHERE user_id = $1 AND type = $2', [userId, 'hard']);
@@ -206,7 +227,7 @@ router.post('/profile/cv/parse', requireAuth, cvUpload.single('cv'), async (req,
         );
       }
     }
-    res.json({ success: true, cv_url: cvUrl, parsed });
+    res.json({ success: true, cv_url: cvUrl, cv_summary: cvSummary, parsed });
   } catch (e) {
     if (e?.status === 429 || e?.message?.includes('429') || e?.message?.includes('quota')) {
       return res.status(200).json({ success: true, cv_url: req.file ? `/nexhire/uploads/${req.file.filename}` : null, parsed: null, message: 'CV sauvegardé — quota OpenAI dépassé, rechargez votre compte sur platform.openai.com/settings/billing' });
