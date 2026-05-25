@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="stylesheet" href="/nexhire/css/main.css?v=20260525m">
+<link rel="stylesheet" href="/nexhire/css/main.css?v=20260525n">
 <link rel="icon" type="image/svg+xml" href="/nexhire/img/favicon.svg">
 <link rel="manifest" href="/nexhire/manifest.json">
 <meta name="theme-color" content="#023448">
@@ -212,11 +212,15 @@
 
   <section class="categories-section reveal">
     <div class="section-inner">
-      <div class="section-header">
+      <div class="section-header cat-section-header">
         <h2 data-i18n="cat.title">Browse by category</h2>
         <button class="btn-link" data-goto="jobs"><span data-i18n="cat.all">See all jobs</span> <i class="ti ti-arrow-right"></i></button>
       </div>
-      <div class="categories-grid reveal-stagger">
+      <button class="cat-dropdown-toggle" id="cat-toggle" onclick="toggleCatDropdown()" aria-expanded="false">
+        <span data-i18n="cat.title">Browse by category</span>
+        <i class="ti ti-chevron-down cat-toggle-chevron"></i>
+      </button>
+      <div class="categories-grid reveal-stagger" id="categories-grid">
         <div class="cat-card" data-search="Software Developer">
           <div class="cat-icon" style="background:#EEF2FF;color:#6366F1"><i class="ti ti-code"></i></div>
           <div class="cat-info"><div class="cat-name" data-i18n="cat.software">Software Development</div><div class="cat-sub" data-i18n="cat.software.sub">Developer · Engineer · Architect</div></div>
@@ -1204,7 +1208,7 @@ if ('serviceWorker' in navigator) {
     .catch(e => console.warn('[SW] failed', e));
 }
 </script>
-<script src="/nexhire/js/app.js?v=20260525m"></script>
+<script src="/nexhire/js/app.js?v=20260525n"></script>
 <script>window.__nexBase='/nexhire';</script>
 <script src="/nexhire/js/chatbot.js?v=20260524a"></script>
 </body>

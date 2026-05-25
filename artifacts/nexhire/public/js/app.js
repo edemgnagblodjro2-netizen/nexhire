@@ -6925,3 +6925,13 @@ document.addEventListener('click', e => {
 document.getElementById('nav-links')?.addEventListener('click', e => {
   if (e.target === document.getElementById('nav-links')) closeMobileMenu();
 });
+
+// ── Categories dropdown (mobile) ──────────────────────────
+function toggleCatDropdown() {
+  const grid = document.getElementById('categories-grid');
+  const btn  = document.getElementById('cat-toggle');
+  if (!grid || !btn) return;
+  const open = grid.classList.toggle('open');
+  btn.classList.toggle('active', open);
+  btn.setAttribute('aria-expanded', open);
+}
