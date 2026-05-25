@@ -2774,6 +2774,7 @@ async function loadProfileForm() {
   const p = d.profile || {};
 
   state.candidateProfile = p;
+  _applyOtwRing(p.open_to_work);
   const { pct, missing } = computeCompleteness(p, state.user);
   const pctColor = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--gold)' : 'var(--indigo)';
   const score = computeCareerScore(p, state.user, pct);
@@ -4492,6 +4493,8 @@ async function uploadProfilePhoto(input) {
     }
     if (statusEl) statusEl.innerHTML = `<span style="color:var(--green)">✓ ${isFr?'Photo mise à jour !':'Photo updated!'}</span>`;
     toast(isFr ? 'Photo de profil mise à jour !' : 'Profile photo updated!', 'success');
+    // Re-apply OTW ring after photo change (ring was on the element, new img replaced innerHTML)
+    _applyOtwRing(state.candidateProfile?.open_to_work);
   } catch (e) {
     if (statusEl) statusEl.innerHTML = `<span style="color:var(--danger)">✗ ${e.message}</span>`;
   }
@@ -7347,6 +7350,19 @@ openQuickApply = function(jobId, jobTitle) {
   }
 };
 
+// ── Open to Work — apply / remove ring on all avatar elements ──
+function _applyOtwRing(on) {
+  // Navbar avatar (small)
+  const navAv = document.getElementById('nav-avatar');
+  if (navAv) navAv.classList.toggle('otw-ring', !!on);
+  // Sidebar dashboard avatar
+  const dashAv = document.getElementById('dash-avatar');
+  if (dashAv) dashAv.classList.toggle('otw-ring', !!on);
+  // Passport / profile page avatar (large)
+  const passportAv = document.querySelector('.passport-avatar-upload');
+  if (passportAv) passportAv.classList.toggle('otw-ring-lg', !!on);
+}
+
 // ── Open to Work — quick toggle ──────────────────────────────
 async function saveOpenToWork(checked) {
   const isFr = state.lang === 'fr';
@@ -7366,6 +7382,7 @@ async function saveOpenToWork(checked) {
       wrap.style.borderColor = checked ? 'rgba(16,185,129,.25)' : 'var(--border)';
     }
     if (state.candidateProfile) state.candidateProfile.open_to_work = checked;
+    _applyOtwRing(checked);
   } else {
     toast(d.error || 'Failed', 'error');
     const toggle = document.getElementById('pf-otw');

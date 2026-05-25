@@ -738,6 +738,9 @@ a{text-decoration:none;color:inherit}
 .dash-score-pill{display:inline-flex;align-items:center;gap:5px;border-radius:20px;padding:4px 11px;font-size:12px;font-weight:700;margin-top:4px;margin-bottom:2px}
 /* Sidebar open-to-work pill */
 .sidebar-otw{display:inline-flex;align-items:center;gap:5px;background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;border-radius:20px;padding:4px 11px;font-size:12px;font-weight:700;margin-top:4px}
+/* Open to Work avatar ring — LinkedIn style */
+.otw-ring{box-shadow:0 0 0 2px #fff,0 0 0 4px #16a34a!important;transition:box-shadow .25s}
+.otw-ring-lg{box-shadow:0 0 0 3px #fff,0 0 0 6px #16a34a!important;transition:box-shadow .25s}
 /* ── AVAILABILITY BADGES ─────────────────────────────────── */
 .avail-section{background:#f9fafb;border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:20px}
 .avail-label{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:12px;display:flex;align-items:center;gap:6px}
