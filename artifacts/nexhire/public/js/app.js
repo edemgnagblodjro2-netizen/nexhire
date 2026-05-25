@@ -802,9 +802,14 @@ async function loadStats() {
 // ── Notifications badge ────────────────────────────────────
 async function loadNotifBadge() {
   const d = await api('GET', `${BASE}/api/notifications`);
+  const badge = document.getElementById('notif-badge');
+  if (!badge) return;
   if (d.success && d.unread > 0) {
-    const badge = document.getElementById('notif-badge');
-    if (badge) { badge.textContent = d.unread > 9 ? '9+' : d.unread; badge.style.display = 'flex'; }
+    badge.textContent = d.unread > 9 ? '9+' : d.unread;
+    badge.style.display = 'flex';
+  } else {
+    badge.textContent = '';
+    badge.style.display = 'none';
   }
 }
 
