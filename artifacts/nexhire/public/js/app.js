@@ -6820,7 +6820,7 @@ function renderViCreateForm() {
       </button>
     </div>
 
-    <div style="background:#eff6ff;border-radius:10px;padding:12px 14px;font-size:12px;color:#1e40af;margin-bottom:16px">
+    <div style="background:#f0f9ff;border-radius:10px;padding:12px 14px;font-size:12px;color:#0369a1;margin-bottom:16px">
       <i class="ti ti-bulb"></i> ${isFr ? 'Le candidat enregistre ses réponses en audio (max 3 min/question). L\'IA transcrit et score automatiquement.' : 'Candidate records audio responses (max 3 min/question). AI auto-transcribes and scores.'}
     </div>
 

@@ -4,8 +4,8 @@
 :root{
   --indigo:#6366F1;--indigo2:#818CF8;--indigo3:#EEF2FF;--indigo4:#C7D2FE;
   --brand-dark:#023448;--brand-teal:#1b485a;
-  --dark:#0d1526;--mid:#1b485a;--text:#334155;--muted:#64748B;
-  --border:#E2E8F0;--bg:#F8FAFC;--white:#fff;
+  --dark:#0d1526;--mid:#1b485a;--text:#475569;--muted:#94a3b8;
+  --border:#E2E8F0;--bg:#F8FAFC;--white:#fff;--surface:#fff;
   --green:#10B981;--red:#EF4444;--gold:#F59E0B;
   --r:'Space Grotesk',sans-serif;--b:'Inter',sans-serif;
   --radius:12px;--radius-sm:8px;
