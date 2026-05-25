@@ -5648,7 +5648,7 @@ function renderNotifDropdown(notifs, unread, isFr) {
     listHtml = notifs.map(n => {
       const ic = notifIcon(n.type);
       const isUnread = !n.read_at;
-      const link = n.link_url ? `data-link="${esc(n.link_url)}"` : '';
+      const link = n.link ? `data-link="${esc(n.link)}"` : '';
       return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} onclick="markNotifRead(this)">
         <div class="notif-icon" style="background:${ic.bg};color:${ic.color}"><i class="ti ${ic.icon}"></i></div>
         <div class="notif-item-body">
@@ -5701,7 +5701,10 @@ async function markNotifRead(el) {
 
   // Close dropdown then navigate
   closeNotifDropdown();
-  if (link) location.hash = link;
+  if (link) {
+    if (link.includes('#')) location.href = link;
+    else location.hash = link;
+  }
 }
 
 // ── Navbar — dropdown items ──────────────────────────────────
