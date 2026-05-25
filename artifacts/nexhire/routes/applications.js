@@ -131,6 +131,17 @@ router.put('/:id/status', requireAuth, requireCompanyAccess, async (req, res) =>
   res.json({ success: true });
 });
 
+router.delete('/:id', requireAuth, requireCompanyAccess, async (req, res) => {
+  const app = await db.get(`
+    SELECT a.id, j.company_id FROM nh_applications a
+    JOIN nh_jobs j ON a.job_id = j.id
+    WHERE a.id = $1 AND a.status = 'rejected'
+  `, [req.params.id]);
+  if (!app || app.company_id !== req.session.user.company_id) return res.status(403).json({ success: false, error: 'Access denied or application not rejected' });
+  await db.run('DELETE FROM nh_applications WHERE id = $1', [req.params.id]);
+  res.json({ success: true });
+});
+
 router.post('/:id/withdraw', requireAuth, async (req, res) => {
   const app = await db.get('SELECT * FROM nh_applications WHERE id = $1 AND user_id = $2', [req.params.id, req.session.user.id]);
   if (!app) return res.status(403).json({ success: false, error: 'Access denied' });

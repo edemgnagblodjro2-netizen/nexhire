@@ -3325,6 +3325,7 @@ async function loadInlineCandidates(jobId) {
           `<button onclick="updateCandidateStatus('${a.id}','${s.key}','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;color:var(--text);white-space:nowrap">${s.label}</button>`
         ).join('') : ''}
         ${isActive ? `<button onclick="openRejectModal('${a.id}','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #fca5a5;background:#fff5f5;cursor:pointer;color:#dc2626;white-space:nowrap"><i class="ti ti-x" style="font-size:10px"></i> ${rejectLabel}</button>` : ''}
+        ${status === 'rejected' ? `<button onclick="deleteRejectedApplication('${a.id}','${jobId}')" title="${isFr?'Supprimer':'Delete'}" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;color:#9ca3af;white-space:nowrap"><i class="ti ti-trash" style="font-size:12px"></i></button>` : ''}
       </div>
     </div>`;
   }).join('');
@@ -3377,6 +3378,18 @@ async function confirmReject(appId, jobId) {
   const reason = document.getElementById('reject-reason-text')?.value?.trim() || null;
   document.getElementById('reject-reason-modal')?.remove();
   await updateCandidateStatus(appId, 'rejected', jobId, reason);
+}
+
+async function deleteRejectedApplication(appId, jobId) {
+  const isFr = state.lang === 'fr';
+  if (!confirm(isFr ? 'Supprimer définitivement cette candidature refusée ?' : 'Permanently delete this rejected application?')) return;
+  const d = await api('DELETE', `${BASE}/api/applications/${appId}`);
+  if (d.success) {
+    toast(isFr ? 'Candidature supprimée' : 'Application deleted', 'success');
+    loadInlineCandidates(jobId);
+  } else {
+    toast(d.error || 'Error', 'error');
+  }
 }
 
 async function closeJob(jobId) {
