@@ -1295,7 +1295,10 @@ async function filterJobs(page = 1) {
   } else if (pgEl) pgEl.innerHTML = '';
 
   // Load Job Bank Canada section in parallel (only on first page)
-  if (page === 1) triggerJobBankSection();
+  // Append Adzuna jobs into the same list (Canada only, page 1)
+  if (page === 1 && locVal !== 'REMOTE' && !locVal.startsWith('c:')) {
+    loadAdzunaIntoMainList(q, locVal, list);
+  }
 }
 
 function clearFilters() {
@@ -1315,76 +1318,73 @@ function jobSidebarFilter(selectId, value) {
   }
 }
 
-// ── Job Bank Canada section ─────────────────────────────────
-let _jbTimer = null;
-function triggerJobBankSection() {
-  clearTimeout(_jbTimer);
-  _jbTimer = setTimeout(() => {
-    const q    = document.getElementById('fq')?.value || '';
-    const prov = document.getElementById('fprov')?.value || '';
-    loadJobBankSection(q, prov);
-  }, 600);
-}
-
-async function loadJobBankSection(q = '', prov = '') {
-  const section = document.getElementById('jobbank-section');
-  const listEl  = document.getElementById('jobbank-list');
-  const countEl = document.getElementById('jobbank-count');
-  const titleEl = document.getElementById('jobbank-title');
-  const discEl  = document.getElementById('jobbank-disclaimer');
-  if (!section || !listEl) return;
-
+// ── Adzuna — injects into the main jobs list ────────────────
+async function loadAdzunaIntoMainList(q, prov, listEl) {
+  if (!listEl) return;
   const isFr = state.lang === 'fr';
 
-  // Don't show for remote/international filters — Job Bank is Canada-only
-  const locVal = document.getElementById('fprov')?.value || '';
-  if (locVal === 'REMOTE' || locVal.startsWith('c:')) {
-    section.style.display = 'none';
-    return;
-  }
-
-  section.style.display = 'block';
-  if (titleEl) titleEl.textContent = isFr ? 'Offres supplémentaires via Adzuna 🌐' : 'More jobs via Adzuna 🌐';
-  if (countEl) countEl.textContent = '';
-  listEl.innerHTML = `<div style="display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;padding:16px 0"><i class="ti ti-loader" style="animation:spin 1s linear infinite"></i> ${isFr ? 'Chargement depuis Adzuna...' : 'Loading from Adzuna...'}</div>`;
+  // Append skeleton row
+  const skeletonId = 'adzuna-loading-row';
+  const skeleton = document.createElement('div');
+  skeleton.id = skeletonId;
+  skeleton.className = 'adzuna-loading-row';
+  skeleton.innerHTML = `<i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:16px;color:var(--indigo)"></i>
+    <span>${isFr ? 'Chargement des offres partenaires…' : 'Loading partner jobs…'}</span>`;
+  listEl.appendChild(skeleton);
 
   const params = new URLSearchParams({ lang: state.lang });
   if (q) params.set('q', q);
   if (prov && prov !== 'REMOTE' && !prov.startsWith('c:')) params.set('prov', prov);
 
   const d = await api('GET', `${BASE}/api/jobbank/search?${params}`);
-  const jobs = d.jobs || [];
 
-  if (!jobs.length) {
-    section.style.display = 'none';
-    return;
-  }
+  // Remove skeleton (it might be gone if list was re-rendered)
+  document.getElementById(skeletonId)?.remove();
+  if (!listEl.isConnected) return;
 
-  if (countEl) countEl.textContent = isFr ? `${jobs.length} offre${jobs.length > 1 ? 's' : ''}` : `${jobs.length} posting${jobs.length !== 1 ? 's' : ''}`;
+  const jobs = (d.jobs || []).slice(0, 20);
+  if (!jobs.length) return;
 
-  listEl.innerHTML = jobs.slice(0, 20).map(j => `
-    <div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)">
-      <div style="width:44px;height:44px;border-radius:10px;flex-shrink:0;background:#f0f4f8;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#555">
-        ${(j.company || 'J').slice(0,2).toUpperCase()}
-      </div>
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;font-size:15px;color:var(--dark)">${esc(j.title)}</div>
-        <div style="font-size:13px;color:var(--muted);margin-top:2px">${esc(j.company)}${j.location ? ' · ' + esc(j.location) : ''}</div>
-        <div style="display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap">
-          ${j.salary ? `<span class="job-tag salary-tag" style="font-size:11px">${esc(j.salary)}</span>` : ''}
-          ${j.date ? `<span style="font-size:11px;color:var(--muted)">${esc(j.date)}</span>` : ''}
-          <span style="font-size:10px;background:#e8f4fd;color:#1a5276;border-radius:4px;padding:2px 6px;font-weight:600">🌐 Adzuna</span>
+  // Divider row
+  const divider = document.createElement('div');
+  divider.className = 'adzuna-divider';
+  divider.innerHTML = `<span>${isFr ? 'Offres partenaires via' : 'Partner jobs via'} <a href="https://www.adzuna.ca" target="_blank" rel="noopener">Adzuna</a> · ${jobs.length} offre${jobs.length > 1 ? 's' : ''}</span>`;
+  listEl.appendChild(divider);
+
+  // Cards — same template, external link instead of save button
+  jobs.forEach(j => {
+    const card = document.createElement('div');
+    card.className = 'job-list-item js-job-card';
+    card.dataset.adzunaUrl = j.url;
+    card.innerHTML = `
+      <div class="jli-top">
+        <div class="jli-badges">
+          <span class="job-tag source-adzuna">🌐 Adzuna</span>
         </div>
+        <a href="${j.url}" target="_blank" rel="noopener noreferrer"
+           class="jli-apply-ext" onclick="event.stopPropagation()">
+          ${isFr ? 'Postuler' : 'Apply'} <i class="ti ti-external-link" style="font-size:12px"></i>
+        </a>
       </div>
-      <a href="${j.url}" target="_blank" rel="noopener noreferrer"
-         style="flex-shrink:0;background:var(--indigo);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px">
-        <i class="ti ti-external-link" style="font-size:14px"></i> ${isFr ? 'Postuler' : 'Apply'}
-      </a>
-    </div>`).join('');
+      <div class="jli-title">${esc(j.title)}</div>
+      <div class="jli-meta">
+        ${j.company ? `<span class="jli-company">${esc(j.company)}</span>` : ''}
+        ${j.location ? `<span class="jli-loc"><i class="ti ti-map-pin"></i> ${esc(j.location)}</span>` : ''}
+        ${j.salary ? `<span class="jli-sal"><i class="ti ti-currency-dollar"></i> ${esc(j.salary)}</span>` : ''}
+        ${j.date ? `<span class="jli-date">${esc(j.date)}</span>` : ''}
+      </div>`;
+    listEl.appendChild(card);
+  });
 
-  if (discEl) discEl.innerHTML = isFr
-    ? `Ces offres supplémentaires proviennent d'<a href="https://www.adzuna.ca" target="_blank" rel="noopener" style="color:var(--indigo)">Adzuna</a>, un agrégateur d'emploi canadien. Vous serez redirigé vers le site de l'employeur pour postuler.`
-    : `These additional postings are sourced from <a href="https://www.adzuna.ca" target="_blank" rel="noopener" style="color:var(--indigo)">Adzuna</a>, a Canadian job aggregator. You'll be redirected to the employer's site to apply.`;
+  // Update count label
+  const countLabel = document.getElementById('jobs-count-label');
+  if (countLabel) {
+    const nexhireCount = listEl.querySelectorAll('[data-job-id]').length;
+    const total = nexhireCount + jobs.length;
+    countLabel.textContent = state.lang === 'fr'
+      ? `${nexhireCount} offre${nexhireCount > 1 ? 's' : ''} + ${jobs.length} via Adzuna`
+      : `${nexhireCount} job${nexhireCount !== 1 ? 's' : ''} + ${jobs.length} via Adzuna`;
+  }
 }
 
 // ── Job detail panel ───────────────────────────────────────
@@ -5742,6 +5742,13 @@ document.addEventListener('click', e => {
   if (saveBtn) {
     e.stopPropagation();
     toggleSave(saveBtn.dataset.saveId, e);
+    return;
+  }
+
+  // ── Adzuna card click → open external URL ────────────────
+  const adzunaCard = e.target.closest('[data-adzuna-url]');
+  if (adzunaCard) {
+    window.open(adzunaCard.dataset.adzunaUrl, '_blank', 'noopener,noreferrer');
     return;
   }
 
