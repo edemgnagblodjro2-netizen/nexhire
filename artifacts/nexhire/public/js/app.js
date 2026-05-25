@@ -3950,7 +3950,21 @@ function initCompanyForm() {
       <div class="form-group"><label>City</label><input type="text" id="cf-city"></div>
       <div class="form-group"><label>Website</label><input type="url" id="cf-web" placeholder="https://"></div>
     </div>
-    <div class="form-group"><label>Logo URL</label><input type="url" id="cf-logo" placeholder="https://...company-logo.png"></div>
+    <div class="form-group">
+      <label>Company Logo</label>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:4px">
+        <div id="cf-logo-preview" style="width:64px;height:64px;border-radius:12px;border:1px solid var(--border);overflow:hidden;background:var(--surface-2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i class="ti ti-building" style="font-size:24px;color:var(--muted)"></i>
+        </div>
+        <div>
+          <label for="cf-logo-file" class="btn-ghost btn-sm" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px">
+            <i class="ti ti-upload"></i> Upload logo
+          </label>
+          <input type="file" id="cf-logo-file" accept="image/*" style="display:none" onchange="uploadCompanyLogo(this)">
+          <div id="cf-logo-status" style="font-size:12px;color:var(--muted);margin-top:4px">JPG, PNG, WebP · max 2 MB</div>
+        </div>
+      </div>
+    </div>
     <div class="form-group"><label>About the company (EN)</label><textarea id="cf-desc-en" placeholder="Describe your company..."></textarea></div>
     <div class="form-group"><label>À propos (FR)</label><textarea id="cf-desc-fr" placeholder="Décrivez votre entreprise..."></textarea></div>
     <button class="btn-primary" type="submit"><i class="ti ti-check"></i> Save company profile</button>
@@ -3963,8 +3977,12 @@ async function loadCompanyForm() {
   const c = d.company;
   const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ''; };
   set('cf-name', c.name); set('cf-industry', c.industry); set('cf-size', c.size);
-  set('cf-city', c.city); set('cf-web', c.website); set('cf-logo', c.logo_url);
+  set('cf-city', c.city); set('cf-web', c.website);
   set('cf-desc-en', c.description_en); set('cf-desc-fr', c.description_fr);
+  const preview = document.getElementById('cf-logo-preview');
+  if (preview && c.logo_url) {
+    preview.innerHTML = `<img src="${esc(c.logo_url)}" style="width:100%;height:100%;object-fit:contain" alt="logo">`;
+  }
 }
 
 async function saveCompany(e) {
@@ -3975,13 +3993,32 @@ async function saveCompany(e) {
     size: document.getElementById('cf-size')?.value,
     city: document.getElementById('cf-city')?.value.trim(),
     website: document.getElementById('cf-web')?.value.trim(),
-    logo_url: document.getElementById('cf-logo')?.value.trim(),
     description_en: document.getElementById('cf-desc-en')?.value.trim(),
     description_fr: document.getElementById('cf-desc-fr')?.value.trim(),
   };
   const d = await api('PUT', `${BASE}/api/companies/me/profile`, body);
   if (d.success) toast('Company profile saved!', 'success');
   else toast(d.error || 'Failed to save', 'error');
+}
+
+async function uploadCompanyLogo(input) {
+  if (!input?.files?.length) return;
+  const statusEl = document.getElementById('cf-logo-status');
+  if (statusEl) statusEl.textContent = '⏳ Uploading…';
+  const fd = new FormData();
+  fd.append('logo', input.files[0]);
+  try {
+    const resp = await fetch(`${BASE}/api/companies/me/logo`, { method: 'POST', body: fd, credentials: 'include' });
+    const d = await resp.json();
+    if (!d.success) throw new Error(d.error);
+    const preview = document.getElementById('cf-logo-preview');
+    if (preview) preview.innerHTML = `<img src="${esc(d.logo_url)}" style="width:100%;height:100%;object-fit:contain" alt="logo">`;
+    if (statusEl) statusEl.innerHTML = `<span style="color:var(--green)">✓ Logo updated!</span>`;
+    toast('Company logo updated!', 'success');
+  } catch (err) {
+    if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${err.message}</span>`;
+    toast(err.message || 'Upload failed', 'error');
+  }
 }
 
 // ── Billing ────────────────────────────────────────────────

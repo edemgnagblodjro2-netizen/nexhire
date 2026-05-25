@@ -1,6 +1,41 @@
-const router = require('express').Router();
-const db = require('../models/db');
+const router  = require('express').Router();
+const path    = require('path');
+const fs      = require('fs');
+const multer  = require('multer');
+const db      = require('../models/db');
 const { requireAuth, requireCompanyAccess } = require('../middleware/auth');
+
+// ── Logo upload ────────────────────────────────────────────────
+const logoDir = path.join(__dirname, '..', 'uploads');
+if (!fs.existsSync(logoDir)) fs.mkdirSync(logoDir, { recursive: true });
+
+const logoStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, logoDir),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase() || '.png';
+    cb(null, `logo-${req.session.user.company_id}-${Date.now()}${ext}`);
+  },
+});
+const logoUpload = multer({
+  storage: logoStorage,
+  limits: { fileSize: 2 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) cb(null, true);
+    else cb(new Error('Images only (JPG, PNG, WebP, SVG)'));
+  },
+});
+
+router.post('/me/logo', requireAuth, requireCompanyAccess, logoUpload.single('logo'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ success: false, error: 'No file uploaded' });
+    const basePath = (process.env.BASE_PATH || '/nexhire/').replace(/\/$/, '');
+    const logoUrl  = `${basePath}/uploads/${req.file.filename}`;
+    await db.run('UPDATE nh_companies SET logo_url=$1 WHERE id=$2', [logoUrl, req.session.user.company_id]);
+    res.json({ success: true, logo_url: logoUrl });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
 
 router.get('/me/profile', requireAuth, requireCompanyAccess, async (req, res) => {
   const company = await db.get('SELECT * FROM nh_companies WHERE id = $1', [req.session.user.company_id]);
@@ -9,7 +44,7 @@ router.get('/me/profile', requireAuth, requireCompanyAccess, async (req, res) =>
 });
 
 router.put('/me/profile', requireAuth, requireCompanyAccess, async (req, res) => {
-  const allowed = ['name','description_fr','description_en','website','industry','size','logo_url','city','country'];
+  const allowed = ['name','description_fr','description_en','website','industry','size','city','country'];
   const sets = []; const vals = []; let p = 1;
   allowed.forEach(f => { if (req.body[f] !== undefined) { sets.push(`${f} = $${p}`); vals.push(req.body[f]); p++; } });
   if (!sets.length) return res.status(400).json({ success: false, error: 'Nothing to update' });
