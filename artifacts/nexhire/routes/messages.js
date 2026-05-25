@@ -12,18 +12,25 @@ async function notifyUser(userId, type, title, linkUrl) {
   } catch {}
 }
 
-// Check if userId has access to an application (as candidate or employer)
+// Check if userId has access to an application (as candidate or employer).
+// nh_applications.candidate_id = nh_candidate_profiles.id (NOT nh_users.id).
+// We join nh_candidate_profiles to resolve the actual user_id for the candidate.
 async function getAppWithAccess(appId, userId, companyId) {
   return db.get(`
-    SELECT a.*, c.owner_id as employer_owner, j.posted_by, c.id as comp_id
+    SELECT a.*,
+      c.owner_id  AS employer_owner,
+      j.posted_by AS posted_by,
+      c.id        AS comp_id,
+      cp.user_id  AS cand_user_id
     FROM nh_applications a
     JOIN nh_jobs j ON j.id = a.job_id
     JOIN nh_companies c ON c.id = j.company_id
+    LEFT JOIN nh_candidate_profiles cp ON cp.id = a.candidate_id
     WHERE a.id = $1
   `, [appId]).then(app => {
     if (!app) return null;
-    const isCandidate = app.candidate_id === userId;
-    const isEmployer = app.employer_owner === userId
+    const isCandidate = app.candidate_id === userId || app.cand_user_id === userId;
+    const isEmployer  = app.employer_owner === userId
       || app.posted_by === userId
       || (companyId && app.comp_id === companyId);
     if (!isCandidate && !isEmployer) return null;
@@ -33,37 +40,38 @@ async function getAppWithAccess(appId, userId, companyId) {
 
 router.get('/threads', requireAuth, async (req, res) => {
   try {
-    const userId = req.session.user.id;
+    const userId    = req.session.user.id;
     const companyId = req.session.user.company_id || null;
 
     const threads = await db.all(`
       WITH user_apps AS (
-        SELECT DISTINCT a.id AS application_id,
+        SELECT DISTINCT
+          a.id          AS application_id,
           j.title_en, j.title_fr,
-          c.name AS company_name, c.logo_url,
-          u_cand.first_name AS cand_first, u_cand.last_name AS cand_last,
-          u_cand.avatar_url AS cand_avatar
+          c.name        AS company_name,
+          c.logo_url,
+          u_cand.first_name  AS cand_first,
+          u_cand.last_name   AS cand_last,
+          u_cand.avatar_url  AS cand_avatar
         FROM nh_applications a
-        JOIN nh_jobs j ON j.id = a.job_id
-        JOIN nh_companies c ON c.id = j.company_id
-        LEFT JOIN nh_users u_cand ON u_cand.id = a.candidate_id
+        JOIN  nh_jobs j ON j.id = a.job_id
+        JOIN  nh_companies c ON c.id = j.company_id
+        LEFT JOIN nh_candidate_profiles cp ON cp.id = a.candidate_id
+        LEFT JOIN nh_users u_cand ON u_cand.id = cp.user_id
         WHERE a.candidate_id = $1
-           OR c.owner_id = $1
-           OR j.posted_by = $1
+           OR cp.user_id     = $1
+           OR c.owner_id     = $1
+           OR j.posted_by    = $1
            OR ($2::text IS NOT NULL AND c.id = $2)
       )
       SELECT
         ua.*,
-        (SELECT body FROM nh_messages
-         WHERE application_id = ua.application_id
-         ORDER BY created_at DESC LIMIT 1) AS last_message,
-        (SELECT created_at FROM nh_messages
-         WHERE application_id = ua.application_id
-         ORDER BY created_at DESC LIMIT 1) AS last_at,
+        (SELECT body       FROM nh_messages WHERE application_id = ua.application_id ORDER BY created_at DESC LIMIT 1) AS last_message,
+        (SELECT created_at FROM nh_messages WHERE application_id = ua.application_id ORDER BY created_at DESC LIMIT 1) AS last_at,
         COALESCE((SELECT COUNT(*) FROM nh_messages
-         WHERE application_id = ua.application_id
-           AND sender_id != $1
-           AND read_at IS NULL), 0) AS unread
+                  WHERE application_id = ua.application_id
+                    AND sender_id != $1
+                    AND read_at IS NULL), 0) AS unread
       FROM user_apps ua
       ORDER BY last_at DESC NULLS LAST
     `, [userId, companyId]);
@@ -76,17 +84,19 @@ router.get('/threads', requireAuth, async (req, res) => {
 
 router.get('/:applicationId', requireAuth, async (req, res) => {
   try {
-    const userId = req.session.user.id;
+    const userId    = req.session.user.id;
     const companyId = req.session.user.company_id || null;
-    const appId = req.params.applicationId;
+    const appId     = req.params.applicationId;
 
     const app = await getAppWithAccess(appId, userId, companyId);
     if (!app) return res.status(403).json({ success: false, error: 'Not found or forbidden' });
 
     const messages = await db.all(
       `SELECT m.*, u.first_name, u.last_name, u.role, u.avatar_url
-       FROM nh_messages m JOIN nh_users u ON u.id = m.sender_id
-       WHERE m.application_id = $1 ORDER BY m.created_at ASC`,
+       FROM nh_messages m
+       JOIN nh_users u ON u.id = m.sender_id
+       WHERE m.application_id = $1
+       ORDER BY m.created_at ASC`,
       [appId]
     );
 
@@ -104,16 +114,15 @@ router.get('/:applicationId', requireAuth, async (req, res) => {
 
 router.post('/:applicationId', requireAuth, async (req, res) => {
   try {
-    const userId = req.session.user.id;
+    const userId    = req.session.user.id;
     const companyId = req.session.user.company_id || null;
-    const appId = req.params.applicationId;
-    const { body } = req.body;
+    const appId     = req.params.applicationId;
+    const { body }  = req.body;
     if (!body?.trim()) return res.status(400).json({ success: false, error: 'Message required' });
 
     const app = await getAppWithAccess(appId, userId, companyId);
     if (!app) return res.status(403).json({ success: false, error: 'Not found or forbidden' });
 
-    // Get job title for notification
     const job = await db.get(`SELECT title_en, title_fr FROM nh_jobs WHERE id = $1`, [app.job_id]);
 
     const id = crypto.randomUUID();
@@ -124,12 +133,18 @@ router.post('/:applicationId', requireAuth, async (req, res) => {
 
     const msg = await db.get(
       `SELECT m.*, u.first_name, u.last_name, u.role, u.avatar_url
-       FROM nh_messages m JOIN nh_users u ON u.id = m.sender_id WHERE m.id = $1`, [id]
+       FROM nh_messages m
+       JOIN nh_users u ON u.id = m.sender_id
+       WHERE m.id = $1`, [id]
     );
 
-    const recipientId = app.isCandidate ? app.employer_owner : app.candidate_id;
+    // Resolve actual user IDs for notification (candidate_id is a profile id, not user id)
+    const recipientId = app.isCandidate
+      ? app.employer_owner
+      : (app.cand_user_id || app.candidate_id);
+
     const senderName = `${msg.first_name} ${msg.last_name}`;
-    const jobTitle = (job && (job.title_en || job.title_fr)) || 'a job';
+    const jobTitle   = (job && (job.title_en || job.title_fr)) || 'a job';
     await notifyUser(
       recipientId, 'message',
       `Nouveau message de ${senderName} — "${jobTitle}"`,
