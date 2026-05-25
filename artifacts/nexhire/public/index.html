@@ -723,6 +723,7 @@
         <a class="dash-nav-item" data-tab="tab-for-you"><i class="ti ti-sparkles"></i> <span data-i18n="cand.nav.foryou">Jobs for You</span></a>
         <a class="dash-nav-item" data-tab="tab-saved"><i class="ti ti-heart"></i> <span data-i18n="cand.nav.saved">Saved Jobs</span></a>
         <a class="dash-nav-item" data-tab="tab-applications"><i class="ti ti-file-text"></i> <span data-i18n="cand.nav.apps">Applications</span></a>
+        <a class="dash-nav-item" data-tab="tab-messages"><i class="ti ti-message-circle-2"></i> <span data-i18n="cand.nav.messages">Messages</span><span id="msg-unread-cand" style="display:none;background:#6366f1;color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:4px"></span></a>
         <a class="dash-nav-item" data-tab="tab-my-reviews" data-tab-extra="loadMyReviews"><i class="ti ti-star"></i> <span data-i18n="cand.nav.reviews">My Reviews</span></a>
         <a class="dash-nav-item" data-tab="tab-alerts"><i class="ti ti-bell"></i> <span data-i18n="cand.nav.alerts">Job Alerts</span></a>
         <a class="dash-nav-item" data-tab="tab-ai-chat"><i class="ti ti-robot"></i> <span data-i18n="cand.nav.ai">AI Coach</span></a>
@@ -763,6 +764,7 @@
       <div id="tab-credits" class="dash-tab"></div>
       <div id="tab-admin-tests" class="dash-tab"></div>
       <div id="tab-admin-moderation" class="dash-tab"></div>
+      <div id="tab-messages" class="dash-tab"></div>
       <div id="tab-ai-chat" class="dash-tab">
         <div class="agent-banner">
           <div class="agent-avatar"><i class="ti ti-robot"></i></div>
@@ -804,6 +806,7 @@
         <a class="dash-nav-item" data-emptab="etab-analytics"><i class="ti ti-chart-bar"></i> <span data-i18n="emp.nav.analytics">Analytics</span></a>
         <a class="dash-nav-item" data-emptab="etab-billing"><i class="ti ti-credit-card"></i> <span data-i18n="emp.nav.billing">Billing</span></a>
         <a class="dash-nav-item" data-emptab="etab-interviews"><i class="ti ti-video"></i> <span>Video Interviews</span></a>
+        <a class="dash-nav-item" data-emptab="etab-messages"><i class="ti ti-message-circle-2"></i> <span data-i18n="cand.nav.messages">Messages</span><span id="msg-unread-emp" style="display:none;background:#6366f1;color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:4px"></span></a>
       </nav>
     </div>
     <div class="dash-content">
@@ -834,6 +837,7 @@
         <div id="billing-info"></div>
       </div>
       <div id="etab-interviews" class="dash-tab"></div>
+      <div id="etab-messages" class="dash-tab"></div>
     </div>
   </div>
 </div>
@@ -1192,7 +1196,7 @@ if ('serviceWorker' in navigator) {
     .catch(e => console.warn('[SW] failed', e));
 }
 </script>
-<script src="/nexhire/js/app.js?v=20260525f"></script>
+<script src="/nexhire/js/app.js?v=20260525g"></script>
 <script>window.__nexBase='/nexhire';</script>
 <script src="/nexhire/js/chatbot.js?v=20260524a"></script>
 </body>

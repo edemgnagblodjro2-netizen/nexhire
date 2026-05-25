@@ -268,6 +268,31 @@ function restoreFromHash() {
   const hash = window.location.hash.replace('#', '');
   if (hash === 'login') { showModal('modal-login'); return; }
   if (hash === 'register') { showModal('modal-register'); return; }
+  // Messages deep-link: #messages or #messages-{appId}
+  if (hash === 'messages' || hash.startsWith('messages-')) {
+    const appId = hash.startsWith('messages-') ? hash.replace('messages-', '') : null;
+    if (state.user) {
+      const role = state.user.role;
+      if (role === 'employer') {
+        goto('employer-dash');
+        setTimeout(() => {
+          const navEl = document.querySelector('[data-emptab="etab-messages"]');
+          showEmpTab('etab-messages', navEl);
+          if (appId) setTimeout(() => openThreadInContainer('etab-messages', appId), 400);
+        }, 100);
+      } else {
+        goto('candidate-dash');
+        setTimeout(() => {
+          const navEl = document.querySelector('[data-tab="tab-messages"]');
+          showTab('tab-messages', navEl);
+          if (appId) setTimeout(() => openThreadInContainer('tab-messages', appId), 400);
+        }, 100);
+      }
+    } else {
+      showModal('modal-login');
+    }
+    return;
+  }
   const valid = ['jobs','employer','pricing','privacy','terms','help'];
   if (hash && valid.includes(hash)) goto(hash);
 }
@@ -465,6 +490,7 @@ const T = {
     'emp.k.new':'New','emp.k.reviewed':'Reviewed','emp.k.short':'Shortlisted','emp.k.offer':'Offer',
     'cand.role':'Candidate','cand.nav.profile':'My Profile','cand.nav.foryou':'Jobs for You',
     'cand.nav.saved':'Saved Jobs','cand.nav.apps':'Applications','cand.nav.reviews':'My Reviews','cand.nav.alerts':'Job Alerts','cand.nav.ai':'AI Coach',
+    'cand.nav.messages':'Messages',
     'cand.nav.score':'Profile Score','cand.nav.skills':'Skill Tests','cand.nav.referrals':'Referrals','cand.nav.salary':'Salary Data','cand.nav.credits':'AI Credits',
     'cand.tab.profile':'My Profile','cand.tab.foryou':'Jobs for You','cand.tab.saved':'Saved Jobs','cand.tab.apps':'My Applications',
     'cand.ai.title':'AI Career Agent','cand.ai.sub':'Ask anything — resume tips, interview prep, salary negotiation, career advice.',
@@ -472,7 +498,7 @@ const T = {
     'cand.ai.greeting':"Hi! I'm your Nexhire AI Career Agent. How can I help accelerate your career today?",'cand.ai.ph':'Ask me about your career...',
     'agent.qa.jobs':'Find matching jobs','agent.qa.profile':'Optimize profile',
     'agent.qa.interview':'Interview prep','agent.qa.salary':'Salary advice',
-    'emp.role':'Employer','emp.nav.jobs':'My Jobs','emp.nav.post':'Post a Job','emp.nav.company':'Company','emp.nav.team':'Work Team','emp.nav.analytics':'Analytics','emp.nav.billing':'Billing',
+    'emp.role':'Employer','emp.nav.jobs':'My Jobs','emp.nav.post':'Post a Job','emp.nav.company':'Company','emp.nav.team':'Work Team','emp.nav.analytics':'Analytics','emp.nav.billing':'Billing','emp.nav.messages':'Messages',
     'emp.tab.jobs':'My Job Listings','emp.tab.post':'Post a New Job','emp.tab.company':'Company Profile','emp.tab.team':'Work Team','emp.tab.billing':'Billing & Plan',
     'team.invite.title':'Invite a team member','team.invite.ph':'colleague@company.com','team.invite.btn':'Send invitation',
     'team.role.recruiter':'Recruiter','team.role.admin':'Administrator',
@@ -690,6 +716,7 @@ const T = {
     'emp.k.new':'Nouveau','emp.k.reviewed':'Examiné','emp.k.short':'Présélectionné','emp.k.offer':'Offre',
     'cand.role':'Candidat','cand.nav.profile':'Mon profil','cand.nav.foryou':'Emplois pour vous',
     'cand.nav.saved':'Offres sauvegardées','cand.nav.apps':'Candidatures','cand.nav.reviews':'Mes avis','cand.nav.alerts':'Alertes emploi','cand.nav.ai':'Coach IA',
+    'cand.nav.messages':'Messages',
     'cand.nav.score':'Score profil','cand.nav.skills':'Tests de compétences','cand.nav.referrals':'Référencement','cand.nav.salary':'Données salariales','cand.nav.credits':'Crédits IA',
     'cand.tab.profile':'Mon profil','cand.tab.foryou':'Emplois pour vous','cand.tab.saved':'Offres sauvegardées','cand.tab.apps':'Mes candidatures',
     'cand.ai.title':'Agent Carrière IA','cand.ai.sub':"Posez n'importe quelle question — conseils CV, préparation entretien, négociation salariale, orientation carrière.",
@@ -697,7 +724,7 @@ const T = {
     'cand.ai.greeting':"Bonjour ! Je suis votre Agent Carrière IA Nexhire. Comment puis-je accélérer votre carrière aujourd'hui ?",'cand.ai.ph':"Posez-moi une question...",
     'agent.qa.jobs':'Emplois correspondants','agent.qa.profile':'Optimiser le profil',
     'agent.qa.interview':'Préparation entrevue','agent.qa.salary':'Conseils salaire',
-    'emp.role':'Employeur','emp.nav.jobs':'Mes offres','emp.nav.post':'Publier une offre','emp.nav.company':'Entreprise','emp.nav.team':"Équipe",'emp.nav.analytics':'Analytique','emp.nav.billing':'Facturation',
+    'emp.role':'Employeur','emp.nav.jobs':'Mes offres','emp.nav.post':'Publier une offre','emp.nav.company':'Entreprise','emp.nav.team':"Équipe",'emp.nav.analytics':'Analytique','emp.nav.billing':'Facturation','emp.nav.messages':'Messages',
     'emp.tab.jobs':"Mes offres d'emploi",'emp.tab.post':'Publier une nouvelle offre','emp.tab.company':"Profil d'entreprise",'emp.tab.team':"Mon équipe",'emp.tab.billing':'Facturation & Plan',
     'team.invite.title':'Inviter un membre','team.invite.ph':'collègue@entreprise.com','team.invite.btn':'Envoyer l\'invitation',
     'team.role.recruiter':'Recruteur','team.role.admin':'Administrateur',
@@ -1858,6 +1885,7 @@ async function loadDashboard() {
   const modNav = document.getElementById('nav-admin-moderation');
   if (modNav) modNav.style.display = u.role === 'admin' ? '' : 'none';
   if (u.role === 'admin') refreshModerationBadge();
+  loadMsgUnreadBadge();
   const _otwEl = document.getElementById('sidebar-otw');
   if (_otwEl) {
     const _otwSet = getAvailBadges(u.id);
@@ -2913,6 +2941,7 @@ async function loadMyApplications() {
         <div style="font-size:13px;color:#374151">${esc(a.rejection_reason)}</div>
       </div>` : ''}
       ${a.work_mode ? `<div style="margin-top:8px"><span class="job-tag ${a.work_mode}">${a.work_mode}</span></div>` : ''}
+      ${a.status !== 'withdrawn' ? `<div style="margin-top:10px;border-top:1px solid var(--border);padding-top:10px"><button onclick="openMessagesPage('${a.id}')" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #c7d2fe;background:#eef2ff;cursor:pointer;color:#6366f1;font-weight:600;display:inline-flex;align-items:center;gap:6px"><i class="ti ti-message-circle-2"></i> ${state.lang==='fr'?'Contacter l\'employeur':'Message Employer'}</button></div>` : ''}
     </div>`;
   }).join('');
 }
@@ -3123,6 +3152,7 @@ async function loadEmployerDash() {
   loadCompanyForm();
   loadBillingInfo();
   loadTeam();
+  loadMsgUnreadBadge();
 }
 
 // ── Work Team ──────────────────────────────────────────────
@@ -3332,6 +3362,7 @@ async function loadInlineCandidates(jobId) {
         ${isActive ? availableProgress.map(s =>
           `<button onclick="updateCandidateStatus('${a.id}','${s.key}','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;color:var(--text);white-space:nowrap">${s.label}</button>`
         ).join('') : ''}
+        <button onclick="openMessagesPage('${a.id}')" title="${isFr?'Ouvrir le chat':'Open chat'}" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #c7d2fe;background:#eef2ff;cursor:pointer;color:#6366f1;white-space:nowrap"><i class="ti ti-message-circle-2" style="font-size:12px"></i> ${isFr?'Chat':'Chat'}</button>
         ${isActive ? `<button onclick="openRejectModal('${a.id}','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #fca5a5;background:#fff5f5;cursor:pointer;color:#dc2626;white-space:nowrap"><i class="ti ti-x" style="font-size:10px"></i> ${rejectLabel}</button>` : ''}
         ${status === 'rejected' ? `<button onclick="deleteRejectedApplication('${a.id}','${jobId}')" title="${isFr?'Supprimer':'Delete'}" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;color:#9ca3af;white-space:nowrap"><i class="ti ti-trash" style="font-size:12px"></i></button>` : ''}
       </div>
@@ -4432,6 +4463,7 @@ function showTab(tabId, el) {
   if (tabId === 'tab-credits') loadCredits();
   if (tabId === 'tab-admin-tests')      loadAdminSkillTests();
   if (tabId === 'tab-admin-moderation') loadAdminModeration();
+  if (tabId === 'tab-messages')         openMessagesInTab('tab-messages');
 }
 
 function showEmpTab(tabId, navEl) {
@@ -4442,6 +4474,7 @@ function showEmpTab(tabId, navEl) {
   if (tabId === 'etab-team') loadTeam();
   if (tabId === 'etab-analytics') loadEmployerAnalytics();
   if (tabId === 'etab-interviews') loadVideoInterviews();
+  if (tabId === 'etab-messages') openMessagesInTab('etab-messages');
 }
 
 // ── Employer Analytics ────────────────────────────────────
@@ -4555,91 +4588,187 @@ function renderSparkline(vals, labels) {
 
 // ── Messagerie ────────────────────────────────────────────
 let _currentThreadApp = null;
+let _currentMsgContainer = null;
 
-async function loadMessagesTab() {
-  const container = document.getElementById('tab-messages') || document.getElementById('tab-applications');
-  if (!container) return;
-  const isFr = state.lang === 'fr';
-  // Inject messages panel into applications tab if not standalone
-  let msgContainer = document.getElementById('messages-panel');
-  if (!msgContainer) return openMessagesPage();
+async function loadMsgUnreadBadge() {
+  try {
+    const d = await api('GET', `${BASE}/api/messages/threads`);
+    const threads = d.threads || [];
+    const total = threads.reduce((s, t) => s + parseInt(t.unread||0), 0);
+    ['msg-unread-cand', 'msg-unread-emp'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = total > 9 ? '9+' : total > 0 ? String(total) : '';
+      el.style.display = total > 0 ? 'inline' : 'none';
+    });
+  } catch {}
 }
 
-async function openMessagesPage(appId) {
+// In-tab two-pane view (candidate Messages tab / employer Messages tab)
+async function openMessagesInTab(containerId, preselectedAppId) {
   const isFr = state.lang === 'fr';
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  _currentMsgContainer = containerId;
+
+  container.innerHTML = `
+    <div style="display:flex;border:1px solid var(--border);border-radius:12px;overflow:hidden;height:calc(100vh - 210px);min-height:420px">
+      <div id="${containerId}-threads" style="width:270px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;background:var(--surface)">
+        <div style="padding:32px;text-align:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px;color:#6366f1"></i></div>
+      </div>
+      <div id="${containerId}-thread" style="flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted)">
+          <i class="ti ti-message-circle-2" style="font-size:40px;opacity:.25"></i>
+          <p style="font-size:13px;margin:0">${isFr?'Sélectionnez une conversation':'Select a conversation'}</p>
+        </div>
+      </div>
+    </div>`;
+
   const d = await api('GET', `${BASE}/api/messages/threads`);
   const threads = d.threads || [];
-  const threadList = threads.length
-    ? threads.map(t => {
-        const title = isFr ? (t.title_fr||t.title_en) : (t.title_en||t.title_fr);
-        const logo = t.logo_url ? `<img src="${esc(t.logo_url)}" style="width:36px;height:36px;border-radius:8px;object-fit:contain">` : `<div class="company-logo" style="background:${companyColor(t.company_name||'')};width:36px;height:36px;border-radius:8px;font-size:11px">${(t.company_name||'?').slice(0,2).toUpperCase()}</div>`;
-        const unread = parseInt(t.unread||0);
-        return `<div class="job-list-item" style="cursor:pointer;${appId===t.application_id?'background:var(--indigo)10;border-color:var(--indigo)':''}" onclick="openThread('${t.application_id}')">
-          ${logo}
-          <div style="flex:1;min-width:0">
-            <div style="font-weight:600;font-size:13px;color:var(--dark)">${esc(title)}</div>
-            <div style="font-size:12px;color:var(--muted)">${esc(t.company_name||'')} · ${esc(t.cand_first||'')} ${esc(t.cand_last||'')}</div>
-            ${t.last_message ? `<div style="font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(t.last_message)}</div>` : ''}
-          </div>
-          ${unread ? `<span style="background:var(--indigo);color:#fff;border-radius:99px;font-size:11px;font-weight:700;padding:2px 7px;min-width:20px;text-align:center">${unread}</span>` : ''}
-        </div>`;
-      }).join('')
-    : `<div class="empty-state" style="padding:32px 0"><i class="ti ti-messages"></i><p style="font-size:13px">${isFr?'Aucune conversation.':'No conversations yet.'}</p></div>`;
+  const listEl = document.getElementById(`${containerId}-threads`);
+  if (!listEl) return;
 
-  const panel = document.getElementById('messages-panel-wrap');
-  if (panel) {
-    panel.innerHTML = threadList;
-    if (appId) openThread(appId);
+  if (!threads.length) {
+    listEl.innerHTML = `<div style="padding:32px 16px;text-align:center;color:var(--muted);font-size:13px"><i class="ti ti-messages" style="font-size:32px;display:block;margin-bottom:10px;opacity:.35"></i>${isFr?'Aucune conversation pour l\'instant':'No conversations yet'}</div>`;
     return;
   }
-  // Show as modal overlay
-  const overlay = document.createElement('div');
-  overlay.id = 'messages-overlay';
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9000;display:flex;align-items:center;justify-content:center;padding:16px';
-  overlay.innerHTML = `<div style="background:var(--surface);border-radius:16px;width:100%;max-width:860px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)">
-      <h3 style="margin:0;color:var(--dark)">${isFr?'Messages':'Messages'}</h3>
-      <button class="btn-ghost" style="padding:4px 10px" onclick="document.getElementById('messages-overlay')?.remove()"><i class="ti ti-x"></i></button>
-    </div>
-    <div style="display:flex;flex:1;overflow:hidden;min-height:0">
-      <div id="messages-panel-wrap" style="width:280px;border-right:1px solid var(--border);overflow-y:auto;padding:8px">${threadList}</div>
-      <div id="messages-thread" style="flex:1;display:flex;flex-direction:column;padding:16px;overflow:hidden">
-        <div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px">${isFr?'Sélectionnez une conversation':'Select a conversation'}</div>
+
+  listEl.innerHTML = threads.map(t => {
+    const title = isFr ? (t.title_fr||t.title_en) : (t.title_en||t.title_fr);
+    const logo = t.logo_url
+      ? `<img src="${esc(t.logo_url)}" style="width:36px;height:36px;border-radius:8px;object-fit:contain;flex-shrink:0">`
+      : `<div style="width:36px;height:36px;border-radius:8px;background:${companyColor(t.company_name||'')};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${(t.company_name||'?').slice(0,2).toUpperCase()}</div>`;
+    const unread = parseInt(t.unread||0);
+    const ago = t.last_at ? daysAgo(t.last_at) : '';
+    return `<div class="msg-thread-item" data-appid="${t.application_id}" style="display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .1s" onmouseenter="if(!this.classList.contains('active'))this.style.background='var(--background,#f9fafb)'" onmouseleave="if(!this.classList.contains('active'))this.style.background=''" onclick="openThreadInContainer('${containerId}','${t.application_id}',this)">
+      ${logo}
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;font-size:13px;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(title)}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:1px">${esc(((t.cand_first||'')+' '+(t.cand_last||'')).trim())}</div>
+        ${t.last_message ? `<div style="font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px">${esc(t.last_message)}</div>` : ''}
       </div>
-    </div>
-  </div>`;
-  document.body.appendChild(overlay);
-  if (appId) openThread(appId);
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">
+        ${ago ? `<span style="font-size:10px;color:var(--muted)">${ago}</span>` : ''}
+        ${unread ? `<span style="background:#6366f1;color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:1px 6px;min-width:18px;text-align:center">${unread}</span>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  if (preselectedAppId) {
+    const navEl = listEl.querySelector(`[data-appid="${preselectedAppId}"]`);
+    openThreadInContainer(containerId, preselectedAppId, navEl);
+  } else {
+    const first = listEl.querySelector('.msg-thread-item');
+    if (first) openThreadInContainer(containerId, threads[0].application_id, first);
+  }
 }
 
-async function openThread(appId) {
+async function openThreadInContainer(containerId, appId, navEl) {
   _currentThreadApp = appId;
+  _currentMsgContainer = containerId;
   const isFr = state.lang === 'fr';
-  const threadEl = document.getElementById('messages-thread');
+
+  // Highlight selected thread
+  const threadsEl = document.getElementById(`${containerId}-threads`);
+  if (threadsEl) {
+    threadsEl.querySelectorAll('.msg-thread-item').forEach(el => {
+      el.classList.remove('active');
+      el.style.background = '';
+    });
+  }
+  if (navEl) { navEl.classList.add('active'); navEl.style.background = '#eef2ff'; }
+
+  const threadEl = document.getElementById(`${containerId}-thread`);
   if (!threadEl) return;
-  threadEl.innerHTML = `<div style="flex:1;display:flex;align-items:center;justify-content:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;color:var(--indigo)"></i></div>`;
+  threadEl.innerHTML = `<div style="flex:1;display:flex;align-items:center;justify-content:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;color:#6366f1;font-size:24px"></i></div>`;
+
   const d = await api('GET', `${BASE}/api/messages/${appId}`);
   const msgs = d.messages || [];
+
   const bubbles = msgs.map(m => {
     const mine = m.sender_id === state.user?.id;
     const name = `${m.first_name||''} ${m.last_name||''}`.trim();
-    const time = new Date(m.created_at).toLocaleTimeString(isFr?'fr-CA':'en-CA', { hour:'2-digit', minute:'2-digit' });
+    const time = new Date(m.created_at).toLocaleTimeString(isFr?'fr-CA':'en-CA', {hour:'2-digit',minute:'2-digit'});
     return `<div style="display:flex;flex-direction:${mine?'row-reverse':'row'};gap:8px;margin-bottom:12px;align-items:flex-end">
-      <div style="max-width:70%">
-        ${!mine?`<div style="font-size:11px;color:var(--muted);margin-bottom:3px">${esc(name)}</div>`:''}
-        <div style="background:${mine?'var(--indigo)':'var(--background)'};color:${mine?'#fff':'var(--dark)'};padding:10px 14px;border-radius:${mine?'14px 14px 4px 14px':'14px 14px 14px 4px'};font-size:13px;line-height:1.5">${esc(m.body)}</div>
+      <div style="max-width:72%">
+        ${!mine?`<div style="font-size:11px;color:var(--muted);margin-bottom:3px;padding-left:2px">${esc(name)}</div>`:''}
+        <div style="background:${mine?'#6366f1':'var(--background,#f3f4f6)'};color:${mine?'#fff':'var(--dark)'};padding:10px 14px;border-radius:${mine?'14px 14px 4px 14px':'14px 14px 14px 4px'};font-size:13px;line-height:1.5;word-break:break-word">${esc(m.body)}</div>
         <div style="font-size:10px;color:var(--muted);margin-top:3px;text-align:${mine?'right':'left'}">${time}</div>
       </div>
     </div>`;
   }).join('');
+
   threadEl.innerHTML = `
-    <div id="msg-bubbles" style="flex:1;overflow-y:auto;padding:8px 0">${bubbles||`<div style="text-align:center;color:var(--muted);font-size:13px;padding:32px">${isFr?'Commencez la conversation':'Start the conversation'}</div>`}</div>
-    <div style="display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
-      <input type="text" id="msg-input" placeholder="${isFr?'Votre message…':'Your message…'}" style="flex:1;font-size:13px" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}">
-      <button class="btn-primary" style="padding:10px 16px;font-size:13px" onclick="sendMessage()"><i class="ti ti-send"></i></button>
+    <div id="thread-bubbles" style="flex:1;overflow-y:auto;padding:16px 20px">${bubbles||`<div style="text-align:center;color:var(--muted);font-size:13px;padding:48px 0"><i class="ti ti-message-circle-2" style="font-size:40px;display:block;margin-bottom:10px;opacity:.25"></i>${isFr?'Commencez la conversation':'Start the conversation'}</div>`}</div>
+    <div style="display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--border);background:var(--surface,#f9fafb)">
+      <input type="text" id="msg-input" placeholder="${isFr?'Votre message…':'Your message…'}" style="flex:1;font-size:13px;border-radius:8px;border:1px solid var(--border);padding:10px 14px;outline:none;background:#fff" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}">
+      <button style="background:#6366f1;color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;font-size:15px;display:flex;align-items:center;transition:opacity .15s" onmouseenter="this.style.opacity='.8'" onmouseleave="this.style.opacity='1'" onclick="sendMessage()"><i class="ti ti-send"></i></button>
     </div>`;
-  const bubblesEl = document.getElementById('msg-bubbles');
+  const bubblesEl = document.getElementById('thread-bubbles');
   if (bubblesEl) bubblesEl.scrollTop = bubblesEl.scrollHeight;
+  // Clear unread badge for this thread in list
+  if (navEl) { const badge = navEl.querySelector('[style*="background:#6366f1"]'); if (badge) badge.remove(); }
+}
+
+// Overlay modal version — used from Kanban / job-view buttons
+async function openMessagesPage(appId) {
+  const isFr = state.lang === 'fr';
+  document.getElementById('messages-overlay')?.remove();
+  const overlay = document.createElement('div');
+  overlay.id = 'messages-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9000;display:flex;align-items:center;justify-content:center;padding:16px';
+  overlay.innerHTML = `<div style="background:var(--surface);border-radius:16px;width:100%;max-width:860px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.25)">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)">
+      <h3 style="margin:0;color:var(--dark);display:flex;align-items:center;gap:8px"><i class="ti ti-message-circle-2" style="color:#6366f1"></i> ${isFr?'Messages':'Messages'}</h3>
+      <button style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);line-height:1;padding:4px" onclick="document.getElementById('messages-overlay')?.remove()"><i class="ti ti-x"></i></button>
+    </div>
+    <div style="display:flex;flex:1;overflow:hidden;min-height:0">
+      <div id="overlay-threads" style="width:260px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;background:var(--surface)">
+        <div style="padding:24px;text-align:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:20px;color:#6366f1"></i></div>
+      </div>
+      <div id="overlay-thread" style="flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted)">
+          <i class="ti ti-message-circle-2" style="font-size:36px;opacity:.25"></i>
+          <p style="font-size:13px;margin:0">${isFr?'Sélectionnez une conversation':'Select a conversation'}</p>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  document.body.appendChild(overlay);
+  _currentMsgContainer = 'overlay';
+
+  const d = await api('GET', `${BASE}/api/messages/threads`);
+  const threads = d.threads || [];
+  const listEl = document.getElementById('overlay-threads');
+  if (!listEl) return;
+
+  if (!threads.length) {
+    listEl.innerHTML = `<div style="padding:24px 16px;text-align:center;color:var(--muted);font-size:13px"><i class="ti ti-messages" style="font-size:28px;display:block;margin-bottom:8px;opacity:.35"></i>${isFr?'Aucune conversation':'No conversations yet'}</div>`;
+    return;
+  }
+
+  listEl.innerHTML = threads.map(t => {
+    const title = isFr ? (t.title_fr||t.title_en) : (t.title_en||t.title_fr);
+    const logo = t.logo_url
+      ? `<img src="${esc(t.logo_url)}" style="width:36px;height:36px;border-radius:8px;object-fit:contain;flex-shrink:0">`
+      : `<div style="width:36px;height:36px;border-radius:8px;background:${companyColor(t.company_name||'')};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${(t.company_name||'?').slice(0,2).toUpperCase()}</div>`;
+    const unread = parseInt(t.unread||0);
+    return `<div class="msg-thread-item" data-appid="${t.application_id}" style="display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .1s" onmouseenter="if(!this.classList.contains('active'))this.style.background='var(--background)'" onmouseleave="if(!this.classList.contains('active'))this.style.background=''" onclick="openThreadInContainer('overlay','${t.application_id}',this)">
+      ${logo}
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;font-size:13px;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(title)}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">${esc(((t.cand_first||'')+' '+(t.cand_last||'')).trim())}</div>
+        ${t.last_message ? `<div style="font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(t.last_message)}</div>` : ''}
+      </div>
+      ${unread ? `<span style="background:#6366f1;color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:1px 6px;min-width:18px;text-align:center;flex-shrink:0">${unread}</span>` : ''}
+    </div>`;
+  }).join('');
+
+  if (appId) {
+    const navEl = listEl.querySelector(`[data-appid="${appId}"]`);
+    openThreadInContainer('overlay', appId, navEl);
+  }
 }
 
 async function sendMessage() {
@@ -4647,9 +4776,12 @@ async function sendMessage() {
   const body = input?.value.trim();
   if (!body || !_currentThreadApp) return;
   input.value = '';
+  input.focus();
   const d = await api('POST', `${BASE}/api/messages/${_currentThreadApp}`, { body });
-  if (d.success) openThread(_currentThreadApp);
-  else toast(d.error || 'Error', 'error');
+  if (d.success) {
+    const cId = _currentMsgContainer || 'overlay';
+    openThreadInContainer(cId, _currentThreadApp);
+  } else toast(d.error || 'Error', 'error');
 }
 
 // ── Pages entreprise publiques ────────────────────────────
