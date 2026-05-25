@@ -829,8 +829,8 @@ a{text-decoration:none;color:inherit}
 
 /* Colors */
 .eb-indigo{background:linear-gradient(135deg,#4F52D3 0%,#6366F1 100%);color:rgba(255,255,255,.7)}
-.eb-emerald{background:linear-gradient(135deg,#047857 0%,#059669 100%);color:rgba(255,255,255,.7)}
-.eb-orange{background:linear-gradient(135deg,#C2410C 0%,#EA580C 100%);color:rgba(255,255,255,.7)}
+.eb-emerald{background:linear-gradient(135deg,#0c5a72 0%,#1a82a0 100%);color:rgba(255,255,255,.7)}
+.eb-orange{background:linear-gradient(135deg,#1d3557 0%,#2e5080 100%);color:rgba(255,255,255,.7)}
 .eb-navy{background:linear-gradient(135deg,#0A1929 0%,#0D1F2E 100%);color:rgba(255,255,255,.7)}
 
 /* Deco icons — large translucent background icon */
