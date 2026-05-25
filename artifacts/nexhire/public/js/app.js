@@ -1316,6 +1316,7 @@ function jobSidebarFilter(selectId, value) {
   if (selectId === 'fwork') {
     document.querySelectorAll('input[name="jf-mode"]').forEach(r => { r.checked = r.value === value; });
   }
+  filterJobs();
 }
 
 // ── Adzuna — injects into the main jobs list ────────────────
