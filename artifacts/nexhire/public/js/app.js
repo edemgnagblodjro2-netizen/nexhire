@@ -4745,12 +4745,15 @@ function _buildThreadItem(t, containerId, isFr) {
     : (company ? company.slice(0,2).toUpperCase() : '??');
 
   // Avatar : pour candidat on utilise un logo/initiales entreprise
+  const otw     = !!t.cand_otw;
+  const otwRing = (isEmp && otw) ? ' class="otw-ring"' : '';
+  const otwRingSt = (isEmp && otw) ? 'outline:3px solid #16a34a;outline-offset:2px;' : '';
   const avatarBg = isEmp ? '#6366f1' : companyColor(company);
   const avatar = (!isEmp && t.company_logo)
     ? `<img src="${esc(t.company_logo)}" style="width:42px;height:42px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0">`
     : (isEmp && t.cand_avatar)
-      ? `<img src="${esc(t.cand_avatar)}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0">`
-      : `<div style="width:42px;height:42px;border-radius:${isEmp?'50%':'10px'};background:${avatarBg};color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${initials}</div>`;
+      ? `<img src="${esc(t.cand_avatar)}"${otwRing} style="width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0;${otwRingSt}">`
+      : `<div${otwRing} style="width:42px;height:42px;border-radius:${isEmp?'50%':'10px'};background:${avatarBg};color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;${otwRingSt}">${initials}</div>`;
 
   const unread  = parseInt(t.unread||0);
   const timeStr = _fmtThreadTime(t.last_at, isFr);
@@ -4766,6 +4769,10 @@ function _buildThreadItem(t, containerId, isFr) {
     ? `<div style="font-size:11px;color:#6366f1;font-weight:500;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(title)}</div>`
     : `<div style="font-size:11px;color:#6366f1;font-weight:500;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(title)}</div>`;
 
+  const otwBadge = otw
+    ? `<span style="display:inline-flex;align-items:center;gap:3px;background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;border-radius:20px;padding:2px 7px;font-size:10px;font-weight:700;margin-top:2px"><span style="width:6px;height:6px;background:#16a34a;border-radius:50%;display:inline-block"></span>${isFr?'Ouvert':'Open'}</span>`
+    : '';
+
   return `<div class="msg-thread-item"
     data-appid="${t.application_id}"
     data-title="${esc(title)}"
@@ -4773,6 +4780,7 @@ function _buildThreadItem(t, containerId, isFr) {
     data-cand-first="${esc(t.cand_first||'')}"
     data-cand-avatar="${esc(t.cand_avatar||'')}"
     data-cand-init="${initials}"
+    data-cand-otw="${otw ? '1' : '0'}"
     data-company="${esc(company)}"
     style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .12s"
     onmouseenter="if(!this.classList.contains('active'))this.style.background='#f5f6fa'" onmouseleave="if(!this.classList.contains('active'))this.style.background=''"
@@ -4784,7 +4792,8 @@ function _buildThreadItem(t, containerId, isFr) {
         ${timeStr ? `<span style="font-size:10px;color:var(--muted);white-space:nowrap;flex-shrink:0">${timeStr}</span>` : ''}
       </div>
       ${subtitle}
-      <div style="font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:${unread?'600':'400'}">${preview}</div>
+      ${isEmp && otwBadge ? otwBadge : ''}
+      <div style="font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:${unread?'600':'400'};margin-top:${isEmp && otw ? '3px' : '0'}">${preview}</div>
     </div>
     ${unread ? `<span style="background:#6366f1;color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:2px 7px;min-width:18px;text-align:center;flex-shrink:0;align-self:center">${unread > 9 ? '9+' : unread}</span>` : ''}
   </div>`;
@@ -4907,6 +4916,7 @@ async function openThreadInContainer(containerId, appId, navEl) {
   const candName  = navEl?.dataset.cand || '';
   const candInit  = navEl?.dataset.candInit || '?';
   const candAvt   = navEl?.dataset.candAvatar || '';
+  const candOtw   = navEl?.dataset.candOtw === '1';
   const jobTitle  = navEl?.dataset.title || '';
   const company   = navEl?.dataset.company || '';
 
@@ -4916,9 +4926,13 @@ async function openThreadInContainer(containerId, appId, navEl) {
   const headerInitials = isEmp ? candInit : (company ? company.slice(0,2).toUpperCase() : '??');
   const headerBg       = isEmp ? '#6366f1' : companyColor(company);
   const headerRadius   = isEmp ? '50%' : '10px';
+  const hOtwSt = (isEmp && candOtw) ? 'outline:3px solid #16a34a;outline-offset:2px;' : '';
   const headerAvatar   = (isEmp && candAvt)
-    ? `<img src="${esc(candAvt)}" style="width:38px;height:38px;border-radius:50%;object-fit:cover">`
-    : `<div style="width:38px;height:38px;border-radius:${headerRadius};background:${headerBg};color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">${esc(headerInitials)}</div>`;
+    ? `<img src="${esc(candAvt)}" style="width:38px;height:38px;border-radius:50%;object-fit:cover;${hOtwSt}">`
+    : `<div style="width:38px;height:38px;border-radius:${headerRadius};background:${headerBg};color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;${hOtwSt}">${esc(headerInitials)}</div>`;
+  const headerOtwBadge = (isEmp && candOtw)
+    ? `<span style="display:inline-flex;align-items:center;gap:3px;background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700"><span style="width:6px;height:6px;background:#16a34a;border-radius:50%;display:inline-block"></span>${isFr?'Ouvert au travail':'Open to Work'}</span>`
+    : '';
 
   const threadEl = document.getElementById(`${containerId}-thread`);
   if (!threadEl) return;
@@ -4928,6 +4942,7 @@ async function openThreadInContainer(containerId, appId, navEl) {
       <div>
         <div style="font-weight:600;font-size:14px;color:var(--dark)">${esc(headerPrimary)}</div>
         ${headerSub ? `<div style="font-size:12px;color:#6366f1;font-weight:500">${esc(headerSub)}</div>` : ''}
+        ${headerOtwBadge}
       </div>
     </div>` : ''}
     <div id="thread-bubbles" style="flex:1;overflow-y:auto;padding:20px 24px;background:#f9fafb">

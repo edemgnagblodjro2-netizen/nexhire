@@ -52,7 +52,8 @@ router.get('/threads', requireAuth, async (req, res) => {
           c.logo_url,
           u_cand.first_name  AS cand_first,
           u_cand.last_name   AS cand_last,
-          u_cand.avatar_url  AS cand_avatar
+          u_cand.avatar_url  AS cand_avatar,
+          cp.open_to_work    AS cand_otw
         FROM nh_applications a
         JOIN  nh_jobs j ON j.id = a.job_id
         JOIN  nh_companies c ON c.id = j.company_id
