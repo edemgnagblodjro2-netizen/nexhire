@@ -5727,15 +5727,22 @@ async function markNotifRead(el) {
   const link = el.dataset.link;
   const wasUnread = el.classList.contains('unread');
 
-  // Visual update immediately
-  el.classList.remove('unread');
-  el.querySelector('.notif-unread-dot')?.remove();
+  // Remove from list immediately
+  el.remove();
 
   // Update badge
   if (wasUnread) updateNotifBadge(-1);
 
-  // Mark on server
-  if (id) await api('POST', `${BASE}/api/notifications/mark-read`, { ids: [id] });
+  // If list is now empty, show empty state
+  const list = document.getElementById('notif-dd-list');
+  if (list && !list.querySelector('.notif-item')) {
+    const isFr = state.lang === 'fr';
+    list.innerHTML = `<div class="notif-dd-empty"><i class="ti ti-bell-off" style="font-size:28px;display:block;margin-bottom:8px"></i>${isFr ? 'Aucune notification' : 'No notifications'}</div>`;
+    document.querySelector('.notif-dd-markall')?.remove();
+  }
+
+  // Mark on server (non-blocking)
+  if (id) api('POST', `${BASE}/api/notifications/mark-read`, { ids: [id] });
 
   // Close dropdown then navigate
   closeNotifDropdown();
