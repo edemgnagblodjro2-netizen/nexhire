@@ -1553,3 +1553,27 @@ a{text-decoration:none;color:inherit}
   transition: border-color .15s;
 }
 .qa-input:focus { border-color: var(--indigo); }
+
+/* ── Fix: modal inputs lisibles sur mobile (forced dark mode) ── */
+.modal-box {
+  color-scheme: light;
+}
+.modal-box textarea,
+.modal-box input[type="text"],
+.modal-box input[type="url"],
+.modal-box input[type="email"],
+.modal-box input[type="search"],
+.modal-box select {
+  color: #1e293b !important;
+  background-color: #ffffff !important;
+}
+.modal-box textarea::placeholder,
+.modal-box input::placeholder {
+  color: #94a3b8 !important;
+}
+#compose-image-label {
+  color: #64748b !important;
+}
+#compose-image-label span {
+  color: #64748b !important;
+}
