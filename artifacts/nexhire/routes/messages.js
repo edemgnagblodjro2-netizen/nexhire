@@ -46,7 +46,7 @@ router.get('/threads', requireAuth, async (req, res) => {
         FROM nh_applications a
         JOIN nh_jobs j ON j.id = a.job_id
         JOIN nh_companies c ON c.id = j.company_id
-        JOIN nh_users u_cand ON u_cand.id = a.candidate_id
+        LEFT JOIN nh_users u_cand ON u_cand.id = a.candidate_id
         WHERE a.candidate_id = $1
            OR c.owner_id = $1
            OR j.posted_by = $1

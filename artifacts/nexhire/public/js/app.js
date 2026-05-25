@@ -4692,7 +4692,9 @@ async function _loadThreadList(containerId, preselectedAppId, isFr) {
   const listEl = document.getElementById(`${containerId}-threads`);
   if (!listEl) return;
 
-  const header = listEl.querySelector('div');
+  // Remove the loading spinner (always the last child after the header)
+  const spinner = listEl.querySelector('div:last-child');
+  if (spinner && spinner !== listEl.firstChild) spinner.remove();
 
   if (!threads.length) {
     const empty = document.createElement('div');
@@ -4864,16 +4866,21 @@ async function openMessagesPage(appId) {
   const listEl = document.getElementById('overlay-threads');
   if (!listEl) return;
 
+  // Remove spinner
+  const spinner = listEl.querySelector('div:last-child');
+  if (spinner && spinner !== listEl.firstChild) spinner.remove();
+
   if (!threads.length) {
-    const slot = listEl.querySelector('div:last-child');
-    if (slot) slot.innerHTML = `<div style="padding:32px 16px;text-align:center;color:var(--muted);font-size:13px"><i class="ti ti-messages" style="font-size:32px;display:block;margin-bottom:10px;opacity:.3;color:#6366f1"></i><div style="font-weight:500;margin-bottom:4px">${isFr?'Aucune conversation':'No conversations'}</div></div>`;
+    const empty = document.createElement('div');
+    empty.style.cssText = 'padding:32px 16px;text-align:center;color:var(--muted);font-size:13px';
+    empty.innerHTML = `<i class="ti ti-messages" style="font-size:32px;display:block;margin-bottom:10px;opacity:.3;color:#6366f1"></i><div style="font-weight:500;margin-bottom:4px">${isFr?'Aucune conversation':'No conversations'}</div>`;
+    listEl.appendChild(empty);
     return;
   }
 
-  const slot = listEl.querySelector('div:last-child');
-  if (slot) {
-    slot.innerHTML = threads.map(t => _buildThreadItem(t, 'overlay', isFr)).join('');
-  }
+  const list = document.createElement('div');
+  list.innerHTML = threads.map(t => _buildThreadItem(t, 'overlay', isFr)).join('');
+  listEl.appendChild(list);
 
   if (appId) {
     const navEl = listEl.querySelector(`[data-appid="${appId}"]`);
