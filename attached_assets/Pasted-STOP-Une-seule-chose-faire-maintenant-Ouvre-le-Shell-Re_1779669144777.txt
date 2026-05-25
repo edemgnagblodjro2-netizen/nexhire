@@ -1,0 +1,50 @@
+STOP. Une seule chose à faire maintenant.
+
+Ouvre le Shell Replit et exécute ce script :
+
+node << 'EOF'
+const Database = require('better-sqlite3');
+const db = new Database('./nexhire.db');
+
+const jobs = [
+  ['Développeur React Senior', 'TechCo Montréal', 'Montréal, QC', 85000, 115000, 'Full time', 'Hybrid', 'Nous recherchons un développeur React senior pour rejoindre notre équipe produit.', 1],
+  ['Marketing Manager', 'GrowthLab', 'Montréal, QC', 70000, 90000, 'Full time', 'Remote', 'Gérer la stratégie marketing digitale et les campagnes de croissance.', 0],
+  ['Analyste Financier', 'FinGroup Canada', 'Toronto, ON', 75000, 95000, 'Full time', 'On-site', 'Analyser les données financières et préparer les rapports de performance.', 0],
+  ['UX Designer', 'StudioNord', 'Québec, QC', 65000, 85000, 'Full time', 'Hybrid', 'Concevoir des expériences utilisateurs pour nos produits SaaS.', 1],
+  ['Data Scientist', 'AILabs Montréal', 'Montréal, QC', 95000, 130000, 'Full time', 'Remote', 'Développer des modèles ML pour analyser les données clients.', 1],
+  ['Chef de Projet IT', 'Conseil Pro', 'Ottawa, ON', 80000, 100000, 'Full time', 'Hybrid', 'Piloter les projets de transformation digitale.', 0],
+  ['Développeur Backend Node.js', 'StartupQC', 'Montréal, QC', 80000, 105000, 'Full time', 'Remote', 'Construire et maintenir les APIs REST de notre plateforme.', 0],
+  ['Responsable RH', 'GroupeHumain', 'Laval, QC', 60000, 75000, 'Full time', 'On-site', 'Gérer le recrutement et les relations employés.', 0],
+  ['Ingénieur DevOps', 'CloudNord', 'Montréal, QC', 90000, 120000, 'Full time', 'Remote', 'AWS, Docker, Kubernetes — pipelines CI/CD et infrastructure cloud.', 1],
+  ['Conseiller en Ventes B2B', 'SalesForce QC', 'Montréal, QC', 55000, 85000, 'Full time', 'Hybrid', 'Développer le portefeuille clients PME au Québec.', 0],
+  ['Comptable CPA', 'AuditPro', 'Montréal, QC', 65000, 85000, 'Full time', 'On-site', 'Gestion des états financiers et conformité fiscale canadienne.', 0],
+  ['Product Manager', 'ProductHQ', 'Montréal, QC', 85000, 115000, 'Full time', 'Hybrid', 'Définir la roadmap produit et coordonner les équipes tech et design.', 1],
+  ['Développeur Mobile React Native', 'AppFactory', 'Remote', 80000, 110000, 'Full time', 'Remote', 'Développer des apps iOS/Android performantes.', 0],
+  ['Infirmière clinicienne', 'CIUSSS Centre', 'Montréal, QC', 65000, 80000, 'Full time', 'On-site', 'Soins aux patients en médecine interne.', 0],
+  ['Technicien en informatique', 'SupportTech', 'Longueuil, QC', 45000, 60000, 'Full time', 'On-site', 'Support technique niveau 1 et 2, gestion du parc informatique.', 0],
+];
+
+const stmt = db.prepare(`
+  INSERT OR IGNORE INTO jobs 
+  (title, company, location, salary_min, salary_max, type, mode, description, featured, posted_at, is_active)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), 1)
+`);
+
+let count = 0;
+for (const job of jobs) {
+  try {
+    stmt.run(...job);
+    count++;
+    console.log('✅ Inséré:', job[0]);
+  } catch(e) {
+    console.log('❌ Erreur:', job[0], e.message);
+  }
+}
+
+console.log('\n✅ DONE —', count, 'jobs insérés en DB');
+console.log('Total jobs en DB:', db.prepare('SELECT COUNT(*) as c FROM jobs').get().c);
+EOF
+
+Après exécution, recharger le site.
+La liste de jobs DOIT s'afficher.
+Si erreur "better-sqlite3 not found" → remplacer par "sqlite3" ou "Database" selon ce qui est utilisé dans server.js.
