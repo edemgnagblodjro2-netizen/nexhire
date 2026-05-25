@@ -3292,9 +3292,9 @@ async function loadInlineCandidates(jobId) {
   const statusLabels = isFr
     ? { new:'Nouveau', reviewed:'En examen', shortlisted:'Présélectionné', interview:'Entretien', offer:'Offre', rejected:'Refusé', withdrawn:'Retiré' }
     : { new:'New', reviewed:'Reviewing', shortlisted:'Shortlisted', interview:'Interview', offer:'Offer', rejected:'Rejected', withdrawn:'Withdrawn' };
-  const nextSteps = isFr
-    ? [{ key:'reviewed', label:'En examen' }, { key:'shortlisted', label:'Présélectionner' }, { key:'interview', label:'Inviter entretien' }, { key:'offer', label:'Faire une offre' }, { key:'rejected', label:'Refuser' }]
-    : [{ key:'reviewed', label:'Review' }, { key:'shortlisted', label:'Shortlist' }, { key:'interview', label:'Invite interview' }, { key:'offer', label:'Make offer' }, { key:'rejected', label:'Reject' }];
+  const progressSteps = isFr
+    ? [{ key:'reviewed', label:'En examen' }, { key:'shortlisted', label:'Présélectionner' }, { key:'interview', label:'Inviter entretien' }, { key:'offer', label:'Faire une offre' }]
+    : [{ key:'reviewed', label:'Review' }, { key:'shortlisted', label:'Shortlist' }, { key:'interview', label:'Invite interview' }, { key:'offer', label:'Make offer' }];
 
   container.innerHTML = apps.map(a => {
     const name = `${a.first_name||''} ${a.last_name||''}`.trim() || (isFr?'Candidat':'Candidate');
@@ -3302,7 +3302,9 @@ async function loadInlineCandidates(jobId) {
     const status = a.status || 'new';
     const color = statusColors[status] || '#6366F1';
     const label = statusLabels[status] || status;
-    const availableSteps = nextSteps.filter(s => s.key !== status);
+    const isActive = status !== 'rejected' && status !== 'withdrawn';
+    const availableProgress = progressSteps.filter(s => s.key !== status);
+    const rejectLabel = isFr ? 'Rejeter' : 'Reject';
     return `<div style="background:var(--surface,#f8f9fa);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
       <div style="display:flex;align-items:center;gap:10px;min-width:200px">
         <div style="width:36px;height:36px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">${(a.first_name||'?')[0].toUpperCase()}</div>
@@ -3314,9 +3316,10 @@ async function loadInlineCandidates(jobId) {
       </div>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <span style="background:${color}22;color:${color};border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700">${label}</span>
-        ${status !== 'rejected' && status !== 'withdrawn' ? availableSteps.slice(0,3).map(s =>
-          `<button onclick="updateCandidateStatus('${a.id}','${s.key}','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;color:var(--text);white-space:nowrap" title="${s.label}">${s.label}</button>`
+        ${isActive ? availableProgress.map(s =>
+          `<button onclick="updateCandidateStatus('${a.id}','${s.key}','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;color:var(--text);white-space:nowrap">${s.label}</button>`
         ).join('') : ''}
+        ${isActive ? `<button onclick="updateCandidateStatus('${a.id}','rejected','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #fca5a5;background:#fff5f5;cursor:pointer;color:#dc2626;white-space:nowrap"><i class="ti ti-x" style="font-size:10px"></i> ${rejectLabel}</button>` : ''}
       </div>
     </div>`;
   }).join('');
