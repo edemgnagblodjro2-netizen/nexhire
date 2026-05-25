@@ -1281,7 +1281,6 @@ async function loadJobBankSection(q = '', prov = '') {
 
 // ── Job detail panel ───────────────────────────────────────
 async function openJobDetail(jobId) {
-  // Navigate to jobs page first if not already there
   const jobsPage = document.getElementById('pg-jobs');
   if (!jobsPage?.classList.contains('active')) {
     goto('jobs');
@@ -1295,90 +1294,190 @@ async function openJobDetail(jobId) {
   const panel = document.getElementById('job-detail-panel');
   if (!panel) return;
 
-  // On narrow viewports: hide list, show panel full-width with back button
-  const jobsList = document.getElementById('jobs-list');
-  const isNarrow = window.innerWidth <= 900;
-  if (isNarrow && jobsList) {
-    jobsList.style.display = 'none';
-    panel.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  } else {
-    panel.style.display = 'block';
-  }
+  // Hide list areas, show detail full-width
+  const jdSidebar = document.querySelector('.jobs-sidebar');
+  const jobsList  = document.getElementById('jobs-list');
+  const resultsBar = document.getElementById('jobs-results-bar');
+  const chipsRow  = document.getElementById('jobs-chips-row');
+  const pagination = document.getElementById('jobs-pagination');
+  if (jdSidebar) jdSidebar.style.display = 'none';
+  if (jobsList)  jobsList.style.display  = 'none';
+  if (resultsBar) resultsBar.style.display = 'none';
+  if (chipsRow)  chipsRow.style.display  = 'none';
+  if (pagination) pagination.style.display = 'none';
+  panel.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 
   document.querySelectorAll('.job-list-item').forEach(el => el.classList.remove('selected'));
   document.getElementById(`jli-${jobId}`)?.classList.add('selected');
 
-  const title = state.lang === 'fr' ? (j.title_fr || j.title_en) : (j.title_en || j.title_fr);
-  const desc = state.lang === 'fr' ? (j.description_fr || j.description_en) : (j.description_en || j.description_fr);
-  const req = state.lang === 'fr' ? (j.requirements_fr || j.requirements_en) : (j.requirements_en || j.requirements_fr);
-  const color = companyColor(j.company_name);
-  const initials = (j.company_name || 'N').slice(0, 2).toUpperCase();
+  const isFr = state.lang === 'fr';
+  const title   = isFr ? (j.title_fr   || j.title_en)   : (j.title_en   || j.title_fr);
+  const desc    = isFr ? (j.description_fr  || j.description_en)  : (j.description_en  || j.description_fr);
+  const req     = isFr ? (j.requirements_fr || j.requirements_en) : (j.requirements_en || j.requirements_fr);
+  const benefits= isFr ? (j.benefits_fr || j.benefits_en) : (j.benefits_en || j.benefits_fr);
+  const companyDesc = isFr ? (j.company_desc_fr || j.company_desc_en) : (j.company_desc_en || j.company_desc_fr);
+  const color   = companyColor(j.company_name);
+  const initials= (j.company_name || 'N').slice(0, 2).toUpperCase();
   const isSaved = state.savedJobIds.has(j.id);
-  const skills = safeJsonArr(j.skills_required);
+  const alreadyApplied = state.appliedJobIds.has(j.id);
+  const skills  = safeJsonArr(j.skills_required);
+
+  const jdModeLabel = { remote: isFr?'Télétravail':'Remote', hybrid: isFr?'Hybride':'Hybrid', onsite: isFr?'Présentiel':'On-site' };
 
   // Fetch reviews
   const rev = j.company_id ? await api('GET', `${BASE}/api/reviews/company/${j.company_id}`) : { success: false };
-  const avgRating = parseFloat(rev.stats?.avg_rating || 0);
-  const totalReviews = parseInt(rev.stats?.total || 0);
-  const stars = avgRating ? starsHtml(avgRating) : '';
+  const avgRating   = parseFloat(rev.stats?.avg_rating || 0);
+  const totalReviews= parseInt(rev.stats?.total || 0);
+
+  // Match score circle
+  const score = j.match_score ? Math.round(j.match_score) : null;
+  const circumference = (2 * Math.PI * 26).toFixed(1);
+  const arc = score ? (2 * Math.PI * 26 * score / 100).toFixed(1) : '0';
+
+  // Info grid
+  const infoItems = [];
+  const loc = [j.city, j.province].filter(Boolean).join(', ');
+  if (loc) infoItems.push(`<div class="jd-info-item"><i class="ti ti-map-pin"></i><div><div class="jd-info-val">${esc(loc)}</div>${j.country?`<div class="jd-info-sub">${esc(j.country)}</div>`:''}</div></div>`);
+  if (j.work_mode) infoItems.push(`<div class="jd-info-item"><i class="ti ti-home-2"></i><div class="jd-info-val">${jdModeLabel[j.work_mode]||j.work_mode}</div></div>`);
+  if (j.salary_min) infoItems.push(`<div class="jd-info-item"><i class="ti ti-currency-dollar"></i><div class="jd-info-val">${fmtSalary(j.salary_min)}${j.salary_max?'–'+fmtSalary(j.salary_max):''} ${j.salary_currency||'CAD'}${fmtPeriod(j.salary_period)}</div></div>`);
+  if (j.job_type) infoItems.push(`<div class="jd-info-item"><i class="ti ti-briefcase"></i><div class="jd-info-val">${esc(j.job_type)}</div></div>`);
+  if (j.experience_years) infoItems.push(`<div class="jd-info-item"><i class="ti ti-award"></i><div class="jd-info-val">${j.experience_years} ${isFr?'ans exp.':'yrs exp.'}</div></div>`);
+  if (j.language) infoItems.push(`<div class="jd-info-item"><i class="ti ti-language"></i><div class="jd-info-val">${j.language==='fr'?'Français':j.language==='en'?'English':esc(j.language)}</div></div>`);
+  if (j.vacancy_count) infoItems.push(`<div class="jd-info-item"><i class="ti ti-users"></i><div class="jd-info-val">${j.vacancy_count} ${isFr?'poste(s) vacant(s)':'position(s)'}</div></div>`);
+  if (j.education_level) infoItems.push(`<div class="jd-info-item"><i class="ti ti-school"></i><div class="jd-info-val">${esc(j.education_level)}</div></div>`);
+  const deadlineFmt = j.deadline_at ? new Date(j.deadline_at).toLocaleDateString(isFr?'fr-CA':'en-CA',{year:'numeric',month:'long',day:'numeric'}) : null;
+
+  // Apply button
+  const applyBtnHtml = state.user?.role === 'candidate'
+    ? alreadyApplied
+      ? `<button class="jd-apply-btn jd-apply-sent" disabled><i class="ti ti-circle-check"></i> ${isFr?'Candidature envoyée':'Applied'}</button>`
+      : `<button class="jd-apply-btn" data-apply-id="${j.id}" data-apply-title="${esc(title)}"><i class="ti ti-send"></i> ${isFr?'Candidature directe':'Apply Now'}</button>`
+    : !state.user
+      ? `<button class="jd-apply-btn" data-modal="modal-login"><i class="ti ti-send"></i> ${isFr?'Se connecter pour postuler':'Sign in to Apply'}</button>`
+      : '';
+
+  const pubDate = j.published_at ? new Date(j.published_at).toLocaleDateString(isFr?'fr-CA':'en-CA',{year:'numeric',month:'long',day:'numeric'}) : '';
 
   panel.innerHTML = `
-    ${isNarrow ? `<button data-action="close-job-detail" style="display:flex;margin-bottom:16px;background:none;border:none;cursor:pointer;color:var(--muted);font-size:14px;font-family:var(--b);padding:0;align-items:center;gap:6px"><i class="ti ti-arrow-left"></i> Back to jobs</button>` : ''}
-    <div class="job-detail-header">
-      ${j.company_logo ? `<img src="${j.company_logo}" style="width:56px;height:56px;border-radius:12px;object-fit:contain">` : `<div class="company-logo" style="background:${color};width:56px;height:56px;border-radius:12px;font-size:18px">${initials}</div>`}
-      <div style="flex:1;min-width:0">
-        <div style="font-size:13px;color:var(--muted);font-weight:500">${esc(j.company_name || '')}</div>
-        ${j.company_website ? `<a href="${esc(j.company_website)}" target="_blank" style="font-size:12px;color:var(--indigo)">${esc(j.company_website)}</a>` : ''}
-        ${stars ? `<div style="display:flex;align-items:center;gap:6px;margin-top:4px">${stars}<span style="font-size:12px;color:var(--muted)">${avgRating.toFixed(1)} (${totalReviews} review${totalReviews !== 1 ? 's' : ''})</span></div>` : ''}
+    <div class="jd-page">
+      <button data-action="close-job-detail" class="jd-back"><i class="ti ti-arrow-left"></i> ${isFr?'Retour aux résultats':'Back to results'}</button>
+      <div class="jd-layout">
+
+        <div class="jd-main">
+          <h1 class="jd-title">${esc(title)}</h1>
+          ${pubDate ? `<div class="jd-pub">${isFr?'Publiée le':'Posted'} ${pubDate}${j.company_name?` ${isFr?'par':'by'} <strong>${esc(j.company_name)}</strong>`:''}</div>` : ''}
+
+          <div class="jd-actions">
+            ${applyBtnHtml}
+            <button class="jd-save-btn save-btn${isSaved?' saved':''} js-save-btn" data-save-id="${j.id}">
+              <i class="ti ti-heart${isSaved?'-filled':''}"></i> ${isFr?'Sauvegarder':'Save'}
+            </button>
+            <span class="jd-stats"><i class="ti ti-eye"></i> ${j.views||0}</span>
+            <span class="jd-stats"><i class="ti ti-users"></i> ${j.applications_count||0} ${isFr?'candidatures':'applicants'}</span>
+          </div>
+
+          <hr class="jd-divider">
+
+          ${infoItems.length ? `
+          <div class="jd-section">
+            <h3 class="jd-section-title">${isFr?'Renseignements sur l\'emploi':'Job information'}</h3>
+            <div class="jd-info-grid">${infoItems.join('')}</div>
+          </div>` : ''}
+
+          ${skills.length ? `
+          <div class="jd-section">
+            <h3 class="jd-section-title">${isFr?'Compétences requises':'Skills required'}</h3>
+            <div class="skills-chips">${skills.map(s=>`<span class="skill-chip">${esc(s)}</span>`).join('')}</div>
+          </div>` : ''}
+
+          ${desc ? `
+          <div class="jd-section">
+            <h3 class="jd-section-title">${isFr?'Description du poste':'About the role'}</h3>
+            <div class="jd-desc">${esc(desc)}</div>
+          </div>` : ''}
+
+          ${req ? `
+          <div class="jd-section">
+            <h3 class="jd-section-title">${isFr?'Exigences':'Requirements'}</h3>
+            <div class="jd-desc">${esc(req)}</div>
+          </div>` : ''}
+
+          ${benefits ? `
+          <div class="jd-section">
+            <h3 class="jd-section-title"><i class="ti ti-gift" style="color:var(--green)"></i> ${isFr?'Avantages sociaux':'Benefits & Perks'}</h3>
+            <div class="jd-desc">${esc(benefits)}</div>
+          </div>` : ''}
+
+          ${applyBtnHtml ? `<div class="jd-apply-bottom">${applyBtnHtml}</div>` : ''}
+          ${deadlineFmt ? `<div class="jd-published-until"><i class="ti ti-calendar-off"></i> ${isFr?'Publiée jusqu\'au':'Open until'}: <strong>${deadlineFmt}</strong></div>` : ''}
+
+          <div class="jd-section">
+            <h3 class="jd-section-title"><i class="ti ti-help-circle" style="color:var(--indigo)"></i> ${isFr?'Questions sur ce poste':'Questions about this role'}</h3>
+            <div id="job-qa-list-${j.id}"><div style="font-size:13px;color:var(--muted)"><i class="ti ti-loader" style="animation:spin 1s linear infinite"></i></div></div>
+            ${state.user?.role==='candidate' ? `
+            <div class="qa-input-row" style="margin-top:12px">
+              <input class="qa-input" id="qa-input-${j.id}" placeholder="${isFr?'Poser une question à l\'employeur…':'Ask the employer a question…'}" onkeydown="if(event.key==='Enter'){event.preventDefault();submitJobQuestion('${j.id}')}">
+              <button class="btn-primary" style="font-size:13px;padding:8px 14px;white-space:nowrap" onclick="submitJobQuestion('${j.id}')"><i class="ti ti-send"></i></button>
+            </div>` : ''}
+          </div>
+        </div>
+
+        <aside class="jd-right-sidebar">
+          <div class="jd-company-card">
+            <div class="jd-company-top">
+              ${j.company_logo ? `<img src="${j.company_logo}" class="jd-co-logo" alt="${esc(j.company_name||'')}">` : `<div class="company-logo jd-co-logo" style="background:${color};font-size:16px">${initials}</div>`}
+              <div class="jd-co-info">
+                <div class="jd-co-name">${esc(j.company_name||'')}</div>
+                ${avgRating ? `<div style="display:flex;align-items:center;gap:4px;margin-top:2px">${starsHtml(avgRating)}<span style="font-size:11px;color:var(--muted)">(${totalReviews})</span></div>` : ''}
+              </div>
+            </div>
+            ${companyDesc ? `<p class="jd-co-desc">${esc(companyDesc.slice(0,200))}${companyDesc.length>200?'…':''}</p>` : ''}
+            ${j.company_website ? `<a href="${esc(j.company_website)}" target="_blank" rel="noopener" class="btn-ghost jd-co-link"><i class="ti ti-external-link"></i> ${isFr?'Voir le site':'Visit website'}</a>` : ''}
+            ${state.user?.role==='candidate' && j.company_id ? `<button class="btn-ghost jd-co-link" data-review-company-id="${j.company_id}" data-review-company-name="${esc(j.company_name||'')}"><i class="ti ti-pencil"></i> ${isFr?'Écrire un avis':'Write a review'}</button>` : ''}
+          </div>
+
+          ${score ? `
+          <div class="jd-match-card">
+            <div class="jd-card-hdr">${isFr?'Score de compatibilité':'Match Score'}</div>
+            <div class="jd-match-circle-wrap">
+              <svg viewBox="0 0 64 64" width="84" height="84">
+                <circle cx="32" cy="32" r="26" fill="none" stroke="#e5e7eb" stroke-width="6"/>
+                <circle cx="32" cy="32" r="26" fill="none" stroke="var(--indigo)" stroke-width="6"
+                  stroke-dasharray="${arc} ${circumference}"
+                  stroke-linecap="round" transform="rotate(-90 32 32)"/>
+              </svg>
+              <span class="jd-match-num">${score}%</span>
+            </div>
+            <div style="text-align:center;margin-top:4px">${matchScoreBadge(j)}</div>
+          </div>` : ''}
+
+          ${totalReviews ? `
+          <div class="jd-reviews-card">
+            <div class="jd-card-hdr">${isFr?'Avis employés':'Employee Reviews'}</div>
+            ${renderReviews(rev.reviews?.slice(0,2)||[])}
+          </div>` : ''}
+        </aside>
       </div>
-      <button class="save-btn${isSaved ? ' saved' : ''} js-save-btn" data-save-id="${j.id}" style="padding:8px 10px;font-size:16px" title="Save job"><i class="ti ti-heart${isSaved ? '-filled' : ''}"></i></button>
-    </div>
-    <h2 style="font-family:var(--r);font-size:20px;font-weight:700;color:var(--dark);margin:12px 0 6px">${esc(title)}</h2>
-    ${state.candidateProfile ? `<div style="margin-bottom:8px">${matchScoreBadge(j)}</div>` : ''}
-    <div class="job-location-detail">${fmtLocationDetail(j)}</div>
-    <div class="job-meta" style="margin-bottom:16px">
-      ${j.job_type ? `<span class="job-tag">${j.job_type}</span>` : ''}
-      ${j.salary_min ? `<span class="job-tag salary-tag">${fmtSalary(j.salary_min)}${j.salary_max ? '–'+fmtSalary(j.salary_max) : ''} ${j.salary_currency||'CAD'}${fmtPeriod(j.salary_period)}</span>` : ''}
-      ${j.experience_years ? `<span class="job-tag"><i class="ti ti-briefcase" style="font-size:11px"></i>${j.experience_years} exp</span>` : ''}
-    </div>
-    ${skills.length ? `<div class="skills-chips" style="margin-bottom:16px">${skills.slice(0,10).map(s => `<span class="skill-chip">${esc(s)}</span>`).join('')}</div>` : ''}
-    <div class="detail-apply-row">
-      ${state.user?.role === 'candidate'
-        ? state.appliedJobIds.has(j.id)
-          ? `<button class="btn-primary" style="flex:1;opacity:.7;cursor:default;background:var(--green)" disabled><i class="ti ti-circle-check"></i> ${state.lang==='fr'?'Candidature envoyée':'Already Applied'}</button>`
-          : `<button class="btn-primary" style="flex:1" data-apply-id="${j.id}" data-apply-title="${esc(title)}"><i class="ti ti-send"></i> Apply Now</button>`
-        : !state.user ? `<button class="btn-primary" style="flex:1" data-modal="modal-login"><i class="ti ti-send"></i> Sign in to Apply</button>` : ''}
-      <div class="job-stats-mini">
-        <span><i class="ti ti-eye"></i>${j.views || 0}</span>
-        <span><i class="ti ti-users"></i>${j.applications_count || 0}</span>
-      </div>
-    </div>
-    <div class="job-section"><h4>About the role</h4><div class="job-desc">${esc(desc || '')}</div></div>
-    ${req ? `<div class="job-section"><h4>Requirements</h4><div class="job-desc">${esc(req)}</div></div>` : ''}
-    ${(j.benefits_en || j.benefits_fr) ? `<div class="job-section"><h4><i class="ti ti-gift" style="color:var(--green)"></i> Benefits & Perks</h4><div class="job-desc">${esc(state.lang==='fr'?(j.benefits_fr||j.benefits_en):(j.benefits_en||j.benefits_fr))}</div></div>` : ''}
-    ${(j.company_desc_en || j.company_desc_fr) ? `<div class="job-section job-section-company"><h4><i class="ti ti-building"></i> About ${esc(j.company_name||'the company')}</h4><div class="job-desc">${esc(state.lang==='fr'?(j.company_desc_fr||j.company_desc_en):(j.company_desc_en||j.company_desc_fr))}</div>${j.company_website?`<a href="${esc(j.company_website)}" target="_blank" rel="noopener" class="btn-ghost" style="font-size:12px;margin-top:10px;display:inline-flex;align-items:center;gap:4px"><i class="ti ti-external-link"></i>${esc(j.company_website)}</a>`:''}</div>` : ''}
-    ${totalReviews ? `<div class="job-section"><h4><i class="ti ti-star"></i> Company Reviews</h4>${renderReviews(rev.reviews?.slice(0,3) || [])}</div>` : ''}
-    ${state.user?.role === 'candidate' && j.company_id ? `<div style="margin-top:8px"><button class="btn-ghost" style="font-size:13px;width:100%" data-review-company-id="${j.company_id}" data-review-company-name="${esc(j.company_name || '')}"><i class="ti ti-pencil"></i> Write a review</button></div>` : ''}
-    <div class="job-section" style="margin-top:20px">
-      <h4><i class="ti ti-help-circle" style="color:var(--indigo)"></i> ${state.lang==='fr' ? 'Questions sur ce poste' : 'Questions about this role'}</h4>
-      <div id="job-qa-list-${j.id}"><div style="font-size:13px;color:var(--muted);padding:4px 0"><i class="ti ti-loader" style="animation:spin 1s linear infinite"></i></div></div>
-      ${state.user?.role === 'candidate' ? `
-      <div class="qa-input-row" style="margin-top:12px">
-        <input class="qa-input" id="qa-input-${j.id}" placeholder="${state.lang==='fr' ? 'Poser une question à l\'employeur…' : 'Ask the employer a question…'}"
-          onkeydown="if(event.key==='Enter'){event.preventDefault();submitJobQuestion('${j.id}')}">
-        <button class="btn-primary" style="font-size:13px;padding:8px 14px;white-space:nowrap" onclick="submitJobQuestion('${j.id}')"><i class="ti ti-send"></i></button>
-      </div>` : ''}
     </div>
   `;
   loadJobQA(j.id);
 }
 
 function closeJobDetail() {
-  const panel = document.getElementById('job-detail-panel');
-  const jobsList = document.getElementById('jobs-list');
-  if (panel) panel.style.display = 'none';
-  if (jobsList) jobsList.style.display = '';
+  const panel     = document.getElementById('job-detail-panel');
+  const jdSidebar = document.querySelector('.jobs-sidebar');
+  const jobsList  = document.getElementById('jobs-list');
+  const resultsBar= document.getElementById('jobs-results-bar');
+  const chipsRow  = document.getElementById('jobs-chips-row');
+  const pagination= document.getElementById('jobs-pagination');
+  if (panel)      panel.style.display      = 'none';
+  if (jdSidebar)  jdSidebar.style.display  = '';
+  if (jobsList)   jobsList.style.display   = '';
+  if (resultsBar && resultsBar.dataset.wasVisible !== 'false') resultsBar.style.display = '';
+  if (chipsRow)   chipsRow.style.display   = '';
+  if (pagination) pagination.style.display = '';
+  document.querySelectorAll('.job-list-item').forEach(el => el.classList.remove('selected'));
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 

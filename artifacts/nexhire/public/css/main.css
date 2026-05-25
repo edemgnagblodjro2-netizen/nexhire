@@ -300,7 +300,47 @@ a{text-decoration:none;color:inherit}
 .jli-date{margin-left:auto;font-size:12px}
 .jli-skills{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
 .jli-skill{font-size:12px;padding:2px 8px;border-radius:5px;background:var(--surface);border:1px solid var(--border);color:var(--muted)}
-.job-detail-panel{width:440px;flex-shrink:0;background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;position:sticky;top:88px;max-height:calc(100vh - 120px);overflow-y:auto}
+.job-detail-panel{flex:1;min-width:0;background:transparent;border:none;padding:0;position:static;max-height:none;overflow:visible}
+/* ── Job detail full-page layout ─────────────────────────── */
+.jd-page{padding-bottom:60px}
+.jd-back{display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:var(--indigo);font-size:14px;font-family:var(--b);font-weight:500;padding:0;margin-bottom:20px;transition:color .15s}
+.jd-back:hover{color:var(--dark)}
+.jd-layout{display:flex;gap:28px;align-items:flex-start}
+.jd-main{flex:1;min-width:0}
+.jd-right-sidebar{width:280px;flex-shrink:0;display:flex;flex-direction:column;gap:14px;position:sticky;top:76px}
+.jd-title{font-family:var(--r);font-size:26px;font-weight:700;color:var(--dark);line-height:1.25;margin-bottom:6px}
+.jd-pub{font-size:13px;color:var(--muted);margin-bottom:14px}
+.jd-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.jd-apply-btn{display:inline-flex;align-items:center;gap:7px;background:var(--indigo);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-family:var(--b);font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
+.jd-apply-btn:hover{background:var(--indigo-dk,#4338ca)}
+.jd-apply-btn.jd-apply-sent{background:var(--green);cursor:default}
+.jd-save-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:9px 16px;font-family:var(--b);font-size:14px;cursor:pointer;color:var(--text);transition:all .15s}
+.jd-save-btn:hover,.jd-save-btn.saved{border-color:var(--red);color:var(--red);background:#FFF1F2}
+.jd-stats{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.jd-divider{border:none;border-top:1px solid var(--border);margin:4px 0 20px}
+.jd-section{margin-top:24px;padding-top:24px;border-top:1px solid var(--border)}
+.jd-section:first-of-type{border-top:none;padding-top:0;margin-top:0}
+.jd-section-title{font-family:var(--r);font-size:16px;font-weight:700;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.jd-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px}
+.jd-info-item{display:flex;align-items:flex-start;gap:10px;font-size:13.5px}
+.jd-info-item i{color:var(--indigo);font-size:16px;margin-top:1px;flex-shrink:0}
+.jd-info-val{font-weight:500;color:var(--dark)}
+.jd-info-sub{font-size:12px;color:var(--muted);margin-top:1px}
+.jd-desc{font-size:14px;color:var(--text);line-height:1.75;white-space:pre-wrap}
+.jd-apply-bottom{margin-top:28px;padding-top:20px;border-top:1px solid var(--border)}
+.jd-published-until{font-size:13px;color:var(--muted);margin-top:14px;display:flex;align-items:center;gap:6px}
+/* Right sidebar cards */
+.jd-company-card,.jd-match-card,.jd-reviews-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.jd-company-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.jd-co-logo{width:48px;height:48px;border-radius:10px;object-fit:contain;flex-shrink:0}
+.jd-co-name{font-weight:700;font-size:15px;color:var(--dark)}
+.jd-co-desc{font-size:12.5px;color:var(--muted);line-height:1.55;margin-bottom:10px}
+.jd-co-link{display:flex;align-items:center;gap:5px;font-size:12.5px;width:100%;justify-content:center;margin-top:6px}
+.jd-card-hdr{font-weight:700;font-size:13px;color:var(--dark);margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em}
+.jd-match-circle-wrap{position:relative;display:flex;justify-content:center;align-items:center;margin-bottom:6px}
+.jd-match-num{position:absolute;font-family:var(--r);font-size:20px;font-weight:700;color:var(--indigo)}
+/* Responsive */
+@media(max-width:900px){.jd-layout{flex-direction:column}.jd-right-sidebar{width:100%;position:static}.jd-info-grid{grid-template-columns:1fr}}
 .job-detail-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:4px}
 .job-section{margin-top:20px;padding-top:20px;border-top:1px solid var(--border)}
 .job-section h4{font-family:var(--r);font-size:14px;font-weight:600;color:var(--dark);margin-bottom:10px;display:flex;align-items:center;gap:6px}
