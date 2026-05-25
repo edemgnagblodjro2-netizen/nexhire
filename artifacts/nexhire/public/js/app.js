@@ -206,6 +206,7 @@ function updateCitiesForProvince(provinceSelectId, citySelectId) {
   } catch (e) {}
   setLangUI(state.lang);
   initLocationSelects();
+  detectUserLocation();
   loadStats();
   renderRecentSearches();
   loadFeaturedJobs();
@@ -1031,6 +1032,113 @@ function initLocationSelects() {
   if (heroSel) heroSel.innerHTML = opts;
   if (fprov) fprov.innerHTML = opts;
 }
+
+// ── Geolocation auto-detect ────────────────────────────────
+const _GEO_KEY   = 'nh_geo_prov';
+const _GEO_CITY  = 'nh_geo_city';
+const _GEO_TIME  = 'nh_geo_time';
+const _GEO_TTL   = 7 * 24 * 3600 * 1000; // 7 days
+
+const _NOMINATIM_TO_PROV = {
+  'Alberta': 'AB', 'British Columbia': 'BC', 'Manitoba': 'MB',
+  'New Brunswick': 'NB', 'Newfoundland and Labrador': 'NL',
+  'Nova Scotia': 'NS', 'Northwest Territories': 'NT', 'Nunavut': 'NU',
+  'Ontario': 'ON', 'Prince Edward Island': 'PE', 'Quebec': 'QC',
+  'Saskatchewan': 'SK', 'Yukon': 'YT',
+};
+
+async function detectUserLocation() {
+  // Check localStorage cache first
+  const cached   = localStorage.getItem(_GEO_KEY);
+  const cachedCity = localStorage.getItem(_GEO_CITY) || '';
+  const cachedAt = parseInt(localStorage.getItem(_GEO_TIME) || '0');
+  if (cached && Date.now() - cachedAt < _GEO_TTL) {
+    _applyGeoLocation(cached, cachedCity, false);
+    return;
+  }
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(
+    async pos => {
+      try {
+        const { latitude: lat, longitude: lon } = pos.coords;
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=en`,
+          { headers: { 'User-Agent': 'Nexhire/1.0' } }
+        );
+        if (!res.ok) return;
+        const data = await res.json();
+        const stateName = data?.address?.state || '';
+        const city = data?.address?.city || data?.address?.town || data?.address?.village || '';
+        const prov = _NOMINATIM_TO_PROV[stateName] || '';
+        if (!prov) return;
+        localStorage.setItem(_GEO_KEY,  prov);
+        localStorage.setItem(_GEO_CITY, city);
+        localStorage.setItem(_GEO_TIME, String(Date.now()));
+        _applyGeoLocation(prov, city, true);
+      } catch (_) {}
+    },
+    () => {},
+    { timeout: 8000, maximumAge: _GEO_TTL }
+  );
+}
+
+function _applyGeoLocation(prov, city, showToastMsg) {
+  const fprov    = document.getElementById('fprov');
+  const heroProv = document.getElementById('hero-province');
+  const changed  = (fprov && !fprov.value) || (heroProv && !heroProv.value);
+  if (fprov    && !fprov.value)    { fprov.value    = prov; }
+  if (heroProv && !heroProv.value) { heroProv.value = prov; loadFeaturedJobs(prov); }
+  // Update geo pill in search bar (jobs page)
+  _renderGeoPill(prov, city);
+  // Also update hero select geo pill
+  _renderHeroGeoPill(prov, city);
+  // If already on jobs page, refresh
+  if (changed && document.getElementById('pg-jobs')?.classList.contains('active')) filterJobs();
+  if (showToastMsg && changed && city) {
+    toast(`📍 ${city}, ${prov}`, 'success');
+  }
+}
+
+function _renderGeoPill(prov, city) {
+  const wrap = document.querySelector('.jobs-search-field-loc');
+  if (!wrap) return;
+  const label = city ? `${city}, ${prov}` : prov;
+  wrap.title = `📍 ${label}`;
+  const icon = wrap.querySelector('i.ti');
+  if (icon) { icon.className = 'ti ti-map-pin-filled'; icon.style.color = 'var(--indigo)'; }
+  let pill = wrap.querySelector('.geo-pill');
+  if (!pill) {
+    pill = document.createElement('span');
+    pill.className = 'geo-pill';
+    pill.title = `📍 ${label} — Cliquer pour changer`;
+    wrap.insertBefore(pill, wrap.querySelector('select'));
+  }
+  pill.textContent = label;
+}
+
+function _renderHeroGeoPill(prov, city) {
+  const heroSel = document.getElementById('hero-province');
+  if (!heroSel) return;
+  const label = city ? `${city}, ${prov}` : prov;
+  heroSel.title = `📍 ${label}`;
+  const parentIcon = heroSel.parentElement?.querySelector('i.ti');
+  if (parentIcon) { parentIcon.className = 'ti ti-map-pin-filled'; parentIcon.style.color = 'var(--indigo)'; }
+}
+
+function clearGeoLocation() {
+  localStorage.removeItem(_GEO_KEY);
+  localStorage.removeItem(_GEO_CITY);
+  localStorage.removeItem(_GEO_TIME);
+  const fprov = document.getElementById('fprov');
+  const heroProv = document.getElementById('hero-province');
+  if (fprov) fprov.value = '';
+  if (heroProv) heroProv.value = '';
+  const pill = document.querySelector('.geo-pill');
+  if (pill) pill.remove();
+  const icon = document.querySelector('.jobs-search-field-loc i.ti');
+  if (icon) { icon.className = 'ti ti-map-pin'; icon.style.color = ''; }
+  filterJobs();
+}
 function quickSearch(q) {
   const heroInput = document.getElementById('q');
   const jobsInput = document.getElementById('fq');
@@ -1280,21 +1388,22 @@ async function loadJobBankSection(q = '', prov = '') {
 }
 
 // ── Job detail panel ───────────────────────────────────────
+let _jobDetailBusy = false;
+
 async function openJobDetail(jobId) {
+  if (_jobDetailBusy) return;
+  _jobDetailBusy = true;
+
   const jobsPage = document.getElementById('pg-jobs');
   if (!jobsPage?.classList.contains('active')) {
     goto('jobs');
     await new Promise(r => setTimeout(r, 200));
   }
 
-  markJobViewed(jobId);
-  const d = await api('GET', `${BASE}/api/jobs/by-id/${jobId}`);
-  if (!d.success) return;
-  const j = d.job;
   const panel = document.getElementById('job-detail-panel');
-  if (!panel) return;
+  if (!panel) { _jobDetailBusy = false; return; }
 
-  // Hide list areas, show detail full-width
+  // ── Show immediately with loading state ───────────────────
   const jdSidebar = document.querySelector('.jobs-sidebar');
   const jobsList  = document.getElementById('jobs-list');
   const resultsBar = document.getElementById('jobs-results-bar');
@@ -1306,11 +1415,28 @@ async function openJobDetail(jobId) {
   if (chipsRow)  chipsRow.style.display  = 'none';
   if (pagination) pagination.style.display = 'none';
   panel.style.display = 'block';
+  panel.innerHTML = `<div class="jd-loading"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px;color:var(--indigo)"></i><span style="font-size:14px;color:var(--muted)">Loading…</span></div>`;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
   document.querySelectorAll('.job-list-item').forEach(el => el.classList.remove('selected'));
   document.getElementById(`jli-${jobId}`)?.classList.add('selected');
 
+  markJobViewed(jobId);
+  const d = await api('GET', `${BASE}/api/jobs/by-id/${jobId}`);
+  _jobDetailBusy = false;
+  if (!d.success) {
+    // Restore list view on error
+    panel.style.display = 'none';
+    if (jdSidebar) jdSidebar.style.display = '';
+    if (jobsList)  jobsList.style.display  = '';
+    if (resultsBar) resultsBar.style.display = '';
+    if (chipsRow)  chipsRow.style.display  = '';
+    if (pagination) pagination.style.display = '';
+    document.querySelectorAll('.job-list-item').forEach(el => el.classList.remove('selected'));
+    toast(state.lang === 'fr' ? 'Impossible de charger cette offre.' : 'Could not load this job.', 'error');
+    return;
+  }
+  const j = d.job;
   const isFr = state.lang === 'fr';
   const title   = isFr ? (j.title_fr   || j.title_en)   : (j.title_en   || j.title_fr);
   const desc    = isFr ? (j.description_fr  || j.description_en)  : (j.description_en  || j.description_fr);

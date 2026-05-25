@@ -339,6 +339,10 @@ a{text-decoration:none;color:inherit}
 .jd-card-hdr{font-weight:700;font-size:13px;color:var(--dark);margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em}
 .jd-match-circle-wrap{position:relative;display:flex;justify-content:center;align-items:center;margin-bottom:6px}
 .jd-match-num{position:absolute;font-family:var(--r);font-size:20px;font-weight:700;color:var(--indigo)}
+/* Loading state */
+.jd-loading{display:flex;align-items:center;justify-content:center;gap:12px;padding:80px 24px;flex-direction:column}
+/* Geo pill in location search field */
+.geo-pill{font-size:13px;font-weight:500;color:var(--indigo);white-space:nowrap;max-width:130px;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
 /* Responsive */
 @media(max-width:900px){.jd-layout{flex-direction:column}.jd-right-sidebar{width:100%;position:static}.jd-info-grid{grid-template-columns:1fr}}
 .job-detail-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:4px}
