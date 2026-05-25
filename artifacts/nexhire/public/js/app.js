@@ -5572,10 +5572,137 @@ document.getElementById('nav-user-menu')?.addEventListener('click', e => {
 });
 
 // ── Navbar — notif bell ──────────────────────────────────────
-document.getElementById('nav-notif-bell')?.addEventListener('click', () => {
-  if (state.user?.role === 'employer') goto('employer-dash');
-  else goto('candidate-dash');
+document.getElementById('nav-notif-bell')?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const dd = document.getElementById('notif-dropdown');
+  if (!dd) return;
+  if (dd.style.display === 'none') openNotifDropdown();
+  else closeNotifDropdown();
 });
+
+// Close dropdown when clicking elsewhere
+document.addEventListener('click', () => closeNotifDropdown());
+
+function closeNotifDropdown() {
+  const dd = document.getElementById('notif-dropdown');
+  if (dd) dd.style.display = 'none';
+}
+
+async function openNotifDropdown() {
+  const dd = document.getElementById('notif-dropdown');
+  if (!dd) return;
+  const isFr = state.lang === 'fr';
+
+  // Show loading state
+  dd.style.display = 'block';
+  dd.innerHTML = `
+    <div class="notif-dd-header">
+      <span class="notif-dd-title">${isFr ? 'Notifications' : 'Notifications'}</span>
+    </div>
+    <div class="notif-dd-list" style="padding:24px;text-align:center;color:#94a3b8;font-size:13px">
+      <i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:20px;display:block;margin-bottom:8px"></i>
+      ${isFr ? 'Chargement…' : 'Loading…'}
+    </div>`;
+
+  const d = await api('GET', `${BASE}/api/notifications`);
+  if (!d.success) { closeNotifDropdown(); return; }
+
+  renderNotifDropdown(d.notifications || [], d.unread || 0, isFr);
+}
+
+function notifIcon(type) {
+  const map = {
+    job_match:          { icon: 'ti-briefcase',        bg: '#eef2ff', color: '#6366f1' },
+    job_alert:          { icon: 'ti-bell-ringing',     bg: '#fef3c7', color: '#d97706' },
+    application_update: { icon: 'ti-file-text',        bg: '#dbeafe', color: '#2563eb' },
+    application:        { icon: 'ti-file-text',        bg: '#dbeafe', color: '#2563eb' },
+    message:            { icon: 'ti-message-circle-2', bg: '#f3e8ff', color: '#9333ea' },
+    review:             { icon: 'ti-star',             bg: '#fef3c7', color: '#d97706' },
+    interview:          { icon: 'ti-calendar-event',   bg: '#dcfce7', color: '#16a34a' },
+    hired:              { icon: 'ti-trophy',           bg: '#fef9c3', color: '#ca8a04' },
+    system:             { icon: 'ti-info-circle',      bg: '#f1f5f9', color: '#64748b' },
+  };
+  return map[type] || { icon: 'ti-bell', bg: '#f1f5f9', color: '#64748b' };
+}
+
+function notifRelTime(dateStr, isFr) {
+  const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+  if (diff < 60)   return isFr ? 'À l\'instant' : 'Just now';
+  if (diff < 3600) { const m = Math.floor(diff/60);   return isFr ? `Il y a ${m} min`    : `${m}m ago`; }
+  if (diff < 86400){ const h = Math.floor(diff/3600);  return isFr ? `Il y a ${h} h`      : `${h}h ago`; }
+  const day = Math.floor(diff/86400);                  return isFr ? `Il y a ${day} j`    : `${day}d ago`;
+}
+
+function renderNotifDropdown(notifs, unread, isFr) {
+  const dd = document.getElementById('notif-dropdown');
+  if (!dd) return;
+
+  const markAllBtn = unread > 0
+    ? `<button class="notif-dd-markall" onclick="markAllNotifsRead()"><i class="ti ti-checks"></i> ${isFr ? 'Tout marquer comme lu' : 'Mark all as read'}</button>`
+    : '';
+
+  let listHtml = '';
+  if (!notifs.length) {
+    listHtml = `<div class="notif-dd-empty"><i class="ti ti-bell-off" style="font-size:28px;display:block;margin-bottom:8px"></i>${isFr ? 'Aucune notification' : 'No notifications'}</div>`;
+  } else {
+    listHtml = notifs.map(n => {
+      const ic = notifIcon(n.type);
+      const isUnread = !n.read_at;
+      const link = n.link_url ? `data-link="${esc(n.link_url)}"` : '';
+      return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} onclick="markNotifRead(this)">
+        <div class="notif-icon" style="background:${ic.bg};color:${ic.color}"><i class="ti ${ic.icon}"></i></div>
+        <div class="notif-item-body">
+          <div class="notif-item-title">${esc(n.title || '')}</div>
+          ${n.message ? `<div class="notif-item-msg">${esc(n.message)}</div>` : ''}
+          <div class="notif-item-time">${notifRelTime(n.created_at, isFr)}</div>
+        </div>
+        ${isUnread ? '<div class="notif-unread-dot"></div>' : ''}
+      </div>`;
+    }).join('');
+  }
+
+  dd.innerHTML = `
+    <div class="notif-dd-header">
+      <span class="notif-dd-title">${isFr ? 'Notifications' : 'Notifications'}</span>
+      ${markAllBtn}
+    </div>
+    <div class="notif-dd-list" id="notif-dd-list">${listHtml}</div>`;
+}
+
+async function markAllNotifsRead() {
+  await api('POST', `${BASE}/api/notifications/mark-read`, {});
+  // Update badge
+  const badge = document.getElementById('notif-badge');
+  if (badge) { badge.textContent = ''; badge.style.display = 'none'; }
+  // Re-render dropdown without unread styling
+  const items = document.querySelectorAll('.notif-item.unread');
+  items.forEach(el => {
+    el.classList.remove('unread');
+    el.querySelector('.notif-unread-dot')?.remove();
+  });
+  // Remove "mark all" button
+  document.querySelector('.notif-dd-markall')?.remove();
+}
+
+async function markNotifRead(el) {
+  const id = el.dataset.id;
+  const link = el.dataset.link;
+  const wasUnread = el.classList.contains('unread');
+
+  // Visual update immediately
+  el.classList.remove('unread');
+  el.querySelector('.notif-unread-dot')?.remove();
+
+  // Update badge
+  if (wasUnread) updateNotifBadge(-1);
+
+  // Mark on server
+  if (id) await api('POST', `${BASE}/api/notifications/mark-read`, { ids: [id] });
+
+  // Close dropdown then navigate
+  closeNotifDropdown();
+  if (link) location.hash = link;
+}
 
 // ── Navbar — dropdown items ──────────────────────────────────
 document.getElementById('user-dropdown')?.addEventListener('click', e => {
