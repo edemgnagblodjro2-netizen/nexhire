@@ -6613,7 +6613,44 @@ async function loadSalaryPage() {
       </div>
     </div>
     ` : ''}
+
+    <!-- ── Embedded Tax Calculator ──────────────────────── -->
+    <div style="margin-top:24px;border-radius:14px;border:1px solid var(--border);background:var(--surface);overflow:hidden">
+      <div style="padding:16px 20px;font-weight:700;font-size:15px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px">
+        <i class="ti ti-calculator" style="color:var(--indigo)"></i>
+        ${isFr ? '🍁 Calculateur de taxes salariales' : '🍁 Salary Tax Calculator'}
+        <span style="margin-left:auto;font-size:11px;font-weight:400;color:var(--muted)">${isFr ? 'Taux fédéraux + provinciaux 2025' : '2025 federal + provincial rates'}</span>
+      </div>
+      <div style="padding:20px">
+        <div id="ptc-tabs" class="tax-rate-tabs" style="margin-bottom:16px">
+          <button class="tc-tab active" data-rate="annual"   onclick="ptcSetRate('annual')"  >${isFr?'Annuel':'Annual'}</button>
+          <button class="tc-tab"        data-rate="month"    onclick="ptcSetRate('month')"   >${isFr?'Mois':'Month'}</button>
+          <button class="tc-tab"        data-rate="biweekly" onclick="ptcSetRate('biweekly')">${isFr?'Bimensuel':'Biweekly'}</button>
+          <button class="tc-tab"        data-rate="weekly"   onclick="ptcSetRate('weekly')"  >${isFr?'Hebdo':'Weekly'}</button>
+          <button class="tc-tab"        data-rate="daily"    onclick="ptcSetRate('daily')"   >${isFr?'Jour':'Day'}</button>
+          <button class="tc-tab"        data-rate="hourly"   onclick="ptcSetRate('hourly')"  >${isFr?'Heure':'Hour'}</button>
+        </div>
+        <div class="tax-fields-row" style="margin-bottom:20px">
+          <div class="tax-salary-wrap" style="flex:1;min-width:160px">
+            <span class="tax-cur-sym">$</span>
+            <input type="number" id="ptc-salary" class="tax-salary-input" value="52000" min="0" step="1000" oninput="ptcUpdate()">
+            <span class="tax-cur-code">CAD</span>
+          </div>
+          <select id="ptc-prov" class="tax-prov-select" onchange="ptcUpdate()"></select>
+        </div>
+        <div id="ptc-results"></div>
+        <details style="margin-top:16px">
+          <summary style="cursor:pointer;font-weight:600;font-size:14px;color:var(--dark);margin-bottom:12px;list-style:none;display:flex;align-items:center;gap:6px">
+            <i class="ti ti-chevron-down" style="font-size:14px;color:var(--muted)"></i>
+            ${isFr ? 'Comparer toutes les provinces' : 'Compare all provinces'}
+          </summary>
+          <div id="ptc-prov-table" style="overflow-x:auto;margin-top:12px"></div>
+        </details>
+        <p style="font-size:11px;color:var(--muted);margin-top:12px;text-align:center">${isFr ? 'Estimation uniquement — consultez un fiscaliste pour un conseil personnalisé.' : 'Estimates only — consult a tax professional for personalized advice.'}</p>
+      </div>
+    </div>
   `;
+  ptcInit();
 }
 
 function showSalarySubmitForm(isUpdate) {
@@ -8492,15 +8529,49 @@ function tcUpdate() {
   const raw = parseFloat(document.getElementById('tc-salary')?.value || '0') || 0;
   const annual = raw * (_TC_MUL[_tcRate] || 1);
   const code = document.getElementById('tc-prov')?.value || 'ON';
-  _tcRenderResults(_tcCalc(annual, code));
-  _tcRenderProvTable(annual, code);
+  _tcRenderResults(_tcCalc(annual, code), 'tc-results');
+  _tcRenderProvTable(annual, code, 'tc-prov-table');
+}
+
+// Profile-embedded tax calc (ptc-* IDs, inside #tab-salary)
+let _ptcRate = 'annual';
+function ptcSetRate(rate) {
+  _ptcRate = rate;
+  document.querySelectorAll('#ptc-tabs .tc-tab').forEach(t => t.classList.toggle('active', t.dataset.rate === rate));
+  ptcUpdate();
+}
+function ptcUpdate() {
+  const raw = parseFloat(document.getElementById('ptc-salary')?.value || '0') || 0;
+  const annual = raw * (_TC_MUL[_ptcRate] || 1);
+  const code = document.getElementById('ptc-prov')?.value || 'ON';
+  _tcRenderResults(_tcCalc(annual, code), 'ptc-results');
+  _tcRenderProvTable(annual, code, 'ptc-prov-table');
+}
+function ptcInit() {
+  const sel = document.getElementById('ptc-prov');
+  if (!sel) return;
+  sel.innerHTML = Object.entries(_TC.prov)
+    .map(([code, p]) => `<option value="${code}"${code === 'ON' ? ' selected' : ''}>${p.n}</option>`)
+    .join('');
+  // Pre-fill with user's salary if available
+  const userSalary = state.user?.salary_expectation || state.user?.current_salary;
+  if (userSalary && userSalary > 0) {
+    const inp = document.getElementById('ptc-salary');
+    if (inp) inp.value = userSalary;
+  }
+  // Pre-select user's province if geo-detected
+  const storedProv = localStorage.getItem('nxUserProvince');
+  if (storedProv && _TC.prov[storedProv]) {
+    sel.value = storedProv;
+  }
+  ptcUpdate();
 }
 
 const _CAD = n => new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD',maximumFractionDigits:0}).format(n);
 const _PCT = n => (n * 100).toFixed(1) + '%';
 
-function _tcRenderResults(r) {
-  const el = document.getElementById('tc-results');
+function _tcRenderResults(r, containerId = 'tc-results') {
+  const el = document.getElementById(containerId);
   if (!el) return;
   const taxPct = r.gross > 0 ? r.totalTax / r.gross : 0;
   const netPct = 1 - taxPct;
@@ -8552,8 +8623,8 @@ function _tcRenderResults(r) {
   </div>`;
 }
 
-function _tcRenderProvTable(annual, selectedCode) {
-  const el = document.getElementById('tc-prov-table');
+function _tcRenderProvTable(annual, selectedCode, containerId = 'tc-prov-table') {
+  const el = document.getElementById(containerId);
   if (!el) return;
   const rows = Object.entries(_TC.prov)
     .map(([code]) => ({ code, ..._tcCalc(annual, code) }))
