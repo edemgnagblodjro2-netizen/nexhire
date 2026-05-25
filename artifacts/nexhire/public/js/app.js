@@ -277,15 +277,14 @@ function restoreFromHash() {
         goto('employer-dash');
         setTimeout(() => {
           const navEl = document.querySelector('[data-emptab="etab-messages"]');
-          showEmpTab('etab-messages', navEl);
-          if (appId) setTimeout(() => openThreadInContainer('etab-messages', appId), 400);
+          showEmpTab('etab-messages', navEl, appId);
         }, 100);
       } else {
         goto('candidate-dash');
         setTimeout(() => {
           const navEl = document.querySelector('[data-tab="tab-messages"]');
           showTab('tab-messages', navEl);
-          if (appId) setTimeout(() => openThreadInContainer('tab-messages', appId), 400);
+          if (appId) setTimeout(() => openMessagesInTab('tab-messages', appId), 100);
         }, 100);
       }
     } else {
@@ -4466,7 +4465,7 @@ function showTab(tabId, el) {
   if (tabId === 'tab-messages')         openMessagesInTab('tab-messages');
 }
 
-function showEmpTab(tabId, navEl) {
+function showEmpTab(tabId, navEl, preselectedAppId) {
   document.querySelectorAll('#pg-employer-dash .dash-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('#pg-employer-dash .dash-nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById(tabId)?.classList.add('active');
@@ -4474,7 +4473,7 @@ function showEmpTab(tabId, navEl) {
   if (tabId === 'etab-team') loadTeam();
   if (tabId === 'etab-analytics') loadEmployerAnalytics();
   if (tabId === 'etab-interviews') loadVideoInterviews();
-  if (tabId === 'etab-messages') openMessagesInTab('etab-messages');
+  if (tabId === 'etab-messages') openMessagesInTab('etab-messages', preselectedAppId || null);
 }
 
 // ── Employer Analytics ────────────────────────────────────
@@ -4589,6 +4588,22 @@ function renderSparkline(vals, labels) {
 // ── Messagerie ────────────────────────────────────────────
 let _currentThreadApp = null;
 let _currentMsgContainer = null;
+let _msgPollInterval = null;
+
+function startMsgPolling(appId) {
+  stopMsgPolling();
+  _msgPollInterval = setInterval(async () => {
+    if (_currentThreadApp !== appId) { stopMsgPolling(); return; }
+    try {
+      const d = await api('GET', `${BASE}/api/messages/${appId}`);
+      if (d.messages) _renderBubbles(d.messages, state.lang === 'fr');
+    } catch {}
+  }, 5000);
+}
+
+function stopMsgPolling() {
+  if (_msgPollInterval) { clearInterval(_msgPollInterval); _msgPollInterval = null; }
+}
 
 // Format timestamp for thread list: Today = "14:30", Yesterday = "Hier/Yesterday", else "12 jan."
 function _fmtThreadTime(dateStr, isFr) {
@@ -4613,7 +4628,7 @@ function _buildThreadItem(t, containerId, isFr) {
   const unread = parseInt(t.unread||0);
   const timeStr = _fmtThreadTime(t.last_at, isFr);
   const preview = t.last_message ? esc(t.last_message).slice(0, 55) + (t.last_message.length > 55 ? '…' : '') : `<em style="color:var(--muted)">${isFr?'Commencer la conv.':'Start the conversation'}</em>`;
-  return `<div class="msg-thread-item" data-appid="${t.application_id}" data-title="${esc(title)}" data-cand="${esc(candName)}" data-cand-avatar="${esc(t.cand_avatar||'')}" data-cand-init="${initials}"
+  return `<div class="msg-thread-item" data-appid="${t.application_id}" data-title="${esc(title)}" data-cand="${esc(candName)}" data-cand-first="${esc(t.cand_first||'')}" data-cand-avatar="${esc(t.cand_avatar||'')}" data-cand-init="${initials}"
     style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .12s"
     onmouseenter="if(!this.classList.contains('active'))this.style.background='#f5f6fa'" onmouseleave="if(!this.classList.contains('active'))this.style.background=''"
     onclick="openThreadInContainer('${containerId}','${t.application_id}',this)">
@@ -4754,10 +4769,26 @@ async function openThreadInContainer(containerId, appId, navEl) {
   const msgs = d.messages || [];
   _renderBubbles(msgs, isFr);
 
-  // Clear unread dot
+  // Template message: pre-fill input when employer opens a fresh conversation
+  if (!msgs.length && state.user?.role === 'employer') {
+    const firstName = navEl?.dataset.candFirst || (candName ? candName.split(' ')[0] : '');
+    const jt = jobTitle || '';
+    const template = isFr
+      ? `Bonjour ${firstName},\n\nNous avons examiné votre candidature pour le poste de ${jt} et nous aimerions en savoir plus sur votre parcours.\n\nSeriez-vous disponible pour un échange ?`
+      : `Hello ${firstName},\n\nWe reviewed your application for ${jt} and would love to learn more about your background.\n\nWould you be available for a quick chat?`;
+    setTimeout(() => {
+      const inp = document.getElementById('msg-input');
+      if (inp && !inp.value) inp.value = template;
+    }, 80);
+  }
+
+  // Clear unread indicators
   if (navEl) { const dot = navEl.querySelector('[style*="background:#ef4444"]'); if (dot) dot.remove(); }
   const unreadBadge = navEl?.querySelector('[style*="background:#6366f1"]');
   if (unreadBadge) unreadBadge.remove();
+
+  // Start 5-second polling for new messages
+  startMsgPolling(appId);
 }
 
 function _renderBubbles(msgs, isFr) {
@@ -4851,30 +4882,26 @@ async function openMessagesPage(appId) {
 }
 
 async function sendMessage() {
+  const isFr = state.lang === 'fr';
   const input = document.getElementById('msg-input');
   const body = input?.value.trim();
   if (!body || !_currentThreadApp) return;
   input.value = '';
   input.focus();
   const d = await api('POST', `${BASE}/api/messages/${_currentThreadApp}`, { body });
-  if (d.success && d.message) {
-    const bubblesEl = document.getElementById('thread-bubbles');
-    const isFr = state.lang === 'fr';
-    if (bubblesEl) {
-      const msgs = [...bubblesEl.querySelectorAll('[data-msg]')].length;
-      // Re-render by reloading the thread
-      const rd = await api('GET', `${BASE}/api/messages/${_currentThreadApp}`);
-      _renderBubbles(rd.messages || [], isFr);
-    }
-    // Update thread list preview
+  if (d.success) {
+    // Immediately re-render bubbles from server
+    const rd = await api('GET', `${BASE}/api/messages/${_currentThreadApp}`);
+    _renderBubbles(rd.messages || [], isFr);
+    // Update preview in thread list
     const cId = _currentMsgContainer || 'overlay';
     const threadsEl = document.getElementById(`${cId}-threads`);
     const item = threadsEl?.querySelector(`[data-appid="${_currentThreadApp}"]`);
     if (item) {
-      const preview = item.querySelector('div > div:last-child');
-      if (preview) preview.innerHTML = esc(body).slice(0, 55);
+      const previewEl = item.querySelector('div:last-child > div:last-child');
+      if (previewEl) { previewEl.style.fontWeight = '400'; previewEl.innerHTML = esc(body).slice(0, 55); }
     }
-  } else if (!d.success) {
+  } else {
     toast(d.error || 'Error', 'error');
   }
 }

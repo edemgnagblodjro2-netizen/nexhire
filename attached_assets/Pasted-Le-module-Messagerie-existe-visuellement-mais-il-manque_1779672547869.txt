@@ -1,0 +1,141 @@
+Le module Messagerie existe visuellement mais il manque 
+l'essentiel. Voici ce qui doit être corrigé et complété :
+
+─────────────────────────────────────────────
+PROBLÈME 1 — Aucun point d'entrée pour démarrer une conversation
+─────────────────────────────────────────────
+Actuellement : l'employeur ouvre la messagerie 
+et voit "Aucune conversation" — il ne sait pas comment 
+contacter un candidat.
+
+SOLUTION : Ajouter un bouton "💬 Envoyer un message" 
+à DEUX endroits :
+
+  A) Dans le Kanban ATS — sur chaque carte candidat :
+     [ 💬 Message ]  [ 📹 Vidéo ]  [ ✓ Shortlist ]
+
+  B) Dans la liste des candidatures reçues — 
+     sur chaque ligne candidat :
+     Nom · Score AI · Statut · [ 💬 Message ]
+
+Ce bouton crée automatiquement une conversation 
+entre l'employeur et ce candidat précis,
+puis ouvre directement la fenêtre de chat.
+
+─────────────────────────────────────────────
+PROBLÈME 2 — Interface de chat incomplète
+─────────────────────────────────────────────
+Le panneau droit dit juste "Sélectionnez une conversation"
+mais quand on sélectionne, il ne se passe rien.
+
+L'interface complète doit ressembler à ceci :
+
+PANNEAU GAUCHE (liste conversations) :
+┌─────────────────────────────┐
+│ 💬 Messagerie               │
+│ Rechercher une conversation │
+├─────────────────────────────┤
+│ [Photo] Jean Dupont      2  │
+│ Développeur React Senior    │
+│ "Merci pour votre..."  14h  │
+├─────────────────────────────┤
+│ [Photo] Marie Koffi         │
+│ UX Designer                 │
+│ "Bonjour, suite à..."  hier │
+└─────────────────────────────┘
+
+PANNEAU DROIT (fenêtre de chat) :
+┌─────────────────────────────────────────┐
+│ [Photo] Jean Dupont                  📹 │
+│ Candidat · Développeur React Senior     │
+│ ● En ligne                              │
+├─────────────────────────────────────────┤
+│                                         │
+│  [Bulle LEUR message — gauche, gris]    │
+│  Bonjour, j'ai vu votre offre...  10h  │
+│                                         │
+│     [Bulle MON message — droite, bleu] │
+│     Bonjour Jean, merci...        11h  │
+│                  ✓✓ lu                 │
+│                                         │
+├─────────────────────────────────────────┤
+│ 📎  [  Écrire un message...     ] ➤   │
+└─────────────────────────────────────────┘
+
+─────────────────────────────────────────────
+PROBLÈME 3 — Côté candidat absent
+─────────────────────────────────────────────
+Le candidat n'a aucun accès à la messagerie.
+
+Ajouter dans Dashboard Candidat → My Applications :
+Sur chaque candidature, un bouton :
+  "💬 Contacter l'employeur"
+  → S'il n'y a pas encore de conversation, en créer une
+  → S'il y en a une, ouvrir directement le chat
+
+Ajouter aussi un onglet "💬 Messages" dans le menu 
+candidat avec badge de notifications non lues.
+
+─────────────────────────────────────────────
+PROBLÈME 4 — Pas de notification
+─────────────────────────────────────────────
+Quand un message arrive, rien ne l'indique.
+
+Ajouter :
+  - Badge rouge sur l'icône 💬 dans la navbar
+    → Affiche le nombre de messages non lus
+    → Disparaît quand tous les messages sont lus
+  
+  - Dans le dashboard : 
+    bannière "Vous avez 2 nouveaux messages" 
+    avec lien direct vers la conversation
+
+─────────────────────────────────────────────
+PROBLÈME 5 — Pas de message de bienvenue automatique
+─────────────────────────────────────────────
+Quand l'employeur clique "💬 Message" sur un candidat,
+pré-remplir le champ avec un message template :
+
+"Bonjour [Prénom],
+
+Nous avons examiné votre candidature pour le poste 
+de [Titre du poste] et nous aimerions en savoir plus 
+sur votre parcours.
+
+Seriez-vous disponible pour un échange ?"
+
+L'employeur peut modifier avant d'envoyer.
+
+─────────────────────────────────────────────
+ORDRE D'IMPLÉMENTATION
+─────────────────────────────────────────────
+
+Étape 1 : Bouton "💬 Message" sur chaque candidat du Kanban
+Étape 2 : Ce bouton crée la conversation et ouvre le chat
+Étape 3 : Interface chat complète (bulles + input + envoi)
+Étape 4 : Onglet Messages dans dashboard candidat
+Étape 5 : Badge notifications non lues dans navbar
+Étape 6 : Message template pré-rempli à l'ouverture
+Étape 7 : Polling toutes les 5 secondes pour nouveaux messages
+Étape 8 : Notification email optionnelle
+
+─────────────────────────────────────────────
+TEST À FAIRE APRÈS IMPLÉMENTATION
+─────────────────────────────────────────────
+
+1. Connecté comme EMPLOYEUR :
+   → Aller dans Kanban ATS
+   → Cliquer "💬 Message" sur un candidat
+   → Vérifier que la conversation s'ouvre
+   → Taper un message et envoyer
+   → Vérifier que le message apparaît dans la bulle
+
+2. Connecté comme CANDIDAT :
+   → Aller dans My Applications
+   → Voir le message reçu de l'employeur
+   → Répondre
+   → Vérifier que l'employeur reçoit la réponse
+
+3. Vérifier le badge navbar :
+   → Quand un message non lu existe → badge rouge visible
+   → Quand tous lus → badge disparaît
