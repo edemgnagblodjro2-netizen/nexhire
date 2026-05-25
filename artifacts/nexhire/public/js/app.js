@@ -4715,26 +4715,54 @@ function _fmtThreadTime(dateStr, isFr) {
 
 // Build a thread list item HTML
 function _buildThreadItem(t, containerId, isFr) {
-  const title = isFr ? (t.title_fr||t.title_en) : (t.title_en||t.title_fr);
+  const isEmp    = state.user?.role === 'employer';
+  const title    = isFr ? (t.title_fr||t.title_en) : (t.title_en||t.title_fr);
   const candName = ((t.cand_first||'')+' '+(t.cand_last||'')).trim();
-  const initials = (t.cand_first||'?')[0].toUpperCase() + (t.cand_last||'')[0]?.toUpperCase();
-  const avatar = t.cand_avatar
-    ? `<img src="${esc(t.cand_avatar)}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0">`
-    : `<div style="width:42px;height:42px;border-radius:50%;background:#6366f1;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${initials}</div>`;
-  const unread = parseInt(t.unread||0);
+  const company  = t.company_name || '';
+  const initials = isEmp
+    ? ((t.cand_first||'?')[0].toUpperCase() + (t.cand_last||'')[0]?.toUpperCase())
+    : (company ? company.slice(0,2).toUpperCase() : '??');
+
+  // Avatar : pour candidat on utilise un logo/initiales entreprise
+  const avatarBg = isEmp ? '#6366f1' : companyColor(company);
+  const avatar = (!isEmp && t.company_logo)
+    ? `<img src="${esc(t.company_logo)}" style="width:42px;height:42px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0">`
+    : (isEmp && t.cand_avatar)
+      ? `<img src="${esc(t.cand_avatar)}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0">`
+      : `<div style="width:42px;height:42px;border-radius:${isEmp?'50%':'10px'};background:${avatarBg};color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${initials}</div>`;
+
+  const unread  = parseInt(t.unread||0);
   const timeStr = _fmtThreadTime(t.last_at, isFr);
-  const preview = t.last_message ? esc(t.last_message).slice(0, 55) + (t.last_message.length > 55 ? '…' : '') : `<em style="color:var(--muted)">${isFr?'Commencer la conv.':'Start the conversation'}</em>`;
-  return `<div class="msg-thread-item" data-appid="${t.application_id}" data-title="${esc(title)}" data-cand="${esc(candName)}" data-cand-first="${esc(t.cand_first||'')}" data-cand-avatar="${esc(t.cand_avatar||'')}" data-cand-init="${initials}"
+  const preview = t.last_message
+    ? esc(t.last_message).slice(0, 55) + (t.last_message.length > 55 ? '…' : '')
+    : `<em style="color:var(--muted)">${isFr?'Commencer la conv.':'Start the conversation'}</em>`;
+
+  // Ligne principale : employeur → nom candidat / candidat → nom entreprise
+  const primaryName = isEmp ? (esc(candName) || esc(company)) : esc(company) || esc(candName);
+
+  // Sous-titre : pour candidat, afficher l'entreprise + poste
+  const subtitle = isEmp
+    ? `<div style="font-size:11px;color:#6366f1;font-weight:500;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(title)}</div>`
+    : `<div style="font-size:11px;color:#6366f1;font-weight:500;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(title)}</div>`;
+
+  return `<div class="msg-thread-item"
+    data-appid="${t.application_id}"
+    data-title="${esc(title)}"
+    data-cand="${esc(candName)}"
+    data-cand-first="${esc(t.cand_first||'')}"
+    data-cand-avatar="${esc(t.cand_avatar||'')}"
+    data-cand-init="${initials}"
+    data-company="${esc(company)}"
     style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .12s"
     onmouseenter="if(!this.classList.contains('active'))this.style.background='#f5f6fa'" onmouseleave="if(!this.classList.contains('active'))this.style.background=''"
     onclick="openThreadInContainer('${containerId}','${t.application_id}',this)">
     <div style="position:relative">${avatar}${unread ? `<span style="position:absolute;top:-2px;right:-2px;width:10px;height:10px;background:#ef4444;border-radius:50%;border:2px solid #fff"></span>` : ''}</div>
     <div style="flex:1;min-width:0">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:2px">
-        <span style="font-weight:${unread?'700':'600'};font-size:13px;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(candName)||esc(t.company_name||'')}</span>
+        <span style="font-weight:${unread?'700':'600'};font-size:13px;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${primaryName}</span>
         ${timeStr ? `<span style="font-size:10px;color:var(--muted);white-space:nowrap;flex-shrink:0">${timeStr}</span>` : ''}
       </div>
-      <div style="font-size:11px;color:#6366f1;font-weight:500;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(title)}</div>
+      ${subtitle}
       <div style="font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:${unread?'600':'400'}">${preview}</div>
     </div>
     ${unread ? `<span style="background:#6366f1;color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:2px 7px;min-width:18px;text-align:center;flex-shrink:0;align-self:center">${unread > 9 ? '9+' : unread}</span>` : ''}
@@ -4854,22 +4882,31 @@ async function openThreadInContainer(containerId, appId, navEl) {
   if (navEl) { navEl.classList.add('active'); navEl.style.background = '#eef2ff'; }
 
   // Get contact info from data attributes
+  const isEmp     = state.user?.role === 'employer';
   const candName  = navEl?.dataset.cand || '';
   const candInit  = navEl?.dataset.candInit || '?';
   const candAvt   = navEl?.dataset.candAvatar || '';
   const jobTitle  = navEl?.dataset.title || '';
-  const headerAvatar = candAvt
+  const company   = navEl?.dataset.company || '';
+
+  // Header primary label: employeur → nom candidat, candidat → nom entreprise
+  const headerPrimary = isEmp ? (candName || company) : (company || candName);
+  const headerSub     = isEmp ? jobTitle : (jobTitle ? `${jobTitle}` : '');
+  const headerInitials = isEmp ? candInit : (company ? company.slice(0,2).toUpperCase() : '??');
+  const headerBg       = isEmp ? '#6366f1' : companyColor(company);
+  const headerRadius   = isEmp ? '50%' : '10px';
+  const headerAvatar   = (isEmp && candAvt)
     ? `<img src="${esc(candAvt)}" style="width:38px;height:38px;border-radius:50%;object-fit:cover">`
-    : `<div style="width:38px;height:38px;border-radius:50%;background:#6366f1;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">${esc(candInit)}</div>`;
+    : `<div style="width:38px;height:38px;border-radius:${headerRadius};background:${headerBg};color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">${esc(headerInitials)}</div>`;
 
   const threadEl = document.getElementById(`${containerId}-thread`);
   if (!threadEl) return;
   threadEl.innerHTML = `
-    ${candName ? `<div style="display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border);background:#fff;flex-shrink:0">
+    ${headerPrimary ? `<div style="display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border);background:#fff;flex-shrink:0">
       ${headerAvatar}
       <div>
-        <div style="font-weight:600;font-size:14px;color:var(--dark)">${esc(candName)}</div>
-        ${jobTitle ? `<div style="font-size:12px;color:#6366f1;font-weight:500">${esc(jobTitle)}</div>` : ''}
+        <div style="font-weight:600;font-size:14px;color:var(--dark)">${esc(headerPrimary)}</div>
+        ${headerSub ? `<div style="font-size:12px;color:#6366f1;font-weight:500">${esc(headerSub)}</div>` : ''}
       </div>
     </div>` : ''}
     <div id="thread-bubbles" style="flex:1;overflow-y:auto;padding:20px 24px;background:#f9fafb">
