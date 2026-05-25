@@ -100,7 +100,7 @@ async function sendApplicationNotification(employerEmail, candidateName, jobTitl
   await send(employerEmail, subject, emailTemplate('Nouvelle candidature reçue', body));
 }
 
-async function sendStatusUpdateEmail(candidateEmail, firstName, jobTitle, companyName, status, labelFr) {
+async function sendStatusUpdateEmail(candidateEmail, firstName, jobTitle, companyName, status, labelFr, rejectionReason = null) {
   const BASE = process.env.BASE_URL || 'https://nexhire.ca';
   const link = `${BASE}/nexhire/`;
 
@@ -122,11 +122,19 @@ async function sendStatusUpdateEmail(candidateEmail, firstName, jobTitle, compan
     rejected:    `Merci pour votre intérêt pour le poste <strong>${jobTitle}</strong> chez <strong>${companyName}</strong>. Après examen de votre candidature, celle-ci n'a pas été retenue cette fois. Nous vous encourageons à postuler à d'autres opportunités sur Nexhire.`,
   };
 
+  const rejectionBlock = status === 'rejected' && rejectionReason
+    ? `<div style="border-left:4px solid #E5E7EB;padding:12px 16px;background:#F3F4F6;border-radius:0 8px 8px 0;margin:12px 0">
+        <p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.5px">Motif communiqué par l'employeur</p>
+        <p style="margin:0;font-size:14px;color:#374151">${rejectionReason}</p>
+      </div>`
+    : '';
+
   const body = `
     <p>Bonjour ${firstName},</p>
     <div style="border-left:4px solid ${cfg.color};padding:12px 16px;background:#F9FAFB;border-radius:0 8px 8px 0;margin:16px 0">
       <p style="margin:0;font-size:15px">${messages[status] || `Votre candidature pour <strong>${jobTitle}</strong> a été mise à jour : <strong>${labelFr}</strong>.`}</p>
     </div>
+    ${rejectionBlock}
     ${status !== 'rejected' ? `<a href="${link}" class="btn">Voir mon tableau de bord →</a>` : `<a href="${link}" class="btn" style="background:#6B7280">Parcourir d'autres offres →</a>`}
     <p style="color:#9CA3AF;font-size:12px;margin-top:24px">Connectez-vous à Nexhire pour suivre l'avancement de toutes vos candidatures.</p>
   `;

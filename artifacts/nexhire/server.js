@@ -244,6 +244,7 @@ async function runMigrations() {
     await pool.query(`ALTER TABLE nh_company_reviews ADD COLUMN IF NOT EXISTS employment_type TEXT`);
     await pool.query(`ALTER TABLE nh_notifications ADD COLUMN IF NOT EXISTS link_url TEXT`);
     await pool.query(`ALTER TABLE nh_applications ADD COLUMN IF NOT EXISTS source TEXT`);
+    await pool.query(`ALTER TABLE nh_applications ADD COLUMN IF NOT EXISTS rejection_reason TEXT`);
     await pool.query(`ALTER TABLE nh_candidate_profiles ADD COLUMN IF NOT EXISTS cv_text TEXT`);
     // Work Team
     await pool.query(`

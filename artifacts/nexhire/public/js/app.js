@@ -2901,6 +2901,11 @@ async function loadMyApplications() {
       <div class="app-progress">
         ${progressSteps.map((s, i) => `<div class="prog-step${i <= pIdx ? ' done' : ''}${i === pIdx ? ' current' : ''}"><div class="prog-dot"></div><div class="prog-label">${statusLabel[s]}</div></div>`).join('<div class="prog-line"></div>')}
       </div>` : ''}
+      ${a.status === 'rejected' && a.rejection_reason ? `
+      <div style="margin-top:10px;border-left:3px solid #fca5a5;padding:10px 14px;background:#fff5f5;border-radius:0 8px 8px 0">
+        <div style="font-size:11px;font-weight:700;color:#dc2626;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px"><i class="ti ti-message"></i> ${state.lang==='fr'?'Motif communiqué par l\'employeur':'Reason provided by employer'}</div>
+        <div style="font-size:13px;color:#374151">${esc(a.rejection_reason)}</div>
+      </div>` : ''}
       ${a.work_mode ? `<div style="margin-top:8px"><span class="job-tag ${a.work_mode}">${a.work_mode}</span></div>` : ''}
     </div>`;
   }).join('');
@@ -3319,15 +3324,17 @@ async function loadInlineCandidates(jobId) {
         ${isActive ? availableProgress.map(s =>
           `<button onclick="updateCandidateStatus('${a.id}','${s.key}','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;color:var(--text);white-space:nowrap">${s.label}</button>`
         ).join('') : ''}
-        ${isActive ? `<button onclick="updateCandidateStatus('${a.id}','rejected','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #fca5a5;background:#fff5f5;cursor:pointer;color:#dc2626;white-space:nowrap"><i class="ti ti-x" style="font-size:10px"></i> ${rejectLabel}</button>` : ''}
+        ${isActive ? `<button onclick="openRejectModal('${a.id}','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #fca5a5;background:#fff5f5;cursor:pointer;color:#dc2626;white-space:nowrap"><i class="ti ti-x" style="font-size:10px"></i> ${rejectLabel}</button>` : ''}
       </div>
     </div>`;
   }).join('');
 }
 
-async function updateCandidateStatus(appId, newStatus, jobId) {
+async function updateCandidateStatus(appId, newStatus, jobId, rejectionReason = null) {
   const isFr = state.lang === 'fr';
-  const d = await api('PUT', `${BASE}/api/applications/${appId}/status`, { status: newStatus });
+  const body = { status: newStatus };
+  if (rejectionReason) body.rejection_reason = rejectionReason;
+  const d = await api('PUT', `${BASE}/api/applications/${appId}/status`, body);
   if (d.success) {
     const labels = { reviewed: isFr?'En examen':'Reviewing', shortlisted: isFr?'Présélectionné':'Shortlisted', interview: isFr?'Entretien':'Interview', offer: isFr?'Offre':'Offer', rejected: isFr?'Refusé':'Rejected' };
     toast(`✓ ${labels[newStatus] || newStatus}${isFr?' — email envoyé au candidat':' — candidate notified by email'}`, 'success');
@@ -3335,6 +3342,41 @@ async function updateCandidateStatus(appId, newStatus, jobId) {
   } else {
     toast(d.error || 'Error', 'error');
   }
+}
+
+function openRejectModal(appId, jobId) {
+  const isFr = state.lang === 'fr';
+  const existing = document.getElementById('reject-reason-modal');
+  if (existing) existing.remove();
+  const modal = document.createElement('div');
+  modal.id = 'reject-reason-modal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:16px;padding:28px;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div style="width:36px;height:36px;background:#fef2f2;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-x" style="color:#dc2626;font-size:18px"></i></div>
+        <h3 style="margin:0;font-size:17px;font-weight:700;color:#111">${isFr ? 'Rejeter la candidature' : 'Reject application'}</h3>
+      </div>
+      <p style="font-size:13px;color:#6b7280;margin:0 0 16px">${isFr ? 'Le candidat sera notifié par email. Le motif est optionnel mais recommandé.' : 'The candidate will be notified by email. Reason is optional but recommended.'}</p>
+      <textarea id="reject-reason-text" placeholder="${isFr ? 'Motif de rejet (optionnel) — ex: profil ne correspond pas aux exigences du poste, manque d\'expérience en...' : 'Reason (optional) — e.g. profile does not match requirements, insufficient experience in...'}"
+        style="width:100%;min-height:100px;border:1px solid #e5e7eb;border-radius:10px;padding:12px;font-size:13px;font-family:inherit;resize:vertical;box-sizing:border-box;outline:none" maxlength="500"></textarea>
+      <div style="font-size:11px;color:#9ca3af;margin:4px 0 18px;text-align:right"><span id="reject-char-count">0</span>/500</div>
+      <div style="display:flex;gap:10px">
+        <button onclick="document.getElementById('reject-reason-modal').remove()" style="flex:1;padding:10px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer;font-size:14px;color:#374151">${isFr ? 'Annuler' : 'Cancel'}</button>
+        <button onclick="confirmReject('${appId}','${jobId}')" style="flex:1;padding:10px;border:none;border-radius:8px;background:#dc2626;color:#fff;cursor:pointer;font-size:14px;font-weight:600">${isFr ? 'Confirmer le rejet' : 'Confirm reject'}</button>
+      </div>
+    </div>`;
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+  const ta = modal.querySelector('textarea');
+  ta.addEventListener('input', () => { modal.querySelector('#reject-char-count').textContent = ta.value.length; });
+  document.body.appendChild(modal);
+  setTimeout(() => ta.focus(), 50);
+}
+
+async function confirmReject(appId, jobId) {
+  const reason = document.getElementById('reject-reason-text')?.value?.trim() || null;
+  document.getElementById('reject-reason-modal')?.remove();
+  await updateCandidateStatus(appId, 'rejected', jobId, reason);
 }
 
 async function closeJob(jobId) {

@@ -85,7 +85,7 @@ router.get('/job/:jobId', requireAuth, requireCompanyAccess, async (req, res) =>
 });
 
 router.put('/:id/status', requireAuth, requireCompanyAccess, async (req, res) => {
-  const { status } = req.body;
+  const { status, rejection_reason } = req.body;
   const validStatuses = ['reviewed','shortlisted','interview','offer','rejected'];
   if (!validStatuses.includes(status)) return res.status(400).json({ success: false, error: 'Invalid status' });
 
@@ -101,7 +101,11 @@ router.put('/:id/status', requireAuth, requireCompanyAccess, async (req, res) =>
   `, [req.params.id]);
   if (!app || app.company_id !== req.session.user.company_id) return res.status(403).json({ success: false, error: 'Access denied' });
 
-  await db.run('UPDATE nh_applications SET status = $1, updated_at = NOW() WHERE id = $2', [status, req.params.id]);
+  const reason = status === 'rejected' && rejection_reason?.trim() ? rejection_reason.trim() : null;
+  await db.run(
+    'UPDATE nh_applications SET status = $1, rejection_reason = $2, updated_at = NOW() WHERE id = $3',
+    [status, reason, req.params.id]
+  );
 
   const labels = {
     reviewed:    "en cours d'examen",
@@ -121,7 +125,7 @@ router.put('/:id/status', requireAuth, requireCompanyAccess, async (req, res) =>
     const jobTitle = app.title_fr || app.title_en || 'votre offre';
     const candidateName = `${app.candidate_first || ''}`.trim() || 'Bonjour';
     const companyName = app.company_name || 'L\'employeur';
-    sendStatusUpdateEmail(app.candidate_email, candidateName, jobTitle, companyName, status, labels[status]).catch(() => {});
+    sendStatusUpdateEmail(app.candidate_email, candidateName, jobTitle, companyName, status, labels[status], reason).catch(() => {});
   }
 
   res.json({ success: true });
