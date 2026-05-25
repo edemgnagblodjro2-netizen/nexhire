@@ -999,6 +999,13 @@ async function seedDemoData() {
   console.log('[Nexhire] ✅ Demo data seeded (3 companies, 15 jobs)');
 }
 
+// ── Mockup pages — allow iframe embedding (canvas previews, dev only) ──
+app.get(BASE_PATH + '/mockup-:name.html', (req, res) => {
+  res.setHeader('X-Frame-Options', 'ALLOWALL');
+  res.setHeader('Content-Security-Policy', "frame-ancestors *");
+  res.sendFile(path.join(__dirname, 'public', `mockup-${req.params.name}.html`));
+});
+
 // ── Security ──────────────────────────────────────────────
 app.use(helmet.contentSecurityPolicy({
   directives: {
