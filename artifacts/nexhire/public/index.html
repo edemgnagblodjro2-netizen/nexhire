@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="stylesheet" href="/nexhire/css/main.css?v=20260525p">
+<link rel="stylesheet" href="/nexhire/css/main.css?v=20260525q">
 <link rel="icon" type="image/svg+xml" href="/nexhire/img/favicon.svg">
 <link rel="manifest" href="/nexhire/manifest.json">
 <meta name="theme-color" content="#023448">
@@ -564,16 +564,16 @@
   <div style="max-width:1080px;margin:0 auto;padding:56px 24px 80px">
 
     <!-- ── CPC Budget Calculator ─────────────────────────── -->
-    <div style="background:linear-gradient(135deg,#EEF2FF 0%,#F5F3FF 100%);border:1px solid #C7D2FE;border-radius:20px;padding:36px;margin-bottom:48px">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+    <div style="background:linear-gradient(135deg,#EEF2FF 0%,#F5F3FF 100%);border:1px solid #C7D2FE;border-radius:20px;padding:40px 36px;margin-bottom:48px;text-align:center">
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px">
         <div style="width:36px;height:36px;background:#6366F1;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0"><i class="ti ti-calculator"></i></div>
-        <h3 style="font-family:var(--r);font-size:20px;font-weight:700;color:var(--dark);margin:0">Estimez votre budget Sponsored</h3>
+        <h3 style="font-family:var(--r);font-size:22px;font-weight:700;color:var(--dark);margin:0">Estimez votre budget Sponsored</h3>
       </div>
-      <p style="font-size:14px;color:var(--muted);margin:0 0 24px">Sélectionnez votre domaine et votre ville pour une estimation personnalisée.</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;max-width:560px">
-        <div>
+      <p style="font-size:14px;color:var(--muted);margin:0 0 28px">Sélectionnez votre domaine et votre ville pour une estimation personnalisée.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;max-width:720px;margin-left:auto;margin-right:auto">
+        <div style="text-align:left">
           <label style="font-size:11px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block">Poste recherché</label>
-          <select id="calc-poste" onchange="calcBudget()" style="width:100%;padding:12px 14px;border:1.5px solid #C7D2FE;border-radius:10px;font-size:14px;background:#fff;color:var(--dark);font-family:var(--b);cursor:pointer;outline:none">
+          <select id="calc-poste" onchange="calcBudget()" style="width:100%;padding:12px 16px;border:1.5px solid #C7D2FE;border-radius:10px;font-size:14px;background:#fff;color:var(--dark);font-family:var(--b);cursor:pointer;outline:none">
             <option value="tech">Tech / Développement</option>
             <option value="finance">Finance / Comptabilité</option>
             <option value="design">Design / Créatif</option>
@@ -582,24 +582,26 @@
             <option value="rh">RH / Recrutement</option>
           </select>
         </div>
-        <div>
+        <div style="text-align:left">
           <label style="font-size:11px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block">Ville</label>
-          <select id="calc-ville" onchange="calcBudget()" style="width:100%;padding:12px 14px;border:1.5px solid #C7D2FE;border-radius:10px;font-size:14px;background:#fff;color:var(--dark);font-family:var(--b);cursor:pointer;outline:none">
+          <select id="calc-ville" onchange="calcBudget()" style="width:100%;padding:12px 16px;border:1.5px solid #C7D2FE;border-radius:10px;font-size:14px;background:#fff;color:var(--dark);font-family:var(--b);cursor:pointer;outline:none">
             <option value="montreal">Montréal</option>
             <option value="toronto">Toronto</option>
-            <option value="remote">Remote</option>
+            <option value="vancouver">Vancouver</option>
+            <option value="calgary">Calgary</option>
+            <option value="ottawa">Ottawa</option>
             <option value="autre">Autre ville</option>
           </select>
         </div>
       </div>
-      <div style="background:#fff;border:1px solid #C7D2FE;border-radius:14px;padding:24px;max-width:560px">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
-          <div><div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Budget recommandé</div><div id="calc-budget" style="font-family:var(--r);font-size:26px;font-weight:800;color:#6366F1">8$/jour</div></div>
-          <div><div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Clics estimés</div><div id="calc-clics" style="font-family:var(--r);font-size:26px;font-weight:800;color:var(--dark)">~16/jour</div></div>
-          <div><div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Candidats qualifiés</div><div id="calc-cands" style="font-family:var(--r);font-size:20px;font-weight:700;color:#16A34A">~4–6/semaine</div></div>
-          <div><div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Coût par embauche</div><div id="calc-cph" style="font-family:var(--r);font-size:20px;font-weight:700;color:var(--dark)">~120$ estimé</div></div>
+      <div style="background:#fff;border:1px solid #C7D2FE;border-radius:14px;padding:28px;max-width:720px;margin:0 auto">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-bottom:24px">
+          <div><div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Budget recommandé</div><div id="calc-budget" style="font-family:var(--r);font-size:26px;font-weight:800;color:#6366F1">8$/jour</div></div>
+          <div><div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Clics estimés</div><div id="calc-clics" style="font-family:var(--r);font-size:26px;font-weight:800;color:var(--dark)">~16/jour</div></div>
+          <div><div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Candidats qualifiés</div><div id="calc-cands" style="font-family:var(--r);font-size:22px;font-weight:700;color:#16A34A">~4–6/sem.</div></div>
+          <div><div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Coût par embauche</div><div id="calc-cph" style="font-family:var(--r);font-size:22px;font-weight:700;color:var(--dark)">~120$ est.</div></div>
         </div>
-        <button class="btn-primary btn-full" onclick="goto('employer');setTimeout(()=>showModal('modal-register'),200)" style="background:#6366F1;border-color:#6366F1">Démarrer avec ce budget <i class="ti ti-arrow-right"></i></button>
+        <button class="btn-primary" onclick="goto('employer');setTimeout(()=>showModal('modal-register'),200)" style="background:#6366F1;border-color:#6366F1;padding:12px 32px">Démarrer avec ce budget <i class="ti ti-arrow-right"></i></button>
       </div>
     </div>
 
@@ -1349,7 +1351,7 @@ if ('serviceWorker' in navigator) {
     .catch(e => console.warn('[SW] failed', e));
 }
 </script>
-<script src="/nexhire/js/app.js?v=20260525p"></script>
+<script src="/nexhire/js/app.js?v=20260525q"></script>
 <script>window.__nexBase='/nexhire';</script>
 <script src="/nexhire/js/chatbot.js?v=20260524a"></script>
 </body>

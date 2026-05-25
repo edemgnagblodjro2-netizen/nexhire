@@ -6939,12 +6939,12 @@ function toggleCatDropdown() {
 
 // ── CPC Budget Calculator ───────────────────────────────────
 const CPC_DATA = {
-  tech:      { montreal:{b:8,c:16,q:'4–6',h:120}, toronto:{b:10,c:18,q:'5–7',h:100}, remote:{b:12,c:22,q:'6–8',h:90},  autre:{b:7,c:14,q:'3–5',h:130} },
-  finance:   { montreal:{b:9,c:14,q:'3–5',h:140}, toronto:{b:11,c:16,q:'4–6',h:120}, remote:{b:8,c:13,q:'3–5',h:150}, autre:{b:7,c:12,q:'3–4',h:160} },
-  design:    { montreal:{b:7,c:15,q:'4–5',h:110}, toronto:{b:9,c:17,q:'5–6',h:100},  remote:{b:10,c:20,q:'5–7',h:95},  autre:{b:6,c:12,q:'3–4',h:120} },
-  marketing: { montreal:{b:6,c:13,q:'3–5',h:110}, toronto:{b:8,c:16,q:'4–6',h:100},  remote:{b:9,c:18,q:'5–6',h:90},   autre:{b:6,c:12,q:'3–4',h:120} },
-  sales:     { montreal:{b:7,c:14,q:'4–5',h:100}, toronto:{b:9,c:16,q:'5–6',h:90},   remote:{b:8,c:15,q:'4–6',h:95},   autre:{b:6,c:12,q:'3–4',h:115} },
-  rh:        { montreal:{b:5,c:11,q:'3–4',h:90},  toronto:{b:7,c:13,q:'3–5',h:85},   remote:{b:6,c:12,q:'3–5',h:90},   autre:{b:5,c:10,q:'2–4',h:100} },
+  tech:      { montreal:{b:8,c:16,q:'4–6',h:120}, toronto:{b:10,c:18,q:'5–7',h:100}, vancouver:{b:9,c:17,q:'4–6',h:110}, calgary:{b:8,c:15,q:'4–6',h:115}, ottawa:{b:7,c:14,q:'4–5',h:125}, autre:{b:7,c:14,q:'3–5',h:130} },
+  finance:   { montreal:{b:9,c:14,q:'3–5',h:140}, toronto:{b:11,c:16,q:'4–6',h:120}, vancouver:{b:9,c:13,q:'3–5',h:135}, calgary:{b:10,c:15,q:'4–5',h:125}, ottawa:{b:8,c:12,q:'3–5',h:145}, autre:{b:7,c:12,q:'3–4',h:160} },
+  design:    { montreal:{b:7,c:15,q:'4–5',h:110}, toronto:{b:9,c:17,q:'5–6',h:100},  vancouver:{b:9,c:16,q:'4–6',h:105}, calgary:{b:7,c:13,q:'3–5',h:115}, ottawa:{b:6,c:12,q:'3–4',h:120}, autre:{b:6,c:12,q:'3–4',h:120} },
+  marketing: { montreal:{b:6,c:13,q:'3–5',h:110}, toronto:{b:8,c:16,q:'4–6',h:100},  vancouver:{b:8,c:14,q:'4–5',h:105}, calgary:{b:6,c:12,q:'3–5',h:115}, ottawa:{b:6,c:12,q:'3–4',h:115}, autre:{b:6,c:12,q:'3–4',h:120} },
+  sales:     { montreal:{b:7,c:14,q:'4–5',h:100}, toronto:{b:9,c:16,q:'5–6',h:90},   vancouver:{b:8,c:14,q:'4–5',h:95},  calgary:{b:8,c:15,q:'4–5',h:95},  ottawa:{b:7,c:13,q:'3–5',h:105}, autre:{b:6,c:12,q:'3–4',h:115} },
+  rh:        { montreal:{b:5,c:11,q:'3–4',h:90},  toronto:{b:7,c:13,q:'3–5',h:85},   vancouver:{b:6,c:12,q:'3–4',h:90},  calgary:{b:6,c:11,q:'3–4',h:92},  ottawa:{b:5,c:11,q:'3–4',h:95},  autre:{b:5,c:10,q:'2–4',h:100} },
 };
 
 function calcBudget() {
