@@ -6723,8 +6723,8 @@ async function loadVideoInterviews() {
   }
 
   const { interviews } = d;
-  const statusColor = { pending:'#94a3b8', in_progress:'#f59e0b', completed:'#22c55e', expired:'#ef4444' };
-  const statusLabel = { pending: isFr ? 'En attente' : 'Pending', in_progress: isFr ? 'En cours' : 'In Progress', completed: isFr ? 'Complété' : 'Completed', expired: isFr ? 'Expiré' : 'Expired' };
+  const statusColor = { draft:'#6366f1', pending:'#94a3b8', in_progress:'#f59e0b', completed:'#22c55e', expired:'#ef4444' };
+  const statusLabel = { draft: isFr ? 'Brouillon' : 'Draft', pending: isFr ? 'En attente' : 'Pending', in_progress: isFr ? 'En cours' : 'In Progress', completed: isFr ? 'Complété' : 'Completed', expired: isFr ? 'Expiré' : 'Expired' };
 
   el.innerHTML = `
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px">
@@ -6764,12 +6764,18 @@ async function loadVideoInterviews() {
               · ${isFr ? 'Exp.' : 'Exp.'} ${exp.toLocaleDateString()}
             </div>
             <div style="display:flex;gap:8px">
-              <button class="btn-ghost" style="flex:1;font-size:13px" onclick="viewViDetail('${esc(iv.id)}')">
-                <i class="ti ti-eye"></i> ${isFr ? 'Voir' : 'View'}
-              </button>
-              <button class="btn-ghost" style="font-size:13px" onclick="copyViLink('${esc(iv.id)}','${esc(iv.title)}')" title="${isFr ? 'Copier le lien candidat' : 'Copy candidate link'}">
-                <i class="ti ti-link"></i>
-              </button>
+              ${effectiveSt === 'draft' ? `
+                <button class="btn-primary" style="flex:1;font-size:13px" onclick="sendViInterview('${esc(iv.id)}','${esc(iv.title)}','${esc(iv.candidate_email||'')}')">
+                  <i class="ti ti-send"></i> ${isFr ? 'Envoyer' : 'Send'}
+                </button>
+              ` : `
+                <button class="btn-ghost" style="flex:1;font-size:13px" onclick="viewViDetail('${esc(iv.id)}')">
+                  <i class="ti ti-eye"></i> ${isFr ? 'Voir' : 'View'}
+                </button>
+                <button class="btn-ghost" style="font-size:13px" onclick="copyViLink('${esc(iv.id)}','${esc(iv.title)}')" title="${isFr ? 'Copier le lien candidat' : 'Copy candidate link'}">
+                  <i class="ti ti-link"></i>
+                </button>
+              `}
               <button class="btn-ghost" style="color:#f87171;border-color:#f8717144;font-size:13px" onclick="deleteVi('${esc(iv.id)}','${esc(iv.title)}')">
                 <i class="ti ti-trash"></i>
               </button>
@@ -6825,7 +6831,7 @@ function renderViCreateForm() {
     </div>
 
     <div style="display:flex;gap:10px">
-      <button class="btn-primary" style="flex:1" onclick="submitViCreate()"><i class="ti ti-send"></i> ${isFr ? 'Créer & obtenir le lien' : 'Create & get link'}</button>
+      <button class="btn-primary" style="flex:1" onclick="submitViCreate()"><i class="ti ti-device-floppy"></i> ${isFr ? 'Créer (brouillon)' : 'Save draft'}</button>
       <button class="btn-ghost" onclick="document.getElementById('vi-create-form').style.display='none'">Cancel</button>
     </div>
   `;
@@ -6877,8 +6883,7 @@ async function submitViCreate() {
 
   if (d.success) {
     document.getElementById('vi-create-form').style.display = 'none';
-    const link = `${location.origin}/nexhire/interview/${d.token}`;
-    showViLinkModal(title, link, cemail);
+    toast(isFr ? 'Brouillon créé — cliquez "Envoyer" pour activer le lien candidat.' : 'Draft saved — click "Send" to activate the candidate link.', 'success');
     loadVideoInterviews();
   } else if (d.upgrade) {
     // Show upgrade prompt instead of generic toast
@@ -6931,6 +6936,18 @@ function showViLinkModal(title, link, email) {
   `;
   document.body.appendChild(modal);
   modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
+async function sendViInterview(id, title, email) {
+  const isFr = state.lang === 'fr';
+  const btn = event?.currentTarget;
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2"></i>'; }
+  const d = await api('POST', `${BASE}/api/video-interviews/${id}/send`);
+  if (btn) { btn.disabled = false; btn.innerHTML = `<i class="ti ti-send"></i> ${isFr ? 'Envoyer' : 'Send'}`; }
+  if (!d.success) { toast(d.error || 'Error', 'error'); return; }
+  const link = `${location.origin}/nexhire/interview/${d.token}`;
+  showViLinkModal(title, link, email);
+  loadVideoInterviews();
 }
 
 function copyViLink(interviewId, title) {

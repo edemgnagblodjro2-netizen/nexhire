@@ -94,6 +94,9 @@ router.get('/respond/:token', async (req, res) => {
       [req.params.token]
     );
     if (!interview) return res.status(404).json({ success: false, error: 'Interview not found' });
+    if (interview.status === 'draft') {
+      return res.status(403).json({ success: false, error: 'This interview has not been sent yet' });
+    }
     if (new Date(interview.token_expires_at) < new Date()) {
       return res.status(410).json({ success: false, error: 'Interview link has expired' });
     }
@@ -206,12 +209,12 @@ router.post('/', requireAuth, requireCompanyAccess, async (req, res) => {
     const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
     await db.run(
-      `INSERT INTO nh_video_interviews (id, company_id, created_by, job_id, candidate_name, candidate_email, title, questions, token, token_expires_at)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
+      `INSERT INTO nh_video_interviews (id, company_id, created_by, job_id, candidate_name, candidate_email, title, questions, token, token_expires_at, status)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'draft')`,
       [id, req.session.user.company_id, req.session.user.id, job_id || null,
        candidate_name || null, candidate_email || null, title, JSON.stringify(questions), token, expires]
     );
-    res.json({ success: true, id, token });
+    res.json({ success: true, id });
   } catch (e) {
     res.status(500).json({ success: false, error: e.message });
   }
@@ -253,6 +256,28 @@ router.get('/:id', requireAuth, requireCompanyAccess, async (req, res) => {
       [req.params.id]
     );
     res.json({ success: true, interview, responses });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
+// POST /api/video-interviews/:id/send  — activate draft → pending
+router.post('/:id/send', requireAuth, requireCompanyAccess, async (req, res) => {
+  try {
+    const interview = await db.get(
+      'SELECT id, token, status FROM nh_video_interviews WHERE id=$1 AND company_id=$2',
+      [req.params.id, req.session.user.company_id]
+    );
+    if (!interview) return res.status(404).json({ success: false, error: 'Not found' });
+    if (interview.status !== 'draft') {
+      return res.json({ success: true, token: interview.token, already_sent: true });
+    }
+    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    await db.run(
+      `UPDATE nh_video_interviews SET status='pending', token_expires_at=$1 WHERE id=$2`,
+      [expires, interview.id]
+    );
+    res.json({ success: true, token: interview.token });
   } catch (e) {
     res.status(500).json({ success: false, error: e.message });
   }
