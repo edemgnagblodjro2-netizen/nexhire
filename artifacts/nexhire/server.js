@@ -901,7 +901,7 @@ app.use(helmet.contentSecurityPolicy({
     styleSrc:      ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com"],
     fontSrc:       ["'self'", "https://cdn.jsdelivr.net", "https://fonts.gstatic.com"],
     imgSrc:        ["'self'", "data:", "blob:", "https://images.unsplash.com", "https://cdn.jsdelivr.net", "https:"],
-    connectSrc:    ["'self'", "https://api.stripe.com", "https://api.openai.com"],
+    connectSrc:    ["'self'", "https://api.stripe.com", "https://api.openai.com", "https://api.adzuna.com"],
     frameSrc:      ["https://js.stripe.com"],
     workerSrc:     ["'self'", "blob:"],
   },
