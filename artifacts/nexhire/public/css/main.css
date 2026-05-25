@@ -116,7 +116,7 @@ a{text-decoration:none;color:inherit}
 
 /* ── HERO ─────────────────────────────────────────────────── */
 .hero{background:var(--dark);padding:96px 24px 80px;text-align:center;position:relative;overflow:hidden}
-.hero-bg{position:absolute;top:64px;left:0;right:0;bottom:0;overflow:hidden;pointer-events:none}
+.hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;pointer-events:none}
 .hbg-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;transform:scale(1.05);transition:opacity 1.2s ease,transform 9s ease}
 .hbg-slide.hbg-on{opacity:1;transform:scale(1)}
 .hbg-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,18,40,.88) 0%,rgba(10,18,40,.72) 60%,rgba(10,18,40,.55) 100%)}
