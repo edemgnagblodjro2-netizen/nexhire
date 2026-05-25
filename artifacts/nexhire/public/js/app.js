@@ -2925,9 +2925,10 @@ async function loadMyApplications() {
           <div style="font-family:var(--r);font-weight:600;color:var(--dark);font-size:15px">${esc(title)}</div>
           <div style="font-size:13px;color:var(--muted)">${esc(a.company_name||'')}${a.city || a.province ? ' · ' + (a.city ? esc(a.city) + (a.province ? ', <strong>'+esc(a.province)+'</strong>' : '') : esc(a.province||'')) : ''}</div>
         </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="app-status ${a.status}">${statusLabel[a.status] || a.status}</span>
           <span style="font-size:11px;color:var(--muted)">${daysAgo(a.created_at)}</span>
+          ${a.status !== 'withdrawn' ? `<button onclick="event.stopPropagation();openMessagesPage('${a.id}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #c7d2fe;background:#eef2ff;cursor:pointer;color:#6366f1;font-weight:600;display:inline-flex;align-items:center;gap:4px;white-space:nowrap"><i class="ti ti-message-circle-2" style="font-size:12px"></i> ${state.lang==='fr'?'Contacter':'Message'}</button>` : ''}
         </div>
       </div>
       ${a.status !== 'rejected' && a.status !== 'withdrawn' ? `
@@ -2940,7 +2941,6 @@ async function loadMyApplications() {
         <div style="font-size:13px;color:#374151">${esc(a.rejection_reason)}</div>
       </div>` : ''}
       ${a.work_mode ? `<div style="margin-top:8px"><span class="job-tag ${a.work_mode}">${a.work_mode}</span></div>` : ''}
-      ${a.status !== 'withdrawn' ? `<div style="margin-top:10px;border-top:1px solid var(--border);padding-top:10px"><button onclick="openMessagesPage('${a.id}')" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #c7d2fe;background:#eef2ff;cursor:pointer;color:#6366f1;font-weight:600;display:inline-flex;align-items:center;gap:6px"><i class="ti ti-message-circle-2"></i> ${state.lang==='fr'?'Contacter l\'employeur':'Message Employer'}</button></div>` : ''}
     </div>`;
   }).join('');
 }
@@ -4687,14 +4687,17 @@ async function openMessagesInTab(containerId, preselectedAppId) {
 }
 
 async function _loadThreadList(containerId, preselectedAppId, isFr) {
-  const d = await api('GET', `${BASE}/api/messages/threads`);
-  const threads = d.threads || [];
+  let threads = [];
+  try {
+    const d = await api('GET', `${BASE}/api/messages/threads`);
+    threads = d.threads || [];
+  } catch(e) { threads = []; }
+
   const listEl = document.getElementById(`${containerId}-threads`);
   if (!listEl) return;
 
-  // Remove the loading spinner (always the last child after the header)
-  const spinner = listEl.querySelector('div:last-child');
-  if (spinner && spinner !== listEl.firstChild) spinner.remove();
+  // Robustly remove spinner + any stale content — keep only the header (first child)
+  while (listEl.children.length > 1) listEl.removeChild(listEl.lastChild);
 
   if (!threads.length) {
     const empty = document.createElement('div');
@@ -4708,13 +4711,12 @@ async function _loadThreadList(containerId, preselectedAppId, isFr) {
   list.innerHTML = threads.map(t => _buildThreadItem(t, containerId, isFr)).join('');
   listEl.appendChild(list);
 
-  if (preselectedAppId) {
-    const navEl = listEl.querySelector(`[data-appid="${preselectedAppId}"]`);
-    openThreadInContainer(containerId, preselectedAppId, navEl);
-  } else {
-    const first = listEl.querySelector('.msg-thread-item');
-    if (first) openThreadInContainer(containerId, threads[0].application_id, first);
-  }
+  // Auto-open: preselected → first unread → first overall
+  const autoAppId = preselectedAppId
+    || threads.find(t => parseInt(t.unread||0) > 0)?.application_id
+    || threads[0].application_id;
+  const navEl = listEl.querySelector(`[data-appid="${autoAppId}"]`);
+  openThreadInContainer(containerId, autoAppId, navEl);
 }
 
 async function openThreadInContainer(containerId, appId, navEl) {
@@ -4861,14 +4863,17 @@ async function openMessagesPage(appId) {
   document.body.appendChild(overlay);
   _currentMsgContainer = 'overlay';
 
-  const d = await api('GET', `${BASE}/api/messages/threads`);
-  const threads = d.threads || [];
+  let threads = [];
+  try {
+    const d = await api('GET', `${BASE}/api/messages/threads`);
+    threads = d.threads || [];
+  } catch(e) { threads = []; }
+
   const listEl = document.getElementById('overlay-threads');
   if (!listEl) return;
 
-  // Remove spinner
-  const spinner = listEl.querySelector('div:last-child');
-  if (spinner && spinner !== listEl.firstChild) spinner.remove();
+  // Robustly remove spinner + stale content
+  while (listEl.children.length > 1) listEl.removeChild(listEl.lastChild);
 
   if (!threads.length) {
     const empty = document.createElement('div');
@@ -4882,10 +4887,12 @@ async function openMessagesPage(appId) {
   list.innerHTML = threads.map(t => _buildThreadItem(t, 'overlay', isFr)).join('');
   listEl.appendChild(list);
 
-  if (appId) {
-    const navEl = listEl.querySelector(`[data-appid="${appId}"]`);
-    openThreadInContainer('overlay', appId, navEl);
-  }
+  // Auto-open: preselected → first unread → first overall
+  const autoAppId = appId
+    || threads.find(t => parseInt(t.unread||0) > 0)?.application_id
+    || threads[0].application_id;
+  const navEl = listEl.querySelector(`[data-appid="${autoAppId}"]`);
+  openThreadInContainer('overlay', autoAppId, navEl);
 }
 
 async function sendMessage() {
