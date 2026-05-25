@@ -27,29 +27,62 @@ const feedMulter = multer({
 });
 
 // ── GET /api/feed ─────────────────────────────────────────────
+// Cursor-based (keyset) pagination — O(1) at any depth.
+// cursor = base64(JSON{ts, id}) of the last post on previous page.
+// Response includes nextCursor (null when no more posts).
 router.get('/', async (req, res) => {
   try {
-    const page   = Math.max(1, parseInt(req.query.page)  || 1);
     const limit  = Math.min(30, parseInt(req.query.limit) || 15);
     const type   = req.query.type || 'all';
-    const offset = (page - 1) * limit;
     const uid    = req.session?.user?.id || null;
 
-    const vals = [limit, offset];
-    let typeWhere = '';
-    if (type !== 'all') { vals.push(type); typeWhere = `AND p.type = $${vals.length}`; }
+    // Decode cursor
+    let cursorTs = null;
+    let cursorId = null;
+    if (req.query.cursor) {
+      try {
+        const decoded = JSON.parse(Buffer.from(req.query.cursor, 'base64').toString('utf8'));
+        cursorTs = decoded.ts;
+        cursorId = decoded.id;
+      } catch { /* invalid cursor → treat as first page */ }
+    }
 
-    const posts = await db.all(`
+    // Build WHERE clauses
+    const vals = [];
+    const where = ['p.is_active = true'];
+
+    if (type !== 'all') {
+      vals.push(type);
+      where.push(`p.type = $${vals.length}`);
+    }
+    if (cursorTs && cursorId) {
+      vals.push(cursorTs, cursorId);
+      where.push(`(p.created_at, p.id) < ($${vals.length - 1}::timestamptz, $${vals.length})`);
+    }
+
+    vals.push(limit + 1); // fetch one extra to detect next page
+    const rows = await db.all(`
       SELECT p.*, u.first_name, u.last_name, u.email,
              cp.headline_en, cp.headline_fr
       FROM nh_posts p
       LEFT JOIN nh_users u  ON u.id = p.author_id
       LEFT JOIN nh_candidate_profiles cp ON cp.user_id = p.author_id
-      WHERE p.is_active = true ${typeWhere}
-      ORDER BY p.created_at DESC
-      LIMIT $1 OFFSET $2
+      WHERE ${where.join(' AND ')}
+      ORDER BY p.created_at DESC, p.id DESC
+      LIMIT $${vals.length}
     `, vals);
 
+    const hasMore = rows.length > limit;
+    const posts   = hasMore ? rows.slice(0, limit) : rows;
+
+    // Build nextCursor from last post in this page
+    let nextCursor = null;
+    if (hasMore && posts.length) {
+      const last = posts[posts.length - 1];
+      nextCursor = Buffer.from(JSON.stringify({ ts: last.created_at, id: last.id })).toString('base64');
+    }
+
+    // Batch-fetch likes for current user
     if (uid && posts.length) {
       const ids = posts.map(p => `'${String(p.id).replace(/'/g,'')}'`).join(',');
       const liked = await db.all(
@@ -62,7 +95,7 @@ router.get('/', async (req, res) => {
       posts.forEach(p => { p.is_liked_by_me = false; });
     }
 
-    res.json({ success: true, posts, page, limit });
+    res.json({ success: true, posts, nextCursor });
   } catch (e) {
     res.status(500).json({ success: false, error: e.message });
   }

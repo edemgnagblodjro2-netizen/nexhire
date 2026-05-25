@@ -7639,7 +7639,7 @@ async function declineSlots(slotId) {
 // FEED
 // ═══════════════════════════════════════════════════════════
 let feedType             = 'all';
-let feedPage             = 1;
+let feedCursor           = null;   // keyset cursor (null = first page)
 let feedLoading          = false;
 let feedAllLoaded        = false;
 let feedUploadedImageUrl = null;
@@ -7722,7 +7722,7 @@ function loadFeed() {
       </aside>
     </div>`;
 
-  feedPage = 1;
+  feedCursor    = null;
   feedAllLoaded = false;
   fetchFeedPosts(true);
 }
@@ -7735,16 +7735,19 @@ async function fetchFeedPosts(reset = false) {
   const isFr = state.lang === 'fr';
 
   if (reset) {
-    feedPage = 1;
+    feedCursor    = null;
     feedAllLoaded = false;
     container.innerHTML = '<div style="text-align:center;padding:40px 0"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>';
   }
 
-  const d = await api('GET', `${BASE}/api/feed?page=${feedPage}&limit=10&type=${feedType}`);
+  const cursorParam = feedCursor ? `&cursor=${encodeURIComponent(feedCursor)}` : '';
+  const d = await api('GET', `${BASE}/api/feed?limit=10&type=${feedType}${cursorParam}`);
   feedLoading = false;
   const posts = d.posts || [];
 
-  if (posts.length < 10) {
+  // Store next cursor — null means we've reached the end
+  feedCursor = d.nextCursor || null;
+  if (!feedCursor) {
     feedAllLoaded = true;
     const lm = document.getElementById('feed-load-more');
     if (lm) lm.style.display = 'none';
@@ -7762,7 +7765,6 @@ async function fetchFeedPosts(reset = false) {
   } else {
     posts.forEach(p => container.insertAdjacentHTML('beforeend', renderPostCard(p)));
   }
-  feedPage++;
 }
 
 function loadMoreFeedPosts() { fetchFeedPosts(false); }
@@ -7771,6 +7773,7 @@ function setFeedFilter(type, btn) {
   feedType = type;
   document.querySelectorAll('.feed-filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  feedCursor = null;
   fetchFeedPosts(true);
 }
 

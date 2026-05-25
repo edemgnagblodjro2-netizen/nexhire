@@ -443,6 +443,7 @@ async function runMigrations() {
     `);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_vi_company ON nh_video_interviews(company_id)`);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_vr_interview ON nh_video_responses(interview_id)`);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_posts_feed ON nh_posts(is_active, created_at DESC, id DESC)`);
     // Seed skill tests if empty
     await seedSkillTests(pool);
     // ── Feature migrations ─────────────────────────────────────
