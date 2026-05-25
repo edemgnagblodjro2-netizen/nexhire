@@ -7251,10 +7251,11 @@ async function declineSlots(slotId) {
 // ═══════════════════════════════════════════════════════════
 // FEED
 // ═══════════════════════════════════════════════════════════
-let feedType    = 'all';
-let feedPage    = 1;
-let feedLoading = false;
-let feedAllLoaded = false;
+let feedType             = 'all';
+let feedPage             = 1;
+let feedLoading          = false;
+let feedAllLoaded        = false;
+let feedUploadedImageUrl = null;
 
 function feedRelTime(dateStr, isFr) {
   const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
@@ -7534,6 +7535,7 @@ function openFeedComposer(type) {
   if (!state.user) { showModal('modal-login'); return; }
   const modal = document.getElementById('compose-modal');
   if (!modal) return;
+  feedUploadedImageUrl = null;
   modal.style.display = 'flex';
   document.querySelectorAll('.compose-tab').forEach(t => t.classList.remove('active'));
   const activeTab = document.querySelector(`.compose-tab[data-ctype="${type}"]`);
@@ -7599,9 +7601,16 @@ function setComposeType(type, btn) {
           style="width:100%;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:15px;resize:vertical;box-sizing:border-box;line-height:1.7;outline:none;font-family:var(--b)">${type === 'hired' ? hired_tmpl : ''}</textarea>
       </div>
       <div class="form-group">
-        <input type="url" id="compose-image-url"
-          placeholder="${isFr ? 'URL d\'une image (optionnel)' : 'Image URL (optional)'}"
-          style="width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;box-sizing:border-box;outline:none;font-family:var(--b)">
+        <label for="compose-image-file" id="compose-image-label"
+          style="cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px dashed var(--border);border-radius:10px;color:var(--muted);font-size:13px;transition:all .15s">
+          <i class="ti ti-photo" style="font-size:18px"></i>
+          <span>${isFr ? 'Ajouter une photo (optionnel)' : 'Add a photo (optional)'}</span>
+        </label>
+        <input type="file" id="compose-image-file" accept="image/*" style="display:none" onchange="handleFeedImageUpload(this)">
+        <div id="compose-image-preview" style="display:none;margin-top:10px;position:relative">
+          <img id="compose-image-preview-img" style="width:100%;border-radius:10px;max-height:200px;object-fit:cover" alt="">
+          <button onclick="removeFeedImage()" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center"><i class="ti ti-x"></i></button>
+        </div>
       </div>`;
     if (type === 'hired') setTimeout(() => document.getElementById('compose-content')?.select(), 50);
   }
@@ -7615,7 +7624,7 @@ async function submitPost() {
   const articleTitle = document.getElementById('compose-article-title')?.value?.trim();
   const articleBody  = document.getElementById('compose-article-body')?.value?.trim();
   const jobId        = document.getElementById('compose-job-id')?.value || null;
-  const imageUrl     = document.getElementById('compose-image-url')?.value?.trim() || null;
+  const imageUrl     = feedUploadedImageUrl || null;
 
   if (type !== 'article' && !content) {
     toast(isFr ? 'Le contenu est requis.' : 'Content is required.', 'error'); return;
@@ -7640,6 +7649,7 @@ async function submitPost() {
 
   if (d.success) {
     document.getElementById('compose-modal').style.display = 'none';
+    feedUploadedImageUrl = null;
     toast(isFr ? '✅ Post publié !' : '✅ Post published!', 'success');
     const container = document.getElementById('feed-posts-container');
     if (container) {
@@ -7693,4 +7703,58 @@ async function submitJobQuestion(jobId) {
     toast(d.error || 'Failed', 'error');
     input.value = question;
   }
+}
+
+// ── Feed image upload helpers ─────────────────────────────
+async function handleFeedImageUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const isFr = state.lang === 'fr';
+
+  // Immediate local preview
+  const reader = new FileReader();
+  reader.onload = e => {
+    const preview = document.getElementById('compose-image-preview');
+    const img     = document.getElementById('compose-image-preview-img');
+    if (preview && img) { img.src = e.target.result; preview.style.display = 'block'; }
+    const label = document.getElementById('compose-image-label');
+    if (label) label.innerHTML = `<i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:18px"></i><span>${isFr ? 'Upload en cours…' : 'Uploading…'}</span>`;
+  };
+  reader.readAsDataURL(file);
+
+  // Upload to server
+  try {
+    const form = new FormData();
+    form.append('image', file);
+    const resp = await fetch(`${BASE}/api/feed/upload`, {
+      method: 'POST',
+      body: form,
+      credentials: 'include',
+    });
+    const d = await resp.json();
+    if (d.success) {
+      feedUploadedImageUrl = d.url;
+      const img = document.getElementById('compose-image-preview-img');
+      if (img) img.src = d.url;
+      const label = document.getElementById('compose-image-label');
+      if (label) label.innerHTML = `<i class="ti ti-check" style="color:var(--green);font-size:18px"></i><span style="color:var(--green)">${isFr ? 'Photo ajoutée ✓' : 'Photo added ✓'}</span>`;
+    } else {
+      toast(d.error || (isFr ? 'Échec de l\'upload' : 'Upload failed'), 'error');
+      removeFeedImage();
+    }
+  } catch {
+    toast(isFr ? 'Erreur réseau' : 'Network error', 'error');
+    removeFeedImage();
+  }
+}
+
+function removeFeedImage() {
+  feedUploadedImageUrl = null;
+  const preview = document.getElementById('compose-image-preview');
+  const input   = document.getElementById('compose-image-file');
+  const label   = document.getElementById('compose-image-label');
+  const isFr    = state.lang === 'fr';
+  if (preview) preview.style.display = 'none';
+  if (input)   input.value = '';
+  if (label)   label.innerHTML = `<i class="ti ti-photo" style="font-size:18px"></i><span>${isFr ? 'Ajouter une photo (optionnel)' : 'Add a photo (optional)'}</span>`;
 }

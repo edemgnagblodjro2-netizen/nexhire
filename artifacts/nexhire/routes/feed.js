@@ -2,6 +2,29 @@ const router   = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
 const db        = require('../models/db');
 const { requireAuth } = require('../middleware/auth');
+const multer    = require('multer');
+const path      = require('path');
+const fs        = require('fs');
+
+const feedUpDir = path.join(__dirname, '../uploads/feed');
+if (!fs.existsSync(feedUpDir)) fs.mkdirSync(feedUpDir, { recursive: true });
+
+const feedStorage = multer.diskStorage({
+  destination: feedUpDir,
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
+    cb(null, `${uuidv4()}${ext}`);
+  },
+});
+const feedMulter = multer({
+  storage: feedStorage,
+  limits: { fileSize: 8 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    cb(null, ['.jpg','.jpeg','.png','.gif','.webp'].includes(
+      path.extname(file.originalname).toLowerCase()
+    ));
+  },
+});
 
 // ── GET /api/feed ─────────────────────────────────────────────
 router.get('/', async (req, res) => {
@@ -156,6 +179,13 @@ router.post('/:id/comment', requireAuth, async (req, res) => {
   } catch (e) {
     res.status(500).json({ success: false, error: e.message });
   }
+});
+
+// ── POST /api/feed/upload — image upload ──────────────────────
+router.post('/upload', requireAuth, feedMulter.single('image'), (req, res) => {
+  if (!req.file) return res.status(400).json({ success: false, error: 'No image uploaded' });
+  const BASE_PATH = process.env.BASE_PATH || '/nexhire';
+  res.json({ success: true, url: `${BASE_PATH}/uploads/feed/${req.file.filename}` });
 });
 
 module.exports = router;

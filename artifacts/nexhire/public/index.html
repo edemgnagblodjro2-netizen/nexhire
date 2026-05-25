@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="stylesheet" href="/nexhire/css/main.css?v=20260525f">
+<link rel="stylesheet" href="/nexhire/css/main.css?v=20260525g">
 <link rel="icon" type="image/svg+xml" href="/nexhire/img/favicon.svg">
 <link rel="manifest" href="/nexhire/manifest.json">
 <meta name="theme-color" content="#023448">
@@ -58,6 +58,7 @@
           <div class="user-dropdown" id="user-dropdown">
             <div class="dropdown-email" id="dropdown-email">—</div>
             <div class="dropdown-item" data-goto="candidate-dash"><i class="ti ti-user"></i> <span data-i18n="nav.dd.profile">Profile</span></div>
+            <div class="dropdown-item" data-goto="feed"><i class="ti ti-layout-list"></i> <span data-i18n="nav.feed">Feed</span></div>
             <div class="dropdown-item" id="dd-my-reviews"><i class="ti ti-star"></i> <span data-i18n="nav.dd.reviews">My reviews</span></div>
             <div class="dropdown-item" data-goto="settings"><i class="ti ti-settings"></i> <span data-i18n="nav.dd.settings">Settings</span></div>
             <div class="dropdown-divider"></div>
@@ -903,6 +904,7 @@
         <a class="dash-nav-item" data-tab="tab-saved"><i class="ti ti-heart"></i> <span data-i18n="cand.nav.saved">Saved Jobs</span></a>
         <a class="dash-nav-item" data-tab="tab-applications"><i class="ti ti-file-text"></i> <span data-i18n="cand.nav.apps">Applications</span></a>
         <a class="dash-nav-item" data-tab="tab-messages"><i class="ti ti-message-circle-2"></i> <span data-i18n="cand.nav.messages">Messages</span><span id="msg-unread-cand" style="display:none;background:#6366f1;color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:4px"></span></a>
+        <a class="dash-nav-item" onclick="goto('feed')" style="cursor:pointer"><i class="ti ti-layout-list"></i> <span data-i18n="nav.feed">Feed</span></a>
         <a class="dash-nav-item" data-tab="tab-my-reviews" data-tab-extra="loadMyReviews"><i class="ti ti-star"></i> <span data-i18n="cand.nav.reviews">My Reviews</span></a>
         <a class="dash-nav-item" data-tab="tab-alerts"><i class="ti ti-bell"></i> <span data-i18n="cand.nav.alerts">Job Alerts</span></a>
         <a class="dash-nav-item" data-tab="tab-ai-chat"><i class="ti ti-robot"></i> <span data-i18n="cand.nav.ai">AI Coach</span></a>
@@ -1383,7 +1385,7 @@ if ('serviceWorker' in navigator) {
     .catch(e => console.warn('[SW] failed', e));
 }
 </script>
-<script src="/nexhire/js/app.js?v=20260525f"></script>
+<script src="/nexhire/js/app.js?v=20260525g"></script>
 <script>window.__nexBase='/nexhire';</script>
 <script src="/nexhire/js/chatbot.js?v=20260524a"></script>
 </body>
