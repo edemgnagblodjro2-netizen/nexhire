@@ -38,7 +38,7 @@ a{text-decoration:none;color:inherit}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── NAV ──────────────────────────────────────────────────── */
-.nav{background:#0d1526;backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:100}
+.nav{background:#0d1526;backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
 .nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:0}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:40px}
 .logo-mark{width:34px;height:34px;flex-shrink:0}
