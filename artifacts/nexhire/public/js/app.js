@@ -6885,3 +6885,43 @@ async function deleteAdminTest(id, title) {
 
   setInterval(() => goTo(current + 1), 6000);
 })();
+
+// ── Mobile hamburger menu ───────────────────────────────────
+function toggleMobileMenu() {
+  const menu = document.getElementById('nav-links');
+  const btn  = document.getElementById('hamburger');
+  if (!menu || !btn) return;
+  const isOpen = menu.classList.toggle('open');
+  btn.classList.toggle('active', isOpen);
+  btn.setAttribute('aria-expanded', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+  // sync mobile auth visibility with auth state
+  const mobAuth = document.getElementById('nav-mob-auth');
+  if (mobAuth) {
+    const guest = document.getElementById('nav-auth-guest');
+    mobAuth.style.display = (guest && guest.style.display !== 'none') ? 'flex' : 'none';
+  }
+}
+
+function closeMobileMenu() {
+  const menu = document.getElementById('nav-links');
+  const btn  = document.getElementById('hamburger');
+  if (!menu) return;
+  menu.classList.remove('open');
+  btn?.classList.remove('active');
+  btn?.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+
+// Close menu when any nav link or mobile auth button is clicked
+document.addEventListener('click', e => {
+  const link = e.target.closest('.nav-link, .nav-mob-btn');
+  if (link && document.getElementById('nav-links')?.classList.contains('open')) {
+    closeMobileMenu();
+  }
+});
+
+// Close on backdrop click (click outside the overlay content)
+document.getElementById('nav-links')?.addEventListener('click', e => {
+  if (e.target === document.getElementById('nav-links')) closeMobileMenu();
+});

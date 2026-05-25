@@ -1,0 +1,167 @@
+PROBLÈME MOBILE — Responsive à corriger
+
+Deux problèmes identifiés sur téléphone :
+
+────────────────────────────────────────
+1. BROWSE BY CATEGORY — Grille qui déborde
+────────────────────────────────────────
+Sur mobile, les 16 catégories s'affichent en grille.
+Les 8 premières sont bien positionnées,
+les 8 suivantes débordent hors de l'écran.
+
+CORRIGER le CSS de la grille catégories :
+
+/* ACTUEL — casse sur mobile */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* trop large */
+}
+
+/* CORRECT — responsive */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 768px) {
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 colonnes sur mobile = 8 lignes propres */
+    overflow: hidden;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 0 16px;
+  }
+  
+  .category-card {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+────────────────────────────────────────
+2. MENU NAVIGATION — Pas de menu déroulant mobile
+────────────────────────────────────────
+Sur mobile, les liens de navigation 
+(Jobs, Pour les employeurs, Tarifs)
+restent affichés en ligne et débordent.
+
+Il n'y a pas de menu hamburger ☰ sur mobile.
+
+IMPLÉMENTER le menu hamburger standard :
+
+HTML — Ajouter dans la navbar :
+<button class="hamburger" id="hamburger" 
+        onclick="toggleMobileMenu()"
+        aria-label="Menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+CSS :
+/* Cacher hamburger sur desktop */
+.hamburger { display: none; }
+
+@media (max-width: 768px) {
+  
+  /* Afficher hamburger sur mobile */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1001;
+  }
+  
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-color);
+    transition: all 0.3s ease;
+  }
+  
+  /* Cacher les liens nav sur mobile par défaut */
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--bg-color);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    z-index: 1000;
+  }
+  
+  /* Afficher quand menu ouvert */
+  .nav-links.open {
+    display: flex;
+  }
+  
+  .nav-links a {
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+  
+  /* Cacher Sign in et Get started de la navbar 
+     sur mobile — les mettre dans le menu */
+  .nav-cta-group {
+    display: none;
+  }
+}
+
+JS :
+function toggleMobileMenu() {
+  const menu = document.querySelector('.nav-links')
+  const hamburger = document.getElementById('hamburger')
+  menu.classList.toggle('open')
+  hamburger.classList.toggle('active')
+  
+  // Bloquer le scroll quand menu ouvert
+  document.body.style.overflow = 
+    menu.classList.contains('open') ? 'hidden' : ''
+}
+
+// Fermer le menu quand on clique sur un lien
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.remove('open')
+    document.getElementById('hamburger').classList.remove('active')
+    document.body.style.overflow = ''
+  })
+})
+
+────────────────────────────────────────
+3. VÉRIFICATION GLOBALE MOBILE
+────────────────────────────────────────
+Après ces deux corrections, vérifier aussi :
+
+□ Hero section — texte ne déborde pas sur mobile
+□ Job listings — cards en colonne unique sur mobile
+□ Pricing — plans en colonne unique sur mobile
+□ Footer — colonnes empilées sur mobile
+□ Dashboard — panneau sidebar se replie sur mobile
+□ Messagerie — interface chat utilisable sur mobile
+
+Tester sur :
+- iPhone SE (375px) — le plus petit
+- iPhone 14 (390px) — standard
+- Android moyen (360px)
+
+Utiliser Chrome DevTools :
+F12 → icône mobile → choisir "iPhone SE"
+et vérifier chaque section.
