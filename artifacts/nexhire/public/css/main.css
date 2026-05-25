@@ -1299,3 +1299,65 @@ a{text-decoration:none;color:inherit}
   color:var(--dark);transition:background .1s;
 }
 .pf-skill-sug-item:hover{background:var(--indigo3);color:var(--indigo)}
+
+/* ── CPC Calculator & ROI & Testimonials responsive ─────── */
+@media (max-width: 640px) {
+  #cpc-calculator > div:nth-child(3) {
+    grid-template-columns: 1fr !important;
+  }
+  #cpc-calculator #calc-result > div:first-child {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Testimonials grid responsive */
+@media (max-width: 700px) {
+  /* employer page inner grids */
+  [style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ROI slider track */
+#roi-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: rgba(99,102,241,.3);
+  border-radius: 3px;
+  outline: none;
+}
+#roi-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #6366F1;
+  cursor: pointer;
+  box-shadow: 0 0 0 4px rgba(99,102,241,.25);
+  transition: box-shadow .15s;
+}
+#roi-slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 6px rgba(99,102,241,.3);
+}
+#roi-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #6366F1;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 0 4px rgba(99,102,241,.25);
+}
+
+/* Calc selects focus ring */
+#calc-poste:focus, #calc-ville:focus {
+  border-color: #6366F1 !important;
+  box-shadow: 0 0 0 3px rgba(99,102,241,.15);
+}
+
+/* Testimonials card hover */
+[style*="border-radius:20px"] {
+  transition: box-shadow .2s, transform .2s;
+}

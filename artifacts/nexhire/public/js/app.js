@@ -4452,7 +4452,8 @@ function showTab(tabId, el) {
   document.getElementById(tabId)?.classList.add('active');
   if (el) el.classList.add('active');
   if (tabId === 'tab-saved') loadSavedJobsTab();
-  if (tabId === 'tab-applications') loadMyApplications();
+  if (tabId === 'tab-applications') { loadMyApplications(); startAppsPolling(); }
+  else stopAppsPolling();
   if (tabId === 'tab-for-you') loadJobsForYou();
   if (tabId === 'tab-alerts') loadAlerts();
   if (tabId === 'tab-score') loadProfileScore();
@@ -6935,3 +6936,69 @@ function toggleCatDropdown() {
   btn.classList.toggle('active', open);
   btn.setAttribute('aria-expanded', open);
 }
+
+// ── CPC Budget Calculator ───────────────────────────────────
+const CPC_DATA = {
+  tech:      { montreal:{b:8,c:16,q:'4–6',h:120}, toronto:{b:10,c:18,q:'5–7',h:100}, remote:{b:12,c:22,q:'6–8',h:90},  autre:{b:7,c:14,q:'3–5',h:130} },
+  finance:   { montreal:{b:9,c:14,q:'3–5',h:140}, toronto:{b:11,c:16,q:'4–6',h:120}, remote:{b:8,c:13,q:'3–5',h:150}, autre:{b:7,c:12,q:'3–4',h:160} },
+  design:    { montreal:{b:7,c:15,q:'4–5',h:110}, toronto:{b:9,c:17,q:'5–6',h:100},  remote:{b:10,c:20,q:'5–7',h:95},  autre:{b:6,c:12,q:'3–4',h:120} },
+  marketing: { montreal:{b:6,c:13,q:'3–5',h:110}, toronto:{b:8,c:16,q:'4–6',h:100},  remote:{b:9,c:18,q:'5–6',h:90},   autre:{b:6,c:12,q:'3–4',h:120} },
+  sales:     { montreal:{b:7,c:14,q:'4–5',h:100}, toronto:{b:9,c:16,q:'5–6',h:90},   remote:{b:8,c:15,q:'4–6',h:95},   autre:{b:6,c:12,q:'3–4',h:115} },
+  rh:        { montreal:{b:5,c:11,q:'3–4',h:90},  toronto:{b:7,c:13,q:'3–5',h:85},   remote:{b:6,c:12,q:'3–5',h:90},   autre:{b:5,c:10,q:'2–4',h:100} },
+};
+
+function calcBudget() {
+  const poste = document.getElementById('calc-poste')?.value || 'tech';
+  const ville = document.getElementById('calc-ville')?.value || 'montreal';
+  const d = (CPC_DATA[poste] || CPC_DATA.tech)[ville] || CPC_DATA.tech.montreal;
+  const set = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+  set('calc-budget', d.b + '$/jour');
+  set('calc-clics',  '~' + d.c + '/jour');
+  set('calc-cands',  '~' + d.q + '/semaine');
+  set('calc-cph',    '~' + d.h + '$ estimé');
+}
+
+// ── ROI Calculator (employer) ───────────────────────────────
+function updateRoi(n) {
+  n = parseInt(n) || 3;
+  const linkedin   = Math.round(n * 8004);
+  const nexhire    = 2388;
+  const savings    = linkedin - nexhire;
+  const fmt = v => v.toLocaleString('fr-CA') + '$/an';
+  const set = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+  set('roi-n-label',      n);
+  set('roi-linkedin',     fmt(linkedin));
+  set('roi-save-amount',  fmt(savings) + ' 🎉');
+}
+
+// ── My Applications — status polling ───────────────────────
+let _appsPoller = null;
+
+function startAppsPolling() {
+  if (_appsPoller) return;
+  _appsPoller = setInterval(() => {
+    // Only poll when candidate dash applications tab is active
+    const tab = document.querySelector('#pg-candidate-dash .dash-tab[data-tab="applications"]');
+    if (tab?.classList.contains('active')) loadMyApplications();
+  }, 30000);
+}
+
+function stopAppsPolling() {
+  clearInterval(_appsPoller);
+  _appsPoller = null;
+}
+
+// Patch openQuickApply to pre-fill candidate banner
+const _origOpenQuickApply = openQuickApply;
+openQuickApply = function(jobId, jobTitle) {
+  _origOpenQuickApply(jobId, jobTitle);
+  // Pre-fill profile banner
+  if (state.user) {
+    const name = [state.user.first_name, state.user.last_name].filter(Boolean).join(' ');
+    const initials = name ? name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2) : '?';
+    const el = document.getElementById('qa-name');
+    const av = document.getElementById('qa-avatar');
+    if (el) el.textContent = name || state.user.email || 'Votre profil';
+    if (av) av.textContent = initials;
+  }
+};
