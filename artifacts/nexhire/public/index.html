@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="stylesheet" href="/nexhire/css/main.css?v=20260525t">
+<link rel="stylesheet" href="/nexhire/css/main.css?v=20260525u">
 <link rel="icon" type="image/svg+xml" href="/nexhire/img/favicon.svg">
 <link rel="manifest" href="/nexhire/manifest.json">
 <meta name="theme-color" content="#023448">
@@ -31,7 +31,7 @@
       <button class="nav-mob-close" id="nav-mob-close" onclick="closeMobileMenu()" aria-label="Close menu"><i class="ti ti-x"></i></button>
       <a class="nav-link" data-goto="jobs" href="#" data-i18n="nav.jobs">Jobs</a>
       <a class="nav-link" data-goto="feed" href="#" data-i18n="nav.feed">Feed</a>
-      <a class="nav-link" data-goto="employer" href="#" data-i18n="nav.employers">For Employers</a>
+      <a class="nav-link" id="nav-link-employers" data-goto="employer" href="#" data-i18n="nav.employers">For Employers</a>
       <a class="nav-link" data-goto="pricing" href="#" data-i18n="nav.pricing">Pricing</a>
       <div class="nav-mob-auth" id="nav-mob-auth">
         <a href="#login" class="btn-ghost nav-mob-btn" id="mob-signin" data-i18n="nav.signin">Sign in</a>
@@ -1386,7 +1386,7 @@ if ('serviceWorker' in navigator) {
     .catch(e => console.warn('[SW] failed', e));
 }
 </script>
-<script src="/nexhire/js/app.js?v=20260525t"></script>
+<script src="/nexhire/js/app.js?v=20260525u"></script>
 <script>window.__nexBase='/nexhire';</script>
 <script src="/nexhire/js/chatbot.js?v=20260524a"></script>
 </body>
