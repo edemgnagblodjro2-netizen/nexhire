@@ -5723,6 +5723,21 @@ async function markAllNotifsRead() {
   document.querySelector('.notif-dd-markall')?.remove();
 }
 
+// Type → destination pour employeurs
+const NOTIF_EMP_DEST = {
+  message:              'messages',    // géré via lien messages-{appId}
+  slot_confirmed:       'interviews',  // etab-interviews
+  interview_invite:     'jobs',        // etab-jobs (leurs offres/candidatures)
+  status_update:        'jobs',
+  application_update:   'jobs',
+  application:          'jobs',
+  review:               'jobs',
+  job_match:            'jobs',
+  job_alert:            'jobs',
+  referral:             null,
+  skill_badge:          null,
+};
+
 // Type → destination pour candidats
 const NOTIF_CAND_DEST = {
   status_update:        '#applications',
@@ -5785,9 +5800,26 @@ async function markNotifRead(el) {
     }
     // sinon pas de navigation (badge/skill)
   } else {
-    // Employeurs : utiliser le lien tel quel
-    if (rawLink && rawLink.includes('#')) location.href = rawLink;
-    else if (rawLink) location.hash = rawLink;
+    // Employeurs : routage par type
+    const dest = NOTIF_EMP_DEST[type];
+    if (dest === 'messages' && rawLink.includes('messages-')) {
+      location.href = rawLink;
+    } else if (dest === 'interviews') {
+      goto('employer-dash');
+      setTimeout(() => {
+        const navEl = document.querySelector('[data-emptab="etab-interviews"]');
+        if (navEl) showEmpTab('etab-interviews', navEl);
+      }, 100);
+    } else if (dest === 'jobs') {
+      goto('employer-dash');
+      setTimeout(() => {
+        const navEl = document.querySelector('[data-emptab="etab-jobs"]');
+        if (navEl) showEmpTab('etab-jobs', navEl);
+      }, 100);
+    } else if (rawLink && rawLink.includes('#')) {
+      location.href = rawLink;
+    }
+    // sinon pas de navigation
   }
 }
 
