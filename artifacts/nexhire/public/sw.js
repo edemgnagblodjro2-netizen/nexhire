@@ -1,4 +1,4 @@
-const CACHE = 'nexhire-v52';
+const CACHE = 'nexhire-v53';
 const PRECACHE = [
   '/nexhire/',
   '/nexhire/css/main.css?v=20260525f',
