@@ -43,7 +43,7 @@ router.post('/', requireAuth, requireCompanyAccess, async (req, res) => {
       `INSERT INTO nh_notifications (id, user_id, type, title, body, link, created_at)
        VALUES ($1,$2,'interview_invite',$3,$4,$5,NOW())`,
       [notifId, app.user_id, '📅 Invitation à un entretien',
-       `${jobTitle} — Choisissez votre créneau`, `/nexhire/#tab-applications`]
+       `${jobTitle} — Choisissez votre créneau`, `/nexhire/#applications`]
     );
 
     res.json({ success: true, slot_id: id });
@@ -119,7 +119,7 @@ router.patch('/:id/confirm', requireAuth, async (req, res) => {
         `INSERT INTO nh_notifications (id, user_id, type, title, body, link, created_at)
          VALUES ($1,$2,'slot_confirmed',$3,$4,$5,NOW())`,
         [notifId, company.owner_id, '✅ Entretien confirmé',
-         `${cname} a choisi son créneau`, `/nexhire/#tab-applications`]
+         `${cname} a choisi son créneau`, `/nexhire/#interviews`]
       );
     }
     res.json({ success: true });

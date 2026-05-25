@@ -269,6 +269,44 @@ function restoreFromHash() {
   const hash = window.location.hash.replace('#', '');
   if (hash === 'login') { showModal('modal-login'); return; }
   if (hash === 'register') { showModal('modal-register'); return; }
+  // Applications deep-link: #applications
+  if (hash === 'applications') {
+    if (state.user) {
+      if (state.user.role === 'employer') {
+        goto('employer-dash');
+        setTimeout(() => {
+          const navEl = document.querySelector('[data-emptab="etab-jobs"]');
+          if (navEl) showEmpTab('etab-jobs', navEl);
+        }, 100);
+      } else {
+        goto('candidate-dash');
+        setTimeout(() => {
+          const navEl = document.querySelector('[data-tab="tab-applications"]');
+          if (navEl) showTab('tab-applications', navEl);
+        }, 100);
+      }
+    } else showModal('modal-login');
+    return;
+  }
+  // Interviews deep-link: #interviews
+  if (hash === 'interviews') {
+    if (state.user) {
+      if (state.user.role === 'employer') {
+        goto('employer-dash');
+        setTimeout(() => {
+          const navEl = document.querySelector('[data-emptab="etab-interviews"]');
+          if (navEl) showEmpTab('etab-interviews', navEl);
+        }, 100);
+      } else {
+        goto('candidate-dash');
+        setTimeout(() => {
+          const navEl = document.querySelector('[data-tab="tab-applications"]');
+          if (navEl) showTab('tab-applications', navEl);
+        }, 100);
+      }
+    } else showModal('modal-login');
+    return;
+  }
   // Messages deep-link: #messages or #messages-{appId}
   if (hash === 'messages' || hash.startsWith('messages-')) {
     const appId = hash.startsWith('messages-') ? hash.replace('messages-', '') : null;

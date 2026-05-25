@@ -118,7 +118,7 @@ router.put('/:id/status', requireAuth, requireCompanyAccess, async (req, res) =>
   // In-app notification for candidate
   const notifId = uuidv4().replace(/-/g, '');
   await db.run('INSERT INTO nh_notifications (id, user_id, type, title, link) VALUES ($1,$2,$3,$4,$5)',
-    [notifId, app.user_id, 'status_update', `Candidature ${labels[status] || status}`, `/nexhire/`]);
+    [notifId, app.user_id, 'status_update', `Candidature ${labels[status] || status}`, `/nexhire/#applications`]);
 
   // Email notification to candidate (non-blocking)
   if (app.candidate_email) {
