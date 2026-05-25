@@ -6961,14 +6961,17 @@ function calcBudget() {
 // ── ROI Calculator (employer) ───────────────────────────────
 function updateRoi(n) {
   n = parseInt(n) || 3;
-  const linkedin   = Math.round(n * 8004);
-  const nexhire    = 2388;
-  const savings    = linkedin - nexhire;
+  // LinkedIn Recruiter: ~$667/mois par poste actif × 12
+  const linkedin = Math.round(n * 8004);
+  // Nexhire Pro: plan $199/mois + budget CPC estimé ~$450/an par poste supplémentaire
+  const nexhire  = Math.round(2388 + (n - 1) * 450);
+  const savings  = linkedin - nexhire;
   const fmt = v => v.toLocaleString('fr-CA') + '$/an';
   const set = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
-  set('roi-n-label',      n);
-  set('roi-linkedin',     fmt(linkedin));
-  set('roi-save-amount',  fmt(savings) + ' 🎉');
+  set('roi-n-label',     n);
+  set('roi-linkedin',    fmt(linkedin));
+  set('roi-nexhire',     fmt(nexhire));
+  set('roi-save-amount', fmt(savings) + ' 🎉');
 }
 
 // ── My Applications — status polling ───────────────────────
