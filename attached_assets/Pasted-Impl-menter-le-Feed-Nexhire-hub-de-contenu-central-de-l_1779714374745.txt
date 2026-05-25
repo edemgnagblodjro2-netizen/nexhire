@@ -1,0 +1,334 @@
+Implémenter le Feed Nexhire — hub de contenu 
+central de la plateforme.
+
+────────────────────────────────────────
+ÉTAPE 1 — BASE DE DONNÉES
+────────────────────────────────────────
+
+Créer ces 3 tables dans PostgreSQL :
+
+CREATE TABLE nh_posts (
+  id                 SERIAL PRIMARY KEY,
+  author_id          INTEGER REFERENCES nh_users(id) ON DELETE CASCADE,
+  type               VARCHAR(20) NOT NULL DEFAULT 'text',
+  content            TEXT,
+  image_url          TEXT,
+  article_title      TEXT,
+  article_body       TEXT,
+  job_id             INTEGER REFERENCES nh_jobs(id) ON DELETE SET NULL,
+  likes_count        INTEGER DEFAULT 0,
+  comments_count     INTEGER DEFAULT 0,
+  shared_to_linkedin BOOLEAN DEFAULT FALSE,
+  linkedin_post_id   TEXT,
+  is_active          BOOLEAN DEFAULT TRUE,
+  created_at         TIMESTAMP DEFAULT NOW(),
+  updated_at         TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE nh_post_likes (
+  id         SERIAL PRIMARY KEY,
+  post_id    INTEGER REFERENCES nh_posts(id) ON DELETE CASCADE,
+  user_id    INTEGER REFERENCES nh_users(id) ON DELETE CASCADE,
+  created_at TIMESTAMP DEFAULT NOW(),
+  UNIQUE(post_id, user_id)
+);
+
+CREATE TABLE nh_post_comments (
+  id         SERIAL PRIMARY KEY,
+  post_id    INTEGER REFERENCES nh_posts(id) ON DELETE CASCADE,
+  author_id  INTEGER REFERENCES nh_users(id) ON DELETE CASCADE,
+  content    TEXT NOT NULL,
+  likes_count INTEGER DEFAULT 0,
+  parent_id  INTEGER REFERENCES nh_post_comments(id),
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE nh_job_questions (
+  id          SERIAL PRIMARY KEY,
+  job_id      INTEGER REFERENCES nh_jobs(id) ON DELETE CASCADE,
+  author_id   INTEGER REFERENCES nh_users(id) ON DELETE CASCADE,
+  question    TEXT NOT NULL,
+  answer      TEXT,
+  answered_by INTEGER REFERENCES nh_users(id),
+  answered_at TIMESTAMP,
+  is_public   BOOLEAN DEFAULT TRUE,
+  created_at  TIMESTAMP DEFAULT NOW()
+);
+
+Ajouter les index de performance :
+CREATE INDEX ON nh_posts(author_id, created_at DESC);
+CREATE INDEX ON nh_posts(type, created_at DESC);
+CREATE INDEX ON nh_post_comments(post_id, created_at);
+CREATE INDEX ON nh_post_likes(post_id, user_id);
+CREATE INDEX ON nh_job_questions(job_id, is_public);
+
+────────────────────────────────────────
+ÉTAPE 2 — ROUTES API dans server.js
+────────────────────────────────────────
+
+-- FEED --
+GET    /api/feed
+       → Liste paginée des posts
+       → Query params : ?page=1&limit=20&type=all
+       → Inclure : auteur, likes_count, 
+         comments_count, is_liked_by_me
+       → ORDER BY created_at DESC
+
+POST   /api/feed
+       → Créer un post (auth requis)
+       → Body : { type, content, image_url,
+                  article_title, article_body, job_id }
+       → Valider : content obligatoire si type=text
+       → Valider : article_title + article_body 
+                   obligatoires si type=article
+
+GET    /api/feed/:id
+       → Un post avec ses commentaires
+
+DELETE /api/feed/:id
+       → Seulement l'auteur peut supprimer
+       → Soft delete : is_active = false
+
+-- LIKES --
+POST   /api/feed/:id/like
+       → Toggle like (like si pas liké, unlike si déjà liké)
+       → Met à jour likes_count dans nh_posts
+       → Retourne : { liked: true/false, count: X }
+
+-- COMMENTAIRES --
+GET    /api/feed/:id/comments
+       → Tous les commentaires d'un post
+       → Inclure auteur + date
+
+POST   /api/feed/:id/comment
+       → Body : { content, parent_id (optionnel) }
+       → Met à jour comments_count dans nh_posts
+       → Envoie notification à l'auteur du post
+
+-- PARTAGE LINKEDIN --
+POST   /api/feed/:id/share-linkedin
+       → Vérifie que l'utilisateur a un 
+         linkedin_access_token en DB
+       → Appelle LinkedIn UGC Posts API
+       → Met à jour shared_to_linkedin = true
+       → Sauvegarde linkedin_post_id
+
+-- Q&A SUR LES OFFRES --
+GET    /api/jobs/:id/questions
+       → Questions publiques sur cette offre
+
+POST   /api/jobs/:id/questions
+       → Candidat pose une question
+       → Notifie l'employeur
+
+POST   /api/jobs/:id/questions/:qid/answer
+       → Seulement l'employeur de ce job
+       → Body : { answer }
+       → Met à jour answered_at
+
+────────────────────────────────────────
+ÉTAPE 3 — INTERFACE UTILISATEUR
+────────────────────────────────────────
+
+A) ONGLET "FEED" dans la navbar principale
+   Ajouter entre "Emplois" et "Pour les employeurs" :
+   Jobs | Feed | Pour les employeurs | Tarifs
+
+B) PAGE FEED — Layout 3 colonnes :
+
+   COLONNE GAUCHE (25%) — Filtres :
+   - Boutons filtres : Tous · Posts · Articles
+     · Annonces · Offres
+   - Top auteurs ce mois-ci
+   - Tendances / Hashtags populaires
+
+   COLONNE CENTRE (50%) — Posts :
+   - Composer en haut
+   - Liste de posts
+   - Chargement infini (scroll)
+
+   COLONNE DROITE (25%) — Suggestions :
+   - Personnes à suivre
+   - Communautés populaires
+   - Offres en vedette
+
+C) COMPOSER — Zone de création :
+
+   ┌─────────────────────────────────────┐
+   │ [Photo] Quoi de neuf ?             │
+   ├─────────────────────────────────────┤
+   │ [📷 Photo] [📝 Article]            │
+   │ [🎉 Annonce] [💼 Offre]            │
+   │                    ☑ LinkedIn  [Publier]│
+   └─────────────────────────────────────┘
+
+   Quand type = 'article' → ouvrir éditeur rich text
+   Quand type = 'job_share' → dropdown de ses offres
+   Quand type = 'hired' → pré-remplir le template
+
+D) POST CARD — Structure HTML :
+
+   <div class="post-card">
+     <div class="post-header">
+       <img class="post-avatar">
+       <div>
+         <span class="post-author-name"></span>
+         <span class="post-author-title"></span>
+         <span class="post-date"></span>
+       </div>
+       <button class="post-menu">···</button>
+     </div>
+     
+     <div class="post-content"></div>
+     <img class="post-image"> (si image)
+     <div class="post-job-card"> (si type=job_share)
+     
+     <div class="post-stats">
+       ❤️ <span class="likes-count"></span>
+       💬 <span class="comments-count"></span>
+     </div>
+     
+     <div class="post-actions">
+       <button data-action="like-post" data-id="">
+         ❤️ J'aime
+       </button>
+       <button data-action="comment-post" data-id="">
+         💬 Commenter
+       </button>
+       <button data-action="share-post" data-id="">
+         ↗️ Partager
+       </button>
+     </div>
+     
+     <div class="comments-section">
+       <!-- Commentaires ici -->
+       <div class="comment-input">
+         <input placeholder="Écrire un commentaire...">
+         <button data-action="submit-comment">➤</button>
+       </div>
+     </div>
+   </div>
+
+E) Q&A SOUS CHAQUE OFFRE D'EMPLOI
+   Ajouter une section en bas de chaque fiche offre :
+
+   ┌─────────────────────────────────────┐
+   │ ❓ Questions sur ce poste (3)       │
+   ├─────────────────────────────────────┤
+   │ Q: Y a-t-il du télétravail ?        │
+   │ R: Oui, 100% remote possible ✅     │
+   │    — RH Manager · il y a 2 jours   │
+   ├─────────────────────────────────────┤
+   │ [Poser une question...]         ➤  │
+   └─────────────────────────────────────┘
+
+F) INTÉGRATION DANS LES DASHBOARDS
+
+   Dashboard Candidat :
+   → Ajouter onglet "📰 Feed" dans le menu
+   → Afficher ses publications + stats
+   → Notifications : "X a liké votre post"
+
+   Dashboard Employeur :
+   → Ajouter onglet "📢 Publications"
+   → Voir les posts liés à ses offres
+   → Répondre aux Q&A depuis le dashboard
+
+────────────────────────────────────────
+ÉTAPE 4 — SEEDS pour tester
+────────────────────────────────────────
+
+Insérer 5 posts de démonstration en DB :
+
+INSERT INTO nh_posts 
+  (author_id, type, content, likes_count, comments_count)
+VALUES
+  (1, 'hired', 
+   'Ravi d''annoncer que j''ai rejoint TechCo 
+    en tant que Développeur React Senior ! 
+    Merci à toute l''équipe Nexhire 🚀 
+    #NewJob #React #Montréal', 
+   24, 8),
+   
+  (2, 'text',
+   'Conseil du jour pour les développeurs 
+    en recherche d''emploi : personnalisez 
+    chaque lettre de motivation. 
+    Les recruteurs le voient immédiatement. 
+    #CareerTips #Dev #Nexhire',
+   45, 12),
+   
+  (3, 'job_share',
+   'Nous recrutons ! Rejoignez notre équipe 
+    tech en pleine croissance 🎯',
+   18, 5),
+   
+  (4, 'text',
+   'Le marché de l''emploi tech au Québec 
+    en 2026 : +23% de postes remote vs 2025. 
+    Les développeurs full-stack sont les 
+    plus demandés. Vos thoughts ? 💭
+    #TechQC #RemoteWork',
+   67, 23),
+   
+  (5, 'article',
+   'Comment négocier son salaire en entretien',
+   89, 34);
+
+────────────────────────────────────────
+ORDRE D'IMPLÉMENTATION EXACT
+────────────────────────────────────────
+
+Phase 1 — Cette semaine :
+□ Créer les 4 tables en PostgreSQL
+□ Insérer les 5 posts de demo
+□ Routes API : GET /api/feed + POST /api/feed
+□ Page Feed accessible via #feed
+□ Affichage liste de posts (cards)
+□ Composer basique texte + photo
+□ Onglet Feed dans la navbar
+
+Phase 2 — Semaine suivante :
+□ Like fonctionnel (toggle + compteur)
+□ Commentaires (affichage + soumission)
+□ Types spéciaux : hired + job_share
+□ Q&A sous les offres d'emploi
+□ Notifications likes/commentaires
+□ Onglet Feed dans les deux dashboards
+
+Phase 3 :
+□ Éditeur d'articles rich text
+□ Filtres par type de contenu
+□ Toggle partage LinkedIn
+□ Intégration LinkedIn UGC Posts API
+□ Top auteurs + Tendances
+
+Phase 4 :
+□ Feed personnalisé par réseau
+□ Suggestions personnes à suivre
+□ Analytics vues par post
+□ Groupes thématiques par secteur
+
+────────────────────────────────────────
+TEST À FAIRE APRÈS PHASE 1
+────────────────────────────────────────
+
+1. Aller sur /nexhire/#feed
+   → Les 5 posts demo s'affichent ✓/✗
+
+2. Créer un post texte connecté
+   → Apparaît dans le feed ✓/✗
+
+3. Cliquer ❤️ Like sur un post
+   → Compteur s'incrémente ✓/✗
+   → Re-cliquer = unlike ✓/✗
+
+4. Écrire un commentaire
+   → Apparaît sous le post ✓/✗
+
+5. Aller sur une fiche offre
+   → Section Q&A visible en bas ✓/✗
+   → Poser une question ✓/✗
+
+Confirmer chaque test avant 
+de passer à la phase suivante.
