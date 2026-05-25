@@ -5687,7 +5687,8 @@ function renderNotifDropdown(notifs, unread, isFr) {
       const ic = notifIcon(n.type);
       const isUnread = !n.read_at;
       const link = n.link ? `data-link="${esc(n.link)}"` : '';
-      return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} onclick="markNotifRead(this)">
+      const dtype = `data-type="${esc(n.type || '')}"`;
+      return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} ${dtype} onclick="markNotifRead(this)">
         <div class="notif-icon" style="background:${ic.bg};color:${ic.color}"><i class="ti ${ic.icon}"></i></div>
         <div class="notif-item-body">
           <div class="notif-item-title">${esc(n.title || '')}</div>
@@ -5722,9 +5723,25 @@ async function markAllNotifsRead() {
   document.querySelector('.notif-dd-markall')?.remove();
 }
 
+// Type → destination pour candidats
+const NOTIF_CAND_DEST = {
+  status_update:        '#applications',
+  application_update:   '#applications',
+  application:          '#applications',
+  interview_invite:     '#applications',
+  message:              null,   // géré via le lien (messages-{appId})
+  slot_confirmed:       '#applications',
+  review:               '#applications',
+  job_match:            '#jobs',
+  job_alert:            '#jobs',
+  referral:             null,
+  skill_badge:          null,
+};
+
 async function markNotifRead(el) {
-  const id = el.dataset.id;
-  const link = el.dataset.link;
+  const id      = el.dataset.id;
+  const rawLink = el.dataset.link || '';
+  const type    = el.dataset.type || '';
   const wasUnread = el.classList.contains('unread');
 
   // Remove from list immediately
@@ -5744,11 +5761,33 @@ async function markNotifRead(el) {
   // Mark on server (non-blocking)
   if (id) api('POST', `${BASE}/api/notifications/mark-read`, { ids: [id] });
 
-  // Close dropdown then navigate
+  // ── Determine destination ────────────────────────────────
   closeNotifDropdown();
-  if (link) {
-    if (link.includes('#')) location.href = link;
-    else location.hash = link;
+
+  const isCandidate = state.user?.role !== 'employer';
+
+  if (isCandidate) {
+    // Candidats : routage par type (ignore les anciens liens cassés)
+    const dest = NOTIF_CAND_DEST[type];
+    if (dest === '#applications') {
+      goto('candidate-dash');
+      setTimeout(() => {
+        const navEl = document.querySelector('[data-tab="tab-applications"]');
+        if (navEl) showTab('tab-applications', navEl);
+      }, 100);
+    } else if (dest === '#jobs') {
+      goto('jobs');
+    } else if (type === 'message' && rawLink.includes('messages-')) {
+      // message : utiliser le lien direct
+      location.href = rawLink;
+    } else if (rawLink && rawLink.includes('#')) {
+      location.href = rawLink;
+    }
+    // sinon pas de navigation (badge/skill)
+  } else {
+    // Employeurs : utiliser le lien tel quel
+    if (rawLink && rawLink.includes('#')) location.href = rawLink;
+    else if (rawLink) location.hash = rawLink;
   }
 }
 
