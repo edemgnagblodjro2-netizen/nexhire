@@ -4590,6 +4590,46 @@ function renderSparkline(vals, labels) {
 let _currentThreadApp = null;
 let _currentMsgContainer = null;
 
+// Format timestamp for thread list: Today = "14:30", Yesterday = "Hier/Yesterday", else "12 jan."
+function _fmtThreadTime(dateStr, isFr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  const now = new Date();
+  const diffDays = Math.floor((now - d) / 86400000);
+  if (diffDays === 0) return d.toLocaleTimeString(isFr?'fr-CA':'en-CA', {hour:'2-digit',minute:'2-digit'});
+  if (diffDays === 1) return isFr ? 'Hier' : 'Yesterday';
+  if (diffDays < 7) return d.toLocaleDateString(isFr?'fr-CA':'en-CA', {weekday:'short'});
+  return d.toLocaleDateString(isFr?'fr-CA':'en-CA', {day:'numeric',month:'short'});
+}
+
+// Build a thread list item HTML
+function _buildThreadItem(t, containerId, isFr) {
+  const title = isFr ? (t.title_fr||t.title_en) : (t.title_en||t.title_fr);
+  const candName = ((t.cand_first||'')+' '+(t.cand_last||'')).trim();
+  const initials = (t.cand_first||'?')[0].toUpperCase() + (t.cand_last||'')[0]?.toUpperCase();
+  const avatar = t.cand_avatar
+    ? `<img src="${esc(t.cand_avatar)}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0">`
+    : `<div style="width:42px;height:42px;border-radius:50%;background:#6366f1;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${initials}</div>`;
+  const unread = parseInt(t.unread||0);
+  const timeStr = _fmtThreadTime(t.last_at, isFr);
+  const preview = t.last_message ? esc(t.last_message).slice(0, 55) + (t.last_message.length > 55 ? '…' : '') : `<em style="color:var(--muted)">${isFr?'Commencer la conv.':'Start the conversation'}</em>`;
+  return `<div class="msg-thread-item" data-appid="${t.application_id}" data-title="${esc(title)}" data-cand="${esc(candName)}" data-cand-avatar="${esc(t.cand_avatar||'')}" data-cand-init="${initials}"
+    style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .12s"
+    onmouseenter="if(!this.classList.contains('active'))this.style.background='#f5f6fa'" onmouseleave="if(!this.classList.contains('active'))this.style.background=''"
+    onclick="openThreadInContainer('${containerId}','${t.application_id}',this)">
+    <div style="position:relative">${avatar}${unread ? `<span style="position:absolute;top:-2px;right:-2px;width:10px;height:10px;background:#ef4444;border-radius:50%;border:2px solid #fff"></span>` : ''}</div>
+    <div style="flex:1;min-width:0">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:2px">
+        <span style="font-weight:${unread?'700':'600'};font-size:13px;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(candName)||esc(t.company_name||'')}</span>
+        ${timeStr ? `<span style="font-size:10px;color:var(--muted);white-space:nowrap;flex-shrink:0">${timeStr}</span>` : ''}
+      </div>
+      <div style="font-size:11px;color:#6366f1;font-weight:500;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(title)}</div>
+      <div style="font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:${unread?'600':'400'}">${preview}</div>
+    </div>
+    ${unread ? `<span style="background:#6366f1;color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:2px 7px;min-width:18px;text-align:center;flex-shrink:0;align-self:center">${unread > 9 ? '9+' : unread}</span>` : ''}
+  </div>`;
+}
+
 async function loadMsgUnreadBadge() {
   try {
     const d = await api('GET', `${BASE}/api/messages/threads`);
@@ -4612,48 +4652,44 @@ async function openMessagesInTab(containerId, preselectedAppId) {
   _currentMsgContainer = containerId;
 
   container.innerHTML = `
-    <div style="display:flex;border:1px solid var(--border);border-radius:12px;overflow:hidden;height:calc(100vh - 210px);min-height:420px">
-      <div id="${containerId}-threads" style="width:270px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;background:var(--surface)">
-        <div style="padding:32px;text-align:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px;color:#6366f1"></i></div>
+    <div style="display:flex;border:1px solid var(--border);border-radius:12px;overflow:hidden;height:calc(100vh - 210px);min-height:480px;box-shadow:0 1px 6px rgba(0,0,0,.06)">
+      <div id="${containerId}-threads" style="width:300px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;background:#fafbfc">
+        <div style="padding:14px 16px;border-bottom:1px solid var(--border);background:#fff">
+          <span style="font-weight:700;font-size:14px;color:var(--dark)">${isFr?'Conversations':'Conversations'}</span>
+        </div>
+        <div style="padding:32px;text-align:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:22px;color:#6366f1"></i></div>
       </div>
       <div id="${containerId}-thread" style="flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff">
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted)">
-          <i class="ti ti-message-circle-2" style="font-size:40px;opacity:.25"></i>
-          <p style="font-size:13px;margin:0">${isFr?'Sélectionnez une conversation':'Select a conversation'}</p>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted)">
+          <div style="width:64px;height:64px;border-radius:50%;background:#f0f0ff;display:flex;align-items:center;justify-content:center"><i class="ti ti-message-circle-2" style="font-size:28px;color:#6366f1;opacity:.6"></i></div>
+          <p style="font-size:14px;margin:0;font-weight:500">${isFr?'Sélectionnez une conversation':'Select a conversation'}</p>
+          <p style="font-size:12px;margin:0;color:var(--muted)">${isFr?'Vos échanges apparaîtront ici':'Your messages will appear here'}</p>
         </div>
       </div>
     </div>`;
 
+  await _loadThreadList(containerId, preselectedAppId, isFr);
+}
+
+async function _loadThreadList(containerId, preselectedAppId, isFr) {
   const d = await api('GET', `${BASE}/api/messages/threads`);
   const threads = d.threads || [];
   const listEl = document.getElementById(`${containerId}-threads`);
   if (!listEl) return;
 
+  const header = listEl.querySelector('div');
+
   if (!threads.length) {
-    listEl.innerHTML = `<div style="padding:32px 16px;text-align:center;color:var(--muted);font-size:13px"><i class="ti ti-messages" style="font-size:32px;display:block;margin-bottom:10px;opacity:.35"></i>${isFr?'Aucune conversation pour l\'instant':'No conversations yet'}</div>`;
+    const empty = document.createElement('div');
+    empty.style.cssText = 'padding:40px 16px;text-align:center;color:var(--muted);font-size:13px';
+    empty.innerHTML = `<i class="ti ti-messages" style="font-size:36px;display:block;margin-bottom:12px;opacity:.3;color:#6366f1"></i><div style="font-weight:500;margin-bottom:4px">${isFr?'Aucun message':'No messages yet'}</div><div style="font-size:12px">${isFr?'Démarrez une conversation depuis une candidature':'Start a conversation from an application'}</div>`;
+    listEl.appendChild(empty);
     return;
   }
 
-  listEl.innerHTML = threads.map(t => {
-    const title = isFr ? (t.title_fr||t.title_en) : (t.title_en||t.title_fr);
-    const logo = t.logo_url
-      ? `<img src="${esc(t.logo_url)}" style="width:36px;height:36px;border-radius:8px;object-fit:contain;flex-shrink:0">`
-      : `<div style="width:36px;height:36px;border-radius:8px;background:${companyColor(t.company_name||'')};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${(t.company_name||'?').slice(0,2).toUpperCase()}</div>`;
-    const unread = parseInt(t.unread||0);
-    const ago = t.last_at ? daysAgo(t.last_at) : '';
-    return `<div class="msg-thread-item" data-appid="${t.application_id}" style="display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .1s" onmouseenter="if(!this.classList.contains('active'))this.style.background='var(--background,#f9fafb)'" onmouseleave="if(!this.classList.contains('active'))this.style.background=''" onclick="openThreadInContainer('${containerId}','${t.application_id}',this)">
-      ${logo}
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;font-size:13px;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(title)}</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:1px">${esc(((t.cand_first||'')+' '+(t.cand_last||'')).trim())}</div>
-        ${t.last_message ? `<div style="font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px">${esc(t.last_message)}</div>` : ''}
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">
-        ${ago ? `<span style="font-size:10px;color:var(--muted)">${ago}</span>` : ''}
-        ${unread ? `<span style="background:#6366f1;color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:1px 6px;min-width:18px;text-align:center">${unread}</span>` : ''}
-      </div>
-    </div>`;
-  }).join('');
+  const list = document.createElement('div');
+  list.innerHTML = threads.map(t => _buildThreadItem(t, containerId, isFr)).join('');
+  listEl.appendChild(list);
 
   if (preselectedAppId) {
     const navEl = listEl.querySelector(`[data-appid="${preselectedAppId}"]`);
@@ -4679,62 +4715,116 @@ async function openThreadInContainer(containerId, appId, navEl) {
   }
   if (navEl) { navEl.classList.add('active'); navEl.style.background = '#eef2ff'; }
 
+  // Get contact info from data attributes
+  const candName  = navEl?.dataset.cand || '';
+  const candInit  = navEl?.dataset.candInit || '?';
+  const candAvt   = navEl?.dataset.candAvatar || '';
+  const jobTitle  = navEl?.dataset.title || '';
+  const headerAvatar = candAvt
+    ? `<img src="${esc(candAvt)}" style="width:38px;height:38px;border-radius:50%;object-fit:cover">`
+    : `<div style="width:38px;height:38px;border-radius:50%;background:#6366f1;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">${esc(candInit)}</div>`;
+
   const threadEl = document.getElementById(`${containerId}-thread`);
   if (!threadEl) return;
-  threadEl.innerHTML = `<div style="flex:1;display:flex;align-items:center;justify-content:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;color:#6366f1;font-size:24px"></i></div>`;
+  threadEl.innerHTML = `
+    ${candName ? `<div style="display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border);background:#fff;flex-shrink:0">
+      ${headerAvatar}
+      <div>
+        <div style="font-weight:600;font-size:14px;color:var(--dark)">${esc(candName)}</div>
+        ${jobTitle ? `<div style="font-size:12px;color:#6366f1;font-weight:500">${esc(jobTitle)}</div>` : ''}
+      </div>
+    </div>` : ''}
+    <div id="thread-bubbles" style="flex:1;overflow-y:auto;padding:20px 24px;background:#f9fafb">
+      <div style="text-align:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;color:#6366f1;font-size:22px"></i></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-top:1px solid var(--border);background:#fff;flex-shrink:0">
+      <input type="text" id="msg-input" placeholder="${isFr?'Écrivez un message…':'Write a message…'}" autocomplete="off"
+        style="flex:1;font-size:14px;border-radius:24px;border:1.5px solid #e0e2f0;padding:10px 18px;outline:none;background:#f8f9ff;transition:border .15s"
+        onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e0e2f0'"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}">
+      <button onclick="sendMessage()" title="${isFr?'Envoyer':'Send'}"
+        style="width:42px;height:42px;border-radius:50%;background:#6366f1;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:background .15s"
+        onmouseenter="this.style.background='#4f46e5'" onmouseleave="this.style.background='#6366f1'">
+        <i class="ti ti-send"></i>
+      </button>
+    </div>`;
 
+  // Load messages
   const d = await api('GET', `${BASE}/api/messages/${appId}`);
   const msgs = d.messages || [];
+  _renderBubbles(msgs, isFr);
 
-  const bubbles = msgs.map(m => {
+  // Clear unread dot
+  if (navEl) { const dot = navEl.querySelector('[style*="background:#ef4444"]'); if (dot) dot.remove(); }
+  const unreadBadge = navEl?.querySelector('[style*="background:#6366f1"]');
+  if (unreadBadge) unreadBadge.remove();
+}
+
+function _renderBubbles(msgs, isFr) {
+  const bubblesEl = document.getElementById('thread-bubbles');
+  if (!bubblesEl) return;
+  if (!msgs.length) {
+    bubblesEl.innerHTML = `<div style="text-align:center;padding:48px 0"><div style="width:64px;height:64px;border-radius:50%;background:#f0f0ff;display:flex;align-items:center;justify-content:center;margin:0 auto 14px"><i class="ti ti-message-circle-2" style="font-size:28px;color:#6366f1;opacity:.5"></i></div><p style="font-size:14px;color:var(--muted);margin:0;font-weight:500">${isFr?'Commencez la conversation':'Start the conversation'}</p><p style="font-size:12px;color:var(--muted);margin:6px 0 0">${isFr?'Envoyez le premier message':'Send the first message'}</p></div>`;
+    return;
+  }
+
+  let lastDate = '';
+  bubblesEl.innerHTML = msgs.map(m => {
     const mine = m.sender_id === state.user?.id;
     const name = `${m.first_name||''} ${m.last_name||''}`.trim();
-    const time = new Date(m.created_at).toLocaleTimeString(isFr?'fr-CA':'en-CA', {hour:'2-digit',minute:'2-digit'});
-    return `<div style="display:flex;flex-direction:${mine?'row-reverse':'row'};gap:8px;margin-bottom:12px;align-items:flex-end">
-      <div style="max-width:72%">
-        ${!mine?`<div style="font-size:11px;color:var(--muted);margin-bottom:3px;padding-left:2px">${esc(name)}</div>`:''}
-        <div style="background:${mine?'#6366f1':'var(--background,#f3f4f6)'};color:${mine?'#fff':'var(--dark)'};padding:10px 14px;border-radius:${mine?'14px 14px 4px 14px':'14px 14px 14px 4px'};font-size:13px;line-height:1.5;word-break:break-word">${esc(m.body)}</div>
-        <div style="font-size:10px;color:var(--muted);margin-top:3px;text-align:${mine?'right':'left'}">${time}</div>
+    const dt = new Date(m.created_at);
+    const dateStr = dt.toLocaleDateString(isFr?'fr-CA':'en-CA', {weekday:'long',day:'numeric',month:'long'});
+    const timeStr = dt.toLocaleTimeString(isFr?'fr-CA':'en-CA', {hour:'2-digit',minute:'2-digit'});
+    const showDate = dateStr !== lastDate;
+    lastDate = dateStr;
+    return `${showDate ? `<div style="text-align:center;margin:16px 0 12px"><span style="background:#e8eaf6;color:#5c6bc0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:99px">${dateStr}</span></div>` : ''}
+    <div style="display:flex;flex-direction:${mine?'row-reverse':'row'};gap:8px;margin-bottom:8px;align-items:flex-end">
+      ${!mine ? `<div style="width:28px;height:28px;border-radius:50%;background:#e0e2f0;color:#5c6bc0;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${(m.first_name||'?')[0].toUpperCase()}</div>` : ''}
+      <div style="max-width:70%">
+        ${!mine ? `<div style="font-size:11px;color:var(--muted);margin-bottom:4px;padding-left:2px">${esc(name)}</div>` : ''}
+        <div style="background:${mine?'#6366f1':'#fff'};color:${mine?'#fff':'var(--dark)'};padding:10px 14px;border-radius:${mine?'18px 18px 4px 18px':'18px 18px 18px 4px'};font-size:13.5px;line-height:1.55;word-break:break-word;box-shadow:${mine?'none':'0 1px 3px rgba(0,0,0,.08)'};border:${mine?'none':'1px solid #eaecf0'}">${esc(m.body)}</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:3px;text-align:${mine?'right':'left'};padding-${mine?'right':'left'}:2px">${timeStr}</div>
       </div>
     </div>`;
   }).join('');
-
-  threadEl.innerHTML = `
-    <div id="thread-bubbles" style="flex:1;overflow-y:auto;padding:16px 20px">${bubbles||`<div style="text-align:center;color:var(--muted);font-size:13px;padding:48px 0"><i class="ti ti-message-circle-2" style="font-size:40px;display:block;margin-bottom:10px;opacity:.25"></i>${isFr?'Commencez la conversation':'Start the conversation'}</div>`}</div>
-    <div style="display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--border);background:var(--surface,#f9fafb)">
-      <input type="text" id="msg-input" placeholder="${isFr?'Votre message…':'Your message…'}" style="flex:1;font-size:13px;border-radius:8px;border:1px solid var(--border);padding:10px 14px;outline:none;background:#fff" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}">
-      <button style="background:#6366f1;color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;font-size:15px;display:flex;align-items:center;transition:opacity .15s" onmouseenter="this.style.opacity='.8'" onmouseleave="this.style.opacity='1'" onclick="sendMessage()"><i class="ti ti-send"></i></button>
-    </div>`;
-  const bubblesEl = document.getElementById('thread-bubbles');
-  if (bubblesEl) bubblesEl.scrollTop = bubblesEl.scrollHeight;
-  // Clear unread badge for this thread in list
-  if (navEl) { const badge = navEl.querySelector('[style*="background:#6366f1"]'); if (badge) badge.remove(); }
+  bubblesEl.scrollTop = bubblesEl.scrollHeight;
 }
 
 // Overlay modal version — used from Kanban / job-view buttons
 async function openMessagesPage(appId) {
   const isFr = state.lang === 'fr';
   document.getElementById('messages-overlay')?.remove();
+
   const overlay = document.createElement('div');
   overlay.id = 'messages-overlay';
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9000;display:flex;align-items:center;justify-content:center;padding:16px';
-  overlay.innerHTML = `<div style="background:var(--surface);border-radius:16px;width:100%;max-width:860px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.25)">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)">
-      <h3 style="margin:0;color:var(--dark);display:flex;align-items:center;gap:8px"><i class="ti ti-message-circle-2" style="color:#6366f1"></i> ${isFr?'Messages':'Messages'}</h3>
-      <button style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);line-height:1;padding:4px" onclick="document.getElementById('messages-overlay')?.remove()"><i class="ti ti-x"></i></button>
-    </div>
-    <div style="display:flex;flex:1;overflow:hidden;min-height:0">
-      <div id="overlay-threads" style="width:260px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;background:var(--surface)">
-        <div style="padding:24px;text-align:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:20px;color:#6366f1"></i></div>
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(15,15,35,.55);z-index:9000;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(2px)';
+  overlay.innerHTML = `
+    <div style="background:#fff;border-radius:16px;width:100%;max-width:900px;height:82vh;max-height:700px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.22)">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #eaecf0;background:#fff;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:36px;height:36px;border-radius:10px;background:#eef2ff;display:flex;align-items:center;justify-content:center"><i class="ti ti-message-circle-2" style="color:#6366f1;font-size:18px"></i></div>
+          <div>
+            <div style="font-weight:700;font-size:15px;color:#111">${isFr?'Messagerie':'Messaging'}</div>
+            <div style="font-size:11px;color:var(--muted)">${isFr?'Vos conversations avec les candidats':'Your conversations with candidates'}</div>
+          </div>
+        </div>
+        <button style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;color:#6b7280;display:flex;align-items:center;justify-content:center;font-size:16px" onclick="document.getElementById('messages-overlay')?.remove()"><i class="ti ti-x"></i></button>
       </div>
-      <div id="overlay-thread" style="flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff">
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted)">
-          <i class="ti ti-message-circle-2" style="font-size:36px;opacity:.25"></i>
-          <p style="font-size:13px;margin:0">${isFr?'Sélectionnez une conversation':'Select a conversation'}</p>
+      <div style="display:flex;flex:1;overflow:hidden;min-height:0">
+        <div id="overlay-threads" style="width:300px;flex-shrink:0;border-right:1px solid #eaecf0;overflow-y:auto;background:#fafbfc">
+          <div style="padding:12px 16px;border-bottom:1px solid #eaecf0;background:#fff">
+            <span style="font-weight:600;font-size:13px;color:#374151">${isFr?'Conversations':'Conversations'}</span>
+          </div>
+          <div style="padding:24px;text-align:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:22px;color:#6366f1"></i></div>
+        </div>
+        <div id="overlay-thread" style="flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted)">
+            <div style="width:64px;height:64px;border-radius:50%;background:#f0f0ff;display:flex;align-items:center;justify-content:center"><i class="ti ti-message-circle-2" style="font-size:28px;color:#6366f1;opacity:.6"></i></div>
+            <p style="font-size:14px;margin:0;font-weight:500;color:#374151">${isFr?'Sélectionnez une conversation':'Select a conversation'}</p>
+          </div>
         </div>
       </div>
-    </div>
-  </div>`;
+    </div>`;
   document.body.appendChild(overlay);
   _currentMsgContainer = 'overlay';
 
@@ -4744,26 +4834,15 @@ async function openMessagesPage(appId) {
   if (!listEl) return;
 
   if (!threads.length) {
-    listEl.innerHTML = `<div style="padding:24px 16px;text-align:center;color:var(--muted);font-size:13px"><i class="ti ti-messages" style="font-size:28px;display:block;margin-bottom:8px;opacity:.35"></i>${isFr?'Aucune conversation':'No conversations yet'}</div>`;
+    const slot = listEl.querySelector('div:last-child');
+    if (slot) slot.innerHTML = `<div style="padding:32px 16px;text-align:center;color:var(--muted);font-size:13px"><i class="ti ti-messages" style="font-size:32px;display:block;margin-bottom:10px;opacity:.3;color:#6366f1"></i><div style="font-weight:500;margin-bottom:4px">${isFr?'Aucune conversation':'No conversations'}</div></div>`;
     return;
   }
 
-  listEl.innerHTML = threads.map(t => {
-    const title = isFr ? (t.title_fr||t.title_en) : (t.title_en||t.title_fr);
-    const logo = t.logo_url
-      ? `<img src="${esc(t.logo_url)}" style="width:36px;height:36px;border-radius:8px;object-fit:contain;flex-shrink:0">`
-      : `<div style="width:36px;height:36px;border-radius:8px;background:${companyColor(t.company_name||'')};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${(t.company_name||'?').slice(0,2).toUpperCase()}</div>`;
-    const unread = parseInt(t.unread||0);
-    return `<div class="msg-thread-item" data-appid="${t.application_id}" style="display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .1s" onmouseenter="if(!this.classList.contains('active'))this.style.background='var(--background)'" onmouseleave="if(!this.classList.contains('active'))this.style.background=''" onclick="openThreadInContainer('overlay','${t.application_id}',this)">
-      ${logo}
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;font-size:13px;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(title)}</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:2px">${esc(((t.cand_first||'')+' '+(t.cand_last||'')).trim())}</div>
-        ${t.last_message ? `<div style="font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(t.last_message)}</div>` : ''}
-      </div>
-      ${unread ? `<span style="background:#6366f1;color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:1px 6px;min-width:18px;text-align:center;flex-shrink:0">${unread}</span>` : ''}
-    </div>`;
-  }).join('');
+  const slot = listEl.querySelector('div:last-child');
+  if (slot) {
+    slot.innerHTML = threads.map(t => _buildThreadItem(t, 'overlay', isFr)).join('');
+  }
 
   if (appId) {
     const navEl = listEl.querySelector(`[data-appid="${appId}"]`);
@@ -4778,10 +4857,26 @@ async function sendMessage() {
   input.value = '';
   input.focus();
   const d = await api('POST', `${BASE}/api/messages/${_currentThreadApp}`, { body });
-  if (d.success) {
+  if (d.success && d.message) {
+    const bubblesEl = document.getElementById('thread-bubbles');
+    const isFr = state.lang === 'fr';
+    if (bubblesEl) {
+      const msgs = [...bubblesEl.querySelectorAll('[data-msg]')].length;
+      // Re-render by reloading the thread
+      const rd = await api('GET', `${BASE}/api/messages/${_currentThreadApp}`);
+      _renderBubbles(rd.messages || [], isFr);
+    }
+    // Update thread list preview
     const cId = _currentMsgContainer || 'overlay';
-    openThreadInContainer(cId, _currentThreadApp);
-  } else toast(d.error || 'Error', 'error');
+    const threadsEl = document.getElementById(`${cId}-threads`);
+    const item = threadsEl?.querySelector(`[data-appid="${_currentThreadApp}"]`);
+    if (item) {
+      const preview = item.querySelector('div > div:last-child');
+      if (preview) preview.innerHTML = esc(body).slice(0, 55);
+    }
+  } else if (!d.success) {
+    toast(d.error || 'Error', 'error');
+  }
 }
 
 // ── Pages entreprise publiques ────────────────────────────

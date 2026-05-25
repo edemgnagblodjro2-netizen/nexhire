@@ -1,0 +1,204 @@
+Implémenter un système de messagerie bidirectionnelle 
+entre employeur et candidat — style chat comme Indeed/LinkedIn.
+
+─────────────────────────────────────────────
+CONTEXTE
+─────────────────────────────────────────────
+Il existe déjà un module Video Interviews.
+Le chat est complémentaire — même logique mais texte en temps réel.
+Les deux parties peuvent initier la conversation :
+  → L'employeur contacte un candidat depuis le Kanban ATS
+  → Le candidat contacte l'employeur depuis sa candidature
+
+─────────────────────────────────────────────
+FONCTIONNALITÉS REQUISES
+─────────────────────────────────────────────
+
+1. CONVERSATION
+   - Thread de messages par candidature
+     (1 job + 1 candidat = 1 conversation unique)
+   - Messages texte avec horodatage
+   - Statut lu / non lu (✓ envoyé, ✓✓ lu)
+   - Indicateur "en train d'écrire..." (typing indicator)
+   - Historique complet de la conversation
+
+2. CÔTÉ CANDIDAT
+   - Accès via Dashboard → My Applications
+   - Chaque candidature a un bouton "💬 Contacter l'employeur"
+   - Liste de toutes ses conversations actives
+   - Badge de notification si nouveau message non lu
+   - Peut envoyer : texte, emoji, fichier (CV, portfolio)
+
+3. CÔTÉ EMPLOYEUR  
+   - Accès via Dashboard → Kanban ATS → fiche candidat
+   - Bouton "💬 Envoyer un message" sur chaque candidat
+   - Boîte de réception centralisée avec tous les candidats
+   - Filtrable par job posting
+   - Badge de notification si nouveau message non lu
+   - Peut envoyer : texte, emoji, fichier (test technique, etc.)
+
+4. NOTIFICATIONS
+   - Badge rouge sur l'icône Messages dans la navbar
+   - Notification dans le dashboard si nouveau message
+   - Email de notification optionnel :
+     "Vous avez un nouveau message de [Employeur/Candidat]"
+   - Son de notification (optionnel, désactivable)
+
+5. SÉCURITÉ & RÈGLES
+   - Un candidat ne peut écrire QU'aux employeurs 
+     auxquels il a postulé
+   - Un employeur ne peut écrire QU'aux candidats 
+     qui ont postulé à ses offres
+   - Pas de messagerie entre candidats
+   - Pas de messagerie entre employeurs
+   - Messages modérables par l'admin si signalement
+
+─────────────────────────────────────────────
+BASE DE DONNÉES — Tables à créer
+─────────────────────────────────────────────
+
+Table : nh_conversations
+  id              SERIAL PRIMARY KEY
+  job_id          INTEGER REFERENCES nh_jobs(id)
+  candidate_id    INTEGER REFERENCES nh_users(id)
+  employer_id     INTEGER REFERENCES nh_users(id)
+  created_at      TIMESTAMP DEFAULT NOW()
+  last_message_at TIMESTAMP DEFAULT NOW()
+  status          VARCHAR(20) DEFAULT 'active'
+  -- active / archived / blocked
+
+Table : nh_messages
+  id              SERIAL PRIMARY KEY
+  conversation_id INTEGER REFERENCES nh_conversations(id)
+  sender_id       INTEGER REFERENCES nh_users(id)
+  sender_role     VARCHAR(20) -- 'candidate' ou 'employer'
+  content         TEXT NOT NULL
+  type            VARCHAR(20) DEFAULT 'text'
+  -- text / file / system
+  file_url        TEXT NULL
+  is_read         BOOLEAN DEFAULT FALSE
+  read_at         TIMESTAMP NULL
+  created_at      TIMESTAMP DEFAULT NOW()
+
+Index à créer :
+  CREATE INDEX ON nh_messages(conversation_id, created_at);
+  CREATE INDEX ON nh_messages(sender_id, is_read);
+
+─────────────────────────────────────────────
+ROUTES API à créer
+─────────────────────────────────────────────
+
+GET  /api/messages/conversations
+     → Liste toutes les conversations de l'utilisateur connecté
+     → Inclure le dernier message et le count non lus
+
+GET  /api/messages/conversations/:id
+     → Récupère tous les messages d'une conversation
+     → Marque automatiquement comme lus
+
+POST /api/messages/conversations
+     → Crée une nouvelle conversation
+     → Body: { job_id, candidate_id }
+
+POST /api/messages/conversations/:id/send
+     → Envoie un message dans une conversation
+     → Body: { content, type }
+     → Vérifie que l'expéditeur fait partie de la conversation
+
+PUT  /api/messages/conversations/:id/read
+     → Marque tous les messages comme lus
+
+GET  /api/messages/unread-count
+     → Retourne le nombre de messages non lus
+     → Pour le badge navbar
+
+─────────────────────────────────────────────
+INTERFACE — Composants UI
+─────────────────────────────────────────────
+
+COMPOSANT 1 — Boîte de réception (inbox)
+  Panneau gauche : liste des conversations
+    - Photo/initiales du contact
+    - Nom + titre du job
+    - Aperçu du dernier message (50 chars)
+    - Horodatage (il y a 2h, hier, lun.)
+    - Badge rouge si messages non lus
+  
+  Panneau droit : fenêtre de conversation
+    - Header : nom du contact + poste + statut en ligne
+    - Zone de messages scrollable
+    - Bulles de message :
+      → Mes messages : alignés à droite, couleur primaire
+      → Leurs messages : alignés à gauche, gris
+    - Statut : ✓ envoyé / ✓✓ lu
+    - Zone de saisie en bas :
+      → Input texte + bouton envoyer
+      → Bouton 📎 pour joindre un fichier
+      → Bouton 😊 pour les emojis (basique)
+      → Envoi par Enter ou clic bouton
+
+COMPOSANT 2 — Mini-chat flottant (optionnel)
+  Comme Facebook Messenger — bulle en bas à droite
+  S'ouvre quand on clique "Contacter" depuis une candidature
+  Sans quitter la page courante
+
+─────────────────────────────────────────────
+TEMPS RÉEL — WebSocket ou Polling
+─────────────────────────────────────────────
+
+Option A — WebSocket (idéal)
+  Utiliser socket.io déjà peut-être installé
+  Les messages arrivent instantanément sans refresh
+  Typing indicator en temps réel
+
+  server.js :
+  io.on('connection', (socket) => {
+    socket.on('join_conversation', (convId) => {
+      socket.join('conv_' + convId)
+    })
+    socket.on('send_message', async (data) => {
+      // sauvegarder en DB
+      // émettre à tous dans la room
+      io.to('conv_' + data.convId).emit('new_message', message)
+    })
+    socket.on('typing', (data) => {
+      socket.to('conv_' + data.convId).emit('typing', data)
+    })
+  })
+
+Option B — Polling (plus simple, moins temps réel)
+  fetch('/api/messages/conversations/:id') 
+  toutes les 5 secondes
+  Suffisant pour un MVP
+
+  Recommandation : commencer par le Polling,
+  migrer vers WebSocket quand tout fonctionne
+
+─────────────────────────────────────────────
+INTÉGRATION DANS L'EXISTANT
+─────────────────────────────────────────────
+
+Dashboard Candidat :
+  Ajouter onglet "💬 Messages" entre Applications et Reviews
+  Badge rouge avec count non lus
+
+Dashboard Employeur :
+  Ajouter onglet "💬 Messages" dans le menu
+  + Bouton "💬 Message" sur chaque carte candidat du Kanban
+
+Navbar :
+  Ajouter icône 💬 avec badge non lus
+  À côté du badge notifications existant
+
+─────────────────────────────────────────────
+ORDRE D'IMPLÉMENTATION RECOMMANDÉ
+─────────────────────────────────────────────
+
+Étape 1 : Créer les tables nh_conversations + nh_messages
+Étape 2 : Créer les routes API CRUD
+Étape 3 : Créer l'UI inbox (panneau liste + panneau chat)
+Étape 4 : Intégrer dans dashboard candidat et employeur
+Étape 5 : Ajouter badge non lus dans la navbar
+Étape 6 : Ajouter les notifications email
+Étape 7 : Polling toutes les 5 secondes pour le temps réel
+Étape 8 : (optionnel) Migrer vers WebSocket socket.io
