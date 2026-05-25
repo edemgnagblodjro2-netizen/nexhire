@@ -4666,11 +4666,20 @@ async function openMessagesInTab(containerId, preselectedAppId) {
   if (!container) return;
   _currentMsgContainer = containerId;
 
+  const isEmp = state.user?.role === 'employer';
+  const newConvAction = isEmp
+    ? `showEmpTab('etab-jobs',document.querySelector('[data-emptab=\\'etab-jobs\\']'))`
+    : `showTab('tab-applications',document.querySelector('[data-tab=\\'tab-applications\\']'))`;
+  const newConvLabel = isEmp
+    ? (isFr ? 'Voir les candidats' : 'View candidates')
+    : (isFr ? 'Mes candidatures' : 'My applications');
+
   container.innerHTML = `
     <div style="display:flex;border:1px solid var(--border);border-radius:12px;overflow:hidden;height:calc(100vh - 210px);min-height:480px;box-shadow:0 1px 6px rgba(0,0,0,.06)">
       <div id="${containerId}-threads" style="width:300px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;background:#fafbfc">
-        <div style="padding:14px 16px;border-bottom:1px solid var(--border);background:#fff">
+        <div style="padding:12px 16px;border-bottom:1px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:space-between">
           <span style="font-weight:700;font-size:14px;color:var(--dark)">${isFr?'Conversations':'Conversations'}</span>
+          <button onclick="${newConvAction}" title="${newConvLabel}" style="font-size:11px;padding:4px 10px;border-radius:6px;background:#6366f1;color:#fff;border:none;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:4px"><i class="ti ti-plus" style="font-size:12px"></i> ${newConvLabel}</button>
         </div>
         <div style="padding:32px;text-align:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:22px;color:#6366f1"></i></div>
       </div>
@@ -4700,9 +4709,23 @@ async function _loadThreadList(containerId, preselectedAppId, isFr) {
   while (listEl.children.length > 1) listEl.removeChild(listEl.lastChild);
 
   if (!threads.length) {
+    const isEmp = state.user?.role === 'employer';
+    const ctaLabel = isEmp
+      ? (isFr ? 'Voir les candidats' : 'View candidates')
+      : (isFr ? 'Parcourir les offres' : 'Browse jobs');
+    const ctaAction = isEmp
+      ? `showEmpTab('etab-jobs',document.querySelector('[data-emptab=\\'etab-jobs\\']'))`
+      : `goto('jobs')`;
+    const hint = isEmp
+      ? (isFr ? 'Cliquez "Chat" sur un candidat pour démarrer' : 'Click "Chat" on a candidate to start')
+      : (isFr ? 'Postulez à une offre, puis contactez l\'employeur' : 'Apply to a job, then message the employer');
     const empty = document.createElement('div');
     empty.style.cssText = 'padding:40px 16px;text-align:center;color:var(--muted);font-size:13px';
-    empty.innerHTML = `<i class="ti ti-messages" style="font-size:36px;display:block;margin-bottom:12px;opacity:.3;color:#6366f1"></i><div style="font-weight:500;margin-bottom:4px">${isFr?'Aucun message':'No messages yet'}</div><div style="font-size:12px">${isFr?'Démarrez une conversation depuis une candidature':'Start a conversation from an application'}</div>`;
+    empty.innerHTML = `
+      <i class="ti ti-message-off" style="font-size:36px;display:block;margin-bottom:12px;opacity:.3;color:#6366f1"></i>
+      <div style="font-weight:600;font-size:14px;color:var(--dark);margin-bottom:6px">${isFr?'Aucune conversation':'No conversations yet'}</div>
+      <div style="font-size:12px;margin-bottom:16px;line-height:1.5">${hint}</div>
+      <button onclick="${ctaAction}" style="font-size:12px;padding:7px 16px;border-radius:8px;background:#6366f1;color:#fff;border:none;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px"><i class="ti ti-arrow-right" style="font-size:13px"></i> ${ctaLabel}</button>`;
     listEl.appendChild(empty);
     return;
   }
@@ -4840,7 +4863,7 @@ async function openMessagesPage(appId) {
           <div style="width:36px;height:36px;border-radius:10px;background:#eef2ff;display:flex;align-items:center;justify-content:center"><i class="ti ti-message-circle-2" style="color:#6366f1;font-size:18px"></i></div>
           <div>
             <div style="font-weight:700;font-size:15px;color:#111">${isFr?'Messagerie':'Messaging'}</div>
-            <div style="font-size:11px;color:var(--muted)">${isFr?'Vos conversations avec les candidats':'Your conversations with candidates'}</div>
+            <div style="font-size:11px;color:var(--muted)">${state.user?.role==='employer' ? (isFr?'Vos conversations avec les candidats':'Your conversations with candidates') : (isFr?'Vos échanges avec les employeurs':'Your exchanges with employers')}</div>
           </div>
         </div>
         <button style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;color:#6b7280;display:flex;align-items:center;justify-content:center;font-size:16px" onclick="document.getElementById('messages-overlay')?.remove()"><i class="ti ti-x"></i></button>
@@ -4876,9 +4899,23 @@ async function openMessagesPage(appId) {
   while (listEl.children.length > 1) listEl.removeChild(listEl.lastChild);
 
   if (!threads.length) {
+    const isEmp = state.user?.role === 'employer';
+    const ctaLabel = isEmp
+      ? (isFr ? 'Voir les candidats' : 'View candidates')
+      : (isFr ? 'Parcourir les offres' : 'Browse jobs');
+    const ctaAction = isEmp
+      ? `document.getElementById('messages-overlay')?.remove();showEmpTab('etab-jobs',document.querySelector('[data-emptab=\\'etab-jobs\\']'))`
+      : `document.getElementById('messages-overlay')?.remove();goto('jobs')`;
+    const hint = isEmp
+      ? (isFr ? 'Cliquez "Chat" sur un candidat pour démarrer' : 'Click "Chat" on a candidate to start')
+      : (isFr ? 'Postulez à une offre, puis contactez l\'employeur' : 'Apply to a job, then message the employer');
     const empty = document.createElement('div');
-    empty.style.cssText = 'padding:32px 16px;text-align:center;color:var(--muted);font-size:13px';
-    empty.innerHTML = `<i class="ti ti-messages" style="font-size:32px;display:block;margin-bottom:10px;opacity:.3;color:#6366f1"></i><div style="font-weight:500;margin-bottom:4px">${isFr?'Aucune conversation':'No conversations'}</div>`;
+    empty.style.cssText = 'padding:40px 16px;text-align:center;color:var(--muted);font-size:13px';
+    empty.innerHTML = `
+      <i class="ti ti-message-off" style="font-size:36px;display:block;margin-bottom:12px;opacity:.25;color:#6366f1"></i>
+      <div style="font-weight:600;font-size:14px;color:#374151;margin-bottom:6px">${isFr?'Aucune conversation':'No conversations yet'}</div>
+      <div style="font-size:12px;margin-bottom:16px;line-height:1.5">${hint}</div>
+      <button onclick="${ctaAction}" style="font-size:12px;padding:7px 16px;border-radius:8px;background:#6366f1;color:#fff;border:none;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px"><i class="ti ti-arrow-right" style="font-size:13px"></i> ${ctaLabel}</button>`;
     listEl.appendChild(empty);
     return;
   }
