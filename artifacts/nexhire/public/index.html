@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="stylesheet" href="/nexhire/css/main.css?v=20260525d">
+<link rel="stylesheet" href="/nexhire/css/main.css?v=20260525f">
 <link rel="icon" type="image/svg+xml" href="/nexhire/img/favicon.svg">
 <link rel="manifest" href="/nexhire/manifest.json">
 <meta name="theme-color" content="#023448">
@@ -33,6 +33,7 @@
       <a class="nav-link" data-goto="feed" href="#" data-i18n="nav.feed">Feed</a>
       <a class="nav-link" id="nav-link-employers" data-goto="employer" href="#" data-i18n="nav.employers">For Employers</a>
       <a class="nav-link" id="nav-link-pricing" data-goto="pricing" href="#" data-i18n="nav.pricing">Pricing</a>
+      <a class="nav-link" data-goto="tax-calc" href="#">🍁 Tax Calc</a>
       <div class="nav-mob-auth" id="nav-mob-auth">
         <a href="#login" class="btn-ghost nav-mob-btn" id="mob-signin" data-i18n="nav.signin">Sign in</a>
         <button class="btn-primary nav-mob-btn" data-modal="modal-register" data-i18n="nav.getstarted">Get started</button>
@@ -1203,6 +1204,40 @@
   </div>
 </div>
 
+<!-- TAX CALCULATOR ──────────────────────────────────────── -->
+<div id="pg-tax-calc" class="page">
+  <div class="tax-page-wrap">
+    <div class="tax-page-hdr">
+      <h1>🍁 Canadian Salary Tax Calculator</h1>
+      <p>Estimate your take-home pay — 2025 federal &amp; provincial rates</p>
+    </div>
+    <div class="tax-input-card">
+      <div class="tax-rate-tabs">
+        <button class="tc-tab active" data-rate="annual"    onclick="tcSetRate('annual')">Annual</button>
+        <button class="tc-tab"        data-rate="month"     onclick="tcSetRate('month')">Month</button>
+        <button class="tc-tab"        data-rate="biweekly"  onclick="tcSetRate('biweekly')">Biweekly</button>
+        <button class="tc-tab"        data-rate="weekly"    onclick="tcSetRate('weekly')">Weekly</button>
+        <button class="tc-tab"        data-rate="daily"     onclick="tcSetRate('daily')">Day</button>
+        <button class="tc-tab"        data-rate="hourly"    onclick="tcSetRate('hourly')">Hour</button>
+      </div>
+      <div class="tax-fields-row">
+        <div class="tax-salary-wrap">
+          <span class="tax-cur-sym">$</span>
+          <input type="number" id="tc-salary" class="tax-salary-input" value="52000" min="0" step="1000" oninput="tcUpdate()">
+          <span class="tax-cur-code">CAD</span>
+        </div>
+        <select id="tc-prov" class="tax-prov-select" onchange="tcUpdate()"></select>
+      </div>
+    </div>
+    <div id="tc-results" class="tax-results-wrap"></div>
+    <div class="tax-prov-table-wrap">
+      <h3 class="tax-section-title">Tax by Province in Canada</h3>
+      <div id="tc-prov-table"></div>
+    </div>
+    <p class="tax-disclaimer">Based on 2025 federal &amp; provincial schedules. For estimation only — consult a tax professional for advice.</p>
+  </div>
+</div>
+
 </main>
 
 <!-- SITE FOOTER ─────────────────────────────────────────── -->
@@ -1410,7 +1445,7 @@ if ('serviceWorker' in navigator) {
     .catch(e => console.warn('[SW] failed', e));
 }
 </script>
-<script src="/nexhire/js/app.js?v=20260525e"></script>
+<script src="/nexhire/js/app.js?v=20260525f"></script>
 <script>window.__nexBase='/nexhire';</script>
 <script src="/nexhire/js/chatbot.js?v=20260524a"></script>
 </body>

@@ -206,6 +206,7 @@ function updateCitiesForProvince(provinceSelectId, citySelectId) {
   } catch (e) {}
   setLangUI(state.lang);
   initLocationSelects();
+  initTaxCalc();
   detectUserLocation();
   loadStats();
   renderRecentSearches();
@@ -8408,4 +8409,180 @@ function removeFeedImage() {
   if (preview) preview.style.display = 'none';
   if (input)   input.value = '';
   if (label)   label.innerHTML = `<i class="ti ti-photo" style="font-size:18px"></i><span>${isFr ? 'Ajouter une photo (optionnel)' : 'Add a photo (optional)'}</span>`;
+}
+
+// ── Canadian Tax Calculator ────────────────────────────────
+let _tcRate = 'annual';
+const _TC_MUL = { annual:1, month:12, biweekly:26, weekly:52, daily:260, hourly:2080 };
+
+const _TC = {
+  fed: {
+    bpa: 16129,
+    br: [[57375,0.15],[114750,0.205],[158519,0.26],[220000,0.29],[Infinity,0.33]]
+  },
+  cpp: { rate:0.0595, max:71300, ex:3500, r2:0.04, m2:76100 },
+  ei:  { rate:0.0164, max:65700 },
+  prov: {
+    AB:{ n:'Alberta',              bpa:21003, lr:0.100, br:[[148269,0.10],[177922,0.12],[237230,0.13],[355845,0.14],[Infinity,0.15]] },
+    BC:{ n:'British Columbia',     bpa:11981, lr:0.0506,br:[[45654,0.0506],[91310,0.077],[104835,0.105],[127299,0.1229],[172602,0.147],[240716,0.168],[Infinity,0.205]] },
+    MB:{ n:'Manitoba',             bpa:15780, lr:0.108, br:[[36842,0.108],[79625,0.1275],[Infinity,0.174]] },
+    NB:{ n:'New Brunswick',        bpa:12458, lr:0.094, br:[[44715,0.094],[89433,0.1482],[145955,0.1652],[166280,0.195],[Infinity,0.203]] },
+    NL:{ n:'Newfoundland & Lab.',  bpa:10818, lr:0.087, br:[[43198,0.087],[86395,0.145],[154244,0.158],[215943,0.178],[275870,0.198],[551739,0.208],[Infinity,0.213]] },
+    NS:{ n:'Nova Scotia',          bpa:8481,  lr:0.0879,br:[[29590,0.0879],[59180,0.1495],[93000,0.1667],[150000,0.175],[Infinity,0.21]] },
+    NT:{ n:'Northwest Territories',bpa:16593, lr:0.059, br:[[50597,0.059],[101198,0.086],[164525,0.122],[Infinity,0.1405]] },
+    NU:{ n:'Nunavut',              bpa:17925, lr:0.04,  br:[[53268,0.04],[106537,0.07],[173205,0.09],[Infinity,0.115]] },
+    ON:{ n:'Ontario',              bpa:11865, lr:0.0505,br:[[51446,0.0505],[102894,0.0915],[150000,0.1116],[220000,0.1216],[Infinity,0.1316]] },
+    PE:{ n:'Prince Edward Island', bpa:12000, lr:0.0965,br:[[32656,0.0965],[64313,0.1363],[105000,0.1665],[140000,0.18],[Infinity,0.1875]] },
+    QC:{ n:'Québec',               bpa:17183, lr:0.14,  br:[[51780,0.14],[103545,0.19],[126000,0.24],[Infinity,0.2575]] },
+    SK:{ n:'Saskatchewan',         bpa:17661, lr:0.105, br:[[49720,0.105],[142058,0.125],[Infinity,0.145]] },
+    YT:{ n:'Yukon',                bpa:15705, lr:0.064, br:[[55867,0.064],[111733,0.09],[154906,0.109],[500000,0.128],[Infinity,0.15]] },
+  }
+};
+
+function _tcBracket(income, brackets) {
+  let tax = 0, prev = 0;
+  for (const [lim, rate] of brackets) {
+    if (income <= prev) break;
+    tax += (Math.min(income, lim) - prev) * rate;
+    prev = lim;
+    if (income <= lim) break;
+  }
+  return tax;
+}
+
+function _tcCalc(annual, code) {
+  const p = _TC.prov[code];
+  if (!p || annual <= 0) return { gross:0, net:0, totalTax:0, cpp:0, ei:0, fed:0, prov:0, avg:0, marginal:0, provName:p?.n||'' };
+  const { cpp, ei, fed } = _TC;
+
+  // CPP + CPP2
+  const cppAmt  = Math.max(0, Math.min(annual, cpp.max) - cpp.ex) * cpp.rate;
+  const cpp2Amt = Math.max(0, Math.min(annual, cpp.m2) - cpp.max) * cpp.r2;
+  const cppTotal = cppAmt + cpp2Amt;
+  // EI
+  const eiAmt = Math.min(annual, ei.max) * ei.rate;
+
+  // Federal
+  let fedTax = _tcBracket(annual, fed.br);
+  fedTax = Math.max(0, fedTax - fed.bpa * 0.15 - cppTotal * 0.15 - eiAmt * 0.15);
+
+  // Provincial
+  let provTax = _tcBracket(annual, p.br);
+  provTax = Math.max(0, provTax - p.bpa * p.lr - cppTotal * p.lr - eiAmt * p.lr);
+
+  const totalTax = fedTax + provTax + cppTotal + eiAmt;
+  const net = Math.max(0, annual - totalTax);
+  const avg = totalTax / annual;
+
+  let mFed = 0.15, mProv = p.br[0][1];
+  for (const [lim, r] of fed.br) { if (annual <= lim) { mFed = r; break; } }
+  for (const [lim, r] of p.br)   { if (annual <= lim) { mProv = r; break; } }
+
+  return { gross:annual, net, totalTax, cpp:cppTotal, ei:eiAmt, fed:fedTax, prov:provTax,
+           avg, marginal: mFed + mProv, provName: p.n };
+}
+
+function tcSetRate(rate) {
+  _tcRate = rate;
+  document.querySelectorAll('.tc-tab').forEach(t => t.classList.toggle('active', t.dataset.rate === rate));
+  tcUpdate();
+}
+
+function tcUpdate() {
+  const raw = parseFloat(document.getElementById('tc-salary')?.value || '0') || 0;
+  const annual = raw * (_TC_MUL[_tcRate] || 1);
+  const code = document.getElementById('tc-prov')?.value || 'ON';
+  _tcRenderResults(_tcCalc(annual, code));
+  _tcRenderProvTable(annual, code);
+}
+
+const _CAD = n => new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD',maximumFractionDigits:0}).format(n);
+const _PCT = n => (n * 100).toFixed(1) + '%';
+
+function _tcRenderResults(r) {
+  const el = document.getElementById('tc-results');
+  if (!el) return;
+  const taxPct = r.gross > 0 ? r.totalTax / r.gross : 0;
+  const netPct = 1 - taxPct;
+  const R = 70, C = 2 * Math.PI * R;
+  const taxD = (C * taxPct).toFixed(2);
+  const netD = (C * netPct).toFixed(2);
+
+  el.innerHTML = `
+  <div class="tc-grid">
+    <div class="tc-breakdown-card">
+      <div class="tc-card-title">Withholding on a ${_CAD(r.gross)} salary in Canada</div>
+      <div class="tc-rows">
+        <div class="tc-row tc-salary-row"><span>Salary</span><span>${_CAD(r.gross)}</span></div>
+        <div class="tc-row tc-deduct-row"><span>EI deduction</span><span class="tc-neg">− ${_CAD(r.ei)}</span></div>
+        <div class="tc-row tc-deduct-row"><span>CPP deduction</span><span class="tc-neg">− ${_CAD(r.cpp)}</span></div>
+        <div class="tc-row tc-deduct-row"><span>Federal tax deduction</span><span class="tc-neg">− ${_CAD(r.fed)}</span></div>
+        <div class="tc-row tc-deduct-row"><span>Provincial tax <small>(${r.provName})</small></span><span class="tc-neg">− ${_CAD(r.prov)}</span></div>
+        <div class="tc-row tc-total-row"><span><strong>Total tax</strong></span><span class="tc-neg"><strong>− ${_CAD(r.totalTax)}</strong></span></div>
+        <div class="tc-row tc-net-row"><span>✨ Net pay</span><span class="tc-green">${_CAD(r.net)}</span></div>
+      </div>
+      <div class="tc-rate-chips">
+        <div class="tc-rate-chip"><div class="tc-rate-num">${_PCT(r.marginal)}</div><div class="tc-rate-lbl">Marginal tax rate</div></div>
+        <div class="tc-rate-chip"><div class="tc-rate-num">${_PCT(r.avg)}</div><div class="tc-rate-lbl">Average tax rate</div></div>
+      </div>
+    </div>
+    <div class="tc-visual-card">
+      <div style="position:relative;display:flex;align-items:center;justify-content:center">
+        <svg width="160" height="160" viewBox="0 0 180 180" style="transform:rotate(-90deg)">
+          <circle cx="90" cy="90" r="${R}" fill="none" stroke="#f0f4f8" stroke-width="24"/>
+          <circle cx="90" cy="90" r="${R}" fill="none" stroke="#ef4444" stroke-width="24"
+            stroke-dasharray="${taxD} ${netD}"/>
+          <circle cx="90" cy="90" r="${R}" fill="none" stroke="#023448" stroke-width="24"
+            stroke-dasharray="${netD} ${taxD}" stroke-dashoffset="-${taxD}"/>
+        </svg>
+        <div style="position:absolute;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:#ef4444">${_PCT(taxPct)}</div>
+          <div style="font-size:10px;color:var(--muted)">tax</div>
+        </div>
+      </div>
+      <div class="tc-donut-legend">
+        <div class="tc-legend-item"><span class="tc-dot" style="background:#023448"></span>${_PCT(netPct)} Net pay</div>
+        <div class="tc-legend-item"><span class="tc-dot" style="background:#ef4444"></span>${_PCT(taxPct)} Total tax</div>
+      </div>
+      <div class="tc-net-big">
+        <div class="tc-net-amount">${_CAD(r.net)}</div>
+        <div class="tc-net-label">Annual net pay</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function _tcRenderProvTable(annual, selectedCode) {
+  const el = document.getElementById('tc-prov-table');
+  if (!el) return;
+  const rows = Object.entries(_TC.prov)
+    .map(([code]) => ({ code, ..._tcCalc(annual, code) }))
+    .sort((a, b) => b.net - a.net);
+  const best = rows[0]?.net || 0;
+  el.innerHTML = `<table class="tc-prov-tbl">
+    <thead><tr><th>#</th><th>Province</th><th>Net pay</th><th>Avg tax</th><th>vs Best</th></tr></thead>
+    <tbody>${rows.map((r, i) => `
+      <tr class="${r.code === selectedCode ? 'tc-sel' : ''}">
+        <td><span class="tc-rank">${i + 1}</span></td>
+        <td>${r.provName}${r.code === selectedCode ? ' <span class="tc-you">● you</span>' : ''}</td>
+        <td style="font-weight:700;color:var(--dark)">${_CAD(r.net)}</td>
+        <td>
+          <div style="display:flex;align-items:center;gap:6px">
+            <div class="tc-bar-wrap"><div class="tc-bar" style="width:${Math.round(r.avg * 280)}px"></div></div>
+            <span style="font-size:13px">${_PCT(r.avg)}</span>
+          </div>
+        </td>
+        <td style="font-size:13px;color:${i===0?'#16a34a':'#ef4444'}">${i===0?'🥇 Best':'−'+_CAD(best - r.net)}</td>
+      </tr>`).join('')}
+    </tbody>
+  </table>`;
+}
+
+function initTaxCalc() {
+  const sel = document.getElementById('tc-prov');
+  if (!sel || sel.options.length > 1) return;
+  sel.innerHTML = Object.entries(_TC.prov)
+    .map(([code, p]) => `<option value="${code}"${code === 'ON' ? ' selected' : ''}>${p.n}</option>`)
+    .join('');
+  tcUpdate();
 }

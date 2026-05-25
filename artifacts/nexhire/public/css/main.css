@@ -1767,3 +1767,55 @@ a{text-decoration:none;color:inherit}
 #compose-modal #compose-image-label.success-label span {
   color: #4ade80 !important;
 }
+
+/* ── Tax Calculator ─────────────────────────────────────── */
+.tax-page-wrap{max-width:920px;margin:0 auto;padding:36px 20px 80px}
+.tax-page-hdr{text-align:center;margin-bottom:32px}
+.tax-page-hdr h1{font-family:var(--r);font-size:30px;font-weight:800;color:var(--dark);margin-bottom:8px}
+.tax-page-hdr p{color:var(--muted);font-size:15px}
+.tax-input-card{background:#fff;border-radius:16px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;margin-bottom:24px}
+.tax-rate-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:20px;background:#f8fafc;border-radius:10px;padding:4px}
+.tc-tab{flex:1;min-width:56px;background:none;border:none;border-radius:7px;padding:8px 10px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s}
+.tc-tab.active{background:#fff;color:var(--dark);box-shadow:0 1px 4px rgba(0,0,0,.1);font-weight:600}
+.tax-fields-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.tax-salary-wrap{display:flex;align-items:center;flex:1;min-width:200px;border:2px solid var(--border);border-radius:10px;overflow:hidden;background:#fff;transition:border-color .15s}
+.tax-salary-wrap:focus-within{border-color:var(--indigo)}
+.tax-cur-sym{padding:0 8px 0 14px;font-size:20px;font-weight:700;color:var(--dark)}
+.tax-salary-input{flex:1;border:none;outline:none;font-size:22px;font-weight:700;color:var(--dark);padding:12px 0;font-family:var(--r);background:transparent;min-width:80px}
+.tax-cur-code{padding:0 14px;font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.tax-prov-select{border:2px solid var(--border);border-radius:10px;padding:12px 16px;font-size:15px;font-weight:500;color:var(--dark);background:#fff;cursor:pointer;outline:none;min-width:180px;transition:border-color .15s}
+.tax-prov-select:focus{border-color:var(--indigo)}
+.tc-grid{display:grid;grid-template-columns:1fr 220px;gap:20px;margin-bottom:24px}
+.tc-breakdown-card,.tc-visual-card{background:#fff;border-radius:16px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px}
+.tc-card-title{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:16px;text-transform:uppercase;letter-spacing:.04em}
+.tc-rows{display:flex;flex-direction:column}
+.tc-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:15px;color:var(--text)}
+.tc-row small{font-size:11px;color:var(--muted);margin-left:4px}
+.tc-salary-row{font-weight:700;font-size:16px;color:var(--dark)}
+.tc-neg{color:#ef4444}
+.tc-total-row{border-top:2px solid var(--border)!important;padding-top:12px;font-size:15px}
+.tc-net-row{font-weight:700;font-size:17px;background:linear-gradient(135deg,#f0fdf4,#dcfce7);margin:0 -24px;padding:14px 24px;border-radius:0 0 16px 16px;border-bottom:none!important}
+.tc-green{color:#16a34a;font-size:18px}
+.tc-rate-chips{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.tc-rate-chip{flex:1;min-width:100px;background:#f8fafc;border-radius:10px;padding:12px;text-align:center;border:1px solid var(--border)}
+.tc-rate-num{font-family:var(--r);font-size:22px;font-weight:800;color:var(--dark)}
+.tc-rate-lbl{font-size:11px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.04em}
+.tc-visual-card{display:flex;flex-direction:column;align-items:center;gap:16px}
+.tc-donut-legend{display:flex;flex-direction:column;gap:7px;align-self:stretch}
+.tc-legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dark)}
+.tc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.tc-net-big{text-align:center;margin-top:auto}
+.tc-net-amount{font-family:var(--r);font-size:22px;font-weight:800;color:var(--dark)}
+.tc-net-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+.tax-prov-table-wrap{background:#fff;border-radius:16px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;margin-bottom:24px;overflow-x:auto}
+.tax-section-title{font-family:var(--r);font-size:18px;font-weight:700;color:var(--dark);margin-bottom:20px}
+.tc-prov-tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tc-prov-tbl th{text-align:left;padding:10px 12px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid var(--border)}
+.tc-prov-tbl td{padding:11px 12px;border-bottom:1px solid #f8fafc;vertical-align:middle}
+.tc-prov-tbl tr.tc-sel td{background:#eff6ff;font-weight:600}
+.tc-rank{display:inline-flex;width:22px;height:22px;border-radius:50%;background:#f1f5f9;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted)}
+.tc-you{font-size:10px;font-weight:700;color:var(--indigo);margin-left:4px}
+.tc-bar-wrap{width:80px;height:6px;background:#f1f5f9;border-radius:3px;overflow:hidden;flex-shrink:0}
+.tc-bar{height:100%;background:var(--indigo);border-radius:3px;max-width:80px}
+.tax-disclaimer{font-size:12px;color:var(--muted);text-align:center;padding:0 20px;margin-top:8px}
+@media(max-width:720px){.tc-grid{grid-template-columns:1fr}.tax-fields-row{flex-direction:column}.tax-prov-select,.tax-salary-wrap{width:100%}.tc-bar-wrap{display:none}}
