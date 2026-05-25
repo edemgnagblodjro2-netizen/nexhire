@@ -568,7 +568,7 @@ a{text-decoration:none;color:inherit}
   .cat-section-header{display:none}
   .cat-dropdown-toggle{display:flex}
   #categories-grid{display:none;margin-top:8px}
-  #categories-grid.open{display:grid}
+  #categories-grid.open{display:grid;grid-template-columns:1fr;gap:6px}
   /* ── Rest of mobile fixes ── */
   .search-bar{flex-direction:column}
   .search-loc,.search-mode{display:none}
