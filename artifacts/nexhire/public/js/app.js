@@ -1127,33 +1127,52 @@ async function filterJobs(page = 1) {
       : `${total.toLocaleString('en-CA')} job${total !== 1 ? 's' : ''} found`;
   }
 
+  // ── Active filter chips ─────────────────────────────────
+  const chipsRow = document.getElementById('jobs-chips-row');
+  if (chipsRow) {
+    const isFr2 = state.lang === 'fr';
+    const chipMap = {
+      fwork:  { remote: isFr2?'Télétravail':'Remote', hybrid: isFr2?'Hybride':'Hybrid', onsite: isFr2?'Présentiel':'On-site' },
+      ftype:  { 'full-time':isFr2?'Temps plein':'Full time', permanent:'Permanent', 'part-time':isFr2?'Temps partiel':'Part time', contract:isFr2?'Contrat':'Contract', temporary:isFr2?'Temporaire':'Temporary', casual:isFr2?'Occasionnel':'Casual' },
+      fsal:   { '40000':'$40k+','60000':'$60k+','80000':'$80k+','100000':'$100k+','120000':'$120k+' },
+      fdate:  { '1':isFr2?'24h':'24h','3':isFr2?'3 jours':'3 days','7':isFr2?'7 jours':'7 days','14':isFr2?'14 jours':'14 days','unseen':isFr2?'Non vus':'Unseen' },
+      flang:  { en:'English', fr:'Français' },
+    };
+    const chips = [];
+    if (q) chips.push(`<span class="jobs-chip">"${esc(q)}" <button onclick="document.getElementById('fq').value='';filterJobs()" class="jobs-chip-x"><i class="ti ti-x"></i></button></span>`);
+    for (const [id, map] of Object.entries(chipMap)) {
+      const val = document.getElementById(id)?.value;
+      if (val && map[val]) chips.push(`<span class="jobs-chip">${map[val]} <button onclick="jobSidebarFilter('${id}','');filterJobs()" class="jobs-chip-x"><i class="ti ti-x"></i></button></span>`);
+    }
+    chipsRow.innerHTML = chips.join('');
+  }
+
+  const modeLabel = { remote: state.lang==='fr'?'Télétravail':'Remote', hybrid: state.lang==='fr'?'Hybride':'Hybrid', onsite: state.lang==='fr'?'Présentiel':'On-site' };
   list.innerHTML = jobs.map(j => {
     const title = state.lang === 'fr' ? (j.title_fr || j.title_en) : (j.title_en || j.title_fr);
-    const color = companyColor(j.company_name);
-    const initials = (j.company_name || 'N').slice(0, 2).toUpperCase();
     const isSaved = state.savedJobIds.has(j.id);
     const timeAgo = daysAgo(j.published_at);
     const isNew = j.published_at && (Date.now() - new Date(j.published_at).getTime()) < 48 * 3600 * 1000;
-    const newBadge = isNew ? `<span class="job-new-badge">${state.lang === 'fr' ? 'Nouveau' : 'New'}</span>` : '';
-    return `<div class="job-list-item js-job-card" data-job-id="${j.id}" id="jli-${j.id}" style="cursor:pointer">
-      ${j.company_logo ? `<img src="${j.company_logo}" style="width:44px;height:44px;border-radius:10px;flex-shrink:0;object-fit:contain">` : `<div class="company-logo" style="background:${color};width:44px;height:44px;border-radius:10px;flex-shrink:0;font-size:14px">${initials}</div>`}
-      <div style="flex:1;min-width:0">
-        <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
-          <span style="font-family:var(--r);font-weight:600;color:var(--dark);font-size:15px">${esc(title)}</span>
-          ${newBadge}
-        </div>
-        <div style="font-size:13px;color:var(--muted);margin-top:2px">${esc(j.company_name || '')}${j.city || j.province ? ' · ' + (j.city ? esc(j.city) + (j.province ? ', <strong>'+esc(j.province)+'</strong>' : '') : esc(j.province||'')) : ''}</div>
-        <div class="job-meta" style="margin-top:8px">
-          <span class="job-tag ${j.work_mode || 'onsite'}">${j.work_mode || 'onsite'}</span>
-          ${j.job_type ? `<span class="job-tag">${j.job_type}</span>` : ''}
-          ${j.salary_min ? `<span class="job-tag salary-tag">${fmtSalary(j.salary_min)}${j.salary_max ? '–'+fmtSalary(j.salary_max) : ''} ${j.salary_currency||'CAD'}</span>` : ''}
-        </div>
-        ${matchScoreBadge(j)}
+    const modeBadge = j.work_mode ? `<span class="job-tag ${j.work_mode}">${modeLabel[j.work_mode]||j.work_mode}</span>` : '';
+    const typeBadge = j.job_type ? `<span class="job-tag">${j.job_type}</span>` : '';
+    const newBadge = isNew ? `<span class="job-new-badge">${state.lang==='fr'?'Nouveau':'New'}</span>` : '';
+    const loc = [j.city, j.province].filter(Boolean).join(', ');
+    const salTxt = j.salary_min ? `${fmtSalary(j.salary_min)}${j.salary_max?'–'+fmtSalary(j.salary_max):''} ${j.salary_currency||'CAD'}` : '';
+    const skills = safeJsonArr(j.skills_required).slice(0,4).map(s=>`<span class="jli-skill">${esc(s)}</span>`).join('');
+    return `<div class="job-list-item js-job-card" data-job-id="${j.id}" id="jli-${j.id}">
+      <div class="jli-top">
+        <div class="jli-badges">${modeBadge}${typeBadge}${newBadge}</div>
+        <button class="jli-save save-btn${isSaved?' saved':''} js-save-btn" data-save-id="${j.id}" title="${state.lang==='fr'?'Sauvegarder':'Save'}"><i class="ti ti-heart${isSaved?'-filled':''}"></i></button>
       </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0">
-        <button class="save-btn${isSaved ? ' saved' : ''} js-save-btn" data-save-id="${j.id}" title="Save"><i class="ti ti-heart${isSaved ? '-filled' : ''}"></i></button>
-        <span style="font-size:11px;color:var(--muted)">${timeAgo}</span>
+      <div class="jli-title">${esc(title)}</div>
+      <div class="jli-meta">
+        <span class="jli-company">${esc(j.company_name||'')}</span>
+        ${loc?`<span class="jli-loc"><i class="ti ti-map-pin"></i> ${esc(loc)}</span>`:''}
+        ${salTxt?`<span class="jli-sal"><i class="ti ti-currency-dollar"></i> ${salTxt}</span>`:''}
+        <span class="jli-date">${timeAgo}</span>
       </div>
+      ${skills?`<div class="jli-skills">${skills}</div>`:''}
+      ${matchScoreBadge(j)}
     </div>`;
   }).join('');
 
@@ -1176,7 +1195,16 @@ function clearFilters() {
   ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
   const fprov = document.getElementById('fprov');
   if (fprov) fprov.value = '';
+  document.querySelectorAll('input[name="jf-mode"]').forEach(r => { r.checked = r.value === ''; });
   filterJobs();
+}
+
+function jobSidebarFilter(selectId, value) {
+  const el = document.getElementById(selectId);
+  if (el) el.value = value;
+  if (selectId === 'fwork') {
+    document.querySelectorAll('input[name="jf-mode"]').forEach(r => { r.checked = r.value === value; });
+  }
 }
 
 // ── Job Bank Canada section ─────────────────────────────────

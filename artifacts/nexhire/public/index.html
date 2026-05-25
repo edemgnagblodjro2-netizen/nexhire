@@ -347,73 +347,96 @@
 
 <!-- JOBS LIST ───────────────────────────────────────────── -->
 <div id="pg-jobs" class="page">
-  <div class="page-header-bar">
+  <div class="jobs-search-hdr">
     <div class="section-inner">
-      <h1 class="page-title" data-i18n="jobs.title">Job listings</h1>
-      <div class="filters-bar">
-        <div class="filters-search-row">
-          <input type="text" id="fq" placeholder="Search title, skill, company..." data-i18n-ph="jobs.filter.ph" oninput="debounceFilterSearch()" onkeydown="if(event.key==='Enter')filterJobs()" class="filter-input">
-          <select id="fprov" onchange="filterJobs()" class="filter-select filter-select-province">
-            <option value="">🌐 All locations</option>
-          </select>
-          <button class="btn-primary filters-search-btn" onclick="filterJobs()"><i class="ti ti-search"></i> <span data-i18n="jobs.search.btn">Find jobs</span></button>
-        </div>
-        <div class="filters-row">
-          <select id="fwork" onchange="filterJobs()" class="filter-select"><option value="">All modes</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select>
-          <select id="ftype" onchange="filterJobs()" class="filter-select">
-            <option value="">All types</option>
-            <option value="full-time">Full time</option>
-            <option value="permanent">Permanent</option>
-            <option value="part-time">Part time</option>
-            <option value="contract">Contract</option>
-            <option value="temporary">Temporary</option>
-            <option value="casual">Casual</option>
-          </select>
-          <select id="fsal" onchange="filterJobs()" class="filter-select">
-            <option value="">All Pay</option>
-            <option value="40000">$40,000+</option>
-            <option value="60000">$60,000+</option>
-            <option value="80000">$80,000+</option>
-            <option value="100000">$100,000+</option>
-            <option value="120000">$120,000+</option>
-          </select>
-          <select id="fdate" onchange="filterJobs()" class="filter-select">
-            <option value="">All Dates</option>
-            <option value="unseen">Jobs you haven't seen</option>
-            <option value="1">Last 24 hours</option>
-            <option value="3">Last 3 days</option>
-            <option value="7">Last 7 days</option>
-            <option value="14">Last 14 days</option>
-          </select>
-          <select id="flang" onchange="filterJobs()" class="filter-select">
-            <option value="">Job language</option>
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-          </select>
-          <select id="fsort" onchange="filterJobs()" class="filter-select">
-            <option value="">Most Recent</option>
-            <option value="salary_desc">Salary ↓ High to Low</option>
-            <option value="salary_asc">Salary ↑ Low to High</option>
-            <option value="date_asc">Oldest First</option>
-          </select>
-        </div>
+      <div class="jobs-search-row">
+        <label class="jobs-search-field">
+          <i class="ti ti-search"></i>
+          <input type="text" id="fq" placeholder="Title, skill, company..." data-i18n-ph="jobs.filter.ph" oninput="debounceFilterSearch()" onkeydown="if(event.key==='Enter')filterJobs()">
+        </label>
+        <label class="jobs-search-field jobs-search-field-loc">
+          <i class="ti ti-map-pin"></i>
+          <select id="fprov" onchange="filterJobs()" class="filter-select-province" style="border:none;outline:none;font-family:var(--b);font-size:14px;background:transparent;flex:1;padding:9px 0;color:var(--text);cursor:pointer"></select>
+        </label>
+        <button class="btn-primary jobs-search-btn" onclick="filterJobs()"><i class="ti ti-search"></i> <span data-i18n="jobs.search.btn">Find jobs</span></button>
       </div>
     </div>
   </div>
-  <div class="section-inner" style="padding-top:16px;padding-bottom:0">
-    <div id="jobs-results-bar" class="jobs-results-bar" style="display:none">
-      <span id="jobs-count-label" class="jobs-count-label"></span>
-      <button id="jobs-clear-btn" class="jobs-clear-btn" onclick="clearFilters()" style="display:none">
-        <i class="ti ti-x"></i> <span data-i18n="jobs.clear">Clear filters</span>
-      </button>
+  <div class="section-inner jobs-page-v2">
+    <aside class="jobs-sidebar">
+      <div class="jf-group">
+        <div class="jf-group-hdr">Work mode</div>
+        <div class="jf-radio-list">
+          <label class="jf-radio"><input type="radio" name="jf-mode" value="" checked onchange="jobSidebarFilter('fwork','')"> <span>All</span></label>
+          <label class="jf-radio"><input type="radio" name="jf-mode" value="remote" onchange="jobSidebarFilter('fwork','remote')"> <span>Remote</span></label>
+          <label class="jf-radio"><input type="radio" name="jf-mode" value="hybrid" onchange="jobSidebarFilter('fwork','hybrid')"> <span>Hybrid</span></label>
+          <label class="jf-radio"><input type="radio" name="jf-mode" value="onsite" onchange="jobSidebarFilter('fwork','onsite')"> <span>On-site</span></label>
+        </div>
+        <select id="fwork" style="display:none"></select>
+      </div>
+      <div class="jf-group">
+        <div class="jf-group-hdr">Contract type</div>
+        <select id="ftype" onchange="filterJobs()" class="jf-select">
+          <option value="">All types</option>
+          <option value="full-time">Full time</option>
+          <option value="permanent">Permanent</option>
+          <option value="part-time">Part time</option>
+          <option value="contract">Contract</option>
+          <option value="temporary">Temporary</option>
+          <option value="casual">Casual</option>
+        </select>
+      </div>
+      <div class="jf-group">
+        <div class="jf-group-hdr">Annual salary</div>
+        <select id="fsal" onchange="filterJobs()" class="jf-select">
+          <option value="">All salaries</option>
+          <option value="40000">$40,000+</option>
+          <option value="60000">$60,000+</option>
+          <option value="80000">$80,000+</option>
+          <option value="100000">$100,000+</option>
+          <option value="120000">$120,000+</option>
+        </select>
+      </div>
+      <div class="jf-group">
+        <div class="jf-group-hdr">Date posted</div>
+        <select id="fdate" onchange="filterJobs()" class="jf-select">
+          <option value="">All dates</option>
+          <option value="unseen">Jobs you haven't seen</option>
+          <option value="1">Last 24 hours</option>
+          <option value="3">Last 3 days</option>
+          <option value="7">Last 7 days</option>
+          <option value="14">Last 14 days</option>
+        </select>
+      </div>
+      <div class="jf-group">
+        <div class="jf-group-hdr">Language</div>
+        <select id="flang" onchange="filterJobs()" class="jf-select">
+          <option value="">All</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+        </select>
+      </div>
+    </aside>
+    <div class="jobs-main-col">
+      <div id="jobs-results-bar" class="jobs-results-bar" style="display:none">
+        <span id="jobs-count-label" class="jobs-count-label"></span>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+          <span style="font-size:13px;color:var(--muted)">Sort by</span>
+          <select id="fsort" onchange="filterJobs()" class="jf-select-sm">
+            <option value="">Most recent</option>
+            <option value="salary_desc">Salary ↓</option>
+            <option value="salary_asc">Salary ↑</option>
+            <option value="date_asc">Oldest first</option>
+          </select>
+          <button id="jobs-clear-btn" class="jobs-clear-btn" onclick="clearFilters()" style="display:none"><i class="ti ti-x"></i> <span data-i18n="jobs.clear">Clear</span></button>
+        </div>
+      </div>
+      <div id="jobs-chips-row" class="jobs-chips-row"></div>
+      <div id="jobs-list" class="jobs-list-col"></div>
+      <div id="job-detail-panel" class="job-detail-panel" style="display:none"></div>
+      <div id="jobs-pagination" style="margin-top:24px;text-align:center;padding-bottom:32px"></div>
     </div>
   </div>
-  <div class="section-inner jobs-page-layout">
-    <div id="jobs-list" class="jobs-list-col"></div>
-    <div id="job-detail-panel" class="job-detail-panel" style="display:none"></div>
-  </div>
-  <div class="section-inner" id="jobs-pagination" style="margin-top:24px;text-align:center;padding-bottom:32px"></div>
-
   <!-- Adzuna external jobs section -->
   <div class="section-inner" id="jobbank-section" style="padding-bottom:56px;display:none">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-top:8px;border-top:1px solid var(--border)">
