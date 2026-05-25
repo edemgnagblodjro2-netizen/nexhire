@@ -268,4 +268,63 @@ router.delete('/:id', requireAuth, requireCompanyAccess, async (req, res) => {
   res.json({ success: true });
 });
 
+// ── Q&A on job listings ───────────────────────────────────────
+router.get('/:id/questions', async (req, res) => {
+  try {
+    const questions = await db.all(`
+      SELECT q.*, u.first_name, u.last_name,
+             ua.first_name AS ans_first, ua.last_name AS ans_last
+      FROM nh_job_questions q
+      LEFT JOIN nh_users u  ON u.id = q.author_id
+      LEFT JOIN nh_users ua ON ua.id = q.answered_by
+      WHERE q.job_id = $1 AND q.is_public = true
+      ORDER BY q.created_at DESC
+    `, [req.params.id]);
+    res.json({ success: true, questions });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
+router.post('/:id/questions', requireAuth, async (req, res) => {
+  try {
+    const { question } = req.body;
+    if (!question?.trim()) return res.status(400).json({ success: false, error: 'question required' });
+    const { v4: uuidv4 } = require('uuid');
+    const id = uuidv4();
+    await db.run(`
+      INSERT INTO nh_job_questions (id, job_id, author_id, question)
+      VALUES ($1,$2,$3,$4)
+    `, [id, req.params.id, req.session.user.id, question.trim()]);
+    const q = await db.get(`
+      SELECT q.*, u.first_name, u.last_name FROM nh_job_questions q
+      LEFT JOIN nh_users u ON u.id = q.author_id WHERE q.id = $1
+    `, [id]);
+    res.json({ success: true, question: q });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
+router.post('/:id/questions/:qid/answer', requireAuth, async (req, res) => {
+  try {
+    if (req.session.user.role !== 'employer')
+      return res.status(403).json({ success: false, error: 'Employers only' });
+    const { answer } = req.body;
+    if (!answer?.trim()) return res.status(400).json({ success: false, error: 'answer required' });
+    const job = await db.get(
+      'SELECT id FROM nh_jobs WHERE id = $1 AND company_id = $2',
+      [req.params.id, req.session.user.company_id]
+    );
+    if (!job) return res.status(403).json({ success: false, error: 'Forbidden' });
+    await db.run(`
+      UPDATE nh_job_questions SET answer = $1, answered_by = $2, answered_at = NOW()
+      WHERE id = $3 AND job_id = $4
+    `, [answer.trim(), req.session.user.id, req.params.qid, req.params.id]);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
 module.exports = router;

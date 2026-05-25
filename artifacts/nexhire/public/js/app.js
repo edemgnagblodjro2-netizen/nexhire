@@ -250,6 +250,7 @@ function goto(page) {
   const el = document.getElementById(`pg-${page}`);
   if (el) { el.classList.add('active'); window.scrollTo(0, 0); }
   if (page === 'jobs') loadJobs();
+  if (page === 'feed') loadFeed();
   if (page === 'candidate-dash' && state.user) { loadDashboard(); showTab('tab-profile', null); }
   if (page === 'employer-dash' && state.user) loadEmployerDash();
   if (page === 'settings') renderSettings();
@@ -257,7 +258,7 @@ function goto(page) {
   if (page === 'privacy') renderPrivacy();
   // terms page is static — no render needed
   // update URL hash for direct linking
-  const publicPages = ['home','jobs','employer','pricing','privacy','terms','help'];
+  const publicPages = ['home','jobs','feed','employer','pricing','privacy','terms','help'];
   if (publicPages.includes(page)) {
     history.replaceState(null, '', page === 'home' ? window.location.pathname : '#' + page);
   }
@@ -292,7 +293,7 @@ function restoreFromHash() {
     }
     return;
   }
-  const valid = ['jobs','employer','pricing','privacy','terms','help'];
+  const valid = ['jobs','feed','employer','pricing','privacy','terms','help'];
   if (hash && valid.includes(hash)) goto(hash);
 }
 window.addEventListener('hashchange', restoreFromHash);
@@ -316,7 +317,7 @@ async function setLang(lang) {
 const T = {
   en: {
     'trust.label':'Trusted by leading companies & organizations',
-    'nav.jobs':'Jobs','nav.employers':'For Employers','nav.pricing':'Pricing',
+    'nav.jobs':'Jobs','nav.feed':'Feed','nav.employers':'For Employers','nav.pricing':'Pricing',
     'nav.signin':'Sign in','nav.getstarted':'Get started',
     'nav.dd.profile':'Profile','nav.dd.reviews':'My reviews','nav.dd.settings':'Settings',
     'nav.dd.help':'Help Centre','nav.dd.privacy':'Privacy Centre',
@@ -542,7 +543,7 @@ const T = {
   },
   fr: {
     'trust.label':'Reconnu par les meilleures entreprises & organisations',
-    'nav.jobs':'Emplois','nav.employers':'Pour les employeurs','nav.pricing':'Tarifs',
+    'nav.jobs':'Emplois','nav.feed':'Fil d\'actu','nav.employers':'Pour les employeurs','nav.pricing':'Tarifs',
     'nav.signin':'Connexion','nav.getstarted':'Commencer',
     'nav.dd.profile':'Profil','nav.dd.reviews':'Mes avis','nav.dd.settings':'Paramètres',
     'nav.dd.help':"Centre d'aide",'nav.dd.privacy':'Confidentialité',
@@ -1293,7 +1294,18 @@ async function openJobDetail(jobId) {
     ${(j.company_desc_en || j.company_desc_fr) ? `<div class="job-section job-section-company"><h4><i class="ti ti-building"></i> About ${esc(j.company_name||'the company')}</h4><div class="job-desc">${esc(state.lang==='fr'?(j.company_desc_fr||j.company_desc_en):(j.company_desc_en||j.company_desc_fr))}</div>${j.company_website?`<a href="${esc(j.company_website)}" target="_blank" rel="noopener" class="btn-ghost" style="font-size:12px;margin-top:10px;display:inline-flex;align-items:center;gap:4px"><i class="ti ti-external-link"></i>${esc(j.company_website)}</a>`:''}</div>` : ''}
     ${totalReviews ? `<div class="job-section"><h4><i class="ti ti-star"></i> Company Reviews</h4>${renderReviews(rev.reviews?.slice(0,3) || [])}</div>` : ''}
     ${state.user?.role === 'candidate' && j.company_id ? `<div style="margin-top:8px"><button class="btn-ghost" style="font-size:13px;width:100%" data-review-company-id="${j.company_id}" data-review-company-name="${esc(j.company_name || '')}"><i class="ti ti-pencil"></i> Write a review</button></div>` : ''}
+    <div class="job-section" style="margin-top:20px">
+      <h4><i class="ti ti-help-circle" style="color:var(--indigo)"></i> ${state.lang==='fr' ? 'Questions sur ce poste' : 'Questions about this role'}</h4>
+      <div id="job-qa-list-${j.id}"><div style="font-size:13px;color:var(--muted);padding:4px 0"><i class="ti ti-loader" style="animation:spin 1s linear infinite"></i></div></div>
+      ${state.user?.role === 'candidate' ? `
+      <div class="qa-input-row" style="margin-top:12px">
+        <input class="qa-input" id="qa-input-${j.id}" placeholder="${state.lang==='fr' ? 'Poser une question à l\'employeur…' : 'Ask the employer a question…'}"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();submitJobQuestion('${j.id}')}">
+        <button class="btn-primary" style="font-size:13px;padding:8px 14px;white-space:nowrap" onclick="submitJobQuestion('${j.id}')"><i class="ti ti-send"></i></button>
+      </div>` : ''}
+    </div>
   `;
+  loadJobQA(j.id);
 }
 
 function closeJobDetail() {
@@ -7234,4 +7246,451 @@ async function declineSlots(slotId) {
     toast(isFr ? 'Créneaux déclinés.' : 'Slots declined.', 'info');
     loadMyApplications();
   } else toast(d.error || 'Failed', 'error');
+}
+
+// ═══════════════════════════════════════════════════════════
+// FEED
+// ═══════════════════════════════════════════════════════════
+let feedType    = 'all';
+let feedPage    = 1;
+let feedLoading = false;
+let feedAllLoaded = false;
+
+function feedRelTime(dateStr, isFr) {
+  const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+  if (diff < 60)    return isFr ? 'à l\'instant' : 'just now';
+  if (diff < 3600)  return isFr ? `il y a ${Math.floor(diff/60)} min`   : `${Math.floor(diff/60)}m ago`;
+  if (diff < 86400) return isFr ? `il y a ${Math.floor(diff/3600)}h`    : `${Math.floor(diff/3600)}h ago`;
+  if (diff < 604800)return isFr ? `il y a ${Math.floor(diff/86400)}j`   : `${Math.floor(diff/86400)}d ago`;
+  return new Date(dateStr).toLocaleDateString(isFr ? 'fr-CA' : 'en-CA', { month: 'short', day: 'numeric' });
+}
+
+function feedInitials(u) {
+  if (!u) return '?';
+  const n = [u.first_name, u.last_name].filter(Boolean).join(' ');
+  return n ? n.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2) : (u.email||'?')[0].toUpperCase();
+}
+
+// ── Main loadFeed — renders page skeleton & fetches posts ──
+function loadFeed() {
+  const isFr = state.lang === 'fr';
+  const pg = document.getElementById('pg-feed');
+  if (!pg) return;
+  const userInitials = state.user ? feedInitials(state.user) : '';
+
+  pg.innerHTML = `
+    <div class="feed-layout">
+      <aside class="feed-sidebar">
+        <div class="feed-sidebar-card">
+          <div class="feed-sidebar-title">${isFr ? 'Filtrer' : 'Filter'}</div>
+          <div class="feed-filters">
+            <button class="feed-filter-btn active" onclick="setFeedFilter('all',this)"><i class="ti ti-layout-grid"></i> ${isFr ? 'Tout' : 'All'}</button>
+            <button class="feed-filter-btn" onclick="setFeedFilter('text',this)"><i class="ti ti-pencil"></i> Posts</button>
+            <button class="feed-filter-btn" onclick="setFeedFilter('article',this)"><i class="ti ti-news"></i> Articles</button>
+            <button class="feed-filter-btn" onclick="setFeedFilter('hired',this)"><i class="ti ti-confetti"></i> ${isFr ? 'Annonces' : 'Announcements'}</button>
+            <button class="feed-filter-btn" onclick="setFeedFilter('job_share',this)"><i class="ti ti-briefcase"></i> ${isFr ? 'Offres partagées' : 'Job posts'}</button>
+          </div>
+        </div>
+      </aside>
+
+      <main class="feed-main">
+        ${state.user ? `
+        <div class="compose-box" onclick="openFeedComposer('text')">
+          <div class="compose-box-inner">
+            <div class="compose-avatar">${userInitials}</div>
+            <div class="compose-placeholder">${isFr ? 'Quoi de neuf ?' : "What's on your mind?"}</div>
+          </div>
+          <div class="compose-type-btns">
+            <button onclick="event.stopPropagation();openFeedComposer('article')"  class="compose-type-btn"><i class="ti ti-news"></i> ${isFr ? 'Article' : 'Article'}</button>
+            <button onclick="event.stopPropagation();openFeedComposer('hired')"    class="compose-type-btn"><i class="ti ti-confetti"></i> ${isFr ? 'Annonce' : 'Announcement'}</button>
+            <button onclick="event.stopPropagation();openFeedComposer('job_share')" class="compose-type-btn"><i class="ti ti-briefcase"></i> ${isFr ? 'Partager une offre' : 'Share a job'}</button>
+          </div>
+        </div>` : `
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;text-align:center;margin-bottom:16px">
+          <i class="ti ti-lock" style="font-size:24px;color:var(--muted)"></i>
+          <div style="font-weight:600;color:var(--dark);margin:8px 0 12px">${isFr ? 'Connectez-vous pour publier' : 'Sign in to post & interact'}</div>
+          <button class="btn-primary" style="font-size:13px" data-modal="modal-login">${isFr ? 'Se connecter' : 'Sign in'}</button>
+        </div>`}
+
+        <div id="feed-posts-container">
+          <div style="text-align:center;padding:40px 0"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>
+        </div>
+        <div id="feed-load-more" style="display:none;text-align:center;padding:16px">
+          <button class="btn-ghost" onclick="loadMoreFeedPosts()"><i class="ti ti-refresh"></i> ${isFr ? 'Plus de posts' : 'Load more'}</button>
+        </div>
+      </main>
+
+      <aside class="feed-sidebar feed-sidebar-right">
+        <div class="feed-sidebar-card">
+          <div class="feed-sidebar-title" style="margin-bottom:10px">💡 ${isFr ? 'Conseil' : 'Tip'}</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.65">${isFr
+            ? 'Personnalisez chaque lettre de motivation. Les recruteurs identifient immédiatement les candidatures génériques.'
+            : 'Personalize every cover letter. Recruiters immediately spot generic applications.'}</div>
+        </div>
+        <div class="feed-sidebar-card" style="margin-top:12px">
+          <div class="feed-sidebar-title" style="margin-bottom:10px">🔥 ${isFr ? 'Trending' : 'Trending'}</div>
+          ${['#Québec','#RemoteWork','#React','#FullStack','#Emploi','#Montréal'].map(h => `<span class="feed-hashtag">${h}</span>`).join('')}
+        </div>
+      </aside>
+    </div>`;
+
+  feedPage = 1;
+  feedAllLoaded = false;
+  fetchFeedPosts(true);
+}
+
+async function fetchFeedPosts(reset = false) {
+  if (feedLoading || feedAllLoaded) return;
+  feedLoading = true;
+  const container = document.getElementById('feed-posts-container');
+  if (!container) { feedLoading = false; return; }
+  const isFr = state.lang === 'fr';
+
+  if (reset) {
+    feedPage = 1;
+    feedAllLoaded = false;
+    container.innerHTML = '<div style="text-align:center;padding:40px 0"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>';
+  }
+
+  const d = await api('GET', `${BASE}/api/feed?page=${feedPage}&limit=10&type=${feedType}`);
+  feedLoading = false;
+  const posts = d.posts || [];
+
+  if (posts.length < 10) {
+    feedAllLoaded = true;
+    const lm = document.getElementById('feed-load-more');
+    if (lm) lm.style.display = 'none';
+  } else {
+    const lm = document.getElementById('feed-load-more');
+    if (lm) lm.style.display = 'block';
+  }
+
+  if (reset) {
+    if (!posts.length) {
+      container.innerHTML = `<div class="empty-state"><i class="ti ti-mood-empty"></i><p>${isFr ? 'Aucun post pour l\'instant.' : 'No posts yet.'}</p>${state.user ? `<button class="btn-primary" onclick="openFeedComposer('text')" style="margin-top:14px">${isFr ? 'Créer le premier post' : 'Create the first post'}</button>` : ''}</div>`;
+      return;
+    }
+    container.innerHTML = posts.map(p => renderPostCard(p)).join('');
+  } else {
+    posts.forEach(p => container.insertAdjacentHTML('beforeend', renderPostCard(p)));
+  }
+  feedPage++;
+}
+
+function loadMoreFeedPosts() { fetchFeedPosts(false); }
+
+function setFeedFilter(type, btn) {
+  feedType = type;
+  document.querySelectorAll('.feed-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  fetchFeedPosts(true);
+}
+
+// ── Post card renderer ────────────────────────────────────
+function renderPostCard(p) {
+  const isFr = state.lang === 'fr';
+  const name = [p.first_name, p.last_name].filter(Boolean).join(' ') || p.email || 'Nexhire User';
+  const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+  const headline  = isFr ? (p.headline_fr || p.headline_en) : (p.headline_en || p.headline_fr);
+  const timeAgo   = feedRelTime(p.created_at, isFr);
+  const isOwn     = state.user?.id === p.author_id;
+
+  const badges = {
+    hired:    `<span class="post-type-badge hired"><i class="ti ti-confetti"></i> ${isFr ? 'Nouvelle recrue' : 'New hire'}</span>`,
+    article:  `<span class="post-type-badge article"><i class="ti ti-news"></i> Article</span>`,
+    job_share:`<span class="post-type-badge job"><i class="ti ti-briefcase"></i> ${isFr ? 'Offre partagée' : 'Job share'}</span>`,
+  };
+  const badge = badges[p.type] || '';
+
+  let body = '';
+  if (p.type === 'article') {
+    const preview = (p.article_body || '').slice(0, 280);
+    body = `<div class="post-article">
+      <div class="post-article-title">${esc(p.article_title || '')}</div>
+      <div class="post-article-body">${esc(preview)}${p.article_body?.length > 280 ? '…' : ''}</div>
+    </div>`;
+  } else {
+    body = `<div class="post-content">${esc(p.content || '').replace(/\n/g,'<br>')}</div>`;
+  }
+
+  return `<div class="post-card" id="post-${p.id}">
+    <div class="post-header">
+      <div class="post-avatar">${initials}</div>
+      <div class="post-author-info">
+        <div class="post-author-name">${esc(name)}</div>
+        ${headline ? `<div class="post-author-title">${esc(headline)}</div>` : ''}
+        <div class="post-date">${timeAgo}</div>
+      </div>
+      ${badge}
+      ${isOwn ? `<button class="post-menu-btn" onclick="deletePost('${p.id}')" title="${isFr?'Supprimer':'Delete'}"><i class="ti ti-trash"></i></button>` : ''}
+    </div>
+    ${body}
+    ${p.image_url ? `<img src="${esc(p.image_url)}" class="post-image" alt="" loading="lazy">` : ''}
+    <div class="post-stats">
+      <span><i class="ti ti-heart"></i> <span data-likes="${p.id}">${p.likes_count || 0}</span></span>
+      <span><i class="ti ti-message-circle"></i> <span data-comments="${p.id}">${p.comments_count || 0}</span></span>
+    </div>
+    <div class="post-actions">
+      <button class="post-action-btn${p.is_liked_by_me ? ' liked' : ''}" onclick="toggleLike('${p.id}',this)">
+        <i class="ti ti-heart${p.is_liked_by_me ? '-filled' : ''}"></i> ${isFr ? 'J\'aime' : 'Like'}
+      </button>
+      <button class="post-action-btn" onclick="toggleComments('${p.id}')">
+        <i class="ti ti-message-circle"></i> ${isFr ? 'Commenter' : 'Comment'}
+      </button>
+    </div>
+    <div class="comments-section" id="comments-${p.id}" style="display:none">
+      <div id="comment-list-${p.id}"></div>
+      ${state.user ? `
+      <div class="comment-input-row">
+        <div class="comment-input-avatar">${feedInitials(state.user)}</div>
+        <input class="comment-input" id="comment-input-${p.id}"
+          placeholder="${isFr ? 'Écrire un commentaire…' : 'Write a comment…'}"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitComment('${p.id}')}">
+        <button class="comment-submit-btn" onclick="submitComment('${p.id}')"><i class="ti ti-send"></i></button>
+      </div>` : ''}
+    </div>
+  </div>`;
+}
+
+// ── Likes ─────────────────────────────────────────────────
+async function toggleLike(postId, btn) {
+  if (!state.user) { showModal('modal-login'); return; }
+  const d = await api('POST', `${BASE}/api/feed/${postId}/like`);
+  if (d.success) {
+    btn.classList.toggle('liked', d.liked);
+    const icon = btn.querySelector('i');
+    if (icon) icon.className = `ti ti-heart${d.liked ? '-filled' : ''}`;
+    const el = document.querySelector(`[data-likes="${postId}"]`);
+    if (el) el.textContent = d.count;
+  }
+}
+
+// ── Comments ──────────────────────────────────────────────
+function toggleComments(postId) {
+  const section = document.getElementById(`comments-${postId}`);
+  if (!section) return;
+  const open = section.style.display !== 'none';
+  section.style.display = open ? 'none' : 'block';
+  if (!open) loadComments(postId);
+}
+
+async function loadComments(postId) {
+  const container = document.getElementById(`comment-list-${postId}`);
+  if (!container) return;
+  const isFr = state.lang === 'fr';
+  container.innerHTML = `<div style="padding:6px 0;color:var(--muted);font-size:13px"><i class="ti ti-loader" style="animation:spin 1s linear infinite"></i></div>`;
+  const d = await api('GET', `${BASE}/api/feed/${postId}/comments`);
+  const comments = d.comments || [];
+  if (!comments.length) {
+    container.innerHTML = `<div style="font-size:13px;color:var(--muted);padding:6px 0">${isFr ? 'Aucun commentaire encore.' : 'No comments yet.'}</div>`;
+    return;
+  }
+  container.innerHTML = comments.map(c => {
+    const n = [c.first_name, c.last_name].filter(Boolean).join(' ') || 'User';
+    const ini = n.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+    return `<div class="comment-item">
+      <div class="comment-avatar">${ini}</div>
+      <div class="comment-body">
+        <span class="comment-author">${esc(n)}</span>
+        <span class="comment-time">${feedRelTime(c.created_at, isFr)}</span>
+        <div class="comment-text">${esc(c.content).replace(/\n/g,'<br>')}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function submitComment(postId) {
+  if (!state.user) { showModal('modal-login'); return; }
+  const input = document.getElementById(`comment-input-${postId}`);
+  const text  = input?.value.trim();
+  if (!text) return;
+  input.value = '';
+  input.disabled = true;
+  const d = await api('POST', `${BASE}/api/feed/${postId}/comment`, { content: text });
+  input.disabled = false;
+  if (d.success) {
+    loadComments(postId);
+    const el = document.querySelector(`[data-comments="${postId}"]`);
+    if (el) el.textContent = parseInt(el.textContent || 0) + 1;
+  } else {
+    toast(d.error || 'Failed', 'error');
+    input.value = text;
+  }
+}
+
+// ── Delete post ───────────────────────────────────────────
+async function deletePost(postId) {
+  const isFr = state.lang === 'fr';
+  if (!confirm(isFr ? 'Supprimer ce post ?' : 'Delete this post?')) return;
+  const d = await api('DELETE', `${BASE}/api/feed/${postId}`);
+  if (d.success) {
+    document.getElementById(`post-${postId}`)?.remove();
+    toast(isFr ? 'Post supprimé.' : 'Post deleted.', 'success');
+  } else toast(d.error || 'Failed', 'error');
+}
+
+// ── Compose modal ─────────────────────────────────────────
+function openFeedComposer(type) {
+  if (!state.user) { showModal('modal-login'); return; }
+  const modal = document.getElementById('compose-modal');
+  if (!modal) return;
+  modal.style.display = 'flex';
+  document.querySelectorAll('.compose-tab').forEach(t => t.classList.remove('active'));
+  const activeTab = document.querySelector(`.compose-tab[data-ctype="${type}"]`);
+  if (activeTab) activeTab.classList.add('active');
+  setComposeType(type, null);
+}
+
+function setComposeType(type, btn) {
+  if (btn) {
+    document.querySelectorAll('.compose-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const isFr = state.lang === 'fr';
+  const fields = document.getElementById('compose-fields');
+  if (!fields) return;
+
+  const hired_tmpl = isFr
+    ? '🎉 Ravi(e) d\'annoncer que j\'ai rejoint [Entreprise] en tant que [Poste] ! Merci à l\'équipe. #NouvelleOpportunité #Nexhire'
+    : '🎉 Excited to announce I\'ve joined [Company] as [Role]! #NewOpportunity #Nexhire';
+
+  if (type === 'article') {
+    fields.innerHTML = `
+      <div class="form-group" style="margin-bottom:12px">
+        <input type="text" id="compose-article-title" placeholder="${isFr ? 'Titre de l\'article' : 'Article title'}"
+          style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:15px;font-weight:600;box-sizing:border-box;outline:none;font-family:var(--b)">
+      </div>
+      <div class="form-group">
+        <textarea id="compose-article-body" rows="9"
+          placeholder="${isFr ? 'Rédigez votre article…' : 'Write your article…'}"
+          style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;resize:vertical;box-sizing:border-box;line-height:1.7;outline:none;font-family:var(--b)"></textarea>
+      </div>`;
+  } else if (type === 'job_share') {
+    fields.innerHTML = `
+      <div class="form-group" style="margin-bottom:12px">
+        <textarea id="compose-content" rows="3"
+          placeholder="${isFr ? 'Pourquoi partagez-vous cette offre ?' : 'Why are you sharing this job?'}"
+          style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;resize:vertical;box-sizing:border-box;outline:none;font-family:var(--b)"></textarea>
+      </div>
+      <div class="form-group">
+        <label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">${isFr ? 'Offre liée (optionnel)' : 'Linked job (optional)'}</label>
+        <select id="compose-job-id"
+          style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;box-sizing:border-box;font-family:var(--b)">
+          <option value="">${isFr ? '— Sélectionner une offre' : '— Select a job posting'}</option>
+        </select>
+      </div>`;
+    if (state.user?.role === 'employer' && state.user?.company_id) {
+      api('GET', `${BASE}/api/jobs?company_id=${state.user.company_id}&limit=20`).then(d => {
+        const sel = document.getElementById('compose-job-id');
+        if (!sel) return;
+        (d.jobs || []).forEach(j => {
+          const opt = document.createElement('option');
+          opt.value = j.id;
+          opt.textContent = j.title_en || j.title_fr || 'Job';
+          sel.appendChild(opt);
+        });
+      });
+    }
+  } else {
+    fields.innerHTML = `
+      <div class="form-group" style="margin-bottom:12px">
+        <textarea id="compose-content" rows="5"
+          placeholder="${isFr ? 'Quoi de neuf ?' : "What's on your mind?"}"
+          style="width:100%;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:15px;resize:vertical;box-sizing:border-box;line-height:1.7;outline:none;font-family:var(--b)">${type === 'hired' ? hired_tmpl : ''}</textarea>
+      </div>
+      <div class="form-group">
+        <input type="url" id="compose-image-url"
+          placeholder="${isFr ? 'URL d\'une image (optionnel)' : 'Image URL (optional)'}"
+          style="width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;box-sizing:border-box;outline:none;font-family:var(--b)">
+      </div>`;
+    if (type === 'hired') setTimeout(() => document.getElementById('compose-content')?.select(), 50);
+  }
+}
+
+async function submitPost() {
+  if (!state.user) { showModal('modal-login'); return; }
+  const isFr  = state.lang === 'fr';
+  const type  = document.querySelector('.compose-tab.active')?.dataset.ctype || 'text';
+  const content      = document.getElementById('compose-content')?.value?.trim();
+  const articleTitle = document.getElementById('compose-article-title')?.value?.trim();
+  const articleBody  = document.getElementById('compose-article-body')?.value?.trim();
+  const jobId        = document.getElementById('compose-job-id')?.value || null;
+  const imageUrl     = document.getElementById('compose-image-url')?.value?.trim() || null;
+
+  if (type !== 'article' && !content) {
+    toast(isFr ? 'Le contenu est requis.' : 'Content is required.', 'error'); return;
+  }
+  if (type === 'article' && (!articleTitle || !articleBody)) {
+    toast(isFr ? 'Titre et corps de l\'article requis.' : 'Article title and body required.', 'error'); return;
+  }
+
+  const btn = document.getElementById('compose-submit-btn');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader" style="animation:spin 1s linear infinite"></i>'; }
+
+  const d = await api('POST', `${BASE}/api/feed`, {
+    type,
+    content:       content       || null,
+    article_title: articleTitle  || null,
+    article_body:  articleBody   || null,
+    job_id:        jobId         || null,
+    image_url:     imageUrl      || null,
+  });
+
+  if (btn) { btn.disabled = false; btn.innerHTML = `<i class="ti ti-send"></i> ${isFr ? 'Publier' : 'Publish'}`; }
+
+  if (d.success) {
+    document.getElementById('compose-modal').style.display = 'none';
+    toast(isFr ? '✅ Post publié !' : '✅ Post published!', 'success');
+    const container = document.getElementById('feed-posts-container');
+    if (container) {
+      if (container.querySelector('.empty-state')) container.innerHTML = '';
+      container.insertAdjacentHTML('afterbegin', renderPostCard(d.post));
+    }
+  } else {
+    toast(d.error || (isFr ? 'Erreur' : 'Error'), 'error');
+  }
+}
+
+// ── Job Q&A ───────────────────────────────────────────────
+async function loadJobQA(jobId) {
+  const container = document.getElementById(`job-qa-list-${jobId}`);
+  if (!container) return;
+  const isFr = state.lang === 'fr';
+  const d = await api('GET', `${BASE}/api/jobs/${jobId}/questions`);
+  const questions = d.questions || [];
+  if (!questions.length) {
+    container.innerHTML = `<div style="font-size:13px;color:var(--muted)">${isFr ? 'Aucune question pour l\'instant. Soyez le premier !' : 'No questions yet. Be the first!'}</div>`;
+    return;
+  }
+  container.innerHTML = questions.map(q => {
+    const author = [q.first_name, q.last_name].filter(Boolean).join(' ') || 'Candidat';
+    const answerer = [q.ans_first, q.ans_last].filter(Boolean).join(' ') || 'RH';
+    return `<div class="qa-item">
+      <div class="qa-question"><i class="ti ti-question-mark" style="color:var(--indigo);flex-shrink:0"></i> ${esc(q.question)}
+        <span style="font-size:11px;color:var(--muted);font-weight:400;margin-left:8px">— ${esc(author)} · ${feedRelTime(q.created_at, isFr)}</span>
+      </div>
+      ${q.answer
+        ? `<div class="qa-answer">${esc(q.answer)}<span style="font-size:11px;color:#059669;margin-left:6px">— ${esc(answerer)} · ${feedRelTime(q.answered_at, isFr)}</span></div>`
+        : `<div style="font-size:12px;color:var(--muted);font-style:italic;padding-left:20px">${isFr ? 'Réponse en attente…' : 'Answer pending…'}</div>`}
+    </div>`;
+  }).join('');
+}
+
+async function submitJobQuestion(jobId) {
+  if (!state.user) { showModal('modal-login'); return; }
+  const isFr  = state.lang === 'fr';
+  const input = document.getElementById(`qa-input-${jobId}`);
+  const question = input?.value.trim();
+  if (!question) return;
+  input.value = '';
+  input.disabled = true;
+  const d = await api('POST', `${BASE}/api/jobs/${jobId}/questions`, { question });
+  input.disabled = false;
+  if (d.success) {
+    toast(isFr ? '✅ Question envoyée !' : '✅ Question submitted!', 'success');
+    loadJobQA(jobId);
+  } else {
+    toast(d.error || 'Failed', 'error');
+    input.value = question;
+  }
 }

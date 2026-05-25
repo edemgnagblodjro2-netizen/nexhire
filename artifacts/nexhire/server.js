@@ -469,6 +469,87 @@ async function runMigrations() {
     `);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_islots_app ON nh_interview_slots(application_id)`);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_islots_company ON nh_interview_slots(company_id)`);
+    // ── Feed tables ────────────────────────────────────────────
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_posts (
+        id                 TEXT PRIMARY KEY,
+        author_id          TEXT REFERENCES nh_users(id) ON DELETE CASCADE,
+        type               VARCHAR(20) NOT NULL DEFAULT 'text',
+        content            TEXT,
+        image_url          TEXT,
+        article_title      TEXT,
+        article_body       TEXT,
+        job_id             TEXT REFERENCES nh_jobs(id) ON DELETE SET NULL,
+        likes_count        INTEGER DEFAULT 0,
+        comments_count     INTEGER DEFAULT 0,
+        shared_to_linkedin BOOLEAN DEFAULT FALSE,
+        is_active          BOOLEAN DEFAULT TRUE,
+        created_at         TIMESTAMPTZ DEFAULT NOW(),
+        updated_at         TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_post_likes (
+        id         TEXT PRIMARY KEY,
+        post_id    TEXT REFERENCES nh_posts(id) ON DELETE CASCADE,
+        user_id    TEXT REFERENCES nh_users(id) ON DELETE CASCADE,
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(post_id, user_id)
+      )
+    `);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_post_comments (
+        id          TEXT PRIMARY KEY,
+        post_id     TEXT REFERENCES nh_posts(id) ON DELETE CASCADE,
+        author_id   TEXT REFERENCES nh_users(id) ON DELETE CASCADE,
+        content     TEXT NOT NULL,
+        likes_count INTEGER DEFAULT 0,
+        parent_id   TEXT REFERENCES nh_post_comments(id),
+        created_at  TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_job_questions (
+        id          TEXT PRIMARY KEY,
+        job_id      TEXT REFERENCES nh_jobs(id) ON DELETE CASCADE,
+        author_id   TEXT REFERENCES nh_users(id) ON DELETE CASCADE,
+        question    TEXT NOT NULL,
+        answer      TEXT,
+        answered_by TEXT REFERENCES nh_users(id),
+        answered_at TIMESTAMPTZ,
+        is_public   BOOLEAN DEFAULT TRUE,
+        created_at  TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_posts_author ON nh_posts(author_id, created_at DESC)`);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_posts_type   ON nh_posts(type, created_at DESC)`);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_pcomments    ON nh_post_comments(post_id, created_at)`);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_plikes       ON nh_post_likes(post_id, user_id)`);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_jquestions   ON nh_job_questions(job_id, is_public)`);
+    // ── Seed demo posts ────────────────────────────────────────
+    const postsCountRes = await pool.query('SELECT COUNT(*) FROM nh_posts');
+    if (parseInt(postsCountRes.rows[0].count) === 0) {
+      const usersRes = await pool.query('SELECT id FROM nh_users LIMIT 3');
+      if (usersRes.rows.length > 0) {
+        const { v4: uuidv4 } = require('uuid');
+        const uid = usersRes.rows[0].id;
+        const uid2 = (usersRes.rows[1] || usersRes.rows[0]).id;
+        const uid3 = (usersRes.rows[2] || usersRes.rows[0]).id;
+        const demoPosts = [
+          { id: uuidv4(), author_id: uid,  type: 'hired',   content: '🎉 Ravi d\'annoncer que j\'ai rejoint TechCo en tant que Développeur React Senior ! Merci à toute l\'équipe Nexhire pour le match parfait. #NouvelleOpportunité #React #Montréal', likes_count: 24, comments_count: 3 },
+          { id: uuidv4(), author_id: uid2, type: 'text',    content: 'Conseil du jour : personnalisez chaque lettre de motivation. Les recruteurs identifient immédiatement les candidatures génériques. Ça fait toute la différence ! 💡 #CareerTips #Nexhire', likes_count: 45, comments_count: 7 },
+          { id: uuidv4(), author_id: uid3, type: 'text',    content: 'Le marché de l\'emploi tech au Québec en 2026 : +23% de postes remote vs 2025. Les développeurs full-stack sont les plus demandés. Vos thoughts ? 💭 #TechQC #RemoteWork', likes_count: 67, comments_count: 12 },
+          { id: uuidv4(), author_id: uid2, type: 'article', article_title: 'Comment négocier son salaire en entretien', article_body: 'La négociation salariale est un moment clé que beaucoup de candidats redoutent. Pourtant, avec la bonne préparation, vous pouvez augmenter votre offre de 10 à 25%.\n\n1. Faites vos recherches avant l\'entretien — connaissez la fourchette du marché pour votre poste et région.\n\n2. Laissez l\'employeur parler en premier — évitez d\'annoncer un chiffre avant qu\'il ne soit nécessaire.\n\n3. Ancrez haut — proposez un chiffre légèrement supérieur à votre cible pour avoir de la marge.\n\n4. Négociez l\'ensemble du package — vacances, télétravail, formation. Tout est négociable.\n\n5. Soyez prêt à justifier — basez votre demande sur vos compétences et la valeur que vous apportez, pas sur vos besoins personnels.', content: 'La négociation salariale est un moment clé. Voici mes 5 règles d\'or.', likes_count: 89, comments_count: 15 },
+        ];
+        for (const p of demoPosts) {
+          await pool.query(`
+            INSERT INTO nh_posts (id, author_id, type, content, article_title, article_body, likes_count, comments_count)
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+            ON CONFLICT (id) DO NOTHING
+          `, [p.id, p.author_id, p.type, p.content || null, p.article_title || null, p.article_body || null, p.likes_count, p.comments_count]);
+        }
+      }
+    }
     console.log('[Nexhire] ✅ DB ready');
   } catch (err) {
     console.error('[Nexhire] Migration error:', err.message);
@@ -995,6 +1076,7 @@ app.use(apiBase + '/recommendations',  require('./routes/recommendations'));
 app.use(apiBase + '/video-interviews', require('./routes/video-interviews'));
 app.use(apiBase + '/moderation',       require('./routes/moderation'));
 app.use(apiBase + '/interview-slots',  require('./routes/interview-slots'));
+app.use(apiBase + '/feed',             require('./routes/feed'));
 // Serve uploaded interview videos
 app.use(BASE_PATH + '/uploads/interviews', express.static(path.join(__dirname, 'uploads', 'interviews')));
 // Candidate public recording page

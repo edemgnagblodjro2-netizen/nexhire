@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="stylesheet" href="/nexhire/css/main.css?v=20260525s">
+<link rel="stylesheet" href="/nexhire/css/main.css?v=20260525f">
 <link rel="icon" type="image/svg+xml" href="/nexhire/img/favicon.svg">
 <link rel="manifest" href="/nexhire/manifest.json">
 <meta name="theme-color" content="#023448">
@@ -30,6 +30,7 @@
     <div class="nav-links" id="nav-links">
       <button class="nav-mob-close" id="nav-mob-close" onclick="closeMobileMenu()" aria-label="Close menu"><i class="ti ti-x"></i></button>
       <a class="nav-link" data-goto="jobs" href="#" data-i18n="nav.jobs">Jobs</a>
+      <a class="nav-link" data-goto="feed" href="#" data-i18n="nav.feed">Feed</a>
       <a class="nav-link" data-goto="employer" href="#" data-i18n="nav.employers">For Employers</a>
       <a class="nav-link" data-goto="pricing" href="#" data-i18n="nav.pricing">Pricing</a>
       <div class="nav-mob-auth" id="nav-mob-auth">
@@ -427,6 +428,36 @@
 </div>
 
 <!-- EMPLOYER LANDING ────────────────────────────────────── -->
+<!-- ── Feed page ─────────────────────────────────────────────── -->
+<div id="pg-feed" class="page">
+  <div id="feed-layout-root" style="min-height:60vh;display:flex;align-items:center;justify-content:center">
+    <i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:32px;color:var(--indigo)"></i>
+  </div>
+</div>
+
+<!-- ── Compose post modal ──────────────────────────────────── -->
+<div class="modal-overlay" id="compose-modal" data-self-close="compose-modal" style="display:none">
+  <div class="modal-box" style="max-width:560px;width:100%">
+    <div class="modal-header">
+      <h3 id="compose-modal-title">Créer un post</h3>
+      <button class="modal-close" onclick="document.getElementById('compose-modal').style.display='none'"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body" style="padding-bottom:0">
+      <div class="compose-tabs" id="compose-tabs">
+        <button class="compose-tab active" data-ctype="text"    onclick="setComposeType('text',this)">   <i class="ti ti-pencil"></i>   <span>Post</span></button>
+        <button class="compose-tab"        data-ctype="article" onclick="setComposeType('article',this)"><i class="ti ti-news"></i>     <span>Article</span></button>
+        <button class="compose-tab"        data-ctype="hired"   onclick="setComposeType('hired',this)">  <i class="ti ti-confetti"></i> <span>Annonce</span></button>
+        <button class="compose-tab"        data-ctype="job_share" onclick="setComposeType('job_share',this)"><i class="ti ti-briefcase"></i><span>Offre</span></button>
+      </div>
+      <div id="compose-fields" style="padding:16px 0"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="document.getElementById('compose-modal').style.display='none'">Annuler</button>
+      <button class="btn-primary" id="compose-submit-btn" onclick="submitPost()"><i class="ti ti-send"></i> Publier</button>
+    </div>
+  </div>
+</div>
+
 <div id="pg-employer" class="page">
   <div class="hero employer-hero">
     <div class="hero-inner">
@@ -1352,7 +1383,7 @@ if ('serviceWorker' in navigator) {
     .catch(e => console.warn('[SW] failed', e));
 }
 </script>
-<script src="/nexhire/js/app.js?v=20260525s"></script>
+<script src="/nexhire/js/app.js?v=20260525f"></script>
 <script>window.__nexBase='/nexhire';</script>
 <script src="/nexhire/js/chatbot.js?v=20260524a"></script>
 </body>
