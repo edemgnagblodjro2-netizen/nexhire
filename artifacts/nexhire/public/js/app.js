@@ -3261,10 +3261,10 @@ async function loadMyApplications() {
           <div style="font-family:var(--r);font-weight:600;color:var(--dark);font-size:15px">${esc(title)}</div>
           <div style="font-size:13px;color:var(--muted)">${esc(a.company_name||'')}${a.city || a.province ? ' · ' + (a.city ? esc(a.city) + (a.province ? ', <strong>'+esc(a.province)+'</strong>' : '') : esc(a.province||'')) : ''}</div>
         </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+        <div class="app-card-meta">
           <span class="app-status ${a.status}">${statusLabel[a.status] || a.status}</span>
-          <span style="font-size:11px;color:var(--muted)">${daysAgo(a.created_at)}</span>
-          ${a.status !== 'withdrawn' ? `<button onclick="event.stopPropagation();openMessagesPage('${a.id}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #c7d2fe;background:#eef2ff;cursor:pointer;color:#6366f1;font-weight:600;display:inline-flex;align-items:center;gap:4px;white-space:nowrap"><i class="ti ti-message-circle-2" style="font-size:12px"></i> ${state.lang==='fr'?'Contacter':'Message'}</button>` : ''}
+          <span class="app-card-date">${daysAgo(a.created_at)}</span>
+          ${a.status !== 'withdrawn' ? `<button onclick="event.stopPropagation();openMessagesPage('${a.id}')" class="app-msg-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> ${state.lang==='fr'?'Contacter':'Message'}</button>` : ''}
         </div>
       </div>
       ${a.status !== 'rejected' && a.status !== 'withdrawn' ? `
