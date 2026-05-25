@@ -1536,9 +1536,11 @@ function showUserNav() {
   if (emailEl) emailEl.textContent = state.user.email || '';
   const ddEmp = document.getElementById('dd-employer');
   if (ddEmp) ddEmp.style.display = state.user.company_id ? 'flex' : 'none';
-  // Hide "For Employers" nav link for logged-in candidates — only guests & employers see it
+  // Hide "For Employers" and "Pricing" nav links for logged-in candidates
   const navEmpLink = document.getElementById('nav-link-employers');
   if (navEmpLink) navEmpLink.style.display = (u.role === 'candidate') ? 'none' : '';
+  const navPricingLink = document.getElementById('nav-link-pricing');
+  if (navPricingLink) navPricingLink.style.display = (u.role === 'candidate') ? 'none' : '';
   // Always hide admin-only tabs for non-admin users
   const isAdmin = u.role === 'admin';
   const adminNav = document.getElementById('nav-admin-tests');
@@ -1549,9 +1551,11 @@ function showUserNav() {
 function showGuestNav() {
   document.getElementById('nav-auth-guest').style.display = 'flex';
   document.getElementById('nav-auth-user').style.display = 'none';
-  // Restore "For Employers" link for guests
+  // Restore "For Employers" and "Pricing" links for guests
   const navEmpLink = document.getElementById('nav-link-employers');
   if (navEmpLink) navEmpLink.style.display = '';
+  const navPricingLink = document.getElementById('nav-link-pricing');
+  if (navPricingLink) navPricingLink.style.display = '';
 }
 function toggleUserMenu() { document.getElementById('user-dropdown').classList.toggle('open'); }
 document.addEventListener('click', e => { if (!e.target.closest('.user-menu')) document.getElementById('user-dropdown')?.classList.remove('open'); });
