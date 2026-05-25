@@ -192,7 +192,7 @@ router.get('/respond/:token/status', async (req, res) => {
 // ══════════════════════════════════════════════════════════
 
 // POST /api/video-interviews
-router.post('/', requireAuth, requireCompanyAccess, requirePro, async (req, res) => {
+router.post('/', requireAuth, requireCompanyAccess, async (req, res) => {
   try {
     const { title, questions, candidate_name, candidate_email, job_id } = req.body;
     if (!title || !Array.isArray(questions) || questions.length < 1 || questions.length > 5) {
