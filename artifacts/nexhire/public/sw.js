@@ -1,8 +1,7 @@
-const CACHE = 'nexhire-v67';
-const PRECACHE = [
-  '/nexhire/',
-  '/nexhire/css/main.css?v=20260525m',
-  '/nexhire/js/app.js?v=20260526f',
+const CACHE = 'nexhire-v68';
+const VERSIONED = [
+  '/nexhire/css/main.css?v=20260526a',
+  '/nexhire/js/app.js?v=20260526g',
   '/nexhire/img/hero-bg1.jpg',
   '/nexhire/img/hero-bg2.jpg',
   '/nexhire/img/hero-bg3.jpg',
@@ -12,39 +11,66 @@ const PRECACHE = [
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(PRECACHE)).then(() => self.skipWaiting())
+    caches.open(CACHE)
+      .then(c => c.addAll(VERSIONED))
+      .then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
-  // Skip non-HTTP schemes (chrome-extension:, blob:, data:, etc.)
   if (!e.request.url.startsWith('http')) return;
   const url = new URL(e.request.url);
+
+  // API calls — never intercept
   if (url.pathname.startsWith('/nexhire/api/')) return;
-  // Network-first: try network, cache on success, fall back to cache
+
+  // HTML (index.html / root) — ALWAYS network, never cache
+  const isHtml = url.pathname === '/nexhire/' || url.pathname === '/nexhire/index.html'
+    || url.pathname.endsWith('/') && !url.pathname.includes('.');
+  if (isHtml) {
+    e.respondWith(
+      fetch(e.request).catch(() =>
+        caches.match(e.request).then(r => r || new Response('Offline', { status: 503 }))
+      )
+    );
+    return;
+  }
+
+  // Versioned assets — cache-first (URL contains ?v=)
+  if (url.search.includes('v=')) {
+    e.respondWith(
+      caches.match(e.request).then(cached => {
+        if (cached) return cached;
+        return fetch(e.request).then(r => {
+          if (r && r.status === 200) {
+            const clone = r.clone();
+            caches.open(CACHE).then(c => c.put(e.request, clone)).catch(() => {});
+          }
+          return r;
+        });
+      })
+    );
+    return;
+  }
+
+  // Everything else — network-first, cache fallback
   e.respondWith(
-    (async () => {
-      try {
-        const r = await fetch(e.request);
-        if (r && r.status === 200) {
-          const clone = r.clone();
-          caches.open(CACHE).then(c => c.put(e.request, clone)).catch(() => {});
-        }
-        return r;
-      } catch (_) {
-        const cached = await caches.match(e.request);
-        return cached || new Response('', { status: 503, statusText: 'Offline' });
+    fetch(e.request).then(r => {
+      if (r && r.status === 200) {
+        const clone = r.clone();
+        caches.open(CACHE).then(c => c.put(e.request, clone)).catch(() => {});
       }
-    })()
+      return r;
+    }).catch(() => caches.match(e.request).then(r => r || new Response('', { status: 503 })))
   );
 });
 

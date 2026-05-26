@@ -1791,8 +1791,9 @@ a{text-decoration:none;color:inherit}
 .tax-page-hdr p{color:var(--muted);font-size:15px}
 .tax-input-card{background:#fff;border-radius:16px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;margin-bottom:24px}
 .tax-rate-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:20px;background:#f8fafc;border-radius:10px;padding:4px}
-.tc-tab{flex:1;min-width:56px;background:none;border:none;border-radius:7px;padding:8px 10px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s}
-.tc-tab.active{background:#fff;color:var(--dark);box-shadow:0 1px 4px rgba(0,0,0,.1);font-weight:600}
+.tc-tab{flex:1;min-width:56px;background:none;border:none;border-radius:7px;padding:8px 10px;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;transition:all .15s}
+.tc-tab:hover{color:var(--dark);background:rgba(255,255,255,.6)}
+.tc-tab.active{background:#fff;color:var(--dark);box-shadow:0 1px 4px rgba(0,0,0,.1);font-weight:700}
 .tax-fields-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .tax-salary-wrap{display:flex;align-items:center;flex:1;min-width:200px;border:2px solid var(--border);border-radius:10px;overflow:hidden;background:#fff;transition:border-color .15s}
 .tax-salary-wrap:focus-within{border-color:var(--indigo)}
