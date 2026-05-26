@@ -8692,9 +8692,22 @@ function _tcRenderProvTable(annual, selectedCode, containerId = 'tc-prov-table')
 
 function initTaxCalc() {
   const sel = document.getElementById('tc-prov');
-  if (!sel || sel.options.length > 1) return;
-  sel.innerHTML = Object.entries(_TC.prov)
-    .map(([code, p]) => `<option value="${code}"${code === 'ON' ? ' selected' : ''}>${p.n}</option>`)
-    .join('');
+  if (!sel) return;
+  // Populate if not yet done
+  if (sel.options.length <= 1) {
+    // Pre-select user province if stored, else Ontario
+    const stored = localStorage.getItem('nxUserProvince');
+    const def = (stored && _TC.prov[stored]) ? stored : 'ON';
+    sel.innerHTML = Object.entries(_TC.prov)
+      .map(([code, p]) => `<option value="${code}"${code === def ? ' selected' : ''}>${p.n}</option>`)
+      .join('');
+  }
+  // Attach events via JS (reliable across all browsers / sandbox environments)
+  const salInput = document.getElementById('tc-salary');
+  if (salInput) {
+    salInput.oninput  = () => tcUpdate();
+    salInput.onchange = () => tcUpdate();
+  }
+  sel.onchange = () => tcUpdate();
   tcUpdate();
 }
