@@ -3146,8 +3146,8 @@ async function loadProfileForm() {
     <span id="pf-avatar-status" style="display:none"></span>
     <div class="form-row"><div class="form-group"><label>${L.firstName}</label><input type="text" id="pf-first" value="${esc(state.user?.first_name||'')}"></div><div class="form-group"><label>${L.lastName}</label><input type="text" id="pf-last" value="${esc(state.user?.last_name||'')}"></div></div>
     <div class="form-row">
-      <div class="form-group"><label>${L.headlineEn}</label><input type="text" id="pf-head-en" value="${esc(p.headline_en||'')}" placeholder="Senior Full-Stack Developer"></div>
-      <div class="form-group"><label>${L.headlineFr}</label><input type="text" id="pf-head-fr" value="${esc(p.headline_fr||'')}" placeholder="Développeur Full-Stack Senior"></div>
+      <div class="form-group"><label>${L.headlineEn} <span style="color:var(--indigo);font-size:11px;font-weight:500">${p.headline_en ? '✓' : isFr ? '— obligatoire' : '— required'}</span></label><input type="text" id="pf-head-en" value="${esc(p.headline_en||'')}" placeholder="${isFr ? 'ex : Développeur Full-Stack Senior' : 'ex: Senior Full-Stack Developer'}" style="${!p.headline_en ? 'border-color:var(--indigo)' : ''}"></div>
+      <div class="form-group"><label>${L.headlineFr} <span style="color:var(--muted);font-size:11px">${p.headline_fr ? '✓' : '(optionnel)'}</span></label><input type="text" id="pf-head-fr" value="${esc(p.headline_fr||'')}" placeholder="ex : Développeur Full-Stack Senior"></div>
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -3157,7 +3157,7 @@ async function loadProfileForm() {
       <div class="form-group"><label>${L.city}</label><input type="text" id="pf-city" value="${esc(p.city||'')}" placeholder="${L.cityPh}"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>${isFr ? 'Téléphone' : 'Phone'}</label><input type="tel" id="pf-phone" value="${esc(p.phone||'')}" placeholder="+1 514 000-0000"></div>
+      <div class="form-group"><label>${isFr ? 'Téléphone' : 'Phone'} <span style="color:var(--muted);font-size:11px">(optionnel)</span></label><input type="tel" id="pf-phone" value="${esc(p.phone || state.user?.phone || '')}" placeholder="${isFr ? 'ex : +1 514 555-0100' : 'ex: +1 514 555-0100'}"></div>
       <div class="form-group"><label>${L.expYears}</label><input type="number" id="pf-exp" value="${p.experience_years||0}" min="0" max="50"></div>
     </div>
     <div class="form-row">
@@ -3193,7 +3193,7 @@ async function loadProfileForm() {
         <div style="font-size:12px;color:var(--muted)">${isFr?'Badge vert visible sur votre profil — les employeurs peuvent vous contacter directement.':'Green badge visible on your profile — employers can reach out directly.'}</div>
       </div>
     </div>
-    <div class="form-group"><label>${L.bioEn}</label><textarea id="pf-bio-en">${esc(p.bio_en||'')}</textarea></div>
+    <div class="form-group"><label>${L.bioEn} <span style="color:var(--indigo);font-size:11px;font-weight:500">${p.bio_en ? '✓' : isFr ? '— obligatoire' : '— required'}</span></label><textarea id="pf-bio-en" style="${!p.bio_en ? 'border-color:var(--indigo)' : ''}" placeholder="${isFr ? 'ex : Développeur passionné avec 5 ans d\'expérience en développement web…' : 'ex: Passionate developer with 5 years of experience in web development…'}">${esc(p.bio_en||'')}</textarea></div>
     <button class="btn-primary" onclick="saveProfile()"><i class="ti ti-check"></i> ${L.save}</button>
     <div style="margin-top:24px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px">
       <div style="font-weight:600;font-size:15px;margin-bottom:12px"><i class="ti ti-file-cv" style="color:var(--indigo)"></i> ${L.cvTitle}</div>
