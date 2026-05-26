@@ -195,15 +195,25 @@ const captchaLimiter = rateLimit({
 });
 app.use("/api/captcha/challenge", captchaLimiter);
 
-// Nexhire domain redirect: nexhire.ca → /nexhire/
-// When the custom domain nexhire.ca is configured, all traffic arrives here.
-// Redirect root and any non-nexhire path to the Nexhire SPA.
+// nexhire.ca domain: serve the Nexhire SPA directly at root so the URL
+// stays nexhire.ca/ (no visible /nexhire/ path in the browser bar).
+// Assets inside the HTML still load from /nexhire/css|js/… which the
+// Nexhire server handles normally.
 app.use((req, res, next) => {
   const host = (req.headers.host ?? "").split(":")[0].toLowerCase();
   if (host === "nexhire.ca" || host === "www.nexhire.ca") {
-    if (!req.path.startsWith("/nexhire/")) {
-      return res.redirect(302, "/nexhire/");
+    // Let /nexhire/ assets and API calls pass through normally
+    if (req.path.startsWith("/nexhire/") || req.path.startsWith("/api/")) {
+      return next();
     }
+    // Serve index.html inline — no redirect, URL stays at nexhire.ca/
+    const nexhireIndexCandidates = [
+      path.resolve(__dirname, "../../nexhire/public/index.html"),
+      path.resolve(process.cwd(), "artifacts/nexhire/public/index.html"),
+    ];
+    const nexhireIndex = nexhireIndexCandidates.find((p) => fs.existsSync(p));
+    if (nexhireIndex) return res.sendFile(nexhireIndex);
+    return res.redirect(302, "/nexhire/"); // fallback
   }
   return next();
 });
