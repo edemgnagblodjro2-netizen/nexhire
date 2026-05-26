@@ -13,6 +13,25 @@ app.set('trust proxy', 1);
 const PORT = process.env.PORT || 19235;
 const BASE_PATH = (process.env.BASE_PATH || '/nexhire/').replace(/\/$/, '');
 
+// ── CSP — must be FIRST middleware so nothing can override it ──────────
+app.use((_req, res, next) => {
+  res.setHeader('Content-Security-Policy', [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
+    "script-src-elem 'self' 'unsafe-inline' https://js.stripe.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
+    "script-src-attr 'unsafe-inline' 'unsafe-hashes'",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
+    "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
+    "img-src 'self' data: https: blob:",
+    "connect-src 'self' https://api.openai.com https://api.stripe.com https://js.stripe.com https://api.adzuna.com https://nexhire.ca",
+    "frame-src 'self' https://js.stripe.com",
+    "worker-src 'self' blob:",
+    "object-src 'none'",
+    "base-uri 'self'",
+  ].join('; '));
+  next();
+});
+
 // Ensure upload dir
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
@@ -1006,25 +1025,8 @@ app.get(BASE_PATH + '/mockup-:name.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', `mockup-${req.params.name}.html`));
 });
 
-// ── Security ──────────────────────────────────────────────
+// ── Security (helmet — CSP disabled, set at top of file) ──────────────
 app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
-app.use((_req, res, next) => {
-  res.setHeader('Content-Security-Policy', [
-    "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
-    "script-src-elem 'self' 'unsafe-inline' https://js.stripe.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
-    "script-src-attr 'unsafe-inline' 'unsafe-hashes'",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
-    "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
-    "img-src 'self' data: https: blob:",
-    "connect-src 'self' https://api.openai.com https://api.stripe.com https://js.stripe.com https://api.adzuna.com",
-    "frame-src 'self' https://js.stripe.com",
-    "worker-src 'self' blob:",
-    "object-src 'none'",
-    "base-uri 'self'",
-  ].join('; '));
-  next();
-});
 
 app.use(cors({ origin: true, credentials: true }));
 
