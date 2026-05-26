@@ -258,7 +258,14 @@ function goto(page) {
   if (page === 'settings') renderSettings();
   if (page === 'help') renderHelp();
   if (page === 'privacy') renderPrivacy();
-  if (page === 'pricing') { _initRoiSlider(); calcBudget(); }
+  if (page === 'pricing') {
+    _initRoiSlider();
+    calcBudget();
+    ['calc-poste','calc-ville'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.onchange = calcBudget;
+    });
+  }
   if (page === 'tax-calc') initTaxCalc();
   // terms page is static — no render needed
   // update URL hash for direct linking
