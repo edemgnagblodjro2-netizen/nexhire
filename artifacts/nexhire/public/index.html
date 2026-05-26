@@ -28,7 +28,7 @@
       <span class="logo-word">Nex<em>hire</em></span>
     </a>
     <div class="nav-links" id="nav-links">
-      <button class="nav-mob-close" id="nav-mob-close" onclick="closeMobileMenu()" aria-label="Close menu"><i class="ti ti-x"></i></button>
+      <button class="nav-mob-close" id="nav-mob-close" data-onclick="closeMobileMenu()" aria-label="Close menu"><i class="ti ti-x"></i></button>
       <a class="nav-link" data-goto="jobs" href="#" data-i18n="nav.jobs">Jobs</a>
       <a class="nav-link" data-goto="feed" href="#" data-i18n="nav.feed">Feed</a>
       <a class="nav-link" id="nav-link-employers" data-goto="employer" href="#" data-i18n="nav.employers">For Employers</a>
@@ -54,7 +54,7 @@
         <div class="notif-bell" id="nav-notif-bell" title="Notifications">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
           <span id="notif-badge" class="notif-badge" style="display:none"></span>
-          <div id="notif-dropdown" class="notif-dropdown" style="display:none" onclick="event.stopPropagation()"></div>
+          <div id="notif-dropdown" class="notif-dropdown" style="display:none" data-onclick="event.stopPropagation()"></div>
         </div>
         <div class="user-menu" id="nav-user-menu">
           <div class="user-avatar" id="nav-avatar">--</div>
@@ -76,7 +76,7 @@
           </div>
         </div>
       </div>
-    <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu" aria-expanded="false">
+    <button class="hamburger" id="hamburger" data-onclick="toggleMobileMenu()" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     </div>
@@ -100,14 +100,14 @@
       <h1 class="hero-title" id="h-title" data-i18n-html="hero.title">Find your next <em>opportunity</em> anywhere in the world</h1>
       <p class="hero-sub" id="h-sub" data-i18n="hero.sub">Jobs across Canada and globally — remote, hybrid, on-site. AI matching finds your best fit in seconds, for free.</p>
       <div class="search-bar">
-        <div class="search-field"><i class="ti ti-search"></i><input type="text" id="q" placeholder="Title, skill, company..." data-i18n-ph="hero.search.ph" oninput="debounceSearch()"></div>
+        <div class="search-field"><i class="ti ti-search"></i><input type="text" id="q" placeholder="Title, skill, company..." data-i18n-ph="hero.search.ph" data-oninput="debounceSearch()"></div>
         <div class="search-field search-loc">
           <i class="ti ti-map-pin"></i>
-          <select id="hero-province" onchange="syncHeroProvince()" style="border:none;background:transparent;font-size:15px;color:#334155;outline:none;width:100%;cursor:pointer;font-family:inherit">
+          <select id="hero-province" data-onchange="syncHeroProvince()" style="border:none;background:transparent;font-size:15px;color:#334155;outline:none;width:100%;cursor:pointer;font-family:inherit">
             <option value="">🌐 All locations</option>
           </select>
         </div>
-        <div class="search-field search-mode"><i class="ti ti-device-laptop"></i><select id="mode-filter" onchange="searchJobs()"><option value="">All modes</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select></div>
+        <div class="search-field search-mode"><i class="ti ti-device-laptop"></i><select id="mode-filter" data-onchange="searchJobs()"><option value="">All modes</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select></div>
         <button class="btn-primary search-btn" data-action="search-jobs"><i class="ti ti-search"></i> <span data-i18n="hero.search.btn">Search</span></button>
       </div>
       <div class="quick-tags">
@@ -224,7 +224,7 @@
         <h2 data-i18n="cat.title">Browse by category</h2>
         <button class="btn-link" data-goto="jobs"><span data-i18n="cat.all">See all jobs</span> <i class="ti ti-arrow-right"></i></button>
       </div>
-      <button class="cat-dropdown-toggle" id="cat-toggle" onclick="toggleCatDropdown()" aria-expanded="false">
+      <button class="cat-dropdown-toggle" id="cat-toggle" data-onclick="toggleCatDropdown()" aria-expanded="false">
         <span data-i18n="cat.title">Browse by category</span>
         <i class="ti ti-chevron-down cat-toggle-chevron"></i>
       </button>
@@ -329,7 +329,7 @@
         <span class="bento-label" data-i18n="bento.cand.label">Pour les candidats</span>
         <h2 class="bento-heading" data-i18n-html="bento.cand.title">Trouvez votre prochaine opportunité,<br>partout dans le monde.</h2>
         <p class="bento-desc" data-i18n="bento.cand.desc">Des milliers d'offres au Canada et à l'international. L'IA Nexhire trouve votre meilleur match en quelques secondes.</p>
-        <button class="btn-bento" onclick="goto('jobs')"><span data-i18n="bento.cand.btn">Parcourir les offres</span> <i class="ti ti-arrow-right"></i></button>
+        <button class="btn-bento" data-onclick="goto('jobs')"><span data-i18n="bento.cand.btn">Parcourir les offres</span> <i class="ti ti-arrow-right"></i></button>
       </div>
       <div class="bento-cell bento-photo">
         <img src="/nexhire/img/team-bento.jpg" alt="Professional team" loading="lazy">
@@ -338,13 +338,13 @@
         <span class="bento-label bento-label-accent" data-i18n="bento.emp.label">Pour les employeurs</span>
         <h2 class="bento-heading bento-heading-dark" data-i18n="bento.emp.title">Recrutez les meilleurs talents, à l'échelle mondiale.</h2>
         <p class="bento-desc bento-desc-dark" data-i18n="bento.emp.desc">Publiez des offres, classez les candidats par IA, gérez votre pipeline Kanban. 2 à 5 postes gratuits pour démarrer.</p>
-        <button class="btn-bento btn-bento-dark" onclick="goto('employers')"><span data-i18n="bento.emp.btn">Commencer gratuitement</span> <i class="ti ti-arrow-right"></i></button>
+        <button class="btn-bento btn-bento-dark" data-onclick="goto('employers')"><span data-i18n="bento.emp.btn">Commencer gratuitement</span> <i class="ti ti-arrow-right"></i></button>
       </div>
       <div class="bento-cell bento-teal">
         <span class="bento-label" data-i18n="bento.ai.label">Propulsé par l'IA</span>
         <h2 class="bento-heading" data-i18n="bento.ai.title">Lettres de motivation, matching &amp; ATS — une seule plateforme.</h2>
         <p class="bento-desc" data-i18n="bento.ai.desc">Tout ce dont vous avez besoin pour décrocher ou combler un poste, réuni en un seul endroit.</p>
-        <button class="btn-bento" onclick="document.getElementById('modal-register').style.display='flex'"><span data-i18n="bento.ai.btn">Explorer les fonctions</span> <i class="ti ti-arrow-right"></i></button>
+        <button class="btn-bento" data-onclick="document.getElementById('modal-register').style.display='flex'"><span data-i18n="bento.ai.btn">Explorer les fonctions</span> <i class="ti ti-arrow-right"></i></button>
       </div>
     </div>
   </section>
@@ -357,13 +357,13 @@
       <div class="jobs-search-row">
         <label class="jobs-search-field">
           <i class="ti ti-search"></i>
-          <input type="text" id="fq" placeholder="Title, skill, company..." data-i18n-ph="jobs.filter.ph" oninput="debounceFilterSearch()" onkeydown="if(event.key==='Enter')filterJobs()">
+          <input type="text" id="fq" placeholder="Title, skill, company..." data-i18n-ph="jobs.filter.ph" data-oninput="debounceFilterSearch()" data-onkeydown="if(event.key==='Enter')filterJobs()">
         </label>
         <label class="jobs-search-field jobs-search-field-loc">
           <i class="ti ti-map-pin"></i>
-          <select id="fprov" onchange="filterJobs()" class="filter-select-province" style="border:none;outline:none;font-family:var(--b);font-size:14px;background:transparent;flex:1;padding:9px 0;color:var(--text);cursor:pointer"></select>
+          <select id="fprov" data-onchange="filterJobs()" class="filter-select-province" style="border:none;outline:none;font-family:var(--b);font-size:14px;background:transparent;flex:1;padding:9px 0;color:var(--text);cursor:pointer"></select>
         </label>
-        <button class="btn-primary jobs-search-btn" onclick="filterJobs()"><i class="ti ti-search"></i> <span data-i18n="jobs.search.btn">Find jobs</span></button>
+        <button class="btn-primary jobs-search-btn" data-onclick="filterJobs()"><i class="ti ti-search"></i> <span data-i18n="jobs.search.btn">Find jobs</span></button>
       </div>
     </div>
   </div>
@@ -372,16 +372,16 @@
       <div class="jf-group">
         <div class="jf-group-hdr">Work mode</div>
         <div class="jf-radio-list">
-          <label class="jf-radio"><input type="radio" name="jf-mode" value="" checked onchange="jobSidebarFilter('fwork','')"> <span>All</span></label>
-          <label class="jf-radio"><input type="radio" name="jf-mode" value="remote" onchange="jobSidebarFilter('fwork','remote')"> <span>Remote</span></label>
-          <label class="jf-radio"><input type="radio" name="jf-mode" value="hybrid" onchange="jobSidebarFilter('fwork','hybrid')"> <span>Hybrid</span></label>
-          <label class="jf-radio"><input type="radio" name="jf-mode" value="onsite" onchange="jobSidebarFilter('fwork','onsite')"> <span>On-site</span></label>
+          <label class="jf-radio"><input type="radio" name="jf-mode" value="" checked data-onchange="jobSidebarFilter('fwork','')"> <span>All</span></label>
+          <label class="jf-radio"><input type="radio" name="jf-mode" value="remote" data-onchange="jobSidebarFilter('fwork','remote')"> <span>Remote</span></label>
+          <label class="jf-radio"><input type="radio" name="jf-mode" value="hybrid" data-onchange="jobSidebarFilter('fwork','hybrid')"> <span>Hybrid</span></label>
+          <label class="jf-radio"><input type="radio" name="jf-mode" value="onsite" data-onchange="jobSidebarFilter('fwork','onsite')"> <span>On-site</span></label>
         </div>
         <select id="fwork" style="display:none"></select>
       </div>
       <div class="jf-group">
         <div class="jf-group-hdr">Contract type</div>
-        <select id="ftype" onchange="filterJobs()" class="jf-select">
+        <select id="ftype" data-onchange="filterJobs()" class="jf-select">
           <option value="">All types</option>
           <option value="full-time">Full time</option>
           <option value="permanent">Permanent</option>
@@ -393,7 +393,7 @@
       </div>
       <div class="jf-group">
         <div class="jf-group-hdr">Annual salary</div>
-        <select id="fsal" onchange="filterJobs()" class="jf-select">
+        <select id="fsal" data-onchange="filterJobs()" class="jf-select">
           <option value="">All salaries</option>
           <option value="40000">$40,000+</option>
           <option value="60000">$60,000+</option>
@@ -404,7 +404,7 @@
       </div>
       <div class="jf-group">
         <div class="jf-group-hdr">Date posted</div>
-        <select id="fdate" onchange="filterJobs()" class="jf-select">
+        <select id="fdate" data-onchange="filterJobs()" class="jf-select">
           <option value="">All dates</option>
           <option value="unseen">Jobs you haven't seen</option>
           <option value="1">Last 24 hours</option>
@@ -415,7 +415,7 @@
       </div>
       <div class="jf-group">
         <div class="jf-group-hdr">Language</div>
-        <select id="flang" onchange="filterJobs()" class="jf-select">
+        <select id="flang" data-onchange="filterJobs()" class="jf-select">
           <option value="">All</option>
           <option value="en">English</option>
           <option value="fr">Français</option>
@@ -427,13 +427,13 @@
         <span id="jobs-count-label" class="jobs-count-label"></span>
         <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
           <span style="font-size:13px;color:var(--muted)">Sort by</span>
-          <select id="fsort" onchange="filterJobs()" class="jf-select-sm">
+          <select id="fsort" data-onchange="filterJobs()" class="jf-select-sm">
             <option value="">Most recent</option>
             <option value="salary_desc">Salary ↓</option>
             <option value="salary_asc">Salary ↑</option>
             <option value="date_asc">Oldest first</option>
           </select>
-          <button id="jobs-clear-btn" class="jobs-clear-btn" onclick="clearFilters()" style="display:none"><i class="ti ti-x"></i> <span data-i18n="jobs.clear">Clear</span></button>
+          <button id="jobs-clear-btn" class="jobs-clear-btn" data-onclick="clearFilters()" style="display:none"><i class="ti ti-x"></i> <span data-i18n="jobs.clear">Clear</span></button>
         </div>
       </div>
       <div id="jobs-chips-row" class="jobs-chips-row"></div>
@@ -470,20 +470,20 @@
   <div class="modal-box" style="max-width:560px;width:100%">
     <div class="modal-header">
       <h3 id="compose-modal-title">Créer un post</h3>
-      <button class="modal-close" onclick="document.getElementById('compose-modal').style.display='none'"><i class="ti ti-x"></i></button>
+      <button class="modal-close" data-onclick="document.getElementById('compose-modal').style.display='none'"><i class="ti ti-x"></i></button>
     </div>
     <div class="modal-body" style="padding-bottom:0">
       <div class="compose-tabs" id="compose-tabs">
-        <button class="compose-tab active" data-ctype="text"    onclick="setComposeType('text',this)">   <i class="ti ti-pencil"></i>   <span>Post</span></button>
-        <button class="compose-tab"        data-ctype="article" onclick="setComposeType('article',this)"><i class="ti ti-news"></i>     <span>Article</span></button>
-        <button class="compose-tab"        data-ctype="hired"   onclick="setComposeType('hired',this)">  <i class="ti ti-confetti"></i> <span>Annonce</span></button>
-        <button class="compose-tab"        data-ctype="job_share" onclick="setComposeType('job_share',this)"><i class="ti ti-briefcase"></i><span>Offre</span></button>
+        <button class="compose-tab active" data-ctype="text"    data-onclick="setComposeType('text',this)">   <i class="ti ti-pencil"></i>   <span>Post</span></button>
+        <button class="compose-tab"        data-ctype="article" data-onclick="setComposeType('article',this)"><i class="ti ti-news"></i>     <span>Article</span></button>
+        <button class="compose-tab"        data-ctype="hired"   data-onclick="setComposeType('hired',this)">  <i class="ti ti-confetti"></i> <span>Annonce</span></button>
+        <button class="compose-tab"        data-ctype="job_share" data-onclick="setComposeType('job_share',this)"><i class="ti ti-briefcase"></i><span>Offre</span></button>
       </div>
       <div id="compose-fields" style="padding:16px 0"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn-ghost" onclick="document.getElementById('compose-modal').style.display='none'">Annuler</button>
-      <button class="btn-primary" id="compose-submit-btn" onclick="submitPost()"><i class="ti ti-send"></i> Publier</button>
+      <button class="btn-ghost" data-onclick="document.getElementById('compose-modal').style.display='none'">Annuler</button>
+      <button class="btn-primary" id="compose-submit-btn" data-onclick="submitPost()"><i class="ti ti-send"></i> Publier</button>
     </div>
   </div>
 </div>
@@ -700,7 +700,7 @@
               <div id="calc-cph" style="font-family:var(--r);font-size:20px;font-weight:800;color:var(--dark)">~120$</div>
             </div>
           </div>
-          <button class="btn-primary" onclick="goto('employer');setTimeout(()=>showModal('modal-register'),200)" style="background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;padding:12px 32px;font-size:14px;box-shadow:0 4px 16px rgba(99,102,241,.3)">Démarrer avec ce budget <i class="ti ti-arrow-right"></i></button>
+          <button class="btn-primary" data-onclick="goto('employer');setTimeout(()=>showModal('modal-register'),200)" style="background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;padding:12px 32px;font-size:14px;box-shadow:0 4px 16px rgba(99,102,241,.3)">Démarrer avec ce budget <i class="ti ti-arrow-right"></i></button>
         </div>
       </div>
 
@@ -1042,7 +1042,7 @@
         <a class="dash-nav-item" data-tab="tab-saved"><i class="ti ti-heart"></i> <span data-i18n="cand.nav.saved">Saved Jobs</span></a>
         <a class="dash-nav-item" data-tab="tab-applications"><i class="ti ti-file-text"></i> <span data-i18n="cand.nav.apps">Applications</span></a>
         <a class="dash-nav-item" data-tab="tab-messages"><i class="ti ti-message-circle-2"></i> <span data-i18n="cand.nav.messages">Messages</span><span id="msg-unread-cand" style="display:none;background:#6366f1;color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:4px"></span></a>
-        <a class="dash-nav-item" onclick="goto('feed')" style="cursor:pointer"><i class="ti ti-layout-list"></i> <span data-i18n="nav.feed">Feed</span></a>
+        <a class="dash-nav-item" data-onclick="goto('feed')" style="cursor:pointer"><i class="ti ti-layout-list"></i> <span data-i18n="nav.feed">Feed</span></a>
         <a class="dash-nav-item" data-tab="tab-my-reviews" data-tab-extra="loadMyReviews"><i class="ti ti-star"></i> <span data-i18n="cand.nav.reviews">My Reviews</span></a>
         <a class="dash-nav-item" data-tab="tab-alerts"><i class="ti ti-bell"></i> <span data-i18n="cand.nav.alerts">Job Alerts</span></a>
         <a class="dash-nav-item" data-tab="tab-ai-chat"><i class="ti ti-robot"></i> <span data-i18n="cand.nav.ai">AI Coach</span></a>
@@ -1093,10 +1093,10 @@
           </div>
         </div>
         <div class="agent-quick-actions">
-          <button class="agent-qa" onclick="agentQuickAction('find-jobs')"><i class="ti ti-sparkles"></i> <span data-i18n="agent.qa.jobs">Find matching jobs</span></button>
-          <button class="agent-qa" onclick="agentQuickAction('optimize-profile')"><i class="ti ti-user-check"></i> <span data-i18n="agent.qa.profile">Optimize profile</span></button>
-          <button class="agent-qa" onclick="agentQuickAction('interview-prep')"><i class="ti ti-microphone"></i> <span data-i18n="agent.qa.interview">Interview prep</span></button>
-          <button class="agent-qa" onclick="agentQuickAction('salary-advice')"><i class="ti ti-cash"></i> <span data-i18n="agent.qa.salary">Salary advice</span></button>
+          <button class="agent-qa" data-onclick="agentQuickAction('find-jobs')"><i class="ti ti-sparkles"></i> <span data-i18n="agent.qa.jobs">Find matching jobs</span></button>
+          <button class="agent-qa" data-onclick="agentQuickAction('optimize-profile')"><i class="ti ti-user-check"></i> <span data-i18n="agent.qa.profile">Optimize profile</span></button>
+          <button class="agent-qa" data-onclick="agentQuickAction('interview-prep')"><i class="ti ti-microphone"></i> <span data-i18n="agent.qa.interview">Interview prep</span></button>
+          <button class="agent-qa" data-onclick="agentQuickAction('salary-advice')"><i class="ti ti-cash"></i> <span data-i18n="agent.qa.salary">Salary advice</span></button>
         </div>
         <div class="ai-chat-box" id="ai-messages">
           <div class="ai-msg ai-msg-bot" id="ai-greeting-msg">Hi! I'm your Nexhire AI Career Agent. How can I help accelerate your career today?</div>
@@ -1325,20 +1325,20 @@
     </div>
     <div class="tax-input-card">
       <div class="tax-rate-tabs">
-        <button class="tc-tab active" data-rate="annual"    onclick="tcSetRate('annual')">Annual</button>
-        <button class="tc-tab"        data-rate="month"     onclick="tcSetRate('month')">Month</button>
-        <button class="tc-tab"        data-rate="biweekly"  onclick="tcSetRate('biweekly')">Biweekly</button>
-        <button class="tc-tab"        data-rate="weekly"    onclick="tcSetRate('weekly')">Weekly</button>
-        <button class="tc-tab"        data-rate="daily"     onclick="tcSetRate('daily')">Day</button>
-        <button class="tc-tab"        data-rate="hourly"    onclick="tcSetRate('hourly')">Hour</button>
+        <button class="tc-tab active" data-rate="annual"    data-onclick="tcSetRate('annual')">Annual</button>
+        <button class="tc-tab"        data-rate="month"     data-onclick="tcSetRate('month')">Month</button>
+        <button class="tc-tab"        data-rate="biweekly"  data-onclick="tcSetRate('biweekly')">Biweekly</button>
+        <button class="tc-tab"        data-rate="weekly"    data-onclick="tcSetRate('weekly')">Weekly</button>
+        <button class="tc-tab"        data-rate="daily"     data-onclick="tcSetRate('daily')">Day</button>
+        <button class="tc-tab"        data-rate="hourly"    data-onclick="tcSetRate('hourly')">Hour</button>
       </div>
       <div class="tax-fields-row">
         <div class="tax-salary-wrap">
           <span class="tax-cur-sym">$</span>
-          <input type="number" id="tc-salary" class="tax-salary-input" value="50000" min="0" step="1000" oninput="tcUpdate()" onchange="tcUpdate()">
+          <input type="number" id="tc-salary" class="tax-salary-input" value="50000" min="0" step="1000" data-oninput="tcUpdate()" data-onchange="tcUpdate()">
           <span class="tax-cur-code">CAD</span>
         </div>
-        <select id="tc-prov" class="tax-prov-select" onchange="tcUpdate()">
+        <select id="tc-prov" class="tax-prov-select" data-onchange="tcUpdate()">
           <option value="AB">Alberta</option>
           <option value="BC">British Columbia</option>
           <option value="MB">Manitoba</option>
@@ -1416,7 +1416,7 @@
       <p style="color:#94A3B8;margin:0 0 24px;font-size:15px" data-i18n="about.cta.sub">Join 150+ Canadian companies already hiring smarter with Nexhire.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
         <button class="btn-primary" data-modal="modal-register" style="font-size:15px;padding:12px 28px" data-i18n="about.cta.btn1">Get started free</button>
-        <button onclick="goto('pricing')" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:12px 28px;font-size:15px;cursor:pointer;font-family:inherit;font-weight:600" data-i18n="about.cta.btn2">View pricing</button>
+        <button data-onclick="goto('pricing')" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:12px 28px;font-size:15px;cursor:pointer;font-family:inherit;font-weight:600" data-i18n="about.cta.btn2">View pricing</button>
       </div>
     </div>
   </div>
@@ -1441,7 +1441,7 @@
           <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">De développeur junior à CTO — fourchettes salariales réelles au Québec, Ontario et C.-B. avec comparatif par ville.</p>
           <div style="display:flex;align-items:center;justify-content:space-between">
             <span style="font-size:11px;color:var(--muted)">🍁 5 min</span>
-            <button onclick="goto('tax-calc')" style="background:var(--indigo3);color:var(--indigo);border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a1.cta">Calculator →</button>
+            <button data-onclick="goto('tax-calc')" style="background:var(--indigo3);color:var(--indigo);border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a1.cta">Calculator →</button>
           </div>
         </div>
       </article>
@@ -1455,7 +1455,7 @@
           <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">From automated CV screening to AI cover letters — what works, what's hype. A practical guide for HR managers.</p>
           <div style="display:flex;align-items:center;justify-content:space-between">
             <span style="font-size:11px;color:var(--muted)">🇨🇦 8 min</span>
-            <button onclick="goto('employer')" style="background:#EEF2FF;color:#6366F1;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a2.cta">Post a job →</button>
+            <button data-onclick="goto('employer')" style="background:#EEF2FF;color:#6366F1;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a2.cta">Post a job →</button>
           </div>
         </div>
       </article>
@@ -1469,7 +1469,7 @@
           <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">PGWP, permis ouvert, permis fermé — vos options pour postuler légalement au Canada, étape par étape.</p>
           <div style="display:flex;align-items:center;justify-content:space-between">
             <span style="font-size:11px;color:var(--muted)">🍁 10 min</span>
-            <button onclick="goto('jobs')" style="background:#F0FDF4;color:#059669;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a3.cta">Browse jobs →</button>
+            <button data-onclick="goto('jobs')" style="background:#F0FDF4;color:#059669;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a3.cta">Browse jobs →</button>
           </div>
         </div>
       </article>
@@ -1483,7 +1483,7 @@
           <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">A $90,000 salary looks very different depending on where you live. We break down net pay for Canada's two biggest job markets.</p>
           <div style="display:flex;align-items:center;justify-content:space-between">
             <span style="font-size:11px;color:var(--muted)">🇨🇦 6 min</span>
-            <button onclick="goto('tax-calc')" style="background:#FFFBEB;color:#D97706;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a4.cta">Calculate →</button>
+            <button data-onclick="goto('tax-calc')" style="background:#FFFBEB;color:#D97706;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a4.cta">Calculate →</button>
           </div>
         </div>
       </article>
@@ -1497,7 +1497,7 @@
           <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">Coût de la vie, connectivité, qualité de vie, fiscalité : on a analysé 20 villes pour vous aider à choisir où vivre en télétravail.</p>
           <div style="display:flex;align-items:center;justify-content:space-between">
             <span style="font-size:11px;color:var(--muted)">🍁 7 min</span>
-            <button onclick="goto('jobs')" style="background:#E0F2FE;color:#0284C7;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a5.cta">Remote jobs →</button>
+            <button data-onclick="goto('jobs')" style="background:#E0F2FE;color:#0284C7;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a5.cta">Remote jobs →</button>
           </div>
         </div>
       </article>
@@ -1511,7 +1511,7 @@
           <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">Most applications are rejected before a human reads them. Here's exactly what AI scoring looks for — and how to rank #1 in the queue.</p>
           <div style="display:flex;align-items:center;justify-content:space-between">
             <span style="font-size:11px;color:var(--muted)">🇨🇦 5 min</span>
-            <button onclick="goto('jobs')" style="background:#F5F3FF;color:#7C3AED;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a6.cta">Find jobs →</button>
+            <button data-onclick="goto('jobs')" style="background:#F5F3FF;color:#7C3AED;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a6.cta">Find jobs →</button>
           </div>
         </div>
       </article>
@@ -1721,20 +1721,12 @@
     </div>
   </div>
   <div style="display:flex;gap:8px">
-    <button onclick="installPWA()" style="background:#6366F1;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:600;cursor:pointer;font-size:13px">Install</button>
-    <button onclick="document.getElementById('pwa-banner').style.display='none'" style="background:rgba(255,255,255,.15);color:#fff;border:none;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px">Not now</button>
+    <button data-onclick="installPWA()" style="background:#6366F1;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:600;cursor:pointer;font-size:13px">Install</button>
+    <button data-onclick="document.getElementById('pwa-banner').style.display='none'" style="background:rgba(255,255,255,.15);color:#fff;border:none;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px">Not now</button>
   </div>
 </div>
 
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/nexhire/sw.js', { scope: '/nexhire/' })
-    .then(r => { r.update(); console.log('[SW] registered', r.scope); })
-    .catch(e => console.warn('[SW] failed', e));
-}
-</script>
-<script src="/nexhire/js/app.js?v=20260526p"></script>
-<script>window.__nexBase='/nexhire';</script>
+<script src="/nexhire/js/app.js?v=20260526q"></script>
 <script src="/nexhire/js/chatbot.js?v=20260524a"></script>
 </body>
 </html>

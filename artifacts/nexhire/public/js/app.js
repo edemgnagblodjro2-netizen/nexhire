@@ -1,6 +1,40 @@
 'use strict';
 
 const BASE = '/nexhire';
+
+// ── CSP-safe global event delegation ──────────────────────────────────
+// Replaces all onclick=/onchange=/onkeydown=/oninput= HTML attributes.
+// Those attributes are now data-onclick= etc., which are plain data,
+// not event-handler attributes — no script-src-attr restriction applies.
+(function () {
+  function run(code, el, event) {
+    try { new Function('event', code).call(el, event); }
+    catch (e) { console.warn('[handler]', e); }
+  }
+  document.addEventListener('click', function (e) {
+    const el = e.target.closest('[data-onclick]');
+    if (el) run(el.dataset.onclick, el, e);
+  });
+  document.addEventListener('change', function (e) {
+    const el = e.target.closest('[data-onchange]');
+    if (el) run(el.dataset.onchange, el, e);
+  });
+  document.addEventListener('keydown', function (e) {
+    const el = e.target.closest('[data-onkeydown]');
+    if (el) run(el.dataset.onkeydown, el, e);
+  });
+  document.addEventListener('input', function (e) {
+    const el = e.target.closest('[data-oninput]');
+    if (el) run(el.dataset.oninput, el, e);
+  });
+})();
+
+// ── Service Worker registration ────────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/nexhire/sw.js', { scope: '/nexhire/' })
+    .then(r => { r.update(); })
+    .catch(e => console.warn('[SW] failed', e));
+}
 const state = {
   user: null, lang: 'en', regRole: 'candidate',
   jobs: [], currentPage: 1, jobSearchTimer: null,
@@ -158,7 +192,7 @@ function fmtLocationDetail(j) {
 function fmtPeriod(p) { return {year:'/yr', month:'/mo', hour:'/hr'}[p] || '/yr'; }
 
 function provinceSelectHtml(id, selectedCode = '') {
-  return `<select id="${id}" onchange="updateCitiesForProvince('${id}')">
+  return `<select id="${id}" data-onchange="updateCitiesForProvince('${id}')">
     <option value="">— Select province/territory —</option>
     ${CA_PROVINCES.map(p => `<option value="${p.code}"${p.code === selectedCode ? ' selected' : ''}>${p.code} — ${p.name.split(' /')[0]}</option>`).join('')}
     <option value="INTL" disabled>──────────</option>
@@ -1024,7 +1058,7 @@ function renderRecentSearches() {
   list.innerHTML = searches.map((s, i) => {
     const label = s.q || (s.province ? provinceLabel(s.province) : 'All jobs');
     const sub = s.province && s.q ? provinceLabel(s.province) : '';
-    return `<button class="recent-search-chip" onclick="replaySearch(${i})">
+    return `<button class="recent-search-chip" data-onclick="replaySearch(${i})">
       <i class="ti ti-history"></i>
       <div class="rsc-text">
         <span class="rsc-label">${esc(label)}</span>
@@ -1166,7 +1200,7 @@ function _renderGeoPill(prov, city) {
     pill.className = 'geo-pill';
     wrap.insertBefore(pill, sel);
   }
-  pill.innerHTML = `${esc(label)}<button onclick="clearGeoLocation()" title="Effacer la localisation" style="background:none;border:none;cursor:pointer;color:var(--indigo);padding:0 0 0 4px;font-size:13px;line-height:1;vertical-align:middle" aria-label="Effacer">×</button>`;
+  pill.innerHTML = `${esc(label)}<button data-onclick="clearGeoLocation()" title="Effacer la localisation" style="background:none;border:none;cursor:pointer;color:var(--indigo);padding:0 0 0 4px;font-size:13px;line-height:1;vertical-align:middle" aria-label="Effacer">×</button>`;
 }
 
 function _renderHeroGeoPill(prov, city) {
@@ -1276,7 +1310,7 @@ async function filterJobs(page = 1) {
   if (!jobs.length) {
     const t = T[state.lang];
     if (countLabel) countLabel.textContent = t['jobs.noresult.short'] || '0 résultats';
-    list.innerHTML = `<div class="empty-state"><i class="ti ti-search-off"></i><p>${t['jobs.noresult']}</p>${hasActiveFilters ? `<button class="btn-ghost" onclick="clearFilters()" style="margin-top:12px;font-size:13px"><i class="ti ti-x"></i> ${t['jobs.clear']}</button>` : ''}</div>`;
+    list.innerHTML = `<div class="empty-state"><i class="ti ti-search-off"></i><p>${t['jobs.noresult']}</p>${hasActiveFilters ? `<button class="btn-ghost" data-onclick="clearFilters()" style="margin-top:12px;font-size:13px"><i class="ti ti-x"></i> ${t['jobs.clear']}</button>` : ''}</div>`;
     return;
   }
 
@@ -1300,10 +1334,10 @@ async function filterJobs(page = 1) {
       flang:  { en:'English', fr:'Français' },
     };
     const chips = [];
-    if (q) chips.push(`<span class="jobs-chip">"${esc(q)}" <button onclick="document.getElementById('fq').value='';filterJobs()" class="jobs-chip-x"><i class="ti ti-x"></i></button></span>`);
+    if (q) chips.push(`<span class="jobs-chip">"${esc(q)}" <button data-onclick="document.getElementById('fq').value='';filterJobs()" class="jobs-chip-x"><i class="ti ti-x"></i></button></span>`);
     for (const [id, map] of Object.entries(chipMap)) {
       const val = document.getElementById(id)?.value;
-      if (val && map[val]) chips.push(`<span class="jobs-chip">${map[val]} <button onclick="jobSidebarFilter('${id}','');filterJobs()" class="jobs-chip-x"><i class="ti ti-x"></i></button></span>`);
+      if (val && map[val]) chips.push(`<span class="jobs-chip">${map[val]} <button data-onclick="jobSidebarFilter('${id}','');filterJobs()" class="jobs-chip-x"><i class="ti ti-x"></i></button></span>`);
     }
     chipsRow.innerHTML = chips.join('');
   }
@@ -1416,7 +1450,7 @@ async function loadAdzunaIntoMainList(q, prov, listEl) {
           <span class="job-tag source-adzuna">🌐 Adzuna</span>
         </div>
         <a href="${j.url}" target="_blank" rel="noopener noreferrer"
-           class="jli-apply-ext" onclick="event.stopPropagation()">
+           class="jli-apply-ext" data-onclick="event.stopPropagation()">
           ${isFr ? 'Postuler' : 'Apply'} <i class="ti ti-external-link" style="font-size:12px"></i>
         </a>
       </div>
@@ -1597,8 +1631,8 @@ async function openJobDetail(jobId) {
             <div id="job-qa-list-${j.id}"><div style="font-size:13px;color:var(--muted)"><i class="ti ti-loader" style="animation:spin 1s linear infinite"></i></div></div>
             ${state.user?.role==='candidate' ? `
             <div class="qa-input-row" style="margin-top:12px">
-              <input class="qa-input" id="qa-input-${j.id}" placeholder="${isFr?'Poser une question à l\'employeur…':'Ask the employer a question…'}" onkeydown="if(event.key==='Enter'){event.preventDefault();submitJobQuestion('${j.id}')}">
-              <button class="btn-primary" style="font-size:13px;padding:8px 14px;white-space:nowrap" onclick="submitJobQuestion('${j.id}')"><i class="ti ti-send"></i></button>
+              <input class="qa-input" id="qa-input-${j.id}" placeholder="${isFr?'Poser une question à l\'employeur…':'Ask the employer a question…'}" data-onkeydown="if(event.key==='Enter'){event.preventDefault();submitJobQuestion('${j.id}')}">
+              <button class="btn-primary" style="font-size:13px;padding:8px 14px;white-space:nowrap" data-onclick="submitJobQuestion('${j.id}')"><i class="ti ti-send"></i></button>
             </div>` : ''}
           </div>
         </div>
@@ -1741,8 +1775,8 @@ function showNoCreditsBanner() {
       <div style="font-size:13px;opacity:.85">${isFr ? 'Achetez des crédits pour continuer à utiliser les fonctionnalités IA.' : 'Buy credits to keep using AI-powered features.'}</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0">
-      <button onclick="document.getElementById('no-credits-banner').remove();showCandTab('tab-credits',null)" style="background:#fff;color:#6366F1;border:none;border-radius:8px;padding:8px 16px;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap">${isFr ? 'Acheter des crédits' : 'Buy Credits'}</button>
-      <button onclick="document.getElementById('no-credits-banner').remove()" style="background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:8px;padding:6px 16px;font-size:12px;cursor:pointer">${isFr ? 'Plus tard' : 'Later'}</button>
+      <button data-onclick="document.getElementById('no-credits-banner').remove();showCandTab('tab-credits',null)" style="background:#fff;color:#6366F1;border:none;border-radius:8px;padding:8px 16px;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap">${isFr ? 'Acheter des crédits' : 'Buy Credits'}</button>
+      <button data-onclick="document.getElementById('no-credits-banner').remove()" style="background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:8px;padding:6px 16px;font-size:12px;cursor:pointer">${isFr ? 'Plus tard' : 'Later'}</button>
     </div>`;
   document.body.appendChild(banner);
   setTimeout(() => { if (banner.parentNode) banner.remove(); }, 8000);
@@ -1965,20 +1999,20 @@ function showSettingsSection(section, el) {
         </div>
         <div class="settings-row">
           <div><div class="settings-row-label">${t['settings.email']}</div><div class="settings-row-value">${esc(u.email||'')}</div></div>
-          <button class="btn-ghost btn-sm" onclick="openChangeEmail()">${t['settings.change.email']}</button>
+          <button class="btn-ghost btn-sm" data-onclick="openChangeEmail()">${t['settings.change.email']}</button>
         </div>
         <div class="settings-row" id="change-email-form" style="display:none">
           <div style="flex:1">
             <div class="form-group"><label>${t['settings.new.email']}</label><input type="email" id="new-email" placeholder="new@example.com"></div>
             <div class="form-group"><label>${t['settings.cur.pw']}</label><input type="password" id="change-email-pw" placeholder="••••••••"></div>
             <div class="form-error" id="change-email-error"></div>
-            <button class="btn-primary btn-sm" onclick="saveEmailChange()">${t['settings.save.email']}</button>
-            <button class="btn-ghost btn-sm" onclick="document.getElementById('change-email-form').style.display='none'" style="margin-left:8px">${t['settings.cancel']}</button>
+            <button class="btn-primary btn-sm" data-onclick="saveEmailChange()">${t['settings.save.email']}</button>
+            <button class="btn-ghost btn-sm" data-onclick="document.getElementById('change-email-form').style.display='none'" style="margin-left:8px">${t['settings.cancel']}</button>
           </div>
         </div>
         <div class="settings-row">
           <div><div class="settings-row-label">${t['settings.name']}</div><div class="settings-row-value">${esc(u.first_name||'')} ${esc(u.last_name||'')}</div></div>
-          <button class="btn-ghost btn-sm" onclick="goto('candidate-dash')">${t['settings.edit.profile']}</button>
+          <button class="btn-ghost btn-sm" data-onclick="goto('candidate-dash')">${t['settings.edit.profile']}</button>
         </div>
         <div class="settings-row">
           <div><div class="settings-row-label">${t['settings.member.since']}</div><div class="settings-row-value">${u.created_at ? new Date(u.created_at).toLocaleDateString(state.lang === 'fr' ? 'fr-CA' : 'en-CA',{year:'numeric',month:'long'}) : '—'}</div></div>
@@ -1986,7 +2020,7 @@ function showSettingsSection(section, el) {
         </div>
       </div>
       <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border)">
-        <button class="btn-ghost" style="color:var(--red);border-color:var(--red)" onclick="confirmCloseAccount()">
+        <button class="btn-ghost" style="color:var(--red);border-color:var(--red)" data-onclick="confirmCloseAccount()">
           <i class="ti ti-trash"></i> ${t['settings.close.account']}
         </button>
         <p style="font-size:12px;color:var(--muted);margin-top:8px">${t['settings.close.desc']}</p>
@@ -1998,7 +2032,7 @@ function showSettingsSection(section, el) {
       <div class="settings-rows">
         <div class="settings-row">
           <div><div class="settings-row-label">${t['settings.password']}</div><div class="settings-row-value">${t['settings.last.changed']}</div></div>
-          <button class="btn-ghost btn-sm" onclick="openChangePassword()">${t['settings.change.pw']}</button>
+          <button class="btn-ghost btn-sm" data-onclick="openChangePassword()">${t['settings.change.pw']}</button>
         </div>
         <div class="settings-row" id="change-pw-form" style="display:none">
           <div style="flex:1">
@@ -2006,8 +2040,8 @@ function showSettingsSection(section, el) {
             <div class="form-group"><label>${t['settings.new.pw']}</label><input type="password" id="new-pw" placeholder="${t['settings.chars']}"></div>
             <div class="form-group"><label>${t['settings.confirm.pw']}</label><input type="password" id="confirm-pw" placeholder="${t['settings.repeat.pw']}"></div>
             <div class="form-error" id="change-pw-error"></div>
-            <button class="btn-primary btn-sm" onclick="savePasswordChange()">${t['settings.save.pw']}</button>
-            <button class="btn-ghost btn-sm" onclick="document.getElementById('change-pw-form').style.display='none'" style="margin-left:8px">${t['settings.cancel']}</button>
+            <button class="btn-primary btn-sm" data-onclick="savePasswordChange()">${t['settings.save.pw']}</button>
+            <button class="btn-ghost btn-sm" data-onclick="document.getElementById('change-pw-form').style.display='none'" style="margin-left:8px">${t['settings.cancel']}</button>
           </div>
         </div>
         <div class="settings-row">
@@ -2016,7 +2050,7 @@ function showSettingsSection(section, el) {
         </div>
         <div class="settings-row">
           <div><div class="settings-row-label">${t['settings.sessions']}</div><div class="settings-row-value settings-muted">${t['settings.sessions.val']}</div></div>
-          <button class="btn-ghost btn-sm" onclick="logout()">${t['settings.signout.all']}</button>
+          <button class="btn-ghost btn-sm" data-onclick="logout()">${t['settings.signout.all']}</button>
         </div>
       </div>
     `;
@@ -2026,19 +2060,19 @@ function showSettingsSection(section, el) {
       <div class="settings-rows">
         <div class="settings-row">
           <div><div class="settings-row-label">${t['settings.job.alerts']}</div><div class="settings-row-value settings-muted">${t['settings.job.alerts.val']}</div></div>
-          <label class="toggle-switch"><input type="checkbox" id="notif-jobs" checked onchange="saveNotifPref('job_alerts',this.checked)"><span class="toggle-slider"></span></label>
+          <label class="toggle-switch"><input type="checkbox" id="notif-jobs" checked data-onchange="saveNotifPref('job_alerts',this.checked)"><span class="toggle-slider"></span></label>
         </div>
         <div class="settings-row">
           <div><div class="settings-row-label">${t['settings.app.updates']}</div><div class="settings-row-value settings-muted">${t['settings.app.updates.val']}</div></div>
-          <label class="toggle-switch"><input type="checkbox" id="notif-apps" checked onchange="saveNotifPref('app_updates',this.checked)"><span class="toggle-slider"></span></label>
+          <label class="toggle-switch"><input type="checkbox" id="notif-apps" checked data-onchange="saveNotifPref('app_updates',this.checked)"><span class="toggle-slider"></span></label>
         </div>
         <div class="settings-row">
           <div><div class="settings-row-label">${t['settings.news']}</div><div class="settings-row-value settings-muted">${t['settings.news.val']}</div></div>
-          <label class="toggle-switch"><input type="checkbox" id="notif-news" onchange="saveNotifPref('news',this.checked)"><span class="toggle-slider"></span></label>
+          <label class="toggle-switch"><input type="checkbox" id="notif-news" data-onchange="saveNotifPref('news',this.checked)"><span class="toggle-slider"></span></label>
         </div>
         <div class="settings-row">
           <div><div class="settings-row-label">${t['settings.lang']}</div><div class="settings-row-value">${state.lang === 'fr' ? t['settings.lang.val.fr'] : t['settings.lang.val.en']}</div></div>
-          <div style="display:flex;gap:8px"><button class="btn-ghost btn-sm ${state.lang==='en'?'btn-active':''}" onclick="setLang('en')">EN</button><button class="btn-ghost btn-sm ${state.lang==='fr'?'btn-active':''}" onclick="setLang('fr')">FR</button></div>
+          <div style="display:flex;gap:8px"><button class="btn-ghost btn-sm ${state.lang==='en'?'btn-active':''}" data-onclick="setLang('en')">EN</button><button class="btn-ghost btn-sm ${state.lang==='fr'?'btn-active':''}" data-onclick="setLang('fr')">FR</button></div>
         </div>
       </div>
     `;
@@ -2060,10 +2094,10 @@ function showSettingsSection(section, el) {
         </div>
         <div class="settings-row">
           <div><div class="settings-row-label">${t['settings.your.data']}</div><div class="settings-row-value settings-muted">${t['settings.your.data.val']}</div></div>
-          <div style="display:flex;gap:8px"><button class="btn-ghost btn-sm" onclick="toast('${state.lang==='fr'?'Export de données bientôt disponible':'Data export coming soon'}','info')"><i class="ti ti-download"></i> Export</button><button class="btn-ghost btn-sm" style="color:var(--red)" onclick="confirmCloseAccount()"><i class="ti ti-trash"></i> Delete</button></div>
+          <div style="display:flex;gap:8px"><button class="btn-ghost btn-sm" data-onclick="toast('${state.lang==='fr'?'Export de données bientôt disponible':'Data export coming soon'}','info')"><i class="ti ti-download"></i> Export</button><button class="btn-ghost btn-sm" style="color:var(--red)" data-onclick="confirmCloseAccount()"><i class="ti ti-trash"></i> Delete</button></div>
         </div>
       </div>
-      <div style="margin-top:24px"><a class="help-link" onclick="goto('privacy')">${t['settings.privacy.link']}</a></div>
+      <div style="margin-top:24px"><a class="help-link" data-onclick="goto('privacy')">${t['settings.privacy.link']}</a></div>
     `;
   }
 }
@@ -2176,7 +2210,7 @@ async function loadMyReviews() {
       </div>
     </div>
     <div class="my-reviews-tabs">
-      <button class="my-rev-tab active" onclick="showMyRevTab('mrt-reviews',this)">Reviews <span class="rev-count" id="mrt-count">0</span></button>
+      <button class="my-rev-tab active" data-onclick="showMyRevTab('mrt-reviews',this)">Reviews <span class="rev-count" id="mrt-count">0</span></button>
     </div>
     <div id="mrt-reviews">
       <div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>
@@ -2194,7 +2228,7 @@ async function loadMyReviews() {
         <div class="my-reviews-lock"><i class="ti ti-lock"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i></div>
         <h3>Unlock all reviews</h3>
         <p>Access all company reviews by writing yours</p>
-        <button class="btn-primary" onclick="goto('jobs')"><i class="ti ti-star"></i> Write a review →</button>
+        <button class="btn-primary" data-onclick="goto('jobs')"><i class="ti ti-star"></i> Write a review →</button>
       </div>
     `;
     return;
@@ -2340,7 +2374,7 @@ function renderAvailSection(uid) {
   const lang = state.lang || 'en';
   const chips = AVAIL_BADGES.map(b => {
     const on = set.has(b.id);
-    return `<span class="avail-chip" data-bid="${b.id}" onclick="toggleAvailBadge('${b.id}')"
+    return `<span class="avail-chip" data-bid="${b.id}" data-onclick="toggleAvailBadge('${b.id}')"
       style="background:${on?b.color:b.bg};color:${on?'#fff':b.color};border:1.5px solid ${on?b.color:b.color+'40'};font-weight:${on?700:500}">
       <i class="ti ${b.icon}"></i> ${lang==='fr'?b.fr:b.en}
     </span>`;
@@ -2411,10 +2445,10 @@ function renderTalentPassport(p, user, pct) {
     : initials;
   return `<div class="talent-passport">
     <div class="passport-header">
-      <div class="passport-avatar-lg passport-avatar-upload" onclick="document.getElementById('pf-avatar-file').click()" title="${isFr?'Changer la photo':'Change photo'}" style="cursor:pointer;position:relative;overflow:hidden">
+      <div class="passport-avatar-lg passport-avatar-upload" data-onclick="document.getElementById('pf-avatar-file').click()" title="${isFr?'Changer la photo':'Change photo'}" style="cursor:pointer;position:relative;overflow:hidden">
         ${avatarInner}
         <div class="passport-avatar-cam"><i class="ti ti-camera" style="font-size:16px"></i></div>
-        <input type="file" id="pf-avatar-file" accept="image/*" style="display:none" onchange="uploadProfilePhoto(this)">
+        <input type="file" id="pf-avatar-file" accept="image/*" style="display:none" data-onchange="uploadProfilePhoto(this)">
       </div>
       <div class="passport-info">
         <div class="passport-name">${esc(name)}</div>
@@ -2851,11 +2885,11 @@ function renderSkillPicker(selected = [], idPrefix = 'sp') {
   const sel = new Set(selected.map(s => s.toLowerCase()));
 
   const mainBar = `<div class="sp-sector-bar" id="${idPrefix}-sector-bar">
-    ${SKILL_SECTORS.map(s => `<button type="button" class="sp-sector-btn${s.id==='all'?' active':''}" data-sid="${s.id}" onclick="selectSkillSector('${s.id}','${idPrefix}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
+    ${SKILL_SECTORS.map(s => `<button type="button" class="sp-sector-btn${s.id==='all'?' active':''}" data-sid="${s.id}" data-onclick="selectSkillSector('${s.id}','${idPrefix}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
   </div>`;
 
   const subBar = `<div class="sp-sector-bar sp-subsector-bar" id="${idPrefix}-subsector-bar" style="display:none">
-    ${TECH_SUBS.map(s => `<button type="button" class="sp-sector-btn${s.id==='tech'?' active':''}" data-sid="${s.id}" onclick="selectSkillSector('${s.id}','${idPrefix}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
+    ${TECH_SUBS.map(s => `<button type="button" class="sp-sector-btn${s.id==='tech'?' active':''}" data-sid="${s.id}" data-onclick="selectSkillSector('${s.id}','${idPrefix}')"><i class="ti ${s.icon}"></i>${s.label}</button>`).join('')}
   </div>`;
 
   const groups = SKILL_GROUPS.map(g => {
@@ -2866,7 +2900,7 @@ function renderSkillPicker(selected = [], idPrefix = 'sp') {
         ? `<img src="${sk.logo}" class="sp-logo"${sk.invert ? ' style="filter:invert(1)"' : ''}>`
         : `<span class="sp-badge" style="background:${sk.badge.bg};color:${sk.badge.color}">${sk.badge.text}</span>`;
       const isVerified = state.verifiedSkillNames?.has(sk.name);
-      return `<span class="sp-chip${active}" data-skill="${esc(sk.name)}" onclick="toggleSkill(this)">${img}${esc(sk.name)}${isVerified ? '<span style="color:#4ade80;font-size:10px;font-weight:800;margin-left:3px" title="Verified by skill test">✓</span>' : ''}</span>`;
+      return `<span class="sp-chip${active}" data-skill="${esc(sk.name)}" data-onclick="toggleSkill(this)">${img}${esc(sk.name)}${isVerified ? '<span style="color:#4ade80;font-size:10px;font-weight:800;margin-left:3px" title="Verified by skill test">✓</span>' : ''}</span>`;
     }).join('');
     return `<div class="sp-group" data-sector="${sec}">
       <div class="sp-group-label"><i class="ti ${g.icon}"></i>${g.label}</div>
@@ -2879,7 +2913,7 @@ function renderSkillPicker(selected = [], idPrefix = 'sp') {
     <div id="${idPrefix}-groups">${groups}</div>
     <div class="sp-custom-wrap">
       <i class="ti ti-plus sp-custom-icon"></i>
-      <input type="text" id="${idPrefix}-custom" class="sp-custom-input" placeholder="Add a custom skill (press Enter)…" onkeydown="addCustomSkill(event,'${idPrefix}')">
+      <input type="text" id="${idPrefix}-custom" class="sp-custom-input" placeholder="Add a custom skill (press Enter)…" data-onkeydown="addCustomSkill(event,'${idPrefix}')">
     </div>
     <div id="${idPrefix}-custom-chips" class="sp-chips" style="margin-top:6px"></div>
   </div>`;
@@ -2936,7 +2970,7 @@ function addCustomSkill(e, idPrefix = 'sp') {
     const chip = document.createElement('span');
     chip.className = 'sp-chip active sp-custom-chip';
     chip.dataset.skill = val;
-    chip.innerHTML = `${esc(val)} <span onclick="this.parentElement.remove()" style="margin-left:4px;opacity:.6;cursor:pointer">✕</span>`;
+    chip.innerHTML = `${esc(val)} <span data-onclick="this.parentElement.remove()" style="margin-left:4px;opacity:.6;cursor:pointer">✕</span>`;
     container.appendChild(chip);
   }
   if (inp) inp.value = '';
@@ -2959,7 +2993,7 @@ function _getPfSkillList() {
 function renderProfileSkillEditor(selected = []) {
   const isFr = state.lang === 'fr';
   const chips = selected.map(s =>
-    `<span class="pf-skill-tag" data-skill="${esc(s)}">${esc(s)}<button type="button" class="pf-skill-rm" onclick="removePfSkill(this)" aria-label="Remove">&times;</button></span>`
+    `<span class="pf-skill-tag" data-skill="${esc(s)}">${esc(s)}<button type="button" class="pf-skill-rm" data-onclick="removePfSkill(this)" aria-label="Remove">&times;</button></span>`
   ).join('');
   const ph = isFr ? 'Tapez une compétence + Entrée…' : 'Type a skill + Enter…';
   const empty = isFr ? 'Aucune compétence — ajoutez-en ci-dessous' : 'No skills yet — add some below';
@@ -2968,8 +3002,8 @@ function renderProfileSkillEditor(selected = []) {
     <div class="pf-skill-input-wrap">
       <input type="text" id="pf-skill-input" class="pf-skill-input" placeholder="${ph}"
         autocomplete="off"
-        oninput="updatePfSkillSug(this.value)"
-        onkeydown="handlePfSkillKey(event)"
+        data-oninput="updatePfSkillSug(this.value)"
+        data-onkeydown="handlePfSkillKey(event)"
         onblur="setTimeout(hidePfSkillSug,160)">
       <div id="pf-skill-sug" class="pf-skill-sug-box" style="display:none"></div>
     </div>
@@ -2996,7 +3030,7 @@ function addPfSkill(name) {
   const tag = document.createElement('span');
   tag.className = 'pf-skill-tag';
   tag.dataset.skill = clean;
-  tag.innerHTML = `${esc(clean)}<button type="button" class="pf-skill-rm" onclick="removePfSkill(this)" aria-label="Remove">&times;</button>`;
+  tag.innerHTML = `${esc(clean)}<button type="button" class="pf-skill-rm" data-onclick="removePfSkill(this)" aria-label="Remove">&times;</button>`;
   row.appendChild(tag);
   const inp = document.getElementById('pf-skill-input');
   if (inp) inp.value = '';
@@ -3040,16 +3074,16 @@ const JOB_SKILL_QUICK = [
 
 function renderJobSkillInput(skills = []) {
   const initialChips = skills.map(s =>
-    `<span class="sp-chip active sp-custom-chip" data-skill="${esc(s)}">${esc(s)} <span onclick="this.parentElement.remove()" style="margin-left:4px;opacity:.6;cursor:pointer">✕</span></span>`
+    `<span class="sp-chip active sp-custom-chip" data-skill="${esc(s)}">${esc(s)} <span data-onclick="this.parentElement.remove()" style="margin-left:4px;opacity:.6;cursor:pointer">✕</span></span>`
   ).join('');
   const suggestions = JOB_SKILL_QUICK.map(s =>
-    `<span class="sp-chip" style="cursor:pointer" onclick="addJobSkillTag('${esc(s)}')">${esc(s)}</span>`
+    `<span class="sp-chip" style="cursor:pointer" data-onclick="addJobSkillTag('${esc(s)}')">${esc(s)}</span>`
   ).join('');
   return `<div id="jf-skill-wrap">
     <div id="jf-skill-chips" class="sp-chips" style="min-height:32px;margin-bottom:8px">${initialChips}</div>
     <input type="text" id="jf-skill-text" class="sp-custom-input" style="width:100%;box-sizing:border-box"
       placeholder="Type a skill and press Enter…"
-      onkeydown="addJobSkill(event)">
+      data-onkeydown="addJobSkill(event)">
     <div style="margin-top:12px;font-size:12px;color:var(--muted);margin-bottom:6px">Common skills — click to add:</div>
     <div class="sp-chips">${suggestions}</div>
   </div>`;
@@ -3074,7 +3108,7 @@ function addJobSkillTag(tag) {
   const chip = document.createElement('span');
   chip.className = 'sp-chip active sp-custom-chip';
   chip.dataset.skill = tag;
-  chip.innerHTML = `${esc(tag)} <span onclick="this.parentElement.remove()" style="margin-left:4px;opacity:.6;cursor:pointer">✕</span>`;
+  chip.innerHTML = `${esc(tag)} <span data-onclick="this.parentElement.remove()" style="margin-left:4px;opacity:.6;cursor:pointer">✕</span>`;
   container.appendChild(chip);
 }
 
@@ -3184,7 +3218,7 @@ async function loadProfileForm() {
     <div class="form-group"><label>${L.avail}</label><select id="pf-avail"><option value="immediate" ${p.availability==='immediate'?'selected':''}>${L.availImm}</option><option value="2weeks" ${p.availability==='2weeks'?'selected':''}>${L.avail2w}</option><option value="1month" ${p.availability==='1month'?'selected':''}>${L.avail1m}</option><option value="3months" ${p.availability==='3months'?'selected':''}>${L.avail3m}</option></select></div>
     <div class="form-group" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:${p.open_to_work?'rgba(16,185,129,.06)':'var(--surface)'};border:1px solid ${p.open_to_work?'rgba(16,185,129,.25)':'var(--border)'};border-radius:12px;transition:all .2s">
       <label class="otw-toggle" style="flex-shrink:0;position:relative;display:inline-block;width:44px;height:24px;cursor:pointer">
-        <input type="checkbox" id="pf-otw" ${p.open_to_work?'checked':''} style="opacity:0;width:0;height:0;position:absolute" onchange="saveOpenToWork(this.checked)">
+        <input type="checkbox" id="pf-otw" ${p.open_to_work?'checked':''} style="opacity:0;width:0;height:0;position:absolute" data-onchange="saveOpenToWork(this.checked)">
         <span style="position:absolute;inset:0;background:${p.open_to_work?'#10B981':'#D1D5DB'};border-radius:12px;transition:background .2s;"></span>
         <span style="position:absolute;top:2px;left:${p.open_to_work?'22px':'2px'};width:20px;height:20px;background:#fff;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></span>
       </label>
@@ -3194,13 +3228,13 @@ async function loadProfileForm() {
       </div>
     </div>
     <div class="form-group"><label>${L.bioEn} <span style="color:var(--indigo);font-size:11px;font-weight:500">${p.bio_en ? '✓' : isFr ? '— obligatoire' : '— required'}</span></label><textarea id="pf-bio-en" style="${!p.bio_en ? 'border-color:var(--indigo)' : ''}" placeholder="${isFr ? 'ex : Développeur passionné avec 5 ans d\'expérience en développement web…' : 'ex: Passionate developer with 5 years of experience in web development…'}">${esc(p.bio_en||'')}</textarea></div>
-    <button class="btn-primary" onclick="saveProfile()"><i class="ti ti-check"></i> ${L.save}</button>
+    <button class="btn-primary" data-onclick="saveProfile()"><i class="ti ti-check"></i> ${L.save}</button>
     <div style="margin-top:24px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px">
       <div style="font-weight:600;font-size:15px;margin-bottom:12px"><i class="ti ti-file-cv" style="color:var(--indigo)"></i> ${L.cvTitle}</div>
       ${p.cv_url ? `<div style="margin-bottom:12px"><a href="${esc(p.cv_url)}" target="_blank" class="btn-ghost" style="font-size:13px"><i class="ti ti-download"></i> ${L.cvView}</a></div>` : ''}
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <input type="file" id="cv-file" accept=".pdf,.doc,.docx" style="display:none" onchange="uploadAndParseCV()">
-        <button type="button" class="btn-primary" onclick="document.getElementById('cv-file').click()" style="font-size:13px;padding:9px 16px"><i class="ti ti-sparkles"></i> ${isFr ? 'Importer & analyser CV (IA)' : 'Import & parse CV (AI)'}</button>
+        <input type="file" id="cv-file" accept=".pdf,.doc,.docx" style="display:none" data-onchange="uploadAndParseCV()">
+        <button type="button" class="btn-primary" data-onclick="document.getElementById('cv-file').click()" style="font-size:13px;padding:9px 16px"><i class="ti ti-sparkles"></i> ${isFr ? 'Importer & analyser CV (IA)' : 'Import & parse CV (AI)'}</button>
         <span style="font-size:12px;color:var(--muted)">${L.cvHint}</span>
       </div>
       <div id="cv-upload-status" style="display:none;font-size:13px;margin-top:8px;color:var(--muted)"></div>
@@ -3290,7 +3324,7 @@ async function loadMyApplications() {
   state.appliedJobIds = new Set(apps.map(a => a.job_id));
   if (!container) return;
   const t = T[state.lang];
-  if (!apps.length) { container.innerHTML = `<div class="empty-state"><i class="ti ti-file-off"></i><p>${t['dash.empty.apps']}</p><button class="btn-primary" onclick="goto('jobs')" style="margin-top:16px">${t['dash.empty.browse']}</button></div>`; return; }
+  if (!apps.length) { container.innerHTML = `<div class="empty-state"><i class="ti ti-file-off"></i><p>${t['dash.empty.apps']}</p><button class="btn-primary" data-onclick="goto('jobs')" style="margin-top:16px">${t['dash.empty.browse']}</button></div>`; return; }
 
   const statuses = ['new','reviewed','shortlisted','interview','offer','rejected'];
   const statusLabel = state.lang === 'fr'
@@ -3316,7 +3350,7 @@ async function loadMyApplications() {
         <div class="app-card-meta">
           <span class="app-status ${a.status}">${statusLabel[a.status] || a.status}</span>
           <span class="app-card-date">${daysAgo(a.created_at)}</span>
-          ${a.status !== 'withdrawn' ? `<button onclick="event.stopPropagation();openMessagesPage('${a.id}')" class="app-msg-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> ${state.lang==='fr'?'Contacter':'Message'}</button>` : ''}
+          ${a.status !== 'withdrawn' ? `<button data-onclick="event.stopPropagation();openMessagesPage('${a.id}')" class="app-msg-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> ${state.lang==='fr'?'Contacter':'Message'}</button>` : ''}
         </div>
       </div>
       ${a.status !== 'rejected' && a.status !== 'withdrawn' ? `
@@ -3340,9 +3374,9 @@ async function loadMyApplications() {
           ${slot.notes ? `<div style="font-size:12px;color:var(--muted);margin-bottom:10px;font-style:italic">"${esc(slot.notes)}"</div>` : ''}
           ${slot.location ? `<div style="font-size:12px;color:var(--muted);margin-bottom:8px"><i class="ti ti-map-pin"></i> ${esc(slot.location)}</div>` : ''}
           <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
-            ${slots.map(s => `<button class="btn-ghost" style="font-size:12px;padding:7px 12px;justify-content:flex-start;text-align:left" onclick="confirmSlot('${slot.id}','${s}')"><i class="ti ti-check" style="color:#10b981"></i> ${isFr?'Confirmer :':'Confirm:'} ${fmtSlot(s)}</button>`).join('')}
+            ${slots.map(s => `<button class="btn-ghost" style="font-size:12px;padding:7px 12px;justify-content:flex-start;text-align:left" data-onclick="confirmSlot('${slot.id}','${s}')"><i class="ti ti-check" style="color:#10b981"></i> ${isFr?'Confirmer :':'Confirm:'} ${fmtSlot(s)}</button>`).join('')}
           </div>
-          <button class="btn-ghost" style="font-size:11px;color:#ef4444;border-color:#fca5a5;padding:5px 12px" onclick="declineSlots('${slot.id}')"><i class="ti ti-x"></i> ${isFr?'Décliner':'Decline'}</button>
+          <button class="btn-ghost" style="font-size:11px;color:#ef4444;border-color:#fca5a5;padding:5px 12px" data-onclick="declineSlots('${slot.id}')"><i class="ti ti-x"></i> ${isFr?'Décliner':'Decline'}</button>
         </div>`;
       })()}
     </div>`;
@@ -3361,14 +3395,14 @@ async function loadSavedJobsTab() {
     const title = state.lang === 'fr' ? (j.title_fr || j.title_en) : (j.title_en || j.title_fr);
     const color = companyColor(j.company_name);
     const initials = (j.company_name || 'N').slice(0, 2).toUpperCase();
-    return `<div class="job-list-item" style="cursor:pointer" onclick="goto('jobs')">
+    return `<div class="job-list-item" style="cursor:pointer" data-onclick="goto('jobs')">
       ${j.company_logo ? `<img src="${j.company_logo}" style="width:40px;height:40px;border-radius:8px;flex-shrink:0;object-fit:contain">` : `<div class="company-logo" style="background:${color};width:40px;height:40px;border-radius:8px;flex-shrink:0;font-size:13px">${initials}</div>`}
       <div style="flex:1;min-width:0">
         <div style="font-family:var(--r);font-weight:600;color:var(--dark)">${esc(title)}</div>
         <div style="font-size:13px;color:var(--muted)">${esc(j.company_name||'')}${j.city || j.province ? ' · ' + (j.city ? esc(j.city) + (j.province ? ', <strong>'+esc(j.province)+'</strong>' : '') : esc(j.province||'')) : ''}</div>
         <div class="job-meta" style="margin-top:6px"><span class="job-tag ${j.work_mode||'onsite'}">${j.work_mode||'onsite'}</span>${j.salary_min ? `<span class="job-tag salary-tag">${fmtSalary(j.salary_min)} ${j.salary_currency||'CAD'}</span>` : ''}</div>
       </div>
-      <button class="save-btn saved" data-id="${j.id}" onclick="toggleSave('${j.id}',event);this.closest('.job-list-item').remove()" title="Remove"><i class="ti ti-heart-filled"></i></button>
+      <button class="save-btn saved" data-id="${j.id}" data-onclick="toggleSave('${j.id}',event);this.closest('.job-list-item').remove()" title="Remove"><i class="ti ti-heart-filled"></i></button>
     </div>`;
   }).join('');
 }
@@ -3405,7 +3439,7 @@ async function loadAlerts() {
             <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">${chips || `<span style="color:var(--muted);font-size:13px">${isFr ? 'Toutes offres' : 'All jobs'}</span>`}</div>
             <div style="font-size:11px;color:var(--muted);margin-top:4px">${isFr ? 'Créée le' : 'Created'} ${new Date(a.created_at).toLocaleDateString(isFr ? 'fr-CA' : 'en-CA', { month: 'short', day: 'numeric' })}</div>
           </div>
-          <button class="btn-ghost" style="color:var(--danger);border-color:var(--danger);font-size:12px;padding:6px 12px" onclick="deleteAlert('${a.id}')"><i class="ti ti-trash"></i></button>
+          <button class="btn-ghost" style="color:var(--danger);border-color:var(--danger);font-size:12px;padding:6px 12px" data-onclick="deleteAlert('${a.id}')"><i class="ti ti-trash"></i></button>
         </div>`;
       }).join('')
     : `<div class="empty-state" style="padding:40px 0"><i class="ti ti-bell-off"></i><p>${isFr ? 'Aucune alerte configurée.' : 'No alerts configured yet.'}</p></div>`;
@@ -3444,7 +3478,7 @@ async function loadAlerts() {
             <input type="text" id="al-city" placeholder="${isFr ? 'ex. Montréal' : 'e.g. Toronto'}" style="font-size:13px">
           </div>
         </div>
-        <button class="btn-primary" style="font-size:13px;padding:9px 20px" onclick="createAlert()"><i class="ti ti-bell-plus"></i> ${isFr ? 'Créer l\'alerte' : 'Create alert'}</button>
+        <button class="btn-primary" style="font-size:13px;padding:9px 20px" data-onclick="createAlert()"><i class="ti ti-bell-plus"></i> ${isFr ? 'Créer l\'alerte' : 'Create alert'}</button>
       </div>` : `<p style="font-size:13px;color:var(--muted);text-align:center;margin-top:12px">${isFr ? 'Maximum 5 alertes atteint.' : 'Maximum of 5 alerts reached.'}</p>`}
     </div>`;
 }
@@ -3534,7 +3568,7 @@ async function loadJobsForYou() {
     `<p style="font-size:12px;color:var(--muted);margin-bottom:12px">${isFr ? 'Basé sur' : 'Based on'}: ${usedSkills.slice(0,3).map(s=>`<span class="skill-chip">${esc(s)}</span>`).join(' ')}</p>` +
     jobs.map(j => {
       const title = isFr ? (j.title_fr || j.title_en) : (j.title_en || j.title_fr);
-      return `<div class="jfy-card" onclick="goto('jobs')">
+      return `<div class="jfy-card" data-onclick="goto('jobs')">
         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
           <div class="jfy-title">${esc(title)}</div>
           ${matchScoreBadge(j)}
@@ -3573,7 +3607,7 @@ async function loadTeam() {
           <option value="recruiter">${_tt('team.role.recruiter')}</option>
           <option value="admin">${_tt('team.role.admin')}</option>
         </select>
-        <button class="btn-primary" type="button" onclick="inviteTeamMember()" style="white-space:nowrap">
+        <button class="btn-primary" type="button" data-onclick="inviteTeamMember()" style="white-space:nowrap">
           <i class="ti ti-send"></i> ${_tt('team.invite.btn')}
         </button>
       </div>
@@ -3610,14 +3644,14 @@ async function refreshTeamList() {
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
         <span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;background:${statusColor}20;color:${statusColor}">${statusLabel}</span>
-        <select onchange="changeTeamRole('${m.id}',this.value)" style="font-size:12px;padding:2px 6px;border-radius:6px">
+        <select data-onchange="changeTeamRole('${m.id}',this.value)" style="font-size:12px;padding:2px 6px;border-radius:6px">
           <option value="recruiter"${m.role==='recruiter'?' selected':''}>${_tt('team.role.recruiter')}</option>
           <option value="admin"${m.role==='admin'?' selected':''}>${_tt('team.role.admin')}</option>
         </select>
       </div>
       <div style="display:flex;flex-direction:column;gap:6px;margin-left:4px">
-        ${m.status==='pending' ? `<button type="button" class="btn-ghost" style="font-size:12px;padding:4px 8px" onclick="resendTeamInvite('${m.id}')">${_tt('team.resend')}</button>` : ''}
-        <button type="button" class="btn-ghost" style="font-size:12px;padding:4px 8px;color:var(--danger,#ef4444)" onclick="removeTeamMember('${m.id}','${esc(name)}')">${_tt('team.remove')}</button>
+        ${m.status==='pending' ? `<button type="button" class="btn-ghost" style="font-size:12px;padding:4px 8px" data-onclick="resendTeamInvite('${m.id}')">${_tt('team.resend')}</button>` : ''}
+        <button type="button" class="btn-ghost" style="font-size:12px;padding:4px 8px;color:var(--danger,#ef4444)" data-onclick="removeTeamMember('${m.id}','${esc(name)}')">${_tt('team.remove')}</button>
       </div>
     </div>`;
   }).join('');
@@ -3676,7 +3710,7 @@ async function loadEmployerJobs() {
   const container = document.getElementById('employer-jobs-list');
   if (!container) return;
   const jobs = d.jobs || [];
-  if (!jobs.length) { container.innerHTML = '<div class="empty-state"><i class="ti ti-briefcase"></i><p>No jobs posted yet.</p><button class="btn-primary" onclick="showEmpTab(\'etab-post\')" style="margin-top:16px"><i class="ti ti-plus"></i> Post your first job</button></div>'; return; }
+  if (!jobs.length) { container.innerHTML = '<div class="empty-state"><i class="ti ti-briefcase"></i><p>No jobs posted yet.</p><button class="btn-primary" data-onclick="showEmpTab(\'etab-post\')" style="margin-top:16px"><i class="ti ti-plus"></i> Post your first job</button></div>'; return; }
 
   container.innerHTML = jobs.map(j => {
     const isFr = state.lang === 'fr';
@@ -3703,16 +3737,16 @@ async function loadEmployerJobs() {
         <div class="emp-stat"><i class="ti ti-percentage"></i><span>${conv}%</span><small>${isFr?'Conversion':'Conversion'}</small></div>
       </div>
       <div class="emp-job-actions">
-        ${j.status !== 'rejected' ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px" onclick="openKanban('${j.id}','${esc(title)}')"><i class="ti ti-layout-kanban"></i> Kanban</button>` : ''}
+        ${j.status !== 'rejected' ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px" data-onclick="openKanban('${j.id}','${esc(title)}')"><i class="ti ti-layout-kanban"></i> Kanban</button>` : ''}
         ${j.status === 'active' && !(j.is_sponsored && j.sponsored_until && new Date(j.sponsored_until) > new Date())
-          ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px;color:#d97706;border-color:#fde68a" onclick="openBoostModal('${j.id}','${esc(title)}')"><i class="ti ti-rocket"></i> ${isFr?'Booster':'Boost'}</button>`
+          ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px;color:#d97706;border-color:#fde68a" data-onclick="openBoostModal('${j.id}','${esc(title)}')"><i class="ti ti-rocket"></i> ${isFr?'Booster':'Boost'}</button>`
           : ''}
         ${j.is_sponsored && j.sponsored_until && new Date(j.sponsored_until) > new Date()
           ? `<span style="font-size:11px;font-weight:700;color:#d97706;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:3px 10px;display:inline-flex;align-items:center;gap:4px"><i class="ti ti-star-filled"></i> ${isFr?'Sponsorisé':'Sponsored'} · ${isFr?'jusqu\'au':'until'} ${new Date(j.sponsored_until).toLocaleDateString(isFr?'fr-CA':'en-CA',{month:'short',day:'numeric'})}</span>`
           : ''}
         ${j.status === 'rejected'
-          ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px;color:#dc2626;border-color:#fca5a5" onclick="deleteRejectedJob('${j.id}')"><i class="ti ti-trash"></i> ${isFr?'Supprimer':'Delete'}</button>`
-          : `<button class="btn-ghost" style="font-size:13px;padding:6px 14px" onclick="closeJob('${j.id}')"><i class="ti ti-x"></i> ${isFr?'Fermer':'Close'}</button>`}
+          ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px;color:#dc2626;border-color:#fca5a5" data-onclick="deleteRejectedJob('${j.id}')"><i class="ti ti-trash"></i> ${isFr?'Supprimer':'Delete'}</button>`
+          : `<button class="btn-ghost" style="font-size:13px;padding:6px 14px" data-onclick="closeJob('${j.id}')"><i class="ti ti-x"></i> ${isFr?'Fermer':'Close'}</button>`}
       </div>
       ${apps > 0 ? `
       <div class="inline-candidates" id="icands-${j.id}">
@@ -3777,11 +3811,11 @@ async function loadInlineCandidates(jobId) {
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <span style="background:${color}22;color:${color};border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700">${label}</span>
         ${isActive ? availableProgress.map(s =>
-          `<button onclick="updateCandidateStatus('${a.id}','${s.key}','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;color:var(--text);white-space:nowrap">${s.label}</button>`
+          `<button data-onclick="updateCandidateStatus('${a.id}','${s.key}','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;color:var(--text);white-space:nowrap">${s.label}</button>`
         ).join('') : ''}
-        <button onclick="openMessagesPage('${a.id}')" title="${isFr?'Ouvrir le chat':'Open chat'}" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #c7d2fe;background:#eef2ff;cursor:pointer;color:#6366f1;white-space:nowrap"><i class="ti ti-message-circle-2" style="font-size:12px"></i> ${isFr?'Chat':'Chat'}</button>
-        ${isActive ? `<button onclick="openRejectModal('${a.id}','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #fca5a5;background:#fff5f5;cursor:pointer;color:#dc2626;white-space:nowrap"><i class="ti ti-x" style="font-size:10px"></i> ${rejectLabel}</button>` : ''}
-        ${status === 'rejected' ? `<button onclick="deleteRejectedApplication('${a.id}','${jobId}')" title="${isFr?'Supprimer':'Delete'}" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;color:#9ca3af;white-space:nowrap"><i class="ti ti-trash" style="font-size:12px"></i></button>` : ''}
+        <button data-onclick="openMessagesPage('${a.id}')" title="${isFr?'Ouvrir le chat':'Open chat'}" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #c7d2fe;background:#eef2ff;cursor:pointer;color:#6366f1;white-space:nowrap"><i class="ti ti-message-circle-2" style="font-size:12px"></i> ${isFr?'Chat':'Chat'}</button>
+        ${isActive ? `<button data-onclick="openRejectModal('${a.id}','${jobId}')" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #fca5a5;background:#fff5f5;cursor:pointer;color:#dc2626;white-space:nowrap"><i class="ti ti-x" style="font-size:10px"></i> ${rejectLabel}</button>` : ''}
+        ${status === 'rejected' ? `<button data-onclick="deleteRejectedApplication('${a.id}','${jobId}')" title="${isFr?'Supprimer':'Delete'}" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;color:#9ca3af;white-space:nowrap"><i class="ti ti-trash" style="font-size:12px"></i></button>` : ''}
       </div>
     </div>`;
   }).join('');
@@ -3819,8 +3853,8 @@ function openRejectModal(appId, jobId) {
         style="width:100%;min-height:100px;border:1px solid #e5e7eb;border-radius:10px;padding:12px;font-size:13px;font-family:inherit;resize:vertical;box-sizing:border-box;outline:none" maxlength="500"></textarea>
       <div style="font-size:11px;color:#9ca3af;margin:4px 0 18px;text-align:right"><span id="reject-char-count">0</span>/500</div>
       <div style="display:flex;gap:10px">
-        <button onclick="document.getElementById('reject-reason-modal').remove()" style="flex:1;padding:10px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer;font-size:14px;color:#374151">${isFr ? 'Annuler' : 'Cancel'}</button>
-        <button onclick="confirmReject('${appId}','${jobId}')" style="flex:1;padding:10px;border:none;border-radius:8px;background:#dc2626;color:#fff;cursor:pointer;font-size:14px;font-weight:600">${isFr ? 'Confirmer le rejet' : 'Confirm reject'}</button>
+        <button data-onclick="document.getElementById('reject-reason-modal').remove()" style="flex:1;padding:10px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer;font-size:14px;color:#374151">${isFr ? 'Annuler' : 'Cancel'}</button>
+        <button data-onclick="confirmReject('${appId}','${jobId}')" style="flex:1;padding:10px;border:none;border-radius:8px;background:#dc2626;color:#fff;cursor:pointer;font-size:14px;font-weight:600">${isFr ? 'Confirmer le rejet' : 'Confirm reject'}</button>
       </div>
     </div>`;
   modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
@@ -3939,20 +3973,20 @@ function kanbanCard(a, col) {
     <div style="font-size:11px;color:var(--muted);margin-bottom:8px">${daysAgo(a.created_at)}</div>
     <div class="kanban-actions">
       ${COLUMNS.filter(c => c.key !== col.key && c.key !== 'rejected').slice(0,2).map(c =>
-        `<button class="btn-ghost" style="font-size:11px;padding:4px 8px" onclick="moveCandidate('${a.id}','${c.key}')">${c.label} →</button>`
+        `<button class="btn-ghost" style="font-size:11px;padding:4px 8px" data-onclick="moveCandidate('${a.id}','${c.key}')">${c.label} →</button>`
       ).join('')}
-      <button class="btn-ghost" style="font-size:11px;padding:4px 8px;color:var(--red);border-color:var(--red)" onclick="moveCandidate('${a.id}','rejected')">Reject</button>
+      <button class="btn-ghost" style="font-size:11px;padding:4px 8px;color:var(--red);border-color:var(--red)" data-onclick="moveCandidate('${a.id}','rejected')">Reject</button>
     </div>
     ${a.profile_cv || a.cv_url ? `<a href="${a.profile_cv || a.cv_url}" target="_blank" style="font-size:11px;color:var(--indigo);display:block;margin-top:4px"><i class="ti ti-file-cv"></i> View CV</a>` : ''}
     ${cuid ? `<div class="kanban-endorse-row">
       <span id="ke-${cuid}" class="kanban-endorse-pill" style="display:none"></span>
-      <button class="btn-ghost kanban-endorse-btn" onclick="openEndorseModal('${cuid}','${esc(cname)}')"><i class="ti ti-thumb-up"></i> Endorse</button>
+      <button class="btn-ghost kanban-endorse-btn" data-onclick="openEndorseModal('${cuid}','${esc(cname)}')"><i class="ti ti-thumb-up"></i> Endorse</button>
     </div>` : ''}
     <div class="kanban-notes-row">
-      <button class="btn-ghost kanban-notes-btn" onclick="openNotesModal('${a.id}','${esc(cname)}')">
+      <button class="btn-ghost kanban-notes-btn" data-onclick="openNotesModal('${a.id}','${esc(cname)}')">
         <i class="ti ti-message-circle-2"></i> Suivi RH<span id="kn-${a.id}" class="kanban-notes-badge" style="display:none"></span>
       </button>
-      <button class="btn-ghost" style="font-size:11px;padding:4px 8px;color:#10b981;border-color:#6ee7b7;margin-top:4px;width:100%;justify-content:center" onclick="proposeSlots('${a.id}','${esc(cname)}')">
+      <button class="btn-ghost" style="font-size:11px;padding:4px 8px;color:#10b981;border-color:#6ee7b7;margin-top:4px;width:100%;justify-content:center" data-onclick="proposeSlots('${a.id}','${esc(cname)}')">
         <i class="ti ti-calendar-event"></i> ${state.lang==='fr'?'Proposer créneaux':'Propose slots'}
       </button>
     </div>
@@ -4025,7 +4059,7 @@ async function refreshNotes(appId) {
         <div class="note-header">
           <span class="note-author"><i class="ti ti-user-circle"></i> ${esc(n.author_name || 'RH')}</span>
           <span class="note-date">${fmtNoteDate(n.created_at)}</span>
-          ${n.author_id === state.user?.id ? `<button class="note-del-btn" title="Supprimer" onclick="deleteNote('${n.id}','${appId}')"><i class="ti ti-trash"></i></button>` : ''}
+          ${n.author_id === state.user?.id ? `<button class="note-del-btn" title="Supprimer" data-onclick="deleteNote('${n.id}','${appId}')"><i class="ti ti-trash"></i></button>` : ''}
         </div>
         <div class="note-body">${esc(n.content)}</div>
       </div>
@@ -4097,7 +4131,7 @@ function initPostJobForm() {
       <div class="form-group"><label>Titre du poste (FR)</label><input type="text" id="jf-title-fr" placeholder="ex: Développeur Full-Stack Senior"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>Work mode</label><select id="jf-mode" onchange="toggleLocationByMode()"><option value="onsite">On-site</option><option value="hybrid">Hybrid</option><option value="remote">Remote</option><option value="remote-intl">Fully Remote (International)</option></select></div>
+      <div class="form-group"><label>Work mode</label><select id="jf-mode" data-onchange="toggleLocationByMode()"><option value="onsite">On-site</option><option value="hybrid">Hybrid</option><option value="remote">Remote</option><option value="remote-intl">Fully Remote (International)</option></select></div>
       <div class="form-group"><label>Job type</label><select id="jf-type"><option value="full-time">Full-time</option><option value="part-time">Part-time</option><option value="contract">Contract</option><option value="internship">Internship</option><option value="temporary">Temporary</option><option value="permanent">Permanent</option></select></div>
     </div>
 
@@ -4267,7 +4301,7 @@ function initCompanyForm() {
           <label for="cf-logo-file" class="btn-ghost btn-sm" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px">
             <i class="ti ti-upload"></i> Upload logo
           </label>
-          <input type="file" id="cf-logo-file" accept="image/*" style="display:none" onchange="uploadCompanyLogo(this)">
+          <input type="file" id="cf-logo-file" accept="image/*" style="display:none" data-onchange="uploadCompanyLogo(this)">
           <div id="cf-logo-status" style="font-size:12px;color:var(--muted);margin-top:4px">JPG, PNG, WebP · max 2 MB</div>
         </div>
       </div>
@@ -4350,10 +4384,10 @@ async function loadBillingInfo() {
       <div class="upgrade-cta">
         <div style="font-size:14px;color:var(--text);margin-bottom:12px">Upgrade to <strong>Pro</strong> — 10 job slots, AI ranking, featured listings</div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <button class="btn-primary" onclick="startCheckout('pro','month')"><i class="ti ti-crown"></i> Pro — $99/mo</button>
-          <button class="btn-primary" onclick="startCheckout('pro','year')" style="background:var(--green);border-color:var(--green)"><i class="ti ti-crown"></i> Pro — $990/yr <span style="background:rgba(255,255,255,0.25);color:#fff;padding:2px 8px;border-radius:100px;font-size:10px;margin-left:4px">-16%</span></button>
+          <button class="btn-primary" data-onclick="startCheckout('pro','month')"><i class="ti ti-crown"></i> Pro — $99/mo</button>
+          <button class="btn-primary" data-onclick="startCheckout('pro','year')" style="background:var(--green);border-color:var(--green)"><i class="ti ti-crown"></i> Pro — $990/yr <span style="background:rgba(255,255,255,0.25);color:#fff;padding:2px 8px;border-radius:100px;font-size:10px;margin-left:4px">-16%</span></button>
         </div>
-      </div>` : `<button class="btn-ghost" onclick="openBillingPortal()"><i class="ti ti-credit-card"></i> Manage billing</button>`}
+      </div>` : `<button class="btn-ghost" data-onclick="openBillingPortal()"><i class="ti ti-credit-card"></i> Manage billing</button>`}
     </div>
   `;
 }
@@ -4420,7 +4454,7 @@ function renderEndorsementSection(data, candidateId, isOwn) {
         ${!isOwn ? `<button class="endorse-btn ${iMine ? 'endorsed' : ''}"
           style="--ec:${q.color}"
           data-endorse-candidate="${candidateId}" data-endorse-q="${q.id}"
-          onclick="handleEndorseClick(this,'${candidateId}','${q.id}')">
+          data-onclick="handleEndorseClick(this,'${candidateId}','${q.id}')">
           <i class="ti ${iMine ? 'ti-check' : 'ti-thumb-up'}"></i>
         </button>` : ''}
       </div>
@@ -4501,7 +4535,7 @@ function renderHighlightsSection(highlights = []) {
       </div>
       <div class="hl-grid" id="highlights-cards">${cards}</div>
       <div class="hl-modal-backdrop hidden" id="hl-modal-backdrop" data-action="close-hl-modal">
-        <div class="hl-modal-box" onclick="event.stopPropagation()">
+        <div class="hl-modal-box" data-onclick="event.stopPropagation()">
           <h4 style="margin:0 0 14px;font-size:15px;font-weight:700">${isFr ? 'Nouveau point fort' : 'New highlight'}</h4>
           <div class="hl-icon-picker" id="hl-icon-picker">${iconPicker}</div>
           <input type="text" id="hl-title" class="filter-input" style="width:100%;box-sizing:border-box;margin-bottom:8px" maxlength="50" placeholder="${isFr ? 'Titre (ex : Certifié PMP)' : 'Title (e.g. PMP Certified)'}">
@@ -4615,12 +4649,12 @@ function renderProfileSkillsSection(skills = []) {
       </div>
 
       <div class="ps-modal-backdrop hidden" id="ps-modal-backdrop" data-action="close-skill-modal">
-        <div class="hl-modal-box" onclick="event.stopPropagation()">
+        <div class="hl-modal-box" data-onclick="event.stopPropagation()">
           <h4 id="ps-modal-title" style="margin:0 0 14px;font-size:15px;font-weight:700">${skillModalHard}</h4>
           <input type="text" id="ps-skill-name" class="filter-input" style="width:100%;box-sizing:border-box;margin-bottom:10px" maxlength="80" placeholder="${isFr ? 'Nom de la compétence' : 'Skill name'}">
           <div id="ps-level-wrap">
             <label style="font-size:13px;color:var(--muted)">${levelLbl} : <strong id="ps-level-val">75</strong>%</label>
-            <input type="range" id="ps-skill-level" min="0" max="100" value="75" style="width:100%;margin:6px 0 14px" oninput="document.getElementById('ps-level-val').textContent=this.value">
+            <input type="range" id="ps-skill-level" min="0" max="100" value="75" style="width:100%;margin:6px 0 14px" data-oninput="document.getElementById('ps-level-val').textContent=this.value">
           </div>
           <div style="display:flex;gap:8px">
             <button class="btn-primary" style="flex:1" data-action="save-profile-skill"><i class="ti ti-plus"></i> ${isFr ? 'Ajouter' : 'Add'}</button>
@@ -4716,7 +4750,7 @@ function renderRecommendationsSection(recs = []) {
 
       <!-- Backdrop external -->
       <div class="hl-modal-backdrop hidden" id="rec-ext-modal" data-action="close-rec-ext">
-        <div class="hl-modal-box" onclick="event.stopPropagation()" style="max-width:440px">
+        <div class="hl-modal-box" data-onclick="event.stopPropagation()" style="max-width:440px">
           <h4 style="margin:0 0 4px;font-size:15px;font-weight:700">${isFr ? 'Recommandation externe' : 'External recommendation'}</h4>
           <p style="font-size:12px;color:var(--muted);margin-bottom:14px">${isFr ? 'Copiez-collez un témoignage reçu par email ou LinkedIn.' : 'Copy-paste a testimonial received by email or LinkedIn.'}</p>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
@@ -4744,7 +4778,7 @@ function renderRecommendationsSection(recs = []) {
 
       <!-- Backdrop invite -->
       <div class="hl-modal-backdrop hidden" id="rec-inv-modal" data-action="close-rec-inv">
-        <div class="hl-modal-box" onclick="event.stopPropagation()" style="max-width:400px">
+        <div class="hl-modal-box" data-onclick="event.stopPropagation()" style="max-width:400px">
           <h4 style="margin:0 0 4px;font-size:15px;font-weight:700">${isFr ? 'Inviter quelqu\'un à vous recommander' : 'Invite someone to recommend you'}</h4>
           <p style="font-size:12px;color:var(--muted);margin-bottom:14px">${isFr ? 'Un lien unique sera généré — envoyez-le à votre contact.' : 'A unique link will be generated — send it to your contact.'}</p>
           <div id="rec-inv-form">
@@ -5128,7 +5162,7 @@ function _buildThreadItem(t, containerId, isFr) {
     data-company="${esc(company)}"
     style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .12s"
     onmouseenter="if(!this.classList.contains('active'))this.style.background='#f5f6fa'" onmouseleave="if(!this.classList.contains('active'))this.style.background=''"
-    onclick="openThreadInContainer('${containerId}','${t.application_id}',this)">
+    data-onclick="openThreadInContainer('${containerId}','${t.application_id}',this)">
     <div style="position:relative">${avatar}${unread ? `<span style="position:absolute;top:-2px;right:-2px;width:10px;height:10px;background:#ef4444;border-radius:50%;border:2px solid #fff"></span>` : ''}</div>
     <div style="flex:1;min-width:0">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:2px">
@@ -5182,7 +5216,7 @@ async function openMessagesInTab(containerId, preselectedAppId) {
       <div id="${containerId}-threads" class="msg-threads-panel">
         <div class="msg-threads-header">
           <span style="font-weight:700;font-size:14px;color:var(--dark)">${isFr?'Conversations':'Conversations'}</span>
-          <button onclick="${newConvAction}" title="${newConvLabel}" class="msg-new-conv-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> ${newConvLabel}</button>
+          <button data-onclick="${newConvAction}" title="${newConvLabel}" class="msg-new-conv-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> ${newConvLabel}</button>
         </div>
         <div style="padding:32px;text-align:center"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:22px;color:#6366f1"></i></div>
       </div>
@@ -5228,7 +5262,7 @@ async function _loadThreadList(containerId, preselectedAppId, isFr) {
       <i class="ti ti-message-off" style="font-size:36px;display:block;margin-bottom:12px;opacity:.3;color:#6366f1"></i>
       <div style="font-weight:600;font-size:14px;color:var(--dark);margin-bottom:6px">${isFr?'Aucune conversation':'No conversations yet'}</div>
       <div style="font-size:12px;margin-bottom:16px;line-height:1.5">${hint}</div>
-      <button onclick="${ctaAction}" style="font-size:12px;padding:7px 16px;border-radius:8px;background:#6366f1;color:#fff;border:none;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px"><i class="ti ti-arrow-right" style="font-size:13px"></i> ${ctaLabel}</button>`;
+      <button data-onclick="${ctaAction}" style="font-size:12px;padding:7px 16px;border-radius:8px;background:#6366f1;color:#fff;border:none;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px"><i class="ti ti-arrow-right" style="font-size:13px"></i> ${ctaLabel}</button>`;
     listEl.appendChild(empty);
     return;
   }
@@ -5292,7 +5326,7 @@ async function openThreadInContainer(containerId, appId, navEl) {
   if (outer && isMobile) outer.classList.add('msg-conv-open');
 
   const mobileBackBtn = isMobile ? `
-    <div class="msg-mobile-back" onclick="msgBackToList('${containerId}')">
+    <div class="msg-mobile-back" data-onclick="msgBackToList('${containerId}')">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       ${isFr ? 'Conversations' : 'Back'}
     </div>` : '';
@@ -5314,8 +5348,8 @@ async function openThreadInContainer(containerId, appId, navEl) {
       <input type="text" id="msg-input" placeholder="${isFr?'Écrivez un message…':'Write a message…'}" autocomplete="off"
         style="flex:1;font-size:14px;border-radius:24px;border:1.5px solid #e0e2f0;padding:10px 18px;outline:none;background:#f8f9ff;transition:border .15s"
         onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e0e2f0'"
-        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}">
-      <button onclick="sendMessage()" title="${isFr?'Envoyer':'Send'}"
+        data-onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}">
+      <button data-onclick="sendMessage()" title="${isFr?'Envoyer':'Send'}"
         style="width:42px;height:42px;border-radius:50%;background:#6366f1;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:background .15s"
         onmouseenter="this.style.background='#4f46e5'" onmouseleave="this.style.background='#6366f1'">
         <i class="ti ti-send"></i>
@@ -5397,7 +5431,7 @@ async function openMessagesPage(appId) {
             <div style="font-size:11px;color:var(--muted)">${state.user?.role==='employer' ? (isFr?'Vos conversations avec les candidats':'Your conversations with candidates') : (isFr?'Vos échanges avec les employeurs':'Your exchanges with employers')}</div>
           </div>
         </div>
-        <button style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;color:#6b7280;display:flex;align-items:center;justify-content:center;font-size:16px" onclick="document.getElementById('messages-overlay')?.remove()"><i class="ti ti-x"></i></button>
+        <button style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;color:#6b7280;display:flex;align-items:center;justify-content:center;font-size:16px" data-onclick="document.getElementById('messages-overlay')?.remove()"><i class="ti ti-x"></i></button>
       </div>
       <div style="display:flex;flex:1;overflow:hidden;min-height:0">
         <div id="overlay-threads" style="width:300px;flex-shrink:0;border-right:1px solid #eaecf0;overflow-y:auto;background:#fafbfc">
@@ -5446,7 +5480,7 @@ async function openMessagesPage(appId) {
       <i class="ti ti-message-off" style="font-size:36px;display:block;margin-bottom:12px;opacity:.25;color:#6366f1"></i>
       <div style="font-weight:600;font-size:14px;color:#374151;margin-bottom:6px">${isFr?'Aucune conversation':'No conversations yet'}</div>
       <div style="font-size:12px;margin-bottom:16px;line-height:1.5">${hint}</div>
-      <button onclick="${ctaAction}" style="font-size:12px;padding:7px 16px;border-radius:8px;background:#6366f1;color:#fff;border:none;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px"><i class="ti ti-arrow-right" style="font-size:13px"></i> ${ctaLabel}</button>`;
+      <button data-onclick="${ctaAction}" style="font-size:12px;padding:7px 16px;border-radius:8px;background:#6366f1;color:#fff;border:none;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px"><i class="ti ti-arrow-right" style="font-size:13px"></i> ${ctaLabel}</button>`;
     listEl.appendChild(empty);
     return;
   }
@@ -5523,7 +5557,7 @@ async function loadCompanyPage(slug) {
         <div style="font-weight:600;color:var(--dark);font-size:14px">${esc(jTitle)}</div>
         <div style="font-size:12px;color:var(--muted);margin-top:3px">${[j.city, j.province].filter(Boolean).join(', ')||''} · <span class="job-tag ${j.work_mode||''}" style="font-size:11px;padding:2px 6px">${j.work_mode||'onsite'}</span></div>
       </div>
-      <button class="btn-ghost" style="font-size:12px;flex-shrink:0" onclick="document.getElementById('company-page-overlay')?.remove();goto('jobs')"><i class="ti ti-arrow-right"></i> ${isFr?'Voir':'Apply'}</button>
+      <button class="btn-ghost" style="font-size:12px;flex-shrink:0" data-onclick="document.getElementById('company-page-overlay')?.remove();goto('jobs')"><i class="ti ti-arrow-right"></i> ${isFr?'Voir':'Apply'}</button>
     </div>`;
   }).join('');
   const reviewCards = (reviews||[]).map(r => `
@@ -5540,7 +5574,7 @@ async function loadCompanyPage(slug) {
   overlay.innerHTML = `
     <div style="background:var(--dark);padding:24px 0;margin-bottom:0">
       <div style="max-width:900px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between">
-        <button class="btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.3);font-size:13px" onclick="document.getElementById('company-page-overlay')?.remove()"><i class="ti ti-arrow-left"></i> ${isFr?'Retour':'Back'}</button>
+        <button class="btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.3);font-size:13px" data-onclick="document.getElementById('company-page-overlay')?.remove()"><i class="ti ti-arrow-left"></i> ${isFr?'Retour':'Back'}</button>
         <div style="font-size:13px;color:rgba(255,255,255,.5)">nexhire.ca</div>
       </div>
     </div>
@@ -5572,14 +5606,14 @@ async function loadCompanyPage(slug) {
           ${reviewCards||`<p style="color:var(--muted);font-size:13px">${isFr?'Aucun avis.':'No reviews yet.'}</p>`}
           <div style="border:2px dashed var(--border);border-radius:12px;padding:20px;margin-top:16px">
             <h4 style="margin:0 0 12px;color:var(--dark);font-size:14px">${isFr?'Laisser un avis':'Leave a review'}</h4>
-            <div style="display:flex;gap:4px;margin-bottom:12px">${[1,2,3,4,5].map(n=>`<button onclick="setReviewRating(${n},this)" data-rating="${n}" style="font-size:22px;background:none;border:none;cursor:pointer;color:#d1d5db">★</button>`).join('')}</div>
+            <div style="display:flex;gap:4px;margin-bottom:12px">${[1,2,3,4,5].map(n=>`<button data-onclick="setReviewRating(${n},this)" data-rating="${n}" style="font-size:22px;background:none;border:none;cursor:pointer;color:#d1d5db">★</button>`).join('')}</div>
             <input type="hidden" id="review-rating" value="">
             <input type="text" id="review-title" placeholder="${isFr?'Titre de l\'avis':'Review title'}" style="width:100%;margin-bottom:8px;font-size:13px">
             <div class="form-row" style="gap:8px">
               <div class="form-group"><label style="font-size:12px">✓ ${isFr?'Points positifs':'Pros'}</label><textarea id="review-pros" style="font-size:12px;min-height:60px"></textarea></div>
               <div class="form-group"><label style="font-size:12px">✗ ${isFr?'Points négatifs':'Cons'}</label><textarea id="review-cons" style="font-size:12px;min-height:60px"></textarea></div>
             </div>
-            <button class="btn-primary" style="font-size:13px;padding:8px 18px;margin-top:4px" onclick="submitReview('${esc(c.slug)}')"><i class="ti ti-send"></i> ${isFr?'Publier':'Submit'}</button>
+            <button class="btn-primary" style="font-size:13px;padding:8px 18px;margin-top:4px" data-onclick="submitReview('${esc(c.slug)}')"><i class="ti ti-send"></i> ${isFr?'Publier':'Submit'}</button>
           </div>
         </div>
         <div>
@@ -6118,7 +6152,7 @@ function renderNotifDropdown(notifs, unread, isFr) {
   if (!dd) return;
 
   const markAllBtn = unread > 0
-    ? `<button class="notif-dd-markall" onclick="markAllNotifsRead()"><i class="ti ti-checks"></i> ${isFr ? 'Tout marquer comme lu' : 'Mark all as read'}</button>`
+    ? `<button class="notif-dd-markall" data-onclick="markAllNotifsRead()"><i class="ti ti-checks"></i> ${isFr ? 'Tout marquer comme lu' : 'Mark all as read'}</button>`
     : '';
 
   let listHtml = '';
@@ -6130,7 +6164,7 @@ function renderNotifDropdown(notifs, unread, isFr) {
       const isUnread = !n.read_at;
       const link = n.link ? `data-link="${esc(n.link)}"` : '';
       const dtype = `data-type="${esc(n.type || '')}"`;
-      return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} ${dtype} onclick="markNotifRead(this)">
+      return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} ${dtype} data-onclick="markNotifRead(this)">
         <div class="notif-icon" style="background:${ic.bg};color:${ic.color}"><i class="ti ${ic.icon}"></i></div>
         <div class="notif-item-body">
           <div class="notif-item-title">${esc(n.title || '')}</div>
@@ -6385,7 +6419,7 @@ async function loadSkillTests() {
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px" id="skill-filter-pills">
       ${categories.map((cat, i) => `
         <button class="skill-filter-pill" data-cat="${cat}"
-          onclick="filterSkillTests('${cat}')"
+          data-onclick="filterSkillTests('${cat}')"
           style="background:${i===0?'var(--indigo)':'var(--surface)'};color:${i===0?'#fff':''};border:1px solid ${i===0?'var(--indigo)':'var(--border)'};border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s">
           ${cat}
         </button>
@@ -6402,7 +6436,7 @@ async function loadSkillTests() {
           <div style="font-weight:700;font-size:16px;margin-bottom:4px">${isFr ? t.title_fr : t.title_en}</div>
           <div style="font-size:12px;color:var(--muted);margin-bottom:14px">${t.question_count} ${isFr ? 'questions' : 'questions'} · ${isFr ? 'Score min' : 'Pass score'}: ${t.pass_score}%</div>
           ${attempted ? `<div style="font-size:13px;margin-bottom:12px;color:${passed ? '#4ade80' : 'var(--muted)'}">${isFr ? 'Votre score' : 'Your score'}: <strong>${t.score}%</strong></div>` : ''}
-          <button class="btn-primary" style="width:100%;font-size:13px;padding:9px" onclick="startSkillTest('${t.slug}', '${isFr ? t.title_fr : t.title_en}')">
+          <button class="btn-primary" style="width:100%;font-size:13px;padding:9px" data-onclick="startSkillTest('${t.slug}', '${isFr ? t.title_fr : t.title_en}')">
             <i class="ti ti-${passed ? 'refresh' : 'pencil'}"></i> ${passed ? (isFr ? 'Repasser' : 'Retake') : (isFr ? 'Commencer le test' : 'Start Test')}
           </button>
         </div>
@@ -6443,7 +6477,7 @@ function renderSkillTestUI() {
   const t = currentTest;
   el.innerHTML = `
     <div style="max-width:680px;margin:0 auto">
-      <button class="btn-ghost" style="margin-bottom:16px" onclick="loadSkillTests()"><i class="ti ti-arrow-left"></i> ${isFr ? 'Retour' : 'Back'}</button>
+      <button class="btn-ghost" style="margin-bottom:16px" data-onclick="loadSkillTests()"><i class="ti ti-arrow-left"></i> ${isFr ? 'Retour' : 'Back'}</button>
       <h2>${isFr ? t.title_fr || t.title_en : t.title_en}</h2>
       <p style="color:var(--muted);margin-bottom:24px">${t.questions.length} ${isFr ? 'questions · Score minimum' : 'questions · Pass score'}: ${t.pass_score}%</p>
       <div id="test-questions">
@@ -6452,7 +6486,7 @@ function renderSkillTestUI() {
             <div style="font-weight:600;margin-bottom:14px">${i + 1}. ${q.q}</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="q-opts-${i}">
               ${q.opts.map((opt, j) => `
-                <button onclick="selectAnswer(${i},${j})" id="q-opt-${i}-${j}"
+                <button data-onclick="selectAnswer(${i},${j})" id="q-opt-${i}-${j}"
                   style="padding:10px 14px;background:var(--bg);border:2px solid var(--border);border-radius:10px;text-align:left;cursor:pointer;font-size:13px;transition:all .2s">
                   <span style="font-weight:700;margin-right:8px">${String.fromCharCode(65+j)}.</span>${opt}
                 </button>
@@ -6462,7 +6496,7 @@ function renderSkillTestUI() {
         `).join('')}
       </div>
       <div id="test-submit-row" style="display:flex;justify-content:center;margin-top:24px">
-        <button class="btn-primary" style="padding:12px 32px;font-size:15px" onclick="submitSkillTest()"><i class="ti ti-send"></i> ${isFr ? 'Soumettre le test' : 'Submit Test'}</button>
+        <button class="btn-primary" style="padding:12px 32px;font-size:15px" data-onclick="submitSkillTest()"><i class="ti ti-send"></i> ${isFr ? 'Soumettre le test' : 'Submit Test'}</button>
       </div>
     </div>
   `;
@@ -6511,8 +6545,8 @@ async function submitSkillTest() {
         `).join('')}
       </div>
       <div style="display:flex;gap:12px;justify-content:center">
-        <button class="btn-primary" onclick="startSkillTest('${currentTest.slug}', '')"><i class="ti ti-refresh"></i> ${isFr ? 'Réessayer' : 'Try Again'}</button>
-        <button class="btn-ghost" onclick="loadSkillTests()"><i class="ti ti-arrow-left"></i> ${isFr ? 'Tous les tests' : 'All Tests'}</button>
+        <button class="btn-primary" data-onclick="startSkillTest('${currentTest.slug}', '')"><i class="ti ti-refresh"></i> ${isFr ? 'Réessayer' : 'Try Again'}</button>
+        <button class="btn-ghost" data-onclick="loadSkillTests()"><i class="ti ti-arrow-left"></i> ${isFr ? 'Tous les tests' : 'All Tests'}</button>
       </div>
     </div>
   `;
@@ -6539,7 +6573,7 @@ async function loadReferrals() {
       <div style="background:linear-gradient(135deg,#6366F1,#8b5cf6);border-radius:16px;padding:24px;color:#fff">
         <div style="font-size:13px;opacity:.8;margin-bottom:8px">${isFr ? 'Votre lien de référencement' : 'Your referral link'}</div>
         <div style="font-family:monospace;font-size:14px;background:rgba(0,0,0,.2);border-radius:8px;padding:10px;word-break:break-all;margin-bottom:14px">${referral_url}</div>
-        <button onclick="navigator.clipboard.writeText('${referral_url}').then(()=>toast('${isFr ? 'Lien copié !' : 'Link copied!'}', 'success'))"
+        <button data-onclick="navigator.clipboard.writeText('${referral_url}').then(()=>toast('${isFr ? 'Lien copié !' : 'Link copied!'}', 'success'))"
           style="background:rgba(255,255,255,.2);border:none;color:#fff;padding:8px 18px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600">
           <i class="ti ti-copy"></i> ${isFr ? 'Copier le lien' : 'Copy Link'}
         </button>
@@ -6620,7 +6654,7 @@ async function loadSalaryPage() {
             <option value="">${isFr ? 'Toutes les provinces' : 'All provinces'}</option>
             <option>QC</option><option>ON</option><option>BC</option><option>AB</option><option>MB</option><option>SK</option><option>NS</option><option>NB</option>
           </select>
-          <button class="btn-primary" style="padding:10px" onclick="searchSalary()"><i class="ti ti-search"></i> ${isFr ? 'Rechercher' : 'Search'}</button>
+          <button class="btn-primary" style="padding:10px" data-onclick="searchSalary()"><i class="ti ti-search"></i> ${isFr ? 'Rechercher' : 'Search'}</button>
         </div>
         <div id="sal-result" style="margin-top:14px"></div>
       </div>
@@ -6633,11 +6667,11 @@ async function loadSalaryPage() {
             <div style="font-weight:600">${isFr ? 'Votre contribution' : 'Your contribution'}</div>
             <div style="opacity:.85;margin-top:4px">${sub.title_normalized} · ${sub.province} · ${isFr ? formatSalaryFr(sub.salary) : formatSalary(sub.salary)}${isFr ? '/an' : '/yr'}</div>
           </div>
-          <button onclick="showSalarySubmitForm(true)" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;width:100%">
+          <button data-onclick="showSalarySubmitForm(true)" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;width:100%">
             <i class="ti ti-edit"></i> ${isFr ? 'Modifier' : 'Update'}
           </button>
         ` : `
-          <button onclick="showSalarySubmitForm(false)" style="background:#fff;border:none;color:#6366F1;padding:10px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;width:100%">
+          <button data-onclick="showSalarySubmitForm(false)" style="background:#fff;border:none;color:#6366F1;padding:10px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;width:100%">
             <i class="ti ti-plus"></i> ${isFr ? 'Contribuer mes données' : 'Contribute My Data'}
           </button>
         `}
@@ -6693,20 +6727,20 @@ async function loadSalaryPage() {
       </div>
       <div style="padding:20px">
         <div id="ptc-tabs" class="tax-rate-tabs" style="margin-bottom:16px">
-          <button class="tc-tab active" data-rate="annual"   onclick="ptcSetRate('annual')"  >${isFr?'Annuel':'Annual'}</button>
-          <button class="tc-tab"        data-rate="month"    onclick="ptcSetRate('month')"   >${isFr?'Mois':'Month'}</button>
-          <button class="tc-tab"        data-rate="biweekly" onclick="ptcSetRate('biweekly')">${isFr?'Bimensuel':'Biweekly'}</button>
-          <button class="tc-tab"        data-rate="weekly"   onclick="ptcSetRate('weekly')"  >${isFr?'Hebdo':'Weekly'}</button>
-          <button class="tc-tab"        data-rate="daily"    onclick="ptcSetRate('daily')"   >${isFr?'Jour':'Day'}</button>
-          <button class="tc-tab"        data-rate="hourly"   onclick="ptcSetRate('hourly')"  >${isFr?'Heure':'Hour'}</button>
+          <button class="tc-tab active" data-rate="annual"   data-onclick="ptcSetRate('annual')"  >${isFr?'Annuel':'Annual'}</button>
+          <button class="tc-tab"        data-rate="month"    data-onclick="ptcSetRate('month')"   >${isFr?'Mois':'Month'}</button>
+          <button class="tc-tab"        data-rate="biweekly" data-onclick="ptcSetRate('biweekly')">${isFr?'Bimensuel':'Biweekly'}</button>
+          <button class="tc-tab"        data-rate="weekly"   data-onclick="ptcSetRate('weekly')"  >${isFr?'Hebdo':'Weekly'}</button>
+          <button class="tc-tab"        data-rate="daily"    data-onclick="ptcSetRate('daily')"   >${isFr?'Jour':'Day'}</button>
+          <button class="tc-tab"        data-rate="hourly"   data-onclick="ptcSetRate('hourly')"  >${isFr?'Heure':'Hour'}</button>
         </div>
         <div class="tax-fields-row" style="margin-bottom:20px">
           <div class="tax-salary-wrap" style="flex:1;min-width:160px">
             <span class="tax-cur-sym">$</span>
-            <input type="number" id="ptc-salary" class="tax-salary-input" value="52000" min="0" step="1000" oninput="ptcUpdate()">
+            <input type="number" id="ptc-salary" class="tax-salary-input" value="52000" min="0" step="1000" data-oninput="ptcUpdate()">
             <span class="tax-cur-code">CAD</span>
           </div>
-          <select id="ptc-prov" class="tax-prov-select" onchange="ptcUpdate()"></select>
+          <select id="ptc-prov" class="tax-prov-select" data-onchange="ptcUpdate()"></select>
         </div>
         <div id="ptc-results"></div>
         <details style="margin-top:16px">
@@ -6746,10 +6780,10 @@ function showSalarySubmitForm(isUpdate) {
         <option value="15">${isFr ? '10+ ans' : '10+ yrs'}</option>
       </select>
       <div style="display:flex;gap:8px">
-        <button onclick="submitMySalary()" style="flex:1;background:#fff;border:none;color:#6366F1;padding:9px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700">
+        <button data-onclick="submitMySalary()" style="flex:1;background:#fff;border:none;color:#6366F1;padding:9px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700">
           <i class="ti ti-check"></i> ${isUpdate ? (isFr ? 'Mettre à jour' : 'Update') : (isFr ? 'Soumettre' : 'Submit')}
         </button>
-        <button onclick="document.getElementById('sal-submit-form').style.display='none'" style="background:rgba(255,255,255,.1);border:none;color:#fff;padding:9px 14px;border-radius:8px;cursor:pointer;font-size:13px">
+        <button data-onclick="document.getElementById('sal-submit-form').style.display='none'" style="background:rgba(255,255,255,.1);border:none;color:#fff;padding:9px 14px;border-radius:8px;cursor:pointer;font-size:13px">
           ${isFr ? 'Annuler' : 'Cancel'}
         </button>
       </div>
@@ -6875,7 +6909,7 @@ async function loadCredits() {
               <div style="font-size:13px;color:var(--muted);margin:4px 0">${isFr ? 'crédits IA' : 'AI credits'}</div>
               <div style="font-size:20px;font-weight:700;margin:8px 0">${isFr ? (p.price/100).toFixed(2)+' $' : '$'+(p.price/100).toFixed(2)}</div>
               <div style="font-size:11px;color:var(--muted);margin-bottom:12px">${isFr ? (p.price/p.credits/100*100).toFixed(1)+'¢/crédit' : (p.price/p.credits/100*100).toFixed(1)+'¢/credit'}</div>
-              <button class="btn-primary" style="width:100%;font-size:13px;padding:9px" onclick="buyCredits('${p.id}')">
+              <button class="btn-primary" style="width:100%;font-size:13px;padding:9px" data-onclick="buyCredits('${p.id}')">
                 <i class="ti ti-shopping-cart"></i> ${isFr ? 'Acheter' : 'Buy'}
               </button>
             </div>
@@ -6959,7 +6993,7 @@ async function loadAdminModeration() {
         <h2 style="margin:0"><i class="ti ti-shield-check" style="color:var(--indigo)"></i> Modération des offres</h2>
         <p style="color:var(--muted);font-size:13px;margin-top:4px">Filtre IA automatique · Les offres claires passent sans action. Seuls les cas ambigus arrivent ici.</p>
       </div>
-      <button class="btn-ghost" style="font-size:13px" onclick="loadAdminModeration()"><i class="ti ti-refresh"></i> Actualiser</button>
+      <button class="btn-ghost" style="font-size:13px" data-onclick="loadAdminModeration()"><i class="ti ti-refresh"></i> Actualiser</button>
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:24px">
@@ -6969,7 +7003,7 @@ async function loadAdminModeration() {
         { label:'Refusées IA',     val: stats.rejected     || 0, color:'#ef4444', icon:'ti-ban',          status:'rejected' },
         { label:'Total actives',   val: stats.total_active || 0, color:'#6366f1', icon:'ti-briefcase',    status:'active'   },
       ].map(s => `
-        <div onclick="modFilterStatus('${s.status}')" style="background:var(--surface);border:2px solid ${modCurrentStatus===s.status ? s.color : 'var(--border)'};border-radius:14px;padding:16px;text-align:center;cursor:pointer;transition:all .2s">
+        <div data-onclick="modFilterStatus('${s.status}')" style="background:var(--surface);border:2px solid ${modCurrentStatus===s.status ? s.color : 'var(--border)'};border-radius:14px;padding:16px;text-align:center;cursor:pointer;transition:all .2s">
           <i class="ti ${s.icon}" style="color:${s.color};font-size:24px;display:block;margin-bottom:6px"></i>
           <div style="font-weight:800;font-size:22px;color:${s.color}">${s.val}</div>
           <div style="font-size:11px;color:var(--muted)">${s.label}</div>
@@ -6979,7 +7013,7 @@ async function loadAdminModeration() {
 
     <div style="margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap">
       ${['pending','active','rejected'].map(s => `
-        <button onclick="modFilterStatus('${s}')" class="btn-ghost" style="font-size:13px;${modCurrentStatus===s?'background:var(--indigo);color:#fff;border-color:var(--indigo)':''}">
+        <button data-onclick="modFilterStatus('${s}')" class="btn-ghost" style="font-size:13px;${modCurrentStatus===s?'background:var(--indigo);color:#fff;border-color:var(--indigo)':''}">
           ${{pending:'⏳ En attente',active:'✅ Approuvées',rejected:'❌ Refusées'}[s]}
           ${s==='pending' && stats.pending > 0 ? `<span style="background:#ef4444;color:#fff;border-radius:99px;font-size:10px;padding:1px 6px;margin-left:4px">${stats.pending}</span>` : ''}
         </button>
@@ -7055,10 +7089,10 @@ async function loadModJobs() {
 
       ${modCurrentStatus === 'pending' ? `
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn-ghost" style="font-size:13px;color:#16a34a;border-color:#86efac" onclick="adminApproveJob('${esc(j.id)}')">
+          <button class="btn-ghost" style="font-size:13px;color:#16a34a;border-color:#86efac" data-onclick="adminApproveJob('${esc(j.id)}')">
             <i class="ti ti-circle-check"></i> Approuver
           </button>
-          <button class="btn-ghost" style="font-size:13px;color:#dc2626;border-color:#fca5a5" onclick="adminRejectJob('${esc(j.id)}', '${esc(title)}')">
+          <button class="btn-ghost" style="font-size:13px;color:#dc2626;border-color:#fca5a5" data-onclick="adminRejectJob('${esc(j.id)}', '${esc(title)}')">
             <i class="ti ti-x"></i> Refuser
           </button>
           <a href="${BASE}/jobs/${j.id}" target="_blank" class="btn-ghost" style="font-size:13px">
@@ -7079,7 +7113,7 @@ async function loadModJobs() {
   const pagEl = document.getElementById('mod-pagination');
   if (pagEl && totalPages > 1) {
     pagEl.innerHTML = Array.from({ length: totalPages }, (_, i) => `
-      <button class="btn-ghost" style="font-size:13px;${i+1===modCurrentPage?'background:var(--indigo);color:#fff;border-color:var(--indigo)':''}" onclick="modGoPage(${i+1})">${i+1}</button>
+      <button class="btn-ghost" style="font-size:13px;${i+1===modCurrentPage?'background:var(--indigo);color:#fff;border-color:var(--indigo)':''}" data-onclick="modGoPage(${i+1})">${i+1}</button>
     `).join('');
   }
 }
@@ -7135,7 +7169,7 @@ async function loadVideoInterviews() {
           <div style="font-size:52px;margin-bottom:16px">🎬</div>
           <h2 style="font-size:22px;font-weight:800;margin-bottom:10px">${isFr ? 'Entretiens vidéo asynchrones' : 'Async Video Interviews'}</h2>
           <p style="color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:24px">${isFr ? 'Envoyez des questions aux candidats, ils répondent en vidéo à leur rythme. L\'IA transcrit et score chaque réponse. Disponible en plan Pro.' : 'Send questions to candidates, they respond in video at their own pace. AI transcribes and scores every response. Available on Pro plan.'}</p>
-          <button class="btn-primary" onclick="showEmpTab('etab-billing', document.querySelector('[data-emptab=etab-billing]'))"><i class="ti ti-crown"></i> ${isFr ? 'Passer au plan Pro' : 'Upgrade to Pro'}</button>
+          <button class="btn-primary" data-onclick="showEmpTab('etab-billing', document.querySelector('[data-emptab=etab-billing]'))"><i class="ti ti-crown"></i> ${isFr ? 'Passer au plan Pro' : 'Upgrade to Pro'}</button>
         </div>`;
       return;
     }
@@ -7153,7 +7187,7 @@ async function loadVideoInterviews() {
         <h2 style="margin:0"><i class="ti ti-video" style="color:var(--indigo)"></i> ${isFr ? 'Entretiens vidéo' : 'Video Interviews'}</h2>
         <p style="color:var(--muted);font-size:13px;margin-top:4px">${isFr ? 'Le candidat répond en audio à son rythme — l\'IA transcrit et score.' : 'Candidates respond in audio at their own pace — AI transcribes and scores.'}</p>
       </div>
-      <button class="btn-primary" onclick="openViCreateForm()"><i class="ti ti-plus"></i> ${isFr ? 'Créer un entretien' : 'New Interview'}</button>
+      <button class="btn-primary" data-onclick="openViCreateForm()"><i class="ti ti-plus"></i> ${isFr ? 'Créer un entretien' : 'New Interview'}</button>
     </div>
 
     <div id="vi-create-form" style="display:none;background:var(--surface);border:2px solid var(--indigo);border-radius:18px;padding:24px;margin-bottom:24px"></div>
@@ -7186,18 +7220,18 @@ async function loadVideoInterviews() {
             </div>
             <div style="display:flex;gap:8px">
               ${effectiveSt === 'draft' ? `
-                <button class="btn-primary" style="flex:1;font-size:13px" onclick="sendViInterview('${esc(iv.id)}','${esc(iv.title)}','${esc(iv.candidate_email||'')}')">
+                <button class="btn-primary" style="flex:1;font-size:13px" data-onclick="sendViInterview('${esc(iv.id)}','${esc(iv.title)}','${esc(iv.candidate_email||'')}')">
                   <i class="ti ti-send"></i> ${isFr ? 'Envoyer' : 'Send'}
                 </button>
               ` : `
-                <button class="btn-ghost" style="flex:1;font-size:13px" onclick="viewViDetail('${esc(iv.id)}')">
+                <button class="btn-ghost" style="flex:1;font-size:13px" data-onclick="viewViDetail('${esc(iv.id)}')">
                   <i class="ti ti-eye"></i> ${isFr ? 'Voir' : 'View'}
                 </button>
-                <button class="btn-ghost" style="font-size:13px" onclick="copyViLink('${esc(iv.id)}','${esc(iv.title)}')" title="${isFr ? 'Copier le lien candidat' : 'Copy candidate link'}">
+                <button class="btn-ghost" style="font-size:13px" data-onclick="copyViLink('${esc(iv.id)}','${esc(iv.title)}')" title="${isFr ? 'Copier le lien candidat' : 'Copy candidate link'}">
                   <i class="ti ti-link"></i>
                 </button>
               `}
-              <button class="btn-ghost" style="color:#f87171;border-color:#f8717144;font-size:13px" onclick="deleteVi('${esc(iv.id)}','${esc(iv.title)}')">
+              <button class="btn-ghost" style="color:#f87171;border-color:#f8717144;font-size:13px" data-onclick="deleteVi('${esc(iv.id)}','${esc(iv.title)}')">
                 <i class="ti ti-trash"></i>
               </button>
             </div>
@@ -7242,7 +7276,7 @@ function renderViCreateForm() {
     <div style="margin-bottom:16px">
       <label style="font-size:12px;font-weight:600;display:block;margin-bottom:8px">${isFr ? 'Questions (1–5)' : 'Questions (1–5)'} <span style="color:#f87171">*</span></label>
       <div id="vi-questions-list"></div>
-      <button class="btn-ghost" id="btn-add-q" style="margin-top:8px;font-size:13px" onclick="addViQuestion()">
+      <button class="btn-ghost" id="btn-add-q" style="margin-top:8px;font-size:13px" data-onclick="addViQuestion()">
         <i class="ti ti-plus"></i> ${isFr ? 'Ajouter une question' : 'Add Question'}
       </button>
     </div>
@@ -7252,8 +7286,8 @@ function renderViCreateForm() {
     </div>
 
     <div style="display:flex;gap:10px">
-      <button class="btn-primary" style="flex:1" onclick="submitViCreate()"><i class="ti ti-device-floppy"></i> ${isFr ? 'Créer (brouillon)' : 'Save draft'}</button>
-      <button class="btn-ghost" onclick="document.getElementById('vi-create-form').style.display='none'">Cancel</button>
+      <button class="btn-primary" style="flex:1" data-onclick="submitViCreate()"><i class="ti ti-device-floppy"></i> ${isFr ? 'Créer (brouillon)' : 'Save draft'}</button>
+      <button class="btn-ghost" data-onclick="document.getElementById('vi-create-form').style.display='none'">Cancel</button>
     </div>
   `;
   renderViQuestionsList();
@@ -7266,8 +7300,8 @@ function renderViQuestionsList() {
   el.innerHTML = viQuestions.map((q, i) => `
     <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center">
       <span style="width:24px;height:24px;background:var(--indigo);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">${i+1}</span>
-      <input type="text" class="filter-input" style="flex:1;box-sizing:border-box" placeholder="${isFr ? `Question ${i+1}…` : `Question ${i+1}…`}" value="${esc(q)}" oninput="viQuestions[${i}]=this.value">
-      ${viQuestions.length > 1 ? `<button class="btn-ghost" style="padding:6px 10px;color:#94a3b8" onclick="removeViQuestion(${i})"><i class="ti ti-x"></i></button>` : ''}
+      <input type="text" class="filter-input" style="flex:1;box-sizing:border-box" placeholder="${isFr ? `Question ${i+1}…` : `Question ${i+1}…`}" value="${esc(q)}" data-oninput="viQuestions[${i}]=this.value">
+      ${viQuestions.length > 1 ? `<button class="btn-ghost" style="padding:6px 10px;color:#94a3b8" data-onclick="removeViQuestion(${i})"><i class="ti ti-x"></i></button>` : ''}
     </div>
   `).join('');
   const addBtn = document.getElementById('btn-add-q');
@@ -7319,10 +7353,10 @@ async function submitViCreate() {
           ${isFr2 ? 'Les entretiens vidéo asynchrones sont disponibles à partir du plan <strong>Pro</strong>. Passez à Pro pour déverrouiller cette fonctionnalité et bien d\'autres.' : 'Async video interviews are available on the <strong>Pro</strong> plan. Upgrade to unlock this feature and many more.'}
         </p>
         <div style="display:flex;gap:10px;justify-content:center">
-          <button class="btn-primary" onclick="this.closest('[style*=fixed]').remove();showEmpTab('etab-billing',document.querySelector('[data-emptab=etab-billing]'))">
+          <button class="btn-primary" data-onclick="this.closest('[style*=fixed]').remove();showEmpTab('etab-billing',document.querySelector('[data-emptab=etab-billing]'))">
             <i class="ti ti-crown"></i> ${isFr2 ? 'Voir les plans' : 'View Plans'}
           </button>
-          <button class="btn-ghost" onclick="this.closest('[style*=fixed]').remove()">${isFr2 ? 'Plus tard' : 'Later'}</button>
+          <button class="btn-ghost" data-onclick="this.closest('[style*=fixed]').remove()">${isFr2 ? 'Plus tard' : 'Later'}</button>
         </div>
       </div>`;
     document.body.appendChild(overlay);
@@ -7345,13 +7379,13 @@ function showViLinkModal(title, link, email) {
       </div>
       <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:16px;word-break:break-all;font-size:13px;font-family:monospace;color:var(--muted)">${link}</div>
       <div style="display:flex;gap:10px">
-        <button class="btn-primary" style="flex:1" onclick="navigator.clipboard.writeText('${link}').then(()=>toast('${isFr ? 'Lien copié !' : 'Link copied!'}','success'))">
+        <button class="btn-primary" style="flex:1" data-onclick="navigator.clipboard.writeText('${link}').then(()=>toast('${isFr ? 'Lien copié !' : 'Link copied!'}','success'))">
           <i class="ti ti-copy"></i> ${isFr ? 'Copier le lien' : 'Copy Link'}
         </button>
-        ${email ? `<button class="btn-ghost" style="flex:1" onclick="window.open('mailto:${email}?subject=${encodeURIComponent(isFr ? 'Invitation entretien vidéo — '+title : 'Video Interview Invitation — '+title)}&body=${encodeURIComponent((isFr ? 'Bonjour,\n\nNous vous invitons à répondre à notre entretien vidéo asynchrone.\n\nLien : ' : 'Hello,\n\nWe invite you to complete our async video interview.\n\nLink: ')+link)}','_blank')">
+        ${email ? `<button class="btn-ghost" style="flex:1" data-onclick="window.open('mailto:${email}?subject=${encodeURIComponent(isFr ? 'Invitation entretien vidéo — '+title : 'Video Interview Invitation — '+title)}&body=${encodeURIComponent((isFr ? 'Bonjour,\n\nNous vous invitons à répondre à notre entretien vidéo asynchrone.\n\nLien : ' : 'Hello,\n\nWe invite you to complete our async video interview.\n\nLink: ')+link)}','_blank')">
           <i class="ti ti-mail"></i> ${isFr ? 'Envoyer par email' : 'Email'}
         </button>` : ''}
-        <button class="btn-ghost" onclick="this.closest('[style*=fixed]').remove()">${isFr ? 'Fermer' : 'Close'}</button>
+        <button class="btn-ghost" data-onclick="this.closest('[style*=fixed]').remove()">${isFr ? 'Fermer' : 'Close'}</button>
       </div>
     </div>
   `;
@@ -7405,8 +7439,8 @@ async function viewViDetail(id) {
         ${iv.candidate_name ? `<div style="color:var(--muted);font-size:13px"><i class="ti ti-user" style="font-size:12px"></i> ${esc(iv.candidate_name)} ${iv.candidate_email ? '· '+esc(iv.candidate_email) : ''}</div>` : ''}
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn-ghost" style="font-size:13px" onclick="navigator.clipboard.writeText('${link}').then(()=>toast('Lien copié !','success'))"><i class="ti ti-link"></i> ${isFr ? 'Copier lien' : 'Copy link'}</button>
-        <button class="btn-ghost" style="font-size:13px" onclick="document.getElementById('vi-detail-panel').style.display='none'"><i class="ti ti-x"></i></button>
+        <button class="btn-ghost" style="font-size:13px" data-onclick="navigator.clipboard.writeText('${link}').then(()=>toast('Lien copié !','success'))"><i class="ti ti-link"></i> ${isFr ? 'Copier lien' : 'Copy link'}</button>
+        <button class="btn-ghost" style="font-size:13px" data-onclick="document.getElementById('vi-detail-panel').style.display='none'"><i class="ti ti-x"></i></button>
       </div>
     </div>
 
@@ -7469,7 +7503,7 @@ async function viewViDetail(id) {
     </div>
 
     ${responses.some(r => !r.ai_score && r.video_path) ? `
-      <button class="btn-ghost" style="margin-top:8px;font-size:13px" onclick="viewViDetail('${id}')"><i class="ti ti-refresh"></i> ${isFr ? 'Actualiser l\'analyse IA' : 'Refresh AI analysis'}</button>
+      <button class="btn-ghost" style="margin-top:8px;font-size:13px" data-onclick="viewViDetail('${id}')"><i class="ti ti-refresh"></i> ${isFr ? 'Actualiser l\'analyse IA' : 'Refresh AI analysis'}</button>
     ` : ''}
   `;
 }
@@ -7504,7 +7538,7 @@ async function loadAdminSkillTests() {
         <h2 style="margin:0"><i class="ti ti-settings" style="color:var(--indigo)"></i> Admin — Skill Tests</h2>
         <p style="color:var(--muted);margin:4px 0 0">${tests.length} test${tests.length !== 1 ? 's' : ''} · ${tests.reduce((a,t) => a + parseInt(t.question_count||0), 0)} questions pool</p>
       </div>
-      <button class="btn-primary" onclick="openAdminTestForm()"><i class="ti ti-plus"></i> New Test</button>
+      <button class="btn-primary" data-onclick="openAdminTestForm()"><i class="ti ti-plus"></i> New Test</button>
     </div>
 
     <div id="admin-test-form-wrapper" style="display:none;background:var(--surface);border:1px solid var(--indigo);border-radius:16px;padding:24px;margin-bottom:24px"></div>
@@ -7523,8 +7557,8 @@ async function loadAdminSkillTests() {
             · ${t.question_count} Qs · Pass: ${t.pass_score}% · ${t.attempts} attempt${t.attempts !== '1' ? 's' : ''}
           </div>
           <div style="display:flex;gap:8px">
-            <button class="btn-ghost" style="flex:1;font-size:13px" onclick="editAdminTest('${esc(t.id)}')"><i class="ti ti-pencil"></i> Edit</button>
-            <button class="btn-ghost" style="color:#f87171;border-color:#f8717144;font-size:13px" onclick="deleteAdminTest('${esc(t.id)}','${esc(t.title_en)}')"><i class="ti ti-trash"></i></button>
+            <button class="btn-ghost" style="flex:1;font-size:13px" data-onclick="editAdminTest('${esc(t.id)}')"><i class="ti ti-pencil"></i> Edit</button>
+            <button class="btn-ghost" style="color:#f87171;border-color:#f8717144;font-size:13px" data-onclick="deleteAdminTest('${esc(t.id)}','${esc(t.title_en)}')"><i class="ti ti-trash"></i></button>
           </div>
         </div>
       `).join('')}
@@ -7574,14 +7608,14 @@ function openAdminTestForm(prefill = null) {
     <div style="margin-bottom:12px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
         <label style="font-size:12px;font-weight:600">Questions JSON <span style="color:#f87171">*</span> <span style="color:var(--muted);font-weight:400">(min 5, idéalement 15)</span></label>
-        <button class="btn-ghost" style="font-size:11px;padding:4px 10px" onclick="insertAdminTestTemplate()"><i class="ti ti-template"></i> Template</button>
+        <button class="btn-ghost" style="font-size:11px;padding:4px 10px" data-onclick="insertAdminTestTemplate()"><i class="ti ti-template"></i> Template</button>
       </div>
       <textarea id="at-questions" style="width:100%;box-sizing:border-box;height:220px;font-family:monospace;font-size:12px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);resize:vertical" placeholder='[{"q":"Question text?","opts":["A","B","C","D"],"answer":0},...]'>${prefill?.questions ? JSON.stringify(prefill.questions, null, 2) : ''}</textarea>
       <div style="font-size:11px;color:var(--muted);margin-top:4px">Format: <code>[{"q":"...", "opts":["A","B","C","D"], "answer": 0}]</code> — answer = index de la bonne réponse</div>
     </div>
     <div style="display:flex;gap:10px">
-      <button class="btn-primary" style="flex:1" onclick="saveAdminTest()"><i class="ti ti-device-floppy"></i> ${adminEditingTestId ? 'Update Test' : 'Create Test'}</button>
-      <button class="btn-ghost" onclick="closeAdminTestForm()">Cancel</button>
+      <button class="btn-primary" style="flex:1" data-onclick="saveAdminTest()"><i class="ti ti-device-floppy"></i> ${adminEditingTestId ? 'Update Test' : 'Create Test'}</button>
+      <button class="btn-ghost" data-onclick="closeAdminTestForm()">Cancel</button>
     </div>
   `;
   wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -7892,10 +7926,10 @@ function openBoostModal(jobId, title) {
         <i class="ti ti-lock"></i> ${isFr ? 'Paiement sécurisé via Stripe — CAD' : 'Secure payment via Stripe — CAD'}
       </div>
       <div style="display:flex;gap:10px">
-        <button class="btn-ghost" style="flex:1" onclick="document.getElementById('boost-overlay').remove()">
+        <button class="btn-ghost" style="flex:1" data-onclick="document.getElementById('boost-overlay').remove()">
           <i class="ti ti-x"></i> ${isFr ? 'Annuler' : 'Cancel'}
         </button>
-        <button class="btn-primary" style="flex:2;background:#f59e0b;border-color:#f59e0b;color:#fff" onclick="submitBoost()">
+        <button class="btn-primary" style="flex:2;background:#f59e0b;border-color:#f59e0b;color:#fff" data-onclick="submitBoost()">
           <i class="ti ti-rocket"></i> ${isFr ? 'Booster maintenant →' : 'Boost now →'}
         </button>
       </div>
@@ -7958,10 +7992,10 @@ function proposeSlots(appId, candidateName) {
           style="width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
       </div>
       <div style="display:flex;gap:10px">
-        <button class="btn-ghost" style="flex:1" onclick="document.getElementById('slots-overlay').remove()">
+        <button class="btn-ghost" style="flex:1" data-onclick="document.getElementById('slots-overlay').remove()">
           <i class="ti ti-x"></i> ${isFr ? 'Annuler' : 'Cancel'}
         </button>
-        <button class="btn-primary" style="flex:2;background:#10b981;border-color:#10b981" onclick="submitSlots()">
+        <button class="btn-primary" style="flex:2;background:#10b981;border-color:#10b981" data-onclick="submitSlots()">
           <i class="ti ti-send"></i> ${isFr ? 'Envoyer l\'invitation' : 'Send invitation'}
         </button>
       </div>
@@ -8052,26 +8086,26 @@ function loadFeed() {
         <div class="feed-sidebar-card">
           <div class="feed-sidebar-title">${isFr ? 'Filtrer' : 'Filter'}</div>
           <div class="feed-filters">
-            <button class="feed-filter-btn active" onclick="setFeedFilter('all',this)"><i class="ti ti-layout-grid"></i> ${isFr ? 'Tout' : 'All'}</button>
-            <button class="feed-filter-btn" onclick="setFeedFilter('text',this)"><i class="ti ti-pencil"></i> Posts</button>
-            <button class="feed-filter-btn" onclick="setFeedFilter('article',this)"><i class="ti ti-news"></i> Articles</button>
-            <button class="feed-filter-btn" onclick="setFeedFilter('hired',this)"><i class="ti ti-confetti"></i> ${isFr ? 'Annonces' : 'Announcements'}</button>
-            <button class="feed-filter-btn" onclick="setFeedFilter('job_share',this)"><i class="ti ti-briefcase"></i> ${isFr ? 'Offres partagées' : 'Job posts'}</button>
+            <button class="feed-filter-btn active" data-onclick="setFeedFilter('all',this)"><i class="ti ti-layout-grid"></i> ${isFr ? 'Tout' : 'All'}</button>
+            <button class="feed-filter-btn" data-onclick="setFeedFilter('text',this)"><i class="ti ti-pencil"></i> Posts</button>
+            <button class="feed-filter-btn" data-onclick="setFeedFilter('article',this)"><i class="ti ti-news"></i> Articles</button>
+            <button class="feed-filter-btn" data-onclick="setFeedFilter('hired',this)"><i class="ti ti-confetti"></i> ${isFr ? 'Annonces' : 'Announcements'}</button>
+            <button class="feed-filter-btn" data-onclick="setFeedFilter('job_share',this)"><i class="ti ti-briefcase"></i> ${isFr ? 'Offres partagées' : 'Job posts'}</button>
           </div>
         </div>
       </aside>
 
       <main class="feed-main">
         ${state.user ? `
-        <div class="compose-box" onclick="openFeedComposer('text')">
+        <div class="compose-box" data-onclick="openFeedComposer('text')">
           <div class="compose-box-inner">
             <div class="compose-avatar">${userInitials}</div>
             <div class="compose-placeholder">${isFr ? 'Quoi de neuf ?' : "What's on your mind?"}</div>
           </div>
           <div class="compose-type-btns">
-            <button onclick="event.stopPropagation();openFeedComposer('article')"  class="compose-type-btn"><i class="ti ti-news"></i> ${isFr ? 'Article' : 'Article'}</button>
-            <button onclick="event.stopPropagation();openFeedComposer('hired')"    class="compose-type-btn"><i class="ti ti-confetti"></i> ${isFr ? 'Annonce' : 'Announcement'}</button>
-            <button onclick="event.stopPropagation();openFeedComposer('job_share')" class="compose-type-btn"><i class="ti ti-briefcase"></i> ${isFr ? 'Partager une offre' : 'Share a job'}</button>
+            <button data-onclick="event.stopPropagation();openFeedComposer('article')"  class="compose-type-btn"><i class="ti ti-news"></i> ${isFr ? 'Article' : 'Article'}</button>
+            <button data-onclick="event.stopPropagation();openFeedComposer('hired')"    class="compose-type-btn"><i class="ti ti-confetti"></i> ${isFr ? 'Annonce' : 'Announcement'}</button>
+            <button data-onclick="event.stopPropagation();openFeedComposer('job_share')" class="compose-type-btn"><i class="ti ti-briefcase"></i> ${isFr ? 'Partager une offre' : 'Share a job'}</button>
           </div>
         </div>` : `
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;text-align:center;margin-bottom:16px">
@@ -8084,7 +8118,7 @@ function loadFeed() {
           <div style="text-align:center;padding:40px 0"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>
         </div>
         <div id="feed-load-more" style="display:none;text-align:center;padding:16px">
-          <button class="btn-ghost" onclick="loadMoreFeedPosts()"><i class="ti ti-refresh"></i> ${isFr ? 'Plus de posts' : 'Load more'}</button>
+          <button class="btn-ghost" data-onclick="loadMoreFeedPosts()"><i class="ti ti-refresh"></i> ${isFr ? 'Plus de posts' : 'Load more'}</button>
         </div>
       </main>
 
@@ -8138,7 +8172,7 @@ async function fetchFeedPosts(reset = false) {
 
   if (reset) {
     if (!posts.length) {
-      container.innerHTML = `<div class="empty-state"><i class="ti ti-mood-empty"></i><p>${isFr ? 'Aucun post pour l\'instant.' : 'No posts yet.'}</p>${state.user ? `<button class="btn-primary" onclick="openFeedComposer('text')" style="margin-top:14px">${isFr ? 'Créer le premier post' : 'Create the first post'}</button>` : ''}</div>`;
+      container.innerHTML = `<div class="empty-state"><i class="ti ti-mood-empty"></i><p>${isFr ? 'Aucun post pour l\'instant.' : 'No posts yet.'}</p>${state.user ? `<button class="btn-primary" data-onclick="openFeedComposer('text')" style="margin-top:14px">${isFr ? 'Créer le premier post' : 'Create the first post'}</button>` : ''}</div>`;
       return;
     }
     container.innerHTML = posts.map(p => renderPostCard(p)).join('');
@@ -8193,7 +8227,7 @@ function renderPostCard(p) {
         <div class="post-date">${timeAgo}</div>
       </div>
       ${badge}
-      ${isOwn ? `<button class="post-menu-btn" onclick="deletePost('${p.id}')" title="${isFr?'Supprimer':'Delete'}"><i class="ti ti-trash"></i></button>` : ''}
+      ${isOwn ? `<button class="post-menu-btn" data-onclick="deletePost('${p.id}')" title="${isFr?'Supprimer':'Delete'}"><i class="ti ti-trash"></i></button>` : ''}
     </div>
     ${body}
     ${p.image_url ? `<img src="${esc(p.image_url)}" class="post-image" alt="" loading="lazy">` : ''}
@@ -8202,10 +8236,10 @@ function renderPostCard(p) {
       <span><i class="ti ti-message-circle"></i> <span data-comments="${p.id}">${p.comments_count || 0}</span></span>
     </div>
     <div class="post-actions">
-      <button class="post-action-btn${p.is_liked_by_me ? ' liked' : ''}" onclick="toggleLike('${p.id}',this)">
+      <button class="post-action-btn${p.is_liked_by_me ? ' liked' : ''}" data-onclick="toggleLike('${p.id}',this)">
         <i class="ti ti-heart${p.is_liked_by_me ? '-filled' : ''}"></i> ${isFr ? 'J\'aime' : 'Like'}
       </button>
-      <button class="post-action-btn" onclick="toggleComments('${p.id}')">
+      <button class="post-action-btn" data-onclick="toggleComments('${p.id}')">
         <i class="ti ti-message-circle"></i> ${isFr ? 'Commenter' : 'Comment'}
       </button>
     </div>
@@ -8216,8 +8250,8 @@ function renderPostCard(p) {
         <div class="comment-input-avatar">${feedInitials(state.user)}</div>
         <input class="comment-input" id="comment-input-${p.id}"
           placeholder="${isFr ? 'Écrire un commentaire…' : 'Write a comment…'}"
-          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitComment('${p.id}')}">
-        <button class="comment-submit-btn" onclick="submitComment('${p.id}')"><i class="ti ti-send"></i></button>
+          data-onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitComment('${p.id}')}">
+        <button class="comment-submit-btn" data-onclick="submitComment('${p.id}')"><i class="ti ti-send"></i></button>
       </div>` : ''}
     </div>
   </div>`;
@@ -8376,10 +8410,10 @@ function setComposeType(type, btn) {
           <i class="ti ti-photo" style="font-size:18px"></i>
           <span>${isFr ? 'Ajouter une photo (optionnel)' : 'Add a photo (optional)'}</span>
         </label>
-        <input type="file" id="compose-image-file" accept="image/*" style="display:none" onchange="handleFeedImageUpload(this)">
+        <input type="file" id="compose-image-file" accept="image/*" style="display:none" data-onchange="handleFeedImageUpload(this)">
         <div id="compose-image-preview" style="display:none;margin-top:10px;position:relative">
           <img id="compose-image-preview-img" style="width:100%;border-radius:10px;max-height:200px;object-fit:cover" alt="">
-          <button onclick="removeFeedImage()" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center"><i class="ti ti-x"></i></button>
+          <button data-onclick="removeFeedImage()" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center"><i class="ti ti-x"></i></button>
         </div>
       </div>`;
     if (type === 'hired') setTimeout(() => document.getElementById('compose-content')?.select(), 50);
