@@ -1289,10 +1289,24 @@
       <div class="tax-fields-row">
         <div class="tax-salary-wrap">
           <span class="tax-cur-sym">$</span>
-          <input type="number" id="tc-salary" class="tax-salary-input" value="50000" min="0" step="1000">
+          <input type="number" id="tc-salary" class="tax-salary-input" value="50000" min="0" step="1000" oninput="tcUpdate()" onchange="tcUpdate()">
           <span class="tax-cur-code">CAD</span>
         </div>
-        <select id="tc-prov" class="tax-prov-select"></select>
+        <select id="tc-prov" class="tax-prov-select" onchange="tcUpdate()">
+          <option value="AB">Alberta</option>
+          <option value="BC">British Columbia</option>
+          <option value="MB">Manitoba</option>
+          <option value="NB">New Brunswick</option>
+          <option value="NL">Newfoundland &amp; Lab.</option>
+          <option value="NS">Nova Scotia</option>
+          <option value="NT">Northwest Territories</option>
+          <option value="NU">Nunavut</option>
+          <option value="ON" selected>Ontario</option>
+          <option value="PE">Prince Edward Island</option>
+          <option value="QC">Québec</option>
+          <option value="SK">Saskatchewan</option>
+          <option value="YT">Yukon</option>
+        </select>
         <button class="btn-primary" onclick="tcUpdate()" style="padding:0 22px;height:48px;font-size:14px;border-radius:10px;white-space:nowrap">Calculate</button>
       </div>
     </div>
