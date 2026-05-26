@@ -635,3 +635,9 @@ id = "vJBK_KWmszyK_LBTNARDG"
 uri = "file://attached_assets/services-a-charger-2026-05-08.csv"
 type = "table"
 title = "Services à charger — 115 fiches"
+
+[[outputs]]
+id = "uJ271pk2Wrl5AL6Uj7-EZ"
+uri = "file://source-code.zip"
+type = "unspecified"
+title = "Code source complet — Monorepo CivicAI / Nexhire / AttenteZéro (20 MB)"
