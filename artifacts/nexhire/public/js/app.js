@@ -1157,14 +1157,16 @@ function _renderGeoPill(prov, city) {
   wrap.title = `📍 ${label}`;
   const icon = wrap.querySelector('i.ti');
   if (icon) { icon.className = 'ti ti-map-pin-filled'; icon.style.color = 'var(--indigo)'; }
+  // Hide the select — pill replaces it visually
+  const sel = wrap.querySelector('select');
+  if (sel) sel.style.display = 'none';
   let pill = wrap.querySelector('.geo-pill');
   if (!pill) {
     pill = document.createElement('span');
     pill.className = 'geo-pill';
-    pill.title = `📍 ${label} — Cliquer pour changer`;
-    wrap.insertBefore(pill, wrap.querySelector('select'));
+    wrap.insertBefore(pill, sel);
   }
-  pill.textContent = label;
+  pill.innerHTML = `${esc(label)}<button onclick="clearGeoLocation()" title="Effacer la localisation" style="background:none;border:none;cursor:pointer;color:var(--indigo);padding:0 0 0 4px;font-size:13px;line-height:1;vertical-align:middle" aria-label="Effacer">×</button>`;
 }
 
 function _renderHeroGeoPill(prov, city) {
@@ -1182,7 +1184,7 @@ function clearGeoLocation() {
   localStorage.removeItem(_GEO_TIME);
   const fprov = document.getElementById('fprov');
   const heroProv = document.getElementById('hero-province');
-  if (fprov) fprov.value = '';
+  if (fprov) { fprov.value = ''; fprov.style.display = ''; }
   if (heroProv) heroProv.value = '';
   const pill = document.querySelector('.geo-pill');
   if (pill) pill.remove();

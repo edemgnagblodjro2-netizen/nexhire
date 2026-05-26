@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
   let i = 1;
 
   if (q) {
-    where.push(`(j.title_fr ILIKE $${i} OR j.title_en ILIKE $${i} OR c.name ILIKE $${i} OR j.city ILIKE $${i} OR j.province ILIKE $${i})`);
+    where.push(`(j.title_fr ILIKE $${i} OR j.title_en ILIKE $${i} OR c.name ILIKE $${i} OR j.city ILIKE $${i} OR j.province ILIKE $${i} OR j.description_fr ILIKE $${i} OR j.description_en ILIKE $${i} OR j.requirements_fr ILIKE $${i} OR j.requirements_en ILIKE $${i} OR j.skills_required::text ILIKE $${i})`);
     params.push(`%${q}%`); i++;
   }
   if (province) {

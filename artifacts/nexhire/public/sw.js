@@ -1,7 +1,7 @@
-const CACHE = 'nexhire-v74';
+const CACHE = 'nexhire-v75';
 const VERSIONED = [
-  '/nexhire/css/main.css?v=20260526a',
-  '/nexhire/js/app.js?v=20260526n',
+  '/nexhire/css/main.css?v=20260526b',
+  '/nexhire/js/app.js?v=20260526o',
   '/nexhire/img/hero-bg1.jpg',
   '/nexhire/img/hero-bg2.jpg',
   '/nexhire/img/hero-bg3.jpg',
