@@ -641,3 +641,9 @@ id = "uJ271pk2Wrl5AL6Uj7-EZ"
 uri = "file://source-code.zip"
 type = "unspecified"
 title = "Code source complet — Monorepo CivicAI / Nexhire / AttenteZéro (20 MB)"
+
+[[outputs]]
+id = "w3ATe0R2yyZ_Y-4_kew4v"
+uri = "file://nexhire-render.zip"
+type = "unspecified"
+title = "nexhire-render.zip — Deploy on Render.com"
