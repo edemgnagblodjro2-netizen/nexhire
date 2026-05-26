@@ -258,6 +258,7 @@ function goto(page) {
   if (page === 'settings') renderSettings();
   if (page === 'help') renderHelp();
   if (page === 'privacy') renderPrivacy();
+  if (page === 'pricing') { updateRoi(3); calcBudget(); }
   // terms page is static — no render needed
   // update URL hash for direct linking
   const publicPages = ['home','jobs','feed','employer','pricing','privacy','terms','help'];
