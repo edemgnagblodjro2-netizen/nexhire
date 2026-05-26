@@ -195,14 +195,14 @@ const captchaLimiter = rateLimit({
 });
 app.use("/api/captcha/challenge", captchaLimiter);
 
-// Nexhire domain redirect: nexhire.ca/* → /nexhire/coming-soon.html
+// Nexhire domain redirect: nexhire.ca → /nexhire/
 // When the custom domain nexhire.ca is configured, all traffic arrives here.
-// Redirect root and any non-nexhire path to the coming soon page.
+// Redirect root and any non-nexhire path to the Nexhire SPA.
 app.use((req, res, next) => {
   const host = (req.headers.host ?? "").split(":")[0].toLowerCase();
   if (host === "nexhire.ca" || host === "www.nexhire.ca") {
     if (!req.path.startsWith("/nexhire/")) {
-      return res.redirect(301, "/nexhire/coming-soon.html");
+      return res.redirect(302, "/nexhire/");
     }
   }
   return next();
