@@ -8550,6 +8550,7 @@ function _tcCalc(annual, code) {
            avg, marginal: mFed + mProv, provName: p.n };
 }
 
+const _TC_RATE_LABELS = { annual:'Annual', month:'Month', biweekly:'Biweekly', weekly:'Weekly', daily:'Day', hourly:'Hour' };
 function tcSetRate(rate) {
   _tcRate = rate;
   document.querySelectorAll('.tc-tab').forEach(t => t.classList.toggle('active', t.dataset.rate === rate));
@@ -8562,14 +8563,21 @@ function tcUpdate() {
   const provSel = document.getElementById('tc-prov');
   const code = provSel?.value || 'ON';
   const provName = provSel?.options[provSel.selectedIndex]?.text || 'Ontario';
-  // Update dynamic heading
+  // Dynamic heading — matches talent.com format
   const fmtK = v => '$' + Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   const titleEl = document.getElementById('tc-dyn-title');
   const subEl   = document.getElementById('tc-dyn-sub');
-  if (titleEl && raw > 0) {
-    titleEl.textContent = `Income Tax Calculator for a ${fmtK(raw)} Salary in ${provName} — 2026`;
-    if (subEl) subEl.textContent = `Find out how much your ${fmtK(annual)} annual salary is after tax`;
+  if (titleEl) {
+    if (raw > 0) {
+      const per = _tcRate !== 'annual' ? '/' + _TC_RATE_LABELS[_tcRate] : '';
+      titleEl.textContent = `Income Tax Calculator for a ${fmtK(raw)}${per} Salary in ${provName} - 2026`;
+      if (subEl) subEl.textContent = `Find out how much your salary is after tax`;
+    } else {
+      titleEl.textContent = '🍁 Canadian Salary Tax Calculator';
+      if (subEl) subEl.textContent = 'Find out how much your salary is after tax';
+    }
   }
+  if (annual <= 0) return;
   _tcRenderResults(_tcCalc(annual, code), 'tc-results');
   _tcRenderProvTable(annual, code, 'tc-prov-table');
 }
