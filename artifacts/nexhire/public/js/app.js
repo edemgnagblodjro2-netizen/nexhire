@@ -258,7 +258,7 @@ function goto(page) {
   if (page === 'settings') renderSettings();
   if (page === 'help') renderHelp();
   if (page === 'privacy') renderPrivacy();
-  if (page === 'pricing') { updateRoi(3); calcBudget(); }
+  if (page === 'pricing') { _initRoiSlider(); calcBudget(); }
   // terms page is static — no render needed
   // update URL hash for direct linking
   const publicPages = ['home','jobs','feed','employer','pricing','privacy','terms','help'];
@@ -7708,6 +7708,10 @@ function calcBudget() {
 }
 
 // ── ROI Calculator (employer) ───────────────────────────────
+function fmtRoi(v) {
+  // Format with space thousands separator — no locale dependency
+  return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0') + '\u00a0$/an';
+}
 function updateRoi(n) {
   n = parseInt(n) || 3;
   // LinkedIn Recruiter: ~$667/mois par poste actif × 12
@@ -7715,12 +7719,19 @@ function updateRoi(n) {
   // Nexhire Pro: plan $199/mois + budget CPC estimé ~$450/an par poste supplémentaire
   const nexhire  = Math.round(2388 + (n - 1) * 450);
   const savings  = linkedin - nexhire;
-  const fmt = v => v.toLocaleString('fr-CA') + '$/an';
-  const set = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
-  set('roi-n-label',     n);
-  set('roi-linkedin',    fmt(linkedin));
-  set('roi-nexhire',     fmt(nexhire));
-  set('roi-save-amount', fmt(savings) + ' 🎉');
+  const setEl = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+  setEl('roi-n-label',     n);
+  setEl('roi-linkedin',    fmtRoi(linkedin));
+  setEl('roi-nexhire',     fmtRoi(nexhire));
+  setEl('roi-save-amount', fmtRoi(savings) + ' 🎉');
+}
+function _initRoiSlider() {
+  const slider = document.getElementById('roi-slider');
+  if (!slider) return;
+  // Reset to default and attach listener (replaces any stale handler)
+  slider.value = 3;
+  slider.oninput = function() { updateRoi(parseInt(this.value)); };
+  updateRoi(3);
 }
 
 // ── My Applications — status polling ───────────────────────
