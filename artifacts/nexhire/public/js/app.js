@@ -259,6 +259,7 @@ function goto(page) {
   if (page === 'help') renderHelp();
   if (page === 'privacy') renderPrivacy();
   if (page === 'pricing') { _initRoiSlider(); calcBudget(); }
+  if (page === 'tax-calc') initTaxCalc();
   // terms page is static — no render needed
   // update URL hash for direct linking
   const publicPages = ['home','jobs','feed','employer','pricing','privacy','terms','help'];
@@ -8558,7 +8559,17 @@ function tcSetRate(rate) {
 function tcUpdate() {
   const raw = parseFloat(document.getElementById('tc-salary')?.value || '0') || 0;
   const annual = raw * (_TC_MUL[_tcRate] || 1);
-  const code = document.getElementById('tc-prov')?.value || 'ON';
+  const provSel = document.getElementById('tc-prov');
+  const code = provSel?.value || 'ON';
+  const provName = provSel?.options[provSel.selectedIndex]?.text || 'Ontario';
+  // Update dynamic heading
+  const fmtK = v => '$' + Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const titleEl = document.getElementById('tc-dyn-title');
+  const subEl   = document.getElementById('tc-dyn-sub');
+  if (titleEl && raw > 0) {
+    titleEl.textContent = `Income Tax Calculator for a ${fmtK(raw)} Salary in ${provName} — 2026`;
+    if (subEl) subEl.textContent = `Find out how much your ${fmtK(annual)} annual salary is after tax`;
+  }
   _tcRenderResults(_tcCalc(annual, code), 'tc-results');
   _tcRenderProvTable(annual, code, 'tc-prov-table');
 }
