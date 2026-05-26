@@ -1007,18 +1007,22 @@ app.get(BASE_PATH + '/mockup-:name.html', (req, res) => {
 });
 
 // ── Security ──────────────────────────────────────────────
-app.use(helmet.contentSecurityPolicy({
-  directives: {
-    defaultSrc:    ["'self'"],
-    scriptSrc:     ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://js.stripe.com", "https://cdn.jsdelivr.net"],
-    scriptSrcAttr: ["'unsafe-inline'"],
-    styleSrc:      ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com"],
-    fontSrc:       ["'self'", "https://cdn.jsdelivr.net", "https://fonts.gstatic.com"],
-    imgSrc:        ["'self'", "data:", "blob:", "https://images.unsplash.com", "https://cdn.jsdelivr.net", "https:"],
-    connectSrc:    ["'self'", "https://api.stripe.com", "https://api.openai.com", "https://api.adzuna.com"],
-    frameSrc:      ["https://js.stripe.com"],
-    workerSrc:     ["'self'", "blob:"],
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://js.stripe.com", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
+      scriptSrcAttr: ["'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
+      imgSrc: ["'self'", "data:", "https:", "blob:"],
+      connectSrc: ["'self'", "https://api.openai.com", "https://js.stripe.com"],
+      frameSrc: ["'self'", "https://js.stripe.com"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: [],
+    },
   },
+  crossOriginEmbedderPolicy: false,
 }));
 
 app.use(cors({ origin: true, credentials: true }));
