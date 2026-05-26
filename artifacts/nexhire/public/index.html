@@ -34,6 +34,8 @@
       <a class="nav-link" id="nav-link-employers" data-goto="employer" href="#" data-i18n="nav.employers">For Employers</a>
       <a class="nav-link" id="nav-link-pricing" data-goto="pricing" href="#" data-i18n="nav.pricing">Pricing</a>
       <a class="nav-link" data-goto="tax-calc" href="#">🍁 Tax Calc</a>
+      <a class="nav-link" data-goto="blog" href="#">Blog</a>
+      <a class="nav-link" data-goto="about" href="#">About</a>
       <div class="nav-mob-auth" id="nav-mob-auth">
         <a href="#login" class="btn-ghost nav-mob-btn" id="mob-signin" data-i18n="nav.signin">Sign in</a>
         <button class="btn-primary nav-mob-btn" data-modal="modal-register" data-i18n="nav.getstarted">Get started</button>
@@ -142,7 +144,7 @@
 
   <!-- ── Trusted by / Partners marquee ──────────────────── -->
   <section class="trust-band">
-    <div class="trust-label" data-i18n="trust.label">Join 200+ companies already hiring on Nexhire</div>
+    <div class="trust-label" data-i18n="trust.label">Join 150+ companies already hiring on Nexhire</div>
     <div class="marquee-wrap">
       <div class="marquee-track">
         <!-- set A -->
@@ -615,7 +617,7 @@
       <!-- Trust stats -->
       <div style="display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:44px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px 32px;max-width:560px;margin-left:auto;margin-right:auto">
         <div style="flex:1;min-width:120px;text-align:center;padding:8px 16px">
-          <div style="font-family:var(--r);font-size:30px;font-weight:800;color:#fff;line-height:1">500+</div>
+          <div style="font-family:var(--r);font-size:30px;font-weight:800;color:#fff;line-height:1">150+</div>
           <div style="font-size:11px;color:#64748B;text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-top:4px">Employers</div>
         </div>
         <div style="width:1px;height:44px;background:rgba(255,255,255,.08);flex-shrink:0"></div>
@@ -913,34 +915,78 @@
 
   <!-- ── Testimonials ──────────────────────────────────────── -->
   <div style="background:#F8FAFC;border-top:1px solid #E2E8F0;padding:80px 24px">
-    <div style="max-width:960px;margin:0 auto">
+    <div style="max-width:1040px;margin:0 auto">
       <div style="text-align:center;margin-bottom:52px">
-        <div style="display:inline-flex;align-items:center;gap:6px;background:var(--indigo3);color:var(--indigo);border-radius:100px;padding:5px 16px;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:14px"><i class="ti ti-message-circle"></i> TÉMOIGNAGES EMPLOYEURS</div>
-        <h2 style="font-family:var(--r);font-size:30px;font-weight:800;color:var(--dark);margin:0">Ce que disent nos employeurs</h2>
+        <div style="display:inline-flex;align-items:center;gap:6px;background:var(--indigo3);color:var(--indigo);border-radius:100px;padding:5px 16px;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:14px"><i class="ti ti-message-circle"></i> EMPLOYER STORIES</div>
+        <h2 style="font-family:var(--r);font-size:30px;font-weight:800;color:var(--dark);margin:0 0 10px">What our hiring teams say</h2>
+        <p style="color:var(--muted);font-size:15px;margin:0">Real results from companies across Canada</p>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
-        <div style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;padding:36px;position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
-          <div style="position:absolute;top:20px;right:24px;font-size:48px;color:#EEF2FF;font-family:Georgia,serif;line-height:1;pointer-events:none;user-select:none;opacity:.6">❝</div>
-          <div style="display:flex;gap:2px;margin-bottom:16px">
-            <i class="ti ti-star-filled" style="color:#F59E0B;font-size:14px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:14px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:14px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:14px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:14px"></i>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+
+        <div style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;padding:32px;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05)">
+          <div style="position:absolute;top:16px;right:20px;font-size:44px;color:#EEF2FF;font-family:Georgia,serif;line-height:1;opacity:.7">❝</div>
+          <div style="display:flex;gap:2px;margin-bottom:14px">
+            <i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i>
           </div>
-          <p style="font-size:15px;color:#374151;line-height:1.75;margin:0 0 24px">"Nous avons trouvé notre développeur senior en 4 jours. Le Kanban AI nous a fait gagner des heures de tri de CV."</p>
+          <p style="font-size:14px;color:#374151;line-height:1.8;margin:0 0 22px">"We hired our senior Rails developer in 4 days — candidates were pre-ranked by AI before we even read a single CV. We've never hired this fast."</p>
           <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0">MT</div>
-            <div><div style="font-weight:700;font-size:14px;color:var(--dark)">Marie T.</div><div style="font-size:12px;color:var(--muted)">CTO · StartupQC, Montréal</div></div>
+            <div style="width:44px;height:44px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0">ST</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--dark)">Sophie Tremblay</div>
+              <div style="font-size:12px;color:var(--muted)">CTO · NordiqTech, Montréal</div>
+              <div style="font-size:11px;color:#6366F1;margin-top:2px;font-weight:600">✓ Verified employer</div>
+            </div>
           </div>
         </div>
-        <div style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;padding:36px;position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)">
-          <div style="position:absolute;top:20px;right:24px;font-size:48px;color:#EEF2FF;font-family:Georgia,serif;line-height:1;pointer-events:none;user-select:none;opacity:.6">❝</div>
-          <div style="display:flex;gap:2px;margin-bottom:16px">
-            <i class="ti ti-star-filled" style="color:#F59E0B;font-size:14px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:14px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:14px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:14px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:14px"></i>
+
+        <div style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;padding:32px;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05)">
+          <div style="position:absolute;top:16px;right:20px;font-size:44px;color:#EEF2FF;font-family:Georgia,serif;line-height:1;opacity:.7">❝</div>
+          <div style="display:flex;gap:2px;margin-bottom:14px">
+            <i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i>
           </div>
-          <p style="font-size:15px;color:#374151;line-height:1.75;margin:0 0 24px">"Le rapport qualité/prix est imbattable vs LinkedIn. Même volume de candidats, 10× moins cher."</p>
+          <p style="font-size:14px;color:#374151;line-height:1.8;margin:0 0 22px">"Same quality of applicants as LinkedIn at literally 8× the cost savings. We posted 6 roles in Q1 and filled 5 of them through Nexhire. No brainer."</p>
           <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;background:linear-gradient(135deg,#0EA5E9,#0284C7);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0">JB</div>
-            <div><div style="font-weight:700;font-size:14px;color:var(--dark)">Jean-François B.</div><div style="font-size:12px;color:var(--muted)">RH Manager · FinGroup Canada</div></div>
+            <div style="width:44px;height:44px;background:linear-gradient(135deg,#0EA5E9,#0284C7);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0">JB</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--dark)">Jean-François Bergeron</div>
+              <div style="font-size:12px;color:var(--muted)">Head of Talent · AtlasFinance, Toronto</div>
+              <div style="font-size:11px;color:#6366F1;margin-top:2px;font-weight:600">✓ Verified employer</div>
+            </div>
           </div>
         </div>
+
+        <div style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;padding:32px;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05)">
+          <div style="position:absolute;top:16px;right:20px;font-size:44px;color:#EEF2FF;font-family:Georgia,serif;line-height:1;opacity:.7">❝</div>
+          <div style="display:flex;gap:2px;margin-bottom:14px">
+            <i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i>
+          </div>
+          <p style="font-size:14px;color:#374151;line-height:1.8;margin:0 0 22px">"Notre équipe RH a gagné 3h par poste grâce au Kanban IA. Les candidats sont triés, scorés, et prêts pour l'entretien dès le premier matin."</p>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:44px;height:44px;background:linear-gradient(135deg,#059669,#047857);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0">AC</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--dark)">Amélie Côté</div>
+              <div style="font-size:12px;color:var(--muted)">DRH · QuébecSoft, Québec City</div>
+              <div style="font-size:11px;color:#6366F1;margin-top:2px;font-weight:600">✓ Employeur vérifié</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;padding:32px;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05)">
+          <div style="position:absolute;top:16px;right:20px;font-size:44px;color:#EEF2FF;font-family:Georgia,serif;line-height:1;opacity:.7">❝</div>
+          <div style="display:flex;gap:2px;margin-bottom:14px">
+            <i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-filled" style="color:#F59E0B;font-size:13px"></i><i class="ti ti-star-half-filled" style="color:#F59E0B;font-size:13px"></i>
+          </div>
+          <p style="font-size:14px;color:#374151;line-height:1.8;margin:0 0 22px">"We're a 12-person startup. Nexhire let us compete for senior talent against companies 10× our size — the AI cover letter scoring alone filtered out 80% of noise."</p>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:44px;height:44px;background:linear-gradient(135deg,#D97706,#B45309);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0">ML</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--dark)">Marcus Leblanc</div>
+              <div style="font-size:12px;color:var(--muted)">Founder & CEO · HarbourAI, Halifax</div>
+              <div style="font-size:11px;color:#6366F1;margin-top:2px;font-weight:600">✓ Verified employer</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -1319,6 +1365,172 @@
   </div>
 </div>
 
+<!-- ABOUT ──────────────────────────────────────────────── -->
+<div id="pg-about" class="page">
+  <div style="max-width:900px;margin:0 auto;padding:64px 24px">
+    <div style="text-align:center;margin-bottom:64px">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:var(--indigo3);color:var(--indigo);border-radius:100px;padding:5px 16px;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:16px"><i class="ti ti-building"></i> ABOUT NEXHIRE</div>
+      <h1 style="font-family:var(--r);font-size:clamp(28px,5vw,44px);font-weight:800;color:var(--dark);margin:0 0 16px;line-height:1.12">Building the future of employment in Canada</h1>
+      <p style="font-size:17px;color:var(--muted);max-width:580px;margin:0 auto;line-height:1.7">Nexhire is an AI-first global hiring platform built by CivicAI — a Québec software company applying artificial intelligence where it matters most.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:64px">
+      <div style="background:#EEF2FF;border-radius:16px;padding:28px">
+        <div style="font-size:28px;margin-bottom:12px">🎯</div>
+        <h3 style="font-family:var(--r);font-size:18px;font-weight:700;color:var(--dark);margin:0 0 8px">Our Mission</h3>
+        <p style="font-size:14px;color:#475569;line-height:1.7;margin:0">Remove the friction between great talent and great companies — across Canada and globally — using AI that works for both sides of the hiring equation.</p>
+      </div>
+      <div style="background:#F0FDF4;border-radius:16px;padding:28px">
+        <div style="font-size:28px;margin-bottom:12px">🍁</div>
+        <h3 style="font-family:var(--r);font-size:18px;font-weight:700;color:var(--dark);margin:0 0 8px">Made in Québec</h3>
+        <p style="font-size:14px;color:#475569;line-height:1.7;margin:0">Founded in Montréal by CivicAI Inc. (NEQ 2280791601). We build world-class technology from Québec, serving candidates and employers coast to coast.</p>
+      </div>
+      <div style="background:#FFF7ED;border-radius:16px;padding:28px">
+        <div style="font-size:28px;margin-bottom:12px">🤖</div>
+        <h3 style="font-family:var(--r);font-size:18px;font-weight:700;color:var(--dark);margin:0 0 8px">AI-First</h3>
+        <p style="font-size:14px;color:#475569;line-height:1.7;margin:0">GPT-4o powers our matching, cover letter generation, and candidate ranking. Our AI reduces time-to-hire from weeks to days without sacrificing quality.</p>
+      </div>
+      <div style="background:#FDF4FF;border-radius:16px;padding:28px">
+        <div style="font-size:28px;margin-bottom:12px">🌐</div>
+        <h3 style="font-family:var(--r);font-size:18px;font-weight:700;color:var(--dark);margin:0 0 8px">Global Reach</h3>
+        <p style="font-size:14px;color:#475569;line-height:1.7;margin:0">Available in FR, EN, ES, AR, and HT. We serve newcomers, international talent, and Canadian employers hiring beyond borders.</p>
+      </div>
+    </div>
+    <div style="margin-bottom:64px">
+      <h2 style="font-family:var(--r);font-size:24px;font-weight:800;color:var(--dark);margin:0 0 28px;text-align:center">Our Team</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px">
+        <div style="text-align:center;background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;padding:32px 20px;box-shadow:0 2px 10px rgba(0,0,0,.04)">
+          <div style="width:68px;height:68px;background:linear-gradient(135deg,#023448,#1b485a);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;margin:0 auto 14px">CK</div>
+          <div style="font-weight:700;font-size:15px;color:var(--dark);margin-bottom:4px">Christophe K.</div>
+          <div style="font-size:13px;color:var(--indigo);font-weight:600;margin-bottom:8px">Founder &amp; CEO</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.5">AI strategy · product vision · CivicAI Inc.</div>
+        </div>
+        <div style="text-align:center;background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;padding:32px 20px;box-shadow:0 2px 10px rgba(0,0,0,.04)">
+          <div style="width:68px;height:68px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;margin:0 auto 14px">AI</div>
+          <div style="font-weight:700;font-size:15px;color:var(--dark);margin-bottom:4px">AI-Assisted Dev</div>
+          <div style="font-size:13px;color:var(--indigo);font-weight:600;margin-bottom:8px">Platform Engineering</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.5">Full-stack · API · Mobile · built AI-first</div>
+        </div>
+        <div style="text-align:center;background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;padding:32px 20px;box-shadow:0 2px 10px rgba(0,0,0,.04)">
+          <div style="width:68px;height:68px;background:linear-gradient(135deg,#059669,#047857);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;margin:0 auto 14px">📩</div>
+          <div style="font-weight:700;font-size:15px;color:var(--dark);margin-bottom:4px">Join the team</div>
+          <div style="font-size:13px;color:var(--indigo);font-weight:600;margin-bottom:8px">We're hiring</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.5"><a href="mailto:hello@nexhire.ca" style="color:var(--indigo)">hello@nexhire.ca</a></div>
+        </div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,#023448,#1b485a);border-radius:20px;padding:40px;text-align:center;color:#fff">
+      <h3 style="font-family:var(--r);font-size:22px;font-weight:800;margin:0 0 10px">Ready to transform your hiring?</h3>
+      <p style="color:#94A3B8;margin:0 0 24px;font-size:15px">Join 150+ Canadian companies already hiring smarter with Nexhire.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn-primary" data-modal="modal-register" style="font-size:15px;padding:12px 28px">Get started free</button>
+        <button onclick="goto('pricing')" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:12px 28px;font-size:15px;cursor:pointer;font-family:inherit;font-weight:600">View pricing</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOG ───────────────────────────────────────────────── -->
+<div id="pg-blog" class="page">
+  <div style="max-width:960px;margin:0 auto;padding:64px 24px">
+    <div style="text-align:center;margin-bottom:52px">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:var(--indigo3);color:var(--indigo);border-radius:100px;padding:5px 16px;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:16px"><i class="ti ti-pencil"></i> BLOG &amp; RESSOURCES</div>
+      <h1 style="font-family:var(--r);font-size:clamp(26px,4vw,40px);font-weight:800;color:var(--dark);margin:0 0 12px">Career &amp; Hiring Insights</h1>
+      <p style="font-size:16px;color:var(--muted);margin:0">Tips, guides, and salary data for job seekers and employers in Canada · FR + EN</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+
+      <article style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;flex-direction:column">
+        <div style="background:linear-gradient(135deg,#023448,#1b485a);padding:24px 20px 18px">
+          <span style="background:rgba(255,255,255,.15);color:#fff;border-radius:100px;padding:3px 10px;font-size:10px;font-weight:700">SALARY GUIDE · FR</span>
+          <h2 style="font-family:var(--r);font-size:16px;font-weight:800;color:#fff;margin:10px 0 0;line-height:1.35">Salaires tech au Canada 2026 : qui gagne quoi ?</h2>
+        </div>
+        <div style="padding:18px 20px;flex:1;display:flex;flex-direction:column">
+          <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">De développeur junior à CTO — fourchettes salariales réelles au Québec, Ontario et C.-B. avec comparatif par ville.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:11px;color:var(--muted)">🍁 5 min</span>
+            <button onclick="goto('tax-calc')" style="background:var(--indigo3);color:var(--indigo);border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">Calculateur →</button>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;flex-direction:column">
+        <div style="background:linear-gradient(135deg,#6366F1,#8B5CF6);padding:24px 20px 18px">
+          <span style="background:rgba(255,255,255,.2);color:#fff;border-radius:100px;padding:3px 10px;font-size:10px;font-weight:700">AI &amp; HIRING · EN</span>
+          <h2 style="font-family:var(--r);font-size:16px;font-weight:800;color:#fff;margin:10px 0 0;line-height:1.35">How AI is changing Canadian recruitment in 2026</h2>
+        </div>
+        <div style="padding:18px 20px;flex:1;display:flex;flex-direction:column">
+          <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">From automated CV screening to AI cover letters — what works, what's hype. A practical guide for HR managers.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:11px;color:var(--muted)">🇨🇦 8 min</span>
+            <button onclick="goto('employer')" style="background:#EEF2FF;color:#6366F1;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">Post a job →</button>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;flex-direction:column">
+        <div style="background:linear-gradient(135deg,#059669,#047857);padding:24px 20px 18px">
+          <span style="background:rgba(255,255,255,.2);color:#fff;border-radius:100px;padding:3px 10px;font-size:10px;font-weight:700">IMMIGRATION · FR</span>
+          <h2 style="font-family:var(--r);font-size:16px;font-weight:800;color:#fff;margin:10px 0 0;line-height:1.35">Travailler au Canada avec un permis ouvert : guide complet</h2>
+        </div>
+        <div style="padding:18px 20px;flex:1;display:flex;flex-direction:column">
+          <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">PGWP, permis ouvert, permis fermé — vos options pour postuler légalement au Canada, étape par étape.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:11px;color:var(--muted)">🍁 10 min</span>
+            <button onclick="goto('jobs')" style="background:#F0FDF4;color:#059669;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">Voir les offres →</button>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;flex-direction:column">
+        <div style="background:linear-gradient(135deg,#D97706,#B45309);padding:24px 20px 18px">
+          <span style="background:rgba(255,255,255,.2);color:#fff;border-radius:100px;padding:3px 10px;font-size:10px;font-weight:700">TAX GUIDE · EN</span>
+          <h2 style="font-family:var(--r);font-size:16px;font-weight:800;color:#fff;margin:10px 0 0;line-height:1.35">Quebec vs Ontario: which province has lower income tax?</h2>
+        </div>
+        <div style="padding:18px 20px;flex:1;display:flex;flex-direction:column">
+          <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">A $90,000 salary looks very different depending on where you live. We break down net pay for Canada's two biggest job markets.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:11px;color:var(--muted)">🇨🇦 6 min</span>
+            <button onclick="goto('tax-calc')" style="background:#FFFBEB;color:#D97706;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">Calculate →</button>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;flex-direction:column">
+        <div style="background:linear-gradient(135deg,#0EA5E9,#0284C7);padding:24px 20px 18px">
+          <span style="background:rgba(255,255,255,.2);color:#fff;border-radius:100px;padding:3px 10px;font-size:10px;font-weight:700">TÉLÉTRAVAIL · FR</span>
+          <h2 style="font-family:var(--r);font-size:16px;font-weight:800;color:#fff;margin:10px 0 0;line-height:1.35">Top 10 villes canadiennes pour le télétravail en 2026</h2>
+        </div>
+        <div style="padding:18px 20px;flex:1;display:flex;flex-direction:column">
+          <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">Coût de la vie, connectivité, qualité de vie, fiscalité : on a analysé 20 villes pour vous aider à choisir où vivre en télétravail.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:11px;color:var(--muted)">🍁 7 min</span>
+            <button onclick="goto('jobs')" style="background:#E0F2FE;color:#0284C7;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">Remote jobs →</button>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;flex-direction:column">
+        <div style="background:linear-gradient(135deg,#7C3AED,#6D28D9);padding:24px 20px 18px">
+          <span style="background:rgba(255,255,255,.2);color:#fff;border-radius:100px;padding:3px 10px;font-size:10px;font-weight:700">CAREER TIPS · EN</span>
+          <h2 style="font-family:var(--r);font-size:16px;font-weight:800;color:#fff;margin:10px 0 0;line-height:1.35">How to write a cover letter that gets past AI screening</h2>
+        </div>
+        <div style="padding:18px 20px;flex:1;display:flex;flex-direction:column">
+          <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">Most applications are rejected before a human reads them. Here's exactly what AI scoring looks for — and how to rank #1 in the queue.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:11px;color:var(--muted)">🇨🇦 5 min</span>
+            <button onclick="goto('jobs')" style="background:#F5F3FF;color:#7C3AED;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">Find jobs →</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+    <div style="text-align:center;margin-top:44px;padding:28px;background:#F8FAFC;border-radius:16px;border:1.5px solid #E2E8F0">
+      <p style="font-size:15px;color:var(--muted);margin:0 0 6px">Want us to cover a specific topic?</p>
+      <a href="mailto:hello@nexhire.ca" style="color:var(--indigo);font-weight:700;font-size:15px">hello@nexhire.ca →</a>
+    </div>
+  </div>
+</div>
+
 </main>
 
 <!-- SITE FOOTER ─────────────────────────────────────────── -->
@@ -1342,6 +1554,8 @@
       </div>
       <div class="footer-col">
         <div class="footer-col-title" data-i18n="footer.company">Company</div>
+        <a class="footer-link" data-goto="about">About / Our Team</a>
+        <a class="footer-link" data-goto="blog">Blog</a>
         <a class="footer-link" href="https://civicai.ca" target="_blank" rel="noopener">CivicAI Inc.</a>
         <a class="footer-link" href="https://attentezero.ca" target="_blank" rel="noopener">AttenteZéro</a>
         <a class="footer-link" data-goto="help" data-i18n="footer.help">Help Centre</a>
@@ -1526,7 +1740,7 @@ if ('serviceWorker' in navigator) {
     .catch(e => console.warn('[SW] failed', e));
 }
 </script>
-<script src="/nexhire/js/app.js?v=20260526g"></script>
+<script src="/nexhire/js/app.js?v=20260526h"></script>
 <script>window.__nexBase='/nexhire';</script>
 <script src="/nexhire/js/chatbot.js?v=20260524a"></script>
 </body>
