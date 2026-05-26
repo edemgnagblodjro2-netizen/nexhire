@@ -1033,20 +1033,21 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // ── Sessions (PostgreSQL-backed — survives server restarts) ──
+const isProd = process.env.NODE_ENV === 'production';
 app.use(session({
   store: new pgSession({
     conString: process.env.DATABASE_URL,
     tableName: 'nh_sessions',
-    createTableIfMissing: false,
+    createTableIfMissing: true,
   }),
   secret: process.env.NEXHIRE_SESSION_SECRET || process.env.SESSION_SECRET || 'nexhire-dev-secret-2026',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,
+    secure: isProd,       // true in production (HTTPS proxy), false in dev
     httpOnly: true,
     maxAge: 7 * 24 * 60 * 60 * 1000,
-    sameSite: 'lax'
+    sameSite: isProd ? 'none' : 'lax', // 'none' required for cross-site Replit proxy
   }
 }));
 
