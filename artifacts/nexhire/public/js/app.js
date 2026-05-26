@@ -1060,8 +1060,11 @@ function searchJobs() {
   const fprov = document.getElementById('fprov');
   if (fprov && heroProv !== undefined) fprov.value = heroProv;
 
-  // Save search before navigating
+  // Sync hero search text → jobs page search bar
   const q = document.getElementById('q')?.value?.trim() || '';
+  const fqEl = document.getElementById('fq');
+  if (fqEl) fqEl.value = q;
+
   const province = heroProv || '';
   saveRecentSearch(q, province, 0);
   renderRecentSearches();
