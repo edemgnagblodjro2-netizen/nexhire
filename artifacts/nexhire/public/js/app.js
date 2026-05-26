@@ -2277,7 +2277,7 @@ function computeCompleteness(p, user) {
     { key: 'skills', label: isFr ? 'Ajouter des compétences' : 'Add skills', val: safeJsonArr(p.skills).length > 0 },
     { key: 'city', label: isFr ? 'Ajouter votre ville' : 'Add your city', val: p.city },
     { key: 'linkedin_url', label: isFr ? 'Lier votre LinkedIn' : 'Link your LinkedIn', val: p.linkedin_url },
-    { key: 'experience_years', label: isFr ? 'Années d\'expérience' : 'Add experience years', val: p.experience_years > 0 },
+    { key: 'experience_years', label: isFr ? 'Années d\'expérience' : 'Add experience years', val: p.experience_years != null },
     { key: 'phone', label: isFr ? 'Numéro de téléphone' : 'Add phone number', val: p.phone || user?.phone },
   ];
   const done = fields.filter(f => f.val);
