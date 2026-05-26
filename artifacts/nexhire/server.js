@@ -1013,6 +1013,7 @@ app.use(helmet({
     directives: {
       defaultSrc:    ["'self'"],
       scriptSrc:     ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://js.stripe.com", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
+      scriptSrcElem: ["'self'", "'unsafe-inline'", "https://js.stripe.com", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
       scriptSrcAttr: ["'unsafe-inline'", "'unsafe-hashes'"],
       styleSrc:      ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
       fontSrc:       ["'self'", "https://fonts.gstatic.com", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
