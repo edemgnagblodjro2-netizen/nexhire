@@ -2,6 +2,7 @@ services:
   - type: web
     name: nexhire
     runtime: node
+    rootDir: artifacts/nexhire
     buildCommand: npm install
     startCommand: node server.js
     envVars:
