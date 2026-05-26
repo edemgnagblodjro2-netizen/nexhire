@@ -1007,26 +1007,24 @@ app.get(BASE_PATH + '/mockup-:name.html', (req, res) => {
 });
 
 // ── Security ──────────────────────────────────────────────
-app.use(helmet({
-  contentSecurityPolicy: {
-    useDefaults: false,
-    directives: {
-      defaultSrc:    ["'self'"],
-      scriptSrc:     ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://js.stripe.com", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
-      scriptSrcElem: ["'self'", "'unsafe-inline'", "https://js.stripe.com", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
-      scriptSrcAttr: ["'unsafe-inline'", "'unsafe-hashes'"],
-      styleSrc:      ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
-      fontSrc:       ["'self'", "https://fonts.gstatic.com", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
-      imgSrc:        ["'self'", "data:", "https:", "blob:"],
-      connectSrc:    ["'self'", "https://api.openai.com", "https://api.stripe.com", "https://js.stripe.com", "https://api.adzuna.com"],
-      frameSrc:      ["'self'", "https://js.stripe.com"],
-      workerSrc:     ["'self'", "blob:"],
-      objectSrc:     ["'none'"],
-      baseUri:       ["'self'"],
-    },
-  },
-  crossOriginEmbedderPolicy: false,
-}));
+app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
+app.use((_req, res, next) => {
+  res.setHeader('Content-Security-Policy', [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
+    "script-src-elem 'self' 'unsafe-inline' https://js.stripe.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
+    "script-src-attr 'unsafe-inline' 'unsafe-hashes'",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
+    "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
+    "img-src 'self' data: https: blob:",
+    "connect-src 'self' https://api.openai.com https://api.stripe.com https://js.stripe.com https://api.adzuna.com",
+    "frame-src 'self' https://js.stripe.com",
+    "worker-src 'self' blob:",
+    "object-src 'none'",
+    "base-uri 'self'",
+  ].join('; '));
+  next();
+});
 
 app.use(cors({ origin: true, credentials: true }));
 
