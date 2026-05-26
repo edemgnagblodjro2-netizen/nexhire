@@ -1,8 +1,8 @@
-const CACHE = 'nexhire-v66';
+const CACHE = 'nexhire-v67';
 const PRECACHE = [
   '/nexhire/',
   '/nexhire/css/main.css?v=20260525m',
-  '/nexhire/js/app.js?v=20260526e',
+  '/nexhire/js/app.js?v=20260526f',
   '/nexhire/img/hero-bg1.jpg',
   '/nexhire/img/hero-bg2.jpg',
   '/nexhire/img/hero-bg3.jpg',

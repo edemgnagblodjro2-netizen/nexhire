@@ -262,7 +262,7 @@ function goto(page) {
   if (page === 'tax-calc') initTaxCalc();
   // terms page is static — no render needed
   // update URL hash for direct linking
-  const publicPages = ['home','jobs','feed','employer','pricing','privacy','terms','help'];
+  const publicPages = ['home','jobs','feed','employer','pricing','privacy','terms','help','tax-calc'];
   if (publicPages.includes(page)) {
     history.replaceState(null, '', page === 'home' ? window.location.pathname : '#' + page);
   }
@@ -335,7 +335,7 @@ function restoreFromHash() {
     }
     return;
   }
-  const valid = ['jobs','feed','employer','pricing','privacy','terms','help'];
+  const valid = ['jobs','feed','employer','pricing','privacy','terms','help','tax-calc'];
   if (hash && valid.includes(hash)) goto(hash);
 }
 window.addEventListener('hashchange', restoreFromHash);
