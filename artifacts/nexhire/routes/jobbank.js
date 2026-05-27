@@ -99,7 +99,7 @@ router.get('/search', async (req, res) => {
     const seenIds = new Set(jobs.map(j => j.id));
 
     // Provinces extra — 5 jobs chacune si pas de filtre province
-    if (!prov || prov === '') {
+    if (true) {
       const extras = await Promise.allSettled(
         EXTRA_PROVINCES.map(p => fetchAdzuna(appId, appKey, q, PROV_TO_WHERE[p], 5, 1))
       );
