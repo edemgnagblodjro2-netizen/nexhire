@@ -90,6 +90,10 @@ router.get('/search', async (req, res) => {
       }
     }
 
+    const excluded = ['uber', 'lyft', 'doordash', 'instacart', 'delivery driver', 'deliver with', 'conduisez', 'chauffeur'];
+    jobs = jobs.filter(j => {
+      const text = (j.title + ' ' + j.company).toLowerCase();
+    });
     res.json({ success: true, jobs: jobs, total: main.count || jobs.length });
   } catch (e) {
     res.json({ success: false, jobs: [], error: e.message });
