@@ -1111,7 +1111,7 @@ app.get(BASE_PATH + '/*', (req, res) => {
 app.get('/', (req, res) => res.redirect(BASE_PATH + '/'));
 
 // ── Start ──────────────────────────────────────────────────
-runMigrations().then(() => require('./routes/salary').seedBenchmarks()).then(() => seedDemoData()).then(() => {
+runMigrations().then(() => require('./routes/salary').seedBenchmarks()).then(() => Promise.resolve()).then(() => {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`[Nexhire] Server on port ${PORT} | base: ${BASE_PATH}`);
   });
