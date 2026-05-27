@@ -1384,9 +1384,13 @@ async function filterJobs(page = 1) {
 
   // Load Job Bank Canada section in parallel (only on first page)
   // Append Adzuna jobs into the same list (Canada only, page 1)
-  if (page === 1) {
-    loadAdzunaIntoMainList(q, locVal, list);
-  }
+ if (
+  page === 1 &&
+  typeof locVal === 'string' &&
+  locVal !== 'REMOTE' &&
+  !locVal.startsWith('c:')
+) {
+  loadAdzunaIntoMainList(q, locVal, list);
 }
 
 function clearFilters() {
