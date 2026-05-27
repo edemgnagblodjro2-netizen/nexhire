@@ -23,7 +23,7 @@ app.use((_req, res, next) => {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
     "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
     "img-src 'self' data: https: blob:",
-    "connect-src 'self' https://api.openai.com https://api.stripe.com https://js.stripe.com https://api.adzuna.com https://nexhire.ca",
+    "connect-src 'self' https://api.openai.com https://api.stripe.com https://js.stripe.com https://api.adzuna.com https://nexhire.ca https://nominatim.openstreetmap.org https://cdn.jsdelivr.net",
     "frame-src 'self' https://js.stripe.com",
     "worker-src 'self' blob:",
     "object-src 'none'",
