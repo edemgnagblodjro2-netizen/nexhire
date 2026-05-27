@@ -1274,7 +1274,7 @@ async function filterJobs(page = 1) {
   const isUnseenFilter = fdate === 'unseen';
 
   const params = new URLSearchParams({ page, limit: isUnseenFilter ? 50 : 15 });
-  params.set('q', q || 'developer analyst engineer manager designer');
+  params.set('q', q || 'developer');
   if (work_mode) params.set('work_mode', work_mode);
   if (job_type) params.set('job_type', job_type);
   if (sal_min) params.set('salary_min', sal_min);
