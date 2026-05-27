@@ -1421,7 +1421,7 @@ async function loadAdzunaIntoMainList(q, prov, listEl) {
   listEl.appendChild(skeleton);
 
   const params = new URLSearchParams({ lang: state.lang });
-  if (q) params.set('q', q);
+  params.set('q', q || 'developer');
   if (prov && prov !== 'REMOTE' && !prov.startsWith('c:')) params.set('prov', prov);
 
   const d = await api('GET', `${BASE}/api/jobbank/search?${params}`);
