@@ -63,7 +63,7 @@ router.get('/search', async (req, res) => {
       return res.json({ success: false, jobs: [], error: 'Adzuna keys not configured' });
     }
 
-    const q = req.query.q || '';
+    const q = req.query.q || 'developer OR analyst OR engineer OR manager OR designer OR accountant OR nurse OR teacher';
     const prov = req.query.prov || '';
     const page = req.query.page || 1;
     const where = prov && prov !== 'REMOTE' ? (PROV_TO_WHERE[prov] || '') : '';
