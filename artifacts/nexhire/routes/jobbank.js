@@ -1,3 +1,4 @@
+cat > /home/runner/workspace/artifacts/nexhire/routes/jobbank.js << 'EOF'
 const express = require('express');
 const router  = express.Router();
 const https   = require('https');
@@ -54,8 +55,7 @@ function mapJobs(results) {
 
 async function fetchAdzuna(appId, appKey, q, where, perPage, page) {
   const params = new URLSearchParams({
-    app_id: appId,
-    app_key: appKey,
+    app_id: appId, app_key: appKey,
     results_per_page: String(perPage),
   });
   if (q && q.trim()) params.set('what', q.trim());
@@ -65,14 +65,11 @@ async function fetchAdzuna(appId, appKey, q, where, perPage, page) {
   return JSON.parse(raw);
 }
 
-// GET /api/jobbank/search?q=developer&prov=QC&lang=en&page=1
 router.get('/search', async (req, res) => {
   try {
     const appId  = process.env.ADZUNA_APP_ID;
     const appKey = process.env.ADZUNA_API_KEY;
-    if (!appId || !appKey) {
-      return res.json({ success: false, jobs: [], error: 'Adzuna keys not configured' });
-    }
+    if (!appId || !appKey) return res.json({ success: false, jobs: [], error: 'Adzuna keys not configured' });
 
     const q    = req.query.q || 'developer';
     const prov = req.query.prov || '';
@@ -80,9 +77,7 @@ router.get('/search', async (req, res) => {
     const where = prov && prov !== 'REMOTE' ? (PROV_TO_WHERE[prov] || '') : '';
 
     const main = await fetchAdzuna(appId, appKey, q, where, 20, page);
-    if (!main.results) {
-      return res.json({ success: false, jobs: [], error: main.exception || 'No results' });
-    }
+    if (!main.results) return res.json({ success: false, jobs: [], error: main.exception || 'No results' });
 
     let jobs = filterGigs(mapJobs(main.results));
     const seenIds = new Set(jobs.map(j => j.id));
@@ -107,3 +102,5 @@ router.get('/search', async (req, res) => {
 });
 
 module.exports = router;
+EOF
+echo "Done" && wc -l /home/runner/workspace/artifacts/nexhire/routes/jobbank.js
