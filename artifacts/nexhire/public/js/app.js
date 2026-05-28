@@ -6171,7 +6171,7 @@ function renderNotifDropdown(notifs, unread, isFr) {
       const isUnread = !n.read_at;
       const link = n.link ? `data-link="${n.link}"` : '';
       const dtype = `data-type="${esc(n.type || '')}"`;
-      return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} ${dtype} data-onclick="handleNotifClick('${esc(n.id)}','${esc(n.link||'')}','${esc(n.type||'')}')">
+      return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} ${dtype} data-onclick="data-onclick="handleNotifClick('${esc(n.id)}','${esc(n.link||'')}','${esc(n.type||'')}')">
         <div class="notif-icon" style="background:${ic.bg};color:${ic.color}"><i class="ti ${ic.icon}"></i></div>
         <div class="notif-item-body">
           <div class="notif-item-title">${esc(n.title || '')}</div>
@@ -6264,6 +6264,7 @@ async function handleNotifClick(id, rawLink, type) {
         if (navEl) showEmpTab('etab-jobs', navEl);
       }, 100);
     }
+  }
 }
   // Remove from list immediately
   el.remove();
