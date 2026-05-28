@@ -6198,8 +6198,9 @@ async function markAllNotifsRead() {
     el.classList.remove('unread');
     el.querySelector('.notif-unread-dot')?.remove();
   });
-  // Remove "mark all" button
-  document.querySelector('.notif-dd-markall')?.remove();
+   document.querySelector('.notif-dd-markall')?.remove();
+  // ← AJOUT : rouvre le dropdown mis à jour
+  openNotifDropdown();
 }
 
 // Type → destination pour employeurs
