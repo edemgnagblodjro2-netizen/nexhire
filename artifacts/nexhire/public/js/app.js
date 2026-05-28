@@ -1312,6 +1312,7 @@ async function filterJobs(page = 1) {
     const t = T[state.lang];
     if (countLabel) countLabel.textContent = t['jobs.noresult.short'] || '0 résultats';
     list.innerHTML = `<div class="empty-state"><i class="ti ti-search-off"></i><p>${t['jobs.noresult']}</p>${hasActiveFilters ? `<button class="btn-ghost" data-onclick="clearFilters()" style="margin-top:12px;font-size:13px"><i class="ti ti-x"></i> ${t['jobs.clear']}</button>` : ''}</div>`;
+    if (page === 1) loadAdzunaIntoMainList(q, locVal, list);
     return;
   }
 
