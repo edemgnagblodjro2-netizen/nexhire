@@ -1433,7 +1433,7 @@ async function loadAdzunaIntoMainList(q, prov, listEl) {
   document.getElementById(skeletonId)?.remove();
   if (!listEl.isConnected) return;
 
-  const jobs = (d.jobs || []).slice(0, 20);
+  const jobs = (d.jobs || []).slice(0, 30);
   if (!jobs.length) return;
 
   // Divider row
