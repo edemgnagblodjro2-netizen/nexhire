@@ -1283,7 +1283,8 @@ async function filterJobs(page = 1) {
   const isUnseenFilter = fdate === 'unseen';
 
   const params = new URLSearchParams({ page, limit: isUnseenFilter ? 50 : 15 });
-  params.set('q', q || '');
+  const cleanQ = (q || '').includes('@') ? '' : (q || '');
+  params.set('q', cleanQ);
   if (work_mode) params.set('work_mode', work_mode);
   if (job_type) params.set('job_type', job_type);
   if (sal_min) params.set('salary_min', sal_min);
@@ -1436,6 +1437,7 @@ async function loadAdzunaIntoMainList(q, prov, listEl) {
   params.set('q', q || 'developer');
   if (prov && prov !== 'REMOTE' && !prov.startsWith('c:')) params.set('prov', prov);
 
+  params.set('_t', Date.now());
   const d = await api('GET', `${BASE}/api/jobbank/search?${params}`);
 
   // Remove skeleton (it might be gone if list was re-rendered)
