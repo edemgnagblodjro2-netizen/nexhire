@@ -1,6 +1,6 @@
 'use strict';
 
-const BASE = '';
+const BASE = '/nexhire';
 
 // ── CSP-safe global event delegation ──────────────────────────────────
 // Replaces all onclick=/onchange=/onkeydown=/oninput= HTML attributes.
@@ -1275,7 +1275,7 @@ async function filterJobs(page = 1) {
   const isUnseenFilter = fdate === 'unseen';
 
   const params = new URLSearchParams({ page, limit: isUnseenFilter ? 50 : 15 });
-  params.set('q', q || '');
+  params.set('q', q || 'developer');
   if (work_mode) params.set('work_mode', work_mode);
   if (job_type) params.set('job_type', job_type);
   if (sal_min) params.set('salary_min', sal_min);
@@ -1312,7 +1312,6 @@ async function filterJobs(page = 1) {
     const t = T[state.lang];
     if (countLabel) countLabel.textContent = t['jobs.noresult.short'] || '0 résultats';
     list.innerHTML = `<div class="empty-state"><i class="ti ti-search-off"></i><p>${t['jobs.noresult']}</p>${hasActiveFilters ? `<button class="btn-ghost" data-onclick="clearFilters()" style="margin-top:12px;font-size:13px"><i class="ti ti-x"></i> ${t['jobs.clear']}</button>` : ''}</div>`;
-    if (page === 1) loadAdzunaIntoMainList(q, locVal, list);
     return;
   }
 
@@ -1386,9 +1385,9 @@ async function filterJobs(page = 1) {
   // Load Job Bank Canada section in parallel (only on first page)
   // Append Adzuna jobs into the same list (Canada only, page 1)
  if (page === 1) {
-    console.log('ADZUNA CALL - list:', list, 'locVal:', locVal);
-    loadAdzunaIntoMainList(q, locVal, list);
-  }
+  console.log('ADZUNA CALL - list:', list, 'locVal:', locVal);
+  loadAdzunaIntoMainList(q, locVal, list);
+}
 }
 
 function clearFilters() {
@@ -1433,7 +1432,7 @@ async function loadAdzunaIntoMainList(q, prov, listEl) {
   document.getElementById(skeletonId)?.remove();
   if (!listEl.isConnected) return;
 
-  const jobs = (d.jobs || []).slice(0, 30);
+  const jobs = (d.jobs || []).slice(0, 20);
   if (!jobs.length) return;
 
   // Divider row
@@ -6098,11 +6097,7 @@ document.getElementById('nav-notif-bell')?.addEventListener('click', (e) => {
 });
 
 // Close dropdown when clicking elsewhere
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('#notif-dropdown') && !e.target.closest('#nav-notif-bell')) {
-    closeNotifDropdown();
-  }
-});
+document.addEventListener('click', () => closeNotifDropdown());
 
 function closeNotifDropdown() {
   const dd = document.getElementById('notif-dropdown');
@@ -6159,7 +6154,7 @@ function renderNotifDropdown(notifs, unread, isFr) {
   if (!dd) return;
 
   const markAllBtn = unread > 0
-    ? `<button class="notif-dd-markall" data-onclick="event.stopPropagation();markAllNotifsRead()"><i class="ti ti-checks"></i> ${isFr ? 'Tout marquer comme lu' : 'Mark all as read'}</button>`
+    ? `<button class="notif-dd-markall" data-onclick="markAllNotifsRead()"><i class="ti ti-checks"></i> ${isFr ? 'Tout marquer comme lu' : 'Mark all as read'}</button>`
     : '';
 
   let listHtml = '';
@@ -6169,9 +6164,9 @@ function renderNotifDropdown(notifs, unread, isFr) {
     listHtml = notifs.map(n => {
       const ic = notifIcon(n.type);
       const isUnread = !n.read_at;
-      const link = n.link ? `data-link="${n.link}"` : '';
+      const link = n.link ? `data-link="${esc(n.link)}"` : '';
       const dtype = `data-type="${esc(n.type || '')}"`;
-      return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} ${dtype} data-onclick="data-onclick="handleNotifClick('${esc(n.id)}','${esc(n.link||'')}','${esc(n.type||'')}')">
+      return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} ${dtype} data-onclick="markNotifRead(this)">
         <div class="notif-icon" style="background:${ic.bg};color:${ic.color}"><i class="ti ${ic.icon}"></i></div>
         <div class="notif-item-body">
           <div class="notif-item-title">${esc(n.title || '')}</div>
@@ -6193,9 +6188,17 @@ function renderNotifDropdown(notifs, unread, isFr) {
 
 async function markAllNotifsRead() {
   await api('POST', `${BASE}/api/notifications/mark-read`, {});
+  // Update badge
   const badge = document.getElementById('notif-badge');
   if (badge) { badge.textContent = ''; badge.style.display = 'none'; }
-  setTimeout(() => openNotifDropdown(), 300);
+  // Re-render dropdown without unread styling
+  const items = document.querySelectorAll('.notif-item.unread');
+  items.forEach(el => {
+    el.classList.remove('unread');
+    el.querySelector('.notif-unread-dot')?.remove();
+  });
+  // Remove "mark all" button
+  document.querySelector('.notif-dd-markall')?.remove();
 }
 
 // Type → destination pour employeurs
@@ -6228,44 +6231,12 @@ const NOTIF_CAND_DEST = {
   skill_badge:          null,
 };
 
-async function handleNotifClick(id, rawLink, type) {
-  const el = document.querySelector(`.notif-item[data-id="${id}"]`);
-  const wasUnread = el?.classList.contains('unread');
-  if (el) el.remove();
-  if (wasUnread) updateNotifBadge(-1);
-  const list = document.getElementById('notif-dd-list');
-  if (list && !list.querySelector('.notif-item')) {
-    const isFr = state.lang === 'fr';
-    list.innerHTML = `<div class="notif-dd-empty"><i class="ti ti-bell-off" style="font-size:28px;display:block;margin-bottom:8px"></i>${isFr ? 'Aucune notification' : 'No notifications'}</div>`;
-    document.querySelector('.notif-dd-markall')?.remove();
-  }
-  if (id) api('POST', `${BASE}/api/notifications/mark-read`, { ids: [id] });
-  closeNotifDropdown();
-  const isCandidate = state.user?.role !== 'employer';
-  if (isCandidate) {
-    if (type === 'status_update' || type === 'application_update' || type === 'application') {
-      goto('candidate-dash');
-      setTimeout(() => {
-        const navEl = document.querySelector('[data-tab="tab-applications"]');
-        if (navEl) showTab('tab-applications', navEl);
-      }, 100);
-    } else if (type === 'message' && rawLink.includes('messages-')) {
-      location.href = rawLink;
-    } else if (type === 'job_match' || type === 'job_alert') {
-      goto('jobs');
-    }
-  } else {
-    if (type === 'message' && rawLink.includes('messages-')) {
-      location.href = rawLink;
-    } else if (type === 'application' || type === 'application_update') {
-      goto('employer-dash');
-      setTimeout(() => {
-        const navEl = document.querySelector('[data-emptab="etab-jobs"]');
-        if (navEl) showEmpTab('etab-jobs', navEl);
-      }, 100);
-    }
-  }
-}
+async function markNotifRead(el) {
+  const id      = el.dataset.id;
+  const rawLink = el.dataset.link || '';
+  const type    = el.dataset.type || '';
+  const wasUnread = el.classList.contains('unread');
+
   // Remove from list immediately
   el.remove();
 
