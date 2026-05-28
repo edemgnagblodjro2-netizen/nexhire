@@ -43,11 +43,11 @@ router.get('/', async (req, res) => {
     const knownCities = CA_CITIES_BY_PROV[province] || [];
     if (knownCities.length) {
       const cityPh = knownCities.map((_, idx) => `$${i + 1 + idx}`).join(',');
-      where.push(`(j.province = $${i} OR (j.province IS NULL AND j.city IN (${cityPh})))`);
+      where.push(`(j.province = $${i} OR j.province IS NULL OR (j.province IS NULL AND j.city IN (${cityPh})))`);
       params.push(province, ...knownCities);
       i += 1 + knownCities.length;
     } else {
-      where.push(`j.province = $${i}`);
+      where.push(`(j.province = $${i} OR j.province IS NULL)`);
       params.push(province); i++;
     }
   }
