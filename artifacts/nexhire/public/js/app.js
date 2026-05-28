@@ -6171,7 +6171,7 @@ function renderNotifDropdown(notifs, unread, isFr) {
       const isUnread = !n.read_at;
       const link = n.link ? `data-link="${n.link}"` : '';
       const dtype = `data-type="${esc(n.type || '')}"`;
-      return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} ${dtype} data-onclick="markNotifRead(event.currentTarget)">
+      return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} ${dtype} data-onclick="data-onclick="handleNotifClick('${esc(n.id)}','${esc(n.link||'')}','${esc(n.type||'')}')">
         <div class="notif-icon" style="background:${ic.bg};color:${ic.color}"><i class="ti ${ic.icon}"></i></div>
         <div class="notif-item-body">
           <div class="notif-item-title">${esc(n.title || '')}</div>
@@ -6228,12 +6228,44 @@ const NOTIF_CAND_DEST = {
   skill_badge:          null,
 };
 
-async function markNotifRead(el) {
-  const id      = el.dataset.id;
-  const rawLink = el.dataset.link || '';
-  const type    = el.dataset.type || '';
-  const wasUnread = el.classList.contains('unread');
-
+async function handleNotifClick(id, rawLink, type) {
+  const el = document.querySelector(`.notif-item[data-id="${id}"]`);
+  const wasUnread = el?.classList.contains('unread');
+  if (el) el.remove();
+  if (wasUnread) updateNotifBadge(-1);
+  const list = document.getElementById('notif-dd-list');
+  if (list && !list.querySelector('.notif-item')) {
+    const isFr = state.lang === 'fr';
+    list.innerHTML = `<div class="notif-dd-empty"><i class="ti ti-bell-off" style="font-size:28px;display:block;margin-bottom:8px"></i>${isFr ? 'Aucune notification' : 'No notifications'}</div>`;
+    document.querySelector('.notif-dd-markall')?.remove();
+  }
+  if (id) api('POST', `${BASE}/api/notifications/mark-read`, { ids: [id] });
+  closeNotifDropdown();
+  const isCandidate = state.user?.role !== 'employer';
+  if (isCandidate) {
+    if (type === 'status_update' || type === 'application_update' || type === 'application') {
+      goto('candidate-dash');
+      setTimeout(() => {
+        const navEl = document.querySelector('[data-tab="tab-applications"]');
+        if (navEl) showTab('tab-applications', navEl);
+      }, 100);
+    } else if (type === 'message' && rawLink.includes('messages-')) {
+      location.href = rawLink;
+    } else if (type === 'job_match' || type === 'job_alert') {
+      goto('jobs');
+    }
+  } else {
+    if (type === 'message' && rawLink.includes('messages-')) {
+      location.href = rawLink;
+    } else if (type === 'application' || type === 'application_update') {
+      goto('employer-dash');
+      setTimeout(() => {
+        const navEl = document.querySelector('[data-emptab="etab-jobs"]');
+        if (navEl) showEmpTab('etab-jobs', navEl);
+      }, 100);
+    }
+  }
+}
   // Remove from list immediately
   el.remove();
 
