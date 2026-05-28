@@ -1110,10 +1110,71 @@ app.get(BASE_PATH + '/*', (req, res) => {
 
 //app.get('/', (req, res) => res.redirect(BASE_PATH + '/'));
 
+// ── Job Alerts — toutes les 6h ─────────────────────────────
+async function runJobAlerts() {
+  try {
+    const { pool } = require('./models/db');
+    const emailService = require('./services/email');
+
+    const alerts = await pool.query(`
+      SELECT a.*, u.email, u.first_name, u.preferred_lang
+      FROM nh_job_alerts a
+      JOIN nh_users u ON u.id = a.user_id
+    `);
+
+    for (const alert of alerts.rows) {
+      const where = [];
+      const params = [];
+      let i = 1;
+
+      if (alert.keywords) {
+        where.push(`(j.title_en ILIKE $${i} OR j.title_fr ILIKE $${i} OR j.skills_required::text ILIKE $${i})`);
+        params.push(`%${alert.keywords}%`); i++;
+      }
+      if (alert.province) {
+        where.push(`j.province = $${i}`);
+        params.push(alert.province); i++;
+      }
+      if (alert.work_mode) {
+        where.push(`j.work_mode = $${i}`);
+        params.push(alert.work_mode); i++;
+      }
+
+      where.push(`j.published_at > NOW() - INTERVAL '24 hours'`);
+      where.push(`j.status = 'active'`);
+
+      const sql = `
+        SELECT j.*, c.name AS company_name
+        FROM nh_jobs j
+        JOIN nh_companies c ON c.id = j.company_id
+        ${where.length ? 'WHERE ' + where.join(' AND ') : ''}
+        LIMIT 10
+      `;
+
+      const jobs = await pool.query(sql, params);
+      if (!jobs.rows.length) continue;
+
+      await emailService.sendJobAlertEmail(
+        alert.email,
+        alert.first_name,
+        jobs.rows,
+        alert.preferred_lang || 'fr'
+      );
+      console.log(`[JobAlerts] Sent to ${alert.email} — ${jobs.rows.length} jobs`);
+    }
+  } catch (e) {
+    console.error('[JobAlerts] Error:', e.message);
+  }
+}
+
 // ── Start ──────────────────────────────────────────────────
 runMigrations().then(() => require('./routes/salary').seedBenchmarks()).then(() => Promise.resolve()).then(() => {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`[Nexhire] Server on port ${PORT} | base: ${BASE_PATH}`);
+    // Run job alerts every 6 hours
+    setInterval(runJobAlerts, 6 * 60 * 60 * 1000);
+    // Run once after 1 min on startup
+    setTimeout(runJobAlerts, 60 * 1000);
   });
 }).catch(err => {
   console.error('[Nexhire] Fatal startup error:', err);
