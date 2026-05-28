@@ -1244,6 +1244,12 @@ async function loadJobs() {
   if (jdSidebar) jdSidebar.style.display = '';
   if (jobsList)  jobsList.style.display  = '';
 
+  // Clear search fields for employers
+  const fqEl = document.getElementById('fq');
+  const qEl  = document.getElementById('q');
+  if (fqEl && fqEl.value.includes('@')) fqEl.value = '';
+  if (qEl  && qEl.value.includes('@'))  qEl.value  = '';
+  
   // Pre-fill salary filter from candidate profile (only if filter not already set by user)
   const fsalEl = document.getElementById('fsal');
   if (fsalEl && !fsalEl.value && state.user?.role === 'candidate' && state.candidateProfile?.desired_salary_min) {
