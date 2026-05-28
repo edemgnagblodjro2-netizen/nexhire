@@ -1290,6 +1290,7 @@ async function filterJobs(page = 1) {
   const list = document.getElementById('jobs-list');
   if (list) list.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:28px;color:var(--indigo)"></i></div>`;
 
+  params.set('_t', Date.now());
   const d = await api('GET', `${BASE}/api/jobs?${params}`);
   if (!list) return;
   let jobs = d.jobs || [];
