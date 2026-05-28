@@ -6155,7 +6155,7 @@ function renderNotifDropdown(notifs, unread, isFr) {
   if (!dd) return;
 
   const markAllBtn = unread > 0
-    ? `<button class="notif-dd-markall" data-onclick="markAllNotifsRead()"><i class="ti ti-checks"></i> ${isFr ? 'Tout marquer comme lu' : 'Mark all as read'}</button>`
+    ? `<button class="notif-dd-markall" data-onclick="event.stopPropagation();markAllNotifsRead()"><i class="ti ti-checks"></i> ${isFr ? 'Tout marquer comme lu' : 'Mark all as read'}</button>`
     : '';
 
   let listHtml = '';
