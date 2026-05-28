@@ -7051,6 +7051,7 @@ async function loadModJobs() {
         <i class="ti ti-circle-check" style="font-size:40px;color:#22c55e;display:block;margin-bottom:12px"></i>
         <p>${modCurrentStatus === 'pending' ? '🎉 Aucune offre en attente — le filtre IA a tout traité !' : 'Aucune offre dans cette catégorie.'}</p>
       </div>`;
+  if (page === 1) loadAdzunaIntoMainList(q, locVal, list);
     return;
   }
 
