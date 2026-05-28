@@ -6189,18 +6189,9 @@ function renderNotifDropdown(notifs, unread, isFr) {
 
 async function markAllNotifsRead() {
   await api('POST', `${BASE}/api/notifications/mark-read`, {});
-  // Update badge
   const badge = document.getElementById('notif-badge');
   if (badge) { badge.textContent = ''; badge.style.display = 'none'; }
-  // Re-render dropdown without unread styling
-  const items = document.querySelectorAll('.notif-item.unread');
-  items.forEach(el => {
-    el.classList.remove('unread');
-    el.querySelector('.notif-unread-dot')?.remove();
-  });
-   document.querySelector('.notif-dd-markall')?.remove();
-  // ← AJOUT : rouvre le dropdown mis à jour
-  openNotifDropdown();
+  setTimeout(() => openNotifDropdown(), 300);
 }
 
 // Type → destination pour employeurs
