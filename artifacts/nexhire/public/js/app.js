@@ -1,6 +1,6 @@
 'use strict';
 
-const BASE = '/nexhire';
+const BASE = '';
 
 // ── CSP-safe global event delegation ──────────────────────────────────
 // Replaces all onclick=/onchange=/onkeydown=/oninput= HTML attributes.
@@ -1275,7 +1275,7 @@ async function filterJobs(page = 1) {
   const isUnseenFilter = fdate === 'unseen';
 
   const params = new URLSearchParams({ page, limit: isUnseenFilter ? 50 : 15 });
-  params.set('q', q || 'developer');
+  params.set('q', q || '');
   if (work_mode) params.set('work_mode', work_mode);
   if (job_type) params.set('job_type', job_type);
   if (sal_min) params.set('salary_min', sal_min);
@@ -1312,6 +1312,7 @@ async function filterJobs(page = 1) {
     const t = T[state.lang];
     if (countLabel) countLabel.textContent = t['jobs.noresult.short'] || '0 résultats';
     list.innerHTML = `<div class="empty-state"><i class="ti ti-search-off"></i><p>${t['jobs.noresult']}</p>${hasActiveFilters ? `<button class="btn-ghost" data-onclick="clearFilters()" style="margin-top:12px;font-size:13px"><i class="ti ti-x"></i> ${t['jobs.clear']}</button>` : ''}</div>`;
+    if (page === 1) loadAdzunaIntoMainList(q, locVal, list);
     return;
   }
 
@@ -1385,9 +1386,9 @@ async function filterJobs(page = 1) {
   // Load Job Bank Canada section in parallel (only on first page)
   // Append Adzuna jobs into the same list (Canada only, page 1)
  if (page === 1) {
-  console.log('ADZUNA CALL - list:', list, 'locVal:', locVal);
-  loadAdzunaIntoMainList(q, locVal, list);
-}
+    console.log('ADZUNA CALL - list:', list, 'locVal:', locVal);
+    loadAdzunaIntoMainList(q, locVal, list);
+  }
 }
 
 function clearFilters() {
@@ -1432,7 +1433,7 @@ async function loadAdzunaIntoMainList(q, prov, listEl) {
   document.getElementById(skeletonId)?.remove();
   if (!listEl.isConnected) return;
 
-  const jobs = (d.jobs || []).slice(0, 20);
+  const jobs = (d.jobs || []).slice(0, 30);
   if (!jobs.length) return;
 
   // Divider row
@@ -6097,7 +6098,11 @@ document.getElementById('nav-notif-bell')?.addEventListener('click', (e) => {
 });
 
 // Close dropdown when clicking elsewhere
-document.addEventListener('click', () => closeNotifDropdown());
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('#notif-dropdown') && !e.target.closest('#nav-notif-bell')) {
+    closeNotifDropdown();
+  }
+});
 
 function closeNotifDropdown() {
   const dd = document.getElementById('notif-dropdown');
@@ -6154,7 +6159,7 @@ function renderNotifDropdown(notifs, unread, isFr) {
   if (!dd) return;
 
   const markAllBtn = unread > 0
-    ? `<button class="notif-dd-markall" data-onclick="markAllNotifsRead()"><i class="ti ti-checks"></i> ${isFr ? 'Tout marquer comme lu' : 'Mark all as read'}</button>`
+    ? `<button class="notif-dd-markall" data-onclick="event.stopPropagation();markAllNotifsRead()"><i class="ti ti-checks"></i> ${isFr ? 'Tout marquer comme lu' : 'Mark all as read'}</button>`
     : '';
 
   let listHtml = '';
@@ -6164,7 +6169,7 @@ function renderNotifDropdown(notifs, unread, isFr) {
     listHtml = notifs.map(n => {
       const ic = notifIcon(n.type);
       const isUnread = !n.read_at;
-      const link = n.link ? `data-link="${esc(n.link)}"` : '';
+      const link = n.link ? `data-link="${n.link}"` : '';
       const dtype = `data-type="${esc(n.type || '')}"`;
       return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} ${dtype} data-onclick="markNotifRead(this)">
         <div class="notif-icon" style="background:${ic.bg};color:${ic.color}"><i class="ti ${ic.icon}"></i></div>
@@ -6188,17 +6193,9 @@ function renderNotifDropdown(notifs, unread, isFr) {
 
 async function markAllNotifsRead() {
   await api('POST', `${BASE}/api/notifications/mark-read`, {});
-  // Update badge
   const badge = document.getElementById('notif-badge');
   if (badge) { badge.textContent = ''; badge.style.display = 'none'; }
-  // Re-render dropdown without unread styling
-  const items = document.querySelectorAll('.notif-item.unread');
-  items.forEach(el => {
-    el.classList.remove('unread');
-    el.querySelector('.notif-unread-dot')?.remove();
-  });
-  // Remove "mark all" button
-  document.querySelector('.notif-dd-markall')?.remove();
+  setTimeout(() => openNotifDropdown(), 300);
 }
 
 // Type → destination pour employeurs
@@ -7051,7 +7048,6 @@ async function loadModJobs() {
         <i class="ti ti-circle-check" style="font-size:40px;color:#22c55e;display:block;margin-bottom:12px"></i>
         <p>${modCurrentStatus === 'pending' ? '🎉 Aucune offre en attente — le filtre IA a tout traité !' : 'Aucune offre dans cette catégorie.'}</p>
       </div>`;
-  if (page === 1) loadAdzunaIntoMainList(q, locVal, list);
     return;
   }
 
