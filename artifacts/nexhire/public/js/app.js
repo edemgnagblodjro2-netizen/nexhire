@@ -6098,7 +6098,11 @@ document.getElementById('nav-notif-bell')?.addEventListener('click', (e) => {
 });
 
 // Close dropdown when clicking elsewhere
-document.addEventListener('click', () => closeNotifDropdown());
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('#notif-dropdown') && !e.target.closest('#nav-notif-bell')) {
+    closeNotifDropdown();
+  }
+});
 
 function closeNotifDropdown() {
   const dd = document.getElementById('notif-dropdown');
