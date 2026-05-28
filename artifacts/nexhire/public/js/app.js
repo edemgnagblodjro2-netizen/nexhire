@@ -6189,6 +6189,14 @@ function renderNotifDropdown(notifs, unread, isFr) {
       ${markAllBtn}
     </div>
     <div class="notif-dd-list" id="notif-dd-list">${listHtml}</div>`;
+  setTimeout(() => {
+    dd.querySelectorAll('.notif-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        markNotifRead(item);
+      });
+    });
+  }, 0);
 }
 
 async function markAllNotifsRead() {
