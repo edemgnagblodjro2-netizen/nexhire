@@ -1108,7 +1108,7 @@ app.get(BASE_PATH + '/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/', (req, res) => res.redirect(BASE_PATH + '/'));
+//app.get('/', (req, res) => res.redirect(BASE_PATH + '/'));
 
 // ── Start ──────────────────────────────────────────────────
 runMigrations().then(() => require('./routes/salary').seedBenchmarks()).then(() => Promise.resolve()).then(() => {

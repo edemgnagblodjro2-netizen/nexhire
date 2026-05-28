@@ -1,6 +1,6 @@
 'use strict';
 
-const BASE = '/nexhire';
+const BASE = '';
 
 // ── CSP-safe global event delegation ──────────────────────────────────
 // Replaces all onclick=/onchange=/onkeydown=/oninput= HTML attributes.
