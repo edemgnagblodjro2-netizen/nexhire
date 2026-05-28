@@ -111,17 +111,66 @@ router.patch('/:id/confirm', requireAuth, async (req, res) => {
       [selected_slot, req.params.id]
     );
 
-    const company = await db.get('SELECT owner_id FROM nh_companies WHERE id = $1', [slot.company_id]);
+    // ── Récupérer infos job + candidat + employeur ──────────
+    const job = await db.get('SELECT title_en, title_fr FROM nh_jobs WHERE id = $1', [slot.job_id]);
+    const jobTitle = job?.title_en || job?.title_fr || 'Entretien';
+    const candName = `${req.session.user.first_name || ''} ${req.session.user.last_name || ''}`.trim();
+    const candLang = req.session.user.preferred_lang || 'fr';
+    const slotDate = new Date(selected_slot).toLocaleString(candLang === 'fr' ? 'fr-CA' : 'en-CA', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+
+    const emailService = require('../services/email');
+
+    // Email au candidat
+    await emailService.send(
+      req.session.user.email,
+      candLang === 'fr' ? `✅ Entretien confirmé — ${jobTitle}` : `✅ Interview confirmed — ${jobTitle}`,
+      emailService.emailTemplate
+        ? emailService.emailTemplate(
+            candLang === 'fr' ? 'Entretien confirmé' : 'Interview confirmed',
+            `<p>${candLang === 'fr' ? 'Bonjour' : 'Hello'} ${candName},</p>
+             <p>${candLang === 'fr' ? 'Votre entretien pour le poste' : 'Your interview for'} <strong>${jobTitle}</strong> ${candLang === 'fr' ? 'est confirmé pour le' : 'is confirmed for'} <strong>${slotDate}</strong>.</p>
+             ${slot.location ? `<p><i>${candLang === 'fr' ? 'Lieu / Lien' : 'Location / Link'} :</i> <strong>${slot.location}</strong></p>` : ''}
+             ${slot.notes ? `<p><i>${candLang === 'fr' ? 'Note' : 'Note'} :</i> ${slot.notes}</p>` : ''}
+             <a href="https://nexhire.ca" class="btn">${candLang === 'fr' ? 'Voir mon tableau de bord' : 'View my dashboard'} →</a>`
+          )
+        : `Entretien confirmé : ${slotDate}`
+    );
+
+    // Notification + email à l'employeur
+    const company = await db.get(
+      'SELECT c.owner_id, u.email, u.first_name, u.preferred_lang FROM nh_companies c JOIN nh_users u ON u.id = c.owner_id WHERE c.id = $1',
+      [slot.company_id]
+    );
     if (company?.owner_id) {
-      const cname = `${req.session.user.first_name || ''} ${req.session.user.last_name || ''}`.trim() || 'Un candidat';
-      const notifId = genId('n');
+      const { v4: uuidv4 } = require('uuid');
       await db.run(
         `INSERT INTO nh_notifications (id, user_id, type, title, body, link, created_at)
          VALUES ($1,$2,'slot_confirmed',$3,$4,$5,NOW())`,
-        [notifId, company.owner_id, '✅ Entretien confirmé',
-         `${cname} a choisi son créneau`, `/nexhire/#interviews`]
+        [uuidv4().replace(/-/g,''), company.owner_id,
+         '✅ Entretien confirmé',
+         `${candName} a choisi le ${slotDate}`,
+         `/#interviews`]
+      );
+
+      // Email à l'employeur
+      const empLang = company.preferred_lang || 'fr';
+      await emailService.send(
+        company.email,
+        empLang === 'fr' ? `📅 Entretien confirmé — ${jobTitle}` : `📅 Interview confirmed — ${jobTitle}`,
+        emailService.emailTemplate(
+          empLang === 'fr' ? 'Entretien confirmé' : 'Interview confirmed',
+          `<p>${empLang === 'fr' ? 'Bonjour' : 'Hello'} ${company.first_name},</p>
+           <p><strong>${candName}</strong> ${empLang === 'fr' ? 'a confirmé son entretien pour le poste' : 'confirmed their interview for'} <strong>${jobTitle}</strong>.</p>
+           <p>${empLang === 'fr' ? 'Date choisie' : 'Selected date'} : <strong>${slotDate}</strong></p>
+           ${slot.location ? `<p>${empLang === 'fr' ? 'Lieu / Lien' : 'Location'} : <strong>${slot.location}</strong></p>` : ''}
+           <a href="https://nexhire.ca" class="btn">${empLang === 'fr' ? 'Voir le tableau de bord' : 'View dashboard'} →</a>`
+        )
       );
     }
+
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ success: false, error: e.message });
