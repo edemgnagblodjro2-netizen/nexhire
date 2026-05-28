@@ -6165,7 +6165,7 @@ function renderNotifDropdown(notifs, unread, isFr) {
     listHtml = notifs.map(n => {
       const ic = notifIcon(n.type);
       const isUnread = !n.read_at;
-      const link = n.link ? `data-link="${esc(n.link)}"` : '';
+      const link = n.link ? `data-link="${n.link}"` : '';
       const dtype = `data-type="${esc(n.type || '')}"`;
       return `<div class="notif-item${isUnread ? ' unread' : ''}" data-id="${esc(n.id)}" ${link} ${dtype} data-onclick="markNotifRead(this)">
         <div class="notif-icon" style="background:${ic.bg};color:${ic.color}"><i class="ti ${ic.icon}"></i></div>
