@@ -1236,6 +1236,14 @@ function quickSearch(q) {
 }
 
 async function loadJobs() {
+  // Reset hidden elements from job detail panel
+  const jdSidebar = document.querySelector('.jobs-sidebar');
+  const jobsList  = document.getElementById('jobs-list');
+  const panel     = document.getElementById('job-detail-panel');
+  if (panel)     panel.style.display     = 'none';
+  if (jdSidebar) jdSidebar.style.display = '';
+  if (jobsList)  jobsList.style.display  = '';
+
   // Pre-fill salary filter from candidate profile (only if filter not already set by user)
   const fsalEl = document.getElementById('fsal');
   if (fsalEl && !fsalEl.value && state.user?.role === 'candidate' && state.candidateProfile?.desired_salary_min) {
