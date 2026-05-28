@@ -149,7 +149,7 @@ router.post('/:applicationId', requireAuth, async (req, res) => {
     await notifyUser(
       recipientId, 'message',
       `Nouveau message de ${senderName} — "${jobTitle}"`,
-      `/nexhire/#messages-${appId}`
+      `/#messages-${appId}`
     );
 
     res.json({ success: true, message: msg });
