@@ -182,15 +182,15 @@ router.get('/careerjet', async (req, res) => {
 
     const credentials = Buffer.from(key + ':').toString('base64');
     const params = new URLSearchParams({
-      locale_code: 'en_CA',
-      keywords: q,
-      location: location,
-      page: page,
-      page_size: 20,
-      sort: 'date',
-      user_ip: '1.2.3.4',
-      user_agent: 'Mozilla/5.0',
-    });
+  locale_code: 'en_CA',
+  keywords: q,
+  location: 'Canada',
+  page: page,
+  page_size: 20,
+  sort: 'date',
+  user_ip: '74.220.48.23',
+  user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+});
 
     const data = await new Promise((resolve, reject) => {
       const options = {
