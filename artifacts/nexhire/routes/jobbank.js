@@ -123,44 +123,31 @@ router.get('/jobbank-canada', async (req, res) => {
     const q    = req.query.q || 'developer';
     const prov = req.query.prov || '';
     const lang = req.query.lang || 'en';
+    const page = parseInt(req.query.page || '1');
 
     const where = prov && PROV_TO_WHERE[prov] ? PROV_TO_WHERE[prov] : '';
-    const params = new URLSearchParams({
-      searchstring: q,
-      locationstring: where,
-      action: 'getjobs',
-    });
 
-    // Job Bank Canada RSS feed
-    const url = `https://www.jobbank.gc.ca/jobsearch/rss?searchstring=${encodeURIComponent(q)}&locationstring=${encodeURIComponent(where)}&sort=M`;
+    const url = `https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=${encodeURIComponent(q)}&locationstring=${encodeURIComponent(where)}&sort=M&action=getJobs&fnjobs=1&page=${page}`;
+
     const raw = await httpsGet(url);
+    const data = JSON.parse(raw);
 
-    // Parse RSS XML
-    const items = [];
-    const itemRegex = /<item>([\s\S]*?)<\/item>/g;
-    let match;
-    while ((match = itemRegex.exec(raw)) !== null) {
-      const item = match[1];
-      const get = tag => {
-        const m = item.match(new RegExp(`<${tag}[^>]*><!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/${tag}>|<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`));
-        return m ? (m[1] || m[2] || '').trim() : '';
-      };
-      const link = get('link') || get('guid');
-      const jobId = link.split('/').pop();
-      items.push({
-        id:       `jb_${jobId}`,
-        title:    get('title'),
-        company:  get('dc:creator') || get('author') || '',
-        location: get('location') || where || 'Canada',
-        salary:   '',
-        date:     get('pubDate') ? new Date(get('pubDate')).toLocaleDateString('en-CA') : '',
-        url:      link,
+    const jobs = (data.hits?.hits || []).map(j => {
+      const src = j._source || {};
+      return {
+        id:       `jb_${j._id || src.noc}`,
+        title:    src.title_en || src.title_fr || src.title || '',
+        company:  src.businessName || src.employer || '',
+        location: src.city || src.location || where || 'Canada',
+        salary:   src.salary || '',
+        date:     src.datePosted ? new Date(src.datePosted).toLocaleDateString('en-CA') : '',
+        url:      `https://www.jobbank.gc.ca/jobsearch/jobposting/${j._id}`,
         external: true,
         source:   'jobbank',
-      });
-    }
+      };
+    });
 
-    res.json({ success: true, jobs: items, total: items.length });
+    res.json({ success: true, jobs, total: data.hits?.total?.value || jobs.length });
   } catch (e) {
     console.error('[JobBank CA]', e.message);
     res.json({ success: false, jobs: [], error: e.message });
