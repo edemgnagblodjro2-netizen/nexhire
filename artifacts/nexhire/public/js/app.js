@@ -1409,7 +1409,7 @@ async function filterJobs(page = 1) {
 async function loadJoobleIntoMainList(q, prov, listEl) {
   if (!listEl) return;
   const isFr = state.lang === 'fr';
-  // Skeleton
+
   const skeletonId = 'jooble-loading-row';
   const skeleton = document.createElement('div');
   skeleton.id = skeletonId;
@@ -1422,17 +1422,12 @@ async function loadJoobleIntoMainList(q, prov, listEl) {
   params.set('q', q || 'developer');
   if (prov && prov !== 'REMOTE' && !prov.startsWith('c:')) params.set('prov', prov);
   params.set('_t', Date.now());
+
   const d = await api('GET', `${BASE}/api/jobbank/jooble?${params}`);
-  
   document.getElementById(skeletonId)?.remove();
   if (!listEl.isConnected) return;
-  const params = new URLSearchParams();
-  params.set('q', q || 'developer');
-  if (prov && prov !== 'REMOTE' && !prov.startsWith('c:')) params.set('prov', prov);
-  params.set('_t', Date.now());
-  const d = await api('GET', `${BASE}/api/jobbank/jooble?${params}`);
-  if (!listEl.isConnected) return;
-  const jobs = (d.jobs || []).slice(0, 50);
+
+  const jobs = (d.jobs || []).slice(0, 20);
   if (!jobs.length) return;
 
   const divider = document.createElement('div');
