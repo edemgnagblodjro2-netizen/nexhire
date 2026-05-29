@@ -1108,8 +1108,9 @@ app.get(BASE_PATH + '/recommend/:token', (req, res) => res.sendFile(path.join(__
 // ── Health check ───────────────────────────────────────────
 app.get(BASE_PATH + '/healthz', (req, res) => res.json({ status: 'ok', service: 'nexhire' }));
 
-// ── SPA fallback ───────────────────────────────────────────
-app.get(BASE_PATH + '/*', (req, res) => {
+// ── SPA fallback ─────────────────────────────────────────
+app.get(BASE_PATH + '/*', (req, res, next) => {
+  if (req.path.startsWith('/api/')) return next();
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
