@@ -489,113 +489,170 @@
 </div>
 
 <div id="pg-employer" class="page">
-  <div class="hero employer-hero">
-    <div class="hero-inner">
-      <div class="hero-badge"><span class="badge-dot"></span><span data-i18n="emp.eyebrow">For Employers</span></div>
-      <h1 class="hero-title" data-i18n-html="emp.title">Hire globally with <em>AI precision</em></h1>
-      <p class="hero-sub" data-i18n="emp.sub">Post jobs, get AI-ranked candidates, manage your pipeline with Kanban, and build your global team — all in one platform.</p>
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <button class="btn-primary btn-lg" data-modal="modal-register" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:14px 28px">
-          <span>Poster votre premier job gratuitement →</span>
-          <span style="font-size:12px;font-weight:400;opacity:.75">Aucune carte de crédit · En ligne en 5 min</span>
-        </button>
-        <button class="btn-ghost btn-lg" data-onclick="window.location.href='/#applications'" data-i18n="emp.pricing">See pricing / Boost</button>
+<style>
+.emp-page{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f6f3ec;color:#023448}
+.emp-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 12% 0%,#1b485a 0%,transparent 45%),radial-gradient(90% 80% at 88% 18%,#0c3d54 0%,transparent 55%),linear-gradient(160deg,#023448 0%,#07182f 100%);color:#eaf0fb;padding-bottom:110px}
+.emp-wrap{max-width:1100px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+.emp-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;padding:52px 0 28px}
+.emp-eyebrow{font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#94a3b8;margin-bottom:18px}
+.emp-h1{font-size:clamp(38px,5vw,66px);font-weight:800;letter-spacing:-.025em;line-height:.98;color:#fff}
+.emp-h1 em{color:#ff7a59;font-style:italic}
+.emp-lede{margin-top:22px;max-width:460px;font-size:17px;line-height:1.65;color:#94a3b8}
+.emp-cta-row{margin-top:32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.emp-btn-main{font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;border:none;border-radius:12px;padding:15px 26px;background:#ff7a59;color:#fff;box-shadow:0 10px 28px -6px rgba(255,122,89,.5);transition:transform .18s,box-shadow .18s}
+.emp-btn-main:hover{transform:translateY(-2px)}
+.emp-btn-sec{font-family:inherit;font-weight:600;font-size:15px;cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:14px 22px;color:#fff}
+.emp-trust-bar{display:flex;gap:20px;flex-wrap:wrap;margin-top:24px}
+.emp-trust-bar span{font-size:13px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:5px}
+.emp-visual{position:relative;min-height:420px}
+.emp-photo{position:absolute;inset:0 0 0 16%;border-radius:24px;overflow:hidden;box-shadow:0 36px 72px -28px rgba(0,0,0,.6)}
+.emp-photo img{width:100%;height:100%;object-fit:cover;object-position:60% 20%;position:absolute;inset:0;z-index:1}
+.emp-blend{position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,#023448 0%,rgba(2,52,72,.22) 22%,transparent 50%),linear-gradient(0deg,#023448 0%,rgba(2,52,72,.14) 26%,transparent 52%)}
+.emp-trust-band{position:relative;z-index:2;max-width:1100px;margin:-68px auto 0;padding:0 28px}
+.emp-trust-inner{background:#fff;border-radius:22px;padding:28px 36px;box-shadow:0 28px 56px -28px rgba(7,20,40,.28);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.emp-trust-item{display:flex;flex-direction:column}
+.emp-trust-num{font-weight:800;font-size:28px;color:#023448;letter-spacing:-.02em}
+.emp-trust-lab{font-size:13px;color:#6b7a90;margin-top:2px;font-weight:500}
+.emp-trust-div{width:1px;align-self:stretch;background:#e8ebf0}
+.emp-section{padding:72px 0}
+.emp-sec-label{font-size:11px;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px}
+.emp-sec-title{font-size:clamp(24px,3.5vw,38px);font-weight:800;color:#023448;margin-bottom:12px;line-height:1.15}
+.emp-sec-sub{font-size:16px;color:#64748b;max-width:520px;line-height:1.7}
+.emp-feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
+.emp-feat-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:20px;padding:28px 24px}
+.emp-feat-ico{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+.emp-feat-title{font-size:17px;font-weight:800;color:#023448;margin-bottom:8px}
+.emp-feat-desc{font-size:13.5px;color:#475569;line-height:1.7}
+.emp-feat-checks{margin-top:12px;display:flex;flex-direction:column;gap:5px}
+.emp-chk{display:flex;align-items:center;gap:7px;font-size:13px;color:#475569}
+.emp-chk::before{content:"✓";color:#22c55e;font-weight:700;flex-shrink:0}
+.emp-steps-sec{background:linear-gradient(135deg,#f8fafc,#f1f5f9);padding:72px 0}
+.emp-steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px}
+.emp-step-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:16px;padding:24px 20px;text-align:center}
+.emp-step-n{width:44px;height:44px;background:#6366f1;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;margin:0 auto 14px}
+.emp-step-t{font-size:15px;font-weight:700;color:#023448;margin-bottom:6px}
+.emp-step-d{font-size:13px;color:#64748b;line-height:1.6}
+.emp-testi-sec{background:#fff;padding:72px 0}
+.emp-testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
+.emp-testi{background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:20px;padding:28px}
+.emp-stars{color:#f59e0b;font-size:13px;margin-bottom:14px}
+.emp-testi-text{font-size:14px;color:#374151;line-height:1.8;margin-bottom:20px;font-style:italic}
+.emp-testi-author{display:flex;align-items:center;gap:12px}
+.emp-testi-av{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0}
+.emp-faq-sec{padding:72px 0;background:#f8fafc}
+.emp-faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:44px}
+.emp-faq-item{background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:22px 24px}
+.emp-faq-q{font-size:15px;font-weight:700;color:#023448;margin-bottom:9px;display:flex;align-items:flex-start;gap:8px}
+.emp-faq-q i{color:#6366f1;font-size:17px;flex-shrink:0;margin-top:1px}
+.emp-faq-a{font-size:13.5px;color:#475569;line-height:1.7}
+.emp-cta-sec{background:linear-gradient(135deg,#023448,#0c3d54);padding:72px 0;text-align:center}
+.emp-cta-sec h2{font-size:clamp(24px,4vw,40px);font-weight:800;color:#fff;margin-bottom:12px}
+.emp-cta-sec p{color:#94a3b8;font-size:16px;margin-bottom:28px}
+.emp-cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+@media(max-width:960px){.emp-grid{grid-template-columns:1fr}.emp-visual{min-height:320px;margin-top:12px}.emp-photo{inset:0 8% 0 8%}.emp-feat-grid{grid-template-columns:repeat(2,1fr)}.emp-steps-grid{grid-template-columns:repeat(2,1fr)}.emp-testi-grid{grid-template-columns:1fr}.emp-faq-grid{grid-template-columns:1fr}.emp-trust-div{display:none}}
+@media(max-width:600px){.emp-feat-grid,.emp-steps-grid{grid-template-columns:1fr}}
+</style>
+<div class="emp-page">
+<section class="emp-hero">
+  <div class="emp-wrap">
+    <div class="emp-grid">
+      <div>
+        <p class="emp-eyebrow">Nexhire · Pour les employeurs</p>
+        <h1 class="emp-h1">Trouvez votre<br>prochaine recrue.<br><em>Rapidement.</em></h1>
+        <p class="emp-lede">Publiez vos offres, recevez des candidats scorés par IA, gérez votre pipeline Kanban — tout en un seul endroit, fait au Québec.</p>
+        <div class="emp-cta-row">
+          <button class="emp-btn-main" data-modal="modal-register">Poster votre premier job gratuitement →</button>
+          <button class="emp-btn-sec" data-onclick="goto('pricing')">Voir les tarifs</button>
+        </div>
+        <div class="emp-trust-bar">
+          <span>🔒 Paiement sécurisé</span>
+          <span>✓ Annulation à tout moment</span>
+          <span>✓ Support inclus</span>
+          <span>🍁 Entreprise québécoise</span>
+        </div>
       </div>
-      <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:20px">
-        <span style="font-size:13px;color:rgba(255,255,255,.65);display:flex;align-items:center;gap:5px"><span>🔒</span> Paiement sécurisé</span>
-        <span style="font-size:13px;color:rgba(255,255,255,.65);display:flex;align-items:center;gap:5px"><span>✓</span> Annulation à tout moment</span>
-        <span style="font-size:13px;color:rgba(255,255,255,.65);display:flex;align-items:center;gap:5px"><span>✓</span> Support inclus</span>
-        <span style="font-size:13px;color:rgba(255,255,255,.65);display:flex;align-items:center;gap:5px"><span>🍁</span> Entreprise québécoise</span>
+      <div class="emp-visual">
+        <div class="emp-photo">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=700&q=80&fit=crop" alt="Recruteuse professionnelle au bureau">
+          <div class="emp-blend"></div>
+        </div>
       </div>
     </div>
   </div>
-  <!-- ── Employer Features Bento ─────────────────────────── -->
-  <div class="emp-bento">
-    <div class="emp-bento-grid">
-
-      <!-- Cell 1 — Indigo · Post in minutes -->
-      <div class="eb-cell eb-indigo">
-        <span class="eb-label" data-i18n="emp.f1.label">PUBLIEZ VITE</span>
-        <h3 data-i18n="emp.f1.title">Post in minutes</h3>
-        <p data-i18n="emp.f1.desc">Create bilingual job postings with AI-assisted descriptions. Go live in under 5 minutes.</p>
-        <div class="eb-checks">
-          <span><i class="ti ti-check"></i> <span data-i18n="emp.f1.c1">AI-generated FR &amp; EN</span></span>
-          <span><i class="ti ti-check"></i> <span data-i18n="emp.f1.c2">Salary recommendations</span></span>
-          <span><i class="ti ti-check"></i> <span data-i18n="emp.f1.c3">Live in &lt; 5 min</span></span>
-        </div>
-        <button class="eb-btn eb-btn-white" data-modal="modal-register">
-          <span data-i18n="emp.cta.short">Start free</span> <i class="ti ti-arrow-right"></i>
-        </button>
-        <div class="eb-deco eb-deco-bolt"><i class="ti ti-bolt"></i></div>
-      </div>
-
-      <!-- Cell 2 — Emerald · AI ranking -->
-      <div class="eb-cell eb-emerald">
-        <span class="eb-label" data-i18n="emp.f2.label">IA RANKING</span>
-        <h3 data-i18n="emp.f2.title">AI candidate ranking</h3>
-        <p data-i18n="emp.f2.desc">Every application gets an AI match score so you focus on the best candidates first.</p>
-        <!-- Mini score pills -->
-        <div class="eb-scores">
-          <div class="eb-score-row"><span class="eb-avatar" style="background:#fff2;color:#fff">SM</span><span class="eb-sname">Sarah M.</span><span class="eb-pill eb-pill-hi">96%</span></div>
-          <div class="eb-score-row"><span class="eb-avatar" style="background:#fff2;color:#fff">JL</span><span class="eb-sname">Jean L.</span><span class="eb-pill eb-pill-mid">81%</span></div>
-          <div class="eb-score-row"><span class="eb-avatar" style="background:#fff2;color:#fff">MA</span><span class="eb-sname">Marie A.</span><span class="eb-pill eb-pill-lo">58%</span></div>
-        </div>
-        <button class="eb-btn eb-btn-white" data-modal="modal-register">
-          <span data-i18n="emp.cta.short">Start free</span> <i class="ti ti-arrow-right"></i>
-        </button>
-        <div class="eb-deco eb-deco-star"><i class="ti ti-sparkles"></i></div>
-      </div>
-
-      <!-- Cell 3 — Orange · Kanban -->
-      <div class="eb-cell eb-orange">
-        <span class="eb-label" data-i18n="emp.f3.label">PIPELINE ATS</span>
-        <h3 data-i18n="emp.f3.title">Kanban ATS pipeline</h3>
-        <p data-i18n="emp.f3.desc">Visual pipeline: New → Reviewed → Shortlisted → Interview → Offer. Move candidates with one click.</p>
-        <!-- Mini kanban pills -->
-        <div class="eb-kanban-pills">
-          <span class="eb-kpill" data-i18n="emp.k.new">New</span>
-          <i class="ti ti-arrow-right" style="font-size:11px;opacity:.6"></i>
-          <span class="eb-kpill" data-i18n="emp.k.reviewed">Reviewed</span>
-          <i class="ti ti-arrow-right" style="font-size:11px;opacity:.6"></i>
-          <span class="eb-kpill" data-i18n="emp.k.short">Shortlisted</span>
-          <i class="ti ti-arrow-right" style="font-size:11px;opacity:.6"></i>
-          <span class="eb-kpill" data-i18n="emp.k.offer">Offer</span>
-        </div>
-        <button class="eb-btn eb-btn-white" data-modal="modal-register">
-          <span data-i18n="emp.cta.short">Start free</span> <i class="ti ti-arrow-right"></i>
-        </button>
-        <div class="eb-deco eb-deco-kanban"><i class="ti ti-layout-kanban"></i></div>
-      </div>
-
-      <!-- Cell 4 — Dark navy · Analytics -->
-      <div class="eb-cell eb-navy">
-        <span class="eb-label" data-i18n="emp.f4.label">ANALYTIQUE</span>
-        <h3 data-i18n="emp.f4.title">Job analytics</h3>
-        <p data-i18n="emp.f4.desc">Track views, applications, and conversion rate per listing. Know which jobs perform best.</p>
-        <!-- Mini stat row -->
-        <div class="eb-stats">
-          <div class="eb-stat"><div class="eb-stat-n">847</div><div class="eb-stat-l" data-i18n="emp.mock.views">Views</div></div>
-          <div class="eb-stat-sep"></div>
-          <div class="eb-stat"><div class="eb-stat-n">124</div><div class="eb-stat-l" data-i18n="emp.mock.apps">Applied</div></div>
-          <div class="eb-stat-sep"></div>
-          <div class="eb-stat"><div class="eb-stat-n">14.6%</div><div class="eb-stat-l" data-i18n="emp.mock.conv">Conv.</div></div>
-        </div>
-        <!-- Micro bar chart -->
-        <div class="eb-chart">
-          <div class="eb-bar" style="height:40%"></div><div class="eb-bar" style="height:60%"></div>
-          <div class="eb-bar" style="height:45%"></div><div class="eb-bar" style="height:80%"></div>
-          <div class="eb-bar" style="height:65%"></div><div class="eb-bar" style="height:95%"></div>
-          <div class="eb-bar" style="height:70%"></div><div class="eb-bar" style="height:85%"></div>
-          <div class="eb-bar" style="height:55%"></div><div class="eb-bar" style="height:100%"></div>
-        </div>
-        <button class="eb-btn eb-btn-outline" data-modal="modal-register">
-          <span data-i18n="emp.cta.short">Start free</span> <i class="ti ti-arrow-right"></i>
-        </button>
-        <div class="eb-deco eb-deco-chart"><i class="ti ti-chart-line"></i></div>
-      </div>
-
+</section>
+<div class="emp-trust-band">
+  <div class="emp-trust-inner">
+    <div class="emp-trust-item"><span class="emp-trust-num">150+</span><span class="emp-trust-lab">employeurs actifs</span></div>
+    <div class="emp-trust-div"></div>
+    <div class="emp-trust-item"><span class="emp-trust-num">4 jours</span><span class="emp-trust-lab">délai moyen d'embauche</span></div>
+    <div class="emp-trust-div"></div>
+    <div class="emp-trust-item"><span class="emp-trust-num">40×</span><span class="emp-trust-lab">moins cher que LinkedIn</span></div>
+    <div class="emp-trust-div"></div>
+    <div class="emp-trust-item"><span class="emp-trust-num">4,8/5</span><span class="emp-trust-lab">satisfaction employeurs</span></div>
+  </div>
+</div>
+<div class="emp-section">
+  <div class="emp-wrap">
+    <div class="emp-sec-label">Fonctionnalités</div>
+    <div class="emp-sec-title">Gérez tout votre recrutement,<br>du début à la fin.</div>
+    <div class="emp-sec-sub">De la publication à l'embauche — Nexhire automatise les tâches répétitives pour que vous vous concentriez sur les meilleurs candidats.</div>
+    <div class="emp-feat-grid">
+      <div class="emp-feat-card"><div class="emp-feat-ico" style="background:#eef2ff">🚀</div><div class="emp-feat-title">Publiez en 5 minutes</div><div class="emp-feat-desc">Offres bilingues FR/EN générées par IA, avec recommandations de salaire.</div><div class="emp-feat-checks"><div class="emp-chk">Description IA FR &amp; EN</div><div class="emp-chk">Recommandation de salaire</div><div class="emp-chk">Publication en 1 clic</div></div></div>
+      <div class="emp-feat-card"><div class="emp-feat-ico" style="background:#f0fdf4">🤖</div><div class="emp-feat-title">Candidats scorés par IA</div><div class="emp-feat-desc">GPT-4o analyse chaque CV et lettre. Score 0-100% automatique.</div><div class="emp-feat-checks"><div class="emp-chk">Score de compatibilité</div><div class="emp-chk">Analyse de la lettre</div><div class="emp-chk">Ranking automatique</div></div></div>
+      <div class="emp-feat-card"><div class="emp-feat-ico" style="background:#fdf4ff">📋</div><div class="emp-feat-title">Pipeline Kanban ATS</div><div class="emp-feat-desc">New → Reviewed → Interview → Offer. Glisser-déposer intuitif.</div><div class="emp-feat-checks"><div class="emp-chk">Kanban visuel</div><div class="emp-chk">Notes RH par candidat</div><div class="emp-chk">Proposer des créneaux</div></div></div>
+      <div class="emp-feat-card"><div class="emp-feat-ico" style="background:#fffbeb">🎬</div><div class="emp-feat-title">Entretiens vidéo async</div><div class="emp-feat-desc">Candidats répondent à leur rythme. L'IA transcrit et score.</div><div class="emp-feat-checks"><div class="emp-chk">Questions personnalisées</div><div class="emp-chk">Transcription automatique</div><div class="emp-chk">Score IA par réponse</div></div></div>
+      <div class="emp-feat-card"><div class="emp-feat-ico" style="background:#eff6ff">📊</div><div class="emp-feat-title">Analytics en temps réel</div><div class="emp-feat-desc">Suivez vues, candidatures et taux de conversion par offre.</div><div class="emp-feat-checks"><div class="emp-chk">Vues et clics par offre</div><div class="emp-chk">Taux de conversion</div><div class="emp-chk">Comparatif entre offres</div></div></div>
+      <div class="emp-feat-card"><div class="emp-feat-ico" style="background:#f0fdf4">💬</div><div class="emp-feat-title">Messagerie intégrée</div><div class="emp-feat-desc">Communiquez avec vos candidats sans quitter la plateforme.</div><div class="emp-feat-checks"><div class="emp-chk">Chat temps réel</div><div class="emp-chk">Notifications instantanées</div><div class="emp-chk">Historique complet</div></div></div>
     </div>
   </div>
+</div>
+<div class="emp-steps-sec">
+  <div class="emp-wrap">
+    <div style="text-align:center"><div class="emp-sec-label">Comment ça marche</div><div class="emp-sec-title">Embauchez en 4 étapes simples</div></div>
+    <div class="emp-steps-grid">
+      <div class="emp-step-card"><div class="emp-step-n">1</div><div class="emp-step-t">Créez votre compte</div><div class="emp-step-d">Inscrivez-vous gratuitement en 2 minutes. Aucune carte requise.</div></div>
+      <div class="emp-step-card"><div class="emp-step-n">2</div><div class="emp-step-t">Publiez une offre</div><div class="emp-step-d">L'IA génère une description bilingue et recommande un salaire.</div></div>
+      <div class="emp-step-card"><div class="emp-step-n">3</div><div class="emp-step-t">Recevez des candidats</div><div class="emp-step-d">Scorés automatiquement — les meilleurs profils en premier.</div></div>
+      <div class="emp-step-card"><div class="emp-step-n">4</div><div class="emp-step-t">Embauchez</div><div class="emp-step-d">Kanban, entretiens vidéo, proposer une offre.</div></div>
+    </div>
+  </div>
+</div>
+<div class="emp-testi-sec">
+  <div class="emp-wrap">
+    <div style="text-align:center"><div class="emp-sec-label">Témoignages</div><div class="emp-sec-title">Ce que disent nos employeurs</div></div>
+    <div class="emp-testi-grid">
+      <div class="emp-testi"><div class="emp-stars">★★★★★</div><div class="emp-testi-text">"Nous avons embauché notre développeur senior en 4 jours. Les candidats étaient déjà classés par IA avant même qu'on lise un seul CV."</div><div class="emp-testi-author"><div class="emp-testi-av" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">ST</div><div><div style="font-weight:700;font-size:14px;color:#023448">Sophie Tremblay</div><div style="font-size:12px;color:#64748b">CTO · NordiqTech, Montréal</div></div></div></div>
+      <div class="emp-testi"><div class="emp-stars">★★★★★</div><div class="emp-testi-text">"Même qualité de candidats que LinkedIn à 8× le coût en moins. On a publié 6 postes au Q1 et rempli 5 via Nexhire."</div><div class="emp-testi-author"><div class="emp-testi-av" style="background:linear-gradient(135deg,#0ea5e9,#0284c7)">JB</div><div><div style="font-weight:700;font-size:14px;color:#023448">Jean-François Bergeron</div><div style="font-size:12px;color:#64748b">Head of Talent · AtlasFinance, Toronto</div></div></div></div>
+      <div class="emp-testi"><div class="emp-stars">★★★★★</div><div class="emp-testi-text">"Notre équipe RH a gagné 3h par poste grâce au Kanban IA. Les candidats sont triés et prêts pour l'entretien dès le premier matin."</div><div class="emp-testi-author"><div class="emp-testi-av" style="background:linear-gradient(135deg,#059669,#047857)">AC</div><div><div style="font-weight:700;font-size:14px;color:#023448">Amélie Côté</div><div style="font-size:12px;color:#64748b">DRH · QuébecSoft, Québec City</div></div></div></div>
+    </div>
+  </div>
+</div>
+<div class="emp-faq-sec">
+  <div class="emp-wrap">
+    <div style="text-align:center"><div class="emp-sec-label">FAQ Employeurs</div><div class="emp-sec-title">Questions fréquentes</div></div>
+    <div class="emp-faq-grid">
+      <div class="emp-faq-item"><div class="emp-faq-q"><i class="ti ti-coin"></i> Combien coûte la publication ?</div><div class="emp-faq-a">La publication standard est <strong>gratuite</strong>. Vous payez seulement si vous choisissez de sponsoriser votre offre (CPC de 0,50$–2,00$ par clic qualifié).</div></div>
+      <div class="emp-faq-item"><div class="emp-faq-q"><i class="ti ti-robot"></i> Comment fonctionne le scoring IA ?</div><div class="emp-faq-a">GPT-4o analyse chaque candidature — CV, lettre et compétences — et attribue un score de 0 à 100% selon l'adéquation avec votre offre.</div></div>
+      <div class="emp-faq-item"><div class="emp-faq-q"><i class="ti ti-calendar"></i> Puis-je annuler à tout moment ?</div><div class="emp-faq-a">Oui. Aucun contrat à long terme. Pausez ou annulez depuis votre tableau de bord instantanément.</div></div>
+      <div class="emp-faq-item"><div class="emp-faq-q"><i class="ti ti-users"></i> Combien de membres d'équipe ?</div><div class="emp-faq-a">Le plan Standard inclut jusqu'à 3 membres. Le plan Pro permet des sièges illimités pour les grandes équipes RH.</div></div>
+      <div class="emp-faq-item"><div class="emp-faq-q"><i class="ti ti-world"></i> Puis-je poster en FR et EN ?</div><div class="emp-faq-a">Absolument. Nexhire génère automatiquement votre offre en FR et EN avec l'IA. Vous pouvez modifier les deux versions.</div></div>
+      <div class="emp-faq-item"><div class="emp-faq-q"><i class="ti ti-shield-check"></i> Mes données sont sécurisées ?</div><div class="emp-faq-a">Oui. Nexhire est une entreprise québécoise (CivicAI Inc., NEQ 2280791601). Données hébergées au Canada, jamais vendues.</div></div>
+      <div class="emp-faq-item"><div class="emp-faq-q"><i class="ti ti-video"></i> Entretien vidéo asynchrone ?</div><div class="emp-faq-a">Envoyez des questions vidéo aux candidats. Ils répondent à leur rythme (6 min max/question). L'IA transcrit et score automatiquement.</div></div>
+      <div class="emp-faq-item"><div class="emp-faq-q"><i class="ti ti-rocket"></i> Comment fonctionne le Boost ?</div><div class="emp-faq-a">Le Boost met votre offre en tête des résultats. Budget quotidien flexible — vous payez uniquement par clic de candidat vérifié.</div></div>
+    </div>
+  </div>
+</div>
+<div class="emp-cta-sec">
+  <div class="emp-wrap">
+    <h2>Prêt à recruter plus intelligemment ?</h2>
+    <p>Rejoignez 150+ entreprises canadiennes. Commencez gratuitement dès aujourd'hui.</p>
+    <div class="emp-cta-btns">
+      <button class="emp-btn-main" style="font-size:16px;padding:16px 32px" data-modal="modal-register">Publier votre première offre →</button>
+      <button class="emp-btn-sec" style="font-size:16px;padding:15px 28px" data-onclick="goto('pricing')">Voir les tarifs</button>
+    </div>
+  </div>
+</div>
+</div>
 </div>
 
 <!-- PRICING ─────────────────────────────────────────────── -->
