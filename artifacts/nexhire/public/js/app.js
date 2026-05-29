@@ -3766,7 +3766,7 @@ async function loadEmployerJobs() {
           : ''}
         ${j.status === 'rejected'
           ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px;color:#dc2626;border-color:#fca5a5" data-onclick="deleteRejectedJob('${j.id}')"><i class="ti ti-trash"></i> ${isFr?'Supprimer':'Delete'}</button>`
-          : `<button class="btn-ghost" style="font-size:13px;padding:6px 14px" data-onclick="closeJob('${j.id}')"><i class="ti ti-x"></i> ${isFr?'Fermer':'Close'}</button>`}
+          : `<button class="btn-ghost" style="font-size:13px;padding:6px 14px;color:var(--dark);border:1px solid var(--border);background:#fff" data-onclick="closeJob('${j.id}')"><i class="ti ti-x"></i> ${isFr?'Fermer':'Close'}</button>`}
       </div>
       ${apps > 0 ? `
       <div class="inline-candidates" id="icands-${j.id}">
