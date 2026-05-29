@@ -7424,7 +7424,7 @@ async function sendViInterview(id, title, email) {
   const d = await api('POST', `${BASE}/api/video-interviews/${id}/send`);
   if (btn) { btn.disabled = false; btn.innerHTML = `<i class="ti ti-send"></i> ${isFr ? 'Envoyer' : 'Send'}`; }
   if (!d.success) { toast(d.error || 'Error', 'error'); return; }
-  const link = `${location.origin}/nexhire/interview/${d.token}`;
+  const link = `${location.origin}/interview/${d.token}`;
   showViLinkModal(title, link, email);
   loadVideoInterviews();
 }
@@ -7434,7 +7434,7 @@ function copyViLink(interviewId, title) {
   api('GET', `${BASE}/api/video-interviews/${interviewId}`).then(d => {
     if (!d.success) return;
     const iv = d.interview;
-    const link = `${location.origin}/nexhire/interview/${iv.token}`;
+    const link = `${location.origin}/interview/${iv.token}`;
     navigator.clipboard.writeText(link).then(() => toast('Lien copié !', 'success'));
   });
 }
@@ -7452,7 +7452,7 @@ async function viewViDetail(id) {
 
   const { interview: iv, responses } = d;
   const questions = typeof iv.questions === 'string' ? JSON.parse(iv.questions) : iv.questions;
-  const link = `${location.origin}/nexhire/interview/${iv.token}`;
+  const link = `${location.origin}/interview/${iv.token}`;
 
   const scoreColor = s => s >= 80 ? '#22c55e' : s >= 60 ? '#f59e0b' : '#ef4444';
 
