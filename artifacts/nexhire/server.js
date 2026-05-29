@@ -1082,6 +1082,7 @@ app.use(apiBase + '/skills',           require('./routes/skills'));
 app.use(apiBase + '/profile-score',    require('./routes/profile-score'));
 app.use(apiBase + '/salary',           require('./routes/salary'));
 app.use(apiBase + '/highlights',       require('./routes/highlights'));
+console.log('[DEBUG] apiBase:', apiBase);
 app.use(apiBase + '/jobbank',          require('./routes/jobbank'));
 app.use(apiBase + '/profile-skills',   require('./routes/profile-skills'));
 app.use(apiBase + '/recommendations',  require('./routes/recommendations'));
