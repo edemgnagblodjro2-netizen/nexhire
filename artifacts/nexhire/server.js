@@ -1058,33 +1058,29 @@ app.use(session({
   }
 }));
 
-// ── Static files ───────────────────────────────────────────
-app.use(BASE_PATH + '/', express.static(path.join(__dirname, 'public')));
-app.use(BASE_PATH + '/uploads', express.static(uploadDir));
-
 // ── API Routes ─────────────────────────────────────────────
 const apiBase = BASE_PATH + '/api';
-app.use(apiBase + '/auth',          require('./routes/auth'));
-app.use(apiBase + '/jobs',          require('./routes/jobs'));
-app.use(apiBase + '/companies',     require('./routes/companies'));
-app.use(apiBase + '/applications',  require('./routes/applications'));
-app.use(apiBase,                    require('./routes/endorsements'));
-app.use(apiBase,                    require('./routes/notes'));
-app.use(apiBase + '/candidates',    require('./routes/candidates'));
-app.use(apiBase + '/ai',            require('./routes/ai'));
-app.use(apiBase + '/payments',      require('./routes/payments'));
-app.use(apiBase + '/notifications', require('./routes/notifications'));
-app.use(apiBase + '/messages',      require('./routes/messages'));
-app.use(apiBase + '/analytics',     require('./routes/analytics'));
-app.use(apiBase + '/admin',         require('./routes/admin'));
-app.use(apiBase + '/saved-jobs',    require('./routes/saved-jobs'));
-app.use(apiBase + '/reviews',       require('./routes/reviews'));
-app.use(apiBase + '/team',          require('./routes/team'));
-app.use(apiBase + '/credits',       require('./routes/credits'));
-app.use(apiBase + '/referrals',     require('./routes/referrals'));
-app.use(apiBase + '/skills',        require('./routes/skills'));
-app.use(apiBase + '/profile-score', require('./routes/profile-score'));
-app.use(apiBase + '/salary',        require('./routes/salary'));
+app.use(apiBase + '/auth',             require('./routes/auth'));
+app.use(apiBase + '/jobs',             require('./routes/jobs'));
+app.use(apiBase + '/companies',        require('./routes/companies'));
+app.use(apiBase + '/applications',     require('./routes/applications'));
+app.use(apiBase,                       require('./routes/endorsements'));
+app.use(apiBase,                       require('./routes/notes'));
+app.use(apiBase + '/candidates',       require('./routes/candidates'));
+app.use(apiBase + '/ai',               require('./routes/ai'));
+app.use(apiBase + '/payments',         require('./routes/payments'));
+app.use(apiBase + '/notifications',    require('./routes/notifications'));
+app.use(apiBase + '/messages',         require('./routes/messages'));
+app.use(apiBase + '/analytics',        require('./routes/analytics'));
+app.use(apiBase + '/admin',            require('./routes/admin'));
+app.use(apiBase + '/saved-jobs',       require('./routes/saved-jobs'));
+app.use(apiBase + '/reviews',          require('./routes/reviews'));
+app.use(apiBase + '/team',             require('./routes/team'));
+app.use(apiBase + '/credits',          require('./routes/credits'));
+app.use(apiBase + '/referrals',        require('./routes/referrals'));
+app.use(apiBase + '/skills',           require('./routes/skills'));
+app.use(apiBase + '/profile-score',    require('./routes/profile-score'));
+app.use(apiBase + '/salary',           require('./routes/salary'));
 app.use(apiBase + '/highlights',       require('./routes/highlights'));
 app.use(apiBase + '/jobbank',          require('./routes/jobbank'));
 app.use(apiBase + '/profile-skills',   require('./routes/profile-skills'));
@@ -1093,6 +1089,12 @@ app.use(apiBase + '/video-interviews', require('./routes/video-interviews'));
 app.use(apiBase + '/moderation',       require('./routes/moderation'));
 app.use(apiBase + '/interview-slots',  require('./routes/interview-slots'));
 app.use(apiBase + '/feed',             require('./routes/feed'));
+
+// ── Static files ───────────────────────────────────────────
+app.use(BASE_PATH + '/uploads/interviews', express.static(path.join(__dirname, 'uploads', 'interviews')));
+app.use(BASE_PATH + '/uploads',            express.static(uploadDir));
+app.use(BASE_PATH + '/',                   express.static(path.join(__dirname, 'public')));
+
 // Serve uploaded interview videos
 app.use(BASE_PATH + '/uploads/interviews', express.static(path.join(__dirname, 'uploads', 'interviews')));
 // Candidate public recording page
