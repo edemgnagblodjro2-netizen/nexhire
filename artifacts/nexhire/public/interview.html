@@ -111,7 +111,7 @@ let mediaRecorder = null;
 let chunks    = [];
 let timerInterval = null;
 let elapsed   = 0;
-const MAX_DURATION = 180; // 3 minutes max per question
+const MAX_DURATION = 360; // 6 minutes max per question
 
 async function apiFetch(method, url, body) {
   const opts = { method, credentials: 'include', headers: {} };
@@ -252,7 +252,13 @@ async function startRecording() {
   const permErr = document.getElementById('permission-error');
   if (permErr) permErr.style.display = 'none';
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } } });
+    let stream;
+try {
+  stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: { facingMode: 'user' } });
+} catch (videoErr) {
+  // Fallback: audio only if camera unavailable
+  stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+}
     const preview = document.getElementById('preview');
     if (preview) { preview.srcObject = stream; preview.style.display = 'block'; }
 
