@@ -3954,8 +3954,8 @@ async function refreshKanban() {
     const colApps = apps.filter(a => a.status === col.key);
     return `<div class="kanban-col">
       <div class="kanban-col-header" style="border-top:3px solid ${col.color}">
-        <span style="font-weight:700;color:var(--dark)">${col.label}</span>
-        <span class="kanban-count">${colApps.length}</span>
+        <span style="font-weight:700;color:#fff">${col.label}</span>
+        <span class="kanban-count" style="color:#fff">${colApps.length}</span>
       </div>
       <div class="kanban-cards" id="kc-${col.key}">
         ${colApps.map(a => kanbanCard(a, col)).join('')}
