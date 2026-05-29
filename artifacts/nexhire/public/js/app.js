@@ -1249,7 +1249,7 @@ async function loadJobs() {
   const qEl  = document.getElementById('q');
   if (fqEl && fqEl.value.includes('@')) fqEl.value = '';
   if (qEl  && qEl.value.includes('@'))  qEl.value  = '';
-  
+
   // Pre-fill salary filter from candidate profile (only if filter not already set by user)
   const fsalEl = document.getElementById('fsal');
   if (fsalEl && !fsalEl.value && state.user?.role === 'candidate' && state.candidateProfile?.desired_salary_min) {
@@ -3756,7 +3756,7 @@ async function loadEmployerJobs() {
         <div class="emp-stat"><i class="ti ti-users"></i><span>${apps}</span><small>${isFr?'Candidats':'Applicants'}</small></div>
         <div class="emp-stat"><i class="ti ti-percentage"></i><span>${conv}%</span><small>${isFr?'Conversion':'Conversion'}</small></div>
       </div>
-      <div class="emp-job-actions">
+      <div class="emp-job-actions" style="display:flex;gap:8px;flex-wrap:wrap">
         ${j.status !== 'rejected' ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px" data-onclick="openKanban('${j.id}','${esc(title)}')"><i class="ti ti-layout-kanban"></i> Kanban</button>` : ''}
         ${j.status === 'active' && !(j.is_sponsored && j.sponsored_until && new Date(j.sponsored_until) > new Date())
           ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px;color:#d97706;border-color:#fde68a" data-onclick="openBoostModal('${j.id}','${esc(title)}')"><i class="ti ti-rocket"></i> ${isFr?'Booster':'Boost'}</button>`
