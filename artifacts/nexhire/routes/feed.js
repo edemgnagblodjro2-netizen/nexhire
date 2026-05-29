@@ -217,8 +217,8 @@ router.post('/:id/comment', requireAuth, async (req, res) => {
 // ── POST /api/feed/upload — image upload ──────────────────────
 router.post('/upload', requireAuth, feedMulter.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ success: false, error: 'No image uploaded' });
-  const BASE_PATH = process.env.BASE_PATH || '/nexhire';
-  res.json({ success: true, url: `${BASE_PATH}/uploads/feed/${req.file.filename}` });
+  const baseUrl = process.env.BASE_URL || 'https://nexhire.ca';
+  res.json({ success: true, url: `${baseUrl}/uploads/feed/${req.file.filename}` });
 });
 
 module.exports = router;
