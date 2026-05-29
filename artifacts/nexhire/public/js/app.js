@@ -1427,7 +1427,7 @@ async function loadJoobleIntoMainList(q, prov, listEl) {
   document.getElementById(skeletonId)?.remove();
   if (!listEl.isConnected) return;
 
-  const jobs = (d.jobs || []).slice(0, 50);
+  const jobs = (d.jobs || []).slice(0, 30);
   if (!jobs.length) return;
 
   const divider = document.createElement('div');
