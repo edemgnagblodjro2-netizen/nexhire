@@ -1481,104 +1481,139 @@
 
 <!-- BLOG ───────────────────────────────────────────────── -->
 <div id="pg-blog" class="page">
-  <div style="max-width:960px;margin:0 auto;padding:64px 24px">
-    <div style="text-align:center;margin-bottom:52px">
-      <div style="display:inline-flex;align-items:center;gap:6px;background:var(--indigo3);color:var(--indigo);border-radius:100px;padding:5px 16px;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:16px"><i class="ti ti-pencil"></i> <span data-i18n="blog.eyebrow">BLOG &amp; RESOURCES</span></div>
-      <h1 style="font-family:var(--r);font-size:clamp(26px,4vw,40px);font-weight:800;color:var(--dark);margin:0 0 12px" data-i18n="blog.title">Career &amp; Hiring Insights</h1>
-      <p style="font-size:16px;color:var(--muted);margin:0" data-i18n="blog.sub">Tips, guides, and salary data for job seekers and employers in Canada · FR + EN</p>
+<style>
+.blog-hero-sec{background:linear-gradient(160deg,#023448 0%,#0c3d54 60%,#1b485a 100%);padding:72px 24px 80px;text-align:center}
+.blog-eyebrow{display:inline-flex;align-items:center;gap:6px;background:rgba(99,102,241,.2);border:1px solid rgba(99,102,241,.3);color:#a5b4fc;border-radius:99px;padding:5px 16px;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:20px}
+.blog-hero-sec h1{font-size:clamp(28px,4vw,48px);font-weight:800;color:#fff;margin-bottom:12px;line-height:1.15}
+.blog-hero-sec p{font-size:16px;color:#94a3b8;max-width:480px;margin:0 auto}
+.blog-outer{max-width:1100px;margin:0 auto;padding:0 24px}
+.blog-featured-wrap{max-width:1100px;margin:-48px auto 0;padding:0 24px}
+.blog-featured{background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 24px 56px -16px rgba(0,0,0,.15);display:grid;grid-template-columns:1.2fr 1fr}
+.blog-feat-img{position:relative;min-height:360px}
+.blog-feat-img img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
+.blog-feat-badge{position:absolute;top:20px;left:20px;background:#6366f1;color:#fff;border-radius:99px;padding:5px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;z-index:2}
+.blog-feat-body{padding:40px 36px;display:flex;flex-direction:column;justify-content:center}
+.blog-feat-tag{font-size:11px;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px}
+.blog-feat-title{font-size:clamp(20px,2.5vw,28px);font-weight:800;color:#023448;line-height:1.25;margin-bottom:14px}
+.blog-feat-desc{font-size:14px;color:#64748b;line-height:1.7;margin-bottom:20px}
+.blog-feat-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:#94a3b8}
+.blog-feat-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px;flex-shrink:0}
+.blog-read-btn{margin-top:20px;display:inline-flex;align-items:center;gap:6px;background:#023448;color:#fff;border-radius:10px;padding:11px 20px;font-size:13px;font-weight:600;border:none;cursor:pointer}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:48px 0}
+.blog-card{background:#fff;border-radius:20px;overflow:hidden;border:1.5px solid #e2e8f0;transition:transform .2s,box-shadow .2s;cursor:pointer}
+.blog-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -12px rgba(0,0,0,.12)}
+.blog-card img{width:100%;height:200px;object-fit:cover;display:block}
+.blog-card-body{padding:22px}
+.blog-card-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;display:inline-block;padding:3px 10px;border-radius:99px}
+.blog-card-title{font-size:16px;font-weight:800;color:#023448;line-height:1.35;margin-bottom:8px}
+.blog-card-desc{font-size:13px;color:#64748b;line-height:1.65;margin-bottom:16px}
+.blog-card-meta{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#94a3b8}
+.blog-card-read{color:#6366f1;font-weight:600;font-size:12px}
+.blog-newsletter{background:linear-gradient(135deg,#023448,#0c3d54);border-radius:24px;padding:48px;text-align:center;margin:0 0 64px}
+.blog-newsletter h2{font-size:26px;font-weight:800;color:#fff;margin-bottom:10px}
+.blog-newsletter p{color:#94a3b8;font-size:15px;margin-bottom:28px}
+.blog-nl-form{display:flex;gap:10px;max-width:460px;margin:0 auto}
+.blog-nl-input{flex:1;padding:12px 16px;border-radius:10px;border:none;font-size:14px;outline:none}
+.blog-nl-btn{background:#6366f1;color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit}
+@media(max-width:900px){.blog-featured{grid-template-columns:1fr}.blog-feat-img{min-height:240px}.blog-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.blog-grid{grid-template-columns:1fr}.blog-nl-form{flex-direction:column}}
+</style>
+
+<div class="blog-hero-sec">
+  <div class="blog-eyebrow"><i class="ti ti-pencil"></i> Blog &amp; Resources</div>
+  <h1 data-i18n="blog.title">Career &amp; Hiring Insights</h1>
+  <p data-i18n="blog.sub">Tips, guides, and salary data for job seekers and employers in Canada · FR + EN</p>
+</div>
+
+<div class="blog-featured-wrap">
+  <div class="blog-featured">
+    <div class="blog-feat-img">
+      <img src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=700&q=80&fit=crop" alt="AI Hiring 2026">
+      <div class="blog-feat-badge">⭐ À la une</div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
-
-      <article style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;flex-direction:column">
-        <div style="background:linear-gradient(135deg,#023448,#1b485a);padding:24px 20px 18px">
-          <span style="background:rgba(255,255,255,.15);color:#fff;border-radius:100px;padding:3px 10px;font-size:10px;font-weight:700">SALARY GUIDE · FR</span>
-          <h2 style="font-family:var(--r);font-size:16px;font-weight:800;color:#fff;margin:10px 0 0;line-height:1.35">Salaires tech au Canada 2026 : qui gagne quoi ?</h2>
+    <div class="blog-feat-body">
+      <div class="blog-feat-tag">AI &amp; Hiring · EN</div>
+      <div class="blog-feat-title">How AI is changing Canadian recruitment in 2026</div>
+      <div class="blog-feat-desc">From automated CV screening to AI cover letters — what works, what's hype. A practical guide for HR managers across Canada.</div>
+      <div class="blog-feat-meta">
+        <div class="blog-feat-av">AE</div>
+        <div>
+          <div style="font-weight:600;color:#023448;font-size:13px">Ayaovi Edem G.</div>
+          <div>May 2026 · 8 min</div>
         </div>
-        <div style="padding:18px 20px;flex:1;display:flex;flex-direction:column">
-          <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">De développeur junior à CTO — fourchettes salariales réelles au Québec, Ontario et C.-B. avec comparatif par ville.</p>
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <span style="font-size:11px;color:var(--muted)">🍁 5 min</span>
-            <button data-onclick="goto('tax-calc')" style="background:var(--indigo3);color:var(--indigo);border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a1.cta">Calculator →</button>
-          </div>
-        </div>
-      </article>
-
-      <article style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;flex-direction:column">
-        <div style="background:linear-gradient(135deg,#6366F1,#8B5CF6);padding:24px 20px 18px">
-          <span style="background:rgba(255,255,255,.2);color:#fff;border-radius:100px;padding:3px 10px;font-size:10px;font-weight:700">AI &amp; HIRING · EN</span>
-          <h2 style="font-family:var(--r);font-size:16px;font-weight:800;color:#fff;margin:10px 0 0;line-height:1.35">How AI is changing Canadian recruitment in 2026</h2>
-        </div>
-        <div style="padding:18px 20px;flex:1;display:flex;flex-direction:column">
-          <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">From automated CV screening to AI cover letters — what works, what's hype. A practical guide for HR managers.</p>
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <span style="font-size:11px;color:var(--muted)">🇨🇦 8 min</span>
-            <button data-onclick="goto('employer')" style="background:#EEF2FF;color:#6366F1;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a2.cta">Post a job →</button>
-          </div>
-        </div>
-      </article>
-
-      <article style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;flex-direction:column">
-        <div style="background:linear-gradient(135deg,#059669,#047857);padding:24px 20px 18px">
-          <span style="background:rgba(255,255,255,.2);color:#fff;border-radius:100px;padding:3px 10px;font-size:10px;font-weight:700">IMMIGRATION · FR</span>
-          <h2 style="font-family:var(--r);font-size:16px;font-weight:800;color:#fff;margin:10px 0 0;line-height:1.35">Travailler au Canada avec un permis ouvert : guide complet</h2>
-        </div>
-        <div style="padding:18px 20px;flex:1;display:flex;flex-direction:column">
-          <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">PGWP, permis ouvert, permis fermé — vos options pour postuler légalement au Canada, étape par étape.</p>
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <span style="font-size:11px;color:var(--muted)">🍁 10 min</span>
-            <button data-onclick="goto('jobs')" style="background:#F0FDF4;color:#059669;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a3.cta">Browse jobs →</button>
-          </div>
-        </div>
-      </article>
-
-      <article style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;flex-direction:column">
-        <div style="background:linear-gradient(135deg,#D97706,#B45309);padding:24px 20px 18px">
-          <span style="background:rgba(255,255,255,.2);color:#fff;border-radius:100px;padding:3px 10px;font-size:10px;font-weight:700">TAX GUIDE · EN</span>
-          <h2 style="font-family:var(--r);font-size:16px;font-weight:800;color:#fff;margin:10px 0 0;line-height:1.35">Quebec vs Ontario: which province has lower income tax?</h2>
-        </div>
-        <div style="padding:18px 20px;flex:1;display:flex;flex-direction:column">
-          <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">A $90,000 salary looks very different depending on where you live. We break down net pay for Canada's two biggest job markets.</p>
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <span style="font-size:11px;color:var(--muted)">🇨🇦 6 min</span>
-            <button data-onclick="goto('tax-calc')" style="background:#FFFBEB;color:#D97706;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a4.cta">Calculate →</button>
-          </div>
-        </div>
-      </article>
-
-      <article style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;flex-direction:column">
-        <div style="background:linear-gradient(135deg,#0EA5E9,#0284C7);padding:24px 20px 18px">
-          <span style="background:rgba(255,255,255,.2);color:#fff;border-radius:100px;padding:3px 10px;font-size:10px;font-weight:700">TÉLÉTRAVAIL · FR</span>
-          <h2 style="font-family:var(--r);font-size:16px;font-weight:800;color:#fff;margin:10px 0 0;line-height:1.35">Top 10 villes canadiennes pour le télétravail en 2026</h2>
-        </div>
-        <div style="padding:18px 20px;flex:1;display:flex;flex-direction:column">
-          <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">Coût de la vie, connectivité, qualité de vie, fiscalité : on a analysé 20 villes pour vous aider à choisir où vivre en télétravail.</p>
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <span style="font-size:11px;color:var(--muted)">🍁 7 min</span>
-            <button data-onclick="goto('jobs')" style="background:#E0F2FE;color:#0284C7;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a5.cta">Remote jobs →</button>
-          </div>
-        </div>
-      </article>
-
-      <article style="background:#fff;border:1.5px solid #E2E8F0;border-radius:20px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;flex-direction:column">
-        <div style="background:linear-gradient(135deg,#7C3AED,#6D28D9);padding:24px 20px 18px">
-          <span style="background:rgba(255,255,255,.2);color:#fff;border-radius:100px;padding:3px 10px;font-size:10px;font-weight:700">CAREER TIPS · EN</span>
-          <h2 style="font-family:var(--r);font-size:16px;font-weight:800;color:#fff;margin:10px 0 0;line-height:1.35">How to write a cover letter that gets past AI screening</h2>
-        </div>
-        <div style="padding:18px 20px;flex:1;display:flex;flex-direction:column">
-          <p style="font-size:13px;color:#475569;line-height:1.7;margin:0 0 14px;flex:1">Most applications are rejected before a human reads them. Here's exactly what AI scoring looks for — and how to rank #1 in the queue.</p>
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <span style="font-size:11px;color:var(--muted)">🇨🇦 5 min</span>
-            <button data-onclick="goto('jobs')" style="background:#F5F3FF;color:#7C3AED;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit" data-i18n="blog.a6.cta">Find jobs →</button>
-          </div>
-        </div>
-      </article>
-
-    </div>
-    <div style="text-align:center;margin-top:44px;padding:28px;background:#F8FAFC;border-radius:16px;border:1.5px solid #E2E8F0">
-      <p style="font-size:15px;color:var(--muted);margin:0 0 6px" data-i18n="blog.footer.q">Want us to cover a specific topic?</p>
-      <a href="mailto:hello@nexhire.ca" style="color:var(--indigo);font-weight:700;font-size:15px">hello@nexhire.ca →</a>
+      </div>
+      <button class="blog-read-btn" data-onclick="goto('employer')">Lire l'article <i class="ti ti-arrow-right" style="font-size:13px"></i></button>
     </div>
   </div>
+</div>
+
+<div class="blog-outer">
+  <div class="blog-grid">
+    <div class="blog-card" data-onclick="goto('tax-calc')">
+      <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500&q=80&fit=crop" alt="Salary Guide">
+      <div class="blog-card-body">
+        <span class="blog-card-tag" style="background:#fffbeb;color:#d97706">Salary Guide · FR</span>
+        <div class="blog-card-title">Salaires tech au Canada 2026 : qui gagne quoi ?</div>
+        <div class="blog-card-desc">De développeur junior à CTO — fourchettes salariales réelles au Québec, Ontario et C.-B. avec comparatif par ville.</div>
+        <div class="blog-card-meta"><span>🍁 5 min</span><span class="blog-card-read" data-i18n="blog.a1.cta">Calculator →</span></div>
+      </div>
+    </div>
+    <div class="blog-card" data-onclick="goto('jobs')">
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80&fit=crop" alt="Immigration Canada">
+      <div class="blog-card-body">
+        <span class="blog-card-tag" style="background:#f0fdf4;color:#059669">Immigration · FR</span>
+        <div class="blog-card-title">Travailler au Canada avec un permis ouvert : guide complet</div>
+        <div class="blog-card-desc">PGWP, permis ouvert, permis fermé — vos options pour postuler légalement au Canada, étape par étape.</div>
+        <div class="blog-card-meta"><span>🍁 10 min</span><span class="blog-card-read" data-i18n="blog.a3.cta">Browse jobs →</span></div>
+      </div>
+    </div>
+    <div class="blog-card" data-onclick="goto('tax-calc')">
+      <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=500&q=80&fit=crop" alt="Tax Guide">
+      <div class="blog-card-body">
+        <span class="blog-card-tag" style="background:#eff6ff;color:#0284c7">Tax Guide · EN</span>
+        <div class="blog-card-title">Quebec vs Ontario: which province has lower income tax?</div>
+        <div class="blog-card-desc">A $90,000 salary looks very different depending on where you live. We break down net pay for Canada's two biggest job markets.</div>
+        <div class="blog-card-meta"><span>🇨🇦 6 min</span><span class="blog-card-read" data-i18n="blog.a4.cta">Calculate →</span></div>
+      </div>
+    </div>
+    <div class="blog-card" data-onclick="goto('jobs')">
+      <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=500&q=80&fit=crop" alt="Remote Work">
+      <div class="blog-card-body">
+        <span class="blog-card-tag" style="background:#e0f2fe;color:#0284c7">Télétravail · FR</span>
+        <div class="blog-card-title">Top 10 villes canadiennes pour le télétravail en 2026</div>
+        <div class="blog-card-desc">Coût de la vie, connectivité, qualité de vie, fiscalité : on a analysé 20 villes pour vous aider à choisir.</div>
+        <div class="blog-card-meta"><span>🍁 7 min</span><span class="blog-card-read" data-i18n="blog.a5.cta">Remote jobs →</span></div>
+      </div>
+    </div>
+    <div class="blog-card" data-onclick="goto('jobs')">
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&q=80&fit=crop" alt="Cover Letter AI">
+      <div class="blog-card-body">
+        <span class="blog-card-tag" style="background:#f5f3ff;color:#7c3aed">Career Tips · EN</span>
+        <div class="blog-card-title">How to write a cover letter that gets past AI screening</div>
+        <div class="blog-card-desc">Most applications are rejected before a human reads them. Here's exactly what AI scoring looks for — and how to rank #1.</div>
+        <div class="blog-card-meta"><span>🇨🇦 5 min</span><span class="blog-card-read" data-i18n="blog.a6.cta">Find jobs →</span></div>
+      </div>
+    </div>
+    <div class="blog-card" data-onclick="goto('employer')">
+      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80&fit=crop" alt="Hiring Metrics">
+      <div class="blog-card-body">
+        <span class="blog-card-tag" style="background:#fdf4ff;color:#a21caf">Hiring · EN</span>
+        <div class="blog-card-title">5 metrics every hiring manager should track in 2026</div>
+        <div class="blog-card-desc">Time-to-hire, cost-per-hire, offer acceptance rate — the KPIs that separate great HR teams from the rest.</div>
+        <div class="blog-card-meta"><span>🇨🇦 6 min</span><span class="blog-card-read">Post a job →</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="blog-newsletter">
+    <h2>Ne manquez aucun article</h2>
+    <p>Recevez nos guides carrière et recrutement chaque mois · FR + EN</p>
+    <div class="blog-nl-form">
+      <input class="blog-nl-input" type="email" placeholder="votre@email.ca">
+      <button class="blog-nl-btn">S'abonner →</button>
+    </div>
+  </div>
+</div>
 </div>
 
 </main>
