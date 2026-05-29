@@ -278,7 +278,7 @@ router.post('/:id/send', requireAuth, requireCompanyAccess, async (req, res) => 
       [expires, interview.id]
     );
 
-    // ── Email au candidat ──────────────────────────────
+    
     // ── Email au candidat ──────────────────────────────
     if (interview.candidate_email) {
       const emailService = require('../services/email');

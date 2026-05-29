@@ -241,7 +241,7 @@ function renderQuestion(idx) {
         <div class="upload-progress" id="upload-bar"><div class="upload-fill" id="upload-fill" style="width:0%"></div></div>
         <div id="upload-status" style="font-size:13px;color:var(--muted);margin-bottom:12px;display:none"></div>
         <div class="btn-row" id="btn-row">
-          <button class="btn btn-primary" id="btn-start" onclick="startRecording()"><i class="ti ti-player-record"></i> Commencer l'enregistrement</button>
+          <button class="btn btn-primary" id="btn-start"><i class="ti ti-player-record"></i> Commencer l'enregistrement</button>
         </div>
       `}
     </div>
@@ -367,7 +367,7 @@ async function uploadRecording() {
   } catch (err) {
     clearInterval(progInterval);
     if (uploadStatus) uploadStatus.textContent = '❌ Erreur réseau. Vérifiez votre connexion.';
-    if (btnRow) btnRow.innerHTML = `<button class="btn btn-primary" onclick="location.reload()"><i class="ti ti-refresh"></i> Réessayer</button>`;
+    if (btnRow) btnRow.innerHTML = `<button class="btn btn-danger" data-stop="1">
   }
 }
 
