@@ -1402,9 +1402,50 @@ async function filterJobs(page = 1) {
   // Load Job Bank Canada section in parallel (only on first page)
   // Append Adzuna jobs into the same list (Canada only, page 1)
  if (page === 1) {
-    console.log('ADZUNA CALL - list:', list, 'locVal:', locVal);
     loadAdzunaIntoMainList(q, locVal, list);
+    loadJoobleIntoMainList(q, locVal, list);
   }
+}
+async function loadJoobleIntoMainList(q, prov, listEl) {
+  if (!listEl) return;
+  const isFr = state.lang === 'fr';
+  const params = new URLSearchParams();
+  params.set('q', q || 'developer');
+  if (prov && prov !== 'REMOTE' && !prov.startsWith('c:')) params.set('prov', prov);
+  params.set('_t', Date.now());
+  const d = await api('GET', `${BASE}/api/jobbank/jooble?${params}`);
+  if (!listEl.isConnected) return;
+  const jobs = (d.jobs || []).slice(0, 20);
+  if (!jobs.length) return;
+
+  const divider = document.createElement('div');
+  divider.className = 'adzuna-divider';
+  divider.innerHTML = `<span>${isFr ? 'Offres via' : 'Jobs via'} <a href="https://jooble.org" target="_blank" rel="noopener">Jooble</a> · ${jobs.length} offre${jobs.length > 1 ? 's' : ''}</span>`;
+  listEl.appendChild(divider);
+
+  jobs.forEach(j => {
+    const card = document.createElement('div');
+    card.className = 'job-list-item js-job-card';
+    card.dataset.adzunaUrl = j.url;
+    card.innerHTML = `
+      <div class="jli-top">
+        <div class="jli-badges">
+          <span class="job-tag source-adzuna">🍁 Jooble</span>
+        </div>
+        <a href="${j.url}" target="_blank" rel="noopener noreferrer"
+           class="jli-apply-ext" data-onclick="event.stopPropagation()">
+          ${isFr ? 'Postuler' : 'Apply'} <i class="ti ti-external-link" style="font-size:12px"></i>
+        </a>
+      </div>
+      <div class="jli-title">${esc(j.title)}</div>
+      <div class="jli-meta">
+        ${j.company ? `<span class="jli-company">${esc(j.company)}</span>` : ''}
+        ${j.location ? `<span class="jli-loc"><i class="ti ti-map-pin"></i> ${esc(j.location)}</span>` : ''}
+        ${j.salary ? `<span class="jli-sal"><i class="ti ti-currency-dollar"></i> ${esc(j.salary)}</span>` : ''}
+        ${j.date ? `<span class="jli-date">${esc(j.date)}</span>` : ''}
+      </div>`;
+    listEl.appendChild(card);
+  });
 }
 
 function clearFilters() {
