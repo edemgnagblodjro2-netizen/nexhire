@@ -4,7 +4,12 @@ const https   = require('https');
 
 function httpsGet(url) {
   return new Promise((resolve, reject) => {
-    const req = https.get(url, { headers: { 'Accept': 'application/json' } }, (res) => {
+    const req = https.get(url, { headers: { 
+      'Accept': 'application/json, text/html, */*',
+      'Accept-Language': 'en-CA,en;q=0.9,fr-CA;q=0.8',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+      'Referer': 'https://www.jobbank.gc.ca/',
+    } }, (res) => {
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => resolve(data));
