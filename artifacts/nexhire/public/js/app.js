@@ -1542,9 +1542,12 @@ async function loadAdzunaIntoMainList(q, prov, listEl) {
   if (countLabel) {
     const nexhireCount = listEl.querySelectorAll('[data-job-id]').length;
     const total = nexhireCount + jobs.length;
-    countLabel.textContent = state.lang === 'fr'
-      ? `${nexhireCount} offre${nexhireCount > 1 ? 's' : ''} + ${jobs.length} via Adzuna`
-      : `${nexhireCount} job${nexhireCount !== 1 ? 's' : ''} + ${jobs.length} via Adzuna`;
+    const adzunaCount = jobs.length;
+const joobleEl = document.querySelector('.adzuna-divider a[href*="jooble"]');
+const joobleCount = joobleEl ? parseInt(joobleEl.closest('.adzuna-divider').textContent.match(/\d+/)?.[0] || 0) : 0;
+countLabel.textContent = state.lang === 'fr'
+  ? `${nexhireCount} offre${nexhireCount > 1 ? 's' : ''} + ${adzunaCount} Adzuna + ${joobleCount} Jooble`
+  : `${nexhireCount} job${nexhireCount !== 1 ? 's' : ''} + ${adzunaCount} Adzuna + ${joobleCount} Jooble`;
   }
 }
 
