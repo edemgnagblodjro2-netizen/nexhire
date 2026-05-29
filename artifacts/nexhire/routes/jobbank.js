@@ -134,7 +134,7 @@ router.get('/jobbank-canada', async (req, res) => {
       action: 'getjobs',
     });
 
-    const url = `https://jobs-emplois.gc.ca/api/v0.1/jobsearch/?${params.toString()}`;
+    const url = `https://jobbank.gc.ca/api/v0.1/jobsearch/?${params.toString()}`;
     const raw = await httpsGet(url);
     const data = JSON.parse(raw);
 
