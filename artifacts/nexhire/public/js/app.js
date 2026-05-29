@@ -1539,16 +1539,15 @@ async function loadAdzunaIntoMainList(q, prov, listEl) {
 
   // Update count label
   const countLabel = document.getElementById('jobs-count-label');
-  if (countLabel) {
-    const nexhireCount = listEl.querySelectorAll('[data-job-id]').length;
-    const total = nexhireCount + jobs.length;
-    const adzunaCount = jobs.length;
-const joobleEl = document.querySelector('.adzuna-divider a[href*="jooble"]');
-const joobleCount = joobleEl ? parseInt(joobleEl.closest('.adzuna-divider').textContent.match(/\d+/)?.[0] || 0) : 0;
-countLabel.textContent = state.lang === 'fr'
-  ? `${nexhireCount} offre${nexhireCount > 1 ? 's' : ''} + ${adzunaCount} Adzuna + ${joobleCount} Jooble`
-  : `${nexhireCount} job${nexhireCount !== 1 ? 's' : ''} + ${adzunaCount} Adzuna + ${joobleCount} Jooble`;
-  }
+if (countLabel) {
+  const nexhireCount = listEl.querySelectorAll('[data-job-id]').length;
+  const adzunaCount = listEl.querySelectorAll('[data-adzuna-url]').length;
+  const joobleCount = jobs.length;
+  const total = nexhireCount + adzunaCount + joobleCount;
+  countLabel.textContent = state.lang === 'fr'
+    ? `${nexhireCount} native${nexhireCount > 1 ? 's' : ''} + ${adzunaCount} Adzuna + ${joobleCount} Jooble`
+    : `${nexhireCount} native${nexhireCount !== 1 ? 's' : ''} + ${adzunaCount} Adzuna + ${joobleCount} Jooble`;
+}
 }
 
 // ── Job detail panel ───────────────────────────────────────
