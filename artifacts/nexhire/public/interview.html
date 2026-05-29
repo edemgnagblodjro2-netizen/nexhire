@@ -237,7 +237,7 @@ function renderQuestion(idx) {
         <div id="permission-error"><i class="ti ti-microphone-off"></i> Accès au micro refusé. Veuillez autoriser le microphone dans votre navigateur.</div>
         <div class="rec-status idle" id="rec-status"><i class="ti ti-microphone"></i> Prêt à enregistrer</div>
         <div class="rec-timer" id="rec-timer">0:00</div>
-        <div class="max-hint">Durée max : 3 minutes</div>
+        <div class="max-hint">Durée max : 6 minutes</div>
         <div class="upload-progress" id="upload-bar"><div class="upload-fill" id="upload-fill" style="width:0%"></div></div>
         <div id="upload-status" style="font-size:13px;color:var(--muted);margin-bottom:12px;display:none"></div>
         <div class="btn-row" id="btn-row">
@@ -270,9 +270,10 @@ async function startRecording() {
     if (preview) { preview.srcObject = stream; preview.style.display = 'block'; }
 
     chunks = [];
-    const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus'
-                   : MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm'
-                   : 'audio/ogg';
+    const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus') ? 'video/webm;codecs=vp9,opus'
+               : MediaRecorder.isTypeSupported('video/webm') ? 'video/webm'
+               : MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus'
+               : 'audio/webm';
     mediaRecorder = new MediaRecorder(stream, { mimeType });
     mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
     mediaRecorder.onstop = () => {
