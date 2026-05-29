@@ -118,7 +118,7 @@ router.get('/jooble', async (req, res) => {
     for (const r of results) {
       if (r.status !== 'fulfilled') continue;
       for (const j of (r.value.jobs || [])) {
-        const id = `jb_${Buffer.from(j.link || Math.random().toString()).toString('base64').slice(0, 12)}`;
+        const id = `jb_${Buffer.from(j.link || Math.random().toString()).toString('base64').slice(8, 20)}`;
         if (seenIds.has(id)) continue;
         seenIds.add(id);
         jobs.push({
