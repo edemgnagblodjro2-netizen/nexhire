@@ -82,60 +82,47 @@ async function fetchAdzuna(appId, appKey, q, where, perPage, page) {
 
 router.get('/jooble', async (req, res) => {
   try {
-    const key = process.env.JOOBLE_API_KEY;
+    const key  = process.env.JOOBLE_API_KEY;
     if (!key) return res.json({ success: false, jobs: [], error: 'No Jooble key' });
 
-    const q        = req.query.q || 'developer';
-    const prov     = req.query.prov || '';
+    const q    = req.query.q || 'developer';
+    const prov = req.query.prov || '';
+    const page = parseInt(req.query.page || '1');
     const location = prov && PROV_TO_WHERE[prov] ? PROV_TO_WHERE[prov] + ', Canada' : 'Canada';
 
-    // Fetch 3 pages in parallel
-    const pages = [1, 2, 3];
-    const results = await Promise.allSettled(pages.map(page => {
-      const body = JSON.stringify({ keywords: q, location, page, resultonpage: 20 });
-      return new Promise((resolve, reject) => {
-        const options = {
-          hostname: 'jooble.org',
-          path: `/api/${key}`,
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) },
-        };
-        const req2 = https.request(options, r => {
-          let raw = '';
-          r.on('data', c => raw += c);
-          r.on('end', () => resolve(JSON.parse(raw)));
-        });
-        req2.on('error', reject);
-        req2.setTimeout(10000, () => { req2.destroy(); reject(new Error('timeout')); });
-        req2.write(body);
-        req2.end();
+    const body = JSON.stringify({ keywords: q, location, page, resultonpage: 20 });
+
+    const data = await new Promise((resolve, reject) => {
+      const options = {
+        hostname: 'jooble.org',
+        path: `/api/${key}`,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) },
+      };
+      const req2 = https.request(options, r => {
+        let raw = '';
+        r.on('data', c => raw += c);
+        r.on('end', () => resolve(JSON.parse(raw)));
       });
+      req2.on('error', reject);
+      req2.setTimeout(10000, () => { req2.destroy(); reject(new Error('timeout')); });
+      req2.write(body);
+      req2.end();
+    });
+
+    const jobs = (data.jobs || []).map((j, i) => ({
+      id:       `jb_${i}_${Date.now()}`,
+      title:    j.title || '',
+      company:  j.company || '',
+      location: j.location || location,
+      salary:   j.salary || '',
+      date:     j.updated ? new Date(j.updated).toLocaleDateString('en-CA') : '',
+      url:      j.link || '',
+      external: true,
+      source:   'jooble',
     }));
 
-    const seenIds = new Set();
-    const jobs = [];
-
-    for (const r of results) {
-      if (r.status !== 'fulfilled') continue;
-      for (const j of (r.value.jobs || [])) {
-        const id = `jb_${Buffer.from(j.link || Math.random().toString()).toString('base64').slice(8, 20)}`;
-        if (seenIds.has(id)) continue;
-        seenIds.add(id);
-        jobs.push({
-          id,
-          title:    j.title || '',
-          company:  j.company || '',
-          location: j.location || location,
-          salary:   j.salary || '',
-          date:     j.updated ? new Date(j.updated).toLocaleDateString('en-CA') : '',
-          url:      j.link || '',
-          external: true,
-          source:   'jooble',
-        });
-      }
-    }
-
-    res.json({ success: true, jobs, total: jobs.length });
+    res.json({ success: true, jobs, total: data.totalCount || jobs.length });
   } catch (e) {
     console.error('[Jooble]', e.message);
     res.json({ success: false, jobs: [], error: e.message });
