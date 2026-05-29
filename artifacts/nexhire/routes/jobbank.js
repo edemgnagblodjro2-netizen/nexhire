@@ -132,7 +132,7 @@ router.get('/jobbank-canada', async (req, res) => {
     });
 
     // Job Bank Canada RSS feed
-    const url = `https://www.jobbank.gc.ca/jobsearch/rss?${params.toString()}`;
+    const url = `https://www.jobbank.gc.ca/jobsearch/rss?searchstring=${encodeURIComponent(q)}&locationstring=${encodeURIComponent(where)}&sort=M`;
     const raw = await httpsGet(url);
 
     // Parse RSS XML
