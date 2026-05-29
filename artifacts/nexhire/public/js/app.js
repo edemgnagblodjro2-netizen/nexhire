@@ -7497,6 +7497,15 @@ async function viewViDetail(id) {
           </div>
           ${resp ? `
             <div style="padding:16px 18px">
+            ${resp.video_path ? `
+            <div style="margin-bottom:14px">
+            <video controls style="width:100%;border-radius:10px;background:#000;max-height:300px" 
+            src="/uploads/interviews/${resp.video_path.split('/').pop()}">
+            <source src="/uploads/interviews/${resp.video_path.split('/').pop()}" type="video/webm">
+            ${isFr ? 'Votre navigateur ne supporte pas la lecture vidéo.' : 'Your browser does not support video playback.'}
+            </video>
+            </div>
+             ` : ''}
               ${resp.transcript ? `
                 <div style="margin-bottom:14px">
                   <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">${isFr ? 'Transcription' : 'Transcript'}</div>
