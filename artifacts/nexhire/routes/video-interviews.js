@@ -327,4 +327,22 @@ router.delete('/:id', requireAuth, requireCompanyAccess, async (req, res) => {
   }
 });
 
+// DELETE /api/video-interviews/:id/responses/:responseId
+router.delete('/:id/responses/:responseId', requireAuth, requireCompanyAccess, async (req, res) => {
+  try {
+    const resp = await db.get(
+      `SELECT r.* FROM nh_video_responses r
+       JOIN nh_video_interviews iv ON iv.id = r.interview_id
+       WHERE r.id=$1 AND iv.company_id=$2`,
+      [req.params.responseId, req.session.user.company_id]
+    );
+    if (!resp) return res.status(404).json({ success: false, error: 'Not found' });
+    if (resp.video_path && fs.existsSync(resp.video_path)) fs.unlinkSync(resp.video_path);
+    await db.run('DELETE FROM nh_video_responses WHERE id=$1', [resp.id]);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
 module.exports = router;

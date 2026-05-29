@@ -7518,6 +7518,12 @@ async function viewViDetail(id) {
                   ` : ''}
                 </div>
                 ${fb.summary ? `<div style="font-size:13px;color:var(--muted);font-style:italic;line-height:1.6">${esc(fb.summary)}</div>` : ''}
+                <div style="margin-top:12px;text-align:right">
+  <button class="btn-ghost" style="font-size:12px;color:#ef4444;border-color:#fca5a5" 
+    data-onclick="deleteViResponse('${id}','${resp.id}')">
+    <i class="ti ti-trash"></i> ${isFr ? 'Supprimer la réponse' : 'Delete response'}
+  </button>
+</div>
                 ${fb.keywords?.length ? `<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px">${fb.keywords.map(k=>`<span style="background:var(--indigo)15;color:var(--indigo);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600">${esc(k)}</span>`).join('')}</div>` : ''}
               ` : ''}
             </div>
@@ -7538,6 +7544,16 @@ async function deleteVi(id, title) {
   const d = await api('DELETE', `${BASE}/api/video-interviews/${id}`);
   if (d.success) { toast(isFr ? 'Entretien supprimé' : 'Interview deleted', 'success'); loadVideoInterviews(); }
   else toast(d.error || 'Error', 'error');
+}
+
+async function deleteViResponse(interviewId, responseId) {
+  const isFr = state.lang === 'fr';
+  if (!confirm(isFr ? 'Supprimer cette réponse vidéo ?' : 'Delete this video response?')) return;
+  const d = await api('DELETE', `${BASE}/api/video-interviews/${interviewId}/responses/${responseId}`);
+  if (d.success) {
+    toast(isFr ? 'Réponse supprimée.' : 'Response deleted.', 'success');
+    viewViDetail(interviewId);
+  } else toast(d.error || 'Error', 'error');
 }
 
 /* ── Admin — Skill Tests Manager ───────────────────────────────────────── */
