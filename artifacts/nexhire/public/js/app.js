@@ -3757,7 +3757,7 @@ async function loadEmployerJobs() {
         <div class="emp-stat"><i class="ti ti-percentage"></i><span>${conv}%</span><small>${isFr?'Conversion':'Conversion'}</small></div>
       </div>
       <div class="emp-job-actions" style="display:flex;gap:8px;flex-wrap:wrap">
-        ${j.status !== 'rejected' ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px" data-onclick="openKanban('${j.id}','${esc(title)}')"><i class="ti ti-layout-kanban"></i> Kanban</button>` : ''}
+        ${j.status !== 'rejected' ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px;color:var(--dark);border:1px solid var(--border)" data-onclick="openKanban('${j.id}','${esc(title)}')"><i class="ti ti-layout-kanban"></i> Kanban</button>` : ''}
         ${j.status === 'active' && !(j.is_sponsored && j.sponsored_until && new Date(j.sponsored_until) > new Date())
           ? `<button class="btn-ghost" style="font-size:13px;padding:6px 14px;color:#d97706;border-color:#fde68a" data-onclick="openBoostModal('${j.id}','${esc(title)}')"><i class="ti ti-rocket"></i> ${isFr?'Booster':'Boost'}</button>`
           : ''}
