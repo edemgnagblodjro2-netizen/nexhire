@@ -130,6 +130,7 @@ router.get('/jobbank-canada', async (req, res) => {
     const url = `https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=${encodeURIComponent(q)}&locationstring=${encodeURIComponent(where)}&sort=M&action=getJobs&fnjobs=1&page=${page}`;
 
     const raw = await httpsGet(url);
+    console.log('[JobBank CA] raw:', raw.slice(0, 500));
     const data = JSON.parse(raw);
 
     const jobs = (data.hits?.hits || []).map(j => {
