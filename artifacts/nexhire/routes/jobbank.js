@@ -130,4 +130,42 @@ router.get('/jooble', async (req, res) => {
   }
 });
 
+// GET /api/jobbank/search?q=developer&prov=QC&lang=en&page=1
+router.get('/search', async (req, res) => {
+  try {
+    const appId  = process.env.ADZUNA_APP_ID;
+    const appKey = process.env.ADZUNA_API_KEY;
+    if (!appId || !appKey) {
+      return res.json({ success: false, jobs: [], error: 'Adzuna keys not configured' });
+    }
+
+    const q    = req.query.q || 'developer';
+    const prov = req.query.prov || '';
+    const page = req.query.page || 1;
+    const where = prov && prov !== 'REMOTE' ? (PROV_TO_WHERE[prov] || '') : '';
+
+    const main = await fetchAdzuna(appId, appKey, q, where, 20, page);
+    if (!main.results) {
+      return res.json({ success: false, jobs: [], error: main.exception || 'No results from Adzuna' });
+    }
+
+    let jobs = filterGigs(mapJobs(main.results));
+    const seenIds = new Set(jobs.map(j => j.id));
+
+    const extras = await Promise.allSettled(
+      EXTRA_PROVINCES.map(p => fetchAdzuna(appId, appKey, q, PROV_TO_WHERE[p], 5, 1))
+    );
+    for (const r of extras) {
+      if (r.status === 'fulfilled' && r.value.results) {
+        for (const j of filterGigs(mapJobs(r.value.results))) {
+          if (!seenIds.has(j.id)) { seenIds.add(j.id); jobs.push(j); }
+        }
+      }
+    }
+
+    res.json({ success: true, jobs, total: main.count || jobs.length });
+  } catch (e) {
+    res.json({ success: false, jobs: [], error: e.message });
+  }
+});
 module.exports = router;
