@@ -265,7 +265,7 @@ router.get('/:id', requireAuth, requireCompanyAccess, async (req, res) => {
 router.post('/:id/send', requireAuth, requireCompanyAccess, async (req, res) => {
   try {
     const interview = await db.get(
-      'SELECT id, token, status FROM nh_video_interviews WHERE id=$1 AND company_id=$2',
+      'SELECT iv.*, c.name AS company_name FROM nh_video_interviews iv JOIN nh_companies c ON c.id = iv.company_id WHERE iv.id=$1 AND iv.company_id=$2',
       [req.params.id, req.session.user.company_id]
     );
     if (!interview) return res.status(404).json({ success: false, error: 'Not found' });
@@ -277,6 +277,31 @@ router.post('/:id/send', requireAuth, requireCompanyAccess, async (req, res) => 
       `UPDATE nh_video_interviews SET status='pending', token_expires_at=$1 WHERE id=$2`,
       [expires, interview.id]
     );
+
+    // ── Email au candidat ──────────────────────────────
+    // ── Email au candidat ──────────────────────────────
+    if (interview.candidate_email) {
+      const emailService = require('../services/email');
+      const link = `${process.env.BASE_URL}/interview/${interview.token}`;
+      await emailService.send(
+        interview.candidate_email,
+        `📹 Invitation à un entretien vidéo / Video Interview Invitation — ${interview.title}`,
+        emailService.emailTemplate(
+          'Invitation à un entretien vidéo / Video Interview Invitation',
+          `<p>Bonjour ${interview.candidate_name || ''} / Hello ${interview.candidate_name || ''},</p>
+
+           <p><strong>${interview.company_name}</strong> vous invite à compléter un entretien vidéo asynchrone pour le poste <strong>${interview.title}</strong>.</p>
+           <p><strong>${interview.company_name}</strong> invites you to complete an async video interview for the position <strong>${interview.title}</strong>.</p>
+
+           <p>🇫🇷 Vous avez <strong>7 jours</strong> pour répondre aux questions à votre rythme — pas besoin de vous connecter en direct.</p>
+           <p>🇨🇦 You have <strong>7 days</strong> to answer the questions at your own pace — no live connection required.</p>
+
+           <a href="${link}" class="btn">🎬 Commencer l'entretien / Start Interview →</a>
+           <p style="font-size:12px;color:#64748b;margin-top:16px">Lien / Link : ${link}</p>`
+        )
+      );
+    }
+
     res.json({ success: true, token: interview.token });
   } catch (e) {
     res.status(500).json({ success: false, error: e.message });
