@@ -160,4 +160,4 @@ async function sendJobAlertEmail(email, firstName, jobs, lang = 'en') {
   await send(email, subject, emailTemplate(isFr ? 'Nouvelles offres pour vous' : 'New jobs for you', body));
 }
 
-module.exports = { send, sendVerificationEmail, sendPasswordResetEmail, sendApplicationNotification, sendStatusUpdateEmail, sendJobAlertEmail };
+module.exports = { send, emailTemplate, sendVerificationEmail, sendPasswordResetEmail, sendApplicationNotification, sendStatusUpdateEmail, sendJobAlertEmail };
