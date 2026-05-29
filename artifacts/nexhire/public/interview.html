@@ -251,14 +251,21 @@ function renderQuestion(idx) {
 async function startRecording() {
   const permErr = document.getElementById('permission-error');
   if (permErr) permErr.style.display = 'none';
+  
+  let stream;
   try {
-    let stream;
-try {
-  stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: { facingMode: 'user' } });
-} catch (videoErr) {
-  // Fallback: audio only if camera unavailable
-  stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-}
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: { facingMode: 'user' } });
+  } catch (e1) {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+    } catch (e2) {
+      if (permErr) permErr.style.display = 'block';
+      console.error('Mic error:', e2);
+      return;
+    }
+  }
+
+  try {
     const preview = document.getElementById('preview');
     if (preview) { preview.srcObject = stream; preview.style.display = 'block'; }
 
