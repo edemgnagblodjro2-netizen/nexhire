@@ -1093,7 +1093,10 @@ app.use(apiBase + '/feed',             require('./routes/feed'));
 // ── Static files ───────────────────────────────────────────
 app.use(BASE_PATH + '/uploads/interviews', express.static(path.join(__dirname, 'uploads', 'interviews')));
 app.use(BASE_PATH + '/uploads',            express.static(uploadDir));
-app.use(BASE_PATH + '/',                   express.static(path.join(__dirname, 'public')));
+app.use(BASE_PATH + '/', (req, res, next) => {
+  if (req.path.startsWith('/api/')) return next();
+  express.static(path.join(__dirname, 'public'))(req, res, next);
+});
 
 // Serve uploaded interview videos
 app.use(BASE_PATH + '/uploads/interviews', express.static(path.join(__dirname, 'uploads', 'interviews')));
