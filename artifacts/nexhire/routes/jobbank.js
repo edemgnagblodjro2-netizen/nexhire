@@ -168,4 +168,67 @@ router.get('/search', async (req, res) => {
     res.json({ success: false, jobs: [], error: e.message });
   }
 });
+
+// GET /api/jobbank/careerjet?q=developer&prov=QC
+router.get('/careerjet', async (req, res) => {
+  try {
+    const key = process.env.CAREERJET_API_KEY;
+    if (!key) return res.json({ success: false, jobs: [], error: 'No Careerjet key' });
+
+    const q    = req.query.q || 'developer';
+    const prov = req.query.prov || '';
+    const page = parseInt(req.query.page || '1');
+    const location = prov && PROV_TO_WHERE[prov] ? PROV_TO_WHERE[prov] + ', Canada' : 'Canada';
+
+    const credentials = Buffer.from(key + ':').toString('base64');
+    const params = new URLSearchParams({
+      locale_code: 'en_CA',
+      keywords: q,
+      location: location,
+      page: page,
+      page_size: 20,
+      sort: 'date',
+      user_ip: '1.2.3.4',
+      user_agent: 'Mozilla/5.0',
+    });
+
+    const data = await new Promise((resolve, reject) => {
+      const options = {
+        hostname: 'search.api.careerjet.net',
+        path: `/v4/query?${params.toString()}`,
+        method: 'GET',
+        headers: {
+          'Authorization': `Basic ${credentials}`,
+          'Accept': 'application/json',
+        },
+      };
+      const req2 = https.request(options, r => {
+        let raw = '';
+        r.on('data', c => raw += c);
+        r.on('end', () => resolve(JSON.parse(raw)));
+      });
+      req2.on('error', reject);
+      req2.setTimeout(10000, () => { req2.destroy(); reject(new Error('timeout')); });
+      req2.end();
+    });
+
+    const jobs = (data.jobs || []).map(j => ({
+      id:       `cj_${Buffer.from(j.url||Math.random().toString()).toString('base64').slice(0,12)}`,
+      title:    j.title || '',
+      company:  j.company || '',
+      location: j.locations || location,
+      salary:   j.salary || '',
+      date:     j.date ? new Date(j.date).toLocaleDateString('en-CA') : '',
+      url:      j.url || '',
+      external: true,
+      source:   'careerjet',
+    }));
+
+    res.json({ success: true, jobs, total: data.hits || jobs.length });
+  } catch (e) {
+    console.error('[Careerjet]', e.message);
+    res.json({ success: false, jobs: [], error: e.message });
+  }
+});
+
 module.exports = router;
