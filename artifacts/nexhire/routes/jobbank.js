@@ -91,7 +91,7 @@ router.get('/jooble', async (req, res) => {
     const page = parseInt(req.query.page || '1');
     const location = prov && PROV_TO_WHERE[prov] ? PROV_TO_WHERE[prov] + ', Canada' : 'Canada';
 
-    const body = JSON.stringify({ keywords: q, location, page, resultonpage: 20 });
+    const body = JSON.stringify({ keywords: q, location, page, resultonpage: 100 });
 
     const data = await new Promise((resolve, reject) => {
       const options = {
