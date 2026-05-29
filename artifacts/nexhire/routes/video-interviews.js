@@ -40,13 +40,18 @@ async function requirePro(req, res, next) {
 // ── Transcribe via OpenAI Whisper ──────────────────────────
 async function transcribeAudio(filePath) {
   const key = process.env.OPENAI_API_KEY;
-  if (!key) return null;
+  if (!key) { console.warn('[VideoInterview] No OPENAI_API_KEY'); return null; }
   try {
     const OpenAI = require('openai');
     const client = new OpenAI({ apiKey: key });
+    // Whisper needs the filename to detect format
+    const fileName = path.basename(filePath);
+    const fileStream = fs.createReadStream(filePath);
+    fileStream.name = fileName.endsWith('.webm') ? fileName : fileName + '.webm';
     const transcription = await client.audio.transcriptions.create({
-      file:  fs.createReadStream(filePath),
-      model: 'whisper-1',
+      file:     fileStream,
+      model:    'whisper-1',
+      language: 'fr',
     });
     return transcription.text || null;
   } catch (e) {
