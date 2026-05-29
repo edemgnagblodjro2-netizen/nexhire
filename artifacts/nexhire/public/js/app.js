@@ -7249,7 +7249,8 @@ async function loadVideoInterviews() {
                 </button>
               ` : `
                 <button class="btn-ghost" style="flex:1;font-size:13px" data-onclick="viewViDetail('${esc(iv.id)}')">
-                  <i class="ti ti-eye"></i> ${isFr ? 'Voir' : 'View'}
+                <i class="ti ti-eye"></i> ${isFr ? 'Voir réponses' : 'View responses'}
+                ${iv.responses_count > 0 ? `<span style="background:#6366f1;color:#fff;border-radius:99px;font-size:10px;padding:2px 7px;margin-left:4px">${iv.responses_count}</span>` : ''}
                 </button>
                 <button class="btn-ghost" style="font-size:13px" data-onclick="copyViLink('${esc(iv.id)}','${esc(iv.title)}')" title="${isFr ? 'Copier le lien candidat' : 'Copy candidate link'}">
                   <i class="ti ti-link"></i>
