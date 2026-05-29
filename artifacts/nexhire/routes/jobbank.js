@@ -118,4 +118,43 @@ router.get('/search', async (req, res) => {
   }
 });
 
+// GET /api/jobbank/jobbank-canada?q=developer&prov=QC&page=1
+router.get('/jobbank-canada', async (req, res) => {
+  try {
+    const q    = req.query.q || '';
+    const prov = req.query.prov || '';
+    const page = parseInt(req.query.page || '1');
+    const lang = req.query.lang || 'en';
+
+    const params = new URLSearchParams({
+      searchstring: q,
+      locationstring: prov ? PROV_TO_WHERE[prov] || '' : '',
+      page: page,
+      sort: 'M',
+      action: 'getjobs',
+    });
+
+    const url = `https://jobs-emplois.gc.ca/api/v0.1/jobsearch/?${params.toString()}`;
+    const raw = await httpsGet(url);
+    const data = JSON.parse(raw);
+
+    const jobs = (data.jobs || []).map(j => ({
+      id:       `jb_${j.jobId || j.seqNo}`,
+      title:    j.title?.en || j.title?.fr || '',
+      company:  j.employer || '',
+      location: j.location || '',
+      salary:   j.salaryText || '',
+      date:     j.datePosted || '',
+      url:      `https://www.jobbank.gc.ca/jobsearch/jobposting/${j.jobId}`,
+      external: true,
+      source:   'jobbank',
+    }));
+
+    res.json({ success: true, jobs, total: data.totalResults || jobs.length });
+  } catch (e) {
+    console.error('[JobBank CA]', e.message);
+    res.json({ success: false, jobs: [], error: e.message });
+  }
+});
+
 module.exports = router;
