@@ -8971,6 +8971,7 @@ function tcSetRate(rate) {
   );
   tcUpdate();
 }
+
 function ptcUpdate() {
   const raw = parseFloat(document.getElementById('ptc-salary')?.value || '0') || 0;
   const annual = raw * (_TC_MUL[_ptcRate] || 1);
