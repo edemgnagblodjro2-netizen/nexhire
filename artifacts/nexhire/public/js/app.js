@@ -8523,6 +8523,65 @@ function setComposeType(type, btn) {
     ? '🎉 Ravi(e) d\'annoncer que j\'ai rejoint [Entreprise] en tant que [Poste] ! Merci à l\'équipe. #NouvelleOpportunité #Nexhire'
     : '🎉 Excited to announce I\'ve joined [Company] as [Role]! #NewOpportunity #Nexhire';
 
+   if (type === 'achievement') {
+    fields.innerHTML = `
+      <div class="form-group" style="margin-bottom:12px">
+        <textarea id="compose-content" rows="5"
+          placeholder="${isFr ? '🏆 Décrivez votre réalisation professionnelle...\nEx: J\'ai terminé le développement d\'une app RH en React et Node.js.' : '🏆 Describe your professional achievement...\nEx: I completed a full HR app in React and Node.js.'}"
+          style="width:100%;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:15px;resize:vertical;box-sizing:border-box;line-height:1.7;outline:none;font-family:var(--b)"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="compose-image-file" id="compose-image-label"
+          style="cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px dashed var(--border);border-radius:10px;color:var(--muted);font-size:13px">
+          <i class="ti ti-photo" style="font-size:18px"></i>
+          <span>${isFr ? 'Ajouter une photo / capture d\'écran' : 'Add a photo / screenshot'}</span>
+        </label>
+        <input type="file" id="compose-image-file" accept="image/*" style="display:none" data-onchange="handleFeedImageUpload(this)">
+        <div id="compose-image-preview" style="display:none;margin-top:10px;position:relative">
+          <img id="compose-image-preview-img" style="width:100%;border-radius:10px;max-height:200px;object-fit:cover" alt="">
+          <button data-onclick="removeFeedImage()" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center"><i class="ti ti-x"></i></button>
+        </div>
+      </div>`;
+  } else if (type === 'portfolio') {
+    fields.innerHTML = `
+      <div class="form-group" style="margin-bottom:12px">
+        <textarea id="compose-content" rows="5"
+          placeholder="${isFr ? '💼 Présentez votre projet ou portfolio...\nEx: Voici le système réseau que j\'ai déployé pour une PME de 150 employés.' : '💼 Present your project or portfolio...\nEx: Here\'s the network system I deployed for a 150-employee SMB.'}"
+          style="width:100%;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:15px;resize:vertical;box-sizing:border-box;line-height:1.7;outline:none;font-family:var(--b)"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="compose-image-file" id="compose-image-label"
+          style="cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px dashed var(--border);border-radius:10px;color:var(--muted);font-size:13px">
+          <i class="ti ti-photo" style="font-size:18px"></i>
+          <span>${isFr ? 'Ajouter une photo / démo' : 'Add a photo / demo'}</span>
+        </label>
+        <input type="file" id="compose-image-file" accept="image/*" style="display:none" data-onchange="handleFeedImageUpload(this)">
+        <div id="compose-image-preview" style="display:none;margin-top:10px;position:relative">
+          <img id="compose-image-preview-img" style="width:100%;border-radius:10px;max-height:200px;object-fit:cover" alt="">
+          <button data-onclick="removeFeedImage()" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center"><i class="ti ti-x"></i></button>
+        </div>
+      </div>`;
+  } else if (type === 'certification') {
+    fields.innerHTML = `
+      <div class="form-group" style="margin-bottom:12px">
+        <textarea id="compose-content" rows="4"
+          placeholder="${isFr ? '🎓 Annoncez votre nouvelle certification...\nEx: Certification AWS Solutions Architect obtenue ! #AWS #Cloud' : '🎓 Announce your new certification...\nEx: Just earned my AWS Solutions Architect certification! #AWS #Cloud'}"
+          style="width:100%;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:15px;resize:vertical;box-sizing:border-box;line-height:1.7;outline:none;font-family:var(--b)"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="compose-image-file" id="compose-image-label"
+          style="cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px dashed var(--border);border-radius:10px;color:var(--muted);font-size:13px">
+          <i class="ti ti-photo" style="font-size:18px"></i>
+          <span>${isFr ? 'Ajouter votre badge / certificat' : 'Add your badge / certificate'}</span>
+        </label>
+        <input type="file" id="compose-image-file" accept="image/*" style="display:none" data-onchange="handleFeedImageUpload(this)">
+        <div id="compose-image-preview" style="display:none;margin-top:10px;position:relative">
+          <img id="compose-image-preview-img" style="width:100%;border-radius:10px;max-height:200px;object-fit:cover" alt="">
+          <button data-onclick="removeFeedImage()" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center"><i class="ti ti-x"></i></button>
+        </div>
+      </div>`;
+  } else
+     
   if (type === 'article') {
     fields.innerHTML = `
       <div class="form-group" style="margin-bottom:12px">
