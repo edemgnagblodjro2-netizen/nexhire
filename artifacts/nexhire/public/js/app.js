@@ -8908,7 +8908,8 @@ function tcUpdate() {
   const raw = parseFloat(document.getElementById('tc-salary')?.value || '0') || 0;
   const annual = raw * (_TC_MUL[_tcRate] || 1);
   const provSel = document.getElementById('tc-prov');
-  const code = provSel?.value || 'ON';
+  const code = document.getElementById('tc-prov')?.value || 'ON';
+  console.log('[TAX] code=', code, 'annual=', annual);
   const provName = provSel?.options[provSel.selectedIndex]?.text || 'Ontario';
   const fmtK = v => '$' + Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   const titleEl = document.getElementById('tc-dyn-title');
