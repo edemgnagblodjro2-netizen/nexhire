@@ -8957,7 +8957,6 @@ function ptcSetRate(rate) {
   document.querySelectorAll('#ptc-tabs .tc-tab').forEach(t => t.classList.toggle('active', t.dataset.rate === rate));
   ptcUpdate();
 }
-let _tcRate = 'annual';
 function tcSetRate(rate) {
   _tcRate = rate;
   document.querySelectorAll('.tc-rate-tabs .tc-tab').forEach(t => t.classList.toggle('active', t.dataset.rate === rate));
