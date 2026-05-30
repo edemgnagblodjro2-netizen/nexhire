@@ -473,12 +473,13 @@
       <button class="modal-close" data-onclick="document.getElementById('compose-modal').style.display='none'"><i class="ti ti-x"></i></button>
     </div>
     <div class="modal-body" style="padding-bottom:0">
-      <div class="compose-tabs" id="compose-tabs">
-        <button class="compose-tab active" data-ctype="text"    data-onclick="setComposeType('text',this)">   <i class="ti ti-pencil"></i>   <span>Post</span></button>
-        <button class="compose-tab"        data-ctype="article" data-onclick="setComposeType('article',this)"><i class="ti ti-news"></i>     <span>Article</span></button>
-        <button class="compose-tab"        data-ctype="hired"   data-onclick="setComposeType('hired',this)">  <i class="ti ti-confetti"></i> <span>Annonce</span></button>
-        <button class="compose-tab"        data-ctype="job_share" data-onclick="setComposeType('job_share',this)"><i class="ti ti-briefcase"></i><span>Offre</span></button>
-      </div>
+     <div class="compose-tabs" id="compose-tabs">
+  <button class="compose-tab active" data-ctype="achievement"   data-onclick="setComposeType('achievement',this)"><i class="ti ti-trophy"></i> <span>Réalisation</span></button>
+  <button class="compose-tab"        data-ctype="portfolio"     data-onclick="setComposeType('portfolio',this)"><i class="ti ti-layout-grid"></i> <span>Portfolio</span></button>
+  <button class="compose-tab"        data-ctype="certification" data-onclick="setComposeType('certification',this)"><i class="ti ti-certificate"></i> <span>Certification</span></button>
+  <button class="compose-tab"        data-ctype="job_share"     data-onclick="setComposeType('job_share',this)"><i class="ti ti-building"></i> <span>Offre</span></button>
+  <button class="compose-tab"        data-ctype="article"       data-onclick="setComposeType('article',this)"><i class="ti ti-bulb"></i> <span>Conseil</span></button>
+</div>
       <div id="compose-fields" style="padding:16px 0"></div>
     </div>
     <div class="modal-footer">

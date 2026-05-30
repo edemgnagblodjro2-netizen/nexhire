@@ -8356,9 +8356,11 @@ function renderPostCard(p) {
   const isOwn     = state.user?.id === p.author_id;
 
   const badges = {
-    hired:    `<span class="post-type-badge hired"><i class="ti ti-confetti"></i> ${isFr ? 'Nouvelle recrue' : 'New hire'}</span>`,
-    article:  `<span class="post-type-badge article"><i class="ti ti-news"></i> Article</span>`,
-    job_share:`<span class="post-type-badge job"><i class="ti ti-briefcase"></i> ${isFr ? 'Offre partagée' : 'Job share'}</span>`,
+    achievement:  `<span class="post-type-badge hired"><i class="ti ti-trophy"></i> ${isFr ? 'Réalisation' : 'Achievement'}</span>`,
+    portfolio:    `<span class="post-type-badge article"><i class="ti ti-briefcase"></i> Portfolio</span>`,
+    certification:`<span class="post-type-badge job"><i class="ti ti-certificate"></i> Certification</span>`,
+    article:      `<span class="post-type-badge article"><i class="ti ti-bulb"></i> ${isFr ? 'Conseil' : 'Tip'}</span>`,
+    job_share:    `<span class="post-type-badge job"><i class="ti ti-building"></i> ${isFr ? 'Offre' : 'Job'}</span>`,
   };
   const badge = badges[p.type] || '';
 
@@ -8391,8 +8393,14 @@ function renderPostCard(p) {
       <span><i class="ti ti-message-circle"></i> <span data-comments="${p.id}">${p.comments_count || 0}</span></span>
     </div>
     <div class="post-actions">
-      <button class="post-action-btn${p.is_liked_by_me ? ' liked' : ''}" data-onclick="toggleLike('${p.id}',this)">
-        <i class="ti ti-heart${p.is_liked_by_me ? '-filled' : ''}"></i> ${isFr ? 'J\'aime' : 'Like'}
+      <button class="post-action-btn${p.is_liked_by_me ? ' liked' : ''}" data-onclick="toggleLike('${p.id}',this)" title="${isFr?'Pertinent':'Relevant'}">
+        💼 ${isFr ? 'Pertinent' : 'Relevant'}
+      </button>
+      <button class="post-action-btn" data-onclick="toggleLike('${p.id}',this)" title="Compétence démontrée">
+        ⭐ ${isFr ? 'Compétence' : 'Skill'}
+      </button>
+      <button class="post-action-btn" data-onclick="toggleLike('${p.id}',this)" title="Inspirant">
+        🚀 ${isFr ? 'Inspirant' : 'Inspiring'}
       </button>
       <button class="post-action-btn" data-onclick="toggleComments('${p.id}')">
         <i class="ti ti-message-circle"></i> ${isFr ? 'Commenter' : 'Comment'}
