@@ -1164,29 +1164,92 @@
   </div>
 </div>
 
-<!-- TAX CALCULATOR ──────────────────────────────────────── -->
-<div id="pg-tax-calc" class="page">
-  <div class="tax-page-wrap">
-    <div class="tax-page-hdr">
-      <h1 id="tc-dyn-title">🍁 Canadian Salary Tax Calculator</h1>
-      <p id="tc-dyn-sub">Estimate your take-home pay — 2026 federal &amp; provincial rates</p>
+<!-- TAX CALCULATOR ──────────────────────────────────────── --><div id="pg-tax-calc" class="page">
+<style>
+.tc-page{max-width:960px;margin:0 auto;padding:48px 24px 80px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.tc-hero{text-align:center;margin-bottom:48px}
+.tc-hero-eyebrow{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;color:#6366f1;border-radius:99px;padding:5px 16px;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:16px}
+.tc-hero h1{font-size:clamp(24px,4vw,40px);font-weight:800;color:#023448;margin-bottom:8px;line-height:1.15}
+.tc-hero p{font-size:16px;color:#64748b;margin:0}
+.tc-input-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:24px;padding:32px;margin-bottom:32px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.tc-rate-tabs{display:flex;gap:4px;margin-bottom:24px;background:#f1f5f9;border-radius:12px;padding:4px}
+.tc-tab{flex:1;padding:9px 4px;border:none;background:transparent;border-radius:9px;font-size:13px;font-weight:600;color:#64748b;cursor:pointer;font-family:inherit;transition:all .15s}
+.tc-tab.active{background:#fff;color:#023448;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.tc-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.tc-field label{font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:8px}
+.tc-salary-wrap{display:flex;align-items:center;border:1.5px solid #e2e8f0;border-radius:12px;overflow:hidden;background:#f8fafc;transition:border-color .15s}
+.tc-salary-wrap:focus-within{border-color:#6366f1;background:#fff}
+.tc-cur-sym{padding:0 14px;font-size:18px;font-weight:700;color:#023448}
+.tc-salary-input{flex:1;border:none;background:transparent;font-size:22px;font-weight:800;color:#023448;padding:14px 0;outline:none;font-family:inherit}
+.tc-cur-code{padding:0 14px;font-size:13px;font-weight:600;color:#94a3b8}
+.tc-prov-select{width:100%;padding:14px 16px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:15px;font-weight:600;color:#023448;background:#f8fafc;font-family:inherit;outline:none;cursor:pointer;transition:border-color .15s}
+.tc-prov-select:focus{border-color:#6366f1;background:#fff}
+.tc-results-wrap{margin-bottom:32px}
+.tc-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:20px}
+.tc-breakdown-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:20px;padding:28px;box-shadow:0 4px 20px rgba(0,0,0,.05)}
+.tc-card-title{font-size:14px;font-weight:700;color:#023448;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #f1f5f9}
+.tc-rows{display:flex;flex-direction:column;gap:0}
+.tc-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f8fafc;font-size:14px;color:#475569}
+.tc-salary-row{font-weight:700;color:#023448;font-size:15px}
+.tc-deduct-row{color:#64748b}
+.tc-total-row{font-weight:700;color:#023448;border-top:2px solid #e2e8f0;margin-top:4px;padding-top:14px;font-size:15px}
+.tc-net-row{font-weight:800;font-size:16px;color:#023448;background:#f0fdf4;border-radius:10px;padding:12px 14px;margin-top:8px;border:none}
+.tc-neg{color:#ef4444}
+.tc-green{color:#16a34a}
+.tc-rate-chips{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.tc-rate-chip{background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:14px;text-align:center}
+.tc-rate-num{font-size:20px;font-weight:800;color:#023448;line-height:1}
+.tc-rate-lbl{font-size:11px;color:#64748b;margin-top:4px;font-weight:500}
+.tc-visual-card{background:linear-gradient(160deg,#023448,#0c3d54);border-radius:20px;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px}
+.tc-donut-legend{display:flex;flex-direction:column;gap:8px;width:100%}
+.tc-legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:#94a3b8;font-weight:500}
+.tc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.tc-net-big{text-align:center;width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:20px}
+.tc-net-amount{font-size:32px;font-weight:900;color:#fff;line-height:1}
+.tc-net-label{font-size:12px;color:#64748b;margin-top:6px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+.tc-prov-table-wrap{background:#fff;border:1.5px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.05)}
+.tc-section-title{font-size:16px;font-weight:800;color:#023448;padding:20px 24px;border-bottom:1px solid #f1f5f9}
+.tc-prov-tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tc-prov-tbl thead tr{background:#f8fafc}
+.tc-prov-tbl th{padding:12px 16px;text-align:left;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px}
+.tc-prov-tbl td{padding:12px 16px;border-bottom:1px solid #f8fafc;color:#475569}
+.tc-prov-tbl tr:last-child td{border-bottom:none}
+.tc-sel td{background:#eef2ff!important}
+.tc-sel td:first-child{border-left:3px solid #6366f1}
+.tc-rank{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#f1f5f9;font-size:11px;font-weight:700;color:#64748b}
+.tc-you{color:#6366f1;font-size:11px;font-weight:700}
+.tc-bar-wrap{width:80px;height:6px;background:#f1f5f9;border-radius:99px;overflow:hidden}
+.tc-bar{height:100%;background:linear-gradient(90deg,#6366f1,#8b5cf6);border-radius:99px}
+.tc-disclaimer{text-align:center;font-size:12px;color:#94a3b8;margin-top:24px;line-height:1.6}
+@media(max-width:700px){.tc-grid{grid-template-columns:1fr}.tc-fields{grid-template-columns:1fr}.tc-visual-card{order:-1}}
+</style>
+<div class="tc-page">
+  <div class="tc-hero">
+    <div class="tc-hero-eyebrow">🍁 Canada 2026</div>
+    <h1 id="tc-dyn-title">Canadian Salary Tax Calculator</h1>
+    <p id="tc-dyn-sub">Estimate your take-home pay — 2026 federal &amp; provincial rates</p>
+  </div>
+  <div class="tc-input-card">
+    <div class="tc-rate-tabs">
+      <button class="tc-tab active" data-rate="annual"   data-onclick="tcSetRate('annual')">Annual</button>
+      <button class="tc-tab"        data-rate="month"    data-onclick="tcSetRate('month')">Month</button>
+      <button class="tc-tab"        data-rate="biweekly" data-onclick="tcSetRate('biweekly')">Biweekly</button>
+      <button class="tc-tab"        data-rate="weekly"   data-onclick="tcSetRate('weekly')">Weekly</button>
+      <button class="tc-tab"        data-rate="daily"    data-onclick="tcSetRate('daily')">Day</button>
+      <button class="tc-tab"        data-rate="hourly"   data-onclick="tcSetRate('hourly')">Hour</button>
     </div>
-    <div class="tax-input-card">
-      <div class="tax-rate-tabs">
-        <button class="tc-tab active" data-rate="annual"    data-onclick="tcSetRate('annual')">Annual</button>
-        <button class="tc-tab"        data-rate="month"     data-onclick="tcSetRate('month')">Month</button>
-        <button class="tc-tab"        data-rate="biweekly"  data-onclick="tcSetRate('biweekly')">Biweekly</button>
-        <button class="tc-tab"        data-rate="weekly"    data-onclick="tcSetRate('weekly')">Weekly</button>
-        <button class="tc-tab"        data-rate="daily"     data-onclick="tcSetRate('daily')">Day</button>
-        <button class="tc-tab"        data-rate="hourly"    data-onclick="tcSetRate('hourly')">Hour</button>
-      </div>
-      <div class="tax-fields-row">
-        <div class="tax-salary-wrap">
-          <span class="tax-cur-sym">$</span>
-          <input type="number" id="tc-salary" class="tax-salary-input" value="50000" min="0" step="1000" data-oninput="tcUpdate()" data-onchange="tcUpdate()">
-          <span class="tax-cur-code">CAD</span>
+    <div class="tc-fields">
+      <div>
+        <label>Salary</label>
+        <div class="tc-salary-wrap">
+          <span class="tc-cur-sym">$</span>
+          <input type="number" id="tc-salary" class="tc-salary-input" value="75000" min="0" step="1000" data-oninput="tcUpdate()" data-onchange="tcUpdate()">
+          <span class="tc-cur-code">CAD</span>
         </div>
-        <select id="tc-prov" class="tax-prov-select" data-onchange="tcUpdate()">
+      </div>
+      <div>
+        <label>Province</label>
+        <select id="tc-prov" class="tc-prov-select" data-onchange="tcUpdate()">
           <option value="AB">Alberta</option>
           <option value="BC">British Columbia</option>
           <option value="MB">Manitoba</option>
@@ -1203,13 +1266,14 @@
         </select>
       </div>
     </div>
-    <div id="tc-results" class="tax-results-wrap"></div>
-    <div class="tax-prov-table-wrap">
-      <h3 class="tax-section-title">Tax by Province in Canada</h3>
-      <div id="tc-prov-table"></div>
-    </div>
-    <p class="tax-disclaimer">Based on 2025 federal &amp; provincial schedules. For estimation only — consult a tax professional for advice.</p>
   </div>
+  <div id="tc-results" class="tc-results-wrap"></div>
+  <div class="tc-prov-table-wrap">
+    <div class="tc-section-title">🏆 Tax comparison by province</div>
+    <div id="tc-prov-table"></div>
+  </div>
+  <p class="tc-disclaimer">Based on 2026 federal &amp; provincial schedules. For estimation only — consult a tax professional for advice.</p>
+</div>
 </div>
 
 <!-- ABOUT ──────────────────────────────────────────────── -->
