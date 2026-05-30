@@ -8958,8 +8958,17 @@ function ptcSetRate(rate) {
   ptcUpdate();
 }
 function tcSetRate(rate) {
+  const oldMul = _TC_MUL[_tcRate] || 1;
+  const newMul = _TC_MUL[rate] || 1;
+  const inp = document.getElementById('tc-salary');
+  if (inp && parseFloat(inp.value) > 0) {
+    const annual = parseFloat(inp.value) * oldMul;
+    inp.value = Math.round(annual / newMul);
+  }
   _tcRate = rate;
-  document.querySelectorAll('.tc-rate-tabs .tc-tab').forEach(t => t.classList.toggle('active', t.dataset.rate === rate));
+  document.querySelectorAll('.tc-rate-tabs .tc-tab').forEach(t => 
+    t.classList.toggle('active', t.dataset.rate === rate)
+  );
   tcUpdate();
 }
 function ptcUpdate() {
