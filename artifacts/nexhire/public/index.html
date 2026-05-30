@@ -1176,6 +1176,16 @@
 .tc-tab{flex:1;padding:9px 4px;border:none;background:transparent;border-radius:9px;font-size:13px;font-weight:600;color:#64748b;cursor:pointer;font-family:inherit;transition:all .15s}
 .tc-tab.active{background:#fff;color:#023448;box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .tc-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){
+  .tc-fields{grid-template-columns:1fr}
+  .tc-salary-input{font-size:18px}
+  .tc-rate-tabs{gap:2px}
+  .tc-tab{font-size:11px;padding:8px 6px}
+  .tc-grid{grid-template-columns:1fr}
+  .tc-prov-tbl{font-size:12px}
+  .tc-prov-tbl th,.tc-prov-tbl td{padding:8px 10px}
+  .tc-bar-wrap{width:50px}
+}
 .tc-field label{font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:8px}
 .tc-salary-wrap{display:flex;align-items:center;border:1.5px solid #e2e8f0;border-radius:12px;overflow:hidden;background:#f8fafc;transition:border-color .15s}
 .tc-salary-wrap:focus-within{border-color:#6366f1;background:#fff}
