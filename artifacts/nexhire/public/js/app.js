@@ -8906,7 +8906,7 @@ function tcSetRate(rate) {
 
 function tcUpdate() {
   const raw = parseFloat(document.getElementById('tc-salary')?.value || '0') || 0;
-  const annual = raw;
+  const annual = raw * (_TC_MUL[_tcRate] || 1);
   const provSel = document.getElementById('tc-prov');
   const code = provSel?.value || 'ON';
   const provName = provSel?.options[provSel.selectedIndex]?.text || 'Ontario';
