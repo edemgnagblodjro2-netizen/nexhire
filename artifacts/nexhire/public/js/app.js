@@ -44,6 +44,45 @@ const state = {
   candidateProfile: null
 };
 
+// ── Session timeout warning ────────────────────────────────
+let sessionTimer, sessionWarningTimer;
+const SESSION_TIMEOUT = 15 * 60 * 1000; // 15 min
+const WARNING_BEFORE  = 60 * 1000;       // avertir 1 min avant
+
+function resetSessionTimer() {
+  clearTimeout(sessionTimer);
+  clearTimeout(sessionWarningTimer);
+  if (!state.user) return;
+
+  sessionWarningTimer = setTimeout(() => {
+    const isFr = state.lang === 'fr';
+    const stay = confirm(
+      isFr
+        ? '⏱️ Votre session expire dans 1 minute.\nRester connecté ?'
+        : '⏱️ Your session expires in 1 minute.\nStay connected?'
+    );
+    if (stay) {
+      resetSessionTimer();
+      // Ping le serveur pour renouveler la session
+      api('GET', `${BASE}/api/auth/me`).catch(() => {});
+    }
+  }, SESSION_TIMEOUT - WARNING_BEFORE);
+
+  sessionTimer = setTimeout(() => {
+    const isFr = state.lang === 'fr';
+    toast(isFr ? 'Session expirée. Veuillez vous reconnecter.' : 'Session expired. Please sign in again.', 'error');
+    state.user = null;
+    updateAuthUI();
+    goto('home');
+    showModal('modal-login');
+  }, SESSION_TIMEOUT);
+}
+
+// Réinitialiser le timer sur toute activité
+['mousemove','keydown','click','scroll','touchstart'].forEach(evt =>
+  document.addEventListener(evt, resetSessionTimer, { passive: true })
+);
+
 // ── Geography ──────────────────────────────────────────────
 const CA_PROVINCES = [
   { code: 'AB', name: 'Alberta' },
@@ -2069,6 +2108,7 @@ async function login() {
     if (d.user.role === 'candidate') { loadSavedJobIds(); goto('candidate-dash'); }
     else goto('employer-dash');
     loadNotifBadge();
+    resetSessionTimer();
   } else showErr(errEl, d.error || 'Invalid credentials');
 }
 
@@ -2097,6 +2137,7 @@ async function register() {
     }
     if (d.user.role === 'candidate') { loadSavedJobIds(); goto('candidate-dash'); }
     else goto('employer-dash');
+    resetSessionTimer();
   } else showErr(errEl, d.error || 'Registration failed');
 }
 
@@ -8581,7 +8622,7 @@ function setComposeType(type, btn) {
         </div>
       </div>`;
   } else
-     
+
   if (type === 'article') {
     fields.innerHTML = `
       <div class="form-group" style="margin-bottom:12px">
