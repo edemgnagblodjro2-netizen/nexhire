@@ -8898,10 +8898,28 @@ function _tcCalc(annual, code) {
 }
 
 const _TC_RATE_LABELS = { annual:'Annual', month:'Month', biweekly:'Biweekly', weekly:'Weekly', daily:'Day', hourly:'Hour' };
-function tcSetRate(rate) {
-  _tcRate = rate;
-  document.querySelectorAll('.tc-tab').forEach(t => t.classList.toggle('active', t.dataset.rate === rate));
-  tcUpdate();
+function tcUpdate() {
+  const raw = parseFloat(document.getElementById('tc-salary')?.value || '0') || 0;
+  const mul = _TC_MUL[_tcRate] || 1;
+  const annual = raw * mul;
+  const provSel = document.getElementById('tc-prov');
+  const code = provSel?.value || 'ON';
+  const provName = provSel?.options[provSel.selectedIndex]?.text || 'Ontario';
+  const fmtK = v => '$' + Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const titleEl = document.getElementById('tc-dyn-title');
+  const subEl   = document.getElementById('tc-dyn-sub');
+  if (titleEl && raw > 0) {
+    const per = _tcRate !== 'annual' ? '/' + _TC_RATE_LABELS[_tcRate] : '/year';
+    titleEl.textContent = `Tax Calculator — ${fmtK(raw)}${per} in ${provName} - 2026`;
+    if (subEl) subEl.textContent = `Find out how much your salary is after tax`;
+  }
+  console.log('[TAX] code=', code, 'raw=', raw, 'mul=', mul, 'annual=', annual);
+  if (annual <= 0) return;
+  const result = _tcCalc(annual, code);
+  result._rate = _tcRate;
+  result._mul  = mul;
+  _tcRenderResults(result, 'tc-results');
+  _tcRenderProvTable(annual, code, 'tc-prov-table');
 }
 
 function tcUpdate() {
