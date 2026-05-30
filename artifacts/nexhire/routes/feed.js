@@ -227,7 +227,7 @@ router.post('/upload', requireAuth, feedMulter.single('image'), async (req, res)
   try {
     const result = await cloudinary.uploader.upload(req.file.path, {
       folder: 'nexhire/feed',
-      transformation: [{ width: 1200, crop: 'limit', quality: 'auto' }]
+      transformation: [{ width: 120, crop: 'limit', quality: 'auto' }]
     });
     // Delete local temp file
     const fs = require('fs');
