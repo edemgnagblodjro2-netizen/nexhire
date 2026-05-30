@@ -8899,25 +8899,19 @@ function _tcCalc(annual, code) {
 
 const _TC_RATE_LABELS = { annual:'Annual', month:'Month', biweekly:'Biweekly', weekly:'Weekly', daily:'Day', hourly:'Hour' };
 function tcUpdate() {
-  const raw = parseFloat(document.getElementById('tc-salary')?.value || '0') || 0;
-  const mul = _TC_MUL[_tcRate] || 1;
-  const annual = raw * mul;
+  const annual = parseFloat(document.getElementById('tc-salary')?.value || '0') || 0;
   const provSel = document.getElementById('tc-prov');
   const code = provSel?.value || 'ON';
   const provName = provSel?.options[provSel.selectedIndex]?.text || 'Ontario';
   const fmtK = v => '$' + Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   const titleEl = document.getElementById('tc-dyn-title');
   const subEl   = document.getElementById('tc-dyn-sub');
-  if (titleEl && raw > 0) {
-    const per = _tcRate !== 'annual' ? '/' + _TC_RATE_LABELS[_tcRate] : '/year';
-    titleEl.textContent = `Tax Calculator — ${fmtK(raw)}${per} in ${provName} - 2026`;
-    if (subEl) subEl.textContent = `Find out how much your salary is after tax`;
+  if (titleEl && annual > 0) {
+    titleEl.textContent = `Tax on ${fmtK(annual)} in ${provName} - 2026`;
+    if (subEl) subEl.textContent = `Your salary after tax, federal + provincial`;
   }
-  console.log('[TAX] code=', code, 'raw=', raw, 'mul=', mul, 'annual=', annual);
   if (annual <= 0) return;
   const result = _tcCalc(annual, code);
-  result._rate = _tcRate;
-  result._mul  = mul;
   _tcRenderResults(result, 'tc-results');
   _tcRenderProvTable(annual, code, 'tc-prov-table');
 }
@@ -9047,12 +9041,14 @@ function _tcRenderResults(r, containerId = 'tc-results') {
         <div class="tc-legend-item"><span class="tc-dot" style="background:#023448"></span>${_PCT(netPct)} Net pay</div>
         <div class="tc-legend-item"><span class="tc-dot" style="background:#ef4444"></span>${_PCT(taxPct)} Total tax</div>
       </div>
-      <div class="tc-net-big">
-        <div class="tc-net-amount">${_CAD(r.net / (r._mul||1))}</div>
-        <div class="tc-net-label">${r._rate === 'annual' ? 'Annual' : 'Per ' + _TC_RATE_LABELS[r._rate||'annual']} net pay</div>
-        <div style="font-size:12px;color:#94a3b8;margin-top:4px">${_CAD(r.net)} / year</div>
+      <<div class="tc-net-big">
+        <div class="tc-net-amount">${_CAD(r.net)}</div>
+        <div class="tc-net-label">Annual net pay</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:10px;line-height:1.8">
+          ${_CAD(r.net/12)} / month · ${_CAD(r.net/26)} / biweekly<br>
+          ${_CAD(r.net/52)} / week · ${_CAD(r.net/2080)} / hour
+        </div>
       </div>
-    </div>
   </div>`;
 }
 
