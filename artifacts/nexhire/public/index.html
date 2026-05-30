@@ -667,6 +667,9 @@
 .pr-badge-top{display:inline-flex;align-items:center;gap:9px;padding:9px 18px;border-radius:999px;background:rgba(86,104,196,.18);border:1px solid rgba(140,156,235,.32);color:#aab8ff;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase}
 .pr-hero h1{margin-top:26px;font-size:clamp(36px,6vw,64px);font-weight:800;line-height:1.04;letter-spacing:-1px;color:#f1f6f8}
 .pr-hero p{margin-top:20px;max-width:540px;font-size:clamp(15px,1.8vw,18px);line-height:1.6;color:#93a8b3}
+.pr-hero{position:relative;min-height:520px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:90px 24px 100px;background:radial-gradient(120% 95% at 12% 100%,rgba(18,92,86,.55) 0%,transparent 55%),radial-gradient(110% 90% at 88% 0%,rgba(20,46,92,.6) 0%,transparent 60%),linear-gradient(135deg,#0a2d33 0%,#0c2440 100%);z-index:1}
+.pr-featured-wrap{max-width:1100px;margin:48px auto 0;padding:0 24px;position:relative;z-index:2}
+.pr-featured{background:#fff;border-radius:24px;overflow:visible;box-shadow:0 24px 56px -16px rgba(0,0,0,.15);display:grid;grid-template-columns:1fr 1.1fr}
 .pr-stats{margin-top:40px;width:100%;max-width:560px;display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;align-items:center;padding:28px 24px;border-radius:22px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09)}
 .pr-stat-div2{width:1px;height:56px;background:rgba(255,255,255,.08);justify-self:center}
 .pr-stat .num{font-size:clamp(24px,3.5vw,32px);font-weight:700;color:#f1f6f8;line-height:1}
@@ -676,8 +679,8 @@
 @keyframes pr-draw{to{stroke-dashoffset:0}}
 .pr-growth-bar{transform-box:fill-box;transform-origin:bottom;animation:pr-grow 1s cubic-bezier(.2,.8,.2,1) forwards;opacity:0}
 @keyframes pr-grow{from{transform:scaleY(0);opacity:0}to{transform:scaleY(1);opacity:1}}
-.pr-featured-wrap{max-width:1100px;margin:48px auto 0;padding:0 24px}
-.pr-featured{background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 24px 56px -16px rgba(0,0,0,.15);display:grid;grid-template-columns:1fr 1.1fr}
+.pr-featured-wrap{max-width:1100px;margin:48px auto 0;padding:0 24px;position:relative;z-index:2}
+.pr-featured{background:#fff;border-radius:24px;overflow:visible;box-shadow:0 24px 56px -16px rgba(0,0,0,.15);display:grid;grid-template-columns:1fr 1.1fr}
 .pr-feat-left{background:linear-gradient(160deg,#0f172a,#1e293b);padding:48px 40px;display:flex;flex-direction:column;justify-content:space-between}
 .pr-feat-tag{font-size:11px;font-weight:700;color:#818cf8;text-transform:uppercase;letter-spacing:.6px;margin-bottom:16px}
 .pr-feat-price{font-size:56px;font-weight:900;color:#fff;line-height:1;margin-bottom:6px}
