@@ -30,12 +30,12 @@ const BASE = '';
 })();
 
 // ── Service Worker registration ────────────────────────────────────────
-// Disabled — causes caching issues
-// if ('serviceWorker' in navigator) {
-//   navigator.serviceWorker.register('/nexhire/sw.js', { scope: '/nexhire/' })
-//     .then(r => { r.update(); })
-//     .catch(e => console.warn('[SW] failed', e));
-// }
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js', { scope: '/' })
+    .then(r => r.update())
+    .catch(e => console.warn('[SW] failed', e));
+}
+
 const state = {
   user: null, lang: 'en', regRole: 'candidate',
   jobs: [], currentPage: 1, jobSearchTimer: null,
