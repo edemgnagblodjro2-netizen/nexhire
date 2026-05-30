@@ -8957,6 +8957,12 @@ function ptcSetRate(rate) {
   document.querySelectorAll('#ptc-tabs .tc-tab').forEach(t => t.classList.toggle('active', t.dataset.rate === rate));
   ptcUpdate();
 }
+let _tcRate = 'annual';
+function tcSetRate(rate) {
+  _tcRate = rate;
+  document.querySelectorAll('.tc-rate-tabs .tc-tab').forEach(t => t.classList.toggle('active', t.dataset.rate === rate));
+  tcUpdate();
+}
 function ptcUpdate() {
   const raw = parseFloat(document.getElementById('ptc-salary')?.value || '0') || 0;
   const annual = raw * (_TC_MUL[_ptcRate] || 1);
