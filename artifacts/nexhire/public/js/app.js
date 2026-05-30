@@ -8910,7 +8910,6 @@ function tcUpdate() {
   const provSel = document.getElementById('tc-prov');
   const code = provSel?.value || 'ON';
   const provName = provSel?.options[provSel.selectedIndex]?.text || 'Ontario';
-  // Dynamic heading — matches talent.com format
   const fmtK = v => '$' + Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   const titleEl = document.getElementById('tc-dyn-title');
   const subEl   = document.getElementById('tc-dyn-sub');
@@ -8925,7 +8924,10 @@ function tcUpdate() {
     }
   }
   if (annual <= 0) return;
-  _tcRenderResults(_tcCalc(annual, code), 'tc-results');
+  const result = _tcCalc(annual, code);
+  result._rate = _tcRate;
+  result._mul  = _TC_MUL[_tcRate] || 1;
+  _tcRenderResults(result, 'tc-results');
   _tcRenderProvTable(annual, code, 'tc-prov-table');
 }
 
@@ -8986,7 +8988,8 @@ function _tcRenderResults(r, containerId = 'tc-results') {
         <div class="tc-row tc-deduct-row"><span>Federal tax deduction</span><span class="tc-neg">− ${_CAD(r.fed)}</span></div>
         <div class="tc-row tc-deduct-row"><span>Provincial tax <small>(${r.provName})</small></span><span class="tc-neg">− ${_CAD(r.prov)}</span></div>
         <div class="tc-row tc-total-row"><span><strong>Total tax</strong></span><span class="tc-neg"><strong>− ${_CAD(r.totalTax)}</strong></span></div>
-        <div class="tc-row tc-net-row"><span>✨ Net pay</span><span class="tc-green">${_CAD(r.net)}</span></div>
+        <div class="tc-row tc-net-row"><span>✨ Net pay / ${r._rate === 'annual' ? 'year' : _TC_RATE_LABELS[r._rate||'annual']}</span><span class="tc-green">${_CAD(r.net / (r._mul||1))}</span></div>
+        <div class="tc-row" style="font-size:12px;color:#94a3b8"><span>Annual gross</span><span>${_CAD(r.gross)}</span></div>
       </div>
       <div class="tc-rate-chips">
         <div class="tc-rate-chip"><div class="tc-rate-num">${_PCT(r.marginal)}</div><div class="tc-rate-lbl">Marginal tax rate</div></div>
@@ -9012,8 +9015,9 @@ function _tcRenderResults(r, containerId = 'tc-results') {
         <div class="tc-legend-item"><span class="tc-dot" style="background:#ef4444"></span>${_PCT(taxPct)} Total tax</div>
       </div>
       <div class="tc-net-big">
-        <div class="tc-net-amount">${_CAD(r.net)}</div>
-        <div class="tc-net-label">Annual net pay</div>
+        <div class="tc-net-amount">${_CAD(r.net / (r._mul||1))}</div>
+        <div class="tc-net-label">${r._rate === 'annual' ? 'Annual' : 'Per ' + _TC_RATE_LABELS[r._rate||'annual']} net pay</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px">${_CAD(r.net)} / year</div>
       </div>
     </div>
   </div>`;
