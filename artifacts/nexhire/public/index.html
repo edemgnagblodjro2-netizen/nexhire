@@ -799,6 +799,149 @@
     <div style="font-size:11px;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px">FAQ</div>
     <div style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#023448" data-i18n="pricing.faq.title">Questions fréquentes</div>
   </div>
+  <div id="pg-pricing" class="page">
+<style>
+.pw{max-width:1100px;margin:0 auto;padding:0 24px}
+.pr-hero{position:relative;overflow:hidden;background:linear-gradient(160deg,#023448 0%,#0c3d54 55%,#1b485a 100%);padding:80px 24px 120px;text-align:center}
+.pr-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);background-size:28px 28px}
+.pr-eyebrow{display:inline-flex;align-items:center;gap:6px;background:rgba(99,102,241,.2);border:1px solid rgba(99,102,241,.3);color:#a5b4fc;border-radius:99px;padding:5px 16px;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:20px}
+.pr-hero h1{font-size:clamp(32px,5vw,56px);font-weight:800;color:#fff;margin-bottom:14px;line-height:1.08}
+.pr-hero p{font-size:17px;color:#94a3b8;max-width:500px;margin:0 auto 36px;line-height:1.7}
+.pr-badge-free{display:inline-flex;align-items:center;gap:8px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);color:#34d399;border-radius:99px;padding:9px 22px;font-size:13px;font-weight:600}
+.pr-featured-wrap{max-width:1100px;margin:-56px auto 0;padding:0 24px}
+.pr-featured{background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 24px 56px -16px rgba(0,0,0,.15);display:grid;grid-template-columns:1fr 1.1fr}
+.pr-feat-left{background:linear-gradient(160deg,#0f172a,#1e293b);padding:48px 40px;display:flex;flex-direction:column;justify-content:space-between}
+.pr-feat-tag{font-size:11px;font-weight:700;color:#818cf8;text-transform:uppercase;letter-spacing:.6px;margin-bottom:16px}
+.pr-feat-price{font-size:56px;font-weight:900;color:#fff;line-height:1;margin-bottom:6px}
+.pr-feat-per{font-size:14px;color:#64748b;margin-bottom:24px}
+.pr-feat-desc{font-size:15px;color:#94a3b8;line-height:1.7;margin-bottom:32px}
+.pr-feat-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:12px;padding:14px 28px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 6px 20px rgba(99,102,241,.4)}
+.pr-feat-right{padding:48px 40px}
+.pr-feat-right h3{font-size:15px;font-weight:700;color:#023448;margin-bottom:20px}
+.pr-chk{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:14px;color:#475569}
+.pr-chk:last-child{border-bottom:none}
+.pr-chk i{color:#10b981;font-size:16px;flex-shrink:0}
+.pr-chk .hi{color:#fbbf24;font-weight:600}
+.pr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:48px 0}
+.pr-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:20px;padding:28px 24px;display:flex;flex-direction:column}
+.pr-card-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#64748b;margin-bottom:10px}
+.pr-card-price{font-size:36px;font-weight:900;color:#023448;line-height:1;margin-bottom:4px}
+.pr-card-per{font-size:12px;color:#94a3b8;margin-bottom:16px}
+.pr-card-desc{font-size:13px;color:#475569;line-height:1.65;margin-bottom:20px;flex:1}
+.pr-card-features{display:flex;flex-direction:column;gap:6px;margin-bottom:24px}
+.pr-cf{display:flex;align-items:center;gap:8px;font-size:13px;color:#475569}
+.pr-cf::before{content:"✓";color:#22c55e;font-weight:700;flex-shrink:0}
+.pr-cf.off{color:#cbd5e1}
+.pr-cf.off::before{content:"✗";color:#cbd5e1}
+.pr-card-btn{width:100%;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;border:1.5px solid #e2e8f0;background:transparent;color:#475569}
+.pr-card-btn.dark{background:#023448;border-color:#023448;color:#fff}
+.pr-ent{background:linear-gradient(135deg,#023448,#0c3d54);border-radius:20px;padding:40px 48px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:64px}
+.pr-ent h3{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px}
+.pr-ent p{font-size:14px;color:#94a3b8;line-height:1.6}
+.pr-ent-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:13px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;text-decoration:none}
+.pr-faq{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:64px}
+.pr-faq-item{background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:22px 24px}
+.pr-faq-q{font-size:15px;font-weight:700;color:#023448;margin-bottom:8px;display:flex;align-items:flex-start;gap:8px}
+.pr-faq-q i{color:#6366f1;font-size:16px;flex-shrink:0;margin-top:2px}
+.pr-faq-a{font-size:13.5px;color:#475569;line-height:1.7}
+@media(max-width:900px){.pr-featured{grid-template-columns:1fr}.pr-feat-left{padding:36px 28px}.pr-grid{grid-template-columns:1fr;max-width:480px;margin:0 auto;padding:48px 0}}
+@media(max-width:600px){.pr-faq{grid-template-columns:1fr}.pr-ent{flex-direction:column;text-align:center}}
+</style>
+
+<div class="pr-hero">
+  <div class="pr-eyebrow"><i class="ti ti-sparkles"></i> <span data-i18n="pricing.eyebrow">Tarification transparente</span></div>
+  <h1>Simple. Flexible.<br>Sans surprise.</h1>
+  <p>Publiez gratuitement. Payez seulement par clic qualifié sur les offres sponsorisées. Aucun contrat.</p>
+  <div class="pr-badge-free"><i class="ti ti-check"></i> Gratuit pour publier · Payez uniquement par clic qualifié sponsorisé</div>
+</div>
+
+<div class="pr-featured-wrap">
+  <div class="pr-featured">
+    <div class="pr-feat-left">
+      <div>
+        <div class="pr-feat-tag">⭐ Plus populaire · Sponsored CPC</div>
+        <div class="pr-feat-price">$0.50</div>
+        <div class="pr-feat-per">par clic qualifié · budget flexible min. $3/jour</div>
+        <div class="pr-feat-desc">Atteignez les meilleurs talents avec un placement prioritaire. Candidats classés par IA. Payez uniquement par clic.</div>
+      </div>
+      <button class="pr-feat-btn" data-onclick="goto('employer')">Sponsoriser une offre <i class="ti ti-arrow-right" style="font-size:14px"></i></button>
+    </div>
+    <div class="pr-feat-right">
+      <h3>Tout ce qui est inclus :</h3>
+      <div class="pr-chk"><i class="ti ti-check"></i> Candidats scorés par IA (GPT-4o)</div>
+      <div class="pr-chk"><i class="ti ti-check"></i> <span class="hi">Badge Urgently Hiring</span> dans les résultats</div>
+      <div class="pr-chk"><i class="ti ti-check"></i> Placement prioritaire en recherche</div>
+      <div class="pr-chk"><i class="ti ti-check"></i> Offres brandées avec logo entreprise</div>
+      <div class="pr-chk"><i class="ti ti-check"></i> Badge employeur vérifié</div>
+      <div class="pr-chk"><i class="ti ti-check"></i> Analytics par offre (vues, clics, conv.)</div>
+      <div class="pr-chk"><i class="ti ti-check"></i> Pipeline Kanban ATS complet</div>
+      <div class="pr-chk"><i class="ti ti-check"></i> Messagerie candidats intégrée</div>
+    </div>
+  </div>
+</div>
+
+<div class="pw">
+  <div class="pr-grid">
+    <div class="pr-card">
+      <div class="pr-card-name">Standard</div>
+      <div class="pr-card-price">Free</div>
+      <div class="pr-card-per">pour toujours · sans carte</div>
+      <div class="pr-card-desc">Visibilité organique dans les résultats. Parfait pour commencer à recruter sans budget.</div>
+      <div class="pr-card-features">
+        <div class="pr-cf">Offres illimitées</div>
+        <div class="pr-cf">Pipeline Kanban ATS</div>
+        <div class="pr-cf">Messagerie candidats</div>
+        <div class="pr-cf">Visibilité organique</div>
+        <div class="pr-cf off">Candidats scorés IA</div>
+        <div class="pr-cf off">Badge Urgently Hiring</div>
+      </div>
+      <button class="pr-card-btn" data-modal="modal-register">Publier une offre</button>
+    </div>
+    <div class="pr-card" style="border-color:#6366f1;box-shadow:0 8px 32px rgba(99,102,241,.15)">
+      <div class="pr-card-name" style="color:#6366f1">Sponsored · CPC</div>
+      <div class="pr-card-price" style="color:#6366f1">$0.50+</div>
+      <div class="pr-card-per">par clic · budget flexible</div>
+      <div class="pr-card-desc">Pay-per-click sur vos offres sponsorisées. Budget quotidien à définir. Stoppez à tout moment.</div>
+      <div class="pr-card-features">
+        <div class="pr-cf">Tout de Standard</div>
+        <div class="pr-cf">Candidats scorés IA</div>
+        <div class="pr-cf">Placement prioritaire</div>
+        <div class="pr-cf">Badge Urgently Hiring</div>
+        <div class="pr-cf">Analytics par offre</div>
+        <div class="pr-cf">Offres brandées</div>
+      </div>
+      <button class="pr-card-btn dark" data-onclick="goto('employer')">Sponsoriser</button>
+    </div>
+    <div class="pr-card">
+      <div class="pr-card-name">Pro · Abonnement</div>
+      <div class="pr-card-price">$199</div>
+      <div class="pr-card-per">/ mois · 14 jours gratuits</div>
+      <div class="pr-card-desc">Pour les équipes RH. Slots illimités, base de candidats, outils en masse, support prioritaire.</div>
+      <div class="pr-card-features">
+        <div class="pr-cf">Tout de Sponsored</div>
+        <div class="pr-cf">Slots illimités</div>
+        <div class="pr-cf">Base de candidats</div>
+        <div class="pr-cf">Analytics avancés</div>
+        <div class="pr-cf">3 sièges équipe</div>
+        <div class="pr-cf">Support prioritaire</div>
+      </div>
+      <button class="pr-card-btn dark" data-checkout="pro,month">Essai gratuit 14j</button>
+    </div>
+  </div>
+
+  <div class="pr-ent">
+    <div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(99,102,241,.2);border:1px solid rgba(99,102,241,.3);color:#a5b4fc;border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:12px">Enterprise</div>
+      <h3 data-i18n="pricing.ent.title">Volume pricing &amp; intégrations sur mesure</h3>
+      <p data-i18n="pricing.ent.sub">Account manager dédié · SLA 99.9% · SSO · Sièges illimités · White-label</p>
+    </div>
+    <a href="mailto:hello@nexhire.ca" class="pr-ent-btn" data-i18n="pricing.ent.btn">Contacter les ventes →</a>
+  </div>
+
+  <div style="text-align:center;margin-bottom:32px">
+    <div style="font-size:11px;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px">FAQ</div>
+    <div style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#023448" data-i18n="pricing.faq.title">Questions fréquentes</div>
+  </div>
   <div class="pr-faq">
     <div class="pr-faq-item"><div class="pr-faq-q"><i class="ti ti-coin"></i> <span data-i18n="pricing.faq1.q">Quand suis-je facturé ?</span></div><div class="pr-faq-a" data-i18n="pricing.faq1.a">Uniquement quand un candidat vérifié clique sur votre offre sponsorisée. Les offres standard sont toujours gratuites.</div></div>
     <div class="pr-faq-item"><div class="pr-faq-q"><i class="ti ti-player-pause"></i> <span data-i18n="pricing.faq2.q">Puis-je annuler à tout moment ?</span></div><div class="pr-faq-a" data-i18n="pricing.faq2.a">Oui. Aucun contrat. Pausez ou annulez depuis votre dashboard instantanément.</div></div>
