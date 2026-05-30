@@ -215,10 +215,28 @@ router.post('/:id/comment', requireAuth, async (req, res) => {
 });
 
 // ── POST /api/feed/upload — image upload ──────────────────────
-router.post('/upload', requireAuth, feedMulter.single('image'), (req, res) => {
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key:    process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+router.post('/upload', requireAuth, feedMulter.single('image'), async (req, res) => {
   if (!req.file) return res.status(400).json({ success: false, error: 'No image uploaded' });
-  const baseUrl = process.env.BASE_URL || 'https://nexhire.ca';
-  res.json({ success: true, url: `${baseUrl}/uploads/feed/${req.file.filename}` });
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'nexhire/feed',
+      transformation: [{ width: 1200, crop: 'limit', quality: 'auto' }]
+    });
+    // Delete local temp file
+    const fs = require('fs');
+    if (fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path);
+    res.json({ success: true, url: result.secure_url });
+  } catch (e) {
+    console.error('[Feed Upload]', e.message);
+    res.status(500).json({ success: false, error: e.message });
+  }
 });
 
 module.exports = router;
