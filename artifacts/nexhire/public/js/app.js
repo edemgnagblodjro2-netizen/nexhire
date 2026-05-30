@@ -8981,16 +8981,15 @@ function _tcRenderResults(r, containerId = 'tc-results') {
   el.innerHTML = `
   <div class="tc-grid">
     <div class="tc-breakdown-card">
-      <div class="tc-card-title">Withholding on a ${_CAD(r.gross)} salary in Canada</div>
+      <div class="tc-card-title">Withholding on a ${_CAD(r.gross / (r._mul||1))}${r._rate && r._rate !== 'annual' ? '/' + _TC_RATE_LABELS[r._rate] : '/year'} salary in Canada</div>
       <div class="tc-rows">
-        <div class="tc-row tc-salary-row"><span>Salary</span><span>${_CAD(r.gross)}</span></div>
-        <div class="tc-row tc-deduct-row"><span>EI deduction</span><span class="tc-neg">− ${_CAD(r.ei)}</span></div>
-        <div class="tc-row tc-deduct-row"><span>CPP deduction</span><span class="tc-neg">− ${_CAD(r.cpp)}</span></div>
-        <div class="tc-row tc-deduct-row"><span>Federal tax deduction</span><span class="tc-neg">− ${_CAD(r.fed)}</span></div>
-        <div class="tc-row tc-deduct-row"><span>Provincial tax <small>(${r.provName})</small></span><span class="tc-neg">− ${_CAD(r.prov)}</span></div>
-        <div class="tc-row tc-total-row"><span><strong>Total tax</strong></span><span class="tc-neg"><strong>− ${_CAD(r.totalTax)}</strong></span></div>
-        <div class="tc-row tc-net-row"><span>✨ Net pay / ${r._rate === 'annual' ? 'year' : _TC_RATE_LABELS[r._rate||'annual']}</span><span class="tc-green">${_CAD(r.net / (r._mul||1))}</span></div>
-        <div class="tc-row" style="font-size:12px;color:#94a3b8"><span>Annual gross</span><span>${_CAD(r.gross)}</span></div>
+        <div class="tc-row tc-salary-row"><span>Salary</span><span>${_CAD(r.gross / (r._mul||1))}</span></div>
+        <div class="tc-row tc-deduct-row"><span>EI deduction</span><span class="tc-neg">− ${_CAD(r.ei / (r._mul||1))}</span></div>
+        <div class="tc-row tc-deduct-row"><span>CPP deduction</span><span class="tc-neg">− ${_CAD(r.cpp / (r._mul||1))}</span></div>
+        <div class="tc-row tc-deduct-row"><span>Federal tax deduction</span><span class="tc-neg">− ${_CAD(r.fed / (r._mul||1))}</span></div>
+        <div class="tc-row tc-deduct-row"><span>Provincial tax <small>(${r.provName})</small></span><span class="tc-neg">− ${_CAD(r.prov / (r._mul||1))}</span></div>
+        <div class="tc-row tc-total-row"><span><strong>Total tax</strong></span><span class="tc-neg"><strong>− ${_CAD(r.totalTax / (r._mul||1))}</strong></span></div>
+        <div class="tc-row tc-net-row"><span>✨ Net pay</span><span class="tc-green">${_CAD(r.net / (r._mul||1))}</span></div>
       </div>
       <div class="tc-rate-chips">
         <div class="tc-rate-chip"><div class="tc-rate-num">${_PCT(r.marginal)}</div><div class="tc-rate-lbl">Marginal tax rate</div></div>
