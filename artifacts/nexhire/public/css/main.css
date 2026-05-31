@@ -1854,3 +1854,8 @@ a{text-decoration:none;color:inherit}
   .msg-mobile-back{display:flex;align-items:center;gap:8px;padding:11px 14px;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;cursor:pointer;font-size:13px;font-weight:600;color:#6366f1}
 }
 @media(max-width:720px){.tc-grid{grid-template-columns:1fr}.tax-fields-row{flex-direction:column}.tax-prov-select,.tax-salary-wrap{width:100%}.tc-bar-wrap{display:none}}
+@media print {
+  .nav, .site-footer, .ed-side, #toasts, #pwa-banner { display: none !important; }
+  .ed-main { padding: 0 !important; }
+  body { background: #fff !important; }
+}

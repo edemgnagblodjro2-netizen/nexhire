@@ -5141,6 +5141,7 @@ function showEmpTab(tabId, navEl, preselectedAppId) {
   if (tabId === 'etab-analytics') loadEmployerAnalytics();
   if (tabId === 'etab-interviews') loadVideoInterviews();
   if (tabId === 'etab-messages') openMessagesInTab('etab-messages', preselectedAppId || null);
+  if (tabId === 'etab-report') loadEmployerReport();
 }
 
 // ── Employer Analytics ────────────────────────────────────
@@ -5227,7 +5228,84 @@ async function loadEmployerAnalytics() {
       </div>
     </div>`;
 }
-// ── ADMIN DASHBOARD ────────────────────────────────────────
+// ── Employer Report (graphs + PDF export) ─────────────────
+let _empReportData = null;
+
+async function loadEmployerReport() {
+  const c = document.getElementById('etab-report');
+  if (!c) return;
+  const isFr = state.lang === 'fr';
+  c.innerHTML = `<div class="loading-state"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px;color:var(--indigo)"></i></div>`;
+  const d = await api('GET', `${BASE}/api/analytics/employer`);
+  if (!d.success) { c.innerHTML = `<div class="empty-state"><i class="ti ti-chart-off"></i><p>${d.error||'Erreur'}</p></div>`; return; }
+  _empReportData = d;
+  const { totals, jobStats, stageFunnel, sourceDist } = d;
+
+  // Pie: stage funnel
+  const stageColors = { new:'#6366f1', reviewed:'#8b5cf6', shortlisted:'#3b82f6', interview:'#f59e0b', offer:'#22c55e', rejected:'#ef4444' };
+  const stageLabels = isFr
+    ? { new:'Nouveau', reviewed:'Examiné', shortlisted:'Présélectionné', interview:'Entretien', offer:'Offre', rejected:'Rejeté' }
+    : { new:'New', reviewed:'Reviewed', shortlisted:'Shortlisted', interview:'Interview', offer:'Offer', rejected:'Rejected' };
+  const funnelTotal = (stageFunnel||[]).reduce((s,r)=>s+parseInt(r.n||0),0) || 1;
+
+  const pieSegs = (stageFunnel||[]).filter(r=>parseInt(r.n)>0).map(r => ({
+    label: stageLabels[r.status]||r.status, val: parseInt(r.n), color: stageColors[r.status]||'#6366f1'
+  }));
+  const R=70, CIRC=2*Math.PI*R; let off=0;
+  const pieCircles = pieSegs.map(s=>{
+    const frac=s.val/funnelTotal, dash=(CIRC*frac).toFixed(2), gap=(CIRC-dash).toFixed(2);
+    const circ=`<circle cx="90" cy="90" r="${R}" fill="none" stroke="${s.color}" stroke-width="28" stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${(-off).toFixed(2)}"/>`;
+    off+=CIRC*frac; return circ;
+  }).join('');
+  const pieLegend = pieSegs.map(s=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f1f5f9"><div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:3px;background:${s.color}"></span><span style="font-size:13px;color:#475569">${s.label}</span></div><span style="font-weight:700;color:#0f172a">${s.val} <span style="font-size:11px;color:#94a3b8">(${Math.round(s.val/funnelTotal*100)}%)</span></span></div>`).join('');
+
+  // Bar chart: applications by job
+  const topJobs = (jobStats||[]).slice(0,6);
+  const maxApps = Math.max(...topJobs.map(j=>parseInt(j.applications||0)), 1);
+  const bars = topJobs.map(j=>{
+    const title = isFr?(j.title_fr||j.title_en):(j.title_en||j.title_fr);
+    const apps = parseInt(j.applications||0);
+    const pct = Math.round(apps/maxApps*100);
+    return `<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="color:#475569;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70%">${esc(title)}</span><span style="color:#0f172a;font-weight:700">${apps}</span></div><div style="background:#f1f5f9;border-radius:6px;height:10px"><div style="background:linear-gradient(90deg,#6366f1,#8b5cf6);width:${pct}%;height:10px;border-radius:6px"></div></div></div>`;
+  }).join('');
+
+  const now = new Date().toLocaleDateString(isFr?'fr-CA':'en-CA',{year:'numeric',month:'long',day:'numeric'});
+
+  c.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:12px">
+      <h2 style="margin:0">${isFr?'Rapport de recrutement':'Recruitment Report'}</h2>
+      <button class="btn-primary" data-onclick="exportReportPDF()"><i class="ti ti-file-download"></i> ${isFr?'Exporter en PDF':'Export PDF'}</button>
+    </div>
+    <p style="font-size:13px;color:#64748b;margin:0 0 24px">${isFr?'Généré le':'Generated on'} ${now}</p>
+
+    <div id="report-printable">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:24px">
+        ${[
+          {l:isFr?'Offres':'Jobs', v:totals.total_jobs, c:'#6366f1', i:'ti-briefcase'},
+          {l:isFr?'Candidatures':'Applications', v:totals.total_apps, c:'#3b82f6', i:'ti-file-text'},
+          {l:isFr?'Présélectionnés':'Shortlisted', v:totals.total_shortlisted, c:'#f59e0b', i:'ti-users'},
+          {l:isFr?'Offres faites':'Offers', v:totals.total_offers, c:'#22c55e', i:'ti-star'},
+          {l:isFr?'Jours moy.':'Avg days', v:totals.avg_days||'—', c:'#8b5cf6', i:'ti-clock'},
+        ].map(m=>`<div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:18px"><div style="color:${m.c};font-size:20px;margin-bottom:8px"><i class="ti ${m.i}"></i></div><div style="font-size:26px;font-weight:800;color:#0f172a">${m.v}</div><div style="font-size:12px;color:#64748b;margin-top:2px">${m.l}</div></div>`).join('')}
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:16px;padding:24px">
+          <h4 style="margin:0 0 16px;font-size:15px;color:#0f172a">${isFr?'Répartition des candidats':'Candidate breakdown'}</h4>
+          ${pieSegs.length ? `<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap"><svg width="180" height="180" viewBox="0 0 180 180" style="transform:rotate(-90deg);flex-shrink:0">${pieCircles}</svg><div style="flex:1;min-width:180px">${pieLegend}</div></div>` : `<p style="color:#94a3b8;font-size:13px">${isFr?'Aucune donnée':'No data'}</p>`}
+        </div>
+        <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:16px;padding:24px">
+          <h4 style="margin:0 0 16px;font-size:15px;color:#0f172a">${isFr?'Candidatures par offre':'Applications by job'}</h4>
+          ${bars || `<p style="color:#94a3b8;font-size:13px">${isFr?'Aucune offre':'No jobs'}</p>`}
+        </div>
+      </div>
+    </div>`;
+}
+
+function exportReportPDF() {
+  window.print();
+}
+
 // ── ADMIN DASHBOARD ────────────────────────────────────────
 function showAdmTab(tabId, el) {
   document.querySelectorAll('#pg-admin .adm-tab').forEach(t => t.style.display = 'none');
