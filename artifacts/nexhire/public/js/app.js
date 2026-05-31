@@ -598,10 +598,10 @@ const T = {
 'emp.hero.lede':'Post jobs, get AI-ranked candidates, manage your Kanban pipeline — all in one place, made in Québec.',
 'emp.hero.btn1':'Post your first job free →',
 'emp.hero.btn2':'See pricing',
-'emp.trust1.num':'150+','emp.trust1.lab':'active employers',
-'emp.trust2.num':'4 days','emp.trust2.lab':'avg. hire time',
-'emp.trust3.num':'40×','emp.trust3.lab':'cheaper than LinkedIn',
-'emp.trust4.num':'4.8/5','emp.trust4.lab':'employer satisfaction',
+'emp.trust1.num':'$0','emp.trust1.lab':'to post a job',
+'emp.trust2.num':'FR + EN','emp.trust2.lab':'AI-generated bilingual posts',
+'emp.trust3.num':'GPT-4o','emp.trust3.lab':'candidate scoring',
+'emp.trust4.num':'🇨🇦','emp.trust4.lab':'data hosted in Canada',
 'emp.feat.sec.label':'Features',
 'emp.feat.sec.title':'Manage your entire recruiting,<br>from start to finish.',
 'emp.feat.sec.sub':'From posting to hiring — Nexhire automates repetitive tasks so you focus on the best candidates.',
@@ -616,7 +616,7 @@ const T = {
 'emp.faq.label':'Employer FAQ',
 'emp.faq.title':'Frequently asked questions',
 'emp.cta.title':'Ready to hire smarter?',
-'emp.cta.sub':'Join 150+ Canadian companies. Start free today.',
+'emp.cta.sub':'Post your first job for free and find your next hire in Canada.',
 'emp.cta.btn1':'Post your first job →',
 'emp.cta.btn2':'See pricing',
     'emp.sub':'Post jobs, get AI-ranked candidates, manage your pipeline with Kanban, and build your global team — all in one platform.',
@@ -701,7 +701,7 @@ const T = {
     'about.team.title':'Our Team',
     'about.team.ae.role':'Founder & CEO','about.team.ae.desc':'AI strategy · product vision · CivicAI Inc. · Full-stack · API · Mobile · built AI-first',
     'about.team.join.name':'Join the team','about.team.join.role':"We're hiring",
-    'about.cta.title':'Ready to transform your hiring?','about.cta.sub':'Join 150+ Canadian companies already hiring smarter with Nexhire.',
+    'about.cta.title':'Ready to transform your hiring?','about.cta.sub':'Be one of the first companies hiring with Nexhire. Free to start.',
     'about.cta.btn1':'Get started free','about.cta.btn2':'View pricing',
     'blog.eyebrow':'BLOG & RESOURCES',
     'blog.title':'Career & Hiring Insights',
@@ -709,6 +709,7 @@ const T = {
     'blog.a1.cta':'Calculator →','blog.a2.cta':'Post a job →','blog.a3.cta':'Browse jobs →',
     'blog.a4.cta':'Calculate →','blog.a5.cta':'Remote jobs →','blog.a6.cta':'Find jobs →',
     'blog.footer.q':'Want us to cover a specific topic?',
+    'contact.eyebrow':'CONTACT','contact.title':'We reply fast','contact.sub':'A question about the platform, a partnership, or a technical issue? Drop us a line.','contact.name':'Full name *','contact.email':'Email *','contact.subject':'Subject','contact.message':'Message *','contact.send':'Send message','contact.ok.title':'Message sent!','contact.ok.sub':'Thanks — we\'ll get back to you shortly.','footer.contactform':'Contact us',
   },
   fr: {
     'trust.label':'Reconnu par les meilleures entreprises & organisations',
@@ -869,10 +870,10 @@ const T = {
 'emp.hero.lede':'Publiez vos offres, recevez des candidats scorés par IA, gérez votre pipeline Kanban — tout en un seul endroit, fait au Québec.',
 'emp.hero.btn1':'Poster votre premier job gratuitement →',
 'emp.hero.btn2':'Voir les tarifs',
-'emp.trust1.num':'150+','emp.trust1.lab':'employeurs actifs',
-'emp.trust2.num':'4 jours','emp.trust2.lab':'délai moyen d\'embauche',
-'emp.trust3.num':'40×','emp.trust3.lab':'moins cher que LinkedIn',
-'emp.trust4.num':'4,8/5','emp.trust4.lab':'satisfaction employeurs',
+'emp.trust1.num':'0 $','emp.trust1.lab':'pour publier une offre',
+'emp.trust2.num':'FR + EN','emp.trust2.lab':'offres bilingues par IA',
+'emp.trust3.num':'GPT-4o','emp.trust3.lab':'scoring des candidats',
+'emp.trust4.num':'🇨🇦','emp.trust4.lab':'données hébergées au Canada',
 'emp.feat.sec.label':'Fonctionnalités',
 'emp.feat.sec.title':'Gérez tout votre recrutement,<br>du début à la fin.',
 'emp.feat.sec.sub':'De la publication à l\'embauche — Nexhire automatise les tâches répétitives pour que vous vous concentriez sur les meilleurs candidats.',
@@ -887,7 +888,7 @@ const T = {
 'emp.faq.label':'FAQ Employeurs',
 'emp.faq.title':'Questions fréquentes',
 'emp.cta.title':'Prêt à recruter plus intelligemment ?',
-'emp.cta.sub':'Rejoignez 150+ entreprises canadiennes. Commencez gratuitement dès aujourd\'hui.',
+'emp.cta.sub':'Publiez votre première offre gratuitement et trouvez vos prochains talents au Canada.',
 'emp.cta.btn1':'Publier votre première offre →',
 'emp.cta.btn2':'Voir les tarifs',
     'emp.sub':'Publiez des offres, recevez des candidats classés par IA, gérez votre pipeline Kanban et construisez votre équipe mondiale — tout en un.',
@@ -972,7 +973,7 @@ const T = {
     'about.team.title':'Notre équipe',
     'about.team.ae.role':'Fondateur et PDG','about.team.ae.desc':'Stratégie IA · vision produit · CivicAI Inc. · Full-stack · API · Mobile · conçu IA-first',
     'about.team.join.name':"Rejoignez l'équipe",'about.team.join.role':'Nous recrutons',
-    'about.cta.title':'Prêt à transformer votre recrutement ?','about.cta.sub':'Rejoignez 150+ entreprises canadiennes qui recrutent plus intelligemment avec Nexhire.',
+    'about.cta.title':'Prêt à transformer votre recrutement ?','about.cta.sub':'Soyez parmi les premières entreprises à recruter avec Nexhire. Gratuit pour commencer.',
     'about.cta.btn1':'Commencer gratuitement','about.cta.btn2':'Voir les tarifs',
     'blog.eyebrow':'BLOG & RESSOURCES',
     'blog.title':'Conseils carrière & recrutement',
@@ -980,6 +981,7 @@ const T = {
     'blog.a1.cta':'Calculateur →','blog.a2.cta':'Publier un poste →','blog.a3.cta':'Voir les offres →',
     'blog.a4.cta':'Calculer →','blog.a5.cta':'Emplois à distance →','blog.a6.cta':'Trouver un emploi →',
     "blog.footer.q":"Vous souhaitez qu'on aborde un sujet précis ?",
+    'contact.eyebrow':'CONTACT','contact.title':'On vous répond rapidement','contact.sub':'Une question sur la plateforme, un partenariat ou un souci technique ? Écrivez-nous.','contact.name':'Nom complet *','contact.email':'Courriel *','contact.subject':'Sujet','contact.message':'Message *','contact.send':'Envoyer le message','contact.ok.title':'Message envoyé !','contact.ok.sub':'Merci — nous vous répondrons dans les plus brefs délais.','footer.contactform':'Nous écrire',
   }
 };
 function setLangUI(lang) {
@@ -5349,6 +5351,48 @@ async function loadAdmOverview() {
     </div>
     <div id="adm-pie-container"></div>`;
   loadAdmJobsPie();
+}
+
+async function submitContactForm() {
+  const isFr = state.lang === 'fr';
+  const name = (document.getElementById('ct-name')?.value || '').trim();
+  const email = (document.getElementById('ct-email')?.value || '').trim();
+  const subject = (document.getElementById('ct-subject')?.value || '').trim();
+  const message = (document.getElementById('ct-message')?.value || '').trim();
+  const err = document.getElementById('ct-error');
+  if (err) err.textContent = '';
+
+  if (!name || !email || !message) {
+    const msg = isFr ? 'Veuillez remplir votre nom, courriel et message.' : 'Please fill in your name, email and message.';
+    if (err) err.textContent = msg; else toast(msg, 'error');
+    return;
+  }
+  if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
+    const msg = isFr ? 'Courriel invalide.' : 'Invalid email.';
+    if (err) err.textContent = msg; else toast(msg, 'error');
+    return;
+  }
+
+  const btn = document.getElementById('ct-submit');
+  const html = btn ? btn.innerHTML : '';
+  if (btn) { btn.disabled = true; btn.innerHTML = '…'; }
+
+  try {
+    const d = await api('POST', `${BASE}/api/contact`, { name, email, subject, message });
+    if (d && d.success) {
+      document.getElementById('ct-form').style.display = 'none';
+      document.getElementById('ct-success').style.display = 'block';
+    } else {
+      throw new Error('no-endpoint');
+    }
+  } catch (e) {
+    // Repli sans backend : ouvre le client mail du visiteur
+    const body = encodeURIComponent('Nom: ' + name + '\nCourriel: ' + email + '\n\n' + message);
+    const subj = encodeURIComponent(subject || 'Contact depuis nexhire.ca');
+    window.location.href = 'mailto:hello@nexhire.ca?subject=' + subj + '&body=' + body;
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = html; }
+  }
 }
 
 async function subscribeNewsletter() {
