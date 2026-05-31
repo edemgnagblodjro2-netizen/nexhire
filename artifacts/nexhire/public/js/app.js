@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 const BASE = '';
 
@@ -458,7 +458,7 @@ const T = {
     'hero.search.ph':'Title, skill, company...','hero.search.btn':'Search',
     'hero.mode.all':'All modes','hero.mode.remote':'Remote','hero.mode.hybrid':'Hybrid','hero.mode.onsite':'On-site',
     'hero.recent':'Your recent searches',
-    'hero.stat.jobs':'Active jobs','hero.stat.companies':'Companies','hero.stat.match':'AI match rate','hero.stat.resp':'Avg response',
+    'hero.stat.jobs':'Active jobs','hero.stat.companies':'Companies','hero.stat.match':'Bilingual by AI','hero.stat.resp':'Free to apply',
     'cat.title':'Browse by category','cat.all':'See all jobs',
     'cat.software':'Software Development','cat.software.sub':'Developer · Engineer · Architect',
     'cat.ai':'AI / Data Science','cat.ai.sub':'ML · Data Analyst · LLM',
@@ -733,7 +733,7 @@ const T = {
     'hero.search.ph':'Titre, compétence, entreprise...','hero.search.btn':'Rechercher',
     'hero.mode.all':'Tous les modes','hero.mode.remote':'Télétravail','hero.mode.hybrid':'Hybride','hero.mode.onsite':'Présentiel',
     'hero.recent':'Vos recherches récentes',
-    'hero.stat.jobs':'Offres actives','hero.stat.companies':'Entreprises','hero.stat.match':'Taux matching IA','hero.stat.resp':'Délai réponse moyen',
+    'hero.stat.jobs':'Offres actives','hero.stat.companies':'Entreprises','hero.stat.match':'Bilingue par IA','hero.stat.resp':'Gratuit pour postuler',
     'cat.title':'Parcourir par catégorie','cat.all':'Voir toutes les offres',
     'cat.software':'Développement logiciel','cat.software.sub':'Développeur · Ingénieur · Architecte',
     'cat.ai':'IA / Science des données','cat.ai.sub':'ML · Analyste données · LLM',

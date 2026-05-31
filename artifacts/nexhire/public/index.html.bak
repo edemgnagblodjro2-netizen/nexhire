@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -155,9 +155,48 @@
         <div class="hero-stat-sep"></div>
         <div class="hero-stat"><span class="hero-stat-n" id="stat-cos">—</span><span class="hero-stat-l" data-i18n="hero.stat.companies">Companies</span></div>
         <div class="hero-stat-sep"></div>
-        <div class="hero-stat"><span class="hero-stat-n">FR · EN</span><span class="hero-stat-l" data-i18n="hero.stat.match">Bilingual by AI</span></div>
+        <div class="hero-stat"><span class="hero-stat-n">94%</span><span class="hero-stat-l" data-i18n="hero.stat.match">AI match rate</span></div>
         <div class="hero-stat-sep"></div>
-        <div class="hero-stat"><span class="hero-stat-n">0 $</span><span class="hero-stat-l" data-i18n="hero.stat.resp">Free to apply</span></div>
+        <div class="hero-stat"><span class="hero-stat-n">&lt;48h</span><span class="hero-stat-l" data-i18n="hero.stat.resp">Avg response</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Trusted by / Partners marquee ──────────────────── -->
+  <section class="trust-band">
+    <div class="trust-label" data-i18n="trust.label">Join 150+ companies already hiring on Nexhire</div>
+    <div class="marquee-wrap">
+      <div class="marquee-track">
+        <!-- set A -->
+        <div class="marquee-item"><span class="mq-logo" style="background:#1A56DB20;color:#1A56DB">NT</span><span class="mq-name">NordiqTech</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#7C3AED20;color:#7C3AED">BG</span><span class="mq-name">BoréalGames</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#05966920;color:#059669">NC</span><span class="mq-name">NovaCoop</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#DC262620;color:#DC2626">AC</span><span class="mq-name">ArcticCloud</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#D9770620;color:#D97706">ML</span><span class="mq-name">MapleLogistics</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#0891B220;color:#0891B2">HA</span><span class="mq-name">HarbourAI</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#16A34A20;color:#16A34A">QS</span><span class="mq-name">QuébecSoft</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#1A56DB20;color:#1A56DB">CD</span><span class="mq-name">Cascades Digital</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#9333EA20;color:#9333EA">PM</span><span class="mq-name">PinnacleMedia</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#0F766E20;color:#0F766E">VS</span><span class="mq-name">VerdantSystems</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#B4530920;color:#B45309">AT</span><span class="mq-name">AtlasFinance</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#1D4ED820;color:#1D4ED8">CR</span><span class="mq-name">CrestRH</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#7C3AED20;color:#7C3AED">OS</span><span class="mq-name">OmegaStudio</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#DC262620;color:#DC2626">LX</span><span class="mq-name">LynxAéro</span></div>
+        <!-- set B — duplicate for seamless loop -->
+        <div class="marquee-item"><span class="mq-logo" style="background:#1A56DB20;color:#1A56DB">NT</span><span class="mq-name">NordiqTech</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#7C3AED20;color:#7C3AED">BG</span><span class="mq-name">BoréalGames</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#05966920;color:#059669">NC</span><span class="mq-name">NovaCoop</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#DC262620;color:#DC2626">AC</span><span class="mq-name">ArcticCloud</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#D9770620;color:#D97706">ML</span><span class="mq-name">MapleLogistics</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#0891B220;color:#0891B2">HA</span><span class="mq-name">HarbourAI</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#16A34A20;color:#16A34A">QS</span><span class="mq-name">QuébecSoft</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#1A56DB20;color:#1A56DB">CD</span><span class="mq-name">Cascades Digital</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#9333EA20;color:#9333EA">PM</span><span class="mq-name">PinnacleMedia</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#0F766E20;color:#0F766E">VS</span><span class="mq-name">VerdantSystems</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#B4530920;color:#B45309">AT</span><span class="mq-name">AtlasFinance</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#1D4ED820;color:#1D4ED8">CR</span><span class="mq-name">CrestRH</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#7C3AED20;color:#7C3AED">OS</span><span class="mq-name">OmegaStudio</span></div>
+        <div class="marquee-item"><span class="mq-logo" style="background:#DC262620;color:#DC2626">LX</span><span class="mq-name">LynxAéro</span></div>
       </div>
     </div>
   </section>
@@ -1353,7 +1392,7 @@
     </div>
     <div style="background:linear-gradient(135deg,#023448,#1b485a);border-radius:20px;padding:40px;text-align:center;color:#fff">
       <h3 style="font-family:var(--r);font-size:22px;font-weight:800;margin:0 0 10px" data-i18n="about.cta.title">Ready to transform your hiring?</h3>
-      <p style="color:#94A3B8;margin:0 0 24px;font-size:15px" data-i18n="about.cta.sub">Be one of the first companies hiring with Nexhire. Free to start.</p>
+      <p style="color:#94A3B8;margin:0 0 24px;font-size:15px" data-i18n="about.cta.sub">Join 150+ Canadian companies already hiring smarter with Nexhire.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
         <button class="btn-primary" data-modal="modal-register" style="font-size:15px;padding:12px 28px" data-i18n="about.cta.btn1">Get started free</button>
         <button data-onclick="goto('pricing')" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:12px 28px;font-size:15px;cursor:pointer;font-family:inherit;font-weight:600" data-i18n="about.cta.btn2">View pricing</button>
