@@ -5240,6 +5240,7 @@ function showAdmTab(tabId, el) {
   if (tabId === 'adm-users')      loadAdmUsers();
   if (tabId === 'adm-moderation') loadAdmModeration();
   if (tabId === 'adm-jobs')       loadAdmPendingJobs();
+  if (tabId === 'adm-history')    loadAdmHistory();
 }
 
 async function loadAdminDash() {
@@ -5428,6 +5429,31 @@ async function loadAdmPendingJobs() {
             <button class="adm-btn success" data-onclick="admApproveJob('${j.id}')">Approuver</button>
             <button class="adm-btn danger" data-onclick="admRejectJob('${j.id}')">Rejeter</button>
           </div></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+async function loadAdmHistory() {
+  const c = document.getElementById('adm-history-container');
+  if (!c) return;
+  c.innerHTML = `<div class="adm-empty"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px"></i></div>`;
+  const d = await api('GET', `${BASE}/api/admin/jobs/processed`);
+  const jobs = d.jobs || [];
+  if (!jobs.length) { c.innerHTML = `<div class="adm-card"><div class="adm-empty">Aucune offre traitée.</div></div>`; return; }
+  const statusBadge = s => s === 'active'
+    ? '<span class="adm-badge" style="background:#dcfce7;color:#15803d">✓ Approuvée</span>'
+    : '<span class="adm-badge" style="background:#fee2e2;color:#b91c1c">✗ Rejetée</span>';
+  c.innerHTML = `<div class="adm-card">
+    <div class="adm-card-hdr">Historique <span style="font-size:13px;color:#94a3b8;font-weight:500">${jobs.length} offres</span></div>
+    <table class="adm-tbl">
+      <thead><tr><th>Titre</th><th>Entreprise</th><th>Statut</th><th>Date</th></tr></thead>
+      <tbody>${jobs.map(j => `
+        <tr>
+          <td style="font-weight:600;color:#0f172a">${esc(j.title_en || j.title_fr || '—')}</td>
+          <td>${esc(j.company_name || '—')}</td>
+          <td>${statusBadge(j.status)}</td>
+          <td style="font-size:12px;color:#94a3b8">${(j.published_at||j.created_at) ? new Date(j.published_at||j.created_at).toLocaleDateString('fr-CA',{month:'short',day:'numeric',year:'numeric'}) : '—'}</td>
         </tr>`).join('')}
       </tbody>
     </table>
