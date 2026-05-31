@@ -1473,6 +1473,80 @@
 </div>
 </div>
 
+<!-- ADMIN DASHBOARD ─────────────────────────────────────── -->
+<div id="pg-admin" class="page">
+<style>
+.adm{display:flex;min-height:calc(100vh - 64px);background:#f6f7f9}
+.adm-side{width:240px;flex-shrink:0;background:#0f172a;color:#cbd5e1;padding:24px 0;display:flex;flex-direction:column}
+.adm-side-brand{padding:0 24px 24px;font-size:13px;font-weight:700;color:#fff;letter-spacing:.5px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:16px}
+.adm-nav-item{display:flex;align-items:center;gap:10px;padding:12px 24px;font-size:14px;font-weight:500;cursor:pointer;color:#94a3b8;border-left:3px solid transparent;transition:all .15s}
+.adm-nav-item:hover{background:rgba(255,255,255,.04);color:#fff}
+.adm-nav-item.active{background:rgba(99,102,241,.15);color:#fff;border-left-color:#6366f1}
+.adm-nav-item i{font-size:18px}
+.adm-main{flex:1;padding:32px;overflow-y:auto}
+.adm-h{font-size:24px;font-weight:800;color:#0f172a;margin:0 0 4px}
+.adm-sub{font-size:14px;color:#64748b;margin:0 0 28px}
+.adm-stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:32px}
+.adm-stat-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:16px;padding:20px}
+.adm-stat-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px}
+.adm-stat-n{font-size:28px;font-weight:800;color:#0f172a;line-height:1}
+.adm-stat-l{font-size:12px;color:#64748b;margin-top:4px;font-weight:500}
+.adm-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:16px;overflow:hidden;margin-bottom:24px}
+.adm-card-hdr{padding:16px 20px;border-bottom:1px solid #f1f5f9;font-size:15px;font-weight:700;color:#0f172a;display:flex;align-items:center;justify-content:space-between}
+.adm-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.adm-tbl thead tr{background:#f8fafc}
+.adm-tbl th{padding:12px 16px;text-align:left;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px}
+.adm-tbl td{padding:12px 16px;border-bottom:1px solid #f8fafc;color:#475569}
+.adm-tbl tr:last-child td{border-bottom:none}
+.adm-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:700}
+.adm-btn{font-size:12px;padding:5px 12px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-family:inherit;color:#475569;font-weight:600}
+.adm-btn:hover{background:#f8fafc}
+.adm-btn.danger{color:#dc2626;border-color:#fca5a5}
+.adm-btn.success{color:#16a34a;border-color:#86efac}
+.adm-empty{padding:40px;text-align:center;color:#94a3b8;font-size:14px}
+@media(max-width:768px){.adm{flex-direction:column}.adm-side{width:100%;flex-direction:row;overflow-x:auto;padding:12px 0}.adm-side-brand{display:none}.adm-nav-item{flex-shrink:0;border-left:none;border-bottom:3px solid transparent;padding:10px 16px}.adm-nav-item.active{border-left:none;border-bottom-color:#6366f1}}
+</style>
+<div class="adm">
+  <aside class="adm-side">
+    <div class="adm-side-brand"><i class="ti ti-shield-lock"></i> NEXHIRE ADMIN</div>
+    <nav id="adm-nav">
+      <div class="adm-nav-item active" data-admtab="adm-overview"><i class="ti ti-dashboard"></i> Vue d'ensemble</div>
+      <div class="adm-nav-item" data-admtab="adm-tenants"><i class="ti ti-building"></i> Entreprises</div>
+      <div class="adm-nav-item" data-admtab="adm-users"><i class="ti ti-users"></i> Utilisateurs</div>
+      <div class="adm-nav-item" data-admtab="adm-moderation"><i class="ti ti-shield-check"></i> Modération</div>
+      <div class="adm-nav-item" data-admtab="adm-jobs"><i class="ti ti-briefcase"></i> Offres en attente</div>
+    </nav>
+  </aside>
+  <div class="adm-main">
+    <div id="adm-overview" class="adm-tab">
+      <h1 class="adm-h">Vue d'ensemble</h1>
+      <p class="adm-sub">Statistiques globales de la plateforme</p>
+      <div id="adm-stats-container"></div>
+    </div>
+    <div id="adm-tenants" class="adm-tab" style="display:none">
+      <h1 class="adm-h">Entreprises (Tenants)</h1>
+      <p class="adm-sub">Gérez les employeurs et leurs entreprises</p>
+      <div id="adm-tenants-container"></div>
+    </div>
+    <div id="adm-users" class="adm-tab" style="display:none">
+      <h1 class="adm-h">Utilisateurs</h1>
+      <p class="adm-sub">Tous les comptes de la plateforme</p>
+      <div id="adm-users-container"></div>
+    </div>
+    <div id="adm-moderation" class="adm-tab" style="display:none">
+      <h1 class="adm-h">Modération du feed</h1>
+      <p class="adm-sub">Posts signalés et contenu à vérifier</p>
+      <div id="adm-moderation-container"></div>
+    </div>
+    <div id="adm-jobs" class="adm-tab" style="display:none">
+      <h1 class="adm-h">Offres en attente</h1>
+      <p class="adm-sub">Offres à approuver ou rejeter</p>
+      <div id="adm-jobs-container"></div>
+    </div>
+  </div>
+</div>
+</div>
+
 </main>
 
 <!-- SITE FOOTER ─────────────────────────────────────────── -->

@@ -341,6 +341,7 @@ function goto(page) {
     });
   }
   if (page === 'tax-calc') initTaxCalc();
+  if (page === 'admin') loadAdminDash();
   // terms page is static — no render needed
   // update URL hash for direct linking
   const publicPages = ['home','jobs','feed','employer','pricing','privacy','terms','help','tax-calc','about','blog'];
@@ -2042,6 +2043,9 @@ function showUserNav() {
   const emailEl = document.getElementById('dropdown-email');
   if (emailEl) emailEl.textContent = state.user.email || '';
   const ddEmp = document.getElementById('dd-employer');
+  if (ddEmp) ddEmp.style.display = state.user.company_id ? 'flex' : 'none';
+  const ddAdmin = document.getElementById('dd-admin');
+  if (ddAdmin) ddAdmin.style.display = state.user.role === 'admin' ? 'flex' : 'none';
   if (ddEmp) ddEmp.style.display = state.user.company_id ? 'flex' : 'none';
   // Hide "For Employers" and "Pricing" nav links for logged-in candidates
   const navEmpLink = document.getElementById('nav-link-employers');
@@ -5223,7 +5227,172 @@ async function loadEmployerAnalytics() {
       </div>
     </div>`;
 }
+// ── ADMIN DASHBOARD ────────────────────────────────────────
+// ── ADMIN DASHBOARD ────────────────────────────────────────
+function showAdmTab(tabId, el) {
+  document.querySelectorAll('#pg-admin .adm-tab').forEach(t => t.style.display = 'none');
+  document.querySelectorAll('#pg-admin .adm-nav-item').forEach(n => n.classList.remove('active'));
+  const tab = document.getElementById(tabId);
+  if (tab) tab.style.display = 'block';
+  if (el) el.classList.add('active');
+  if (tabId === 'adm-overview')   loadAdmOverview();
+  if (tabId === 'adm-tenants')    loadAdmTenants();
+  if (tabId === 'adm-users')      loadAdmUsers();
+  if (tabId === 'adm-moderation') loadAdmModeration();
+  if (tabId === 'adm-jobs')       loadAdmPendingJobs();
+}
 
+async function loadAdminDash() {
+  if (!state.user || state.user.role !== 'admin') { goto('home'); return; }
+  loadAdmOverview();
+}
+
+async function loadAdmOverview() {
+  const c = document.getElementById('adm-stats-container');
+  if (!c) return;
+  c.innerHTML = `<div class="adm-empty"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px"></i></div>`;
+  const [s, e] = await Promise.all([
+    api('GET', `${BASE}/api/admin/stats`),
+    api('GET', `${BASE}/api/admin/stats/extended`)
+  ]);
+  const st = s.stats || {};
+  const ext = e.ext || {};
+  c.innerHTML = `
+    <div class="adm-stats-grid">
+      <div class="adm-stat-card"><div class="adm-stat-ico" style="background:#eef2ff;color:#6366f1"><i class="ti ti-users"></i></div><div class="adm-stat-n">${st.totalUsers||0}</div><div class="adm-stat-l">Utilisateurs total</div></div>
+      <div class="adm-stat-card"><div class="adm-stat-ico" style="background:#f0fdf4;color:#16a34a"><i class="ti ti-user"></i></div><div class="adm-stat-n">${ext.candidates||0}</div><div class="adm-stat-l">Candidats</div></div>
+      <div class="adm-stat-card"><div class="adm-stat-ico" style="background:#fffbeb;color:#d97706"><i class="ti ti-building"></i></div><div class="adm-stat-n">${ext.employers||0}</div><div class="adm-stat-l">Employeurs</div></div>
+      <div class="adm-stat-card"><div class="adm-stat-ico" style="background:#fdf4ff;color:#a21caf"><i class="ti ti-briefcase"></i></div><div class="adm-stat-n">${st.totalJobs||0}</div><div class="adm-stat-l">Offres actives</div></div>
+      <div class="adm-stat-card"><div class="adm-stat-ico" style="background:#fff7ed;color:#ea580c"><i class="ti ti-rocket"></i></div><div class="adm-stat-n">${ext.sponsored||0}</div><div class="adm-stat-l">Offres sponsorisées</div></div>
+      <div class="adm-stat-card"><div class="adm-stat-ico" style="background:#eff6ff;color:#0284c7"><i class="ti ti-file-text"></i></div><div class="adm-stat-n">${st.totalApplications||0}</div><div class="adm-stat-l">Candidatures</div></div>
+      <div class="adm-stat-card"><div class="adm-stat-ico" style="background:#f0fdfa;color:#0d9488"><i class="ti ti-layout-list"></i></div><div class="adm-stat-n">${ext.posts||0}</div><div class="adm-stat-l">Posts feed</div></div>
+      <div class="adm-stat-card"><div class="adm-stat-ico" style="background:#ecfdf5;color:#059669"><i class="ti ti-trending-up"></i></div><div class="adm-stat-n">${ext.signups7d||0}</div><div class="adm-stat-l">Inscriptions 7j</div></div>
+    </div>`;
+}
+
+async function loadAdmTenants() {
+  const c = document.getElementById('adm-tenants-container');
+  if (!c) return;
+  c.innerHTML = `<div class="adm-empty"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px"></i></div>`;
+  const d = await api('GET', `${BASE}/api/admin/tenants`);
+  const tenants = d.tenants || [];
+  if (!tenants.length) { c.innerHTML = `<div class="adm-card"><div class="adm-empty">Aucune entreprise.</div></div>`; return; }
+  c.innerHTML = `<div class="adm-card">
+    <table class="adm-tbl">
+      <thead><tr><th>Entreprise</th><th>Membres</th><th>Offres</th><th>Statut</th><th>Inscrite</th><th>Actions</th></tr></thead>
+      <tbody>${tenants.map(t => `
+        <tr>
+          <td><div style="display:flex;align-items:center;gap:10px">
+            ${t.logo_url ? `<img src="${esc(t.logo_url)}" style="width:32px;height:32px;border-radius:8px;object-fit:contain;border:1px solid #e2e8f0">` : `<div style="width:32px;height:32px;border-radius:8px;background:${companyColor(t.name||'')};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px">${(t.name||'?').slice(0,2).toUpperCase()}</div>`}
+            <div><div style="font-weight:600;color:#0f172a">${esc(t.name||'—')}</div><div style="font-size:11px;color:#94a3b8">${esc(t.industry||'')} ${t.city?'· '+esc(t.city):''}</div></div>
+          </div></td>
+          <td>${t.member_count||0}</td>
+          <td>${t.job_count||0}</td>
+          <td>${t.verified ? '<span class="adm-badge" style="background:#dcfce7;color:#15803d">✓ Vérifié</span>' : '<span class="adm-badge" style="background:#f1f5f9;color:#64748b">Non vérifié</span>'}</td>
+          <td style="font-size:12px;color:#94a3b8">${t.joined ? new Date(t.joined).toLocaleDateString('fr-CA',{month:'short',day:'numeric',year:'numeric'}) : '—'}</td>
+          <td><div style="display:flex;gap:6px">
+            <button class="adm-btn success" data-onclick="admVerifyTenant('${t.id}')">${t.verified?'Retirer':'Vérifier'}</button>
+            <button class="adm-btn danger" data-onclick="admDeleteTenant('${t.id}','${esc((t.name||'').replace(/'/g,''))}')">Suppr.</button>
+          </div></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+async function admVerifyTenant(id) {
+  const d = await api('PUT', `${BASE}/api/admin/tenants/${id}/verify`);
+  if (d.success) { toast(d.verified ? 'Entreprise vérifiée ✓' : 'Vérification retirée', 'success'); loadAdmTenants(); }
+  else toast(d.error || 'Erreur', 'error');
+}
+
+async function admDeleteTenant(id, name) {
+  if (!confirm(`Supprimer définitivement "${name}" et toutes ses données ?`)) return;
+  const d = await api('DELETE', `${BASE}/api/admin/tenants/${id}`);
+  if (d.success) { toast('Entreprise supprimée', 'success'); loadAdmTenants(); }
+  else toast(d.error || 'Erreur', 'error');
+}
+
+async function loadAdmUsers() {
+  const c = document.getElementById('adm-users-container');
+  if (!c) return;
+  c.innerHTML = `<div class="adm-empty"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px"></i></div>`;
+  const d = await api('GET', `${BASE}/api/admin/users`);
+  const users = d.users || [];
+  if (!users.length) { c.innerHTML = `<div class="adm-card"><div class="adm-empty">Aucun utilisateur.</div></div>`; return; }
+  const roleBadge = r => {
+    const map = { admin:['#fef2f2','#dc2626'], employer:['#fffbeb','#d97706'], candidate:['#eef2ff','#6366f1'] };
+    const [bg,col] = map[r] || ['#f1f5f9','#64748b'];
+    return `<span class="adm-badge" style="background:${bg};color:${col}">${r||'—'}</span>`;
+  };
+  c.innerHTML = `<div class="adm-card">
+    <div class="adm-card-hdr">Utilisateurs <span style="font-size:13px;color:#94a3b8;font-weight:500">${users.length} affichés</span></div>
+    <table class="adm-tbl">
+      <thead><tr><th>Nom</th><th>Email</th><th>Rôle</th><th>Inscrit</th></tr></thead>
+      <tbody>${users.map(u => `
+        <tr>
+          <td style="font-weight:600;color:#0f172a">${esc(`${u.first_name||''} ${u.last_name||''}`.trim()||'—')}</td>
+          <td>${esc(u.email||'')}</td>
+          <td>${roleBadge(u.role)}</td>
+          <td style="font-size:12px;color:#94a3b8">${u.created_at ? new Date(u.created_at).toLocaleDateString('fr-CA',{month:'short',day:'numeric',year:'numeric'}) : '—'}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+async function loadAdmModeration() {
+  const c = document.getElementById('adm-moderation-container');
+  if (!c) return;
+  c.innerHTML = `<div class="adm-empty"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px"></i></div>`;
+  // Reuse existing moderation endpoint if it exists
+  try {
+    const d = await api('GET', `${BASE}/api/admin/moderation/pending`);
+    const items = d.posts || d.items || [];
+    if (!items.length) { c.innerHTML = `<div class="adm-card"><div class="adm-empty"><i class="ti ti-shield-check" style="font-size:32px;color:#16a34a;display:block;margin-bottom:8px"></i>Aucun contenu signalé. Tout est propre ! 🎉</div></div>`; return; }
+    c.innerHTML = `<div class="adm-card"><div class="adm-card-hdr">Posts signalés (${items.length})</div><div style="padding:16px">${items.map(p => `<div style="padding:12px;border:1px solid #f1f5f9;border-radius:10px;margin-bottom:10px"><div style="font-size:13px;color:#475569">${esc(p.content||p.body||'')}</div></div>`).join('')}</div></div>`;
+  } catch {
+    c.innerHTML = `<div class="adm-card"><div class="adm-empty"><i class="ti ti-shield-check" style="font-size:32px;color:#16a34a;display:block;margin-bottom:8px"></i>Aucun contenu signalé.</div></div>`;
+  }
+}
+
+async function loadAdmPendingJobs() {
+  const c = document.getElementById('adm-jobs-container');
+  if (!c) return;
+  c.innerHTML = `<div class="adm-empty"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px"></i></div>`;
+  const d = await api('GET', `${BASE}/api/admin/jobs/pending`);
+  const jobs = d.jobs || [];
+  if (!jobs.length) { c.innerHTML = `<div class="adm-card"><div class="adm-empty"><i class="ti ti-check" style="font-size:32px;color:#16a34a;display:block;margin-bottom:8px"></i>Aucune offre en attente.</div></div>`; return; }
+  c.innerHTML = `<div class="adm-card">
+    <table class="adm-tbl">
+      <thead><tr><th>Titre</th><th>Entreprise</th><th>Date</th><th>Actions</th></tr></thead>
+      <tbody>${jobs.map(j => `
+        <tr>
+          <td style="font-weight:600;color:#0f172a">${esc(j.title_en || j.title_fr || '—')}</td>
+          <td>${esc(j.company_name || '—')}</td>
+          <td style="font-size:12px;color:#94a3b8">${j.created_at ? new Date(j.created_at).toLocaleDateString('fr-CA',{month:'short',day:'numeric'}) : '—'}</td>
+          <td><div style="display:flex;gap:6px">
+            <button class="adm-btn success" data-onclick="admApproveJob('${j.id}')">Approuver</button>
+            <button class="adm-btn danger" data-onclick="admRejectJob('${j.id}')">Rejeter</button>
+          </div></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+async function admApproveJob(id) {
+  const d = await api('PUT', `${BASE}/api/admin/jobs/${id}/approve`);
+  if (d.success) { toast('Offre approuvée ✓', 'success'); loadAdmPendingJobs(); }
+  else toast(d.error || 'Erreur', 'error');
+}
+
+async function admRejectJob(id) {
+  if (!confirm('Rejeter cette offre ?')) return;
+  const d = await api('PUT', `${BASE}/api/admin/jobs/${id}/reject`);
+  if (d.success) { toast('Offre rejetée', 'success'); loadAdmPendingJobs(); }
+  else toast(d.error || 'Erreur', 'error');
+}
 function renderSparkline(vals, labels) {
   if (!vals.length) return '';
   const max = Math.max(...vals, 1);
@@ -6497,6 +6666,12 @@ document.getElementById('user-dropdown')?.addEventListener('click', e => {
 document.getElementById('emp-dash-nav')?.addEventListener('click', e => {
   const item = e.target.closest('[data-emptab]');
   if (item) showEmpTab(item.dataset.emptab, item);
+});
+
+// ── Admin dashboard sidebar nav ──────────────────────────────
+document.getElementById('adm-nav')?.addEventListener('click', e => {
+  const item = e.target.closest('[data-admtab]');
+  if (item) showAdmTab(item.dataset.admtab, item);
 });
 
 // ── Employer dashboard "Post job" header button ──────────────
