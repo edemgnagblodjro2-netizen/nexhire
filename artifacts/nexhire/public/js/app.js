@@ -710,7 +710,9 @@ const T = {
     'blog.a4.cta':'Calculate →','blog.a5.cta':'Remote jobs →','blog.a6.cta':'Find jobs →',
     'blog.footer.q':'Want us to cover a specific topic?',
     'contact.eyebrow':'CONTACT','contact.title':'We reply fast','contact.sub':'A question about the platform, a partnership, or a technical issue? Drop us a line.','contact.name':'Full name *','contact.email':'Email *','contact.subject':'Subject','contact.message':'Message *','contact.send':'Send message','contact.ok.title':'Message sent!','contact.ok.sub':'Thanks — we\'ll get back to you shortly.','footer.contactform':'Contact us',
+    'nav.contact':'Contact',
   },
+
   fr: {
     'trust.label':'Reconnu par les meilleures entreprises & organisations',
     'nav.jobs':'Emplois','nav.feed':'Fil d\'actu','nav.employers':'Pour les employeurs','nav.pricing':'Tarifs',
@@ -982,6 +984,7 @@ const T = {
     'blog.a4.cta':'Calculer →','blog.a5.cta':'Emplois à distance →','blog.a6.cta':'Trouver un emploi →',
     "blog.footer.q":"Vous souhaitez qu'on aborde un sujet précis ?",
     'contact.eyebrow':'CONTACT','contact.title':'On vous répond rapidement','contact.sub':'Une question sur la plateforme, un partenariat ou un souci technique ? Écrivez-nous.','contact.name':'Nom complet *','contact.email':'Courriel *','contact.subject':'Sujet','contact.message':'Message *','contact.send':'Envoyer le message','contact.ok.title':'Message envoyé !','contact.ok.sub':'Merci — nous vous répondrons dans les plus brefs délais.','footer.contactform':'Nous écrire',
+    'nav.contact':'Contact',
   }
 };
 function setLangUI(lang) {
