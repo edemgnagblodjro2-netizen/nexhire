@@ -159,4 +159,34 @@ router.get('/stats/extended', async (req, res) => {
   } catch (e) { res.status(500).json({ success: false, error: e.message }); }
 });
 
+// ── Jobs status breakdown (for pie chart) ─────────────────────
+router.get('/jobs/breakdown', async (req, res) => {
+  try {
+    const rows = await db.all(`
+      SELECT status, COUNT(*) as n
+      FROM nh_jobs
+      GROUP BY status
+    `);
+    const breakdown = {};
+    rows.forEach(r => { breakdown[r.status] = parseInt(r.n); });
+    res.json({ success: true, breakdown });
+  } catch (e) { res.status(500).json({ success: false, error: e.message }); }
+});
+
+// ── Processed jobs history (approved + rejected) ──────────────
+router.get('/jobs/processed', async (req, res) => {
+  try {
+    const jobs = await db.all(`
+      SELECT j.id, j.title_en, j.title_fr, j.status, j.created_at, j.published_at,
+             c.name as company_name
+      FROM nh_jobs j
+      LEFT JOIN nh_companies c ON c.id = j.company_id
+      WHERE j.status IN ('active','closed')
+      ORDER BY COALESCE(j.published_at, j.created_at) DESC
+      LIMIT 100
+    `);
+    res.json({ success: true, jobs });
+  } catch (e) { res.status(500).json({ success: false, error: e.message }); }
+});
+
 module.exports = router;
