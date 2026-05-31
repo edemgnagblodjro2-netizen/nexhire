@@ -5267,7 +5267,60 @@ async function loadAdmOverview() {
       <div class="adm-stat-card"><div class="adm-stat-ico" style="background:#eff6ff;color:#0284c7"><i class="ti ti-file-text"></i></div><div class="adm-stat-n">${st.totalApplications||0}</div><div class="adm-stat-l">Candidatures</div></div>
       <div class="adm-stat-card"><div class="adm-stat-ico" style="background:#f0fdfa;color:#0d9488"><i class="ti ti-layout-list"></i></div><div class="adm-stat-n">${ext.posts||0}</div><div class="adm-stat-l">Posts feed</div></div>
       <div class="adm-stat-card"><div class="adm-stat-ico" style="background:#ecfdf5;color:#059669"><i class="ti ti-trending-up"></i></div><div class="adm-stat-n">${ext.signups7d||0}</div><div class="adm-stat-l">Inscriptions 7j</div></div>
-    </div>`;
+    </div>
+    <div id="adm-pie-container"></div>`;
+  loadAdmJobsPie();
+}
+
+async function loadAdmJobsPie() {
+  const d = await api('GET', `${BASE}/api/admin/jobs/breakdown`);
+  const b = d.breakdown || {};
+  const c = document.getElementById('adm-pie-container');
+  if (!c) return;
+  const active = b.active || 0;
+  const closed = b.closed || 0;
+  const pending = b.pending || 0;
+  const total = active + closed + pending;
+  if (total === 0) { c.innerHTML = `<div class="adm-card"><div class="adm-empty">Aucune offre à analyser.</div></div>`; return; }
+
+  const segs = [
+    { label:'Approuvées (actives)', val:active, color:'#16a34a' },
+    { label:'Rejetées (fermées)', val:closed, color:'#dc2626' },
+    { label:'En attente', val:pending, color:'#d97706' },
+  ].filter(s => s.val > 0);
+
+  // Build SVG donut
+  const R = 70, C = 2 * Math.PI * R;
+  let offset = 0;
+  const circles = segs.map(s => {
+    const frac = s.val / total;
+    const dash = (C * frac).toFixed(2);
+    const gap = (C - dash).toFixed(2);
+    const circle = `<circle cx="90" cy="90" r="${R}" fill="none" stroke="${s.color}" stroke-width="28" stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${(-offset).toFixed(2)}"/>`;
+    offset += C * frac;
+    return circle;
+  }).join('');
+
+  const legend = segs.map(s => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f5f9">
+      <div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:3px;background:${s.color};display:inline-block"></span><span style="font-size:14px;color:#475569">${s.label}</span></div>
+      <span style="font-weight:700;color:#0f172a">${s.val} <span style="font-size:12px;color:#94a3b8;font-weight:500">(${Math.round(s.val/total*100)}%)</span></span>
+    </div>`).join('');
+
+  c.innerHTML = `<div class="adm-card">
+    <div class="adm-card-hdr">Répartition des offres</div>
+    <div style="display:flex;align-items:center;gap:32px;padding:24px;flex-wrap:wrap">
+      <svg width="180" height="180" viewBox="0 0 180 180" style="transform:rotate(-90deg);flex-shrink:0">
+        ${circles}
+        <circle cx="90" cy="90" r="${R}" fill="none" stroke="#f1f5f9" stroke-width="28" stroke-opacity="0" />
+      </svg>
+      <div style="flex:1;min-width:240px">${legend}
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0 0;font-weight:800;color:#0f172a">
+          <span>Total</span><span>${total}</span>
+        </div>
+      </div>
+    </div>
+  </div>`;
 }
 
 async function loadAdmTenants() {
