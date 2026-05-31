@@ -5351,6 +5351,23 @@ async function loadAdmOverview() {
   loadAdmJobsPie();
 }
 
+async function subscribeNewsletter() {
+  const isFr = state.lang === 'fr';
+  const input = document.getElementById('blog-nl-email');
+  const email = input?.value.trim();
+  if (!email || !/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
+    toast(isFr ? 'Email invalide' : 'Invalid email', 'error');
+    return;
+  }
+  const d = await api('POST', `${BASE}/api/newsletter/subscribe`, { email });
+  if (d.success) {
+    input.value = '';
+    toast(isFr ? '✅ Merci ! Vous êtes abonné(e).' : '✅ Thanks! You are subscribed.', 'success');
+  } else {
+    toast(d.error || (isFr ? 'Erreur' : 'Error'), 'error');
+  }
+}
+
 async function loadAdmJobsPie() {
   const d = await api('GET', `${BASE}/api/admin/jobs/breakdown`);
   const b = d.breakdown || {};

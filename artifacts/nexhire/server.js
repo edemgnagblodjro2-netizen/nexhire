@@ -1090,6 +1090,7 @@ app.use(apiBase + '/video-interviews', require('./routes/video-interviews'));
 app.use(apiBase + '/moderation',       require('./routes/moderation'));
 app.use(apiBase + '/interview-slots',  require('./routes/interview-slots'));
 app.use(apiBase + '/feed',             require('./routes/feed'));
+app.use(apiBase + '/newsletter',       require('./routes/newsletter'));
 
 // ── Static files ───────────────────────────────────────────
 app.use(BASE_PATH + '/uploads/interviews', express.static(path.join(__dirname, 'uploads', 'interviews')));
