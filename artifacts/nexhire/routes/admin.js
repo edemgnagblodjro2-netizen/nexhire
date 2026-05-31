@@ -93,4 +93,70 @@ router.delete('/skill-tests/:id', async (req, res) => {
   } catch (e) { res.status(500).json({ success: false, error: e.message }); }
 });
 
+// ── TENANTS (employeurs + entreprises) ────────────────────────
+router.get('/tenants', async (req, res) => {
+  try {
+    const companies = await db.all(`
+      SELECT c.*,
+             COUNT(DISTINCT j.id) as job_count,
+             COUNT(DISTINCT u.id) as member_count,
+             c.created_at as joined
+      FROM nh_companies c
+      LEFT JOIN nh_jobs j ON j.company_id = c.id
+      LEFT JOIN nh_users u ON u.company_id = c.id
+      GROUP BY c.id
+      ORDER BY c.created_at DESC
+    `);
+    res.json({ success: true, tenants: companies });
+  } catch (e) { res.status(500).json({ success: false, error: e.message }); }
+});
+
+router.put('/tenants/:id/verify', async (req, res) => {
+  try {
+    await db.run('UPDATE nh_companies SET verified = NOT COALESCE(verified, false) WHERE id = $1', [req.params.id]);
+    const c = await db.get('SELECT verified FROM nh_companies WHERE id = $1', [req.params.id]);
+    res.json({ success: true, verified: c?.verified });
+  } catch (e) { res.status(500).json({ success: false, error: e.message }); }
+});
+
+router.delete('/tenants/:id', async (req, res) => {
+  try {
+    await db.run('DELETE FROM nh_companies WHERE id = $1', [req.params.id]);
+    res.json({ success: true });
+  } catch (e) { res.status(500).json({ success: false, error: e.message }); }
+});
+
+// ── USERS list ────────────────────────────────────────────────
+router.get('/users', async (req, res) => {
+  try {
+    const users = await db.all(`
+      SELECT id, first_name, last_name, email, role, created_at, company_id
+      FROM nh_users
+      ORDER BY created_at DESC
+      LIMIT 200
+    `);
+    res.json({ success: true, users });
+  } catch (e) { res.status(500).json({ success: false, error: e.message }); }
+});
+
+// ── Extended stats ────────────────────────────────────────────
+router.get('/stats/extended', async (req, res) => {
+  try {
+    const [candidates, employers, sponsored, posts, signups7d] = await Promise.all([
+      db.get("SELECT COUNT(*) as n FROM nh_users WHERE role = 'candidate'"),
+      db.get("SELECT COUNT(*) as n FROM nh_users WHERE role = 'employer'"),
+      db.get("SELECT COUNT(*) as n FROM nh_jobs WHERE is_sponsored = true AND sponsored_until > NOW()"),
+      db.get("SELECT COUNT(*) as n FROM nh_posts WHERE is_active = true"),
+      db.get("SELECT COUNT(*) as n FROM nh_users WHERE created_at > NOW() - INTERVAL '7 days'"),
+    ]);
+    res.json({ success: true, ext: {
+      candidates: parseInt(candidates?.n||0),
+      employers: parseInt(employers?.n||0),
+      sponsored: parseInt(sponsored?.n||0),
+      posts: parseInt(posts?.n||0),
+      signups7d: parseInt(signups7d?.n||0),
+    }});
+  } catch (e) { res.status(500).json({ success: false, error: e.message }); }
+});
+
 module.exports = router;
