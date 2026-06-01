@@ -1867,3 +1867,18 @@ html, body {
 .hero-bg, .hbg-slide {
   max-width: 100%;
 }
+
+/* ── Fix menu profil déborde à droite sur mobile ── */
+@media (max-width: 768px) {
+  .user-dropdown {
+    right: 8px !important;
+    left: auto !important;
+    min-width: 0 !important;
+    width: max-content !important;
+    max-width: calc(100vw - 16px) !important;
+  }
+  .user-dropdown.open {
+    position: fixed !important;
+    top: 64px !important;
+  }
+}
