@@ -1859,3 +1859,11 @@ a{text-decoration:none;color:inherit}
   .ed-main { padding: 0 !important; }
   body { background: #fff !important; }
 }
+/* ── Fix débordement horizontal mobile (hero hbg-slide scale 1.05) ── */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+.hero-bg, .hbg-slide {
+  max-width: 100%;
+}
