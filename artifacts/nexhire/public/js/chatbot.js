@@ -1,8 +1,8 @@
-/* ── Nex Chatbot Widget ─────────────────────────────────────── */
+﻿/* ── Nex Chatbot Widget ─────────────────────────────────────── */
 (function () {
   'use strict';
 
-  const BASE = (window.__nexBase || '/nexhire').replace(/\/$/, '');
+  const BASE = (window.__nexBase || '').replace(/\/$/, '');
 
   const nexBot = {
     open: false,

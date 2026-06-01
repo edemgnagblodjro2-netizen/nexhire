@@ -5146,7 +5146,7 @@ function showEmpTab(tabId, navEl, preselectedAppId) {
   document.querySelectorAll('#pg-employer-dash .dash-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('#pg-employer-dash .ed-nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById(tabId)?.classList.add('active');
-  if (navEl) navEl.classList.add('active')
+  if (navEl) navEl.classList.add('active');
   if (tabId === 'etab-team') loadTeam();
   if (tabId === 'etab-analytics') loadEmployerAnalytics();
   if (tabId === 'etab-interviews') loadVideoInterviews();
