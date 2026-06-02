@@ -5514,6 +5514,43 @@ async function admDeleteTenant(id, name) {
   else toast(d.error || 'Erreur', 'error');
 }
 
+async function showUserDetail(userId) {
+  const d = await api('GET', `${BASE}/api/admin/users/${userId}/detail`);
+  if (!d.success) { toast(d.error || 'Erreur', 'error'); return; }
+  const u = d.user, p = d.profile, skills = d.skills || [];
+  const fmt = v => v || '<span style="color:#cbd5e1">—</span>';
+  let body = `
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:14px">
+      <div><strong>${esc(`${u.first_name||''} ${u.last_name||''}`.trim())}</strong> · ${esc(u.role)}</div>
+      <div>📧 ${fmt(esc(u.email))}</div>
+      <div>📞 ${fmt(esc(u.phone))}</div>`;
+  if (u.role === 'candidate') {
+    if (!p) {
+      body += `<div style="margin-top:12px;padding:14px;background:#fffbeb;border-radius:8px;color:#92400e">⚠️ Ce candidat n'a pas encore rempli son profil (compte créé uniquement).</div>`;
+    } else {
+      body += `
+        <hr style="border:none;border-top:1px solid #f1f5f9;margin:8px 0">
+        <div>📍 ${fmt(esc([p.city, p.province].filter(Boolean).join(', ')))}</div>
+        <div>💼 ${fmt(esc(p.headline_fr || p.headline_en))}</div>
+        <div>🎓 Expérience : ${fmt(p.experience_years)} an(s)</div>
+        <div>📝 ${fmt(esc((p.bio_fr || p.bio_en || '').slice(0,300)))}</div>
+        <div>🔗 ${p.linkedin_url ? `<a href="${esc(p.linkedin_url)}" target="_blank">LinkedIn</a>` : '—'} ${p.cv_url ? `· <a href="${esc(p.cv_url)}" target="_blank">CV</a>` : ''}</div>
+        <div>🛠️ Compétences : ${skills.length ? skills.map(s=>esc(s.name)).join(', ') : '<span style="color:#cbd5e1">aucune</span>'}</div>`;
+    }
+  }
+  body += `</div>`;
+  // Affiche dans une alerte simple si pas de système de modale dédié
+  const win = document.createElement('div');
+  win.style = 'position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  win.innerHTML = `<div style="background:#fff;border-radius:16px;padding:24px;max-width:480px;width:100%;max-height:80vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h3 style="margin:0;font-size:18px;color:#0f172a">Profil utilisateur</h3>
+      <button style="border:none;background:#f1f5f9;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:18px" onclick="this.closest('div[style*=fixed]').remove()">×</button>
+    </div>${body}</div>`;
+  win.onclick = e => { if (e.target === win) win.remove(); };
+  document.body.appendChild(win);
+}
+
 async function loadAdmUsers() {
   const c = document.getElementById('adm-users-container');
   if (!c) return;
@@ -5531,7 +5568,7 @@ async function loadAdmUsers() {
     <table class="adm-tbl">
       <thead><tr><th>Nom</th><th>Email</th><th>Rôle</th><th>Inscrit</th></tr></thead>
       <tbody>${users.map(u => `
-        <tr>
+          <tr style="cursor:pointer" data-onclick="showUserDetail('${u.id}')">
           <td style="font-weight:600;color:#0f172a">${esc(`${u.first_name||''} ${u.last_name||''}`.trim()||'—')}</td>
           <td>${esc(u.email||'')}</td>
           <td>${roleBadge(u.role)}</td>

@@ -139,6 +139,22 @@ router.get('/users', async (req, res) => {
   } catch (e) { res.status(500).json({ success: false, error: e.message }); }
 });
 
+// ── User detail (profil complet) ──────────────────────────
+router.get('/users/:id/detail', async (req, res) => {
+  try {
+    const user = await db.get('SELECT id, first_name, last_name, email, phone, role, created_at, avatar_url FROM nh_users WHERE id = $1', [req.params.id]);
+    if (!user) return res.status(404).json({ success: false, error: 'User not found' });
+    let profile = null, skills = [];
+    if (user.role === 'candidate') {
+      profile = await db.get('SELECT * FROM nh_candidate_profiles WHERE user_id = $1', [req.params.id]);
+      skills = await db.all('SELECT name, type, level FROM nh_profile_skills WHERE user_id = $1', [req.params.id]);
+    }
+    res.json({ success: true, user, profile, skills });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
 // ── Extended stats ────────────────────────────────────────────
 router.get('/stats/extended', async (req, res) => {
   try {
