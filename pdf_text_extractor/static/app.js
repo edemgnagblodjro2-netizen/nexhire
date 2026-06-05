@@ -245,6 +245,8 @@ connectorSearchForm.addEventListener("submit", async (event) => {
     });
     const result = await parseJson(response);
     connectorSearchResult.textContent = JSON.stringify(result, null, 2);
+    connectorStatus.classList.remove("error");
+    connectorStatus.textContent = `search_data() execute sur ${result.source_name}: ${result.query}`;
   } catch (error) {
     connectorSearchResult.textContent = error.message;
   }
@@ -256,6 +258,8 @@ searchSourceButtons.forEach((button) => {
     searchSourceButtons.forEach((sourceButton) => {
       sourceButton.classList.toggle("active", sourceButton === button);
     });
+    connectorStatus.classList.remove("error");
+    connectorStatus.textContent = `Source selectionnee pour search_data(): ${button.textContent}.`;
   });
 });
 
