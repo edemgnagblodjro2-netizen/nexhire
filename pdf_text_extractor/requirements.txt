@@ -1,6 +1,9 @@
 fastapi
+cryptography
+httpx
 openai
 python-multipart
 pypdf
+stripe
 supabase
 uvicorn[standard]

@@ -11,13 +11,148 @@ const chatButton = document.querySelector("#chat-button");
 const chatLog = document.querySelector("#chat-log");
 const assistantMode = document.querySelector("#assistant-mode");
 const language = document.querySelector("#language");
-const promptButtons = document.querySelectorAll("[data-prompt]");
+const promptButtons = document.querySelectorAll("[data-prompt-fr]");
+const slides = document.querySelectorAll(".slide");
+const sliderDots = document.querySelectorAll(".slider-dot");
+const planButtons = document.querySelectorAll(".select-plan");
+const signupPlan = document.querySelector("#signup-plan");
+const authTabs = document.querySelectorAll(".auth-tab");
+const signupForm = document.querySelector("#signup-form");
+const loginForm = document.querySelector("#login-form");
+const authStatus = document.querySelector("#auth-status");
+const connectorButtons = document.querySelectorAll("[data-connector-id]");
+const connectorStatus = document.querySelector("#connector-status");
+const connectorSearchForm = document.querySelector("#connector-search-form");
+const connectorSearchSource = document.querySelector("#connector-search-source");
+const connectorSearchQuery = document.querySelector("#connector-search-query");
+const connectorSearchResult = document.querySelector("#connector-search-result");
+const searchSourceButtons = document.querySelectorAll("[data-search-source]");
+const headerLanguageToggle = document.querySelector("#header-language-toggle");
+const notificationButton = document.querySelector("#notification-button");
+const notificationMenu = document.querySelector("#notification-menu");
+const notificationCount = document.querySelector("#notification-count");
+const markNotificationsRead = document.querySelector("#mark-notifications-read");
+let activeSlide = 0;
+const selectedConnectorIds = new Set();
+
+const translations = {
+  fr: {
+    extracting: "Extraction en cours...",
+    noText: "Aucun texte extractible.",
+    processed: (filename, count) =>
+      `${filename} traite: ${count} caracteres extraits.`,
+    ready: "Document pret. Cliquez pour generer un resume IA.",
+    documentLoaded:
+      "Document charge. Posez votre question en francais ou en anglais.",
+    generating: "Generation du resume...",
+  },
+  en: {
+    extracting: "Extracting text...",
+    noText: "No extractable text.",
+    processed: (filename, count) =>
+      `${filename} processed: ${count} characters extracted.`,
+    ready: "Document ready. Click to generate an AI summary.",
+    documentLoaded: "Document loaded. Ask your question in English or French.",
+    generating: "Generating summary...",
+  },
+};
+
+language.addEventListener("change", updateUiLanguage);
+updateUiLanguage();
+loadConnectors();
+
+headerLanguageToggle.addEventListener("click", () => {
+  language.value = language.value === "fr" ? "en" : "fr";
+  updateUiLanguage();
+});
+
+notificationButton.addEventListener("click", (event) => {
+  event.stopPropagation();
+  toggleNotifications(notificationMenu.hidden);
+});
+
+markNotificationsRead.addEventListener("click", () => {
+  notificationCount.textContent = "0";
+  notificationCount.hidden = true;
+  toggleNotifications(false);
+});
+
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".notification-wrap")) {
+    toggleNotifications(false);
+  }
+});
+
+sliderDots.forEach((dot) => {
+  dot.addEventListener("click", () => {
+    showSlide(Number(dot.dataset.slide));
+  });
+});
+
+window.setInterval(() => {
+  showSlide((activeSlide + 1) % slides.length);
+}, 6000);
+
+planButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    signupPlan.value = button.dataset.plan;
+    document.querySelector("#auth").scrollIntoView({ behavior: "smooth" });
+    showAuthTab("signup");
+    setAuthStatus(
+      button.dataset.plan === "annual"
+        ? "Plan annuel selectionne: 990 $/annee apres 14 jours gratuits."
+        : "Plan mensuel selectionne: 99 $/mois apres 14 jours gratuits."
+    );
+  });
+});
+
+authTabs.forEach((tab) => {
+  tab.addEventListener("click", () => showAuthTab(tab.dataset.authTab));
+});
+
+signupForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const formData = new FormData(signupForm);
+  const payload = Object.fromEntries(formData.entries());
+
+  try {
+    const response = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await parseJson(response);
+    setAuthStatus(
+      `Compte cree pour ${data.email}. Essai gratuit actif ${data.trial_days} jours, plan ${data.plan_label}.`
+    );
+    await startStripeCheckout(payload.plan, data.email);
+  } catch (error) {
+    setAuthStatus(error.message, true);
+  }
+});
+
+loginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const payload = Object.fromEntries(new FormData(loginForm).entries());
+
+  try {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await parseJson(response);
+    setAuthStatus(`Connexion reussie. Bienvenue ${data.name}.`);
+  } catch (error) {
+    setAuthStatus(error.message, true);
+  }
+});
 
 uploadForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const formData = new FormData(uploadForm);
 
-  setStatus("Extraction en cours...");
+  setStatus(t("extracting"));
   disableAssistant(true);
 
   try {
@@ -28,15 +163,11 @@ uploadForm.addEventListener("submit", async (event) => {
     const payload = await parseJson(response);
 
     activeDocumentId = payload.id;
-    preview.textContent = payload.text_preview || "Aucun texte extractible.";
-    setStatus(
-      `${payload.filename} traite: ${payload.character_count} caracteres extraits.`
-    );
-    summaryBox.textContent =
-      payload.warning || "Document pret. Cliquez pour generer un resume IA.";
+    preview.textContent = payload.text_preview || t("noText");
+    setStatus(t("processed", payload.filename, payload.character_count));
+    summaryBox.textContent = payload.warning || t("ready");
     summaryBox.classList.toggle("muted", Boolean(payload.warning));
-    chatLog.innerHTML =
-      '<div class="message assistant">Document charge. Posez votre question en francais ou en anglais.</div>';
+    chatLog.innerHTML = `<div class="message assistant">${t("documentLoaded")}</div>`;
     disableAssistant(false);
   } catch (error) {
     activeDocumentId = null;
@@ -49,7 +180,7 @@ summaryButton.addEventListener("click", async () => {
   if (!activeDocumentId) return;
 
   summaryButton.disabled = true;
-  summaryBox.textContent = "Generation du resume...";
+  summaryBox.textContent = t("generating");
 
   try {
     const response = await fetch(`/api/documents/${activeDocumentId}/summary`, {
@@ -93,9 +224,49 @@ chatForm.addEventListener("submit", async (event) => {
   }
 });
 
+connectorButtons.forEach((button) => {
+  button.addEventListener("click", async () => {
+    const connectorId = button.dataset.connectorId;
+    await connectConnector(connectorId);
+  });
+});
+
+connectorSearchForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  try {
+    const response = await fetch("/api/connectors/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        source: connectorSearchSource.value,
+        query: connectorSearchQuery.value,
+        organization_id: "demo-org",
+        user_id: "demo-admin",
+      }),
+    });
+    const result = await parseJson(response);
+    connectorSearchResult.textContent = JSON.stringify(result, null, 2);
+    connectorStatus.classList.remove("error");
+    connectorStatus.textContent = `search_data() execute sur ${result.source_name}: ${result.query}`;
+  } catch (error) {
+    connectorSearchResult.textContent = error.message;
+  }
+});
+
+searchSourceButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    connectorSearchSource.value = button.dataset.searchSource;
+    searchSourceButtons.forEach((sourceButton) => {
+      sourceButton.classList.toggle("active", sourceButton === button);
+    });
+    connectorStatus.classList.remove("error");
+    connectorStatus.textContent = `Source selectionnee pour search_data(): ${button.textContent}.`;
+  });
+});
+
 promptButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    questionInput.value = button.dataset.prompt;
+    questionInput.value = button.dataset[`prompt${language.value === "en" ? "En" : "Fr"}`];
     questionInput.focus();
   });
 });
@@ -123,7 +294,204 @@ function assistantContext() {
   return {
     assistant_mode: assistantMode.value,
     language: language.value,
+    connector_ids: Array.from(selectedConnectorIds),
   };
+}
+
+async function loadConnectors() {
+  try {
+    const response = await fetch("/api/connectors");
+    const connectors = await parseJson(response);
+    connectors.forEach((connector) => updateConnectorButtons(connector));
+  } catch (error) {
+    if (connectorStatus) {
+      connectorStatus.textContent = error.message;
+      connectorStatus.classList.add("error");
+    }
+  }
+}
+
+async function connectConnector(connectorId) {
+  try {
+    const oauthStartResponse = await fetch(`/api/connectors/${connectorId}/oauth/start`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        organization_id: "demo-org",
+        user_id: "demo-admin",
+      }),
+    });
+    const oauthStart = await parseJson(oauthStartResponse);
+    connectorStatus.classList.remove("error");
+    connectorStatus.textContent = `OAuth pret: redirection vers ${oauthStart.authorization_url}`;
+
+    const callbackResponse = await fetch("/api/connectors/oauth/callback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        connector_id: connectorId,
+        code: `demo-code-${connectorId}`,
+        state: oauthStart.state,
+        organization_id: "demo-org",
+        user_id: "demo-admin",
+      }),
+    });
+    const connection = await parseJson(callbackResponse);
+    selectedConnectorIds.add(connection.connector_id);
+    updateConnectorButtons({
+      id: connection.connector_id,
+      status: connection.status,
+      priority_label: connectorPhaseLabel(connection.connector_id),
+    });
+    connectorStatus.classList.remove("error");
+    connectorStatus.textContent = `${connectorName(connection.connector_id)} connecte via OAuth au CivicAI Chat. Token stocke et audit journalise.`;
+  } catch (error) {
+    connectorStatus.textContent = error.message;
+    connectorStatus.classList.add("error");
+  }
+}
+
+async function startStripeCheckout(plan, customerEmail) {
+  try {
+    const response = await fetch("/api/billing/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        plan,
+        customer_email: customerEmail,
+        success_url: `${window.location.origin}/?checkout=success`,
+        cancel_url: `${window.location.origin}/?checkout=cancel`,
+      }),
+    });
+    const checkout = await parseJson(response);
+    window.location.href = checkout.url;
+  } catch (error) {
+    setAuthStatus(
+      `Compte cree. Stripe Checkout sera actif apres configuration: ${error.message}`,
+      false,
+    );
+  }
+}
+
+function updateConnectorButtons(connector) {
+  document
+    .querySelectorAll(`[data-connector-id="${connector.id}"]`)
+    .forEach((button) => {
+      const isConnected = connector.status === "connected" || connector.status === "active";
+      button.classList.toggle("connected", isConnected);
+      button.dataset.status = connector.status;
+      button.setAttribute(
+        "aria-pressed",
+        isConnected ? "true" : "false",
+      );
+      if (button.classList.contains("connector-button")) {
+        const phase = button.querySelector("span");
+        if (phase) phase.textContent = `${connector.priority_label} · ${connector.status}`;
+        const label = button.querySelector("b");
+        if (label) label.textContent = isConnected ? "Actif" : "Connecter";
+      }
+    });
+}
+
+function connectorName(connectorId) {
+  const names = {
+    microsoft_365: "Microsoft 365",
+    servicenow: "ServiceNow",
+    jira: "Jira",
+    salesforce: "Salesforce",
+    workday: "Workday",
+    sap: "SAP",
+  };
+  return names[connectorId] || connectorId;
+}
+
+function connectorPhaseLabel(connectorId) {
+  const phases = {
+    microsoft_365: "Phase 1",
+    servicenow: "Phase 2",
+    jira: "Phase 3",
+    salesforce: "Phase 4",
+    workday: "Phase 5",
+    sap: "Phase 6",
+  };
+  return phases[connectorId] || "Phase";
+}
+
+function showSlide(index) {
+  activeSlide = index;
+  slides.forEach((slide, slideIndex) => {
+    slide.classList.toggle("active", slideIndex === index);
+  });
+  sliderDots.forEach((dot, dotIndex) => {
+    dot.classList.toggle("active", dotIndex === index);
+  });
+}
+
+function showAuthTab(tabName) {
+  authTabs.forEach((tab) => {
+    tab.classList.toggle("active", tab.dataset.authTab === tabName);
+  });
+  signupForm.classList.toggle("active", tabName === "signup");
+  loginForm.classList.toggle("active", tabName === "login");
+}
+
+function setAuthStatus(message, isError = false) {
+  authStatus.textContent = message;
+  authStatus.classList.toggle("error", isError);
+}
+
+function updateUiLanguage() {
+  const currentLanguage = language.value;
+  headerLanguageToggle.textContent = currentLanguage === "en" ? "FR | EN" : "EN | FR";
+  headerLanguageToggle.setAttribute(
+    "aria-label",
+    currentLanguage === "en"
+      ? "Switch language to French"
+      : "Basculer la langue vers anglais",
+  );
+
+  document.querySelectorAll("[data-i18n-fr]").forEach((element) => {
+    element.textContent = element.dataset[`i18n${currentLanguage === "en" ? "En" : "Fr"}`];
+  });
+
+  document.querySelectorAll("[data-placeholder-fr]").forEach((element) => {
+    element.placeholder =
+      element.dataset[`placeholder${currentLanguage === "en" ? "En" : "Fr"}`];
+  });
+
+  document.querySelectorAll("[data-aria-fr]").forEach((element) => {
+    element.setAttribute(
+      "aria-label",
+      element.dataset[`aria${currentLanguage === "en" ? "En" : "Fr"}`],
+    );
+  });
+
+  if (!activeDocumentId && preview.dataset.emptyFr) {
+    preview.textContent =
+      preview.dataset[`empty${currentLanguage === "en" ? "En" : "Fr"}`];
+  }
+
+  if (!activeDocumentId) {
+    summaryBox.textContent =
+      currentLanguage === "en"
+        ? "Upload a PDF to enable the summary."
+        : "Televersez un PDF pour activer le resume.";
+    chatLog.innerHTML = `<div class="message assistant">${
+      currentLanguage === "en"
+        ? "Ask a question after upload. Posez votre question en francais ou en anglais."
+        : "Posez une question apres le televersement. Ask in French or English."
+    }</div>`;
+  }
+}
+
+function toggleNotifications(open) {
+  notificationMenu.hidden = !open;
+  notificationButton.setAttribute("aria-expanded", open ? "true" : "false");
+}
+
+function t(key, ...args) {
+  const value = translations[language.value][key];
+  return typeof value === "function" ? value(...args) : value;
 }
 
 async function parseJson(response) {
