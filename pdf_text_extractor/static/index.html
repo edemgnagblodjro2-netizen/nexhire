@@ -207,14 +207,15 @@
             <form id="connector-search-form" class="connector-search">
               <label>
                 Source
-                <select id="connector-search-source">
-                  <option value="microsoft_365">Microsoft 365</option>
-                  <option value="servicenow">ServiceNow</option>
-                  <option value="jira">Jira</option>
-                  <option value="salesforce">Salesforce</option>
-                  <option value="workday">Workday</option>
-                  <option value="sap">SAP</option>
-                </select>
+                <input id="connector-search-source" type="hidden" value="microsoft_365" />
+                <div class="source-options" aria-label="Sources de recherche">
+                  <button type="button" class="active" data-search-source="microsoft_365">Microsoft 365</button>
+                  <button type="button" data-search-source="servicenow">ServiceNow</button>
+                  <button type="button" data-search-source="jira">Jira</button>
+                  <button type="button" data-search-source="salesforce">Salesforce</button>
+                  <button type="button" data-search-source="workday">Workday</button>
+                  <button type="button" data-search-source="sap">SAP</button>
+                </div>
               </label>
               <label>
                 Recherche

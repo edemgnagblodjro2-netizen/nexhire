@@ -610,7 +610,7 @@ h3 {
 .connector-search {
   display: grid;
   gap: 12px;
-  grid-template-columns: minmax(160px, 0.8fr) minmax(220px, 1.2fr) auto;
+  grid-template-columns: minmax(260px, 1fr) minmax(220px, 0.8fr) auto;
   margin-top: 18px;
 }
 
@@ -619,6 +619,27 @@ h3 {
   gap: 8px;
   color: var(--muted-strong);
   font-weight: 800;
+}
+
+.source-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.source-options button {
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  color: var(--hire-strong);
+  background: rgba(165, 180, 252, 0.08);
+  box-shadow: none;
+  font-size: 0.78rem;
+}
+
+.source-options button.active {
+  color: #070d1a;
+  background: var(--hire);
 }
 
 .connector-search-result {

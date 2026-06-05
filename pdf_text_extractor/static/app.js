@@ -26,6 +26,7 @@ const connectorSearchForm = document.querySelector("#connector-search-form");
 const connectorSearchSource = document.querySelector("#connector-search-source");
 const connectorSearchQuery = document.querySelector("#connector-search-query");
 const connectorSearchResult = document.querySelector("#connector-search-result");
+const searchSourceButtons = document.querySelectorAll("[data-search-source]");
 const headerLanguageToggle = document.querySelector("#header-language-toggle");
 const notificationButton = document.querySelector("#notification-button");
 const notificationMenu = document.querySelector("#notification-menu");
@@ -247,6 +248,15 @@ connectorSearchForm.addEventListener("submit", async (event) => {
   } catch (error) {
     connectorSearchResult.textContent = error.message;
   }
+});
+
+searchSourceButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    connectorSearchSource.value = button.dataset.searchSource;
+    searchSourceButtons.forEach((sourceButton) => {
+      sourceButton.classList.toggle("active", sourceButton === button);
+    });
+  });
 });
 
 promptButtons.forEach((button) => {
