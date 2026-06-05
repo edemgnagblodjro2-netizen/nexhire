@@ -55,13 +55,22 @@ class AssistantService:
         *,
         assistant_mode: str = "enterprise",
         language: str = "fr",
+        connector_context: list[str] | None = None,
     ) -> str:
         if self.dev_mode:
-            return self._local_answer(document_text, question, language=language)
+            return self._local_answer(
+                document_text,
+                question,
+                language=language,
+                connector_context=connector_context or [],
+            )
 
         prompt = (
             f"{_mode_instruction(assistant_mode)}\n"
             f"Reponds en {_language_name(language)}. "
+            f"Connecteurs selectionnes par l'utilisateur: {_connector_context(connector_context)}. "
+            "Dans une integration complete, appelle ces connecteurs pour recuperer les donnees "
+            "au lieu de supposer leur contenu. "
             "Reponds uniquement a partir du contenu fourni. Si l'information est absente, "
             "dis-le clairement et propose la prochaine verification utile.\n\n"
             f"Question: {question}"
@@ -104,7 +113,14 @@ class AssistantService:
         prefix = "Local mode: " if language == "en" else "Mode local: "
         return prefix + " ".join(selected).strip()
 
-    def _local_answer(self, document_text: str, question: str, *, language: str) -> str:
+    def _local_answer(
+        self,
+        document_text: str,
+        question: str,
+        *,
+        language: str,
+        connector_context: list[str],
+    ) -> str:
         terms = {
             term
             for term in re.findall(r"[a-zA-Z0-9_'-]{4,}", _normalize(question))
@@ -137,7 +153,13 @@ class AssistantService:
             return "Mode local: aucun contenu texte n'est disponible dans ce PDF."
 
         prefix = "Local mode: " if language == "en" else "Mode local: "
-        return prefix + " ".join(evidence)
+        connector_note = ""
+        if connector_context:
+            if language == "en":
+                connector_note = f" Connectors selected: {', '.join(connector_context)}."
+            else:
+                connector_note = f" Connecteurs selectionnes: {', '.join(connector_context)}."
+        return prefix + " ".join(evidence) + connector_note
 
 
 def _trim(text: str, limit: int = 16000) -> str:
@@ -177,6 +199,12 @@ def _mode_instruction(assistant_mode: str) -> str:
 
 def _language_name(language: str) -> str:
     return "anglais" if language == "en" else "francais"
+
+
+def _connector_context(connector_context: list[str] | None) -> str:
+    if not connector_context:
+        return "aucun"
+    return ", ".join(connector_context)
 
 
 def _normalize(value: str) -> str:

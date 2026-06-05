@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field
 from starlette import status
 
 from ai_service import AIConfigurationError, AssistantService
+from connector_hub import CONNECTORS, CONNECTORS_BY_ID, connector_payload
 from pdf_utils import MAX_UPLOAD_BYTES, PdfExtractionError, extract_text_from_pdf, is_allowed_pdf
 from storage import DocumentStore
 
@@ -53,6 +54,7 @@ class ChatRequest(BaseModel):
         pattern="^(enterprise|municipal|recruiting)$",
     )
     language: str = Field("fr", pattern="^(fr|en)$")
+    connector_ids: list[str] = Field(default_factory=list)
 
 
 class ChatResponse(BaseModel):
@@ -83,6 +85,15 @@ class AccountResponse(BaseModel):
     plan: str
     plan_label: str
     trial_days: int
+
+
+class ConnectorResponse(BaseModel):
+    id: str
+    name: str
+    phase: int
+    priority_label: str
+    status: str
+    description: str
 
 
 def create_app(
@@ -127,6 +138,31 @@ def create_app(
                 {"id": "annual", "price": 990, "currency": "CAD", "interval": "year"},
             ],
         }
+
+    @app.get("/api/connectors", response_model=list[ConnectorResponse])
+    def list_connectors(store: DocumentStore = Depends(get_storage)):
+        return [
+            connector_payload(
+                connector,
+                status=store.connector_status(connector.id),
+            )
+            for connector in CONNECTORS
+        ]
+
+    @app.post("/api/connectors/{connector_id}/connect", response_model=ConnectorResponse)
+    def connect_connector(
+        connector_id: str,
+        store: DocumentStore = Depends(get_storage),
+    ):
+        connector = CONNECTORS_BY_ID.get(connector_id)
+        if connector is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Connecteur introuvable.",
+            )
+
+        connector_status = store.connect_connector(connector_id)
+        return connector_payload(connector, status=connector_status)
 
     @app.post("/api/auth/register", response_model=AccountResponse)
     def register_account(
@@ -250,11 +286,13 @@ def create_app(
         document = _document_or_404(store, document_id)
 
         try:
+            connectors = _connector_names(payload.connector_ids)
             answer = ai.answer_question(
                 document["content_text"],
                 payload.question,
                 assistant_mode=payload.assistant_mode,
                 language=payload.language,
+                connector_context=connectors,
             )
         except AIConfigurationError as exc:
             raise HTTPException(
@@ -271,6 +309,7 @@ def create_app(
             model=ai.model,
             assistant_mode=payload.assistant_mode,
             language=payload.language,
+            connector_ids=payload.connector_ids,
         )
 
         return ChatResponse(
@@ -299,6 +338,15 @@ def _document_or_404(store: DocumentStore, document_id: str) -> dict:
             detail="Document introuvable.",
         )
     return document
+
+
+def _connector_names(connector_ids: list[str]) -> list[str]:
+    names = []
+    for connector_id in connector_ids:
+        connector = CONNECTORS_BY_ID.get(connector_id)
+        if connector is not None:
+            names.append(connector.name)
+    return names
 
 
 app = create_app()

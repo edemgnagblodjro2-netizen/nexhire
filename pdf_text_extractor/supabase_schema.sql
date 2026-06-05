@@ -40,6 +40,7 @@ create table if not exists public.conversations (
   model text,
   assistant_mode text not null default 'enterprise',
   language text not null default 'fr',
+  connector_ids jsonb not null default '[]'::jsonb,
   created_at timestamptz not null default now()
 );
 

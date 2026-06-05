@@ -20,6 +20,7 @@ class DocumentStore:
     documents: dict[str, dict[str, Any]] = field(default_factory=dict)
     conversations: list[dict[str, Any]] = field(default_factory=list)
     accounts: dict[str, dict[str, Any]] = field(default_factory=dict)
+    connector_statuses: dict[str, str] = field(default_factory=dict)
 
     @classmethod
     def from_env(cls) -> "DocumentStore":
@@ -96,6 +97,7 @@ class DocumentStore:
         model: str | None = None,
         assistant_mode: str = "enterprise",
         language: str = "fr",
+        connector_ids: list[str] | None = None,
     ) -> dict[str, Any]:
         payload = {
             "organization_id": organization_id,
@@ -106,6 +108,7 @@ class DocumentStore:
             "model": model,
             "assistant_mode": assistant_mode,
             "language": language,
+            "connector_ids": connector_ids or [],
         }
 
         if self.supabase is not None:
@@ -155,6 +158,13 @@ class DocumentStore:
             return None
 
         return _public_account(account)
+
+    def connector_status(self, connector_id: str) -> str:
+        return self.connector_statuses.get(connector_id, "planned")
+
+    def connect_connector(self, connector_id: str) -> str:
+        self.connector_statuses[connector_id] = "connected"
+        return self.connector_statuses[connector_id]
 
 
 def _hash_password(password: str) -> str:

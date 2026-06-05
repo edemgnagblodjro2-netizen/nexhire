@@ -14,6 +14,7 @@
       </a>
       <nav class="nav-links" aria-label="Navigation principale">
         <a href="#solutions">Solutions</a>
+        <a href="#connectors">Connecteurs</a>
         <a href="#assistant">Assistant</a>
         <a href="#pricing">Pricing</a>
         <a href="#auth">Connexion</a>
@@ -45,12 +46,12 @@
             <a class="ghost-link large" href="#assistant">Voir l'assistant</a>
           </div>
           <div class="trust-row" aria-label="Systemes d'entreprise cibles">
-            <span>Microsoft 365</span>
-            <span>Salesforce</span>
-            <span>ServiceNow</span>
-            <span>Jira</span>
-            <span>SAP</span>
-            <span>Workday</span>
+            <button type="button" class="mini-connector" data-connector-id="microsoft_365">Microsoft 365</button>
+            <button type="button" class="mini-connector" data-connector-id="servicenow">ServiceNow</button>
+            <button type="button" class="mini-connector" data-connector-id="jira">Jira</button>
+            <button type="button" class="mini-connector" data-connector-id="salesforce">Salesforce</button>
+            <button type="button" class="mini-connector" data-connector-id="workday">Workday</button>
+            <button type="button" class="mini-connector" data-connector-id="sap">SAP</button>
           </div>
         </div>
 
@@ -114,6 +115,60 @@
               matching, prequalification, entrevues et assistant RH.
             </p>
           </article>
+        </div>
+      </section>
+
+      <section id="connectors" class="section connector-section">
+        <div class="section-heading">
+          <p class="eyebrow">CivicAI Enterprise Connector Hub</p>
+          <h2>L'agent ne devine pas les donnees: il appelle les connecteurs.</h2>
+          <p>
+            Deploiement par phases: Microsoft 365 d'abord, puis ServiceNow,
+            Jira, Salesforce, Workday et SAP.
+          </p>
+        </div>
+        <div class="connector-layout">
+          <div class="connector-flow" aria-label="Architecture agent connecteurs">
+            <div>Utilisateur</div>
+            <span>↓</span>
+            <div>CivicAI Chat</div>
+            <span>↓</span>
+            <div>Agent IA</div>
+            <span>↓</span>
+            <div class="connector-stack">
+              <span>Microsoft 365</span>
+              <span>ServiceNow</span>
+              <span>Jira</span>
+              <span>Salesforce</span>
+              <span>Workday</span>
+              <span>SAP</span>
+            </div>
+          </div>
+          <div>
+            <div id="connector-buttons" class="connector-buttons" aria-live="polite">
+              <button type="button" class="connector-button" data-connector-id="microsoft_365">
+                <span>Phase 1</span><strong>Microsoft 365</strong><em>Courriels, SharePoint, Teams</em>
+              </button>
+              <button type="button" class="connector-button" data-connector-id="servicenow">
+                <span>Phase 2</span><strong>ServiceNow</strong><em>Incidents, tickets TI, SLA</em>
+              </button>
+              <button type="button" class="connector-button" data-connector-id="jira">
+                <span>Phase 3</span><strong>Jira</strong><em>Projets, epics, retards</em>
+              </button>
+              <button type="button" class="connector-button" data-connector-id="salesforce">
+                <span>Phase 4</span><strong>Salesforce</strong><em>Pipeline, comptes, clients</em>
+              </button>
+              <button type="button" class="connector-button" data-connector-id="workday">
+                <span>Phase 5</span><strong>Workday</strong><em>RH, talents, employes</em>
+              </button>
+              <button type="button" class="connector-button" data-connector-id="sap">
+                <span>Phase 6</span><strong>SAP</strong><em>ERP, achats, finances</em>
+              </button>
+            </div>
+            <p id="connector-status" class="status">
+              Selectionnez un connecteur pour le connecter au chat.
+            </p>
+          </div>
         </div>
       </section>
 

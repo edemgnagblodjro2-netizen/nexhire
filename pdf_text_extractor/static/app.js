@@ -20,7 +20,10 @@ const authTabs = document.querySelectorAll(".auth-tab");
 const signupForm = document.querySelector("#signup-form");
 const loginForm = document.querySelector("#login-form");
 const authStatus = document.querySelector("#auth-status");
+const connectorButtons = document.querySelectorAll("[data-connector-id]");
+const connectorStatus = document.querySelector("#connector-status");
 let activeSlide = 0;
+const selectedConnectorIds = new Set();
 
 const translations = {
   fr: {
@@ -46,6 +49,7 @@ const translations = {
 
 language.addEventListener("change", updateUiLanguage);
 updateUiLanguage();
+loadConnectors();
 
 sliderDots.forEach((dot) => {
   dot.addEventListener("click", () => {
@@ -187,6 +191,13 @@ chatForm.addEventListener("submit", async (event) => {
   }
 });
 
+connectorButtons.forEach((button) => {
+  button.addEventListener("click", async () => {
+    const connectorId = button.dataset.connectorId;
+    await connectConnector(connectorId);
+  });
+});
+
 promptButtons.forEach((button) => {
   button.addEventListener("click", () => {
     questionInput.value = button.dataset[`prompt${language.value === "en" ? "En" : "Fr"}`];
@@ -217,7 +228,54 @@ function assistantContext() {
   return {
     assistant_mode: assistantMode.value,
     language: language.value,
+    connector_ids: Array.from(selectedConnectorIds),
   };
+}
+
+async function loadConnectors() {
+  try {
+    const response = await fetch("/api/connectors");
+    const connectors = await parseJson(response);
+    connectors.forEach((connector) => updateConnectorButtons(connector));
+  } catch (error) {
+    if (connectorStatus) {
+      connectorStatus.textContent = error.message;
+      connectorStatus.classList.add("error");
+    }
+  }
+}
+
+async function connectConnector(connectorId) {
+  try {
+    const response = await fetch(`/api/connectors/${connectorId}/connect`, {
+      method: "POST",
+    });
+    const connector = await parseJson(response);
+    selectedConnectorIds.add(connector.id);
+    updateConnectorButtons(connector);
+    connectorStatus.classList.remove("error");
+    connectorStatus.textContent = `${connector.name} connecte au CivicAI Chat (${connector.priority_label}).`;
+  } catch (error) {
+    connectorStatus.textContent = error.message;
+    connectorStatus.classList.add("error");
+  }
+}
+
+function updateConnectorButtons(connector) {
+  document
+    .querySelectorAll(`[data-connector-id="${connector.id}"]`)
+    .forEach((button) => {
+      button.classList.toggle("connected", connector.status === "connected");
+      button.dataset.status = connector.status;
+      button.setAttribute(
+        "aria-pressed",
+        connector.status === "connected" ? "true" : "false",
+      );
+      if (button.classList.contains("connector-button")) {
+        const phase = button.querySelector("span");
+        if (phase) phase.textContent = `${connector.priority_label} · ${connector.status}`;
+      }
+    });
 }
 
 function showSlide(index) {

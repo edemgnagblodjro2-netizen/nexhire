@@ -40,6 +40,7 @@ class FakeAssistant:
         *,
         assistant_mode: str = "enterprise",
         language: str = "fr",
+        connector_context: list[str] | None = None,
     ) -> str:
         assert "Bonjour depuis un PDF de test" in document_text
         self.calls.append(
@@ -47,6 +48,7 @@ class FakeAssistant:
                 "type": "chat",
                 "assistant_mode": assistant_mode,
                 "language": language,
+                "connector_context": connector_context or [],
             }
         )
         return f"Reponse fake [{assistant_mode}/{language}]: {question}"
@@ -120,6 +122,30 @@ def test_register_and_login_account():
     assert login_response.json()["email"] == account["email"]
 
 
+def test_connector_hub_lists_and_connects_in_priority_order():
+    client, _, _ = _client()
+
+    list_response = client.get("/api/connectors")
+    connect_response = client.post("/api/connectors/microsoft_365/connect")
+    updated_response = client.get("/api/connectors")
+
+    assert list_response.status_code == 200
+    connectors = list_response.json()
+    assert [connector["id"] for connector in connectors] == [
+        "microsoft_365",
+        "servicenow",
+        "jira",
+        "salesforce",
+        "workday",
+        "sap",
+    ]
+    assert connectors[0]["phase"] == 1
+    assert connectors[0]["status"] == "planned"
+    assert connect_response.status_code == 200
+    assert connect_response.json()["status"] == "connected"
+    assert updated_response.json()[0]["status"] == "connected"
+
+
 def test_summary_uses_assistant_and_updates_document():
     client, store, assistant = _client()
     document = _upload_pdf(client)
@@ -152,6 +178,7 @@ def test_chat_returns_answer_and_conversation_id():
             "question": "Screen this resume",
             "assistant_mode": "recruiting",
             "language": "en",
+            "connector_ids": ["microsoft_365", "jira"],
         },
     )
 
@@ -163,10 +190,12 @@ def test_chat_returns_answer_and_conversation_id():
     assert payload["conversation_id"]
     assert store.conversations[-1]["assistant_mode"] == "recruiting"
     assert store.conversations[-1]["language"] == "en"
+    assert store.conversations[-1]["connector_ids"] == ["microsoft_365", "jira"]
     assert assistant.calls[-1] == {
         "type": "chat",
         "assistant_mode": "recruiting",
         "language": "en",
+        "connector_context": ["Microsoft 365", "Jira"],
     }
 
 

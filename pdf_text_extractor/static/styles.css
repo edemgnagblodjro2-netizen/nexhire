@@ -214,8 +214,10 @@ h3 {
 }
 
 .trust-row span,
+.mini-connector,
 .badge {
   display: inline-flex;
+  min-height: auto;
   padding: 8px 12px;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -223,6 +225,12 @@ h3 {
   background: rgba(165, 180, 252, 0.08);
   font-size: 0.82rem;
   font-weight: 800;
+  box-shadow: none;
+}
+
+.mini-connector.connected {
+  color: #070d1a;
+  background: var(--hire);
 }
 
 .hero-slider {
@@ -360,6 +368,102 @@ h3 {
 .pricing-section {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+}
+
+.connector-section {
+  border-top: 1px solid var(--border);
+}
+
+.connector-layout {
+  display: grid;
+  align-items: stretch;
+  gap: 22px;
+  grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr);
+}
+
+.connector-flow {
+  display: grid;
+  gap: 12px;
+  padding: 26px;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background:
+    linear-gradient(145deg, rgba(99, 102, 241, 0.18), rgba(255, 255, 255, 0.03)),
+    var(--surface);
+  text-align: center;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.18);
+}
+
+.connector-flow > div:not(.connector-stack) {
+  padding: 14px;
+  border: 1px solid rgba(165, 180, 252, 0.28);
+  border-radius: 18px;
+  color: var(--hire-strong);
+  background: rgba(2, 6, 23, 0.34);
+  font-weight: 900;
+}
+
+.connector-flow > span {
+  color: var(--hire);
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+.connector-stack {
+  display: grid;
+  gap: 8px;
+}
+
+.connector-stack span {
+  padding: 10px;
+  border-radius: 14px;
+  color: var(--muted-strong);
+  background: rgba(165, 180, 252, 0.1);
+  font-weight: 800;
+}
+
+.connector-buttons {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.connector-button {
+  display: grid;
+  min-height: 128px;
+  align-content: start;
+  gap: 8px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  color: var(--text);
+  background: rgba(15, 23, 42, 0.82);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+  text-align: left;
+}
+
+.connector-button span {
+  color: var(--hire);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.connector-button strong {
+  font-size: 1.15rem;
+}
+
+.connector-button em {
+  color: var(--muted);
+  font-style: normal;
+}
+
+.connector-button.connected {
+  border-color: rgba(52, 211, 153, 0.55);
+  background:
+    linear-gradient(145deg, rgba(52, 211, 153, 0.18), rgba(99, 102, 241, 0.08)),
+    var(--surface);
 }
 
 .price {
@@ -641,6 +745,7 @@ select:disabled {
 
   .hero-shell,
   .auth-section,
+  .connector-layout,
   .product-grid,
   .pricing-grid,
   .grid,
@@ -664,7 +769,8 @@ select:disabled {
   }
 
   .upload-form,
-  .chat-form {
+  .chat-form,
+  .connector-buttons {
     grid-template-columns: 1fr;
   }
 
