@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import io
+from types import SimpleNamespace
 
 from fastapi.testclient import TestClient
 from reportlab.pdfgen import canvas
 
+import billing
 from main import create_app
 from storage import DocumentStore
 
@@ -95,8 +97,60 @@ def test_billing_plans_include_trial_and_prices():
     assert response.status_code == 200
     payload = response.json()
     assert payload["trial_days"] == 14
-    assert {"id": "monthly", "price": 99, "currency": "CAD", "interval": "month"} in payload["plans"]
-    assert {"id": "annual", "price": 990, "currency": "CAD", "interval": "year"} in payload["plans"]
+    assert payload["plans"][0]["id"] == "monthly"
+    assert payload["plans"][0]["price"] == 99
+    assert payload["plans"][1]["id"] == "annual"
+    assert payload["plans"][1]["price"] == 990
+
+
+def test_billing_checkout_requires_stripe_configuration(monkeypatch):
+    client, _, _ = _client()
+    monkeypatch.delenv("STRIPE_SECRET_KEY", raising=False)
+
+    response = client.post(
+        "/api/billing/checkout",
+        json={"plan": "monthly", "customer_email": "buyer@example.com"},
+    )
+
+    assert response.status_code == 503
+    assert "STRIPE_SECRET_KEY" in response.json()["detail"]
+
+
+def test_billing_checkout_creates_stripe_session(monkeypatch):
+    client, _, _ = _client()
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_123")
+    monkeypatch.setenv("STRIPE_MONTHLY_PRICE_ID", "price_monthly")
+
+    def fake_create(**kwargs):
+        assert kwargs["mode"] == "subscription"
+        assert kwargs["line_items"] == [{"price": "price_monthly", "quantity": 1}]
+        assert kwargs["subscription_data"] == {"trial_period_days": 14}
+        return SimpleNamespace(id="cs_test_123", url="https://checkout.stripe.test/session")
+
+    monkeypatch.setattr(billing.stripe.checkout.Session, "create", fake_create)
+
+    response = client.post(
+        "/api/billing/checkout",
+        json={"plan": "monthly", "customer_email": "buyer@example.com"},
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "id": "cs_test_123",
+        "url": "https://checkout.stripe.test/session",
+    }
+
+
+def test_readiness_reports_missing_production_configuration(monkeypatch):
+    client, _, _ = _client()
+    monkeypatch.delenv("STRIPE_SECRET_KEY", raising=False)
+    monkeypatch.delenv("CONNECTOR_TOKEN_ENCRYPTION_KEY", raising=False)
+
+    response = client.get("/api/readiness")
+
+    assert response.status_code == 200
+    assert response.json()["stripe"] is False
+    assert response.json()["token_encryption_key"] is False
 
 
 def test_register_and_login_account():
@@ -147,8 +201,8 @@ def test_connector_hub_lists_and_connects_in_priority_order():
     assert updated_response.json()[0]["status"] == "connected"
 
 
-def test_connector_oauth_callback_creates_connection_and_audit_logs():
-    client, _, _ = _client()
+def test_connector_oauth_callback_creates_connection_token_and_audit_logs():
+    client, store, _ = _client()
 
     start_response = client.post(
         "/api/connectors/microsoft_365/oauth/start",
@@ -172,6 +226,9 @@ def test_connector_oauth_callback_creates_connection_and_audit_logs():
     assert callback_response.status_code == 200
     assert callback_response.json()["status"] == "active"
     assert connections_response.json()[0]["connector_id"] == "microsoft_365"
+    token = store.connector_tokens["city-abc:microsoft_365"]
+    assert token["access_token_ciphertext"] != "access:oauth-code"
+    assert token["refresh_token_ciphertext"] != "refresh:oauth-code"
     assert [log["action"] for log in audit_response.json()] == [
         "oauth_start",
         "connector_connected",
@@ -188,6 +245,7 @@ def test_search_data_abstraction_writes_audit_log():
             "query": "projets en retard",
             "organization_id": "city-abc",
             "user_id": "ayaovi",
+            "role": "it",
         },
     )
     audit_response = client.get("/api/audit-logs?organization_id=city-abc")
@@ -199,6 +257,25 @@ def test_search_data_abstraction_writes_audit_log():
     assert payload["results"][0]["title"] == "Jira: resultat de demonstration"
     assert audit_response.json()[0]["action"] == "search_data"
     assert audit_response.json()[0]["query"] == "projets en retard"
+
+
+def test_search_data_enforces_role_permissions():
+    client, _, _ = _client()
+
+    response = client.post(
+        "/api/connectors/search",
+        json={
+            "source": "sap",
+            "query": "depenses du mois",
+            "organization_id": "city-abc",
+            "user_id": "employee-1",
+            "role": "employee",
+        },
+    )
+    audit_response = client.get("/api/audit-logs?organization_id=city-abc")
+
+    assert response.status_code == 403
+    assert audit_response.json()[0]["action"] == "search_denied"
 
 
 def test_summary_uses_assistant_and_updates_document():

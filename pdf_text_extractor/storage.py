@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import os
-import hashlib
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any
 from uuid import uuid4
 
 from supabase import Client, create_client
+
+from security import encrypt_secret, generate_session_token, hash_password, verify_password
 
 
 def _now_iso() -> str:
@@ -143,10 +144,11 @@ class DocumentStore:
             "id": str(uuid4()),
             "name": name.strip(),
             "email": normalized_email,
-            "password_hash": _hash_password(password),
+            "password_hash": hash_password(password),
             "account_type": account_type,
             "plan": plan,
             "trial_days": 14,
+            "session_token": generate_session_token(),
             "created_at": _now_iso(),
         }
         self.accounts[normalized_email] = account
@@ -157,9 +159,10 @@ class DocumentStore:
         if account is None:
             return None
 
-        if account["password_hash"] != _hash_password(password):
+        if not verify_password(password, account["password_hash"]):
             return None
 
+        account["session_token"] = generate_session_token()
         return _public_account(account)
 
     def connector_status(self, connector_id: str) -> str:
@@ -218,8 +221,8 @@ class DocumentStore:
             "id": str(uuid4()),
             "organization_id": organization_id,
             "connector_id": connector_id,
-            "access_token_hash": _hash_password(access_token),
-            "refresh_token_hash": _hash_password(refresh_token or access_token),
+            "access_token_ciphertext": encrypt_secret(access_token),
+            "refresh_token_ciphertext": encrypt_secret(refresh_token or access_token),
             "created_at": _now_iso(),
         }
         self.connector_tokens[key] = token
@@ -254,10 +257,6 @@ class DocumentStore:
             for log in self.audit_logs
             if log["organization_id"] == organization_id
         ]
-
-
-def _hash_password(password: str) -> str:
-    return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
 
 def _public_account(account: dict[str, Any]) -> dict[str, Any]:

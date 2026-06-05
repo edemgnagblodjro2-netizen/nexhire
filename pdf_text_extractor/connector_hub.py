@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import os
 from urllib.parse import urlencode
 
 
@@ -107,6 +108,14 @@ CONNECTORS = [
 
 CONNECTORS_BY_ID = {connector.id: connector for connector in CONNECTORS}
 
+ROLE_SOURCE_ACCESS = {
+    "admin": {"microsoft_365", "servicenow", "jira", "salesforce", "workday", "sap"},
+    "it": {"microsoft_365", "servicenow", "jira"},
+    "hr": {"microsoft_365", "workday"},
+    "finance": {"microsoft_365", "sap", "salesforce"},
+    "employee": {"microsoft_365"},
+}
+
 
 def connector_payload(connector: ConnectorDefinition, *, status: str = "planned") -> dict:
     return {
@@ -126,11 +135,12 @@ def build_oauth_url(
     *,
     state: str,
     redirect_uri: str,
-    client_id: str = "civicai-demo-client",
+    client_id: str | None = None,
 ) -> str:
+    resolved_client_id = client_id or _oauth_client_id(connector.id)
     query = urlencode(
         {
-            "client_id": client_id,
+            "client_id": resolved_client_id,
             "redirect_uri": redirect_uri,
             "response_type": "code",
             "scope": " ".join(connector.scopes),
@@ -138,6 +148,22 @@ def build_oauth_url(
         }
     )
     return f"{connector.oauth_authorize_url}?{query}"
+
+
+def can_access_source(*, role: str, source: str) -> bool:
+    return source in ROLE_SOURCE_ACCESS.get(role, ROLE_SOURCE_ACCESS["employee"])
+
+
+def microsoft_oauth_ready() -> bool:
+    return all(
+        os.getenv(name)
+        for name in (
+            "MICROSOFT_CLIENT_ID",
+            "MICROSOFT_CLIENT_SECRET",
+            "MICROSOFT_TENANT_ID",
+            "MICROSOFT_REDIRECT_URI",
+        )
+    )
 
 
 def search_data(
@@ -164,3 +190,9 @@ def search_data(
             }
         ],
     }
+
+
+def _oauth_client_id(connector_id: str) -> str:
+    if connector_id == "microsoft_365":
+        return os.getenv("MICROSOFT_CLIENT_ID", "civicai-demo-client")
+    return "civicai-demo-client"

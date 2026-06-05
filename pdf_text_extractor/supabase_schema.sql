@@ -96,6 +96,19 @@ create table if not exists public.audit_logs (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.subscriptions (
+  id uuid primary key default gen_random_uuid(),
+  organization_id uuid references public.organizations(id) on delete cascade,
+  user_id uuid references public.users(id) on delete set null,
+  stripe_customer_id text,
+  stripe_subscription_id text,
+  plan text not null,
+  status text not null default 'trialing',
+  trial_ends_at timestamptz,
+  current_period_ends_at timestamptz,
+  created_at timestamptz not null default now()
+);
+
 do $$
 begin
   if not exists (
@@ -154,6 +167,9 @@ create index if not exists connections_organization_id_idx
 create index if not exists audit_logs_organization_id_created_at_idx
   on public.audit_logs (organization_id, created_at desc);
 
+create index if not exists subscriptions_organization_id_idx
+  on public.subscriptions (organization_id);
+
 alter table public.organizations enable row level security;
 alter table public.users enable row level security;
 alter table public.documents enable row level security;
@@ -163,6 +179,7 @@ alter table public.connections enable row level security;
 alter table public.connector_tokens enable row level security;
 alter table public.permissions enable row level security;
 alter table public.audit_logs enable row level security;
+alter table public.subscriptions enable row level security;
 
 create policy "Users can read their organization"
   on public.organizations
@@ -251,5 +268,17 @@ create policy "Users can read organization audit logs"
       from public.users u
       where u.id = auth.uid()
         and u.organization_id = audit_logs.organization_id
+    )
+  );
+
+create policy "Users can read organization subscriptions"
+  on public.subscriptions
+  for select
+  using (
+    exists (
+      select 1
+      from public.users u
+      where u.id = auth.uid()
+        and u.organization_id = subscriptions.organization_id
     )
   );

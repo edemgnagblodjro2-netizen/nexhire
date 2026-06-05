@@ -87,6 +87,30 @@ export OPENAI_API_KEY="sk-..."
 export OPENAI_MODEL="gpt-4o-mini"
 ```
 
+Pour activer Stripe Checkout reel:
+
+```bash
+export STRIPE_SECRET_KEY="sk_live_..."
+export STRIPE_MONTHLY_PRICE_ID="price_..."
+export STRIPE_ANNUAL_PRICE_ID="price_..."
+```
+
+Pour chiffrer les tokens connecteurs:
+
+```bash
+python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+export CONNECTOR_TOKEN_ENCRYPTION_KEY="..."
+```
+
+Pour activer OAuth Microsoft 365 reel:
+
+```bash
+export MICROSOFT_CLIENT_ID="..."
+export MICROSOFT_CLIENT_SECRET="..."
+export MICROSOFT_TENANT_ID="..."
+export MICROSOFT_REDIRECT_URI="https://votre-domaine/api/connectors/oauth/callback"
+```
+
 Pour connecter Supabase:
 
 ```bash
@@ -95,7 +119,9 @@ export SUPABASE_SERVICE_ROLE_KEY="..."
 ```
 
 Executez `supabase_schema.sql` dans Supabase SQL Editor pour creer les tables
-`organizations`, `users`, `documents` et `conversations`.
+`organizations`, `users`, `documents`, `conversations`, `connectors`,
+`connections`, `connector_tokens`, `permissions`, `audit_logs` et
+`subscriptions`.
 
 Sans variables Supabase, l'application utilise un stockage memoire local. Pour
 tester sans cle OpenAI:
@@ -132,6 +158,8 @@ Chaque requete de resume ou de chat accepte aussi `language` avec `fr` ou `en`.
 - `POST /api/documents/{document_id}/chat`: repond a une question et conserve
   l'historique dans `conversations`.
 - `GET /api/billing/plans`: retourne les plans `monthly` et `annual`.
+- `POST /api/billing/checkout`: cree une session Stripe Checkout avec essai de
+  14 jours.
 - `POST /api/auth/register`: cree un compte prototype avec essai de 14 jours.
 - `POST /api/auth/login`: connecte un compte cree localement.
 - `GET /api/connectors`: retourne les connecteurs et leur phase.
@@ -141,7 +169,19 @@ Chaque requete de resume ou de chat accepte aussi `language` avec `fr` ou `en`.
 - `GET /api/connections`: liste les connexions par organisation.
 - `POST /api/connectors/search`: appelle l'abstraction `search_data()`.
 - `GET /api/audit-logs`: liste l'historique des actions.
+- `GET /api/readiness`: verifie Stripe, Supabase, OAuth Microsoft et chiffrement.
 - `GET /api/health`: verifie que l'API repond.
+
+## Staging avant production
+
+Avant production, configurez un environnement staging avec:
+
+- `APP_ENV=staging`;
+- clés Stripe test ou live selon votre compte Replit;
+- Supabase staging;
+- URL publique pour `MICROSOFT_REDIRECT_URI`;
+- `CONNECTOR_TOKEN_ENCRYPTION_KEY` persistant;
+- verification de `/api/readiness`.
 
 Exemple chat:
 

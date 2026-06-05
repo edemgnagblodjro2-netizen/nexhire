@@ -125,6 +125,7 @@ signupForm.addEventListener("submit", async (event) => {
     setAuthStatus(
       `Compte cree pour ${data.email}. Essai gratuit actif ${data.trial_days} jours, plan ${data.plan_label}.`
     );
+    await startStripeCheckout(payload.plan, data.email);
   } catch (error) {
     setAuthStatus(error.message, true);
   }
@@ -347,6 +348,28 @@ async function connectConnector(connectorId) {
   } catch (error) {
     connectorStatus.textContent = error.message;
     connectorStatus.classList.add("error");
+  }
+}
+
+async function startStripeCheckout(plan, customerEmail) {
+  try {
+    const response = await fetch("/api/billing/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        plan,
+        customer_email: customerEmail,
+        success_url: `${window.location.origin}/?checkout=success`,
+        cancel_url: `${window.location.origin}/?checkout=cancel`,
+      }),
+    });
+    const checkout = await parseJson(response);
+    window.location.href = checkout.url;
+  } catch (error) {
+    setAuthStatus(
+      `Compte cree. Stripe Checkout sera actif apres configuration: ${error.message}`,
+      false,
+    );
   }
 }
 
