@@ -1,0 +1,6 @@
+fastapi
+openai
+python-multipart
+pypdf
+supabase
+uvicorn[standard]

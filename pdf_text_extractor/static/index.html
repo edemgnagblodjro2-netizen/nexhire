@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NexHire Enterprise Assistant</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">NexHire Enterprise Assistant</p>
+          <h1>Un seul assistant IA pour vos donnees, vos processus et vos equipes.</h1>
+          <p>
+            One bilingual AI assistant for Canadian organizations: documents,
+            reports, tickets, dashboards, municipal services and recruiting.
+          </p>
+          <div class="hero-actions">
+            <span>FR/EN</span>
+            <span>FastAPI</span>
+            <span>OpenAI + Supabase ready</span>
+          </div>
+        </div>
+        <aside class="systems-card" aria-label="Systemes d'entreprise cibles">
+          <strong>Connecteurs cibles</strong>
+          <div class="system-grid">
+            <span>Microsoft 365</span>
+            <span>Salesforce</span>
+            <span>ServiceNow</span>
+            <span>Jira</span>
+            <span>SAP</span>
+            <span>Workday</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="product-grid" aria-label="Offres NexHire">
+        <article class="product-card active">
+          <p class="eyebrow">Enterprise</p>
+          <h2>NexHire Enterprise Assistant</h2>
+          <p>
+            Agent IA pour municipalites, organismes, PME, universites et grandes
+            entreprises: demandes citoyennes, rapports, reglements, courriels,
+            tickets et statistiques.
+          </p>
+        </article>
+        <article class="product-card">
+          <p class="eyebrow">Recruiting</p>
+          <h2>NexHire AI Recruiter Pro</h2>
+          <p>
+            Recruteur IA bilingue pour PME canadiennes: analyse de CV, matching,
+            prequalification, questions d'entrevue, classement et assistant RH.
+          </p>
+        </article>
+      </section>
+
+      <section class="grid">
+        <article class="panel">
+          <h2>1. Choisir le contexte</h2>
+          <div class="controls">
+            <label>
+              Assistant
+              <select id="assistant-mode">
+                <option value="enterprise">Enterprise Assistant</option>
+                <option value="municipal">Municipal / organisme</option>
+                <option value="recruiting">AI Recruiter Pro</option>
+              </select>
+            </label>
+            <label>
+              Langue / Language
+              <select id="language">
+                <option value="fr">Francais</option>
+                <option value="en">English</option>
+              </select>
+            </label>
+          </div>
+        </article>
+
+        <article class="panel">
+          <h2>2. Televerser un PDF</h2>
+          <form id="upload-form" class="upload-form">
+            <label class="file-picker" for="pdf-file">
+              <span>Choisir un fichier PDF</span>
+              <input id="pdf-file" name="file" type="file" accept=".pdf" required />
+            </label>
+            <button type="submit">Extraire le texte</button>
+          </form>
+          <p id="upload-status" class="status"></p>
+        </article>
+
+        <article class="panel">
+          <h2>3. Resume IA</h2>
+          <button id="summary-button" type="button" disabled>Generer le resume</button>
+          <div id="summary" class="output muted">
+            Televersez un PDF pour activer le resume.
+          </div>
+        </article>
+
+        <article class="panel">
+          <h2>Exemples de questions</h2>
+          <div class="prompt-list">
+            <button type="button" data-prompt="Montre-moi les incidents critiques ouverts, les projets en retard et les depenses du mois.">
+              Incidents + projets + depenses
+            </button>
+            <button type="button" data-prompt="Ou est la politique RH ?">
+              Politique RH
+            </button>
+            <button type="button" data-prompt="Classe les candidatures et propose des questions d'entrevue.">
+              Recrutement bilingue
+            </button>
+          </div>
+        </article>
+
+        <article class="panel wide">
+          <h2>4. Chat sur le document</h2>
+          <div id="chat-log" class="chat-log">
+            <div class="message assistant">
+              Posez une question apres le televersement. Ask in French or English.
+            </div>
+          </div>
+          <form id="chat-form" class="chat-form">
+            <input
+              id="question"
+              type="text"
+              placeholder="Ex: Quel est le processus d'achat ?"
+              disabled
+              required
+            />
+            <button id="chat-button" type="submit" disabled>Envoyer</button>
+          </form>
+        </article>
+
+        <article class="panel wide">
+          <h2>Apercu du texte extrait</h2>
+          <pre id="preview" class="preview">Aucun document televerse.</pre>
+        </article>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
