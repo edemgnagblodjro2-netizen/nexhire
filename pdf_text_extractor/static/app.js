@@ -347,6 +347,13 @@ function updateUiLanguage() {
       element.dataset[`placeholder${currentLanguage === "en" ? "En" : "Fr"}`];
   });
 
+  document.querySelectorAll("[data-aria-fr]").forEach((element) => {
+    element.setAttribute(
+      "aria-label",
+      element.dataset[`aria${currentLanguage === "en" ? "En" : "Fr"}`],
+    );
+  });
+
   if (!activeDocumentId && preview.dataset.emptyFr) {
     preview.textContent =
       preview.dataset[`empty${currentLanguage === "en" ? "En" : "Fr"}`];

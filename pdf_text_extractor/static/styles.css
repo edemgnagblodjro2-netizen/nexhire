@@ -247,6 +247,10 @@ button:hover:not(:disabled) {
   background: var(--hire);
 }
 
+.notification-menu li p {
+  margin: 0;
+}
+
 .hero-shell,
 .section,
 .site-footer {
