@@ -143,7 +143,62 @@ def test_connector_hub_lists_and_connects_in_priority_order():
     assert connectors[0]["status"] == "planned"
     assert connect_response.status_code == 200
     assert connect_response.json()["status"] == "connected"
+    assert connect_response.json()["actions"]
     assert updated_response.json()[0]["status"] == "connected"
+
+
+def test_connector_oauth_callback_creates_connection_and_audit_logs():
+    client, _, _ = _client()
+
+    start_response = client.post(
+        "/api/connectors/microsoft_365/oauth/start",
+        json={"organization_id": "city-abc", "user_id": "ayaovi"},
+    )
+    callback_response = client.post(
+        "/api/connectors/oauth/callback",
+        json={
+            "connector_id": "microsoft_365",
+            "code": "oauth-code",
+            "state": start_response.json()["state"],
+            "organization_id": "city-abc",
+            "user_id": "ayaovi",
+        },
+    )
+    connections_response = client.get("/api/connections?organization_id=city-abc")
+    audit_response = client.get("/api/audit-logs?organization_id=city-abc")
+
+    assert start_response.status_code == 200
+    assert "login.microsoftonline.com" in start_response.json()["authorization_url"]
+    assert callback_response.status_code == 200
+    assert callback_response.json()["status"] == "active"
+    assert connections_response.json()[0]["connector_id"] == "microsoft_365"
+    assert [log["action"] for log in audit_response.json()] == [
+        "oauth_start",
+        "connector_connected",
+    ]
+
+
+def test_search_data_abstraction_writes_audit_log():
+    client, _, _ = _client()
+
+    response = client.post(
+        "/api/connectors/search",
+        json={
+            "source": "jira",
+            "query": "projets en retard",
+            "organization_id": "city-abc",
+            "user_id": "ayaovi",
+        },
+    )
+    audit_response = client.get("/api/audit-logs?organization_id=city-abc")
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["source"] == "jira"
+    assert payload["source_name"] == "Jira"
+    assert payload["results"][0]["title"] == "Jira: resultat de demonstration"
+    assert audit_response.json()[0]["action"] == "search_data"
+    assert audit_response.json()[0]["query"] == "projets en retard"
 
 
 def test_summary_uses_assistant_and_updates_document():

@@ -32,6 +32,34 @@ L'agent ne doit pas inventer les donnees: il recoit les connecteurs selectionnes
 et, dans une integration complete, les appelle pour recuperer les donnees avant
 de repondre.
 
+Architecture cible:
+
+```text
+CivicAI Enterprise
+├── Utilisateurs
+├── Chat IA
+├── Documents
+├── Tableau de bord
+├── Permissions
+└── Connectors Hub
+    ├── Microsoft 365
+    ├── Salesforce
+    ├── ServiceNow
+    ├── Jira
+    ├── SAP
+    └── Workday
+```
+
+Fondations implementees dans ce prototype:
+
+- gestionnaire de connecteurs accessible depuis `Parametres -> Connecteurs`;
+- demarrage OAuth et callback prototype;
+- table logique `connections` pour suivre le statut par organisation;
+- stockage de token sous forme de hash de demonstration;
+- catalogue d'actions par connecteur;
+- abstraction `search_data(source, query, organization_id)`;
+- journalisation `audit_logs` des OAuth et recherches.
+
 Ordre de deploiement recommande:
 
 1. `microsoft_365`: Outlook, SharePoint, Teams et fichiers.
@@ -108,6 +136,11 @@ Chaque requete de resume ou de chat accepte aussi `language` avec `fr` ou `en`.
 - `POST /api/auth/login`: connecte un compte cree localement.
 - `GET /api/connectors`: retourne les connecteurs et leur phase.
 - `POST /api/connectors/{connector_id}/connect`: connecte un systeme au chat.
+- `POST /api/connectors/{connector_id}/oauth/start`: initialise OAuth.
+- `POST /api/connectors/oauth/callback`: enregistre token + connection.
+- `GET /api/connections`: liste les connexions par organisation.
+- `POST /api/connectors/search`: appelle l'abstraction `search_data()`.
+- `GET /api/audit-logs`: liste l'historique des actions.
 - `GET /api/health`: verifie que l'API repond.
 
 Exemple chat:

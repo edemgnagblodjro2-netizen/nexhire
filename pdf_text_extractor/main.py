@@ -12,7 +12,13 @@ from pydantic import BaseModel, Field
 from starlette import status
 
 from ai_service import AIConfigurationError, AssistantService
-from connector_hub import CONNECTORS, CONNECTORS_BY_ID, connector_payload
+from connector_hub import (
+    CONNECTORS,
+    CONNECTORS_BY_ID,
+    build_oauth_url,
+    connector_payload,
+    search_data,
+)
 from pdf_utils import MAX_UPLOAD_BYTES, PdfExtractionError, extract_text_from_pdf, is_allowed_pdf
 from storage import DocumentStore
 
@@ -94,6 +100,64 @@ class ConnectorResponse(BaseModel):
     priority_label: str
     status: str
     description: str
+    scopes: list[str]
+    actions: list[dict[str, str]]
+
+
+class OAuthStartRequest(BaseModel):
+    organization_id: str = "demo-org"
+    user_id: str | None = None
+    redirect_uri: str = "http://127.0.0.1:8000/api/connectors/oauth/callback"
+
+
+class OAuthStartResponse(BaseModel):
+    connector_id: str
+    authorization_url: str
+    state: str
+
+
+class OAuthCallbackRequest(BaseModel):
+    connector_id: str
+    code: str = Field(..., min_length=3)
+    state: str
+    organization_id: str = "demo-org"
+    user_id: str | None = None
+
+
+class ConnectionResponse(BaseModel):
+    id: str
+    organization_id: str
+    connector_id: str
+    status: str
+    created_by: str | None = None
+    updated_at: str
+
+
+class ConnectorSearchRequest(BaseModel):
+    source: str
+    query: str = Field(..., min_length=1)
+    organization_id: str = "demo-org"
+    user_id: str | None = None
+
+
+class ConnectorSearchResponse(BaseModel):
+    source: str
+    source_name: str
+    query: str
+    organization_id: str
+    user_id: str | None = None
+    results: list[dict[str, str]]
+
+
+class AuditLogResponse(BaseModel):
+    id: str
+    organization_id: str
+    user_id: str | None = None
+    action: str
+    source: str
+    query: str | None = None
+    metadata: dict
+    created_at: str
 
 
 def create_app(
@@ -163,6 +227,118 @@ def create_app(
 
         connector_status = store.connect_connector(connector_id)
         return connector_payload(connector, status=connector_status)
+
+    @app.post("/api/connectors/{connector_id}/oauth/start", response_model=OAuthStartResponse)
+    def start_connector_oauth(
+        connector_id: str,
+        payload: OAuthStartRequest,
+        store: DocumentStore = Depends(get_storage),
+    ):
+        connector = CONNECTORS_BY_ID.get(connector_id)
+        if connector is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Connecteur introuvable.",
+            )
+
+        state = f"{payload.organization_id}:{connector_id}"
+        authorization_url = build_oauth_url(
+            connector,
+            state=state,
+            redirect_uri=payload.redirect_uri,
+        )
+        store.create_audit_log(
+            organization_id=payload.organization_id,
+            user_id=payload.user_id,
+            action="oauth_start",
+            source=connector_id,
+            metadata={"redirect_uri": payload.redirect_uri},
+        )
+        return OAuthStartResponse(
+            connector_id=connector_id,
+            authorization_url=authorization_url,
+            state=state,
+        )
+
+    @app.post("/api/connectors/oauth/callback", response_model=ConnectionResponse)
+    def complete_connector_oauth(
+        payload: OAuthCallbackRequest,
+        store: DocumentStore = Depends(get_storage),
+    ):
+        if payload.connector_id not in CONNECTORS_BY_ID:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Connecteur introuvable.",
+            )
+
+        expected_state = f"{payload.organization_id}:{payload.connector_id}"
+        if payload.state != expected_state:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Etat OAuth invalide.",
+            )
+
+        store.save_connector_token(
+            organization_id=payload.organization_id,
+            connector_id=payload.connector_id,
+            access_token=f"access:{payload.code}",
+            refresh_token=f"refresh:{payload.code}",
+        )
+        connection = store.upsert_connection(
+            organization_id=payload.organization_id,
+            connector_id=payload.connector_id,
+            status="active",
+            created_by=payload.user_id,
+        )
+        store.create_audit_log(
+            organization_id=payload.organization_id,
+            user_id=payload.user_id,
+            action="connector_connected",
+            source=payload.connector_id,
+            metadata={"connection_id": connection["id"]},
+        )
+        return connection
+
+    @app.get("/api/connections", response_model=list[ConnectionResponse])
+    def list_connections(
+        organization_id: str = "demo-org",
+        store: DocumentStore = Depends(get_storage),
+    ):
+        return store.list_connections(organization_id=organization_id)
+
+    @app.post("/api/connectors/search", response_model=ConnectorSearchResponse)
+    def search_connector_data(
+        payload: ConnectorSearchRequest,
+        store: DocumentStore = Depends(get_storage),
+    ):
+        if payload.source not in CONNECTORS_BY_ID:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Connecteur introuvable.",
+            )
+
+        result = search_data(
+            source=payload.source,
+            query=payload.query,
+            organization_id=payload.organization_id,
+            user_id=payload.user_id,
+        )
+        store.create_audit_log(
+            organization_id=payload.organization_id,
+            user_id=payload.user_id,
+            action="search_data",
+            source=payload.source,
+            query=payload.query,
+            metadata={"result_count": len(result["results"])},
+        )
+        return result
+
+    @app.get("/api/audit-logs", response_model=list[AuditLogResponse])
+    def list_audit_logs(
+        organization_id: str = "demo-org",
+        store: DocumentStore = Depends(get_storage),
+    ):
+        return store.list_audit_logs(organization_id=organization_id)
 
     @app.post("/api/auth/register", response_model=AccountResponse)
     def register_account(

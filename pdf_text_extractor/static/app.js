@@ -22,6 +22,10 @@ const loginForm = document.querySelector("#login-form");
 const authStatus = document.querySelector("#auth-status");
 const connectorButtons = document.querySelectorAll("[data-connector-id]");
 const connectorStatus = document.querySelector("#connector-status");
+const connectorSearchForm = document.querySelector("#connector-search-form");
+const connectorSearchSource = document.querySelector("#connector-search-source");
+const connectorSearchQuery = document.querySelector("#connector-search-query");
+const connectorSearchResult = document.querySelector("#connector-search-result");
 const headerLanguageToggle = document.querySelector("#header-language-toggle");
 const notificationButton = document.querySelector("#notification-button");
 const notificationMenu = document.querySelector("#notification-menu");
@@ -225,6 +229,26 @@ connectorButtons.forEach((button) => {
   });
 });
 
+connectorSearchForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  try {
+    const response = await fetch("/api/connectors/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        source: connectorSearchSource.value,
+        query: connectorSearchQuery.value,
+        organization_id: "demo-org",
+        user_id: "demo-admin",
+      }),
+    });
+    const result = await parseJson(response);
+    connectorSearchResult.textContent = JSON.stringify(result, null, 2);
+  } catch (error) {
+    connectorSearchResult.textContent = error.message;
+  }
+});
+
 promptButtons.forEach((button) => {
   button.addEventListener("click", () => {
     questionInput.value = button.dataset[`prompt${language.value === "en" ? "En" : "Fr"}`];
@@ -274,14 +298,38 @@ async function loadConnectors() {
 
 async function connectConnector(connectorId) {
   try {
-    const response = await fetch(`/api/connectors/${connectorId}/connect`, {
+    const oauthStartResponse = await fetch(`/api/connectors/${connectorId}/oauth/start`, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        organization_id: "demo-org",
+        user_id: "demo-admin",
+      }),
     });
-    const connector = await parseJson(response);
-    selectedConnectorIds.add(connector.id);
-    updateConnectorButtons(connector);
+    const oauthStart = await parseJson(oauthStartResponse);
     connectorStatus.classList.remove("error");
-    connectorStatus.textContent = `${connector.name} connecte au CivicAI Chat (${connector.priority_label}).`;
+    connectorStatus.textContent = `OAuth pret: redirection vers ${oauthStart.authorization_url}`;
+
+    const callbackResponse = await fetch("/api/connectors/oauth/callback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        connector_id: connectorId,
+        code: `demo-code-${connectorId}`,
+        state: oauthStart.state,
+        organization_id: "demo-org",
+        user_id: "demo-admin",
+      }),
+    });
+    const connection = await parseJson(callbackResponse);
+    selectedConnectorIds.add(connection.connector_id);
+    updateConnectorButtons({
+      id: connection.connector_id,
+      status: connection.status,
+      priority_label: connectorPhaseLabel(connection.connector_id),
+    });
+    connectorStatus.classList.remove("error");
+    connectorStatus.textContent = `${connectorName(connection.connector_id)} connecte via OAuth au CivicAI Chat. Token stocke et audit journalise.`;
   } catch (error) {
     connectorStatus.textContent = error.message;
     connectorStatus.classList.add("error");
@@ -292,17 +340,44 @@ function updateConnectorButtons(connector) {
   document
     .querySelectorAll(`[data-connector-id="${connector.id}"]`)
     .forEach((button) => {
-      button.classList.toggle("connected", connector.status === "connected");
+      const isConnected = connector.status === "connected" || connector.status === "active";
+      button.classList.toggle("connected", isConnected);
       button.dataset.status = connector.status;
       button.setAttribute(
         "aria-pressed",
-        connector.status === "connected" ? "true" : "false",
+        isConnected ? "true" : "false",
       );
       if (button.classList.contains("connector-button")) {
         const phase = button.querySelector("span");
         if (phase) phase.textContent = `${connector.priority_label} · ${connector.status}`;
+        const label = button.querySelector("b");
+        if (label) label.textContent = isConnected ? "Actif" : "Connecter";
       }
     });
+}
+
+function connectorName(connectorId) {
+  const names = {
+    microsoft_365: "Microsoft 365",
+    servicenow: "ServiceNow",
+    jira: "Jira",
+    salesforce: "Salesforce",
+    workday: "Workday",
+    sap: "SAP",
+  };
+  return names[connectorId] || connectorId;
+}
+
+function connectorPhaseLabel(connectorId) {
+  const phases = {
+    microsoft_365: "Phase 1",
+    servicenow: "Phase 2",
+    jira: "Phase 3",
+    salesforce: "Phase 4",
+    workday: "Phase 5",
+    sap: "Phase 6",
+  };
+  return phases[connectorId] || "Phase";
 }
 
 function showSlide(index) {

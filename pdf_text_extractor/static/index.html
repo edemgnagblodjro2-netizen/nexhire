@@ -155,6 +155,7 @@
 
       <section id="connectors" class="section connector-section">
         <div class="section-heading">
+          <p class="settings-path">Parametres → Connecteurs</p>
           <p class="eyebrow">CivicAI Enterprise Connector Hub</p>
           <h2 data-i18n-fr="L'agent ne devine pas les donnees: il appelle les connecteurs." data-i18n-en="The agent does not guess data: it calls connectors.">L'agent ne devine pas les donnees: il appelle les connecteurs.</h2>
           <p data-i18n-fr="Deploiement par phases: Microsoft 365 d'abord, puis ServiceNow, Jira, Salesforce, Workday et SAP." data-i18n-en="Phased rollout: Microsoft 365 first, then ServiceNow, Jira, Salesforce, Workday and SAP.">
@@ -182,27 +183,46 @@
           <div>
             <div id="connector-buttons" class="connector-buttons" aria-live="polite">
               <button type="button" class="connector-button" data-connector-id="microsoft_365">
-                <span>Phase 1</span><strong>Microsoft 365</strong><em data-i18n-fr="Courriels, SharePoint, Teams" data-i18n-en="Email, SharePoint, Teams">Courriels, SharePoint, Teams</em>
+                <span>Phase 1</span><strong>Microsoft 365</strong><em data-i18n-fr="Courriels, SharePoint, Teams" data-i18n-en="Email, SharePoint, Teams">Courriels, SharePoint, Teams</em><b>Connecter</b>
               </button>
               <button type="button" class="connector-button" data-connector-id="servicenow">
-                <span>Phase 2</span><strong>ServiceNow</strong><em data-i18n-fr="Incidents, tickets TI, SLA" data-i18n-en="Incidents, IT tickets, SLA">Incidents, tickets TI, SLA</em>
+                <span>Phase 2</span><strong>ServiceNow</strong><em data-i18n-fr="Incidents, tickets TI, SLA" data-i18n-en="Incidents, IT tickets, SLA">Incidents, tickets TI, SLA</em><b>Connecter</b>
               </button>
               <button type="button" class="connector-button" data-connector-id="jira">
-                <span>Phase 3</span><strong>Jira</strong><em data-i18n-fr="Projets, epics, retards" data-i18n-en="Projects, epics, delays">Projets, epics, retards</em>
+                <span>Phase 3</span><strong>Jira</strong><em data-i18n-fr="Projets, epics, retards" data-i18n-en="Projects, epics, delays">Projets, epics, retards</em><b>Connecter</b>
               </button>
               <button type="button" class="connector-button" data-connector-id="salesforce">
-                <span>Phase 4</span><strong>Salesforce</strong><em data-i18n-fr="Pipeline, comptes, clients" data-i18n-en="Pipeline, accounts, customers">Pipeline, comptes, clients</em>
+                <span>Phase 4</span><strong>Salesforce</strong><em data-i18n-fr="Pipeline, comptes, clients" data-i18n-en="Pipeline, accounts, customers">Pipeline, comptes, clients</em><b>Connecter</b>
               </button>
               <button type="button" class="connector-button" data-connector-id="workday">
-                <span>Phase 5</span><strong>Workday</strong><em data-i18n-fr="RH, talents, employes" data-i18n-en="HR, talent, employees">RH, talents, employes</em>
+                <span>Phase 5</span><strong>Workday</strong><em data-i18n-fr="RH, talents, employes" data-i18n-en="HR, talent, employees">RH, talents, employes</em><b>Connecter</b>
               </button>
               <button type="button" class="connector-button" data-connector-id="sap">
-                <span>Phase 6</span><strong>SAP</strong><em data-i18n-fr="ERP, achats, finances" data-i18n-en="ERP, purchasing, finance">ERP, achats, finances</em>
+                <span>Phase 6</span><strong>SAP</strong><em data-i18n-fr="ERP, achats, finances" data-i18n-en="ERP, purchasing, finance">ERP, achats, finances</em><b>Connecter</b>
               </button>
             </div>
             <p id="connector-status" class="status">
               <span data-i18n-fr="Selectionnez un connecteur pour le connecter au chat." data-i18n-en="Select a connector to connect it to chat.">Selectionnez un connecteur pour le connecter au chat.</span>
             </p>
+            <form id="connector-search-form" class="connector-search">
+              <label>
+                Source
+                <select id="connector-search-source">
+                  <option value="microsoft_365">Microsoft 365</option>
+                  <option value="servicenow">ServiceNow</option>
+                  <option value="jira">Jira</option>
+                  <option value="salesforce">Salesforce</option>
+                  <option value="workday">Workday</option>
+                  <option value="sap">SAP</option>
+                </select>
+              </label>
+              <label>
+                Recherche
+                <input id="connector-search-query" type="text" value="politiques RH" />
+              </label>
+              <button type="submit">search_data()</button>
+            </form>
+            <pre id="connector-search-result" class="connector-search-result">Aucune recherche executee.</pre>
           </div>
         </div>
       </section>

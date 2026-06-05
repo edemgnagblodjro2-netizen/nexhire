@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from urllib.parse import urlencode
 
 
 @dataclass(frozen=True)
@@ -10,6 +11,9 @@ class ConnectorDefinition:
     phase: int
     priority_label: str
     description: str
+    oauth_authorize_url: str
+    scopes: list[str]
+    actions: list[dict[str, str]]
 
 
 CONNECTORS = [
@@ -19,6 +23,14 @@ CONNECTORS = [
         phase=1,
         priority_label="Phase 1",
         description="Courriels Outlook, SharePoint, Teams, calendriers et fichiers.",
+        oauth_authorize_url="https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+        scopes=["openid", "offline_access", "Mail.Read", "Files.Read.All", "Calendars.Read"],
+        actions=[
+            {"id": "read_email", "label": "Lire courriel"},
+            {"id": "send_email", "label": "Envoyer courriel"},
+            {"id": "read_sharepoint", "label": "Lire SharePoint"},
+            {"id": "create_meeting", "label": "Creer reunion"},
+        ],
     ),
     ConnectorDefinition(
         id="servicenow",
@@ -26,6 +38,13 @@ CONNECTORS = [
         phase=2,
         priority_label="Phase 2",
         description="Tickets TI, incidents critiques, SLA et demandes de support.",
+        oauth_authorize_url="https://instance.service-now.com/oauth_auth.do",
+        scopes=["incident.read", "incident.write"],
+        actions=[
+            {"id": "create_incident", "label": "Creer incident"},
+            {"id": "read_incident", "label": "Lire incident"},
+            {"id": "update_incident", "label": "Mettre a jour incident"},
+        ],
     ),
     ConnectorDefinition(
         id="jira",
@@ -33,6 +52,13 @@ CONNECTORS = [
         phase=3,
         priority_label="Phase 3",
         description="Projets, epics, sprints, tickets en retard et priorites produit.",
+        oauth_authorize_url="https://auth.atlassian.com/authorize",
+        scopes=["read:jira-work", "write:jira-work"],
+        actions=[
+            {"id": "create_ticket", "label": "Creer ticket"},
+            {"id": "read_sprint", "label": "Lire sprint"},
+            {"id": "close_ticket", "label": "Fermer ticket"},
+        ],
     ),
     ConnectorDefinition(
         id="salesforce",
@@ -40,6 +66,13 @@ CONNECTORS = [
         phase=4,
         priority_label="Phase 4",
         description="Comptes, opportunites, pipeline commercial et interactions clients.",
+        oauth_authorize_url="https://login.salesforce.com/services/oauth2/authorize",
+        scopes=["api", "refresh_token"],
+        actions=[
+            {"id": "read_accounts", "label": "Lire comptes"},
+            {"id": "read_opportunities", "label": "Lire opportunites"},
+            {"id": "create_task", "label": "Creer tache commerciale"},
+        ],
     ),
     ConnectorDefinition(
         id="workday",
@@ -47,6 +80,13 @@ CONNECTORS = [
         phase=5,
         priority_label="Phase 5",
         description="Donnees RH, postes, profils employes et processus talent.",
+        oauth_authorize_url="https://impl.workday.com/oauth2/authorize",
+        scopes=["workers.read", "jobs.read"],
+        actions=[
+            {"id": "read_worker", "label": "Lire profil employe"},
+            {"id": "read_jobs", "label": "Lire postes"},
+            {"id": "read_org_chart", "label": "Lire organigramme"},
+        ],
     ),
     ConnectorDefinition(
         id="sap",
@@ -54,6 +94,13 @@ CONNECTORS = [
         phase=6,
         priority_label="Phase 6",
         description="Finances, achats, contrats, factures et donnees ERP complexes.",
+        oauth_authorize_url="https://sap.example.com/oauth/authorize",
+        scopes=["finance.read", "procurement.read"],
+        actions=[
+            {"id": "read_contracts", "label": "Lire contrats"},
+            {"id": "read_purchase_orders", "label": "Lire achats"},
+            {"id": "read_invoices", "label": "Lire factures"},
+        ],
     ),
 ]
 
@@ -69,4 +116,51 @@ def connector_payload(connector: ConnectorDefinition, *, status: str = "planned"
         "priority_label": connector.priority_label,
         "status": status,
         "description": connector.description,
+        "scopes": connector.scopes,
+        "actions": connector.actions,
+    }
+
+
+def build_oauth_url(
+    connector: ConnectorDefinition,
+    *,
+    state: str,
+    redirect_uri: str,
+    client_id: str = "civicai-demo-client",
+) -> str:
+    query = urlencode(
+        {
+            "client_id": client_id,
+            "redirect_uri": redirect_uri,
+            "response_type": "code",
+            "scope": " ".join(connector.scopes),
+            "state": state,
+        }
+    )
+    return f"{connector.oauth_authorize_url}?{query}"
+
+
+def search_data(
+    *,
+    source: str,
+    query: str,
+    organization_id: str,
+    user_id: str | None = None,
+) -> dict:
+    connector = CONNECTORS_BY_ID[source]
+    return {
+        "source": connector.id,
+        "source_name": connector.name,
+        "query": query,
+        "organization_id": organization_id,
+        "user_id": user_id,
+        "results": [
+            {
+                "title": f"{connector.name}: resultat de demonstration",
+                "snippet": (
+                    "Le connecteur est abstrait via search_data(). "
+                    "En production, cette couche appelle l'API du fournisseur."
+                ),
+            }
+        ],
     }

@@ -44,6 +44,58 @@ create table if not exists public.conversations (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.connectors (
+  id text primary key,
+  name text not null,
+  phase integer not null,
+  auth_type text not null default 'oauth',
+  actions jsonb not null default '[]'::jsonb,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.connections (
+  id uuid primary key default gen_random_uuid(),
+  organization_id uuid references public.organizations(id) on delete cascade,
+  connector_id text references public.connectors(id) on delete cascade,
+  status text not null default 'inactive',
+  created_by uuid references public.users(id) on delete set null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique (organization_id, connector_id)
+);
+
+create table if not exists public.connector_tokens (
+  id uuid primary key default gen_random_uuid(),
+  organization_id uuid references public.organizations(id) on delete cascade,
+  connector_id text references public.connectors(id) on delete cascade,
+  token_ciphertext text not null,
+  refresh_token_ciphertext text,
+  expires_at timestamptz,
+  created_at timestamptz not null default now(),
+  unique (organization_id, connector_id)
+);
+
+create table if not exists public.permissions (
+  id uuid primary key default gen_random_uuid(),
+  organization_id uuid references public.organizations(id) on delete cascade,
+  role text not null,
+  source text not null,
+  can_read boolean not null default true,
+  can_write boolean not null default false,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.audit_logs (
+  id uuid primary key default gen_random_uuid(),
+  organization_id uuid references public.organizations(id) on delete cascade,
+  user_id uuid references public.users(id) on delete set null,
+  action text not null,
+  source text not null,
+  query text,
+  metadata jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
 do $$
 begin
   if not exists (
@@ -96,10 +148,21 @@ create index if not exists documents_organization_id_created_at_idx
 create index if not exists conversations_document_id_created_at_idx
   on public.conversations (document_id, created_at asc);
 
+create index if not exists connections_organization_id_idx
+  on public.connections (organization_id);
+
+create index if not exists audit_logs_organization_id_created_at_idx
+  on public.audit_logs (organization_id, created_at desc);
+
 alter table public.organizations enable row level security;
 alter table public.users enable row level security;
 alter table public.documents enable row level security;
 alter table public.conversations enable row level security;
+alter table public.connectors enable row level security;
+alter table public.connections enable row level security;
+alter table public.connector_tokens enable row level security;
+alter table public.permissions enable row level security;
+alter table public.audit_logs enable row level security;
 
 create policy "Users can read their organization"
   on public.organizations
@@ -147,5 +210,46 @@ create policy "Users can read organization conversations"
       from public.users u
       where u.id = auth.uid()
         and u.organization_id = conversations.organization_id
+    )
+  );
+
+create policy "Users can read connector catalog"
+  on public.connectors
+  for select
+  using (true);
+
+create policy "Users can read organization connections"
+  on public.connections
+  for select
+  using (
+    exists (
+      select 1
+      from public.users u
+      where u.id = auth.uid()
+        and u.organization_id = connections.organization_id
+    )
+  );
+
+create policy "Users can read organization permissions"
+  on public.permissions
+  for select
+  using (
+    exists (
+      select 1
+      from public.users u
+      where u.id = auth.uid()
+        and u.organization_id = permissions.organization_id
+    )
+  );
+
+create policy "Users can read organization audit logs"
+  on public.audit_logs
+  for select
+  using (
+    exists (
+      select 1
+      from public.users u
+      where u.id = auth.uid()
+        and u.organization_id = audit_logs.organization_id
     )
   );
