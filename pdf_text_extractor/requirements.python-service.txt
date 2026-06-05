@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pypdf
+openai
+supabase
+pyjwt
+cryptography
+email-validator

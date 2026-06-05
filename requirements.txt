@@ -1,0 +1,8 @@
+fastapi
+openai
+python-multipart
+pypdf
+psycopg[binary]
+psycopg-pool
+pyjwt
+uvicorn[standard]

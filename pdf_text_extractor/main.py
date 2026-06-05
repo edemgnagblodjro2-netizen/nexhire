@@ -2,6 +2,10 @@ from __future__ import annotations
 
 import io
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).parent / ".env")
 from typing import Annotated
 
 from fastapi import Body, Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
@@ -14,7 +18,8 @@ from starlette import status
 from ai_service import AIConfigurationError, AssistantService
 from pdf_utils import MAX_UPLOAD_BYTES, PdfExtractionError, extract_text_from_pdf, is_allowed_pdf
 from storage import DocumentStore
-
+from routes_auth import router as auth_router
+from routes_connectors import router as connectors_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -75,6 +80,8 @@ def create_app(
         ),
         version="1.0.0",
     )
+    app.include_router(auth_router)
+    app.include_router(connectors_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 

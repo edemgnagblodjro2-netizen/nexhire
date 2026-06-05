@@ -3,14 +3,119 @@ from __future__ import annotations
 import os
 import re
 import unicodedata
-from dataclasses import dataclass
-
-from openai import OpenAI
+from dataclasses import dataclass, field
+from typing import Protocol, runtime_checkable
 
 
 class AIConfigurationError(Exception):
-    """Raised when the assistant cannot call OpenAI."""
+    """Raised when the LLM backend is not configured."""
 
+
+# ── Backend protocol ──────────────────────────────────────────────────────────
+
+@runtime_checkable
+class LLMBackend(Protocol):
+    model: str
+
+    def complete(self, system: str, user: str) -> str:
+        ...
+
+
+# ── OpenAI backend (also covers any OpenAI-compatible endpoint) ───────────────
+
+@dataclass
+class OpenAIBackend:
+    """Standard OpenAI API.
+
+    Set LLM_PROVIDER=openai (default).
+    For private / self-hosted models that expose an OpenAI-compatible API,
+    set LLM_PROVIDER=openai_compatible and provide OPENAI_API_BASE.
+    """
+    api_key: str
+    model: str
+    base_url: str | None = None   # None → api.openai.com
+
+    def complete(self, system: str, user: str) -> str:
+        from openai import OpenAI  # lazy import keeps startup fast when unused
+        client = OpenAI(api_key=self.api_key, base_url=self.base_url)
+        response = client.chat.completions.create(
+            model=self.model,
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
+        )
+        return response.choices[0].message.content.strip()
+
+
+# ── Azure OpenAI backend ──────────────────────────────────────────────────────
+
+@dataclass
+class AzureOpenAIBackend:
+    """Azure OpenAI Service.
+
+    Set LLM_PROVIDER=azure and provide:
+      AZURE_OPENAI_ENDPOINT  — https://<resource>.openai.azure.com/
+      AZURE_OPENAI_KEY       — API key
+      AZURE_OPENAI_DEPLOYMENT — deployment name (used as model)
+      AZURE_OPENAI_API_VERSION (optional, default 2024-02-15-preview)
+    """
+    api_key: str
+    endpoint: str
+    deployment: str
+    api_version: str = "2024-02-15-preview"
+
+    @property
+    def model(self) -> str:
+        return self.deployment
+
+    def complete(self, system: str, user: str) -> str:
+        from openai import AzureOpenAI
+        client = AzureOpenAI(
+            api_key=self.api_key,
+            azure_endpoint=self.endpoint,
+            api_version=self.api_version,
+        )
+        response = client.chat.completions.create(
+            model=self.deployment,
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
+        )
+        return response.choices[0].message.content.strip()
+
+
+# ── Factory ───────────────────────────────────────────────────────────────────
+
+def _build_backend() -> LLMBackend | None:
+    provider = os.getenv("LLM_PROVIDER", "openai").lower()
+
+    if provider == "azure":
+        key = os.getenv("AZURE_OPENAI_KEY")
+        endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+        deployment = os.getenv("AZURE_OPENAI_DEPLOYMENT")
+        if not (key and endpoint and deployment):
+            return None
+        return AzureOpenAIBackend(
+            api_key=key,
+            endpoint=endpoint,
+            deployment=deployment,
+            api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2024-02-15-preview"),
+        )
+
+    # openai (default) or openai_compatible
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        return None
+    return OpenAIBackend(
+        api_key=api_key,
+        model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+        base_url=os.getenv("OPENAI_API_BASE") or None,  # None keeps default
+    )
+
+
+# ── AssistantService ──────────────────────────────────────────────────────────
 
 def _is_enabled(value: str | None) -> bool:
     return value is not None and value.lower() in {"1", "true", "yes", "on"}
@@ -18,15 +123,18 @@ def _is_enabled(value: str | None) -> bool:
 
 @dataclass
 class AssistantService:
-    api_key: str | None
-    model: str = "gpt-4o-mini"
+    backend: LLMBackend | None
     dev_mode: bool = False
+    _model_cache: str = field(init=False, repr=False, default="")
+
+    @property
+    def model(self) -> str:
+        return self.backend.model if self.backend else "local"
 
     @classmethod
     def from_env(cls) -> "AssistantService":
         return cls(
-            api_key=os.getenv("OPENAI_API_KEY"),
-            model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+            backend=_build_backend(),
             dev_mode=_is_enabled(os.getenv("PDF_ASSISTANT_DEV_MODE")),
         )
 
@@ -37,16 +145,21 @@ class AssistantService:
         assistant_mode: str = "enterprise",
         language: str = "fr",
     ) -> str:
-        if self.dev_mode:
+        if self.dev_mode or self.backend is None:
             return self._local_summary(document_text, language=language)
 
-        prompt = (
-            f"{_mode_instruction(assistant_mode)}\n"
-            f"Reponds en {_language_name(language)}.\n"
-            "Resume ce document pour un dirigeant. Structure la reponse en: "
-            "points cles, risques ou echeances, actions recommandees."
+        system = (
+            "Tu es un assistant IA d'entreprise. Tes réponses sont "
+            "concises, vérifiables et utiles pour l'action."
         )
-        return self._ask_openai(prompt, document_text)
+        user = (
+            f"{_mode_instruction(assistant_mode)}\n"
+            f"Réponds en {_language_name(language)}.\n"
+            "Résume ce document pour un dirigeant. Structure la réponse en : "
+            "points clés, risques ou échéances, actions recommandées.\n\n"
+            f"Contenu du document :\n{_trim(document_text)}"
+        )
+        return self.backend.complete(system, user)
 
     def answer_question(
         self,
@@ -56,127 +169,86 @@ class AssistantService:
         assistant_mode: str = "enterprise",
         language: str = "fr",
     ) -> str:
-        if self.dev_mode:
+        if self.dev_mode or self.backend is None:
             return self._local_answer(document_text, question, language=language)
 
-        prompt = (
+        system = (
+            "Tu es un assistant IA d'entreprise. Tes réponses sont "
+            "concises, vérifiables et utiles pour l'action."
+        )
+        user = (
             f"{_mode_instruction(assistant_mode)}\n"
-            f"Reponds en {_language_name(language)}. "
-            "Reponds uniquement a partir du contenu fourni. Si l'information est absente, "
-            "dis-le clairement et propose la prochaine verification utile.\n\n"
-            f"Question: {question}"
+            f"Réponds en {_language_name(language)}. "
+            "Réponds uniquement à partir du contenu fourni. Si l'information est absente, "
+            "dis-le clairement et propose la prochaine vérification utile.\n\n"
+            f"Question : {question}\n\n"
+            f"Contenu du document :\n{_trim(document_text)}"
         )
-        return self._ask_openai(prompt, document_text)
-
-    def _ask_openai(self, instruction: str, document_text: str) -> str:
-        if not self.api_key:
-            raise AIConfigurationError(
-                "OPENAI_API_KEY est requis pour utiliser le resume et le chat IA."
-            )
-
-        client = OpenAI(api_key=self.api_key)
-        response = client.responses.create(
-            model=self.model,
-            input=[
-                {
-                    "role": "system",
-                    "content": (
-                        "Tu es un assistant IA d'entreprise. Tes reponses sont "
-                        "concises, verifiables et utiles pour l'action."
-                    ),
-                },
-                {
-                    "role": "user",
-                    "content": f"{instruction}\n\nContenu du document:\n{_trim(document_text)}",
-                },
-            ],
-        )
-
-        output_text = getattr(response, "output_text", None)
-        if output_text:
-            return output_text.strip()
-
-        return str(response).strip()
+        return self.backend.complete(system, user)
 
     def _local_summary(self, document_text: str, *, language: str) -> str:
         sentences = _sentences(document_text)
         selected = sentences[:3] or [_trim(document_text, limit=500)]
-        prefix = "Local mode: " if language == "en" else "Mode local: "
+        prefix = "Local mode: " if language == "en" else "Mode local : "
         return prefix + " ".join(selected).strip()
 
     def _local_answer(self, document_text: str, question: str, *, language: str) -> str:
         terms = {
             term
             for term in re.findall(r"[a-zA-Z0-9_'-]{4,}", _normalize(question))
-            if term
-            not in {
-                "quel",
-                "quelle",
-                "quels",
-                "quelles",
-                "dans",
-                "pour",
-                "what",
-                "where",
-                "which",
-                "show",
-                "give",
-            }
+            if term not in {"quel", "quelle", "quels", "quelles", "dans", "pour",
+                            "what", "where", "which", "show", "give"}
         }
         lines = [line.strip() for line in document_text.splitlines() if line.strip()]
         matches = [
-            line
-            for line in lines
+            line for line in lines
             if not terms or any(term in _normalize(line) for term in terms)
         ]
         evidence = matches[:3] or lines[:3]
 
         if not evidence:
-            if language == "en":
-                return "Local mode: no extractable text is available in this PDF."
-            return "Mode local: aucun contenu texte n'est disponible dans ce PDF."
+            return ("Local mode: no extractable text." if language == "en"
+                    else "Mode local : aucun contenu texte disponible.")
 
-        prefix = "Local mode: " if language == "en" else "Mode local: "
+        prefix = "Local mode: " if language == "en" else "Mode local : "
         return prefix + " ".join(evidence)
 
+
+# ── Helpers ───────────────────────────────────────────────────────────────────
 
 def _trim(text: str, limit: int = 16000) -> str:
     if len(text) <= limit:
         return text
-    return text[:limit] + "\n\n[Contenu tronque pour rester dans la limite du modele.]"
+    return text[:limit] + "\n\n[Contenu tronqué pour rester dans la limite du modèle.]"
 
 
 def _sentences(text: str) -> list[str]:
-    return [
-        sentence.strip()
-        for sentence in re.split(r"(?<=[.!?])\s+", text)
-        if sentence.strip()
-    ]
+    return [s.strip() for s in re.split(r"(?<=[.!?])\s+", text) if s.strip()]
 
 
 def _mode_instruction(assistant_mode: str) -> str:
     instructions = {
         "enterprise": (
-            "Tu es NexHire Enterprise Assistant, un employe virtuel intelligent qui aide "
-            "les organisations a lire les courriels, analyser les documents, generer des "
+            "Tu es NexHire Enterprise Assistant, un employé virtuel intelligent qui aide "
+            "les organisations à lire les courriels, analyser les documents, générer des "
             "rapports, suivre les tickets et produire des tableaux de bord."
         ),
         "municipal": (
-            "Tu es NexHire Enterprise Assistant pour municipalites et organismes. Tu aides "
-            "a gerer les demandes citoyennes, rechercher dans les reglements, rediger des "
-            "rapports, repondre aux courriels et generer des statistiques."
+            "Tu es NexHire Enterprise Assistant pour municipalités et organismes. Tu aides "
+            "à gérer les demandes citoyennes, rechercher dans les règlements, rédiger des "
+            "rapports, répondre aux courriels et générer des statistiques."
         ),
         "recruiting": (
-            "Tu es NexHire AI Recruiter Pro, un agent IA bilingue francais/anglais pour les "
+            "Tu es NexHire AI Recruiter Pro, un agent IA bilingue français/anglais pour les "
             "PME canadiennes. Tu analyses les CV, qualifies les candidats, proposes des "
-            "questions d'entrevue et aides les equipes RH."
+            "questions d'entrevue et aides les équipes RH."
         ),
     }
     return instructions.get(assistant_mode, instructions["enterprise"])
 
 
 def _language_name(language: str) -> str:
-    return "anglais" if language == "en" else "francais"
+    return "anglais" if language == "en" else "français"
 
 
 def _normalize(value: str) -> str:

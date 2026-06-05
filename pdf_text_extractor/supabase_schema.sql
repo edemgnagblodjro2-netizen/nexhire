@@ -119,9 +119,9 @@ create policy "Users can read organization users"
     id = auth.uid()
     or exists (
       select 1
-      from public.users current_user
-      where current_user.id = auth.uid()
-        and current_user.organization_id = users.organization_id
+      from public.users me
+      where me.id = auth.uid()
+        and me.organization_id = users.organization_id
     )
   );
 
