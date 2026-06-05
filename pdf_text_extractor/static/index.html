@@ -21,6 +21,39 @@
       </nav>
       <div class="header-actions">
         <a class="ghost-link" href="#auth">Se connecter</a>
+        <button
+          type="button"
+          id="header-language-toggle"
+          class="language-toggle"
+          aria-label="Basculer la langue entre anglais et francais"
+        >EN | FR</button>
+        <div class="notification-wrap">
+          <button
+            type="button"
+            id="notification-button"
+            class="notification-button"
+            aria-label="Ouvrir les notifications"
+            aria-expanded="false"
+            aria-controls="notification-menu"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16l-2-2Z"/>
+              <path d="M10 21h4"/>
+            </svg>
+            <strong id="notification-count">3</strong>
+          </button>
+          <div id="notification-menu" class="notification-menu" hidden>
+            <div class="notification-head">
+              <strong>Notifications</strong>
+              <button type="button" id="mark-notifications-read">Tout lu</button>
+            </div>
+            <ul>
+              <li><span></span>Essai gratuit 14 jours disponible apres inscription.</li>
+              <li><span></span>Microsoft 365 est prioritaire en Phase 1.</li>
+              <li><span></span>Plan annuel 990 $/annee pret a selectionner.</li>
+            </ul>
+          </div>
+        </div>
         <a class="primary-link" href="#auth">Essai gratuit</a>
       </div>
     </header>

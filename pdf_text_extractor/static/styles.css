@@ -84,6 +84,10 @@ a {
   gap: 16px;
 }
 
+.header-actions {
+  position: relative;
+}
+
 .nav-links a,
 .ghost-link {
   color: var(--muted-strong);
@@ -135,6 +139,112 @@ button {
 .primary-link:hover,
 button:hover:not(:disabled) {
   transform: translateY(-1px);
+}
+
+.language-toggle,
+.notification-button {
+  min-height: 42px;
+  border: 1px solid var(--border);
+  color: var(--hire-strong);
+  background: rgba(165, 180, 252, 0.08);
+  box-shadow: none;
+}
+
+.language-toggle {
+  padding: 0 14px;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+}
+
+.notification-wrap {
+  position: relative;
+}
+
+.notification-button {
+  position: relative;
+  width: 42px;
+  padding: 0;
+  border-radius: 999px;
+}
+
+.notification-button svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.notification-button strong {
+  position: absolute;
+  right: -5px;
+  top: -6px;
+  display: grid;
+  min-width: 20px;
+  height: 20px;
+  place-items: center;
+  border: 2px solid var(--bg);
+  border-radius: 999px;
+  color: #070d1a;
+  background: var(--hire);
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.notification-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 12px);
+  width: min(340px, calc(100vw - 32px));
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: rgba(15, 23, 42, 0.98);
+  box-shadow: var(--shadow);
+}
+
+.notification-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.notification-head button {
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  color: var(--hire-strong);
+  background: rgba(165, 180, 252, 0.08);
+  box-shadow: none;
+  font-size: 0.8rem;
+}
+
+.notification-menu ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notification-menu li {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 8px 1fr;
+  color: var(--muted-strong);
+  font-size: 0.92rem;
+}
+
+.notification-menu li span {
+  width: 8px;
+  height: 8px;
+  margin-top: 0.45em;
+  border-radius: 999px;
+  background: var(--hire);
 }
 
 .hero-shell,

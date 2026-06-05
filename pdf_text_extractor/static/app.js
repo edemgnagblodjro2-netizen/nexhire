@@ -22,6 +22,11 @@ const loginForm = document.querySelector("#login-form");
 const authStatus = document.querySelector("#auth-status");
 const connectorButtons = document.querySelectorAll("[data-connector-id]");
 const connectorStatus = document.querySelector("#connector-status");
+const headerLanguageToggle = document.querySelector("#header-language-toggle");
+const notificationButton = document.querySelector("#notification-button");
+const notificationMenu = document.querySelector("#notification-menu");
+const notificationCount = document.querySelector("#notification-count");
+const markNotificationsRead = document.querySelector("#mark-notifications-read");
 let activeSlide = 0;
 const selectedConnectorIds = new Set();
 
@@ -50,6 +55,28 @@ const translations = {
 language.addEventListener("change", updateUiLanguage);
 updateUiLanguage();
 loadConnectors();
+
+headerLanguageToggle.addEventListener("click", () => {
+  language.value = language.value === "fr" ? "en" : "fr";
+  updateUiLanguage();
+});
+
+notificationButton.addEventListener("click", (event) => {
+  event.stopPropagation();
+  toggleNotifications(notificationMenu.hidden);
+});
+
+markNotificationsRead.addEventListener("click", () => {
+  notificationCount.textContent = "0";
+  notificationCount.hidden = true;
+  toggleNotifications(false);
+});
+
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".notification-wrap")) {
+    toggleNotifications(false);
+  }
+});
 
 sliderDots.forEach((dot) => {
   dot.addEventListener("click", () => {
@@ -303,6 +330,13 @@ function setAuthStatus(message, isError = false) {
 
 function updateUiLanguage() {
   const currentLanguage = language.value;
+  headerLanguageToggle.textContent = currentLanguage === "en" ? "FR | EN" : "EN | FR";
+  headerLanguageToggle.setAttribute(
+    "aria-label",
+    currentLanguage === "en"
+      ? "Switch language to French"
+      : "Basculer la langue vers anglais",
+  );
 
   document.querySelectorAll("[data-i18n-fr]").forEach((element) => {
     element.textContent = element.dataset[`i18n${currentLanguage === "en" ? "En" : "Fr"}`];
@@ -329,6 +363,11 @@ function updateUiLanguage() {
         : "Posez une question apres le televersement. Ask in French or English."
     }</div>`;
   }
+}
+
+function toggleNotifications(open) {
+  notificationMenu.hidden = !open;
+  notificationButton.setAttribute("aria-expanded", open ? "true" : "false");
 }
 
 function t(key, ...args) {
