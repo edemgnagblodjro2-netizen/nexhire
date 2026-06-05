@@ -4,7 +4,7 @@ import io
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi import Body, Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -32,10 +32,27 @@ class SummaryResponse(BaseModel):
     summary: str
 
 
+class AssistantContext(BaseModel):
+    assistant_mode: str = Field(
+        "enterprise",
+        pattern="^(enterprise|municipal|recruiting)$",
+    )
+    language: str = Field("fr", pattern="^(fr|en)$")
+
+
+class SummaryRequest(AssistantContext):
+    pass
+
+
 class ChatRequest(BaseModel):
     question: str = Field(..., min_length=1)
     user_id: str | None = None
     organization_id: str | None = None
+    assistant_mode: str = Field(
+        "enterprise",
+        pattern="^(enterprise|municipal|recruiting)$",
+    )
+    language: str = Field("fr", pattern="^(fr|en)$")
 
 
 class ChatResponse(BaseModel):
@@ -51,10 +68,10 @@ def create_app(
     assistant: AssistantService | None = None,
 ) -> FastAPI:
     app = FastAPI(
-        title="Assistant IA documentaire",
+        title="NexHire Enterprise Assistant",
         description=(
-            "API FastAPI pour televerser des PDF, extraire le texte, resumer "
-            "le contenu et poser des questions sur les documents."
+            "API FastAPI bilingue pour televerser des documents, resumer leur "
+            "contenu et poser des questions en contexte entreprise ou recrutement."
         ),
         version="1.0.0",
     )
@@ -134,13 +151,18 @@ def create_app(
     @app.post("/api/documents/{document_id}/summary", response_model=SummaryResponse)
     def summarize_document(
         document_id: str,
+        payload: SummaryRequest = Body(default_factory=SummaryRequest),
         store: DocumentStore = Depends(get_storage),
         ai: AssistantService = Depends(get_assistant),
     ):
         document = _document_or_404(store, document_id)
 
         try:
-            summary = ai.summarize(document["content_text"])
+            summary = ai.summarize(
+                document["content_text"],
+                assistant_mode=payload.assistant_mode,
+                language=payload.language,
+            )
         except AIConfigurationError as exc:
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -160,7 +182,12 @@ def create_app(
         document = _document_or_404(store, document_id)
 
         try:
-            answer = ai.answer_question(document["content_text"], payload.question)
+            answer = ai.answer_question(
+                document["content_text"],
+                payload.question,
+                assistant_mode=payload.assistant_mode,
+                language=payload.language,
+            )
         except AIConfigurationError as exc:
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -174,6 +201,8 @@ def create_app(
             organization_id=payload.organization_id or document.get("organization_id"),
             user_id=payload.user_id or document.get("user_id"),
             model=ai.model,
+            assistant_mode=payload.assistant_mode,
+            language=payload.language,
         )
 
         return ChatResponse(

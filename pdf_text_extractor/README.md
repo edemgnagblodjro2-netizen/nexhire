@@ -1,9 +1,19 @@
-# Assistant IA documentaire
+# NexHire Enterprise Assistant
 
-Application Python/FastAPI qui permet de televerser un PDF, d'en extraire le
-texte, de generer un resume avec OpenAI et de poser des questions sur le
-document. L'objectif est de servir de base a un assistant IA unique pour les
-donnees et les processus d'une organisation.
+Application Python/FastAPI bilingue qui sert de base a un assistant IA unique
+pour les donnees, documents et processus d'une organisation canadienne.
+
+Le portail couvre deux offres coherentes avec NexHire:
+
+- **NexHire Enterprise Assistant**: assistant IA pour municipalites, organismes,
+  PME, universites, hopitaux et grandes entreprises.
+- **NexHire AI Recruiter Pro**: recruteur IA bilingue francais/anglais pour les
+  PME canadiennes.
+
+Le prototype actuel televerse un PDF, extrait le texte, genere un resume avec
+OpenAI et permet de poser des questions sur le document. Le schema Supabase
+prepare aussi les sources futures: Microsoft 365, Salesforce, ServiceNow, Jira,
+SAP et Workday.
 
 ## Installation
 
@@ -46,8 +56,20 @@ export PDF_ASSISTANT_DEV_MODE=1
 uvicorn main:app --reload
 ```
 
-Ouvrez ensuite <http://127.0.0.1:8000>, choisissez un fichier `.pdf`, generez
-un resume, puis posez vos questions dans le chat.
+Ouvrez ensuite <http://127.0.0.1:8000>, choisissez un mode d'assistant, une
+langue, un fichier `.pdf`, puis generez un resume et posez vos questions dans le
+chat.
+
+## Modes d'assistant
+
+- `enterprise`: rapports, courriels, tickets, tableaux de bord, politiques RH,
+  achats, depenses et operations.
+- `municipal`: demandes citoyennes, reglements, rapports municipaux, courriels,
+  tickets et statistiques.
+- `recruiting`: analyse de CV, matching avance, prequalification, questions
+  d'entrevue, classement des candidatures et assistant RH conversationnel.
+
+Chaque requete de resume ou de chat accepte aussi `language` avec `fr` ou `en`.
 
 ## Endpoints principaux
 
@@ -56,6 +78,16 @@ un resume, puis posez vos questions dans le chat.
 - `POST /api/documents/{document_id}/chat`: repond a une question et conserve
   l'historique dans `conversations`.
 - `GET /api/health`: verifie que l'API repond.
+
+Exemple chat:
+
+```json
+{
+  "assistant_mode": "recruiting",
+  "language": "en",
+  "question": "Screen this candidate and suggest interview questions."
+}
+```
 
 ## Tests
 

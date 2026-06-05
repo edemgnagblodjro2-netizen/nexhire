@@ -24,6 +24,10 @@ body {
 }
 
 .hero {
+  display: grid;
+  align-items: stretch;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1fr) 320px;
   margin-bottom: 28px;
   padding: 42px;
   border: 1px solid #d6e2f2;
@@ -32,6 +36,12 @@ body {
     radial-gradient(circle at top right, rgba(37, 99, 235, 0.16), transparent 32%),
     #ffffff;
   box-shadow: 0 22px 60px rgba(52, 87, 140, 0.16);
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .eyebrow {
@@ -56,11 +66,71 @@ h1 {
   line-height: 1.02;
 }
 
-.hero p:last-child {
+.hero-copy > p {
   max-width: 760px;
   margin-bottom: 0;
   color: #536176;
   font-size: 1.08rem;
+}
+
+.hero-actions,
+.system-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hero-actions {
+  margin-top: 24px;
+}
+
+.hero-actions span,
+.system-grid span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: #1e3a8a;
+  background: #dbeafe;
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+
+.systems-card {
+  display: grid;
+  align-content: center;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid #c7d8f2;
+  border-radius: 24px;
+  background: rgba(248, 251, 255, 0.86);
+}
+
+.systems-card strong {
+  font-size: 1.05rem;
+}
+
+.product-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 18px;
+}
+
+.product-card {
+  padding: 24px;
+  border: 1px solid #d6e2f2;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 14px 36px rgba(52, 87, 140, 0.1);
+}
+
+.product-card.active {
+  border-color: #93b4ff;
+  background: linear-gradient(145deg, #ffffff, #eef4ff);
+}
+
+.product-card p:last-child {
+  margin-bottom: 0;
+  color: #536176;
 }
 
 .grid {
@@ -82,9 +152,17 @@ h1 {
 }
 
 .upload-form,
-.chat-form {
+.chat-form,
+.controls {
   display: grid;
   gap: 14px;
+}
+
+.controls label {
+  display: grid;
+  gap: 8px;
+  color: #41516a;
+  font-weight: 800;
 }
 
 .upload-form {
@@ -121,6 +199,15 @@ input[type="text"] {
   font: inherit;
 }
 
+select {
+  min-height: 52px;
+  padding: 0 16px;
+  border: 1px solid #cad7ea;
+  border-radius: 16px;
+  background: #ffffff;
+  font: inherit;
+}
+
 button {
   min-height: 52px;
   padding: 0 22px;
@@ -138,9 +225,28 @@ button:hover:not(:disabled) {
 }
 
 button:disabled,
-input:disabled {
+input:disabled,
+select:disabled {
   cursor: not-allowed;
   opacity: 0.55;
+}
+
+.prompt-list {
+  display: grid;
+  gap: 10px;
+}
+
+.prompt-list button {
+  min-height: auto;
+  padding: 12px 14px;
+  color: #1e3a8a;
+  background: #dbeafe;
+  box-shadow: none;
+  text-align: left;
+}
+
+.prompt-list button:hover {
+  background: #c7d8ff;
 }
 
 .status {
@@ -209,10 +315,12 @@ input:disabled {
 
 @media (max-width: 820px) {
   .hero {
+    grid-template-columns: 1fr;
     padding: 28px 20px;
   }
 
   .grid,
+  .product-grid,
   .upload-form,
   .chat-form {
     grid-template-columns: 1fr;

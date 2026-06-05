@@ -9,6 +9,9 @@ const chatForm = document.querySelector("#chat-form");
 const questionInput = document.querySelector("#question");
 const chatButton = document.querySelector("#chat-button");
 const chatLog = document.querySelector("#chat-log");
+const assistantMode = document.querySelector("#assistant-mode");
+const language = document.querySelector("#language");
+const promptButtons = document.querySelectorAll("[data-prompt]");
 
 uploadForm.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -33,7 +36,7 @@ uploadForm.addEventListener("submit", async (event) => {
       payload.warning || "Document pret. Cliquez pour generer un resume IA.";
     summaryBox.classList.toggle("muted", Boolean(payload.warning));
     chatLog.innerHTML =
-      '<div class="message assistant">Document charge. Posez votre question.</div>';
+      '<div class="message assistant">Document charge. Posez votre question en francais ou en anglais.</div>';
     disableAssistant(false);
   } catch (error) {
     activeDocumentId = null;
@@ -51,6 +54,8 @@ summaryButton.addEventListener("click", async () => {
   try {
     const response = await fetch(`/api/documents/${activeDocumentId}/summary`, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(assistantContext()),
     });
     const payload = await parseJson(response);
     summaryBox.textContent = payload.summary;
@@ -76,7 +81,7 @@ chatForm.addEventListener("submit", async (event) => {
     const response = await fetch(`/api/documents/${activeDocumentId}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question }),
+      body: JSON.stringify({ question, ...assistantContext() }),
     });
     const payload = await parseJson(response);
     appendMessage("assistant", payload.answer);
@@ -86,6 +91,13 @@ chatForm.addEventListener("submit", async (event) => {
     chatButton.disabled = false;
     questionInput.focus();
   }
+});
+
+promptButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    questionInput.value = button.dataset.prompt;
+    questionInput.focus();
+  });
 });
 
 function disableAssistant(disabled) {
@@ -105,6 +117,13 @@ function appendMessage(role, text) {
   message.textContent = text;
   chatLog.appendChild(message);
   chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+function assistantContext() {
+  return {
+    assistant_mode: assistantMode.value,
+    language: language.value,
+  };
 }
 
 async function parseJson(response) {

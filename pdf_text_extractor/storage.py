@@ -92,6 +92,8 @@ class DocumentStore:
         organization_id: str | None = None,
         user_id: str | None = None,
         model: str | None = None,
+        assistant_mode: str = "enterprise",
+        language: str = "fr",
     ) -> dict[str, Any]:
         payload = {
             "organization_id": organization_id,
@@ -100,6 +102,8 @@ class DocumentStore:
             "question": question,
             "answer": answer,
             "model": model,
+            "assistant_mode": assistant_mode,
+            "language": language,
         }
 
         if self.supabase is not None:

@@ -22,6 +22,7 @@ create table if not exists public.documents (
   user_id uuid references public.users(id) on delete set null,
   filename text not null,
   mime_type text not null default 'application/pdf',
+  source_system text not null default 'upload',
   storage_path text,
   content_text text not null default '',
   summary text,
@@ -37,8 +38,53 @@ create table if not exists public.conversations (
   question text not null,
   answer text not null,
   model text,
+  assistant_mode text not null default 'enterprise',
+  language text not null default 'fr',
   created_at timestamptz not null default now()
 );
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint where conname = 'documents_source_system_check'
+  ) then
+    alter table public.documents
+      add constraint documents_source_system_check
+      check (
+        source_system in (
+          'upload',
+          'microsoft_365',
+          'salesforce',
+          'servicenow',
+          'jira',
+          'sap',
+          'workday'
+        )
+      );
+  end if;
+end $$;
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint where conname = 'conversations_assistant_mode_check'
+  ) then
+    alter table public.conversations
+      add constraint conversations_assistant_mode_check
+      check (assistant_mode in ('enterprise', 'municipal', 'recruiting'));
+  end if;
+end $$;
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint where conname = 'conversations_language_check'
+  ) then
+    alter table public.conversations
+      add constraint conversations_language_check
+      check (language in ('fr', 'en'));
+  end if;
+end $$;
 
 create index if not exists users_organization_id_idx
   on public.users (organization_id);

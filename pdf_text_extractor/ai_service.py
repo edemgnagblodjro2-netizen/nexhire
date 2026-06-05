@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import re
+import unicodedata
 from dataclasses import dataclass
 
 from openai import OpenAI
@@ -29,24 +30,40 @@ class AssistantService:
             dev_mode=_is_enabled(os.getenv("PDF_ASSISTANT_DEV_MODE")),
         )
 
-    def summarize(self, document_text: str) -> str:
+    def summarize(
+        self,
+        document_text: str,
+        *,
+        assistant_mode: str = "enterprise",
+        language: str = "fr",
+    ) -> str:
         if self.dev_mode:
-            return self._local_summary(document_text)
+            return self._local_summary(document_text, language=language)
 
         prompt = (
-            "Resume ce document pour un dirigeant d'organisation. "
-            "Structure la reponse en: points cles, risques ou echeances, actions recommandees."
+            f"{_mode_instruction(assistant_mode)}\n"
+            f"Reponds en {_language_name(language)}.\n"
+            "Resume ce document pour un dirigeant. Structure la reponse en: "
+            "points cles, risques ou echeances, actions recommandees."
         )
         return self._ask_openai(prompt, document_text)
 
-    def answer_question(self, document_text: str, question: str) -> str:
+    def answer_question(
+        self,
+        document_text: str,
+        question: str,
+        *,
+        assistant_mode: str = "enterprise",
+        language: str = "fr",
+    ) -> str:
         if self.dev_mode:
-            return self._local_answer(document_text, question)
+            return self._local_answer(document_text, question, language=language)
 
         prompt = (
-            "Tu es l'assistant IA central d'une organisation. Reponds uniquement a partir "
-            "du contenu fourni. Si l'information est absente, dis-le clairement et propose "
-            "la prochaine verification utile.\n\n"
+            f"{_mode_instruction(assistant_mode)}\n"
+            f"Reponds en {_language_name(language)}. "
+            "Reponds uniquement a partir du contenu fourni. Si l'information est absente, "
+            "dis-le clairement et propose la prochaine verification utile.\n\n"
             f"Question: {question}"
         )
         return self._ask_openai(prompt, document_text)
@@ -81,29 +98,46 @@ class AssistantService:
 
         return str(response).strip()
 
-    def _local_summary(self, document_text: str) -> str:
+    def _local_summary(self, document_text: str, *, language: str) -> str:
         sentences = _sentences(document_text)
         selected = sentences[:3] or [_trim(document_text, limit=500)]
-        return "Mode local: " + " ".join(selected).strip()
+        prefix = "Local mode: " if language == "en" else "Mode local: "
+        return prefix + " ".join(selected).strip()
 
-    def _local_answer(self, document_text: str, question: str) -> str:
+    def _local_answer(self, document_text: str, question: str, *, language: str) -> str:
         terms = {
             term
-            for term in re.findall(r"[a-zA-Z0-9_'-]{4,}", question.lower())
-            if term not in {"quel", "quelle", "quels", "quelles", "dans", "pour"}
+            for term in re.findall(r"[a-zA-Z0-9_'-]{4,}", _normalize(question))
+            if term
+            not in {
+                "quel",
+                "quelle",
+                "quels",
+                "quelles",
+                "dans",
+                "pour",
+                "what",
+                "where",
+                "which",
+                "show",
+                "give",
+            }
         }
         lines = [line.strip() for line in document_text.splitlines() if line.strip()]
         matches = [
             line
             for line in lines
-            if not terms or any(term in line.lower() for term in terms)
+            if not terms or any(term in _normalize(line) for term in terms)
         ]
         evidence = matches[:3] or lines[:3]
 
         if not evidence:
+            if language == "en":
+                return "Local mode: no extractable text is available in this PDF."
             return "Mode local: aucun contenu texte n'est disponible dans ce PDF."
 
-        return "Mode local: " + " ".join(evidence)
+        prefix = "Local mode: " if language == "en" else "Mode local: "
+        return prefix + " ".join(evidence)
 
 
 def _trim(text: str, limit: int = 16000) -> str:
@@ -118,3 +152,33 @@ def _sentences(text: str) -> list[str]:
         for sentence in re.split(r"(?<=[.!?])\s+", text)
         if sentence.strip()
     ]
+
+
+def _mode_instruction(assistant_mode: str) -> str:
+    instructions = {
+        "enterprise": (
+            "Tu es NexHire Enterprise Assistant, un employe virtuel intelligent qui aide "
+            "les organisations a lire les courriels, analyser les documents, generer des "
+            "rapports, suivre les tickets et produire des tableaux de bord."
+        ),
+        "municipal": (
+            "Tu es NexHire Enterprise Assistant pour municipalites et organismes. Tu aides "
+            "a gerer les demandes citoyennes, rechercher dans les reglements, rediger des "
+            "rapports, repondre aux courriels et generer des statistiques."
+        ),
+        "recruiting": (
+            "Tu es NexHire AI Recruiter Pro, un agent IA bilingue francais/anglais pour les "
+            "PME canadiennes. Tu analyses les CV, qualifies les candidats, proposes des "
+            "questions d'entrevue et aides les equipes RH."
+        ),
+    }
+    return instructions.get(assistant_mode, instructions["enterprise"])
+
+
+def _language_name(language: str) -> str:
+    return "anglais" if language == "en" else "francais"
+
+
+def _normalize(value: str) -> str:
+    ascii_value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore")
+    return ascii_value.decode("ascii").lower().replace("'", " ")
