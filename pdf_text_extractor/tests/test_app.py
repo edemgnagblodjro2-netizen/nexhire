@@ -2,9 +2,23 @@ from __future__ import annotations
 
 import io
 
+from fastapi.testclient import TestClient
 from reportlab.pdfgen import canvas
 
-from app import create_app
+from main import create_app
+from storage import DocumentStore
+
+
+class FakeAssistant:
+    model = "fake-model"
+
+    def summarize(self, document_text: str) -> str:
+        assert "Bonjour depuis un PDF de test" in document_text
+        return "Resume fake: document de test."
+
+    def answer_question(self, document_text: str, question: str) -> str:
+        assert "Bonjour depuis un PDF de test" in document_text
+        return f"Reponse fake: {question}"
 
 
 def _build_pdf_with_text(text: str) -> bytes:
@@ -16,51 +30,67 @@ def _build_pdf_with_text(text: str) -> bytes:
     return buffer.read()
 
 
-def test_upload_pdf_extracts_text():
-    app = create_app()
-    app.config.update(TESTING=True)
+def _client() -> TestClient:
+    return TestClient(
+        create_app(storage=DocumentStore(), assistant=FakeAssistant())
+    )
 
-    client = app.test_client()
-    sample_text = "Bonjour depuis un PDF de test"
+
+def _upload_pdf(client: TestClient, text: str = "Bonjour depuis un PDF de test") -> dict:
     response = client.post(
-        "/",
-        data={
-            "pdf_file": (
-                io.BytesIO(_build_pdf_with_text(sample_text)),
-                "exemple.pdf",
-            )
-        },
-        content_type="multipart/form-data",
+        "/api/documents",
+        files={"file": ("exemple.pdf", _build_pdf_with_text(text), "application/pdf")},
+    )
+    assert response.status_code == 201
+    return response.json()
+
+
+def test_upload_pdf_extracts_text():
+    client = _client()
+    payload = _upload_pdf(client)
+
+    assert payload["filename"] == "exemple.pdf"
+    assert payload["character_count"] > 0
+    assert "Bonjour depuis un PDF de test" in payload["text_preview"]
+
+
+def test_summary_uses_assistant_and_updates_document():
+    client = _client()
+    document = _upload_pdf(client)
+
+    response = client.post(f"/api/documents/{document['id']}/summary")
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "document_id": document["id"],
+        "summary": "Resume fake: document de test.",
+    }
+
+
+def test_chat_returns_answer_and_conversation_id():
+    client = _client()
+    document = _upload_pdf(client)
+
+    response = client.post(
+        f"/api/documents/{document['id']}/chat",
+        json={"question": "Que contient ce document ?"},
     )
 
     assert response.status_code == 200
-    assert sample_text.encode() in response.data
-    assert b"exemple.pdf" in response.data
+    payload = response.json()
+    assert payload["document_id"] == document["id"]
+    assert payload["question"] == "Que contient ce document ?"
+    assert payload["answer"] == "Reponse fake: Que contient ce document ?"
+    assert payload["conversation_id"]
 
 
 def test_rejects_non_pdf_upload():
-    app = create_app()
-    app.config.update(TESTING=True)
+    client = _client()
 
-    response = app.test_client().post(
-        "/",
-        data={"pdf_file": (io.BytesIO(b"hello"), "notes.txt")},
-        content_type="multipart/form-data",
+    response = client.post(
+        "/api/documents",
+        files={"file": ("notes.txt", io.BytesIO(b"hello"), "text/plain")},
     )
 
-    assert response.status_code == 200
-    assert b"Seuls les fichiers PDF sont acceptes." in response.data
-
-
-def test_requires_file_selection():
-    app = create_app()
-    app.config.update(TESTING=True)
-
-    response = app.test_client().post(
-        "/",
-        data={},
-        content_type="multipart/form-data",
-    )
-
-    assert response.status_code == 200
-    assert b"Veuillez choisir un fichier PDF" in response.data
+    assert response.status_code == 400
+    assert response.json()["detail"] == "Seuls les fichiers PDF sont acceptes."

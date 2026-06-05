@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Assistant IA organisationnel</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Assistant IA organisationnel</p>
+        <h1>Un seul assistant pour vos documents et processus.</h1>
+        <p>
+          Televersez un PDF, obtenez un resume, puis posez des questions comme
+          "Ou est la politique RH ?" ou "Quel est le processus d'achat ?".
+        </p>
+      </section>
+
+      <section class="grid">
+        <article class="panel">
+          <h2>1. Televerser un PDF</h2>
+          <form id="upload-form" class="upload-form">
+            <label class="file-picker" for="pdf-file">
+              <span>Choisir un fichier PDF</span>
+              <input id="pdf-file" name="file" type="file" accept=".pdf" required />
+            </label>
+            <button type="submit">Extraire le texte</button>
+          </form>
+          <p id="upload-status" class="status"></p>
+        </article>
+
+        <article class="panel">
+          <h2>2. Resume IA</h2>
+          <button id="summary-button" type="button" disabled>Generer le resume</button>
+          <div id="summary" class="output muted">
+            Televersez un PDF pour activer le resume.
+          </div>
+        </article>
+
+        <article class="panel wide">
+          <h2>3. Chat sur le PDF</h2>
+          <div id="chat-log" class="chat-log">
+            <div class="message assistant">
+              Posez une question sur le document apres le televersement.
+            </div>
+          </div>
+          <form id="chat-form" class="chat-form">
+            <input
+              id="question"
+              type="text"
+              placeholder="Ex: Quel est le processus d'achat ?"
+              disabled
+              required
+            />
+            <button id="chat-button" type="submit" disabled>Envoyer</button>
+          </form>
+        </article>
+
+        <article class="panel wide">
+          <h2>Apercu du texte extrait</h2>
+          <pre id="preview" class="preview">Aucun document televerse.</pre>
+        </article>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
