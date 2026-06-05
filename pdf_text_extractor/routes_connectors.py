@@ -3,8 +3,9 @@ from __future__ import annotations
 import json
 from datetime import UTC, datetime
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request, status
 
+from audit import AuditEvent, client_ip, log_audit
 from auth import CurrentUser
 from crypto import encrypt
 from rbac import require_min_role
@@ -67,6 +68,8 @@ def connector_status(
 @router.post("/{connector_type}/connect", status_code=status.HTTP_200_OK)
 def connect(
     connector_type: str,
+    request: Request,
+    background: BackgroundTasks,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
     """Simule la connexion (option B : stocke {"simulated": true} chiffré Fernet)."""
@@ -102,12 +105,23 @@ def connect(
             "updated_at": now,
         }).execute()
 
+    background.add_task(log_audit, AuditEvent(
+        action="connector_connect",
+        query=connector_type,
+        organization_id=user.organization_id,
+        user_id=user.id,
+        connector=connector_type,
+        ip_address=client_ip(request),
+        http_status=200,
+    ))
     return {"connector_type": connector_type, "status": "connected"}
 
 
 @router.post("/{connector_type}/disconnect", status_code=status.HTTP_200_OK)
 def disconnect(
     connector_type: str,
+    request: Request,
+    background: BackgroundTasks,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
     """Déconnecte et efface les credentials chiffrés."""
@@ -121,4 +135,13 @@ def disconnect(
         "updated_at": _now(),
     }).eq("organization_id", user.organization_id).eq("connector_type", connector_type).execute()
 
+    background.add_task(log_audit, AuditEvent(
+        action="connector_disconnect",
+        query=connector_type,
+        organization_id=user.organization_id,
+        user_id=user.id,
+        connector=connector_type,
+        ip_address=client_ip(request),
+        http_status=200,
+    ))
     return {"connector_type": connector_type, "status": "disconnected"}

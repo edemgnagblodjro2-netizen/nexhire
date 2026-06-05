@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv(Path(__file__).parent / ".env")
 from typing import Annotated
 
-from fastapi import Body, Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi import BackgroundTasks, Body, Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -16,8 +16,10 @@ from pydantic import BaseModel, Field
 from starlette import status
 
 from ai_service import AIConfigurationError, AssistantService
+from audit import AuditEvent, client_ip, log_audit
 from pdf_utils import MAX_UPLOAD_BYTES, PdfExtractionError, extract_text_from_pdf, is_allowed_pdf
 from storage import DocumentStore
+from routes_audit import router as audit_router
 from routes_auth import router as auth_router
 from routes_connectors import router as connectors_router
 
@@ -82,6 +84,7 @@ def create_app(
     )
     app.include_router(auth_router)
     app.include_router(connectors_router)
+    app.include_router(audit_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 
@@ -108,6 +111,8 @@ def create_app(
         status_code=status.HTTP_201_CREATED,
     )
     async def upload_document(
+        request: Request,
+        background: BackgroundTasks,
         file: Annotated[UploadFile, File()],
         organization_id: Annotated[str | None, Form()] = None,
         user_id: Annotated[str | None, Form()] = None,
@@ -147,6 +152,16 @@ def create_app(
             organization_id=organization_id,
             user_id=user_id,
         )
+        background.add_task(log_audit, AuditEvent(
+            action="document_upload",
+            query=file.filename,
+            organization_id=organization_id,
+            user_id=user_id,
+            resource_ids=[document["id"]],
+            ip_address=client_ip(request),
+            http_status=201,
+            metadata={"char_count": len(text), "has_warning": bool(warning)},
+        ))
         return DocumentResponse(
             id=document["id"],
             filename=document["filename"],
@@ -158,6 +173,8 @@ def create_app(
     @app.post("/api/documents/{document_id}/summary", response_model=SummaryResponse)
     def summarize_document(
         document_id: str,
+        request: Request,
+        background: BackgroundTasks,
         payload: SummaryRequest = Body(default_factory=SummaryRequest),
         store: DocumentStore = Depends(get_storage),
         ai: AssistantService = Depends(get_assistant),
@@ -171,22 +188,47 @@ def create_app(
                 language=payload.language,
             )
         except AIConfigurationError as exc:
+            background.add_task(log_audit, AuditEvent(
+                action="document_summary",
+                query=document_id,
+                organization_id=document.get("organization_id"),
+                user_id=document.get("user_id"),
+                resource_ids=[document_id],
+                ip_address=client_ip(request),
+                success=False,
+                http_status=503,
+                error_detail=str(exc),
+            ))
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail=str(exc),
             ) from exc
 
         store.update_document_summary(document_id, summary)
+        background.add_task(log_audit, AuditEvent(
+            action="document_summary",
+            query=document_id,
+            organization_id=document.get("organization_id"),
+            user_id=document.get("user_id"),
+            resource_ids=[document_id],
+            ip_address=client_ip(request),
+            http_status=200,
+            metadata={"assistant_mode": payload.assistant_mode, "language": payload.language},
+        ))
         return SummaryResponse(document_id=document_id, summary=summary)
 
     @app.post("/api/documents/{document_id}/chat", response_model=ChatResponse)
     def chat_with_document(
         document_id: str,
+        request: Request,
+        background: BackgroundTasks,
         payload: ChatRequest,
         store: DocumentStore = Depends(get_storage),
         ai: AssistantService = Depends(get_assistant),
     ):
         document = _document_or_404(store, document_id)
+        org_id = payload.organization_id or document.get("organization_id")
+        usr_id = payload.user_id or document.get("user_id")
 
         try:
             answer = ai.answer_question(
@@ -196,6 +238,17 @@ def create_app(
                 language=payload.language,
             )
         except AIConfigurationError as exc:
+            background.add_task(log_audit, AuditEvent(
+                action="document_chat",
+                query=payload.question,
+                organization_id=org_id,
+                user_id=usr_id,
+                resource_ids=[document_id],
+                ip_address=client_ip(request),
+                success=False,
+                http_status=503,
+                error_detail=str(exc),
+            ))
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail=str(exc),
@@ -205,13 +258,23 @@ def create_app(
             document_id=document_id,
             question=payload.question,
             answer=answer,
-            organization_id=payload.organization_id or document.get("organization_id"),
-            user_id=payload.user_id or document.get("user_id"),
+            organization_id=org_id,
+            user_id=usr_id,
             model=ai.model,
             assistant_mode=payload.assistant_mode,
             language=payload.language,
         )
 
+        background.add_task(log_audit, AuditEvent(
+            action="document_chat",
+            query=payload.question,
+            organization_id=org_id,
+            user_id=usr_id,
+            resource_ids=[document_id, conversation["id"]],
+            ip_address=client_ip(request),
+            http_status=200,
+            metadata={"assistant_mode": payload.assistant_mode, "language": payload.language},
+        ))
         return ChatResponse(
             document_id=document_id,
             question=payload.question,

@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
 from pydantic import BaseModel, EmailStr, Field
 
+from audit import AuditEvent, client_ip, log_audit
 from auth import CurrentUser, get_current_user
 from supabase_client import anon_client
 
@@ -47,17 +48,42 @@ class LoginPayload(BaseModel):
 
 
 @router.post("/login")
-def login(payload: LoginPayload):
+def login(payload: LoginPayload, request: Request, background: BackgroundTasks):
     """Connexion. Retourne le JWT Supabase à passer en Authorization: Bearer."""
+    ip = client_ip(request)
     try:
         sb = anon_client()
         res = sb.auth.sign_in_with_password({"email": payload.email, "password": payload.password})
     except Exception as exc:
+        background.add_task(log_audit, AuditEvent(
+            action="auth_login",
+            query=payload.email,
+            success=False,
+            ip_address=ip,
+            http_status=401,
+            error_detail=str(exc),
+        ))
         raise HTTPException(status_code=401, detail=str(exc)) from exc
 
     if not res.session:
+        background.add_task(log_audit, AuditEvent(
+            action="auth_login",
+            query=payload.email,
+            success=False,
+            ip_address=ip,
+            http_status=401,
+            error_detail="session nulle",
+        ))
         raise HTTPException(status_code=401, detail="Authentification échouée.")
 
+    background.add_task(log_audit, AuditEvent(
+        action="auth_login",
+        query=payload.email,
+        user_id=res.user.id,
+        success=True,
+        ip_address=ip,
+        http_status=200,
+    ))
     return {
         "access_token": res.session.access_token,
         "token_type": "bearer",
