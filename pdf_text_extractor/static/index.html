@@ -7,30 +7,44 @@
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
-    <main class="shell">
-      <section class="hero">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="NexHire accueil">
+        <img src="/static/logo-mark.svg" alt="" />
+        <span>Nex<span>Hire</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Navigation principale">
+        <a href="#solutions">Solutions</a>
+        <a href="#assistant">Assistant</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#auth">Connexion</a>
+      </nav>
+      <div class="header-actions">
+        <a class="ghost-link" href="#auth">Se connecter</a>
+        <a class="primary-link" href="#auth">Essai gratuit</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero-shell">
         <div class="hero-copy">
           <p class="eyebrow">NexHire Enterprise Assistant</p>
           <h1
-            data-i18n-fr="Un seul assistant IA pour vos donnees, vos processus et vos equipes."
-            data-i18n-en="One AI assistant for your data, processes and teams."
-          >Un seul assistant IA pour vos donnees, vos processus et vos equipes.</h1>
+            data-i18n-fr="Une plateforme IA professionnelle pour vos donnees, vos processus et vos talents."
+            data-i18n-en="A professional AI platform for your data, processes and talent."
+          >Une plateforme IA professionnelle pour vos donnees, vos processus et vos talents.</h1>
           <p
-            data-i18n-fr="One bilingual AI assistant for Canadian organizations: documents, reports, tickets, dashboards, municipal services and recruiting."
-            data-i18n-en="One bilingual AI assistant for Canadian organizations: documents, reports, tickets, dashboards, municipal services and recruiting."
+            data-i18n-fr="Un assistant bilingue qui analyse les documents, genere des rapports, repond aux employes et aide les PME canadiennes a recruter plus vite."
+            data-i18n-en="A bilingual assistant that analyzes documents, creates reports, answers employees and helps Canadian SMBs recruit faster."
           >
-            One bilingual AI assistant for Canadian organizations: documents,
-            reports, tickets, dashboards, municipal services and recruiting.
+            Un assistant bilingue qui analyse les documents, genere des
+            rapports, repond aux employes et aide les PME canadiennes a recruter
+            plus vite.
           </p>
-          <div class="hero-actions">
-            <span>FR/EN</span>
-            <span>FastAPI</span>
-            <span>OpenAI + Supabase ready</span>
+          <div class="hero-cta">
+            <a class="primary-link large" href="#auth">Commencer 14 jours gratuits</a>
+            <a class="ghost-link large" href="#assistant">Voir l'assistant</a>
           </div>
-        </div>
-        <aside class="systems-card" aria-label="Systemes d'entreprise cibles">
-          <strong data-i18n-fr="Connecteurs cibles" data-i18n-en="Target connectors">Connecteurs cibles</strong>
-          <div class="system-grid">
+          <div class="trust-row" aria-label="Systemes d'entreprise cibles">
             <span>Microsoft 365</span>
             <span>Salesforce</span>
             <span>ServiceNow</span>
@@ -38,146 +52,257 @@
             <span>SAP</span>
             <span>Workday</span>
           </div>
-        </aside>
-      </section>
+        </div>
 
-      <section class="product-grid" aria-label="Offres NexHire">
-        <article class="product-card active">
-          <p class="eyebrow">Enterprise</p>
-          <h2>NexHire Enterprise Assistant</h2>
-          <p
-            data-i18n-fr="Agent IA pour municipalites, organismes, PME, universites et grandes entreprises: demandes citoyennes, rapports, reglements, courriels, tickets et statistiques."
-            data-i18n-en="AI agent for municipalities, nonprofits, SMBs, universities and enterprises: citizen requests, reports, regulations, emails, tickets and statistics."
-          >
-            Agent IA pour municipalites, organismes, PME, universites et grandes
-            entreprises: demandes citoyennes, rapports, reglements, courriels,
-            tickets et statistiques.
-          </p>
-        </article>
-        <article class="product-card">
-          <p class="eyebrow">Recruiting</p>
-          <h2>NexHire AI Recruiter Pro</h2>
-          <p
-            data-i18n-fr="Recruteur IA bilingue pour PME canadiennes: analyse de CV, matching, prequalification, questions d'entrevue, classement et assistant RH."
-            data-i18n-en="Bilingual AI recruiter for Canadian SMBs: resume analysis, matching, prequalification, interview questions, ranking and HR assistant."
-          >
-            Recruteur IA bilingue pour PME canadiennes: analyse de CV, matching,
-            prequalification, questions d'entrevue, classement et assistant RH.
-          </p>
-        </article>
-      </section>
-
-      <section class="grid">
-        <article class="panel">
-          <h2 data-i18n-fr="1. Choisir le contexte" data-i18n-en="1. Choose context">1. Choisir le contexte</h2>
-          <div class="controls">
-            <label>
-              <span data-i18n-fr="Assistant" data-i18n-en="Assistant">Assistant</span>
-              <select id="assistant-mode">
-                <option value="enterprise">Enterprise Assistant</option>
-                <option value="municipal">Municipal / organisme</option>
-                <option value="recruiting">AI Recruiter Pro</option>
-              </select>
-            </label>
-            <label>
-              <span data-i18n-fr="Langue / Language" data-i18n-en="Language / Langue">Langue / Language</span>
-              <select id="language">
-                <option value="fr">Francais</option>
-                <option value="en">English</option>
-              </select>
-            </label>
+        <div class="hero-slider" aria-label="Bannieres NexHire">
+          <figure class="slide active">
+            <img src="/static/slide-enterprise.svg" alt="Tableaux de bord IA entreprise" />
+            <figcaption>
+              <strong>Enterprise Intelligence</strong>
+              <span>Incidents, projets, depenses et rapports en une seule vue.</span>
+            </figcaption>
+          </figure>
+          <figure class="slide">
+            <img src="/static/slide-recruiting.svg" alt="Recrutement IA bilingue" />
+            <figcaption>
+              <strong>AI Recruiter Pro</strong>
+              <span>CV, matching, prequalification et questions d'entrevue.</span>
+            </figcaption>
+          </figure>
+          <figure class="slide">
+            <img src="/static/slide-municipal.svg" alt="Assistant IA pour municipalites" />
+            <figcaption>
+              <strong>Municipal & Public Sector</strong>
+              <span>Demandes citoyennes, reglements, tickets et statistiques.</span>
+            </figcaption>
+          </figure>
+          <div class="slider-controls" aria-label="Controle du slider">
+            <button type="button" class="slider-dot active" data-slide="0" aria-label="Banniere 1"></button>
+            <button type="button" class="slider-dot" data-slide="1" aria-label="Banniere 2"></button>
+            <button type="button" class="slider-dot" data-slide="2" aria-label="Banniere 3"></button>
           </div>
-        </article>
+        </div>
+      </section>
 
-        <article class="panel">
-          <h2 data-i18n-fr="2. Televerser un PDF" data-i18n-en="2. Upload a PDF">2. Televerser un PDF</h2>
-          <form id="upload-form" class="upload-form">
-            <label class="file-picker" for="pdf-file">
-              <span data-i18n-fr="Choisir un fichier PDF" data-i18n-en="Choose a PDF file">Choisir un fichier PDF</span>
-              <input id="pdf-file" name="file" type="file" accept=".pdf" required />
+      <section id="solutions" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Plateforme SaaS</p>
+          <h2>Un moteur IA vendable aux entreprises, municipalites et organismes.</h2>
+        </div>
+        <div class="product-grid">
+          <article class="product-card active">
+            <p class="eyebrow">Enterprise</p>
+            <h3>NexHire Enterprise Assistant</h3>
+            <p>
+              Lecture de courriels, analyse documentaire, rapports, tickets,
+              tableaux de bord, politiques RH, achats, depenses et operations.
+            </p>
+          </article>
+          <article class="product-card">
+            <p class="eyebrow">Public sector</p>
+            <h3>Municipalites & organismes</h3>
+            <p>
+              Demandes citoyennes, redaction automatique de rapports, recherche
+              dans les reglements, courriels, tickets et statistiques.
+            </p>
+          </article>
+          <article class="product-card">
+            <p class="eyebrow">Recruiting</p>
+            <h3>NexHire AI Recruiter Pro</h3>
+            <p>
+              Recruteur IA bilingue francais/anglais pour PME canadiennes: CV,
+              matching, prequalification, entrevues et assistant RH.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="pricing" class="section pricing-section">
+        <div class="section-heading">
+          <p class="eyebrow">Paiement</p>
+          <h2>Deux semaines gratuites, puis un plan simple.</h2>
+          <p>Choisissez le mensuel ou economisez avec le paiement annuel.</p>
+        </div>
+        <div class="pricing-grid">
+          <article class="price-card">
+            <span class="badge">14 jours gratuits</span>
+            <h3>Mensuel</h3>
+            <div class="price"><strong>99 $</strong><span>/mois</span></div>
+            <p>Pour demarrer rapidement avec une equipe ou un organisme.</p>
+            <button type="button" class="select-plan" data-plan="monthly">Choisir mensuel</button>
+          </article>
+          <article class="price-card featured">
+            <span class="badge">Meilleure valeur</span>
+            <h3>Annuel</h3>
+            <div class="price"><strong>990 $</strong><span>/annee</span></div>
+            <p>Deux mois economises pour deploiement SaaS canadien.</p>
+            <button type="button" class="select-plan" data-plan="annual">Choisir annuel</button>
+          </article>
+        </div>
+      </section>
+
+      <section id="auth" class="section auth-section">
+        <div class="auth-copy">
+          <p class="eyebrow">Compte NexHire</p>
+          <h2>Inscription et connexion pour entreprise, particulier ou organisme.</h2>
+          <p>
+            Le compte active un essai gratuit de 14 jours et conserve le choix
+            du plan de paiement pour la suite.
+          </p>
+        </div>
+        <div class="auth-card">
+          <div class="auth-tabs">
+            <button type="button" class="auth-tab active" data-auth-tab="signup">S'inscrire</button>
+            <button type="button" class="auth-tab" data-auth-tab="login">Connexion</button>
+          </div>
+          <form id="signup-form" class="auth-form active">
+            <label>Nom complet<input name="name" type="text" required /></label>
+            <label>Email professionnel<input name="email" type="email" required /></label>
+            <label>Mot de passe<input name="password" type="password" minlength="8" required /></label>
+            <label>
+              Type de compte
+              <select name="account_type" required>
+                <option value="business">Entreprise</option>
+                <option value="individual">Particulier</option>
+                <option value="organization">Organisme</option>
+              </select>
             </label>
-            <button type="submit" data-i18n-fr="Extraire le texte" data-i18n-en="Extract text">Extraire le texte</button>
+            <label>
+              Plan apres essai
+              <select id="signup-plan" name="plan" required>
+                <option value="monthly">99 $ / mois</option>
+                <option value="annual">990 $ / annee</option>
+              </select>
+            </label>
+            <button type="submit">Creer mon compte</button>
           </form>
-          <p id="upload-status" class="status"></p>
-        </article>
+          <form id="login-form" class="auth-form">
+            <label>Email<input name="email" type="email" required /></label>
+            <label>Mot de passe<input name="password" type="password" required /></label>
+            <button type="submit">Se connecter</button>
+          </form>
+          <p id="auth-status" class="status"></p>
+        </div>
+      </section>
 
-        <article class="panel">
-          <h2 data-i18n-fr="3. Resume IA" data-i18n-en="3. AI summary">3. Resume IA</h2>
-          <button id="summary-button" type="button" disabled data-i18n-fr="Generer le resume" data-i18n-en="Generate summary">Generer le resume</button>
-          <div id="summary" class="output muted">
-            Televersez un PDF pour activer le resume.
-          </div>
-        </article>
-
-        <article class="panel">
-          <h2 data-i18n-fr="Exemples de questions" data-i18n-en="Sample questions">Exemples de questions</h2>
-          <div class="prompt-list">
-            <button
-              type="button"
-              data-prompt-fr="Montre-moi les incidents critiques ouverts, les projets en retard et les depenses du mois."
-              data-prompt-en="Show me open critical incidents, late projects and this month's expenses."
-              data-i18n-fr="Incidents + projets + depenses"
-              data-i18n-en="Incidents + projects + expenses"
-            >
-              Incidents + projets + depenses
-            </button>
-            <button
-              type="button"
-              data-prompt-fr="Ou est la politique RH ?"
-              data-prompt-en="Where is the HR policy?"
-              data-i18n-fr="Politique RH"
-              data-i18n-en="HR policy"
-            >
-              Politique RH
-            </button>
-            <button
-              type="button"
-              data-prompt-fr="Classe les candidatures et propose des questions d'entrevue."
-              data-prompt-en="Rank the applicants and suggest interview questions."
-              data-i18n-fr="Recrutement bilingue"
-              data-i18n-en="Bilingual recruiting"
-            >
-              Recrutement bilingue
-            </button>
-          </div>
-        </article>
-
-        <article class="panel wide">
-          <h2 data-i18n-fr="4. Chat sur le document" data-i18n-en="4. Chat with the document">4. Chat sur le document</h2>
-          <div id="chat-log" class="chat-log">
-            <div
-              class="message assistant"
-              data-i18n-fr="Posez une question apres le televersement. Ask in French or English."
-              data-i18n-en="Ask a question after upload. Posez votre question en francais ou en anglais."
-            >
-              Posez une question apres le televersement. Ask in French or English.
+      <section id="assistant" class="section app-section">
+        <div class="section-heading">
+          <p class="eyebrow">Assistant en action</p>
+          <h2>Televersez un PDF, resumez-le et discutez avec l'IA.</h2>
+        </div>
+        <div class="grid">
+          <article class="panel">
+            <h3 data-i18n-fr="1. Choisir le contexte" data-i18n-en="1. Choose context">1. Choisir le contexte</h3>
+            <div class="controls">
+              <label>
+                <span data-i18n-fr="Assistant" data-i18n-en="Assistant">Assistant</span>
+                <select id="assistant-mode">
+                  <option value="enterprise">Enterprise Assistant</option>
+                  <option value="municipal">Municipal / organisme</option>
+                  <option value="recruiting">AI Recruiter Pro</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n-fr="Langue / Language" data-i18n-en="Language / Langue">Langue / Language</span>
+                <select id="language">
+                  <option value="fr">Francais</option>
+                  <option value="en">English</option>
+                </select>
+              </label>
             </div>
-          </div>
-          <form id="chat-form" class="chat-form">
-            <input
-              id="question"
-              type="text"
-              placeholder="Ex: Quel est le processus d'achat ?"
-              data-placeholder-fr="Ex: Quel est le processus d'achat ?"
-              data-placeholder-en="Ex: What is the purchasing process?"
-              disabled
-              required
-            />
-            <button id="chat-button" type="submit" disabled data-i18n-fr="Envoyer" data-i18n-en="Send">Envoyer</button>
-          </form>
-        </article>
+          </article>
 
-        <article class="panel wide">
-          <h2 data-i18n-fr="Apercu du texte extrait" data-i18n-en="Extracted text preview">Apercu du texte extrait</h2>
-          <pre
-            id="preview"
-            class="preview"
-            data-empty-fr="Aucun document televerse."
-            data-empty-en="No document uploaded."
-          >Aucun document televerse.</pre>
-        </article>
+          <article class="panel">
+            <h3 data-i18n-fr="2. Televerser un PDF" data-i18n-en="2. Upload a PDF">2. Televerser un PDF</h3>
+            <form id="upload-form" class="upload-form">
+              <label class="file-picker" for="pdf-file">
+                <span data-i18n-fr="Choisir un fichier PDF" data-i18n-en="Choose a PDF file">Choisir un fichier PDF</span>
+                <input id="pdf-file" name="file" type="file" accept=".pdf" required />
+              </label>
+              <button type="submit" data-i18n-fr="Extraire le texte" data-i18n-en="Extract text">Extraire le texte</button>
+            </form>
+            <p id="upload-status" class="status"></p>
+          </article>
+
+          <article class="panel">
+            <h3 data-i18n-fr="3. Resume IA" data-i18n-en="3. AI summary">3. Resume IA</h3>
+            <button id="summary-button" type="button" disabled data-i18n-fr="Generer le resume" data-i18n-en="Generate summary">Generer le resume</button>
+            <div id="summary" class="output muted">Televersez un PDF pour activer le resume.</div>
+          </article>
+
+          <article class="panel">
+            <h3 data-i18n-fr="Exemples de questions" data-i18n-en="Sample questions">Exemples de questions</h3>
+            <div class="prompt-list">
+              <button type="button" data-prompt-fr="Montre-moi les incidents critiques ouverts, les projets en retard et les depenses du mois." data-prompt-en="Show me open critical incidents, late projects and this month's expenses." data-i18n-fr="Incidents + projets + depenses" data-i18n-en="Incidents + projects + expenses">Incidents + projets + depenses</button>
+              <button type="button" data-prompt-fr="Ou est la politique RH ?" data-prompt-en="Where is the HR policy?" data-i18n-fr="Politique RH" data-i18n-en="HR policy">Politique RH</button>
+              <button type="button" data-prompt-fr="Classe les candidatures et propose des questions d'entrevue." data-prompt-en="Rank the applicants and suggest interview questions." data-i18n-fr="Recrutement bilingue" data-i18n-en="Bilingual recruiting">Recrutement bilingue</button>
+            </div>
+          </article>
+
+          <article class="panel wide">
+            <h3 data-i18n-fr="4. Chat sur le document" data-i18n-en="4. Chat with the document">4. Chat sur le document</h3>
+            <div id="chat-log" class="chat-log">
+              <div class="message assistant" data-i18n-fr="Posez une question apres le televersement. Ask in French or English." data-i18n-en="Ask a question after upload. Posez votre question en francais ou en anglais.">
+                Posez une question apres le televersement. Ask in French or English.
+              </div>
+            </div>
+            <form id="chat-form" class="chat-form">
+              <input id="question" type="text" placeholder="Ex: Quel est le processus d'achat ?" data-placeholder-fr="Ex: Quel est le processus d'achat ?" data-placeholder-en="Ex: What is the purchasing process?" disabled required />
+              <button id="chat-button" type="submit" disabled data-i18n-fr="Envoyer" data-i18n-en="Send">Envoyer</button>
+            </form>
+          </article>
+
+          <article class="panel wide">
+            <h3 data-i18n-fr="Apercu du texte extrait" data-i18n-en="Extracted text preview">Apercu du texte extrait</h3>
+            <pre id="preview" class="preview" data-empty-fr="Aucun document televerse." data-empty-en="No document uploaded.">Aucun document televerse.</pre>
+          </article>
+        </div>
       </section>
     </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <section class="footer-brand">
+          <a class="brand" href="#top" aria-label="NexHire accueil">
+            <img src="/static/logo-mark.svg" alt="" />
+            <span>Nex<span>Hire</span></span>
+          </a>
+          <p>Global AI Employment Platform</p>
+          <hr />
+          <p>A product of <strong>CivicAI Inc.</strong><br />NEQ 2280791601 · Montreal, Quebec</p>
+        </section>
+        <section>
+          <h4>Platform</h4>
+          <a href="#assistant">Browse jobs</a>
+          <a href="#solutions">For employers</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#auth">Get started free</a>
+        </section>
+        <section>
+          <h4>Company</h4>
+          <a href="#solutions">About / Our Team</a>
+          <a href="#solutions">Blog</a>
+          <a href="#top">CivicAI Inc.</a>
+          <a href="#solutions">AttenteZero</a>
+          <a href="#assistant">Help Centre</a>
+          <a href="#auth">Privacy Centre</a>
+          <a href="#pricing">Terms of Service</a>
+        </section>
+        <section>
+          <h4>Contact</h4>
+          <a href="mailto:hello@nexhire.ca">hello@nexhire.ca</a>
+          <a href="mailto:contact@nexhire.ca">contact@nexhire.ca</a>
+          <a href="mailto:legal@nexhire.ca">legal@nexhire.ca</a>
+          <a href="https://www.linkedin.com" rel="noreferrer">LinkedIn</a>
+        </section>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 CivicAI Inc. All rights reserved.</span>
+        <span>Privacy · Terms · Legal</span>
+        <span>Made in Quebec · CivicAI 2026</span>
+      </div>
+    </footer>
+
     <script src="/static/app.js"></script>
   </body>
 </html>

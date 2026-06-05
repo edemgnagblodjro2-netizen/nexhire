@@ -62,6 +62,29 @@ class ChatResponse(BaseModel):
     conversation_id: str
 
 
+class RegisterRequest(BaseModel):
+    name: str = Field(..., min_length=2)
+    email: str = Field(..., min_length=5)
+    password: str = Field(..., min_length=8)
+    account_type: str = Field("business", pattern="^(business|individual|organization)$")
+    plan: str = Field("monthly", pattern="^(monthly|annual)$")
+
+
+class LoginRequest(BaseModel):
+    email: str = Field(..., min_length=5)
+    password: str = Field(..., min_length=1)
+
+
+class AccountResponse(BaseModel):
+    id: str
+    name: str
+    email: str
+    account_type: str
+    plan: str
+    plan_label: str
+    trial_days: int
+
+
 def create_app(
     *,
     storage: DocumentStore | None = None,
@@ -94,6 +117,51 @@ def create_app(
     @app.get("/api/health")
     def health():
         return {"status": "ok"}
+
+    @app.get("/api/billing/plans")
+    def billing_plans():
+        return {
+            "trial_days": 14,
+            "plans": [
+                {"id": "monthly", "price": 99, "currency": "CAD", "interval": "month"},
+                {"id": "annual", "price": 990, "currency": "CAD", "interval": "year"},
+            ],
+        }
+
+    @app.post("/api/auth/register", response_model=AccountResponse)
+    def register_account(
+        payload: RegisterRequest,
+        store: DocumentStore = Depends(get_storage),
+    ):
+        try:
+            return store.create_account(
+                name=payload.name,
+                email=payload.email,
+                password=payload.password,
+                account_type=payload.account_type,
+                plan=payload.plan,
+            )
+        except ValueError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail=str(exc),
+            ) from exc
+
+    @app.post("/api/auth/login", response_model=AccountResponse)
+    def login_account(
+        payload: LoginRequest,
+        store: DocumentStore = Depends(get_storage),
+    ):
+        account = store.authenticate_account(
+            email=payload.email,
+            password=payload.password,
+        )
+        if account is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Email ou mot de passe invalide.",
+            )
+        return account
 
     @app.post(
         "/api/documents",

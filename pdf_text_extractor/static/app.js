@@ -12,6 +12,15 @@ const chatLog = document.querySelector("#chat-log");
 const assistantMode = document.querySelector("#assistant-mode");
 const language = document.querySelector("#language");
 const promptButtons = document.querySelectorAll("[data-prompt-fr]");
+const slides = document.querySelectorAll(".slide");
+const sliderDots = document.querySelectorAll(".slider-dot");
+const planButtons = document.querySelectorAll(".select-plan");
+const signupPlan = document.querySelector("#signup-plan");
+const authTabs = document.querySelectorAll(".auth-tab");
+const signupForm = document.querySelector("#signup-form");
+const loginForm = document.querySelector("#login-form");
+const authStatus = document.querySelector("#auth-status");
+let activeSlide = 0;
 
 const translations = {
   fr: {
@@ -37,6 +46,70 @@ const translations = {
 
 language.addEventListener("change", updateUiLanguage);
 updateUiLanguage();
+
+sliderDots.forEach((dot) => {
+  dot.addEventListener("click", () => {
+    showSlide(Number(dot.dataset.slide));
+  });
+});
+
+window.setInterval(() => {
+  showSlide((activeSlide + 1) % slides.length);
+}, 6000);
+
+planButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    signupPlan.value = button.dataset.plan;
+    document.querySelector("#auth").scrollIntoView({ behavior: "smooth" });
+    showAuthTab("signup");
+    setAuthStatus(
+      button.dataset.plan === "annual"
+        ? "Plan annuel selectionne: 990 $/annee apres 14 jours gratuits."
+        : "Plan mensuel selectionne: 99 $/mois apres 14 jours gratuits."
+    );
+  });
+});
+
+authTabs.forEach((tab) => {
+  tab.addEventListener("click", () => showAuthTab(tab.dataset.authTab));
+});
+
+signupForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const formData = new FormData(signupForm);
+  const payload = Object.fromEntries(formData.entries());
+
+  try {
+    const response = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await parseJson(response);
+    setAuthStatus(
+      `Compte cree pour ${data.email}. Essai gratuit actif ${data.trial_days} jours, plan ${data.plan_label}.`
+    );
+  } catch (error) {
+    setAuthStatus(error.message, true);
+  }
+});
+
+loginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const payload = Object.fromEntries(new FormData(loginForm).entries());
+
+  try {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await parseJson(response);
+    setAuthStatus(`Connexion reussie. Bienvenue ${data.name}.`);
+  } catch (error) {
+    setAuthStatus(error.message, true);
+  }
+});
 
 uploadForm.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -145,6 +218,29 @@ function assistantContext() {
     assistant_mode: assistantMode.value,
     language: language.value,
   };
+}
+
+function showSlide(index) {
+  activeSlide = index;
+  slides.forEach((slide, slideIndex) => {
+    slide.classList.toggle("active", slideIndex === index);
+  });
+  sliderDots.forEach((dot, dotIndex) => {
+    dot.classList.toggle("active", dotIndex === index);
+  });
+}
+
+function showAuthTab(tabName) {
+  authTabs.forEach((tab) => {
+    tab.classList.toggle("active", tab.dataset.authTab === tabName);
+  });
+  signupForm.classList.toggle("active", tabName === "signup");
+  loginForm.classList.toggle("active", tabName === "login");
+}
+
+function setAuthStatus(message, isError = false) {
+  authStatus.textContent = message;
+  authStatus.classList.toggle("error", isError);
 }
 
 function updateUiLanguage() {

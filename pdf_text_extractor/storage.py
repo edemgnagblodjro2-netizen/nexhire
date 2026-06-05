@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import hashlib
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any
@@ -18,6 +19,7 @@ class DocumentStore:
     supabase: Client | None = None
     documents: dict[str, dict[str, Any]] = field(default_factory=dict)
     conversations: list[dict[str, Any]] = field(default_factory=list)
+    accounts: dict[str, dict[str, Any]] = field(default_factory=dict)
 
     @classmethod
     def from_env(cls) -> "DocumentStore":
@@ -117,3 +119,49 @@ class DocumentStore:
         }
         self.conversations.append(conversation)
         return conversation
+
+    def create_account(
+        self,
+        *,
+        name: str,
+        email: str,
+        password: str,
+        account_type: str,
+        plan: str,
+    ) -> dict[str, Any]:
+        normalized_email = email.strip().lower()
+        if normalized_email in self.accounts:
+            raise ValueError("Un compte existe deja pour cet email.")
+
+        account = {
+            "id": str(uuid4()),
+            "name": name.strip(),
+            "email": normalized_email,
+            "password_hash": _hash_password(password),
+            "account_type": account_type,
+            "plan": plan,
+            "trial_days": 14,
+            "created_at": _now_iso(),
+        }
+        self.accounts[normalized_email] = account
+        return _public_account(account)
+
+    def authenticate_account(self, *, email: str, password: str) -> dict[str, Any] | None:
+        account = self.accounts.get(email.strip().lower())
+        if account is None:
+            return None
+
+        if account["password_hash"] != _hash_password(password):
+            return None
+
+        return _public_account(account)
+
+
+def _hash_password(password: str) -> str:
+    return hashlib.sha256(password.encode("utf-8")).hexdigest()
+
+
+def _public_account(account: dict[str, Any]) -> dict[str, Any]:
+    public = {key: value for key, value in account.items() if key != "password_hash"}
+    public["plan_label"] = "990 $/annee" if public["plan"] == "annual" else "99 $/mois"
+    return public

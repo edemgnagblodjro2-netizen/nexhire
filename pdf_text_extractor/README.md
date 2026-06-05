@@ -15,6 +15,16 @@ OpenAI et permet de poser des questions sur le document. Le schema Supabase
 prepare aussi les sources futures: Microsoft 365, Salesforce, ServiceNow, Jira,
 SAP et Workday.
 
+Le portail web inclut aussi:
+
+- une entete professionnelle avec branding NexHire;
+- un slider de 3 bannieres visuelles locales;
+- un footer avec les informations CivicAI/NexHire;
+- deux plans de paiement: `99 $/mois` et `990 $/annee`;
+- un essai gratuit de 14 jours apres inscription;
+- des formulaires inscription/connexion pour `business`, `individual` et
+  `organization`.
+
 ## Installation
 
 ```bash
@@ -77,6 +87,9 @@ Chaque requete de resume ou de chat accepte aussi `language` avec `fr` ou `en`.
 - `POST /api/documents/{document_id}/summary`: genere et conserve le resume.
 - `POST /api/documents/{document_id}/chat`: repond a une question et conserve
   l'historique dans `conversations`.
+- `GET /api/billing/plans`: retourne les plans `monthly` et `annual`.
+- `POST /api/auth/register`: cree un compte prototype avec essai de 14 jours.
+- `POST /api/auth/login`: connecte un compte cree localement.
 - `GET /api/health`: verifie que l'API repond.
 
 Exemple chat:

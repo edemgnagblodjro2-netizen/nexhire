@@ -85,6 +85,41 @@ def test_upload_pdf_extracts_text():
     assert "Bonjour depuis un PDF de test" in payload["text_preview"]
 
 
+def test_billing_plans_include_trial_and_prices():
+    client, _, _ = _client()
+
+    response = client.get("/api/billing/plans")
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["trial_days"] == 14
+    assert {"id": "monthly", "price": 99, "currency": "CAD", "interval": "month"} in payload["plans"]
+    assert {"id": "annual", "price": 990, "currency": "CAD", "interval": "year"} in payload["plans"]
+
+
+def test_register_and_login_account():
+    client, _, _ = _client()
+    account = {
+        "name": "Marie Tremblay",
+        "email": "marie@example.com",
+        "password": "password123",
+        "account_type": "business",
+        "plan": "annual",
+    }
+
+    register_response = client.post("/api/auth/register", json=account)
+    login_response = client.post(
+        "/api/auth/login",
+        json={"email": account["email"], "password": account["password"]},
+    )
+
+    assert register_response.status_code == 200
+    assert register_response.json()["trial_days"] == 14
+    assert register_response.json()["plan_label"] == "990 $/annee"
+    assert login_response.status_code == 200
+    assert login_response.json()["email"] == account["email"]
+
+
 def test_summary_uses_assistant_and_updates_document():
     client, store, assistant = _client()
     document = _upload_pdf(client)
