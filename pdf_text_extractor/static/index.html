@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="Un seul assistant IA pour tous vos systèmes d'entreprise. Bilingue FR/EN." />
   <meta name="twitter:image"       content="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&h=630&q=80" />
 
-  <link rel="stylesheet" href="/static/styles.css?v=20260607" />
+  <link rel="stylesheet" href="/static/styles.css?v=20260608" />
 </head>
 <body>
 
@@ -365,6 +365,9 @@
           <li style="margin-bottom:6px"><code>phase12_dept_types.sql</code> — type de département (dept_type)</li>
           <li style="margin-bottom:6px"><code>phase13_connectors.sql</code> — table connecteurs OAuth / API-key</li>
         </ol>
+        <p style="color:var(--slate);margin-top:8px;font-size:.82rem">
+          <strong>Tables partiellement créées ?</strong> Exécutez uniquement <code>fix_missing_tables.sql</code> pour créer <code>servers</code> et <code>workforce_processes</code> sans retoucher les autres tables.
+        </p>
         <p style="color:var(--slate);font-size:.82rem">Ces fichiers se trouvent dans le dossier <code>pdf_text_extractor/</code> du projet. Une fois exécutés, actualisez la page.</p>
         <div id="setup-checks" style="margin-top:12px;background:var(--surface2);border-radius:8px;padding:12px;font-family:monospace;font-size:.78rem;white-space:pre-wrap;max-height:180px;overflow-y:auto"></div>
       </div>
@@ -1379,6 +1382,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260607"></script>
+<script src="/static/app.js?v=20260608"></script>
 </body>
 </html>

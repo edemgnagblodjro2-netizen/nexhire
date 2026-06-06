@@ -501,7 +501,7 @@ async function checkReadinessNow() {
     _readinessData = d;
     if (checks) {
       checks.textContent = Object.entries(d.checks || {})
-        .map(([k, v]) => `${v === "ok" || v === "set" ? "✅" : "❌"} ${k}: ${v}`)
+        .map(([k, v]) => `${v === "ok" || v === "set" || String(v).startsWith("ok") ? "✅" : "❌"} ${k}: ${v}`)
         .join("\n");
     }
     const missing = Object.entries(d.checks || {})
@@ -521,7 +521,7 @@ function openSetupModal() {
   const checks = $("setup-checks");
   if (checks && _readinessData) {
     checks.textContent = Object.entries(_readinessData.checks || {})
-      .map(([k, v]) => `${v === "ok" || v === "set" ? "✅" : "❌"} ${k}: ${v}`)
+      .map(([k, v]) => `${v === "ok" || v === "set" || String(v).startsWith("ok") ? "✅" : "❌"} ${k}: ${v}`)
       .join("\n");
   }
   modal.classList.remove("hidden");
