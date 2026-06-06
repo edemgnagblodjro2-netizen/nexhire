@@ -261,7 +261,19 @@ def _mock_workday(category: str, department: str | None = None, period: str = "c
 
 # ── Dispatch des outils ───────────────────────────────────────────────────────
 
-def _call_tool(name: str, arguments: dict[str, Any]) -> Any:
+def _call_tool(name: str, arguments: dict[str, Any], org_id: str | None = None) -> Any:
+    # Microsoft 365 : vrais appels Graph API si l'org a des tokens OAuth stockés.
+    if name == "search_microsoft_365" and org_id:
+        try:
+            from m365_service import search_microsoft_365 as _real_m365
+            return _real_m365(
+                query=arguments.get("query", ""),
+                org_id=org_id,
+                limit=arguments.get("limit", 5),
+            )
+        except Exception:
+            pass  # fallback simulé en cas d'erreur inattendue
+
     handlers = {
         "search_servicenow": lambda a: _mock_servicenow(**a),
         "search_jira": lambda a: _mock_jira(**a),
@@ -296,6 +308,7 @@ def run_agent(
     assistant_mode: str = "enterprise",
     language: str = "fr",
     connected_connectors: list[str] | None = None,
+    org_id: str | None = None,
 ) -> AgentResponse:
     """Boucle agent en deux passes :
     1. LLM choisit quels outils appeler (function calling).
@@ -360,7 +373,7 @@ def run_agent(
         for tool_call in choice.message.tool_calls:
             fn_name = tool_call.function.name
             arguments = json.loads(tool_call.function.arguments)
-            result = _call_tool(fn_name, arguments)
+            result = _call_tool(fn_name, arguments, org_id=org_id)
 
             tools_called.append({"tool": fn_name, "arguments": arguments, "result": result})
 

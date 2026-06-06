@@ -23,6 +23,7 @@ from routes_agent import router as agent_router
 from routes_audit import router as audit_router
 from routes_auth import router as auth_router
 from routes_connectors import router as connectors_router
+from routes_oauth import router as oauth_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -85,6 +86,7 @@ def create_app(
     )
     app.include_router(auth_router)
     app.include_router(connectors_router)
+    app.include_router(oauth_router)
     app.include_router(audit_router)
     app.include_router(agent_router)
     app.state.storage = storage or DocumentStore.from_env()

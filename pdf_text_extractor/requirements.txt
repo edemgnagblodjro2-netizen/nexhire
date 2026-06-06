@@ -8,3 +8,4 @@ python-dotenv
 cryptography
 PyJWT[crypto]
 pydantic[email]
+httpx

@@ -1,142 +1,199 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>NexHire Enterprise Assistant</title>
-    <link rel="stylesheet" href="/static/styles.css" />
-  </head>
-  <body>
-    <main class="shell">
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">NexHire Enterprise Assistant</p>
-          <h1>Un seul assistant IA pour vos donnees, vos processus et vos equipes.</h1>
-          <p>
-            One bilingual AI assistant for Canadian organizations: documents,
-            reports, tickets, dashboards, municipal services and recruiting.
-          </p>
-          <div class="hero-actions">
-            <span>FR/EN</span>
-            <span>FastAPI</span>
-            <span>OpenAI + Supabase ready</span>
-          </div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NexHire Enterprise Assistant</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ LOGIN ══════════════════════════ -->
+<div id="auth-screen" class="auth-screen">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <span class="brand-dot"></span>
+      <strong>NexHire</strong>
+    </div>
+    <h1>Bienvenue</h1>
+    <p class="auth-sub">Connectez-vous à votre espace Enterprise Assistant.</p>
+    <form id="login-form">
+      <label>
+        Adresse courriel
+        <input id="login-email" type="email" placeholder="vous@organisation.ca"
+               required autocomplete="email" />
+      </label>
+      <label>
+        Mot de passe
+        <input id="login-password" type="password" placeholder="••••••••"
+               required autocomplete="current-password" />
+      </label>
+      <button type="submit" id="login-btn">Se connecter</button>
+      <p id="login-error" class="form-error hidden"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ APP ════════════════════════════ -->
+<div id="app-screen" class="hidden">
+
+  <!-- Navigation -->
+  <nav class="topnav">
+    <div class="nav-brand">
+      <span class="brand-dot"></span>
+      <strong>NexHire</strong>
+      <span class="nav-sub">Enterprise Assistant</span>
+    </div>
+
+    <div class="nav-tabs" role="tablist">
+      <button class="tab-btn active" data-tab="agent"      role="tab">Assistant IA</button>
+      <button class="tab-btn"        data-tab="connectors" role="tab">Connecteurs</button>
+      <button class="tab-btn"        data-tab="documents"  role="tab">Documents</button>
+      <button class="tab-btn admin-only hidden" data-tab="audit" role="tab">Audit</button>
+    </div>
+
+    <div class="nav-user">
+      <span id="nav-user-email" class="user-email"></span>
+      <span id="nav-user-role"  class="user-role-badge"></span>
+      <button id="logout-btn" class="btn-ghost">Déconnexion</button>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="app-main">
+
+    <!-- ─────────────────────────────────── TAB : AGENT ───────────────── -->
+    <section id="tab-agent" class="tab-content" role="tabpanel">
+      <div class="section-header">
+        <h2>Posez votre question</h2>
+        <div class="controls-inline">
+          <select id="agent-mode" title="Mode assistant">
+            <option value="enterprise">Enterprise</option>
+            <option value="municipal">Municipal / Organisme</option>
+            <option value="recruiting">Recrutement</option>
+          </select>
+          <select id="agent-lang" title="Langue">
+            <option value="fr">Français</option>
+            <option value="en">English</option>
+          </select>
         </div>
-        <aside class="systems-card" aria-label="Systemes d'entreprise cibles">
-          <strong>Connecteurs cibles</strong>
-          <div class="system-grid">
-            <span>Microsoft 365</span>
-            <span>Salesforce</span>
-            <span>ServiceNow</span>
-            <span>Jira</span>
-            <span>SAP</span>
-            <span>Workday</span>
-          </div>
-        </aside>
-      </section>
+      </div>
 
-      <section class="product-grid" aria-label="Offres NexHire">
-        <article class="product-card active">
-          <p class="eyebrow">Enterprise</p>
-          <h2>NexHire Enterprise Assistant</h2>
-          <p>
-            Agent IA pour municipalites, organismes, PME, universites et grandes
-            entreprises: demandes citoyennes, rapports, reglements, courriels,
-            tickets et statistiques.
-          </p>
-        </article>
-        <article class="product-card">
-          <p class="eyebrow">Recruiting</p>
-          <h2>NexHire AI Recruiter Pro</h2>
-          <p>
-            Recruteur IA bilingue pour PME canadiennes: analyse de CV, matching,
-            prequalification, questions d'entrevue, classement et assistant RH.
-          </p>
-        </article>
-      </section>
+      <div class="prompt-shortcuts" id="prompt-shortcuts">
+        <button class="prompt-chip" data-prompt="Montre-moi les incidents critiques ouverts, les projets en retard et les dépenses du mois.">Incidents + projets + budget</button>
+        <button class="prompt-chip" data-prompt="Quels emails importants n'ont pas été lus depuis hier ?">Emails non lus</button>
+        <button class="prompt-chip" data-prompt="Quels contrats arrivent à échéance dans les 90 prochains jours ?">Contrats à renouveler</button>
+        <button class="prompt-chip" data-prompt="Combien de postes sont vacants et quelles absences sont prévues cette semaine ?">Effectifs RH</button>
+        <button class="prompt-chip" data-prompt="Quel est le statut du budget du mois courant par département ?">Budget du mois</button>
+      </div>
 
-      <section class="grid">
-        <article class="panel">
-          <h2>1. Choisir le contexte</h2>
-          <div class="controls">
-            <label>
-              Assistant
-              <select id="assistant-mode">
-                <option value="enterprise">Enterprise Assistant</option>
-                <option value="municipal">Municipal / organisme</option>
-                <option value="recruiting">AI Recruiter Pro</option>
-              </select>
-            </label>
-            <label>
-              Langue / Language
-              <select id="language">
-                <option value="fr">Francais</option>
-                <option value="en">English</option>
-              </select>
-            </label>
-          </div>
-        </article>
+      <form id="agent-form" class="agent-form">
+        <textarea id="agent-question" rows="3"
+          placeholder="Ex : Montre-moi les incidents critiques et les emails non lus liés à la panne de ce matin."
+          required></textarea>
+        <button type="submit" id="agent-btn">Envoyer à l'agent</button>
+      </form>
 
-        <article class="panel">
-          <h2>2. Televerser un PDF</h2>
-          <form id="upload-form" class="upload-form">
+      <div id="agent-loading" class="loading-bar hidden">L'agent analyse vos systèmes connectés…</div>
+      <p   id="agent-error"   class="error-text hidden"></p>
+
+      <div id="agent-result" class="agent-result hidden">
+        <div id="agent-sources" class="agent-sources"></div>
+        <div id="agent-answer"  class="agent-answer"></div>
+        <details class="tools-detail">
+          <summary>Outils appelés par l'agent</summary>
+          <pre id="agent-tools-json"></pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────── TAB : CONNECTEURS ────────────── -->
+    <section id="tab-connectors" class="tab-content hidden" role="tabpanel">
+      <div class="section-header">
+        <h2>Connecteurs d'entreprise</h2>
+        <button id="refresh-connectors" class="btn-secondary">&#8635; Actualiser</button>
+      </div>
+      <p class="section-sub">
+        Connectez vos systèmes pour que l'agent puisse les interroger en temps réel.
+        Les tokens OAuth sont chiffrés (Fernet) avant d'être stockés.
+      </p>
+      <div id="connector-success" class="success-banner hidden"></div>
+      <div id="connector-grid"   class="connector-grid">
+        <p class="muted">Chargement des connecteurs…</p>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────── TAB : DOCUMENTS ─────────────── -->
+    <section id="tab-documents" class="tab-content hidden" role="tabpanel">
+      <div class="section-header">
+        <h2>Analyse de documents PDF</h2>
+        <div class="controls-inline">
+          <select id="doc-mode">
+            <option value="enterprise">Enterprise</option>
+            <option value="municipal">Municipal</option>
+            <option value="recruiting">Recrutement</option>
+          </select>
+          <select id="doc-lang">
+            <option value="fr">Français</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="doc-grid">
+        <div class="panel">
+          <h3>Téléverser un PDF</h3>
+          <form id="upload-form">
             <label class="file-picker" for="pdf-file">
-              <span>Choisir un fichier PDF</span>
+              <span id="file-label">Choisir un fichier PDF</span>
               <input id="pdf-file" name="file" type="file" accept=".pdf" required />
             </label>
             <button type="submit">Extraire le texte</button>
           </form>
           <p id="upload-status" class="status"></p>
-        </article>
+        </div>
 
-        <article class="panel">
-          <h2>3. Resume IA</h2>
-          <button id="summary-button" type="button" disabled>Generer le resume</button>
-          <div id="summary" class="output muted">
-            Televersez un PDF pour activer le resume.
-          </div>
-        </article>
+        <div class="panel">
+          <h3>Résumé IA</h3>
+          <button id="summary-button" disabled>Générer le résumé</button>
+          <div id="summary" class="output muted">Téléversez un PDF pour activer le résumé.</div>
+        </div>
 
-        <article class="panel">
-          <h2>Exemples de questions</h2>
-          <div class="prompt-list">
-            <button type="button" data-prompt="Montre-moi les incidents critiques ouverts, les projets en retard et les depenses du mois.">
-              Incidents + projets + depenses
-            </button>
-            <button type="button" data-prompt="Ou est la politique RH ?">
-              Politique RH
-            </button>
-            <button type="button" data-prompt="Classe les candidatures et propose des questions d'entrevue.">
-              Recrutement bilingue
-            </button>
-          </div>
-        </article>
-
-        <article class="panel wide">
-          <h2>4. Chat sur le document</h2>
+        <div class="panel wide">
+          <h3>Chat sur le document</h3>
           <div id="chat-log" class="chat-log">
             <div class="message assistant">
-              Posez une question apres le televersement. Ask in French or English.
+              Posez une question après le téléversement. Ask in French or English.
             </div>
           </div>
           <form id="chat-form" class="chat-form">
-            <input
-              id="question"
-              type="text"
-              placeholder="Ex: Quel est le processus d'achat ?"
-              disabled
-              required
-            />
+            <input id="doc-question" type="text"
+                   placeholder="Ex : Quel est le processus d'achat ?" disabled required />
             <button id="chat-button" type="submit" disabled>Envoyer</button>
           </form>
-        </article>
+        </div>
 
-        <article class="panel wide">
-          <h2>Apercu du texte extrait</h2>
-          <pre id="preview" class="preview">Aucun document televerse.</pre>
-        </article>
-      </section>
-    </main>
-    <script src="/static/app.js"></script>
-  </body>
+        <div class="panel wide">
+          <h3>Aperçu du texte extrait</h3>
+          <pre id="preview" class="preview">Aucun document téléversé.</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────── TAB : AUDIT ──────────────────── -->
+    <section id="tab-audit" class="tab-content hidden" role="tabpanel">
+      <div class="section-header">
+        <h2>Journal d'audit</h2>
+        <button id="refresh-audit" class="btn-secondary">&#8635; Actualiser</button>
+      </div>
+      <div id="audit-wrap" class="table-wrap">
+        <p class="muted" style="padding:20px">Chargement…</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
 </html>

@@ -65,6 +65,7 @@ def agent_query(
             assistant_mode=payload.assistant_mode,
             language=payload.language,
             connected_connectors=connectors if connectors else None,
+            org_id=user.organization_id,
         )
     except RuntimeError as exc:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
