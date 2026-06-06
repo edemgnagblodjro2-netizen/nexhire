@@ -89,30 +89,18 @@ def get_current_user(authorization: str | None = Header(default=None)) -> Curren
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Jeton incomplet.")
 
     sb = service_client()
-    res = (
-        sb.table("users")
-        .select("id, email, organization_id, role")
-        .eq("id", sub)
-        .limit(1)
-        .execute()
-    )
+
+    # SECURITY DEFINER bypasse l'RLS indépendamment du format de clé Supabase.
+    res = sb.rpc("get_user_profile_by_id", {"p_user_id": sub}).execute()
     rows = res.data or []
     if not rows:
-        # Future SSO : provisioning à la volée par email possible ici.
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Profil utilisateur introuvable.")
     row = rows[0]
 
     org_status = None
     if row.get("organization_id"):
-        org = (
-            sb.table("organizations")
-            .select("subscription_status")
-            .eq("id", row["organization_id"])
-            .limit(1)
-            .execute()
-        )
-        if org.data:
-            org_status = org.data[0].get("subscription_status")
+        org_res = sb.rpc("get_org_status", {"p_org_id": row["organization_id"]}).execute()
+        org_status = org_res.data if isinstance(org_res.data, str) else None
 
     return CurrentUser(
         id=row["id"],
