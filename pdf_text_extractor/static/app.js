@@ -107,6 +107,21 @@ const T = {
     'settings.sso.active.msg':'SSO actif — vos utilisateurs se connectent via votre fournisseur d\'identité.',
     'settings.plan.title':'Abonnement','settings.plan.manage':'Gérer l\'abonnement',
     'loading':'Chargement…',
+    'app.tab.parc':'Parc IT',
+    'parc.title':'Parc IT','parc.dept.all':'Tous les départements',
+    'parc.tab.overview':'Vue d\'ensemble','parc.tab.budget':'Budget',
+    'parc.tab.licenses':'Licences','parc.tab.servers':'Serveurs','parc.tab.apps':'Applications',
+    'parc.kpi.budget':'Budget utilisé','parc.kpi.lic':'Licences expirant <30j',
+    'parc.kpi.srv':'Serveurs à décommissionner','parc.kpi.apps':'Applications inutilisées',
+    'parc.chart.budget':'Budget par catégorie','parc.chart.forecast':'Prévision 3 mois',
+    'parc.all':'Tout','parc.budget.add':'+ Entrée','parc.budget.label':'Libellé',
+    'parc.budget.allocated':'Alloué ($)','parc.budget.actual':'Réel ($)',
+    'parc.lic.add':'+ Licence','parc.lic.expiring30':'Expirent <30j','parc.lic.expiring90':'Expirent <90j',
+    'parc.srv.add':'+ Serveur','parc.srv.active':'Actifs','parc.srv.idle':'Inactifs','parc.srv.decom':'À décommissionner',
+    'parc.app.add':'+ Application','parc.app.active':'Actives','parc.app.unused':'Non utilisées','parc.app.decom':'Décommissionnées',
+    'sa.title':'Comptes de service','sa.add':'+ Créer','sa.name':'Nom','sa.role':'Rôle',
+    'sa.desc':'Tokens longue durée non liés à un compte utilisateur.',
+    'dept.title':'Départements','dept.add':'+ Département','dept.name':'Nom','dept.budget':'Budget annuel ($)',
   },
   en: {
     'nav.features':'Features','nav.pricing':'Pricing','nav.connectors':'Connectors',
@@ -204,6 +219,21 @@ const T = {
     'settings.sso.active.msg':'SSO active — your users sign in through your identity provider.',
     'settings.plan.title':'Subscription','settings.plan.manage':'Manage subscription',
     'loading':'Loading…',
+    'app.tab.parc':'IT Assets',
+    'parc.title':'IT Assets','parc.dept.all':'All departments',
+    'parc.tab.overview':'Overview','parc.tab.budget':'Budget',
+    'parc.tab.licenses':'Licenses','parc.tab.servers':'Servers','parc.tab.apps':'Applications',
+    'parc.kpi.budget':'Budget used','parc.kpi.lic':'Licenses expiring <30d',
+    'parc.kpi.srv':'Servers to decommission','parc.kpi.apps':'Unused applications',
+    'parc.chart.budget':'Budget by category','parc.chart.forecast':'3-month forecast',
+    'parc.all':'All','parc.budget.add':'+ Entry','parc.budget.label':'Label',
+    'parc.budget.allocated':'Allocated ($)','parc.budget.actual':'Actual ($)',
+    'parc.lic.add':'+ License','parc.lic.expiring30':'Expiring <30d','parc.lic.expiring90':'Expiring <90d',
+    'parc.srv.add':'+ Server','parc.srv.active':'Active','parc.srv.idle':'Idle','parc.srv.decom':'To decommission',
+    'parc.app.add':'+ Application','parc.app.active':'Active','parc.app.unused':'Unused','parc.app.decom':'Decommissioned',
+    'sa.title':'Service Accounts','sa.add':'+ Create','sa.name':'Name','sa.role':'Role',
+    'sa.desc':'Long-lived tokens not tied to a user account.',
+    'dept.title':'Departments','dept.add':'+ Department','dept.name':'Name','dept.budget':'Annual budget ($)',
   },
 };
 
@@ -468,6 +498,7 @@ function loadActiveTab() {
   if (state.tab === "stats")      loadAnalytics();
   if (state.tab === "settings")   loadSettings();
   if (state.tab === "team")       loadTeam();
+  if (state.tab === "parc-it")    loadParcIT();
 }
 
 // ── Quota indicator ────────────────────────────────────────────────────────
@@ -1458,3 +1489,530 @@ showApp = function () {
   resetIdleTimer();
   _restoreWorkState();
 };
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PARC IT
+// ═══════════════════════════════════════════════════════════════════════════
+
+let _parcTab = "overview";
+let _parcBudgetChart = null;
+let _parcForecastChart = null;
+
+function switchParcTab(name) {
+  _parcTab = name;
+  document.querySelectorAll(".parc-tab-btn").forEach(b => b.classList.toggle("active", b.dataset.parc === name));
+  document.querySelectorAll(".parc-content").forEach(el => el.classList.add("hidden"));
+  const el = $(`parc-${name}`);
+  if (el) el.classList.remove("hidden");
+  _loadParcSection(name);
+}
+
+async function loadParcIT() {
+  await _populateDeptSelects();
+  switchParcTab(_parcTab);
+}
+
+function _loadParcSection(name) {
+  if (name === "overview")  _loadParcOverview();
+  if (name === "budget")    loadBudget();
+  if (name === "licenses")  loadLicenses();
+  if (name === "servers")   loadServers();
+  if (name === "apps")      loadApps();
+}
+
+async function _populateDeptSelects() {
+  try {
+    const depts = await apiCall("/api/departments");
+    const parcSel = $("parc-dept-select");
+    const allOpt = `<option value="">${T[_lang]["parc.dept.all"] || "Tous les départements"}</option>`;
+    const opts = depts.map(d => `<option value="${d.id}">${esc(d.name)}</option>`).join("");
+    [parcSel, $("bm-dept"), $("lm-dept"), $("sm-dept"), $("am-dept")].forEach(sel => {
+      if (!sel) return;
+      const baseOpt = sel === parcSel ? allOpt : `<option value="">— Aucun —</option>`;
+      sel.innerHTML = baseOpt + opts;
+    });
+  } catch (_) {}
+}
+
+async function _loadParcOverview() {
+  const deptId = $("parc-dept-select")?.value || "";
+  try {
+    const [summary, lics, srvs, apps] = await Promise.all([
+      apiCall(`/api/budget/summary?year=${new Date().getFullYear()}${deptId ? `&dept_id=${deptId}` : ""}`),
+      apiCall(`/api/licenses${deptId ? `?dept_id=${deptId}` : ""}`),
+      apiCall(`/api/servers${deptId ? `?dept_id=${deptId}` : ""}`),
+      apiCall(`/api/apps${deptId ? `?dept_id=${deptId}` : ""}`),
+    ]);
+
+    // KPIs
+    const util = summary.total?.utilization_pct ?? 0;
+    $("parc-kpi-budget-util").textContent = util.toFixed(1) + "%";
+    $("parc-kpi-lic-expiring").textContent = lics.filter(l => l.computed_status === "expiring_soon").length;
+    $("parc-kpi-srv-decom").textContent    = srvs.filter(s => s.status === "to_decommission").length;
+    $("parc-kpi-apps-unused").textContent  = apps.filter(a => a.status === "unused").length;
+
+    // Budget by category chart
+    const cats = summary.by_category || [];
+    if (_parcBudgetChart) _parcBudgetChart.destroy();
+    _parcBudgetChart = new Chart($("parc-budget-chart"), {
+      type: "bar",
+      data: {
+        labels: cats.map(c => c.category.toUpperCase()),
+        datasets: [
+          { label: "Alloué", data: cats.map(c => c.allocated), backgroundColor: "rgba(129,140,248,.4)", borderColor: "#818cf8", borderWidth: 1 },
+          { label: "Réel",   data: cats.map(c => c.actual),    backgroundColor: "rgba(99,102,241,.8)",  borderColor: "#6366f1", borderWidth: 1 },
+        ],
+      },
+      options: { responsive: true, plugins: { legend: { display: true } }, scales: { y: { beginAtZero: true } } },
+    });
+
+    // Forecast chart
+    const fc = summary.forecast || [];
+    if (_parcForecastChart) _parcForecastChart.destroy();
+    _parcForecastChart = new Chart($("parc-forecast-chart"), {
+      type: "line",
+      data: {
+        labels: fc.map(f => f.period),
+        datasets: [{ label: "Prévision", data: fc.map(f => f.predicted), borderColor: "#818cf8", backgroundColor: "rgba(129,140,248,.15)", fill: true, tension: .3 }],
+      },
+      options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } },
+    });
+  } catch (e) { console.error(e); }
+}
+
+async function loadBudget() {
+  const wrap = $("budget-table-wrap");
+  const summaryWrap = $("budget-summary-wrap");
+  const deptId = $("parc-dept-select")?.value || "";
+  const year   = $("budget-year-filter")?.value  || new Date().getFullYear();
+  const cat    = $("budget-cat-filter")?.value   || "";
+  try {
+    const [entries, summary] = await Promise.all([
+      apiCall(`/api/budget?year=${year}${cat ? `&category=${cat}` : ""}${deptId ? `&dept_id=${deptId}` : ""}`),
+      apiCall(`/api/budget/summary?year=${year}${deptId ? `&dept_id=${deptId}` : ""}`),
+    ]);
+
+    if (!entries.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune donnée budgétaire.</p>`; }
+    else {
+      wrap.innerHTML = `<table class="data-table"><thead><tr><th>Catégorie</th><th>Libellé</th><th>Période</th><th>Alloué</th><th>Réel</th><th>Écart</th><th>Département</th><th></th></tr></thead><tbody>` +
+        entries.map(e => {
+          const period = e.month ? `${e.year}-${String(e.month).padStart(2,"0")}` : String(e.year);
+          const var_ = (e.allocated||0) - (e.actual||0);
+          const varColor = var_ >= 0 ? "color:#15803d" : "color:#dc2626";
+          const deptName = e.departments?.name || "—";
+          return `<tr>
+            <td><span class="badge badge-active">${esc(e.category.toUpperCase())}</span></td>
+            <td>${esc(e.label||"")}</td><td>${period}</td>
+            <td>${_fmt(e.allocated)} ${e.currency}</td>
+            <td>${_fmt(e.actual)} ${e.currency}</td>
+            <td style="${varColor}">${var_ >= 0 ? "+" : ""}${_fmt(var_)}</td>
+            <td>${esc(deptName)}</td>
+            <td><button class="btn-icon" onclick="editBudget('${e.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteBudget('${e.id}')">✕</button></td>
+          </tr>`;
+        }).join("") + `</tbody></table>`;
+    }
+
+    // Summary bar
+    const total = summary.total || {};
+    const by_cat = summary.by_category || [];
+    const fc = summary.forecast || [];
+    summaryWrap.innerHTML = `
+      <div style="margin-bottom:8px;font-weight:700;color:var(--navy)">
+        Total alloué : ${_fmt(total.allocated)} · Réel : ${_fmt(total.actual)} · Utilisation : <strong>${total.utilization_pct||0}%</strong>
+      </div>
+      ${by_cat.map(c => {
+        const pct = c.allocated > 0 ? Math.min(100, c.actual / c.allocated * 100) : 0;
+        const cls = pct > 100 ? "over" : pct > 85 ? "warn" : "";
+        return `<div class="budget-summary-row">
+          <div class="budget-cat-label">${c.category.toUpperCase()}</div>
+          <div class="budget-bar-outer"><div class="budget-bar-inner ${cls}" style="width:${Math.min(100,pct)}%"></div></div>
+          <div class="budget-amounts">${_fmt(c.actual)} / <strong>${_fmt(c.allocated)}</strong></div>
+        </div>`;
+      }).join("")}
+      ${fc.length ? `<div class="forecast-row">${fc.map(f=>`<div class="forecast-pill"><div class="forecast-pill-period">${f.period}</div><div class="forecast-pill-val">${_fmt(f.predicted)}</div></div>`).join("")}</div>` : ""}
+    `;
+  } catch (e) { wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message||"Erreur"}</p>`; }
+}
+
+async function loadLicenses() {
+  const wrap = $("licenses-table-wrap");
+  const deptId = $("parc-dept-select")?.value || "";
+  const expDays = $("lic-filter")?.value || "";
+  try {
+    const url = `/api/licenses?${deptId ? `dept_id=${deptId}&` : ""}${expDays ? `expiring_days=${expDays}` : ""}`;
+    const lics = await apiCall(url);
+    if (!lics.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune licence enregistrée.</p>`; return; }
+    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Produit</th><th>Fournisseur</th><th>Type</th><th>Qté / Assign.</th><th>Coût/unité</th><th>Expiration</th><th>Renouvellement</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
+      lics.map(l => {
+        const st = l.computed_status;
+        const badgeCls = st === "expired" ? "badge-expired" : st === "expiring_soon" ? "badge-expiring" : "badge-active";
+        const stLabel  = st === "expired" ? "Expirée" : st === "expiring_soon" ? `Expire dans ${l.days_to_expiry}j` : st === "expiring_medium" ? `${l.days_to_expiry}j` : "Active";
+        const deptName = l.departments?.name || "—";
+        return `<tr class="${st==="expired"?"row-inactive":""}">
+          <td><strong>${esc(l.product_name)}</strong></td>
+          <td>${esc(l.vendor||"—")}</td>
+          <td>${l.license_type||"—"}</td>
+          <td>${l.assigned_count}/${l.quantity}</td>
+          <td>${_fmt(l.cost_per_unit)}</td>
+          <td>${l.expiration_date||"—"}</td>
+          <td>${l.renewal_date||"—"}</td>
+          <td><span class="badge ${badgeCls}">${stLabel}</span></td>
+          <td>${esc(deptName)}</td>
+          <td><button class="btn-icon" onclick="editLicense('${l.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteLicense('${l.id}')">✕</button></td>
+        </tr>`;
+      }).join("") + `</tbody></table>`;
+  } catch (e) { wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message||"Erreur"}</p>`; }
+}
+
+async function loadServers() {
+  const wrap = $("servers-table-wrap");
+  const deptId = $("parc-dept-select")?.value || "";
+  const status = $("srv-status-filter")?.value || "";
+  try {
+    const url = `/api/servers?${deptId ? `dept_id=${deptId}&` : ""}${status ? `status=${status}` : ""}`;
+    const srvs = await apiCall(url);
+    if (!srvs.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucun serveur enregistré.</p>`; return; }
+    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Hôte</th><th>IP</th><th>Env.</th><th>OS</th><th>CPU/RAM/Stockage</th><th>Emplacement</th><th>Dernier ping</th><th>Statut</th><th>Coût/mois</th><th>Dép.</th><th></th></tr></thead><tbody>` +
+      srvs.map(s => {
+        const stMap = { active:"badge-active", idle:"badge-idle", to_decommission:"badge-decom", decommissioned:"badge-expired" };
+        const stLbl = { active:"Actif", idle:"Inactif", to_decommission:"À décom.", decommissioned:"Décom." };
+        const pingInfo = s.last_ping_at ? `${s.idle_days}j` : "Jamais";
+        const spec = [s.cpu_cores ? `${s.cpu_cores}c` : null, s.ram_gb ? `${s.ram_gb}Go` : null, s.storage_gb ? `${s.storage_gb}Go` : null].filter(Boolean).join(" / ") || "—";
+        const deptName = s.departments?.name || "—";
+        return `<tr class="${s.status==="decommissioned"?"row-inactive":""}">
+          <td><strong>${esc(s.hostname)}</strong></td>
+          <td>${esc(s.ip_address||"—")}</td>
+          <td>${esc(s.environment||"—")}</td>
+          <td>${esc(s.os||"—")}</td>
+          <td>${spec}</td>
+          <td>${esc(s.location||"—")}</td>
+          <td>${pingInfo}</td>
+          <td><span class="badge ${stMap[s.status]||"badge-idle"}">${stLbl[s.status]||s.status}</span></td>
+          <td>${_fmt(s.monthly_cost)}</td>
+          <td>${esc(deptName)}</td>
+          <td><button class="btn-icon" onclick="editServer('${s.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteServer('${s.id}')">✕</button></td>
+        </tr>`;
+      }).join("") + `</tbody></table>`;
+  } catch (e) { wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message||"Erreur"}</p>`; }
+}
+
+async function loadApps() {
+  const wrap = $("apps-table-wrap");
+  const deptId = $("parc-dept-select")?.value || "";
+  const status = $("app-status-filter")?.value || "";
+  try {
+    const url = `/api/apps?${deptId ? `dept_id=${deptId}&` : ""}${status ? `status=${status}` : ""}`;
+    const apps = await apiCall(url);
+    if (!apps.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune application enregistrée.</p>`; return; }
+    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Nom</th><th>Fournisseur</th><th>Catégorie</th><th>Utilisateurs</th><th>Dernier usage</th><th>Coût/mois</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
+      apps.map(a => {
+        const stMap = { active:"badge-active", unused:"badge-unused", decommissioned:"badge-expired" };
+        const stLbl = { active:"Active", unused:"Inutilisée", decommissioned:"Décom." };
+        const unusedInfo = a.days_unused !== null ? `${a.days_unused}j sans usage` : "—";
+        const deptName = a.departments?.name || "—";
+        return `<tr class="${a.status!=="active"?"row-inactive":""}">
+          <td><strong>${esc(a.name)}</strong>${a.url ? ` <a href="${esc(a.url)}" target="_blank" style="font-size:.75rem;color:var(--indigo)">↗</a>` : ""}</td>
+          <td>${esc(a.vendor||"—")}</td>
+          <td>${esc(a.category||"—")}</td>
+          <td>${a.user_count}</td>
+          <td>${unusedInfo}</td>
+          <td>${_fmt(a.monthly_cost)}</td>
+          <td><span class="badge ${stMap[a.status]||"badge-active"}">${stLbl[a.status]||a.status}</span></td>
+          <td>${esc(deptName)}</td>
+          <td><button class="btn-icon" onclick="editApp('${a.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteApp('${a.id}')">✕</button></td>
+        </tr>`;
+      }).join("") + `</tbody></table>`;
+  } catch (e) { wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message||"Erreur"}</p>`; }
+}
+
+// ── Budget CRUD ───────────────────────────────────────────────────────────────
+function openBudgetModal(entry = null) {
+  $("bm-id").value = entry?.id || "";
+  $("bm-cat").value      = entry?.category   || "aws";
+  $("bm-label").value    = entry?.label      || "";
+  $("bm-year").value     = entry?.year       || new Date().getFullYear();
+  $("bm-month").value    = entry?.month      || "";
+  $("bm-currency").value = entry?.currency   || "CAD";
+  $("bm-allocated").value = entry?.allocated || 0;
+  $("bm-actual").value    = entry?.actual    || 0;
+  $("bm-dept").value     = entry?.department_id || "";
+  $("bm-notes").value    = entry?.notes      || "";
+  $("bm-error").classList.add("hidden");
+  $("budget-modal").classList.remove("hidden");
+}
+async function editBudget(id) {
+  try { const e = (await apiCall(`/api/budget?year=2020`))[0]; openBudgetModal({id, ...e}); } catch(_) { openBudgetModal({id}); }
+}
+function closeParcModal(modalId) { $(modalId).classList.add("hidden"); }
+
+document.addEventListener("DOMContentLoaded", () => {
+  $("budget-modal-form")?.addEventListener("submit", async e => {
+    e.preventDefault();
+    const id = $("bm-id").value;
+    const body = { category:$("bm-cat").value, label:$("bm-label").value||null, year:+$("bm-year").value,
+      month:$("bm-month").value ? +$("bm-month").value : null, currency:$("bm-currency").value,
+      allocated:+$("bm-allocated").value, actual:+$("bm-actual").value,
+      department_id:$("bm-dept").value||null, notes:$("bm-notes").value||null };
+    try {
+      if (id) await apiCall(`/api/budget/${id}`, "PATCH", body);
+      else    await apiCall("/api/budget", "POST", body);
+      closeParcModal("budget-modal"); loadBudget();
+    } catch(ex) { const err=$("bm-error"); err.textContent=ex.message||"Erreur"; err.classList.remove("hidden"); }
+  });
+
+  $("license-modal-form")?.addEventListener("submit", async e => {
+    e.preventDefault();
+    const id = $("lm-id").value;
+    const body = { product_name:$("lm-product").value, vendor:$("lm-vendor").value||null,
+      license_type:$("lm-type").value, quantity:+$("lm-qty").value, assigned_count:+$("lm-assigned").value,
+      cost_per_unit:+$("lm-cost").value, billing_cycle:$("lm-cycle").value,
+      purchase_date:$("lm-purchase").value||null, expiration_date:$("lm-expiry").value||null,
+      renewal_date:$("lm-renewal").value||null, auto_renew:$("lm-autorenew").checked,
+      department_id:$("lm-dept").value||null, notes:$("lm-notes").value||null };
+    try {
+      if (id) await apiCall(`/api/licenses/${id}`, "PATCH", body);
+      else    await apiCall("/api/licenses", "POST", body);
+      closeParcModal("license-modal"); loadLicenses();
+    } catch(ex) { const err=$("lm-error"); err.textContent=ex.message||"Erreur"; err.classList.remove("hidden"); }
+  });
+
+  $("server-modal-form")?.addEventListener("submit", async e => {
+    e.preventDefault();
+    const id = $("sm-id").value;
+    const body = { hostname:$("sm-hostname").value, ip_address:$("sm-ip").value||null,
+      environment:$("sm-env").value, status:$("sm-status").value, os:$("sm-os").value||null,
+      cpu_cores:$("sm-cpu").value ? +$("sm-cpu").value : null, ram_gb:$("sm-ram").value ? +$("sm-ram").value : null,
+      storage_gb:$("sm-storage").value ? +$("sm-storage").value : null,
+      location:$("sm-location").value||null, monthly_cost:+($("sm-cost").value||0),
+      department_id:$("sm-dept").value||null, notes:$("sm-notes").value||null };
+    try {
+      if (id) await apiCall(`/api/servers/${id}`, "PATCH", body);
+      else    await apiCall("/api/servers", "POST", body);
+      closeParcModal("server-modal"); loadServers();
+    } catch(ex) { const err=$("sm-error"); err.textContent=ex.message||"Erreur"; err.classList.remove("hidden"); }
+  });
+
+  $("app-modal-form")?.addEventListener("submit", async e => {
+    e.preventDefault();
+    const id = $("am-id").value;
+    const body = { name:$("am-name").value, vendor:$("am-vendor").value||null,
+      category:$("am-cat").value||null, status:$("am-status").value,
+      monthly_cost:+($("am-cost").value||0), user_count:+($("am-users").value||0),
+      url:$("am-url").value||null, department_id:$("am-dept").value||null,
+      notes:$("am-notes").value||null };
+    try {
+      if (id) await apiCall(`/api/apps/${id}`, "PATCH", body);
+      else    await apiCall("/api/apps", "POST", body);
+      closeParcModal("app-modal"); loadApps();
+    } catch(ex) { const err=$("am-error"); err.textContent=ex.message||"Erreur"; err.classList.remove("hidden"); }
+  });
+});
+
+function openLicenseModal(lic = null) {
+  $("lm-id").value = lic?.id || "";
+  $("lm-product").value  = lic?.product_name  || "";
+  $("lm-vendor").value   = lic?.vendor        || "";
+  $("lm-type").value     = lic?.license_type  || "subscription";
+  $("lm-qty").value      = lic?.quantity      || 1;
+  $("lm-assigned").value = lic?.assigned_count|| 0;
+  $("lm-cost").value     = lic?.cost_per_unit || 0;
+  $("lm-cycle").value    = lic?.billing_cycle || "annual";
+  $("lm-purchase").value = lic?.purchase_date || "";
+  $("lm-expiry").value   = lic?.expiration_date || "";
+  $("lm-renewal").value  = lic?.renewal_date  || "";
+  $("lm-autorenew").checked = lic?.auto_renew || false;
+  $("lm-dept").value     = lic?.department_id || "";
+  $("lm-notes").value    = lic?.notes || "";
+  $("lm-error").classList.add("hidden");
+  $("license-modal").classList.remove("hidden");
+}
+async function editLicense(id) {
+  try {
+    const lics = await apiCall("/api/licenses");
+    const l = lics.find(x => x.id === id);
+    if (l) openLicenseModal(l);
+  } catch(_) { openLicenseModal({id}); }
+}
+async function deleteLicense(id) {
+  if (!confirm("Supprimer cette licence ?")) return;
+  try { await apiCall(`/api/licenses/${id}`, "DELETE"); loadLicenses(); } catch(e) { alert(e.message); }
+}
+
+function openServerModal(srv = null) {
+  $("sm-id").value = srv?.id || "";
+  $("sm-hostname").value = srv?.hostname  || "";
+  $("sm-ip").value       = srv?.ip_address || "";
+  $("sm-env").value      = srv?.environment || "production";
+  $("sm-status").value   = srv?.status    || "active";
+  $("sm-os").value       = srv?.os        || "";
+  $("sm-cpu").value      = srv?.cpu_cores || "";
+  $("sm-ram").value      = srv?.ram_gb    || "";
+  $("sm-storage").value  = srv?.storage_gb || "";
+  $("sm-location").value = srv?.location  || "";
+  $("sm-cost").value     = srv?.monthly_cost || 0;
+  $("sm-dept").value     = srv?.department_id || "";
+  $("sm-notes").value    = srv?.notes     || "";
+  $("sm-error").classList.add("hidden");
+  $("server-modal").classList.remove("hidden");
+}
+async function editServer(id) {
+  try {
+    const srvs = await apiCall("/api/servers");
+    const s = srvs.find(x => x.id === id);
+    if (s) openServerModal(s);
+  } catch(_) { openServerModal({id}); }
+}
+async function deleteServer(id) {
+  if (!confirm("Supprimer ce serveur ?")) return;
+  try { await apiCall(`/api/servers/${id}`, "DELETE"); loadServers(); } catch(e) { alert(e.message); }
+}
+
+function openAppModal(app = null) {
+  $("am-id").value = app?.id || "";
+  $("am-name").value   = app?.name      || "";
+  $("am-vendor").value = app?.vendor    || "";
+  $("am-cat").value    = app?.category  || "";
+  $("am-status").value = app?.status    || "active";
+  $("am-cost").value   = app?.monthly_cost || 0;
+  $("am-users").value  = app?.user_count || 0;
+  $("am-url").value    = app?.url       || "";
+  $("am-dept").value   = app?.department_id || "";
+  $("am-notes").value  = app?.notes     || "";
+  $("am-error").classList.add("hidden");
+  $("app-modal").classList.remove("hidden");
+}
+async function editApp(id) {
+  try {
+    const apps = await apiCall("/api/apps");
+    const a = apps.find(x => x.id === id);
+    if (a) openAppModal(a);
+  } catch(_) { openAppModal({id}); }
+}
+async function deleteApp(id) {
+  if (!confirm("Supprimer cette application ?")) return;
+  try { await apiCall(`/api/apps/${id}`, "DELETE"); loadApps(); } catch(e) { alert(e.message); }
+}
+async function deleteBudget(id) {
+  if (!confirm("Supprimer cette entrée budgétaire ?")) return;
+  try { await apiCall(`/api/budget/${id}`, "DELETE"); loadBudget(); } catch(e) { alert(e.message); }
+}
+
+// ── Comptes de service ────────────────────────────────────────────────────────
+async function loadServiceAccounts() {
+  const wrap = $("sa-list-wrap");
+  if (!wrap) return;
+  try {
+    const sas = await apiCall("/api/service-accounts");
+    if (!sas.length) { wrap.innerHTML = `<p class="muted">Aucun compte de service.</p>`; return; }
+    wrap.innerHTML = sas.map(sa => `
+      <div class="sa-row">
+        <div class="sa-name">${esc(sa.name)}${sa.description ? ` <span class="sa-meta">— ${esc(sa.description)}</span>` : ""}</div>
+        <span class="sa-prefix">${esc(sa.token_prefix)}****</span>
+        <span class="badge ${sa.is_active?"badge-active":"badge-idle"}">${sa.role}</span>
+        <span class="sa-meta">${sa.last_used_at ? "Vu : "+sa.last_used_at.slice(0,10) : "Jamais utilisé"}</span>
+        <button class="btn-icon" onclick="toggleSA('${sa.id}',${!sa.is_active})" title="${sa.is_active?"Révoquer":"Réactiver"}">${sa.is_active?"⏸":"▶"}</button>
+        <button class="btn-icon btn-deactivate" onclick="deleteSA('${sa.id}')" title="Supprimer">✕</button>
+      </div>`).join("");
+  } catch(e) { wrap.innerHTML = `<p class="muted">${e.message||"Erreur"}</p>`; }
+}
+
+function openSAModal() {
+  $("sa-name").value = ""; $("sa-desc").value = ""; $("sa-role").value = "user";
+  $("sa-error").classList.add("hidden");
+  $("sa-token-wrap").classList.add("hidden");
+  $("sa-modal-form").classList.remove("hidden");
+  $("sa-modal").classList.remove("hidden");
+}
+async function copyToken() {
+  const val = $("sa-token-input").value;
+  try { await navigator.clipboard.writeText(val); } catch(_) { $("sa-token-input").select(); document.execCommand("copy"); }
+}
+async function toggleSA(id, active) {
+  try { await apiCall(`/api/service-accounts/${id}`, "PATCH", { is_active: active }); loadServiceAccounts(); } catch(e) { alert(e.message); }
+}
+async function deleteSA(id) {
+  if (!confirm("Supprimer définitivement ce compte de service ?")) return;
+  try { await apiCall(`/api/service-accounts/${id}`, "DELETE"); loadServiceAccounts(); } catch(e) { alert(e.message); }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  $("sa-modal-form")?.addEventListener("submit", async e => {
+    e.preventDefault();
+    try {
+      const data = await apiCall("/api/service-accounts", "POST", { name:$("sa-name").value, description:$("sa-desc").value||null, role:$("sa-role").value });
+      $("sa-token-input").value = data.token;
+      $("sa-token-wrap").classList.remove("hidden");
+      $("sa-modal-form").classList.add("hidden");
+      loadServiceAccounts();
+    } catch(ex) { const err=$("sa-error"); err.textContent=ex.message||"Erreur"; err.classList.remove("hidden"); }
+  });
+});
+
+// ── Départements ──────────────────────────────────────────────────────────────
+async function loadDepartments() {
+  const wrap = $("dept-list-wrap");
+  if (!wrap) return;
+  try {
+    const depts = await apiCall("/api/departments");
+    if (!depts.length) { wrap.innerHTML = `<p class="muted">Aucun département.</p>`; return; }
+    wrap.innerHTML = depts.map(d => `
+      <div class="dept-card">
+        <div class="dept-card-name">${esc(d.name)}</div>
+        <div class="dept-card-meta">${d.member_count||0} membre(s) · Budget : ${_fmt(d.annual_budget)} ${d.currency}</div>
+        ${d.description ? `<div class="dept-card-meta">${esc(d.description)}</div>` : ""}
+        <div class="dept-actions">
+          <button class="btn-icon" onclick="editDept('${d.id}','${esc(d.name)}','${esc(d.description||"")}',${d.annual_budget},'${d.currency}')">✎</button>
+          <button class="btn-icon btn-deactivate" onclick="deleteDept('${d.id}')">✕</button>
+        </div>
+      </div>`).join("");
+  } catch(e) { wrap.innerHTML = `<p class="muted">${e.message||"Erreur"}</p>`; }
+}
+
+function openDeptModal(dept = null) {
+  $("dm-id").value = dept?.id || "";
+  $("dm-name").value     = dept?.name         || "";
+  $("dm-desc").value     = dept?.description  || "";
+  $("dm-budget").value   = dept?.annual_budget|| 0;
+  $("dm-currency").value = dept?.currency     || "CAD";
+  $("dm-error").classList.add("hidden");
+  $("dept-modal").classList.remove("hidden");
+}
+function editDept(id, name, desc, budget, currency) {
+  openDeptModal({ id, name, description:desc, annual_budget:budget, currency });
+}
+async function deleteDept(id) {
+  if (!confirm("Supprimer ce département ? Les données associées seront dissociées.")) return;
+  try { await apiCall(`/api/departments/${id}`, "DELETE"); loadDepartments(); } catch(e) { alert(e.message); }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  $("dept-modal-form")?.addEventListener("submit", async e => {
+    e.preventDefault();
+    const id = $("dm-id").value;
+    const body = { name:$("dm-name").value, description:$("dm-desc").value||null,
+      annual_budget:+($("dm-budget").value||0), currency:$("dm-currency").value };
+    try {
+      if (id) await apiCall(`/api/departments/${id}`, "PATCH", body);
+      else    await apiCall("/api/departments", "POST", body);
+      closeParcModal("dept-modal"); loadDepartments();
+    } catch(ex) { const err=$("dm-error"); err.textContent=ex.message||"Erreur"; err.classList.remove("hidden"); }
+  });
+});
+
+// Patch loadTeam to also load departments and service accounts
+const _origLoadTeam = loadTeam;
+async function loadTeam() {
+  await _origLoadTeam();
+  loadDepartments();
+}
+const _origLoadSettings = loadSettings;
+async function loadSettings() {
+  await _origLoadSettings();
+  loadServiceAccounts();
+}
+
+// Helper formatter
+function _fmt(v) {
+  if (v == null) return "0.00";
+  return Number(v).toLocaleString("fr-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}

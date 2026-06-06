@@ -28,6 +28,7 @@ class CurrentUser:
     organization_id: str | None
     role: str
     subscription_status: str | None
+    is_service_account: bool = False
 
 
 # ── Vérification du jeton ──────────────────────────────────────────────────
@@ -80,9 +81,46 @@ def _extract_bearer(authorization: str | None) -> str:
     return authorization[len("Bearer ") :]
 
 
+def _resolve_service_account(token: str) -> CurrentUser:
+    """Résout un token svc_* en CurrentUser sans passer par Supabase Auth."""
+    import hashlib
+    from datetime import datetime, timezone
+
+    token_hash = hashlib.sha256(token.encode()).hexdigest()
+    sb = service_client()
+    res = (
+        sb.table("service_accounts")
+        .select("id, organization_id, role, is_active")
+        .eq("token_hash", token_hash)
+        .limit(1)
+        .execute()
+    )
+    rows = res.data or []
+    if not rows or not rows[0].get("is_active"):
+        raise HTTPException(status_code=401, detail="Service account invalide ou révoqué.")
+    sa = rows[0]
+    try:
+        sb.table("service_accounts").update(
+            {"last_used_at": datetime.now(timezone.utc).isoformat()}
+        ).eq("id", sa["id"]).execute()
+    except Exception:
+        pass
+    return CurrentUser(
+        id=sa["id"],
+        email=None,
+        organization_id=sa["organization_id"],
+        role=sa["role"],
+        subscription_status="active",
+        is_service_account=True,
+    )
+
+
 def get_current_user(authorization: str | None = Header(default=None)) -> CurrentUser:
     """Dépendance FastAPI : identité vérifiée + profil applicatif (rôle, org)."""
-    claims = _verify_token(_extract_bearer(authorization))
+    raw = _extract_bearer(authorization)
+    if raw.startswith("svc_"):
+        return _resolve_service_account(raw)
+    claims = _verify_token(raw)
     sub = claims.get("sub")
     email = claims.get("email")
     if not sub:

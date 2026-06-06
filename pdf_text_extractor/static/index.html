@@ -359,8 +359,9 @@
       <button class="tab-btn active" data-tab="agent"      role="tab" data-i18n="app.tab.agent">Assistant IA</button>
       <button class="tab-btn"        data-tab="connectors" role="tab" data-i18n="app.tab.connectors">Connecteurs</button>
       <button class="tab-btn"        data-tab="documents"  role="tab" data-i18n="app.tab.documents">Documents</button>
-      <button class="tab-btn admin-only hidden" data-tab="audit"  role="tab" data-i18n="app.tab.audit">Audit</button>
+      <button class="tab-btn admin-only hidden" data-tab="audit"    role="tab" data-i18n="app.tab.audit">Audit</button>
       <button class="tab-btn"        data-tab="stats"    role="tab" data-i18n="app.tab.stats">Statistiques</button>
+      <button class="tab-btn"        data-tab="parc-it"  role="tab" data-i18n="app.tab.parc">Parc IT</button>
       <button class="tab-btn admin-only hidden" data-tab="team"     role="tab" data-i18n="app.tab.team">Équipe</button>
       <button class="tab-btn"        data-tab="settings" role="tab" data-i18n="app.tab.settings">Paramètres</button>
     </div>
@@ -565,6 +566,15 @@
         <h3 style="font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:12px" data-i18n="team.pending">Invitations en attente</h3>
         <div id="pending-inv-list" class="pending-inv-list"></div>
       </div>
+
+      <!-- Départements -->
+      <div style="margin-top:32px">
+        <div class="section-header" style="margin-bottom:12px">
+          <h3 style="font-size:.95rem;font-weight:700;color:var(--navy)" data-i18n="dept.title">Départements</h3>
+          <button class="btn btn-outline btn-sm" onclick="openDeptModal()" data-i18n="dept.add">+ Département</button>
+        </div>
+        <div id="dept-list-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
+      </div>
     </section>
 
     <!-- ── INVITE MODAL ───────────────────────────────────────────────────── -->
@@ -698,8 +708,299 @@
           </button>
         </div>
 
+        <!-- Comptes de service (admin only) -->
+        <div class="settings-card admin-only hidden" style="grid-column:1/-1">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <h3 data-i18n="sa.title">Comptes de service</h3>
+            <button class="btn btn-primary btn-sm" onclick="openSAModal()" data-i18n="sa.add">+ Créer</button>
+          </div>
+          <p class="settings-desc" data-i18n="sa.desc">Tokens longue durée non liés à un compte utilisateur. Idéal pour les intégrations API et les scripts automatisés.</p>
+          <div id="sa-list-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
+        </div>
+
       </div>
     </section>
+
+    <!-- ── PARC IT ──────────────────────────────────────────────────────────── -->
+    <section id="tab-parc-it" class="tab-content hidden" role="tabpanel">
+      <div class="section-header">
+        <h2 data-i18n="parc.title">Parc IT</h2>
+        <div class="controls-inline">
+          <select id="parc-dept-select" onchange="loadParcIT()">
+            <option value="" data-i18n="parc.dept.all">Tous les départements</option>
+          </select>
+          <button class="btn btn-outline btn-sm" onclick="loadParcIT()" data-i18n="conn.refresh">↻ Actualiser</button>
+        </div>
+      </div>
+
+      <!-- Sub-navigation -->
+      <div class="parc-tabs" role="tablist">
+        <button class="parc-tab-btn active" data-parc="overview" onclick="switchParcTab('overview')" data-i18n="parc.tab.overview">Vue d'ensemble</button>
+        <button class="parc-tab-btn"        data-parc="budget"   onclick="switchParcTab('budget')"   data-i18n="parc.tab.budget">Budget</button>
+        <button class="parc-tab-btn"        data-parc="licenses" onclick="switchParcTab('licenses')" data-i18n="parc.tab.licenses">Licences</button>
+        <button class="parc-tab-btn"        data-parc="servers"  onclick="switchParcTab('servers')"  data-i18n="parc.tab.servers">Serveurs</button>
+        <button class="parc-tab-btn"        data-parc="apps"     onclick="switchParcTab('apps')"     data-i18n="parc.tab.apps">Applications</button>
+      </div>
+
+      <!-- Vue d'ensemble -->
+      <div id="parc-overview" class="parc-content">
+        <div class="kpi-grid" id="parc-kpi-grid">
+          <div class="kpi-card"><div class="kpi-val" id="parc-kpi-budget-util">—</div><div class="kpi-label" data-i18n="parc.kpi.budget">Budget utilisé</div></div>
+          <div class="kpi-card"><div class="kpi-val" id="parc-kpi-lic-expiring">—</div><div class="kpi-label" data-i18n="parc.kpi.lic">Licences expirant &lt;30j</div></div>
+          <div class="kpi-card"><div class="kpi-val" id="parc-kpi-srv-decom">—</div><div class="kpi-label" data-i18n="parc.kpi.srv">Serveurs à décommissionner</div></div>
+          <div class="kpi-card"><div class="kpi-val" id="parc-kpi-apps-unused">—</div><div class="kpi-label" data-i18n="parc.kpi.apps">Applications inutilisées</div></div>
+        </div>
+        <div class="stats-charts" style="margin-top:20px">
+          <div class="chart-panel">
+            <h3 data-i18n="parc.chart.budget">Budget par catégorie</h3>
+            <canvas id="parc-budget-chart" height="220"></canvas>
+          </div>
+          <div class="chart-panel">
+            <h3 data-i18n="parc.chart.forecast">Prévision 3 mois (k$)</h3>
+            <canvas id="parc-forecast-chart" height="220"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Budget -->
+      <div id="parc-budget" class="parc-content hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+          <div class="controls-inline">
+            <select id="budget-year-filter" onchange="loadBudget()">
+              <option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option>
+            </select>
+            <select id="budget-cat-filter" onchange="loadBudget()">
+              <option value="" data-i18n="parc.all">Toutes catégories</option>
+              <option value="aws">AWS</option><option value="azure">Azure</option>
+              <option value="m365">Microsoft 365</option><option value="exchange">Exchange Online</option>
+              <option value="google_workspace">Google Workspace</option><option value="custom">Autre</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openBudgetModal()" data-i18n="parc.budget.add">+ Entrée</button>
+        </div>
+        <div id="budget-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
+        <div id="budget-summary-wrap" style="margin-top:24px"></div>
+      </div>
+
+      <!-- Licences -->
+      <div id="parc-licenses" class="parc-content hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div class="controls-inline">
+            <select id="lic-filter" onchange="loadLicenses()">
+              <option value="" data-i18n="parc.all">Toutes</option>
+              <option value="30" data-i18n="parc.lic.expiring30">Expirent &lt;30j</option>
+              <option value="90" data-i18n="parc.lic.expiring90">Expirent &lt;90j</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openLicenseModal()" data-i18n="parc.lic.add">+ Licence</button>
+        </div>
+        <div id="licenses-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
+      </div>
+
+      <!-- Serveurs -->
+      <div id="parc-servers" class="parc-content hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <select id="srv-status-filter" onchange="loadServers()">
+            <option value="" data-i18n="parc.all">Tous statuts</option>
+            <option value="active" data-i18n="parc.srv.active">Actifs</option>
+            <option value="idle" data-i18n="parc.srv.idle">Inactifs</option>
+            <option value="to_decommission" data-i18n="parc.srv.decom">À décommissionner</option>
+          </select>
+          <button class="btn btn-primary btn-sm admin-only hidden" onclick="openServerModal()" data-i18n="parc.srv.add">+ Serveur</button>
+        </div>
+        <div id="servers-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
+      </div>
+
+      <!-- Applications -->
+      <div id="parc-apps" class="parc-content hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <select id="app-status-filter" onchange="loadApps()">
+            <option value="" data-i18n="parc.all">Tous statuts</option>
+            <option value="active" data-i18n="parc.app.active">Actives</option>
+            <option value="unused" data-i18n="parc.app.unused">Non utilisées</option>
+            <option value="decommissioned" data-i18n="parc.app.decom">Décommissionnées</option>
+          </select>
+          <button class="btn btn-primary btn-sm" onclick="openAppModal()" data-i18n="parc.app.add">+ Application</button>
+        </div>
+        <div id="apps-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
+      </div>
+    </section>
+
+    <!-- ── MODALS PARC IT ─────────────────────────────────────────────────── -->
+
+    <!-- Modal Budget -->
+    <div id="budget-modal" class="modal-backdrop hidden">
+      <div class="modal-card">
+        <button class="modal-close" onclick="closeParcModal('budget-modal')">✕</button>
+        <h3 id="budget-modal-title" data-i18n="parc.budget.add">Entrée budgétaire</h3>
+        <input type="hidden" id="bm-id" />
+        <form id="budget-modal-form" class="settings-form" style="display:grid;gap:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Catégorie</span>
+              <select id="bm-cat">
+                <option value="aws">AWS</option><option value="azure">Azure</option>
+                <option value="m365">Microsoft 365</option><option value="exchange">Exchange Online</option>
+                <option value="google_workspace">Google Workspace</option><option value="custom">Autre</option>
+              </select>
+            </label>
+            <label class="auth-label"><span data-i18n="parc.budget.label">Libellé</span><input id="bm-label" type="text" placeholder="ex: Prod cluster" /></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Année</span><input id="bm-year" type="number" value="2026" min="2020" max="2040" required /></label>
+            <label class="auth-label"><span>Mois (optionnel)</span><select id="bm-month"><option value="">Annuel</option><option value="1">Janv</option><option value="2">Févr</option><option value="3">Mars</option><option value="4">Avr</option><option value="5">Mai</option><option value="6">Juin</option><option value="7">Juil</option><option value="8">Août</option><option value="9">Sept</option><option value="10">Oct</option><option value="11">Nov</option><option value="12">Déc</option></select></label>
+            <label class="auth-label"><span>Devise</span><select id="bm-currency"><option value="CAD">CAD</option><option value="USD">USD</option><option value="EUR">EUR</option></select></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span data-i18n="parc.budget.allocated">Alloué ($)</span><input id="bm-allocated" type="number" step="0.01" value="0" required /></label>
+            <label class="auth-label"><span data-i18n="parc.budget.actual">Réel ($)</span><input id="bm-actual" type="number" step="0.01" value="0" required /></label>
+          </div>
+          <label class="auth-label"><span>Département</span><select id="bm-dept"><option value="">— Aucun —</option></select></label>
+          <label class="auth-label"><span>Notes</span><input id="bm-notes" type="text" /></label>
+          <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
+          <p id="bm-error" class="form-error hidden"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Licence -->
+    <div id="license-modal" class="modal-backdrop hidden">
+      <div class="modal-card" style="max-width:560px">
+        <button class="modal-close" onclick="closeParcModal('license-modal')">✕</button>
+        <h3 id="lic-modal-title">Licence</h3>
+        <input type="hidden" id="lm-id" />
+        <form id="license-modal-form" class="settings-form" style="display:grid;gap:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Produit *</span><input id="lm-product" type="text" required placeholder="Adobe Creative Cloud" /></label>
+            <label class="auth-label"><span>Fournisseur</span><input id="lm-vendor" type="text" placeholder="Adobe" /></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Type</span><select id="lm-type"><option value="subscription">Abonnement</option><option value="perpetual">Perpétuelle</option><option value="volume">Volume</option><option value="trial">Essai</option></select></label>
+            <label class="auth-label"><span>Qté totale</span><input id="lm-qty" type="number" min="1" value="1" required /></label>
+            <label class="auth-label"><span>Qté assignée</span><input id="lm-assigned" type="number" min="0" value="0" required /></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Coût/unité ($)</span><input id="lm-cost" type="number" step="0.01" value="0" /></label>
+            <label class="auth-label"><span>Cycle</span><select id="lm-cycle"><option value="annual">Annuel</option><option value="monthly">Mensuel</option><option value="one-time">Unique</option></select></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Achat</span><input id="lm-purchase" type="date" /></label>
+            <label class="auth-label"><span>Expiration *</span><input id="lm-expiry" type="date" /></label>
+            <label class="auth-label"><span>Renouvellement</span><input id="lm-renewal" type="date" /></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Département</span><select id="lm-dept"><option value="">— Aucun —</option></select></label>
+            <label class="auth-label" style="justify-content:flex-end;padding-top:26px"><label><input id="lm-autorenew" type="checkbox" /> Renouvellement auto</label></label>
+          </div>
+          <label class="auth-label"><span>Notes</span><input id="lm-notes" type="text" /></label>
+          <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
+          <p id="lm-error" class="form-error hidden"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Serveur -->
+    <div id="server-modal" class="modal-backdrop hidden">
+      <div class="modal-card" style="max-width:560px">
+        <button class="modal-close" onclick="closeParcModal('server-modal')">✕</button>
+        <h3 id="srv-modal-title">Serveur</h3>
+        <input type="hidden" id="sm-id" />
+        <form id="server-modal-form" class="settings-form" style="display:grid;gap:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Hôte *</span><input id="sm-hostname" type="text" required placeholder="srv-prod-01" /></label>
+            <label class="auth-label"><span>IP</span><input id="sm-ip" type="text" placeholder="192.168.1.10" /></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Environnement</span><select id="sm-env"><option value="production">Production</option><option value="staging">Staging</option><option value="development">Développement</option><option value="test">Test</option><option value="backup">Sauvegarde</option></select></label>
+            <label class="auth-label"><span>Statut</span><select id="sm-status"><option value="active">Actif</option><option value="idle">Inactif</option><option value="to_decommission">À décommissionner</option><option value="decommissioned">Décommissionné</option></select></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <label class="auth-label"><span>OS</span><input id="sm-os" type="text" placeholder="Ubuntu 22.04" /></label>
+            <label class="auth-label"><span>CPU (cœurs)</span><input id="sm-cpu" type="number" min="1" /></label>
+            <label class="auth-label"><span>RAM (Go)</span><input id="sm-ram" type="number" min="1" /></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Stockage (Go)</span><input id="sm-storage" type="number" min="1" /></label>
+            <label class="auth-label"><span>Emplacement</span><input id="sm-location" type="text" placeholder="Datacenter Montréal" /></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Coût mensuel ($)</span><input id="sm-cost" type="number" step="0.01" value="0" /></label>
+            <label class="auth-label"><span>Département</span><select id="sm-dept"><option value="">— Aucun —</option></select></label>
+          </div>
+          <label class="auth-label"><span>Notes</span><input id="sm-notes" type="text" /></label>
+          <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
+          <p id="sm-error" class="form-error hidden"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Application IT -->
+    <div id="app-modal" class="modal-backdrop hidden">
+      <div class="modal-card" style="max-width:520px">
+        <button class="modal-close" onclick="closeParcModal('app-modal')">✕</button>
+        <h3 id="app-modal-title">Application IT</h3>
+        <input type="hidden" id="am-id" />
+        <form id="app-modal-form" class="settings-form" style="display:grid;gap:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Nom *</span><input id="am-name" type="text" required placeholder="Microsoft Project" /></label>
+            <label class="auth-label"><span>Fournisseur</span><input id="am-vendor" type="text" placeholder="Microsoft" /></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Catégorie</span><select id="am-cat"><option value="">—</option><option value="cloud">Cloud</option><option value="saas">SaaS</option><option value="on-prem">On-premise</option><option value="mobile">Mobile</option><option value="security">Sécurité</option></select></label>
+            <label class="auth-label"><span>Statut</span><select id="am-status"><option value="active">Active</option><option value="unused">Non utilisée</option><option value="decommissioned">Décommissionnée</option></select></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Coût mensuel ($)</span><input id="am-cost" type="number" step="0.01" value="0" /></label>
+            <label class="auth-label"><span>Utilisateurs</span><input id="am-users" type="number" min="0" value="0" /></label>
+            <label class="auth-label"><span>Département</span><select id="am-dept"><option value="">— Aucun —</option></select></label>
+          </div>
+          <label class="auth-label"><span>URL</span><input id="am-url" type="url" placeholder="https://..." /></label>
+          <label class="auth-label"><span>Notes</span><input id="am-notes" type="text" /></label>
+          <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
+          <p id="am-error" class="form-error hidden"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Compte de service -->
+    <div id="sa-modal" class="modal-backdrop hidden">
+      <div class="modal-card" style="max-width:460px">
+        <button class="modal-close" onclick="closeParcModal('sa-modal')">✕</button>
+        <h3 data-i18n="sa.add">Créer un compte de service</h3>
+        <form id="sa-modal-form" class="settings-form" style="display:grid;gap:10px">
+          <label class="auth-label"><span data-i18n="sa.name">Nom</span><input id="sa-name" type="text" required placeholder="CI/CD Pipeline" /></label>
+          <label class="auth-label"><span>Description</span><input id="sa-desc" type="text" placeholder="Optionnel" /></label>
+          <label class="auth-label"><span data-i18n="sa.role">Rôle</span><select id="sa-role"><option value="user">Utilisateur</option><option value="manager">Manager</option><option value="admin">Admin</option></select></label>
+          <button type="submit" class="btn btn-primary btn-sm">Créer</button>
+          <p id="sa-error" class="form-error hidden"></p>
+        </form>
+        <div id="sa-token-wrap" class="hidden" style="margin-top:16px">
+          <p class="form-success">Token créé — copiez-le maintenant, il ne sera plus affiché.</p>
+          <div class="invite-link-box">
+            <input id="sa-token-input" type="text" readonly onclick="this.select()" style="font-family:monospace;font-size:.8rem" />
+            <button class="btn btn-outline btn-sm" onclick="copyToken()">Copier</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Département -->
+    <div id="dept-modal" class="modal-backdrop hidden">
+      <div class="modal-card" style="max-width:440px">
+        <button class="modal-close" onclick="closeParcModal('dept-modal')">✕</button>
+        <h3 id="dept-modal-title" data-i18n="dept.add">Département</h3>
+        <input type="hidden" id="dm-id" />
+        <form id="dept-modal-form" class="settings-form" style="display:grid;gap:10px">
+          <label class="auth-label"><span data-i18n="dept.name">Nom *</span><input id="dm-name" type="text" required placeholder="Finance" /></label>
+          <label class="auth-label"><span>Description</span><input id="dm-desc" type="text" /></label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span data-i18n="dept.budget">Budget annuel ($)</span><input id="dm-budget" type="number" step="0.01" value="0" /></label>
+            <label class="auth-label"><span>Devise</span><select id="dm-currency"><option value="CAD">CAD</option><option value="USD">USD</option><option value="EUR">EUR</option></select></label>
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
+          <p id="dm-error" class="form-error hidden"></p>
+        </form>
+      </div>
+    </div>
 
     <!-- ── STATISTIQUES ───────────────────────────────────────────────────── -->
     <section id="tab-stats" class="tab-content hidden" role="tabpanel">
