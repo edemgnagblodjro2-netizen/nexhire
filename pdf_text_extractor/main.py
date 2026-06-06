@@ -14,6 +14,18 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from starlette import status
+from starlette.middleware.base import BaseHTTPMiddleware
+
+
+class NoCacheStaticMiddleware(BaseHTTPMiddleware):
+    """Empêche le navigateur de mettre en cache app.js / styles.css."""
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        path = request.url.path
+        if path.startswith("/static/") and (path.endswith(".js") or path.endswith(".css")):
+            response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+            response.headers["Pragma"] = "no-cache"
+        return response
 
 from ai_service import AIConfigurationError, AssistantService
 from audit import AuditEvent, client_ip, log_audit
@@ -118,6 +130,7 @@ def create_app(
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 
+    app.add_middleware(NoCacheStaticMiddleware)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
@@ -150,6 +163,14 @@ def create_app(
             checks["db_orgs"] = "ok"
             res = sb.table("users").select("id", count="exact").execute()
             checks["db_users"] = f"ok ({res.count} rows)" if res.count is not None else f"ok ({len(res.data)} rows)"
+            # Vérification des tables Phase 9-11
+            for tbl in ["departments","budget_entries","licenses","servers","it_applications",
+                        "service_accounts","contracts","workforce_processes"]:
+                try:
+                    sb.table(tbl).select("id").limit(1).execute()
+                    checks[f"table_{tbl}"] = "ok"
+                except Exception:
+                    checks[f"table_{tbl}"] = "MISSING — exécuter phase9/10 SQL"
         except Exception as exc:
             checks["db"] = f"error: {type(exc).__name__}: {exc}"
         ok = all(v == "set" for k, v in checks.items() if k not in ("db_orgs","db_users","db")) \

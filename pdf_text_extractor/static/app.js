@@ -440,10 +440,16 @@ async function apiCall(path, method = "GET", body = null) {
   if (state.token) headers["Authorization"] = `Bearer ${state.token}`;
   const opts = { method, headers };
   if (body !== null) opts.body = JSON.stringify(body);
-  const res = await fetch(path, opts);
+  let res;
+  try { res = await fetch(path, opts); }
+  catch (_) { throw new Error("Erreur réseau — vérifiez la connexion."); }
   if (res.status === 401) { clearAuth(); showAuth("login"); throw new Error("Session expirée."); }
-  const data = await res.json().catch(() => ({ detail: res.statusText }));
-  if (!res.ok) throw new Error(data.detail || `Erreur ${res.status}`);
+  const data = await res.json().catch(() => ({ detail: `HTTP ${res.status}` }));
+  if (!res.ok) {
+    const err = new Error(data.detail || `Erreur ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
   return data;
 }
 
@@ -525,13 +531,17 @@ function switchTab(name) {
 }
 
 function loadActiveTab() {
-  if (state.tab === "connectors") loadConnectors();
-  if (state.tab === "audit")      loadAudit();
-  if (state.tab === "stats")      loadAnalytics();
-  if (state.tab === "settings")   loadSettings();
-  if (state.tab === "team")       loadTeam();
-  if (state.tab === "parc-it")    loadParcIT();
-  if (state.tab === "optim")      loadOptimization();
+  const loaders = {
+    "connectors": loadConnectors,
+    "audit":      loadAudit,
+    "stats":      loadAnalytics,
+    "settings":   loadSettings,
+    "team":       loadTeam,
+    "parc-it":    loadParcIT,
+    "optim":      loadOptimization,
+  };
+  const fn = loaders[state.tab];
+  if (fn) Promise.resolve().then(() => fn()).catch(err => console.warn(`[${state.tab}] load error:`, err));
 }
 
 // ── Quota indicator ────────────────────────────────────────────────────────
@@ -1991,7 +2001,10 @@ async function loadDepartments() {
   if (!wrap) return;
   try {
     const depts = await apiCall("/api/departments");
-    if (!depts.length) { wrap.innerHTML = `<p class="muted">Aucun département.</p>`; return; }
+    if (!depts.length) {
+      wrap.innerHTML = `<p class="muted">Aucun département. Cliquez sur <strong>⚡ Initialiser par secteur</strong> pour en créer automatiquement.</p>`;
+      return;
+    }
     wrap.innerHTML = depts.map(d => `
       <div class="dept-card">
         <div class="dept-card-name">${esc(d.name)}</div>
@@ -2002,7 +2015,12 @@ async function loadDepartments() {
           <button class="btn-icon btn-deactivate" onclick="deleteDept('${d.id}')">✕</button>
         </div>
       </div>`).join("");
-  } catch(e) { wrap.innerHTML = `<p class="muted">${e.message||"Erreur"}</p>`; }
+  } catch(e) {
+    const isDbMissing = e.status === 500;
+    wrap.innerHTML = isDbMissing
+      ? `<p class="muted" style="color:#dc2626">⚠️ Tables manquantes — exécutez <strong>phase9_enterprise.sql</strong> dans Supabase SQL Editor puis rechargez.</p>`
+      : `<p class="muted">${e.message||"Erreur"}</p>`;
+  }
 }
 
 function openDeptModal(dept = null) {
