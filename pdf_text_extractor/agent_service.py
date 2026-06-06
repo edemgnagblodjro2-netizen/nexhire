@@ -164,6 +164,85 @@ TOOL_DEFINITIONS: list[dict] = [
             },
         },
     },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_zendesk",
+            "description": (
+                "Recherche des tickets de support client dans Zendesk. "
+                "Utile pour : tickets ouverts, demandes clients, escalades, satisfaction client."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "Mots-clés ou description du problème"},
+                    "status": {
+                        "type": "string",
+                        "enum": ["open", "pending", "solved", "all"],
+                        "default": "all",
+                    },
+                    "priority": {
+                        "type": "string",
+                        "enum": ["urgent", "high", "normal", "low", "all"],
+                        "default": "all",
+                    },
+                    "limit": {"type": "integer", "default": 5},
+                },
+                "required": ["query"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_autotask",
+            "description": (
+                "Interroge Autotask PSA pour des tickets IT, projets et contrats de service. "
+                "Utile pour : tickets IT en cours, projets MSP, SLA, temps facturable."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "Description ou numéro de ticket"},
+                    "type": {
+                        "type": "string",
+                        "enum": ["ticket", "project", "contract", "time_entry", "all"],
+                        "default": "all",
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": ["new", "in_progress", "waiting", "completed", "all"],
+                        "default": "all",
+                    },
+                    "limit": {"type": "integer", "default": 5},
+                },
+                "required": ["query"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_hubspot",
+            "description": (
+                "Recherche dans HubSpot CRM : contacts, entreprises, transactions, campagnes. "
+                "Utile pour : pipeline commercial, leads récents, opportunités à relancer."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "Nom, email ou description"},
+                    "object_type": {
+                        "type": "string",
+                        "enum": ["contact", "company", "deal", "ticket", "all"],
+                        "default": "all",
+                    },
+                    "limit": {"type": "integer", "default": 5},
+                },
+                "required": ["query"],
+            },
+        },
+    },
 ]
 
 
@@ -259,6 +338,49 @@ def _mock_workday(category: str, department: str | None = None, period: str = "c
     return mocks.get(category, {"message": f"Données Workday '{category}' non disponibles en mode simulé."})
 
 
+def _mock_zendesk(query: str, status: str = "all", priority: str = "all", limit: int = 5) -> list[dict]:
+    data = [
+        {"id": "ZD-4821", "sujet": "Impossible de se connecter au portail client", "priorité": "urgent", "statut": "open", "client": "CIBC", "créé": "2026-06-05T09:10:00Z", "assigné": "Sophie Bilodeau"},
+        {"id": "ZD-4815", "sujet": "Lenteurs sur l'application mobile — version iOS 17", "priorité": "high", "statut": "pending", "client": "Desjardins", "créé": "2026-06-04T14:30:00Z", "assigné": "Marc Ouellet"},
+        {"id": "ZD-4802", "sujet": "Erreur 500 sur la page de facturation", "priorité": "urgent", "statut": "open", "client": "Banque Nationale", "créé": "2026-06-03T11:00:00Z", "assigné": "Non assigné"},
+        {"id": "ZD-4798", "sujet": "Demande d'exportation des données RGPD", "priorité": "normal", "statut": "open", "client": "Client Interne", "créé": "2026-06-02T10:45:00Z", "assigné": "Équipe Conformité"},
+        {"id": "ZD-4790", "sujet": "Intégration Slack — notifications manquantes", "priorité": "low", "statut": "open", "client": "TechMontréal Inc.", "créé": "2026-06-01T08:20:00Z", "assigné": "Support L2"},
+    ]
+    if priority != "all":
+        data = [d for d in data if d["priorité"] == priority]
+    if status != "all":
+        data = [d for d in data if d["statut"] == status]
+    return data[:limit]
+
+
+def _mock_autotask(query: str, type: str = "all", status: str = "all", limit: int = 5) -> list[dict]:
+    data = [
+        {"id": "AT-12047", "type": "ticket", "titre": "Mise à jour firmware — switches Cisco Laval", "statut": "in_progress", "sla": "4h", "temps_restant": "1h30", "technicien": "Jean-François Roy", "client": "Ville de Laval"},
+        {"id": "AT-12039", "type": "ticket", "titre": "Déploiement antivirus — 45 postes", "statut": "new", "sla": "8h", "priorité": "high", "client": "CHU Sainte-Justine"},
+        {"id": "AT-P-087", "type": "project", "titre": "Migration Exchange → Microsoft 365", "statut": "in_progress", "avancement": "67 %", "échéance": "2026-07-15", "client": "Commission scolaire CSDM"},
+        {"id": "AT-C-023", "type": "contract", "titre": "Contrat support annuel — niveau Gold", "statut": "active", "renouvellement": "2026-12-31", "valeur": "48 000 $", "client": "Desjardins"},
+        {"id": "AT-12031", "type": "ticket", "titre": "VPN Cisco AnyConnect — erreur certificat", "statut": "waiting", "sla": "2h", "en_attente": "Approbation client", "technicien": "Marie Côté"},
+    ]
+    if type != "all":
+        data = [d for d in data if d["type"] == type]
+    if status != "all":
+        data = [d for d in data if d["statut"] == status]
+    return data[:limit]
+
+
+def _mock_hubspot(query: str, object_type: str = "all", limit: int = 5) -> list[dict]:
+    data = [
+        {"type": "deal", "nom": "Ville de Québec — Expansion licences", "valeur": "180 000 $", "étape": "Proposition envoyée", "probabilité": "70 %", "contact": "Directeur TI", "fermeture_prévue": "2026-07-31"},
+        {"type": "deal", "nom": "CSSDM — Renouvellement annuel", "valeur": "95 000 $", "étape": "Négociation", "probabilité": "85 %", "contact": "DG Achat", "fermeture_prévue": "2026-06-30"},
+        {"type": "contact", "nom": "André Bergeron", "entreprise": "Intact Assurances", "email": "a.bergeron@intact.net", "dernier_contact": "2026-05-28", "statut": "Lead qualifié"},
+        {"type": "company", "nom": "Bell Canada", "statut": "Prospect", "industrie": "Télécommunications", "taille": "50 000+ employés", "arr_potentiel": "500 000 $"},
+        {"type": "deal", "nom": "CGI Montréal — Pilote IA", "valeur": "45 000 $", "étape": "Démo planifiée", "probabilité": "45 %", "contact": "VP Innovation", "fermeture_prévue": "2026-08-15"},
+    ]
+    if object_type != "all":
+        data = [d for d in data if d["type"] == object_type]
+    return data[:limit]
+
+
 # ── Dispatch des outils ───────────────────────────────────────────────────────
 
 def _call_tool(name: str, arguments: dict[str, Any], org_id: str | None = None) -> Any:
@@ -276,11 +398,14 @@ def _call_tool(name: str, arguments: dict[str, Any], org_id: str | None = None) 
 
     handlers = {
         "search_servicenow": lambda a: _mock_servicenow(**a),
-        "search_jira": lambda a: _mock_jira(**a),
-        "query_sap": lambda a: _mock_sap(**a),
+        "search_jira":        lambda a: _mock_jira(**a),
+        "query_sap":          lambda a: _mock_sap(**a),
         "search_microsoft_365": lambda a: _mock_microsoft_365(**a),
-        "search_salesforce": lambda a: _mock_salesforce(**a),
-        "query_workday": lambda a: _mock_workday(**a),
+        "search_salesforce":  lambda a: _mock_salesforce(**a),
+        "query_workday":      lambda a: _mock_workday(**a),
+        "search_zendesk":     lambda a: _mock_zendesk(**a),
+        "search_autotask":    lambda a: _mock_autotask(**a),
+        "search_hubspot":     lambda a: _mock_hubspot(**a),
     }
     handler = handlers.get(name)
     if not handler:
@@ -328,11 +453,14 @@ def run_agent(
     # Filtrer les outils selon les connecteurs actifs
     connector_tool_map = {
         "microsoft_365": "search_microsoft_365",
-        "salesforce": "search_salesforce",
-        "servicenow": "search_servicenow",
-        "jira": "search_jira",
-        "sap": "query_sap",
-        "workday": "query_workday",
+        "salesforce":    "search_salesforce",
+        "servicenow":    "search_servicenow",
+        "jira":          "search_jira",
+        "sap":           "query_sap",
+        "workday":       "query_workday",
+        "zendesk":       "search_zendesk",
+        "autotask":      "search_autotask",
+        "hubspot":       "search_hubspot",
     }
     if connected_connectors is not None:
         active_tools = {connector_tool_map[c] for c in connected_connectors if c in connector_tool_map}

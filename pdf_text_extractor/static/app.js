@@ -36,7 +36,7 @@ const T = {
     'price.sub':"14 jours d'essai complet inclus, sans carte de crédit.",
     'price.trial':"14 jours d'essai gratuit",'price.trial.desc':'— accès complet à tous les connecteurs et fonctionnalités. Aucune carte requise.',
     'price.monthly':'Mensuel','price.monthly.unit':'/mois',
-    'price.f1':'6 connecteurs (M365, Salesforce, Jira…)','price.f2':'Agent IA — 1 000 requêtes / mois',
+    'price.f1':'9 connecteurs (M365, Zendesk, Autotask…)','price.f2':'Agent IA — 1 000 requêtes / mois',
     'price.f3':'Analyse de documents PDF illimitée','price.f4':"Journal d'audit complet",
     'price.f5':'Support courriel prioritaire','price.f6':'Bilingue FR / EN',
     'price.cta':"Commencer l'essai",'price.monthly.note':'Sans engagement · Annulez à tout moment',
@@ -101,7 +101,7 @@ const T = {
     'price.sub':'14-day full trial included, no credit card required.',
     'price.trial':'14-day free trial','price.trial.desc':'— full access to all connectors and features. No card required.',
     'price.monthly':'Monthly','price.monthly.unit':'/mo',
-    'price.f1':'6 connectors (M365, Salesforce, Jira…)','price.f2':'AI Agent — 1,000 queries / month',
+    'price.f1':'9 connectors (M365, Zendesk, Autotask…)','price.f2':'AI Agent — 1,000 queries / month',
     'price.f3':'Unlimited PDF document analysis','price.f4':'Full audit log',
     'price.f5':'Priority email support','price.f6':'Bilingual FR / EN',
     'price.cta':'Start trial','price.monthly.note':'No commitment · Cancel anytime',
@@ -189,6 +189,9 @@ const CONNECTORS = {
   jira:          { label: "Jira",           icon: "J",  color: "#0052cc", oauth: false },
   sap:           { label: "SAP",            icon: "S",  color: "#0070b8", oauth: false },
   workday:       { label: "Workday",        icon: "W",  color: "#f78b1f", oauth: false },
+  zendesk:       { label: "Zendesk",        icon: "ZD", color: "#00b7c5", oauth: false },
+  autotask:      { label: "Autotask",       icon: "AT", color: "#007dc6", oauth: false },
+  hubspot:       { label: "HubSpot",        icon: "HS", color: "#ff7a59", oauth: false },
 };
 
 // ── DOM shortcuts ──────────────────────────────────────────────────────────
