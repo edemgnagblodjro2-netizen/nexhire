@@ -3,143 +3,398 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NexHire Enterprise Assistant</title>
+  <title>NexHire — Enterprise Assistant IA</title>
+  <meta name="description" content="Un seul assistant IA pour tous vos systèmes d'entreprise : Microsoft 365, Salesforce, Jira, ServiceNow, SAP, Workday." />
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════ LOGIN ══════════════════════════ -->
-<div id="auth-screen" class="auth-screen">
-  <div class="auth-card">
-    <div class="auth-brand">
-      <span class="brand-dot"></span>
-      <strong>NexHire</strong>
+<!-- ═══════════════════════════════════════ LANDING ════════════════════════ -->
+<div id="view-landing">
+
+  <!-- Nav -->
+  <nav class="land-nav">
+    <div class="nav-brand">
+      <div class="brand-mark">N</div>
+      <span>NexHire</span>
     </div>
-    <h1>Bienvenue</h1>
-    <p class="auth-sub">Connectez-vous à votre espace Enterprise Assistant.</p>
-    <form id="login-form">
-      <label>
-        Adresse courriel
-        <input id="login-email" type="email" placeholder="vous@organisation.ca"
-               required autocomplete="email" />
-      </label>
-      <label>
-        Mot de passe
-        <input id="login-password" type="password" placeholder="••••••••"
-               required autocomplete="current-password" />
-      </label>
-      <button type="submit" id="login-btn">Se connecter</button>
-      <p id="login-error" class="form-error hidden"></p>
-    </form>
+    <div class="land-nav-links">
+      <a href="#features">Fonctionnalités</a>
+      <a href="#pricing">Tarifs</a>
+      <a href="#connectors">Connecteurs</a>
+    </div>
+    <div class="land-nav-cta">
+      <button class="btn btn-outline btn-sm" onclick="showAuth('login')">Se connecter</button>
+      <button class="btn btn-primary btn-sm" onclick="showAuth('signup')">Essai gratuit 14 jours</button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow"><span></span>Intelligence artificielle · Bilingue FR/EN</div>
+        <h1>Un assistant IA pour <em>tous</em> vos systèmes</h1>
+        <p class="hero-sub">
+          NexHire connecte vos outils — Microsoft 365, Salesforce, Jira, ServiceNow, SAP, Workday —
+          en un seul agent conversationnel intelligent pour vos équipes canadiennes.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" onclick="showAuth('signup')">Commencer l'essai gratuit</button>
+          <button class="btn btn-outline btn-lg" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25);color:#fff" onclick="showAuth('login')">Se connecter</button>
+        </div>
+        <div class="hero-trust">
+          <span>14 jours gratuits</span>
+          <span>Aucune carte requise</span>
+          <span>FR / EN</span>
+        </div>
+      </div>
+
+      <!-- Dashboard preview -->
+      <div class="hero-visual">
+        <div class="dash-preview">
+          <div class="dash-bar">
+            <div class="dash-dot" style="background:#ef4444"></div>
+            <div class="dash-dot" style="background:#f59e0b"></div>
+            <div class="dash-dot" style="background:#22c55e"></div>
+          </div>
+          <div class="dash-body">
+            <div class="dash-msg q">Incidents critiques + emails non lus + budget ?</div>
+            <div class="dash-msg src">🔍 Sources : ServiceNow · Microsoft 365 · SAP</div>
+            <div class="dash-msg a">
+              <strong style="font-size:.82rem;color:#2563eb">3 incidents critiques ouverts</strong><br>
+              INC0012847 — Panne serveur DB-01 (non assigné)<br>
+              INC0012839 — Certificat SSL expiré portail RH<br><br>
+              <strong style="font-size:.82rem;color:#2563eb">2 emails prioritaires</strong><br>
+              PDG@client.ca — Renouvellement contrat Q3 ✉️<br><br>
+              <strong style="font-size:.82rem;color:#2563eb">Budget juin 2026 — 93,7% consommé</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Connectors strip -->
+  <div class="connectors-strip" id="connectors">
+    <div class="connectors-strip-inner">
+      <p>Connecteurs disponibles</p>
+      <div class="conn-pill"><div class="conn-icon" style="background:#0078d4">M</div>Microsoft 365</div>
+      <div class="conn-pill"><div class="conn-icon" style="background:#00a1e0">SF</div>Salesforce</div>
+      <div class="conn-pill"><div class="conn-icon" style="background:#62d2cc">SN</div>ServiceNow</div>
+      <div class="conn-pill"><div class="conn-icon" style="background:#0052cc">J</div>Jira</div>
+      <div class="conn-pill"><div class="conn-icon" style="background:#0070b8">S</div>SAP</div>
+      <div class="conn-pill"><div class="conn-icon" style="background:#f78b1f">W</div>Workday</div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="section-center">
+      <span class="section-label">Pourquoi NexHire</span>
+      <h2 class="section-title">Tout ce dont votre organisation a besoin</h2>
+      <p class="section-sub">Un seul agent IA qui interroge tous vos systèmes en temps réel et vous répond en français ou en anglais.</p>
+      <div class="features-grid">
+        <div class="feat-card">
+          <div class="feat-icon" style="background:#eff6ff">🔗</div>
+          <h3>6 connecteurs intégrés</h3>
+          <p>Microsoft 365, Salesforce, Jira, ServiceNow, SAP et Workday — connectés en quelques clics via OAuth sécurisé.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon" style="background:#f0fdf4">🤖</div>
+          <h3>Agent IA conversationnel</h3>
+          <p>Posez vos questions en langage naturel. L'agent consulte les bons systèmes automatiquement et synthétise les résultats.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon" style="background:#fef9ee">🔒</div>
+          <h3>Sécurité entreprise</h3>
+          <p>Tokens OAuth chiffrés Fernet, JWT ES256, audit log immuable et contrôle d'accès par rôle (RBAC).</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon" style="background:#fdf4ff">🌐</div>
+          <h3>Bilingue FR / EN</h3>
+          <p>Interface et réponses de l'agent disponibles en français et en anglais, adapté aux organisations canadiennes.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon" style="background:#eff6ff">📄</div>
+          <h3>Analyse de documents</h3>
+          <p>Téléversez des PDF — politiques, appels d'offres, rapports — et posez des questions directement sur leur contenu.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon" style="background:#f0fdf4">📊</div>
+          <h3>Journal d'audit complet</h3>
+          <p>Chaque requête, connexion et action est tracée avec l'IP, l'utilisateur, la source et le résultat — append-only.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
+    <div class="section-center" style="text-align:center">
+      <span class="section-label">Tarifs simples</span>
+      <h2 class="section-title">Commencez gratuitement. Payez quand vous êtes prêt.</h2>
+      <p class="section-sub" style="margin:0 auto 40px">14 jours d'essai complet inclus, sans carte de crédit.</p>
+
+      <div class="trial-banner" style="justify-content:center">
+        <span class="trial-icon">🎁</span>
+        <div>
+          <strong>14 jours d'essai gratuit</strong> — accès complet à tous les connecteurs et fonctionnalités.
+          Aucune carte requise.
+        </div>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div>
+            <div class="price-period">Mensuel</div>
+            <div class="price-amount"><sup>$</sup>99<sub>/mois</sub></div>
+          </div>
+          <div class="price-features">
+            <div class="price-feat">6 connecteurs (M365, Salesforce, Jira…)</div>
+            <div class="price-feat">Agent IA — 1 000 requêtes / mois</div>
+            <div class="price-feat">Analyse de documents PDF illimitée</div>
+            <div class="price-feat">Journal d'audit complet</div>
+            <div class="price-feat">Support courriel prioritaire</div>
+            <div class="price-feat">Bilingue FR / EN</div>
+          </div>
+          <button class="btn btn-outline" onclick="showAuth('signup')">Commencer l'essai</button>
+          <p class="price-trial">Sans engagement · Annulez à tout moment</p>
+        </div>
+
+        <div class="price-card featured">
+          <div class="price-badge">🏆 Meilleure valeur — économisez 198 $</div>
+          <div>
+            <div class="price-period">Annuel</div>
+            <div class="price-amount"><sup>$</sup>990<sub>/an</sub></div>
+            <div class="price-saving">Équivaut à 82,50 $ / mois — économisez 2 mois gratuits</div>
+          </div>
+          <div class="price-features">
+            <div class="price-feat">Tout le plan Mensuel inclus</div>
+            <div class="price-feat">Agent IA — 12 000 requêtes / an</div>
+            <div class="price-feat">Accès prioritaire aux nouveaux connecteurs</div>
+            <div class="price-feat">Rapport d'utilisation mensuel</div>
+            <div class="price-feat">Support téléphonique dédié</div>
+            <div class="price-feat">Onboarding personnalisé</div>
+          </div>
+          <button class="btn btn-primary" onclick="showAuth('signup')">Commencer l'essai</button>
+          <p class="price-trial">Facturé annuellement · Annulez à tout moment</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="nav-brand" style="color:#fff">
+            <div class="brand-mark">N</div>
+            <span>NexHire</span>
+          </div>
+          <p>Un assistant IA enterprise pour les organisations canadiennes — bilingue, sécurisé, multi-connecteurs.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Produit</h4>
+          <ul>
+            <li><a href="#features">Fonctionnalités</a></li>
+            <li><a href="#connectors">Connecteurs</a></li>
+            <li><a href="#pricing">Tarifs</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Centre d'aide</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Légal</h4>
+          <ul>
+            <li><a href="#">Conditions d'utilisation</a></li>
+            <li><a href="#">Politique de confidentialité</a></li>
+            <li><a href="#">Sécurité</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 NexHire Inc. Tous droits réservés.</span>
+        <span>Conçu pour les organisations canadiennes 🍁</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════ AUTH ═══════════════════════════ -->
+<div id="view-auth" class="auth-screen hidden">
+  <div class="auth-card">
+    <button class="auth-back" onclick="showLanding()">← Retour à l'accueil</button>
+
+    <!-- Login -->
+    <div id="auth-login">
+      <div class="auth-title">Connexion</div>
+      <p class="auth-sub">Accédez à votre espace NexHire.</p>
+      <form class="auth-form" id="login-form">
+        <label class="auth-label">
+          Adresse courriel
+          <input id="login-email" type="email" placeholder="vous@organisation.ca" required autocomplete="email" />
+        </label>
+        <label class="auth-label">
+          Mot de passe
+          <input id="login-password" type="password" placeholder="••••••••" required autocomplete="current-password" />
+        </label>
+        <button type="submit" class="auth-submit" id="login-btn">Se connecter</button>
+        <p id="login-error" class="form-error hidden"></p>
+      </form>
+      <p class="auth-switch">Pas encore de compte ? <a href="#" onclick="showAuth('signup');return false">Essai gratuit 14 jours</a></p>
+    </div>
+
+    <!-- Signup -->
+    <div id="auth-signup" class="hidden">
+      <div class="auth-title">Créer un compte</div>
+      <p class="auth-sub">14 jours d'essai gratuit — aucune carte requise.</p>
+      <form class="auth-form" id="signup-form">
+        <label class="auth-label">
+          Nom de l'organisation
+          <input id="signup-org" type="text" placeholder="Ville de Montréal" required />
+        </label>
+        <div class="input-row">
+          <label class="auth-label">
+            Prénom
+            <input id="signup-fname" type="text" placeholder="Marie" required />
+          </label>
+          <label class="auth-label">
+            Nom
+            <input id="signup-lname" type="text" placeholder="Tremblay" required />
+          </label>
+        </div>
+        <label class="auth-label">
+          Adresse courriel
+          <input id="signup-email" type="email" placeholder="marie.tremblay@organisation.ca" required autocomplete="email" />
+        </label>
+        <label class="auth-label">
+          Mot de passe (min. 8 caractères)
+          <input id="signup-password" type="password" placeholder="••••••••" required minlength="8" autocomplete="new-password" />
+        </label>
+        <button type="submit" class="auth-submit" id="signup-btn">Créer mon compte gratuitement</button>
+        <p id="signup-error"   class="form-error hidden"></p>
+        <p id="signup-success" class="form-success hidden"></p>
+      </form>
+      <p class="auth-switch">Déjà un compte ? <a href="#" onclick="showAuth('login');return false">Se connecter</a></p>
+    </div>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════ APP ════════════════════════════ -->
-<div id="app-screen" class="hidden">
+<div id="view-app" class="hidden">
 
-  <!-- Navigation -->
+  <!-- Trial banner -->
+  <div id="trial-banner" class="trial-app-banner hidden">
+    <span>🕐</span>
+    <span id="trial-text">Votre essai gratuit se termine bientôt.</span>
+    <button class="btn btn-dark btn-sm" onclick="alert('Contactez-nous à contact@nexhire.ca pour passer au Premium.')">Passer au Premium — 99 $/mois</button>
+    <button class="dismiss" id="trial-dismiss" title="Fermer">✕</button>
+  </div>
+
+  <!-- Top nav -->
   <nav class="topnav">
     <div class="nav-brand">
-      <span class="brand-dot"></span>
-      <strong>NexHire</strong>
-      <span class="nav-sub">Enterprise Assistant</span>
+      <div class="brand-mark">N</div>
+      <span>NexHire</span>
     </div>
-
     <div class="nav-tabs" role="tablist">
       <button class="tab-btn active" data-tab="agent"      role="tab">Assistant IA</button>
       <button class="tab-btn"        data-tab="connectors" role="tab">Connecteurs</button>
       <button class="tab-btn"        data-tab="documents"  role="tab">Documents</button>
       <button class="tab-btn admin-only hidden" data-tab="audit" role="tab">Audit</button>
     </div>
-
-    <div class="nav-user">
-      <span id="nav-user-email" class="user-email"></span>
-      <span id="nav-user-role"  class="user-role-badge"></span>
-      <button id="logout-btn" class="btn-ghost">Déconnexion</button>
+    <div class="nav-right">
+      <!-- Notification bell -->
+      <div class="notif-wrap">
+        <button class="notif-btn" id="notif-btn" title="Notifications">
+          🔔
+          <span class="notif-dot" id="notif-dot"></span>
+        </button>
+        <div class="notif-dropdown hidden" id="notif-dropdown">
+          <div class="notif-header">Notifications</div>
+          <div id="notif-list"></div>
+        </div>
+      </div>
+      <!-- User chip -->
+      <div class="user-chip">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <span class="user-email-nav" id="nav-user-email"></span>
+        <span class="role-badge" id="nav-user-role"></span>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="logout-btn">Déconnexion</button>
     </div>
   </nav>
 
   <!-- Main content -->
   <main class="app-main">
 
-    <!-- ─────────────────────────────────── TAB : AGENT ───────────────── -->
+    <!-- ── AGENT ────────────────────────────────────────────────────────── -->
     <section id="tab-agent" class="tab-content" role="tabpanel">
       <div class="section-header">
         <h2>Posez votre question</h2>
         <div class="controls-inline">
-          <select id="agent-mode" title="Mode assistant">
+          <select id="agent-mode">
             <option value="enterprise">Enterprise</option>
             <option value="municipal">Municipal / Organisme</option>
             <option value="recruiting">Recrutement</option>
           </select>
-          <select id="agent-lang" title="Langue">
+          <select id="agent-lang">
             <option value="fr">Français</option>
             <option value="en">English</option>
           </select>
         </div>
       </div>
-
-      <div class="prompt-shortcuts" id="prompt-shortcuts">
+      <div class="prompt-shortcuts">
         <button class="prompt-chip" data-prompt="Montre-moi les incidents critiques ouverts, les projets en retard et les dépenses du mois.">Incidents + projets + budget</button>
         <button class="prompt-chip" data-prompt="Quels emails importants n'ont pas été lus depuis hier ?">Emails non lus</button>
         <button class="prompt-chip" data-prompt="Quels contrats arrivent à échéance dans les 90 prochains jours ?">Contrats à renouveler</button>
         <button class="prompt-chip" data-prompt="Combien de postes sont vacants et quelles absences sont prévues cette semaine ?">Effectifs RH</button>
         <button class="prompt-chip" data-prompt="Quel est le statut du budget du mois courant par département ?">Budget du mois</button>
       </div>
-
-      <form id="agent-form" class="agent-form">
-        <textarea id="agent-question" rows="3"
-          placeholder="Ex : Montre-moi les incidents critiques et les emails non lus liés à la panne de ce matin."
-          required></textarea>
+      <form class="agent-form" id="agent-form">
+        <textarea id="agent-question" rows="3" placeholder="Ex : Montre-moi les incidents critiques et les emails non lus liés à la panne de ce matin." required></textarea>
         <button type="submit" id="agent-btn">Envoyer à l'agent</button>
       </form>
-
       <div id="agent-loading" class="loading-bar hidden">L'agent analyse vos systèmes connectés…</div>
       <p   id="agent-error"   class="error-text hidden"></p>
-
-      <div id="agent-result" class="agent-result hidden">
+      <div id="agent-result"  class="agent-result hidden">
         <div id="agent-sources" class="agent-sources"></div>
         <div id="agent-answer"  class="agent-answer"></div>
         <details class="tools-detail">
-          <summary>Outils appelés par l'agent</summary>
+          <summary>Outils appelés</summary>
           <pre id="agent-tools-json"></pre>
         </details>
       </div>
     </section>
 
-    <!-- ──────────────────────────────── TAB : CONNECTEURS ────────────── -->
+    <!-- ── CONNECTEURS ──────────────────────────────────────────────────── -->
     <section id="tab-connectors" class="tab-content hidden" role="tabpanel">
       <div class="section-header">
         <h2>Connecteurs d'entreprise</h2>
-        <button id="refresh-connectors" class="btn-secondary">&#8635; Actualiser</button>
+        <button class="btn btn-outline btn-sm" id="refresh-connectors">&#8635; Actualiser</button>
       </div>
-      <p class="section-sub">
-        Connectez vos systèmes pour que l'agent puisse les interroger en temps réel.
-        Les tokens OAuth sont chiffrés (Fernet) avant d'être stockés.
-      </p>
+      <p class="section-desc">Connectez vos systèmes pour que l'agent puisse les interroger en temps réel. Les tokens OAuth sont chiffrés (Fernet) avant d'être stockés.</p>
       <div id="connector-success" class="success-banner hidden"></div>
-      <div id="connector-grid"   class="connector-grid">
-        <p class="muted">Chargement des connecteurs…</p>
-      </div>
+      <div id="connector-grid"   class="connector-grid"><p class="muted">Chargement…</p></div>
     </section>
 
-    <!-- ──────────────────────────────── TAB : DOCUMENTS ─────────────── -->
+    <!-- ── DOCUMENTS ────────────────────────────────────────────────────── -->
     <section id="tab-documents" class="tab-content hidden" role="tabpanel">
       <div class="section-header">
         <h2>Analyse de documents PDF</h2>
         <div class="controls-inline">
-          <select id="doc-mode">
-            <option value="enterprise">Enterprise</option>
-            <option value="municipal">Municipal</option>
-            <option value="recruiting">Recrutement</option>
-          </select>
-          <select id="doc-lang">
-            <option value="fr">Français</option>
-            <option value="en">English</option>
-          </select>
+          <select id="doc-mode"><option value="enterprise">Enterprise</option><option value="municipal">Municipal</option><option value="recruiting">Recrutement</option></select>
+          <select id="doc-lang"><option value="fr">Français</option><option value="en">English</option></select>
         </div>
       </div>
-
       <div class="doc-grid">
         <div class="panel">
           <h3>Téléverser un PDF</h3>
@@ -152,27 +407,21 @@
           </form>
           <p id="upload-status" class="status"></p>
         </div>
-
         <div class="panel">
           <h3>Résumé IA</h3>
           <button id="summary-button" disabled>Générer le résumé</button>
           <div id="summary" class="output muted">Téléversez un PDF pour activer le résumé.</div>
         </div>
-
         <div class="panel wide">
           <h3>Chat sur le document</h3>
           <div id="chat-log" class="chat-log">
-            <div class="message assistant">
-              Posez une question après le téléversement. Ask in French or English.
-            </div>
+            <div class="message assistant">Posez une question après le téléversement. Ask in French or English.</div>
           </div>
           <form id="chat-form" class="chat-form">
-            <input id="doc-question" type="text"
-                   placeholder="Ex : Quel est le processus d'achat ?" disabled required />
+            <input id="doc-question" type="text" placeholder="Ex : Quel est le processus d'achat ?" disabled required />
             <button id="chat-button" type="submit" disabled>Envoyer</button>
           </form>
         </div>
-
         <div class="panel wide">
           <h3>Aperçu du texte extrait</h3>
           <pre id="preview" class="preview">Aucun document téléversé.</pre>
@@ -180,11 +429,11 @@
       </div>
     </section>
 
-    <!-- ──────────────────────────────── TAB : AUDIT ──────────────────── -->
-    <section id="tab-audit" class="tab-content hidden" role="tabpanel">
+    <!-- ── AUDIT ────────────────────────────────────────────────────────── -->
+    <section id="tab-audit" class="tab-content hidden admin-only" role="tabpanel">
       <div class="section-header">
         <h2>Journal d'audit</h2>
-        <button id="refresh-audit" class="btn-secondary">&#8635; Actualiser</button>
+        <button class="btn btn-outline btn-sm" id="refresh-audit">&#8635; Actualiser</button>
       </div>
       <div id="audit-wrap" class="table-wrap">
         <p class="muted" style="padding:20px">Chargement…</p>
