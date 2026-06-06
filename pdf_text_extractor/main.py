@@ -117,11 +117,15 @@ def create_app(
             checks[var] = "set" if os.environ.get(var) else "MISSING"
         try:
             from supabase_client import service_client
-            service_client().table("organizations").select("id").limit(1).execute()
-            checks["db"] = "ok"
+            sb = service_client()
+            sb.table("organizations").select("id").limit(1).execute()
+            checks["db_orgs"] = "ok"
+            res = sb.table("users").select("id", count="exact").execute()
+            checks["db_users"] = f"ok ({res.count} rows)" if res.count is not None else f"ok ({len(res.data)} rows)"
         except Exception as exc:
             checks["db"] = f"error: {type(exc).__name__}: {exc}"
-        ok = all(v == "set" for k, v in checks.items() if k != "db") and checks.get("db") == "ok"
+        ok = all(v == "set" for k, v in checks.items() if k not in ("db_orgs","db_users","db")) \
+             and "ok" in checks.get("db_orgs","") and "ok" in checks.get("db_users","")
         return {"ready": ok, "checks": checks}
 
     @app.post(
