@@ -1112,6 +1112,7 @@ const ROLE_LABELS_FR = { owner:"Owner", admin:"Admin", manager:"Manager", user:"
 
 async function loadTeam() {
   await Promise.all([_loadMembers(), _loadPendingInvitations()]);
+  loadDepartments();
 }
 
 async function _loadMembers() {
@@ -1310,6 +1311,7 @@ async function loadSettings() {
   } catch (ex) {
     console.error("Settings load error:", ex.message);
   }
+  loadServiceAccounts();
 }
 
 // Profile form submit
@@ -2031,18 +2033,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch(ex) { const err=$("dm-error"); err.textContent=ex.message||"Erreur"; err.classList.remove("hidden"); }
   });
 });
-
-// Patch loadTeam to also load departments and service accounts
-const _origLoadTeam = loadTeam;
-async function loadTeam() {
-  await _origLoadTeam();
-  loadDepartments();
-}
-const _origLoadSettings = loadSettings;
-async function loadSettings() {
-  await _origLoadSettings();
-  loadServiceAccounts();
-}
 
 // Helper formatter
 function _fmt(v) {
