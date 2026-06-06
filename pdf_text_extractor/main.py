@@ -19,6 +19,7 @@ from ai_service import AIConfigurationError, AssistantService
 from audit import AuditEvent, client_ip, log_audit
 from pdf_utils import MAX_UPLOAD_BYTES, PdfExtractionError, extract_text_from_pdf, is_allowed_pdf
 from storage import DocumentStore
+from routes_agent import router as agent_router
 from routes_audit import router as audit_router
 from routes_auth import router as auth_router
 from routes_connectors import router as connectors_router
@@ -85,6 +86,7 @@ def create_app(
     app.include_router(auth_router)
     app.include_router(connectors_router)
     app.include_router(audit_router)
+    app.include_router(agent_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 
