@@ -2,14 +2,23 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass
+from functools import lru_cache
 
 import jwt
+from jwt import PyJWKClient
 from fastapi import Header, HTTPException, status
 
 from supabase_client import service_client
 
+SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "")
 JWT_AUDIENCE = "authenticated"
+
+
+@lru_cache(maxsize=1)
+def _jwks_client() -> PyJWKClient:
+    """Client JWKS mis en cache — récupère les clés publiques Supabase (ES256)."""
+    return PyJWKClient(f"{SUPABASE_URL}/auth/v1/.well-known/jwks.json", cache_keys=True)
 
 
 @dataclass
@@ -22,13 +31,30 @@ class CurrentUser:
 
 
 # ── Vérification du jeton ──────────────────────────────────────────────────
-# AUJOURD'HUI : Supabase Auth (HS256, secret du projet).
-#
-# EXTENSION SSO / V2 (Microsoft Entra ID) ou clés asymétriques Supabase :
-# il suffira d'ajouter ici un vérificateur RS256 via JWKS et de choisir le
-# vérificateur selon l'émetteur (claim `iss`). Tout l'aval (get_current_user,
-# RBAC) ne dépend QUE des claims normalisés {sub, email} et reste inchangé.
+# Supabase émet des tokens ES256 (ECDSA P-256) vérifiables via JWKS.
+# Fallback HS256 conservé pour compatibilité avec d'éventuels anciens tokens.
+# Extension SSO (Entra ID, Okta…) : même mécanique — ajouter le JWKS de
+# l'IdP et router selon le claim `iss`. Tout l'aval (get_current_user, RBAC)
+# ne dépend que des claims normalisés {sub, email}.
 def _verify_token(token: str) -> dict:
+    # Tentative ES256 via JWKS (chemin principal Supabase).
+    try:
+        signing_key = _jwks_client().get_signing_key_from_jwt(token)
+        return jwt.decode(
+            token,
+            signing_key.key,
+            algorithms=["ES256", "RS256"],
+            audience=JWT_AUDIENCE,
+        )
+    except jwt.exceptions.PyJWKClientError:
+        pass  # kid inconnu → essayer HS256
+    except jwt.PyJWTError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Jeton invalide ou expiré.",
+        ) from exc
+
+    # Fallback HS256 (anciens tokens / tests locaux).
     if not SUPABASE_JWT_SECRET:
         raise HTTPException(status_code=500, detail="SUPABASE_JWT_SECRET non configuré.")
     try:
