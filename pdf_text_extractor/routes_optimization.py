@@ -18,34 +18,42 @@ router = APIRouter(prefix="/api/optimization", tags=["optimization"])
 @router.get("/overview")
 def overview(user: CurrentUser = Depends(require_min_role("user"))):
     """Tableau de bord exécutif : toutes les opportunités d'économies identifiées."""
-    org_id = user.organization_id
-    unused   = _unused_licenses(org_id)
-    dups     = _duplicate_tools(org_id)
-    contracts = _contracts_at_risk(org_id)
-    processes = _process_waste(org_id)
-    score     = _efficiency_score(org_id)
+    try:
+        org_id = user.organization_id
+        unused    = _unused_licenses(org_id)
+        dups      = _duplicate_tools(org_id)
+        contracts = _contracts_at_risk(org_id)
+        processes = _process_waste(org_id)
+        score     = _efficiency_score(org_id)
 
-    total_lics  = sum(l["annual_savings_potential"] for l in unused)
-    total_sw    = sum(d["annual_savings_potential"] for d in dups)
-    total_cont  = sum(c.get("potential_savings", 0) for c in contracts)
-    total_proc  = sum(p.get("annual_savings_potential", 0) for p in processes)
-    grand_total = total_lics + total_sw + total_cont + total_proc
+        total_lics  = sum(l["annual_savings_potential"] for l in unused)
+        total_sw    = sum(d["annual_savings_potential"] for d in dups)
+        total_cont  = sum(c.get("potential_savings", 0) for c in contracts)
+        total_proc  = sum(p.get("annual_savings_potential", 0) for p in processes)
+        grand_total = total_lics + total_sw + total_cont + total_proc
 
-    return {
-        "efficiency_score":   score,
-        "savings": {
-            "licenses":   round(total_lics,  2),
-            "software":   round(total_sw,    2),
-            "contracts":  round(total_cont,  2),
-            "processes":  round(total_proc,  2),
-            "total":      round(grand_total, 2),
-        },
-        "top_opportunities":  _top_opps(unused, dups, contracts, processes),
-        "unused_licenses":    unused[:5],
-        "duplicate_tools":    dups[:5],
-        "contracts_at_risk":  contracts[:5],
-        "process_waste":      processes[:5],
-    }
+        return {
+            "efficiency_score":  score,
+            "savings": {
+                "licenses":  round(total_lics,  2),
+                "software":  round(total_sw,    2),
+                "contracts": round(total_cont,  2),
+                "processes": round(total_proc,  2),
+                "total":     round(grand_total, 2),
+            },
+            "top_opportunities": _top_opps(unused, dups, contracts, processes),
+            "unused_licenses":   unused[:5],
+            "duplicate_tools":   dups[:5],
+            "contracts_at_risk": contracts[:5],
+            "process_waste":     processes[:5],
+        }
+    except Exception:
+        return {
+            "efficiency_score": {"overall": 0, "software": 0, "licenses": 0, "infrastructure": 0, "process": 0},
+            "savings": {"licenses": 0, "software": 0, "contracts": 0, "processes": 0, "total": 0},
+            "top_opportunities": [], "unused_licenses": [], "duplicate_tools": [],
+            "contracts_at_risk": [], "process_waste": [],
+        }
 
 
 @router.get("/unused-licenses")
@@ -233,7 +241,10 @@ def _efficiency_score(org_id: str) -> dict:
     lic_score    = (used_seats / tot_seats * 100) if tot_seats > 0 else 80.0
 
     # Infrastructure
-    srvs        = sb.table("servers").select("status").eq("organization_id", org_id).execute().data or []
+    try:
+        srvs = sb.table("servers").select("status").eq("organization_id", org_id).execute().data or []
+    except Exception:
+        srvs = []
     tot_srvs    = len(srvs)
     problem     = sum(1 for s in srvs if s.get("status") in ("idle", "to_decommission"))
     infra_score = max(0.0, min(100.0, 100 - (problem / tot_srvs * 100 if tot_srvs > 0 else 0)))
