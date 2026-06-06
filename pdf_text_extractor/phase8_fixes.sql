@@ -29,7 +29,11 @@ end;
 $$;
 
 -- ── 2. RPC get_user_profile_by_id — inclut maintenant is_active ──────────
-create or replace function public.get_user_profile_by_id(p_user_id uuid)
+-- DROP requis car on ajoute une colonne au type de retour (CREATE OR REPLACE
+-- ne peut pas changer la signature de retour d'une fonction existante).
+drop function if exists public.get_user_profile_by_id(uuid);
+
+create function public.get_user_profile_by_id(p_user_id uuid)
 returns table (
   id              uuid,
   email           text,
