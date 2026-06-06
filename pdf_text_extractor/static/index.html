@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nexhire — Enterprise Assistant IA</title>
   <meta name="description" content="Un seul assistant IA pour tous vos systèmes d'entreprise : Microsoft 365, Salesforce, Jira, ServiceNow, SAP, Workday." />
+
+  <!-- Open Graph / social sharing -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:title"       content="Nexhire — Enterprise Assistant IA" />
+  <meta property="og:description" content="Un seul assistant IA pour tous vos systèmes — Microsoft 365, Salesforce, Jira, ServiceNow, SAP, Workday. Bilingue FR/EN." />
+  <meta property="og:image"       content="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&h=630&q=80" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name"   content="Nexhire" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Nexhire — Enterprise Assistant IA" />
+  <meta name="twitter:description" content="Un seul assistant IA pour tous vos systèmes d'entreprise. Bilingue FR/EN." />
+  <meta name="twitter:image"       content="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&h=630&q=80" />
+
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
@@ -34,7 +50,7 @@
   <section class="hero" id="hero-slider">
     <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1920&q=80')"></div>
     <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1920&q=80');background-position:center 20%"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1920&q=80');background-position:top center"></div>
     <div class="hero-overlay"></div>
     <div class="slide-nav">
       <button class="slide-dot active" data-slide="0"></button>
@@ -43,12 +59,7 @@
     </div>
     <div class="hero-inner">
       <div>
-        <div class="hero-eyebrow"><span></span><span data-i18n="hero.eyebrow">Intelligence artificielle · Bilingue FR/EN</span></div>
         <h1 data-i18n-html="hero.title">Un assistant IA pour <em>tous</em> vos systèmes</h1>
-        <p class="hero-sub" data-i18n="hero.sub">
-          Nexhire connecte vos outils — Microsoft 365, Salesforce, Jira, ServiceNow, SAP, Workday —
-          en un seul agent conversationnel intelligent pour vos équipes canadiennes.
-        </p>
         <div class="hero-actions">
           <button class="btn btn-primary btn-lg" onclick="showAuth('signup')" data-i18n="hero.cta">Commencer l'essai gratuit</button>
           <button class="btn btn-outline btn-lg" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25);color:#fff" onclick="showAuth('login')" data-i18n="hero.login">Se connecter</button>
@@ -341,7 +352,8 @@
       <button class="tab-btn active" data-tab="agent"      role="tab" data-i18n="app.tab.agent">Assistant IA</button>
       <button class="tab-btn"        data-tab="connectors" role="tab" data-i18n="app.tab.connectors">Connecteurs</button>
       <button class="tab-btn"        data-tab="documents"  role="tab" data-i18n="app.tab.documents">Documents</button>
-      <button class="tab-btn admin-only hidden" data-tab="audit" role="tab" data-i18n="app.tab.audit">Audit</button>
+      <button class="tab-btn admin-only hidden" data-tab="audit"  role="tab" data-i18n="app.tab.audit">Audit</button>
+      <button class="tab-btn"        data-tab="stats" role="tab" data-i18n="app.tab.stats">Statistiques</button>
     </div>
     <div class="nav-right">
       <!-- Notification bell -->
@@ -423,6 +435,18 @@
       <div id="agent-result"  class="agent-result hidden">
         <div id="agent-sources" class="agent-sources"></div>
         <div id="agent-answer"  class="agent-answer"></div>
+        <!-- Rating widget -->
+        <div class="rating-bar" id="rating-bar">
+          <span class="rating-label" data-i18n="rating.label">Cette réponse vous a-t-elle aidé ?</span>
+          <div class="star-row" id="star-row">
+            <button class="star-btn" data-score="1" onclick="sendRating(1)" title="1 étoile">★</button>
+            <button class="star-btn" data-score="2" onclick="sendRating(2)" title="2 étoiles">★</button>
+            <button class="star-btn" data-score="3" onclick="sendRating(3)" title="3 étoiles">★</button>
+            <button class="star-btn" data-score="4" onclick="sendRating(4)" title="4 étoiles">★</button>
+            <button class="star-btn" data-score="5" onclick="sendRating(5)" title="5 étoiles">★</button>
+          </div>
+          <span class="rating-thanks hidden" id="rating-thanks" data-i18n="rating.thanks">Merci pour votre avis !</span>
+        </div>
         <!-- Export buttons -->
         <div class="export-bar">
           <span class="export-label" data-i18n="export.label">Télécharger ce rapport :</span>
@@ -507,9 +531,51 @@
       </div>
     </section>
 
+    <!-- ── STATISTIQUES ───────────────────────────────────────────────────── -->
+    <section id="tab-stats" class="tab-content hidden" role="tabpanel">
+      <div class="section-header">
+        <h2 data-i18n="stats.title">Statistiques d'utilisation</h2>
+        <div class="controls-inline">
+          <select id="stats-days" onchange="loadAnalytics()">
+            <option value="7">7 jours</option>
+            <option value="30" selected>30 jours</option>
+            <option value="90">90 jours</option>
+          </select>
+          <button class="btn btn-outline btn-sm" onclick="loadAnalytics()" data-i18n="conn.refresh">↻ Actualiser</button>
+        </div>
+      </div>
+
+      <!-- KPI cards -->
+      <div class="kpi-grid" id="kpi-grid">
+        <div class="kpi-card"><div class="kpi-val" id="kpi-queries">—</div><div class="kpi-label" data-i18n="stats.queries">Requêtes</div></div>
+        <div class="kpi-card"><div class="kpi-val" id="kpi-score">—</div><div class="kpi-label" data-i18n="stats.score">Satisfaction moyenne</div></div>
+        <div class="kpi-card"><div class="kpi-val" id="kpi-rated">—</div><div class="kpi-label" data-i18n="stats.rated">Réponses notées</div></div>
+        <div class="kpi-card admin-only hidden"><div class="kpi-val" id="kpi-util">—</div><div class="kpi-label" data-i18n="stats.util">Utilisateurs actifs</div></div>
+      </div>
+
+      <!-- Charts row -->
+      <div class="stats-charts">
+        <div class="chart-panel">
+          <h3 data-i18n="stats.chart.daily">Activité quotidienne</h3>
+          <canvas id="chart-daily" height="200"></canvas>
+        </div>
+        <div class="chart-panel">
+          <h3 data-i18n="stats.chart.connectors">Connecteurs utilisés</h3>
+          <canvas id="chart-connectors" height="200"></canvas>
+        </div>
+      </div>
+
+      <!-- Satisfaction distribution -->
+      <div class="chart-panel" style="margin-top:20px">
+        <h3 data-i18n="stats.chart.sat">Répartition de la satisfaction</h3>
+        <div id="sat-dist" class="sat-dist"></div>
+      </div>
+    </section>
+
   </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <script src="/static/app.js"></script>
 </body>
 </html>

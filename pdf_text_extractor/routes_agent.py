@@ -4,7 +4,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request,
 from pydantic import BaseModel, Field
 
 from agent_service import AgentResponse, run_agent
-from audit import AuditEvent, client_ip, log_audit
+from audit import AuditEvent, client_ip, log_audit, log_audit_sync
 from auth import CurrentUser
 from rbac import require_active_subscription, require_min_role
 from supabase_client import service_client
@@ -23,6 +23,7 @@ class AgentQueryResponse(BaseModel):
     answer: str
     sources: list[str]
     tools_called: list[dict]
+    audit_id: str | None = None
 
 
 def _connected_connectors(organization_id: str) -> list[str]:
@@ -83,7 +84,7 @@ def agent_query(
         ))
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
-    background.add_task(log_audit, AuditEvent(
+    audit_id = log_audit_sync(AuditEvent(
         action="agent_query",
         query=payload.question,
         organization_id=user.organization_id,
@@ -103,4 +104,5 @@ def agent_query(
         answer=result.answer,
         sources=result.sources,
         tools_called=result.tools_called,
+        audit_id=audit_id,
     )

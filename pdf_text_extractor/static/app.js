@@ -75,6 +75,12 @@ const T = {
     'docs.chat.init':'Posez une question après le téléversement. Ask in French or English.',
     'docs.preview.title':'Aperçu du texte extrait','docs.preview.empty':'Aucun document téléversé.',
     'audit.title':"Journal d'audit",'audit.refresh':'↻ Actualiser',
+    'export.label':'Télécharger ce rapport :',
+    'rating.label':'Cette réponse vous a-t-elle aidé ?','rating.thanks':'Merci pour votre avis !',
+    'stats.title':"Statistiques d'utilisation",
+    'stats.queries':'Requêtes','stats.score':'Satisfaction moyenne','stats.rated':'Réponses notées','stats.util':'Utilisateurs actifs',
+    'stats.chart.daily':'Activité quotidienne','stats.chart.connectors':'Connecteurs utilisés','stats.chart.sat':'Répartition de la satisfaction',
+    'app.tab.stats':'Statistiques',
     'loading':'Chargement…',
   },
   en: {
@@ -140,6 +146,12 @@ const T = {
     'docs.chat.init':'Ask a question after uploading. Ask in French or English.',
     'docs.preview.title':'Extracted text preview','docs.preview.empty':'No document uploaded.',
     'audit.title':'Audit Log','audit.refresh':'↻ Refresh',
+    'export.label':'Download this report:',
+    'rating.label':'Was this answer helpful?','rating.thanks':'Thank you for your feedback!',
+    'stats.title':'Usage Statistics',
+    'stats.queries':'Queries','stats.score':'Avg satisfaction','stats.rated':'Rated responses','stats.util':'Active users',
+    'stats.chart.daily':'Daily activity','stats.chart.connectors':'Connectors used','stats.chart.sat':'Satisfaction distribution',
+    'app.tab.stats':'Statistics',
     'loading':'Loading…',
   },
 };
@@ -396,6 +408,7 @@ function switchTab(name) {
 function loadActiveTab() {
   if (state.tab === "connectors") loadConnectors();
   if (state.tab === "audit")      loadAudit();
+  if (state.tab === "stats")      loadAnalytics();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -454,6 +467,10 @@ function renderAgentResult(data) {
   // Store last result for export
   window._lastAgentResult = data;
   window._lastAgentQuestion = $("agent-question").value;
+  // Reset rating widget
+  window._lastAuditId = data.audit_id || null;
+  $("rating-thanks").classList.add("hidden");
+  document.querySelectorAll(".star-btn").forEach(b => b.classList.remove("selected", "faded"));
 }
 
 // Formatter — converts plain AI text with markdown-like patterns into clean HTML
@@ -518,6 +535,46 @@ function _inlineFormat(s) {
   return s;
 }
 
+// Extract structured chart data from tools_called
+function _extractChartData(toolsResult) {
+  if (!Array.isArray(toolsResult)) return [];
+  const charts = [];
+  toolsResult.forEach(t => {
+    const src = (t.source || t.tool || t.connector || "").toLowerCase();
+    const result = t.result || {};
+    try {
+      // SAP budget → pie chart
+      if (src.includes("sap") && result.budget_breakdown) {
+        const entries = Object.entries(result.budget_breakdown);
+        charts.push({ type: "pie", title: "Budget par département (SAP)", labels: entries.map(e=>e[0]), values: entries.map(e=>Number(e[1])) });
+      }
+      // ServiceNow incidents → bar chart
+      if (src.includes("servicenow") && result.open_incidents_count !== undefined) {
+        const by_prio = result.by_priority || {};
+        if (Object.keys(by_prio).length) {
+          charts.push({ type: "bar", title: "Incidents par priorité (ServiceNow)", labels: Object.keys(by_prio), values: Object.values(by_prio).map(Number) });
+        }
+      }
+      // Workday headcount → bar chart
+      if (src.includes("workday") && result.departments) {
+        const depts = result.departments;
+        charts.push({ type: "bar", title: "Effectifs par département (Workday)", labels: depts.map(d=>d.name||d.department||"?"), values: depts.map(d=>Number(d.headcount||d.count||0)) });
+      }
+      // Salesforce contracts → bar chart
+      if (src.includes("salesforce") && result.contracts) {
+        const c = result.contracts.slice(0,6);
+        charts.push({ type: "bar", title: "Valeur des contrats (Salesforce $)", labels: c.map(x=>x.name||x.account||"?"), values: c.map(x=>Number(x.value||x.amount||0)) });
+      }
+      // HubSpot deals pipeline → bar chart
+      if (src.includes("hubspot") && result.deals) {
+        const d = result.deals.slice(0,6);
+        charts.push({ type: "bar", title: "Deals HubSpot ($)", labels: d.map(x=>x.name||x.dealname||"?"), values: d.map(x=>Number(x.amount||x.value||0)) });
+      }
+    } catch { /* skip */ }
+  });
+  return charts;
+}
+
 // Export report in requested format
 async function exportReport(fmt) {
   const data = window._lastAgentResult;
@@ -526,6 +583,7 @@ async function exportReport(fmt) {
   const origText = btn?.textContent;
   if (btn) { btn.disabled = true; btn.textContent = "…"; }
   try {
+    const charts = _extractChartData(data.tools_called);
     const resp = await fetch("/api/agent/export", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${state.token}` },
@@ -534,6 +592,7 @@ async function exportReport(fmt) {
         answer:   data.answer || "",
         sources:  data.sources || [],
         format:   fmt,
+        charts:   charts,
       }),
     });
     if (!resp.ok) { const e = await resp.json().catch(() => ({})); alert(e.detail || "Erreur export"); return; }
@@ -547,9 +606,36 @@ async function exportReport(fmt) {
     document.body.appendChild(a); a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    // Log export event
+    apiCall("/api/analytics/event", "POST", { event_type: "export", meta: { format: fmt } }).catch(()=>{});
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = origText; }
   }
+}
+
+// ── Rating ──────────────────────────────────────────────────────────────────
+
+// Hover effect on stars
+document.querySelectorAll(".star-btn").forEach((btn, idx, all) => {
+  btn.addEventListener("mouseenter", () => {
+    all.forEach((b, i) => b.classList.toggle("hovered", i <= idx));
+  });
+  btn.addEventListener("mouseleave", () => {
+    all.forEach(b => b.classList.remove("hovered"));
+  });
+});
+
+async function sendRating(score) {
+  const auditId = window._lastAuditId;
+  if (!auditId) return;  // no audit id available
+  document.querySelectorAll(".star-btn").forEach((b, i) => {
+    b.classList.toggle("selected", i < score);
+    b.classList.toggle("faded", i >= score);
+  });
+  $("rating-thanks").classList.remove("hidden");
+  try {
+    await apiCall("/api/analytics/rate", "POST", { audit_id: auditId, score });
+  } catch { /* silent */ }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -734,6 +820,101 @@ function appendMsg(role, text) {
   d.className = `message ${role}`; d.textContent = text;
   $("chat-log").appendChild(d);
   $("chat-log").scrollTop = $("chat-log").scrollHeight;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// STATISTIQUES TAB
+// ═══════════════════════════════════════════════════════════════════════════
+
+let _chartDaily = null;
+let _chartConn  = null;
+
+async function loadAnalytics() {
+  const days = $("stats-days")?.value || 30;
+  // Update kpi placeholders
+  ["kpi-queries","kpi-score","kpi-rated","kpi-util"].forEach(id => { const el=$(id); if(el) el.textContent = "…"; });
+  try {
+    const d = await apiCall(`/api/analytics/dashboard?days=${days}`);
+
+    // KPI cards
+    $("kpi-queries").textContent = d.total_queries.toLocaleString("fr-CA");
+    $("kpi-score").textContent   = d.avg_satisfaction ? `${d.avg_satisfaction} / 5 ★` : "—";
+    $("kpi-rated").textContent   = d.rated_count.toLocaleString("fr-CA");
+    if ($("kpi-util") && d.utilization_pct !== null && d.utilization_pct !== undefined) {
+      $("kpi-util").textContent = `${d.utilization_pct} %`;
+      $("kpi-util").closest(".kpi-card").classList.remove("hidden");
+    }
+
+    // Daily chart
+    const dailyLabels = d.queries_per_day.map(x => x.date.slice(5));  // MM-DD
+    const dailyData   = d.queries_per_day.map(x => x.count);
+    if (_chartDaily) { _chartDaily.destroy(); _chartDaily = null; }
+    const ctxD = $("chart-daily")?.getContext("2d");
+    if (ctxD) {
+      _chartDaily = new Chart(ctxD, {
+        type: "bar",
+        data: {
+          labels: dailyLabels,
+          datasets: [{ label: "Requêtes", data: dailyData, backgroundColor: "#818CF8", borderRadius: 5, borderSkipped: false }],
+        },
+        options: {
+          responsive: true, maintainAspectRatio: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 45, minRotation: 0 } },
+            y: { beginAtZero: true, grid: { color: "#e2e8f0" }, ticks: { precision: 0 } },
+          },
+        },
+      });
+    }
+
+    // Connectors pie chart
+    const connLabels = d.top_connectors.map(x => x.name);
+    const connData   = d.top_connectors.map(x => x.count);
+    const palette    = ["#818CF8","#6366f1","#4f46e5","#0ea5e9","#10b981","#f59e0b","#ef4444","#94a3b8"];
+    if (_chartConn) { _chartConn.destroy(); _chartConn = null; }
+    const ctxC = $("chart-connectors")?.getContext("2d");
+    if (ctxC && connLabels.length) {
+      _chartConn = new Chart(ctxC, {
+        type: "doughnut",
+        data: {
+          labels: connLabels,
+          datasets: [{ data: connData, backgroundColor: palette.slice(0, connLabels.length), borderWidth: 2, borderColor: "#fff" }],
+        },
+        options: {
+          responsive: true, maintainAspectRatio: true,
+          plugins: {
+            legend: { position: "right", labels: { font: { size: 11 }, padding: 12 } },
+          },
+          cutout: "55%",
+        },
+      });
+    } else if (ctxC) {
+      const p = document.createElement("p");
+      p.className = "muted";
+      p.style.padding = "20px";
+      p.textContent = "Aucune donnée de connecteur disponible.";
+      $("chart-connectors").replaceWith(p);
+    }
+
+    // Satisfaction distribution bars
+    const satWrap = $("sat-dist");
+    if (satWrap && d.satisfaction_dist) {
+      const total = Object.values(d.satisfaction_dist).reduce((a,b)=>a+Number(b),0) || 1;
+      satWrap.innerHTML = [5,4,3,2,1].map(star => {
+        const count = Number(d.satisfaction_dist[String(star)] || 0);
+        const pct   = Math.round(count / total * 100);
+        return `<div class="sat-row">
+          <span class="sat-stars">${"★".repeat(star)}${"☆".repeat(5-star)}</span>
+          <div class="sat-bar-wrap"><div class="sat-bar" style="width:${pct}%"></div></div>
+          <span class="sat-count">${count}</span>
+        </div>`;
+      }).join("");
+    }
+  } catch (ex) {
+    $("kpi-queries").textContent = "—";
+    console.error("Analytics error:", ex.message);
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

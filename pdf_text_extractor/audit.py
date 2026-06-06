@@ -31,31 +31,54 @@ def client_ip(request: Request) -> str | None:
     return request.client.host if request.client else None
 
 
+def _build_row(event: AuditEvent) -> dict:
+    row: dict = {
+        "organization_id": event.organization_id,
+        "user_id": event.user_id,
+        "connector": event.connector,
+        "query": event.query or event.action,
+        "action": event.action,
+        "success": event.success,
+        "ip_address": event.ip_address,
+        "http_status": event.http_status,
+        "resource_ids": event.resource_ids,
+        "error_detail": event.error_detail,
+    }
+    if event.metadata:
+        row["metadata"] = event.metadata
+    return row
+
+
 def log_audit(event: AuditEvent) -> None:
     """Insère un log d'audit. Conçu pour tourner dans un BackgroundTask.
     N'émet jamais d'exception — une panne d'audit ne doit pas bloquer la requête."""
     try:
-        from supabase_client import service_client  # import paresseux
+        from supabase_client import service_client
         sb = service_client()
-        row: dict = {
-            "organization_id": event.organization_id,
-            "user_id": event.user_id,
-            "connector": event.connector,
-            "query": event.query or event.action,
-            "action": event.action,
-            "success": event.success,
-            "ip_address": event.ip_address,
-            "http_status": event.http_status,
-            "resource_ids": event.resource_ids,
-            "error_detail": event.error_detail,
-        }
-        if event.metadata:
-            row["metadata"] = event.metadata
+        row = _build_row(event)
         try:
             sb.table("audit_logs").insert(row).execute()
         except Exception:
-            # Colonne metadata absente ? Réessaie sans (ADD COLUMN dans phase3_audit.sql).
             row.pop("metadata", None)
             sb.table("audit_logs").insert(row).execute()
     except Exception:
         pass
+
+
+def log_audit_sync(event: AuditEvent) -> str | None:
+    """Insère un log d'audit de façon synchrone et retourne l'UUID de la ligne créée.
+    Utilisé quand l'ID d'audit doit être inclus dans la réponse HTTP (ex: agent query)."""
+    try:
+        from supabase_client import service_client
+        sb = service_client()
+        row = _build_row(event)
+        try:
+            res = sb.table("audit_logs").insert(row).execute()
+        except Exception:
+            row.pop("metadata", None)
+            res = sb.table("audit_logs").insert(row).execute()
+        if res.data:
+            return res.data[0].get("id")
+    except Exception:
+        pass
+    return None
