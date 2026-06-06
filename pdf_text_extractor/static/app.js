@@ -277,6 +277,7 @@ function setLang(l) {
   document.getElementById("html-root").lang = l;
   // Update all lang toggle buttons
   document.querySelectorAll(".lang-btn").forEach(b => { b.textContent = l === "fr" ? "EN" : "FR"; });
+  _updateLangLabel();
   // Sync agent-lang and doc-lang selects
   const al = document.getElementById("agent-lang"); if (al) al.value = l;
   const dl = document.getElementById("doc-lang");   if (dl) dl.value = l;
@@ -349,9 +350,12 @@ function showApp() {
 
   // User info
   const u = state.user;
+  const initials = (u?.email || "?")[0].toUpperCase();
   $("nav-user-email").textContent  = u?.email || "";
   $("nav-user-role").textContent   = u?.role  || "user";
-  $("user-avatar").textContent     = (u?.email || "?")[0].toUpperCase();
+  $("user-avatar").textContent     = initials;
+  if ($("user-avatar-menu"))   $("user-avatar-menu").textContent   = initials;
+  if ($("user-menu-email-text")) $("user-menu-email-text").textContent = u?.email || "";
 
   // Admin-only elements
   const isAdmin = ["admin", "owner"].includes(u?.role);
@@ -395,6 +399,36 @@ function showApp() {
 // Trial banner dismiss
 $("trial-dismiss")?.addEventListener("click", () => {
   $("trial-banner").classList.add("hidden");
+});
+
+// ── User menu dropdown ────────────────────────────────────────────────────
+function toggleUserMenu() {
+  const wrap = $("user-menu-wrap");
+  const drop = $("user-menu-dropdown");
+  const btn  = $("user-chip-btn");
+  const isOpen = !drop.classList.contains("hidden");
+  if (isOpen) { closeUserMenu(); return; }
+  drop.classList.remove("hidden");
+  wrap.classList.add("open");
+  btn.setAttribute("aria-expanded", "true");
+  _updateLangLabel();
+}
+function closeUserMenu() {
+  const wrap = $("user-menu-wrap");
+  const drop = $("user-menu-dropdown");
+  const btn  = $("user-chip-btn");
+  drop.classList.add("hidden");
+  wrap.classList.remove("open");
+  btn?.setAttribute("aria-expanded", "false");
+}
+function _updateLangLabel() {
+  const lbl = $("user-menu-lang-label");
+  if (lbl) lbl.textContent = _lang === "fr" ? "Switch to English" : "Passer en français";
+}
+// Ferme le menu si on clique en dehors
+document.addEventListener("click", e => {
+  const wrap = $("user-menu-wrap");
+  if (wrap && !wrap.contains(e.target)) closeUserMenu();
 });
 
 // ═══════════════════════════════════════════════════════════════════════════

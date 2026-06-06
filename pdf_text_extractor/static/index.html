@@ -359,12 +359,10 @@
       <button class="tab-btn active" data-tab="agent"      role="tab" data-i18n="app.tab.agent">Assistant IA</button>
       <button class="tab-btn"        data-tab="connectors" role="tab" data-i18n="app.tab.connectors">Connecteurs</button>
       <button class="tab-btn"        data-tab="documents"  role="tab" data-i18n="app.tab.documents">Documents</button>
-      <button class="tab-btn admin-only hidden" data-tab="audit"    role="tab" data-i18n="app.tab.audit">Audit</button>
-      <button class="tab-btn"        data-tab="stats"    role="tab" data-i18n="app.tab.stats">Statistiques</button>
-      <button class="tab-btn"        data-tab="parc-it"  role="tab" data-i18n="app.tab.parc">Parc IT</button>
-      <button class="tab-btn"        data-tab="optim"    role="tab" data-i18n="app.tab.optim">Optimisation IA</button>
-      <button class="tab-btn admin-only hidden" data-tab="team"     role="tab" data-i18n="app.tab.team">Équipe</button>
-      <button class="tab-btn"        data-tab="settings" role="tab" data-i18n="app.tab.settings">Paramètres</button>
+      <button class="tab-btn admin-only hidden" data-tab="audit"  role="tab" data-i18n="app.tab.audit">Audit</button>
+      <button class="tab-btn"        data-tab="stats"      role="tab" data-i18n="app.tab.stats">Statistiques</button>
+      <button class="tab-btn"        data-tab="parc-it"    role="tab" data-i18n="app.tab.parc">Parc IT</button>
+      <button class="tab-btn"        data-tab="optim"      role="tab" data-i18n="app.tab.optim">Optimisation IA</button>
     </div>
     <div class="nav-right">
       <!-- Notification bell -->
@@ -378,19 +376,42 @@
           <div id="notif-list"></div>
         </div>
       </div>
-      <!-- User chip -->
-      <div class="user-chip">
-        <div class="user-avatar" id="user-avatar">?</div>
-        <span class="user-email-nav" id="nav-user-email"></span>
-        <span class="role-badge" id="nav-user-role"></span>
-      </div>
       <!-- Quota indicator -->
       <div class="quota-pill" id="quota-pill" title="Requêtes ce mois">
         <div class="quota-bar-wrap"><div class="quota-bar" id="quota-bar"></div></div>
         <span id="quota-text">—</span>
       </div>
-      <button class="lang-btn" id="lang-btn-app" onclick="toggleLang()" style="margin-right:4px">EN</button>
-      <button class="btn btn-ghost btn-sm" id="logout-btn" data-i18n="app.logout">Déconnexion</button>
+      <!-- User dropdown -->
+      <div class="user-menu-wrap" id="user-menu-wrap">
+        <button class="user-chip" id="user-chip-btn" onclick="toggleUserMenu()" aria-haspopup="true" aria-expanded="false">
+          <div class="user-avatar" id="user-avatar">?</div>
+          <span class="user-email-nav" id="nav-user-email"></span>
+          <svg class="user-menu-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="user-menu-dropdown hidden" id="user-menu-dropdown" role="menu">
+          <div class="user-menu-header">
+            <div class="user-avatar user-avatar-lg" id="user-avatar-menu">?</div>
+            <div>
+              <div class="user-menu-email" id="user-menu-email-text"></div>
+              <span class="role-badge" id="nav-user-role"></span>
+            </div>
+          </div>
+          <div class="user-menu-divider"></div>
+          <button class="user-menu-item" onclick="switchTab('settings');closeUserMenu()">
+            <span>⚙️</span> <span data-i18n="app.tab.settings">Paramètres</span>
+          </button>
+          <button class="user-menu-item admin-only hidden" onclick="switchTab('team');closeUserMenu()">
+            <span>👥</span> <span data-i18n="app.tab.team">Équipe</span>
+          </button>
+          <div class="user-menu-divider"></div>
+          <button class="user-menu-item" onclick="toggleLang();closeUserMenu()">
+            <span>🌐</span> <span id="user-menu-lang-label">Passer en anglais</span>
+          </button>
+          <button class="user-menu-item user-menu-item-danger" id="logout-btn">
+            <span>🚪</span> <span data-i18n="app.logout">Déconnexion</span>
+          </button>
+        </div>
+      </div>
     </div>
   </nav>
 
