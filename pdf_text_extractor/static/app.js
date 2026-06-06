@@ -375,9 +375,11 @@ const CONNECTORS = {
   },
   autotask: {
     label: "Autotask (Datto)", icon: "AT", color: "#005a9e", method: "apikey",
-    desc: "PSA, Tickets, Projets, Facturation, Temps",
+    desc: "PSA, Tickets, Projets, Facturation, Temps — pour fournisseurs MSP",
     help_url: "https://ww1.autotask.net/help/Content/AdminSetup/2ExtensionsIntegrations/APIs/GenerateRESTAPIKey.htm",
     help_label: "API Keys Autotask",
+    niche: true,
+    niche_label: "Fournisseurs de services gérés (MSP)",
     fields: [
       { id: "username",   label: "Nom d'utilisateur *", placeholder: "user@domain.com" },
       { id: "api_key",    label: "Clé API secrète *",   placeholder: "••••••••",  type: "password" },
@@ -1003,9 +1005,53 @@ async function loadConnectors() {
     return;
   }
   grid.innerHTML = "";
-  Object.entries(CONNECTORS).forEach(([type, meta]) => {
-    grid.appendChild(buildConnectorCard(type, meta, connected[type] || null));
-  });
+
+  const standard = Object.entries(CONNECTORS).filter(([, m]) => !m.niche);
+  const niche    = Object.entries(CONNECTORS).filter(([, m]) =>  m.niche);
+
+  // Connecteurs standard
+  const mainGrid = document.createElement("div");
+  mainGrid.className = "connector-grid-inner";
+  standard.forEach(([type, meta]) => mainGrid.appendChild(buildConnectorCard(type, meta, connected[type] || null)));
+  grid.appendChild(mainGrid);
+
+  // Connecteurs de niche — pliés par défaut, sauf si l'un est déjà connecté
+  if (niche.length > 0) {
+    const anyNicheConnected = niche.some(([t]) => connected[t]?.status === "connected");
+    const section = document.createElement("div");
+    section.className = "connector-niche-section";
+
+    const groups = {};
+    niche.forEach(([type, meta]) => {
+      const label = meta.niche_label || "Spécialisé";
+      if (!groups[label]) groups[label] = [];
+      groups[label].push([type, meta]);
+    });
+
+    Object.entries(groups).forEach(([groupLabel, entries]) => {
+      const toggle = document.createElement("button");
+      toggle.className = "connector-niche-toggle";
+      const isOpen = anyNicheConnected;
+      toggle.innerHTML = `<span class="niche-toggle-icon">${isOpen ? "▾" : "▸"}</span> Connecteurs spécialisés — <em>${groupLabel}</em>`;
+      toggle.setAttribute("aria-expanded", String(isOpen));
+
+      const inner = document.createElement("div");
+      inner.className = `connector-grid-inner connector-niche-inner${isOpen ? "" : " hidden"}`;
+      entries.forEach(([type, meta]) => inner.appendChild(buildConnectorCard(type, meta, connected[type] || null)));
+
+      toggle.addEventListener("click", () => {
+        const open = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!open));
+        toggle.querySelector(".niche-toggle-icon").textContent = !open ? "▾" : "▸";
+        inner.classList.toggle("hidden", open);
+      });
+
+      section.appendChild(toggle);
+      section.appendChild(inner);
+    });
+
+    grid.appendChild(section);
+  }
 }
 
 function buildConnectorCard(type, meta, info) {
