@@ -246,6 +246,248 @@ TOOL_DEFINITIONS: list[dict] = [
 ]
 
 
+# ── Outils internes NexHire (lisent directement la DB) ───────────────────────
+
+_INTERNAL_TOOL_NAMES = {
+    "query_licenses_usage",
+    "query_contracts",
+    "query_workforce_processes",
+    "query_optimization_summary",
+}
+
+INTERNAL_TOOL_DEFINITIONS: list[dict] = [
+    {
+        "type": "function",
+        "function": {
+            "name": "query_licenses_usage",
+            "description": (
+                "Analyse l'utilisation des licences logicielles et applications IT de l'organisation. "
+                "Utile pour : logiciels peu utilisés, licences surnuméraires, coûts par application, "
+                "doublons d'outils dans une même catégorie, économies potentielles sur les licences."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "filter": {
+                        "type": "string",
+                        "enum": ["all", "unused", "duplicates", "expensive"],
+                        "default": "all",
+                        "description": "unused=peu utilisés, duplicates=doublons par catégorie, expensive=plus coûteux",
+                    },
+                    "limit": {"type": "integer", "default": 10},
+                },
+                "required": [],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "query_contracts",
+            "description": (
+                "Consulte les contrats fournisseurs de l'organisation : valeurs, renouvellements, "
+                "potentiel de négociation et économies. "
+                "Utile pour : contrats trop chers, contrats à renouveler bientôt, économies négociables, "
+                "budget contrats par catégorie."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "filter": {
+                        "type": "string",
+                        "enum": ["all", "expiring_soon", "high_value", "negotiable"],
+                        "default": "all",
+                        "description": "expiring_soon=renouvellement <90j, high_value=plus coûteux, negotiable=potentiel économie >0",
+                    },
+                    "category": {
+                        "type": "string",
+                        "description": "Filtrer par catégorie : telecom, software, hardware, services, cloud, facilities",
+                    },
+                    "limit": {"type": "integer", "default": 10},
+                },
+                "required": [],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "query_workforce_processes",
+            "description": (
+                "Analyse les processus RH et opérationnels manuels de l'organisation. "
+                "Utile pour : processus qui coûtent le plus en heures, potentiel d'automatisation, "
+                "ROI estimé par processus, tâches à automatiser en priorité."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "filter": {
+                        "type": "string",
+                        "enum": ["all", "high_cost", "automatable", "already_automated"],
+                        "default": "all",
+                        "description": "high_cost=plus coûteux en heures, automatable=potentiel >50%",
+                    },
+                    "limit": {"type": "integer", "default": 10},
+                },
+                "required": [],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "query_optimization_summary",
+            "description": (
+                "Tableau de bord global des opportunités d'économies identifiées par NexHire : "
+                "score d'efficacité, total des économies potentielles par catégorie, "
+                "meilleures opportunités classées par ROI. "
+                "Utile pour : vue d'ensemble, où est l'argent, priorités d'action."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+            },
+        },
+    },
+]
+
+
+def _internal_licenses(org_id: str, filter: str = "all", limit: int = 10) -> dict:
+    try:
+        from routes_optimization import _unused_licenses, _duplicate_tools
+        unused = _unused_licenses(org_id)
+        dups   = _duplicate_tools(org_id)
+        if filter == "unused":
+            return {"licences_peu_utilisees": unused[:limit]}
+        if filter == "duplicates":
+            return {"doublons_par_categorie": dups[:limit]}
+        if filter == "expensive":
+            from supabase_client import service_client
+            apps = (service_client().table("it_applications")
+                    .select("name, vendor, category, monthly_cost, user_count, status")
+                    .eq("organization_id", org_id)
+                    .neq("status", "decommissioned")
+                    .order("monthly_cost", desc=True)
+                    .limit(limit).execute().data or [])
+            return {"applications_plus_couteuses": apps}
+        return {
+            "licences_peu_utilisees":  unused[:limit // 2],
+            "doublons_par_categorie":  dups[:limit // 2],
+        }
+    except Exception as exc:
+        return {"error": str(exc)}
+
+
+def _internal_contracts(org_id: str, filter: str = "all", category: str | None = None, limit: int = 10) -> dict:
+    try:
+        from datetime import date, timedelta
+        from supabase_client import service_client
+        sb    = service_client()
+        today = date.today()
+        q = (sb.table("contracts")
+             .select("vendor, description, category, annual_value, currency, renewal_date, negotiation_potential, status, departments(name)")
+             .eq("organization_id", org_id))
+        if category:
+            q = q.eq("category", category)
+        if filter == "expiring_soon":
+            q = (q.eq("status", "active")
+                   .lte("renewal_date", (today + timedelta(days=90)).isoformat())
+                   .gte("renewal_date", today.isoformat()))
+        elif filter == "high_value":
+            q = q.order("annual_value", desc=True)
+        elif filter == "negotiable":
+            q = q.gt("negotiation_potential", 0).order("negotiation_potential", desc=True)
+        rows = (q.limit(limit).execute().data or [])
+        total = sum(float(r.get("annual_value") or 0) for r in rows)
+        result = []
+        for r in rows:
+            val = float(r.get("annual_value") or 0)
+            pot = float(r.get("negotiation_potential") or 0)
+            result.append({
+                "fournisseur":        r.get("vendor"),
+                "description":        r.get("description"),
+                "categorie":          r.get("category"),
+                "valeur_annuelle":    f"{val:,.0f} {r.get('currency','CAD')}",
+                "renouvellement":     r.get("renewal_date"),
+                "potentiel_negoce_%": pot,
+                "economie_possible":  f"{val * pot / 100:,.0f} {r.get('currency','CAD')}" if pot else None,
+                "departement":        (r.get("departments") or {}).get("name"),
+            })
+        return {"contrats": result, "total_annuel": f"{total:,.0f} CAD", "nombre": len(result)}
+    except Exception as exc:
+        return {"error": str(exc)}
+
+
+def _internal_processes(org_id: str, filter: str = "all", limit: int = 10) -> dict:
+    try:
+        from supabase_client import service_client
+        rows = (service_client().table("workforce_processes")
+                .select("name, description, team_size, manual_hours_per_month, automation_potential, hourly_cost, status, departments(name)")
+                .eq("organization_id", org_id)
+                .execute().data or [])
+        result = []
+        for p in rows:
+            hours  = float(p.get("manual_hours_per_month") or 0)
+            auto   = float(p.get("automation_potential") or 0)
+            hourly = float(p.get("hourly_cost") or 50)
+            roi_ann = hours * (auto / 100) * hourly * 12
+            item = {
+                "processus":             p.get("name"),
+                "equipe":                p.get("team_size"),
+                "heures_manuelles_mois": hours,
+                "potentiel_auto_%":      auto,
+                "cout_horaire":          hourly,
+                "roi_annuel_estimé":     f"{roi_ann:,.0f} CAD",
+                "statut":                p.get("status"),
+                "departement":           (p.get("departments") or {}).get("name"),
+            }
+            result.append(item)
+        if filter == "high_cost":
+            result.sort(key=lambda x: -float(x["heures_manuelles_mois"]))
+        elif filter == "automatable":
+            result = [r for r in result if float(r["potentiel_auto_%"]) >= 50]
+            result.sort(key=lambda x: -float(x["roi_annuel_estimé"].replace(",", "").replace(" CAD", "")))
+        elif filter == "already_automated":
+            result = [r for r in result if r["statut"] == "automated"]
+        else:
+            result.sort(key=lambda x: -float(x["roi_annuel_estimé"].replace(",", "").replace(" CAD", "")))
+        return {"processus": result[:limit], "nombre": len(result)}
+    except Exception as exc:
+        return {"error": str(exc)}
+
+
+def _internal_optimization_summary(org_id: str) -> dict:
+    try:
+        from routes_optimization import (
+            _efficiency_score, _unused_licenses, _duplicate_tools,
+            _contracts_at_risk, _process_waste, _top_opps,
+        )
+        unused    = _unused_licenses(org_id)
+        dups      = _duplicate_tools(org_id)
+        contracts = _contracts_at_risk(org_id)
+        procs     = _process_waste(org_id)
+        score     = _efficiency_score(org_id)
+        top       = _top_opps(unused, dups, contracts, procs)
+        total = (sum(l["annual_savings_potential"] for l in unused)
+               + sum(d["annual_savings_potential"] for d in dups)
+               + sum(c.get("potential_savings", 0) for c in contracts)
+               + sum(p.get("annual_savings_potential", 0) for p in procs))
+        return {
+            "score_efficacite_global": f"{score.get('overall', 0):.1f}/100",
+            "economies_totales_annuelles": f"{total:,.0f} CAD",
+            "par_categorie": {
+                "licences":  f"{sum(l['annual_savings_potential'] for l in unused):,.0f} CAD",
+                "logiciels": f"{sum(d['annual_savings_potential'] for d in dups):,.0f} CAD",
+                "contrats":  f"{sum(c.get('potential_savings',0) for c in contracts):,.0f} CAD",
+                "processus": f"{sum(p.get('annual_savings_potential',0) for p in procs):,.0f} CAD",
+            },
+            "top_opportunites": top[:5],
+        }
+    except Exception as exc:
+        return {"error": str(exc)}
+
+
 # ── Implémentations simulées (V1) — remplacer par vrais appels API en V2 ──────
 
 def _mock_servicenow(query: str, status: str = "all", priority: str = "all", limit: int = 5) -> list[dict]:
@@ -386,6 +628,17 @@ def _mock_hubspot(query: str, object_type: str = "all", limit: int = 5) -> list[
 def _call_tool(name: str, arguments: dict[str, Any], org_id: str | None = None) -> Any:
     """Essaie d'abord le vrai service (si connecté), puis retombe sur le mock."""
 
+    # Outils internes NexHire — toujours réels, pas de mock
+    if name in _INTERNAL_TOOL_NAMES and org_id:
+        if name == "query_licenses_usage":
+            return _internal_licenses(org_id, arguments.get("filter", "all"), arguments.get("limit", 10))
+        if name == "query_contracts":
+            return _internal_contracts(org_id, arguments.get("filter", "all"), arguments.get("category"), arguments.get("limit", 10))
+        if name == "query_workforce_processes":
+            return _internal_processes(org_id, arguments.get("filter", "all"), arguments.get("limit", 10))
+        if name == "query_optimization_summary":
+            return _internal_optimization_summary(org_id)
+
     if org_id:
         try:
             if name == "search_microsoft_365":
@@ -494,7 +747,11 @@ def run_agent(
         active_tools = {connector_tool_map[c] for c in connected_connectors if c in connector_tool_map}
         tools = [t for t in TOOL_DEFINITIONS if t["function"]["name"] in active_tools]
     else:
-        tools = TOOL_DEFINITIONS
+        tools = list(TOOL_DEFINITIONS)
+
+    # Outils internes toujours disponibles si org_id connu (pas de connecteur requis)
+    if org_id:
+        tools = tools + INTERNAL_TOOL_DEFINITIONS
 
     lang_name = "français" if language == "fr" else "English"
     system_prompt = (
@@ -540,11 +797,15 @@ def run_agent(
                 "content": json.dumps(result, ensure_ascii=False),
             })
 
-            # Identifier la source (connecteur)
-            source = next(
-                (c for c, t in connector_tool_map.items() if t == fn_name),
-                fn_name,
-            )
+            # Identifier la source (connecteur ou nexhire interne)
+            if fn_name in _INTERNAL_TOOL_NAMES:
+                source = "nexhire"
+            else:
+                source = next(
+                    (c for c, t in connector_tool_map.items()
+                     if t == fn_name and c not in _INTERNAL_TOOL_NAMES),
+                    fn_name,
+                )
             if source not in sources:
                 sources.append(source)
 
