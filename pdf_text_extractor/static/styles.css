@@ -137,25 +137,70 @@ button[type="submit"] { @extend .btn; @extend .btn-primary; width: 100%; }
 .land-nav-links a:hover { color: var(--blue); text-decoration: none; }
 .land-nav-cta { display: flex; gap: 10px; align-items: center; }
 
-/* ── Hero ────────────────────────────────────────────────────────────────── */
+/* ── Hero slider ─────────────────────────────────────────────────────────── */
 .hero {
   position: relative;
   overflow: hidden;
   padding: 96px 40px 80px;
-  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #1d4ed8 100%);
+  min-height: 580px;
   color: #fff;
+  background: #0f172a;
 }
-.hero::before {
-  content: "";
+
+/* Slides images */
+.hero-slide {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 60% 70% at 80% 20%, rgba(96,165,250,.18), transparent),
-    radial-gradient(ellipse 40% 50% at 10% 80%, rgba(167,139,250,.12), transparent);
-  pointer-events: none;
+  background-size: cover;
+  background-position: center top;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+  will-change: opacity;
+}
+.hero-slide.active { opacity: 1; }
+
+/* Overlay gradient pour lisibilité du texte */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, .82) 0%,
+    rgba(30, 58, 138, .68) 60%,
+    rgba(29, 78, 216, .55) 100%
+  );
+  z-index: 1;
+}
+
+/* Navigation dots */
+.slide-nav {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 3;
+}
+.slide-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.6);
+  background: transparent;
+  cursor: pointer;
+  box-shadow: none;
+  min-height: auto;
+  padding: 0;
+  transition: background .3s, transform .3s, border-color .3s;
+}
+.slide-dot.active {
+  background: #fff;
+  border-color: #fff;
+  transform: scale(1.25);
 }
 .hero-inner {
   position: relative;
+  z-index: 2;
   max-width: 1080px;
   margin: 0 auto;
   display: grid;

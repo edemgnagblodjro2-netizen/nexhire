@@ -29,8 +29,20 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="hero">
+  <!-- Hero avec diaporama -->
+  <section class="hero" id="hero-slider">
+    <!-- Slides images (vraies photos Unsplash) -->
+    <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1920&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1920&q=80')"></div>
+    <!-- Overlay sombre pour lisibilité du texte -->
+    <div class="hero-overlay"></div>
+    <!-- Navigation dots -->
+    <div class="slide-nav">
+      <button class="slide-dot active" data-slide="0"></button>
+      <button class="slide-dot" data-slide="1"></button>
+      <button class="slide-dot" data-slide="2"></button>
+    </div>
     <div class="hero-inner">
       <div>
         <div class="hero-eyebrow"><span></span>Intelligence artificielle · Bilingue FR/EN</div>
@@ -73,7 +85,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section><!-- end hero -->
 
   <!-- Connectors strip -->
   <div class="connectors-strip" id="connectors">

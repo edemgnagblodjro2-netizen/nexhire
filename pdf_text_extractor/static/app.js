@@ -511,3 +511,39 @@ async function init() {
 }
 
 init();
+
+// ═══════════════════════════════════════════════════════════════════════════
+// HERO SLIDESHOW
+// ═══════════════════════════════════════════════════════════════════════════
+
+(function () {
+  const slides = document.querySelectorAll(".hero-slide");
+  const dots   = document.querySelectorAll(".slide-dot");
+  if (!slides.length) return;
+
+  let current = 0;
+  let timer;
+
+  function goTo(n) {
+    slides[current].classList.remove("active");
+    dots[current].classList.remove("active");
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add("active");
+    dots[current].classList.add("active");
+  }
+
+  function next() { goTo(current + 1); }
+
+  function start() { timer = setInterval(next, 5000); }
+  function stop()  { clearInterval(timer); }
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener("click", () => { stop(); goTo(i); start(); });
+  });
+
+  // Pause on hover
+  document.getElementById("hero-slider")?.addEventListener("mouseenter", stop);
+  document.getElementById("hero-slider")?.addEventListener("mouseleave", start);
+
+  start();
+})();
