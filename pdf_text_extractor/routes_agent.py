@@ -8,6 +8,7 @@ from audit import AuditEvent, client_ip, log_audit
 from auth import CurrentUser
 from rbac import require_active_subscription, require_min_role
 from supabase_client import service_client
+from usage import check_and_consume_query
 
 router = APIRouter(prefix="/api/agent", tags=["agent"])
 
@@ -53,6 +54,9 @@ def agent_query(
     L'agent consulte automatiquement les connecteurs actifs de l'organisation,
     synthétise les résultats et retourne une réponse structurée avec les sources.
     """
+    # Vérifie le quota mensuel et incrémente le compteur (HTTP 429 si dépassé).
+    check_and_consume_query(user.organization_id, user.subscription_status)
+
     connectors = _connected_connectors(user.organization_id)
 
     try:
