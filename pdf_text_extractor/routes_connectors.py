@@ -8,7 +8,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request,
 from audit import AuditEvent, client_ip, log_audit
 from auth import CurrentUser
 from crypto import encrypt
-from rbac import require_min_role
+from rbac import require_active_subscription, require_min_role
 from supabase_client import service_client
 
 VALID_TYPES = frozenset({
@@ -71,6 +71,7 @@ def connect(
     request: Request,
     background: BackgroundTasks,
     user: CurrentUser = Depends(require_min_role("admin")),
+    _active: CurrentUser = Depends(require_active_subscription),
 ):
     """Simule la connexion (option B : stocke {"simulated": true} chiffré Fernet)."""
     _check_type(connector_type)
@@ -123,6 +124,7 @@ def disconnect(
     request: Request,
     background: BackgroundTasks,
     user: CurrentUser = Depends(require_min_role("admin")),
+    _active: CurrentUser = Depends(require_active_subscription),
 ):
     """Déconnecte et efface les credentials chiffrés."""
     _check_type(connector_type)

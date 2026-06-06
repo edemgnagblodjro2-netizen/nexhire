@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 from agent_service import AgentResponse, run_agent
 from audit import AuditEvent, client_ip, log_audit
 from auth import CurrentUser
-from rbac import require_min_role
+from rbac import require_active_subscription, require_min_role
 from supabase_client import service_client
 
 router = APIRouter(prefix="/api/agent", tags=["agent"])
@@ -46,6 +46,7 @@ def agent_query(
     request: Request,
     background: BackgroundTasks,
     user: CurrentUser = Depends(require_min_role("user")),
+    _active: CurrentUser = Depends(require_active_subscription),
 ):
     """Pose une question en langage naturel.
 

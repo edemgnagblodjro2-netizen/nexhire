@@ -9,6 +9,21 @@ from auth import CurrentUser, get_current_user
 # Hiérarchie des rôles : owner > admin > manager > user.
 ROLE_RANK: dict[str, int] = {"user": 1, "manager": 2, "admin": 3, "owner": 4}
 
+# Statuts d'abonnement qui bloquent l'accès aux fonctionnalités payantes.
+_BLOCKED_STATUSES = frozenset({"suspended", "canceled"})
+
+
+def require_active_subscription(user: CurrentUser = Depends(get_current_user)) -> CurrentUser:
+    """Bloque les organisations dont l'abonnement est suspendu ou annulé.
+    À injecter sur tout endpoint qui consomme des ressources LLM ou connecteurs."""
+    if user.subscription_status in _BLOCKED_STATUSES:
+        raise HTTPException(
+            status_code=status.HTTP_402_PAYMENT_REQUIRED,
+            detail=f"Accès suspendu — statut d'abonnement : {user.subscription_status}. "
+                   "Contactez le support pour réactiver votre compte.",
+        )
+    return user
+
 
 def require_min_role(minimum: str) -> Callable[..., CurrentUser]:
     """Exige AU MOINS ce rôle (un owner passe un require_min_role('admin'))."""
