@@ -625,6 +625,13 @@ footer {
   flex-shrink: 0;
   margin-right: 8px;
 }
+.land-nav .nav-brand,
+.topnav .nav-brand {
+  background: var(--navy);
+  border-radius: 10px;
+  padding: 3px 12px 3px 3px;
+  color: #fff;
+}
 .brand-mark {
   width: 30px; height: 30px;
   border-radius: 8px;
