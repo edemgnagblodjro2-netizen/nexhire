@@ -376,25 +376,47 @@ button[type="submit"] { @extend .btn; @extend .btn-primary; width: 100%; }
   gap: 20px;
 }
 .feat-card {
-  padding: 28px;
+  padding: 0;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   background: var(--surface);
   box-shadow: var(--shadow-sm);
   transition: box-shadow .2s, transform .2s;
+  overflow: hidden;
 }
-.feat-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
-.feat-icon {
-  width: 48px; height: 48px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-  margin-bottom: 16px;
+.feat-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+.feat-img {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
 }
-.feat-card h3 { font-size: 1.05rem; margin-bottom: 8px; color: var(--navy); }
-.feat-card p  { font-size: .88rem; line-height: 1.65; }
+.feat-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s ease;
+  display: block;
+}
+.feat-card:hover .feat-img img { transform: scale(1.05); }
+.feat-card h3 { font-size: 1.02rem; margin: 20px 22px 6px; color: var(--navy); font-weight: 700; }
+.feat-card p  { font-size: .87rem; line-height: 1.65; margin: 0 22px 22px; color: var(--muted); }
+
+/* ── Lang button ─────────────────────────────────────────────────────────── */
+.lang-btn {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--navy);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: .04em;
+  transition: background .15s, color .15s;
+}
+.lang-btn:hover { background: var(--blue-light); color: var(--blue-dark); border-color: var(--blue); }
+.topnav .lang-btn { color: #fff; border-color: rgba(255,255,255,.3); }
+.topnav .lang-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
 
 /* ── Pricing section ─────────────────────────────────────────────────────── */
 .pricing {

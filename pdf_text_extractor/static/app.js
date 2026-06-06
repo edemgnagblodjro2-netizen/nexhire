@@ -10,6 +10,177 @@ const state = {
   docId: null,
 };
 
+// ── i18n ───────────────────────────────────────────────────────────────────
+const T = {
+  fr: {
+    'nav.features':'Fonctionnalités','nav.pricing':'Tarifs','nav.connectors':'Connecteurs',
+    'nav.login':'Se connecter','nav.trial':'Essai gratuit 14 jours',
+    'hero.eyebrow':'Intelligence artificielle · Bilingue FR/EN',
+    'hero.title':'Un assistant IA pour <em>tous</em> vos systèmes',
+    'hero.sub':'Nexhire connecte vos outils — Microsoft 365, Salesforce, Jira, ServiceNow, SAP, Workday — en un seul agent conversationnel intelligent pour vos équipes canadiennes.',
+    'hero.cta':"Commencer l'essai gratuit",'hero.login':'Se connecter',
+    'hero.trust1':'14 jours gratuits','hero.trust2':'Aucune carte requise','hero.trust3':'Bilingue FR / EN',
+    'hero.demo.q':'Incidents critiques + emails non lus + budget ?',
+    'hero.demo.a1':'3 incidents critiques ouverts','hero.demo.a2':'2 emails prioritaires',
+    'hero.demo.a3':'Budget juin 2026 — 93,7% consommé',
+    'strip.label':'Connecteurs disponibles',
+    'feat.label':'Pourquoi Nexhire','feat.title':'Tout ce dont votre organisation a besoin',
+    'feat.sub':'Un seul agent IA qui interroge tous vos systèmes en temps réel et vous répond en français ou en anglais.',
+    'feat1.title':'6 connecteurs intégrés','feat1.desc':'Microsoft 365, Salesforce, Jira, ServiceNow, SAP et Workday — connectés en quelques clics via OAuth sécurisé.',
+    'feat2.title':'Agent IA conversationnel','feat2.desc':"Posez vos questions en langage naturel. L'agent consulte les bons systèmes automatiquement et synthétise les résultats.",
+    'feat3.title':'Sécurité entreprise','feat3.desc':"Tokens OAuth chiffrés Fernet, JWT ES256, audit log immuable et contrôle d'accès par rôle (RBAC).",
+    'feat4.title':'Bilingue FR / EN','feat4.desc':"Interface et réponses de l'agent disponibles en français et en anglais, adapté aux organisations canadiennes.",
+    'feat5.title':'Analyse de documents','feat5.desc':"Téléversez des PDF — politiques, appels d'offres, rapports — et posez des questions directement sur leur contenu.",
+    'feat6.title':"Journal d'audit complet",'feat6.desc':"Chaque requête, connexion et action est tracée avec l'IP, l'utilisateur, la source et le résultat — append-only.",
+    'price.label':'Tarifs simples','price.title':'Commencez gratuitement. Payez quand vous êtes prêt.',
+    'price.sub':"14 jours d'essai complet inclus, sans carte de crédit.",
+    'price.trial':"14 jours d'essai gratuit",'price.trial.desc':'— accès complet à tous les connecteurs et fonctionnalités. Aucune carte requise.',
+    'price.monthly':'Mensuel','price.monthly.unit':'/mois',
+    'price.f1':'6 connecteurs (M365, Salesforce, Jira…)','price.f2':'Agent IA — 1 000 requêtes / mois',
+    'price.f3':'Analyse de documents PDF illimitée','price.f4':"Journal d'audit complet",
+    'price.f5':'Support courriel prioritaire','price.f6':'Bilingue FR / EN',
+    'price.cta':"Commencer l'essai",'price.monthly.note':'Sans engagement · Annulez à tout moment',
+    'price.best':'🏆 Meilleure valeur — économisez 198 $','price.annual':'Annuel','price.annual.unit':'/an',
+    'price.annual.saving':'Équivaut à 82,50 $ / mois — économisez 2 mois gratuits',
+    'price.annual.f1':'Tout le plan Mensuel inclus','price.annual.f2':'Agent IA — 12 000 requêtes / an',
+    'price.annual.f3':'Accès prioritaire aux nouveaux connecteurs','price.annual.f4':"Rapport d'utilisation mensuel",
+    'price.annual.f5':'Support téléphonique dédié','price.annual.f6':'Onboarding personnalisé',
+    'price.annual.note':'Facturé annuellement · Annulez à tout moment',
+    'footer.desc':'Un assistant IA enterprise pour les organisations canadiennes — bilingue, sécurisé, multi-connecteurs.',
+    'footer.product':'Produit','footer.support':'Support','footer.legal':'Légal',
+    'footer.features':'Fonctionnalités','footer.connectors':'Connecteurs','footer.pricing':'Tarifs',
+    'footer.docs':'Documentation','footer.help':"Centre d'aide",'footer.contact':'Contact',
+    'footer.terms':"Conditions d'utilisation",'footer.privacy':'Politique de confidentialité','footer.security':'Sécurité',
+    'footer.copyright':'© 2026 Nexhire Inc. Tous droits réservés.','footer.tagline':'Conçu pour les organisations canadiennes 🍁',
+    'auth.back':"← Retour à l'accueil",'auth.login.title':'Connexion','auth.login.sub':'Accédez à votre espace Nexhire.',
+    'auth.email':'Adresse courriel','auth.email.ph':'vous@organisation.ca','auth.password':'Mot de passe',
+    'auth.login.btn':'Se connecter','auth.login.switch':'Pas encore de compte ?','auth.login.switch.link':'Essai gratuit 14 jours',
+    'auth.signup.title':'Créer un compte','auth.signup.sub':"14 jours d'essai gratuit — aucune carte requise.",
+    'auth.org':"Nom de l'organisation",'auth.fname':'Prénom','auth.lname':'Nom',
+    'auth.password.new':'Mot de passe (min. 8 caractères)','auth.signup.btn':'Créer mon compte gratuitement',
+    'auth.signup.switch':'Déjà un compte ?','auth.signup.switch.link':'Se connecter',
+    'app.trial':'Votre essai gratuit se termine bientôt.','app.trial.cta':'Passer au Premium — 99 $/mois',
+    'app.tab.agent':'Assistant IA','app.tab.connectors':'Connecteurs','app.tab.documents':'Documents','app.tab.audit':'Audit','app.tab.settings':'Paramètres',
+    'app.logout':'Déconnexion','app.notif.title':'Notifications',
+    'agent.title':'Posez votre question','agent.mode.ent':'Enterprise','agent.mode.mun':'Municipal / Organisme','agent.mode.rec':'Recrutement',
+    'agent.chip1':'Incidents + projets + budget','agent.chip2':'Emails non lus','agent.chip3':'Contrats à renouveler','agent.chip4':'Effectifs RH','agent.chip5':'Budget du mois',
+    'agent.placeholder':"Ex : Montre-moi les incidents critiques et les emails non lus liés à la panne de ce matin.",
+    'agent.send':"Envoyer à l'agent",'agent.loading':'L\'agent analyse vos systèmes connectés…','agent.tools':'Outils appelés',
+    'conn.title':"Connecteurs d'entreprise",'conn.refresh':'↻ Actualiser',
+    'conn.desc':"Connectez vos systèmes pour que l'agent puisse les interroger en temps réel. Les tokens OAuth sont chiffrés (Fernet) avant d'être stockés.",
+    'docs.title':'Analyse de documents PDF','docs.upload.title':'Téléverser un PDF','docs.upload.label':'Choisir un fichier PDF',
+    'docs.upload.btn':'Extraire le texte','docs.summary.title':'Résumé IA','docs.summary.btn':'Générer le résumé',
+    'docs.summary.empty':'Téléversez un PDF pour activer le résumé.','docs.chat.title':'Chat sur le document',
+    'docs.chat.placeholder':"Ex : Quel est le processus d'achat ?",'docs.chat.send':'Envoyer',
+    'docs.chat.init':'Posez une question après le téléversement. Ask in French or English.',
+    'docs.preview.title':'Aperçu du texte extrait','docs.preview.empty':'Aucun document téléversé.',
+    'audit.title':"Journal d'audit",'audit.refresh':'↻ Actualiser',
+    'loading':'Chargement…',
+  },
+  en: {
+    'nav.features':'Features','nav.pricing':'Pricing','nav.connectors':'Connectors',
+    'nav.login':'Log in','nav.trial':'14-day free trial',
+    'hero.eyebrow':'Artificial intelligence · Bilingual FR/EN',
+    'hero.title':'One AI assistant for <em>all</em> your systems',
+    'hero.sub':'Nexhire connects your tools — Microsoft 365, Salesforce, Jira, ServiceNow, SAP, Workday — into a single intelligent conversational agent for your Canadian teams.',
+    'hero.cta':'Start free trial','hero.login':'Log in',
+    'hero.trust1':'14 days free','hero.trust2':'No card required','hero.trust3':'Bilingual FR / EN',
+    'hero.demo.q':'Critical incidents + unread emails + budget?',
+    'hero.demo.a1':'3 open critical incidents','hero.demo.a2':'2 priority emails',
+    'hero.demo.a3':'June 2026 budget — 93.7% consumed',
+    'strip.label':'Available connectors',
+    'feat.label':'Why Nexhire','feat.title':'Everything your organization needs',
+    'feat.sub':'One AI agent that queries all your systems in real time and responds in French or English.',
+    'feat1.title':'6 integrated connectors','feat1.desc':'Microsoft 365, Salesforce, Jira, ServiceNow, SAP and Workday — connected in a few clicks via secure OAuth.',
+    'feat2.title':'Conversational AI agent','feat2.desc':'Ask questions in natural language. The agent queries the right systems automatically and synthesizes the results.',
+    'feat3.title':'Enterprise security','feat3.desc':'Fernet-encrypted OAuth tokens, JWT ES256, immutable audit log and role-based access control (RBAC).',
+    'feat4.title':'Bilingual FR / EN','feat4.desc':'Interface and agent responses available in French and English, tailored for Canadian organizations.',
+    'feat5.title':'Document analysis','feat5.desc':'Upload PDFs — policies, RFPs, reports — and ask questions directly about their content.',
+    'feat6.title':'Full audit log','feat6.desc':'Every query, connection and action is tracked with IP, user, source and result — append-only.',
+    'price.label':'Simple pricing','price.title':"Start free. Pay when you're ready.",
+    'price.sub':'14-day full trial included, no credit card required.',
+    'price.trial':'14-day free trial','price.trial.desc':'— full access to all connectors and features. No card required.',
+    'price.monthly':'Monthly','price.monthly.unit':'/mo',
+    'price.f1':'6 connectors (M365, Salesforce, Jira…)','price.f2':'AI Agent — 1,000 queries / month',
+    'price.f3':'Unlimited PDF document analysis','price.f4':'Full audit log',
+    'price.f5':'Priority email support','price.f6':'Bilingual FR / EN',
+    'price.cta':'Start trial','price.monthly.note':'No commitment · Cancel anytime',
+    'price.best':'🏆 Best value — save $198','price.annual':'Annual','price.annual.unit':'/yr',
+    'price.annual.saving':'Equivalent to $82.50/mo — save 2 free months',
+    'price.annual.f1':'All Monthly plan included','price.annual.f2':'AI Agent — 12,000 queries / year',
+    'price.annual.f3':'Priority access to new connectors','price.annual.f4':'Monthly usage report',
+    'price.annual.f5':'Dedicated phone support','price.annual.f6':'Personalized onboarding',
+    'price.annual.note':'Billed annually · Cancel anytime',
+    'footer.desc':'An enterprise AI assistant for Canadian organizations — bilingual, secure, multi-connector.',
+    'footer.product':'Product','footer.support':'Support','footer.legal':'Legal',
+    'footer.features':'Features','footer.connectors':'Connectors','footer.pricing':'Pricing',
+    'footer.docs':'Documentation','footer.help':'Help center','footer.contact':'Contact',
+    'footer.terms':'Terms of service','footer.privacy':'Privacy policy','footer.security':'Security',
+    'footer.copyright':'© 2026 Nexhire Inc. All rights reserved.','footer.tagline':'Built for Canadian organizations 🍁',
+    'auth.back':'← Back to home','auth.login.title':'Sign in','auth.login.sub':'Access your Nexhire workspace.',
+    'auth.email':'Email address','auth.email.ph':'you@organization.ca','auth.password':'Password',
+    'auth.login.btn':'Sign in','auth.login.switch':'No account yet?','auth.login.switch.link':'14-day free trial',
+    'auth.signup.title':'Create account','auth.signup.sub':'14-day free trial — no card required.',
+    'auth.org':'Organization name','auth.fname':'First name','auth.lname':'Last name',
+    'auth.password.new':'Password (min. 8 characters)','auth.signup.btn':'Create my free account',
+    'auth.signup.switch':'Already have an account?','auth.signup.switch.link':'Sign in',
+    'app.trial':'Your free trial ends soon.','app.trial.cta':'Upgrade to Premium — $99/mo',
+    'app.tab.agent':'AI Assistant','app.tab.connectors':'Connectors','app.tab.documents':'Documents','app.tab.audit':'Audit','app.tab.settings':'Settings',
+    'app.logout':'Sign out','app.notif.title':'Notifications',
+    'agent.title':'Ask a question','agent.mode.ent':'Enterprise','agent.mode.mun':'Municipal / Organization','agent.mode.rec':'Recruiting',
+    'agent.chip1':'Incidents + projects + budget','agent.chip2':'Unread emails','agent.chip3':'Contracts to renew','agent.chip4':'HR headcount','agent.chip5':'Monthly budget',
+    'agent.placeholder':"E.g.: Show me critical incidents and unread emails related to this morning's outage.",
+    'agent.send':'Send to agent','agent.loading':'Agent is analyzing your connected systems…','agent.tools':'Tools called',
+    'conn.title':'Enterprise Connectors','conn.refresh':'↻ Refresh',
+    'conn.desc':'Connect your systems so the agent can query them in real time. OAuth tokens are Fernet-encrypted before storage.',
+    'docs.title':'PDF Document Analysis','docs.upload.title':'Upload a PDF','docs.upload.label':'Choose a PDF file',
+    'docs.upload.btn':'Extract text','docs.summary.title':'AI Summary','docs.summary.btn':'Generate summary',
+    'docs.summary.empty':'Upload a PDF to enable summary.','docs.chat.title':'Chat with document',
+    'docs.chat.placeholder':'E.g.: What is the procurement process?','docs.chat.send':'Send',
+    'docs.chat.init':'Ask a question after uploading. Ask in French or English.',
+    'docs.preview.title':'Extracted text preview','docs.preview.empty':'No document uploaded.',
+    'audit.title':'Audit Log','audit.refresh':'↻ Refresh',
+    'loading':'Loading…',
+  },
+};
+
+let _lang = localStorage.getItem("nexhire_lang") || "fr";
+
+function setLang(l) {
+  _lang = l;
+  localStorage.setItem("nexhire_lang", l);
+  document.getElementById("html-root").lang = l;
+  // Update all lang toggle buttons
+  document.querySelectorAll(".lang-btn").forEach(b => { b.textContent = l === "fr" ? "EN" : "FR"; });
+  // Sync agent-lang and doc-lang selects
+  const al = document.getElementById("agent-lang"); if (al) al.value = l;
+  const dl = document.getElementById("doc-lang");   if (dl) dl.value = l;
+  // Apply text translations
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const v = T[l][el.dataset.i18n];
+    if (v !== undefined) el.textContent = v;
+  });
+  // Apply HTML translations (for elements with markup like <em>)
+  document.querySelectorAll("[data-i18n-html]").forEach(el => {
+    const v = T[l][el.dataset.i18nHtml];
+    if (v !== undefined) el.innerHTML = v;
+  });
+  // Apply placeholder translations
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    const v = T[l][el.dataset.i18nPlaceholder];
+    if (v !== undefined) el.placeholder = v;
+  });
+  // Update prompt chips data-prompt to the active language
+  document.querySelectorAll(".prompt-chip").forEach(chip => {
+    const p = chip.dataset[l === "fr" ? "promptFr" : "promptEn"];
+    if (p) chip.dataset.prompt = p;
+  });
+}
+
+function toggleLang() {
+  setLang(_lang === "fr" ? "en" : "fr");
+}
+
 // ── Connector metadata ─────────────────────────────────────────────────────
 const CONNECTORS = {
   microsoft_365: { label: "Microsoft 365",  icon: "M",  color: "#0078d4", oauth: true  },
@@ -511,6 +682,7 @@ async function init() {
 }
 
 init();
+setLang(_lang);
 
 // ═══════════════════════════════════════════════════════════════════════════
 // HERO SLIDESHOW
