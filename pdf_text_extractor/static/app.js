@@ -1277,6 +1277,8 @@ async function loadSettings() {
     $("sp-email").value    = p.email    || "";
     $("sp-org").value      = p.organization_name || "";
     $("sp-since").value    = p.member_since || "";
+    if ($("sp-org-type")) $("sp-org-type").value = p.org_type || "entreprise";
+    state.orgType = p.org_type || "entreprise";
 
     // SSO
     const badge = $("sso-badge");
@@ -2041,6 +2043,73 @@ function _fmt(v) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// TYPE D'ORGANISATION & INITIALISATION DÉPARTEMENTS
+// ═══════════════════════════════════════════════════════════════════════════
+
+async function saveOrgType(type) {
+  // Enregistre le type d'org sans créer les départements (juste la colonne organizations.org_type)
+  // On réutilise l'endpoint initialize qui met à jour la colonne avant d'insérer
+  try {
+    await apiCall(`/api/departments/initialize?org_type=${type}`, "POST");
+    state.orgType = type;
+  } catch (_) {
+    state.orgType = type; // garde en mémoire locale même si appel échoue
+  }
+}
+
+let _selectedSector = null;
+
+function openInitDeptsModal() {
+  _selectedSector = null;
+  document.querySelectorAll(".sector-card").forEach(c => c.classList.remove("selected"));
+  $("sector-preview").classList.add("hidden");
+  $("init-depts-confirm-btn").disabled = true;
+  $("init-depts-error").classList.add("hidden");
+  $("init-depts-modal").classList.remove("hidden");
+}
+
+function closeInitDeptsModal() {
+  $("init-depts-modal").classList.add("hidden");
+}
+
+async function selectSector(type) {
+  _selectedSector = type;
+  document.querySelectorAll(".sector-card").forEach(c => c.classList.toggle("selected", c.dataset.type === type));
+  $("init-depts-confirm-btn").disabled = false;
+
+  try {
+    const data = await apiCall(`/api/departments/templates?org_type=${type}`);
+    const depts = data.departments || [];
+    $("sector-preview-list").innerHTML = depts.map(d =>
+      `<span class="badge badge-idle" title="${esc(d.description||"")}">${esc(d.name)}</span>`
+    ).join("");
+    $("sector-preview").classList.remove("hidden");
+  } catch (_) {}
+}
+
+async function confirmInitDepts() {
+  if (!_selectedSector) return;
+  const btn = $("init-depts-confirm-btn");
+  btn.disabled = true; btn.textContent = "Création en cours…";
+  $("init-depts-error").classList.add("hidden");
+  try {
+    const res = await apiCall(`/api/departments/initialize?org_type=${_selectedSector}`, "POST");
+    state.orgType = _selectedSector;
+    if ($("sp-org-type")) $("sp-org-type").value = _selectedSector;
+    closeInitDeptsModal();
+    loadDepartments();
+    _populateDeptSelects();
+    alert(`✅ ${res.created} département(s) créé(s), ${res.skipped} déjà existant(s).`);
+  } catch (ex) {
+    const err = $("init-depts-error");
+    err.textContent = ex.message || "Erreur lors de la création.";
+    err.classList.remove("hidden");
+  } finally {
+    btn.disabled = false; btn.textContent = "Créer les départements";
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // OPTIMISATION IA
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -2056,8 +2125,17 @@ function switchOptimTab(name) {
   _loadOptimSection(name);
 }
 
+const SECTOR_BADGE_LABELS = { entreprise: "🏢 Entreprise", hopital: "🏥 Hôpital", municipalite: "🏛️ Municipalité", universite: "🎓 Université" };
+
 async function loadOptimization() {
   await _populateOptimDeptSelects();
+  // Affiche le badge sectoriel
+  const badge = $("optim-sector-badge");
+  if (badge) {
+    const type = state.orgType || "entreprise";
+    badge.textContent = SECTOR_BADGE_LABELS[type] || type;
+    badge.classList.remove("hidden");
+  }
   switchOptimTab(_optimTab);
 }
 
@@ -2333,9 +2411,10 @@ async function runAIAnalysis() {
   if (resultWrap) resultWrap.innerHTML = `<div style="padding:40px;text-align:center"><div class="spinner" style="margin:auto"></div><p class="muted" style="margin-top:12px">Analyse de vos données IT…</p></div>`;
 
   try {
-    const lang = _lang || "fr";
-    const enc  = encodeURIComponent(question);
-    const data = await apiCall(`/api/optimization/analyze?question=${enc}&language=${lang}`, "POST");
+    const lang    = _lang || "fr";
+    const orgType = state.orgType || "entreprise";
+    const enc     = encodeURIComponent(question);
+    const data    = await apiCall(`/api/optimization/analyze?question=${enc}&language=${lang}&org_type=${orgType}`, "POST");
     const a    = data.analysis || {};
 
     if (resultWrap) resultWrap.innerHTML = `

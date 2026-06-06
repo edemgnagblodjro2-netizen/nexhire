@@ -1202,6 +1202,19 @@ footer {
 .dept-card-meta { font-size: .8rem; color: var(--navy-light); }
 .dept-actions { display: flex; gap: 6px; }
 
+/* Sector cards (modal init départements) */
+.sector-card {
+  border: 2px solid #e2e8f0; border-radius: 12px; padding: 16px;
+  cursor: pointer; text-align: center; transition: all .15s;
+  background: #f8fafc;
+}
+.sector-card:hover          { border-color: var(--indigo); background: #f0f1ff; }
+.sector-card.selected       { border-color: var(--indigo); background: #eef2ff; box-shadow: 0 0 0 3px rgba(99,102,241,.15); }
+.sector-card-icon           { font-size: 2rem; margin-bottom: 6px; }
+.sector-card-label          { font-weight: 700; color: var(--navy); font-size: .88rem; margin-bottom: 4px; }
+.sector-card-count          { font-size: .78rem; color: var(--navy-light); }
+.sector-badge               { display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:.78rem;font-weight:600;background:#eef2ff;color:var(--indigo); }
+
 /* SA (service account) list */
 .sa-row {
   display: flex; align-items: center; gap: 12px; padding: 10px 0;

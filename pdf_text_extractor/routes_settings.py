@@ -35,7 +35,7 @@ def get_profile(user: CurrentUser = Depends(require_min_role("user"))):
     # Organisation
     org: dict = {}
     if user.organization_id:
-        org_row = sb.table("organizations").select("name, slug, created_at").eq("id", user.organization_id).single().execute()
+        org_row = sb.table("organizations").select("name, slug, created_at, org_type").eq("id", user.organization_id).single().execute()
         org = org_row.data or {}
 
     # SSO (vérifie si un connecteur SAML/OIDC est configuré)
@@ -55,6 +55,7 @@ def get_profile(user: CurrentUser = Depends(require_min_role("user"))):
         "organization_id":     user.organization_id,
         "organization_name":   org.get("name") or "",
         "organization_slug":   org.get("slug") or "",
+        "org_type":            org.get("org_type") or "entreprise",
         "sso_enabled":         sso_enabled,
         "subscription_status": user.subscription_status,
     }

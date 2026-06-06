@@ -67,10 +67,20 @@ def get_efficiency_score(user: CurrentUser = Depends(require_min_role("user"))):
 async def ai_analyze(
     question: str = Query(default="Comment réduire nos dépenses IT de 10% sans affecter les opérations ?"),
     language: str = Query(default="fr", pattern="^(fr|en)$"),
+    org_type: str = Query(default="entreprise"),
     user: CurrentUser = Depends(require_min_role("user")),
 ):
     """Analyse IA : génère un plan d'économies personnalisé via OpenAI."""
-    return await _ai_cost_analysis(user.organization_id, question, language)
+    # Récupère le org_type depuis la DB si non fourni explicitement
+    effective_type = org_type
+    if effective_type == "entreprise":
+        try:
+            sb = service_client()
+            res = sb.table("organizations").select("org_type").eq("id", user.organization_id).limit(1).execute()
+            effective_type = ((res.data or [{}])[0].get("org_type") or "entreprise")
+        except Exception:
+            pass
+    return await _ai_cost_analysis(user.organization_id, question, language, effective_type)
 
 
 # ── Analysis helpers ──────────────────────────────────────────────────────────
@@ -263,7 +273,61 @@ def _top_opps(lics, dups, contracts, procs) -> list[dict]:
     return sorted(opps, key=lambda x: -x["savings"])[:10]
 
 
-async def _ai_cost_analysis(org_id: str, question: str, language: str) -> dict:
+# ── Règles sectorielles ───────────────────────────────────────────────────────
+SECTOR_INSIGHTS: dict[str, list[str]] = {
+    "hopital": [
+        "Les hôpitaux perdent en moyenne 15-20% du budget en rendez-vous non honorés non optimisés.",
+        "L'automatisation des tâches administratives infirmières peut libérer 2-3h/infirmier/jour.",
+        "L'imagerie médicale sous-utilisée (< 70% taux d'occupation) génère des coûts fixes évitables.",
+        "La consolidation des systèmes cliniques (DPI, RIS, LIS) réduit les coûts d'intégration de 25-40%.",
+    ],
+    "municipalite": [
+        "Les municipalités ont en moyenne 30-45% de leurs contrats fournisseurs renégociables à la baisse.",
+        "La numérisation des services citoyens réduit les coûts de traitement de 60-70% par transaction.",
+        "Les actifs municipaux (véhicules, équipements) génèrent 20-30% de coûts de maintenance évitables.",
+        "La consolidation des fournisseurs de services TI peut générer 15-25% d'économies annuelles.",
+    ],
+    "universite": [
+        "Les universités utilisent en moyenne 45% de leurs licences logicielles académiques.",
+        "L'automatisation des processus d'admission réduit les coûts administratifs de 35-50%.",
+        "La rationalisation des plateformes LMS évite la duplication de contenu et réduit les licences.",
+        "Les espaces d'enseignement sous-utilisés (< 60% taux d'occupation) peuvent être optimisés.",
+    ],
+    "entreprise": [
+        "Les entreprises dépensent en moyenne 30% de leur budget TI en licences sous-utilisées.",
+        "La consolidation des outils SaaS dans les mêmes catégories réduit les coûts de 40-60%.",
+        "L'automatisation des processus manuels récurrents génère un ROI positif en moins de 12 mois.",
+        "La renégociation proactive des contrats (90 jours avant) économise en moyenne 15-20%.",
+    ],
+}
+
+SECTOR_OPPORTUNITIES: dict[str, list[dict]] = {
+    "hopital": [
+        {"action": "Optimiser la gestion des rendez-vous médicaux avec rappels automatiques", "impact": "high",   "timeline": "1-3 mois",  "savings_pct": 0.08},
+        {"action": "Automatiser la saisie administrative des dossiers infirmiers",           "impact": "high",   "timeline": "3-6 mois",  "savings_pct": 0.12},
+        {"action": "Renégocier les contrats de fournitures médicales (appels d'offres)",      "impact": "medium", "timeline": "3-6 mois",  "savings_pct": 0.15},
+        {"action": "Consolider les systèmes informatiques cliniques (DPI unique)",            "impact": "high",   "timeline": "6-18 mois", "savings_pct": 0.20},
+        {"action": "Réduire les licences logicielles inutilisées (hors systèmes cliniques)", "impact": "medium", "timeline": "1-2 mois",  "savings_pct": 0.05},
+    ],
+    "municipalite": [
+        {"action": "Numériser les services citoyens (permis, paiements, demandes en ligne)",  "impact": "high",   "timeline": "3-6 mois",  "savings_pct": 0.18},
+        {"action": "Renégocier les contrats de services publics et fournisseurs",              "impact": "high",   "timeline": "3-6 mois",  "savings_pct": 0.15},
+        {"action": "Optimiser la maintenance préventive des actifs (véhicules, bâtiments)",   "impact": "medium", "timeline": "6-12 mois", "savings_pct": 0.12},
+        {"action": "Consolider les fournisseurs TI municipaux",                               "impact": "medium", "timeline": "3-6 mois",  "savings_pct": 0.10},
+        {"action": "Automatiser la facturation et le recouvrement des taxes",                  "impact": "medium", "timeline": "2-4 mois",  "savings_pct": 0.08},
+    ],
+    "universite": [
+        {"action": "Auditer et réduire les licences logicielles académiques sous-utilisées",  "impact": "high",   "timeline": "1-2 mois",  "savings_pct": 0.20},
+        {"action": "Automatiser les processus d'admission et de gestion des dossiers",        "impact": "high",   "timeline": "3-6 mois",  "savings_pct": 0.15},
+        {"action": "Consolider les plateformes d'enseignement en ligne (LMS unique)",         "impact": "medium", "timeline": "6-12 mois", "savings_pct": 0.12},
+        {"action": "Renégocier les contrats de bases de données et ressources académiques",   "impact": "medium", "timeline": "3-6 mois",  "savings_pct": 0.10},
+        {"action": "Optimiser l'utilisation des espaces et salles de cours",                   "impact": "low",    "timeline": "1-3 mois",  "savings_pct": 0.06},
+    ],
+    "entreprise": [],
+}
+
+
+async def _ai_cost_analysis(org_id: str, question: str, language: str, org_type: str = "entreprise") -> dict:
     """Plan d'économies via OpenAI — fallback règles si indisponible."""
     try:
         from openai import OpenAI
@@ -274,14 +338,16 @@ async def _ai_cost_analysis(org_id: str, question: str, language: str) -> dict:
         lics   = sb.table("licenses").select("product_name,vendor,quantity,assigned_count,cost_per_unit,billing_cycle").eq("organization_id", org_id).execute().data or []
         budget = sb.table("budget_entries").select("category,allocated,actual,year").eq("organization_id", org_id).execute().data or []
 
-        context = _build_context(apps, lics, budget)
+        context = _build_context(apps, lics, budget, org_type)
         lang_str = "French" if language == "fr" else "English"
+        sector_labels = {"entreprise": "private enterprise", "hopital": "hospital/healthcare", "municipalite": "municipality", "universite": "university"}
+        sector_label = sector_labels.get(org_type, "organization")
 
         resp = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": (
-                    f"You are an IT cost optimization expert for Canadian organizations. "
+                    f"You are an IT cost optimization expert specializing in {sector_label} organizations in Canada. "
                     f"Respond strictly in {lang_str}. "
                     "Return a valid JSON object with this exact structure:\n"
                     '{"summary":"...","total_potential_savings":0,"confidence":0,'
@@ -300,16 +366,18 @@ async def _ai_cost_analysis(org_id: str, question: str, language: str) -> dict:
         return {
             "success":  False,
             "question": question,
-            "analysis": _rule_based_analysis(org_id),
+            "analysis": _rule_based_analysis(org_id, org_type),
             "error":    type(exc).__name__,
         }
 
 
-def _build_context(apps: list, lics: list, budget: list) -> str:
+def _build_context(apps: list, lics: list, budget: list, org_type: str = "entreprise") -> str:
     total_monthly   = sum(float(a.get("monthly_cost") or 0) for a in apps)
     unused_apps     = [a for a in apps if a.get("status") == "unused"]
     annual_budget   = sum(float(b.get("allocated") or 0) for b in budget if b.get("year") == date.today().year)
+    sector_labels = {"entreprise": "private enterprise", "hopital": "hospital", "municipalite": "municipality", "universite": "university"}
     lines = [
+        f"Organization type: {sector_labels.get(org_type, org_type)}",
         f"Monthly IT spend: ${total_monthly:,.0f}",
         f"Annual IT budget: ${annual_budget:,.0f}",
         f"Applications: {len(apps)} total, {len(unused_apps)} unused",
@@ -327,11 +395,19 @@ def _build_context(apps: list, lics: list, budget: list) -> str:
     return "\n".join(lines)
 
 
-def _rule_based_analysis(org_id: str) -> dict:
-    unused = _unused_licenses(org_id)
-    dups   = _duplicate_tools(org_id)
-    procs  = _process_waste(org_id)
-    total  = sum(l["annual_savings_potential"] for l in unused) + sum(d["annual_savings_potential"] for d in dups) + sum(p["annual_savings_potential"] for p in procs)
+def _rule_based_analysis(org_id: str, org_type: str = "entreprise") -> dict:
+    unused    = _unused_licenses(org_id)
+    dups      = _duplicate_tools(org_id)
+    procs     = _process_waste(org_id)
+    contracts = _contracts_at_risk(org_id)
+
+    data_total = (
+        sum(l["annual_savings_potential"] for l in unused)
+        + sum(d["annual_savings_potential"] for d in dups)
+        + sum(p["annual_savings_potential"] for p in procs)
+        + sum(c.get("potential_savings", 0) for c in contracts)
+    )
+
     steps: list[dict] = []
     for i, l in enumerate(unused[:3], 1):
         steps.append({"step": i, "action": f"Réduire licences {l['product_name']} ({l['quantity']} → {l['assigned_count']})", "savings": l["annual_savings_potential"], "impact": "medium", "timeline": "1-3 mois"})
@@ -339,14 +415,40 @@ def _rule_based_analysis(org_id: str) -> dict:
         steps.append({"step": len(steps)+1, "action": f"Consolider outils {d['category']} ({d['tool_count']} en doublon)", "savings": d["annual_savings_potential"], "impact": "high", "timeline": "3-6 mois"})
     for p in procs[:2]:
         steps.append({"step": len(steps)+1, "action": f"Automatiser processus : {p['name']} ({p['automatable_hours_monthly']}h/mois)", "savings": p["annual_savings_potential"], "impact": "high", "timeline": "6-12 mois"})
+    for c in contracts[:2]:
+        steps.append({"step": len(steps)+1, "action": f"Renégocier contrat {c['vendor']} avant expiration ({c['days_to_renewal']}j)", "savings": c.get("potential_savings", 0), "impact": "medium", "timeline": "1-3 mois"})
+
+    # Ajoute les opportunités sectorielles si peu de données internes
+    sector_opps = SECTOR_OPPORTUNITIES.get(org_type, [])
+    if len(steps) < 4 and sector_opps:
+        budget_ref = 500_000
+        for opp in sector_opps[:max(0, 5 - len(steps))]:
+            est_savings = round(budget_ref * opp["savings_pct"], 2)
+            if data_total > 0:
+                est_savings = round(data_total * opp["savings_pct"] / 0.10, 2)
+            steps.append({"step": len(steps)+1, "action": opp["action"], "savings": est_savings, "impact": opp["impact"], "timeline": opp["timeline"]})
+            data_total += est_savings
+
+    # Insights : données réelles + sectoriels
+    base_insights = [
+        f"{len(unused)} produits licenciés ont un taux d'utilisation inférieur à 80%.",
+        f"{len(dups)} catégories d'outils présentent des doublons potentiels.",
+        f"{sum(p['automatable_hours_monthly'] for p in procs):.0f} heures/mois pourraient être automatisées.",
+        f"{len(contracts)} contrats arrivent à renouvellement dans les 180 prochains jours.",
+    ]
+    sector_insights = SECTOR_INSIGHTS.get(org_type, [])
+    all_insights = [i for i in base_insights if not i.startswith("0 ")] + sector_insights[:2]
+
+    sector_labels = {"entreprise": "entreprise privée", "hopital": "hôpital", "municipalite": "municipalité", "universite": "université"}
     return {
-        "summary":                f"Analyse des données IT : {len(unused)} licences sous-utilisées, {len(dups)} catégories avec doublons, {len(procs)} processus automatisables.",
-        "total_potential_savings": round(total, 2),
+        "summary": (
+            f"Analyse ({sector_labels.get(org_type, org_type)}) : "
+            f"{len(unused)} licences sous-utilisées, {len(dups)} catégories avec doublons, "
+            f"{len(procs)} processus automatisables, {len(contracts)} contrats à renégocier."
+        ),
+        "total_potential_savings": round(data_total, 2),
         "confidence":             82,
         "steps":                  steps,
-        "insights":               [
-            f"{len(unused)} produits licenciés ont un taux d'utilisation inférieur à 80%.",
-            f"{len(dups)} catégories d'outils présentent des doublons potentiels.",
-            f"{sum(p['automatable_hours_monthly'] for p in procs):.0f} heures/mois pourraient être automatisées.",
-        ],
+        "insights":               all_insights,
+        "org_type":               org_type,
     }

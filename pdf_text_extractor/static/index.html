@@ -570,9 +570,12 @@
 
       <!-- Départements -->
       <div style="margin-top:32px">
-        <div class="section-header" style="margin-bottom:12px">
+        <div class="section-header" style="margin-bottom:8px">
           <h3 style="font-size:.95rem;font-weight:700;color:var(--navy)" data-i18n="dept.title">Départements</h3>
-          <button class="btn btn-outline btn-sm" onclick="openDeptModal()" data-i18n="dept.add">+ Département</button>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <button class="btn btn-outline btn-sm" onclick="openDeptModal()">+ Département</button>
+            <button class="btn btn-outline btn-sm" onclick="openInitDeptsModal()" style="border-color:var(--indigo);color:var(--indigo)">⚡ Initialiser par secteur</button>
+          </div>
         </div>
         <div id="dept-list-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
       </div>
@@ -643,6 +646,15 @@
             <label class="auth-label">
               <span data-i18n="settings.org">Organisation</span>
               <input id="sp-org" type="text" disabled style="opacity:.6;cursor:not-allowed" />
+            </label>
+            <label class="auth-label">
+              <span>Type d'organisation</span>
+              <select id="sp-org-type" onchange="saveOrgType(this.value)">
+                <option value="entreprise">🏢 Entreprise privée</option>
+                <option value="hopital">🏥 Hôpital / Centre de santé</option>
+                <option value="municipalite">🏛️ Municipalité</option>
+                <option value="universite">🎓 Université / Établissement d'enseignement</option>
+              </select>
             </label>
             <label class="auth-label">
               <span data-i18n="settings.member.since">Membre depuis</span>
@@ -1006,7 +1018,10 @@
     <!-- ── OPTIMISATION IA ───────────────────────────────────────────────── -->
     <section id="tab-optim" class="tab-content hidden" role="tabpanel">
       <div class="section-header">
-        <h2 data-i18n="optim.title">Optimisation IA</h2>
+        <div style="display:flex;align-items:center;gap:10px">
+          <h2 data-i18n="optim.title">Optimisation IA</h2>
+          <span id="optim-sector-badge" class="sector-badge hidden"></span>
+        </div>
         <button class="btn btn-primary btn-sm" onclick="runAIAnalysis()" id="optim-analyze-btn" data-i18n="optim.analyze">Analyser avec l'IA</button>
       </div>
 
@@ -1169,6 +1184,46 @@
           <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
           <p id="pm-error" class="form-error hidden"></p>
         </form>
+      </div>
+    </div>
+
+    <!-- ── MODAL INITIALISATION DÉPARTEMENTS PAR SECTEUR ──────────────────── -->
+    <div id="init-depts-modal" class="modal-backdrop hidden">
+      <div class="modal-card" style="max-width:600px">
+        <button class="modal-close" onclick="closeInitDeptsModal()">✕</button>
+        <h3>⚡ Initialiser les départements par secteur</h3>
+        <p class="settings-desc" style="margin-bottom:16px">Choisissez le type d'organisation pour pré-remplir automatiquement la liste des départements. Les départements déjà existants ne seront pas écrasés.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px" id="sector-cards">
+          <div class="sector-card" data-type="entreprise" onclick="selectSector('entreprise')">
+            <div class="sector-card-icon">🏢</div>
+            <div class="sector-card-label">Entreprise privée</div>
+            <div class="sector-card-count" id="sc-count-entreprise">12 départements</div>
+          </div>
+          <div class="sector-card" data-type="hopital" onclick="selectSector('hopital')">
+            <div class="sector-card-icon">🏥</div>
+            <div class="sector-card-label">Hôpital / Centre de santé</div>
+            <div class="sector-card-count" id="sc-count-hopital">12 départements</div>
+          </div>
+          <div class="sector-card" data-type="municipalite" onclick="selectSector('municipalite')">
+            <div class="sector-card-icon">🏛️</div>
+            <div class="sector-card-label">Municipalité</div>
+            <div class="sector-card-count" id="sc-count-municipalite">12 départements</div>
+          </div>
+          <div class="sector-card" data-type="universite" onclick="selectSector('universite')">
+            <div class="sector-card-icon">🎓</div>
+            <div class="sector-card-label">Université / Enseignement</div>
+            <div class="sector-card-count" id="sc-count-universite">12 départements</div>
+          </div>
+        </div>
+        <div id="sector-preview" class="hidden" style="margin-bottom:16px">
+          <h4 style="font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:8px">Départements qui seront créés :</h4>
+          <div id="sector-preview-list" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:flex-end">
+          <button class="btn btn-outline btn-sm" onclick="closeInitDeptsModal()">Annuler</button>
+          <button class="btn btn-primary btn-sm" id="init-depts-confirm-btn" onclick="confirmInitDepts()" disabled>Créer les départements</button>
+        </div>
+        <p id="init-depts-error" class="form-error hidden"></p>
       </div>
     </div>
 
