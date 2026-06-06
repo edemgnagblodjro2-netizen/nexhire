@@ -97,6 +97,12 @@ def get_current_user(authorization: str | None = Header(default=None)) -> Curren
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Profil utilisateur introuvable.")
     row = rows[0]
 
+    if row.get("is_active") is False:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Compte désactivé. Contactez votre administrateur.",
+        )
+
     org_status = None
     if row.get("organization_id"):
         org_res = sb.rpc("get_org_status", {"p_org_id": row["organization_id"]}).execute()

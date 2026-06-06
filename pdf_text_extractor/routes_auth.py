@@ -11,10 +11,11 @@ router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 
 class SignupPayload(BaseModel):
-    organization_name: str = Field(min_length=1, max_length=255)
+    organization_name: str = Field(default="Mon organisation", min_length=1, max_length=255)
     full_name: str = Field(min_length=1, max_length=255)
     email: EmailStr
     password: str = Field(min_length=8)
+    invite_token: str | None = None
 
 
 @router.post("/signup")
@@ -24,16 +25,18 @@ def signup(payload: SignupPayload):
     (voir phase1_onboarding.sql). Les métadonnées portent le nom de l'org."""
     try:
         sb = anon_client()
+        meta: dict = {
+            "org_name":  payload.organization_name,
+            "full_name": payload.full_name,
+        }
+        if payload.invite_token:
+            meta["invite_token"] = payload.invite_token
+
         res = sb.auth.sign_up(
             {
                 "email": payload.email,
                 "password": payload.password,
-                "options": {
-                    "data": {
-                        "org_name": payload.organization_name,
-                        "full_name": payload.full_name,
-                    }
-                },
+                "options": {"data": meta},
             }
         )
     except Exception as exc:

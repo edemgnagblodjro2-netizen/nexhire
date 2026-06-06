@@ -1110,6 +1110,64 @@ footer {
   .settings-grid { grid-template-columns: 1fr !important; }
 }
 
+/* ── Team page ───────────────────────────────────────────────────────────── */
+.member-av {
+  width: 36px; height: 36px; border-radius: 50%;
+  color: #fff; font-size: .8rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.member-status { font-size: .75rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; }
+.status-active   { background: var(--success-bg); color: var(--success); }
+.status-inactive { background: var(--error-bg);   color: var(--error); }
+.member-actions { display: flex; align-items: center; gap: 6px; }
+.role-select-inline {
+  font-size: .78rem; border: 1px solid var(--border); border-radius: 6px;
+  padding: 3px 6px; color: var(--navy); background: #fff; cursor: pointer;
+}
+.btn-icon {
+  width: 28px; height: 28px; border-radius: 50%; border: none; cursor: pointer;
+  font-size: .85rem; display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
+}
+.btn-deactivate { background: var(--error-bg);   color: var(--error); }
+.btn-activate   { background: var(--success-bg); color: var(--success); }
+.btn-deactivate:hover { background: var(--error);   color: #fff; }
+.btn-activate:hover   { background: var(--success); color: #fff; }
+.row-inactive td { opacity: .55; }
+
+.pending-inv-list  { display: flex; flex-direction: column; gap: 8px; }
+.pending-inv-item  {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); font-size: .85rem;
+}
+.inv-email  { font-weight: 600; color: var(--navy); }
+.inv-expiry { color: var(--slate); font-size: .78rem; }
+
+/* Invite modal */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(15,23,42,.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 5000; padding: 20px;
+}
+.modal-card {
+  background: #fff; border-radius: var(--radius-lg); padding: 36px;
+  width: 100%; max-width: 480px; box-shadow: var(--shadow-lg);
+  position: relative;
+}
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  background: none; border: none; font-size: 1.1rem; cursor: pointer;
+  color: var(--slate); line-height: 1;
+}
+.modal-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin: 0 0 6px; }
+.invite-link-box { display: flex; gap: 8px; margin-top: 8px; }
+.invite-link-box input {
+  flex: 1; font-size: .8rem; padding: 8px 10px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--navy); background: var(--bg);
+}
+
 /* ── Settings page ───────────────────────────────────────────────────────── */
 .settings-grid {
   display: grid;

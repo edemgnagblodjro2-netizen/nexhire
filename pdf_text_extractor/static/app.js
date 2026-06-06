@@ -81,7 +81,15 @@ const T = {
     'stats.queries':'Requêtes','stats.score':'Satisfaction moyenne','stats.rated':'Réponses notées','stats.util':'Utilisateurs actifs',
     'stats.chart.daily':'Activité quotidienne','stats.chart.connectors':'Connecteurs utilisés','stats.chart.sat':'Répartition de la satisfaction',
     'app.tab.stats':'Statistiques',
-    'app.tab.settings':'Paramètres',
+    'app.tab.team':'Équipe','app.tab.settings':'Paramètres',
+    'team.title':"Gestion de l'équipe",'team.invite.btn':'+ Inviter un membre',
+    'team.desc':"Les membres invités rejoignent votre organisation et partagent le quota mensuel de requêtes.",
+    'team.pending':'Invitations en attente',
+    'team.invite.title':'Inviter un membre','team.invite.desc':"Un lien d'invitation valide 7 jours sera généré.",
+    'team.invite.role':'Rôle','team.role.user':'Utilisateur','team.role.manager':'Manager','team.role.admin':'Admin',
+    'team.invite.generate':'Générer le lien','team.invite.ready':'Lien prêt — copiez-le et partagez-le :',
+    'team.invite.copy':'Copier','team.invite.copied':'Lien copié !',
+    'auth.invite.joining':'Vous rejoignez cette organisation en tant que',
     'settings.title':'Paramètres',
     'settings.profile.title':'Informations du compte',
     'settings.fullname':'Nom complet','settings.email.label':'Adresse courriel',
@@ -169,6 +177,15 @@ const T = {
     'stats.queries':'Queries','stats.score':'Avg satisfaction','stats.rated':'Rated responses','stats.util':'Active users',
     'stats.chart.daily':'Daily activity','stats.chart.connectors':'Connectors used','stats.chart.sat':'Satisfaction distribution',
     'app.tab.stats':'Statistics',
+    'app.tab.team':'Team','app.tab.settings':'Settings',
+    'team.title':'Team management','team.invite.btn':'+ Invite member',
+    'team.desc':'Invited members join your organization and share the monthly query quota.',
+    'team.pending':'Pending invitations',
+    'team.invite.title':'Invite a member','team.invite.desc':'An invitation link valid for 7 days will be generated.',
+    'team.invite.role':'Role','team.role.user':'User','team.role.manager':'Manager','team.role.admin':'Admin',
+    'team.invite.generate':'Generate link','team.invite.ready':'Link ready — copy and share it:',
+    'team.invite.copy':'Copy','team.invite.copied':'Link copied!',
+    'auth.invite.joining':'You are joining this organization as',
     'app.tab.settings':'Settings',
     'settings.title':'Settings',
     'settings.profile.title':'Account information',
@@ -402,12 +419,15 @@ $("signup-form").addEventListener("submit", async e => {
   err.classList.add("hidden"); suc.classList.add("hidden");
   const fullName = `${$("signup-fname").value.trim()} ${$("signup-lname").value.trim()}`.trim();
   try {
-    await apiCall("/api/auth/signup", "POST", {
-      organization_name: $("signup-org").value.trim(),
+    const signupBody = {
+      organization_name: $("signup-org").value.trim() || "Mon organisation",
       full_name: fullName,
       email: $("signup-email").value.trim(),
       password: $("signup-password").value,
-    });
+    };
+    const invToken = $("signup-invite-token")?.value;
+    if (invToken) signupBody.invite_token = invToken;
+    await apiCall("/api/auth/signup", "POST", signupBody);
     suc.textContent = "Compte créé ! Vérifiez votre courriel pour activer votre compte, puis connectez-vous.";
     suc.classList.remove("hidden");
     setTimeout(() => showAuth("login"), 4000);
@@ -444,6 +464,7 @@ function loadActiveTab() {
   if (state.tab === "audit")      loadAudit();
   if (state.tab === "stats")      loadAnalytics();
   if (state.tab === "settings")   loadSettings();
+  if (state.tab === "team")       loadTeam();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -983,6 +1004,160 @@ async function loadAudit() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// TEAM TAB
+// ═══════════════════════════════════════════════════════════════════════════
+
+const ROLE_COLORS = { owner:"#0f172a", admin:"#6366f1", manager:"#0ea5e9", user:"#64748b" };
+const ROLE_LABELS_FR = { owner:"Owner", admin:"Admin", manager:"Manager", user:"Utilisateur" };
+
+async function loadTeam() {
+  await Promise.all([_loadMembers(), _loadPendingInvitations()]);
+}
+
+async function _loadMembers() {
+  const wrap = $("team-table-wrap");
+  wrap.innerHTML = "<p class='muted' style='padding:20px'>Chargement…</p>";
+  try {
+    const { members } = await apiCall("/api/members");
+    if (!members.length) { wrap.innerHTML = "<p class='muted' style='padding:20px'>Aucun membre.</p>"; return; }
+
+    const isOwner = ["admin","owner"].includes(state.user?.role);
+    const rows = members.map(m => {
+      const initials = (m.full_name || m.email || "?").slice(0,2).toUpperCase();
+      const active = m.is_active !== false;
+      const canEdit = isOwner && m.role !== "owner" && m.id !== state.user?.id;
+      return `<tr class="${active ? "" : "row-inactive"}">
+        <td>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="member-av" style="background:${ROLE_COLORS[m.role]||"#818CF8"}">${initials}</div>
+            <div>
+              <div style="font-weight:600;font-size:.9rem">${m.full_name || "—"}</div>
+              <div style="font-size:.78rem;color:var(--slate)">${m.email}</div>
+            </div>
+          </div>
+        </td>
+        <td><span class="role-badge" style="background:${ROLE_COLORS[m.role]}22;color:${ROLE_COLORS[m.role]}">${ROLE_LABELS_FR[m.role]||m.role}</span></td>
+        <td><span class="member-status ${active?"status-active":"status-inactive"}">${active?"Actif":"Inactif"}</span></td>
+        <td style="font-size:.78rem;color:var(--slate)">${m.created_at ? new Date(m.created_at).toLocaleDateString("fr-CA") : "—"}</td>
+        <td class="member-actions">
+          ${canEdit ? `
+            <select class="role-select-inline" onchange="changeMemberRole('${m.id}',this.value)" title="Changer le rôle">
+              ${["user","manager","admin"].map(r=>`<option value="${r}"${r===m.role?" selected":""}>${ROLE_LABELS_FR[r]}</option>`).join("")}
+            </select>
+            <button class="btn-icon ${active?"btn-deactivate":"btn-activate"}" onclick="toggleMember('${m.id}')" title="${active?"Désactiver":"Activer"}">
+              ${active ? "⊘" : "✓"}
+            </button>
+          ` : ""}
+        </td>
+      </tr>`;
+    }).join("");
+
+    wrap.innerHTML = `<table>
+      <thead><tr><th>Membre</th><th>Rôle</th><th>Statut</th><th>Depuis</th><th>Actions</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  } catch (ex) {
+    wrap.innerHTML = `<p class='error-text' style='padding:20px'>Erreur : ${ex.message}</p>`;
+  }
+}
+
+async function _loadPendingInvitations() {
+  const wrap = $("pending-inv-list");
+  if (!wrap) return;
+  wrap.innerHTML = "";
+  try {
+    const { invitations } = await apiCall("/api/members/invitations");
+    if (!invitations.length) { wrap.innerHTML = "<p class='muted' style='font-size:.85rem'>Aucune invitation en attente.</p>"; return; }
+    wrap.innerHTML = invitations.map(inv => `
+      <div class="pending-inv-item">
+        <div>
+          <span class="inv-email">${inv.email}</span>
+          <span class="role-badge" style="margin-left:8px">${ROLE_LABELS_FR[inv.role]||inv.role}</span>
+        </div>
+        <span class="inv-expiry">Expire le ${new Date(inv.expires_at).toLocaleDateString("fr-CA")}</span>
+      </div>
+    `).join("");
+  } catch { wrap.innerHTML = ""; }
+}
+
+async function changeMemberRole(memberId, role) {
+  try {
+    await apiCall(`/api/members/${memberId}/role`, "PATCH", { role });
+    await _loadMembers();
+  } catch (ex) { alert(`Erreur : ${ex.message}`); }
+}
+
+async function toggleMember(memberId) {
+  try {
+    await apiCall(`/api/members/${memberId}/active`, "PATCH");
+    await _loadMembers();
+  } catch (ex) { alert(`Erreur : ${ex.message}`); }
+}
+
+// Invite modal
+function openInviteModal() {
+  $("invite-modal").classList.remove("hidden");
+  $("inv-email").focus();
+  $("invite-link-wrap").classList.add("hidden");
+  $("inv-error").classList.add("hidden");
+  $("invite-form").reset();
+  $("copy-confirm").classList.add("hidden");
+}
+function closeInviteModal() {
+  $("invite-modal").classList.add("hidden");
+}
+$("invite-modal")?.addEventListener("click", e => { if (e.target === $("invite-modal")) closeInviteModal(); });
+
+$("invite-form")?.addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("inv-btn"); const err = $("inv-error");
+  btn.disabled = true; err.classList.add("hidden");
+  try {
+    const data = await apiCall("/api/members/invite", "POST", {
+      email: $("inv-email").value.trim(),
+      role:  $("inv-role").value,
+    });
+    const fullUrl = `${window.location.origin}/?invite=${data.token}`;
+    $("invite-link-input").value = fullUrl;
+    $("invite-link-wrap").classList.remove("hidden");
+    await _loadPendingInvitations();
+  } catch (ex) {
+    err.textContent = ex.message; err.classList.remove("hidden");
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+function copyInviteLink() {
+  const input = $("invite-link-input");
+  input.select(); input.setSelectionRange(0, 99999);
+  navigator.clipboard?.writeText(input.value).catch(() => document.execCommand("copy"));
+  $("copy-confirm").classList.remove("hidden");
+  setTimeout(() => $("copy-confirm").classList.add("hidden"), 3000);
+}
+
+// ─ Gestion du token d'invitation dans l'URL ──────────────────────────────
+async function _handleInviteToken() {
+  const params = new URLSearchParams(window.location.search);
+  const token  = params.get("invite");
+  if (!token) return;
+  try {
+    const inv = await fetch(`/api/members/invite/validate?token=${encodeURIComponent(token)}`).then(r=>r.json());
+    if (inv.detail) return;  // invalid
+    // Pre-fill signup form
+    showAuth("signup");
+    $("signup-invite-token").value = token;
+    $("signup-email").value = inv.email;
+    $("signup-email").disabled = true;
+    $("signup-org-wrap").classList.add("hidden");
+    $("invite-org-name").textContent = inv.org_name;
+    $("invite-role-label").textContent = ROLE_LABELS_FR[inv.role] || inv.role;
+    $("invite-context").classList.remove("hidden");
+    window.history.replaceState({}, "", "/");
+  } catch { /* ignore invalid tokens */ }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // SETTINGS TAB
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -1094,6 +1269,7 @@ $("settings-pwd-form")?.addEventListener("submit", async e => {
 // ═══════════════════════════════════════════════════════════════════════════
 
 async function init() {
+  await _handleInviteToken();
   const stored = localStorage.getItem("nexhire_token");
   if (!stored) { showLanding(); return; }
   state.token = stored;
