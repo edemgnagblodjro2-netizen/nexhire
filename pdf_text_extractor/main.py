@@ -120,7 +120,7 @@ def create_app(
             service_client().table("organizations").select("id").limit(1).execute()
             checks["db"] = "ok"
         except Exception as exc:
-            checks["db"] = f"error: {type(exc).__name__}"
+            checks["db"] = f"error: {type(exc).__name__}: {exc}"
         ok = all(v == "set" for k, v in checks.items() if k != "db") and checks.get("db") == "ok"
         return {"ready": ok, "checks": checks}
 

@@ -3,7 +3,7 @@ uvicorn[standard]
 python-multipart
 pypdf
 openai
-supabase
+supabase>=2.0.0
 python-dotenv
 cryptography
 PyJWT[crypto]
