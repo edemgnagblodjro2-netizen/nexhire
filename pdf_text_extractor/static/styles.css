@@ -636,6 +636,7 @@ footer {
   background: rgba(255,255,255,.94);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
+  overflow: visible;   /* laisser le dropdown sortir de la barre */
 }
 .nav-brand {
   display: flex;
@@ -666,7 +667,23 @@ footer {
   font-weight: 900;
   letter-spacing: -.5px;
 }
-.nav-tabs { display: flex; gap: 2px; flex: 1; }
+.nav-tabs {
+  display: flex;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;          /* permet à flex de comprimer les onglets */
+  overflow-x: auto;      /* scroll horizontal si trop d'onglets */
+  overflow-y: visible;   /* laisse passer le dropdown */
+  scrollbar-width: none; /* cache scrollbar Firefox */
+}
+.nav-tabs::-webkit-scrollbar { display: none; }
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;        /* ne jamais compresser la zone utilisateur */
+}
 .tab-btn {
   min-height: 34px;
   padding: 0 14px;
@@ -685,7 +702,6 @@ footer {
 .tab-btn.active { background: var(--blue-light); color: var(--blue); font-weight: 700; }
 
 /* Notification bell */
-.nav-right { display: flex; align-items: center; gap: 10px; margin-left: auto; }
 .notif-wrap { position: relative; }
 .notif-btn {
   width: 36px; height: 36px;
@@ -789,10 +805,10 @@ footer {
 }
 
 .user-menu-dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  min-width: 220px;
+  position: fixed;      /* fixed pour ne jamais être clippé par la nav */
+  top: 60px;            /* juste sous la topnav */
+  right: 16px;          /* marge à droite */
+  min-width: 230px;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -848,6 +864,23 @@ footer {
 }
 .trial-app-banner .btn { min-height: 32px; padding: 0 16px; font-size: .82rem; }
 .trial-app-banner .dismiss { margin-left: auto; background: none; border: none; cursor: pointer; color: #92400e; font-size: 1rem; box-shadow: none; min-height: auto; }
+
+/* ── Setup readiness banner ─────────────────────────────────────────────── */
+.setup-app-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 24px;
+  background: linear-gradient(90deg, #fef2f2, #fee2e2);
+  border-bottom: 1px solid #fca5a5;
+  font-size: .88rem;
+  font-weight: 600;
+  color: #7f1d1d;
+  flex-wrap: wrap;
+}
+.setup-app-banner .btn-warning { background:#ef4444;color:#fff;border-color:#ef4444;min-height:32px;padding:0 14px;font-size:.82rem }
+.setup-app-banner .btn-warning:hover { background:#dc2626 }
+.setup-app-banner .dismiss { margin-left:auto;background:none;border:none;cursor:pointer;color:#991b1b;font-size:1rem;box-shadow:none;min-height:auto }
 
 /* ── App main ────────────────────────────────────────────────────────────── */
 .app-main {
@@ -1517,8 +1550,8 @@ footer {
 /* ── Connector tab ───────────────────────────────────────────────────────── */
 .connector-grid {
   display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
 .connector-card {
   padding: 22px;
@@ -1531,52 +1564,77 @@ footer {
   gap: 12px;
   transition: box-shadow .15s;
 }
-.connector-card.connected { border-color: #86efac; }
+.connector-card.connected { border-color: #86efac; background: linear-gradient(135deg,#f0fdf4 0%,#fff 100%); }
 .connector-card:hover { box-shadow: var(--shadow); }
-.connector-head { display: flex; align-items: center; gap: 12px; }
+.connector-head { display: flex; align-items: flex-start; gap: 12px; }
+.connector-head-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .connector-icon {
-  width: 42px; height: 42px;
-  border-radius: 11px;
+  width: 46px; height: 46px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: .85rem;
+  font-size: .82rem;
   font-weight: 800;
   color: #fff;
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
 }
 .connector-name { font-weight: 700; font-size: .95rem; color: var(--navy); }
+.connector-desc { font-size: .77rem; color: var(--slate); line-height: 1.4; }
 .connector-badge {
-  margin-left: auto;
   padding: 3px 10px;
   border-radius: 999px;
   font-size: .7rem;
   font-weight: 700;
   text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .badge-connected    { background: var(--success-bg); color: var(--success); }
 .badge-disconnected { background: #f1f5f9; color: #64748b; }
 .badge-oauth        { background: var(--blue-light); color: var(--blue); }
-.connector-meta     { font-size: .8rem; color: var(--slate); }
-.connector-error    { font-size: .8rem; color: var(--error); }
+.connector-meta  { font-size: .78rem; color: var(--slate); margin: 0; }
+.connector-error { font-size: .78rem; color: var(--error); margin: 0; }
+.connector-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
+  margin-top: 2px;
+}
+.connector-method-tag {
+  font-size: .7rem;
+  font-weight: 700;
+  color: var(--slate);
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+.connector-help-link { font-size: .77rem; color: var(--primary); text-decoration: none; margin-left: auto; }
+.connector-help-link:hover { text-decoration: underline; }
+.connector-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
 .btn-connect, .btn-disconnect {
   min-height: 38px;
-  padding: 0 16px;
+  padding: 0 18px;
   border-radius: var(--radius-sm);
   font-size: .84rem;
   font-weight: 700;
   cursor: pointer;
-  align-self: flex-start;
-  transition: background .15s;
+  transition: background .15s, opacity .15s;
 }
 .btn-connect.real { background: #0078d4; color: #fff; border: none; box-shadow: 0 4px 12px rgba(0,120,212,.28); }
 .btn-connect.real:hover { background: #006bb3; }
-.btn-connect.sim  { background: var(--blue-light); color: var(--blue); border: none; box-shadow: none; }
+.btn-connect.sim  { background: var(--blue-light); color: var(--blue); border: 1.5px solid var(--primary); box-shadow: none; }
 .btn-connect.sim:hover  { background: #c3d9fe; }
 .btn-disconnect   { background: #fff; color: var(--error); border: 1px solid #fca5a5; box-shadow: none; }
 .btn-disconnect:hover   { background: var(--error-bg); }
 .btn-connect:disabled, .btn-disconnect:disabled { opacity: .55; cursor: not-allowed; }
+.btn-sm { min-height: 30px; padding: 0 12px; font-size: .78rem; }
 
 .success-banner {
   margin-bottom: 16px;
@@ -1698,16 +1756,116 @@ tbody tr:hover { background: var(--blue-pale); }
   .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
   .footer-top { grid-template-columns: 1fr 1fr; }
 }
-/* Desktop intermédiaire : compresse les onglets sans wrap */
-@media (max-width: 1280px) and (min-width: 769px) {
+/* ── Tableau de bord département (Phase 12) ─────────────────────────────── */
+.dept-dashboard {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px 20px 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  --dept-color: #818CF8;
+}
+.dept-dash-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.dept-dash-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.dept-dash-titles {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.dept-dash-label {
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--dept-color, #818CF8);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.dept-dash-name {
+  font-size: .82rem;
+  color: var(--navy-light);
+}
+.dept-dash-cta {
+  border-color: var(--dept-color, #818CF8);
+  color: var(--dept-color, #818CF8);
+  font-size: .78rem;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+.dept-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.dept-kpi-loading {
+  grid-column: 1/-1;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+.dept-kpi-card {
+  background: #f8fafc;
+  border-radius: 10px;
+  border-top: 3px solid #818CF8;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.dept-kpi-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.dept-kpi-val {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1.1;
+}
+.dept-kpi-label {
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.3;
+}
+.dept-kpi-sub {
+  font-size: .72rem;
+  color: var(--navy-light);
+  margin-top: 2px;
+}
+.dept-type-icon {
+  margin-right: 4px;
+}
+@media (max-width: 640px) {
+  .dept-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── App catalog select ──────────────────────────────────────────────────── */
+#am-name-select { width: 100%; max-height: 400px; }
+#am-name-select optgroup { font-weight: 700; font-size: .78rem; color: var(--slate); }
+#am-name-select option  { font-weight: 400; padding: 4px 8px; }
+
+/* Desktop intermédiaire */
+@media (max-width: 1280px) and (min-width: 1025px) {
   .tab-btn  { font-size: .8rem; padding: 0 10px; }
   .topnav   { padding: 0 16px; gap: 6px; }
-  .user-email-nav { max-width: 110px; }
+  .user-email-nav { max-width: 100px; }
 }
-/* Petit desktop / grand mobile */
+/* Petit desktop */
 @media (max-width: 1024px) and (min-width: 769px) {
   .tab-btn  { font-size: .76rem; padding: 0 8px; }
   .quota-pill { display: none; }
+  .user-email-nav { display: none; }  /* libère de la place */
 }
 
 @media (max-width: 640px) {

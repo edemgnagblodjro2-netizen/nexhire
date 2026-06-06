@@ -305,19 +305,85 @@ function setLang(l) {
 
 function toggleLang() {
   setLang(_lang === "fr" ? "en" : "fr");
+  if (state.token) loadActiveTab(); // rafraîchit les labels dynamiques
 }
 
 // ── Connector metadata ─────────────────────────────────────────────────────
 const CONNECTORS = {
-  microsoft_365: { label: "Microsoft 365",  icon: "M",  color: "#0078d4", oauth: true  },
-  salesforce:    { label: "Salesforce",     icon: "SF", color: "#00a1e0", oauth: false },
-  servicenow:    { label: "ServiceNow",     icon: "SN", color: "#62d2cc", oauth: false },
-  jira:          { label: "Jira",           icon: "J",  color: "#0052cc", oauth: false },
-  sap:           { label: "SAP",            icon: "S",  color: "#0070b8", oauth: false },
-  workday:       { label: "Workday",        icon: "W",  color: "#f78b1f", oauth: false },
-  zendesk:       { label: "Zendesk",        icon: "ZD", color: "#00b7c5", oauth: false },
-  autotask:      { label: "Autotask",       icon: "AT", color: "#007dc6", oauth: false },
-  hubspot:       { label: "HubSpot",        icon: "HS", color: "#ff7a59", oauth: false },
+  // ── OAuth (Authorization Code Flow) ──────────────────────────────────────
+  microsoft_365: {
+    label: "Microsoft 365", icon: "M",  color: "#0078d4", method: "oauth",
+    desc: "Exchange, Teams, SharePoint, OneDrive, Calendrier",
+    help_url: "https://portal.azure.com",
+    help_label: "Azure App Registration",
+  },
+  salesforce: {
+    label: "Salesforce CRM", icon: "SF", color: "#00a1e0", method: "oauth",
+    desc: "Comptes, Leads, Opportunités, Tickets, Rapports",
+    help_url: "https://trailhead.salesforce.com/content/learn/modules/connected-app-basics",
+    help_label: "Connected App Salesforce",
+  },
+  servicenow: {
+    label: "ServiceNow", icon: "SN", color: "#62d2cc", method: "oauth",
+    desc: "Incidents, Changements, CMDB, SLA, Demandes",
+    help_url: "https://docs.servicenow.com/bundle/washingtondc-platform-security/page/administer/security/concept/c_OAuthApplications.html",
+    help_label: "OAuth dans ServiceNow",
+  },
+  jira: {
+    label: "Jira / Confluence", icon: "J", color: "#0052cc", method: "oauth",
+    desc: "Tickets, Sprints, Projets, Pages Confluence",
+    help_url: "https://developer.atlassian.com/console/myapps/",
+    help_label: "Atlassian Developer Console",
+  },
+  zendesk: {
+    label: "Zendesk", icon: "ZD", color: "#03363d", method: "oauth",
+    desc: "Tickets support, Agents, SLA, Articles base de connaissances",
+    help_url: "https://developer.zendesk.com/api-reference/ticketing/oauth/oauth_clients/",
+    help_label: "OAuth Client Zendesk",
+  },
+  hubspot: {
+    label: "HubSpot", icon: "HS", color: "#ff7a59", method: "oauth",
+    desc: "CRM, Contacts, Deals, Tickets, Pipelines marketing",
+    help_url: "https://developers.hubspot.com/docs/api/oauth-quickstart-guide",
+    help_label: "OAuth HubSpot",
+  },
+  // ── API Key / Credentials ─────────────────────────────────────────────────
+  sap: {
+    label: "SAP", icon: "S", color: "#0070b8", method: "apikey",
+    desc: "ERP, Finance, Achats, Logistique, Ressources Humaines",
+    help_url: "https://api.sap.com/",
+    help_label: "SAP API Hub",
+    fields: [
+      { id: "api_url",    label: "URL de l'API SAP *",  placeholder: "https://<host>:<port>/sap/opu/odata/sap/" },
+      { id: "client_id",  label: "Client ID (OAuth SAP)", placeholder: "client_id" },
+      { id: "client_secret", label: "Client Secret",    placeholder: "••••••••",  type: "password" },
+      { id: "username",   label: "Utilisateur SAP",     placeholder: "sapuser" },
+      { id: "password",   label: "Mot de passe SAP",    placeholder: "••••••••",  type: "password" },
+    ],
+  },
+  workday: {
+    label: "Workday", icon: "W", color: "#f78b1f", method: "apikey",
+    desc: "RH, Paie, Recrutement, Absences, Formation",
+    help_url: "https://community.workday.com/articles/1087893",
+    help_label: "API Workday (ISSG / REST)",
+    fields: [
+      { id: "tenant_url",    label: "URL du Tenant *",  placeholder: "https://wd3-impl-services1.workday.com/ccx/service/<tenant>" },
+      { id: "client_id",    label: "Client ID *",       placeholder: "client_id" },
+      { id: "client_secret",label: "Client Secret *",   placeholder: "••••••••", type: "password" },
+      { id: "refresh_token",label: "Refresh Token",     placeholder: "refresh_token optionnel" },
+    ],
+  },
+  autotask: {
+    label: "Autotask (Datto)", icon: "AT", color: "#005a9e", method: "apikey",
+    desc: "PSA, Tickets, Projets, Facturation, Temps",
+    help_url: "https://ww1.autotask.net/help/Content/AdminSetup/2ExtensionsIntegrations/APIs/GenerateRESTAPIKey.htm",
+    help_label: "API Keys Autotask",
+    fields: [
+      { id: "username",   label: "Nom d'utilisateur *", placeholder: "user@domain.com" },
+      { id: "api_key",    label: "Clé API secrète *",   placeholder: "••••••••",  type: "password" },
+      { id: "zone_url",   label: "Zone URL *",           placeholder: "https://webservices24.autotask.net" },
+    ],
+  },
 };
 
 // ── DOM shortcuts ──────────────────────────────────────────────────────────
@@ -395,11 +461,82 @@ function showApp() {
   }
 
   loadActiveTab();
+  loadDeptDashboard();
+  loadReadiness();
 }
 
 // Trial banner dismiss
 $("trial-dismiss")?.addEventListener("click", () => {
   $("trial-banner").classList.add("hidden");
+});
+
+// ── Setup readiness banner ────────────────────────────────────────────────
+let _readinessData = null;
+
+async function loadReadiness() {
+  const isAdmin = ["admin", "owner"].includes(state.user?.role);
+  if (!isAdmin) return;
+  try {
+    const d = await apiCall("/api/readiness");
+    _readinessData = d;
+    const missing = Object.entries(d.checks || {})
+      .filter(([, v]) => typeof v === "string" && v.startsWith("MISSING"))
+      .map(([k]) => k);
+    if (missing.length > 0) {
+      const names = missing.map(k => k.replace("table_", "")).join(", ");
+      const txt = $("setup-banner-text");
+      if (txt) txt.textContent = `Tables manquantes : ${names}. Exécutez les scripts SQL pour activer toutes les fonctionnalités.`;
+      $("setup-banner")?.classList.remove("hidden");
+    } else {
+      $("setup-banner")?.classList.add("hidden");
+    }
+  } catch { /* silent */ }
+}
+
+async function checkReadinessNow() {
+  const checks = $("setup-checks");
+  if (checks) checks.textContent = "Vérification en cours…";
+  try {
+    const d = await apiCall("/api/readiness");
+    _readinessData = d;
+    if (checks) {
+      checks.textContent = Object.entries(d.checks || {})
+        .map(([k, v]) => `${v === "ok" || v === "set" ? "✅" : "❌"} ${k}: ${v}`)
+        .join("\n");
+    }
+    const missing = Object.entries(d.checks || {})
+      .filter(([, v]) => typeof v === "string" && v.startsWith("MISSING"));
+    if (missing.length === 0) {
+      $("setup-banner")?.classList.add("hidden");
+      alert("✅ Toutes les tables sont prêtes. Actualisez la page pour recharger.");
+    }
+  } catch (e) {
+    if (checks) checks.textContent = `Erreur: ${e.message}`;
+  }
+}
+
+function openSetupModal() {
+  const modal = $("setup-modal");
+  if (!modal) return;
+  const checks = $("setup-checks");
+  if (checks && _readinessData) {
+    checks.textContent = Object.entries(_readinessData.checks || {})
+      .map(([k, v]) => `${v === "ok" || v === "set" ? "✅" : "❌"} ${k}: ${v}`)
+      .join("\n");
+  }
+  modal.classList.remove("hidden");
+}
+
+function closeSetupModal() {
+  $("setup-modal")?.classList.add("hidden");
+}
+
+$("setup-banner-dismiss")?.addEventListener("click", () => {
+  $("setup-banner")?.classList.add("hidden");
+});
+
+$("setup-modal")?.addEventListener("click", e => {
+  if (e.target === $("setup-modal")) closeSetupModal();
 });
 
 // ── User menu dropdown ────────────────────────────────────────────────────
@@ -471,13 +608,21 @@ function saveToken(t) { state.token = t; localStorage.setItem("nexhire_token", t
 function clearAuth()  { state.token = null; state.user = null; localStorage.removeItem("nexhire_token"); }
 
 async function apiCall(path, method = "GET", body = null) {
+  const ctrl = new AbortController();
+  const tid  = setTimeout(() => ctrl.abort(), 15000); // 15s timeout
   const headers = { "Content-Type": "application/json" };
   if (state.token) headers["Authorization"] = `Bearer ${state.token}`;
-  const opts = { method, headers };
+  const opts = { method, headers, signal: ctrl.signal };
   if (body !== null) opts.body = JSON.stringify(body);
   let res;
-  try { res = await fetch(path, opts); }
-  catch (_) { throw new Error("Erreur réseau — vérifiez la connexion."); }
+  try {
+    res = await fetch(path, opts);
+  } catch (e) {
+    if (e.name === "AbortError") throw new Error("Délai dépassé — le serveur ne répond pas.");
+    throw new Error("Erreur réseau — vérifiez la connexion.");
+  } finally {
+    clearTimeout(tid);
+  }
   if (res.status === 401) { clearAuth(); showAuth("login"); throw new Error("Session expirée."); }
   const data = await res.json().catch(() => ({ detail: `HTTP ${res.status}` }));
   if (!res.ok) {
@@ -567,6 +712,7 @@ function switchTab(name) {
 
 function loadActiveTab() {
   const loaders = {
+    "agent":      loadDeptDashboard,  // rafraîchit le dashboard département
     "connectors": loadConnectors,
     "audit":      loadAudit,
     "stats":      loadAnalytics,
@@ -865,59 +1011,153 @@ async function loadConnectors() {
 function buildConnectorCard(type, meta, info) {
   const isConnected = info?.status === "connected";
   const connectedAt = info?.connected_at ? new Date(info.connected_at).toLocaleString("fr-CA") : null;
+  const isOAuth     = meta.method === "oauth";
+  const isApiKey    = meta.method === "apikey";
 
   const card = document.createElement("div");
   card.className = `connector-card${isConnected ? " connected" : ""}`;
 
-  const head = document.createElement("div");
-  head.className = "connector-head";
-  head.innerHTML = `
-    <div class="connector-icon" style="background:${meta.color}">${meta.icon}</div>
-    <span class="connector-name">${meta.label}</span>
-    <span class="connector-badge ${isConnected ? (meta.oauth ? "badge-oauth" : "badge-connected") : "badge-disconnected"}">
-      ${isConnected ? (meta.oauth ? "OAuth ✓" : "Connecté") : "Déconnecté"}
-    </span>`;
-  card.appendChild(head);
+  const methodBadge = isOAuth ? "OAuth 2.0" : "API Key";
+  const statusText  = isConnected ? (isOAuth ? "OAuth ✓" : "Connecté") : "Déconnecté";
+  const badgeCls    = isConnected ? (isOAuth ? "badge-oauth" : "badge-connected") : "badge-disconnected";
 
-  if (connectedAt) {
-    const m = document.createElement("p");
-    m.className = "connector-meta";
-    m.textContent = `Connecté depuis le ${connectedAt}`;
-    card.appendChild(m);
-  }
-  if (info?.last_error) {
-    const er = document.createElement("p");
-    er.className = "connector-error";
-    er.textContent = info.last_error;
-    card.appendChild(er);
-  }
+  card.innerHTML = `
+    <div class="connector-head">
+      <div class="connector-icon" style="background:${meta.color}">${meta.icon}</div>
+      <div class="connector-head-info">
+        <span class="connector-name">${meta.label}</span>
+        <span class="connector-desc">${meta.desc || ""}</span>
+      </div>
+      <span class="connector-badge ${badgeCls}">${statusText}</span>
+    </div>
+    ${connectedAt ? `<p class="connector-meta">Connecté depuis le ${connectedAt}</p>` : ""}
+    ${info?.last_error ? `<p class="connector-error">${info.last_error}</p>` : ""}
+    <div class="connector-footer">
+      <span class="connector-method-tag">${methodBadge}</span>
+      ${meta.help_url ? `<a class="connector-help-link" href="${meta.help_url}" target="_blank" rel="noopener">${meta.help_label || "Documentation"} ↗</a>` : ""}
+    </div>`;
 
-  const btn = document.createElement("button");
+  const actions = document.createElement("div");
+  actions.className = "connector-actions";
+
   if (isConnected) {
-    btn.className = "btn-disconnect";
-    btn.textContent = "Déconnecter";
-    btn.addEventListener("click", () => doDisconnect(type, btn));
-  } else if (meta.oauth) {
+    const disconnBtn = document.createElement("button");
+    disconnBtn.className = "btn-disconnect";
+    disconnBtn.textContent = "Déconnecter";
+    disconnBtn.addEventListener("click", () => doDisconnect(type, disconnBtn));
+    actions.appendChild(disconnBtn);
+
+    if (isOAuth) {
+      const reauth = document.createElement("button");
+      reauth.className = "btn-connect real btn-sm";
+      reauth.textContent = "Renouveler OAuth";
+      reauth.style.marginLeft = "8px";
+      reauth.addEventListener("click", () => doOAuthStart(type, reauth));
+      actions.appendChild(reauth);
+    }
+  } else if (isOAuth) {
+    const btn = document.createElement("button");
     btn.className = "btn-connect real";
-    btn.textContent = "Connecter avec Microsoft";
+    btn.textContent = `Connecter via OAuth`;
     btn.addEventListener("click", () => doOAuthStart(type, btn));
+    actions.appendChild(btn);
+  } else if (isApiKey) {
+    const btn = document.createElement("button");
+    btn.className = "btn-connect sim";
+    btn.textContent = "Configurer les credentials";
+    btn.addEventListener("click", () => openCredModal(type, meta));
+    actions.appendChild(btn);
   } else {
+    const btn = document.createElement("button");
     btn.className = "btn-connect sim";
     btn.textContent = "Connecter (simulé)";
     btn.addEventListener("click", () => doConnect(type, btn));
+    actions.appendChild(btn);
   }
-  card.appendChild(btn);
+  card.appendChild(actions);
   return card;
 }
 
 async function doOAuthStart(type, btn) {
-  btn.disabled = true; btn.textContent = "Redirection…";
+  const origText = btn.textContent;
+  btn.disabled = true; btn.textContent = "Redirection OAuth…";
   try {
     const data = await apiCall(`/api/connectors/${type}/oauth/start`, "POST");
     window.location.href = data.authorization_url;
   } catch (ex) {
-    btn.disabled = false; btn.textContent = "Connecter avec Microsoft";
-    alert(`Erreur : ${ex.message}`);
+    btn.disabled = false; btn.textContent = origText;
+    alert(`Erreur OAuth : ${ex.message}`);
+  }
+}
+
+// ── Credential modal (API Key connectors) ─────────────────────────────────
+
+function openCredModal(type, meta) {
+  let modal = $("cred-modal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "cred-modal";
+    modal.className = "modal-overlay hidden";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    document.body.appendChild(modal);
+    modal.addEventListener("click", e => { if (e.target === modal) closeCredModal(); });
+  }
+  const fields = meta.fields || [
+    { id: "api_key", label: "Clé API *", placeholder: "••••••••", type: "password" }
+  ];
+  modal.innerHTML = `
+    <div class="modal-box" style="max-width:480px">
+      <div class="modal-header">
+        <h3><span style="background:${meta.color};color:#fff;padding:2px 8px;border-radius:4px;font-size:.8rem;margin-right:8px">${meta.icon}</span>${meta.label} — Credentials</h3>
+        <button class="modal-close" onclick="closeCredModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:.85rem;color:var(--slate);margin-bottom:16px">
+          Ces credentials sont chiffrés (Fernet AES-128) avant d'être stockés. Nexhire ne les affiche jamais en clair.
+          ${meta.help_url ? `<br><a href="${meta.help_url}" target="_blank" rel="noopener" style="color:var(--primary)">${meta.help_label || "Documentation"} ↗</a>` : ""}
+        </p>
+        <form id="cred-form">
+          ${fields.map(f => `
+            <label class="auth-label">
+              <span>${f.label}</span>
+              <input id="cred-field-${f.id}" type="${f.type || "text"}" placeholder="${f.placeholder || ""}" autocomplete="off" />
+            </label>`).join("")}
+        </form>
+        <div id="cred-error" class="error-text hidden" style="margin-top:8px"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeCredModal()">Annuler</button>
+        <button class="btn btn-primary" id="cred-save-btn" onclick="saveCredentials('${type}')">Enregistrer</button>
+      </div>
+    </div>`;
+  modal.classList.remove("hidden");
+}
+
+function closeCredModal() {
+  $("cred-modal")?.classList.add("hidden");
+}
+
+async function saveCredentials(type) {
+  const meta = CONNECTORS[type];
+  if (!meta) return;
+  const fields = meta.fields || [{ id: "api_key" }];
+  const payload = {};
+  for (const f of fields) {
+    const el = $(`cred-field-${f.id}`);
+    if (el) payload[f.id] = el.value.trim();
+  }
+  const saveBtn = $("cred-save-btn");
+  const errEl   = $("cred-error");
+  if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = "Enregistrement…"; }
+  if (errEl)   errEl.classList.add("hidden");
+  try {
+    await apiCall(`/api/connectors/${type}/credentials`, "POST", payload);
+    closeCredModal();
+    await loadConnectors();
+  } catch (ex) {
+    if (errEl) { errEl.textContent = ex.message; errEl.classList.remove("hidden"); }
+    if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = "Enregistrer"; }
   }
 }
 
@@ -1122,7 +1362,7 @@ async function loadAnalytics() {
 // AUDIT TAB
 // ═══════════════════════════════════════════════════════════════════════════
 
-$("refresh-audit").addEventListener("click", loadAudit);
+$("refresh-audit")?.addEventListener("click", loadAudit);
 
 async function loadAudit() {
   const wrap = $("audit-wrap");
@@ -1573,6 +1813,133 @@ showApp = function () {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
+// CATALOGUE D'APPLICATIONS (listes déroulantes avec auto-remplissage)
+// ═══════════════════════════════════════════════════════════════════════════
+const APP_CATALOG = [
+  // Suite bureautique
+  {name:"Microsoft 365",                vendor:"Microsoft",           category:"saas",     group:"Suite bureautique"},
+  {name:"Google Workspace",             vendor:"Google",              category:"saas",     group:"Suite bureautique"},
+  // Collaboration
+  {name:"Microsoft Teams",              vendor:"Microsoft",           category:"saas",     group:"Collaboration"},
+  {name:"Slack",                        vendor:"Salesforce",          category:"saas",     group:"Collaboration"},
+  {name:"Zoom",                         vendor:"Zoom",                category:"saas",     group:"Collaboration"},
+  {name:"Cisco Webex",                  vendor:"Cisco",               category:"saas",     group:"Collaboration"},
+  {name:"SharePoint",                   vendor:"Microsoft",           category:"cloud",    group:"Collaboration"},
+  {name:"OneDrive",                     vendor:"Microsoft",           category:"cloud",    group:"Collaboration"},
+  {name:"Dropbox Business",             vendor:"Dropbox",             category:"saas",     group:"Collaboration"},
+  // Gestion documentaire
+  {name:"OpenText",                     vendor:"OpenText",            category:"on-prem",  group:"Gestion documentaire"},
+  {name:"M-Files",                      vendor:"M-Files",             category:"saas",     group:"Gestion documentaire"},
+  {name:"DocuWare",                     vendor:"DocuWare",            category:"saas",     group:"Gestion documentaire"},
+  {name:"Laserfiche",                   vendor:"Laserfiche",          category:"saas",     group:"Gestion documentaire"},
+  {name:"Alfresco",                     vendor:"Hyland",              category:"on-prem",  group:"Gestion documentaire"},
+  // ERP
+  {name:"SAP S/4HANA",                  vendor:"SAP",                 category:"saas",     group:"ERP"},
+  {name:"Oracle ERP Cloud",             vendor:"Oracle",              category:"cloud",    group:"ERP"},
+  {name:"Microsoft Dynamics 365",       vendor:"Microsoft",           category:"saas",     group:"ERP"},
+  {name:"NetSuite",                     vendor:"Oracle",              category:"saas",     group:"ERP"},
+  {name:"Infor CloudSuite",             vendor:"Infor",               category:"cloud",    group:"ERP"},
+  {name:"Sage Intacct",                 vendor:"Sage",                category:"saas",     group:"ERP"},
+  // Comptabilité
+  {name:"QuickBooks Online",            vendor:"Intuit",              category:"saas",     group:"Comptabilité"},
+  {name:"Xero",                         vendor:"Xero",                category:"saas",     group:"Comptabilité"},
+  {name:"Sage 300",                     vendor:"Sage",                category:"on-prem",  group:"Comptabilité"},
+  {name:"FreshBooks",                   vendor:"FreshBooks",          category:"saas",     group:"Comptabilité"},
+  // Ressources humaines
+  {name:"Workday",                      vendor:"Workday",             category:"saas",     group:"Ressources humaines"},
+  {name:"UKG Pro",                      vendor:"UKG",                 category:"saas",     group:"Ressources humaines"},
+  {name:"ADP Workforce Now",            vendor:"ADP",                 category:"saas",     group:"Ressources humaines"},
+  {name:"BambooHR",                     vendor:"BambooHR",            category:"saas",     group:"Ressources humaines"},
+  {name:"Ceridian Dayforce",            vendor:"Ceridian",            category:"saas",     group:"Ressources humaines"},
+  {name:"SuccessFactors",               vendor:"SAP",                 category:"saas",     group:"Ressources humaines"},
+  // Recrutement (ATS)
+  {name:"Greenhouse",                   vendor:"Greenhouse",          category:"saas",     group:"Recrutement (ATS)"},
+  {name:"Lever",                        vendor:"Lever",               category:"saas",     group:"Recrutement (ATS)"},
+  {name:"iCIMS",                        vendor:"iCIMS",               category:"saas",     group:"Recrutement (ATS)"},
+  {name:"SmartRecruiters",              vendor:"SmartRecruiters",     category:"saas",     group:"Recrutement (ATS)"},
+  {name:"Workday Recruiting",           vendor:"Workday",             category:"saas",     group:"Recrutement (ATS)"},
+  // CRM
+  {name:"Salesforce",                   vendor:"Salesforce",          category:"saas",     group:"CRM"},
+  {name:"HubSpot CRM",                  vendor:"HubSpot",             category:"saas",     group:"CRM"},
+  {name:"Microsoft Dynamics CRM",       vendor:"Microsoft",           category:"saas",     group:"CRM"},
+  {name:"Zoho CRM",                     vendor:"Zoho",                category:"saas",     group:"CRM"},
+  {name:"Pipedrive",                    vendor:"Pipedrive",           category:"saas",     group:"CRM"},
+  // Support TI (ITSM)
+  {name:"ServiceNow",                   vendor:"ServiceNow",          category:"saas",     group:"Support TI (ITSM)"},
+  {name:"Jira Service Management",      vendor:"Atlassian",           category:"saas",     group:"Support TI (ITSM)"},
+  {name:"Freshservice",                 vendor:"Freshworks",          category:"saas",     group:"Support TI (ITSM)"},
+  {name:"ManageEngine ServiceDesk Plus",vendor:"Zoho",                category:"saas",     group:"Support TI (ITSM)"},
+  {name:"BMC Helix ITSM",               vendor:"BMC",                 category:"saas",     group:"Support TI (ITSM)"},
+  // Gestion de projets
+  {name:"Jira Software",                vendor:"Atlassian",           category:"saas",     group:"Gestion de projets"},
+  {name:"Microsoft Project",            vendor:"Microsoft",           category:"saas",     group:"Gestion de projets"},
+  {name:"Asana",                        vendor:"Asana",               category:"saas",     group:"Gestion de projets"},
+  {name:"Monday.com",                   vendor:"Monday.com",          category:"saas",     group:"Gestion de projets"},
+  {name:"Trello",                       vendor:"Atlassian",           category:"saas",     group:"Gestion de projets"},
+  {name:"ClickUp",                      vendor:"ClickUp",             category:"saas",     group:"Gestion de projets"},
+  // Cybersécurité
+  {name:"Microsoft Defender",           vendor:"Microsoft",           category:"security", group:"Cybersécurité"},
+  {name:"CrowdStrike",                  vendor:"CrowdStrike",         category:"security", group:"Cybersécurité"},
+  {name:"SentinelOne",                  vendor:"SentinelOne",         category:"security", group:"Cybersécurité"},
+  {name:"Palo Alto Networks",           vendor:"Palo Alto Networks",  category:"security", group:"Cybersécurité"},
+  {name:"Fortinet",                     vendor:"Fortinet",            category:"security", group:"Cybersécurité"},
+  // Gestion des identités
+  {name:"Microsoft Entra ID",           vendor:"Microsoft",           category:"security", group:"Gestion des identités"},
+  {name:"Okta",                         vendor:"Okta",                category:"security", group:"Gestion des identités"},
+  {name:"Ping Identity",                vendor:"Ping Identity",       category:"security", group:"Gestion des identités"},
+  // Business Intelligence
+  {name:"Microsoft Power BI",           vendor:"Microsoft",           category:"saas",     group:"Business Intelligence"},
+  {name:"Tableau",                      vendor:"Salesforce",          category:"saas",     group:"Business Intelligence"},
+  {name:"Qlik Sense",                   vendor:"Qlik",                category:"saas",     group:"Business Intelligence"},
+  {name:"Looker",                       vendor:"Google",              category:"saas",     group:"Business Intelligence"},
+  // Cloud
+  {name:"Amazon Web Services (AWS)",    vendor:"Amazon",              category:"cloud",    group:"Cloud"},
+  {name:"Microsoft Azure",              vendor:"Microsoft",           category:"cloud",    group:"Cloud"},
+  {name:"Google Cloud",                 vendor:"Google",              category:"cloud",    group:"Cloud"},
+  // Hôpitaux / Santé
+  {name:"Epic Systems",                 vendor:"Epic",                category:"on-prem",  group:"Hôpitaux / Santé"},
+  {name:"Oracle Health (Cerner)",       vendor:"Oracle",              category:"saas",     group:"Hôpitaux / Santé"},
+  {name:"MEDITECH",                     vendor:"MEDITECH",            category:"on-prem",  group:"Hôpitaux / Santé"},
+  // Universités / Enseignement
+  {name:"Ellucian Banner",              vendor:"Ellucian",            category:"saas",     group:"Universités"},
+  {name:"PeopleSoft Campus Solutions",  vendor:"Oracle",              category:"on-prem",  group:"Universités"},
+  {name:"Moodle",                       vendor:"Moodle",              category:"on-prem",  group:"Universités"},
+  {name:"Canvas LMS",                   vendor:"Instructure",         category:"saas",     group:"Universités"},
+];
+
+function _buildAppSelect() {
+  const sel = $("am-name-select");
+  if (!sel) return;
+  const groups = {};
+  APP_CATALOG.forEach(a => { if (!groups[a.group]) groups[a.group] = []; groups[a.group].push(a); });
+  sel.innerHTML =
+    `<option value="">— Choisir une application —</option>` +
+    Object.entries(groups).map(([grp, apps]) =>
+      `<optgroup label="${grp}">${apps.map(a =>
+        `<option value="${a.name}">${a.name}</option>`
+      ).join("")}</optgroup>`
+    ).join("") +
+    `<optgroup label="━━━━━━━━━━━━"><option value="__autre__">✏️ Autre — saisie manuelle</option></optgroup>`;
+}
+
+function onAppSelectChange(val) {
+  const manualWrap = $("am-name-manual-wrap");
+  if (!manualWrap) return;
+  if (val === "__autre__") {
+    manualWrap.classList.remove("hidden");
+    $("am-name-manual").focus();
+  } else {
+    manualWrap.classList.add("hidden");
+    const app = APP_CATALOG.find(a => a.name === val);
+    if (app) {
+      const v = $("am-vendor"); const c = $("am-cat");
+      if (v && !v.value) v.value = app.vendor;   // auto-fill seulement si vide
+      if (c) c.value = app.category;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // PARC IT
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -1874,10 +2241,22 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch(ex) { const err=$("sm-error"); err.textContent=ex.message||"Erreur"; err.classList.remove("hidden"); }
   });
 
+  _buildAppSelect();
+
   $("app-modal-form")?.addEventListener("submit", async e => {
     e.preventDefault();
-    const id = $("am-id").value;
-    const body = { name:$("am-name").value, vendor:$("am-vendor").value||null,
+    const id  = $("am-id").value;
+    const sel = $("am-name-select");
+    const nameVal = (sel?.value === "__autre__")
+      ? ($("am-name-manual")?.value?.trim() || "")
+      : (sel?.value || "");
+    if (!nameVal) {
+      const err = $("am-error");
+      err.textContent = "Le nom de l'application est requis.";
+      err.classList.remove("hidden");
+      return;
+    }
+    const body = { name:nameVal, vendor:$("am-vendor").value||null,
       category:$("am-cat").value||null, status:$("am-status").value,
       monthly_cost:+($("am-cost").value||0), user_count:+($("am-users").value||0),
       url:$("am-url").value||null, department_id:$("am-dept").value||null,
@@ -1951,15 +2330,36 @@ async function deleteServer(id) {
 
 function openAppModal(app = null) {
   $("am-id").value = app?.id || "";
-  $("am-name").value   = app?.name      || "";
-  $("am-vendor").value = app?.vendor    || "";
-  $("am-cat").value    = app?.category  || "";
-  $("am-status").value = app?.status    || "active";
+
+  // Nom : catalogue ou saisie manuelle
+  const sel        = $("am-name-select");
+  const manualWrap = $("am-name-manual-wrap");
+  const manualInp  = $("am-name-manual");
+  const appName    = app?.name || "";
+  const inCatalog  = appName && APP_CATALOG.find(a => a.name === appName);
+  if (sel) {
+    if (inCatalog) {
+      sel.value = appName;
+      manualWrap?.classList.add("hidden");
+    } else if (appName) {
+      sel.value = "__autre__";
+      manualWrap?.classList.remove("hidden");
+      if (manualInp) manualInp.value = appName;
+    } else {
+      sel.value = "";
+      manualWrap?.classList.add("hidden");
+      if (manualInp) manualInp.value = "";
+    }
+  }
+
+  $("am-vendor").value = app?.vendor       || "";
+  $("am-cat").value    = app?.category     || "";
+  $("am-status").value = app?.status       || "active";
   $("am-cost").value   = app?.monthly_cost || 0;
-  $("am-users").value  = app?.user_count || 0;
-  $("am-url").value    = app?.url       || "";
+  $("am-users").value  = app?.user_count   || 0;
+  $("am-url").value    = app?.url          || "";
   $("am-dept").value   = app?.department_id || "";
-  $("am-notes").value  = app?.notes     || "";
+  $("am-notes").value  = app?.notes        || "";
   $("am-error").classList.add("hidden");
   $("app-modal").classList.remove("hidden");
 }
@@ -2040,13 +2440,17 @@ async function loadDepartments() {
       wrap.innerHTML = `<p class="muted">Aucun département. Cliquez sur <strong>⚡ Initialiser par secteur</strong> pour en créer automatiquement.</p>`;
       return;
     }
+    const DEPT_TYPE_ICONS = { finance:"💰", hr:"👥", it:"🖥️", legal:"⚖️", operations:"⚙️", marketing:"📣", direction:"🏛️", approvisionnement:"📦", general:"🏢" };
     wrap.innerHTML = depts.map(d => `
       <div class="dept-card">
-        <div class="dept-card-name">${esc(d.name)}</div>
+        <div class="dept-card-name">
+          <span class="dept-type-icon">${DEPT_TYPE_ICONS[d.dept_type] || "🏢"}</span>
+          ${esc(d.name)}
+        </div>
         <div class="dept-card-meta">${d.member_count||0} membre(s) · Budget : ${_fmt(d.annual_budget)} ${d.currency}</div>
         ${d.description ? `<div class="dept-card-meta">${esc(d.description)}</div>` : ""}
         <div class="dept-actions">
-          <button class="btn-icon" onclick="editDept('${d.id}','${esc(d.name)}','${esc(d.description||"")}',${d.annual_budget},'${d.currency}')">✎</button>
+          <button class="btn-icon" onclick="editDept('${d.id}','${esc(d.name)}','${esc(d.description||"")}',${d.annual_budget},'${d.currency}','${d.dept_type||"general"}')">✎</button>
           <button class="btn-icon btn-deactivate" onclick="deleteDept('${d.id}')">✕</button>
         </div>
       </div>`).join("");
@@ -2060,15 +2464,16 @@ async function loadDepartments() {
 
 function openDeptModal(dept = null) {
   $("dm-id").value = dept?.id || "";
-  $("dm-name").value     = dept?.name         || "";
-  $("dm-desc").value     = dept?.description  || "";
-  $("dm-budget").value   = dept?.annual_budget|| 0;
-  $("dm-currency").value = dept?.currency     || "CAD";
+  $("dm-name").value        = dept?.name         || "";
+  $("dm-desc").value        = dept?.description  || "";
+  $("dm-dept-type").value   = dept?.dept_type    || "general";
+  $("dm-budget").value      = dept?.annual_budget|| 0;
+  $("dm-currency").value    = dept?.currency     || "CAD";
   $("dm-error").classList.add("hidden");
   $("dept-modal").classList.remove("hidden");
 }
-function editDept(id, name, desc, budget, currency) {
-  openDeptModal({ id, name, description:desc, annual_budget:budget, currency });
+function editDept(id, name, desc, budget, currency, deptType) {
+  openDeptModal({ id, name, description:desc, annual_budget:budget, currency, dept_type:deptType || "general" });
 }
 async function deleteDept(id) {
   if (!confirm("Supprimer ce département ? Les données associées seront dissociées.")) return;
@@ -2080,6 +2485,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const id = $("dm-id").value;
     const body = { name:$("dm-name").value, description:$("dm-desc").value||null,
+      dept_type:$("dm-dept-type").value||"general",
       annual_budget:+($("dm-budget").value||0), currency:$("dm-currency").value };
     try {
       if (id) await apiCall(`/api/departments/${id}`, "PATCH", body);
@@ -2450,6 +2856,72 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch(ex) { const err=$("pm-error"); err.textContent=ex.message||"Erreur"; err.classList.remove("hidden"); }
   });
 });
+
+// ── Tableau de bord département (Phase 12) ────────────────────────────────────
+async function loadDeptDashboard() {
+  const section = $("dept-dashboard-section");
+  const grid    = $("dept-kpi-grid");
+  if (!section || !grid) return;
+
+  try {
+    const d = await apiCall("/api/departments/dashboard");
+    if (!d || !d.kpis || d.kpis.length === 0) {
+      // Pas de département assigné → invite à en créer un
+      const icon  = $("dept-dash-icon");  if (icon)  icon.textContent = "📋";
+      const label = $("dept-dash-label"); if (label) label.textContent = "Tableau de bord";
+      const name  = $("dept-dash-name");  if (name)  name.textContent = "";
+      const cta   = $("dept-dash-cta");
+      if (cta) { cta.textContent = "Créer des départements"; cta.onclick = () => { switchTab("team"); }; }
+      grid.innerHTML = `<div style="grid-column:1/-1;padding:12px 0;color:var(--slate);font-size:.85rem">
+        Aucun département configuré. Allez dans <strong>Équipe → Départements</strong> pour en créer ou initialiser par secteur.
+      </div>`;
+      section.classList.remove("hidden");
+      return;
+    }
+
+    // Header
+    const icon  = $("dept-dash-icon");
+    const label = $("dept-dash-label");
+    const name  = $("dept-dash-name");
+    const cta   = $("dept-dash-cta");
+
+    if (icon)  icon.textContent  = d.icon  || "📊";
+    if (label) label.textContent = d.label || "Mon département";
+    if (name)  name.textContent  = d.dept_name || "";
+
+    // CTA button — navigate to the recommended tab
+    if (cta && d.primary_tab) {
+      cta.onclick = () => {
+        switchTab(d.primary_tab);
+        if (d.primary_subtab) {
+          setTimeout(() => {
+            const parcMap  = { budget:"budget", licenses:"licenses", servers:"servers", apps:"apps", overview:"overview" };
+            const optimMap = { dashboard:"dashboard", licenses:"licenses", duplicates:"duplicates", contracts:"contracts", processes:"processes", aiplan:"aiplan" };
+            if (parcMap[d.primary_subtab])  switchParcTab(d.primary_subtab);
+            if (optimMap[d.primary_subtab]) switchOptimTab(d.primary_subtab);
+          }, 150);
+        }
+      };
+    }
+
+    // KPI cards
+    grid.innerHTML = d.kpis.map(k => `
+      <div class="dept-kpi-card" style="border-top:3px solid ${k.color || "#818CF8"}">
+        <div class="dept-kpi-icon">${k.icon || "📊"}</div>
+        <div class="dept-kpi-val" style="color:${k.color || "#1e293b"}">${esc(k.value)}</div>
+        <div class="dept-kpi-label">${esc(k.label)}</div>
+        ${k.sub ? `<div class="dept-kpi-sub">${esc(k.sub)}</div>` : ""}
+      </div>`).join("");
+
+    // Style header accent
+    if (d.color) section.style.setProperty("--dept-color", d.color);
+
+    section.classList.remove("hidden");
+  } catch (_) {
+    // Silently hide — dashboard is non-critical
+    if (section) section.classList.add("hidden");
+  }
+}
 
 // ── Plan IA ───────────────────────────────────────────────────────────────────
 async function runAIAnalysis() {

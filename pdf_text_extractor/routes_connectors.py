@@ -12,7 +12,8 @@ from rbac import require_active_subscription, require_min_role
 from supabase_client import service_client
 
 VALID_TYPES = frozenset({
-    "microsoft_365", "salesforce", "servicenow", "jira", "sap", "workday"
+    "microsoft_365", "salesforce", "servicenow", "jira", "sap", "workday",
+    "zendesk", "autotask", "hubspot",
 })
 
 router = APIRouter(prefix="/api/connectors", tags=["connectors"])

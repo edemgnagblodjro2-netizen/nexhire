@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="Un seul assistant IA pour tous vos systèmes d'entreprise. Bilingue FR/EN." />
   <meta name="twitter:image"       content="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&h=630&q=80" />
 
-  <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="stylesheet" href="/static/styles.css?v=20260607" />
 </head>
 <body>
 
@@ -341,6 +341,40 @@
 <!-- ═══════════════════════════════════════ APP ════════════════════════════ -->
 <div id="view-app" class="hidden">
 
+  <!-- Setup readiness banner (admin only, tables manquantes) -->
+  <div id="setup-banner" class="setup-app-banner hidden" role="alert">
+    <span>⚠️</span>
+    <span id="setup-banner-text">Les tables entreprise ne sont pas encore configurées.</span>
+    <button class="btn btn-warning btn-sm" onclick="openSetupModal()">Voir le guide →</button>
+    <button class="dismiss" id="setup-banner-dismiss" title="Fermer">✕</button>
+  </div>
+
+  <!-- Setup guide modal -->
+  <div id="setup-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal-box" style="max-width:560px">
+      <div class="modal-header">
+        <h3>⚙️ Configuration initiale requise</h3>
+        <button class="modal-close" onclick="closeSetupModal()">✕</button>
+      </div>
+      <div class="modal-body" style="font-size:.9rem;line-height:1.7">
+        <p>Certaines tables entreprise ne sont pas encore créées dans Supabase. Exécutez ces fichiers SQL <strong>dans l'ordre</strong> dans le <strong>Supabase SQL Editor</strong> de votre projet :</p>
+        <ol style="margin:12px 0 12px 20px;padding:0">
+          <li style="margin-bottom:6px"><code>phase9_enterprise.sql</code> — départements, budgets, licences, serveurs, apps IT, comptes de service</li>
+          <li style="margin-bottom:6px"><code>phase10_optimization.sql</code> — contrats, processus RH</li>
+          <li style="margin-bottom:6px"><code>phase11_sector.sql</code> — type d'organisation (org_type)</li>
+          <li style="margin-bottom:6px"><code>phase12_dept_types.sql</code> — type de département (dept_type)</li>
+          <li style="margin-bottom:6px"><code>phase13_connectors.sql</code> — table connecteurs OAuth / API-key</li>
+        </ol>
+        <p style="color:var(--slate);font-size:.82rem">Ces fichiers se trouvent dans le dossier <code>pdf_text_extractor/</code> du projet. Une fois exécutés, actualisez la page.</p>
+        <div id="setup-checks" style="margin-top:12px;background:var(--surface2);border-radius:8px;padding:12px;font-family:monospace;font-size:.78rem;white-space:pre-wrap;max-height:180px;overflow-y:auto"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="checkReadinessNow()">↻ Revérifier maintenant</button>
+        <button class="btn btn-primary" onclick="closeSetupModal()">Fermer</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Trial banner -->
   <div id="trial-banner" class="trial-app-banner hidden">
     <span>🕐</span>
@@ -420,6 +454,22 @@
 
     <!-- ── AGENT ────────────────────────────────────────────────────────── -->
     <section id="tab-agent" class="tab-content" role="tabpanel">
+
+      <!-- Tableau de bord personnalisé par département (Phase 12) -->
+      <div id="dept-dashboard-section" class="dept-dashboard hidden">
+        <div class="dept-dash-header">
+          <span class="dept-dash-icon" id="dept-dash-icon">📊</span>
+          <div class="dept-dash-titles">
+            <span class="dept-dash-label" id="dept-dash-label">Mon département</span>
+            <span class="dept-dash-name"  id="dept-dash-name"></span>
+          </div>
+          <button class="btn btn-outline btn-sm dept-dash-cta" id="dept-dash-cta" onclick="">Voir plus</button>
+        </div>
+        <div class="dept-kpi-grid" id="dept-kpi-grid">
+          <div class="dept-kpi-loading"><div class="spinner" style="margin:auto"></div></div>
+        </div>
+      </div>
+
       <div class="section-header">
         <h2 data-i18n="agent.title">Posez votre question</h2>
         <div class="controls-inline">
@@ -969,18 +1019,41 @@
 
     <!-- Modal Application IT -->
     <div id="app-modal" class="modal-backdrop hidden">
-      <div class="modal-card" style="max-width:520px">
+      <div class="modal-card" style="max-width:540px">
         <button class="modal-close" onclick="closeParcModal('app-modal')">✕</button>
         <h3 id="app-modal-title">Application IT</h3>
         <input type="hidden" id="am-id" />
         <form id="app-modal-form" class="settings-form" style="display:grid;gap:10px">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <label class="auth-label"><span>Nom *</span><input id="am-name" type="text" required placeholder="Microsoft Project" /></label>
-            <label class="auth-label"><span>Fournisseur</span><input id="am-vendor" type="text" placeholder="Microsoft" /></label>
+          <label class="auth-label"><span>Application *</span>
+            <select id="am-name-select" onchange="onAppSelectChange(this.value)">
+              <option value="">— Choisir une application —</option>
+            </select>
+          </label>
+          <div id="am-name-manual-wrap" class="hidden">
+            <label class="auth-label">
+              <span>Nom personnalisé *</span>
+              <input id="am-name-manual" type="text" placeholder="Nom de l'application" />
+            </label>
           </div>
+          <label class="auth-label"><span>Fournisseur</span><input id="am-vendor" type="text" placeholder="Microsoft" /></label>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <label class="auth-label"><span>Catégorie</span><select id="am-cat"><option value="">—</option><option value="cloud">Cloud</option><option value="saas">SaaS</option><option value="on-prem">On-premise</option><option value="mobile">Mobile</option><option value="security">Sécurité</option></select></label>
-            <label class="auth-label"><span>Statut</span><select id="am-status"><option value="active">Active</option><option value="unused">Non utilisée</option><option value="decommissioned">Décommissionnée</option></select></label>
+            <label class="auth-label"><span>Catégorie</span>
+              <select id="am-cat">
+                <option value="">—</option>
+                <option value="saas">SaaS</option>
+                <option value="cloud">Cloud</option>
+                <option value="on-prem">On-premise</option>
+                <option value="mobile">Mobile</option>
+                <option value="security">Sécurité</option>
+              </select>
+            </label>
+            <label class="auth-label"><span>Statut</span>
+              <select id="am-status">
+                <option value="active">Active</option>
+                <option value="unused">Non utilisée</option>
+                <option value="decommissioned">Décommissionnée</option>
+              </select>
+            </label>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
             <label class="auth-label"><span>Coût mensuel ($)</span><input id="am-cost" type="number" step="0.01" value="0" /></label>
@@ -1026,6 +1099,19 @@
         <form id="dept-modal-form" class="settings-form" style="display:grid;gap:10px">
           <label class="auth-label"><span data-i18n="dept.name">Nom *</span><input id="dm-name" type="text" required placeholder="Finance" /></label>
           <label class="auth-label"><span>Description</span><input id="dm-desc" type="text" /></label>
+          <label class="auth-label"><span>Type de département</span>
+            <select id="dm-dept-type">
+              <option value="general">— Général —</option>
+              <option value="finance">💰 Finance / Comptabilité</option>
+              <option value="hr">👥 Ressources humaines</option>
+              <option value="it">🖥️ Technologies de l'information</option>
+              <option value="legal">⚖️ Juridique / Légal</option>
+              <option value="operations">⚙️ Opérations</option>
+              <option value="marketing">📣 Marketing / Communications</option>
+              <option value="direction">🏛️ Direction / Exécutif</option>
+              <option value="approvisionnement">📦 Approvisionnement / Achats</option>
+            </select>
+          </label>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <label class="auth-label"><span data-i18n="dept.budget">Budget annuel ($)</span><input id="dm-budget" type="number" step="0.01" value="0" /></label>
             <label class="auth-label"><span>Devise</span><select id="dm-currency"><option value="CAD">CAD</option><option value="USD">USD</option><option value="EUR">EUR</option></select></label>
@@ -1293,6 +1379,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js"></script>
+<script src="/static/app.js?v=20260607"></script>
 </body>
 </html>

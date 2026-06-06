@@ -1,8 +1,8 @@
-"""OAuth 2.0 — flux Authorization Code pour les connecteurs d'entreprise.
+"""OAuth 2.0 — Authorization Code Flow pour les connecteurs d'entreprise.
 
-Endpoints :
-  POST /api/connectors/microsoft_365/oauth/start  → retourne {"authorization_url": "..."}
-  GET  /api/connectors/oauth/callback             → échange le code, stocke les tokens
+Connecteurs OAuth complets : microsoft_365, salesforce, servicenow, jira,
+                              zendesk, hubspot
+Connecteurs API-key         : sap, workday, autotask  (via /api/connectors/{type}/credentials)
 """
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from datetime import UTC, datetime, timedelta
 from urllib.parse import urlencode
 
 import httpx
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query, Request, status
+from fastapi import APIRouter, BackgroundTasks, Body, Depends, HTTPException, Query, Request, status
 from fastapi.responses import RedirectResponse
 
 from audit import AuditEvent, client_ip, log_audit
@@ -23,19 +23,72 @@ from supabase_client import service_client
 
 router = APIRouter(prefix="/api/connectors", tags=["connectors-oauth"])
 
-# ── Microsoft 365 ─────────────────────────────────────────────────────────────
-_M365_SCOPES = " ".join([
-    "openid", "profile", "email", "offline_access",
-    "Mail.Read", "Files.Read.All", "Sites.Read.All",
-    "Calendars.Read", "Chat.Read", "User.Read",
-])
-_M365_AUTH_URL  = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize"
-_M365_TOKEN_URL = "https://login.microsoftonline.com/common/oauth2/v2.0/token"
-
 _STATE_TTL = 10  # minutes
 
+# ── Config des connecteurs OAuth ──────────────────────────────────────────────
 
-# ── State CSRF ────────────────────────────────────────────────────────────────
+_OAUTH_CFG: dict[str, dict] = {
+    "microsoft_365": {
+        "auth_url":    "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+        "token_url":   "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+        "scopes":      "openid profile email offline_access Mail.Read Files.Read.All "
+                       "Sites.Read.All Calendars.Read Chat.Read User.Read",
+        "client_id_env":     "M365_CLIENT_ID",
+        "client_secret_env": "M365_CLIENT_SECRET",
+        "redirect_uri_env":  "M365_REDIRECT_URI",
+    },
+    "salesforce": {
+        "auth_url":   "https://login.salesforce.com/services/oauth2/authorize",
+        "token_url":  "https://login.salesforce.com/services/oauth2/token",
+        "scopes":     "api refresh_token offline_access",
+        "client_id_env":     "SF_CLIENT_ID",
+        "client_secret_env": "SF_CLIENT_SECRET",
+        "redirect_uri_env":  "SF_REDIRECT_URI",
+    },
+    "jira": {
+        "auth_url":  "https://auth.atlassian.com/authorize",
+        "token_url": "https://auth.atlassian.com/oauth/token",
+        "scopes":    "read:jira-work read:jira-user read:confluence-content.all "
+                     "read:confluence-space.summary offline_access",
+        "client_id_env":     "JIRA_CLIENT_ID",
+        "client_secret_env": "JIRA_CLIENT_SECRET",
+        "redirect_uri_env":  "JIRA_REDIRECT_URI",
+        "extra_params": {"audience": "api.atlassian.com", "prompt": "consent"},
+    },
+    "zendesk": {
+        # token_url built dynamically from ZENDESK_SUBDOMAIN
+        "auth_url_tpl":   "https://{subdomain}.zendesk.com/oauth/authorizations/new",
+        "token_url_tpl":  "https://{subdomain}.zendesk.com/oauth/tokens",
+        "scopes":         "read",
+        "client_id_env":     "ZENDESK_CLIENT_ID",
+        "client_secret_env": "ZENDESK_CLIENT_SECRET",
+        "redirect_uri_env":  "ZENDESK_REDIRECT_URI",
+        "subdomain_env":     "ZENDESK_SUBDOMAIN",
+    },
+    "hubspot": {
+        "auth_url":  "https://app.hubspot.com/oauth/authorize",
+        "token_url": "https://api.hubapi.com/oauth/v1/token",
+        "scopes":    "crm.objects.contacts.read crm.objects.deals.read "
+                     "crm.objects.companies.read tickets",
+        "client_id_env":     "HUBSPOT_CLIENT_ID",
+        "client_secret_env": "HUBSPOT_CLIENT_SECRET",
+        "redirect_uri_env":  "HUBSPOT_REDIRECT_URI",
+    },
+}
+
+# ServiceNow is handled separately (instance URL in DB, not env)
+_SNOW_OAUTH = {
+    "client_id_env":     "SNOW_CLIENT_ID",
+    "client_secret_env": "SNOW_CLIENT_SECRET",
+    "instance_url_env":  "SNOW_INSTANCE_URL",
+    "redirect_uri_env":  "SNOW_REDIRECT_URI",
+    "scopes":            "useraccount",
+}
+
+_APIKEY_TYPES = frozenset({"sap", "workday", "autotask"})
+
+
+# ── CSRF state helpers ────────────────────────────────────────────────────────
 
 def _make_state(org_id: str, user_id: str, connector: str) -> str:
     payload = json.dumps({
@@ -51,102 +104,25 @@ def _parse_state(state: str) -> dict:
     try:
         data = json.loads(decrypt(state))
     except Exception:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="State OAuth invalide ou altéré.")
+        raise HTTPException(status_code=400, detail="State OAuth invalide ou altéré.")
     if datetime.fromisoformat(data["expires_at"]) < datetime.now(UTC):
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="State OAuth expiré — relance la connexion.")
+        raise HTTPException(status_code=400, detail="State OAuth expiré — relancez la connexion.")
     return data
 
 
-# ── Routes ────────────────────────────────────────────────────────────────────
+# ── Upsert helper ─────────────────────────────────────────────────────────────
 
-@router.post("/microsoft_365/oauth/start")
-def m365_oauth_start(
-    user: CurrentUser = Depends(require_min_role("admin")),
-    _active: CurrentUser = Depends(require_active_subscription),
-):
-    """Crée l'URL d'autorisation Microsoft 365 (Authorization Code Flow)."""
-    if not user.organization_id:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="Votre compte n'est pas rattaché à une organisation.")
-    client_id    = os.environ.get("M365_CLIENT_ID")
-    redirect_uri = os.environ.get("M365_REDIRECT_URI", "")
-    if not client_id:
-        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                            detail="M365_CLIENT_ID non configuré sur le serveur.")
-
-    state = _make_state(user.organization_id, user.id, "microsoft_365")
-    params = urlencode({
-        "client_id":     client_id,
-        "response_type": "code",
-        "redirect_uri":  redirect_uri,
-        "scope":         _M365_SCOPES,
-        "state":         state,
-        "response_mode": "query",
-        "prompt":        "select_account",
-    })
-    return {"authorization_url": f"{_M365_AUTH_URL}?{params}"}
-
-
-@router.get("/oauth/callback")
-def oauth_callback(
-    request: Request,
-    background: BackgroundTasks,
-    code:              str       = Query(...),
-    state:             str       = Query(...),
-    error:             str | None = Query(default=None),
-    error_description: str | None = Query(default=None),
-):
-    """Callback OAuth générique — échange le code contre les tokens et stocke."""
-    if error:
-        # Redirige vers le frontend avec le message d'erreur
-        return RedirectResponse(url=f"/?oauth_error={error}", status_code=302)
-
-    state_data     = _parse_state(state)
-    connector_type = state_data["connector"]
-    org_id         = state_data["org_id"]
-    user_id        = state_data["user_id"]
-
-    # Paramètres selon le type de connecteur
-    if connector_type == "microsoft_365":
-        client_id    = os.environ.get("M365_CLIENT_ID", "")
-        client_secret = os.environ.get("M365_CLIENT_SECRET", "")
-        redirect_uri = os.environ.get("M365_REDIRECT_URI", "")
-        token_url    = _M365_TOKEN_URL
-    else:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail=f"Connecteur OAuth non supporté : {connector_type}")
-
-    # Échange code → tokens
-    try:
-        resp = httpx.post(token_url, data={
-            "client_id":     client_id,
-            "client_secret": client_secret,
-            "code":          code,
-            "redirect_uri":  redirect_uri,
-            "grant_type":    "authorization_code",
-        }, timeout=15)
-    except httpx.RequestError as exc:
-        raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY,
-                            detail=f"Token exchange réseau échoué : {exc}") from exc
-
-    if resp.status_code != 200:
-        return RedirectResponse(url="/?oauth_error=token_exchange_failed", status_code=302)
-
-    tokens_data  = resp.json()
-    expires_in   = tokens_data.get("expires_in", 3600)
-    credentials  = {
-        "access_token":  tokens_data["access_token"],
-        "refresh_token": tokens_data.get("refresh_token"),
-        "expires_at":    (datetime.now(UTC) + timedelta(seconds=expires_in)).isoformat(),
-        "scope":         tokens_data.get("scope", ""),
-        "token_type":    tokens_data.get("token_type", "Bearer"),
-    }
+def _upsert_connector(sb, org_id: str, connector_type: str, credentials: dict, extra: dict | None = None):
     encrypted = encrypt(json.dumps(credentials))
     now = datetime.now(UTC).isoformat()
-    sb  = service_client()
-
+    payload = {
+        "status":                "connected",
+        "encrypted_credentials": encrypted,
+        "connected_at":          now,
+        "last_error":            None,
+        "updated_at":            now,
+        **(extra or {}),
+    }
     existing = (
         sb.table("connectors")
         .select("id")
@@ -156,22 +132,143 @@ def oauth_callback(
         .execute()
     )
     if existing.data:
-        sb.table("connectors").update({
-            "status":                "connected",
-            "encrypted_credentials": encrypted,
-            "connected_at":          now,
-            "last_error":            None,
-            "updated_at":            now,
-        }).eq("id", existing.data[0]["id"]).execute()
+        sb.table("connectors").update(payload).eq("id", existing.data[0]["id"]).execute()
     else:
         sb.table("connectors").insert({
-            "organization_id":       org_id,
-            "connector_type":        connector_type,
-            "status":                "connected",
-            "encrypted_credentials": encrypted,
-            "connected_at":          now,
-            "updated_at":            now,
+            "organization_id": org_id,
+            "connector_type":  connector_type,
+            **payload,
         }).execute()
+
+
+# ── Generic OAuth start ───────────────────────────────────────────────────────
+
+def _resolve_cfg(connector_type: str) -> dict:
+    """Returns (client_id, client_secret, redirect_uri, auth_url, token_url, scopes, extra)."""
+    if connector_type == "servicenow":
+        instance_url = os.environ.get("SNOW_INSTANCE_URL", "").rstrip("/")
+        client_id    = os.environ.get("SNOW_CLIENT_ID", "")
+        if not client_id or not instance_url:
+            raise HTTPException(503, "SNOW_CLIENT_ID / SNOW_INSTANCE_URL non configurés.")
+        return {
+            "client_id":     client_id,
+            "client_secret": os.environ.get("SNOW_CLIENT_SECRET", ""),
+            "redirect_uri":  os.environ.get("SNOW_REDIRECT_URI", ""),
+            "auth_url":      f"{instance_url}/oauth_auth.do",
+            "token_url":     f"{instance_url}/oauth_token.do",
+            "scopes":        _SNOW_OAUTH["scopes"],
+            "extra_params":  {},
+        }
+
+    cfg = _OAUTH_CFG.get(connector_type)
+    if not cfg:
+        raise HTTPException(422, f"Connecteur OAuth inconnu : {connector_type}")
+
+    client_id = os.environ.get(cfg["client_id_env"], "")
+    if not client_id:
+        raise HTTPException(503, f"{cfg['client_id_env']} non configuré sur le serveur.")
+
+    if "subdomain_env" in cfg:
+        sub = os.environ.get(cfg["subdomain_env"], "")
+        if not sub:
+            raise HTTPException(503, f"{cfg['subdomain_env']} non configuré sur le serveur.")
+        auth_url  = cfg["auth_url_tpl"].format(subdomain=sub)
+        token_url = cfg["token_url_tpl"].format(subdomain=sub)
+    else:
+        auth_url  = cfg["auth_url"]
+        token_url = cfg["token_url"]
+
+    return {
+        "client_id":     client_id,
+        "client_secret": os.environ.get(cfg["client_secret_env"], ""),
+        "redirect_uri":  os.environ.get(cfg["redirect_uri_env"], ""),
+        "auth_url":      auth_url,
+        "token_url":     token_url,
+        "scopes":        cfg["scopes"],
+        "extra_params":  cfg.get("extra_params", {}),
+    }
+
+
+@router.post("/{connector_type}/oauth/start")
+def oauth_start(
+    connector_type: str,
+    user: CurrentUser = Depends(require_min_role("admin")),
+    _active: CurrentUser = Depends(require_active_subscription),
+):
+    """Retourne l'URL d'autorisation OAuth pour le connecteur demandé."""
+    if connector_type not in _OAUTH_CFG and connector_type != "servicenow":
+        raise HTTPException(422, f"OAuth non supporté pour : {connector_type}")
+    if not user.organization_id:
+        raise HTTPException(400, "Compte non rattaché à une organisation.")
+
+    c = _resolve_cfg(connector_type)
+    state = _make_state(user.organization_id, user.id, connector_type)
+    params: dict = {
+        "client_id":     c["client_id"],
+        "response_type": "code",
+        "redirect_uri":  c["redirect_uri"],
+        "scope":         c["scopes"],
+        "state":         state,
+        **c["extra_params"],
+    }
+    # Jira requires PKCE-like audience; M365 wants response_mode=query
+    if connector_type == "microsoft_365":
+        params["response_mode"] = "query"
+        params["prompt"] = "select_account"
+
+    return {"authorization_url": f"{c['auth_url']}?{urlencode(params)}"}
+
+
+# ── Callback universel ────────────────────────────────────────────────────────
+
+@router.get("/oauth/callback")
+def oauth_callback(
+    request: Request,
+    background: BackgroundTasks,
+    code:              str        = Query(default=None),
+    state:             str        = Query(default=None),
+    error:             str | None = Query(default=None),
+    error_description: str | None = Query(default=None),
+):
+    if error or not code or not state:
+        return RedirectResponse(url=f"/?oauth_error={error or 'missing_params'}", status_code=302)
+
+    state_data     = _parse_state(state)
+    connector_type = state_data["connector"]
+    org_id         = state_data["org_id"]
+    user_id        = state_data["user_id"]
+
+    c = _resolve_cfg(connector_type)
+
+    try:
+        resp = httpx.post(c["token_url"], data={
+            "client_id":     c["client_id"],
+            "client_secret": c["client_secret"],
+            "code":          code,
+            "redirect_uri":  c["redirect_uri"],
+            "grant_type":    "authorization_code",
+        }, timeout=20)
+    except httpx.RequestError as exc:
+        return RedirectResponse(url=f"/?oauth_error=network_error", status_code=302)
+
+    if resp.status_code != 200:
+        return RedirectResponse(url="/?oauth_error=token_exchange_failed", status_code=302)
+
+    tokens      = resp.json()
+    expires_in  = tokens.get("expires_in", 3600)
+    credentials = {
+        "access_token":  tokens.get("access_token", ""),
+        "refresh_token": tokens.get("refresh_token"),
+        "expires_at":    (datetime.now(UTC) + timedelta(seconds=expires_in)).isoformat(),
+        "scope":         tokens.get("scope", c["scopes"]),
+        "token_type":    tokens.get("token_type", "Bearer"),
+    }
+    # Salesforce also returns instance_url for API calls
+    if connector_type == "salesforce" and "instance_url" in tokens:
+        credentials["instance_url"] = tokens["instance_url"]
+
+    sb = service_client()
+    _upsert_connector(sb, org_id, connector_type, credentials)
 
     background.add_task(log_audit, AuditEvent(
         action="connector_connect",
@@ -183,5 +280,96 @@ def oauth_callback(
         http_status=200,
         metadata={"oauth": True, "scope": credentials["scope"][:120]},
     ))
+    return RedirectResponse(url=f"/?connected={connector_type}&tab=connectors", status_code=302)
 
-    return RedirectResponse(url="/?connected=microsoft_365&tab=connectors", status_code=302)
+
+# ── API-key credential endpoint (SAP, Workday, Autotask, …) ──────────────────
+
+@router.post("/{connector_type}/credentials")
+def save_credentials(
+    connector_type: str,
+    request: Request,
+    background: BackgroundTasks,
+    payload: dict = Body(...),
+    user: CurrentUser = Depends(require_min_role("admin")),
+    _active: CurrentUser = Depends(require_active_subscription),
+):
+    """Stocke des credentials API-key / basic-auth chiffrés (Fernet)."""
+    if connector_type not in _APIKEY_TYPES:
+        # Also allow any VALID_TYPES connector to store API-key creds as fallback
+        from routes_connectors import VALID_TYPES
+        if connector_type not in VALID_TYPES:
+            raise HTTPException(422, f"Connecteur inconnu : {connector_type}")
+
+    if not payload:
+        raise HTTPException(400, "Aucune credential fournie.")
+
+    # Sanitize — strip empty values
+    creds = {k: v for k, v in payload.items() if v}
+    if not creds:
+        raise HTTPException(400, "Toutes les credentials sont vides.")
+
+    sb = service_client()
+    _upsert_connector(sb, user.organization_id, connector_type, creds)
+
+    background.add_task(log_audit, AuditEvent(
+        action="connector_connect",
+        query=connector_type,
+        organization_id=user.organization_id,
+        user_id=user.id,
+        connector=connector_type,
+        ip_address=client_ip(request),
+        http_status=200,
+        metadata={"method": "api_key", "fields": list(creds.keys())},
+    ))
+    return {"connector_type": connector_type, "status": "connected"}
+
+
+# ── Token refresh (internal helper) ──────────────────────────────────────────
+
+def refresh_token_if_needed(connector_type: str, org_id: str) -> dict | None:
+    """Refreshes the OAuth access token if expired. Returns updated credentials or None."""
+    if connector_type not in _OAUTH_CFG and connector_type != "servicenow":
+        return None
+    try:
+        sb = service_client()
+        row = (
+            sb.table("connectors")
+            .select("encrypted_credentials")
+            .eq("organization_id", org_id)
+            .eq("connector_type", connector_type)
+            .eq("status", "connected")
+            .limit(1)
+            .execute()
+        )
+        if not row.data:
+            return None
+        creds = json.loads(decrypt(row.data[0]["encrypted_credentials"]))
+        expires_at = datetime.fromisoformat(creds.get("expires_at", "2000-01-01T00:00:00+00:00"))
+        if expires_at > datetime.now(UTC) + timedelta(minutes=5):
+            return creds  # still valid
+
+        refresh_token = creds.get("refresh_token")
+        if not refresh_token:
+            return creds  # no refresh token, return as-is
+
+        c = _resolve_cfg(connector_type)
+        resp = httpx.post(c["token_url"], data={
+            "client_id":     c["client_id"],
+            "client_secret": c["client_secret"],
+            "refresh_token": refresh_token,
+            "grant_type":    "refresh_token",
+        }, timeout=15)
+        if resp.status_code != 200:
+            return creds
+        tokens = resp.json()
+        creds["access_token"] = tokens.get("access_token", creds["access_token"])
+        if tokens.get("refresh_token"):
+            creds["refresh_token"] = tokens["refresh_token"]
+        creds["expires_at"] = (
+            datetime.now(UTC) + timedelta(seconds=tokens.get("expires_in", 3600))
+        ).isoformat()
+        _upsert_connector(sb, org_id, connector_type, creds)
+        return creds
+    except Exception:
+        return None

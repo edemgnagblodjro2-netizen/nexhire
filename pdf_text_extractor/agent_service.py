@@ -384,28 +384,56 @@ def _mock_hubspot(query: str, object_type: str = "all", limit: int = 5) -> list[
 # ── Dispatch des outils ───────────────────────────────────────────────────────
 
 def _call_tool(name: str, arguments: dict[str, Any], org_id: str | None = None) -> Any:
-    # Microsoft 365 : vrais appels Graph API si l'org a des tokens OAuth stockés.
-    if name == "search_microsoft_365" and org_id:
-        try:
-            from m365_service import search_microsoft_365 as _real_m365
-            return _real_m365(
-                query=arguments.get("query", ""),
-                org_id=org_id,
-                limit=arguments.get("limit", 5),
-            )
-        except Exception:
-            pass  # fallback simulé en cas d'erreur inattendue
+    """Essaie d'abord le vrai service (si connecté), puis retombe sur le mock."""
 
+    if org_id:
+        try:
+            if name == "search_microsoft_365":
+                from m365_service import search_microsoft_365 as _fn
+                return _fn(query=arguments.get("query", ""), org_id=org_id,
+                           limit=arguments.get("limit", 5))
+            if name == "search_salesforce":
+                from salesforce_service import search_salesforce as _fn
+                return _fn(query=arguments.get("query", ""), org_id=org_id,
+                           object_type=arguments.get("object_type", "all"),
+                           limit=arguments.get("limit", 5))
+            if name == "search_servicenow":
+                from servicenow_service import search_servicenow as _fn
+                return _fn(query=arguments.get("query", ""), org_id=org_id,
+                           status=arguments.get("status", "all"),
+                           priority=arguments.get("priority", "all"),
+                           limit=arguments.get("limit", 5))
+            if name == "search_jira":
+                from jira_service import search_jira as _fn
+                return _fn(query=arguments.get("query", ""), org_id=org_id,
+                           status=arguments.get("status", "all"),
+                           project=arguments.get("project"),
+                           limit=arguments.get("limit", 5))
+            if name == "search_zendesk":
+                from zendesk_service import search_zendesk as _fn
+                return _fn(query=arguments.get("query", ""), org_id=org_id,
+                           status=arguments.get("status", "all"),
+                           priority=arguments.get("priority", "all"),
+                           limit=arguments.get("limit", 5))
+            if name == "search_hubspot":
+                from hubspot_service import search_hubspot as _fn
+                return _fn(query=arguments.get("query", ""), org_id=org_id,
+                           object_type=arguments.get("object_type", "all"),
+                           limit=arguments.get("limit", 5))
+        except Exception:
+            pass  # fallback vers mock
+
+    # Mocks (démo / connecteur non configuré)
     handlers = {
-        "search_servicenow": lambda a: _mock_servicenow(**a),
-        "search_jira":        lambda a: _mock_jira(**a),
-        "query_sap":          lambda a: _mock_sap(**a),
+        "search_servicenow":    lambda a: _mock_servicenow(**a),
+        "search_jira":          lambda a: _mock_jira(**a),
+        "query_sap":            lambda a: _mock_sap(**a),
         "search_microsoft_365": lambda a: _mock_microsoft_365(**a),
-        "search_salesforce":  lambda a: _mock_salesforce(**a),
-        "query_workday":      lambda a: _mock_workday(**a),
-        "search_zendesk":     lambda a: _mock_zendesk(**a),
-        "search_autotask":    lambda a: _mock_autotask(**a),
-        "search_hubspot":     lambda a: _mock_hubspot(**a),
+        "search_salesforce":    lambda a: _mock_salesforce(**a),
+        "query_workday":        lambda a: _mock_workday(**a),
+        "search_zendesk":       lambda a: _mock_zendesk(**a),
+        "search_autotask":      lambda a: _mock_autotask(**a),
+        "search_hubspot":       lambda a: _mock_hubspot(**a),
     }
     handler = handlers.get(name)
     if not handler:

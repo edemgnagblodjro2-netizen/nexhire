@@ -14,18 +14,37 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from starlette import status
-from starlette.middleware.base import BaseHTTPMiddleware
+_NO_CACHE_EXTS = (".js", ".css")
+_NO_CACHE_HEADERS = [
+    (b"cache-control", b"no-store, no-cache, must-revalidate, max-age=0"),
+    (b"pragma",        b"no-cache"),
+    (b"expires",       b"0"),
+]
+_STRIP_CACHE_KEYS = {b"cache-control", b"pragma", b"etag", b"last-modified", b"expires"}
 
 
-class NoCacheStaticMiddleware(BaseHTTPMiddleware):
-    """Empêche le navigateur de mettre en cache app.js / styles.css."""
-    async def dispatch(self, request: Request, call_next):
-        response = await call_next(request)
-        path = request.url.path
-        if path.startswith("/static/") and (path.endswith(".js") or path.endswith(".css")):
-            response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
-            response.headers["Pragma"] = "no-cache"
-        return response
+class NoCacheStaticMiddleware:
+    """Middleware ASGI pur — modifie les headers avant envoi (fonctionne avec StaticFiles streaming)."""
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] == "http" and scope.get("path", "").startswith("/static/") \
+                and any(scope["path"].endswith(e) for e in _NO_CACHE_EXTS):
+
+            async def send_no_cache(message):
+                if message["type"] == "http.response.start":
+                    headers = [
+                        (k, v) for k, v in message.get("headers", [])
+                        if k.lower() not in _STRIP_CACHE_KEYS
+                    ]
+                    headers.extend(_NO_CACHE_HEADERS)
+                    message = {**message, "headers": headers}
+                await send(message)
+
+            await self.app(scope, receive, send_no_cache)
+        else:
+            await self.app(scope, receive, send)
 
 from ai_service import AIConfigurationError, AssistantService
 from audit import AuditEvent, client_ip, log_audit
@@ -165,7 +184,7 @@ def create_app(
             checks["db_users"] = f"ok ({res.count} rows)" if res.count is not None else f"ok ({len(res.data)} rows)"
             # Vérification des tables Phase 9-11
             for tbl in ["departments","budget_entries","licenses","servers","it_applications",
-                        "service_accounts","contracts","workforce_processes"]:
+                        "service_accounts","contracts","workforce_processes","connectors"]:
                 try:
                     sb.table(tbl).select("id").limit(1).execute()
                     checks[f"table_{tbl}"] = "ok"
