@@ -34,6 +34,10 @@ create trigger audit_logs_immutable
   before update or delete on public.audit_logs
   for each row execute function public.prevent_audit_modification();
 
+-- Colonne metadata pour logs enrichis (données libres par endpoint)
+alter table public.audit_logs
+  add column if not exists metadata jsonb not null default '{}'::jsonb;
+
 -- ── Index supplémentaires ─────────────────────────────────────────────────────
 create index if not exists audit_logs_action_idx
   on public.audit_logs (action, created_at desc);

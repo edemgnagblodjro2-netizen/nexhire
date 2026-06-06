@@ -37,7 +37,7 @@ def log_audit(event: AuditEvent) -> None:
     try:
         from supabase_client import service_client  # import paresseux
         sb = service_client()
-        sb.table("audit_logs").insert({
+        row: dict = {
             "organization_id": event.organization_id,
             "user_id": event.user_id,
             "connector": event.connector,
@@ -48,7 +48,14 @@ def log_audit(event: AuditEvent) -> None:
             "http_status": event.http_status,
             "resource_ids": event.resource_ids,
             "error_detail": event.error_detail,
-            "metadata": event.metadata,
-        }).execute()
+        }
+        if event.metadata:
+            row["metadata"] = event.metadata
+        try:
+            sb.table("audit_logs").insert(row).execute()
+        except Exception:
+            # Colonne metadata absente ? Réessaie sans (ADD COLUMN dans phase3_audit.sql).
+            row.pop("metadata", None)
+            sb.table("audit_logs").insert(row).execute()
     except Exception:
         pass
