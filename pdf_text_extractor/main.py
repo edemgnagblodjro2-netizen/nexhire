@@ -107,6 +107,23 @@ def create_app(
     def health():
         return {"status": "ok"}
 
+    @app.get("/api/readiness")
+    def readiness():
+        """Vérifie la connexion DB et les variables d'env critiques (sans valeurs)."""
+        import os
+        checks: dict = {}
+        for var in ["SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY",
+                    "FERNET_KEYS", "OPENAI_API_KEY"]:
+            checks[var] = "set" if os.environ.get(var) else "MISSING"
+        try:
+            from supabase_client import service_client
+            service_client().table("organizations").select("id").limit(1).execute()
+            checks["db"] = "ok"
+        except Exception as exc:
+            checks["db"] = f"error: {type(exc).__name__}"
+        ok = all(v == "set" for k, v in checks.items() if k != "db") and checks.get("db") == "ok"
+        return {"ready": ok, "checks": checks}
+
     @app.post(
         "/api/documents",
         response_model=DocumentResponse,
