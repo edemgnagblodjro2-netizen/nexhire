@@ -305,6 +305,9 @@ function showApp() {
   // Notifications
   buildNotifications();
 
+  // Quota
+  loadQuota();
+
   // OAuth return params
   const params = new URLSearchParams(window.location.search);
   if (params.get("connected")) {
@@ -467,6 +470,38 @@ function loadActiveTab() {
   if (state.tab === "team")       loadTeam();
 }
 
+// ── Quota indicator ────────────────────────────────────────────────────────
+
+async function loadQuota() {
+  try {
+    const q = await apiCall("/api/agent/quota");
+    const used  = q.used  || 0;
+    const limit = q.limit || 1000;
+    const pct   = Math.min(Math.round(used / limit * 100), 100);
+
+    $("quota-text").textContent = `${used.toLocaleString("fr-CA")} / ${limit.toLocaleString("fr-CA")}`;
+
+    const bar = $("quota-bar");
+    bar.style.width = `${pct}%`;
+    bar.className = "quota-bar " + (pct >= 95 ? "quota-critical" : pct >= 80 ? "quota-warn" : "quota-ok");
+
+    const pill = $("quota-pill");
+    pill.title = `${pct}% du quota mensuel utilisé (${used}/${limit} requêtes)`;
+    pill.classList.toggle("quota-pill-warn",     pct >= 80);
+    pill.classList.toggle("quota-pill-critical", pct >= 95);
+
+    // Avertissement si > 90%
+    if (pct >= 90) {
+      const notif = { icon: "⚠️", title: "Quota presque atteint", body: `${used}/${limit} requêtes utilisées ce mois — contactez-nous pour augmenter la limite.` };
+      // Inject into notification list
+      const existing = $("notif-list").innerHTML;
+      const item = `<div class="notif-item"><div class="notif-item-icon">⚠️</div><div class="notif-item-body"><strong>${notif.title}</strong><span>${notif.body}</span></div></div>`;
+      $("notif-list").innerHTML = item + existing;
+      $("notif-dot").classList.remove("hidden");
+    }
+  } catch { /* silent */ }
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 // AGENT TAB
 // ═══════════════════════════════════════════════════════════════════════════
@@ -527,6 +562,7 @@ function renderAgentResult(data) {
   window._lastAuditId = data.audit_id || null;
   $("rating-thanks").classList.add("hidden");
   document.querySelectorAll(".star-btn").forEach(b => b.classList.remove("selected", "faded"));
+  loadQuota();
 }
 
 // Formatter — converts plain AI text with markdown-like patterns into clean HTML

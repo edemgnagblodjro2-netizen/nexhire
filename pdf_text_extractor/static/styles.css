@@ -1110,6 +1110,32 @@ footer {
   .settings-grid { grid-template-columns: 1fr !important; }
 }
 
+/* ── Quota pill ──────────────────────────────────────────────────────────── */
+.quota-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 99px;
+  padding: 4px 12px 4px 8px;
+  font-size: .75rem;
+  color: rgba(255,255,255,.85);
+  cursor: default;
+  transition: background .2s;
+}
+.quota-bar-wrap {
+  width: 42px; height: 5px;
+  background: rgba(255,255,255,.2);
+  border-radius: 99px; overflow: hidden;
+}
+.quota-bar { height: 100%; border-radius: 99px; transition: width .4s ease; }
+.quota-ok       { background: #22c55e; }
+.quota-warn     { background: #f59e0b; }
+.quota-critical { background: #ef4444; }
+.quota-pill-warn     { border-color: rgba(245,158,11,.5);  background: rgba(245,158,11,.1); }
+.quota-pill-critical { border-color: rgba(239,68,68,.5);   background: rgba(239,68,68,.15); }
+
 /* ── Team page ───────────────────────────────────────────────────────────── */
 .member-av {
   width: 36px; height: 36px; border-radius: 50%;

@@ -13,6 +13,19 @@ from usage import check_and_consume_query
 router = APIRouter(prefix="/api/agent", tags=["agent"])
 
 
+@router.get("/quota")
+def get_quota(user: CurrentUser = Depends(require_min_role("user"))):
+    """Retourne l'utilisation des requêtes du mois en cours pour l'organisation."""
+    sb = service_client()
+    res = sb.rpc("get_org_quota", {"p_org_id": user.organization_id}).execute()
+    data = res.data if isinstance(res.data, dict) else {}
+    return {
+        "used":   data.get("used", 0),
+        "limit":  data.get("limit", 1000),
+        "period": data.get("period", ""),
+    }
+
+
 class AgentQuery(BaseModel):
     question: str = Field(..., min_length=1, max_length=2000)
     assistant_mode: str = Field("enterprise", pattern="^(enterprise|municipal|recruiting)$")
