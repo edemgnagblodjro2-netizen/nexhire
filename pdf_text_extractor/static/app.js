@@ -356,6 +356,7 @@ function showApp() {
   $("user-avatar").textContent     = initials;
   if ($("user-avatar-menu"))   $("user-avatar-menu").textContent   = initials;
   if ($("user-menu-email-text")) $("user-menu-email-text").textContent = u?.email || "";
+  _updateLangLabel();
 
   // Admin-only elements
   const isAdmin = ["admin", "owner"].includes(u?.role);
