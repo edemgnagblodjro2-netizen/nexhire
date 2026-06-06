@@ -1,6 +1,10 @@
 fastapi
-openai
+uvicorn[standard]
 python-multipart
 pypdf
+openai
 supabase
-uvicorn[standard]
+python-dotenv
+cryptography
+PyJWT[crypto]
+pydantic[email]
