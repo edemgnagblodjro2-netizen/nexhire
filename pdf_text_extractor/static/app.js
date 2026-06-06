@@ -81,6 +81,23 @@ const T = {
     'stats.queries':'Requêtes','stats.score':'Satisfaction moyenne','stats.rated':'Réponses notées','stats.util':'Utilisateurs actifs',
     'stats.chart.daily':'Activité quotidienne','stats.chart.connectors':'Connecteurs utilisés','stats.chart.sat':'Répartition de la satisfaction',
     'app.tab.stats':'Statistiques',
+    'app.tab.settings':'Paramètres',
+    'settings.title':'Paramètres',
+    'settings.profile.title':'Informations du compte',
+    'settings.fullname':'Nom complet','settings.email.label':'Adresse courriel',
+    'settings.org':'Organisation','settings.member.since':'Membre depuis',
+    'settings.save':'Enregistrer','settings.saved':'Profil mis à jour.',
+    'settings.password.title':'Sécurité',
+    'settings.pwd.current':'Mot de passe actuel','settings.pwd.new':'Nouveau mot de passe',
+    'settings.pwd.confirm':'Confirmer le nouveau mot de passe',
+    'settings.pwd.btn':'Changer le mot de passe','settings.pwd.success':'Mot de passe modifié avec succès.',
+    'settings.pwd.mismatch':'Les deux mots de passe ne correspondent pas.',
+    'settings.sso.title':'Authentification SSO',
+    'settings.sso.inactive':'SSO non configuré','settings.sso.active':'SSO actif ✓',
+    'settings.sso.desc':"L'authentification unique (SSO) via SAML 2.0 ou OpenID Connect permet à vos collaborateurs de se connecter avec les identifiants de votre organisation.",
+    'settings.sso.cta':'Activer le SSO — contacter le support',
+    'settings.sso.active.msg':'SSO actif — vos utilisateurs se connectent via votre fournisseur d\'identité.',
+    'settings.plan.title':'Abonnement','settings.plan.manage':'Gérer l\'abonnement',
     'loading':'Chargement…',
   },
   en: {
@@ -152,6 +169,23 @@ const T = {
     'stats.queries':'Queries','stats.score':'Avg satisfaction','stats.rated':'Rated responses','stats.util':'Active users',
     'stats.chart.daily':'Daily activity','stats.chart.connectors':'Connectors used','stats.chart.sat':'Satisfaction distribution',
     'app.tab.stats':'Statistics',
+    'app.tab.settings':'Settings',
+    'settings.title':'Settings',
+    'settings.profile.title':'Account information',
+    'settings.fullname':'Full name','settings.email.label':'Email address',
+    'settings.org':'Organization','settings.member.since':'Member since',
+    'settings.save':'Save','settings.saved':'Profile updated.',
+    'settings.password.title':'Security',
+    'settings.pwd.current':'Current password','settings.pwd.new':'New password',
+    'settings.pwd.confirm':'Confirm new password',
+    'settings.pwd.btn':'Change password','settings.pwd.success':'Password changed successfully.',
+    'settings.pwd.mismatch':'The two passwords do not match.',
+    'settings.sso.title':'SSO Authentication',
+    'settings.sso.inactive':'SSO not configured','settings.sso.active':'SSO active ✓',
+    'settings.sso.desc':'Single Sign-On (SSO) via SAML 2.0 or OpenID Connect lets your team log in with your organization credentials (Microsoft Entra ID, Okta, Google Workspace…).',
+    'settings.sso.cta':'Enable SSO — contact support',
+    'settings.sso.active.msg':'SSO active — your users sign in through your identity provider.',
+    'settings.plan.title':'Subscription','settings.plan.manage':'Manage subscription',
     'loading':'Loading…',
   },
 };
@@ -409,6 +443,7 @@ function loadActiveTab() {
   if (state.tab === "connectors") loadConnectors();
   if (state.tab === "audit")      loadAudit();
   if (state.tab === "stats")      loadAnalytics();
+  if (state.tab === "settings")   loadSettings();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -946,6 +981,113 @@ async function loadAudit() {
     wrap.innerHTML = `<p class='error-text' style='padding:20px'>Erreur : ${ex.message}</p>`;
   }
 }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SETTINGS TAB
+// ═══════════════════════════════════════════════════════════════════════════
+
+async function loadSettings() {
+  try {
+    const p = await apiCall("/api/settings/profile");
+
+    // Header avatar
+    $("settings-avatar").textContent = (p.full_name || p.email || "?")[0].toUpperCase();
+    $("settings-fullname").textContent = p.full_name || "—";
+    $("settings-email").textContent    = p.email    || "—";
+    $("settings-role").textContent     = p.role     || "";
+
+    // Profile form
+    $("sp-fullname").value = p.full_name || "";
+    $("sp-email").value    = p.email    || "";
+    $("sp-org").value      = p.organization_name || "";
+    $("sp-since").value    = p.member_since || "";
+
+    // SSO
+    const badge = $("sso-badge");
+    const txt   = $("sso-status-text");
+    const cta   = $("sso-cta-btn");
+    const info  = $("sso-active-info");
+    if (p.sso_enabled) {
+      badge.classList.replace("inactive", "active");
+      txt.textContent = T[_lang]["settings.sso.active"] || "SSO actif ✓";
+      cta.classList.add("hidden");
+      info.classList.remove("hidden");
+    } else {
+      badge.classList.remove("active"); badge.classList.add("inactive");
+      txt.textContent = T[_lang]["settings.sso.inactive"] || "SSO non configuré";
+      cta.classList.remove("hidden");
+      info.classList.add("hidden");
+    }
+
+    // Plan
+    const planBadge = $("plan-badge");
+    const planDesc  = $("plan-desc");
+    const plans = {
+      trialing:  { label: "Essai gratuit",   desc: "14 jours d'accès complet — aucune carte requise.", cls: "plan-trial" },
+      active:    { label: "Premium actif",   desc: "Accès complet à tous les connecteurs et fonctionnalités.", cls: "plan-active" },
+      canceled:  { label: "Annulé",          desc: "Votre abonnement est annulé. Contactez-nous pour le réactiver.", cls: "plan-inactive" },
+      suspended: { label: "Suspendu",        desc: "L'accès est suspendu. Contactez le support.", cls: "plan-inactive" },
+    };
+    const pl = plans[p.subscription_status] || { label: p.subscription_status || "—", desc: "", cls: "" };
+    planBadge.textContent = pl.label;
+    planBadge.className = `plan-badge ${pl.cls}`;
+    planDesc.textContent = pl.desc;
+  } catch (ex) {
+    console.error("Settings load error:", ex.message);
+  }
+}
+
+// Profile form submit
+$("settings-profile-form")?.addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("sp-save-btn");
+  const suc = $("sp-success"); const err = $("sp-error");
+  btn.disabled = true; suc.classList.add("hidden"); err.classList.add("hidden");
+  try {
+    await apiCall("/api/settings/profile", "PATCH", { full_name: $("sp-fullname").value.trim() });
+    suc.classList.remove("hidden");
+    $("settings-fullname").textContent = $("sp-fullname").value.trim();
+    $("settings-avatar").textContent   = $("sp-fullname").value.trim()[0].toUpperCase();
+    // Sync top nav avatar
+    $("user-avatar").textContent = $("sp-fullname").value.trim()[0].toUpperCase();
+    setTimeout(() => suc.classList.add("hidden"), 4000);
+  } catch (ex) {
+    err.textContent = ex.message; err.classList.remove("hidden");
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+// Password form submit
+$("settings-pwd-form")?.addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("sp-pwd-btn");
+  const suc = $("sp-pwd-success"); const err = $("sp-pwd-error");
+  suc.classList.add("hidden"); err.classList.add("hidden");
+
+  const np = $("sp-pwd-new").value;
+  const cp = $("sp-pwd-confirm").value;
+  if (np !== cp) {
+    err.textContent = T[_lang]["settings.pwd.mismatch"] || "Les mots de passe ne correspondent pas.";
+    err.classList.remove("hidden");
+    return;
+  }
+
+  btn.disabled = true;
+  try {
+    await apiCall("/api/settings/password", "POST", {
+      current_password: $("sp-pwd-current").value,
+      new_password:     np,
+    });
+    suc.classList.remove("hidden");
+    $("settings-pwd-form").reset();
+    setTimeout(() => suc.classList.add("hidden"), 5000);
+  } catch (ex) {
+    err.textContent = ex.message; err.classList.remove("hidden");
+  } finally {
+    btn.disabled = false;
+  }
+});
 
 // ═══════════════════════════════════════════════════════════════════════════
 // INIT

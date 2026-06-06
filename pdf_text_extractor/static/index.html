@@ -353,7 +353,8 @@
       <button class="tab-btn"        data-tab="connectors" role="tab" data-i18n="app.tab.connectors">Connecteurs</button>
       <button class="tab-btn"        data-tab="documents"  role="tab" data-i18n="app.tab.documents">Documents</button>
       <button class="tab-btn admin-only hidden" data-tab="audit"  role="tab" data-i18n="app.tab.audit">Audit</button>
-      <button class="tab-btn"        data-tab="stats" role="tab" data-i18n="app.tab.stats">Statistiques</button>
+      <button class="tab-btn"        data-tab="stats"    role="tab" data-i18n="app.tab.stats">Statistiques</button>
+      <button class="tab-btn"        data-tab="settings" role="tab" data-i18n="app.tab.settings">Paramètres</button>
     </div>
     <div class="nav-right">
       <!-- Notification bell -->
@@ -528,6 +529,106 @@
       </div>
       <div id="audit-wrap" class="table-wrap">
         <p class="muted" style="padding:20px" data-i18n="loading">Chargement…</p>
+      </div>
+    </section>
+
+    <!-- ── PARAMÈTRES ────────────────────────────────────────────────────── -->
+    <section id="tab-settings" class="tab-content hidden" role="tabpanel">
+      <div class="section-header">
+        <h2 data-i18n="settings.title">Paramètres</h2>
+      </div>
+
+      <div class="settings-grid">
+
+        <!-- Profil -->
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <div class="settings-avatar" id="settings-avatar">?</div>
+            <div>
+              <div class="settings-name"  id="settings-fullname">—</div>
+              <div class="settings-email" id="settings-email">—</div>
+              <span class="role-badge"    id="settings-role"></span>
+            </div>
+          </div>
+          <h3 data-i18n="settings.profile.title">Informations du compte</h3>
+          <form id="settings-profile-form" class="settings-form">
+            <label class="auth-label">
+              <span data-i18n="settings.fullname">Nom complet</span>
+              <input id="sp-fullname" type="text" placeholder="Marie Tremblay" required />
+            </label>
+            <label class="auth-label">
+              <span data-i18n="settings.email.label">Adresse courriel</span>
+              <input id="sp-email" type="email" disabled style="opacity:.6;cursor:not-allowed" />
+            </label>
+            <label class="auth-label">
+              <span data-i18n="settings.org">Organisation</span>
+              <input id="sp-org" type="text" disabled style="opacity:.6;cursor:not-allowed" />
+            </label>
+            <label class="auth-label">
+              <span data-i18n="settings.member.since">Membre depuis</span>
+              <input id="sp-since" type="text" disabled style="opacity:.6;cursor:not-allowed" />
+            </label>
+            <button type="submit" class="btn btn-primary btn-sm" id="sp-save-btn" data-i18n="settings.save">Enregistrer</button>
+            <p id="sp-success" class="form-success hidden" data-i18n="settings.saved">Profil mis à jour.</p>
+            <p id="sp-error"   class="form-error   hidden"></p>
+          </form>
+        </div>
+
+        <!-- Sécurité / Mot de passe -->
+        <div class="settings-card">
+          <h3 data-i18n="settings.password.title">Sécurité</h3>
+          <form id="settings-pwd-form" class="settings-form">
+            <label class="auth-label">
+              <span data-i18n="settings.pwd.current">Mot de passe actuel</span>
+              <input id="sp-pwd-current" type="password" placeholder="••••••••" required autocomplete="current-password" />
+            </label>
+            <label class="auth-label">
+              <span data-i18n="settings.pwd.new">Nouveau mot de passe</span>
+              <input id="sp-pwd-new" type="password" placeholder="••••••••" required minlength="8" autocomplete="new-password" />
+            </label>
+            <label class="auth-label">
+              <span data-i18n="settings.pwd.confirm">Confirmer le nouveau mot de passe</span>
+              <input id="sp-pwd-confirm" type="password" placeholder="••••••••" required minlength="8" autocomplete="new-password" />
+            </label>
+            <button type="submit" class="btn btn-primary btn-sm" id="sp-pwd-btn" data-i18n="settings.pwd.btn">Changer le mot de passe</button>
+            <p id="sp-pwd-success" class="form-success hidden" data-i18n="settings.pwd.success">Mot de passe modifié avec succès.</p>
+            <p id="sp-pwd-error"   class="form-error   hidden"></p>
+          </form>
+        </div>
+
+        <!-- SSO -->
+        <div class="settings-card">
+          <h3 data-i18n="settings.sso.title">Authentification SSO</h3>
+          <div class="sso-status" id="sso-status-wrap">
+            <div class="sso-badge inactive" id="sso-badge">
+              <span class="sso-dot"></span>
+              <span id="sso-status-text" data-i18n="settings.sso.inactive">SSO non configuré</span>
+            </div>
+            <p class="settings-desc" data-i18n="settings.sso.desc">
+              L'authentification unique (SSO) via SAML 2.0 ou OpenID Connect permet à vos collaborateurs
+              de se connecter avec les identifiants de votre organisation (Microsoft Entra ID, Okta, Google Workspace…).
+            </p>
+            <button class="btn btn-outline btn-sm" id="sso-cta-btn" onclick="window.location.href='mailto:contact@nexhire.ca?subject=Activation SSO'" data-i18n="settings.sso.cta">
+              Activer le SSO — contacter le support
+            </button>
+            <div id="sso-active-info" class="hidden">
+              <p class="form-success" data-i18n="settings.sso.active.msg">SSO actif — vos utilisateurs se connectent via votre fournisseur d'identité.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Abonnement -->
+        <div class="settings-card">
+          <h3 data-i18n="settings.plan.title">Abonnement</h3>
+          <div class="plan-badge-wrap">
+            <div class="plan-badge" id="plan-badge">—</div>
+            <p class="settings-desc" id="plan-desc"></p>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="alert('Contactez-nous à contact@nexhire.ca pour gérer votre abonnement.')" data-i18n="settings.plan.manage">
+            Gérer l'abonnement
+          </button>
+        </div>
+
       </div>
     </section>
 
