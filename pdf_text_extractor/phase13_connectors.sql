@@ -27,6 +27,7 @@ create index if not exists idx_connectors_org
 alter table public.connectors enable row level security;
 
 -- Seul le service_role peut lire/écrire (aucun accès direct depuis le navigateur)
+drop policy if exists "connectors_service_only" on public.connectors;
 create policy "connectors_service_only"
   on public.connectors
   using (false)
