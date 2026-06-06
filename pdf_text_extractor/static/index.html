@@ -423,6 +423,14 @@
       <div id="agent-result"  class="agent-result hidden">
         <div id="agent-sources" class="agent-sources"></div>
         <div id="agent-answer"  class="agent-answer"></div>
+        <!-- Export buttons -->
+        <div class="export-bar">
+          <span class="export-label" data-i18n="export.label">Télécharger ce rapport :</span>
+          <button class="export-btn" onclick="exportReport('pdf')">📄 PDF</button>
+          <button class="export-btn" onclick="exportReport('xlsx')">📊 Excel</button>
+          <button class="export-btn" onclick="exportReport('docx')">📝 Word</button>
+          <button class="export-btn" onclick="exportReport('pptx')">📑 PowerPoint</button>
+        </div>
         <details class="tools-detail">
           <summary data-i18n="agent.tools">Outils appelés</summary>
           <pre id="agent-tools-json"></pre>

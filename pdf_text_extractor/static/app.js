@@ -447,10 +447,109 @@ function renderAgentResult(data) {
   } else {
     sources.style.display = "none";
   }
-  $("agent-answer").textContent  = data.answer || "(aucune réponse)";
+  $("agent-answer").innerHTML = _formatAnswer(data.answer || "(aucune réponse)");
   $("agent-tools-json").textContent = JSON.stringify(data.tools_called, null, 2);
   $("agent-result").classList.remove("hidden");
   $("agent-result").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  // Store last result for export
+  window._lastAgentResult = data;
+  window._lastAgentQuestion = $("agent-question").value;
+}
+
+// Formatter — converts plain AI text with markdown-like patterns into clean HTML
+function _formatAnswer(text) {
+  const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const lines = text.split("\n");
+  let html = "";
+  let inUl = false, inOl = false;
+
+  const closeList = () => {
+    if (inUl) { html += "</ul>"; inUl = false; }
+    if (inOl) { html += "</ol>"; inOl = false; }
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i];
+
+    // --- H1/H2/H3 detected by leading # signs
+    if (/^### /.test(line)) { closeList(); html += `<h4>${_inlineFormat(esc(line.slice(4)))}</h4>`; continue; }
+    if (/^## /.test(line))  { closeList(); html += `<h3>${_inlineFormat(esc(line.slice(3)))}</h3>`; continue; }
+    if (/^# /.test(line))   { closeList(); html += `<h3>${_inlineFormat(esc(line.slice(2)))}</h3>`; continue; }
+
+    // --- Bullet list
+    if (/^[-*•]\s/.test(line)) {
+      if (inOl) { html += "</ol>"; inOl = false; }
+      if (!inUl) { html += "<ul>"; inUl = true; }
+      html += `<li>${_inlineFormat(esc(line.replace(/^[-*•]\s/, "")))}</li>`;
+      continue;
+    }
+
+    // --- Numbered list
+    if (/^\d+\.\s/.test(line)) {
+      if (inUl) { html += "</ul>"; inUl = false; }
+      if (!inOl) { html += "<ol>"; inOl = true; }
+      html += `<li>${_inlineFormat(esc(line.replace(/^\d+\.\s/, "")))}</li>`;
+      continue;
+    }
+
+    closeList();
+
+    // --- Empty line = paragraph break
+    if (!line.trim()) { html += "<br>"; continue; }
+
+    // --- Regular paragraph line
+    html += `<p>${_inlineFormat(esc(line))}</p>`;
+  }
+
+  closeList();
+  return html;
+}
+
+function _inlineFormat(s) {
+  // Bold: **text** or __text__
+  s = s.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  s = s.replace(/__(.+?)__/g, "<strong>$1</strong>");
+  // Italic: *text* or _text_
+  s = s.replace(/\*(.+?)\*/g, "<em>$1</em>");
+  // Inline code: `code`
+  s = s.replace(/`(.+?)`/g, "<code>$1</code>");
+  // Numbers at line-start coloured (like "93,7%")
+  s = s.replace(/(\d[\d\s,.%$]+)/g, '<span class="num-highlight">$1</span>');
+  return s;
+}
+
+// Export report in requested format
+async function exportReport(fmt) {
+  const data = window._lastAgentResult;
+  if (!data) return;
+  const btn = document.querySelector(`.export-btn[onclick="exportReport('${fmt}')"]`);
+  const origText = btn?.textContent;
+  if (btn) { btn.disabled = true; btn.textContent = "…"; }
+  try {
+    const resp = await fetch("/api/agent/export", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${state.token}` },
+      body: JSON.stringify({
+        question: window._lastAgentQuestion || "",
+        answer:   data.answer || "",
+        sources:  data.sources || [],
+        format:   fmt,
+      }),
+    });
+    if (!resp.ok) { const e = await resp.json().catch(() => ({})); alert(e.detail || "Erreur export"); return; }
+    const blob = await resp.blob();
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement("a");
+    const cd   = resp.headers.get("content-disposition") || "";
+    const match = cd.match(/filename="(.+?)"/);
+    a.href     = url;
+    a.download = match ? match[1] : `nexhire-rapport.${fmt}`;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = origText; }
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -722,3 +821,105 @@ setLang(_lang);
 
   start();
 })();
+
+// ═══════════════════════════════════════════════════════════════════════════
+// AUTO-LOGOUT après 10 min d'inactivité (avertissement à 8 min)
+// L'état de l'onglet actif + la question en cours sont sauvegardés en session
+// pour être restaurés après reconnexion.
+// ═══════════════════════════════════════════════════════════════════════════
+
+const IDLE_WARN_MS  = 8 * 60 * 1000;  // 8 min → avertissement
+const IDLE_LIMIT_MS = 10 * 60 * 1000; // 10 min → déconnexion
+
+let _idleWarnTimer  = null;
+let _idleLogoutTimer = null;
+let _warnBannerEl   = null;
+
+function _createWarnBanner() {
+  if (_warnBannerEl) return;
+  const div = document.createElement("div");
+  div.id = "idle-warn-banner";
+  div.innerHTML = `
+    <span id="idle-warn-msg">Votre session expire dans 2 minutes. Cliquez pour rester connecté.</span>
+    <button class="btn btn-dark btn-sm" onclick="resetIdleTimer()">Rester connecté</button>
+  `;
+  document.body.appendChild(div);
+  _warnBannerEl = div;
+}
+
+function _showWarnBanner() {
+  _createWarnBanner();
+  _warnBannerEl.classList.add("visible");
+  // Translate if EN
+  const msg = $("idle-warn-msg");
+  if (msg && _lang === "en") msg.textContent = "Your session expires in 2 minutes. Click to stay connected.";
+  else if (msg) msg.textContent = "Votre session expire dans 2 minutes. Cliquez pour rester connecté.";
+}
+
+function _hideWarnBanner() {
+  if (_warnBannerEl) _warnBannerEl.classList.remove("visible");
+}
+
+function _saveWorkState() {
+  // Save current tab + agent question so user can resume after re-login
+  const work = {
+    tab: state.tab,
+    agentQuestion: $("agent-question")?.value || "",
+    agentResult: window._lastAgentResult || null,
+    agentQuestion2: window._lastAgentQuestion || "",
+  };
+  sessionStorage.setItem("nexhire_work_state", JSON.stringify(work));
+}
+
+function _restoreWorkState() {
+  const raw = sessionStorage.getItem("nexhire_work_state");
+  if (!raw) return;
+  try {
+    const work = JSON.parse(raw);
+    if (work.tab) switchTab(work.tab);
+    if (work.agentQuestion && $("agent-question")) $("agent-question").value = work.agentQuestion;
+    if (work.agentResult) {
+      window._lastAgentResult  = work.agentResult;
+      window._lastAgentQuestion = work.agentQuestion2;
+      renderAgentResult(work.agentResult);
+    }
+    sessionStorage.removeItem("nexhire_work_state");
+  } catch { /* ignore */ }
+}
+
+function resetIdleTimer() {
+  _hideWarnBanner();
+  clearTimeout(_idleWarnTimer);
+  clearTimeout(_idleLogoutTimer);
+  if (!state.token) return;  // not logged in, don't restart
+  _idleWarnTimer   = setTimeout(_showWarnBanner, IDLE_WARN_MS);
+  _idleLogoutTimer = setTimeout(_autoLogout,     IDLE_LIMIT_MS);
+}
+
+function _autoLogout() {
+  _hideWarnBanner();
+  _saveWorkState();
+  clearAuth();
+  showAuth("login");
+  // Add a message to the login form
+  const err = $("login-error");
+  if (err) {
+    err.textContent = _lang === "en"
+      ? "You were disconnected due to inactivity. Please sign in again."
+      : "Vous avez été déconnecté pour inactivité. Veuillez vous reconnecter.";
+    err.classList.remove("hidden");
+  }
+}
+
+// Activity events reset the idle timer
+["mousedown","mousemove","keydown","touchstart","scroll","click"].forEach(evt => {
+  document.addEventListener(evt, () => { if (state.token) resetIdleTimer(); }, { passive: true });
+});
+
+// Patch showApp to start idle timer and restore work state
+const _origShowApp = showApp;
+showApp = function () {
+  _origShowApp();
+  resetIdleTimer();
+  _restoreWorkState();
+};
